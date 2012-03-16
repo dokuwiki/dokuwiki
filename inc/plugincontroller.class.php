@@ -137,6 +137,7 @@ class Doku_Plugin_Controller {
                     // the plugin was disabled by rc2009-01-26
                     // disabling mechanism was changed back very soon again
                     // to keep everything simple we just skip the plugin completely
+                    continue;
                 } elseif (@file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
                     // treat this as a default disabled plugin(over-rideable by the plugin manager)
                     // deprecated 2011-09-10 (usage of disabled files)

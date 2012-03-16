@@ -1,17 +1,17 @@
 <?php
 
 /**
- *  Class to safely store UTF-8 in a Filename
+ * Class to safely store UTF-8 in a Filename
  *
- *  Encodes a utf8 string using only the following characters 0-9a-z_.-%
- *  characters 0-9a-z in the original string are preserved, "plain".
- *  all other characters are represented in a substring that starts
- *  with '%' are "converted".
- *  The transition from converted substrings to plain characters is
- *  marked with a '.'
+ * Encodes a utf8 string using only the following characters 0-9a-z_.-%
+ * characters 0-9a-z in the original string are preserved, "plain".
+ * all other characters are represented in a substring that starts
+ * with '%' are "converted".
+ * The transition from converted substrings to plain characters is
+ * marked with a '.'
  *
- *  @author   Christopher Smith
- *  @date     2010-04-02
+ * @author   Christopher Smith <chris@jalakai.co.uk>
+ * @date     2010-04-02
  */
 class SafeFN {
 
@@ -133,14 +133,15 @@ class SafeFN {
 
         $converted = false;
         foreach ($split as $sub) {
+            $len = strlen($sub);
             if ($sub[0] != self::$pre_indicator) {
                 // plain (unconverted) characters, optionally starting with a post_indicator
                 // set initial value to skip any post_indicator
-                for ($i=($converted?1:0); $i < strlen($sub); $i++) {
+                for ($i=($converted?1:0); $i < $len; $i++) {
                     $unicode[] = ord($sub[$i]);
                 }
                 $converted = false;
-            } else if (strlen($sub)==1) {
+            } else if ($len==1) {
                 // a pre_indicator character in the real data
                 $unicode[] = ord($sub);
                 $converted = true;

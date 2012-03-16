@@ -88,7 +88,9 @@ class PassHash {
     public function gen_salt($len=32){
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        for($i=0;$i<$len;$i++) $salt .= $chars[mt_rand(0,61)];
+        for($i=0; $i<$len; $i++){
+            $salt .= $chars[mt_rand(0,61)];
+        }
         return $salt;
     }
 

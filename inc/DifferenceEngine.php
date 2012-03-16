@@ -29,7 +29,7 @@ class _DiffOp {
 
 class _DiffOp_Copy extends _DiffOp {
     var $type = 'copy';
-    
+
     function __construct($orig, $closing = false) {
         if (!is_array($closing))
             $closing = $orig;
@@ -44,7 +44,7 @@ class _DiffOp_Copy extends _DiffOp {
 
 class _DiffOp_Delete extends _DiffOp {
     var $type = 'delete';
-    
+
     function __construct($lines) {
         $this->orig = $lines;
         $this->closing = false;
@@ -57,7 +57,7 @@ class _DiffOp_Delete extends _DiffOp {
 
 class _DiffOp_Add extends _DiffOp {
     var $type = 'add';
-    
+
     function __construct($lines) {
         $this->closing = $lines;
         $this->orig = false;
@@ -70,7 +70,7 @@ class _DiffOp_Add extends _DiffOp {
 
 class _DiffOp_Change extends _DiffOp {
     var $type = 'change';
-    
+
     function __construct($orig, $closing) {
         $this->orig = $orig;
         $this->closing = $closing;
@@ -924,7 +924,7 @@ class WordLevelDiff extends MappedDiff {
 }
 
 class InlineWordLevelDiff extends MappedDiff {
-    
+
     function __construct($orig_lines, $closing_lines) {
         list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
         list ($closing_words, $closing_stripped) = $this->_split($closing_lines);

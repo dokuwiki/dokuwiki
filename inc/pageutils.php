@@ -213,9 +213,9 @@ function sectionID($title,&$check) {
     if(is_array($check)){
         // make sure tiles are unique
         if (!array_key_exists ($title,$check)) {
-           $check[$title] = 0;
+            $check[$title] = 0;
         } else {
-           $title .= ++ $check[$title];
+            $title .= ++ $check[$title];
         }
     }
 
@@ -347,8 +347,8 @@ function mediaFN($id, $rev=''){
     if(empty($rev)){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
     }else{
-    	$ext = mimetype($id);
-    	$name = substr($id,0, -1*strlen($ext[0])-1);
+        $ext = mimetype($id);
+        $name = substr($id,0, -1*strlen($ext[0])-1);
         $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name .'.'.( (int) $rev ).'.'.$ext[0]);
     }
     return $fn;

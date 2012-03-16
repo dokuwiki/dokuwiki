@@ -994,7 +994,7 @@ function tpl_img($maxwidth=0,$maxheight=0,$link=true,$params=null){
 /**
  * Default action for TPL_IMG_DISPLAY
  */
-function _tpl_img_action($data, $param=NULL) {
+function _tpl_img_action($data, $param=null) {
     global $lang;
     $p = buildAttributes($data['params']);
 

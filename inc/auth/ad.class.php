@@ -33,10 +33,10 @@
  *   // add a list of comma separated ldap contact fields.
  *   $conf['auth']['ad']['additional'] = 'field1,field2';
  *
- *  @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *  @author  James Van Lommel <jamesvl@gmail.com>
- *  @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
- *  @author  Andreas Gohr <andi@splitbrain.org>
+ * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author  James Van Lommel <jamesvl@gmail.com>
+ * @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
 require_once(DOKU_INC.'inc/adLDAP.php');
@@ -51,10 +51,9 @@ class auth_ad extends auth_basic {
     /**
      * Constructor
      */
-    function auth_ad() {
+    function __construct() {
         global $conf;
         $this->cnf = $conf['auth']['ad'];
-
 
         // additional information fields
         if (isset($this->cnf['additional'])) {
@@ -72,21 +71,21 @@ class auth_ad extends auth_basic {
 
         // Prepare SSO
         if($_SERVER['REMOTE_USER'] && $this->cnf['sso']){
-             // remove possible NTLM domain
-             list($dom,$usr) = explode('\\',$_SERVER['REMOTE_USER'],2);
-             if(!$usr) $usr = $dom;
+            // remove possible NTLM domain
+            list($dom,$usr) = explode('\\',$_SERVER['REMOTE_USER'],2);
+            if(!$usr) $usr = $dom;
 
-             // remove possible Kerberos domain
-             list($usr,$dom) = explode('@',$usr);
+            // remove possible Kerberos domain
+            list($usr,$dom) = explode('@',$usr);
 
-             $dom = strtolower($dom);
-             $_SERVER['REMOTE_USER'] = $usr;
+            $dom = strtolower($dom);
+            $_SERVER['REMOTE_USER'] = $usr;
 
-             // we need to simulate a login
-             if(empty($_COOKIE[DOKU_COOKIE])){
-                 $_REQUEST['u'] = $_SERVER['REMOTE_USER'];
-                 $_REQUEST['p'] = 'sso_only';
-             }
+            // we need to simulate a login
+            if(empty($_COOKIE[DOKU_COOKIE])){
+                $_REQUEST['u'] = $_SERVER['REMOTE_USER'];
+                $_REQUEST['p'] = 'sso_only';
+            }
         }
 
         // prepare adLDAP standard configuration
@@ -147,7 +146,7 @@ class auth_ad extends auth_basic {
      *
      * @author  James Van Lommel <james@nosq.com>
      */
-   function getUserData($user){
+    function getUserData($user){
         global $conf;
         global $lang;
         global $ID;
@@ -297,7 +296,7 @@ class auth_ad extends auth_basic {
      * @param   $user      nick of the user to be changed
      * @param   $changes   array of field/value pairs to be changed
      * @return  bool
-    */
+     */
     function modifyUser($user, $changes) {
         $return = true;
 
@@ -380,7 +379,6 @@ class auth_ad extends auth_basic {
     function _constructPattern($filter) {
         $this->_pattern = array();
         foreach ($filter as $item => $pattern) {
-//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
             $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
         }
     }

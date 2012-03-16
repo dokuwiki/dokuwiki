@@ -175,10 +175,10 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @return int One of: 0,
-                       DOKU_MEDIA_DELETED,
-                       DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS,
-                       DOKU_MEDIA_NOT_AUTH,
-                       DOKU_MEDIA_INUSE
+ *                     DOKU_MEDIA_DELETED,
+ *                     DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS,
+ *                     DOKU_MEDIA_NOT_AUTH,
+ *                     DOKU_MEDIA_INUSE
  */
 function media_delete($id,$auth){
     global $lang;

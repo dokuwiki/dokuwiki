@@ -108,7 +108,7 @@ class TarLib {
      * represent the GZIP or BZIP compression level.  1 produce fast compression,
      * and 9 produce smaller files. See the RFC 1952 for more infos.
      */
-    function tarlib($p_filen = TarLib::ARCHIVE_DYNAMIC , $p_comptype = TarLib::COMPRESS_AUTO, $p_complevel = 9) {
+    function __construct($p_filen = TarLib::ARCHIVE_DYNAMIC , $p_comptype = TarLib::COMPRESS_AUTO, $p_complevel = 9) {
         $this->_initerror = 0;
         $this->_nomf = $p_filen;
         $flag=0;
@@ -127,7 +127,7 @@ class TarLib {
         }
 
         switch($p_comptype) {
-        case TarLib::COMPRESS_GZIP:
+            case TarLib::COMPRESS_GZIP:
                 if(!extension_loaded('zlib')) $this->_initerror = -1;
                 $this->_comptype = TarLib::COMPRESS_GZIP;
                 break;

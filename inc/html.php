@@ -1141,8 +1141,6 @@ function html_diff($text='',$intro=true,$type=null){
         $tdf = new TableDiffFormatter();
     }
 
-
-
     if($intro) print p_locale_xhtml('diff');
 
     if (!$text) {
@@ -1164,7 +1162,6 @@ function html_diff($text='',$intro=true,$type=null){
                             array('class'=>'quickselect')));
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
-
 
         $diffurl = wl($ID, array(
                         'do'       => 'diff',
@@ -1703,8 +1700,6 @@ function html_resendpwd() {
         html_form('resendpwd', $form);
         print '</div>'.NL;
     }
-
-
 }
 
 /**

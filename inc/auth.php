@@ -677,7 +677,7 @@ function auth_sendPassword($user,$password){
 
     if(empty($conf['mailprefix'])) {
         $subject = $lang['regpwmail'];
-    } else {  
+    } else {
         $subject = '['.$conf['mailprefix'].'] '.$lang['regpwmail'];
     }
 
@@ -883,7 +883,6 @@ function act_resendpwd(){
             return false;
         }
 
-
         if(!$conf['autopasswd']){ // we let the user choose a password
             // password given correctly?
             if(!isset($_REQUEST['pass']) || $_REQUEST['pass'] == '') return false;
@@ -950,10 +949,10 @@ function act_resendpwd(){
 
         if(empty($conf['mailprefix'])) {
             $subject = $lang['regpwmail'];
-        } else {  
+        } else {
             $subject = '['.$conf['mailprefix'].'] '.$lang['regpwmail'];
         }
-        
+
         if(mail_send($userinfo['name'].' <'.$userinfo['mail'].'>',
                      $subject,
                      $text,

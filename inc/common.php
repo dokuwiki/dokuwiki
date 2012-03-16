@@ -1290,14 +1290,14 @@ function dformat($dt=null,$format=''){
  *
  * @author <ungu at terong dot com>
  * @link http://www.php.net/manual/en/function.date.php#54072
+ * @param int $int_date: current date in UNIX timestamp
  */
 function date_iso8601($int_date) {
-   //$int_date: current date in UNIX timestamp
-   $date_mod = date('Y-m-d\TH:i:s', $int_date);
-   $pre_timezone = date('O', $int_date);
-   $time_zone = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
-   $date_mod .= $time_zone;
-   return $date_mod;
+    $date_mod = date('Y-m-d\TH:i:s', $int_date);
+    $pre_timezone = date('O', $int_date);
+    $time_zone = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
+    $date_mod .= $time_zone;
+    return $date_mod;
 }
 
 /**
@@ -1558,10 +1558,14 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
     }
 }
 
+/**
+ * Read a preference from the DokuWiki cookie
+ */
 function get_doku_pref($pref, $default) {
     if (strpos($_COOKIE['DOKU_PREFS'], $pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        for ($i = 0; $i < count($parts); $i+=2){
+        $cnt   = count($parts);
+        for ($i = 0; $i < $cnt; $i+=2){
             if ($parts[$i] == $pref) {
                 return $parts[$i+1];
             }

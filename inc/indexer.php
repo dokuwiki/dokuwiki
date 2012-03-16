@@ -291,7 +291,6 @@ class Doku_Indexer {
                 $val_idx = array();
             }
 
-
             foreach ($values as $val) {
                 $val = (string)$val;
                 if ($val !== "") {
