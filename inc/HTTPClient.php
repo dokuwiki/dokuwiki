@@ -26,7 +26,7 @@ class DokuHTTPClient extends HTTPClient {
         global $conf;
 
         // call parent constructor
-        $this->HTTPClient();
+        parent::__construct();
 
         // set some values from the config
         $this->proxy_host   = $conf['proxy']['host'];
