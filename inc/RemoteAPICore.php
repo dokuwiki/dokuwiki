@@ -20,25 +20,17 @@ class RemoteAPICore {
                 'return' => 'string',
                 'doc' => 'Returns the running DokuWiki version.'
             ), 'dokuwiki.login' => array(
-                'args' => array(
-                    'username' => 'string',
-                    'password' => 'string'
-                ),
+                'args' => array('string', 'string'),
                 'return' => 'int',
                 'doc' => 'Tries to login with the given credentials and sets auth cookies.',
                 'public' => '1'
             ), 'dokuwiki.getPagelist' => array(
-                'args' => array(
-                    'namespace' => 'string',
-                    'options' => 'array'
-                ),
+                'args' => array('string', 'array'),
                 'return' => 'array',
                 'doc' => 'List all pages within the given namespace.',
                 'name' => 'readNamespace'
             ), 'dokuwiki.search' => array(
-                'args' => array(
-                    'search' => 'string'
-                ),
+                'args' => array('string'),
                 'return' => 'array',
                 'doc' => 'Perform a fulltext search and return a list of matching pages'
             ), 'dokuwiki.getTime' => array(
@@ -46,7 +38,7 @@ class RemoteAPICore {
                 'return' => 'int',
                 'doc' =>  'Returns the current time at the remote wiki server as Unix timestamp.',
             ), 'dokuwiki.setLocks' => array(
-                'args' => array('lock' => 'array'),
+                'args' => array('array'),
                 'return' => 'array',
                 'doc' => 'Lock or unlock pages.'
             ), 'dokuwiki.getTitle' => array(
@@ -54,40 +46,26 @@ class RemoteAPICore {
                 'return' => 'string',
                 'doc' => 'Returns the wiki title.'
             ), 'dokuwiki.appendPage' => array(
-                'args' => array(
-                    'pagename' => 'string',
-                    'rawWikiText' => 'string',
-                    'attrs' => 'array'
-                ),
+                'args' => array('string', 'string', 'array'),
                 'return' => 'int',
                 'doc' => 'Append text to a wiki page.'
             ),  'wiki.getPage' => array(
-                'args' => array(
-                    'id' => 'string'
-                ),
+                'args' => array('string'),
                 'return' => 'string',
                 'doc' => 'Get the raw Wiki text of page, latest version.',
                 'name' => 'rawPage',
             ), 'wiki.getPageVersion' => array(
-                'args' => array(
-                    'id' => 'string',
-                    'rev' => 'int',
-                ),
+                'args' => array('string', 'int'),
                 'name' => 'rawPage',
                 'return' => 'string',
                 'doc' => 'Return a raw wiki page'
             ), 'wiki.getPageHTML' => array(
-                'args' => array(
-                    'id' => 'string'
-                ),
+                'args' => array('string'),
                 'return' => 'string',
                 'doc' => 'Return page in rendered HTML, latest version.',
                 'name' => 'htmlPage'
             ), 'wiki.getPageHTMLVersion' => array(
-                'args' => array(
-                    'id' => 'string',
-                    'rev' => 'int'
-                ),
+                'args' => array('string', 'int'),
                 'return' => 'string',
                 'doc' => 'Return page in rendered HTML.',
                 'name' => 'htmlPage'
@@ -97,86 +75,79 @@ class RemoteAPICore {
                 'doc' => 'Returns a list of all pages. The result is an array of utf8 pagenames.',
                 'name' => 'listPages'
             ), 'wiki.getAttachments' => array(
-                'args' => array(
-                    'namespace' => 'string',
-                    'options' => 'array'
-                ),
+                'args' => array('string', 'array'),
                 'return' => 'array',
                 'doc' => 'Returns a list of all media files.',
                 'name' => 'listAttachments'
             ), 'wiki.getBackLinks' => array(
-                'args' => array(
-                    'id' => 'string'
-                ),
+                'args' => array('string'),
                 'return' => 'array',
                 'doc' => 'Returns the pages that link to this page.',
                 'name' => 'listBackLinks'
             ), 'wiki.getPageInfo' => array(
-                'args' => array('id' => 'string'),
+                'args' => array('string'),
                 'return' => 'array',
                 'doc' => 'Returns a struct with infos about the page.',
                 'name' => 'pageInfo'
             ), 'wiki.getPageInfoVersion' => array(
-                'args' => array(
-                    'id' => 'string',
-                    'version' => 'int',
-                ),
+                'args' => array('string', 'int'),
                 'return' => 'array',
                 'doc' => 'Returns a struct with infos about the page.',
                 'name' => 'pageInfo'
             ), 'wiki.getPageVersions' => array(
-                'args' => array(
-                    'id' => 'string',
-                    'offset' => 'int'
-                ),
+                'args' => array('string', 'int'),
                 'return' => 'array',
                 'doc' => 'Returns the available revisions of the page.',
                 'name' => 'pageVersions'
             ), 'wiki.putPage' => array(
-                'args' => array(
-                    'id' => 'string',
-                    'rawText' => 'string',
-                    'attrs' => 'array'
-                ),
+                'args' => array('string', 'string', 'array'),
                 'return' => 'int',
                 'doc' => 'Saves a wiki page.'
             ), 'wiki.listLinks' => array(
-                'args' => array('id' => 'string'),
+                'args' => array('string'),
                 'return' => 'array',
                 'doc' => 'Lists all links contained in a wiki page.'
             ), 'wiki.getRecentChanges' => array(
-                'args' => array('timestamp' => 'int'),
+                'args' => array('int'),
                 'return' => 'array',
                 'Returns a struct about all recent changes since given timestamp.'
             ), 'wiki.getRecentMediaChanges' => array(
-                'args' => array('timestamp' => 'int'),
+                'args' => array('int'),
                 'return' => 'array',
                 'Returns a struct about all recent media changes since given timestamp.'
             ), 'wiki.aclCheck' => array(
-                'args' => array('id' => 'string'),
+                'args' => array('string'),
                 'return' => 'int',
                 'doc' => 'Returns the permissions of a given wiki page.'
             ), 'wiki.putAttachment' => array(
-                'args' => array(
-                    'id' => 'string',
-                    'data' => 'file',
-                    'params' => 'array'
-                ),
+                'args' => array('string', 'file', 'array'),
                 'return' => 'array',
                 'doc' => 'Upload a file to the wiki.'
             ), 'wiki.deleteAttachment' => array(
-                'args' => array('id' => 'string'),
+                'args' => array('string'),
                 'return' => 'int',
                 'doc' => 'Delete a file from the wiki.'
             ), 'wiki.getAttachment' => array(
-                'args' => array('id' => 'string'),
+                'args' => array('string'),
                 'doc' => 'Return a media file',
                 'return' => 'file',
                 'name' => 'getAttachment',
             ), 'wiki.getAttachmentInfo' => array(
-                'args' => array('id' => 'string'),
+                'args' => array('string'),
                 'return' => 'array',
                 'doc' => 'Returns a struct with infos about the attachment.'
+            ), 'dokuwiki.getXMLRPCAPIVersion' => array(
+                'args' => array(),
+                'name' => 'getAPIVersion',
+                'return' => 'int',
+                'doc' => 'Returns the XMLRPC API version.',
+                'public' => '1',
+            ), 'wiki.getRPCVersionSupported' => array(
+                'args' => array(),
+                'name' => 'wiki_RPCVersion',
+                'return' => 'int',
+                'doc' => 'Returns 2 with the supported RPC API version.',
+                'public' => '1'
             ),
 
         );
