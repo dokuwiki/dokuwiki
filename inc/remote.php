@@ -35,8 +35,6 @@ class RemoteAccessDeniedException extends RemoteException {}
  * plugin methods are formed like 'plugin.<plugin name>.<method name>'.
  * i.e.: plugin.clock.getTime or plugin.clock_gmt.getTime
  *
- *
- *
  * @throws RemoteException
  */
 class RemoteAPI {
@@ -51,6 +49,14 @@ class RemoteAPI {
      * {@see RemoteAPI#getPluginMethods}
      */
     private $pluginMethods = null;
+
+    /**
+     * @var array contains custom calls to the api. Plugins can use the XML_CALL_REGISTER event.
+     * The data inside is 'custom.call.something' => array('plugin name', 'remote method name')
+     *
+     * The remote method name is the same as in the remote name returned by _getMethods().
+     */
+    private $pluginCustomCalls = null;
 
     private $dateTransformation;
     private $fileTransformation;
@@ -83,9 +89,34 @@ class RemoteAPI {
         list($type, $pluginName, $call) = explode('.', $method, 3);
         if ($type === 'plugin') {
             return $this->callPlugin($pluginName, $method, $args);
-        } else {
+        }
+        if ($this->coreMethodExist($method)) {
             return $this->callCoreMethod($method, $args);
         }
+        return $this->callCustomCallPlugin($method, $args);
+    }
+
+    private function coreMethodExist($name) {
+        $coreMethods = $this->getCoreMethods();
+        return array_key_exists($name, $coreMethods);
+    }
+
+    private function  callCustomCallPlugin($method, $args) {
+        $customCalls = $this->getCustomCallPlugins();
+        if (!array_key_exists($method, $customCalls)) {
+            throw new RemoteException('Method does not exist', -32603);
+        }
+        $customCall = $customCalls[$method];
+        return $this->callPlugin($customCall[0], $customCall[1], $args);
+    }
+
+    private function getCustomCallPlugins() {
+        if ($this->pluginCustomCalls === null) {
+            $data = array();
+            trigger_event('RPC_CALL_ADD', $data);
+            $this->pluginCustomCalls = $data;
+        }
+        return $this->pluginCustomCalls;
     }
 
     private function callPlugin($pluginName, $method, $args) {

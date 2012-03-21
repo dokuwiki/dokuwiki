@@ -309,4 +309,16 @@ class remote_test extends UnitTestCase {
         $remoteApi->call('plugin.testplugin.methodString');
     }
 
+    function test_pluginCallCustomPath() {
+        global $EVENT_HANDLER;
+        $EVENT_HANDLER->register_hook('RPC_CALL_ADD', 'BEFORE', &$this, 'pluginCallCustomPathRegister');
+
+        $remoteApi = new RemoteAPI();
+        $result = $remoteApi->call('custom.path');
+        $this->assertEqual($result, 'success');
+    }
+
+    function pluginCallCustomPathRegister(&$event, $param) {
+        $event->data['custom.path'] = array('testplugin', 'methodString');
+    }
 }
