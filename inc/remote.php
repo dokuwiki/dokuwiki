@@ -158,7 +158,7 @@ class RemoteAPI {
      */
     public function forceAccess() {
         if (!$this->hasAccess()) {
-            throw new RemoteAccessDeniedException('server error. not authorized to call method', -32603);
+            throw new RemoteAccessDeniedException('server error. not authorized to call method', -32604);
         }
     }
 
