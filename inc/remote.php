@@ -19,7 +19,7 @@ class RemoteAccessDeniedException extends RemoteException {}
  * array(
  *     'method.remoteName' => array(
  *          'args' => array(
- *              'name' => 'type eg. string|int|...|date|file',
+ *              'type eg. string|int|...|date|file',
  *          )
  *          'name' => 'method name in class',
  *          'return' => 'type',
