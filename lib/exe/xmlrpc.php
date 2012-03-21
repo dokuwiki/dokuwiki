@@ -1,9 +1,6 @@
 <?php
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 
-// fix when '< ?xml' isn't on the very first line
-if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
-
 require_once(DOKU_INC.'inc/init.php');
 require_once(DOKU_INC.'inc/remote.php');
 session_write_close();  //close session

@@ -302,11 +302,12 @@ class IXR_Server {
     }
     function serve($data = false) {
         if (!$data) {
-            global $HTTP_RAW_POST_DATA;
-            if (!$HTTP_RAW_POST_DATA) {
+
+            $postData = trim(http_get_raw_post_data());
+            if (!$postData) {
                 die('XML-RPC server accepts POST requests only.');
             }
-            $data = $HTTP_RAW_POST_DATA;
+            $data = $postData;
         }
         $this->message = new IXR_Message($data);
         if (!$this->message->parse()) {
