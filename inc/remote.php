@@ -92,7 +92,7 @@ class RemoteAPI {
         $plugin = plugin_load('remote', $pluginName);
         $methods = $this->getPluginMethods();
         if (!$plugin) {
-            throw new RemoteException('Method dose not exists', -32603);
+            throw new RemoteException('Method does not exist', -32603);
         }
         $this->checkAccess($methods[$method]);
         $name = $this->getMethodName($methods, $method);
@@ -103,7 +103,7 @@ class RemoteAPI {
         $coreMethods = $this->getCoreMethods();
         $this->checkAccess($coreMethods[$method]);
         if (!isset($coreMethods[$method])) {
-            throw new RemoteException('Method dose not exists', -32603);
+            throw new RemoteException('Method does not exist', -32603);
         }
         $this->checkArgumentLength($coreMethods[$method], $args);
         return call_user_func_array(array($this->coreMethods, $this->getMethodName($coreMethods, $method)), $args);
@@ -121,7 +121,7 @@ class RemoteAPI {
 
     private function checkArgumentLength($method, $args) {
         if (count($method['args']) < count($args)) {
-            throw new RemoteException('Method dose not exists - wrong parameter count.', -32603);
+            throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
         }
     }
 
@@ -173,7 +173,7 @@ class RemoteAPI {
             foreach ($plugins as $pluginName) {
                 $plugin = plugin_load('remote', $pluginName);
                 if (!is_subclass_of($plugin, 'DokuWiki_Remote_Plugin')) {
-                    throw new RemoteException("Plugin $pluginName dose not implement DokuWiki_Remote_Plugin");
+                    throw new RemoteException("Plugin $pluginName does not implement DokuWiki_Remote_Plugin");
                 }
 
                 $methods = $plugin->_getMethods();
