@@ -278,8 +278,6 @@ class RemoteAPICore {
      * List all pages in the given namespace (and below)
      */
     function search($query){
-        require_once(DOKU_INC.'inc/fulltext.php');
-
         $regex = '';
         $data  = ft_pageSearch($query,$regex);
         $pages = array();
