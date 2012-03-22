@@ -77,6 +77,7 @@ function load_autoload($name){
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
+        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php', 
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',

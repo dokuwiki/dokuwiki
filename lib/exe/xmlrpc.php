@@ -2,10 +2,9 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/remote.php');
 session_write_close();  //close session
 
-if(!$conf['xmlrpc']) die('XML-RPC server not enabled.');
+if(!$conf['remote']) die('XML-RPC server not enabled.');
 
 /**
  * Contains needed wrapper functions and registers all available
