@@ -27,14 +27,7 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
 </head>
 
 <body>
-    <?php /* with these Conditional Comments you can better address IE issues in CSS files,
-             precede CSS rules by #IE7 for IE7 and #IE8 for IE8 (div closes at the bottom) */ ?>
     <!--[if lte IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
-
-    <?php /* the "dokuwiki__top" id is needed somewhere at the top, because that's where the "back to top" button/link links to */ ?>
-    <?php /* classes mode_<action> are added to make it possible to e.g. style a page differently if it's in edit mode,
-         see http://www.dokuwiki.org/devel:action_modes for a list of action modes */ ?>
-    <?php /* .dokuwiki should always be in one of the surrounding elements (e.g. plugins and templates depend on it) */ ?>
     <div id="dokuwiki__site"><div id="dokuwiki__top"
         class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'hasSidebar' : ''; ?>">
 
@@ -45,9 +38,9 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
             <?php if($showSidebar): ?>
                 <!-- ********** ASIDE ********** -->
                 <div id="dokuwiki__aside"><div class="pad include group">
-                    <?php tpl_flush() /* flush the output buffer */ ?>
+                    <?php tpl_flush() ?>
                     <?php _tpl_include('sidebarheader.html') ?>
-                    <?php tpl_include_page($conf['sidebar']) /* includes the given wiki page */ ?>
+                    <?php tpl_include_page($conf['sidebar']) ?>
                     <?php _tpl_include('sidebarfooter.html') ?>
                 </div></div><!-- /aside -->
             <?php endif; ?>
@@ -61,12 +54,12 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
                     <?php tpl_flush() ?>
                     <?php _tpl_include('pageheader.html') ?>
                     <!-- wikipage start -->
-                    <?php tpl_content() /* the main content */ ?>
+                    <?php tpl_content() ?>
                     <!-- wikipage stop -->
                     <?php _tpl_include('pagefooter.html') ?>
                 </div>
 
-                <div class="docInfo"><?php tpl_pageinfo() /* 'Last modified' etc */ ?></div>
+                <div class="docInfo"><?php tpl_pageinfo() ?></div>
 
                 <?php tpl_flush() ?>
             </div></div><!-- /content -->

@@ -1,7 +1,7 @@
 <!-- ********** HEADER ********** -->
 <div id="dokuwiki__header"><div class="pad group">
 
-    <?php html_msgarea() /* occasional error and info messages on top of the page */ ?>
+    <?php html_msgarea() ?>
     <?php _tpl_include('header.html') ?>
 
     <div class="headings group">
@@ -12,7 +12,7 @@
         <h1><?php
             // get logo either out of the template images folder or data/media folder
             $logoSize = array();
-            $logo = tpl_getMediaFile(array(':wiki:logo.png','images/logo.png'),false,$logoSize);
+            $logo = tpl_getMediaFile(array(':wiki:logo.png', 'images/logo.png'), false, $logoSize);
 
             // display logo and wiki title in a link to the home page
             tpl_link(
@@ -32,8 +32,6 @@
             <div id="dokuwiki__usertools">
                 <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
                 <ul>
-                    <?php /* the optional second parameter of tpl_action() switches between a link and a button,
-                             e.g. a button inside a <li> would be: tpl_action('edit',0,'li') */
                         if ($_SERVER['REMOTE_USER']) {
                             echo '<li class="user">';
                             tpl_userinfo(); /* 'Logged in as ...' */
@@ -52,7 +50,6 @@
         <div id="dokuwiki__sitetools">
             <h3 class="a11y"><?php echo $lang['site_tools']; ?></h3>
             <?php tpl_searchform(); ?>
-            <?php /* all the tools in one dropdown (good for mobile view): */ ?>
             <div class="mobileTools">
                 <?php tpl_actiondropdown($lang['tools']); ?>
             </div>
