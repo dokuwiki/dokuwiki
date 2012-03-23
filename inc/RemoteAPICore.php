@@ -471,7 +471,7 @@ class RemoteAPICore {
 
         // save temporary file
         @unlink($ftmp);
-        io_saveFile($ftmp, $file->getValue());
+        io_saveFile($ftmp, $file);
 
         $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
