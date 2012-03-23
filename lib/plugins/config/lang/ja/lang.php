@@ -8,6 +8,7 @@
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ * @author Taisuke Shimamoto <dentostar@gmail.com>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
@@ -48,6 +49,8 @@ $lang['cookiedir']             = 'Cookie のパス。空欄にすると baseurl 
 $lang['start']                 = 'スタートページ名';
 $lang['title']                 = 'WIKIタイトル';
 $lang['template']              = 'テンプレート';
+$lang['tagline']               = 'キャッチフレーズ (テンプレートが対応していれば)';
+$lang['sidebar']               = 'サイドバー用ページ名 (テンプレートが対応していれば)。空欄でサイドバー無効。';
 $lang['license']               = '作成した内容をどのライセンスでリリースしますか？';
 $lang['fullpath']              = 'ページのフッターに絶対パスを表示';
 $lang['recent']                = '最近の変更表示数';
@@ -91,6 +94,8 @@ $lang['disableactions_other']  = 'その他の動作（カンマ区切り）';
 $lang['sneaky_index']          = 'デフォルトでは索引にすべての名前空間を表示しますが、この機能はユーザーに閲覧権限のない名前空間を非表示にします。ただし、閲覧が可能な副名前空間まで表示されなくなるため、ACLの設定が適正でない場合は索引機能が使えなくなる場合があります。';
 $lang['auth_security_timeout'] = '認証タイムアウト設定（秒）';
 $lang['securecookie']          = 'クッキーをHTTPSにてセットする場合は、ブラウザよりHTTPS経由で送信された場合にみに制限しますか？ログインのみをSSLで行う場合は、この機能を無効にしてください。';
+$lang['xmlrpc']                = 'XML-RPCインターフェースを有効/無効にする';
+$lang['xmlrpcuser']            = 'XML-RPCアクセスを指定グループとユーザーに制限します（半角コンマ区切り）。　すべての人にアクセスを許可する場合は空のままにしてください。';
 $lang['updatecheck']           = 'DokuWikiの更新とセキュリティに関する情報をチェックしますか？ この機能は update.dokuwiki.org への接続が必要です。';
 $lang['userewrite']            = 'URLの書き換え';
 $lang['useslash']              = 'URL上の名前空間の区切りにスラッシュを使用';
@@ -130,6 +135,7 @@ $lang['rss_content']           = 'XMLフィードに何を表示させますか�
 $lang['rss_update']            = 'RSSフィードの更新間隔（秒）';
 $lang['recent_days']           = '最近の変更とする期間（日数）';
 $lang['rss_show_summary']      = 'フィードのタイトルにサマリーを表示';
+$lang['rss_media']             = 'XMLフィードで、どんな種類の変更を記載するか';
 $lang['target____wiki']        = '内部リンクの表示先';
 $lang['target____interwiki']   = 'InterWikiリンクの表示先';
 $lang['target____extern']      = '外部リンクの表示先';
