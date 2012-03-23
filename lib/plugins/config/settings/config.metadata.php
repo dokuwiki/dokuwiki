@@ -138,8 +138,8 @@ $meta['disableactions'] = array('disableactions',
 $meta['sneaky_index'] = array('onoff');
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
-$meta['xmlrpc']       = array('onoff');
-$meta['xmlrpcuser']   = array('string');
+$meta['remote']       = array('onoff');
+$meta['remoteuser']   = array('string');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');

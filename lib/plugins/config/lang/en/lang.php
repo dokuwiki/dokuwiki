@@ -110,8 +110,8 @@ $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the index view. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces. This may make the index unusable with certain ACL setups.';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
-$lang['xmlrpc']      = 'Enable/disable XML-RPC interface.';
-$lang['xmlrpcuser']  = 'Restrict XML-RPC access to the comma separated groups or users given here. Leave empty to give access to everyone.';
+$lang['remote']      = 'Enable/disable Remote interface.';
+$lang['remoteuser']  = 'Restrict Remote access to the comma separated groups or users given here. Leave empty to give access to everyone.';
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';

@@ -101,9 +101,6 @@ $lang['disableactions_other']  = 'Andre kommandoer (kommaseparert)';
 $lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerom i innholdsfortegnelsen. Hvis du skrur på dette alternativet vil brukere bare se de navnerommene der de har lesetilgang. Dette kan føre til at tilgjengelige undernavnerom skjules. Det kan gjøre innholdsfortegnelsen ubrukelig med enkelte ACL-oppsett.';
 $lang['auth_security_timeout'] = 'Autentisering utløper etter (sekunder)';
 $lang['securecookie']          = 'Skal informasjonskapsler satt via HTTPS kun sendes via HTTPS av nettleseren? Skal ikke velges dersom bare innloggingen til din wiki er sikret med SSL, og annen navigering  på wikien er usikret.';
-$lang['xmlrpc']                = 'Slå på/slå av XML-RPC-grensesnitt';
-$lang['xmlrpcuser']            = 'Å tillate XML-RPC-adgang til bestemte grupper eller brukere, sette deres navne (kommaseparert) her. Slik får du tilgang til alle, la feltet tomt.
-';
 $lang['updatecheck']           = 'Se etter oppdateringer og sikkerhetsadvarsler? Denne funksjonen er avhengig av å kontakte update.dokuwiki.org.';
 $lang['userewrite']            = 'Bruk pene URLer';
 $lang['useslash']              = 'Bruk / som skilletegn mellom navnerom i URLer';
