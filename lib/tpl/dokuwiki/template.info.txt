@@ -1,7 +1,7 @@
 ﻿base     dokuwiki
 author   Anika Henke, Andreas Gohr, Clarence Lee
 email    andi@splitbrain.org
-date     2012-01-30
+date     2012-03-24
 name     DokuWiki Template
-desc     DokuWiki's default template 2012
-url      http://www.dokuwiki.org/template
+desc     DokuWiki's default template since 2012
+url      http://www.dokuwiki.org/template:dokuwiki
