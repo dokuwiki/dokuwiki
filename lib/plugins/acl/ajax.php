@@ -6,15 +6,16 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-//fix for Opera XMLHttpRequests
-if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
-  parse_str($HTTP_RAW_POST_DATA, $_POST);
-}
-
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../../');
 require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
+
+//fix for Opera XMLHttpRequests
+$postData = http_get_raw_post_data();
+if(!count($_POST) && !empty($postData)){
+    parse_str($postData, $_POST);
+}
 
 if(!auth_isadmin()) die('for admins only');
 if(!checkSecurityToken()) die('CRSF Attack');

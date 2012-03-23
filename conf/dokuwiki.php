@@ -81,8 +81,8 @@ $conf['sneaky_index']   = 0;             //check for namespace read permission i
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 
-$conf['xmlrpc']      = 0;                //Enable/disable XML-RPC interface
-$conf['xmlrpcuser']  = '!!not set!!';    //Restrict XML-RPC access to this groups/users
+$conf['remote']      = 0;                //Enable/disable remote interfaces
+$conf['remoteuser']  = '!!not set !!';   //user/groups that have access to remote interface (comma separated)
 
 /* Advanced Options */
 
