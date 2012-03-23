@@ -370,15 +370,6 @@ class Mailer {
                 }
 
                 if(!utf8_isASCII($text)){
-                    //FIXME check if this is needed for base64 too
-                    // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
-                    /*
-                    if (preg_match('/^"(.+)"$/', $text, $matches)) {
-                      $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';
-                    } else {
-                      $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text, 0).'?=';
-                    }
-                    */
                     $text = '=?UTF-8?B?'.base64_encode($text).'?=';
                 }
             }else{
