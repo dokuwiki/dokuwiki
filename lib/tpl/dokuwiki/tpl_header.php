@@ -32,6 +32,7 @@
             <div id="dokuwiki__usertools">
                 <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
                 <ul>
+                    <?php
                         if ($_SERVER['REMOTE_USER']) {
                             echo '<li class="user">';
                             tpl_userinfo(); /* 'Logged in as ...' */
