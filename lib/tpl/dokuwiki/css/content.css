@@ -119,7 +119,7 @@
 .dokuwiki dl.code dt,
 .dokuwiki dl.file dt {
     background-color: __background_alt__;
-    background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%);
+    /*background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%); see FS#2447 */
     background: -webkit-linear-gradient(top, __background__ 0%, __background_alt__ 100%);
     background: -o-linear-gradient(     top, __background__ 0%, __background_alt__ 100%);
     background: -ms-linear-gradient(    top, __background__ 0%, __background_alt__ 100%);
