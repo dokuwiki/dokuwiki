@@ -95,6 +95,8 @@ $lang['sneaky_index']          = '기본적으로, DokuWiki는 색인 목록에 
 특정 ACL 설정은 색인 사용이 불가능하게 할 수도 있습니다.';
 $lang['auth_security_timeout'] = '인증 보안 초과 시간(초)';
 $lang['securecookie']          = 'HTTPS로 보내진 쿠키는 HTTPS에만 적용 할까요? 위키의 로그인 페이지만 SSL로 암호화 하고 위키 페이지는 그렇지 않은경우 꺼야 합니다.';
+$lang['xmlrpc']                = 'XML-RPC 인터페이스 지원/무시';
+$lang['xmlrpcuser']            = '주어진 그룹이나 유저들에게만 XML-RPC접근을 허락하려면 컴마로 구분하여 적으세요. 비어두면 모두에게 허용됩니다.';
 $lang['updatecheck']           = '업데이트와 보안 문제를 검사(DokuWiki를 update.dokuwiki.org에 연결해야 합니다.)';
 $lang['userewrite']            = 'URL rewriting기능 사용';
 $lang['useslash']              = 'URL에서 네임스페이스 구분자로 슬래쉬 문자 사용';
@@ -135,6 +137,7 @@ $lang['rss_content']           = 'XML feed 항목들에 표시되는 내용은?'
 $lang['rss_update']            = 'XML feed 갱신 주기(초)';
 $lang['recent_days']           = '최근 바뀐 페이지 기준 시간(날짜)';
 $lang['rss_show_summary']      = 'XML feed 제목에서 요약정보 보여주기';
+$lang['rss_media']             = '어떤 규격으로 XML 피드를 받아보시겠습니까?';
 $lang['target____wiki']        = '내부 링크들에 대한 타겟 윈도우 ';
 $lang['target____interwiki']   = 'InterWiki 링크들에 대한 타겟 윈도우';
 $lang['target____extern']      = '외부 링크들에 대한 타겟 윈도우';
