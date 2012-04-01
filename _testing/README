@@ -1,0 +1,15 @@
+====== DokuWiki test suite ======
+
+
+===== Unit Tests =====
+
+==== Requirements ====
+  * PHP Unit  3.7
+
+Installation:
+The easiest way to install phpunit is via pear:
+  pear config-set auto_discover 1
+  pear install pear.phpunit.de/PHPUnit
+
+==== Run unit tests ====
+  phpunit -c _testing/unittest.xml
