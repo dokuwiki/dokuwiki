@@ -1,4 +1,6 @@
 <?php
+
+require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/IXR_Library.php';
 
 class ixr_library_date_test extends UnitTestCase {
