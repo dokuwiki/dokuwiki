@@ -4,7 +4,7 @@
         convertNoticesToExceptions="false">
 
     <testsuites>
-        <testsuite>
+        <testsuite name="Default Unit Tests">
             <directory suffix=".test.php">unittests/</directory>
         </testsuite>
     </testsuites>
