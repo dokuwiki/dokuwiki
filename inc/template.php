@@ -775,7 +775,8 @@ function tpl_youarehere($sep=' &raquo; '){
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
     // always print the startpage
-    tpl_pagelink(':'.$conf['start']);
+    $title = p_get_metadata ($conf['start']);
+    (count ($title) > 0) ? tpl_pagelink (':' . $conf['start'], $title) : tpl_pagelink (':' . $conf['start']);
 
     // print intermediate namespace links
     $part = '';
@@ -786,7 +787,8 @@ function tpl_youarehere($sep=' &raquo; '){
 
         // output
         echo $sep;
-        tpl_pagelink($page);
+        $title = p_get_metadata ($page);
+        (count ($title) > 0) ? tpl_pagelink ($page, $title) : tpl_pagelink ($page);
     }
 
     // print current page, skipping start page, skipping for namespace index
@@ -795,7 +797,8 @@ function tpl_youarehere($sep=' &raquo; '){
     $page = $part.$parts[$i];
     if($page == $conf['start']) return;
     echo $sep;
-    tpl_pagelink($page);
+    $title = p_get_metadata ($page);
+    (count ($title) > 0) ? tpl_pagelink ($page, $title) : tpl_pagelink ($page);
     return true;
 }
 
