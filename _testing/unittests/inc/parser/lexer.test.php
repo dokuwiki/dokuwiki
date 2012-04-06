@@ -63,9 +63,9 @@ class TestOfLexerParallelRegex extends PHPUnit_Framework_TestCase {
 		$regex = new Doku_LexerParallelRegex(false);
 		$regex->addPattern("abc", "letter");
 		$regex->addPattern("123", "number");
-		$this->assertIdentical($regex->match("abcdef", $match), "letter");
+		$this->assertEquals($regex->match("abcdef", $match), "letter");
 		$this->assertEquals($match, "abc");
-		$this->assertIdentical($regex->match("0123456789", $match), "number");
+		$this->assertEquals($regex->match("0123456789", $match), "number");
 		$this->assertEquals($match, "123");
 	}
 	function testMatchMultipleWithLookaheadNot() {
@@ -244,22 +244,21 @@ class TestOfLexerModes extends PHPUnit_Framework_TestCase {
             ->with("b", DOKU_LEXER_UNMATCHED,4)->will($this->returnValue(true));
         $handler->expects($this->at(4))->method('a')
             ->with("aaa", DOKU_LEXER_MATCHED,5)->will($this->returnValue(true));
-
-        $handler->expects($this->at(0))->method('b')
-            ->with(":", DOKU_LEXER_ENTER,8)->will($this->returnValue(true));
-        $handler->expects($this->at(1))->method('b')
-            ->with("a", DOKU_LEXER_UNMATCHED,9)->will($this->returnValue(true));
-        $handler->expects($this->at(2))->method('b')
-            ->with("b", DOKU_LEXER_MATCHED, 10)->will($this->returnValue(true));
-        $handler->expects($this->at(3))->method('b')
-            ->with("a", DOKU_LEXER_UNMATCHED,11)->will($this->returnValue(true));
-        $handler->expects($this->at(4))->method('b')
-            ->with("bb", DOKU_LEXER_MATCHED,12)->will($this->returnValue(true));
         $handler->expects($this->at(5))->method('b')
-            ->with("a", DOKU_LEXER_UNMATCHED,14)->will($this->returnValue(true));
+            ->with(":", DOKU_LEXER_ENTER,8)->will($this->returnValue(true));
         $handler->expects($this->at(6))->method('b')
-            ->with("bbb", DOKU_LEXER_MATCHED,15)->will($this->returnValue(true));
+            ->with("a", DOKU_LEXER_UNMATCHED,9)->will($this->returnValue(true));
         $handler->expects($this->at(7))->method('b')
+            ->with("b", DOKU_LEXER_MATCHED, 10)->will($this->returnValue(true));
+        $handler->expects($this->at(8))->method('b')
+            ->with("a", DOKU_LEXER_UNMATCHED,11)->will($this->returnValue(true));
+        $handler->expects($this->at(9))->method('b')
+            ->with("bb", DOKU_LEXER_MATCHED,12)->will($this->returnValue(true));
+        $handler->expects($this->at(10))->method('b')
+            ->with("a", DOKU_LEXER_UNMATCHED,14)->will($this->returnValue(true));
+        $handler->expects($this->at(11))->method('b')
+            ->with("bbb", DOKU_LEXER_MATCHED,15)->will($this->returnValue(true));
+        $handler->expects($this->at(12))->method('b')
             ->with("a", DOKU_LEXER_UNMATCHED,18)->will($this->returnValue(true));
 
 		$lexer = new Doku_Lexer($handler, "a");
@@ -270,18 +269,31 @@ class TestOfLexerModes extends PHPUnit_Framework_TestCase {
 	}
 	function testNesting() {
         $handler = $this->getMock('TestParser');
-        $handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
-		$handler->expectArgumentsAt(1, "a", array("b", DOKU_LEXER_UNMATCHED,2));
-		$handler->expectArgumentsAt(2, "a", array("aa", DOKU_LEXER_MATCHED,3));
-		$handler->expectArgumentsAt(3, "a", array("b", DOKU_LEXER_UNMATCHED,5));
-		$handler->expectArgumentsAt(0, "b", array("(", DOKU_LEXER_ENTER,6));
-		$handler->expectArgumentsAt(1, "b", array("bb", DOKU_LEXER_MATCHED,7));
-		$handler->expectArgumentsAt(2, "b", array("a", DOKU_LEXER_UNMATCHED,9));
-		$handler->expectArgumentsAt(3, "b", array("bb", DOKU_LEXER_MATCHED,10));
-		$handler->expectArgumentsAt(4, "b", array(")", DOKU_LEXER_EXIT,12));
-		$handler->expectArgumentsAt(4, "a", array("aa", DOKU_LEXER_MATCHED,13));
-		$handler->expectArgumentsAt(5, "a", array("b", DOKU_LEXER_UNMATCHED,15));
-		$lexer = new Doku_Lexer($handler, "a");
+        $handler->expects($this->at(0))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('a')
+            ->with("b", DOKU_LEXER_UNMATCHED,2)->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,3)->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('a')
+            ->with("b", DOKU_LEXER_UNMATCHED,5)->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('b')
+            ->with("(", DOKU_LEXER_ENTER,6)->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('b')
+            ->with("bb", DOKU_LEXER_MATCHED,7)->will($this->returnValue(true));
+        $handler->expects($this->at(6))->method('b')
+            ->with("a", DOKU_LEXER_UNMATCHED,9)->will($this->returnValue(true));
+        $handler->expects($this->at(7))->method('b')
+            ->with("bb", DOKU_LEXER_MATCHED,10)->will($this->returnValue(true));
+        $handler->expects($this->at(8))->method('b')
+            ->with(")", DOKU_LEXER_EXIT,12)->will($this->returnValue(true));
+        $handler->expects($this->at(9))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,13)->will($this->returnValue(true));
+        $handler->expects($this->at(10))->method('a')
+            ->with("b", DOKU_LEXER_UNMATCHED,15)->will($this->returnValue(true));
+
+
+        $lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addEntryPattern("(", "a", "b");
 		$lexer->addPattern("b+", "b");
@@ -289,49 +301,56 @@ class TestOfLexerModes extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($lexer->parse("aabaab(bbabb)aab"));
 	}
 	function testSingular() {
-		$handler = new MockTestParser($this);
-		$handler->setReturnValue("a", true);
-		$handler->setReturnValue("b", true);
-		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
-		$handler->expectArgumentsAt(1, "a", array("aa", DOKU_LEXER_MATCHED,3));
-		$handler->expectArgumentsAt(2, "a", array("xx", DOKU_LEXER_UNMATCHED,5));
-		$handler->expectArgumentsAt(3, "a", array("xx", DOKU_LEXER_UNMATCHED,10));
-		$handler->expectArgumentsAt(0, "b", array("b", DOKU_LEXER_SPECIAL,2));
-		$handler->expectArgumentsAt(1, "b", array("bbb", DOKU_LEXER_SPECIAL,7));
-		$handler->expectCallCount("a", 4);
-		$handler->expectCallCount("b", 2);
+		$handler = $this->getMock('TestParser');
+        $handler->expects($this->at(0))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('b')
+            ->with("b", DOKU_LEXER_SPECIAL,2)->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,3)->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('a')
+            ->with("xx", DOKU_LEXER_UNMATCHED,5)->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('b')
+            ->with("bbb", DOKU_LEXER_SPECIAL,7)->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('a')
+            ->with("xx", DOKU_LEXER_UNMATCHED,10)->will($this->returnValue(true));
 		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addSpecialPattern("b+", "a", "b");
 		$this->assertTrue($lexer->parse("aabaaxxbbbxx"));
-		$handler->tally();
 	}
 	function testUnwindTooFar() {
-		$handler = new MockTestParser($this);
-		$handler->setReturnValue("a", true);
-		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
-		$handler->expectArgumentsAt(1, "a", array(")", DOKU_LEXER_EXIT,2));
-		$handler->expectCallCount("a", 2);
+		$handler = $this->getMock('TestParser');
+        $handler->expects($this->at(0))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('a')
+            ->with(")", DOKU_LEXER_EXIT,2)->will($this->returnValue(true));
+
 		$lexer = new Doku_Lexer($handler, "a");
 		$lexer->addPattern("a+", "a");
 		$lexer->addExitPattern(")", "a");
 		$this->assertFalse($lexer->parse("aa)aa"));
-		$handler->tally();
 	}
 }
 
 class TestOfLexerHandlers extends PHPUnit_Framework_TestCase {
 	function testModeMapping() {
-		$handler = new MockTestParser($this);
-		$handler->setReturnValue("a", true);
-		$handler->expectArgumentsAt(0, "a", array("aa", DOKU_LEXER_MATCHED,0));
-		$handler->expectArgumentsAt(1, "a", array("(", DOKU_LEXER_ENTER,2));
-		$handler->expectArgumentsAt(2, "a", array("bb", DOKU_LEXER_MATCHED,3));
-		$handler->expectArgumentsAt(3, "a", array("a", DOKU_LEXER_UNMATCHED,5));
-		$handler->expectArgumentsAt(4, "a", array("bb", DOKU_LEXER_MATCHED,6));
-		$handler->expectArgumentsAt(5, "a", array(")", DOKU_LEXER_EXIT,8));
-		$handler->expectArgumentsAt(6, "a", array("b", DOKU_LEXER_UNMATCHED,9));
-		$handler->expectCallCount("a", 7);
+        $handler = $this->getMock('TestParser');
+        $handler->expects($this->at(0))->method('a')
+            ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('a')
+            ->with("(", DOKU_LEXER_ENTER,2)->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('a')
+            ->with("bb", DOKU_LEXER_MATCHED,3)->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('a')
+            ->with("a", DOKU_LEXER_UNMATCHED,5)->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('a')
+            ->with("bb", DOKU_LEXER_MATCHED,6)->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('a')
+            ->with(")", DOKU_LEXER_EXIT,8)->will($this->returnValue(true));
+        $handler->expects($this->at(6))->method('a')
+            ->with("b", DOKU_LEXER_UNMATCHED,9)->will($this->returnValue(true));
+
 		$lexer = new Doku_Lexer($handler, "mode_a");
 		$lexer->addPattern("a+", "mode_a");
 		$lexer->addEntryPattern("(", "mode_a", "mode_b");
@@ -340,7 +359,6 @@ class TestOfLexerHandlers extends PHPUnit_Framework_TestCase {
 		$lexer->mapHandler("mode_a", "a");
 		$lexer->mapHandler("mode_b", "a");
 		$this->assertTrue($lexer->parse("aa(bbabb)b"));
-		$handler->tally();
 	}
 }
 
@@ -353,43 +371,23 @@ class TestParserByteIndex {
 	function caught() {}
 }
 
-Mock::generate('TestParserByteIndex');
-
 class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
 
 	function testIndex() {
         $doc = "aaa<file>bcd</file>eee";
 
-		$handler = new MockTestParserByteIndex($this);
-		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("caught", true);
-
-		$handler->expectArgumentsAt(
-            0,
-            "caught",
-            array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
-            );
-		$handler->expectArgumentsAt(
-            1,
-            "caught",
-            array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
-            );
-		$handler->expectArgumentsAt(
-            2,
-            "caught",
-            array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
-            );
-        $handler->expectArgumentsAt(
-            3,
-            "caught",
-            array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
-            );
-		$handler->expectArgumentsAt(
-            4,
-            "caught",
-            array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
-            );
-		$handler->expectCallCount("caught", 5);
+		$handler = $this->getMock('TestParserByteIndex');
+        $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('caught')
+            ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('caught')
+            ->with("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('caught')
+            ->with("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('caught')
+            ->with("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('caught')
+            ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
 		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern("<file>", "ignore", "caught");
@@ -399,42 +397,23 @@ class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
         $lexer->addPattern('c','caught');
 
 		$this->assertTrue($lexer->parse($doc));
-		$handler->tally();
 	}
 
 	function testIndexLookaheadEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-		$handler = new MockTestParserByteIndex($this);
-		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("caught", true);
-
-		$handler->expectArgumentsAt(
-            0,
-            "caught",
-            array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
-            );
-		$handler->expectArgumentsAt(
-            1,
-            "caught",
-            array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
-            );
-		$handler->expectArgumentsAt(
-            2,
-            "caught",
-            array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
-            );
-        $handler->expectArgumentsAt(
-            3,
-            "caught",
-            array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
-            );
-		$handler->expectArgumentsAt(
-            4,
-            "caught",
-            array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
-            );
-		$handler->expectCallCount("caught", 5);
+		$handler = $this->getMock('TestParserByteIndex');
+        $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('caught')
+            ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('caught')
+            ->with("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('caught')
+            ->with("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('caught')
+            ->with("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('caught')
+            ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
 		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>(?=.*</file>)', "ignore", "caught");
@@ -444,42 +423,23 @@ class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
         $lexer->addPattern('c','caught');
 
 		$this->assertTrue($lexer->parse($doc));
-		$handler->tally();
 	}
 
 	function testIndexLookaheadNotEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-		$handler = new MockTestParserByteIndex($this);
-		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("caught", true);
-
-		$handler->expectArgumentsAt(
-            0,
-            "caught",
-            array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
-            );
-		$handler->expectArgumentsAt(
-            1,
-            "caught",
-            array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
-            );
-		$handler->expectArgumentsAt(
-            2,
-            "caught",
-            array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
-            );
-        $handler->expectArgumentsAt(
-            3,
-            "caught",
-            array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
-            );
-		$handler->expectArgumentsAt(
-            4,
-            "caught",
-            array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
-            );
-		$handler->expectCallCount("caught", 5);
+		$handler = $this->getMock('TestParserByteIndex');
+        $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('caught')
+            ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('caught')
+            ->with("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('caught')
+            ->with("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('caught')
+            ->with("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('caught')
+            ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
 		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>(?!foo)', "ignore", "caught");
@@ -489,42 +449,23 @@ class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
         $lexer->addPattern('c','caught');
 
 		$this->assertTrue($lexer->parse($doc));
-		$handler->tally();
 	}
 
 	function testIndexLookbehindEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-		$handler = new MockTestParserByteIndex($this);
-		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("caught", true);
-
-		$handler->expectArgumentsAt(
-            0,
-            "caught",
-            array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
-            );
-		$handler->expectArgumentsAt(
-            1,
-            "caught",
-            array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
-            );
-		$handler->expectArgumentsAt(
-            2,
-            "caught",
-            array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
-            );
-        $handler->expectArgumentsAt(
-            3,
-            "caught",
-            array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
-            );
-		$handler->expectArgumentsAt(
-            4,
-            "caught",
-            array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
-            );
-		$handler->expectCallCount("caught", 5);
+		$handler = $this->getMock('TestParserByteIndex');
+        $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('caught')
+            ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('caught')
+            ->with("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('caught')
+            ->with("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('caught')
+            ->with("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('caught')
+            ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
 		$lexer = new Doku_Lexer($handler, "ignore");
 		$lexer->addEntryPattern('<file>', "ignore", "caught");
@@ -534,52 +475,32 @@ class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
         $lexer->addPattern('c','caught');
 
 		$this->assertTrue($lexer->parse($doc));
-		$handler->tally();
 	}
 
 	function testIndexLookbehindNotEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-		$handler = new MockTestParserByteIndex($this);
-		$handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("caught", true);
+        $handler = $this->getMock('TestParserByteIndex');
+        $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
+        $handler->expects($this->at(1))->method('caught')
+            ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
+        $handler->expects($this->at(2))->method('caught')
+            ->with("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))->will($this->returnValue(true));
+        $handler->expects($this->at(3))->method('caught')
+            ->with("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))->will($this->returnValue(true));
+        $handler->expects($this->at(4))->method('caught')
+            ->with("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))->will($this->returnValue(true));
+        $handler->expects($this->at(5))->method('caught')
+            ->with("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))->will($this->returnValue(true));
 
-		$handler->expectArgumentsAt(
-            0,
-            "caught",
-            array("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))
-            );
-		$handler->expectArgumentsAt(
-            1,
-            "caught",
-            array("b", DOKU_LEXER_SPECIAL, strpos($doc,'b'))
-            );
-		$handler->expectArgumentsAt(
-            2,
-            "caught",
-            array("c", DOKU_LEXER_MATCHED, strpos($doc,'c'))
-            );
-        $handler->expectArgumentsAt(
-            3,
-            "caught",
-            array("d", DOKU_LEXER_UNMATCHED, strpos($doc,'d'))
-            );
-		$handler->expectArgumentsAt(
-            4,
-            "caught",
-            array("</file>", DOKU_LEXER_EXIT, strpos($doc,'</file>'))
-            );
-		$handler->expectCallCount("caught", 5);
-
-		$lexer = new Doku_Lexer($handler, "ignore");
-		$lexer->addEntryPattern('<file>', "ignore", "caught");
-		$lexer->addExitPattern("(?<!c)</file>", "caught");
+		$lexer = new Doku_Lexer($handler, 'ignore');
+		$lexer->addEntryPattern('<file>', 'ignore', 'caught');
+		$lexer->addExitPattern('(?<!c)</file>', 'caught');
         $lexer->addSpecialPattern('b','caught','special');
         $lexer->mapHandler('special','caught');
         $lexer->addPattern('c','caught');
 
 		$this->assertTrue($lexer->parse($doc));
-		$handler->tally();
 	}
 
     /**
@@ -590,25 +511,19 @@ class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
         $doc = "ALL FOOLS ARE FOO";
         $pattern = '\bFOO\b';
 
-        $handler = new MockTestParserByteIndex($this);
-        $handler->setReturnValue("ignore", true);
-        $handler->setReturnValue("caught", true);
+        $handler = $this->getMock('TestParserByteIndex');
+        $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
 
         $matches = array();
         preg_match('/'.$pattern.'/',$doc,$matches,PREG_OFFSET_CAPTURE);
 
-        $handler->expectArgumentsAt(
-            0,
-            "caught",
-            array("FOO", DOKU_LEXER_SPECIAL, $matches[0][1])
-            );
-        $handler->expectCallCount("caught", 1);
+        $handler->expects($this->once())->method('caught')
+            ->with("FOO", DOKU_LEXER_SPECIAL, $matches[0][1])->will($this->returnValue(true));
 
         $lexer = new Doku_Lexer($handler, "ignore");
         $lexer->addSpecialPattern($pattern,'ignore','caught');
 
         $this->assertTrue($lexer->parse($doc));
-        $handler->tally();
     }
 
 }
