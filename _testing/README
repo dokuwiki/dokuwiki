@@ -32,7 +32,5 @@ Bad tests are tests that do not run out of the box.
 
 
 ==== TODO ====
-  * Mocking
-    * inc/parser/lexer.test.php
   * plugin unit tests
   * integration tests (+plugins)
