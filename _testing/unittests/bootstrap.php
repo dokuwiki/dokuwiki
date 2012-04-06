@@ -1,6 +1,7 @@
 <?php
 
-define('DOKU_UNITTEST',true);
+define('DOKU_UNITTEST', true);
+define('SIMPLE_TEST', true);
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 define('DOKU_CONF',realpath(dirname(__FILE__).'/../../conf').'/');
 
