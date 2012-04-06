@@ -32,5 +32,4 @@ Bad tests are tests that do not run out of the box.
 
 
 ==== TODO ====
-  * plugin unit tests
   * integration tests (+plugins)

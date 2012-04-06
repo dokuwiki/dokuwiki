@@ -7,6 +7,9 @@
         <testsuite name="Default Unit Tests">
             <directory suffix=".test.php">unittests/</directory>
         </testsuite>
+        <testsuite name="Plugin tests">
+            <directory suffix=".test.php">../lib/plugins/*/_testing</directory>
+        </testsuite>
     </testsuites>
 
 </phpunit>
