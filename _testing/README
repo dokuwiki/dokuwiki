@@ -13,7 +13,8 @@ The easiest way to install phpunit is via pear:
   pear install pear.phpunit.de/PHPUnit
 
 ==== Run unit tests ====
-  phpunit -c _testing/unittest.xml
+  > cd _testing/
+  > phpunit
 
 ==== Bad tests ====
 Bad tests are tests that do not run out of the box.
@@ -32,7 +33,6 @@ Bad tests are tests that do not run out of the box.
 
 ==== TODO ====
   * Mocking
-    * inc/remote.test.php
     * inc/parser/lexer.test.php
   * plugin unit tests
   * integration tests (+plugins)
