@@ -25,9 +25,14 @@ Bad tests are tests that do not run out of the box.
   * inc/indexer_idx_indexlengths
   * inc/mail_send
   * inc/pageutils_resolve_pageid
+  * inc/parser/parser_formatting
+  * inc/parser/xhtml_htmlphp
+  * inc/parser/xhtml_links
 
 
 ==== TODO ====
-  * transform inc/remote.test.php (mocking)
+  * Mocking
+    * inc/remote.test.php
+    * inc/parser/lexer.test.php
   * plugin unit tests
   * integration tests (+plugins)

@@ -1,5 +1,6 @@
 <?php
 if (!defined('DOKU_BASE')) define('DOKU_BASE','./');
+require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/parser/xhtml.php';
 require_once DOKU_INC.'inc/pageutils.php';
 
