@@ -5,7 +5,7 @@ require_once DOKU_INC.'inc/pageutils.php';
 global $conf;
 if (!isset($conf['datadir'])) $conf['datadir'] = $conf['savedir'].'/pages';
 
-class init_resolve_pageid_test extends UnitTestCase {
+class init_resolve_pageid_test extends PHPUnit_Framework_TestCase {
 
 
     function test1(){
@@ -58,7 +58,7 @@ class init_resolve_pageid_test extends UnitTestCase {
             $page = $test[1];
             resolve_pageid($test[0],$page,$foo);
 
-            $this->assertEqual($page,$test[2]);
+            $this->assertEquals($page,$test[2]);
         }
     }
 
@@ -75,8 +75,8 @@ class init_resolve_pageid_test extends UnitTestCase {
         $page = '';
         $exist = true;
 
-        @resolve_pageid($ns, $page, $exist);
-        $this->assertEqual($page, $conf['start']);
+        resolve_pageid($ns, $page, $exist);
+        $this->assertEquals($page, $conf['start']);
    }
 
 }
