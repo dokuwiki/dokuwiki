@@ -440,7 +440,7 @@ EOD;
             $method = $call['methodName'];
             $params = $call['params'];
             if ($method == 'system.multicall') {
-                $result = new IXR_Error(-32600, 'Recursive calls to system.multicall are forbidden');
+                $result = new IXR_Error(-32800, 'Recursive calls to system.multicall are forbidden');
             } else {
                 $result = $this->call($method, $params);
             }

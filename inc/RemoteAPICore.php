@@ -44,7 +44,8 @@ class RemoteAPICore {
             ), 'dokuwiki.getTitle' => array(
                 'args' => array(),
                 'return' => 'string',
-                'doc' => 'Returns the wiki title.'
+                'doc' => 'Returns the wiki title.',
+                'public' => '1'
             ), 'dokuwiki.appendPage' => array(
                 'args' => array('string', 'string', 'array'),
                 'return' => 'int',

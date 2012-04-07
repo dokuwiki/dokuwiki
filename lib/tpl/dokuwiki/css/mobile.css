@@ -1,0 +1,198 @@
+/**
+ * This file provides styles for mobile devices
+ * and smaller screens (up to 480px and 768px width).
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+
+/* up to 768px screen widths
+********************************************************************/
+@media only screen and (max-width: 768px), only screen and (max-device-width: 960px) {
+
+/* structure */
+#dokuwiki__aside {
+    width: 100%;
+    float: none;
+}
+#dokuwiki__aside > .pad {
+    margin: 0 0 .5em;
+}
+
+.hasSidebar #dokuwiki__content {
+    float: none;
+    margin-left: 0;
+    width: 100%;
+}
+.hasSidebar #dokuwiki__content > .pad {
+    margin-left: 0;
+}
+
+/* toc */
+.dokuwiki div.toc {
+    float: none;
+    margin: 0 0 1em 0;
+    width: auto;
+    border-left-width: 0;
+    border-bottom: 1px solid __border__;
+}
+.dokuwiki div.tocheader {
+    padding: 0 0 .5em;
+}
+.dokuwiki #toc__inside {
+    padding: .2em 0 .5em;
+}
+
+/* page */
+.dokuwiki div.page {
+    padding: 1em;
+}
+.dokuwiki .pageId span {
+    border-width: 0;
+    background-color: __background_site__;
+    color: __text_alt__;
+    box-shadow: 0 0 0;
+}
+
+/* _edit */
+.dokuwiki div.section_highlight {
+    margin: -3em -1em -.01em -1em;
+    padding: 3em .5em .01em .5em;
+    border-width: 0 .5em;
+}
+.dokuwiki div.preview {
+    margin: 0 -1em;
+    padding: 1em;
+}
+
+/* _recent */
+.dokuwiki #dw__recent ul,
+.dokuwiki #page__revisions ul {
+    padding-left: 0;
+}
+
+
+} /* /@media */
+
+
+/* up to 480px screen widths
+********************************************************************/
+@media only screen and (max-width: 480px), only screen and (max-device-width: 960px) {
+
+/*____________ structure ____________*/
+
+#dokuwiki__site {
+    max-width: 100%;
+}
+#dokuwiki__site > .site {
+    padding: 0 .5em;
+}
+#dokuwiki__header {
+    padding: .5em 0;
+}
+
+/*____________ header ____________*/
+
+#dokuwiki__header ul.a11y.skip {
+    position: static !important;
+    left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    float: right;
+    font-size: 0.875em;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+#dokuwiki__header ul.a11y.skip li {
+    margin-left: .35em;
+    display: inline;
+}
+
+#dokuwiki__header .headings,
+#dokuwiki__header .tools {
+    float: none;
+    text-align: left;
+    width: auto;
+    margin-bottom: .5em;
+}
+#dokuwiki__sitetools {
+    text-align: left;
+}
+#dokuwiki__usertools,
+#dokuwiki__sitetools ul,
+#dokuwiki__sitetools h3,
+#dokuwiki__pagetools,
+.dokuwiki div.breadcrumbs, /* @todo: maybe move breadcrumbs to the bottom? */
+.dokuwiki .pageId {
+    display: none;
+}
+
+/* search form */
+#dokuwiki__sitetools form.search {
+    float: left;
+    margin: 0 .2em .2em 0;
+    width: 49%;
+}
+#dokuwiki__sitetools form.search input.edit {
+    width: 100% !important;
+}
+.dokuwiki form.search div.ajax_qsearch {
+    display: none !important;
+}
+
+/* action dropdown is alternative for all hidden tools */
+#dokuwiki__header .mobileTools {
+    display: block;
+    font-size: 0.875em;
+    margin: 0 0 .2em 0;
+    float: right;
+    width: 49%;
+}
+#dokuwiki__header .mobileTools select {
+    padding: .3em .1em;
+    width: 100% !important;
+}
+
+
+/*____________ content ____________*/
+
+.dokuwiki div.page {
+    padding: .5em;
+}
+
+/* form elements */
+#config__manager fieldset td.value,
+#config__manager td .input,
+.dokuwiki fieldset,
+.dokuwiki input.edit,
+.dokuwiki textarea,
+.dokuwiki select {
+    width: auto !important;
+    max-width: 100% !important;
+}
+#config__manager fieldset {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.dokuwiki label.block {
+    text-align: left;
+}
+.dokuwiki label.block span {
+    display: block;
+}
+
+/* _edit */
+.dokuwiki div.section_highlight {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+}
+.dokuwiki div.preview {
+    margin: 0 -.5em;
+    padding: .5em;
+}
+
+
+
+} /* /@media */
