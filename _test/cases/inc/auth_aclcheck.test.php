@@ -2,14 +2,27 @@
 
 require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/auth.php';
+require_once DOKU_INC.'inc/auth/basic.class.php';
 
 class auth_acl_test extends UnitTestCase {
+
+    var $oldConf;
+    var $oldAuthAcl;
+
+    function setup() {
+        global $conf;
+        global $AUTH_ACL;
+        global $auth;
+        $this->oldConf = $conf;
+        $this->oldAuthAcl = $AUTH_ACL;
+        $auth = new auth_basic();
+    }
 
     function teardown() {
         global $conf;
         global $AUTH_ACL;
-        unset($conf);
-        unset($AUTH_ACL);
+        $conf = $this->oldConf;
+        $AUTH_ACL = $this->oldAuthAcl;
 
     }
 
