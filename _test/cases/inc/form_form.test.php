@@ -1,7 +1,6 @@
 <?php
 
-require_once DOKU_INC.'inc/auth.php';
-require_once DOKU_INC.'inc/form.php';
+require_once DOKU_INC.'inc/init.php';
 
 class form_test extends UnitTestCase {
 
