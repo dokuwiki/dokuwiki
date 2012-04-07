@@ -19,7 +19,6 @@ The easiest way to install phpunit is via pear:
 ==== Bad tests ====
 Bad tests are tests that do not run out of the box.
 
-  * inc/auth_aclcheck
   * inc/DifferenceEngine
   * inc/html_hilight (runkit)
   * inc/indexer_idx_indexlengths
