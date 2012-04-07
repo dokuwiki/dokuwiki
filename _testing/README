@@ -19,7 +19,7 @@ The easiest way to install phpunit is via pear:
 ==== Bad tests ====
 Bad tests are tests that do not run out of the box.
 
-  * inc/DifferenceEngine
+  * inc/DifferenceEngine (removed FS#2161, FS#2223)
   * inc/html_hilight (runkit)
   * inc/indexer_idx_indexlengths
   * inc/mail_send
