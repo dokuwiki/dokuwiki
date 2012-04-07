@@ -23,7 +23,6 @@ Bad tests are tests that do not run out of the box.
   * inc/html_hilight (runkit)
   * inc/indexer_idx_indexlengths (fs dependencies)
   * inc/mail_send (integration test)
-  * inc/pageutils_resolve_pageid
   * inc/parser/parser_formatting
   * inc/parser/xhtml_htmlphp
   * inc/parser/xhtml_links
