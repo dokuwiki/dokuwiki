@@ -1348,31 +1348,33 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string $img    - print image? (|button|badge)
  * @param  bool   $return - when true don't print, but return HTML
+ * @param  bool   $wrap   - wrap in div with class="license"?
  */
-function tpl_license($img='badge',$imgonly=false,$return=false){
+function tpl_license($img='badge',$imgonly=false,$return=false,$wrap=true){
     global $license;
     global $conf;
     global $lang;
     if(!$conf['license']) return '';
     if(!is_array($license[$conf['license']])) return '';
     $lic = $license[$conf['license']];
+    $target = ($conf['target']['extern']) ? ' target="'.$conf['target']['extern'].'"' : '';
 
-    $out  = '<div class="license">';
+    $out = '';
+    if($wrap) $out  .= '<div class="license">';
     if($img){
         $src = license_img($img);
         if($src){
-            $out .= '<a href="'.$lic['url'].'" rel="license"';
-            if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
-            $out .= '><img src="'.DOKU_BASE.$src.'" class="medialeft lic'.$img.'" alt="'.$lic['name'].'" /></a> ';
+            $out .= '<a href="'.$lic['url'].'" rel="license"'.$target;
+            $out .= '><img src="'.DOKU_BASE.$src.'" alt="'.$lic['name'].'" /></a>';
+            if(!$imgonly) $out .= ' ';
         }
     }
     if(!$imgonly) {
-        $out .= $lang['license'];
-        $out .= ' <a href="'.$lic['url'].'" rel="license" class="urlextern"';
-        if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
+        $out .= $lang['license'].' ';
+        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"'.$target;
         $out .= '>'.$lic['name'].'</a>';
     }
-    $out .= '</div>';
+    if($wrap) $out .= '</div>';
 
     if($return) return $out;
     echo $out;
@@ -1520,6 +1522,42 @@ function tpl_getMediaFile($search, $abs=false, &$imginfo=null){
     }
 
     return $url;
+}
+
+/**
+ * PHP include a file
+ *
+ * either from the conf directory if it exists, otherwise use
+ * file in the template's root directory.
+ *
+ * The function honours config cascade settings and looks for the given
+ * file next to the ´main´ config files, in the order protected, local,
+ * default.
+ *
+ * Note: no escaping or sanity checking is done here. Never pass user input
+ * to this function!
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_includeFile($file){
+    global $config_cascade;
+    foreach (array('protected','local','default') as $config_group) {
+        if (empty($config_cascade['main'][$config_group])) continue;
+        foreach ($config_cascade['main'][$config_group] as $conf_file) {
+            $dir = dirname($conf_file);
+            if(file_exists("$dir/$file")){
+                include("$dir/$file");
+                return;
+            }
+        }
+    }
+
+    // still here? try the template dir
+    $file = tpl_incdir().$file;
+    if(file_exists($file)){
+        include($file);
+    }
 }
 
 /**
