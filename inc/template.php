@@ -1549,7 +1549,7 @@ function tpl_includeFile($file){
         foreach ($config_cascade['main'][$config_group] as $conf_file) {
             $dir = dirname($conf_file);
             if(file_exists("$dir/$file")){
-         //       include("$dir/$file");
+                include("$dir/$file");
                 return;
             }
         }
@@ -1558,7 +1558,7 @@ function tpl_includeFile($file){
     // still here? try the template dir
     $file = tpl_incdir().$file;
     if(file_exists($file)){
-        //include($file);
+        include($file);
     }
 }
 
