@@ -9,7 +9,6 @@
  */
 
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
-@require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
 $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -23,7 +22,7 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
     <?php tpl_metaheaders() ?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
-    <?php _tpl_include('meta.html') ?>
+    <?php tpl_includeFile('meta.html') ?>
 </head>
 
 <body>
@@ -39,9 +38,9 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
                 <!-- ********** ASIDE ********** -->
                 <div id="dokuwiki__aside"><div class="pad include group">
                     <?php tpl_flush() ?>
-                    <?php _tpl_include('sidebarheader.html') ?>
+                    <?php tpl_includeFile('sidebarheader.html') ?>
                     <?php tpl_include_page($conf['sidebar']) ?>
-                    <?php _tpl_include('sidebarfooter.html') ?>
+                    <?php tpl_includeFile('sidebarfooter.html') ?>
                 </div></div><!-- /aside -->
             <?php endif; ?>
 
@@ -52,11 +51,11 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
 
                 <div class="page group">
                     <?php tpl_flush() ?>
-                    <?php _tpl_include('pageheader.html') ?>
+                    <?php tpl_includeFile('pageheader.html') ?>
                     <!-- wikipage start -->
                     <?php tpl_content() ?>
                     <!-- wikipage stop -->
-                    <?php _tpl_include('pagefooter.html') ?>
+                    <?php tpl_includeFile('pagefooter.html') ?>
                 </div>
 
                 <div class="docInfo"><?php tpl_pageinfo() ?></div>

@@ -7,7 +7,6 @@
  */
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
-@require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,7 +22,7 @@ if (!defined('DOKU_INC')) die();
     <?php tpl_metaheaders()?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
-    <?php _tpl_include('meta.html') ?>
+    <?php tpl_includeFile('meta.html') ?>
 </head>
 
 <body>

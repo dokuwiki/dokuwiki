@@ -1527,6 +1527,42 @@ function tpl_getMediaFile($search, $abs=false, &$imginfo=null){
 }
 
 /**
+ * PHP include a file
+ *
+ * either from the conf directory if it exists, otherwise use
+ * file in the template's root directory.
+ *
+ * The function honours config cascade settings and looks for the given
+ * file next to the ´main´ config files, in the order protected, local,
+ * default.
+ *
+ * Note: no escaping or sanity checking is done here. Never pass user input
+ * to this function!
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function tpl_includeFile($file){
+    global $config_cascade;
+    foreach (array('protected','local','default') as $config_group) {
+        if (empty($config_cascade['main'][$config_group])) continue;
+        foreach ($config_cascade['main'][$config_group] as $conf_file) {
+            $dir = dirname($conf_file);
+            if(file_exists("$dir/$file")){
+         //       include("$dir/$file");
+                return;
+            }
+        }
+    }
+
+    // still here? try the template dir
+    $file = tpl_incdir().$file;
+    if(file_exists($file)){
+        //include($file);
+    }
+}
+
+/**
  * Returns icon from data/media root directory if it exists, otherwise
  * the one in the template's image directory.
  *

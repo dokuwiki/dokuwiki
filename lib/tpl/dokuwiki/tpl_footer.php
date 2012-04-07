@@ -20,4 +20,4 @@
     </div>
 </div></div><!-- /footer -->
 
-<?php _tpl_include('footer.html') ?>
+<?php tpl_includeFile('footer.html') ?>

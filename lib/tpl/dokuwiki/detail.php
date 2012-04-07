@@ -9,7 +9,6 @@
 
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
-@require_once(dirname(__FILE__).'/tpl_functions.php'); /* include hook for template functions */
 
 $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -26,7 +25,7 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
     <?php tpl_metaheaders()?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
-    <?php _tpl_include('meta.html') ?>
+    <?php tpl_includeFile('meta.html') ?>
 </head>
 
 <body>
@@ -47,7 +46,7 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
 
                 <div class="page group">
                     <?php tpl_flush() ?>
-                    <?php _tpl_include('pageheader.html') ?>
+                    <?php tpl_includeFile('pageheader.html') ?>
                     <!-- detail start -->
                     <?php
                     if($ERROR):
@@ -95,7 +94,7 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
                     <?php endif; ?>
                 </div>
                 <!-- detail stop -->
-                <?php _tpl_include('pagefooter.html') ?>
+                <?php tpl_includeFile('pagefooter.html') ?>
                 <?php tpl_flush() ?>
 
                 <?php /* doesn't make sense like this; @todo: maybe add tpl_imginfo()?

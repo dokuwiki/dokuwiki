@@ -2,7 +2,7 @@
 <div id="dokuwiki__header"><div class="pad group">
 
     <?php html_msgarea() ?>
-    <?php _tpl_include('header.html') ?>
+    <?php tpl_includeFile('header.html') ?>
 
     <div class="headings group">
         <ul class="a11y skip">
