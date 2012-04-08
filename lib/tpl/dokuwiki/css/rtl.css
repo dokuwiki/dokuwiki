@@ -166,8 +166,7 @@
 
 /*____________ _recent ____________*/
 
-[dir=rtl] .dokuwiki #dw__recent ul li,
-[dir=rtl] .dokuwiki #page__revisions ul li {
+[dir=rtl] .dokuwiki form.changes ul li {
     margin-right: 0;
 }
 
@@ -177,16 +176,16 @@
 
 /*____________ _edit ____________*/
 
-[dir=rtl] .dokuwiki div.toolbar #draft__status {
+[dir=rtl] #draft__status {
     float: left;
 }
-[dir=rtl] .dokuwiki #wiki__editbar #size__ctl {
+[dir=rtl] #size__ctl {
     float: left;
 }
-[dir=rtl] .dokuwiki #wiki__editbar #size__ctl img {
+[dir=rtl] #size__ctl img {
     cursor: pointer;
 }
-[dir=rtl] .dokuwiki #wiki__editbar .editButtons {
+[dir=rtl] .dokuwiki .editBar .editButtons {
     margin-right: 0;
     margin-left: 1em;
 }
@@ -544,8 +543,7 @@
     border-right-width: 0;
 }
 
-[dir=rtl] .dokuwiki #dw__recent ul,
-[dir=rtl] .dokuwiki #page__revisions ul {
+[dir=rtl] .dokuwiki form.changes ul {
     padding-right: 0;
 }
 

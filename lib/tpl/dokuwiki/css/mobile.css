@@ -65,8 +65,7 @@
 }
 
 /* _recent */
-.dokuwiki #dw__recent ul,
-.dokuwiki #page__revisions ul {
+.dokuwiki form.changes ul {
     padding-left: 0;
 }
 
