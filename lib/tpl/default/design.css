@@ -265,11 +265,6 @@ div.dokuwiki a:active {
   text-decoration: underline;
 }
 
-div.dokuwiki h1 a,
-div.dokuwiki h2 a,
-div.dokuwiki h3 a,
-div.dokuwiki h4 a,
-div.dokuwiki h5 a,
 div.dokuwiki a.nolink {
   color: __text__ !important;
   text-decoration: none !important;

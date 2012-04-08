@@ -109,7 +109,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
-                    $this->doc .= '<sup><a href="#fnt__'.$id.'" id="fn__'.$id.'" name="fn__'.$id.'" class="fn_bot">';
+                    $this->doc .= '<sup><a href="#fnt__'.$id.'" id="fn__'.$id.'" class="fn_bot">';
                     $this->doc .= $id.')</a></sup> '.DOKU_LF;
 
                     // get any other footnotes that use the same markup
@@ -118,7 +118,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if (count($alt)) {
                       foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" name="fn__'.($ref+1).'" class="fn_bot">';
+                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" class="fn_bot">';
                         $this->doc .= ($ref+1).')</a></sup> '.DOKU_LF;
                       }
                     }
@@ -181,9 +181,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ($level <= $conf['maxseclevel']) {
             $this->doc .= ' class="' . $this->startSectionEdit($pos, 'section', $text) . '"';
         }
-        $this->doc .= '><a name="'.$hid.'" id="'.$hid.'">';
+        $this->doc .= ' id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</a></h$level>".DOKU_LF;
+        $this->doc .= "</h$level>".DOKU_LF;
     }
 
     function section_open($level) {
@@ -316,7 +316,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__'.$id.'" name="fnt__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
+        $this->doc .= '<sup><a href="#fn__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
     }
 
     function listu_open() {
