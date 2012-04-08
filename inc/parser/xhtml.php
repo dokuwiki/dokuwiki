@@ -1075,10 +1075,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
             $ret .= ' class="media'.$align.'"';
 
-            // make left/right alignment for no-CSS view work (feeds)
-            if($align == 'right') $ret .= ' align="right"';
-            if($align == 'left')  $ret .= ' align="left"';
-
             if ($title) {
                 $ret .= ' title="' . $title . '"';
                 $ret .= ' alt="'   . $title .'"';
