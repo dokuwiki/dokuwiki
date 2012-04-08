@@ -471,8 +471,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $title = $this->_xmlEntities($this->acronyms[$acronym]);
 
-            $this->doc .= '<acronym title="'.$title
-                .'">'.$this->_xmlEntities($acronym).'</acronym>';
+            $this->doc .= '<abbr title="'.$title
+                .'">'.$this->_xmlEntities($acronym).'</abbr>';
 
         } else {
             $this->doc .= $this->_xmlEntities($acronym);

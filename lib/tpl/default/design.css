@@ -382,7 +382,7 @@ div.dokuwiki img.middle {
   vertical-align: middle;
 }
 
-div.dokuwiki acronym {
+div.dokuwiki abbr {
   cursor: help;
   border-bottom: 1px dotted __text__;
 }
