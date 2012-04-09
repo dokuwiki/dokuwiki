@@ -354,12 +354,8 @@ function tpl_metaheaders($alt=true){
     }
 
     // load stylesheets
-    $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
+    $head['link'][] = array('rel'=>'stylesheet', 'type'=>'text/css',
             'href'=>DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed);
-    $head['link'][] = array('rel'=>'stylesheet', 'media'=>'all', 'type'=>'text/css',
-            'href'=>DOKU_BASE.'lib/exe/css.php?s=all&t='.$conf['template'].'&tseed='.$tseed);
-    $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
-            'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template'].'&tseed='.$tseed);
 
     // make $INFO and other vars available to JavaScripts
     $json = new JSON();
