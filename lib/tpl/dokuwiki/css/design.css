@@ -392,60 +392,58 @@
 
 /*____________ changes to _toc ____________*/
 
-.dokuwiki div.toc {
+#dw__toc {
     margin:  -2em -2em .5em 1.4em;
     width: __sidebar_width__;
     border-left: 1px solid __border__;
     background: __background__;
     color: inherit;
 }
-[dir=rtl] .dokuwiki div.toc {
+[dir=rtl] #dw__toc {
     margin: -2em 1.4em .5em -2em;
     border-left-width: 0;
     border-right: 1px solid __border__;
 }
 
-.dokuwiki div.tocheader {
+#dw__toc h3 {
     padding: .5em 1em;
     margin-bottom: 0;
     font-size: .875em;
     letter-spacing: .1em;
 }
 
-.dokuwiki .toc span.toc_open,
-.dokuwiki .toc span.toc_close {
+#dw__toc h3 strong {
     background: transparent url(images/toc-arrows.png) 0 0;
     width: 8px;
     height: 5px;
     margin: .4em 0 0;
 }
-.dokuwiki .toc span.toc_open {
+#dw__toc.close strong {
     background-position: 0 -5px;
 }
 
-.dokuwiki .toc span.toc_open span,
-.dokuwiki .toc span.toc_close span {
+#dw__toc strong span {
     display: none;
 }
 
 
-.dokuwiki #toc__inside {
+#dw__toc > div {
     font-size: 0.875em;
     padding: .5em 1em 1em;
 }
-.dokuwiki #toc__inside ul {
+#dw__toc ul {
     padding: 0 0 0 1.2em;
 }
-[dir=rtl] .dokuwiki #toc__inside ul {
+[dir=rtl] #dw__toc ul {
     padding: 0 1.5em 0 0;
 }
-.dokuwiki #toc__inside ul li {
+#dw__toc ul li {
     list-style-image: url(images/toc-bullet.png);
 }
-.dokuwiki #toc__inside ul li.clear {
+#dw__toc ul li.clear {
     list-style: none;
 }
-.dokuwiki #toc__inside ul li div.li {
+#dw__toc ul li div.li {
     padding: .2em 0;
 }
 

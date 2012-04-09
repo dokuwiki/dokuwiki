@@ -7,68 +7,66 @@
 ********************************************************************/
 
 /* toc container */
-.dokuwiki div.toc {
+#dw__toc {
     float: right;
     margin: 0 0 1.4em 1.4em;
     width: 12em;
     background-color: __background_alt__;
     color: inherit;
 }
-[dir=rtl] .dokuwiki div.toc {
+[dir=rtl] #dw__toc {
     float: left;
     margin: 0 1.4em 1.4em 0;
 }
 
 /*____________ toc header ____________*/
 
-.dokuwiki div.tocheader {
+#dw__toc h3 {
     padding: .2em .5em;
     font-weight: bold;
 }
 
-.dokuwiki .toc span.toc_open,
-.dokuwiki .toc span.toc_close {
+#dw__toc h3 strong {
     float: right;
     margin: 0 .2em;
 }
-[dir=rtl] .dokuwiki .toc span.toc_open,
-[dir=rtl] .dokuwiki .toc span.toc_close {
+[dir=rtl] #dw__toc h3 strong {
     float: left;
 }
 
 /*____________ toc list ____________*/
 
-.dokuwiki #toc__inside {
+#dw__toc > div {
     padding: .2em .5em;
 }
-.dokuwiki #toc__inside ul {
+#dw__toc ul {
     padding: 0;
     margin: 0;
 }
-.dokuwiki #toc__inside ul li {
+#dw__toc ul li {
     list-style: none;
     padding: 0;
     margin: 0;
     line-height: 1.1;
 }
-.dokuwiki #toc__inside ul li div.li {
+#dw__toc ul li div.li {
     padding: .15em 0;
 }
-.dokuwiki #toc__inside ul ul {
+#dw__toc ul ul {
     padding-left: 1em;
 }
-[dir=rtl] .dokuwiki #toc__inside ul ul {
+[dir=rtl] #dw__toc ul ul {
     padding-left: 0;
     padding-right: 1em;
 }
-.dokuwiki #toc__inside ul ul li {
+#dw__toc ul ul li {
 }
-.dokuwiki #toc__inside ul li a {
+#dw__toc ul li a {
 }
 
 /* in case of toc list jumping one level
   (e.g. if heading level 3 follows directly after heading level 1) */
-.dokuwiki #toc__inside ul li.clear {
+#dw__toc ul li.clear {
 }
 
 

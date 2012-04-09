@@ -1712,11 +1712,11 @@ function html_TOC($toc){
     if(!count($toc)) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div class="toc">'.DOKU_LF;
-    $out .= '<div class="tocheader toctoggle" id="toc__header">';
+    $out .= '<div id="dw__toc">'.DOKU_LF;
+    $out .= '<h3>';
     $out .= $lang['toc'];
-    $out .= '</div>'.DOKU_LF;
-    $out .= '<div id="toc__inside">'.DOKU_LF;
+    $out .= '</h3>'.DOKU_LF;
+    $out .= '<div>'.DOKU_LF;
     $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
@@ -1733,8 +1733,7 @@ function html_list_toc($item){
         $link = $item['link'];
     }
 
-    return '<span class="li"><a href="'.$link.'" class="toc">'.
-        hsc($item['title']).'</a></span>';
+    return '<a href="'.$link.'">'.hsc($item['title']).'</a>';
 }
 
 /**

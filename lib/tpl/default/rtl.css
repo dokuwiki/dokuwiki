@@ -89,30 +89,36 @@ div.dokuwiki div.level4 { margin-left: 0px; margin-right: 63px; }
 div.dokuwiki div.level5 { margin-left: 0px; margin-right: 83px; }
 
 /* TOC control */
-div.dokuwiki div.toc {
+div.dokuwiki #dw__toc {
   float: left;
+  margin: 1.2em 2em 0 0;
 }
 
-div.dokuwiki div.tocheader {
+div.dokuwiki #dw__toc h3 {
   text-align: right;
 }
 
-div.dokuwiki #toc__inside {
+div.dokuwiki #dw__toc h3 strong {
+    float: left;
+    margin: 0.4em 0 0 3px;
+}
+
+div.dokuwiki #dw__toc > div {
   text-align: right;
 }
 
-div.dokuwiki ul.toc {
+div.dokuwiki #dw__toc ul {
   padding: 0;
   padding-right: 1em;
 }
 
-div.dokuwiki ul.toc li {
+div.dokuwiki #dw__toc ul li {
   background-position: right 0.6em;
   padding-right: 0.4em;
   direction: rtl;
 }
 
-div.dokuwiki ul.toc li.clear {
+div.dokuwiki #dw__toc ul li.clear {
   padding-right: 0.4em;
 }
 

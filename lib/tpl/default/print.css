@@ -224,5 +224,5 @@ table.inline td {
   border: 1px solid #000000;
 }
 
-.toc, .footerinc, .header, .bar, .user { display: none; }
+#dw__toc, .footerinc, .header, .bar, .user { display: none; }
 
