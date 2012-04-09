@@ -195,6 +195,7 @@ img {
 img,
 object {
     max-width: 100%;
+    height: auto;
 }
 
 hr {
