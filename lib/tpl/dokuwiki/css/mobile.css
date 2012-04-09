@@ -27,6 +27,11 @@
     margin-left: 0;
 }
 
+[dir=rtl] .hasSidebar #dokuwiki__content,
+[dir=rtl] .hasSidebar #dokuwiki__content > .pad {
+    margin-right: 0;
+}
+
 /* toc */
 .dokuwiki div.toc {
     float: none;
@@ -34,6 +39,11 @@
     width: auto;
     border-left-width: 0;
     border-bottom: 1px solid __border__;
+}
+[dir=rtl] .dokuwiki div.toc {
+    float: none;
+    margin: 0 0 1em 0;
+    border-right-width: 0;
 }
 .dokuwiki div.tocheader {
     padding: 0 0 .5em;
@@ -67,6 +77,9 @@
 /* _recent */
 .dokuwiki form.changes ul {
     padding-left: 0;
+}
+[dir=rtl] .dokuwiki form.changes ul {
+    padding-right: 0;
 }
 
 
@@ -102,9 +115,18 @@
     padding-left: 0;
     margin: 0;
 }
+[dir=rtl] #dokuwiki__header ul.a11y.skip {
+    left: auto !important;
+    right: 0 !important;
+    float: left;
+    padding-right: 0;
+}
 #dokuwiki__header ul.a11y.skip li {
     margin-left: .35em;
     display: inline;
+}
+[dir=rtl] #dokuwiki__header ul.a11y.skip li {
+    margin: 0 .35em 0 0;
 }
 
 #dokuwiki__header .headings,
@@ -114,8 +136,17 @@
     width: auto;
     margin-bottom: .5em;
 }
+[dir=rtl] #dokuwiki__header .headings,
+[dir=rtl] #dokuwiki__header .tools {
+    float: none;
+    text-align: right;
+    width: auto;
+}
 #dokuwiki__sitetools {
     text-align: left;
+}
+[dir=rtl] #dokuwiki__sitetools {
+    text-align: right;
 }
 #dokuwiki__usertools,
 #dokuwiki__sitetools ul,
@@ -132,6 +163,11 @@
     margin: 0 .2em .2em 0;
     width: 49%;
 }
+[dir=rtl] #dokuwiki__sitetools form.search {
+    float: right;
+    margin: 0 0 .2em .2em;
+}
+
 #dokuwiki__sitetools form.search input.edit {
     width: 100% !important;
 }
@@ -146,6 +182,9 @@
     margin: 0 0 .2em 0;
     float: right;
     width: 49%;
+}
+[dir=rtl] #dokuwiki__header .mobileTools {
+    float: left;
 }
 #dokuwiki__header .mobileTools select {
     padding: .3em .1em;
@@ -176,6 +215,9 @@
 
 .dokuwiki label.block {
     text-align: left;
+}
+[dir=rtl] .dokuwiki label.block {
+    text-align: right;
 }
 .dokuwiki label.block span {
     display: block;
