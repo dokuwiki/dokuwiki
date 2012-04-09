@@ -23,6 +23,11 @@
     float: left;
     margin-right: .5em;
 }
+[dir=rtl] #dokuwiki__header h1 img {
+    float: right;
+    margin-left: .5em;
+    margin-right: 0;
+}
 #dokuwiki__header h1 span {
     display: block;
     padding-top: 10px;
@@ -78,6 +83,10 @@
     list-style: none;
     display: inline;
 }
+[dir=rtl] #dokuwiki__header .tools li {
+    margin-right: 1em;
+    margin-left: 0;
+}
 #dokuwiki__header .tools form.search div.ajax_qsearch li {
     font-size: 1em;
     margin-left: 0;
@@ -99,6 +108,11 @@
     text-align: right;
     width: 100%;
 }
+[dir=rtl] #dokuwiki__usertools {
+    text-align: left;
+    left: 40px;
+    right: auto;
+}
 #dokuwiki__usertools ul {
     margin: 0 auto;
     padding: 0;
@@ -113,6 +127,9 @@
 #dokuwiki__sitetools {
     text-align: right;
 }
+[dir=rtl] #dokuwiki__sitetools {
+    text-align: left;
+}
 
 #dokuwiki__sitetools form.search {
     display: block;
@@ -123,6 +140,9 @@
     width: 18em;
     padding: .35em 22px .35em .1em;
 }
+[dir=rtl] #dokuwiki__sitetools form.search input.edit {
+    padding: .35em .1em .35em 22px;
+}
 #dokuwiki__sitetools form.search input.button {
     background: transparent url(images/search.png) no-repeat 0 0;
     border-width: 0;
@@ -132,6 +152,11 @@
     margin-left: -20px;
     box-shadow: none;
     padding: 0;
+}
+[dir=rtl] #dokuwiki__sitetools form.search input.button {
+    background-position: 5px 0;
+    margin-left: 0;
+    margin-right: -20px;
 }
 
 #dokuwiki__sitetools ul {
@@ -223,6 +248,10 @@
 #dokuwiki__aside ol {
     padding-left: 0;
 }
+[dir=rtl] #dokuwiki__aside ul,
+[dir=rtl] #dokuwiki__aside ol {
+    padding-right: 0;
+}
 #dokuwiki__aside li ul,
 #dokuwiki__aside li ol {
     margin-bottom: 0;
@@ -247,6 +276,10 @@
     right: -1em;
     overflow: hidden;
     padding: 1em 1em 0;
+}
+[dir=rtl] .dokuwiki .pageId {
+    right: auto;
+    left: -1em;
 }
 .dokuwiki .pageId span {
     font-size: 0.875em;
@@ -276,6 +309,9 @@
 .dokuwiki .docInfo {
     font-size: 0.875em;
     text-align: right;
+}
+[dir=rtl] .dokuwiki .docInfo {
+    text-align: left;
 }
 
 /*____________ misc ____________*/
@@ -314,15 +350,34 @@
     border-bottom-left-radius: 4px;
     border-left-width: 1px;
 }
+[dir=rtl] .dokuwiki div.toolbar button.toolbutton:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left-width: 0;
+    border-right-width: 1px;
+}
 .dokuwiki div.toolbar button.toolbutton:last-child {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
+}
+[dir=rtl] .dokuwiki div.toolbar button.toolbutton:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-left-width: 1px;
 }
 
 .dokuwiki div.section_highlight {
     margin: -3em -2em -.01em -2em;
     padding: 3em 1em .01em 1em;
     border-width: 0 1em;
+}
+[dir=rtl] .dokuwiki div.section_highlight {
+    margin-right: -2em;
+    border-right-width: 1em;
 }
 
 .dokuwiki textarea.edit {
@@ -343,6 +398,11 @@
     border-left: 1px solid __border__;
     background: __background__;
     color: inherit;
+}
+[dir=rtl] .dokuwiki div.toc {
+    margin: -2em 1.4em .5em -2em;
+    border-left-width: 0;
+    border-right: 1px solid __border__;
 }
 
 .dokuwiki div.tocheader {
@@ -375,6 +435,9 @@
 }
 .dokuwiki #toc__inside ul {
     padding: 0 0 0 1.2em;
+}
+[dir=rtl] .dokuwiki #toc__inside ul {
+    padding: 0 1.5em 0 0;
 }
 .dokuwiki #toc__inside ul li {
     list-style-image: url(images/toc-bullet.png);
@@ -409,8 +472,17 @@
     text-align: right;
     clear: left;
 }
+[dir=rtl] #dokuwiki__detail div.img_detail dl dt {
+    float: right;
+    text-align: left;
+    clear: right;
+}
 #dokuwiki__detail div.img_detail dl dd {
     margin-left: 9.5em;
+}
+[dir=rtl] #dokuwiki__detail div.img_detail dl dd {
+    margin-left: 0;
+    margin-right: 9.5em;
 }
 
 
@@ -435,6 +507,10 @@
 .JSpopup ol {
     padding-left: 0;
 }
+[dir=rtl] .JSpopup ul,
+[dir=rtl] .JSpopup ol {
+    padding-right: 0;
+}
 
 
 /* footer
@@ -455,6 +531,10 @@
 #dokuwiki__footer div.license {
     margin-bottom: 0.5em;
     font-size: 100%;
+}
+
+[dir=rtl] #dokuwiki__footer .license img {
+    margin: 0 0 0 .5em;
 }
 
 #dokuwiki__footer div.buttons a img {

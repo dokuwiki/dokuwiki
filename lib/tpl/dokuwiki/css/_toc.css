@@ -14,6 +14,10 @@
     background-color: __background_alt__;
     color: inherit;
 }
+[dir=rtl] .dokuwiki div.toc {
+    float: left;
+    margin: 0 1.4em 1.4em 0;
+}
 
 /*____________ toc header ____________*/
 
@@ -26,6 +30,10 @@
 .dokuwiki .toc span.toc_close {
     float: right;
     margin: 0 .2em;
+}
+[dir=rtl] .dokuwiki .toc span.toc_open,
+[dir=rtl] .dokuwiki .toc span.toc_close {
+    float: left;
 }
 
 /*____________ toc list ____________*/
@@ -49,6 +57,10 @@
 .dokuwiki #toc__inside ul ul {
     padding-left: 1em;
 }
+[dir=rtl] .dokuwiki #toc__inside ul ul {
+    padding-left: 0;
+    padding-right: 1em;
+}
 .dokuwiki #toc__inside ul ul li {
 }
 .dokuwiki #toc__inside ul li a {
@@ -66,6 +78,9 @@
 .dokuwiki ul.idx {
     padding-left: 0;
 }
+[dir=rtl] .dokuwiki ul.idx {
+    padding-right: 0;
+}
 .dokuwiki ul.idx li {
     list-style-image: url(images/bullet.png);
 }
@@ -74,4 +89,7 @@
 }
 .dokuwiki ul.idx li.closed {
     list-style-image: url(images/closed.png);
+}
+[dir=rtl] .dokuwiki ul.idx li.closed {
+    list-style-image: url(images/closed-rtl.png);
 }

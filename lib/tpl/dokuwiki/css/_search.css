@@ -25,6 +25,9 @@
     width: 12em;
     margin: 0 1.5em;
 }
+[dir=rtl] .dokuwiki div.search_quickresult ul li {
+    float: right;
+}
 
 /*____________ search results ____________*/
 
@@ -77,6 +80,11 @@
     z-index: 20;
     text-align: left;
     display: none;
+}
+[dir=rtl] .dokuwiki form.search div.ajax_qsearch {
+    left: auto;
+    right: -13.5em;
+    text-align: right;
 }
 .dokuwiki form.search div.ajax_qsearch strong {
     display: block;

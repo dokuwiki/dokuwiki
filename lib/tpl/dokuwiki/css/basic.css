@@ -370,3 +370,38 @@ button[readonly] {
     cursor: auto;
 }
 
+/*____________ rtl corrections ____________*/
+
+[dir=rtl] caption,
+[dir=rtl] td,
+[dir=rtl] th {
+    text-align: right;
+}
+
+[dir=rtl] ul,
+[dir=rtl] ol {
+    padding: 0 1.5em 0 0;
+}
+[dir=rtl] li,
+[dir=rtl] dd {
+    margin: 0 1.5em 0 0;
+}
+[dir=rtl] blockquote {
+    border-width: 0 .25em 0 0;
+}
+
+[dir=rtl] h1,
+[dir=rtl] h2,
+[dir=rtl] h3,
+[dir=rtl] h4,
+[dir=rtl] h5,
+[dir=rtl] h6,
+[dir=rtl] caption,
+[dir=rtl] legend {
+    clear: right;
+}
+
+[dir=rtl] .a11y {
+    left: auto;
+    right: -9000px;
+}
