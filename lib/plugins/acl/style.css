@@ -8,6 +8,10 @@ div#acl_manager div#acl__tree {
     border: 1px solid __border__;
     text-align: left;
 }
+[dir=rtl] div#acl_manager div#acl__tree {
+    float: right;
+    text-align: right;
+}
 
 div#acl_manager div#acl__tree a.cur {
     background-color: __highlight__;
@@ -24,10 +28,18 @@ div#acl_manager div#acl__tree li {
     padding-left: 1em;
     list-style-image: none;
 }
+[dir=rtl] div#acl_manager div#acl__tree li {
+    padding-left: 0em;
+    padding-right: 1em;
+}
 
 div#acl_manager div#acl__tree ul img {
     margin-right: 0.25em;
     cursor: pointer;
+}
+[dir=rtl] div#acl_manager div#acl__tree ul img {
+    margin-left: 0.25em;
+    margin-right: 0em;
 }
 
 div#acl_manager div#acl__detail {
@@ -35,6 +47,9 @@ div#acl_manager div#acl__detail {
     height: 300px;
     float: right;
     overflow: auto;
+}
+[dir=rtl] div#acl_manager div#acl__detail {
+    float: left;
 }
 
 div#acl_manager div#acl__detail fieldset {
@@ -56,20 +71,36 @@ div#acl_manager .aclgroup {
     background: transparent url(pix/group.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
+[dir=rtl] div#acl_manager .aclgroup {
+    background: transparent url(pix/group.png) right 1px no-repeat;
+    padding: 1px 18px 1px 0px;
+}
 
 div#acl_manager .acluser {
     background: transparent url(pix/user.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
+}
+[dir=rtl] div#acl_manager .acluser {
+    background: transparent url(pix/user.png) right 1px no-repeat;
+    padding: 1px 18px 1px 0px;
 }
 
 div#acl_manager .aclpage {
     background: transparent url(pix/page.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
+[dir=rtl] div#acl_manager .aclpage {
+    background: transparent url(pix/page.png) right 1px no-repeat;
+    padding: 1px 18px 1px 0px;
+}
 
 div#acl_manager .aclns {
     background: transparent url(pix/ns.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
+}
+[dir=rtl] div#acl_manager .aclns {
+    background: transparent url(pix/ns.png) right 1px no-repeat;
+    padding: 1px 18px 1px 0px;
 }
 
 div#acl_manager label.disabled {
