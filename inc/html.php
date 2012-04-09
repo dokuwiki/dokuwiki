@@ -323,11 +323,11 @@ function html_search(){
     flush();
 
     //show progressbar
-    print '<div class="centeralign" id="dw__loading">'.NL;
+    print '<div id="dw__loading">'.NL;
     print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
     print 'showLoadBar();'.NL;
     print '//--><!]]></script>'.NL;
-    print '<br /></div>'.NL;
+    print '</div>'.NL;
     flush();
 
     //do quick pagesearch
@@ -363,20 +363,24 @@ function html_search(){
     //do fulltext search
     $data = ft_pageSearch($QUERY,$regex);
     if(count($data)){
+        print '<dl class="search_results">';
         $num = 1;
         foreach($data as $id => $cnt){
-            print '<div class="search_result">';
+            print '<dt>';
             print html_wikilink(':'.$id,useHeading('navigation')?null:$id,$regex);
             if($cnt !== 0){
-                print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
+                print ': '.$cnt.' '.$lang['hits'].'';
+            }
+            print '</dt>';
+            if($cnt !== 0){
                 if($num < FT_SNIPPET_NUMBER){ // create snippets for the first number of matches only
-                    print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
+                    print '<dd>'.ft_snippet($id,$regex).'</dd>';
                 }
                 $num++;
             }
-            print '</div>';
             flush();
         }
+        print '</dl>';
     }else{
         print '<div class="nothing">'.$lang['nothingfound'].'</div>';
     }

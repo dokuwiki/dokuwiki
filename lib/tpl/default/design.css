@@ -706,12 +706,20 @@ div.insitu-footnote {
 }
 
 /* --------------- search result formating --------------- */
-div.dokuwiki .search_result {
-  margin-bottom: 6px;
+#dw__loading {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+div.dokuwiki .search_results {
   padding: 0 10px 0 30px;
 }
 
-div.dokuwiki .search_snippet {
+div.dokuwiki .search_results dt {
+  margin-bottom: 3px;
+}
+div.dokuwiki .search_results dd {
+  margin-bottom: 6px;
   color: __text_other__;
   font-size: 12px;
   margin-left: 20px;
