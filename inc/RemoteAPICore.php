@@ -302,7 +302,7 @@ class RemoteAPICore {
                 'mtime'   => filemtime($file),
                 'size'    => filesize($file),
                 'snippet' => $snippet,
-                'title' => p_get_first_heading($id)
+                'title' => useHeading('navigation') ? p_get_first_heading($id) : $id
             );
         }
         return $pages;
