@@ -101,6 +101,7 @@ $conf['notify']      = '';               //send change info to this email (leave
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
+$conf['htmlmail']    = 1;                //send HTML multipart mails
 $conf['gzip_output'] = 0;                //use gzip content encodeing for the output xhtml (if allowed by browser)
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)

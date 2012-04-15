@@ -127,6 +127,7 @@ $lang['notify']      = 'Send change notifications to this email address';
 $lang['registernotify'] = 'Send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Email address to use for automatic mails';
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails';
+$lang['htmlmail']    = 'Send better looking but larger in size HTML multipart emails. Disable for plain text only mails.';
 $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';

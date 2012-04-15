@@ -179,6 +179,7 @@ $meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf
 $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
 $meta['mailprefix']  = array('string');
+$meta['htmlmail']    = array('onoff');
 $meta['compress']    = array('onoff');
 $meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');

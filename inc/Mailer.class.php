@@ -26,6 +26,7 @@ class Mailer {
     private $sendparam= null;
 
     private $validator = null;
+    private $allowhtml = true;
 
     /**
      * Constructor
@@ -42,6 +43,8 @@ class Mailer {
 
         $listid = join('.',array_reverse(explode('/',DOKU_BASE))).$server;
         $listid = strtolower(trim($listid,'.'));
+
+        $this->allowhtml = (bool) $conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
         $this->setHeader('X-Mailer','DokuWiki '.getVersion());
@@ -433,6 +436,11 @@ class Mailer {
      */
     protected function prepareBody(){
         global $conf;
+
+        // no HTML mails allowed? remove HTML body
+        if(!$this->allowhtml){
+            $this->html = '';
+        }
 
         // check for body
         if(!$this->text && !$this->html){
