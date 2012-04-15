@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+	bootstrap="integrationtests/bootstrap.php"
+        convertNoticesToExceptions="false">
+
+    <testsuites>
+        <testsuite name="DokuWiki Integration Tests">
+            <directory suffix=".test.php">integrationtests/</directory>
+        </testsuite>
+        <testsuite name="Plugin Integration Tests">
+            <directory suffix=".inttest.php">../lib/plugins/*/_testing</directory>
+        </testsuite>
+    </testsuites>
+
+
+</phpunit>
