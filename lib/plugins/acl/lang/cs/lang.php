@@ -9,6 +9,8 @@
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
+ * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['admin_acl']             = 'Správa přístupových práv';
 $lang['acl_group']             = 'Skupina';

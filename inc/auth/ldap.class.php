@@ -15,7 +15,7 @@ class auth_ldap extends auth_basic {
     /**
      * Constructor
      */
-    function auth_ldap(){
+    function __construct(){
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
 
@@ -307,8 +307,6 @@ class auth_ldap extends auth_basic {
             }
         }
         return $result;
-
-
     }
 
     /**
@@ -360,7 +358,6 @@ class auth_ldap extends auth_basic {
     function _constructPattern($filter) {
         $this->_pattern = array();
         foreach ($filter as $item => $pattern) {
-//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
             $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
         }
     }

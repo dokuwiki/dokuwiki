@@ -8,6 +8,7 @@
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ * @author Taisuke Shimamoto <dentostar@gmail.com>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
@@ -41,12 +42,15 @@ $lang['_msg_setting_no_default'] = '初期値が設定されていません。';
 $lang['fmode']                 = 'ファイル作成マスク';
 $lang['dmode']                 = 'フォルダ作成マスク';
 $lang['lang']                  = '使用言語';
-$lang['basedir']               = 'ベースディレクトリ';
-$lang['baseurl']               = 'ベースURL';
+$lang['basedir']               = 'サーバのパス (例: <code>/dokuwiki/</code>)。空欄にすると自動的に検出します。';
+$lang['baseurl']               = 'サーバの URL (例: <code>http://www.yourserver.com</code>)。空欄にすると自動的に検出します。';
 $lang['savedir']               = '保存ディレクトリ';
+$lang['cookiedir']             = 'Cookie のパス。空欄にすると baseurl を使用します。';
 $lang['start']                 = 'スタートページ名';
 $lang['title']                 = 'WIKIタイトル';
 $lang['template']              = 'テンプレート';
+$lang['tagline']               = 'キャッチフレーズ (テンプレートが対応していれば)';
+$lang['sidebar']               = 'サイドバー用ページ名 (テンプレートが対応していれば)。空欄でサイドバー無効。';
 $lang['license']               = '作成した内容をどのライセンスでリリースしますか？';
 $lang['fullpath']              = 'ページのフッターに絶対パスを表示';
 $lang['recent']                = '最近の変更表示数';
@@ -67,6 +71,7 @@ $lang['useheading']            = '最初の見出しをページ名とする';
 $lang['refcheck']              = 'メディア参照元チェック';
 $lang['refshow']               = 'メディア参照元表示数';
 $lang['allowdebug']            = 'デバッグモード（<b>必要で無いときは無効にしてください</b>）';
+$lang['mediarevisions']        = 'メディアファイルの履歴を有効にしますか?';
 $lang['usewordblock']          = '単語リストに基づくスパムブロック';
 $lang['indexdelay']            = 'インデックスを許可（何秒後）';
 $lang['relnofollow']           = 'rel="nofollow"を付加';
@@ -114,6 +119,7 @@ $lang['jpg_quality']           = 'JPG圧縮品質（0-100）';
 $lang['subscribers']           = '更新通知機能';
 $lang['subscribe_time']        = '購読リストと概要を送信する期間（秒）。「最近の変更とする期間」で指定した期間より小さくしてください。';
 $lang['compress']              = 'CSSとJavaScriptを圧縮';
+$lang['cssdatauri']            = 'HTTP リクエスト数によるオーバーヘッドを減らすため、CSS ファイルから参照される画像ファイルのサイズがここで指定するバイト数以内の場合は CSS ファイル内に Data URI として埋め込みます。このテクニックは IE7 以下では動作しません! <code>400</code> から <code>600</code> バイトがちょうどよい値です。<code>0</code> を指定すると埋め込み処理は行われません。';
 $lang['hidepages']             = '非公開ページ（Regex）';
 $lang['send404']               = '文書が存在しないページに"HTTP404/Page Not Found"を使用';
 $lang['sitemap']               = 'Googleサイトマップ作成頻度（日数）';
@@ -129,6 +135,7 @@ $lang['rss_content']           = 'XMLフィードに何を表示させますか�
 $lang['rss_update']            = 'RSSフィードの更新間隔（秒）';
 $lang['recent_days']           = '最近の変更とする期間（日数）';
 $lang['rss_show_summary']      = 'フィードのタイトルにサマリーを表示';
+$lang['rss_media']             = 'XMLフィードで、どんな種類の変更を記載するか';
 $lang['target____wiki']        = '内部リンクの表示先';
 $lang['target____interwiki']   = 'InterWikiリンクの表示先';
 $lang['target____extern']      = '外部リンクの表示先';

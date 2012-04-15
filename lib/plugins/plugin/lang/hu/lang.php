@@ -53,4 +53,4 @@ $lang['enabled']               = 'A(z) %s bővítmény bekapcsolva.';
 $lang['notenabled']            = 'A(z) %s bővítmény engedélyezése nem sikerült. Ellenőrizze a fájl-hozzáférési engedélyeket.';
 $lang['disabled']              = 'A(z) %s bővítmény kikapcsolva.';
 $lang['notdisabled']           = 'A(z) %s bővítmény kikapcsolása nem sikerült. Ellenőrizze a fájl-hozzáférési engedélyeket.';
-$lang['packageinstalled']      = 'A bővítmény csomag(ok) feltelepült(ek): %d plugin%s: %s';
+$lang['packageinstalled']      = 'A bővítmény csomag(ok) feltelepült(ek): %d plugin(s): %s';

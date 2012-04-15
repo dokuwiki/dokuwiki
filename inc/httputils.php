@@ -249,3 +249,11 @@ function http_cached_finish($file, $content) {
         print $content;
     }
 }
+
+function http_get_raw_post_data() {
+    static $postData = null;
+    if ($postData === null) {
+        $postData = file_get_contents('php://input');
+    }
+    return $postData;
+}

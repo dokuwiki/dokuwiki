@@ -91,6 +91,8 @@ $meta['title']    = array('string');
 $meta['start']    = array('string','_pattern' => '!^[^:;/]+$!'); // don't accept namespaces
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
+$meta['tagline']  = array('string');
+$meta['sidebar']  = array('string');
 $meta['license']  = array('license');
 $meta['savedir']  = array('savedir');
 $meta['basedir']  = array('string');
@@ -123,7 +125,7 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','crypt','mysql','my411','kmd5','pmd5','hmd5'));
+$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','bcrypt'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');
@@ -136,8 +138,8 @@ $meta['disableactions'] = array('disableactions',
 $meta['sneaky_index'] = array('onoff');
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
-$meta['xmlrpc']       = array('onoff');
-$meta['xmlrpcuser']   = array('string');
+$meta['remote']       = array('onoff');
+$meta['remoteuser']   = array('string');
 
 $meta['_anti_spam']  = array('fieldset');
 $meta['usewordblock']= array('onoff');
@@ -164,6 +166,7 @@ $meta['target____media']     = array('string');
 $meta['target____windows']   = array('string');
 
 $meta['_media']      = array('fieldset');
+$meta['mediarevisions']  = array('onoff');
 $meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
 $meta['im_convert']  = array('im_convert');
 $meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
@@ -190,9 +193,10 @@ $meta['sitemap']     = array('numeric');
 $meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom','atom1'));
 $meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
 $meta['rss_content'] = array('multichoice','_choices' => array('abstract','diff','htmldiff','html'));
+$meta['rss_media']   = array('multichoice','_choices' => array('both','pages','media'));
 $meta['rss_update']  = array('numeric');
-$meta['recent_days'] = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
+$meta['recent_days'] = array('numeric');
 $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));

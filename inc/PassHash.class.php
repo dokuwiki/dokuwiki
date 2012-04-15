@@ -47,9 +47,15 @@ class PassHash {
         }elseif(preg_match('/^md5\$(.{5})\$/',$hash,$m)){
             $method = 'djangomd5';
             $salt   = $m[1];
+        }elseif(preg_match('/^\$2a\$(.{2})\$/',$hash,$m)){
+            $method = 'bcrypt';
+            $salt   = $hash;
         }elseif(substr($hash,0,6) == '{SSHA}'){
             $method = 'ssha';
             $salt   = substr(base64_decode(substr($hash, 6)),20);
+        }elseif(substr($hash,0,6) == '{SMD5}'){
+            $method = 'lsmd5';
+            $salt   = substr(base64_decode(substr($hash, 6)),16);
         }elseif($len == 32){
             $method = 'md5';
         }elseif($len == 40){
@@ -82,7 +88,9 @@ class PassHash {
     public function gen_salt($len=32){
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        for($i=0;$i<$len;$i++) $salt .= $chars[mt_rand(0,61)];
+        for($i=0; $i<$len; $i++){
+            $salt .= $chars[mt_rand(0,61)];
+        }
         return $salt;
     }
 
@@ -129,6 +137,20 @@ class PassHash {
             return $this->hash_apr1($clear, $salt, '1');
         }
     }
+
+
+    /**
+     * Password hashing method 'lsmd5'
+     *
+     * Uses salted MD5 hashs. Salt is 8 bytes long.
+     *
+     * This is the format used by LDAP.
+     */
+    public function hash_lsmd5($clear, $salt=null){
+        $this->init_salt($salt,8);
+        return "{SMD5}".base64_encode(md5($clear.$salt, true).$salt);
+    }
+
 
     /**
      * Password hashing method 'apr1'
@@ -377,6 +399,37 @@ class PassHash {
     public function hash_djangomd5($clear, $salt=null){
         $this->init_salt($salt,5);
         return 'md5$'.$salt.'$'.md5($salt.$clear);
+    }
+
+
+    /**
+     * Passwordhashing method 'bcrypt'
+     *
+     * Uses a modified blowfish algorithm called eksblowfish
+     * This method works on PHP 5.3+ only and will throw an exception
+     * if the needed crypt support isn't available
+     *
+     * A full hash should be given as salt (starting with $a2$) or this
+     * will break. When no salt is given, the iteration count can be set
+     * through the $compute variable.
+     *
+     * @param string $clear - the clear text to hash
+     * @param string $salt  - the salt to use, null for random
+     * @param int  $compute - the iteration count (between 4 and 31)
+     * @returns string - hashed password
+     */
+    public function hash_bcrypt($clear, $salt=null, $compute=8){
+        if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH != 1){
+            throw new Exception('This PHP installation has no bcrypt support');
+        }
+
+        if(is_null($salt)){
+            if($compute < 4 || $compute > 31) $compute = 8;
+            $salt = '$2a$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
+                    $this->gen_salt(22);
+        }
+
+        return crypt($clear, $salt);
     }
 
 }

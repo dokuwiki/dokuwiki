@@ -1141,8 +1141,6 @@ function html_diff($text='',$intro=true,$type=null){
         $tdf = new TableDiffFormatter();
     }
 
-
-
     if($intro) print p_locale_xhtml('diff');
 
     if (!$text) {
@@ -1165,7 +1163,6 @@ function html_diff($text='',$intro=true,$type=null){
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
 
-
         $diffurl = wl($ID, array(
                         'do'       => 'diff',
                         'rev2[0]'  => $l_rev,
@@ -1176,6 +1173,7 @@ function html_diff($text='',$intro=true,$type=null){
         ptln('</div>');
     }
     ?>
+    <div class="table">
     <table class="diff diff_<?php echo $type?>">
     <tr>
     <th colspan="2" <?php echo $l_minor?>>
@@ -1187,6 +1185,7 @@ function html_diff($text='',$intro=true,$type=null){
     </tr>
     <?php echo $tdf->format($df)?>
     </table>
+    </div>
     <?php
 }
 
@@ -1661,26 +1660,46 @@ function html_admin(){
  * Form to request a new password for an existing account
  *
  * @author Benoit Chesneau <benoit@bchesneau.info>
+ * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function html_resendpwd() {
     global $lang;
     global $conf;
     global $ID;
 
-    print p_locale_xhtml('resendpwd');
-    print '<div class="centeralign">'.NL;
-    $form = new Doku_Form(array('id' => 'dw__resendpwd'));
-    $form->startFieldset($lang['resendpwd']);
-    $form->addHidden('do', 'resendpwd');
-    $form->addHidden('save', '1');
-    $form->addElement(form_makeTag('br'));
-    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block'));
-    $form->addElement(form_makeTag('br'));
-    $form->addElement(form_makeTag('br'));
-    $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));
-    $form->endFieldset();
-    html_form('resendpwd', $form);
-    print '</div>'.NL;
+    $token = preg_replace('/[^a-f0-9]+/','',$_REQUEST['pwauth']);
+
+    if(!$conf['autopasswd'] && $token){
+        print p_locale_xhtml('resetpwd');
+        print '<div class="centeralign">'.NL;
+        $form = new Doku_Form(array('id' => 'dw__resendpwd'));
+        $form->startFieldset($lang['btn_resendpwd']);
+        $form->addHidden('token', $token);
+        $form->addHidden('do', 'resendpwd');
+
+        $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
+        $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
+
+        $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));
+        $form->endFieldset();
+        html_form('resendpwd', $form);
+        print '</div>'.NL;
+    }else{
+        print p_locale_xhtml('resendpwd');
+        print '<div class="centeralign">'.NL;
+        $form = new Doku_Form(array('id' => 'dw__resendpwd'));
+        $form->startFieldset($lang['resendpwd']);
+        $form->addHidden('do', 'resendpwd');
+        $form->addHidden('save', '1');
+        $form->addElement(form_makeTag('br'));
+        $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block'));
+        $form->addElement(form_makeTag('br'));
+        $form->addElement(form_makeTag('br'));
+        $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));
+        $form->endFieldset();
+        html_form('resendpwd', $form);
+        print '</div>'.NL;
+    }
 }
 
 /**

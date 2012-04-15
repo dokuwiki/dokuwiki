@@ -526,7 +526,7 @@ if(!function_exists('utf8_decode_numeric')){
 if(!class_exists('utf8_entity_decoder')){
     class utf8_entity_decoder {
         var $table;
-        function utf8_entity_decoder() {
+        function __construct() {
             $table = get_html_translation_table(HTML_ENTITIES);
             $table = array_flip($table);
             $this->table = array_map(array(&$this,'makeutf8'), $table);

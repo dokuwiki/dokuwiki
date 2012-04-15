@@ -22,11 +22,11 @@ class DokuHTTPClient extends HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function DokuHTTPClient(){
+    function __construct(){
         global $conf;
 
         // call parent constructor
-        $this->HTTPClient();
+        parent::__construct();
 
         // set some values from the config
         $this->proxy_host   = $conf['proxy']['host'];
@@ -121,7 +121,7 @@ class HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function HTTPClient(){
+    function __construct(){
         $this->agent        = 'Mozilla/4.0 (compatible; DokuWiki HTTP Client; '.PHP_OS.')';
         $this->timeout      = 15;
         $this->cookies      = array();
@@ -338,7 +338,10 @@ class HTTPClient {
             }
 
             // wait for stream ready or timeout (1sec)
-            if(stream_select($sel_r,$sel_w,$sel_e,1) === false) continue;
+            if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+                usleep(1000);
+                continue;
+            }
 
             // write to stream
             $ret = fwrite($socket, substr($request,$written,4096));
@@ -577,13 +580,14 @@ class HTTPClient {
      */
     function _parseHeaders($string){
         $headers = array();
-        if (!preg_match_all('/^\s*([\w-]+)\s*:\s*([\S \t]+)\s*$/m', $string,
-                            $matches, PREG_SET_ORDER)) {
-            return $headers;
-        }
-        foreach($matches as $match){
-            list(, $key, $val) = $match;
+        $lines = explode("\n",$string);
+        array_shift($lines); //skip first line (status)
+        foreach($lines as $line){
+            list($key, $val) = explode(':',$line,2);
+            $key = trim($key);
+            $val = trim($val);
             $key = strtolower($key);
+            if(!$key) continue;
             if(isset($headers[$key])){
                 if(is_array($headers[$key])){
                     $headers[$key][] = $val;

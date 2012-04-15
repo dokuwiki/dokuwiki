@@ -16,6 +16,7 @@
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
+ * @author Johnny Utah <pcpa@cyberpunk.su>
  */
 $lang['menu']                  = 'Управление плагинами';
 $lang['download']              = 'Скачать и установить новый плагин';
@@ -61,3 +62,4 @@ $lang['enabled']               = 'Плагин %s включён.';
 $lang['notenabled']            = 'Не удалось включить плагин %s. Проверьте системные права доступа к файлам.';
 $lang['disabled']              = 'Плагин %s отключён.';
 $lang['notdisabled']           = 'Не удалось отключить плагин %s. Проверьте системные права доступа к файлам.';
+$lang['packageinstalled']      = 'Пакет (%d плагин(а): %s) успешно установлен.';

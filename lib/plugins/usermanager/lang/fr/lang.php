@@ -15,6 +15,7 @@
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification utilisateur non disponible)';

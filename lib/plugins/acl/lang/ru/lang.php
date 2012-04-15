@@ -15,6 +15,7 @@
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
+ * @author Johnny Utah <pcpa@cyberpunk.su>
  */
 $lang['admin_acl']             = 'Управление списками контроля доступа';
 $lang['acl_group']             = 'Группа';

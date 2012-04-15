@@ -62,6 +62,8 @@ $lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
 $lang['start']       = 'Start page name';
 $lang['title']       = 'Wiki title';
 $lang['template']    = 'Template';
+$lang['tagline']     = 'Tagline (if template supports it)';
+$lang['sidebar']     = 'Sidebar page name (if template supports it), empty field disables the sidebar';
 $lang['license']     = 'Under which license should your content be released?';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['recent']      = 'Recent changes';
@@ -82,6 +84,7 @@ $lang['useheading']  = 'Use first heading for pagenames';
 $lang['refcheck']    = 'Media reference check';
 $lang['refshow']     = 'Number of media references to show';
 $lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
+$lang['mediarevisions'] = 'Enable Mediarevisions?';
 
 $lang['usewordblock']= 'Block spam based on wordlist';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
@@ -107,8 +110,8 @@ $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the index view. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces. This may make the index unusable with certain ACL setups.';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
-$lang['xmlrpc']      = 'Enable/disable XML-RPC interface.';
-$lang['xmlrpcuser']  = 'Restrict XML-RPC access to the comma separated groups or users given here. Leave empty to give access to everyone.';
+$lang['remote']      = 'Enable the remote API system. This allows other applications to access the wiki via XML-RPC or other mechanisms.';
+$lang['remoteuser']  = 'Restrict remote API access to the comma separated groups or users given here. Leave empty to give access to everyone.';
 
 /* Advanced Options */
 $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
@@ -152,6 +155,7 @@ $lang['rss_content'] = 'What to display in the XML feed items?';
 $lang['rss_update']  = 'XML feed update interval (sec)';
 $lang['recent_days'] = 'How many recent changes to keep (days)';
 $lang['rss_show_summary'] = 'XML feed show summary in title';
+$lang['rss_media']   = 'What kind of changes should be listed in the XML feed?';
 
 /* Target options */
 $lang['target____wiki']      = 'Target window for internal links';

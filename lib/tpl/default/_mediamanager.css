@@ -59,6 +59,7 @@
     background-color: __background_alt__;
 }
 
+
 /*____________ Namespaces tree ____________*/
 
 #mediamanager__page .namespaces h2 {
@@ -406,10 +407,12 @@
 }
 #mediamanager__diff .imageDiff .image1,
 #mediamanager__diff .imageDiff .image2 {
+    width: 97%;
+}
+#mediamanager__diff .imageDiff .image2 {
     position: absolute;
     top: 0;
     left: 0;
-    width: 97%;
 }
 
 #mediamanager__diff .imageDiff.opacity .image2 {

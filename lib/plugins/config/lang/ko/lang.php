@@ -8,6 +8,7 @@
  * @author Song Younghwan <purluno@gmail.com>
  * @author SONG Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo  <dryoo@live.com>
+ * @author erial2@gmail.com
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값때문에 설정들을 변경할 수 없습니다. 수정한 값들을 검사하고 확인을 누르기 바랍니다.
@@ -43,9 +44,12 @@ $lang['lang']                  = '언어';
 $lang['basedir']               = '기본 디렉토리';
 $lang['baseurl']               = '기본 URL';
 $lang['savedir']               = '데이타 저장 디렉토리';
+$lang['cookiedir']             = '쿠키 위치. 비워두면 기본 url 위치로 지정됩니다.';
 $lang['start']                 = '시작 페이지 이름';
 $lang['title']                 = '위키 제목';
 $lang['template']              = '템플릿';
+$lang['tagline']               = '태그 라인 (템플릿이 지원할 때에 한해)';
+$lang['sidebar']               = '사이드바 페이지 이름(템플릿이 지원할 때에 한해). 비워두면 사이드바를 비활성화함';
 $lang['license']               = '컨텐트에 어떤 라이센스 정책을 적용하시겠습니까?';
 $lang['fullpath']              = '페이지 하단에 전체 경로 보여주기';
 $lang['recent']                = '최근에 바뀐 것';
@@ -66,6 +70,7 @@ $lang['useheading']            = '페이지 이름으로 첫 헤드라인 사용
 $lang['refcheck']              = '미디어 참조 검사';
 $lang['refshow']               = '보여줄 미디어 참조 수';
 $lang['allowdebug']            = '디버그 허용 <b>필요하지 않으면 금지!</b>';
+$lang['mediarevisions']        = '미디어 버전 관리를 사용하시겠습니까?';
 $lang['usewordblock']          = '금지단어를 사용해 스팸 막기';
 $lang['indexdelay']            = '색인 연기 시간(초)';
 $lang['relnofollow']           = '외부 링크에 rel="nofollow" 사용';
@@ -115,6 +120,7 @@ $lang['jpg_quality']           = 'JPG 압축 품질 (0-100)';
 $lang['subscribers']           = '페이지 갱신 알람 기능';
 $lang['subscribe_time']        = ' 구독 목록과 요약이 보내질 경과 시간 (초); 이 것은 recent_days에서 설정된 시간보다 작아야 합니다.';
 $lang['compress']              = '최적화된 CSS, javascript 출력';
+$lang['cssdatauri']            = '이미지가 렌더링될 최대 용량 크기를 CSS에 규정해야 HTTP request 헤더 오버헤드 크기를 감소시킬 수 있습니다. 이 기술은 IE 7 이하에서는 작동하지 않습니다! <code>400</code> 에서 <code>600></code> 정도면 좋은 효율을 가져옵니다. <code>0</code>로 지정할 경우 비활성화 됩니다.';
 $lang['hidepages']             = '매칭된 페이지 숨기기(정규표현식)';
 $lang['send404']               = '존재하지 않는 페이지에 대해 "HTTP 404/Page Not Found" 응답';
 $lang['sitemap']               = '구글 사이트맵 생성(날짜)';
@@ -131,6 +137,7 @@ $lang['rss_content']           = 'XML feed 항목들에 표시되는 내용은?'
 $lang['rss_update']            = 'XML feed 갱신 주기(초)';
 $lang['recent_days']           = '최근 바뀐 페이지 기준 시간(날짜)';
 $lang['rss_show_summary']      = 'XML feed 제목에서 요약정보 보여주기';
+$lang['rss_media']             = '어떤 규격으로 XML 피드를 받아보시겠습니까?';
 $lang['target____wiki']        = '내부 링크들에 대한 타겟 윈도우 ';
 $lang['target____interwiki']   = 'InterWiki 링크들에 대한 타겟 윈도우';
 $lang['target____extern']      = '외부 링크들에 대한 타겟 윈도우';

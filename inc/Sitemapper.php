@@ -10,7 +10,7 @@ if(!defined('DOKU_INC')) die('meh.');
 
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.
- * 
+ *
  * @author Michael Hamann
  */
 class Sitemapper {
@@ -25,7 +25,7 @@ class Sitemapper {
      * @link   https://www.google.com/webmasters/sitemaps/docs/en/about.html
      * @link   http://www.sitemaps.org/
      */
-    public function generate(){
+    public static function generate(){
         global $conf;
         if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) return false;
 
@@ -39,11 +39,11 @@ class Sitemapper {
 
         if(@filesize($sitemap) &&
            @filemtime($sitemap) > (time()-($conf['sitemap']*86400))){ // 60*60*24=86400
-            dbglog('Sitemapper::generate(): Sitemap up to date'); // FIXME: only in debug mode
+            dbglog('Sitemapper::generate(): Sitemap up to date');
             return false;
         }
 
-        dbglog("Sitemapper::generate(): using $sitemap"); // FIXME: Only in debug mode
+        dbglog("Sitemapper::generate(): using $sitemap");
 
         $pages = idx_get_indexer()->getPages();
         dbglog('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
@@ -55,7 +55,7 @@ class Sitemapper {
             if(isHiddenPage($id)) continue;
             if(auth_aclcheck($id,'','') < AUTH_READ) continue;
             $item = SitemapItem::createFromID($id);
-            if ($item !== NULL)
+            if ($item !== null)
                 $items[] = $item;
         }
 
@@ -72,12 +72,12 @@ class Sitemapper {
 
     /**
      * Builds the sitemap XML string from the given array auf SitemapItems.
-     * 
+     *
      * @param $items array The SitemapItems that shall be included in the sitemap.
      * @return string The sitemap XML.
      * @author Michael Hamann
      */
-    private function getXML($items) {
+    private static function getXML($items) {
         ob_start();
         echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
@@ -92,11 +92,11 @@ class Sitemapper {
 
     /**
      * Helper function for getting the path to the sitemap file.
-     * 
+     *
      * @return The path to the sitemap file.
      * @author Michael Hamann
      */
-    public function getFilePath() {
+    public static function getFilePath() {
         global $conf;
 
         $sitemap = $conf['cachedir'].'/sitemap.xml';
@@ -108,12 +108,12 @@ class Sitemapper {
     }
 
     /**
-     * Pings search engines with the sitemap url. Plugins can add or remove 
+     * Pings search engines with the sitemap url. Plugins can add or remove
      * urls to ping using the SITEMAP_PING event.
-     * 
+     *
      * @author Michael Hamann
      */
-    public function pingSearchEngines() {
+    public static function pingSearchEngines() {
         //ping search engines...
         $http = new DokuHTTPClient();
         $http->timeout = 8;
@@ -145,7 +145,7 @@ class Sitemapper {
 
 /**
  * An item of a sitemap.
- * 
+ *
  * @author Michael Hamann
  */
 class SitemapItem {
@@ -156,7 +156,7 @@ class SitemapItem {
 
     /**
      * Create a new item.
-     * 
+     *
      * @param $url string The url of the item
      * @param $lastmod int Timestamp of the last modification
      * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
@@ -171,7 +171,7 @@ class SitemapItem {
 
     /**
      * Helper function for creating an item for a wikipage id.
-     * 
+     *
      * @param $id string A wikipage id.
      * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
      * @param $priority float|string The priority of the item relative to other URLs on your site. Valid values     range from 0.0 to 1.0.
@@ -180,22 +180,22 @@ class SitemapItem {
     public static function createFromID($id, $changefreq = null, $priority = null) {
         $id = trim($id);
         $date = @filemtime(wikiFN($id));
-        if(!$date) return NULL;
+        if(!$date) return null;
         return new SitemapItem(wl($id, '', true), $date, $changefreq, $priority);
     }
 
     /**
      * Get the XML representation of the sitemap item.
-     * 
+     *
      * @return The XML representation.
      */
     public function toXML() {
         $result = '  <url>'.NL
                  .'    <loc>'.hsc($this->url).'</loc>'.NL
                  .'    <lastmod>'.date_iso8601($this->lastmod).'</lastmod>'.NL;
-        if ($this->changefreq !== NULL)
+        if ($this->changefreq !== null)
             $result .= '    <changefreq>'.hsc($this->changefreq).'</changefreq>'.NL;
-        if ($this->priority !== NULL)
+        if ($this->priority !== null)
             $result .= '    <priority>'.hsc($this->priority).'</priority>'.NL;
         $result .= '  </url>'.NL;
         return $result;

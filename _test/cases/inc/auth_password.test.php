@@ -12,6 +12,7 @@ class auth_password_test extends UnitTestCase {
         'md5'   => '8fa22d62408e5351553acdd91c6b7003',
         'sha1'  => 'b456d3b0efd105d613744ffd549514ecafcfc7e1',
         'ssha'  => '{SSHA}QMHG+uC7bHNYKkmoLbNsNI38/dJhYmNk',
+        'lsmd5' => '{SMD5}HGbkPrkWgy9KgcRGWlrsUWFiY2RlZmdo',
         'crypt' => 'ablvoGr1hvZ5k',
         'mysql' => '4a1fa3780bd6fd55',
         'my411' => '*e5929347e25f82e19e4ebe92f1dc6b6e7c2dbd29',
@@ -46,6 +47,15 @@ class auth_password_test extends UnitTestCase {
             $hash = auth_cryptPassword('foo'.$method,$method);
             $this->assertTrue(auth_verifyPassword('foo'.$method,$hash));
         }
+    }
+
+    function test_bcrypt_self(){
+        $hash = auth_cryptPassword('foobcrypt','bcrypt');
+        $this->assertTrue(auth_verifyPassword('foobcrypt',$hash));
+    }
+
+    function test_verifyPassword_fixedbcrypt(){
+        $this->assertTrue(auth_verifyPassword('foobcrypt','$2a$12$uTWercxbq4sjp2xAzv3we.ZOxk51m5V/Bv5bp2H27oVFJl5neFQoC'));
     }
 
     function test_verifyPassword_nohash(){

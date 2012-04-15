@@ -7,6 +7,8 @@
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
+ * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['name']                  = 'Průzkum používání (může chviličku trvat, než se natáhne)';
 $lang['submit']                = 'Odeslat data';

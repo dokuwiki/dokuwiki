@@ -77,10 +77,13 @@ function load_autoload($name){
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
+        'RemoteAPI'             => DOKU_INC.'inc/remote.php',
+        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
+        'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
 
     );
 
@@ -90,7 +93,7 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(helper|syntax|action|admin|renderer)_plugin_([^_]+)(?:_([^_]+))?$/',
+    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_([^_]+)(?:_([^_]+))?$/',
                   $name, $m)) {
                 //try to load the wanted plugin file
         // include, but be silent. Maybe some other autoloader has an idea

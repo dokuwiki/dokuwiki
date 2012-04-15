@@ -7,6 +7,7 @@
  * @author Song Younghwan <purluno@gmail.com>
  * @author SONG Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo  <dryoo@live.com>
+ * @author erial2@gmail.com
  */
 $lang['name']                  = '인기도 조사 (불러오는데 시간이 걸릴 수 있습니다.)';
 $lang['submit']                = '자료 보내기';
