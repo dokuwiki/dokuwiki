@@ -16,17 +16,17 @@ if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
 
 class Mailer {
 
-    private $headers = array();
-    private $attach  = array();
-    private $html    = '';
-    private $text    = '';
+    protected $headers = array();
+    protected $attach  = array();
+    protected $html    = '';
+    protected $text    = '';
 
-    private $boundary = '';
-    private $partid   = '';
-    private $sendparam= null;
+    protected $boundary = '';
+    protected $partid   = '';
+    protected $sendparam= null;
 
-    private $validator = null;
-    private $allowhtml = true;
+    protected $validator = null;
+    protected $allowhtml = true;
 
     /**
      * Constructor
