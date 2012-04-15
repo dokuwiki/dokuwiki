@@ -55,10 +55,10 @@ $lang['_msg_setting_no_default'] = 'No default value.';
 /* -------------------- Config Options --------------------------- */
 
 /* Basic Settings */
-$lang['title']       = 'Wiki title';
-$lang['start']       = 'Start page name';
+$lang['title']       = 'Wiki title aka. your wiki\'s name';
+$lang['start']       = 'Page name to use as the starting point for each namespace';
 $lang['lang']        = 'Interface language';
-$lang['template']    = 'Template';
+$lang['template']    = 'Template aka. the design of the wiki.';
 $lang['tagline']     = 'Tagline (if template supports it)';
 $lang['sidebar']     = 'Sidebar page name (if template supports it), empty field disables the sidebar';
 $lang['license']     = 'Under which license should your content be released?';
@@ -71,31 +71,31 @@ $lang['fmode']       = 'File creation mode';
 $lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
 
 /* Display Settings */
-$lang['recent']      = 'Recent changes';
+$lang['recent']      = 'Number of entries per page in the recent changes';
 $lang['recent_days'] = 'How many recent changes to keep (days)';
-$lang['breadcrumbs'] = 'Number of breadcrumbs';
-$lang['youarehere']  = 'Hierarchical breadcrumbs';
+$lang['breadcrumbs'] = 'Number of "trace" breadcrumbs. Set to 0 to disable.';
+$lang['youarehere']  = 'Use hierarchical breadcrumbs (you probably want to disable the above option then)';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['typography']  = 'Do typographical replacements';
 $lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
-$lang['signature']   = 'Signature';
+$lang['signature']   = 'What to insert with the signature button in the editor';
 $lang['showuseras']  = 'What to display when showing the user that last edited a page';
 $lang['toptoclevel'] = 'Top level for table of contents';
 $lang['tocminheads'] = 'Minimum amount of headlines that determines whether the TOC is built';
 $lang['maxtoclevel'] = 'Maximum level for table of contents';
 $lang['maxseclevel'] = 'Maximum section edit level';
 $lang['camelcase']   = 'Use CamelCase for links';
-$lang['deaccent']    = 'Clean pagenames';
+$lang['deaccent']    = 'How to clean pagenames';
 $lang['useheading']  = 'Use first heading for pagenames';
-$lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the index view. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces. This may make the index unusable with certain ACL setups.';
-$lang['hidepages']   = 'Hide matching pages (regular expressions)';
+$lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the sitemap. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces which may make the index unusable with certain ACL setups.';
+$lang['hidepages']   = 'Hide pages matching this regular expressions from search, the sitemap and other automatic indexes';
 
 /* Authentication Settings */
 $lang['useacl']      = 'Use access control lists';
 $lang['autopasswd']  = 'Autogenerate passwords';
 $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';
-$lang['defaultgroup']= 'Default group';
+$lang['defaultgroup']= 'Default group, all new users will be placed in this group';
 $lang['superuser']   = 'Superuser - group, user or comma separated list user1,@group1,user2 with full access to all pages and functions regardless of the ACL settings';
 $lang['manager']     = 'Manager - group, user or comma separated list user1,@group1,user2 with access to certain management functions';
 $lang['profileconfirm'] = 'Confirm profile changes with password';
@@ -133,23 +133,23 @@ $lang['target____windows']   = 'Target window for windows links';
 
 /* Media Settings */
 $lang['mediarevisions'] = 'Enable Mediarevisions?';
-$lang['refcheck']    = 'Media reference check';
-$lang['refshow']     = 'Number of media references to show';
+$lang['refcheck']    = 'Check if a media file is still in use before deleting it';
+$lang['refshow']     = 'Number of media references to show when the above setting is enabled';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
 $lang['jpg_quality'] = 'JPG compression quality (0-100)';
-$lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from extern';
+$lang['fetchsize']   = 'Maximum size (bytes) fetch.php may download from external URLs, eg. to cache and resize external images.';
 
 /* Notification Settings */
 $lang['subscribers'] = 'Allow users to subscribe to page changes by email';
 $lang['subscribe_time'] = 'Time after which subscription lists and digests are sent (sec); This should be smaller than the time specified in recent_days.';
-$lang['notify']      = 'Send change notifications to this email address';
-$lang['registernotify'] = 'Send info on newly registered users to this email address';
-$lang['mailfrom']    = 'Email address to use for automatic mails';
-$lang['mailprefix']  = 'Email subject prefix to use for automatic mails';
+$lang['notify']      = 'Always send change notifications to this email address';
+$lang['registernotify'] = 'Always send info on newly registered users to this email address';
+$lang['mailfrom']    = 'Sender email address to use for automatic mails';
+$lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
 
 /* Syndication Settings */
-$lang['sitemap']     = 'Generate Google sitemap (days)';
+$lang['sitemap']     = 'Generate Google sitemap this often (in days). 0 to disable';
 $lang['rss_type']    = 'XML feed type';
 $lang['rss_linkto']  = 'XML feed links to';
 $lang['rss_content'] = 'What to display in the XML feed items?';
@@ -170,7 +170,7 @@ $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['compress']    = 'Compact CSS and javascript output';
 $lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. This technique won\'t work in IE 7 and below! <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
-$lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
+$lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
 $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
