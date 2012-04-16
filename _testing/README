@@ -65,7 +65,7 @@ TODO for the test framework
       * unit test [ok]
       * integration test [ok]
     * plugins
-      * unit test [untested]
+      * unit test
       * integration test [untested]
   * provide the possibility to enable/disable plugins
   * cleanup dw globals like registered event hooks
