@@ -2,8 +2,7 @@
 <phpunit
 	bootstrap="bootstrap.php"
 	convertNoticesToExceptions="false"
-	backupGlobals="yes"
-	colors="true">
+	backupGlobals="yes">
 
     <testsuites>
         <testsuite name="DokuWiki Tests">
