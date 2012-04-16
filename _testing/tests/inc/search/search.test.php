@@ -1,7 +1,7 @@
 <?php
 require_once DOKU_INC.'inc/init.php';
 
-class search_test extends PHPUnit_Framework_TestCase {
+class search_test extends DokuWikiTest {
     function strip_index_data($entry) {
         $n_entry = array();
         foreach(array('id', 'type', 'level', 'open') as $k) {

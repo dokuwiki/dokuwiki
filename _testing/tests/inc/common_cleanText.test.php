@@ -3,7 +3,7 @@
 require_once DOKU_INC . 'inc/init.php';
 require_once DOKU_INC . 'inc/common.php';
 
-class common_cleanText_test extends PHPUnit_Framework_TestCase {
+class common_cleanText_test extends DokuWikiTest {
 
     function test_unix(){
         $unix = 'one

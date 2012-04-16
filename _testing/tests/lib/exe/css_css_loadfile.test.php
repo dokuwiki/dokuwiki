@@ -2,7 +2,7 @@
 
 require_once DOKU_INC.'lib/exe/css.php';
 
-class css_css_loadfile_test extends PHPUnit_Framework_TestCase {
+class css_css_loadfile_test extends DokuWikiTest {
     public function setUp() {
         $this->file = tempnam('/tmp', 'css');
     }

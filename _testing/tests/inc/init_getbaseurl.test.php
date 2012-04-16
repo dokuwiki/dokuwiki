@@ -2,7 +2,7 @@
 
 require_once DOKU_INC.'inc/init.php';
 
-class init_getBaseURL_test extends PHPUnit_Framework_TestCase {
+class init_getBaseURL_test extends DokuWikiTest {
 
     /**
      * Apache, mod_php, subdirectory

@@ -4,7 +4,7 @@ if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 require_once DOKU_INC.'inc/utf8.php';
 require_once DOKU_INC.'inc/SafeFN.class.php';
 
-class safeFN_test extends PHPUnit_Framework_TestCase {
+class safeFN_test extends DokuWikiTest {
 
 
     function test1(){

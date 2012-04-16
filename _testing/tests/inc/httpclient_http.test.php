@@ -3,7 +3,7 @@
 require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/HTTPClient.php';
 
-class httpclient_http_test extends PHPUnit_Framework_TestCase {
+class httpclient_http_test extends DokuWikiTest {
     protected $server = 'http://httpbin.org';
 
     function test_simpleget(){

@@ -5,7 +5,7 @@ require_once DOKU_INC.'inc/utf8.php';
 // use no mbstring help here
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
-class utf8_html_test extends PHPUnit_Framework_TestCase {
+class utf8_html_test extends DokuWikiTest {
 
     function test_from_1byte(){
         $in  = 'a';

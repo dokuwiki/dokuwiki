@@ -10,7 +10,7 @@ class auth_admin_test_AuthInSensitive extends auth_basic {
     }
 }
 
-class auth_admin_test extends PHPUnit_Framework_TestCase {
+class auth_admin_test extends DokuWikiTest {
 
     private $oldauth;
 

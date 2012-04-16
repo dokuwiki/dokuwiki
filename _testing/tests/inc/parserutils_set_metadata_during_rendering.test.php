@@ -2,7 +2,7 @@
 
 require_once DOKU_INC.'inc/init.php';
 
-class parserutils_set_metadata_during_rendering_test extends PHPUnit_Framework_TestCase {
+class parserutils_set_metadata_during_rendering_test extends DokuWikiTest {
     // the id used for this test case
     private $id;
     // if the test case is currently running

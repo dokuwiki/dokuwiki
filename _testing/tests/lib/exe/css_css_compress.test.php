@@ -3,7 +3,7 @@
 require_once DOKU_INC.'lib/exe/css.php';
 
 
-class css_css_compress_test extends PHPUnit_Framework_TestCase {
+class css_css_compress_test extends DokuWikiTest {
 
     function test_mlcom1(){
         $text = '/**

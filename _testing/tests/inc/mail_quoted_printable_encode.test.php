@@ -2,7 +2,7 @@
 
 require_once DOKU_INC.'inc/mail.php';
 
-class mail_quotedprintable_encode extends PHPUnit_Framework_TestCase {
+class mail_quotedprintable_encode extends DokuWikiTest {
 
     function test_simple(){
         $in  = 'hello';

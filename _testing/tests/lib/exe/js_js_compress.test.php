@@ -3,7 +3,7 @@
 require_once DOKU_INC.'lib/exe/js.php';
 
 
-class js_js_compress_test extends PHPUnit_Framework_TestCase {
+class js_js_compress_test extends DokuWikiTest {
 
     function test_mlcom1(){
         $text = '/**

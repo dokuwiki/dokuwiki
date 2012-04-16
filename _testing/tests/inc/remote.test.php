@@ -114,7 +114,7 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
 }
 
 
-class remote_test extends PHPUnit_Framework_TestCase {
+class remote_test extends DokuWikiTest {
 
     var $originalConf;
     var $userinfo;

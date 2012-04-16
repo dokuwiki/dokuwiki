@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsHooksTest extends PHPUnit_Framework_TestCase {
+class InttestsHooksTest extends DokuWikiTest {
 
 	function testHookTriggering() {
 		$request = new TestRequest();

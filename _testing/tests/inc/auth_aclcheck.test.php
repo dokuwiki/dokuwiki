@@ -4,7 +4,7 @@ require_once DOKU_INC.'inc/init.php';
 require_once DOKU_INC.'inc/auth.php';
 require_once DOKU_INC.'inc/auth/basic.class.php';
 
-class auth_acl_test extends PHPUnit_Framework_TestCase {
+class auth_acl_test extends DokuWikiTest {
 
     var $oldConf;
     var $oldAuthAcl;

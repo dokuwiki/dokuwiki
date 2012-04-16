@@ -2,7 +2,7 @@
 
 require_once DOKU_INC.'inc/init.php';
 
-class form_test extends PHPUnit_Framework_TestCase {
+class form_test extends DokuWikiTest {
 
   function _testform() {
     $form = new Doku_Form(array('id' => 'dw__testform', 'action' => '/test'));

@@ -5,7 +5,7 @@ require_once DOKU_INC.'inc/pageutils.php';
 global $conf;
 if (!isset($conf['datadir'])) $conf['datadir'] = $conf['savedir'].'/pages';
 
-class init_resolve_pageid_test extends PHPUnit_Framework_TestCase {
+class init_resolve_pageid_test extends DokuWikiTest {
 
 
     function test1(){

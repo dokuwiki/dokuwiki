@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsGlobalsTest extends PHPUnit_Framework_TestCase {
+class InttestsGlobalsTest extends DokuWikiTest {
 	/**
 	 * Global variables should be restored for every test case.
 	 */

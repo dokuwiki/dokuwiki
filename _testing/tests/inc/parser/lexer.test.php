@@ -14,7 +14,7 @@ require_once DOKU_INC . 'inc/parser/lexer.php';
 * @package Doku
 * @subpackage Tests
 */
-class TestOfLexerParallelRegex extends PHPUnit_Framework_TestCase {
+class TestOfLexerParallelRegex extends DokuWikiTest {
 
 	function testNoPatterns() {
 		$regex = new Doku_LexerParallelRegex(false);
@@ -120,7 +120,7 @@ class TestOfLexerParallelRegex extends PHPUnit_Framework_TestCase {
 }
 
 
-class TestOfLexerStateStack extends PHPUnit_Framework_TestCase {
+class TestOfLexerStateStack extends DokuWikiTest {
 	function testStartState() {
 		$stack = new Doku_LexerStateStack("one");
 		$this->assertEquals($stack->getCurrent(), "one");
@@ -156,7 +156,7 @@ class TestParser {
 	}
 }
 
-class TestOfLexer extends PHPUnit_Framework_TestCase {
+class TestOfLexer extends DokuWikiTest {
 	function testNoPatterns() {
         $handler = $this->getMock('TestParser');
         $handler->expects($this->never())->method('accept');
@@ -208,7 +208,7 @@ class TestOfLexer extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class TestOfLexerModes extends PHPUnit_Framework_TestCase {
+class TestOfLexerModes extends DokuWikiTest {
 	function testIsolatedPattern() {
         $handler = $this->getMock('TestParser');
         $handler->expects($this->at(0))->method('a')
@@ -333,7 +333,7 @@ class TestOfLexerModes extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class TestOfLexerHandlers extends PHPUnit_Framework_TestCase {
+class TestOfLexerHandlers extends DokuWikiTest {
 	function testModeMapping() {
         $handler = $this->getMock('TestParser');
         $handler->expects($this->at(0))->method('a')
@@ -371,7 +371,7 @@ class TestParserByteIndex {
 	function caught() {}
 }
 
-class TestOfLexerByteIndices extends PHPUnit_Framework_TestCase {
+class TestOfLexerByteIndices extends DokuWikiTest {
 
 	function testIndex() {
         $doc = "aaa<file>bcd</file>eee";

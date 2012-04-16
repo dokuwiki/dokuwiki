@@ -1,7 +1,7 @@
 <?php
 require_once DOKU_INC.'inc/init.php';
 
-class init_fullpath_test extends PHPUnit_Framework_TestCase {
+class init_fullpath_test extends DokuWikiTest {
 
     function test_unix_paths(){
         $base = $_SERVER['SCRIPT_FILENAME'];

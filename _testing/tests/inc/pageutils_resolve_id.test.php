@@ -2,7 +2,7 @@
 require_once DOKU_INC.'inc/utf8.php';
 require_once DOKU_INC.'inc/pageutils.php';
 
-class init_resolve_id_test extends PHPUnit_Framework_TestCase {
+class init_resolve_id_test extends DokuWikiTest {
 
 
     function test1(){

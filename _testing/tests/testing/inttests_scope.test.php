@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsScopeTest extends PHPUnit_Framework_TestCase {
+class InttestsScopeTest extends DokuWikiTest {
 	/**
 	 * It should be possible to have two test cases within one test class.
 	 */
