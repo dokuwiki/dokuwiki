@@ -1,23 +1,52 @@
-====== DokuWiki test suite ======
+DokuWiki Test Suite
+=============================================================================
+
+Content of this document:
+
+  * Requirements
+  * Installation of PHPUnit via Pear
+  * Running all Tests
+  * Create new Tests
+  * Known Bad Tests
+  * TODO for test framework
 
 
-===== Unit Tests =====
 
-==== Requirements ====
-  * PHP Unit  3.7
+Requirements
+-----------------------------------------------------------------------------
 
-Installation:
-The easiest way to install phpunit is via pear:
-  pear config-set auto_discover 1
-  pear upgrade
-  pear install pear.phpunit.de/PHPUnit
+  * PHP Unit 3.7
 
-==== Run unit tests ====
+
+Installation of PHPUnit via Pear
+-----------------------------------------------------------------------------
+
+  > pear config-set auto_discover 1
+  > pear upgrade
+  > pear install pear.phpunit.de/PHPUnit
+
+
+Running all Tests
+-----------------------------------------------------------------------------
+
   > cd _testing/
   > phpunit
 
-==== Bad tests ====
-Bad tests are tests that do not run out of the box.
+
+Create new Tests
+-----------------------------------------------------------------------------
+
+To create a test for DokuWiki, create a *.test.php file within the tests/
+folder. Please respect the folder structure and naming convention. Inside the
+file, implement a class, extending 'DokuWikiTest'. Every method, starting
+with 'test' will be called as a test (e.g. 'testIfThisIsValid');
+
+
+Known Bad Tests
+-----------------------------------------------------------------------------
+
+Every test should be green on every run but the following were broken after
+the PHPUnit migration and are disabled by default:
 
   * inc/DifferenceEngine (removed FS#2161, FS#2223)
   * inc/html_hilight (runkit)
@@ -28,7 +57,13 @@ Bad tests are tests that do not run out of the box.
   * inc/parser/xhtml_links
 
 
-==== TODO ====
+TODO for the test framework
+-----------------------------------------------------------------------------
+
   * plugin tests
   * cross platform compatible: especially test windows (hint: tmp dir location)
+  * optional: add helper methods to TestRequest for easy form submission
+    * createForm(), ...
+  * optional: add helper methods to TestReponse for easy response parsing
+    * findElementById, findElementByXPath, ...
 

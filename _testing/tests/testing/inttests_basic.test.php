@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsBasicTest extends PHPUnit_Framework_TestCase {
+class InttestsBasicTest extends DokuWikiTest {
 	/**
 	 * Execute the simplest possible request and expect
 	 * a dokuwiki page which obviously has the word "DokuWiki"

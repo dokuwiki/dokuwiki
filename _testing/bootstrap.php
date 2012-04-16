@@ -58,6 +58,12 @@ error_reporting(E_ALL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
+// prepare temporary directories
+define('DOKU_INC', dirname(dirname(__FILE__)).'/');
+define('TMP_DIR', '/tmp/dwtests-'.microtime(true));
+define('DOKU_CONF', TMP_DIR.'/conf/');
+define('DOKU_TMP_DATA', TMP_DIR.'/data/');
+
 // default plugins
 $default_plugins = array(
 	'acl',
@@ -74,11 +80,35 @@ $default_plugins = array(
 	'usermanager'
 );
 
-// prepare temporary directories
-define('DOKU_INC', dirname(dirname(__FILE__)).'/');
-define('TMP_DIR', '/tmp/dwtests-'.microtime(true));
-define('DOKU_CONF', TMP_DIR.'/conf/');
-define('DOKU_TMP_DATA', TMP_DIR.'/data/');
+// default server variables
+$default_server_vars = array(
+	'QUERY_STRING' => '?id=',
+	'REQUEST_METHOD' => 'GET',
+	'CONTENT_TYPE' => '',
+	'CONTENT_LENGTH' => '',
+	'SCRIPT_NAME' => '/doku.php',
+	'REQUEST_URI' => '/doku.php?id=',
+	'DOCUMENT_URI' => '/doku.php',
+	'DOCUMENT_ROOT' => DOKU_INC,
+	'SERVER_PROTOCOL' => 'HTTP/1.1',
+	'SERVER_SOFTWARE' => 'nginx/0.7.67',
+	'REMOTE_ADDR' => '87.142.120.6',
+	'REMOTE_PORT' => '21418',
+	'SERVER_ADDR' => '46.38.241.24',
+	'SERVER_PORT' => '443',
+	'SERVER_NAME' => 'wiki.example.com',
+	'REDIRECT_STATUS' => '200',
+	'SCRIPT_FILENAME' => DOKU_INC.'doku.php',
+	'HTTP_HOST' => 'wiki.example.com',
+	'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; OpenBSD amd64; rv:11.0) Gecko/20100101 Firefox/11.0',
+	'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+	'HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.5',
+	'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
+	'HTTP_CONNECTION' => 'keep-alive',
+	'HTTP_CACHE_CONTROL' => 'max-age=0',
+	'PHP_SELF' => '/doku.php',
+	'REQUEST_TIME' => time(),
+);
 
 // create temp directories
 mkdir(TMP_DIR);
@@ -112,8 +142,13 @@ while (false !== ($entry = $dh->read())) {
 }
 $dh->close();
 
-// TODO setup default global variables
-$_SERVER['REMOTE_ADDR'] = '173.194.69.138';
+// setup default global variables
+$_GET = array('id' => '');
+$_POST = array();
+$_REQUEST = array('id' => '');
+foreach ($default_server_vars as $key => $value) {
+	$_SERVER[$key] = $value;
+}
 
 // load dw
 require_once(DOKU_INC.'inc/init.php');
@@ -126,39 +161,13 @@ function ob_start_callback($buffer) {
 	$output_buffer .= $buffer;
 }
 
+// Helper class to provide basic functionality for tests
+abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
+	// nothing for now, makes migration easy
+}
+
 // Helper class to execute a fake request
 class TestRequest {
-	var $server_vars = array(
-			'REMOTE_ADDR' => '127.0.0.1',
-		);
-
-	var $get_vars = array();
-	var $post_vars = array();
-
-	function __construct($page = '') {
-		$this->setPage($page);
-	}
-
-	function setServerVar($varName, $varValue) {
-		$this->sevrer_vars[$varName] = $varValue;
-	}
-
-	function setGetVar($varName, $varValue) {
-		$this->get_vars[$varName] = $varValue;
-	}
-
-	function setPostVar($varName, $varValue) {
-		$this->post_vars[$varName] = $varValue;
-	}
-
-	function setPage($pageName) {
-		$this->setGetVar('id', $pageName);
-	}
-
-	function addLocalConf($text) {
-		$this->conf_local[] = $text;
-	}
-
 	function hook($hook, $step, $function) {
 		global $EVENT_HANDLER;
 		$null = null;
@@ -168,22 +177,6 @@ class TestRequest {
 	function execute() {
 		global $output_buffer;
 		$output_buffer = '';
-
-		// fake php environment
-		foreach ($this->server_vars as $key => $value) {
-			$_SERVER[$key] = $value;
-		}
-		$_REQUEST = array();
-		$_GET = array();
-		foreach ($this->get_vars as $key => $value) {
-			$_GET[$key] = $value;
-			$_REQUEST[$key] = $value;
-		}
-		$_POST = array();
-		foreach ($this->post_vars as $key => $value) {
-			$_POST[$key] = $value;
-			$_REQUEST[$key] = $value;
-		}
 
 		// now execute dokuwiki and grep the output
 		header_remove();
@@ -216,6 +209,4 @@ class TestResponse {
 	function getHeaders() {
 		return $this->headers;
 	}
-
-	// TODO provide findById, findBy... (https://github.com/cosmocode/dokuwiki-plugin-scrape/blob/master/phpQuery-onefile.php)
 }
