@@ -7,8 +7,41 @@
  * runtime inspection.
  */
 
+// helper for recursive copy()
+function rcopy($destdir, $source) {
+	if (!is_dir($source)) {
+		copy($source, $destdir.'/'.basename($source));
+	} else {
+		$newdestdir = $destdir.'/'.basename($source);
+		mkdir($newdestdir);
+
+		$dh = dir($source);
+		while (false !== ($entry = $dh->read())) {
+			if ($entry == '.' || $entry == '..') {
+				continue;
+			}
+			rcopy($newdestdir, $source.'/'.$entry);
+		}
+		$dh->close();
+	}
+}
+
+// prepare temporary directories
+define('DOKU_INC', dirname(dirname(__FILE__)).'/');
+define('TMP_DIR', '/tmp/dwinttests-'.microtime(true));
+define('DOKU_CONF', TMP_DIR.'/inttests.conf/');
+define('DOKU_PLUGIN', TMP_DIR.'/plugins/');
+define('DOKU_TMP_DATA', TMP_DIR.'/inttests.data/');
+
+// create temp directories
+mkdir(TMP_DIR);
+mkdir(DOKU_PLUGIN);
+
+// populate default dirs
+rcopy(TMP_DIR, dirname(__FILE__).'/inttests.conf');
+rcopy(TMP_DIR, dirname(__FILE__).'/inttests.data');
+
 // load dw
-define('DOKU_INC', dirname(dirname(dirname(__FILE__))).'/');
 require_once(DOKU_INC.'inc/init.php');
 
 // output buffering
@@ -28,8 +61,6 @@ class TestRequest {
 	var $get_vars = array();
 	var $post_vars = array();
 
-	var $output = '';
-
 	function __construct($page = '') {
 		$this->setPage($page);
 	}
@@ -48,6 +79,16 @@ class TestRequest {
 
 	function setPage($pageName) {
 		$this->setGetVar('id', $pageName);
+	}
+
+	function addLocalConf($text) {
+		$this->conf_local[] = $text;
+	}
+
+	function hook($hook, $step, $function) {
+		global $EVENT_HANDLER;
+		$null = null;
+		$EVENT_HANDLER->register_hook($hook, $step, $null, $function);
 	}
 
 	function execute() {
