@@ -1,6 +1,11 @@
 <?php
 
 class BasicTest extends PHPUnit_Framework_TestCase {
+	/**
+	 * Execute the simplest possible request and expect
+	 * a dokuwiki page which obviously has the word "DokuWiki"
+	 * in it somewhere.
+	 */
 	function testSimpleRun() {
 		$request = new TestRequest();
 

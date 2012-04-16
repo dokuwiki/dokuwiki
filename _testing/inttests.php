@@ -41,6 +41,17 @@ mkdir(DOKU_PLUGIN);
 rcopy(TMP_DIR, dirname(__FILE__).'/inttests.conf');
 rcopy(TMP_DIR, dirname(__FILE__).'/inttests.data');
 
+// cleanup dir after exit
+register_shutdown_function(function() {
+	// TODO delete recursive tmp dir
+});
+
+// TODO disable all non-default plugins in config
+// TODO if plugin test, enable plugin
+// TODO load plugin descriptor and enable dependent plugins
+
+// TODO set global variables, phpunit will restore them for every test (test that)
+
 // load dw
 require_once(DOKU_INC.'inc/init.php');
 
@@ -142,4 +153,6 @@ class TestResponse {
 	function getHeaders() {
 		return $this->headers;
 	}
+
+	// TODO provide findById, findBy... (https://github.com/cosmocode/dokuwiki-plugin-scrape/blob/master/phpQuery-onefile.php)
 }
