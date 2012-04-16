@@ -67,6 +67,8 @@ TODO for the test framework
     * plugins
       * unit test [untested]
       * integration test [untested]
+  * provide the possibility to enable/disable plugins
+  * cleanup dw globals like registered event hooks
   * cross platform compatibility: especially test windows (hint: tmp dir location)
   * update http://www.dokuwiki.org/devel:unittesting
   * optional: add helper methods to TestRequest for easy form submission
