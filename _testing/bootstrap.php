@@ -85,7 +85,7 @@ mkdir(TMP_DIR);
 
 // cleanup dir after exit
 register_shutdown_function(function() {
-//	rdelete(TMP_DIR);
+	rdelete(TMP_DIR);
 });
 
 // populate default dirs
