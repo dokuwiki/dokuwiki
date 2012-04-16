@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Integration Test Library for DokuWiki
+ * Test Library for DokuWiki
  *
  * Simulates a full DokuWiki HTTP Request and allows
  * runtime inspection.
@@ -26,31 +25,95 @@ function rcopy($destdir, $source) {
 	}
 }
 
+// helper for recursive rmdir()/unlink()
+function rdelete($target) {
+	if (!is_dir($target)) {
+		unlink($target);
+	} else {
+		$dh = dir($target);
+		while (false !== ($entry = $dh->read())) {
+			if ($entry == '.' || $entry == '..') {
+				continue;
+			}
+			rdelete("$target/$entry");
+		}
+		$dh->close();
+		rmdir($target);
+	}
+}
+
+// helper to append text to a file
+function fappend($file, $text) {
+	$fh = fopen($file, 'a');
+	fwrite($fh, $text);
+	fclose($fh);
+}
+
+// if someone really wants a special handling during tests
+define('DOKU_UNITTEST', true);
+define('SIMPLE_TEST', true);
+
+// basic behaviours
+error_reporting(E_ALL);
+set_time_limit(0);
+ini_set('memory_limit','2048M');
+
+// default plugins
+$default_plugins = array(
+	'acl',
+	'action',
+	'admin',
+	'config',
+	'info',
+	'plugin',
+	'popularity',
+	'remote',
+	'revert',
+	'safefnrecode',
+	'syntax',
+	'usermanager'
+);
+
 // prepare temporary directories
 define('DOKU_INC', dirname(dirname(__FILE__)).'/');
-define('TMP_DIR', '/tmp/dwinttests-'.microtime(true));
-define('DOKU_CONF', TMP_DIR.'/inttests.conf/');
-define('DOKU_PLUGIN', TMP_DIR.'/plugins/');
-define('DOKU_TMP_DATA', TMP_DIR.'/inttests.data/');
+define('TMP_DIR', '/tmp/dwtests-'.microtime(true));
+define('DOKU_CONF', TMP_DIR.'/conf/');
+define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
 // create temp directories
 mkdir(TMP_DIR);
-mkdir(DOKU_PLUGIN);
-
-// populate default dirs
-rcopy(TMP_DIR, dirname(__FILE__).'/inttests.conf');
-rcopy(TMP_DIR, dirname(__FILE__).'/inttests.data');
 
 // cleanup dir after exit
 register_shutdown_function(function() {
-	// TODO delete recursive tmp dir
+//	rdelete(TMP_DIR);
 });
 
-// TODO disable all non-default plugins in config
-// TODO if plugin test, enable plugin
-// TODO load plugin descriptor and enable dependent plugins
+// populate default dirs
+rcopy(TMP_DIR, dirname(__FILE__).'/conf');
+rcopy(TMP_DIR, dirname(__FILE__).'/data');
 
-// TODO set global variables, phpunit will restore them for every test (test that)
+// disable all non-default plugins by default
+$dh = dir(DOKU_INC.'lib/plugins/');
+while (false !== ($entry = $dh->read())) {
+	if ($entry == '.' || $entry == '..' || $entry == 'index.html') {
+		continue;
+	}
+
+	if (substr($entry, strlen($entry) - 4) == '.php') {
+		$plugin = substr($entry, 0, strlen($entry) - 4);
+	} else {
+		$plugin = $entry;
+	}
+
+	if (!in_array($plugin, $default_plugins)) {
+		// disable this plugin
+		fappend(DOKU_CONF.'plugins.local.php', "\$plugins['$plugin'] = 0;\n");
+	}
+}
+$dh->close();
+
+// TODO setup default global variables
+$_SERVER['REMOTE_ADDR'] = '173.194.69.138';
 
 // load dw
 require_once(DOKU_INC.'inc/init.php');

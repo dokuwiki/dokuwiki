@@ -1,6 +1,9 @@
 <?php
 
-class ScopeTest extends PHPUnit_Framework_TestCase {
+/**
+ * @group integration
+ */
+class InttestsScopeTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * It should be possible to have two test cases within one test class.
 	 */

@@ -1,6 +1,9 @@
 <?php
 
-class HooksTest extends PHPUnit_Framework_TestCase {
+/**
+ * @group integration
+ */
+class InttestsHooksTest extends PHPUnit_Framework_TestCase {
 
 	function testHookTriggering() {
 		$request = new TestRequest();

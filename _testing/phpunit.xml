@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-        bootstrap="unittests/bootstrap.php"
-        convertNoticesToExceptions="false">
+	bootstrap="bootstrap.php"
+	convertNoticesToExceptions="false"
+	backupGlobals="yes"
+	colors="true">
 
     <testsuites>
-        <testsuite name="Default Unit Tests">
-            <directory suffix=".test.php">unittests/</directory>
+        <testsuite name="DokuWiki Tests">
+            <directory suffix=".test.php">tests/</directory>
         </testsuite>
-        <testsuite name="Plugin tests">
+        <testsuite name="Plugin Tests">
             <directory suffix=".test.php">../lib/plugins/*/_testing</directory>
         </testsuite>
     </testsuites>

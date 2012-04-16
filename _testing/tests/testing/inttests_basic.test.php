@@ -1,6 +1,9 @@
 <?php
 
-class BasicTest extends PHPUnit_Framework_TestCase {
+/**
+ * @group integration
+ */
+class InttestsBasicTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Execute the simplest possible request and expect
 	 * a dokuwiki page which obviously has the word "DokuWiki"

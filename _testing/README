@@ -28,9 +28,7 @@ Bad tests are tests that do not run out of the box.
   * inc/parser/xhtml_links
 
 
-==== Integration Tests ====
-  > phpunit -c inttests.xml
-
 ==== TODO ====
-  * integration tests (+plugins)
+  * plugin tests
+  * cross platform compatible: especially test windows (hint: tmp dir location)
 
