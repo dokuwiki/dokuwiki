@@ -60,8 +60,15 @@ the PHPUnit migration and are disabled by default:
 TODO for the test framework
 -----------------------------------------------------------------------------
 
-  * plugin tests
-  * cross platform compatible: especially test windows (hint: tmp dir location)
+  * following use cases should be possible:
+    * dw core
+      * unit test [ok]
+      * integration test [ok]
+    * plugins
+      * unit test [untested]
+      * integration test [untested]
+  * cross platform compatibility: especially test windows (hint: tmp dir location)
+  * update http://www.dokuwiki.org/devel:unittesting
   * optional: add helper methods to TestRequest for easy form submission
     * createForm(), ...
   * optional: add helper methods to TestReponse for easy response parsing
