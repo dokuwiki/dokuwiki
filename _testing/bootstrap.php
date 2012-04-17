@@ -211,11 +211,6 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
 // Helper class to execute a fake request
 class TestRequest {
-    function hook($hook, $step, $function) {
-        global $EVENT_HANDLER;
-        $null = null;
-        $EVENT_HANDLER->register_hook($hook, $step, $null, $function);
-    }
 
     function execute() {
         global $output_buffer;

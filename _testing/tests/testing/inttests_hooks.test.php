@@ -5,16 +5,20 @@
  */
 class InttestsHooksTest extends DokuWikiTest {
 
-	function testHookTriggering() {
-		$request = new TestRequest();
+    function testHookTriggering() {
+        global $EVENT_HANDLER;
 
-		$hookTriggered = false;
-		$request->hook('TPL_CONTENT_DISPLAY', 'AFTER', function() use (&$hookTriggered) {
-			$hookTriggered = true;
-		});
+        $request = new TestRequest();
+        $hookTriggered = false;
 
-		$request->execute();
+        $EVENT_HANDLER->register_hook('TPL_CONTENT_DISPLAY', 'AFTER', null,
+            function() use (&$hookTriggered) {
+                $hookTriggered = true;
+            }
+        );
 
-		$this->assertTrue($hookTriggered, 'Hook was not triggered as expected!');
-	}
+        $request->execute();
+
+        $this->assertTrue($hookTriggered, 'Hook was not triggered as expected!');
+    }
 }

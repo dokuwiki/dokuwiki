@@ -12,9 +12,8 @@ class InttestsScopeTest extends DokuWikiTest {
         $conf['foo'] = 'bar';
 
         global $EVENT_HANDLER;
-        $null = null;
         $self = $this;
-        $EVENT_HANDLER->register_hook('DOKUWIKI_STARTED', 'AFTER', $null,
+        $EVENT_HANDLER->register_hook('DOKUWIKI_STARTED', 'AFTER', null,
             function() use ($self) {
                 $self->triggered = true;
             }
