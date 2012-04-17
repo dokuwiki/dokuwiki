@@ -1,58 +1,16 @@
 <?php
 /**
- * Test Library for DokuWiki
- *
- * Simulates a full DokuWiki HTTP Request and allows
- * runtime inspection.
+ * Test Suite bootstrapping for DokuWiki
  */
 
-require_once dirname(__FILE__).'/core/phpQuery-onefile.php';
+if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
+require_once DOKU_UNITTEST.'core/phpQuery-onefile.php';
+require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
+require_once DOKU_UNITTEST.'core/TestRequest.php';
+require_once DOKU_UNITTEST.'core/TestUtils.php';
 
-// helper for recursive copy()
-function rcopy($destdir, $source) {
-    if (!is_dir($source)) {
-        copy($source, $destdir.'/'.basename($source));
-    } else {
-        $newdestdir = $destdir.'/'.basename($source);
-        mkdir($newdestdir);
 
-        $dh = dir($source);
-        while (false !== ($entry = $dh->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
-            rcopy($newdestdir, $source.'/'.$entry);
-        }
-        $dh->close();
-    }
-}
-
-// helper for recursive rmdir()/unlink()
-function rdelete($target) {
-    if (!is_dir($target)) {
-        unlink($target);
-    } else {
-        $dh = dir($target);
-        while (false !== ($entry = $dh->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
-            rdelete("$target/$entry");
-        }
-        $dh->close();
-        rmdir($target);
-    }
-}
-
-// helper to append text to a file
-function fappend($file, $text) {
-    $fh = fopen($file, 'a');
-    fwrite($fh, $text);
-    fclose($fh);
-}
-
-// if someone really wants a special handling during tests
-define('DOKU_UNITTEST', true);
+// backward compatibility to old test suite
 define('SIMPLE_TEST', true);
 
 // basic behaviours
@@ -117,12 +75,12 @@ mkdir(TMP_DIR);
 
 // cleanup dir after exit
 register_shutdown_function(function() {
-    rdelete(TMP_DIR);
+    TestUtils::rdelete(TMP_DIR);
 });
 
 // populate default dirs
-rcopy(TMP_DIR, dirname(__FILE__).'/conf');
-rcopy(TMP_DIR, dirname(__FILE__).'/data');
+TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/conf');
+TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/data');
 
 // disable all non-default plugins by default
 $dh = dir(DOKU_INC.'lib/plugins/');
@@ -139,7 +97,7 @@ while (false !== ($entry = $dh->read())) {
 
     if (!in_array($plugin, $default_plugins)) {
         // disable this plugin
-        fappend(DOKU_CONF.'plugins.local.php', "\$plugins['$plugin'] = 0;\n");
+        TestUtils::fappend(DOKU_CONF.'plugins.local.php', "\$plugins['$plugin'] = 0;\n");
     }
 }
 $dh->close();
@@ -163,103 +121,4 @@ function ob_start_callback($buffer) {
     $output_buffer .= $buffer;
 }
 
-// Helper class to provide basic functionality for tests
-abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
-    // nothing for now, makes migration easy
 
-    function setUp() {
-        // reload config
-        global $conf, $config_cascade;
-        $conf = array();
-        foreach (array('default','local','protected') as $config_group) {
-            if (empty($config_cascade['main'][$config_group])) continue;
-            foreach ($config_cascade['main'][$config_group] as $config_file) {
-                if (@file_exists($config_file)) {
-                    include($config_file);
-                }
-            }
-        }
-
-        // reload license config
-        global $license;
-        $license = array();
-
-        // load the license file(s)
-        foreach (array('default','local') as $config_group) {
-            if (empty($config_cascade['license'][$config_group])) continue;
-            foreach ($config_cascade['license'][$config_group] as $config_file) {
-                if(@file_exists($config_file)){
-                    include($config_file);
-                }
-            }
-        }
-
-        // make real paths and check them
-        init_paths();
-        init_files();
-
-        // reset loaded plugins
-        global $plugin_controller_class, $plugin_controller;
-        $plugin_controller = new $plugin_controller_class();
-        global $EVENT_HANDLER;
-        $EVENT_HANDLER = new Doku_Event_Handler();
-
-        // reload language
-        $local = $conf['lang'];
-        trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
-    }
-
-}
-
-// Helper class to execute a fake request
-class TestRequest {
-
-    function execute() {
-        global $output_buffer;
-        $output_buffer = '';
-
-        // now execute dokuwiki and grep the output
-        header_remove();
-        ob_start('ob_start_callback');
-        include(DOKU_INC.'doku.php');
-        ob_end_flush();
-
-        // it's done, return the page result
-        return new TestResponse(
-                $output_buffer,
-                headers_list()
-            );
-    }
-}
-
-// holds a copy of all produced outputs of a TestRequest
-class TestResponse {
-    protected $content;
-    protected $headers;
-    protected $pq = null;
-
-    function __construct($content, $headers) {
-        $this->content = $content;
-        $this->headers = $headers;
-    }
-
-    function getContent() {
-        return $this->content;
-    }
-
-    function getHeaders() {
-        return $this->headers;
-    }
-
-    /**
-     * Query the response for a JQuery compatible CSS selector
-     *
-     * @link    https://code.google.com/p/phpquery/wiki/Selectors
-     * @param   string selector
-     * @returns object a PHPQuery object
-     */
-    function queryHTML($selector){
-        if(is_null($pq)) $pq = phpQuery::newDocument($this->content);
-        return pq($selector);
-    }
-}
