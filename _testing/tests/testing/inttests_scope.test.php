@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsScopeTest extends DokuWikiTest {
+class InttestsResetTest extends DokuWikiTest {
 	/**
 	 * It should be possible to have two test cases within one test class.
 	 */
