@@ -66,6 +66,7 @@ $config_cascade = array_merge(
             ),
 
         'plugins' => array(
+            'default'   => array(DOKU_CONF.'plugins.php'),
             'local'     => array(DOKU_CONF.'plugins.local.php'),
             'protected' => array(
                 DOKU_CONF.'plugins.required.php',
