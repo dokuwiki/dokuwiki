@@ -55,6 +55,7 @@ the PHPUnit migration and are disabled by default:
   * inc/parser/parser_formatting
   * inc/parser/xhtml_htmlphp (runkit)
   * inc/parser/xhtml_links
+  * testing/inttests_plugins (enabling/disabling of plugins is borked)
 
 
 TODO for the test framework
@@ -65,14 +66,10 @@ TODO for the test framework
       * unit test [ok]
       * integration test [ok]
     * plugins
-      * unit test
+      * unit test [ok]
       * integration test [untested]
-  * provide the possibility to enable/disable plugins
-  * cleanup dw globals like registered event hooks
   * cross platform compatibility: especially test windows (hint: tmp dir location)
   * update http://www.dokuwiki.org/devel:unittesting
   * optional: add helper methods to TestRequest for easy form submission
     * createForm(), ...
-  * optional: add helper methods to TestReponse for easy response parsing
-    * findElementById, findElementByXPath, ...
 

@@ -4,10 +4,34 @@
  * runtime inspection.
  */
 
+// output buffering
+$output_buffer = '';
+
+function ob_start_callback($buffer) {
+    global $output_buffer;
+    $output_buffer .= $buffer;
+}
+
+
+
 /**
  * Helper class to execute a fake request
  */
 class TestRequest {
+    var $server = array();
+    var $session = array();
+    var $get = array();
+    var $post = array();
+
+    function getServer($key) { return $this->server[$key]; }
+    function getSession($key) { return $this->session[$key]; }
+    function getGet($key) { return $this->get[$key]; }
+    function getPost($key) { return $this->post[$key]; }
+
+    function setServer($key, $value) { $this->server[$key] = $value; }
+    function setSession($key, $value) { $this->session[$key] = $value; }
+    function setGet($key, $value) { $this->get[$key] = $value; }
+    function setPost($key, $value) { $this->post[$key] = $value; }
 
     /**
      * Executes the request
@@ -15,6 +39,22 @@ class TestRequest {
      * @return TestResponse response
      */
     function execute() {
+        // save old environment
+        $server = $_SERVER;
+        $session = $_SESSION;
+        $get = $_GET;
+        $post = $_POST;
+        $request = $_REQUEST;
+
+        // fake environment
+        global $default_server_vars;
+        $_SERVER = array_merge($default_server_vars, $this->server);
+        $_SESSION = $this->session;
+        $_GET = $this->get;
+        $_POST = $this->post;
+        $_REQUEST = array_merge($_GET, $_POST);
+
+        // reset output buffer
         global $output_buffer;
         $output_buffer = '';
 
@@ -24,44 +64,19 @@ class TestRequest {
         include(DOKU_INC.'doku.php');
         ob_end_flush();
 
-        // it's done, return the page result
-        return new TestResponse(
-                $output_buffer,
-                headers_list()
-            );
-    }
-}
+        // create the response object
+        $response = new TestResponse(
+            $output_buffer,
+            headers_list()
+        );
 
-/**
- * holds a copy of all produced outputs of a TestRequest
- */
-class TestResponse {
-    protected $content;
-    protected $headers;
-    protected $pq = null;
+        // reset environment
+        $_SERVER = $server;
+        $_SESSION = $session;
+        $_GET = $get;
+        $_POST = $post;
+        $_REQUEST = $request;
 
-    function __construct($content, $headers) {
-        $this->content = $content;
-        $this->headers = $headers;
-    }
-
-    function getContent() {
-        return $this->content;
-    }
-
-    function getHeaders() {
-        return $this->headers;
-    }
-
-    /**
-     * Query the response for a JQuery compatible CSS selector
-     *
-     * @link    https://code.google.com/p/phpquery/wiki/Selectors
-     * @param   string selector
-     * @returns object a PHPQuery object
-     */
-    function queryHTML($selector){
-        if(is_null($pq)) $pq = phpQuery::newDocument($this->content);
-        return pq($selector);
+        return $response;
     }
 }

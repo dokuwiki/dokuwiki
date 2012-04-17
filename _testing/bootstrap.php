@@ -6,6 +6,7 @@
 if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
 require_once DOKU_UNITTEST.'core/phpQuery-onefile.php';
 require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
+require_once DOKU_UNITTEST.'core/TestResponse.php';
 require_once DOKU_UNITTEST.'core/TestRequest.php';
 require_once DOKU_UNITTEST.'core/TestUtils.php';
 
@@ -27,16 +28,12 @@ define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 // default plugins
 $default_plugins = array(
     'acl',
-    'action',
-    'admin',
     'config',
     'info',
     'plugin',
     'popularity',
-    'remote',
     'revert',
     'safefnrecode',
-    'syntax',
     'usermanager'
 );
 
@@ -75,7 +72,7 @@ mkdir(TMP_DIR);
 
 // cleanup dir after exit
 register_shutdown_function(function() {
-    TestUtils::rdelete(TMP_DIR);
+    //TestUtils::rdelete(TMP_DIR);
 });
 
 // populate default dirs
@@ -85,40 +82,21 @@ TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/data');
 // disable all non-default plugins by default
 $dh = dir(DOKU_INC.'lib/plugins/');
 while (false !== ($entry = $dh->read())) {
-    if ($entry == '.' || $entry == '..' || $entry == 'index.html') {
+    if ($entry == '.' || $entry == '..') {
         continue;
     }
 
-    if (substr($entry, strlen($entry) - 4) == '.php') {
-        $plugin = substr($entry, 0, strlen($entry) - 4);
-    } else {
-        $plugin = $entry;
+    if (!is_dir(DOKU_INC.'lib/plugins/'.$entry)) {
+        continue;
     }
 
-    if (!in_array($plugin, $default_plugins)) {
+    if (!in_array($entry, $default_plugins)) {
         // disable this plugin
-        TestUtils::fappend(DOKU_CONF.'plugins.local.php', "\$plugins['$plugin'] = 0;\n");
+        TestUtils::fappend(DOKU_CONF.'plugins.local.php', "\$plugins['$entry'] = 0;\n");
     }
 }
 $dh->close();
 
-// setup default global variables
-$_GET = array('id' => '');
-$_POST = array();
-$_REQUEST = array('id' => '');
-foreach ($default_server_vars as $key => $value) {
-    $_SERVER[$key] = $value;
-}
-
 // load dw
 require_once(DOKU_INC.'inc/init.php');
-
-// output buffering
-$output_buffer = '';
-
-function ob_start_callback($buffer) {
-    global $output_buffer;
-    $output_buffer .= $buffer;
-}
-
 
