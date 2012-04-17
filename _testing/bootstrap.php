@@ -6,6 +6,8 @@
  * runtime inspection.
  */
 
+require_once dirname(__FILE__).'/core/phpQuery-onefile.php';
+
 // helper for recursive copy()
 function rcopy($destdir, $source) {
     if (!is_dir($source)) {
@@ -232,8 +234,9 @@ class TestRequest {
 
 // holds a copy of all produced outputs of a TestRequest
 class TestResponse {
-    var $content;
-    var $headers;
+    protected $content;
+    protected $headers;
+    protected $pq = null;
 
     function __construct($content, $headers) {
         $this->content = $content;
@@ -246,5 +249,17 @@ class TestResponse {
 
     function getHeaders() {
         return $this->headers;
+    }
+
+    /**
+     * Query the response for a JQuery compatible CSS selector
+     *
+     * @link    https://code.google.com/p/phpquery/wiki/Selectors
+     * @param   string selector
+     * @returns object a PHPQuery object
+     */
+    function queryHTML($selector){
+        if(is_null($pq)) $pq = phpQuery::newDocument($this->content);
+        return pq($selector);
     }
 }
