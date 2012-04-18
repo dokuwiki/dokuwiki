@@ -17,7 +17,9 @@ class TestUtils {
             copy($source, $destdir.'/'.basename($source));
         } else {
             $newdestdir = $destdir.'/'.basename($source);
-            mkdir($newdestdir);
+            if (!is_dir($newdestdir)) {
+                mkdir($newdestdir);
+            }
 
             $dh = dir($source);
             while (false !== ($entry = $dh->read())) {

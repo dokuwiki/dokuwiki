@@ -71,11 +71,16 @@ $default_server_vars = array(
 mkdir(TMP_DIR);
 
 // cleanup dir after exit
-register_shutdown_function(function() {
-    TestUtils::rdelete(TMP_DIR);
-});
+if (getenv('PRESERVE_TMP') != 'true') {
+    register_shutdown_function(function() {
+        TestUtils::rdelete(TMP_DIR);
+    });
+} else {
+    echo ">>>> Preserving temporary directory: ".TMP_DIR."\n";
+}
 
 // populate default dirs
+TestUtils::rcopy(TMP_DIR, DOKU_INC.'/conf');
 TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/conf');
 TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/data');
 
