@@ -7,8 +7,8 @@ Content of this document:
   * Installation of PHPUnit via Pear
   * Running all Tests
   * Create new Tests
-  * Known Bad Tests
   * TODO for test framework
+  * Migration Protocol
 
 
 
