@@ -15,7 +15,8 @@ Content of this document:
 Requirements
 -----------------------------------------------------------------------------
 
-  * PHP Unit 3.7
+  * PHPUnit 3.6.10+
+    http://www.phpunit.de/
 
 
 Installation of PHPUnit via Pear
