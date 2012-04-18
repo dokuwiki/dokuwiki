@@ -21,7 +21,7 @@ ini_set('memory_limit','2048M');
 
 // prepare temporary directories
 define('DOKU_INC', dirname(dirname(__FILE__)).'/');
-define('TMP_DIR', '/tmp/dwtests-'.microtime(true));
+define('TMP_DIR', sys_get_temp_dir().'/dwtests-'.microtime(true));
 define('DOKU_CONF', TMP_DIR.'/conf/');
 define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
