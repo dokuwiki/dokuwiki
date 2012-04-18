@@ -13,32 +13,32 @@ function ob_start_callback($buffer) {
 }
 
 
-
 /**
  * Helper class to execute a fake request
  */
 class TestRequest {
-    var $server = array();
-    var $session = array();
-    var $get = array();
-    var $post = array();
 
-    function getServer($key) { return $this->server[$key]; }
-    function getSession($key) { return $this->session[$key]; }
-    function getGet($key) { return $this->get[$key]; }
-    function getPost($key) { return $this->post[$key]; }
+    private $server = array();
+    private $session = array();
+    private $get = array();
+    private $post = array();
 
-    function setServer($key, $value) { $this->server[$key] = $value; }
-    function setSession($key, $value) { $this->session[$key] = $value; }
-    function setGet($key, $value) { $this->get[$key] = $value; }
-    function setPost($key, $value) { $this->post[$key] = $value; }
+    public function getServer($key) { return $this->server[$key]; }
+    public function getSession($key) { return $this->session[$key]; }
+    public function getGet($key) { return $this->get[$key]; }
+    public function getPost($key) { return $this->post[$key]; }
+
+    public function setServer($key, $value) { $this->server[$key] = $value; }
+    public function setSession($key, $value) { $this->session[$key] = $value; }
+    public function setGet($key, $value) { $this->get[$key] = $value; }
+    public function setPost($key, $value) { $this->post[$key] = $value; }
 
     /**
      * Executes the request
      *
-     * @return TestResponse response
+     * @return TestResponse the resulting output of the request
      */
-    function execute() {
+    public function execute() {
         // save old environment
         $server = $_SERVER;
         $session = $_SESSION;

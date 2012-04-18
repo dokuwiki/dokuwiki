@@ -1,11 +1,18 @@
 <?php
 
+/**
+ * Helper class with some filesystem utilities.
+ */
 class TestUtils {
 
     /**
      * helper for recursive copy()
+     *
+     * @static
+     * @param $destdir string
+     * @param $source string
      */
-    static function rcopy($destdir, $source) {
+    public static function rcopy($destdir, $source) {
         if (!is_dir($source)) {
             copy($source, $destdir.'/'.basename($source));
         } else {
@@ -25,8 +32,11 @@ class TestUtils {
 
     /**
      * helper for recursive rmdir()/unlink()
+     *
+     * @static
+     * @param $target string
      */
-    static function rdelete($target) {
+    public static function rdelete($target) {
         if (!is_dir($target)) {
             unlink($target);
         } else {
@@ -42,8 +52,14 @@ class TestUtils {
         }
     }
 
-    // helper to append text to a file
-    static function fappend($file, $text) {
+    /**
+     * helper to append text to a file
+     *
+     * @static
+     * @param $file string
+     * @param $text string
+     */
+    public static function fappend($file, $text) {
         $fh = fopen($file, 'a');
         fwrite($fh, $text);
         fclose($fh);

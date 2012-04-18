@@ -3,35 +3,52 @@
  * holds a copy of all produced outputs of a TestRequest
  */
 class TestResponse {
-    protected $content;
-    protected $headers;
+    /**
+     * @var string
+     */
+    private $content;
+
+    /**
+     * @var array
+     */
+    private $headers;
 
     /**
      * @var phpQueryObject
      */
-    protected $pq = null;
+    private $pq = null;
 
+    /**
+     * @param $content string
+     * @param $headers array
+     */
     function __construct($content, $headers) {
         $this->content = $content;
         $this->headers = $headers;
     }
 
-    function getContent() {
+    /**
+     * @return string
+     */
+    public function getContent() {
         return $this->content;
     }
 
-    function getHeaders() {
+    /**
+     * @return array
+     */
+    public function getHeaders() {
         return $this->headers;
     }
 
     /**
      * Query the response for a JQuery compatible CSS selector
      *
-     * @link    https://code.google.com/p/phpquery/wiki/Selectors
-     * @param   string selector
-     * @returns object a PHPQuery object
+     * @link https://code.google.com/p/phpquery/wiki/Selectors
+     * @param $selector string
+     * @return phpQueryObject
      */
-    function queryHTML($selector){
+    public function queryHTML($selector){
         if(is_null($this->pq)) $this->pq = phpQuery::newDocument($this->content);
         return $this->pq->find($selector);
     }
