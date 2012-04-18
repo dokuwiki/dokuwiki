@@ -32,6 +32,11 @@ Running all Tests
   > cd _testing/
   > phpunit
 
+PHPUnit will fail on some systems with the error 'headers already sent'. The
+known workaround for that is to use the '--stderr' flag for PHPUnit:
+
+  > phpunit --stderr
+
 
 Create new Tests
 -----------------------------------------------------------------------------
@@ -42,21 +47,6 @@ file, implement a class, extending 'DokuWikiTest'. Every method, starting
 with 'test' will be called as a test (e.g. 'testIfThisIsValid');
 
 
-Known Bad Tests
------------------------------------------------------------------------------
-
-Every test should be green on every run but the following were broken after
-the PHPUnit migration and are disabled by default:
-
-  * inc/DifferenceEngine (removed FS#2161, FS#2223)
-  * inc/html_hilight (runkit)
-  * inc/indexer_idx_indexlengths (fs dependencies)
-  * inc/mail_send (integration test)
-  * inc/parser/parser_formatting
-  * inc/parser/xhtml_htmlphp (runkit)
-  * inc/parser/xhtml_links
-
-
 TODO for the test framework
 -----------------------------------------------------------------------------
 
@@ -64,3 +54,17 @@ TODO for the test framework
   * update http://www.dokuwiki.org/devel:unittesting
   * optional: add helper methods to TestRequest for easy form submission
     * createForm(), ...
+
+
+Migration Protocol
+-----------------------------------------------------------------------------
+
+The following tests were not migrated:
+
+  * inc/html_hilight (runkit)
+  * inc/indexer_idx_indexlengths (fs dependencies)
+  * inc/mail_send (integration test)
+  * inc/parser/parser_formatting
+  * inc/parser/xhtml_htmlphp (runkit)
+  * inc/parser/xhtml_links
+
