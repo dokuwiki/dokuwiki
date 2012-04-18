@@ -3,6 +3,12 @@
  * Helper class to provide basic functionality for tests
  */
 abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
+
+    // tests can override this
+    protected $pluginsEnabled = array();
+    // tests can override this
+    protected $pluginsDisabled = array();
+
     /**
      * Reset the DokuWiki environment before each test run
      *
@@ -49,6 +55,21 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
             if (!in_array($plugin, $default_plugins)) {
                 $plugin_controller->disable($plugin);
             }
+        }
+
+        // disable and enable configured plugins
+        foreach ($this->pluginsDisabled as $plugin) {
+            if (!$plugin_controller->disable($plugin)) {
+                throw new Exception('Could not disable plugin "'.$plugin.'"!');
+            }
+        }
+        foreach ($this->pluginsEnabled as $plugin) {
+            /*  enable() returns false but works...
+            if (!$plugin_controller->enable($plugin)) {
+                throw new Exception('Could not enable plugin "'.$plugin.'"!');
+            }
+            */
+            $plugin_controller->enable($plugin);
         }
 
         // reset event handler
