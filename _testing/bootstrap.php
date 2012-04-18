@@ -72,7 +72,7 @@ mkdir(TMP_DIR);
 
 // cleanup dir after exit
 register_shutdown_function(function() {
-    //TestUtils::rdelete(TMP_DIR);
+    TestUtils::rdelete(TMP_DIR);
 });
 
 // populate default dirs
