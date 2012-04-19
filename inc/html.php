@@ -1437,7 +1437,7 @@ function html_edit_form($param) {
     global $TEXT;
 
     if ($param['target'] !== 'section') {
-        msg('No editor for edit target ' . $param['target'] . ' found.', -1);
+        msg('No editor for edit target ' . hsc($param['target']) . ' found.', -1);
     }
 
     $attr = array('tabindex'=>'1');
