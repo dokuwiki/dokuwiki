@@ -516,6 +516,7 @@ function media_contentcheck($file,$mime){
  * Send a notify mail on uploads
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @fixme this should embed thumbnails of images in HTML version
  */
 function media_notify($id,$file,$mime,$old_rev=false){
     global $lang;
@@ -523,31 +524,24 @@ function media_notify($id,$file,$mime,$old_rev=false){
     global $INFO;
     if(empty($conf['notify'])) return; //notify enabled?
 
-    $ip = clientIP();
-
     $text = rawLocale('uploadmail');
-    $text = str_replace('@DATE@',dformat(),$text);
-    $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
-    $text = str_replace('@IPADDRESS@',$ip,$text);
-    $text = str_replace('@HOSTNAME@',gethostsbyaddrs($ip),$text);
-    $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
-    $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
-    $text = str_replace('@MIME@',$mime,$text);
-    $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
-    $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
+    $trep = array(
+                'MIME'  => $mime,
+                'MEDIA' => ml($id,'',true,'&',true),
+                'SIZE'  => filesize_h(filesize($file)),
+            );
+
     if ($old_rev && $conf['mediarevisions']) {
-        $text = str_replace('@OLD@', ml($id, "rev=$old_rev", true, '&', true), $text);
+        $trep['OLD'] = ml($id, "rev=$old_rev", true, '&', true);
     } else {
-        $text = str_replace('@OLD@', '', $text);
+        $trep['OLD'] = '---';
     }
 
-    if(empty($conf['mailprefix'])) {
-        $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
-    } else {
-        $subject = '['.$conf['mailprefix'].'] '.$lang['mail_upload'].' '.$id;
-    }
-
-    mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
+    $mail = new Mailer();
+    $mail->to($conf['notify']);
+    $mail->subject($lang['mail_upload'].' '.$id);
+    $mail->setBody($text,$trep);
+    return $mail->send();
 }
 
 /**

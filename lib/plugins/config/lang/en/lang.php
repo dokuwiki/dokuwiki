@@ -147,6 +147,7 @@ $lang['notify']      = 'Always send change notifications to this email address';
 $lang['registernotify'] = 'Always send info on newly registered users to this email address';
 $lang['mailfrom']    = 'Sender email address to use for automatic mails';
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
+$lang['htmlmail']    = 'Send better looking, but larger in size HTML multipart emails. Disable for plain text only mails.';
 
 /* Syndication Settings */
 $lang['sitemap']     = 'Generate Google sitemap this often (in days). 0 to disable';

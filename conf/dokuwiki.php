@@ -110,6 +110,7 @@ $conf['notify']      = '';               //send change info to this email (leave
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
+$conf['htmlmail']    = 1;                //send HTML multipart mails
 
 /* Syndication Settings */
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.
