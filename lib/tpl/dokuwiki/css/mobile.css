@@ -33,22 +33,22 @@
 }
 
 /* toc */
-.dokuwiki div.toc {
+#dw__toc {
     float: none;
     margin: 0 0 1em 0;
     width: auto;
     border-left-width: 0;
     border-bottom: 1px solid __border__;
 }
-[dir=rtl] .dokuwiki div.toc {
+[dir=rtl] #dw__toc {
     float: none;
     margin: 0 0 1em 0;
     border-right-width: 0;
 }
-.dokuwiki div.tocheader {
+#dw__toc h3 {
     padding: 0 0 .5em;
 }
-.dokuwiki #toc__inside {
+#dw__toc > div {
     padding: .2em 0 .5em;
 }
 
