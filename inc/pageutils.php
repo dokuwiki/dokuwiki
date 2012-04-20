@@ -355,19 +355,21 @@ function mediaFN($id, $rev=''){
 }
 
 /**
- * Returns the full filepath to a localized textfile if local
+ * Returns the full filepath to a localized file if local
  * version isn't found the english one is returned
  *
+ * @param  string $id  The id of the local file
+ * @param  string $ext The file extension (usually txt)
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function localeFN($id){
+function localeFN($id,$ext='txt'){
     global $conf;
-    $file = DOKU_CONF.'/lang/'.$conf['lang'].'/'.$id.'.txt';
+    $file = DOKU_CONF.'/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
     if(!@file_exists($file)){
-        $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.txt';
+        $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
         if(!@file_exists($file)){
             //fall back to english
-            $file = DOKU_INC.'inc/lang/en/'.$id.'.txt';
+            $file = DOKU_INC.'inc/lang/en/'.$id.'.'.$ext;
         }
     }
     return $file;
