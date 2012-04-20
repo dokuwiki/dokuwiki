@@ -1,8 +1,10 @@
 <?php
 // use no mbstring help here
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
-require_once DOKU_INC.'inc/utf8.php';
 
+/**
+ * @group slow
+ */
 class utf8_romanize_test extends PHPUnit_Framework_TestCase {
 
     /**
@@ -17,8 +19,7 @@ class utf8_romanize_test extends PHPUnit_Framework_TestCase {
             list($jap,$rom) = explode(';',trim($test));
 
             $chk = utf8_romanize($jap);
-            #if($chk != $rom) echo "$jap\t->\t$chk\t!=\t$rom\t($line)\n";
-            $this->assertEquals($chk,$rom);
+            $this->assertEquals($rom,$chk,"$jap\t->\t$chk\t!=\t$rom\t($line)");
             $line++;
         }
     }

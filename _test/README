@@ -39,7 +39,11 @@ You can run a single test file by providing it as an argument to phpunit:
 
   phpunit --stderr tests/inc/common_cleanText.test.php
 
-FIXME add info about test groups.
+You can also use groups to exclude certain test from running. For example use
+the following command to avoid long running test or tests accessing the
+Internet.
+
+  phpunit --stderr --exclude-group slow,internet
 
 ===== Create new Tests =====
 
