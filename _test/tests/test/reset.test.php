@@ -35,5 +35,4 @@ class InttestsScopeTest extends DokuWikiTest {
 
         $this->assertFalse($this->triggered, 'trigger');
     }
-
 }

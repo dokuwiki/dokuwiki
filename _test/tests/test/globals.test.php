@@ -5,9 +5,9 @@
  */
 class InttestsGlobalsTest extends DokuWikiTest {
 
-	/**
+    /**
      * every request should be with its own variables
-	 */
+     */
     function testFirstRun() {
         global $EVENT_HANDLER;
 
@@ -24,7 +24,7 @@ class InttestsGlobalsTest extends DokuWikiTest {
         );
 
         $request->execute();
-	}
+    }
 
     /**
      * @depends testFirstRun

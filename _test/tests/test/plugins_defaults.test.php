@@ -5,7 +5,7 @@
  */
 class InttestsPluginsDefaultTest extends DokuWikiTest {
 
-	function testTestingPluginDisabledDefault() {
+    function testTestingPluginDisabledDefault() {
         global $EVENT_HANDLER;
 
         $request = new TestRequest();
@@ -20,5 +20,5 @@ class InttestsPluginsDefaultTest extends DokuWikiTest {
         $request->execute();
 
         $this->assertFalse($hookTriggered, 'Testing plugin did trigger!');
-	}
+    }
 }
