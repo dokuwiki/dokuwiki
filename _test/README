@@ -1,46 +1,47 @@
-DokuWiki Test Suite
-=============================================================================
+====== DokuWiki Test Suite ======
 
-Content of this document:
+This is the test suit to automatically test various parts of DokuWiki.
 
-  * Requirements
-  * Installation of PHPUnit via Pear
-  * Running all Tests
-  * Create new Tests
-  * TODO for test framework
-  * Migration Protocol
+===== Requirements =====
 
+  * PHPUnit 3.6.10+ http://www.phpunit.de/
+  * PHP 5.3+ http://www.php.net
 
+===== PHPUnit Installation ======
 
-Requirements
------------------------------------------------------------------------------
+via PEAR:
 
-  * PHPUnit 3.6.10+
-    http://www.phpunit.de/
+  pear config-set auto_discover 1
+  pear upgrade
+  pear install pear.phpunit.de/PHPUnit
 
+on Windows:
 
-Installation of PHPUnit via Pear
------------------------------------------------------------------------------
-
-  > pear config-set auto_discover 1
-  > pear upgrade
-  > pear install pear.phpunit.de/PHPUnit
+  FIXME
 
 
-Running all Tests
------------------------------------------------------------------------------
+===== Running all Tests =====
 
-  > cd _testing/
-  > phpunit
+Just change to the ''_test'' directory and run phpunit:
 
-PHPUnit will fail on some systems with the error 'headers already sent'. The
-known workaround for that is to use the '--stderr' flag for PHPUnit:
+  cd _testing/
+  phpunit
 
-  > phpunit --stderr
+PHPUnit will fail on some systems with a //headers already sent// error.
+This is a known problem with PHPUnit, the error can be avoided by passing the
+'--stderr' flag to phpunit:
 
+  phpunit --stderr
 
-Create new Tests
------------------------------------------------------------------------------
+===== Running selected Tests =====
+
+You can run a single test file by providing it as an argument to phpunit:
+
+  phpunit --stderr tests/inc/common_cleanText.test.php
+
+FIXME add info about test groups.
+
+===== Create new Tests =====
 
 To create a test for DokuWiki, create a *.test.php file within the tests/
 folder. Please respect the folder structure and naming convention. Inside the
@@ -48,21 +49,19 @@ file, implement a class, extending 'DokuWikiTest'. Every method, starting
 with 'test' will be called as a test (e.g. 'testIfThisIsValid');
 
 
-TODO for the test framework
------------------------------------------------------------------------------
+===== TODO for the test framework =====
 
   * test cross platform compatibility: especially test windows
   * update http://www.dokuwiki.org/devel:unittesting
   * optional: add helper methods to TestRequest for easy form submission
     * createForm(), ...
+  * check PHP Unit test_helpers https://github.com/sebastianbergmann/php-test-helpers
 
 
-Migration Protocol
------------------------------------------------------------------------------
+===== Migration Protocol =====
 
 The following tests were not migrated:
 
-  * inc/html_hilight (runkit)
   * inc/indexer_idx_indexlengths (fs dependencies)
   * inc/mail_send (integration test)
   * inc/parser/parser_formatting
