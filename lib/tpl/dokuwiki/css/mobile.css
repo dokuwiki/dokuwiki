@@ -14,9 +14,29 @@
     width: 100%;
     float: none;
 }
+
 #dokuwiki__aside > .pad {
     margin: 0 0 .5em;
+
+    /* style like the page */
+    background: __background__;
+    color: inherit;
+    border: 1px solid #eee;
+    box-shadow: 0 0 .5em #999;
+    border-radius: 2px;
+    padding: 1em;
+    margin-bottom: .5em;
+    overflow: hidden;
+    word-wrap: break-word;
 }
+
+#dokuwiki__aside h3.aside {
+    padding: 0 0 .5em;
+    font-size: .875em;
+    letter-spacing: .1em;
+    border-bottom: 1px solid __border__;
+}
+
 
 .hasSidebar #dokuwiki__content {
     float: none;
@@ -45,6 +65,7 @@
     margin: 0 0 1em 0;
     border-right-width: 0;
 }
+
 #dw__toc h3 {
     padding: 0 0 .5em;
 }
@@ -194,6 +215,7 @@
 
 /*____________ content ____________*/
 
+#dokuwiki__aside > .pad,
 .dokuwiki div.page {
     padding: .5em;
 }
