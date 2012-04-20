@@ -14,7 +14,9 @@
     padding-left: 40px;
 }
 .dokuwiki div.page {
+    height: 190px;
     min-height: 190px; /* 30 (= height of icons) x 6 (= maximum number of possible tools) + 2x5 */
+    height: auto;
 }
 #dokuwiki__usertools {
     /* move the tools just outside of the site */
@@ -27,10 +29,12 @@
     right: -40px;
     /* on same vertical level as first headline, because .page has 2em padding */
     top: 2em;
+    width: 40px;
 }
 
 #dokuwiki__pagetools div.tools {
     position: fixed;
+    width: 40px;
 }
 
 #dokuwiki__pagetools ul {
@@ -66,7 +70,8 @@
 /* hide labels accessibly when neither on hover nor on focus */
 #dokuwiki__pagetools ul li a span {
     position: absolute;
-    left: -99999px;
+    clip: rect(0 0 0 0); /* IE7, IE6 */
+    clip: rect(0, 0, 0, 0);
 }
 
 /* show all tools on hover and individual tools on focus */
