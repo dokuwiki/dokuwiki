@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     bootstrap="bootstrap.php"
-    convertNoticesToExceptions="false"
-    backupGlobals="yes">
+    convertNoticesToExceptions="false">
 
     <testsuites>
         <testsuite name="DokuWiki Tests">
@@ -13,5 +12,15 @@
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">../</directory>
+            <exclude>
+                <directory suffix=".php">../_cs/</directory>
+                <directory suffix=".php">../_test/</directory>
+                <directory suffix=".php">../lib/plugins/*/_test/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 
 </phpunit>
