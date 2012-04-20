@@ -565,23 +565,25 @@ div.dokuwiki #dw__toc h3 {
   font-size: 1em;
 }
 
-div.dokuwiki #dw__toc h3 strong {
+div.dokuwiki .toggle_close .toggle,
+div.dokuwiki .toggle_open .toggle {
     border: 0.4em solid __background_alt__;
     float: right;
     display: block;
     margin: 0.4em 3px 0 0;
 }
 
-div.dokuwiki #dw__toc h3 strong span {
+div.dokuwiki .toggle_open .toggle span,
+div.dokuwiki .toggle_close .toggle span {
     display: none;
 }
 
-div.dokuwiki #dw__toc.close h3 strong {
+div.dokuwiki .toggle_close .toggle {
     margin-top: 0.4em;
     border-top: 0.4em solid __text__;
 }
 
-div.dokuwiki #dw__toc.open h3 strong {
+div.dokuwiki .toggle_open .toggle {
     margin-top: 0;
     border-bottom: 0.4em solid __text__;
 }

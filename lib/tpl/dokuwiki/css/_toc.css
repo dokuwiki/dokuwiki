@@ -26,11 +26,13 @@
     font-weight: bold;
 }
 
-#dw__toc h3 strong {
+.toggle_open .toggle,
+.toggle_close .toggle {
     float: right;
     margin: 0 .2em;
 }
-[dir=rtl] #dw__toc h3 strong {
+[dir=rtl] .toggle_open .toggle,
+[dir=rtl] .toggle_close .toggle {
     float: left;
 }
 

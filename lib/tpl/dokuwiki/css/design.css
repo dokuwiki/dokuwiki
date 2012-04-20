@@ -412,17 +412,19 @@
     letter-spacing: .1em;
 }
 
-#dw__toc h3 strong {
+.toggle_open .toggle,
+.toggle_close .toggle {
     background: transparent url(images/toc-arrows.png) 0 0;
     width: 8px;
     height: 5px;
     margin: .4em 0 0;
 }
-#dw__toc.close strong {
+.toggle_close .toggle {
     background-position: 0 -5px;
 }
 
-#dw__toc strong span {
+.toggle_open .toggle span,
+.toggle_close .toggle span {
     display: none;
 }
 
