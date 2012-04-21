@@ -33,6 +33,14 @@ This is a known problem with PHPUnit, the error can be avoided by passing the
 
   phpunit --stderr
 
+On windows you may have to enable OpenSSL support for https tests.
+Some of them point to httpclient_http.tests.php on the failure.
+To enable HTTPS support copy the ''libeay32.dll'' and ''ssleay32.dll'' to your ''windows\system32'' folder
+and add the following line to your php.ini in the extension section:
+<code ini>
+extension=php_openssl.dll
+</code>
+
 ===== Running selected Tests =====
 
 You can run a single test file by providing it as an argument to phpunit:
