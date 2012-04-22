@@ -405,26 +405,27 @@
     border-right: 1px solid __border__;
 }
 
-#dw__toc h3 {
+.dokuwiki h3.toggle {
     padding: .5em 1em;
     margin-bottom: 0;
     font-size: .875em;
     letter-spacing: .1em;
 }
+#dokuwiki__aside h3.toggle {
+    display: none;
+}
 
-.toggle_open .toggle,
-.toggle_close .toggle {
+.dokuwiki .toggle strong {
     background: transparent url(images/toc-arrows.png) 0 0;
     width: 8px;
     height: 5px;
     margin: .4em 0 0;
 }
-.toggle_close .toggle {
+.dokuwiki .toggle.closed strong {
     background-position: 0 -5px;
 }
 
-.toggle_open .toggle span,
-.toggle_close .toggle span {
+.dokuwiki .toggle strong span {
     display: none;
 }
 

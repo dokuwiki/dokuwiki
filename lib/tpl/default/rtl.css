@@ -98,8 +98,7 @@ div.dokuwiki #dw__toc h3 {
   text-align: right;
 }
 
-div.dokuwiki .toggle_close .toggle,
-div.dokuwiki .toggle_open .toggle {
+div.dokuwiki .toggle strong {
     float: left;
     margin: 0.4em 0 0 3px;
 }

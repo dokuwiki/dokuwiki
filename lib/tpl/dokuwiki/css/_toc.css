@@ -21,18 +21,16 @@
 
 /*____________ toc header ____________*/
 
-#dw__toc h3 {
+.dokuwiki h3.toggle {
     padding: .2em .5em;
     font-weight: bold;
 }
 
-.toggle_open .toggle,
-.toggle_close .toggle {
+.dokuwiki .toggle strong {
     float: right;
     margin: 0 .2em;
 }
-[dir=rtl] .toggle_open .toggle,
-[dir=rtl] .toggle_close .toggle {
+[dir=rtl] .dokuwiki .toggle strong {
     float: left;
 }
 
