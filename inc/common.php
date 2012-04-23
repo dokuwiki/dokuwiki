@@ -676,10 +676,15 @@ function clientismobile(){
 /**
  * Convert one or more comma separated IPs to hostnames
  *
+ * If $conf['dnslookups'] is disabled it simply returns the input string
+ *
  * @author Glen Harris <astfgl@iamnota.org>
  * @returns a comma separated list of hostnames
  */
 function gethostsbyaddrs($ips){
+    global $conf;
+    if(!$conf['dnslookups']) return $ips;
+
     $hosts = array();
     $ips = explode(',',$ips);
 

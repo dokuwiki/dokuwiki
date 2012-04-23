@@ -207,6 +207,7 @@ $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => ar
 $meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
+$meta['dnslookups']  = array('onoff');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
