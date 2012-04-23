@@ -1602,7 +1602,35 @@ function media_uploadform($ns, $auth, $fullscreen = false){
 
     echo NL.'<div id="mediamanager__uploader">'.NL;
     html_form('upload', $form);
+
     echo '</div>'.NL;
+
+    echo '<p class="maxsize">';
+    printf($lang['maxuploadsize'],filesize_h(media_getuploadsize()));
+    echo '</p>'.NL;
+
+}
+
+/**
+ * Returns the size uploaded files may have
+ *
+ * This uses a conservative approach using the lowest number found
+ * in any of the limiting ini settings
+ *
+ * @returns int size in bytes
+ */
+function media_getuploadsize(){
+    $okay = 0;
+
+    $post = (int) php_to_byte(@ini_get('post_max_size'));
+    $suho = (int) php_to_byte(@ini_get('suhosin.post.max_value_length'));
+    $upld = (int) php_to_byte(@ini_get('upload_max_filesize'));
+
+    if($post && ($post < $okay || $okay == 0)) $okay = $post;
+    if($suho && ($suho < $okay || $okay == 0)) $okay = $suho;
+    if($upld && ($upld < $okay || $okay == 0)) $okay = $upld;
+
+    return $okay;
 }
 
 /**
