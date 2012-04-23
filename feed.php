@@ -325,8 +325,8 @@ function rss_buildItems(&$rss,&$data,$opt){
                         $content = preg_replace('/(<!-- TOC START -->).*(<!-- TOC END -->)/s','',$content);
 
                         // add alignment for images
-                        $content = preg_replace('/class="medialeft"/s', 'class="medialeft" align="left"', $content);
-                        $content = preg_replace('/class="mediaright"/s', 'class="mediaright" align="right"', $content);
+                        $content = preg_replace('/(<img .*? class="medialeft")/s', '\\1 align="left"', $content);
+                        $content = preg_replace('/(<img .*? class="mediaright")/s', '\\1 align="right"', $content);
 
                         // make URLs work when canonical is not set, regexp instead of rerendering!
                         if(!$conf['canonical']){
