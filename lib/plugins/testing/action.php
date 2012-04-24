@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Plugin for testing the test system
+ *
+ * This plugin doesn't really do anything and should always be disabled
+ *
+ * @author Tobias Sarnowski <tobias@trustedco.de>
+ */
 class action_plugin_testing extends DokuWiki_Action_Plugin {
     function register(&$controller) {
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'dokuwikiStarted');
@@ -8,6 +14,6 @@ class action_plugin_testing extends DokuWiki_Action_Plugin {
     function dokuwikiStarted() {
         $param = array();
         trigger_event('TESTING_PLUGIN_INSTALLED', $param);
-        msg('hohoho');
+        msg('The testing plugin is enabled and should be disabled.',-1);
     }
 }
