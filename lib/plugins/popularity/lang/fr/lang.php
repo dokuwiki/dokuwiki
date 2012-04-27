@@ -14,6 +14,7 @@
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
+ * @author Yannick Aure <yannick.aure@gmail.com>
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargée)';
 $lang['submit']                = 'Envoyer les données';
