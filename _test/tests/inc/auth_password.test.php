@@ -17,8 +17,6 @@ class auth_password_test extends PHPUnit_Framework_TestCase {
         'mysql' => '4a1fa3780bd6fd55',
         'my411' => '*e5929347e25f82e19e4ebe92f1dc6b6e7c2dbd29',
         'kmd5'  => 'a579299436d7969791189acadd86fcb716',
-        'pmd5'  => '$P$abcdefgh1RC6Fd32heUzl7EYCG9uGw.',
-        'hmd5'  => '$H$abcdefgh1ZbJodHxmeXVAhEzTG7IAp.',
         'djangomd5'  => 'md5$abcde$d0fdddeda8cd92725d2b54148ac09158',
         'djangosha1' => 'sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678',
     );
@@ -36,6 +34,7 @@ class auth_password_test extends PHPUnit_Framework_TestCase {
         foreach($this->passes as $method => $hash){
             $info = "testing method $method";
             $this->assertTrue(auth_verifyPassword('foo'.$method, $hash), $info);
+            $this->assertFalse(auth_verifyPassword('bar'.$method, $hash), $info);
         }
     }
 
@@ -63,6 +62,20 @@ class auth_password_test extends PHPUnit_Framework_TestCase {
     function test_verifyPassword_fixedpmd5(){
         $this->assertTrue(auth_verifyPassword('test12345','$P$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
         $this->assertTrue(auth_verifyPassword('test12345','$H$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
+    }
+
+    /**
+     * pmd5 checking should throw an exception when a hash with a too high
+     * iteration count is passed
+     */
+    function test_verifyPassword_pmd5Exception(){
+        $except = false;
+        try{
+            auth_verifyPassword('foopmd5', '$H$abcdefgh1ZbJodHxmeXVAhEzTG7IAp.');
+        }catch (Exception $e){
+            $except = true;
+        }
+        $this->assertTrue($except);
     }
 
 }
