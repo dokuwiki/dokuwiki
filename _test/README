@@ -1,84 +1,82 @@
---------------------------------------------------------------------------------
- Dokuwiki Unit Test Suite
---------------------------------------------------------------------------------
-$Date: 2004/02/14 02:14:50 $
+====== DokuWiki Test Suite ======
 
-Credits: to the WACT team - http://www.phpwact.org, from whom the basis of
-this test suite was stolen
+This is the test suit to automatically test various parts of DokuWiki.
 
---------------------------------------------------------------------------------
-INSTALLING & SETUP
+===== Requirements =====
 
-1. Grab a copy of the SimpleTest unit testing framework an extract somewhere
+  * PHPUnit 3.6.10+ http://www.phpunit.de/
+  * PHP 5.3+ http://www.php.net
 
-	http://www.lastcraft.com/simple_test.php
-		or
-	http://sourceforge.net/projects/simpletest
+===== PHPUnit Installation ======
 
-2. Edit ./tests.ini
+via PEAR:
 
-	- TEST_ENABLED - set to "1" to allow the test suite to be used
-	by vistors to your site. Generally best to leave as 0 for
-	a productive site - running tests alot will hammer the server 
-	Note: you will still be able to run the tests from the command
-	line even when this is set to 0
+  pear config-set auto_discover 1
+  pear upgrade
+  pear install pear.phpunit.de/PHPUnit
 
-	- WEB_TEST_URL - this is for running "web tests" where SimpleTest
-	acts as a web browser and executes HTTP requests against pages.
-	Should point at your Dokuwiki URL e.g.
-	
-	http://localhost/dokuwiki
+on Windows:
 
-	- PROXY - if you're behind a proxy, specify it here
-	Note: username / password are optional e.g.
-
-	http://proxyuser:proxypwd@proxy.yourdomain.com:8080
-
-	- REMOTE_TEST_URL - it's possible to run the full test suite
-	remotely (over HTTP) with some XML goodness. This should
-        point at the URL of the test suite you want to test
-	See the following URL for more info;
-	http://www.sitepoint.com/blogs/2004/06/15/simple-test-remote-testing/
-
-	- Simple Test
-        Update the library_path to point at the directory where you installed
-	Simple Test
-
---------------------------------------------------------------------------------
-RUNNING THE TESTS
-
-You can run the tests in three ways. From the command line:
-
-	$ ./runtests.php -h
-
-Using a web browser;
-
-	http://localhost/dokuwiki/_test/index.php
-
-As remote tests run on a remote serveri (specified in tests.ini with REMOTE_TEST_URL) and driven locally from the command line using;
-
-	$ ./remotetests.php -h
+  FIXME
 
 
---------------------------------------------------------------------------------
-ADDING TESTS
+===== Running all Tests =====
 
-The test cases are kept in the './cases' directory in a directory structure
-mirroring that of the Dokuwiki's
+Just change to the ''_test'' directory and run phpunit:
 
-Files with the extension .group.php are group tests (collections of
-one or more seperate unit test files) - there should be one group
-test per file in Dokuwiki's real directory.
+  cd _testing/
+  phpunit
 
-Individual tests files have the extension .test.php
+PHPUnit will fail on some systems with a //headers already sent// error.
+This is a known problem with PHPUnit, the error can be avoided by passing the
+'--stderr' flag to phpunit:
 
-To add tests, create a .test.php file in the correct directory under ./cases
-Probably best to use one of the existing scripts as a basis
+  phpunit --stderr
 
-The test will not be executable via one of the test runners (see above).
+On windows you may have to enable OpenSSL support for https tests.
+Some of them point to httpclient_http.tests.php on the failure.
+To enable HTTPS support copy the ''libeay32.dll'' and ''ssleay32.dll'' to your ''windows\system32'' folder
+and add the following line to your php.ini in the extension section:
+<code ini>
+extension=php_openssl.dll
+</code>
 
-To add it to a group of tests, modify the corresponding .group.php file.
+===== Running selected Tests =====
 
-One exception to the naming convention - files named .webtest.php and
-.webgroup.php are run using SimpleTest's browser simulator.
+You can run a single test file by providing it as an argument to phpunit:
+
+  phpunit --stderr tests/inc/common_cleanText.test.php
+
+You can also use groups to exclude certain test from running. For example use
+the following command to avoid long running test or tests accessing the
+Internet.
+
+  phpunit --stderr --exclude-group slow,internet
+
+===== Create new Tests =====
+
+To create a test for DokuWiki, create a *.test.php file within the tests/
+folder. Please respect the folder structure and naming convention. Inside the
+file, implement a class, extending 'DokuWikiTest'. Every method, starting
+with 'test' will be called as a test (e.g. 'testIfThisIsValid');
+
+
+===== TODO for the test framework =====
+
+  * test cross platform compatibility: especially test windows
+  * update http://www.dokuwiki.org/devel:unittesting
+  * optional: add helper methods to TestRequest for easy form submission
+    * createForm(), ...
+  * check PHP Unit test_helpers https://github.com/sebastianbergmann/php-test-helpers
+
+
+===== Migration Protocol =====
+
+The following tests were not migrated:
+
+  * inc/indexer_idx_indexlengths (fs dependencies)
+  * inc/mail_send (integration test)
+  * inc/parser/parser_formatting
+  * inc/parser/xhtml_htmlphp (runkit)
+  * inc/parser/xhtml_links
 
