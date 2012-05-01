@@ -1,0 +1,64 @@
+====== DokuWiki ======
+
+[[doku>wiki:dokuwiki|{{wiki:dokuwiki-128.png }}]] DokuWiki is a standards compliant, simple to use [[wp>Wiki]], mainly aimed at creating documentation of any kind. It is targeted at developer teams, workgroups and small companies. It has a simple but powerful [[wiki:syntax]] which makes sure the datafiles remain readable outside the Wiki and eases the creation of structured texts. All data is stored in plain text files -- no database is required.
+
+Read the [[doku>manual|DokuWiki Manual]] to unleash the full power of DokuWiki.
+
+===== Download =====
+
+DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
+
+
+===== Read More =====
+
+All documentation and additional information besides the [[syntax|syntax description]] is maintained in the DokuWiki at [[doku>|www.dokuwiki.org]].
+
+**About DokuWiki**
+
+  * [[doku>features|A feature list]] :!:
+  * [[doku>users|Happy Users]]
+  * [[doku>press|Who wrote about it]]
+  * [[doku>blogroll|What Bloggers think]]
+  * [[http://www.wikimatrix.org/show/DokuWiki|Compare it with other wiki software]]
+
+**Installing DokuWiki**
+
+  * [[doku>requirements|System Requirements]]
+  * [[http://www.splitbrain.org/go/dokuwiki|Download DokuWiki]] :!:
+  * [[doku>changes|Change Log]]
+  * [[doku>Install|How to install or upgrade]] :!:
+  * [[doku>config|Configuration]]
+
+**Using DokuWiki**
+
+  * [[doku>syntax|Wiki Syntax]]
+  * [[doku>manual|The manual]] :!:
+  * [[doku>FAQ|Frequently Asked Questions (FAQ)]]
+  * [[doku>glossary|Glossary]]
+  * [[http://search.dokuwiki.org|Search for DokuWiki help and documentation]]
+
+**Customizing DokuWiki**
+
+  * [[doku>tips|Tips and Tricks]]
+  * [[doku>Template|How to create and use templates]]
+  * [[doku>plugins|Installing plugins]]
+  * [[doku>development|Development Resources]]
+
+**DokuWiki Feedback and Community**
+
+  * [[doku>newsletter|Subscribe to the newsletter]] :!:
+  * [[doku>mailinglist|Join the mailing list]]
+  * [[http://forum.dokuwiki.org|Check out the user forum]]
+  * [[doku>irc|Talk to other users in the IRC channel]]
+  * [[http://bugs.splitbrain.org/index.php?project=1|Submit bugs and feature wishes]]
+  * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
+  * [[doku>thanks|Some humble thanks]]
+
+
+===== Copyright =====
+
+2004-2010 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[http://forum.dokuwiki.org|forum]] instead)) and the DokuWiki Community
+
+The DokuWiki engine is licensed under [[http://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
+
+Not sure what this means? See the [[doku>faq:license|FAQ on the Licenses]].
