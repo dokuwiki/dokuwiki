@@ -316,6 +316,11 @@ class PassHash {
      * Uses salted MD5 hashs. Salt is 1+8 bytes long, 1st byte is the
      * iteration count when given, for null salts $compute is used.
      *
+     * The actual iteration count is the given count squared, maximum is
+     * 30 (-> 1073741824). If a higher one is given, the function throws
+     * an exception.
+     *
+     * @link  http://www.openwall.com/phpass/
      * @param string $clear - the clear text to hash
      * @param string $salt  - the salt to use, null for random
      * @param string $magic - the hash identifier (P or H)
@@ -330,6 +335,12 @@ class PassHash {
         }
         $iterc = $salt[0]; // pos 0 of salt is iteration count
         $iter = strpos($itoa64,$iterc);
+
+        if($iter > 30){
+            throw new Exception("Too high iteration count ($iter) in ".
+                                __class__.'::'.__function__);
+        }
+
         $iter = 1 << $iter;
         $salt = substr($salt,1,8);
 
