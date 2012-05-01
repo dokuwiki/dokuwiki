@@ -1,7 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/init.php';
-
 class form_test extends DokuWikiTest {
 
   function _testform() {

@@ -1,7 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/init.php';
-
 class init_getBaseURL_test extends DokuWikiTest {
 
     /**

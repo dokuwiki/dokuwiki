@@ -1,24 +1,8 @@
 <?php
-/**
-* @version $Id: parser.inc.php,v 1.2 2005/03/25 21:00:22 harryf Exp $
-* @package Doku
-* @subpackage Tests
-*/
 
-/**
-* Includes
-*/
-require_once DOKU_INC . 'inc/init.php';
-require_once DOKU_INC . 'inc/confutils.php';
 require_once DOKU_INC . 'inc/parser/parser.php';
 require_once DOKU_INC . 'inc/parser/handler.php';
-require_once DOKU_INC . 'inc/events.php';
-require_once DOKU_INC . 'inc/mail.php';
 
-/**
-* @package Doku
-* @subpackage Tests
-*/
 abstract class TestOfDoku_Parser extends PHPUnit_Framework_TestCase {
 
     var $P;

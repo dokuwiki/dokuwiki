@@ -1,7 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/init.php';
-
 class parserutils_set_metadata_during_rendering_test extends DokuWikiTest {
     // the id used for this test case
     private $id;

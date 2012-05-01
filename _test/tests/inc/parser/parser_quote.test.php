@@ -21,11 +21,11 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
             array('cdata',array("klm")),
             array('p_close',array()),
             array('document_end',array()),
-            
+
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testQuoteWinCr() {
         $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
         $this->P->parse("abc\r\n> def\r\n>>ghi\r\nklm");
@@ -44,11 +44,11 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
             array('cdata',array("klm")),
             array('p_close',array()),
             array('document_end',array()),
-            
+
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testQuoteMinumumContext() {
         $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
         $this->P->parse("\n> def\n>>ghi\n ");
@@ -61,11 +61,11 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
             array('quote_close',array()),
             array('quote_close',array()),
             array('document_end',array()),
-            
+
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testQuoteEol() {
         $this->P->addMode('quote',new Doku_Parser_Mode_Quote());
         $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
@@ -85,7 +85,7 @@ class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
             array('cdata',array("klm")),
             array('p_close',array()),
             array('document_end',array()),
-            
+
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }

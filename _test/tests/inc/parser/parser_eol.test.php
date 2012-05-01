@@ -31,7 +31,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testWinEol() {
         $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
         $this->P->parse("Foo\r\nBar");
@@ -44,7 +44,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testLinebreak() {
         $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
         $this->P->parse('Foo\\\\ Bar');
@@ -59,12 +59,12 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testLinebreakPlusEol() {
         $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
         $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
         $this->P->parse('Foo\\\\'."\n\n".'Bar');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -78,7 +78,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testLinebreakInvalid() {
         $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
         $this->P->parse('Foo\\\\Bar');

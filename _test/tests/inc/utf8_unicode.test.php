@@ -1,7 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/utf8.php';
-
 // use no mbstring help here
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 

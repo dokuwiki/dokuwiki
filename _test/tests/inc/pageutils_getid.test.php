@@ -1,12 +1,10 @@
 <?php
-require_once DOKU_INC.'inc/utf8.php';
-require_once DOKU_INC.'inc/pageutils.php';
 
 class init_getID_test extends DokuWikiTest {
 
     /**
      * fetch media files with basedir and urlrewrite=2
-     * 
+     *
      * data provided by Jan Decaluwe <jan@jandecaluwe.com>
      */
     function test1(){

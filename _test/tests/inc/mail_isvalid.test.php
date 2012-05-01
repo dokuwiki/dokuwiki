@@ -1,6 +1,4 @@
 <?php
-// use no mbstring help here
-require_once DOKU_INC.'inc/init.php';
 
 class mail_isvalid extends DokuWikiTest {
 

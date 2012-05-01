@@ -1,8 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/init.php';
-require_once DOKU_INC.'inc/common.php';
-
 class common_obfuscate_test extends DokuWikiTest {
 
     function test_none(){

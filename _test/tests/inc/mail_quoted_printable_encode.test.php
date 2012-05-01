@@ -1,7 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/mail.php';
-
 class mail_quotedprintable_encode extends DokuWikiTest {
 
     function test_simple(){

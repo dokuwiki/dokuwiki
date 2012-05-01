@@ -1,5 +1,4 @@
 <?php
-require_once DOKU_INC.'inc/init.php';
 
 class init_fullpath_test extends DokuWikiTest {
 

@@ -1,12 +1,6 @@
 <?php
-require_once DOKU_INC.'inc/init.php';
-require_once DOKU_INC.'inc/IXR_Library.php';
 
 class ixr_library_ixr_message_test extends DokuWikiTest {
-
-
-
-
 
     function test_untypedvalue1(){
         $xml = '<?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>wiki.getBackLinks</methodName><params><param><value> change  </value></param></params></methodCall>';

@@ -1,9 +1,5 @@
 <?php
 
-require_once DOKU_INC . 'inc/init.php';
-require_once DOKU_INC . 'inc/RemoteAPICore.php';
-require_once DOKU_INC . 'inc/auth/basic.class.php';
-
 class MockAuth extends auth_basic {
     function isCaseSensitive() { return true; }
 }

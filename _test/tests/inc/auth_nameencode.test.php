@@ -1,8 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/init.php';
-require_once DOKU_INC.'inc/auth.php';
-
 class auth_nameencode_test extends DokuWikiTest {
 
     function teardown() {

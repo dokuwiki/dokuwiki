@@ -1,5 +1,4 @@
 <?php
-require_once DOKU_INC.'inc/init.php';
 
 class search_test extends DokuWikiTest {
     function strip_index_data($entry) {

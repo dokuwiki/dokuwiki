@@ -21,7 +21,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeader2() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n  ===== Header ===== \n def");
@@ -40,7 +40,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeader3() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n ==== Header ==== \n def");
@@ -59,7 +59,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeader4() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n === Header === \n def");
@@ -78,7 +78,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeader5() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n  == Header ==  \n def");
@@ -116,7 +116,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeader2UnevenBigger() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n  ===== Header ===========  \n def");
@@ -135,7 +135,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeaderLarge() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n ======= Header ======= \n def");
@@ -154,7 +154,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeaderSmall() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n= Header =\n def");
@@ -167,8 +167,8 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
-    
+
+
     function testHeader1Mixed() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n====== == Header == ======\n def");
@@ -206,7 +206,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
     function testHeaderMultiline() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->parse("abc \n== ====== Header\n ====== ==\n def");
@@ -225,13 +225,13 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
 #    function testNoToc() {
 #        $this->P->addMode('notoc',new Doku_Parser_Mode_NoToc());
 #        $this->P->parse('abc ~~NOTOC~~ def');
 #        $this->assertFalse($this->H->meta['toc']);
 #    }
-    
+
     function testHeader1Eol() {
         $this->P->addMode('header',new Doku_Parser_Mode_Header());
         $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
@@ -250,7 +250,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
             array('document_end',array()),
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
-        
+
     }
 
     function testHeaderMulti2() {
@@ -277,6 +277,6 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-    
+
 }
 

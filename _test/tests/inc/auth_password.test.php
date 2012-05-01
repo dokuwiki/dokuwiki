@@ -1,8 +1,5 @@
 <?php
 
-require_once DOKU_INC.'inc/init.php';
-require_once DOKU_INC.'inc/auth.php';
-
 class auth_password_test extends PHPUnit_Framework_TestCase {
 
     // hashes for the password foo$method, using abcdefgh as salt

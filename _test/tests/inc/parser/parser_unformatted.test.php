@@ -2,7 +2,7 @@
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
-    
+
     function testNowiki() {
         $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
         $this->P->parse("Foo <nowiki>testing</nowiki> Bar");
@@ -17,9 +17,9 @@ class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
         );
 
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
-        
+
     }
-    
+
     function testDoublePercent() {
         $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
         $this->P->parse("Foo %%testing%% Bar");
