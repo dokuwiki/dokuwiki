@@ -136,7 +136,9 @@ class JSON {
      * @access   public
      */
     function encode($var) {
-        if (function_exists('json_encode')) return json_encode($var);
+        if (!$this->skipnative && function_exists('json_encode')){
+            return json_encode($var);
+        }
         switch (gettype($var)) {
             case 'boolean':
                 return $var ? 'true' : 'false';
