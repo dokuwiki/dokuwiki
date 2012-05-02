@@ -144,7 +144,7 @@ class JSON_AssocArray_TestCase extends DokuWikiTest {
     function setUp() {
         parent::setUp();
 
-        $this->json_l = new JSON(SERVICES_JSON_LOOSE_TYPE);
+        $this->json_l = new JSON(JSON_LOOSE_TYPE);
         $this->json_l->skipnative = true;
         $this->json_s = new JSON();
         $this->json_s->skipnative = true;
@@ -196,7 +196,7 @@ class JSON_NestedArray_TestCase extends DokuWikiTest {
     function setUp() {
         parent::setUp();
 
-        $this->json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+        $this->json = new JSON(JSON_LOOSE_TYPE);
         $this->json->skipnative = true;
 
         $this->str1 = '[{"this":"that"}]';
@@ -269,9 +269,9 @@ class JSON_Object_TestCase extends DokuWikiTest {
     function setUp() {
         parent::setUp();
 
-        $this->json_l = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+        $this->json_l = new JSON(JSON_LOOSE_TYPE);
         $this->json_l->skipnative = true;
-        $this->json_s = new Services_JSON();
+        $this->json_s = new JSON();
         $this->json_s->skipnative = true;
 
         $this->obj_j = '{"a_string":"\"he\":llo}:{world","an_array":[1,2,3],"obj":{"a_number":123}}';
@@ -305,7 +305,7 @@ class JSON_Spaces_Comments_TestCase extends DokuWikiTest {
     function setUp() {
         parent::setUp();
 
-        $this->json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+        $this->json = new JSON(JSON_LOOSE_TYPE);
         $this->json->skipnative = true;
 
         $this->obj_j = '{"a_string":"\"he\":llo}:{world","an_array":[1,2,3],"obj":{"a_number":123}}';
@@ -350,10 +350,10 @@ class JSON_Empties_TestCase extends DokuWikiTest {
     function setUp() {
         parent::setUp();
 
-        $this->json_l = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+        $this->json_l = new JSON(JSON_LOOSE_TYPE);
         $this->json_l->skipnative = true;
         $this->json_l->skipnative = true;
-        $this->json_s = new Services_JSON();
+        $this->json_s = new JSON();
         $this->json_s->skipnative = true;
 
         $this->obj0_j = '{}';
@@ -392,7 +392,7 @@ class JSON_UnquotedKeys_TestCase extends DokuWikiTest {
     function setUp() {
         parent::setUp();
 
-        $this->json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+        $this->json = new JSON(JSON_LOOSE_TYPE);
         $this->json->skipnative = true;
 
         $this->arn = array(0=> array(0=> 'tan', 'model' => 'sedan'), 1 => array(0 => 'red', 'model' => 'sports'));
@@ -413,43 +413,3 @@ class JSON_UnquotedKeys_TestCase extends DokuWikiTest {
     }
 }
 
-class JSON_ErrorSuppression_TestCase extends DokuWikiTest {
-
-    function setUp() {
-        parent::setUp();
-
-        $this->json = new Services_JSON();
-        $this->json->skipnative = true;
-        $this->json_ = new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS);
-        $this->json_->skipnative = true;
-
-        $this->res = tmpfile();
-        $this->res_j_ = 'null';
-        $this->res_d = 'naked resource';
-
-        $this->arr = array('a', 1, tmpfile());
-        $this->arr_j_ = '["a",1,null]';
-        $this->arr_d = 'array with string, number and resource';
-
-        $obj = new stdClass();
-        $obj->a_string = '"he":llo}:{world';
-        $obj->an_array = array(1, 2, 3);
-        $obj->resource = tmpfile();
-
-        $this->obj = $obj;
-        $this->obj_j_ = '{"a_string":"\"he\":llo}:{world","an_array":[1,2,3],"resource":null}';
-        $this->obj_d = 'object with properties, array, and nested resource';
-    }
-
-    function test_to_JSON() {
-        $this->assertTrue(Services_JSON::isError($this->json->encode($this->res)), "resource case: {$this->res_d}");
-        $this->assertTrue(Services_JSON::isError($this->json->encode($this->arr)), "array case: {$this->arr_d}");
-        $this->assertTrue(Services_JSON::isError($this->json->encode($this->obj)), "object case: {$this->obj_d}");
-    }
-
-    function test_to_JSON_suppressed() {
-        $this->assertEquals($this->res_j_, $this->json_->encode($this->res), "resource case: {$this->res_d}");
-        $this->assertEquals($this->arr_j_, $this->json_->encode($this->arr), "array case: {$this->arr_d}");
-        $this->assertEquals($this->obj_j_, $this->json_->encode($this->obj), "object case: {$this->obj_d}");
-    }
-}
