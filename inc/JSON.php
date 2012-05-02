@@ -47,8 +47,6 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  *
- * @category
- * @package
  * @author      Michal Migurski <mike-json@teczno.com>
  * @author      Matt Knapp <mdknapp[at]gmail[dot]com>
  * @author      Brett Stimmerman <brettstimmerman[at]gmail[dot]com>
@@ -97,19 +95,6 @@ define('JSON_STRICT_TYPE', 11);
 
 /**
  * Converts to and from JSON format.
- *
- * @category
- * @package
- * @author     Michal Migurski <mike-json@teczno.com>
- * @author     Matt Knapp <mdknapp[at]gmail[dot]com>
- * @author     Brett Stimmerman <brettstimmerman[at]gmail[dot]com>
- * @copyright  2005 Michal Migurski
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version
- * @link
- * @see
- * @since
- * @deprecated
  */
 class JSON {
 
