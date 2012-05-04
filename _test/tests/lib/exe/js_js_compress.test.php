@@ -110,6 +110,17 @@ class js_js_compress_test extends DokuWikiTest {
         $this->assertEquals(js_compress($text),$text);
     }
 
+    function test_multilinestring(){
+        $text = 'var foo = "this is a \\
+multiline string";';
+        $this->assertEquals('var foo="this is a multiline string";',js_compress($text));
+
+        $text = "var foo = 'this is a \\
+multiline string';";
+        $this->assertEquals("var foo='this is a multiline string';",js_compress($text));
+    }
+
+
     /**
      * Test the files provided with the original JsStrip
      */

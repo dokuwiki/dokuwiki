@@ -307,7 +307,10 @@ function js_compress($s){
                     $j += 1;
                 }
             }
-            $result .= substr($s,$i,$j+1);
+            $string  = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
             $i = $i + $j + 1;
             continue;
         }
@@ -322,7 +325,10 @@ function js_compress($s){
                     $j += 1;
                 }
             }
-            $result .= substr($s,$i,$j+1);
+            $string = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
             $i = $i + $j + 1;
             continue;
         }
