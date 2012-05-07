@@ -10,12 +10,12 @@ div.success,
 div.notify {
     color: #000;
     background-repeat: no-repeat;
-    background-position: .5em 50%;
+    background-position: 8px 50%;
     border: 1px solid;
     font-size: 90%;
-    margin: 0.5em 0;
+    margin: 0 0 0.5em;
     padding: 0.4em;
-    padding-left: 3em;
+    padding-left: 32px;
     overflow: hidden;
     border-radius: 5px;
 }
