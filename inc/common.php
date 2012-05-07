@@ -676,10 +676,15 @@ function clientismobile(){
 /**
  * Convert one or more comma separated IPs to hostnames
  *
+ * If $conf['dnslookups'] is disabled it simply returns the input string
+ *
  * @author Glen Harris <astfgl@iamnota.org>
  * @returns a comma separated list of hostnames
  */
 function gethostsbyaddrs($ips){
+    global $conf;
+    if(!$conf['dnslookups']) return $ips;
+
     $hosts = array();
     $ips = explode(',',$ips);
 
@@ -789,8 +794,8 @@ function formText($text){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function rawLocale($id){
-    return io_readFile(localeFN($id));
+function rawLocale($id,$ext='txt'){
+    return io_readFile(localeFN($id,$ext));
 }
 
 /**
@@ -1086,8 +1091,9 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
     global $lang;
     global $conf;
     global $INFO;
+    global $DIFF_INLINESTYLES;
 
-    // decide if there is something to do
+    // decide if there is something to do, eg. whom to mail
     if($who == 'admin'){
         if(empty($conf['notify'])) return; //notify enabled?
         $text = rawLocale('mailtext');
@@ -1112,49 +1118,54 @@ function notify($id,$who,$rev='',$summary='',$minor=false,$replace=array()){
         return; //just to be safe
     }
 
-    $ip   = clientIP();
-    $text = str_replace('@DATE@',dformat(),$text);
-    $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
-    $text = str_replace('@IPADDRESS@',$ip,$text);
-    $text = str_replace('@HOSTNAME@',gethostsbyaddrs($ip),$text);
-    $text = str_replace('@NEWPAGE@',wl($id,'',true,'&'),$text);
-    $text = str_replace('@PAGE@',$id,$text);
-    $text = str_replace('@TITLE@',$conf['title'],$text);
-    $text = str_replace('@DOKUWIKIURL@',DOKU_URL,$text);
-    $text = str_replace('@SUMMARY@',$summary,$text);
-    $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
-    $text = str_replace('@NAME@',$INFO['userinfo']['name'],$text);
-    $text = str_replace('@MAIL@',$INFO['userinfo']['mail'],$text);
+    // prepare replacements (keys not set in hrep will be taken from trep)
+    $trep = array(
+        'NEWPAGE' => wl($id,'',true,'&'),
+        'PAGE'    => $id,
+        'SUMMARY' => $summary
+    );
+    $trep = array_merge($trep,$replace);
+    $hrep = array();
 
-    foreach ($replace as $key => $substitution) {
-        $text = str_replace('@'.strtoupper($key).'@',$substitution, $text);
-    }
-
+    // prepare content
     if($who == 'register'){
-        $subject = $lang['mail_new_user'].' '.$summary;
+        $subject         = $lang['mail_new_user'].' '.$summary;
     }elseif($rev){
-        $subject = $lang['mail_changed'].' '.$id;
-        $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",true,'&'),$text);
-        $df  = new Diff(explode("\n",rawWiki($id,$rev)),
-                        explode("\n",rawWiki($id)));
-        $dformat = new UnifiedDiffFormatter();
-        $diff    = $dformat->format($df);
+        $subject         = $lang['mail_changed'].' '.$id;
+        $trep['OLDPAGE'] = wl($id,"rev=$rev",true,'&');
+        $df              = new Diff(explode("\n",rawWiki($id,$rev)),
+                                    explode("\n",rawWiki($id)));
+        $dformat         = new UnifiedDiffFormatter();
+        $tdiff           = $dformat->format($df);
+
+        $DIFF_INLINESTYLES = true;
+        $dformat         = new InlineDiffFormatter();
+        $hdiff           = $dformat->format($df);
+        $hdiff           = '<table>'.$hdiff.'</table>';
+        $DIFF_INLINESTYLES = false;
     }else{
-        $subject=$lang['mail_newpage'].' '.$id;
-        $text = str_replace('@OLDPAGE@','none',$text);
-        $diff = rawWiki($id);
+        $subject         = $lang['mail_newpage'].' '.$id;
+        $trep['OLDPAGE'] = '---';
+        $tdiff           = rawWiki($id);
+        $hdiff           = nl2br(hsc($tdiff));
     }
-    $text = str_replace('@DIFF@',$diff,$text);
-    if(empty($conf['mailprefix'])) {
-        if(utf8_strlen($conf['title']) < 20) {
-            $subject = '['.$conf['title'].'] '.$subject;
-        }else{
-            $subject = '['.utf8_substr($conf['title'], 0, 20).'...] '.$subject;
-        }
-    }else{
-        $subject = '['.$conf['mailprefix'].'] '.$subject;
+    $trep['DIFF'] = $tdiff;
+    $hrep['DIFF'] = $hdiff;
+
+    // send mail
+    $mail = new Mailer();
+    $mail->to($to);
+    $mail->bcc($bcc);
+    $mail->subject($subject);
+    $mail->setBody($text,$trep,$hrep);
+    if($who == 'subscribers'){
+        $mail->setHeader(
+            'List-Unsubscribe',
+            '<'.wl($id,array('do'=>'subscribe'),true,'&').'>',
+            false
+        );
     }
-    mail_send($to,$subject,$text,$conf['mailfrom'],'',$bcc);
+    return $mail->send();
 }
 
 /**

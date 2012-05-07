@@ -49,6 +49,7 @@ function load_autoload($name){
     static $classes = null;
     if(is_null($classes)) $classes = array(
         'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
+        'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
         'JSON'                  => DOKU_INC.'inc/JSON.php',
         'adLDAP'                => DOKU_INC.'inc/adLDAP.php',
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
@@ -76,8 +77,9 @@ function load_autoload($name){
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
+        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
-        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php', 
+        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',

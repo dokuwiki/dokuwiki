@@ -110,6 +110,7 @@ $conf['notify']      = '';               //send change info to this email (leave
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
+$conf['htmlmail']    = 1;                //send HTML multipart mails
 
 /* Syndication Settings */
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.
@@ -157,6 +158,7 @@ $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generat
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
 
 /* Network Settings */
+$conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups
 // Proxy setup - if your Server needs a proxy to access the web set these
 $conf['proxy']['host']    = '';
 $conf['proxy']['port']    = '';

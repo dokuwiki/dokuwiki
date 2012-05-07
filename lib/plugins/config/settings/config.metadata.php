@@ -177,6 +177,7 @@ $meta['notify']         = array('email', '_multiple' => true);
 $meta['registernotify'] = array('email');
 $meta['mailfrom']       = array('richemail');
 $meta['mailprefix']     = array('string');
+$meta['htmlmail']       = array('onoff');
 
 $meta['_syndication'] = array('fieldset');
 $meta['sitemap']     = array('numeric');
@@ -206,6 +207,7 @@ $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => ar
 $meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
+$meta['dnslookups']  = array('onoff');
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
