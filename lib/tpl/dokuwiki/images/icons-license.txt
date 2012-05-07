@@ -1,3 +1,4 @@
+Icons for:  sitetools.png, email.png, external-link.png and unc.png
 Icon set:   Dusseldorf
 Designer:   pc.de
 License:    Creative Commons Attribution License [http://creativecommons.org/licenses/by/3.0/]
