@@ -18,8 +18,6 @@ div.notify {
     padding-left: 3em;
     overflow: hidden;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 div.error {
