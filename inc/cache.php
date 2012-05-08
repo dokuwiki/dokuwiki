@@ -15,9 +15,10 @@ class cache {
     var $depends = array(); // array containing cache dependency information,
     //   used by _useCache to determine cache validity
 
-    var $_event = '';       // event to be triggered during useCache
+    protected $_event = '';        // event to be triggered during useCache
+    protected $_time = null;       // last modified time of the cache
 
-    function cache($key,$ext) {
+    function __construct($key,$ext) {
         $this->key = $key;
         $this->ext = $ext;
         $this->cache = getCacheName($key,$ext);
@@ -48,7 +49,7 @@ class cache {
     }
 
     /**
-     * private method containing cache use decision logic
+     * protected method containing cache use decision logic
      *
      * this function processes the following keys in the depends array
      *   purge - force a purge on any non empty value
@@ -59,7 +60,7 @@ class cache {
      *
      * @return bool               see useCache()
      */
-    function _useCache() {
+    protected function _useCache() {
 
         if (!empty($this->depends['purge'])) return false;              // purge requested?
         if (!($this->_time = @filemtime($this->cache))) return false;   // cache exists?
@@ -83,7 +84,7 @@ class cache {
      * it should not remove any existing dependencies and
      * it should only overwrite a dependency when the new value is more stringent than the old
      */
-    function _addDependencies() {
+    protected function _addDependencies() {
         if (isset($_REQUEST['purge'])) $this->depends['purge'] = true;   // purge requested
     }
 
@@ -121,7 +122,7 @@ class cache {
      * @param    bool   $success   result of this cache use attempt
      * @return   bool              pass-thru $success value
      */
-    function _stats($success) {
+    protected function _stats($success) {
         global $conf;
         static $stats = null;
         static $file;
@@ -161,23 +162,23 @@ class cache_parser extends cache {
     var $file = '';       // source file for cache
     var $mode = '';       // input mode (represents the processing the input file will undergo)
 
-    var $_event = 'PARSER_CACHE_USE';
+    protected $_event = 'PARSER_CACHE_USE';
 
-    function cache_parser($id, $file, $mode) {
+    function __construct($id, $file, $mode) {
         if ($id) $this->page = $id;
         $this->file = $file;
         $this->mode = $mode;
 
-        parent::cache($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
+        parent::__construct($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
     }
 
-    function _useCache() {
+    protected function _useCache() {
 
         if (!@file_exists($this->file)) return false;                   // source exists?
         return parent::_useCache();
     }
 
-    function _addDependencies() {
+    protected function _addDependencies() {
         global $conf, $config_cascade;
 
         $this->depends['age'] = isset($this->depends['age']) ?
@@ -197,7 +198,7 @@ class cache_parser extends cache {
 }
 
 class cache_renderer extends cache_parser {
-    function _useCache() {
+    protected function _useCache() {
         global $conf;
 
         if (!parent::_useCache()) return false;
@@ -228,7 +229,7 @@ class cache_renderer extends cache_parser {
         return true;
     }
 
-    function _addDependencies() {
+    protected function _addDependencies() {
 
         // renderer cache file dependencies ...
         $files = array(
@@ -255,8 +256,8 @@ class cache_renderer extends cache_parser {
 
 class cache_instructions extends cache_parser {
 
-    function cache_instructions($id, $file) {
-        parent::cache_parser($id, $file, 'i');
+    function __construct($id, $file) {
+        parent::__construct($id, $file, 'i');
     }
 
     function retrieveCache($clean=true) {
