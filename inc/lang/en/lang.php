@@ -191,7 +191,7 @@ $lang['lastmod']               = 'Last modified';
 $lang['by']                    = 'by';
 $lang['deleted']               = 'removed';
 $lang['created']               = 'created';
-$lang['restored']              = 'old revision restored';
+$lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
 $lang['noflash']               = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
