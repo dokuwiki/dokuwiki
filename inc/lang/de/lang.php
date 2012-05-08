@@ -193,7 +193,7 @@ $lang['lastmod']               = 'Zuletzt geändert';
 $lang['by']                    = 'von';
 $lang['deleted']               = 'gelöscht';
 $lang['created']               = 'angelegt';
-$lang['restored']              = 'alte Version wieder hergestellt';
+$lang['restored']              = 'alte Version wieder hergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
