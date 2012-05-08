@@ -63,6 +63,7 @@ $conf['profileconfirm'] = 1;             //Require current password to confirm c
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
 $conf['disableactions'] = '';            //comma separated list of actions to disable
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
+$conf['http_auth'] = 1;                  //allows HTTP authorization (SSO) from PHP_AUTH_USER/PHP_AUTH_PW variables
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
 $conf['remoteuser']  = '!!not set !!';   //user/groups that have access to remote interface (comma separated)

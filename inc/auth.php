@@ -83,7 +83,7 @@ function auth_setup(){
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
-    if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
+    if($conf['http_auth'] && empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])){
         $_REQUEST['u'] = $_SERVER['PHP_AUTH_USER'];
         $_REQUEST['p'] = $_SERVER['PHP_AUTH_PW'];
         $_REQUEST['http_credentials'] = true;
