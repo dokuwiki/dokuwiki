@@ -380,7 +380,7 @@ function act_revert($act){
     if($REV){
         $text = rawWiki($ID,$REV);
         if(!$text) return 'show'; //something went wrong
-        $sum  = $lang['restored'];
+        $sum = sprintf($lang['restored'], dformat($REV));
     }
 
     // spam check
