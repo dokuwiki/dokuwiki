@@ -6,7 +6,7 @@
  * Contributors:
  *  - Benilton Carvalho (beniltoncarvalho@gmail.com)
  * Copyright: (c) 2009 Ron Fredericks (http://www.LectureMaker.com)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2009/03/28
  *
  * R language file for GeSHi.
