@@ -580,7 +580,7 @@ function tpl_get_action($type) {
                     $accesskey = 'v';
                 }
             }else{
-                $params = '';
+                $params = array();
                 $type = 'show';
                 $accesskey = 'v';
             }
@@ -597,7 +597,7 @@ function tpl_get_action($type) {
             break;
         case 'top':
             $accesskey = 'x';
-            $params = '';
+            $params = array();
             $id = '#dokuwiki__top';
             break;
         case 'back':
@@ -606,7 +606,7 @@ function tpl_get_action($type) {
                 return false;
             }
             $id = $parent;
-            $params = '';
+            $params = array();
             $accesskey = 'b';
             break;
         case 'login':
