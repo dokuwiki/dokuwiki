@@ -276,8 +276,11 @@ class JSON_Object_TestCase extends DokuWikiTest {
 
         $this->obj_j = '{"a_string":"\"he\":llo}:{world","an_array":[1,2,3],"obj":{"a_number":123}}';
 
+        $this->obj1 = new stdClass();
+        $this->obj1->car1 = new stdClass();
         $this->obj1->car1->color = 'tan';
         $this->obj1->car1->model = 'sedan';
+        $this->obj1->car2 = new stdClass();
         $this->obj1->car2->color = 'red';
         $this->obj1->car2->model = 'sports';
         $this->obj1_j = '{"car1":{"color":"tan","model":"sedan"},"car2":{"color":"red","model":"sports"}}';

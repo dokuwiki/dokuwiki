@@ -317,7 +317,7 @@ class remote_test extends DokuWikiTest {
 
     function test_pluginCallCustomPath() {
         global $EVENT_HANDLER;
-        $EVENT_HANDLER->register_hook('RPC_CALL_ADD', 'BEFORE', &$this, 'pluginCallCustomPathRegister');
+        $EVENT_HANDLER->register_hook('RPC_CALL_ADD', 'BEFORE', $this, 'pluginCallCustomPathRegister');
 
         $remoteApi = new RemoteAPI();
         $result = $remoteApi->call('custom.path');
