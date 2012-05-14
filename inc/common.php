@@ -342,16 +342,18 @@ function idfilter($id,$ue=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function wl($id='',$more='',$abs=false,$sep='&amp;'){
+function wl($id='',$urlParameters='',$absolute=false,$separator='&amp;'){
     global $conf;
-    if(is_array($more)){
-        $more = buildURLparams($more,$sep);
+    if(is_array($urlParameters)){
+        $urlParameters = buildURLparams($urlParameters,$separator);
     }else{
-        $more = str_replace(',',$sep,$more);
+        $urlParameters = str_replace(',',$separator,$urlParameters);
     }
-
-    $id    = idfilter($id);
-    if($abs){
+    if ($id === '') {
+        $id = $conf['start'];
+    }
+    $id = idfilter($id);
+    if($absolute){
         $xlink = DOKU_URL;
     }else{
         $xlink = DOKU_BASE;
@@ -359,16 +361,16 @@ function wl($id='',$more='',$abs=false,$sep='&amp;'){
 
     if($conf['userewrite'] == 2){
         $xlink .= DOKU_SCRIPT.'/'.$id;
-        if($more) $xlink .= '?'.$more;
+        if($urlParameters) $xlink .= '?'.$urlParameters;
     }elseif($conf['userewrite']){
         $xlink .= $id;
-        if($more) $xlink .= '?'.$more;
+        if($urlParameters) $xlink .= '?'.$urlParameters;
     }elseif($id){
         $xlink .= DOKU_SCRIPT.'?id='.$id;
-        if($more) $xlink .= $sep.$more;
+        if($urlParameters) $xlink .= $separator.$urlParameters;
     }else{
         $xlink .= DOKU_SCRIPT;
-        if($more) $xlink .= '?'.$more;
+        if($urlParameters) $xlink .= '?'.$urlParameters;
     }
 
     return $xlink;
