@@ -325,7 +325,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $conf;
         global $ID;
 
-        echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
+        echo '<form action="'.wl($conf['start']).'" method="post" accept-charset="utf-8"><div class="no">'.NL;
 
         echo '<div id="acl__user">';
         echo $this->getLang('acl_perms').' ';
@@ -584,10 +584,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _html_table(){
+        global $conf
         global $lang;
         global $ID;
 
-        echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
+        echo '<form action="'.wl($conf['start']).'" method="post" accept-charset="utf-8"><div class="no">'.NL;
         if($this->ns){
             echo '<input type="hidden" name="ns" value="'.hsc($this->ns).'" />'.NL;
         }else{
