@@ -96,11 +96,12 @@ function load_autoload($name){
     // Plugin loading
     if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_([^_]+)(?:_([^_]+))?$/',
                   $name, $m)) {
-                //try to load the wanted plugin file
-        // include, but be silent. Maybe some other autoloader has an idea
-        // how to load this class.
+        // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
-        @include DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        if(@file_exists($plg)){
+            include DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        }
         return;
     }
 }
