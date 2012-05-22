@@ -506,7 +506,7 @@ function act_edit($act){
 
     // Use the date of the newest revision, not of the revision we edit
     // This is used for conflict detection
-    if(!$DATE) $DATE = $INFO['meta']['date']['modified'];
+    if(!$DATE) $DATE = @filemtime(wikiFN($ID));
 
     //check if locked by anyone - if not lock for my self
     //do not lock when the user can't edit anyway
