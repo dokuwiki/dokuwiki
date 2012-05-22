@@ -94,6 +94,7 @@ $lang['searchmedia_in']        = ' %s에서 검색';
 $lang['txt_upload']            = '업로드 파일을 선택합니다.';
 $lang['txt_filename']          = '업로드 파일 이름을 입력합니다.(선택 사항)';
 $lang['txt_overwrt']           = '새로운 파일로 이전 파일을 교체합니다.';
+$lang['maxuploadsize']         = '최대 업로드 용량. 파일당 %s';
 $lang['lockedby']              = '현재 잠금 사용자';
 $lang['lockexpire']            = '잠금 해제 시간';
 $lang['js']['willexpire']      = '잠시 후 편집 잠금이 해제됩니다.\n편집 충돌을 피하려면 미리보기를 눌러 잠금 시간을 다시 설정하기 바랍니다.';
