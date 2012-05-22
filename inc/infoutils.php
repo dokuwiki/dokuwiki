@@ -25,11 +25,14 @@ function checkUpdateMessages(){
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
+        dbglog("checkUpdatesMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
         $http->timeout = 8;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
+        @touch($cf);
     }else{
+        dbglog("checkUpdatesMessages(): messages.txt up to date");
         $data = io_readFile($cf);
     }
 
