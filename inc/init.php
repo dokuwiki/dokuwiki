@@ -233,10 +233,8 @@ function init_paths(){
             'lockdir'   => 'locks',
             'tmpdir'    => 'tmp');
 
-    foreach($paths as $c => $p){
-        $path = $conf[$c];
-        if(empty($path))
-            $path = $conf['savedir'].'/'.$p;
+    foreach($paths as $c => $p) {
+        $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
         $conf[$c] = init_path($path);
         if(empty($conf[$c]))
             nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
@@ -310,7 +308,7 @@ function init_files(){
  * Returns absolute path
  *
  * This tries the given path first, then checks in DOKU_INC.
- * Check for accessability on directories as well.
+ * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
