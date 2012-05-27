@@ -386,7 +386,7 @@ The following language strings are currently recognized: //4cs, 6502acme, 6502ki
 
 ==== Downloadable Code Blocks ====
 
-When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might want to make the shown code available for download as well. You can to this by specifying a file name after language code like this:
+When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might want to make the shown code available for download as well. You can do this by specifying a file name after language code like this:
 
 <code>
 <file php myexample.php>
