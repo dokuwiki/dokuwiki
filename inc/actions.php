@@ -498,7 +498,7 @@ function act_edit($act){
     //set summary default
     if(!$SUM){
         if($REV){
-            $SUM = $lang['restored'];
+            $SUM = sprintf($lang['restored'], dformat($REV));
         }elseif(!$INFO['exists']){
             $SUM = $lang['created'];
         }
