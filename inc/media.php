@@ -420,7 +420,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         media_notify($id,$fn,$imime,$old);
         // add a log entry to the media changelog
         if ($REV){
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, $lang['restored'], $REV);
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($REV)), $REV);
         } elseif ($overwrite) {
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT);
         } else {
