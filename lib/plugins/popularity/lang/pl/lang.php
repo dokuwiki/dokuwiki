@@ -12,6 +12,7 @@
  * @author Grzegorz Widła <dzesdzes@gmail.com>
  * @author Łukasz Chmaj <teachmeter@gmail.com>
  * @author Begina Felicysym <begina.felicysym@wp.eu>
+ * @author Aoi Karasu <aoikarasu@gmail.com>
  */
 $lang['name']                  = 'Informacja o popularności (ładowanie może zająć dłuższą chwilę)';
 $lang['submit']                = 'Wyślij dane';

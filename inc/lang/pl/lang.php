@@ -13,6 +13,7 @@
  * @author Grzegorz Widła <dzesdzes@gmail.com>
  * @author Łukasz Chmaj <teachmeter@gmail.com>
  * @author Begina Felicysym <begina.felicysym@wp.eu>
+ * @author Aoi Karasu <aoikarasu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -48,6 +49,7 @@ $lang['btn_backtomedia']       = 'Powrót do wyboru pliku';
 $lang['btn_subscribe']         = 'Subskrybuj zmiany';
 $lang['btn_profile']           = 'Aktualizuj profil';
 $lang['btn_reset']             = 'Resetuj';
+$lang['btn_resendpwd']         = 'Podaj nowe hasło';
 $lang['btn_draft']             = 'Edytuj szkic';
 $lang['btn_recover']           = 'Przywróć szkic';
 $lang['btn_draftdel']          = 'Usuń szkic';
@@ -84,6 +86,7 @@ $lang['profnoempty']           = 'Pusta nazwa lub adres e-mail nie dozwolone.';
 $lang['profchanged']           = 'Zaktualizowano profil użytkownika.';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
+$lang['resendpwd']             = 'Podaj nowe hasło dla';
 $lang['resendpwdmissing']      = 'Wypełnij wszystkie pola.';
 $lang['resendpwdnouser']       = 'Nie można znaleźć tego użytkownika w bazie danych.';
 $lang['resendpwdbadauth']      = 'Błędny kod autoryzacji! Upewnij się, że użyłeś(aś) właściwego odnośnika.';
@@ -96,6 +99,7 @@ $lang['searchmedia_in']        = 'Szukaj w  %s';
 $lang['txt_upload']            = 'Wybierz plik do wysłania';
 $lang['txt_filename']          = 'Nazwa pliku (opcjonalnie)';
 $lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
+$lang['maxuploadsize']         = 'Maksymalny rozmiar wysyłanych danych wynosi %s dla jednego pliku.';
 $lang['lockedby']              = 'Aktualnie zablokowane przez';
 $lang['lockexpire']            = 'Blokada wygasa';
 $lang['js']['willexpire']      = 'Twoja blokada edycji tej strony wygaśnie w ciągu minuty. \nW celu uniknięcia konfliktów użyj przycisku podglądu aby odnowić blokadę.';
@@ -265,6 +269,7 @@ $lang['subscr_style_digest']   = 'email ze streszczeniem zmian dla każdej ze st
 $lang['subscr_style_list']     = 'lista zmienionych stron od czasu ostatniego emaila';
 $lang['authmodfailed']         = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
+$lang['authpwdexpire']         = 'Twoje hasło wygaśnie za %d dni. Należy je zmienić w krótkim czasie.';
 $lang['i_chooselang']          = 'Wybierz język';
 $lang['i_installer']           = 'Instalator DokuWiki';
 $lang['i_wikiname']            = 'Nazwa Wiki';
