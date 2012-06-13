@@ -387,16 +387,12 @@ class auth_ldap extends auth_basic {
         $this->bound = 0;
 
         $port = ($this->cnf['port']) ? $this->cnf['port'] : 389;
-        if (!is_array($this->cnf['server']))
-        {
-            $this->cnf['server'] = array($this->cnf['server']);
-        }
         $bound = false;
-        foreach ($this->cnf['server'] as $server)
-        {
+        $servers = explode(',', $this->cnf['server']);
+        foreach ($servers as $server) {
+            $server = trim($server);
             $this->con = @ldap_connect($server, $port);
-            if (!$this->con)
-            {
+            if (!$this->con) {
                 continue;
             }
 
@@ -445,19 +441,16 @@ class auth_ldap extends auth_basic {
                 }
             }
             /* As of PHP 5.3.0 we can set timeout to speedup skipping of invalid servers */
-            if (defined('LDAP_OPT_NETWORK_TIMEOUT'))
-            {
+            if (defined('LDAP_OPT_NETWORK_TIMEOUT')) {
                 ldap_set_option($this->con, LDAP_OPT_NETWORK_TIMEOUT, 1);
             }
             $bound = ldap_bind($this->con);
-            if ($bound)
-            {
+            if ($bound) {
                 break;
             }
         }
 
-        if(!$bound)
-        {
+        if(!$bound) {
             msg("LDAP: couldn't connect to LDAP server",-1);
             return false;
         }
