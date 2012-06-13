@@ -774,7 +774,7 @@ function unlock($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanText($text){
-    $text = preg_replace("/(\015\012)|(\015)/","\012",$text);
+    $text = str_replace(array("\015\012","\015"),"\012",$text);
     return $text;
 }
 
@@ -1324,8 +1324,7 @@ function obfuscate($email) {
 
     switch ($conf['mailguard']) {
         case 'visible' :
-            $obfuscate = array('@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] ');
-            return strtr($email, $obfuscate);
+            return str_replace(array('@','.','-'), array(' [at] ',' [dot] ',' [dash] '), $email);
 
         case 'hex' :
             $encode = '';
