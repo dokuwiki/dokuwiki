@@ -1,15 +1,14 @@
-DokuWiki가 파일을 업로드하였습니다.
+DokuWiki가 파일을 올렸습니다.
 
-자세한 정보:
-
-파일         : @MEDIA@
-날짜         : @DATE@
-웹 브라우저   : @BROWSER@
-IP 주소      : @IPADDRESS@
-호스트명      : @HOSTNAME@
-크기        : @SIZE@
-파일 종류     : @MIME@
-사용자        : @USER@
+파일 : @MEDIA@
+이전 버전 : @OLD@
+날짜 : @DATE@
+브라우저 : @BROWSER@
+IP 주소 : @IPADDRESS@
+호스트 이름 : @HOSTNAME@
+크기 : @SIZE@
+MIME 종류 : @MIME@
+사용자 : @USER@
 
 -- 
-이 메일은 @DOKUWIKIURL@의 DokuWiki가 생성한 메일입니다.
+@DOKUWIKIURL@의 DokuWiki가 자동으로 만들어낸 메일입니다.
