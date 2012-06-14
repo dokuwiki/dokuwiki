@@ -69,7 +69,7 @@ class cache {
 
         if (!empty($this->depends['files'])) {
             foreach ($this->depends['files'] as $file) {
-                if ($this->_time < @filemtime($file)) return false;         // cache older than files it depends on?
+                if ($this->_time <= @filemtime($file)) return false;         // cache older than files it depends on?
             }
         }
 
