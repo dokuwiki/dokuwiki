@@ -30,7 +30,7 @@ function act_dispatch(){
     if ($evt->advise_before()) {
 
         //sanitize $ACT
-        $ACT = act_clean($ACT);
+        $ACT = act_validate($ACT);
 
         //check if searchword was given - else just show
         $s = cleanID($QUERY);
@@ -183,8 +183,6 @@ function act_sendheaders($headers) {
 /**
  * Sanitize the action command
  *
- * Add all allowed commands here.
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_clean($act){
@@ -205,6 +203,18 @@ function act_clean($act){
     if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
     if($act === '') $act = 'show';
+    return $act;
+}
+
+/**
+ * Sanitize and validate action commands.
+ *
+ * Add all allowed commands here.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_validate($act) {
+    $act = act_clean($act);
 
     // check if action is disabled
     if(!actionOK($act)){
