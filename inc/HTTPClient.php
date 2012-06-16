@@ -456,7 +456,7 @@ class HTTPClient {
         $r_body    = '';
         if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_headers)){
             do {
-                unset($chunk_size);
+                $chunk_size = '';
                 do {
                     if(feof($socket)){
                         $this->error = 'Premature End of File (socket)';
@@ -471,13 +471,17 @@ class HTTPClient {
                     }
                     $byte = fread($socket,1);
                     $chunk_size .= $byte;
-                } while (preg_match('/[a-zA-Z0-9]/',$byte)); // read chunksize including \r
+                } while (preg_match('/^[a-zA-Z0-9]?$/',$byte)); // read chunksize including \r
 
                 $byte = fread($socket,1);     // readtrailing \n
                 $chunk_size = hexdec($chunk_size);
                 if ($chunk_size) {
-                    $this_chunk = fread($socket,$chunk_size);
-                    $r_body    .= $this_chunk;
+                    $read_size = $chunk_size;
+                    while ($read_size > 0) {
+                        $this_chunk = fread($socket,$read_size);
+                        $r_body    .= $this_chunk;
+                        $read_size -= strlen($this_chunk);
+                    }
                     $byte = fread($socket,2); // read trailing \r\n
                 }
 
