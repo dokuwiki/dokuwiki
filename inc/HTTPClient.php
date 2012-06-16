@@ -227,7 +227,7 @@ class HTTPClient {
         $path   = $uri['path'];
         if(empty($path)) $path = '/';
         if(!empty($uri['query'])) $path .= '?'.$uri['query'];
-        if(isset($uri['port']) && !empty($uri['port'])) $port = $uri['port'];
+        if(!empty($uri['port'])) $port = $uri['port'];
         if(isset($uri['user'])) $this->user = $uri['user'];
         if(isset($uri['pass'])) $this->pass = $uri['pass'];
 
@@ -249,7 +249,7 @@ class HTTPClient {
         // prepare headers
         $headers               = $this->headers;
         $headers['Host']       = $uri['host'];
-        if($uri['port']) $headers['Host'].= ':'.$uri['port'];
+        if(!empty($uri['port'])) $headers['Host'].= ':'.$uri['port'];
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
         if ($this->keep_alive) {
@@ -583,7 +583,7 @@ class HTTPClient {
         $lines = explode("\n",$string);
         array_shift($lines); //skip first line (status)
         foreach($lines as $line){
-            list($key, $val) = explode(':',$line,2);
+            @list($key, $val) = explode(':',$line,2);
             $key = trim($key);
             $val = trim($val);
             $key = strtolower($key);
