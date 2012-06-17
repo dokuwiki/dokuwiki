@@ -61,6 +61,8 @@ class DokuHTTPClient extends HTTPClient {
 
 }
 
+class HTTPClientException extends Exception { }
+
 /**
  * This class implements a basic HTTP client
  *
@@ -308,220 +310,200 @@ class HTTPClient {
             }
         }
 
-        //set blocking
-        stream_set_blocking($socket,1);
+        try {
+            //set blocking
+            stream_set_blocking($socket,1);
 
-        // build request
-        $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
-        $request .= $this->_buildHeaders($headers);
-        $request .= $this->_getCookies();
-        $request .= HTTP_NL;
-        $request .= $data;
+            // build request
+            $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
+            $request .= $this->_buildHeaders($headers);
+            $request .= $this->_getCookies();
+            $request .= HTTP_NL;
+            $request .= $data;
 
-        $this->_debug('request',$request);
+            $this->_debug('request',$request);
 
-        // select parameters
-        $sel_r = null;
-        $sel_w = array($socket);
-        $sel_e = null;
+            // select parameters
+            $sel_r = null;
+            $sel_w = array($socket);
+            $sel_e = null;
 
-        // send request
-        $towrite = strlen($request);
-        $written = 0;
-        while($written < $towrite){
-            // check timeout
-            if(time()-$start > $this->timeout){
-                $this->status = -100;
-                $this->error = sprintf('Timeout while sending request (%.3fs)',$this->_time() - $this->start);
-                unset(self::$connections[$connectionId]);
-                return false;
+            // send request
+            $towrite = strlen($request);
+            $written = 0;
+            while($written < $towrite){
+                // check timeout
+                if(time()-$start > $this->timeout)
+                    throw new HTTPClientException(sprintf('Timeout while sending request (%.3fs)',$this->_time() - $this->start), -100);
+
+                // wait for stream ready or timeout (1sec)
+                if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+                    usleep(1000);
+                    continue;
+                }
+
+                // write to stream
+                $ret = fwrite($socket, substr($request,$written,4096));
+                if($ret === false)
+                    throw new HTTPClientException('Failed writing to socket', -100);
+                $written += $ret;
             }
 
-            // wait for stream ready or timeout (1sec)
-            if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+            // continue non-blocking
+            stream_set_blocking($socket,0);
+
+            // read headers from socket
+            $r_headers = '';
+            do{
+                if(time()-$start > $this->timeout)
+                    throw new HTTPClientException(sprintf('Timeout while reading headers (%.3fs)',$this->_time() - $this->start), -100);
+                if(feof($socket))
+                    throw new HTTPClientException('Premature End of File (socket)');
                 usleep(1000);
-                continue;
+                $r_headers .= fgets($socket,1024);
+            }while(!preg_match('/\r?\n\r?\n$/',$r_headers));
+
+            $this->_debug('response headers',$r_headers);
+
+            // check if expected body size exceeds allowance
+            if($this->max_bodysize && preg_match('/\r?\nContent-Length:\s*(\d+)\r?\n/i',$r_headers,$match)){
+                if($match[1] > $this->max_bodysize){
+                    if ($this->max_bodysize_abort)
+                        throw new HTTPClientException('Reported content length exceeds allowed response size');
+                    else
+                        $this->error = 'Reported content length exceeds allowed response size';
+                }
             }
 
-            // write to stream
-            $ret = fwrite($socket, substr($request,$written,4096));
-            if($ret === false){
-                $this->status = -100;
-                $this->error = 'Failed writing to socket';
-                unset(self::$connections[$connectionId]);
-                return false;
+            // get Status
+            if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m))
+                throw new HTTPClientException('Server returned bad answer');
+
+            $this->status = $m[2];
+
+            // handle headers and cookies
+            $this->resp_headers = $this->_parseHeaders($r_headers);
+            if(isset($this->resp_headers['set-cookie'])){
+                foreach ((array) $this->resp_headers['set-cookie'] as $cookie){
+                    list($cookie)   = explode(';',$cookie,2);
+                    list($key,$val) = explode('=',$cookie,2);
+                    $key = trim($key);
+                    if($val == 'deleted'){
+                        if(isset($this->cookies[$key])){
+                            unset($this->cookies[$key]);
+                        }
+                    }elseif($key){
+                        $this->cookies[$key] = $val;
+                    }
+                }
             }
-            $written += $ret;
-        }
 
-        // continue non-blocking
-        stream_set_blocking($socket,0);
+            $this->_debug('Object headers',$this->resp_headers);
 
-        // read headers from socket
-        $r_headers = '';
-        do{
-            if(time()-$start > $this->timeout){
-                $this->status = -100;
-                $this->error = sprintf('Timeout while reading headers (%.3fs)',$this->_time() - $this->start);
-                unset(self::$connections[$connectionId]);
-                return false;
-            }
-            if(feof($socket)){
-                $this->error = 'Premature End of File (socket)';
-                unset(self::$connections[$connectionId]);
-                return false;
-            }
-            usleep(1000);
-            $r_headers .= fgets($socket,1024);
-        }while(!preg_match('/\r?\n\r?\n$/',$r_headers));
-
-        $this->_debug('response headers',$r_headers);
-
-        // check if expected body size exceeds allowance
-        if($this->max_bodysize && preg_match('/\r?\nContent-Length:\s*(\d+)\r?\n/i',$r_headers,$match)){
-            if($match[1] > $this->max_bodysize){
-                $this->error = 'Reported content length exceeds allowed response size';
-                if ($this->max_bodysize_abort)
+            // check server status code to follow redirect
+            if($this->status == 301 || $this->status == 302 ){
+                if (empty($this->resp_headers['location'])){
+                    throw new HTTPClientException('Redirect but no Location Header found');
+                }elseif($this->redirect_count == $this->max_redirect){
+                    throw new HTTPClientException('Maximum number of redirects exceeded');
+                }else{
+                    // close the connection because we don't handle content retrieval here
+                    // that's the easiest way to clean up the connection
+                    fclose($socket);
                     unset(self::$connections[$connectionId]);
-                    return false;
-            }
-        }
 
-        // get Status
-        if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m)) {
-            $this->error = 'Server returned bad answer';
-            unset(self::$connections[$connectionId]);
-            return false;
-        }
-        $this->status = $m[2];
-
-        // handle headers and cookies
-        $this->resp_headers = $this->_parseHeaders($r_headers);
-        if(isset($this->resp_headers['set-cookie'])){
-            foreach ((array) $this->resp_headers['set-cookie'] as $cookie){
-                list($cookie)   = explode(';',$cookie,2);
-                list($key,$val) = explode('=',$cookie,2);
-                $key = trim($key);
-                if($val == 'deleted'){
-                    if(isset($this->cookies[$key])){
-                        unset($this->cookies[$key]);
+                    $this->redirect_count++;
+                    $this->referer = $url;
+                    // handle non-RFC-compliant relative redirects
+                    if (!preg_match('/^http/i', $this->resp_headers['location'])){
+                        if($this->resp_headers['location'][0] != '/'){
+                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
+                                                            dirname($uri['path']).'/'.$this->resp_headers['location'];
+                        }else{
+                            $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
+                                                            $this->resp_headers['location'];
+                        }
                     }
-                }elseif($key){
-                    $this->cookies[$key] = $val;
+                    // perform redirected request, always via GET (required by RFC)
+                    return $this->sendRequest($this->resp_headers['location'],array(),'GET');
                 }
             }
-        }
 
-        $this->_debug('Object headers',$this->resp_headers);
+            // check if headers are as expected
+            if($this->header_regexp && !preg_match($this->header_regexp,$r_headers))
+                throw new HTTPClientException('The received headers did not match the given regexp');
 
-        // check server status code to follow redirect
-        if($this->status == 301 || $this->status == 302 ){
-            // close the connection because we don't handle content retrieval here
-            // that's the easiest way to clean up the connection
-            fclose($socket);
-            unset(self::$connections[$connectionId]);
-
-            if (empty($this->resp_headers['location'])){
-                $this->error = 'Redirect but no Location Header found';
-                return false;
-            }elseif($this->redirect_count == $this->max_redirect){
-                $this->error = 'Maximum number of redirects exceeded';
-                return false;
-            }else{
-                $this->redirect_count++;
-                $this->referer = $url;
-                // handle non-RFC-compliant relative redirects
-                if (!preg_match('/^http/i', $this->resp_headers['location'])){
-                    if($this->resp_headers['location'][0] != '/'){
-                        $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
-                                                          dirname($uri['path']).'/'.$this->resp_headers['location'];
-                    }else{
-                        $this->resp_headers['location'] = $uri['scheme'].'://'.$uri['host'].':'.$uri['port'].
-                                                          $this->resp_headers['location'];
-                    }
-                }
-                // perform redirected request, always via GET (required by RFC)
-                return $this->sendRequest($this->resp_headers['location'],array(),'GET');
-            }
-        }
-
-        // check if headers are as expected
-        if($this->header_regexp && !preg_match($this->header_regexp,$r_headers)){
-            $this->error = 'The received headers did not match the given regexp';
-            unset(self::$connections[$connectionId]);
-            return false;
-        }
-
-        //read body (with chunked encoding if needed)
-        $r_body    = '';
-        if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_headers)){
-            do {
-                $chunk_size = '';
+            //read body (with chunked encoding if needed)
+            $r_body    = '';
+            if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_headers)){
+                stream_set_blocking($socket,1);
                 do {
-                    if(feof($socket)){
-                        $this->error = 'Premature End of File (socket)';
-                        unset(self::$connections[$connectionId]);
-                        return false;
+                    $chunk_size = '';
+                    do {
+                        if(feof($socket))
+                            throw new HTTPClientException('Premature End of File (socket)');
+                        if(time()-$start > $this->timeout)
+                            throw new HTTPClientException(sprintf('Timeout while reading chunk (%.3fs)',$this->_time() - $this->start), -100);
+                        $byte = fread($socket,1);
+                        $chunk_size .= $byte;
+                    } while (preg_match('/^[a-zA-Z0-9]?$/',$byte)); // read chunksize including \r
+
+                    $byte = fread($socket,1);     // readtrailing \n
+                    $chunk_size = hexdec($chunk_size);
+                    if ($chunk_size) {
+                        $read_size = $chunk_size;
+                        while ($read_size > 0) {
+                            $this_chunk = fread($socket,$read_size);
+                            $r_body    .= $this_chunk;
+                            $read_size -= strlen($this_chunk);
+                        }
+                        $byte = fread($socket,2); // read trailing \r\n
                     }
+
+                    if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
+                        if ($this->max_bodysize_abort)
+                            throw new HTTPClientException('Allowed response size exceeded');
+                        $this->error = 'Allowed response size exceeded';
+                        break;
+                    }
+                } while ($chunk_size);
+                stream_set_blocking($socket,0);
+            }else{
+                // read entire socket
+                while (!feof($socket)) {
                     if(time()-$start > $this->timeout){
                         $this->status = -100;
-                        $this->error = sprintf('Timeout while reading chunk (%.3fs)',$this->_time() - $this->start);
+                        $this->error = sprintf('Timeout while reading response (%.3fs)',$this->_time() - $this->start);
                         unset(self::$connections[$connectionId]);
                         return false;
                     }
-                    $byte = fread($socket,1);
-                    $chunk_size .= $byte;
-                } while (preg_match('/^[a-zA-Z0-9]?$/',$byte)); // read chunksize including \r
-
-                $byte = fread($socket,1);     // readtrailing \n
-                $chunk_size = hexdec($chunk_size);
-                if ($chunk_size) {
-                    $read_size = $chunk_size;
-                    while ($read_size > 0) {
-                        $this_chunk = fread($socket,$read_size);
-                        $r_body    .= $this_chunk;
-                        $read_size -= strlen($this_chunk);
+                    $r_body .= fread($socket,4096);
+                    $r_size = strlen($r_body);
+                    if($this->max_bodysize && $r_size > $this->max_bodysize){
+                        $this->error = 'Allowed response size exceeded';
+                        if ($this->max_bodysize_abort) {
+                            unset(self::$connections[$connectionId]);
+                            return false;
+                        } else {
+                            break;
+                        }
                     }
-                    $byte = fread($socket,2); // read trailing \r\n
-                }
-
-                if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
-                    $this->error = 'Allowed response size exceeded';
-                    if ($this->max_bodysize_abort){
-                        unset(self::$connections[$connectionId]);
-                        return false;
-                    } else {
+                    if(isset($this->resp_headers['content-length']) &&
+                    !isset($this->resp_headers['transfer-encoding']) &&
+                    $this->resp_headers['content-length'] == $r_size){
+                        // we read the content-length, finish here
                         break;
                     }
-                }
-            } while ($chunk_size);
-        }else{
-            // read entire socket
-            while (!feof($socket)) {
-                if(time()-$start > $this->timeout){
-                    $this->status = -100;
-                    $this->error = sprintf('Timeout while reading response (%.3fs)',$this->_time() - $this->start);
-                    unset(self::$connections[$connectionId]);
-                    return false;
-                }
-                $r_body .= fread($socket,4096);
-                $r_size = strlen($r_body);
-                if($this->max_bodysize && $r_size > $this->max_bodysize){
-                    $this->error = 'Allowed response size exceeded';
-                    if ($this->max_bodysize_abort) {
-                        unset(self::$connections[$connectionId]);
-                        return false;
-                    } else {
-                        break;
-                    }
-                }
-                if(isset($this->resp_headers['content-length']) &&
-                   !isset($this->resp_headers['transfer-encoding']) &&
-                   $this->resp_headers['content-length'] == $r_size){
-                    // we read the content-length, finish here
-                    break;
                 }
             }
+
+        } catch (HTTPClientException $err) {
+            $this->error = $err->getMessage();
+            if ($err->getCode())
+                $this->status = $err->getCode();
+            unset(self::$connections[$connectionId]);
+            fclose($socket);
+            return false;
         }
 
         if (!$this->keep_alive ||
