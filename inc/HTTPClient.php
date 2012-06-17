@@ -281,9 +281,6 @@ class HTTPClient {
             $headers['Proxy-Authorization'] = 'Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass);
         }
 
-        // stop time
-        $start = time();
-
         // already connected?
         $connectionId = $this->_uniqueConnectionId($server,$port);
         $this->_debug('connection pool', self::$connections);
@@ -333,8 +330,9 @@ class HTTPClient {
             $written = 0;
             while($written < $towrite){
                 // check timeout
-                if(time()-$start > $this->timeout)
-                    throw new HTTPClientException(sprintf('Timeout while sending request (%.3fs)',$this->_time() - $this->start), -100);
+                $time_used = $this->_time() - $this->start;
+                if($time_used > $this->timeout)
+                    throw new HTTPClientException(sprintf('Timeout while sending request (%.3fs)',$time_used), -100);
 
                 // wait for stream ready or timeout (1sec)
                 if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
@@ -355,13 +353,9 @@ class HTTPClient {
             // read headers from socket
             $r_headers = '';
             do{
-                if(time()-$start > $this->timeout)
-                    throw new HTTPClientException(sprintf('Timeout while reading headers (%.3fs)',$this->_time() - $this->start), -100);
-                if(feof($socket))
-                    throw new HTTPClientException('Premature End of File (socket)');
-                usleep(1000);
-                $r_headers .= fgets($socket,1024);
-            }while(!preg_match('/\r?\n\r?\n$/',$r_headers));
+                $r_line = $this->_readLine($socket, 'headers');
+                $r_headers .= $r_line;
+            }while($r_line != "\r\n" && $r_line != "\n");
 
             $this->_debug('response headers',$r_headers);
 
@@ -436,28 +430,19 @@ class HTTPClient {
             //read body (with chunked encoding if needed)
             $r_body    = '';
             if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_headers)){
-                stream_set_blocking($socket,1);
                 do {
                     $chunk_size = '';
                     do {
-                        if(feof($socket))
-                            throw new HTTPClientException('Premature End of File (socket)');
-                        if(time()-$start > $this->timeout)
-                            throw new HTTPClientException(sprintf('Timeout while reading chunk (%.3fs)',$this->_time() - $this->start), -100);
-                        $byte = fread($socket,1);
+                        $byte = $this->_readData($socket, 1, 'chunk');
                         $chunk_size .= $byte;
                     } while (preg_match('/^[a-zA-Z0-9]?$/',$byte)); // read chunksize including \r
-
-                    $byte = fread($socket,1);     // readtrailing \n
+                    $byte = $this->_readData($socket, 1, 'chunk');     // readtrailing \n
                     $chunk_size = hexdec($chunk_size);
+
+                    // TODO: validate max_bodysize here to avoid the costly read
                     if ($chunk_size) {
-                        $read_size = $chunk_size;
-                        while ($read_size > 0) {
-                            $this_chunk = fread($socket,$read_size);
-                            $r_body    .= $this_chunk;
-                            $read_size -= strlen($this_chunk);
-                        }
-                        $byte = fread($socket,2); // read trailing \r\n
+                        $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
+                        $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
 
                     if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
@@ -467,24 +452,16 @@ class HTTPClient {
                         break;
                     }
                 } while ($chunk_size);
-                stream_set_blocking($socket,0);
             }else{
                 // read entire socket
                 while (!feof($socket)) {
-                    if(time()-$start > $this->timeout){
-                        $this->status = -100;
-                        $this->error = sprintf('Timeout while reading response (%.3fs)',$this->_time() - $this->start);
-                        unset(self::$connections[$connectionId]);
-                        return false;
-                    }
-                    $r_body .= fread($socket,4096);
+                    $r_body .= $this->_readData($socket, 0, 'response', true);
                     $r_size = strlen($r_body);
                     if($this->max_bodysize && $r_size > $this->max_bodysize){
-                        $this->error = 'Allowed response size exceeded';
                         if ($this->max_bodysize_abort) {
-                            unset(self::$connections[$connectionId]);
-                            return false;
+                            throw new HTTPClientException('Allowed response size exceeded');
                         } else {
+                            $this->error = 'Allowed response size exceeded';
                             break;
                         }
                     }
@@ -530,6 +507,66 @@ class HTTPClient {
         $this->_debug('response body',$this->resp_body);
         $this->redirect_count = 0;
         return true;
+    }
+
+    /**
+     * Safely read data from a socket
+     *
+     * Reads up to a given number of bytes or throws an exception if the
+     * response times out or ends prematurely. If the number of bytes to
+     * read is negative, then it will read up to the absolute value, but
+     * may read less. A value of 0 returns an arbitrarily sized block,
+     * and a positive value will return exactly that many bytes.
+     *
+     * @param  handle $socket     An open socket handle in non-blocking mode
+     * @param  int    $nbytes     Number of bytes to read
+     * @param  string $message    Description of what is being read
+     * @param  bool   $ignore_eof End-of-file is not an error if this is set
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    function _readData($socket, $nbytes, $message, $ignore_eof = false) {
+        $r_data = '';
+        $to_read = $nbytes ? $nbytes : 4096;
+        if ($to_read < 0) $to_read = -$to_read;
+        do {
+            $time_used = $this->_time() - $this->start;
+            if ($time_used > $this->timeout)
+                throw new HTTPClientException(
+                        sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
+                        -100);
+            if(!$ignore_eof && feof($socket))
+                throw new HTTPClientException("Premature End of File (socket) while reading $message");
+            //usleep(1000);
+            $bytes = fread($socket, $to_read);
+            $r_data .= $bytes;
+            $to_read -= strlen($bytes);
+        } while (strlen($r_data) < $nbytes);
+        return $r_data;
+    }
+
+    /**
+     * Safely read a \n-terminated line from a socket
+     *
+     * Always returns a complete line, including the terminating \n.
+     *
+     * @param  handle $socket     An open socket handle in non-blocking mode
+     * @param  string $message    Description of what is being read
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    function _readLine($socket, $message) {
+        $r_data = '';
+        do {
+            $time_used = $this->_time() - $this->start;
+            if ($time_used > $this->timeout)
+                throw new HTTPClientException(
+                        sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
+                        -100);
+            if(feof($socket))
+                throw new HTTPClientException("Premature End of File (socket) while reading $message");
+            usleep(1000);
+            $r_data .= fgets($socket, 1024);
+        } while (!preg_match('/\n$/',$r_data));
+        return $r_data;
     }
 
     /**
