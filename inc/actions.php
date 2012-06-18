@@ -186,10 +186,6 @@ function act_sendheaders($headers) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_clean($act){
-    global $lang;
-    global $conf;
-    global $INFO;
-
     // check if the action was given as array key
     if(is_array($act)){
         list($act) = array_keys($act);
@@ -214,6 +210,9 @@ function act_clean($act){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_validate($act) {
+    global $conf;
+    global $INFO;
+
     $act = act_clean($act);
 
     // check if action is disabled
