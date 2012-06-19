@@ -176,5 +176,15 @@ class httpclient_http_test extends DokuWikiTest {
         $this->assertArrayHasKey('foo',$http->resp_headers);
         $this->assertEquals('bar',$http->resp_headers['foo']);
     }
+
+    /**
+     * @group internet
+     */
+    function test_chunked(){
+        $http = new HTTPClient();
+        $data = $http->get('http://whoopdedo.org/cgi-bin/chunked/2550');
+        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertEquals(2550,strlen($data));
+    }
 }
 //Setup VIM: ex: et ts=4 :
