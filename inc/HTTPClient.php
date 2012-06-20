@@ -507,7 +507,8 @@ class HTTPClient {
                 throw new HTTPClientException("Socket disconnected while writing $message");
 
             // wait for stream ready or timeout
-            if(@stream_select($sel_r, $sel_w, $sel_e, $this->timeout - $time_used) !== false){
+            self::selecttimeout($this->timeout - $time_used, $sec, $usec);
+            if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
                 // write to stream
                 $nbytes = fwrite($socket, substr($data,$written,4096));
                 if($nbytes === false)
@@ -533,6 +534,11 @@ class HTTPClient {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readData($socket, $nbytes, $message, $ignore_eof = false) {
+        // select parameters
+        $sel_r = array($socket);
+        $sel_w = null;
+        $sel_e = null;
+
         $r_data = '';
         $to_read = $nbytes ? $nbytes : 4096;
         if ($to_read < 0) $to_read = -$to_read;
@@ -544,10 +550,16 @@ class HTTPClient {
                         -100);
             if(!$ignore_eof && feof($socket))
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
-            //usleep(1000);
-            $bytes = fread($socket, $to_read);
-            $r_data .= $bytes;
-            $to_read -= strlen($bytes);
+
+            // wait for stream ready or timeout
+            self::selecttimeout($this->timeout - $time_used, $sec, $usec);
+            if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
+                $bytes = fread($socket, $to_read);
+                if($bytes === false)
+                    throw new HTTPClientException("Failed reading from socket while reading $message", -100);
+                $r_data .= $bytes;
+                $to_read -= strlen($bytes);
+            }
         } while (strlen($r_data) < $nbytes);
         return $r_data;
     }
@@ -562,6 +574,11 @@ class HTTPClient {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readLine($socket, $message) {
+        // select parameters
+        $sel_r = array($socket);
+        $sel_w = null;
+        $sel_e = null;
+
         $r_data = '';
         do {
             $time_used = $this->_time() - $this->start;
@@ -571,8 +588,12 @@ class HTTPClient {
                         -100);
             if(feof($socket))
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
-            usleep(1000);
-            $r_data .= fgets($socket, 1024);
+
+            // wait for stream ready or timeout
+            self::selecttimeout($this->timeout - $time_used, $sec, $usec);
+            if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
+                $r_data = fgets($socket, 1024);
+            }
         } while (!preg_match('/\n$/',$r_data));
         return $r_data;
     }
@@ -597,9 +618,17 @@ class HTTPClient {
     /**
      * Return current timestamp in microsecond resolution
      */
-    function _time(){
+    static function _time(){
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
+    }
+
+    /**
+     * Calculate seconds and microseconds
+     */
+    static function selecttimeout($time, &$sec, &$usec){
+        $sec = floor($time);
+        $usec = (int)(($time - $sec) * 1000000);
     }
 
     /**
