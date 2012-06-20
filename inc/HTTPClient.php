@@ -411,7 +411,7 @@ class HTTPClient {
                         if (strlen($chunk_size) > 128) // set an abritrary limit on the size of chunks
                             throw new HTTPClientException('Allowed response size exceeded');
                     }
-                    $byte = $this->_readData($socket, 1, 'chunk');     // readtrailing \n
+                    $this->_readLine($socket, 'chunk');     // readtrailing \n
                     $chunk_size = hexdec($chunk_size);
 
                     if($this->max_bodysize && $chunk_size+strlen($r_body) > $this->max_bodysize){
