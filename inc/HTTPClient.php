@@ -402,6 +402,7 @@ class HTTPClient {
             $r_body    = '';
             if((isset($this->resp_headers['transfer-encoding']) && $this->resp_headers['transfer-encoding'] == 'chunked')
             || (isset($this->resp_headers['transfer-coding']) && $this->resp_headers['transfer-coding'] == 'chunked')){
+                $abort = false;
                 do {
                     $chunk_size = '';
                     while (preg_match('/^[a-zA-Z0-9]?$/',$byte=$this->_readData($socket,1,'chunk'))){
@@ -417,18 +418,19 @@ class HTTPClient {
                         if ($this->max_bodysize_abort)
                             throw new HTTPClientException('Allowed response size exceeded');
                         $this->error = 'Allowed response size exceeded';
-                        break;
+                        $chunk_size = $this->max_bodysize - strlen($r_body);
+                        $abort = true;
                     }
 
-                    if ($chunk_size) {
+                    if ($chunk_size > 0) {
                         $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
                         $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
-                } while ($chunk_size);
+                } while ($chunk_size && !$abort);
             }else{
                 // read entire socket
                 while (!feof($socket)) {
-                    $r_body .= $this->_readData($socket, 0, 'response', true);
+                    $r_body .= $this->_readData($socket, -$this->max_bodysize, 'response', true);
                     $r_size = strlen($r_body);
                     if($this->max_bodysize && $r_size > $this->max_bodysize){
                         if ($this->max_bodysize_abort) {
