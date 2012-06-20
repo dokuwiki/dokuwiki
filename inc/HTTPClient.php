@@ -404,24 +404,25 @@ class HTTPClient {
             || (isset($this->resp_headers['transfer-coding']) && $this->resp_headers['transfer-coding'] == 'chunked')){
                 do {
                     $chunk_size = '';
-                    do {
-                        $byte = $this->_readData($socket, 1, 'chunk');
+                    while (preg_match('/^[a-zA-Z0-9]?$/',$byte=$this->_readData($socket,1,'chunk'))){
+                        // read chunksize until \r
                         $chunk_size .= $byte;
-                    } while (preg_match('/^[a-zA-Z0-9]?$/',$byte)); // read chunksize including \r
+                        if (strlen($chunk_size) > 128) // set an abritrary limit on the size of chunks
+                            throw new HTTPClientException('Allowed response size exceeded');
+                    }
                     $byte = $this->_readData($socket, 1, 'chunk');     // readtrailing \n
                     $chunk_size = hexdec($chunk_size);
 
-                    // TODO: validate max_bodysize here to avoid the costly read
-                    if ($chunk_size) {
-                        $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
-                        $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
-                    }
-
-                    if($this->max_bodysize && strlen($r_body) > $this->max_bodysize){
+                    if($this->max_bodysize && $chunk_size+strlen($r_body) > $this->max_bodysize){
                         if ($this->max_bodysize_abort)
                             throw new HTTPClientException('Allowed response size exceeded');
                         $this->error = 'Allowed response size exceeded';
                         break;
+                    }
+
+                    if ($chunk_size) {
+                        $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
+                        $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size);
             }else{
