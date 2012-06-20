@@ -400,7 +400,8 @@ class HTTPClient {
 
             //read body (with chunked encoding if needed)
             $r_body    = '';
-            if(preg_match('/transfer\-(en)?coding:\s*chunked\r\n/i',$r_headers)){
+            if((isset($this->resp_headers['transfer-encoding']) && $this->resp_headers['transfer-encoding'] == 'chunked')
+            || (isset($this->resp_headers['transfer-coding']) && $this->resp_headers['transfer-coding'] == 'chunked')){
                 do {
                     $chunk_size = '';
                     do {
