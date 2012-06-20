@@ -308,8 +308,8 @@ class HTTPClient {
         }
 
         try {
-            //set blocking
-            stream_set_blocking($socket,1);
+            //set non-blocking
+            stream_set_blocking($socket, false);
 
             // build request
             $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -319,36 +319,7 @@ class HTTPClient {
             $request .= $data;
 
             $this->_debug('request',$request);
-
-            // select parameters
-            $sel_r = null;
-            $sel_w = array($socket);
-            $sel_e = null;
-
-            // send request
-            $towrite = strlen($request);
-            $written = 0;
-            while($written < $towrite){
-                // check timeout
-                $time_used = $this->_time() - $this->start;
-                if($time_used > $this->timeout)
-                    throw new HTTPClientException(sprintf('Timeout while sending request (%.3fs)',$time_used), -100);
-
-                // wait for stream ready or timeout (1sec)
-                if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
-                    usleep(1000);
-                    continue;
-                }
-
-                // write to stream
-                $ret = fwrite($socket, substr($request,$written,4096));
-                if($ret === false)
-                    throw new HTTPClientException('Failed writing to socket', -100);
-                $written += $ret;
-            }
-
-            // continue non-blocking
-            stream_set_blocking($socket,0);
+            $this->_sendData($socket, $request, 'request');
 
             // read headers from socket
             $r_headers = '';
@@ -507,6 +478,42 @@ class HTTPClient {
         $this->_debug('response body',$this->resp_body);
         $this->redirect_count = 0;
         return true;
+    }
+
+    /**
+     * Safely write data to a socket
+     *
+     * @param  handle $socket     An open socket handle
+     * @param  string $data       The data to write
+     * @param  string $message    Description of what is being read
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    function _sendData($socket, $data, $message) {
+        // select parameters
+        $sel_r = null;
+        $sel_w = array($socket);
+        $sel_e = null;
+
+        // send request
+        $towrite = strlen($data);
+        $written = 0;
+        while($written < $towrite){
+            // check timeout
+            $time_used = $this->_time() - $this->start;
+            if($time_used > $this->timeout)
+                throw new HTTPClientException(sprintf('Timeout while sending %s (%.3fs)',$message, $time_used), -100);
+            if(feof($socket))
+                throw new HTTPClientException("Socket disconnected while writing $message");
+
+            // wait for stream ready or timeout
+            if(@stream_select($sel_r, $sel_w, $sel_e, $this->timeout - $time_used) !== false){
+                // write to stream
+                $nbytes = fwrite($socket, substr($data,$written,4096));
+                if($nbytes === false)
+                    throw new HTTPClientException("Failed writing to socket while sending $message", -100);
+                $written += $nbytes;
+            }
+        }
     }
 
     /**
