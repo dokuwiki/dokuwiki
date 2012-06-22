@@ -1,2 +1,2 @@
-**Bạn đã nạp một phiên bản cũ của văn kiện!** Nếu bảo lưu, bạn sẽ tạo phiên bản với dữ kiện này.
+**Bạn đã nạp một phiên bản cũ của văn bản!** Nếu lưu nó, bạn sẽ tạo phiên bản mới với dữ kiện này.
 ----

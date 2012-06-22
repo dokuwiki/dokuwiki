@@ -1,1 +1,1 @@
-Biên soạn trang này và bấm ''Bảo lưu''. Xem [[wiki:syntax]] về cú pháp của Wiki. Xin bạn biên soạn trang này nếu bạn có thể **cải tiến** nó. Nếu bạn muốn thí nghiệm, bạn có thể tập những bước đầu ở [[playground:playground]].
+Biên soạn trang này và bấm ''Lưu''. Xem [[wiki:syntax:vi|cú pháp của Wiki]] để biết cách soạn thảo. Xin bạn biên soạn trang này nếu bạn có thể **cải tiến** nó. Nếu bạn muốn thử nghiệm, bạn có thể thử ở [[playground:playground| chỗ thử]].
