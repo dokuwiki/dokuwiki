@@ -9,6 +9,8 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
+require_once(DOKU_INC.'inc/PassHash.class.php');
+
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
@@ -50,6 +52,7 @@ $dokuwiki_hash = array(
     '2011-05-25'   => '4241865472edb6fa14a1227721008072',
     '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
+    'devel'        => 'eb0b3fc90056fbc12bac6f49f7764df3'
 );
 
 
@@ -318,9 +321,13 @@ EOT;
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
     if ($d['acl']) {
+        // hash the password
+        $phash = new PassHash();
+        $pass = $phash->hash_smd5($d['password']);
+
         // create users.auth.php
-        // --- user:MD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'admin,user'));
+        // --- user:SMD5password:Real Name:email:groups,comma,seperated
+        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
