@@ -629,7 +629,7 @@ class Mailer {
 
             // make the body
             $body    = $this->prepareBody();
-            if($body === 'false') return false;
+            if($body === false) return false;
 
             // cook the headers
             $headers = $this->prepareHeaders();
