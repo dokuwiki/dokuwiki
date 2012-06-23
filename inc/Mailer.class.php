@@ -566,7 +566,7 @@ class Mailer {
     public function dump(){
         $this->cleanHeaders();
         $body    = $this->prepareBody();
-        if($body === 'false') return false;
+        if($body === false) return false;
         $headers = $this->prepareHeaders();
 
         return $headers.MAILHEADER_EOL.$body;
