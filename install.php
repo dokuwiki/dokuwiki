@@ -29,8 +29,10 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
 
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
-$LC = preg_replace('/[^a-z\-]+/','',$_REQUEST['l']);
-if(!$LC) $LC = 'en';
+if(isset($_REQUEST['l']) && !is_array($_REQUEST['l'])) {
+    $LC = preg_replace('/[^a-z\-]+/','',$_REQUEST['l']);
+}
+if(empty($LC)) $LC = 'en';
 if($LC && $LC != 'en' ) {
     require_once(DOKU_INC.'inc/lang/'.$LC.'/lang.php');
 }
@@ -54,7 +56,6 @@ $dokuwiki_hash = array(
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
     'devel'        => 'eb0b3fc90056fbc12bac6f49f7764df3'
 );
-
 
 
 // begin output
@@ -131,17 +132,16 @@ header('Content-Type: text/html; charset=utf-8');
             }elseif(!check_configs()){
                 echo '<p>'.$lang['i_modified'].'</p>';
                 print_errors();
-            }elseif($_REQUEST['submit']){
-                if(!check_data($_REQUEST['d'])){
-                    print_errors();
-                    print_form($_REQUEST['d']);
-                }elseif(!store_data($_REQUEST['d'])){
+            }elseif(check_data($_REQUEST['d'])){
+                // check_data has sanitized all input parameters
+                if(!store_data($_REQUEST['d'])){
                     echo '<p>'.$lang['i_failure'].'</p>';
                     print_errors();
                 }else{
                     echo '<p>'.$lang['i_success'].'</p>';
                 }
             }else{
+                print_errors();
                 print_form($_REQUEST['d']);
             }
         ?>
@@ -252,41 +252,65 @@ function print_retry() {
  * @author Andreas Gohr
  */
 function check_data(&$d){
+    static $form_default = array(
+        'title'     => '',
+        'acl'       => '0',
+        'superuser' => '',
+        'fullname'  => '',
+        'email'     => '',
+        'password'  => '',
+        'confirm'   => '',
+        'policy'    => '0',
+        'license'   => 'cc-by-sa'
+    );
     global $lang;
     global $error;
 
+    if(!is_array($d)) $d = array();
+    foreach($d as $k => $v) {
+        if(is_array($v))
+            unset($d[$k]);
+        else
+            $d[$k] = (string)$v;
+    }
+
     //autolowercase the username
-    $d['superuser'] = strtolower($d['superuser']);
+    $d['superuser'] = isset($d['superuser']) ? strtolower($d['superuser']) : "";
 
-    $ok = true;
+    $ok = false;
 
-    // check input
-    if(empty($d['title'])){
-        $error[] = sprintf($lang['i_badval'],$lang['i_wikiname']);
-        $ok      = false;
+    if(isset($_REQUEST['submit'])) {
+        $ok = true;
+
+        // check input
+        if(empty($d['title'])){
+            $error[] = sprintf($lang['i_badval'],$lang['i_wikiname']);
+            $ok      = false;
+        }
+        if(isset($d['acl'])){
+            if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
+                $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
+                $ok      = false;
+            }
+            if(empty($d['password'])){
+                $error[] = sprintf($lang['i_badval'],$lang['pass']);
+                $ok      = false;
+            }
+            elseif(!isset($d['confirm']) || $d['confirm'] != $d['password']){
+                $error[] = sprintf($lang['i_badval'],$lang['passchk']);
+                $ok      = false;
+            }
+            if(empty($d['fullname']) || strstr($d['fullname'],':')){
+                $error[] = sprintf($lang['i_badval'],$lang['fullname']);
+                $ok      = false;
+            }
+            if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
+                $error[] = sprintf($lang['i_badval'],$lang['email']);
+                $ok      = false;
+            }
+        }
     }
-    if($d['acl']){
-        if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
-            $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
-            $ok      = false;
-        }
-        if(empty($d['password'])){
-            $error[] = sprintf($lang['i_badval'],$lang['pass']);
-            $ok      = false;
-        }
-        if($d['confirm'] != $d['password']){
-            $error[] = sprintf($lang['i_badval'],$lang['passchk']);
-            $ok      = false;
-        }
-        if(empty($d['fullname']) || strstr($d['fullname'],':')){
-            $error[] = sprintf($lang['i_badval'],$lang['fullname']);
-            $ok      = false;
-        }
-        if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
-            $error[] = sprintf($lang['i_badval'],$lang['email']);
-            $ok      = false;
-        }
-    }
+    $d = array_merge($form_default, $d);
     return $ok;
 }
 
@@ -531,11 +555,13 @@ function langsel(){
  */
 function print_errors(){
     global $error;
-    echo '<ul>';
-    foreach ($error as $err){
-        echo "<li>$err</li>";
+    if(!empty($error)) {
+        echo '<ul>';
+        foreach ($error as $err){
+            echo "<li>$err</li>";
+        }
+        echo '</ul>';
     }
-    echo '</ul>';
 }
 
 /**
