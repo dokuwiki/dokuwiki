@@ -240,7 +240,8 @@ function init_paths(){
             'tmpdir'    => 'tmp');
 
     foreach($paths as $c => $p) {
-        $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
+        $path = empty($conf[$c]) ? $p : $conf[$c];
+        $path = $path[0] == '/' ? $path : $conf['savedir'].'/'.$path;
         $conf[$c] = init_path($path);
         if(empty($conf[$c]))
             nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
