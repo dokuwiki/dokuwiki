@@ -197,6 +197,10 @@ if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Con
 // load libraries
 require_once(DOKU_INC.'inc/load.php');
 
+// input handle class
+global $INPUT;
+$INPUT = new Input();
+
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
 

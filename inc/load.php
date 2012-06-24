@@ -62,6 +62,7 @@ function load_autoload($name){
         'Doku_Event'            => DOKU_INC.'inc/events.php',
         'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
         'EmailAddressValidator' => DOKU_INC.'inc/EmailAddressValidator.php',
+        'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
