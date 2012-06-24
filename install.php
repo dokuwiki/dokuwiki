@@ -213,7 +213,7 @@ function print_form($d){
             <p><?php echo $lang['i_license']?></p>
             <?php
             array_unshift($license,array('name' => 'None', 'url'=>''));
-            if(!isset($d['license'])) $d['license'] = 'cc-by-sa';
+            if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
                 echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
@@ -254,7 +254,7 @@ function print_retry() {
 function check_data(&$d){
     static $form_default = array(
         'title'     => '',
-        'acl'       => '0',
+        'acl'       => '1',
         'superuser' => '',
         'fullname'  => '',
         'email'     => '',
