@@ -28,6 +28,19 @@ class Input {
     }
 
     /**
+     * Check if a parameter was set
+     *
+     * Basically a wrapper around isset
+     *
+     * @see isset
+     * @param $name Parameter name
+     * @return bool
+     */
+    public function has($name) {
+        return isset($this->access[$name]);
+    }
+
+    /**
      * Access a request parameter without any type conversion
      *
      * @param string    $name     Parameter name
