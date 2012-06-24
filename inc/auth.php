@@ -36,6 +36,8 @@ function auth_setup() {
     global $conf;
     /* @var auth_basic $auth */
     global $auth;
+    /* @var Input $INPUT */
+    global $INPUT;
     global $AUTH_ACL;
     global $lang;
     $AUTH_ACL = array();
@@ -66,11 +68,8 @@ function auth_setup() {
     if(!$auth) return false;
 
     // do the login either by cookie or provided credentials XXX
-    if(!isset($_REQUEST['u'])) $_REQUEST['u'] = '';
-    if(!isset($_REQUEST['p'])) $_REQUEST['p'] = '';
-    if(!isset($_REQUEST['r'])) $_REQUEST['r'] = '';
-    $_REQUEST['http_credentials'] = false;
-    if(!$conf['rememberme']) $_REQUEST['r'] = false;
+    $INPUT->set('http_credentials', false);
+    if(!$conf['rememberme']) $INPUT->set('r', false);
 
     // handle renamed HTTP_AUTHORIZATION variable (can happen when a fix like
     // the one presented at
@@ -85,27 +84,27 @@ function auth_setup() {
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
-    if(empty($_REQUEST['u']) && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])) {
-        $_REQUEST['u']                = $_SERVER['PHP_AUTH_USER'];
-        $_REQUEST['p']                = $_SERVER['PHP_AUTH_PW'];
-        $_REQUEST['http_credentials'] = true;
+    if(!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])) {
+        $INPUT->set('u', $_SERVER['PHP_AUTH_USER']);
+        $INPUT->set('p', $_SERVER['PHP_AUTH_PW']);
+        $INPUT->set('http_credentials', true);
     }
 
     // apply cleaning
-    $_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+    $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
 
-    if(isset($_REQUEST['authtok'])) {
+    if($INPUT->str('authtok')) {
         // when an authentication token is given, trust the session
-        auth_validateToken($_REQUEST['authtok']);
+        auth_validateToken($INPUT->str('authtok'));
     } elseif(!is_null($auth) && $auth->canDo('external')) {
         // external trust mechanism in place
-        $auth->trustExternal($_REQUEST['u'], $_REQUEST['p'], $_REQUEST['r']);
+        $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
     } else {
         $evdata = array(
-            'user'     => $_REQUEST['u'],
-            'password' => $_REQUEST['p'],
-            'sticky'   => $_REQUEST['r'],
-            'silent'   => $_REQUEST['http_credentials'],
+            'user'     => $INPUT->str('u'),
+            'password' => $INPUT->str('p'),
+            'sticky'   => $INPUT->bool('r'),
+            'silent'   => $INPUT->bool('http_credentials')
         );
         trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
     }
@@ -799,12 +798,13 @@ function register() {
  */
 function updateprofile() {
     global $conf;
-    global $INFO;
     global $lang;
     /* @var auth_basic $auth */
     global $auth;
+    /* @var Input $INPUT */
+    global $INPUT;
 
-    if(empty($_POST['save'])) return false;
+    if(!$INPUT->post->bool('save')) return false;
     if(!checkSecurityToken()) return false;
 
     if(!actionOK('profile')) {
@@ -812,39 +812,48 @@ function updateprofile() {
         return false;
     }
 
-    if($_POST['newpass'] != $_POST['passchk']) {
-        msg($lang['regbadpass'], -1); // complain about misspelled passwords
+    $changes         = array();
+    $changes['pass'] = $INPUT->post->str('newpass');
+    $changes['name'] = $INPUT->post->str('fullname');
+    $changes['mail'] = $INPUT->post->str('email');
+
+    // check misspelled passwords
+    if($changes['pass'] != $INPUT->post->str('passchk')) {
+        msg($lang['regbadpass'], -1);
         return false;
     }
 
-    //clean fullname and email
-    $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $_POST['fullname']));
-    $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $_POST['email']));
+    // clean fullname and email
+    $changes['name'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $changes['name']));
+    $changes['mail'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $changes['mail']));
 
-    if((empty($_POST['fullname']) && $auth->canDo('modName')) ||
-        (empty($_POST['email']) && $auth->canDo('modMail'))
+    // no empty name and email (except the backend doesn't support them)
+    if((empty($changes['name']) && $auth->canDo('modName')) ||
+        (empty($changes['mail']) && $auth->canDo('modMail'))
     ) {
         msg($lang['profnoempty'], -1);
         return false;
     }
-
-    if(!mail_isvalid($_POST['email']) && $auth->canDo('modMail')) {
+    if(!mail_isvalid($changes['mail']) && $auth->canDo('modMail')) {
         msg($lang['regbadmail'], -1);
         return false;
     }
 
-    $changes = array();
-    if($_POST['fullname'] != $INFO['userinfo']['name'] && $auth->canDo('modName')) $changes['name'] = $_POST['fullname'];
-    if($_POST['email'] != $INFO['userinfo']['mail'] && $auth->canDo('modMail')) $changes['mail'] = $_POST['email'];
-    if(!empty($_POST['newpass']) && $auth->canDo('modPass')) $changes['pass'] = $_POST['newpass'];
+    $changes = array_filter($changes);
 
+    // check for unavailable capabilities
+    if(!$auth->canDo('modName')) unset($changes['name']);
+    if(!$auth->canDo('modMail')) unset($changes['mail']);
+    if(!$auth->canDo('modPass')) unset($changes['pass']);
+
+    // anything to do?
     if(!count($changes)) {
         msg($lang['profnochange'], -1);
         return false;
     }
 
     if($conf['profileconfirm']) {
-        if(!$auth->checkPass($_SERVER['REMOTE_USER'], $_POST['oldpass'])) {
+        if(!$auth->checkPass($_SERVER['REMOTE_USER'], $INPUT->post->str('oldpass'))) {
             msg($lang['badlogin'], -1);
             return false;
         }
@@ -882,13 +891,15 @@ function act_resendpwd() {
     global $conf;
     /* @var auth_basic $auth */
     global $auth;
+    /* @var Input $INPUT */
+    global $INPUT;
 
     if(!actionOK('resendpwd')) {
         msg($lang['resendna'], -1);
         return false;
     }
 
-    $token = preg_replace('/[^a-f0-9]+/', '', $_REQUEST['pwauth']);
+    $token = preg_replace('/[^a-f0-9]+/', '', $INPUT->str('pwauth'));
 
     if($token) {
         // we're in token phase - get user info from token
@@ -896,13 +907,13 @@ function act_resendpwd() {
         $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
         if(!@file_exists($tfile)) {
             msg($lang['resendpwdbadauth'], -1);
-            unset($_REQUEST['pwauth']);
+            $INPUT->remove('pwauth');
             return false;
         }
         // token is only valid for 3 days
         if((time() - filemtime($tfile)) > (3 * 60 * 60 * 24)) {
             msg($lang['resendpwdbadauth'], -1);
-            unset($_REQUEST['pwauth']);
+            $INPUT->remove('pwauth');
             @unlink($tfile);
             return false;
         }
@@ -915,14 +926,16 @@ function act_resendpwd() {
         }
 
         if(!$conf['autopasswd']) { // we let the user choose a password
+            $pass = $INPUT->str('pass');
+
             // password given correctly?
-            if(!isset($_REQUEST['pass']) || $_REQUEST['pass'] == '') return false;
-            if($_REQUEST['pass'] != $_REQUEST['passchk']) {
+            if(!$pass) return false;
+            if($pass != $INPUT->str('passchk')) {
                 msg($lang['regbadpass'], -1);
                 return false;
             }
-            $pass = $_REQUEST['pass'];
 
+            // change it
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
                 msg('error modifying user data', -1);
                 return false;
@@ -949,13 +962,13 @@ function act_resendpwd() {
     } else {
         // we're in request phase
 
-        if(!$_POST['save']) return false;
+        if(!$INPUT->post->bool('save')) return false;
 
-        if(empty($_POST['login'])) {
+        if(!$INPUT->post->str('login')) {
             msg($lang['resendpwdmissing'], -1);
             return false;
         } else {
-            $user = trim($auth->cleanUser($_POST['login']));
+            $user = trim($auth->cleanUser($INPUT->post->str('login')));
         }
 
         $userinfo = $auth->getUserData($user);
