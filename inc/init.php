@@ -23,7 +23,7 @@ if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/
 if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 // define config path (packagers may want to change this to /etc/dokuwiki/)
-if(!defined('DOKU_CONF')) define('DOKU_CONF','/etc/webapps/dokuwiki/');
+if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
 // define path where variable data is saved (packagers may want to change this to /var/lib/dokuwiki/)
 if(!defined('DOKU_DATA')) define('DOKU_DATA',DOKU_INC.'data');
