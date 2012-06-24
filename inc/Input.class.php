@@ -33,7 +33,7 @@ class Input {
      * Basically a wrapper around isset
      *
      * @see isset
-     * @param $name Parameter name
+     * @param string $name Parameter name
      * @return bool
      */
     public function has($name) {
@@ -45,10 +45,12 @@ class Input {
      *
      * @param string    $name     Parameter name
      * @param mixed     $default  Default to return if parameter isn't set
+     * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return mixed
      */
-    public function param($name, $default = null) {
+    public function param($name, $default = null, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
+        if($nonempty && empty($this->access[$name])) return $default;
         return $this->access[$name];
     }
 
@@ -58,12 +60,13 @@ class Input {
      * This avoids copying data in memory, when the parameter is not set it will be created
      * and intialized with the given $default value before a reference is returned
      *
-     * @param string  $name Parameter name
-     * @param mixed   $default Initialize parameter with if not set
+     * @param string    $name Parameter name
+     * @param mixed     $default Initialize parameter with if not set
+     * @param bool      $nonempty Init with $default if parameter is set but empty()
      * @return &mixed
      */
-    public function &ref($name, $default = '') {
-        if(!isset($this->access[$name])) {
+    public function &ref($name, $default = '', $nonempty = false) {
+        if(!isset($this->access[$name]) || ($nonempty && empty($this->access[$name]))) {
             $this->access[$name] = $default;
         }
 
@@ -76,11 +79,13 @@ class Input {
      *
      * @param string    $name     Parameter name
      * @param mixed     $default  Default to return if parameter isn't set or is an array
+     * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return int
      */
-    public function int($name, $default = 0) {
+    public function int($name, $default = 0, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default;
+        if($nonempty && empty($this->access[$name])) return $default;
 
         return (int) $this->access[$name];
     }
@@ -90,11 +95,13 @@ class Input {
      *
      * @param string    $name     Parameter name
      * @param mixed     $default  Default to return if parameter isn't set or is an array
+     * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return string
      */
-    public function str($name, $default = '') {
+    public function str($name, $default = '', $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default;
+        if($nonempty && empty($this->access[$name])) return $default;
 
         return (string) $this->access[$name];
     }
@@ -104,10 +111,12 @@ class Input {
      *
      * @param string    $name     Parameter name
      * @param mixed     $default  Default to return if parameter isn't set
+     * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return bool
      */
-    public function bool($name, $default = '') {
+    public function bool($name, $default = '', $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
+        if($nonempty && empty($this->access[$name])) return $default;
 
         return (bool) $this->access[$name];
     }
@@ -117,10 +126,12 @@ class Input {
      *
      * @param string    $name     Parameter name
      * @param mixed     $default  Default to return if parameter isn't set
+     * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return array
      */
-    public function arr($name, $default = array()) {
+    public function arr($name, $default = array(), $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
+        if($nonempty && empty($this->access[$name])) return $default;
 
         return (array) $this->access[$name];
     }
