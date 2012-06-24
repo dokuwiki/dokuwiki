@@ -30,7 +30,8 @@ class Input {
     /**
      * Check if a parameter was set
      *
-     * Basically a wrapper around isset
+     * Basically a wrapper around isset. When called on the $post and $get subclasses,
+     * the parameter is set to $_POST or $_GET and to $_REQUEST
      *
      * @see isset
      * @param string $name Parameter name
@@ -38,6 +39,29 @@ class Input {
      */
     public function has($name) {
         return isset($this->access[$name]);
+    }
+
+    /**
+     * Remove a parameter from the superglobals
+     *
+     * Basically a wrapper around unset. When NOT called on the $post and $get subclasses,
+     * the parameter will also be removed from $_POST or $_GET
+     *
+     * @see isset
+     * @param string $name Parameter name
+     * @return bool
+     */
+    public function remove($name) {
+        if(isset($this->access[$name])) {
+            unset($this->access[$name]);
+        }
+        // also remove from sub classes
+        if(isset($this->post) && isset($_POST[$name])) {
+            unset($_POST[$name]);
+        }
+        if(isset($this->get) && isset($_GET[$name])) {
+            unset($_GET[$name]);
+        }
     }
 
     /**
