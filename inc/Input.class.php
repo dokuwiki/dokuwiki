@@ -55,19 +55,29 @@ class Input {
     }
 
     /**
+     * Sets a parameter
+     *
+     * @param string $name Parameter name
+     * @param mixed  $value Value to set
+     */
+    public function set($name, $value) {
+        $this->access[$name] = $value;
+    }
+
+    /**
      * Get a reference to a request parameter
      *
      * This avoids copying data in memory, when the parameter is not set it will be created
      * and intialized with the given $default value before a reference is returned
      *
      * @param string    $name Parameter name
-     * @param mixed     $default Initialize parameter with if not set
+     * @param mixed     $default If parameter is not set, initialize with this value
      * @param bool      $nonempty Init with $default if parameter is set but empty()
      * @return &mixed
      */
     public function &ref($name, $default = '', $nonempty = false) {
         if(!isset($this->access[$name]) || ($nonempty && empty($this->access[$name]))) {
-            $this->access[$name] = $default;
+            $this->set($name, $default);
         }
 
         $ref = &$this->access[$name];
@@ -114,7 +124,7 @@ class Input {
      * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return bool
      */
-    public function bool($name, $default = '', $nonempty = false) {
+    public function bool($name, $default = false, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if($nonempty && empty($this->access[$name])) return $default;
 
@@ -152,10 +162,22 @@ class PostInput extends Input {
         unset ($this->post);
         unset ($this->get);
     }
+
+    /**
+     * Sets a parameter in $_POST and $_REQUEST
+     *
+     * @param string $name Parameter name
+     * @param mixed  $value Value to set
+     */
+    public function set($name, $value) {
+        parent::set($name, $value);
+        $_REQUEST[$name] = $value;
+    }
 }
 
 /**
  * Internal class used for $_GET access in Input class
+
  */
 class GetInput extends Input {
     protected $access;
@@ -167,5 +189,16 @@ class GetInput extends Input {
         $this->access = &$_GET;
         unset ($this->post);
         unset ($this->get);
+    }
+
+    /**
+     * Sets a parameter in $_GET and $_REQUEST
+     *
+     * @param string $name Parameter name
+     * @param mixed  $value Value to set
+     */
+    public function set($name, $value) {
+        parent::set($name, $value);
+        $_REQUEST[$name] = $value;
     }
 }
