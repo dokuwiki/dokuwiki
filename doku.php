@@ -13,13 +13,13 @@ $updateVersion = 36.1;
 
 //  xdebug_start_profiling();
 
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
+if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
 
-if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
+if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
-} elseif (!empty($_REQUEST['idx'])) {
+} elseif(!empty($_REQUEST['idx'])) {
     $ACT = 'index';
-} elseif (isset($_REQUEST['do'])) {
+} elseif(isset($_REQUEST['do'])) {
     $ACT = $_REQUEST['do'];
 } else {
     $ACT = 'show';
@@ -29,12 +29,12 @@ if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])){
 require_once(DOKU_INC.'inc/init.php');
 
 //import variables
-$_REQUEST['id'] = str_replace("\xC2\xAD",'',$INPUT->str('id')); //soft-hyphen
-$QUERY = trim($INPUT->str('id'));
-$ID    = getID();
+$_REQUEST['id'] = str_replace("\xC2\xAD", '', $INPUT->str('id')); //soft-hyphen
+$QUERY          = trim($INPUT->str('id'));
+$ID             = getID();
 
 // deprecated 2011-01-14
-$NS    = getNS($ID);
+$NS = getNS($ID);
 
 $REV   = $INPUT->int('rev');
 $IDX   = $INPUT->str('idx');
@@ -43,12 +43,12 @@ $RANGE = $INPUT->str('range');
 $HIGH  = $INPUT->param('s');
 if(empty($HIGH)) $HIGH = getGoogleQuery();
 
-if ($INPUT->post->has('wikitext')) {
-    $TEXT  = cleanText($INPUT->post->str('wikitext'));
+if($INPUT->post->has('wikitext')) {
+    $TEXT = cleanText($INPUT->post->str('wikitext'));
 }
-$PRE   = cleanText(substr($INPUT->post->str('prefix'), 0, -1));
-$SUF   = cleanText($INPUT->post->str('suffix'));
-$SUM   = $INPUT->post->str('summary');
+$PRE = cleanText(substr($INPUT->post->str('prefix'), 0, -1));
+$SUF = cleanText($INPUT->post->str('suffix'));
+$SUM = $INPUT->post->str('summary');
 
 //make infos about the selected page available
 $INFO = pageinfo();
@@ -57,28 +57,28 @@ $INFO = pageinfo();
 $JSINFO['id']        = $ID;
 $JSINFO['namespace'] = (string) $INFO['namespace'];
 
-
 // handle debugging
-if($conf['allowdebug'] && $ACT == 'debug'){
+if($conf['allowdebug'] && $ACT == 'debug') {
     html_debug();
     exit;
 }
 
 //send 404 for missing pages if configured or ID has special meaning to bots
 if(!$INFO['exists'] &&
-  ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/',$ID)) &&
-  ($ACT == 'show' || (!is_array($ACT) && substr($ACT,0,7) == 'export_')) ){
+    ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/', $ID)) &&
+    ($ACT == 'show' || (!is_array($ACT) && substr($ACT, 0, 7) == 'export_'))
+) {
     header('HTTP/1.0 404 Not Found');
 }
 
 //prepare breadcrumbs (initialize a static var)
-if ($conf['breadcrumbs']) breadcrumbs();
+if($conf['breadcrumbs']) breadcrumbs();
 
 // check upstream
 checkUpdateMessages();
 
 $tmp = array(); // No event data
-trigger_event('DOKUWIKI_STARTED',$tmp);
+trigger_event('DOKUWIKI_STARTED', $tmp);
 
 //close session
 session_write_close();
