@@ -6,6 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  *
  * @global array $conf
+ * @global Input $INPUT
  */
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
@@ -26,7 +27,7 @@ $cache = new cache($key, '.feed');
 // prepare cache depends
 $depends['files'] = getConfigFiles('main');
 $depends['age']   = $conf['rss_update'];
-$depends['purge'] = isset($_REQUEST['purge']);
+$depends['purge'] = $INPUT->bool('purge');
 
 // check cacheage and deliver if nothing has changed since last
 // time or the update interval has not passed, also handles conditional requests
@@ -95,6 +96,7 @@ print $feed;
  */
 function rss_parseOptions() {
     global $conf;
+    global $INPUT;
 
     $opt = array();
 
@@ -104,29 +106,28 @@ function rss_parseOptions() {
                 // properties for implementing own feeds
 
                 // One of: list, search, recent
-                'feed_mode'    => array('mode', 'recent'),
+                'feed_mode'    => array('str', 'mode', 'recent'),
                 // One of: diff, page, rev, current
-                'link_to'      => array('linkto', $conf['rss_linkto']),
+                'link_to'      => array('str', 'linkto', $conf['rss_linkto']),
                 // One of: abstract, diff, htmldiff, html
-                'item_content' => array('content', $conf['rss_content']),
+                'item_content' => array('str', 'content', $conf['rss_content']),
 
                 // Special feed properties
                 // These are only used by certain feed_modes
 
                 // String, used for feed title, in list and rc mode
-                'namespace'    => array('ns', null),
+                'namespace'    => array('str', 'ns', null),
                 // Positive integer, only used in rc mode
-                'items'        => array('num', $conf['recent']),
+                'items'        => array('int', 'num', $conf['recent']),
                 // Boolean, only used in rc mode
-                'show_minor'   => array('minor', false),
+                'show_minor'   => array('bool', 'minor', false),
                 // String, only used in search mode
-                'search_query' => array('q', null),
+                'search_query' => array('str', 'q', null),
                 // One of: pages, media, both
-                'content_type' => array('view', $conf['rss_media'])
+                'content_type' => array('str', 'view', $conf['rss_media'])
 
             ) as $name => $val) {
-        $opt[$name] = (isset($_REQUEST[$val[0]]) && !empty($_REQUEST[$val[0]]))
-            ? $_REQUEST[$val[0]] : $val[1];
+        $opt[$name] = $INPUT->$val[0]($val[1], $val[2], true);
     }
 
     $opt['items']      = max(0, (int) $opt['items']);
