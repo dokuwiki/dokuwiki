@@ -104,8 +104,7 @@ class Input {
             $this->set($name, $default);
         }
 
-        $ref = &$this->access[$name];
-        return $ref;
+        return $this->access[$name];
     }
 
     /**
@@ -143,6 +142,8 @@ class Input {
     /**
      * Access a request parameter as bool
      *
+     * Note: $nonempty is here for interface consistency and makes not much sense for booleans
+     *
      * @param string    $name     Parameter name
      * @param mixed     $default  Default to return if parameter isn't set
      * @param bool      $nonempty Return $default if parameter is set but empty()
@@ -165,6 +166,7 @@ class Input {
      */
     public function arr($name, $default = array(), $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
+        if(!is_array($this->access[$name])) return $default;
         if($nonempty && empty($this->access[$name])) return $default;
 
         return (array) $this->access[$name];
@@ -183,8 +185,6 @@ class PostInput extends Input {
      */
     function __construct() {
         $this->access = &$_POST;
-        unset ($this->post);
-        unset ($this->get);
     }
 
     /**
@@ -211,8 +211,6 @@ class GetInput extends Input {
      */
     function __construct() {
         $this->access = &$_GET;
-        unset ($this->post);
-        unset ($this->get);
     }
 
     /**
