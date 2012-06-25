@@ -501,9 +501,9 @@ function auth_quickaclcheck($id) {
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @param  string  $id     page ID (needs to be resolved and cleaned)
- * @param  string  $user   Username
- * @param  array   $groups Array of groups the user is in
+ * @param  string       $id     page ID (needs to be resolved and cleaned)
+ * @param  string       $user   Username
+ * @param  array|null   $groups Array of groups the user is in
  * @return int             permission level
  */
 function auth_aclcheck($id, $user, $groups) {

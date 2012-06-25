@@ -3,7 +3,9 @@
  * Initialize some defaults needed for DokuWiki
  */
 
-// start timing Dokuwiki execution
+/**
+ * timing Dokuwiki execution
+ */
 function delta_time($start=0) {
     return microtime(true)-((float)$start);
 }
