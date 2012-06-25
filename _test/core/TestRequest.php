@@ -58,6 +58,9 @@ class TestRequest {
         global $output_buffer;
         $output_buffer = '';
 
+        // make globals available as were in a function context here FIXME: any others needed?
+        global $INPUT;
+
         // now execute dokuwiki and grep the output
         header_remove();
         ob_start('ob_start_callback');
