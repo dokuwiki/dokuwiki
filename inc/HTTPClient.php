@@ -427,25 +427,25 @@ class HTTPClient {
                         $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
+            }elseif($this->max_bodysize){
+                // read just over the max_bodysize
+                $r_body = $this->_readData($socket, $this->max_bodysize+1, 'response', true);
+                if(strlen($r_body) > $this->max_bodysize){
+                    if ($this->max_bodysize_abort) {
+                        throw new HTTPClientException('Allowed response size exceeded');
+                    } else {
+                        $this->error = 'Allowed response size exceeded';
+                    }
+                }
+            }elseif(isset($this->resp_headers['content-length']) &&
+                    !isset($this->resp_headers['transfer-encoding'])){
+                // read up to the content-length
+                $r_body = $this->_readData($socket, $this->resp_headers['content-length'], 'response', true);
             }else{
                 // read entire socket
+                $r_size = 0;
                 while (!feof($socket)) {
-                    $r_body .= $this->_readData($socket, -$this->max_bodysize, 'response', true);
-                    $r_size = strlen($r_body);
-                    if($this->max_bodysize && $r_size > $this->max_bodysize){
-                        if ($this->max_bodysize_abort) {
-                            throw new HTTPClientException('Allowed response size exceeded');
-                        } else {
-                            $this->error = 'Allowed response size exceeded';
-                            break;
-                        }
-                    }
-                    if(isset($this->resp_headers['content-length']) &&
-                    !isset($this->resp_headers['transfer-encoding']) &&
-                    $this->resp_headers['content-length'] == $r_size){
-                        // we read the content-length, finish here
-                        break;
-                    }
+                    $r_body .= $this->_readData($socket, 0, 'response', true);
                 }
             }
 
@@ -525,10 +525,8 @@ class HTTPClient {
      * Safely read data from a socket
      *
      * Reads up to a given number of bytes or throws an exception if the
-     * response times out or ends prematurely. If the number of bytes to
-     * read is negative, then it will read up to the absolute value, but
-     * may read less. A value of 0 returns an arbitrarily sized block,
-     * and a positive value will return exactly that many bytes.
+     * response times out or ends prematurely. If $nbytes is 0, an arbitrarily
+     * sized block will be read.
      *
      * @param  handle $socket     An open socket handle in non-blocking mode
      * @param  int    $nbytes     Number of bytes to read
@@ -543,16 +541,19 @@ class HTTPClient {
         $sel_e = null;
 
         $r_data = '';
-        $to_read = $nbytes ? $nbytes : 4096;
-        if ($to_read < 0) $to_read = -$to_read;
+        if ($nbytes <= 0) $nbytes = 4096;
+        $to_read = $nbytes;
         do {
             $time_used = $this->_time() - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
                         sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
                         -100);
-            if(!$ignore_eof && feof($socket))
-                throw new HTTPClientException("Premature End of File (socket) while reading $message");
+            if(feof($socket)) {
+                if(!$ignore_eof)
+                    throw new HTTPClientException("Premature End of File (socket) while reading $message");
+                break;
+            }
 
             // wait for stream ready or timeout
             self::selecttimeout($this->timeout - $time_used, $sec, $usec);
