@@ -445,7 +445,7 @@ class HTTPClient {
                 // read entire socket
                 $r_size = 0;
                 while (!feof($socket)) {
-                    $r_body .= $this->_readData($socket, 0, 'response', true);
+                    $r_body .= $this->_readData($socket, 4096, 'response', true);
                 }
             }
 
@@ -525,8 +525,7 @@ class HTTPClient {
      * Safely read data from a socket
      *
      * Reads up to a given number of bytes or throws an exception if the
-     * response times out or ends prematurely. If $nbytes is 0, an arbitrarily
-     * sized block will be read.
+     * response times out or ends prematurely.
      *
      * @param  handle $socket     An open socket handle in non-blocking mode
      * @param  int    $nbytes     Number of bytes to read
@@ -541,7 +540,8 @@ class HTTPClient {
         $sel_e = null;
 
         $r_data = '';
-        if ($nbytes <= 0) $nbytes = 4096;
+        // Does not return immediately so timeout and eof can be checked
+        if ($nbytes < 0) $nbytes = 0;
         $to_read = $nbytes;
         do {
             $time_used = $this->_time() - $this->start;
@@ -555,16 +555,18 @@ class HTTPClient {
                 break;
             }
 
-            // wait for stream ready or timeout
-            self::selecttimeout($this->timeout - $time_used, $sec, $usec);
-            if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
-                $bytes = fread($socket, $to_read);
-                if($bytes === false)
-                    throw new HTTPClientException("Failed reading from socket while reading $message", -100);
-                $r_data .= $bytes;
-                $to_read -= strlen($bytes);
+            if ($to_read > 0) {
+                // wait for stream ready or timeout
+                self::selecttimeout($this->timeout - $time_used, $sec, $usec);
+                if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
+                    $bytes = fread($socket, $to_read);
+                    if($bytes === false)
+                        throw new HTTPClientException("Failed reading from socket while reading $message", -100);
+                    $r_data .= $bytes;
+                    $to_read -= strlen($bytes);
+                }
             }
-        } while (strlen($r_data) < $nbytes);
+        } while ($to_read > 0 && strlen($r_data) < $nbytes);
         return $r_data;
     }
 
