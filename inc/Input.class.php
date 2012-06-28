@@ -118,6 +118,7 @@ class Input {
     public function int($name, $default = 0, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default;
+        if($this->access[$name] === '') return $default;
         if($nonempty && empty($this->access[$name])) return $default;
 
         return (int) $this->access[$name];
@@ -151,6 +152,8 @@ class Input {
      */
     public function bool($name, $default = false, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
+        if(is_array($this->access[$name])) return $default;
+        if($this->access[$name] === '') return $default;
         if($nonempty && empty($this->access[$name])) return $default;
 
         return (bool) $this->access[$name];

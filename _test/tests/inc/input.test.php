@@ -95,6 +95,11 @@ class input_test extends DokuWikiTest {
         $this->assertSame(1, $INPUT->get->int('get', false));
 
         $this->assertSame(0, $INPUT->int('array'));
+
+        $this->assertSame(0, $INPUT->int('zero', -1));
+        $this->assertSame(-1, $INPUT->int('empty', -1));
+        $this->assertSame(-1, $INPUT->int('zero', -1, true));
+        $this->assertSame(-1, $INPUT->int('empty', -1, true));
     }
 
     public function test_arr() {
@@ -155,6 +160,11 @@ class input_test extends DokuWikiTest {
 
         $this->assertSame(false, $INPUT->post->bool('get'));
         $this->assertSame(true, $INPUT->post->bool('post'));
+
+        $this->assertSame(false, $INPUT->bool('zero', -1));
+        $this->assertSame(-1, $INPUT->bool('empty', -1));
+        $this->assertSame(-1, $INPUT->bool('zero', -1, true));
+        $this->assertSame(-1, $INPUT->bool('empty', -1, true));
     }
 
     public function test_remove() {
