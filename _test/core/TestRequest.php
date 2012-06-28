@@ -46,6 +46,11 @@ class TestRequest {
         $post = $_POST;
         $request = $_REQUEST;
 
+        // import all defined globals into the function scope
+        foreach(array_keys($GLOBALS) as $glb){
+            global $$glb;
+        }
+
         // fake environment
         global $default_server_vars;
         $_SERVER = array_merge($default_server_vars, $this->server);
@@ -57,9 +62,6 @@ class TestRequest {
         // reset output buffer
         global $output_buffer;
         $output_buffer = '';
-
-        // make globals available as were in a function context here FIXME: any others needed?
-        global $INPUT;
 
         // now execute dokuwiki and grep the output
         header_remove();
