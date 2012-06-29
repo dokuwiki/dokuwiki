@@ -92,8 +92,6 @@ $lang['hidepages']   = 'Hide pages matching this regular expressions from search
 
 /* Authentication Settings */
 $lang['useacl']      = 'Use access control lists';
-$lang['usewildcards']   = 'Use the wildcard %USER% for ACL';
-$lang['groupwildcards'] = 'Use the wildcard %GROUP% for ACL';
 $lang['autopasswd']  = 'Autogenerate passwords';
 $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';

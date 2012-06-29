@@ -136,12 +136,12 @@ function auth_loadACL() {
         for($i = 0; $i < $len; $i++) {
             if($acl[$i]{0} == '#') continue;
             list($id,$rest) = preg_split('/\s+/',$acl[$i],2);
-            if($conf['groups_wilcards'] && (strstr($id, '%GROUP%') || strstr($rest, '%GROUP%'))){
-                    foreach($USERINFO['grps'] as $grp){
-                            $nid   = str_replace('%GROUP%',cleanID($grp),$id);
-                            $nrest = str_replace('%GROUP%',auth_nameencode($grp),$rest);
-                            $acl[] = "$nid\t$nrest";
-                    }
+            if(strstr($acl[$i], '%GROUP%')){
+                foreach($USERINFO['grps'] as $grp){
+                    $nid   = str_replace('%GROUP%',cleanID($grp),$id);
+                    $nrest = str_replace('%GROUP%',auth_nameencode($grp),$rest);
+                    $acl[] = "$nid\t$nrest";
+                }
             }
             $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
             $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
