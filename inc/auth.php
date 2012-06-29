@@ -123,19 +123,28 @@ function auth_setup() {
  */
 function auth_loadACL() {
     global $config_cascade;
+    global $conf;
+    global $USERINFO;
 
     if(!is_readable($config_cascade['acl']['default'])) return array();
 
     $acl = file($config_cascade['acl']['default']);
 
     //support user wildcard
-    if(isset($_SERVER['REMOTE_USER'])) {
+    if(isset($_SERVER['REMOTE_USER']) && $conf['use_wildcards']){
         $len = count($acl);
         for($i = 0; $i < $len; $i++) {
             if($acl[$i]{0} == '#') continue;
-            list($id, $rest) = preg_split('/\s+/', $acl[$i], 2);
-            $id      = str_replace('%USER%', cleanID($_SERVER['REMOTE_USER']), $id);
-            $rest    = str_replace('%USER%', auth_nameencode($_SERVER['REMOTE_USER']), $rest);
+            list($id,$rest) = preg_split('/\s+/',$acl[$i],2);
+            if($conf['groups_wilcards'] && (strstr($id, '%GROUP%') || strstr($rest, '%GROUP%'))){
+                    foreach($USERINFO['grps'] as $grp){
+                            $nid   = str_replace('%GROUP%',cleanID($grp),$id);
+                            $nrest = str_replace('%GROUP%',auth_nameencode($grp),$rest);
+                            $acl[] = "$nid\t$nrest";
+                    }
+            }
+            $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
+            $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
             $acl[$i] = "$id\t$rest";
         }
     }
@@ -632,6 +641,7 @@ function auth_nameencode($name, $skip_group = false) {
 
     // never encode wildcard FS#1955
     if($name == '%USER%') return $name;
+    if($name == '%GROUP%') return $name;
 
     if(!isset($cache[$name][$skip_group])) {
         if($skip_group && $name{0} == '@') {
