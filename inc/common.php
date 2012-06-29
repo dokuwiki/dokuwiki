@@ -63,9 +63,10 @@ function getSecurityToken() {
  * Check the secret CSRF token
  */
 function checkSecurityToken($token = null) {
+    global $INPUT;
     if(!$_SERVER['REMOTE_USER']) return true; // no logged in user, no need for a check
 
-    if(is_null($token)) $token = $_REQUEST['sectok'];
+    if(is_null($token)) $token = $INPUT->str('sectok');
     if(getSecurityToken() != $token) {
         msg('Security Token did not match. Possible CSRF attack.', -1);
         return false;
