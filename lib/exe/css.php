@@ -29,14 +29,14 @@ function css_out(){
     global $conf;
     global $lang;
     global $config_cascade;
+    global $INPUT;
 
     $mediatype = 'screen';
-    if (isset($_REQUEST['s']) &&
-        in_array($_REQUEST['s'], array('all', 'print', 'feed'))) {
-        $mediatype = $_REQUEST['s'];
+    if (in_array($INPUT->str('s'), array('all', 'print', 'feed'))) {
+        $mediatype = $INPUT->str('s');
     }
 
-    $tpl = trim(preg_replace('/[^\w-]+/','',$_REQUEST['t']));
+    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if($tpl){
         $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
         $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
