@@ -36,15 +36,19 @@ class TestRequest {
     /**
      * Executes the request
      *
+     * @param string $url  end URL to simulate, needs to start with /doku.php currently
      * @return TestResponse the resulting output of the request
      */
-    public function execute() {
+    public function execute($uri='/doku.php') {
         // save old environment
         $server = $_SERVER;
         $session = $_SESSION;
         $get = $_GET;
         $post = $_POST;
         $request = $_REQUEST;
+
+        // prepare the right URI
+        $this->setUri($uri);
 
         // import all defined globals into the function scope
         foreach(array_keys($GLOBALS) as $glb){
@@ -95,8 +99,9 @@ class TestRequest {
      * with all set GET variables.
      *
      * @param string $url  end URL to simulate, needs to start with /doku.php currently
+     * @todo make this work with other end points
      */
-    public function setUri($uri){
+    protected function setUri($uri){
         if(substr($uri,0,9) != '/doku.php'){
             throw new Exception("only '/doku.php' is supported currently");
         }
@@ -128,10 +133,9 @@ class TestRequest {
      * @param return TestResponse
      */
     public function post($post=array(), $uri='/doku.php') {
-        $this->setUri($uri);
         $this->post = array_merge($this->post, $post);
         $this->setServer('REQUEST_METHOD', 'POST');
-        return $this->execute();
+        return $this->execute($uri);
     }
 
     /**
@@ -143,9 +147,8 @@ class TestRequest {
      */
     public function get($get=array(), $uri='/doku.php') {
         $this->get  = array_merge($this->get, $get);
-        $this->setUri($uri);
         $this->setServer('REQUEST_METHOD', 'GET');
-        return $this->execute();
+        return $this->execute($uri);
     }
 
 
