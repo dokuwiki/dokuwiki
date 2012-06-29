@@ -10,6 +10,7 @@
     trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
     session_write_close();  //close session
 
+    global $INPUT;
     // handle passed message
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);
