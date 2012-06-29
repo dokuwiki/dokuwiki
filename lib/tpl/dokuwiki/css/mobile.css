@@ -7,7 +7,7 @@
 
 /* up to 768px screen widths
 ********************************************************************/
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 979px) {
 
 /* structure */
 #dokuwiki__aside {
