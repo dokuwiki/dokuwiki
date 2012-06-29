@@ -50,3 +50,4 @@ $lang['enabled']               = 'الاضافة %s فُعلت.	';
 $lang['notenabled']            = 'تعذر تفعيل الاضافة %s، تحقق من اذونات الملف.';
 $lang['disabled']              = 'عُطلت الإضافة %s.';
 $lang['notdisabled']           = 'تعذر تعطيل الإضافة %s، تحقق من اذونات الملف.';
+$lang['packageinstalled']      = 'حزمة الإضافة (%d plugin(s): %Xs) ثبتت بنجاج.';

@@ -5,7 +5,7 @@
  * Author: Alan Juden (alan@judenware.org)
  * Revised by: Michael Mol (mikemol@gmail.com)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2004/06/04
  *
  * C# language file for GeSHi.

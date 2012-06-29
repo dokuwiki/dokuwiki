@@ -1,3 +1,3 @@
-====== Nối về trước ======
+====== Liên kết đến trang vừa xem ======
 
-Đây là danh sách các trang hình như đã nối vào trang này.
+Đây là danh sách các trang có liên kết đến trang vừa xem.

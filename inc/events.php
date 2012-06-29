@@ -149,8 +149,8 @@ class Doku_Event_Handler {
      * @param  $method  (function) event handler function
      * @param  $param   (mixed)    data passed to the event handler
      */
-    function register_hook($event, $advise, &$obj, $method, $param=null) {
-        $this->_hooks[$event.'_'.$advise][] = array(&$obj, $method, $param);
+    function register_hook($event, $advise, $obj, $method, $param=null) {
+        $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param);
     }
 
     function process_event(&$event,$advise='') {
@@ -158,8 +158,7 @@ class Doku_Event_Handler {
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
 
         if (!empty($this->_hooks[$evt_name])) {
-            $hook = reset($this->_hooks[$evt_name]);
-            do {
+            foreach ($this->_hooks[$evt_name] as $hook) {
                 //        list($obj, $method, $param) = $hook;
                 $obj =& $hook[0];
                 $method = $hook[1];
@@ -171,7 +170,8 @@ class Doku_Event_Handler {
                     $obj->$method($event, $param);
                 }
 
-            } while ($event->_continue && $hook = next($this->_hooks[$evt_name]));
+                if (!$event->_continue) break;
+            }
         }
     }
 }

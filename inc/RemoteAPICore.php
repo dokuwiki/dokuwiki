@@ -169,7 +169,7 @@ class RemoteAPICore {
      * @return page text.
      */
     function rawPage($id,$rev=''){
-        $id = cleanID($id);
+        $id = $this->resolvePageId($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             throw new RemoteAccessDeniedException('You are not allowed to read this file', 111);
         }
@@ -228,7 +228,7 @@ class RemoteAPICore {
      * Return a wiki page rendered to html
      */
     function htmlPage($id,$rev=''){
-        $id = cleanID($id);
+        $id = $this->resolvePageId($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
@@ -302,6 +302,7 @@ class RemoteAPICore {
                 'mtime'   => filemtime($file),
                 'size'    => filesize($file),
                 'snippet' => $snippet,
+                'title' => useHeading('navigation') ? p_get_first_heading($id) : $id
             );
         }
         return $pages;
@@ -355,14 +356,14 @@ class RemoteAPICore {
      * Return a list of backlinks
      */
     function listBackLinks($id){
-        return ft_backlinks(cleanID($id));
+        return ft_backlinks($this->resolvePageId($id));
     }
 
     /**
      * Return some basic data about a page
      */
     function pageInfo($id,$rev=''){
-        $id = cleanID($id);
+        $id = $this->resolvePageId($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
@@ -393,7 +394,7 @@ class RemoteAPICore {
         global $TEXT;
         global $lang;
 
-        $id    = cleanID($id);
+        $id    = $this->resolvePageId($id);
         $TEXT  = cleanText($text);
         $sum   = $params['sum'];
         $minor = $params['minor'];
@@ -506,7 +507,7 @@ class RemoteAPICore {
     * Returns the permissions of a given wiki page
     */
     function aclCheck($id) {
-        $id = cleanID($id);
+        $id = $this->resolvePageId($id);
         return auth_quickaclcheck($id);
     }
 
@@ -516,7 +517,7 @@ class RemoteAPICore {
      * @author Michael Klier <chi@chimeric.de>
      */
     function listLinks($id) {
-        $id = cleanID($id);
+        $id = $this->resolvePageId($id);
         if(auth_quickaclcheck($id) < AUTH_READ){
             throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
@@ -632,7 +633,7 @@ class RemoteAPICore {
      * @author Michael Klier <chi@chimeric.de>
      */
     function pageVersions($id, $first) {
-        $id = cleanID($id);
+        $id = $this->resolvePageId($id);
         if(auth_quickaclcheck($id) < AUTH_READ) {
             throw new RemoteAccessDeniedException('You are not allowed to read this page', 111);
         }
@@ -710,7 +711,7 @@ class RemoteAPICore {
         $unlockfail = array();
 
         foreach((array) $set['lock'] as $id){
-            $id = cleanID($id);
+            $id = $this->resolvePageId($id);
             if(auth_quickaclcheck($id) < AUTH_EDIT || checklock($id)){
                 $lockfail[] = $id;
             }else{
@@ -720,7 +721,7 @@ class RemoteAPICore {
         }
 
         foreach((array) $set['unlock'] as $id){
-            $id = cleanID($id);
+            $id = $this->resolvePageId($id);
             if(auth_quickaclcheck($id) < AUTH_EDIT || !unlock($id)){
                 $unlockfail[] = $id;
             }else{
@@ -763,6 +764,14 @@ class RemoteAPICore {
         return $ok;
     }
 
+    private function resolvePageId($id) {
+        $id = cleanID($id);
+        if(empty($id)) {
+            global $conf;
+            $id = cleanID($conf['start']);	
+        }
+        return $id;
+    }
 
 }
 

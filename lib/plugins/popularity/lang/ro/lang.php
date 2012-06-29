@@ -8,6 +8,7 @@
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
  * @author Marius Olar <olarmariusalex@yahoo.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['name']                  = 'Feedback de popularitate (încărcarea poate dura mai mult)';
 $lang['submit']                = 'Trimite datele';

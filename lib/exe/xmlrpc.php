@@ -30,10 +30,11 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
         } catch (RemoteAccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 header('HTTP/1.1 401 Unauthorized');
+                return new IXR_Error(-32603, "server error. not authorized to call method $methodname");
             } else {
                 header('HTTP/1.1 403 Forbidden');
+                return new IXR_Error(-32604, "server error. forbidden to call the method $methodname");
             }
-            return new IXR_Error(-32603, "server error. not authorized to call method $methodname");
         } catch (RemoteException $e) {
             return new IXR_Error($e->getCode(), $e->getMessage());
         }

@@ -99,6 +99,7 @@ $lang['searchmedia_in']        = 'Search in %s';
 $lang['txt_upload']            = 'Select file to upload';
 $lang['txt_filename']          = 'Upload as (optional)';
 $lang['txt_overwrt']           = 'Overwrite existing file';
+$lang['maxuploadsize']         = 'Upload max. %s per file.';
 $lang['lockedby']              = 'Currently locked by';
 $lang['lockexpire']            = 'Lock expires at';
 
@@ -190,7 +191,7 @@ $lang['lastmod']               = 'Last modified';
 $lang['by']                    = 'by';
 $lang['deleted']               = 'removed';
 $lang['created']               = 'created';
-$lang['restored']              = 'old revision restored';
+$lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
 $lang['noflash']               = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';

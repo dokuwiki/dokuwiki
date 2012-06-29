@@ -4,7 +4,7 @@
  * ----------
  * Author: Carlo Kok (ck@remobjects.com), J�rja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2004 J�rja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2010/01/11
  *
  * Delphi Prism (Oxygene) language file for GeSHi.

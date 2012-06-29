@@ -6,5 +6,5 @@
 #
 # Format:
 #
-# user:MD5password:Real Name:email:groups,comma,seperated
+# login:passwordhash:Real Name:email:groups,comma,seperated
 

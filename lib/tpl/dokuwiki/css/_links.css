@@ -43,16 +43,16 @@
 }
 /* external link */
 .dokuwiki a.urlextern {
-    background-image: url(images/link_icon.gif);
+    background-image: url(images/external-link.png);
     padding: 0 0 0 17px;
 }
 /* windows share */
 .dokuwiki a.windows {
-    background-image: url(images/windows.gif);
+    background-image: url(images/unc.png);
 }
 /* email link */
 .dokuwiki a.mail {
-    background-image: url(images/mail_icon.gif);
+    background-image: url(images/email.png);
 }
 
 /* icons of the following are set by dokuwiki in lib/exe/css.php */

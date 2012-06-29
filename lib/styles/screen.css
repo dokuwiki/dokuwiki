@@ -10,36 +10,38 @@ div.success,
 div.notify {
     color: #000;
     background-repeat: no-repeat;
-    background-position: .5em 0;
-    border-bottom: 1px solid;
+    background-position: 8px 50%;
+    border: 1px solid;
     font-size: 90%;
-    margin: 0;
-    padding-left: 3em;
+    margin: 0 0 0.5em;
+    padding: 0.4em;
+    padding-left: 32px;
     overflow: hidden;
+    border-radius: 5px;
 }
 
 div.error {
     background-color: #fcc;
     background-image: url(../images/error.png);
-    border-bottom-color: #faa;
+    border-color: #ebb;
 }
 
 div.info {
     background-color: #ccf;
     background-image: url(../images/info.png);
-    border-bottom-color: #aaf;
+    border-color: #bbe;
 }
 
 div.success {
     background-color: #cfc;
     background-image: url(../images/success.png);
-    border-bottom-color: #afa;
+    border-color: #beb;
 }
 
 div.notify {
     background-color: #ffc;
     background-image: url(../images/notify.png);
-    border-bottom-color: #ffa;
+    border-color: #eeb;
 }
 
 /* modal windows */

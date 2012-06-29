@@ -169,7 +169,7 @@ class Doku_Plugin_Controller {
         $plugins = array();
         foreach($files as $file) {
             if(file_exists($file)) {
-                @include_once($file);
+                include_once($file);
             }
         }
         return $plugins;

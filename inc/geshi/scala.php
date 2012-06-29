@@ -4,7 +4,7 @@
  * ----------
  * Author: Franco Lombardo (franco@francolombardo.net)
  * Copyright: (c) 2008 Franco Lombardo, Benny Baumann
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2008/02/08
  *
  * Scala language file for GeSHi.

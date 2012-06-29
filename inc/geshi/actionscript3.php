@@ -4,7 +4,7 @@
  * ----------------
  * Author: Jordi Boggiano (j.boggiano@seld.be)
  * Copyright: (c) 2007 Jordi Boggiano (http://www.seld.be/), Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2007/11/26
  *
  * ActionScript3 language file for GeSHi.
@@ -60,7 +60,7 @@ $language_data = array (
     'COMMENT_MULTI' => array('/*' => '*/'),
     'COMMENT_REGEXP' => array(
         //Regular expressions
-        2 => "/(?<=[\\s^])(s|tr|y)\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/(?:\\\\.|(?!\n)[^\\/\\\\])*\\/[msixpogcde]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])(m|q[qrwx]?)?\\/(?:\\\\.|(?!\n)[^\\/\\\\])+\\/[msixpogc]*(?=[\\s$\\.\\,\\;\\)])/iU",
+        2 => "/(?<=[\\s^])(s|tr|y)\\/(?!\s)(?:\\\\.|(?!\n)[^\\/\\\\])+(?<!\s)\\/(?!\s)(?:\\\\.|(?!\n)[^\\/\\\\])*(?<!\s)\\/[msixpogcde]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])(m|q[qrwx]?)?\\/(?!\s)(?:\\\\.|(?!\n)[^\\/\\\\])+(?<!\s)\\/[msixpogc]*(?=[\\s$\\.\\,\\;\\)])/iU",
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),

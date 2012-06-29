@@ -70,6 +70,9 @@ class auth_ad extends auth_basic {
         }
 
         // Prepare SSO
+        if(!utf8_check($_SERVER['REMOTE_USER'])){
+            $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
+        }
         if($_SERVER['REMOTE_USER'] && $this->cnf['sso']){
             // remove possible NTLM domain
             list($dom,$usr) = explode('\\',$_SERVER['REMOTE_USER'],2);

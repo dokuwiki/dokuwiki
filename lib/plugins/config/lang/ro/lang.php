@@ -10,6 +10,7 @@
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
  * @author Marius Olar <olarmariusalex@yahoo.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['menu']                  = 'Setări de Configurare';
 $lang['error']                 = 'Setări nu au fost actualizate datorită unei valori incorecte; verificaţi modificările şi încercaţi din nou. <br /> Valorile incorecte vor apărea într-un chenar roşu.';
@@ -48,6 +49,8 @@ $lang['cookiedir']             = 'Cale Cookie. Lăsați gol pentru a utiliza bas
 $lang['start']                 = 'Numele paginii de start';
 $lang['title']                 = 'Titlul wiki';
 $lang['template']              = 'Şablon';
+$lang['tagline']               = 'Slogan (dacă templateul suportă opțiunea)';
+$lang['sidebar']               = 'Numele paginii barei laterale (dacă templateul suportă opțiunea), câmpul lăsat gol dezactivează bara laterală';
 $lang['license']               = 'Sub ce licenţă va fi publicat conţinutul?';
 $lang['fullpath']              = 'Arată calea completă a paginii în subsol';
 $lang['recent']                = 'Modificări recente';
@@ -91,6 +94,8 @@ $lang['disableactions_other']  = 'Alte acţiuni (separate prin virgulă)';
 $lang['sneaky_index']          = 'Implicit, DokuWiki va arăta toate numele de spaţii la vizualizarea indexului. Activând această opţiune vor fi ascunse acelea la care utilizatorul nu are drepturi de citire. Aceasta poate determina ascunderea sub-numelor de spaţii accesibile. Aceasta poate face index-ul  inutilizabil cu anumite setări ale ACL';
 $lang['auth_security_timeout'] = 'Timpul de expirare al Autentificării Securizate (secunde)';
 $lang['securecookie']          = 'Cookies-urile setate via HTTPS să fie trimise doar via HTTPS de către browser? Dezactivaţi această opţiune numai când login-ul wiki-ului este securizat cu SSL dar navigarea wiki-ului se realizează nesecurizat.';
+$lang['remote']                = 'Activează sistemul remote API. Acesta permite altor aplicații să acceseze wiki-ul via XML-RPC sau alte mecanisme.';
+$lang['remoteuser']            = 'Restricționează accesul sistemului remote API la grupurile sau utilizatorii următori (separați prin virgulă). Lăsați câmpul gol pentru a da acces către toți.';
 $lang['updatecheck']           = 'Verificare actualizări şi avertismente privind securitatea? DokuWiki trebuie să contacteze update.dokuwiki.org pentru această facilitate.';
 $lang['userewrite']            = 'Folosire URL-uri "nice"';
 $lang['useslash']              = 'Foloseşte slash-ul ca separator de spaţii de nume în URL-uri';
@@ -130,6 +135,7 @@ $lang['rss_content']           = 'Ce să afişez în obiectele fluxurilor XML';
 $lang['rss_update']            = 'Intervalul de actualizare a fluxului XML (sec)';
 $lang['recent_days']           = 'Câte modificări recente să se păstreze?';
 $lang['rss_show_summary']      = 'Fluxul XML arată rezumat în titlu';
+$lang['rss_media']             = 'Ce fel de modificări ar trebui afișate în fluxul XML?';
 $lang['target____wiki']        = 'Fereastra ţintă pentru legăturile interne';
 $lang['target____interwiki']   = 'Fereastra ţintă pentru legăturile interwiki';
 $lang['target____extern']      = 'Fereastra ţintă pentru legăturile externe';

@@ -739,7 +739,7 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
-    global $conf, $config_cascade;
+    global $conf, $config_cascade, $INPUT;
     $language = strtolower($language);
 
     // remove any leading or trailing blank lines
@@ -747,7 +747,7 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
 
     $cache = getCacheName($language.$code,".code");
     $ctime = @filemtime($cache);
-    if($ctime && !$_REQUEST['purge'] &&
+    if($ctime && !$INPUT->bool('purge') &&
             $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&                 // geshi changed
             $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&  // language syntax definition changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed

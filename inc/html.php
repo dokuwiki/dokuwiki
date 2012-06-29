@@ -280,8 +280,11 @@ function html_draft(){
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
 function html_hilight($html,$phrases){
-    $phrases = array_filter((array) $phrases);
-    $regex = join('|',array_map('ft_snippet_re_preprocess', array_map('preg_quote_cb',$phrases)));
+    $phrases = (array) $phrases;
+    $phrases = array_map('preg_quote_cb', $phrases);
+    $phrases = array_map('ft_snippet_re_preprocess', $phrases);
+    $phrases = array_filter($phrases);
+    $regex = join('|',$phrases);
 
     if ($regex === '') return $html;
     if (!utf8_check($regex)) return $html;
@@ -1441,7 +1444,7 @@ function html_edit_form($param) {
     global $TEXT;
 
     if ($param['target'] !== 'section') {
-        msg('No editor for edit target ' . $param['target'] . ' found.', -1);
+        msg('No editor for edit target ' . hsc($param['target']) . ' found.', -1);
     }
 
     $attr = array('tabindex'=>'1');
