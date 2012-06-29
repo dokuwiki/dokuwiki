@@ -123,7 +123,6 @@ function auth_setup() {
  */
 function auth_loadACL() {
     global $config_cascade;
-    global $conf;
     global $USERINFO;
 
     if(!is_readable($config_cascade['acl']['default'])) return array();
@@ -131,7 +130,7 @@ function auth_loadACL() {
     $acl = file($config_cascade['acl']['default']);
 
     //support user wildcard
-    if(isset($_SERVER['REMOTE_USER']) && $conf['use_wildcards']){
+    if(isset($_SERVER['REMOTE_USER'])){
         $len = count($acl);
         for($i = 0; $i < $len; $i++) {
             if($acl[$i]{0} == '#') continue;
