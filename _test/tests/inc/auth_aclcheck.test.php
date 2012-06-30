@@ -235,6 +235,33 @@ class auth_acl_test extends DokuWikiTest {
         $this->assertEquals(auth_aclcheck('namespace:*',   'jill',array('foo','roots')), AUTH_ADMIN);
     }
 
+    function test_wildcards(){
+        global $conf;
+        global $AUTH_ACL;
+        global $USERINFO;
+        $conf['useacl']    = 1;
+
+        $_SERVER['REMOTE_USER'] = 'john';
+        $USERINFO['grps']       = array('test','töst','foo bar');
+        $AUTH_ACL = auth_loadACL(); // default test file
+
+        // default setting
+        $this->assertEquals(AUTH_UPLOAD, auth_aclcheck('page', $_SERVER['REMOTE_USER'], $USERINFO['grps']));
+
+        // user namespace
+        $this->assertEquals(AUTH_DELETE, auth_aclcheck('users:john:foo', $_SERVER['REMOTE_USER'], $USERINFO['grps']));
+        $this->assertEquals(AUTH_READ, auth_aclcheck('users:john:foo', 'schmock', array()));
+
+        // group namespace
+        $this->assertEquals(AUTH_DELETE, auth_aclcheck('groups:test:foo', $_SERVER['REMOTE_USER'], $USERINFO['grps']));
+        $this->assertEquals(AUTH_READ, auth_aclcheck('groups:test:foo', 'schmock', array()));
+        $this->assertEquals(AUTH_DELETE, auth_aclcheck('groups:toest:foo', $_SERVER['REMOTE_USER'], $USERINFO['grps']));
+        $this->assertEquals(AUTH_READ, auth_aclcheck('groups:toest:foo', 'schmock', array()));
+        $this->assertEquals(AUTH_DELETE, auth_aclcheck('groups:foo_bar:foo', $_SERVER['REMOTE_USER'], $USERINFO['grps']));
+        $this->assertEquals(AUTH_READ, auth_aclcheck('groups:foo_bar:foo', 'schmock', array()));
+
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 :
