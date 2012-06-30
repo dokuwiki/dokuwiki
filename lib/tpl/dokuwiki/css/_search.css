@@ -8,6 +8,8 @@
 
 /* loading gif */
 #dw__loading {
+    text-align: center;
+    margin-bottom: 1.4em;
 }
 
 /*____________ matching pagenames ____________*/
@@ -25,17 +27,26 @@
     width: 12em;
     margin: 0 1.5em;
 }
+[dir=rtl] .dokuwiki div.search_quickresult ul li {
+    float: right;
+}
 
 /*____________ search results ____________*/
 
-/* container for one search result */
-.dokuwiki div.search_result {
-    margin-bottom: 1.4em;
+.dokuwiki dl.search_results {
+    margin-bottom: 1.2em;
+}
+
+/* search heading */
+.dokuwiki dl.search_results dt {
+    font-weight: normal;
+    margin-bottom: .2em;
 }
 /* search snippet */
-.dokuwiki div.search_result div.search_snippet {
+.dokuwiki dl.search_results dd {
     color: __text_alt__;
     background-color: inherit;
+    margin: 0 0 1.2em 0;
 }
 
 /* search hit in normal text */
@@ -44,11 +55,11 @@
     background-color: __highlight__;
 }
 /* search hit in search results */
-.dokuwiki div.search_result strong.search_hit {
+.dokuwiki .search_results strong.search_hit {
     font-weight: normal;
 }
 /* ellipsis separating snippets */
-.dokuwiki div.search_result .search_sep {
+.dokuwiki .search_results .search_sep {
     color: __text__;
     background-color: inherit;
 }
@@ -77,6 +88,11 @@
     z-index: 20;
     text-align: left;
     display: none;
+}
+[dir=rtl] .dokuwiki form.search div.ajax_qsearch {
+    left: auto;
+    right: -13.5em;
+    text-align: right;
 }
 .dokuwiki form.search div.ajax_qsearch strong {
     display: block;

@@ -13,6 +13,10 @@
 #link__wiz {
 }
 
+[dir=rtl] #link__wiz_close {
+    float: left;
+}
+
 #link__wiz_result {
     background-color: __background__;
     width:  293px;
@@ -22,6 +26,9 @@
     margin: 3px auto;
     text-align: left;
     line-height: 1;
+}
+[dir=rtl] #link__wiz_result {
+    text-align: right;
 }
 
 #link__wiz_result div {
@@ -33,6 +40,10 @@
     padding-left: 22px;
     min-height: 16px;
     background: transparent 3px center no-repeat;
+}
+[dir=rtl] #link__wiz_result div a {
+    padding: 3px 22px 3px 3px;
+    background-position: 257px 3px;
 }
 
 #link__wiz_result div.type_u a {

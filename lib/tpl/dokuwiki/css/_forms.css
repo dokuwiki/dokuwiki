@@ -23,11 +23,17 @@
   text-align: right;
   font-weight: bold;
 }
+[dir=rtl] .dokuwiki label.block {
+    text-align: left;
+}
 
 .dokuwiki label.simple {
   display: block;
   text-align: left;
   font-weight: normal;
+}
+[dir=rtl] .dokuwiki label.simple {
+    text-align: right;
 }
 
 .dokuwiki label.block input.edit {
@@ -74,6 +80,9 @@
 #subscribe__form fieldset {
     text-align: left;
     margin: 0.5em 0;
+}
+[dir=rtl] #subscribe__form fieldset {
+    text-align: right;
 }
 
 #subscribe__form label {
