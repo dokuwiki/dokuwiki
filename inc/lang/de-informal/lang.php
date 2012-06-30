@@ -16,7 +16,7 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <mailinglist@lupo49.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  */
@@ -248,13 +248,13 @@ $lang['img_keywords']          = 'Schlagwörter';
 $lang['img_width']             = 'Breite';
 $lang['img_height']            = 'Höhe';
 $lang['img_manager']           = 'Im Medien-Manager anzeigen';
-$lang['subscr_subscribe_success'] = 'Die Seite %s wurde zur Abonnementenliste von %s hinzugefügt';
-$lang['subscr_subscribe_error'] = 'Fehler beim Hinzufügen von %s zur Abonnementenliste von %s';
+$lang['subscr_subscribe_success'] = 'Die Seite %s wurde zur Abonnementliste von %s hinzugefügt';
+$lang['subscr_subscribe_error'] = 'Fehler beim Hinzufügen von %s zur Abonnementliste von %s';
 $lang['subscr_subscribe_noaddress'] = 'In deinem Account ist keine E-Mail-Adresse hinterlegt. Dadurch kann die Seite nicht abonniert werden';
-$lang['subscr_unsubscribe_success'] = 'Die Seite %s wurde von der Abonnementenliste von %s entfernt';
-$lang['subscr_unsubscribe_error'] = 'Fehler beim Entfernen von %s von der Abonnementenliste von %s';
-$lang['subscr_already_subscribed'] = '%s ist bereits auf der Abonnementenliste von %s';
-$lang['subscr_not_subscribed'] = '%s ist nicht auf der Abonnementenliste von %s';
+$lang['subscr_unsubscribe_success'] = 'Die Seite %s wurde von der Abonnementliste von %s entfernt';
+$lang['subscr_unsubscribe_error'] = 'Fehler beim Entfernen von %s von der Abonnementliste von %s';
+$lang['subscr_already_subscribed'] = '%s ist bereits auf der Abonnementliste von %s';
+$lang['subscr_not_subscribed'] = '%s ist nicht auf der Abonnementliste von %s';
 $lang['subscr_m_not_subscribed'] = 'Du hast kein Abonnement von dieser Seite oder dem Namensraum.';
 $lang['subscr_m_new_header']   = 'Abonnementen hinzufügen';
 $lang['subscr_m_current_header'] = 'Aktive Abonnements';
