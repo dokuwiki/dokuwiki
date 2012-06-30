@@ -340,7 +340,7 @@
     border: 1px solid #eee;
     box-shadow: 0 0 .5em #999;
     border-radius: 2px;
-    padding: 2em;
+    padding: 1.556em 2em 2em;
     margin-bottom: .5em;
     overflow: hidden;
     word-wrap: break-word;
@@ -426,14 +426,14 @@
 
 .dokuwiki div.preview {
     margin: 0 -2em;
-    padding: 2em;
+    padding: 1.556em 2em 2em;
 }
 
 
 /*____________ changes to _toc ____________*/
 
 #dw__toc {
-    margin:  -2em -2em .5em 1.4em;
+    margin:  -1.556em -2em .5em 1.4em;
     width: __sidebar_width__;
     border-left: 1px solid __border__;
     background: __background__;
