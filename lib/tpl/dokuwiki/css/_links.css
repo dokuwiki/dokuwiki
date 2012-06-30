@@ -44,15 +44,17 @@
 /* external link */
 .dokuwiki a.urlextern {
     background-image: url(images/external-link.png);
-    padding: 0 0 0 17px;
+    padding: 0 0 0 15px;
 }
 /* windows share */
 .dokuwiki a.windows {
     background-image: url(images/unc.png);
+    padding: 0 0 0 16px;
 }
 /* email link */
 .dokuwiki a.mail {
     background-image: url(images/email.png);
+    padding: 0 0 0 16px;
 }
 
 /* icons of the following are set by dokuwiki in lib/exe/css.php */
