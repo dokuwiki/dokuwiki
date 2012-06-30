@@ -109,7 +109,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
-                    $this->doc .= '<sup><a href="#fnt__'.$id.'" id="fn__'.$id.'" name="fn__'.$id.'" class="fn_bot">';
+                    $this->doc .= '<sup><a href="#fnt__'.$id.'" id="fn__'.$id.'" class="fn_bot">';
                     $this->doc .= $id.')</a></sup> '.DOKU_LF;
 
                     // get any other footnotes that use the same markup
@@ -118,7 +118,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if (count($alt)) {
                       foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" name="fn__'.($ref+1).'" class="fn_bot">';
+                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" class="fn_bot">';
                         $this->doc .= ($ref+1).')</a></sup> '.DOKU_LF;
                       }
                     }
@@ -181,9 +181,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ($level <= $conf['maxseclevel']) {
             $this->doc .= ' class="' . $this->startSectionEdit($pos, 'section', $text) . '"';
         }
-        $this->doc .= '><a name="'.$hid.'" id="'.$hid.'">';
+        $this->doc .= ' id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</a></h$level>".DOKU_LF;
+        $this->doc .= "</h$level>".DOKU_LF;
     }
 
     function section_open($level) {
@@ -316,7 +316,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__'.$id.'" name="fnt__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
+        $this->doc .= '<sup><a href="#fn__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
     }
 
     function listu_open() {
@@ -471,8 +471,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $title = $this->_xmlEntities($this->acronyms[$acronym]);
 
-            $this->doc .= '<acronym title="'.$title
-                .'">'.$this->_xmlEntities($acronym).'</acronym>';
+            $this->doc .= '<abbr title="'.$title
+                .'">'.$this->_xmlEntities($acronym).'</abbr>';
 
         } else {
             $this->doc .= $this->_xmlEntities($acronym);
@@ -483,7 +483,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( array_key_exists($smiley, $this->smileys) ) {
             $title = $this->_xmlEntities($this->smileys[$smiley]);
             $this->doc .= '<img src="'.DOKU_BASE.'lib/images/smileys/'.$this->smileys[$smiley].
-                '" class="middle" alt="'.
+                '" class="icon" alt="'.
                     $this->_xmlEntities($smiley).'" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);
@@ -1074,10 +1074,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             //add image tag
             $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
             $ret .= ' class="media'.$align.'"';
-
-            // make left/right alignment for no-CSS view work (feeds)
-            if($align == 'right') $ret .= ' align="right"';
-            if($align == 'left')  $ret .= ' align="left"';
 
             if ($title) {
                 $ret .= ' title="' . $title . '"';

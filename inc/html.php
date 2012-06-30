@@ -326,11 +326,11 @@ function html_search(){
     flush();
 
     //show progressbar
-    print '<div class="centeralign" id="dw__loading">'.NL;
+    print '<div id="dw__loading">'.NL;
     print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
     print 'showLoadBar();'.NL;
     print '//--><!]]></script>'.NL;
-    print '<br /></div>'.NL;
+    print '</div>'.NL;
     flush();
 
     //do quick pagesearch
@@ -366,20 +366,24 @@ function html_search(){
     //do fulltext search
     $data = ft_pageSearch($QUERY,$regex);
     if(count($data)){
+        print '<dl class="search_results">';
         $num = 1;
         foreach($data as $id => $cnt){
-            print '<div class="search_result">';
+            print '<dt>';
             print html_wikilink(':'.$id,useHeading('navigation')?null:$id,$regex);
             if($cnt !== 0){
-                print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
+                print ': '.$cnt.' '.$lang['hits'].'';
+            }
+            print '</dt>';
+            if($cnt !== 0){
                 if($num < FT_SNIPPET_NUMBER){ // create snippets for the first number of matches only
-                    print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
+                    print '<dd>'.ft_snippet($id,$regex).'</dd>';
                 }
                 $num++;
             }
-            print '</div>';
             flush();
         }
+        print '</dl>';
     }else{
         print '<div class="nothing">'.$lang['nothingfound'].'</div>';
     }
@@ -452,7 +456,7 @@ function html_revisions($first=0, $media_id = false){
 
     if (!$media_id) print p_locale_xhtml('revisions');
 
-    $params = array('id' => 'page__revisions');
+    $params = array('id' => 'page__revisions', 'class' => 'changes');
     if ($media_id) $params['action'] = media_managerURL(array('image' => $media_id), '&');
 
     $form = new Doku_Form($params);
@@ -667,12 +671,13 @@ function html_recent($first=0, $show_changes='both'){
     if (getNS($ID) != '')
         print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
 
-    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET'));
+    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
 
     if ($conf['mediarevisions']) {
+        $form->addElement('<div class="changeType">');
         $form->addElement(form_makeListboxField(
                     'show_changes',
                     array(
@@ -685,6 +690,7 @@ function html_recent($first=0, $show_changes='both'){
                     array('class'=>'quickselect')));
 
         $form->addElement(form_makeButton('submit', 'recent', $lang['btn_apply']));
+        $form->addElement('</div>');
     }
 
     $form->addElement(form_makeOpenTag('ul'));
@@ -1384,7 +1390,7 @@ function html_edit(){
     }
 
     $form->addHidden('target', $data['target']);
-    $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar')));
+    $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
     $form->addElement(form_makeCloseTag('div'));
     if ($wr) {
@@ -1416,13 +1422,12 @@ function html_edit(){
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
         echo '//--><!]]></script>' . NL;
     } ?>
-    <div style="width:99%;">
+    <div class="editBox">
 
     <div class="toolbar">
-    <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
-    <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
-        target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
-
+        <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
+        <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+            target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
     </div>
     <?php
 
@@ -1714,11 +1719,11 @@ function html_TOC($toc){
     if(!count($toc)) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div class="toc">'.DOKU_LF;
-    $out .= '<div class="tocheader toctoggle" id="toc__header">';
+    $out .= '<div id="dw__toc">'.DOKU_LF;
+    $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
-    $out .= '</div>'.DOKU_LF;
-    $out .= '<div id="toc__inside">'.DOKU_LF;
+    $out .= '</h3>'.DOKU_LF;
+    $out .= '<div>'.DOKU_LF;
     $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
@@ -1735,8 +1740,7 @@ function html_list_toc($item){
         $link = $item['link'];
     }
 
-    return '<span class="li"><a href="'.$link.'" class="toc">'.
-        hsc($item['title']).'</a></span>';
+    return '<a href="'.$link.'">'.hsc($item['title']).'</a>';
 }
 
 /**

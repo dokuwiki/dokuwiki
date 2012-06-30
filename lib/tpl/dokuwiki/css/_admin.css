@@ -9,6 +9,9 @@
     list-style-type: none;
     font-size: 1.125em;
 }
+[dir=rtl] .dokuwiki ul.admin_tasks {
+    float: right;
+}
 
 .dokuwiki ul.admin_tasks li {
     padding-left: 35px;
@@ -17,6 +20,11 @@
     list-style-type: none;
     background: transparent none no-repeat scroll 0 0;
     color: inherit;
+}
+[dir=rtl] .dokuwiki ul.admin_tasks li {
+    padding-left: 0;
+    padding-right: 35px;
+    background-position: right 0;
 }
 
 .dokuwiki ul.admin_tasks li.admin_acl {
@@ -44,4 +52,8 @@
     float: right;
     color: __text_neu__;
     background-color: inherit;
+}
+[dir=rtl] .dokuwiki #admin__version {
+    clear: right;
+    float: left;
 }
