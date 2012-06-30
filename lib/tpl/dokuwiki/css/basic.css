@@ -15,15 +15,7 @@ html {
 html,
 body {
     color: __text__;
-    background-color: __background_site__;
-    background-image: url(images/page-background.svg);
-    /*background-image: -moz-linear-gradient(   top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em); see FS#2447*/
-    background-image: -webkit-linear-gradient(top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-image: -o-linear-gradient(     top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-image: -ms-linear-gradient(    top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-image: linear-gradient(        top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-size: 1px 10em;
-    background-repeat: repeat-x;
+    background: __background_site__ url(images/page-gradient.png) top left repeat-x;
     margin: 0;
     padding: 0;
 }
