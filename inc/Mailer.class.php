@@ -132,8 +132,8 @@ class Mailer {
     public function setHeader($header, $value, $clean = true) {
         $header = str_replace(' ', '-', ucwords(strtolower(str_replace('-', ' ', $header)))); // streamline casing
         if($clean) {
-            $header = preg_replace('/[^a-zA-Z0-9 \-\.\+\@]+/', '', $header);
-            $value  = preg_replace('/[^a-zA-Z0-9 \-\.\+\@<>]+/', '', $value);
+            $header = preg_replace('/[^a-zA-Z0-9_ \-\.\+\@]+/', '', $header);
+            $value  = preg_replace('/[^a-zA-Z0-9_ \-\.\+\@<>]+/', '', $value);
         }
 
         // empty value deletes
