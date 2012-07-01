@@ -127,9 +127,8 @@ class httpclient_http_test extends DokuWikiTest {
         $http->max_bodysize_abort = false;
         $data = $http->get($this->server.'/stream/30');
         $this->assertFalse($data === false, 'HTTP response');
-        /* the current implementation will read in max_bodysize blocks,
-           and aborts if the response is larger, thus a limit of 2*max_bodysize */
-        $this->assertLessThanOrEqual(500,strlen($data));
+        /* should read no more than max_bodysize+1 */
+        $this->assertLessThanOrEqual(251,strlen($data));
     }
 
     /**
