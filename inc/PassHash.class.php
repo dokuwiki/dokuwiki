@@ -132,7 +132,7 @@ class PassHash {
     public function hash_smd5($clear, $salt = null) {
         $this->init_salt($salt, 8);
 
-        if(defined('CRYPT_MD5') && CRYPT_MD5) {
+        if(defined('CRYPT_MD5') && CRYPT_MD5 && $salt !== '') {
             return crypt($clear, '$1$'.$salt.'$');
         } else {
             // Fall back to PHP-only implementation
