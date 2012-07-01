@@ -82,7 +82,12 @@ if (getenv('PRESERVE_TMP') != 'true') {
 // populate default dirs
 TestUtils::rcopy(TMP_DIR, DOKU_INC.'/conf');
 TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/conf');
-TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/data');
+mkdir(DOKU_TMP_DATA);
+foreach(array(
+    'attic', 'cache', 'index', 'locks', 'media',
+    'media_attic', 'media_meta', 'meta', 'pages', 'tmp') as $dir){
+    mkdir(DOKU_TMP_DATA.'/'.$dir);
+}
 
 // disable all non-default plugins by default
 $dh = dir(DOKU_INC.'lib/plugins/');
