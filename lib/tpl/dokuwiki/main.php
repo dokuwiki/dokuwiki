@@ -10,7 +10,8 @@
 
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 
-$showSidebar = page_findnearest($conf['sidebar']) && ($ACT=='show');
+$hasSidebar = page_findnearest($conf['sidebar']);
+$showSidebar = $hasSidebar && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang'] ?>"
@@ -28,7 +29,8 @@ $showSidebar = page_findnearest($conf['sidebar']) && ($ACT=='show');
 <body>
     <!--[if lte IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
     <div id="dokuwiki__site"><div id="dokuwiki__top"
-        class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'hasSidebar' : ''; ?>">
+        class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'showSidebar' : '';
+        ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
 
         <?php include('tpl_header.php') ?>
 

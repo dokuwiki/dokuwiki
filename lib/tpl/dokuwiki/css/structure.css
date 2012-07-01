@@ -56,20 +56,20 @@ body {
         margin: 0 0 0 1.5em;
     }
 
-    .hasSidebar #dokuwiki__content {
+    .showSidebar #dokuwiki__content {
         float: right;
         margin-left: -__sidebar_width__;
         width: 100%;
     }
-    [dir=rtl] .hasSidebar #dokuwiki__content {
+    [dir=rtl] .showSidebar #dokuwiki__content {
         float: left;
         margin-left: 0;
         margin-right: -__sidebar_width__;
     }
-    .hasSidebar #dokuwiki__content > .pad {
+    .showSidebar #dokuwiki__content > .pad {
         margin-left: __sidebar_width__;
     }
-    [dir=rtl] .hasSidebar #dokuwiki__content > .pad {
+    [dir=rtl] .showSidebar #dokuwiki__content > .pad {
         margin-left: 0;
         margin-right: __sidebar_width__;
     }

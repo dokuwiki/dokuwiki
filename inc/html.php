@@ -229,12 +229,12 @@ function html_show($txt=null){
         //PreviewHeader
         echo '<br id="scroll__here" />';
         echo p_locale_xhtml('preview');
-        echo '<div class="preview">';
+        echo '<div class="preview"><div class="pad">';
         $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         echo $html;
         echo '<div class="clearer"></div>';
-        echo '</div>';
+        echo '</div></div>';
 
     }else{
         if ($REV) print p_locale_xhtml('showrev');

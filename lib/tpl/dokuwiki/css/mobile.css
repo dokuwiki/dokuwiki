@@ -28,17 +28,17 @@
     margin-bottom: .5em;
 }
 
-.hasSidebar #dokuwiki__content {
+.showSidebar #dokuwiki__content {
     float: none;
     margin-left: 0;
     width: 100%;
 }
-.hasSidebar #dokuwiki__content > .pad {
+.showSidebar #dokuwiki__content > .pad {
     margin-left: 0;
 }
 
-[dir=rtl] .hasSidebar #dokuwiki__content,
-[dir=rtl] .hasSidebar #dokuwiki__content > .pad {
+[dir=rtl] .showSidebar #dokuwiki__content,
+[dir=rtl] .showSidebar #dokuwiki__content > .pad {
     margin-right: 0;
 }
 

@@ -426,7 +426,17 @@
 
 .dokuwiki div.preview {
     margin: 0 -2em;
-    padding: 1.556em 2em 2em;
+    padding: 0 2em;
+}
+.dokuwiki.hasSidebar div.preview {
+    border-right: __sidebar_width__ solid __background_alt__;
+}
+[dir=rtl] .dokuwiki.hasSidebar div.preview {
+    border-right-width: 0;
+    border-left: __sidebar_width__ solid __background_alt__;
+}
+.dokuwiki div.preview div.pad {
+    padding: 1.556em 0 2em;
 }
 
 
@@ -440,7 +450,7 @@
     color: inherit;
 }
 [dir=rtl] #dw__toc {
-    margin: -2em 1.4em .5em -2em;
+    margin: -1.556em 1.4em .5em -2em;
     border-left-width: 0;
     border-right: 1px solid __border__;
 }
