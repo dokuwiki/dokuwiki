@@ -111,12 +111,10 @@ class js_js_compress_test extends DokuWikiTest {
     }
 
     function test_multilinestring(){
-        $text = 'var foo = "this is a \\
-multiline string";';
+        $text = 'var foo = "this is a \\'."\n".'multiline string";';
         $this->assertEquals('var foo="this is a multiline string";',js_compress($text));
 
-        $text = "var foo = 'this is a \\
-multiline string';";
+        $text = "var foo = 'this is a \\\nmultiline string';";
         $this->assertEquals("var foo='this is a multiline string';",js_compress($text));
     }
 
