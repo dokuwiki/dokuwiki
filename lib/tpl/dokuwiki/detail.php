@@ -10,7 +10,7 @@
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
 
-$showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show');
+$showSidebar = page_findnearest($conf['sidebar']) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>"

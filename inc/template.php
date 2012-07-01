@@ -1394,6 +1394,18 @@ function tpl_include_page($pageid,$print=true){
 
     if(!$print) return $html;
     echo $html;
+    return $html;
+}
+
+/**
+ * Include the sidebar, will check current namespaces first
+ */
+function tpl_sidebar($print=true){
+    global $conf;
+
+    $sidebar = page_findnearest($conf['sidebar']);
+    if($sidebar) return tpl_include_page($sidebar, $print);
+    return '';
 }
 
 /**

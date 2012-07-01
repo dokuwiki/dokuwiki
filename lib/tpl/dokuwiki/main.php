@@ -10,7 +10,7 @@
 
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 
-$showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show');
+$showSidebar = page_findnearest($conf['sidebar']) && ($ACT=='show');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang'] ?>"
@@ -41,7 +41,7 @@ $showSidebar = $conf['sidebar'] && page_exists($conf['sidebar']) && ($ACT=='show
                     <div class="content">
                         <?php tpl_flush() ?>
                         <?php tpl_includeFile('sidebarheader.html') ?>
-                        <?php tpl_include_page($conf['sidebar']) ?>
+                        <?php tpl_sidebar() ?>
                         <?php tpl_includeFile('sidebarfooter.html') ?>
                     </div>
                 </div></div><!-- /aside -->
