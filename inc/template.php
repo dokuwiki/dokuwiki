@@ -592,7 +592,7 @@ function tpl_get_action($type) {
             $accesskey = 'x';
             break;
         case 'top':
-            $accesskey = 'x';
+            $accesskey = 't';
             $params = array();
             $id = '#dokuwiki__top';
             break;
