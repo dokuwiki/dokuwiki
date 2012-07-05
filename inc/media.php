@@ -1442,7 +1442,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         $size .= (int) $item['meta']->getField('File.Height');
         echo '<dd class="size">'.$size.'</dd>'.NL;
     } else {
-        echo '<dd class="size">&nbsp;</dd>'.NL;
+        echo '<dd class="size">&#160;</dd>'.NL;
     }
     $date = dformat($item['mtime']);
     echo '<dd class="date">'.$date.'</dd>'.NL;
@@ -1723,7 +1723,7 @@ function media_nstree_li($item){
     if($item['open']){
         $class .= ' open';
         $img   = DOKU_BASE.'lib/images/minus.gif';
-        $alt   = '&minus;';
+        $alt   = '−';
     }else{
         $class .= ' closed';
         $img   = DOKU_BASE.'lib/images/plus.gif';

@@ -159,7 +159,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             echo '</a> ';
 
             echo html_wikilink(':'.$recent['id'],(useHeading('navigation'))?NULL:$recent['id']);
-            echo ' &ndash; '.htmlspecialchars($recent['sum']);
+            echo ' – '.htmlspecialchars($recent['sum']);
 
             echo ' <span class="user">';
                 echo $recent['user'].' '.$recent['ip'];

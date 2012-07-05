@@ -327,7 +327,7 @@ function html_search(){
 
     //show progressbar
     print '<div id="dw__loading">'.NL;
-    print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
     print 'showLoadBar();'.NL;
     print '//--><!]]></script>'.NL;
     print '</div>'.NL;
@@ -389,7 +389,7 @@ function html_search(){
     }
 
     //hide progressbar
-    print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
     print 'hideLoadBar("dw__loading");'.NL;
     print '//--><!]]></script>'.NL;
     flush();
@@ -494,7 +494,7 @@ function html_revisions($first=0, $media_id = false){
 
         if (!$media_id) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-            $form->addElement(' &ndash; ');
+            $form->addElement(' – ');
             $form->addElement(htmlspecialchars($INFO['sum']));
             $form->addElement(form_makeCloseTag('span'));
         }
@@ -573,7 +573,7 @@ function html_revisions($first=0, $media_id = false){
 
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-            if (!$media_id) $form->addElement(' &ndash; ');
+            if (!$media_id) $form->addElement(' – ');
             $form->addElement(htmlspecialchars($info['sum']));
             $form->addElement(form_makeCloseTag('span'));
         }
@@ -765,7 +765,7 @@ function html_recent($first=0, $show_changes='both'){
             $form->addElement(html_wikilink(':'.$recent['id'],useHeading('navigation')?null:$recent['id']));
         }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' &ndash; '.htmlspecialchars($recent['sum']));
+        $form->addElement(' – '.htmlspecialchars($recent['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
@@ -1418,7 +1418,7 @@ function html_edit(){
 
     if ($wr) {
         // sets changed to true when previewed
-        echo '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'. NL;
+        echo '<script type="text/javascript"><!--//--><![CDATA[//><!--'. NL;
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
         echo '//--><!]]></script>' . NL;
     } ?>

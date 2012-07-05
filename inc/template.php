@@ -714,7 +714,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_breadcrumbs($sep='&bull;'){
+function tpl_breadcrumbs($sep='•'){
     global $lang;
     global $conf;
 
@@ -757,7 +757,7 @@ function tpl_breadcrumbs($sep='&bull;'){
  * @author <fredrik@averpil.com>
  * @todo   May behave strangely in RTL languages
  */
-function tpl_youarehere($sep=' &raquo; '){
+function tpl_youarehere($sep=' » '){
     global $conf;
     global $ID;
     global $lang;
@@ -843,7 +843,7 @@ function tpl_pageinfo($ret=false){
     if($INFO['exists']){
         $out = '';
         $out .= $fn;
-        $out .= ' &middot; ';
+        $out .= ' · ';
         $out .= $lang['lastmod'];
         $out .= ': ';
         $out .= $date;
@@ -854,7 +854,7 @@ function tpl_pageinfo($ret=false){
             $out .= ' ('.$lang['external_edit'].')';
         }
         if($INFO['locked']){
-            $out .= ' &middot; ';
+            $out .= ' · ';
             $out .= $lang['lockedby'];
             $out .= ': ';
             $out .= editorinfo($INFO['locked']);

@@ -549,7 +549,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $ID;
         $name  = $this->_getLinkTitle($name, $hash, $isImage);
         $hash  = $this->_headerToLink($hash);
-        $title = $ID.' &crarr;';
+        $title = $ID.' ↵';
         $this->doc .= '<a href="#'.$hash.'" title="'.$title.'" class="wikilink1">';
         $this->doc .= $name;
         $this->doc .= '</a>';
