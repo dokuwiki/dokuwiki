@@ -5,7 +5,7 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <post@lupo49.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  */
@@ -29,6 +29,8 @@ $lang['_anti_spam']            = 'Anti-Spam-Einstellungen';
 $lang['_editing']              = 'Bearbeitungseinstellungen';
 $lang['_links']                = 'Link-Einstellungen';
 $lang['_media']                = 'Media-Einstellungen';
+$lang['_notifications']        = 'Benachrichtigungs-Konfiguration';
+$lang['_syndication']          = 'Syndication-Konfiguration (RSS)';
 $lang['_advanced']             = 'erweiterte Einstellungen';
 $lang['_network']              = 'Netzwerk-Einstellungen';
 $lang['_plugin_sufix']         = 'Plugin-Einstellungen';
@@ -46,6 +48,8 @@ $lang['cookiedir']             = 'Cookie Pfad. Leer lassen, um die Standard-Url 
 $lang['start']                 = 'Name der Startseite';
 $lang['title']                 = 'Wiki Titel';
 $lang['template']              = 'Vorlage';
+$lang['tagline']               = 'Tag-Linie (nur, wenn vom Template unterstützt)';
+$lang['sidebar']               = 'Name der Sidebar-Seite (nur, wenn vom Template unterstützt)), ein leeres Feld deaktiviert die Sidebar';
 $lang['license']               = 'Unter welcher Lizenz sollte Ihr Inhalt veröffentlicht werden?';
 $lang['fullpath']              = 'Zeige vollen Pfad der Datei in Fußzeile an';
 $lang['recent']                = 'letzte Änderungen';
@@ -89,6 +93,8 @@ $lang['disableactions_other']  = 'Weitere Aktionen (durch Komma getrennt)';
 $lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Indexansicht an. Bei Aktivierung dieser Einstellung werden alle Namensräume versteckt, in welchen der Benutzer keine Leserechte hat. Dies könnte dazu führen, dass lesbare Unternamensräume versteckt werden. Dies kann die Indexansicht bei bestimmten Zugangskontrolleinstellungen unbenutzbar machen.';
 $lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
+$lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
+$lang['remoteuser']            = 'Zugriff auf die externen Schnittstellen durch kommaseparierte Angabe von Benutzern oder Gruppen einschränken. Ein leeres Feld erlaubt Zugriff für jeden.';
 $lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit update.dokuwiki.org verbinden.';
 $lang['userewrite']            = 'Benutze schöne URLs';
 $lang['useslash']              = 'Benutze Schrägstrich als Namensraumtrenner in URLs';
@@ -105,6 +111,7 @@ $lang['notify']                = 'Sende Änderungsbenachrichtigungen an diese E-
 $lang['registernotify']        = 'Sende Information bei neu registrierten Benutzern an diese E-Mail-Adresse.';
 $lang['mailfrom']              = 'Absenderadresse für automatisch erzeugte E-Mails';
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
+$lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks-Konvertierwerkzeug';
@@ -128,11 +135,13 @@ $lang['rss_content']           = 'Was soll in XML-Feedinhalten angezeigt werden?
 $lang['rss_update']            = 'Aktualisierungsintervall für XML-Feeds (Sekunden)';
 $lang['recent_days']           = 'Wie viele Änderungen sollen vorgehalten werden? (Tage)';
 $lang['rss_show_summary']      = 'Bearbeitungs-Zusammenfassung im XML-Feed anzeigen';
+$lang['rss_media']             = 'Welche Änderungen sollen im XML-Feed angezeigt werden?';
 $lang['target____wiki']        = 'Zielfenstername für interne Links';
 $lang['target____interwiki']   = 'Zielfenstername für InterWiki-Links';
 $lang['target____extern']      = 'Zielfenstername für externe Links';
 $lang['target____media']       = 'Zielfenstername für Medienlinks';
 $lang['target____windows']     = 'Zielfenstername für Windows-Freigaben-Links';
+$lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
 $lang['proxy____host']         = 'Proxyadresse';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Benutzername für den Proxy';

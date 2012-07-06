@@ -106,6 +106,7 @@ $lang['searchmedia_in']        = 'Suche in %s';
 $lang['txt_upload']            = 'Datei zum Hochladen auswählen';
 $lang['txt_filename']          = 'Hochladen als (optional)';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
+$lang['maxuploadsize']         = 'Max. %s pro Datei-Upload.';
 $lang['lockedby']              = 'Momentan gesperrt von';
 $lang['lockexpire']            = 'Sperre läuft ab am';
 $lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';

@@ -5,11 +5,11 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <post@lupo49.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  */
-$lang['menu']                  = 'Benutzerverwalter';
+$lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
 $lang['nosupport']             = '(Benutzerverwaltung wird nicht unterstützt)';
 $lang['badauth']               = 'Ungültige Authentifizierung';
@@ -22,7 +22,7 @@ $lang['field']                 = 'Feld';
 $lang['value']                 = 'Wert';
 $lang['add']                   = 'Zufügen';
 $lang['delete']                = 'Löschen';
-$lang['delete_selected']       = 'Lösche ausgewähltes';
+$lang['delete_selected']       = 'Lösche Ausgewähltes';
 $lang['edit']                  = 'Bearbeiten';
 $lang['edit_prompt']           = 'Bearbeite diesen Benutzer';
 $lang['modify']                = 'Änderungen speichern';
@@ -43,10 +43,10 @@ $lang['next']                  = 'nächste';
 $lang['last']                  = 'letzte';
 $lang['edit_usermissing']      = 'Der gewählte Benutzer wurde nicht gefunden. Der angegebene Benutzername könnte gelöscht oder an anderer Stelle geändert worden sein.';
 $lang['user_notify']           = 'Benutzer benachrichtigen';
-$lang['note_notify']           = 'Benachrichtigungsemails werden nur versandt, wenn der Benutzer ein neues Kennwort erhält.';
+$lang['note_notify']           = 'Benachrichtigungsmails werden nur versandt, wenn der Benutzer ein neues Kennwort erhält.';
 $lang['note_group']            = 'Neue Benutzer werden zur Standardgruppe (%s) hinzugefügt, wenn keine Gruppe angegeben wird.';
 $lang['note_pass']             = 'Das Passwort wird automatisch erzeugt, wenn das Feld freigelassen wird und der Benutzer Benachrichtigungen aktiviert hat.';
 $lang['add_ok']                = 'Benutzer erfolgreich hinzugefügt';
 $lang['add_fail']              = 'Hinzufügen des Benutzers fehlgeschlagen';
-$lang['notify_ok']             = 'Benachrichtigungs-Mail wurde versendet';
-$lang['notify_fail']           = 'Benachrichtigungse-Mail konnte nicht gesendet werden';
+$lang['notify_ok']             = 'Benachrichtigungsmail wurde versendet';
+$lang['notify_fail']           = 'Benachrichtigungsemail konnte nicht gesendet werden';
