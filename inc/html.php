@@ -1087,9 +1087,10 @@ function html_diff($text='',$intro=true,$type=null){
     // array in rev2.
     $rev1 = $REV;
 
-    if(is_array($INPUT->ref('rev2'))){
-        $rev1 = (int) $INPUT->int('rev2')[0];
-        $rev2 = (int) $INPUT->int('rev2')[1];
+    $rev2 = $INPUT->ref('rev2');
+    if(is_array($rev2)){
+        $rev1 = (int) $rev2[0];
+        $rev2 = (int) $rev2[1];
 
         if(!$rev1){
             $rev1 = $rev2;
