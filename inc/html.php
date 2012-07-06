@@ -46,6 +46,7 @@ function html_login(){
     global $lang;
     global $conf;
     global $ID;
+    global $INPUT;
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
@@ -53,7 +54,7 @@ function html_login(){
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
-    $form->addElement(form_makeTextField('u', ((!$_REQUEST['http_credentials']) ? $_REQUEST['u'] : ''), $lang['user'], 'focus__this', 'block'));
+    $form->addElement(form_makeTextField('u', ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''), $lang['user'], 'focus__this', 'block'));
     $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
     if($conf['rememberme']) {
         $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
@@ -1076,8 +1077,9 @@ function html_diff($text='',$intro=true,$type=null){
     global $REV;
     global $lang;
     global $conf;
+    global $INPUT;
 
-    if(!$type) $type = $_REQUEST['difftype'];
+    if(!$type) $type = $INPUT->str('difftype');
     if($type != 'inline') $type = 'sidebyside';
 
     // we're trying to be clever here, revisions to compare can be either
@@ -1085,16 +1087,16 @@ function html_diff($text='',$intro=true,$type=null){
     // array in rev2.
     $rev1 = $REV;
 
-    if(is_array($_REQUEST['rev2'])){
-        $rev1 = (int) $_REQUEST['rev2'][0];
-        $rev2 = (int) $_REQUEST['rev2'][1];
+    if(is_array($INPUT->ref('rev2'))){
+        $rev1 = (int) $INPUT->int('rev2')[0];
+        $rev2 = (int) $INPUT->int('rev2')[1];
 
         if(!$rev1){
             $rev1 = $rev2;
             unset($rev2);
         }
     }else{
-        $rev2 = (int) $_REQUEST['rev2'];
+        $rev2 = $INPUT->int('rev2');
     }
 
     $r_minor = '';
@@ -1252,6 +1254,7 @@ function html_register(){
     global $lang;
     global $conf;
     global $ID;
+    global $INPUT;
 
     print p_locale_xhtml('register');
     print '<div class="centeralign">'.NL;
@@ -1259,13 +1262,13 @@ function html_register(){
     $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('login', $INPUT->post->str('login'), $lang['user'], '', 'block', array('size'=>'50')));
     if (!$conf['autopasswd']) {
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
     }
-    $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', array('size'=>'50')));
-    $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('fullname', $INPUT->post->str('fullname'), $lang['fullname'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('email', $INPUT->post->str('email'), $lang['email'], '', 'block', array('size'=>'50')));
     $form->addElement(form_makeButton('submit', '', $lang['btn_register']));
     $form->endFieldset();
     html_form('register', $form);
@@ -1282,26 +1285,27 @@ function html_register(){
 function html_updateprofile(){
     global $lang;
     global $conf;
+    global $INPUT;
     global $ID;
     global $INFO;
     global $auth;
 
     print p_locale_xhtml('updateprofile');
 
-    if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
-    if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
+    $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
+    $email = $INPUT->post->str('email', $INFO['userinfo']['mail'], true);
     print '<div class="centeralign">'.NL;
     $form = new Doku_Form(array('id' => 'dw__register'));
     $form->startFieldset($lang['profile']);
     $form->addHidden('do', 'profile');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('fullname', $_SERVER['REMOTE_USER'], $lang['user'], '', 'block', array('size'=>'50', 'disabled'=>'disabled')));
+    $form->addElement(form_makeTextField('login', $_SERVER['REMOTE_USER'], $lang['user'], '', 'block', array('size'=>'50', 'disabled'=>'disabled')));
     $attr = array('size'=>'50');
     if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
-    $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', $attr));
+    $form->addElement(form_makeTextField('fullname', $fullname, $lang['fullname'], '', 'block', $attr));
     $attr = array('size'=>'50');
     if (!$auth->canDo('modMail')) $attr['disabled'] = 'disabled';
-    $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', $attr));
+    $form->addElement(form_makeTextField('email', $email, $lang['email'], '', 'block', $attr));
     $form->addElement(form_makeTag('br'));
     if ($auth->canDo('modPass')) {
         $form->addElement(form_makePasswordField('newpass', $lang['newpass'], '', 'block', array('size'=>'50')));
@@ -1326,6 +1330,7 @@ function html_updateprofile(){
  * @triggers HTML_EDITFORM_OUTPUT
  */
 function html_edit(){
+    global $INPUT;
     global $ID;
     global $REV;
     global $DATE;
@@ -1338,8 +1343,8 @@ function html_edit(){
     global $TEXT;
     global $RANGE;
 
-    if (isset($_REQUEST['changecheck'])) {
-        $check = $_REQUEST['changecheck'];
+    if ($INPUT->has('changecheck')) {
+        $check = $INPUT->str('changecheck');
     } elseif(!$INFO['exists']){
         // $TEXT has been loaded from page template
         $check = md5('');
@@ -1374,8 +1379,8 @@ function html_edit(){
     $data = array('form' => $form,
                   'wr'   => $wr,
                   'media_manager' => true,
-                  'target' => (isset($_REQUEST['target']) && $wr &&
-                               $RANGE !== '') ? $_REQUEST['target'] : 'section',
+                  'target' => ($INPUT->has('target') && $wr &&
+                               $RANGE !== '') ? $INPUT->str('target') : 'section',
                   'intro_locale' => $include);
 
     if ($data['target'] !== 'section') {
@@ -1461,6 +1466,7 @@ function html_edit_form($param) {
 function html_minoredit(){
     global $conf;
     global $lang;
+    global $INPUT;
     // minor edits are for logged in users only
     if(!$conf['useacl'] || !$_SERVER['REMOTE_USER']){
         return false;
@@ -1468,7 +1474,7 @@ function html_minoredit(){
 
     $p = array();
     $p['tabindex'] = 3;
-    if(!empty($_REQUEST['minor'])) $p['checked']='checked';
+    if($INPUT->bool('minor')) $p['checked']='checked';
     return form_makeCheckboxField('minor', '1', $lang['minoredit'], 'minoredit', 'nowrap', $p);
 }
 
@@ -1674,8 +1680,9 @@ function html_resendpwd() {
     global $lang;
     global $conf;
     global $ID;
+    global $INPUT;
 
-    $token = preg_replace('/[^a-f0-9]+/','',$_REQUEST['pwauth']);
+    $token = preg_replace('/[^a-f0-9]+/','',$INPUT->str('pwauth'));
 
     if(!$conf['autopasswd'] && $token){
         print p_locale_xhtml('resetpwd');
@@ -1700,7 +1707,7 @@ function html_resendpwd() {
         $form->addHidden('do', 'resendpwd');
         $form->addHidden('save', '1');
         $form->addElement(form_makeTag('br'));
-        $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block'));
+        $form->addElement(form_makeTextField('login', $INPUT->post->str('login'), $lang['user'], '', 'block'));
         $form->addElement(form_makeTag('br'));
         $form->addElement(form_makeTag('br'));
         $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));

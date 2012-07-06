@@ -20,6 +20,7 @@ function act_dispatch(){
     global $ID;
     global $INFO;
     global $QUERY;
+    global $INPUT;
     global $lang;
     global $conf;
 
@@ -131,14 +132,14 @@ function act_dispatch(){
         //handle admin tasks
         if($ACT == 'admin'){
             // retrieve admin plugin name from $_REQUEST['page']
-            if (!empty($_REQUEST['page'])) {
+            if (($page = $INPUT->str('page', '', true)) != '') {
                 $pluginlist = plugin_list('admin');
-                if (in_array($_REQUEST['page'], $pluginlist)) {
+                if (in_array($page, $pluginlist)) {
                     // attempt to load the plugin
-                    if ($plugin =& plugin_load('admin',$_REQUEST['page']) !== null){
+                    if ($plugin =& plugin_load('admin',$page) !== null){
                         if($plugin->forAdminOnly() && !$INFO['isadmin']){
                             // a manager tried to load a plugin that's for admins only
-                            unset($_REQUEST['page']);
+                            $INPUT->remove('page');
                             msg('For admins only',-1);
                         }else{
                             $plugin->handle();
@@ -300,13 +301,14 @@ function act_draftdel($act){
 function act_draftsave($act){
     global $INFO;
     global $ID;
+    global $INPUT;
     global $conf;
-    if($conf['usedraft'] && $_POST['wikitext']){
+    if($conf['usedraft'] && $INPUT->post->has('wikitext')) {
         $draft = array('id'     => $ID,
-                'prefix' => substr($_POST['prefix'], 0, -1),
-                'text'   => $_POST['wikitext'],
-                'suffix' => $_POST['suffix'],
-                'date'   => (int) $_POST['date'],
+                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
+                'text'   => $INPUT->post->str('wikitext'),
+                'suffix' => $INPUT->post->str('suffix'),
+                'date'   => $INPUT->post->int('date'),
                 'client' => $INFO['client'],
                 );
         $cname = getCacheName($draft['client'].$ID,'.draft');
@@ -335,6 +337,7 @@ function act_save($act){
     global $SUM;
     global $lang;
     global $INFO;
+    global $INPUT;
 
     //spam check
     if(checkwordblock()) {
@@ -346,7 +349,7 @@ function act_save($act){
         return 'conflict';
 
     //save it
-    saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
+    saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$INPUT->bool('minor')); //use pretty mode for con
     //unlock it
     unlock($ID);
 
@@ -669,6 +672,7 @@ function act_subscription($act){
     global $lang;
     global $INFO;
     global $ID;
+    global $INPUT;
 
     // subcriptions work for logged in users only
     if(!$_SERVER['REMOTE_USER']) return 'show';
@@ -676,8 +680,8 @@ function act_subscription($act){
     // get and preprocess data.
     $params = array();
     foreach(array('target', 'style', 'action') as $param) {
-        if (isset($_REQUEST["sub_$param"])) {
-            $params[$param] = $_REQUEST["sub_$param"];
+        if ($INPUT->has("sub_$param")) {
+            $params[$param] = $INPUT->str("sub_$param");
         }
     }
 

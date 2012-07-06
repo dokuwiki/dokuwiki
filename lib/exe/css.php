@@ -30,8 +30,9 @@ function css_out(){
     global $conf;
     global $lang;
     global $config_cascade;
+    global $INPUT;
 
-    if (isset($_REQUEST['s']) && ($_REQUEST['s'] == 'feed')) {
+    if ($INPUT->str('s') == 'feed') {
         $mediatypes = array('feed');
         $type = 'feed';
     } else {
@@ -39,7 +40,7 @@ function css_out(){
         $type = '';
     }
 
-    $tpl = trim(preg_replace('/[^\w-]+/','',$_REQUEST['t']));
+    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if($tpl){
         $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
         $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';

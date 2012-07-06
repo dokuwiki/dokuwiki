@@ -19,9 +19,10 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getID($param='id',$clean=true){
+    global $INPUT;
     global $conf;
 
-    $id = isset($_REQUEST[$param]) ? $_REQUEST[$param] : null;
+    $id = $INPUT->str($param);
 
     //construct page id from request URI
     if(empty($id) && $conf['userewrite'] == 2){
