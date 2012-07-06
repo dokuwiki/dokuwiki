@@ -39,22 +39,19 @@
 .dokuwiki a.interwiki {
     background-repeat: no-repeat;
     background-position: 0 center;
-    padding: 0 0 0 20px;
+    padding: 0 0 0 18px;
 }
 /* external link */
 .dokuwiki a.urlextern {
     background-image: url(images/external-link.png);
-    padding: 0 0 0 15px;
 }
 /* windows share */
 .dokuwiki a.windows {
     background-image: url(images/unc.png);
-    padding: 0 0 0 16px;
 }
 /* email link */
 .dokuwiki a.mail {
     background-image: url(images/email.png);
-    padding: 0 0 0 16px;
 }
 
 /* icons of the following are set by dokuwiki in lib/exe/css.php */
@@ -63,7 +60,6 @@
 }
 /* interwiki link */
 .dokuwiki a.interwiki {
-    padding: 0 0 0 17px;
 }
 
 /* RTL corrections; if link icons don't work as expected, remove the following lines */
@@ -73,5 +69,5 @@
 [dir=rtl] .dokuwiki a.interwiki,
 [dir=rtl] .dokuwiki a.mediafile {
     background-position: right center;
-    padding: 0 17px 0 0;
+    padding: 0 18px 0 0;
 }
