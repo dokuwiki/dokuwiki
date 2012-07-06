@@ -49,8 +49,6 @@ class DokuWiki_Sniffs_PHP_DiscouragedFunctionsSniff extends Generic_Sniffs_PHP_F
      *
      * @var bool
      */
-    protected $error = false;
+    public $error = false;
 
 }//end class
-
-?>

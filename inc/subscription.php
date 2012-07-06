@@ -377,18 +377,20 @@ function subscription_send_list($subscriber_mail, $ids, $ns_id) {
  */
 function subscription_send($subscriber_mail, $replaces, $subject, $id, $template) {
     global $conf;
+    global $lang;
 
     $text = rawLocale($template);
-    $replaces = array_merge($replaces, array('TITLE'       => $conf['title'],
-                                             'DOKUWIKIURL' => DOKU_URL,
-                                             'PAGE'        => $id));
+    $trep = array_merge($replaces, array('PAGE' => $id));
 
-    foreach ($replaces as $key => $substitution) {
-        $text = str_replace('@'.strtoupper($key).'@', $substitution, $text);
-    }
-
-    global $lang;
     $subject = $lang['mail_' . $subject] . ' ' . $id;
-    mail_send('', '['.$conf['title'].'] '. $subject, $text,
-              $conf['mailfrom'], '', $subscriber_mail);
+    $mail = new Mailer();
+    $mail->bcc($subscriber_mail);
+    $mail->subject($subject);
+    $mail->setBody($text,$trep);
+    $mail->setHeader(
+        'List-Unsubscribe',
+        '<'.wl($id,array('do'=>'subscribe'),true,'&').'>',
+        false
+    );
+    return $mail->send();
 }

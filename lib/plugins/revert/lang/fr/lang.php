@@ -15,6 +15,7 @@
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
+ * @author Yannick Aure <yannick.aure@gmail.com>
  */
 $lang['menu']                  = 'Gestionnaire de réversions';
 $lang['filter']                = 'Trouver les pages spammées ';

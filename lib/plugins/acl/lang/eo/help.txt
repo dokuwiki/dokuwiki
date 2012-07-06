@@ -6,6 +6,6 @@ La maldekstra panelo montras ĉiujn disponeblajn nomspacojn kaj paĝojn.
 
 La suba agordilo permesas al vi rigardi kaj modifi la rajtojn de elektita uzanto aŭ grupo.
 
-En la suba tabelo ĉiuj aktuale difinitaj alirkontrolaj reguloj estas montritaj. Vi povas uzi ĝin por rapide forigi aŭ ŝanĝi multoblajn regulojn.
+En la suba tabelo ĉiuj aktuale difinitaj alirkontrolaj reguloj estas montrataj. Vi povas uzi ĝin por rapide forigi aŭ ŝanĝi multoblajn regulojn.
 
-Legado de la [[doku&gt;acl|oficiala dokumentaro pri ACL]] povus helpi vin bone kompreni kiel alirkontrolo funkcias en DokuWiki.
+Legi la [[doku>acl|oficialan dokumentaron pri ACL]] povus helpi vin bone kompreni kiel alirkontrolo funkcias en DokuWiki.

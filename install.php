@@ -9,6 +9,8 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
+require_once(DOKU_INC.'inc/PassHash.class.php');
+
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
@@ -27,8 +29,10 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
 
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
-$LC = preg_replace('/[^a-z\-]+/','',$_REQUEST['l']);
-if(!$LC) $LC = 'en';
+if(isset($_REQUEST['l']) && !is_array($_REQUEST['l'])) {
+    $LC = preg_replace('/[^a-z\-]+/','',$_REQUEST['l']);
+}
+if(empty($LC)) $LC = 'en';
 if($LC && $LC != 'en' ) {
     require_once(DOKU_INC.'inc/lang/'.$LC.'/lang.php');
 }
@@ -49,8 +53,9 @@ $dokuwiki_hash = array(
     '2010-11-07'   => '7921d48195f4db21b8ead6d9bea801b8',
     '2011-05-25'   => '4241865472edb6fa14a1227721008072',
     '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
+    '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
+    'devel'        => 'eb0b3fc90056fbc12bac6f49f7764df3'
 );
-
 
 
 // begin output
@@ -73,7 +78,7 @@ header('Content-Type: text/html; charset=utf-8');
         select.text, input.text { width: 30em; margin: 0 0.5em; }
         a {text-decoration: none}
     </style>
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
         function acltoggle(){
             var cb = document.getElementById('acl');
             var fs = document.getElementById('acldep');
@@ -127,17 +132,16 @@ header('Content-Type: text/html; charset=utf-8');
             }elseif(!check_configs()){
                 echo '<p>'.$lang['i_modified'].'</p>';
                 print_errors();
-            }elseif($_REQUEST['submit']){
-                if(!check_data($_REQUEST['d'])){
-                    print_errors();
-                    print_form($_REQUEST['d']);
-                }elseif(!store_data($_REQUEST['d'])){
+            }elseif(check_data($_REQUEST['d'])){
+                // check_data has sanitized all input parameters
+                if(!store_data($_REQUEST['d'])){
                     echo '<p>'.$lang['i_failure'].'</p>';
                     print_errors();
                 }else{
                     echo '<p>'.$lang['i_success'].'</p>';
                 }
             }else{
+                print_errors();
                 print_form($_REQUEST['d']);
             }
         ?>
@@ -209,7 +213,7 @@ function print_form($d){
             <p><?php echo $lang['i_license']?></p>
             <?php
             array_unshift($license,array('name' => 'None', 'url'=>''));
-            if(!isset($d['license'])) $d['license'] = 'cc-by-sa';
+            if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
                 echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
@@ -248,41 +252,65 @@ function print_retry() {
  * @author Andreas Gohr
  */
 function check_data(&$d){
+    static $form_default = array(
+        'title'     => '',
+        'acl'       => '1',
+        'superuser' => '',
+        'fullname'  => '',
+        'email'     => '',
+        'password'  => '',
+        'confirm'   => '',
+        'policy'    => '0',
+        'license'   => 'cc-by-sa'
+    );
     global $lang;
     global $error;
 
+    if(!is_array($d)) $d = array();
+    foreach($d as $k => $v) {
+        if(is_array($v))
+            unset($d[$k]);
+        else
+            $d[$k] = (string)$v;
+    }
+
     //autolowercase the username
-    $d['superuser'] = strtolower($d['superuser']);
+    $d['superuser'] = isset($d['superuser']) ? strtolower($d['superuser']) : "";
 
-    $ok = true;
+    $ok = false;
 
-    // check input
-    if(empty($d['title'])){
-        $error[] = sprintf($lang['i_badval'],$lang['i_wikiname']);
-        $ok      = false;
+    if(isset($_REQUEST['submit'])) {
+        $ok = true;
+
+        // check input
+        if(empty($d['title'])){
+            $error[] = sprintf($lang['i_badval'],$lang['i_wikiname']);
+            $ok      = false;
+        }
+        if(isset($d['acl'])){
+            if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
+                $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
+                $ok      = false;
+            }
+            if(empty($d['password'])){
+                $error[] = sprintf($lang['i_badval'],$lang['pass']);
+                $ok      = false;
+            }
+            elseif(!isset($d['confirm']) || $d['confirm'] != $d['password']){
+                $error[] = sprintf($lang['i_badval'],$lang['passchk']);
+                $ok      = false;
+            }
+            if(empty($d['fullname']) || strstr($d['fullname'],':')){
+                $error[] = sprintf($lang['i_badval'],$lang['fullname']);
+                $ok      = false;
+            }
+            if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
+                $error[] = sprintf($lang['i_badval'],$lang['email']);
+                $ok      = false;
+            }
+        }
     }
-    if($d['acl']){
-        if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
-            $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
-            $ok      = false;
-        }
-        if(empty($d['password'])){
-            $error[] = sprintf($lang['i_badval'],$lang['pass']);
-            $ok      = false;
-        }
-        if($d['confirm'] != $d['password']){
-            $error[] = sprintf($lang['i_badval'],$lang['passchk']);
-            $ok      = false;
-        }
-        if(empty($d['fullname']) || strstr($d['fullname'],':')){
-            $error[] = sprintf($lang['i_badval'],$lang['fullname']);
-            $ok      = false;
-        }
-        if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
-            $error[] = sprintf($lang['i_badval'],$lang['email']);
-            $ok      = false;
-        }
-    }
+    $d = array_merge($form_default, $d);
     return $ok;
 }
 
@@ -317,9 +345,13 @@ EOT;
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
     if ($d['acl']) {
+        // hash the password
+        $phash = new PassHash();
+        $pass = $phash->hash_smd5($d['password']);
+
         // create users.auth.php
-        // --- user:MD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'admin,user'));
+        // --- user:SMD5password:Real Name:email:groups,comma,seperated
+        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
@@ -419,16 +451,18 @@ function check_permissions(){
     global $lang;
 
     $dirs = array(
-        'conf'      => DOKU_LOCAL,
-        'data'      => DOKU_INC.'data',
-        'pages'     => DOKU_INC.'data/pages',
-        'attic'     => DOKU_INC.'data/attic',
-        'media'     => DOKU_INC.'data/media',
-        'meta'      => DOKU_INC.'data/meta',
-        'cache'     => DOKU_INC.'data/cache',
-        'locks'     => DOKU_INC.'data/locks',
-        'index'     => DOKU_INC.'data/index',
-        'tmp'       => DOKU_INC.'data/tmp'
+        'conf'        => DOKU_LOCAL,
+        'data'        => DOKU_INC.'data',
+        'pages'       => DOKU_INC.'data/pages',
+        'attic'       => DOKU_INC.'data/attic',
+        'media'       => DOKU_INC.'data/media',
+        'media_attic' => DOKU_INC.'data/media_attic',
+        'media_meta'  => DOKU_INC.'data/media_meta',
+        'meta'        => DOKU_INC.'data/meta',
+        'cache'       => DOKU_INC.'data/cache',
+        'locks'       => DOKU_INC.'data/locks',
+        'index'       => DOKU_INC.'data/index',
+        'tmp'         => DOKU_INC.'data/tmp'
     );
 
     $ok = true;
@@ -463,7 +497,7 @@ function check_functions(){
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace file_get_contents htmlspecialchars_decode '.
-                         'spl_autoload_register');
+                         'spl_autoload_register stream_select fsockopen');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';
@@ -521,11 +555,13 @@ function langsel(){
  */
 function print_errors(){
     global $error;
-    echo '<ul>';
-    foreach ($error as $err){
-        echo "<li>$err</li>";
+    if(!empty($error)) {
+        echo '<ul>';
+        foreach ($error as $err){
+            echo "<li>$err</li>";
+        }
+        echo '</ul>';
     }
-    echo '</ul>';
 }
 
 /**

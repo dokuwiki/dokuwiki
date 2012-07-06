@@ -4,7 +4,7 @@
  * --------
  * Author: Alexander 'E-Razor' Krause (admin@erazor-zone.de)
  * Copyright: (c) 2005 Alexander Krause
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2005/06/15
  *
  * VHDL (VHSICADL, very high speed integrated circuit HDL) language file for GeSHi.

@@ -1,0 +1,4 @@
+Icon set:   iPhone toolbar icons
+Designer:   TheWorkingGroup.ca
+License:    Creative Commons Attribution-Share Alike License [http://creativecommons.org/licenses/by-sa/3.0/]
+URL:        http://blog.twg.ca/2009/09/free-iphone-toolbar-icons/

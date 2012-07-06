@@ -4,7 +4,7 @@
  * -----------
  * Author: G�nter Dannoritzer <dannoritzer@web.de>
  * Copyright: (C) 2008 Guenter Dannoritzer
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2008/05/28
  *
  * Verilog language file for GeSHi.

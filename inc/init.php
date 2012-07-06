@@ -3,7 +3,9 @@
  * Initialize some defaults needed for DokuWiki
  */
 
-// start timing Dokuwiki execution
+/**
+ * timing Dokuwiki execution
+ */
 function delta_time($start=0) {
     return microtime(true)-((float)$start);
 }
@@ -30,8 +32,8 @@ if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
-    if(defined('E_DEPRECATED')){ // since php 5.3
-        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    if(defined('E_DEPRECATED')){ // since php 5.3, since php 5.4 E_STRICT is part of E_ALL
+        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
     }else{
         error_reporting(E_ALL ^ E_NOTICE);
     }
@@ -67,16 +69,6 @@ foreach (array('default','local','protected') as $config_group) {
             include($config_file);
         }
     }
-}
-
-//prepare language array
-global $lang;
-$lang = array();
-
-//load the language files
-require_once(DOKU_INC.'inc/lang/en/lang.php');
-if ( $conf['lang'] && $conf['lang'] != 'en' ) {
-    require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
 }
 
 //prepare license array()
@@ -118,11 +110,11 @@ if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['se
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
-// define Template baseURL
+// DEPRECATED, use tpl_basedir() instead
 if(!defined('DOKU_TPL')) define('DOKU_TPL',
         DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
 
-// define real Template directory
+// DEPRECATED, use tpl_incdir() instead
 if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
         DOKU_INC.'lib/tpl/'.$conf['template'].'/');
 
@@ -200,12 +192,16 @@ init_paths();
 init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper');
+$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
 global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
 
 // load libraries
 require_once(DOKU_INC.'inc/load.php');
+
+// input handle class
+global $INPUT;
+$INPUT = new Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
@@ -213,6 +209,10 @@ $plugin_controller = new $plugin_controller_class();
 // initialize the event handler
 global $EVENT_HANDLER;
 $EVENT_HANDLER = new Doku_Event_Handler();
+
+$local = $conf['lang'];
+trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+
 
 // setup authentication system
 if (!defined('NOSESSION')) {
@@ -239,10 +239,11 @@ function init_paths(){
             'lockdir'   => 'locks',
             'tmpdir'    => 'tmp');
 
-    foreach($paths as $c => $p){
-        if(empty($conf[$c]))  $conf[$c] = $conf['savedir'].'/'.$p;
-        $conf[$c]             = init_path($conf[$c]);
-        if(empty($conf[$c]))  nice_die("The $c ('$p') does not exist, isn't accessible or writable.
+    foreach($paths as $c => $p) {
+        $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
+        $conf[$c] = init_path($path);
+        if(empty($conf[$c]))
+            nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
                 You should check your config and permission settings.
                 Or maybe you want to <a href=\"install.php\">run the
                 installer</a>?");
@@ -256,8 +257,22 @@ function init_paths(){
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
 }
 
+function init_lang($langCode) {
+    //prepare language array
+    global $lang;
+    $lang = array();
+
+    //load the language files
+    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    if ($langCode && $langCode != 'en') {
+        if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
+            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+        }
+    }
+}
+
 /**
- * Checks the existance of certain files and creates them if missing.
+ * Checks the existence of certain files and creates them if missing.
  */
 function init_files(){
     global $conf;
@@ -299,12 +314,12 @@ function init_files(){
  * Returns absolute path
  *
  * This tries the given path first, then checks in DOKU_INC.
- * Check for accessability on directories as well.
+ * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function init_path($path){
-    // check existance
+    // check existence
     $p = fullpath($path);
     if(!@file_exists($p)){
         $p = fullpath(DOKU_INC.$path);
@@ -552,7 +567,7 @@ function fullpath($path,$exists=false){
     }
     $finalpath = $root.implode('/', $newpath);
 
-    // check for existance when needed (except when unit testing)
+    // check for existence when needed (except when unit testing)
     if($exists && !defined('DOKU_UNITTEST') && !@file_exists($finalpath)) {
         return false;
     }

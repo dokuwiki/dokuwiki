@@ -43,7 +43,7 @@ $lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
 $lang['btn_reset']             = 'Reset';
-$lang['btn_resendpwd']         = 'Send new password';
+$lang['btn_resendpwd']         = 'Set new password';
 $lang['btn_draft']             = 'Edit draft';
 $lang['btn_recover']           = 'Recover draft';
 $lang['btn_draftdel']          = 'Delete draft';
@@ -84,7 +84,7 @@ $lang['profchanged']           = 'User profile successfully updated.';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
-$lang['resendpwd']             = 'Send new password for';
+$lang['resendpwd']             = 'Set new password for';
 $lang['resendpwdmissing']      = 'Sorry, you must fill in all fields.';
 $lang['resendpwdnouser']       = 'Sorry, we can\'t find this user in our database.';
 $lang['resendpwdbadauth']      = 'Sorry, this auth code is not valid. Make sure you used the complete confirmation link.';
@@ -99,6 +99,7 @@ $lang['searchmedia_in']        = 'Search in %s';
 $lang['txt_upload']            = 'Select file to upload';
 $lang['txt_filename']          = 'Upload as (optional)';
 $lang['txt_overwrt']           = 'Overwrite existing file';
+$lang['maxuploadsize']         = 'Upload max. %s per file.';
 $lang['lockedby']              = 'Currently locked by';
 $lang['lockexpire']            = 'Lock expires at';
 
@@ -166,7 +167,7 @@ $lang['accessdenied']          = 'You are not allowed to view this page.';
 $lang['mediausage']            = 'Use the following syntax to reference this file:';
 $lang['mediaview']             = 'View original file';
 $lang['mediaroot']             = 'root';
-$lang['mediaupload']           = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your "Upload as" filename separated by colons. Files also can be selected by drag and drop.';
+$lang['mediaupload']           = 'Upload a file to the current namespace here. To create subnamespaces, prepend them to your filename separated by colons after you selected the files. Files can also be selected by drag and drop.';
 $lang['mediaextchange']        = 'Filextension changed from .%s to .%s!';
 $lang['reference']             = 'References for';
 $lang['ref_inuse']             = 'The file can\'t be deleted, because it\'s still used by the following pages:';
@@ -190,11 +191,16 @@ $lang['lastmod']               = 'Last modified';
 $lang['by']                    = 'by';
 $lang['deleted']               = 'removed';
 $lang['created']               = 'created';
-$lang['restored']              = 'old revision restored';
+$lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
 $lang['noflash']               = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']              = 'Download Snippet';
+$lang['tools']                 = 'Tools';
+$lang['user_tools']            = 'User Tools';
+$lang['site_tools']            = 'Site Tools';
+$lang['page_tools']            = 'Page Tools';
+$lang['skip_to_content']       = 'skip to content';
 
 $lang['mail_newpage']          = 'page added:';
 $lang['mail_changed']          = 'page changed:';
@@ -275,6 +281,7 @@ $lang['subscr_style_list']          = 'list of changed pages since last email (e
 /* auth.class language support */
 $lang['authmodfailed']         = 'Bad user authentication configuration. Please inform your Wiki Admin.';
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
+$lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 
 /* installer strings */
 $lang['i_chooselang']          = 'Choose your language';
@@ -303,22 +310,6 @@ $lang['i_pol1']                = 'Public Wiki (read for everyone, write and uplo
 $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registered users only)';
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
-
-$lang['mu_intro']              = 'Here you can upload multiple files at once. Click the browse button to add them to the queue. Press upload when done.';
-$lang['mu_gridname']           = 'Filename';
-$lang['mu_gridsize']           = 'Size';
-$lang['mu_gridstat']           = 'Status';
-$lang['mu_namespace']          = 'Namespace';
-$lang['mu_browse']             = 'Browse';
-$lang['mu_toobig']             = 'too big';
-$lang['mu_ready']              = 'ready for upload';
-$lang['mu_done']               = 'complete';
-$lang['mu_fail']               = 'failed';
-$lang['mu_authfail']           = 'session expired';
-$lang['mu_progress']           = '@PCT@% uploaded';
-$lang['mu_filetypes']          = 'Allowed Filetypes';
-$lang['mu_info']               = 'files uploaded.';
-$lang['mu_lasterr']            = 'Last error:';
 
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';

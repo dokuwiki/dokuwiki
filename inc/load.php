@@ -34,7 +34,6 @@ require_once(DOKU_INC.'inc/subscription.php');
 require_once(DOKU_INC.'inc/template.php');
 require_once(DOKU_INC.'inc/toolbar.php');
 require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/auth.php');
 
 /**
  * spl_autoload_register callback
@@ -49,6 +48,7 @@ function load_autoload($name){
     static $classes = null;
     if(is_null($classes)) $classes = array(
         'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
+        'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
         'JSON'                  => DOKU_INC.'inc/JSON.php',
         'adLDAP'                => DOKU_INC.'inc/adLDAP.php',
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
@@ -61,6 +61,7 @@ function load_autoload($name){
         'Doku_Event'            => DOKU_INC.'inc/events.php',
         'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
         'EmailAddressValidator' => DOKU_INC.'inc/EmailAddressValidator.php',
+        'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
@@ -76,11 +77,15 @@ function load_autoload($name){
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
+        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
+        'RemoteAPI'             => DOKU_INC.'inc/remote.php',
+        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
-    	'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
+        'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
+    	'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php'
 
     );
 
@@ -90,13 +95,14 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(auth|helper|syntax|action|admin|renderer)_plugin_([^_]+)(?:_([^_]+))?$/',
+    if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote)_plugin_([^_]+)(?:_([^_]+))?$/',
                   $name, $m)) {
-                //try to load the wanted plugin file
-        // include, but be silent. Maybe some other autoloader has an idea
-        // how to load this class.
+        // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
-        @include DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        if(@file_exists($plg)){
+            include DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        }
         return;
     }
 }

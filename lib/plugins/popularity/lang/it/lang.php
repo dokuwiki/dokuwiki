@@ -9,6 +9,7 @@
  * @author robocap <robocap1@gmail.com>
  * @author Osman Tekin osman.tekin93@hotmail.it
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
+ * @author Matteo Pasotti <matteo@xquiet.eu>
  */
 $lang['name']                  = 'Raccolta dati sul wiki (può impiegare del tempo per caricarsi)';
 $lang['submit']                = 'Invia dati';

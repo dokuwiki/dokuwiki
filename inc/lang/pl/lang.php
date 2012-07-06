@@ -13,6 +13,7 @@
  * @author Grzegorz Widła <dzesdzes@gmail.com>
  * @author Łukasz Chmaj <teachmeter@gmail.com>
  * @author Begina Felicysym <begina.felicysym@wp.eu>
+ * @author Aoi Karasu <aoikarasu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -48,7 +49,7 @@ $lang['btn_backtomedia']       = 'Powrót do wyboru pliku';
 $lang['btn_subscribe']         = 'Subskrybuj zmiany';
 $lang['btn_profile']           = 'Aktualizuj profil';
 $lang['btn_reset']             = 'Resetuj';
-$lang['btn_resendpwd']         = 'Prześlij nowe hasło';
+$lang['btn_resendpwd']         = 'Podaj nowe hasło';
 $lang['btn_draft']             = 'Edytuj szkic';
 $lang['btn_recover']           = 'Przywróć szkic';
 $lang['btn_draftdel']          = 'Usuń szkic';
@@ -85,7 +86,7 @@ $lang['profnoempty']           = 'Pusta nazwa lub adres e-mail nie dozwolone.';
 $lang['profchanged']           = 'Zaktualizowano profil użytkownika.';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
-$lang['resendpwd']             = 'Prześlij nowe hasło dla';
+$lang['resendpwd']             = 'Podaj nowe hasło dla';
 $lang['resendpwdmissing']      = 'Wypełnij wszystkie pola.';
 $lang['resendpwdnouser']       = 'Nie można znaleźć tego użytkownika w bazie danych.';
 $lang['resendpwdbadauth']      = 'Błędny kod autoryzacji! Upewnij się, że użyłeś(aś) właściwego odnośnika.';
@@ -98,6 +99,7 @@ $lang['searchmedia_in']        = 'Szukaj w  %s';
 $lang['txt_upload']            = 'Wybierz plik do wysłania';
 $lang['txt_filename']          = 'Nazwa pliku (opcjonalnie)';
 $lang['txt_overwrt']           = 'Nadpisać istniejący plik?';
+$lang['maxuploadsize']         = 'Maksymalny rozmiar wysyłanych danych wynosi %s dla jednego pliku.';
 $lang['lockedby']              = 'Aktualnie zablokowane przez';
 $lang['lockexpire']            = 'Blokada wygasa';
 $lang['js']['willexpire']      = 'Twoja blokada edycji tej strony wygaśnie w ciągu minuty. \nW celu uniknięcia konfliktów użyj przycisku podglądu aby odnowić blokadę.';
@@ -135,6 +137,8 @@ $lang['js']['del_confirm']     = 'Czy na pewno usunąć?';
 $lang['js']['restore_confirm'] = 'Naprawdę przywrócić tą wersję?';
 $lang['js']['media_diff']      = 'Pokaż różnice:';
 $lang['js']['media_diff_both'] = 'Obok siebie';
+$lang['js']['media_diff_opacity'] = 'Przezroczystość';
+$lang['js']['media_diff_portions'] = 'Przesunięcie';
 $lang['js']['media_select']    = 'Wybierz pliki...';
 $lang['js']['media_upload_btn'] = 'Przesłanie plików';
 $lang['js']['media_done_btn']  = 'Zrobione';
@@ -190,6 +194,11 @@ $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
 $lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
+$lang['tools']                 = 'Narzędzia';
+$lang['user_tools']            = 'Narzędzia użytkownika';
+$lang['site_tools']            = 'Narzędzia witryny';
+$lang['page_tools']            = 'Narzędzia strony';
+$lang['skip_to_content']       = 'przejście do zawartości';
 $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
 $lang['mail_subscribe_list']   = 'Zmienione strony w katalogu:';
@@ -260,6 +269,7 @@ $lang['subscr_style_digest']   = 'email ze streszczeniem zmian dla każdej ze st
 $lang['subscr_style_list']     = 'lista zmienionych stron od czasu ostatniego emaila';
 $lang['authmodfailed']         = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
+$lang['authpwdexpire']         = 'Twoje hasło wygaśnie za %d dni. Należy je zmienić w krótkim czasie.';
 $lang['i_chooselang']          = 'Wybierz język';
 $lang['i_installer']           = 'Instalator DokuWiki';
 $lang['i_wikiname']            = 'Nazwa Wiki';
@@ -283,21 +293,6 @@ $lang['i_pol1']                = 'Publiczne Wiki (odczyt dla wszystkich, zapis i
 $lang['i_pol2']                = 'Zamknięte Wiki (odczyt, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
 $lang['i_retry']               = 'Spróbuj ponownie';
 $lang['i_license']             = 'Wybierz licencję, na warunkach której chcesz udostępniać treści:';
-$lang['mu_intro']              = 'Możesz tutaj wysłać wiele plików na raz. Kliknij przycisk "Przeglądaj" aby dodać je do kolejki. Kliknij "Wyślij" gdy skończysz.';
-$lang['mu_gridname']           = 'Nazwa pliku';
-$lang['mu_gridsize']           = 'Rozmiar';
-$lang['mu_gridstat']           = 'Stan';
-$lang['mu_namespace']          = 'Katalog';
-$lang['mu_browse']             = 'Przeglądaj';
-$lang['mu_toobig']             = 'za duży';
-$lang['mu_ready']              = 'gotowy do wysłania';
-$lang['mu_done']               = 'zakończono';
-$lang['mu_fail']               = 'nie powiodło się';
-$lang['mu_authfail']           = 'sesja wygasła';
-$lang['mu_progress']           = '@PCT@% wysłano';
-$lang['mu_filetypes']          = 'Dozwolone typy plików';
-$lang['mu_info']               = 'wysłanych plików.';
-$lang['mu_lasterr']            = 'Ostatni błąd:';
 $lang['recent_global']         = 'W tej chwili przeglądasz zmiany w katalogu <b>%s</b>. Możesz przejrzeć także <a href="%s">zmiany w całym wiki</a>.';
 $lang['years']                 = '%d lat temu';
 $lang['months']                = '%d miesięcy temu';

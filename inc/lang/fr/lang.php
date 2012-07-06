@@ -23,6 +23,7 @@
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
+ * @author Yannick Aure <yannick.aure@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -58,7 +59,7 @@ $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
 $lang['btn_subscribe']         = 'S\'abonner à la page';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
-$lang['btn_resendpwd']         = 'Envoyer le mot de passe';
+$lang['btn_resendpwd']         = 'Définir un nouveau mot de passe';
 $lang['btn_draft']             = 'Modifier le brouillon';
 $lang['btn_recover']           = 'Récupérer le brouillon';
 $lang['btn_draftdel']          = 'Effacer le brouillon';
@@ -95,7 +96,7 @@ $lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est 
 $lang['profchanged']           = 'Mise à jour du profil réussie.';
 $lang['pwdforget']             = 'Mot de passe oublié ? Faites-vous envoyer votre mot de passe ';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
-$lang['resendpwd']             = 'Renvoyer le mot de passe de';
+$lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
 $lang['resendpwdmissing']      = 'Désolé, vous devez remplir tous les champs.';
 $lang['resendpwdnouser']       = 'Désolé, cet utilisateur est introuvable dans notre base.';
 $lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez-vous d\'avoir utilisé le lien de confirmation.';
@@ -200,6 +201,11 @@ $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'Le greffon <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash</a> est nécessaire pour afficher ce contenu.';
 $lang['download']              = 'Télécharger un extrait';
+$lang['tools']                 = 'Outils';
+$lang['user_tools']            = 'Outils d\'utilisateurs';
+$lang['site_tools']            = 'Outils du Site';
+$lang['page_tools']            = 'Outils de la Page';
+$lang['skip_to_content']       = 'Aller au contenu';
 $lang['mail_newpage']          = 'page ajoutée :';
 $lang['mail_changed']          = 'page modifiée :';
 $lang['mail_subscribe_list']   = 'pages modifiées dans la catégorie :';
@@ -270,6 +276,7 @@ $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les m
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
 $lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'informer l\'administrateur du Wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'informer l\'administrateur du Wiki.';
+$lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
 $lang['i_installer']           = 'Installeur DokuWiki';
 $lang['i_wikiname']            = 'Nom du wiki';
@@ -292,21 +299,6 @@ $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écri
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
 $lang['i_retry']               = 'Réessayer';
 $lang['i_license']             = 'Veuillez choisir la licence sous laquelle placer votre contenu :';
-$lang['mu_intro']              = 'Ici vous pouvez envoyer plusieurs fichiers en même temps. Cliquez sur le bouton parcourir pour les ajouter. Cliquez sur envoyer lorsque c\'est prêt. ';
-$lang['mu_gridname']           = 'Nom du fichier';
-$lang['mu_gridsize']           = 'Taille';
-$lang['mu_gridstat']           = 'État';
-$lang['mu_namespace']          = 'Catégorie';
-$lang['mu_browse']             = 'Parcourir';
-$lang['mu_toobig']             = 'Trop gros';
-$lang['mu_ready']              = 'Prêt à envoyer';
-$lang['mu_done']               = 'Terminé';
-$lang['mu_fail']               = 'Échoué';
-$lang['mu_authfail']           = 'Session expirée';
-$lang['mu_progress']           = '@PCT@% envoyé';
-$lang['mu_filetypes']          = 'Types de fichiers acceptés';
-$lang['mu_info']               = 'fichiers envoyés.';
-$lang['mu_lasterr']            = 'Dernière erreur : ';
 $lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein de la catégorie <strong>%s</strong>. Vous pouvez aussi <a href="%s">voir les récentes modifications sur tout le wiki</a>.';
 $lang['years']                 = 'il y a %d ans';
 $lang['months']                = 'il y a %d mois';

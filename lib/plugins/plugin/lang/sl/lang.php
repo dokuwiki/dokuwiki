@@ -7,7 +7,6 @@
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  */
-
 $lang['menu']                  = 'Upravljanje vstavkov';
 $lang['download']              = 'Prejmi in namesti nov vstavek';
 $lang['manage']                = 'Nameščeni vstavki';
@@ -52,3 +51,4 @@ $lang['enabled']               = 'Vstavek %s je omogočen.';
 $lang['notenabled']            = 'Vstavka %s ni mogoče omogočiti zaradi neustreznih dovoljen.';
 $lang['disabled']              = 'Vstavek %s je onemogočen.';
 $lang['notdisabled']           = 'Vstavka %s ni mogoče onemogočiti zaradi neustreznih dovoljen.';
+$lang['packageinstalled']      = 'Paket vstavka (%d vstavkov: %s) je uspešno nameščen.';

@@ -17,6 +17,7 @@
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
+ * @author Yannick Aure <yannick.aure@gmail.com>
  */
 $lang['menu']                  = 'Gestion des modules externes';
 $lang['download']              = 'Télécharger et installer un nouveau module';

@@ -8,6 +8,8 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Marius Olar <olarmariusalex@yahoo.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -43,7 +45,7 @@ $lang['btn_backtomedia']       = 'Înapoi la Selecţia Mediafile';
 $lang['btn_subscribe']         = 'Subscrie Modificarea Paginii';
 $lang['btn_profile']           = 'Actualizează Profil';
 $lang['btn_reset']             = 'Resetează';
-$lang['btn_resendpwd']         = 'Trimite parola nouă';
+$lang['btn_resendpwd']         = 'Setează o parolă nouă';
 $lang['btn_draft']             = 'Editează schiţă';
 $lang['btn_recover']           = 'Recuperează schiţă';
 $lang['btn_draftdel']          = 'Şterge schiţă';
@@ -80,7 +82,7 @@ $lang['profnoempty']           = 'Nu sunt admise numele sau adresa de email neco
 $lang['profchanged']           = 'Profilul de utilizator a fost actualizat succes.';
 $lang['pwdforget']             = 'Parola uitată? Luaţi una nouă';
 $lang['resendna']              = 'Această wiki nu suportă retrimiterea parolei.';
-$lang['resendpwd']             = 'Trimite parola nouă pentru';
+$lang['resendpwd']             = 'Setează o parolă nouă pentru';
 $lang['resendpwdmissing']      = 'Ne pare rău, trebuie completate toate câmpurile.';
 $lang['resendpwdnouser']       = 'Ne pare rău, acest utilizator nu poate fi găsit în baza de date.';
 $lang['resendpwdbadauth']      = 'Ne pare rău, acest cod de autorizare nu este corect. Verificaţi dacă aţi folosit tot link-ul de confirmare.';
@@ -187,6 +189,11 @@ $lang['external_edit']         = 'editare externă';
 $lang['summary']               = 'Editează sumarul';
 $lang['noflash']               = 'Plugin-ul <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> este necesar pentru afişarea corectă a conţinutului.';
 $lang['download']              = 'Bloc descărcări';
+$lang['tools']                 = 'Unelte';
+$lang['user_tools']            = 'Unelte utilizator';
+$lang['site_tools']            = 'Unelte Site';
+$lang['page_tools']            = 'Unelte Pagină';
+$lang['skip_to_content']       = 'sari la conținut';
 $lang['mail_newpage']          = 'pagina adăugată:';
 $lang['mail_changed']          = 'page schimbată:';
 $lang['mail_subscribe_list']   = 'pagini modificate în spaţiul de nume:';
@@ -257,6 +264,7 @@ $lang['subscr_style_digest']   = 'digerează email la schimbări pentru fiecare 
 $lang['subscr_style_list']     = 'lista paginilor schimbate de la ultimul email (la fiecare %.2f zile)';
 $lang['authmodfailed']         = 'Configuraţia autentificării utilizatorului este eronată. Anunţaţi Wiki Admin-ul.';
 $lang['authtempfail']          = 'Autentificarea utilizatorului este temporar indisponibilă. Anunţaţi Wiki Admin-ul.';
+$lang['authpwdexpire']         = 'Parola vă va expira în %d zile, ar trebui să o schimbați curând.';
 $lang['i_chooselang']          = 'Alegeţi limba';
 $lang['i_installer']           = 'DokuWiki Installer';
 $lang['i_wikiname']            = 'Numele Wiki';
@@ -280,21 +288,6 @@ $lang['i_pol1']                = 'Wiki Deschisă (citeste oricine, scrie şi în
 $lang['i_pol2']                = 'Wiki Închisă (citeşte, scrie şi încarcă doar utilizatorul înregistrat)';
 $lang['i_retry']               = 'Încearcă din nou';
 $lang['i_license']             = 'Vă rugăm alegeţi licenţa sub care doriţi să vă licenţiaţi materialul:';
-$lang['mu_intro']              = 'Aici poţi încărca mai multe fişiere simultan. Apasă butonul Răsfoieşte pentru a le adăuga. Apasă Încarcă când ai terminat.';
-$lang['mu_gridname']           = 'Numele fişierului';
-$lang['mu_gridsize']           = 'Mărime';
-$lang['mu_gridstat']           = 'Stare';
-$lang['mu_namespace']          = 'Spaţiu de nume';
-$lang['mu_browse']             = 'Răsfoieşte';
-$lang['mu_toobig']             = 'prea mare';
-$lang['mu_ready']              = 'pregătit pentru încărcare';
-$lang['mu_done']               = 'complet';
-$lang['mu_fail']               = 'eşuat';
-$lang['mu_authfail']           = 'sesiunea a expirat';
-$lang['mu_progress']           = '@PCT@% încărcat';
-$lang['mu_filetypes']          = 'Tipuri de fişiere permise';
-$lang['mu_info']               = 'fişiere încărcate';
-$lang['mu_lasterr']            = 'Ultima eroare:';
 $lang['recent_global']         = 'Acum vizualizaţi modificările în interiorul numelui de spaţiu <b>%s</b>. De asemenea puteţi <a href="%s">vizualiza modificările recente ale întregului wiki</a>.';
 $lang['years']                 = 'acum %d ani';
 $lang['months']                = 'acum %d luni';

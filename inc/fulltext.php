@@ -405,6 +405,8 @@ function ft_snippet_re_preprocess($term) {
     }else{
         $term = $term.'\b';
     }
+
+    if($term == '\b' || $term == '\b\b') $term = '';
     return $term;
 }
 

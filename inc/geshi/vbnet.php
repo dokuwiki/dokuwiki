@@ -4,7 +4,7 @@
  * ---------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.10
  * Date Started: 2004/06/04
  *
  * VB.NET language file for GeSHi.

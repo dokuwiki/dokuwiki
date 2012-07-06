@@ -106,7 +106,7 @@ function _mail_send_action($data) {
 
     // discard mail request if no recipients are available
     if(trim($to) === '' && trim($cc) === '' && trim($bcc) === '') return false;
-    
+
     // end additional code to support event ... original mail_send() code from here
 
     if(defined('MAILHEADER_ASCIIONLY')){
@@ -208,9 +208,9 @@ function mail_encode_address($string,$header='',$names=true){
             if(!utf8_isASCII($text)){
                 // put the quotes outside as in =?UTF-8?Q?"Elan Ruusam=C3=A4e"?= vs "=?UTF-8?Q?Elan Ruusam=C3=A4e?="
                 if (preg_match('/^"(.+)"$/', $text, $matches)) {
-                  $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';
+                    $text = '"=?UTF-8?Q?'.mail_quotedprintable_encode($matches[1], 0).'?="';
                 } else {
-                  $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text, 0).'?=';
+                    $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text, 0).'?=';
                 }
                 // additionally the space character should be encoded as =20 (or each
                 // word QP encoded separately).

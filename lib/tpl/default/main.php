@@ -61,7 +61,7 @@ if (!defined('DOKU_INC')) die();
 
       <div class="bar-right" id="bar__topright">
         <?php tpl_button('recent')?>
-        <?php tpl_searchform()?>&nbsp;
+        <?php tpl_searchform()?>&#160;
       </div>
 
       <div class="clearer"></div>
@@ -121,7 +121,7 @@ if (!defined('DOKU_INC')) die();
         <?php tpl_button('profile')?>
         <?php tpl_button('login')?>
         <?php tpl_button('index')?>
-        <?php tpl_button('top')?>&nbsp;
+        <?php tpl_button('top')?>&#160;
       </div>
       <div class="clearer"></div>
     </div>

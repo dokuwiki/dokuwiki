@@ -32,8 +32,8 @@ function js_out(){
     global $config_cascade;
 
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],
-                       '.js');
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
+    $cache->_event = 'JS_CACHE_USE';
 
     // load minified version for some files
     $min = $conf['compress'] ? '.min' : '';
@@ -65,7 +65,7 @@ function js_out(){
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_INC.'lib/scripts/behaviour.js',
                 DOKU_INC.'lib/scripts/page.js',
-                DOKU_TPLINC.'script.js',
+                tpl_incdir().'script.js',
             );
 
     // add possible plugin scripts and userscript
@@ -79,15 +79,15 @@ function js_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    http_cached($cache->cache,
-                $cache->useCache(array('files' => $cache_files)));
+    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    http_cached($cache->cache, $cache_ok);
 
     // start output buffering and build the script
     ob_start();
 
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
-    print "var DOKU_TPL    = '".DOKU_TPL."';";
+    print "var DOKU_TPL    = '".tpl_basedir()."';";
     // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
@@ -307,7 +307,10 @@ function js_compress($s){
                     $j += 1;
                 }
             }
-            $result .= substr($s,$i,$j+1);
+            $string  = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
             $i = $i + $j + 1;
             continue;
         }
@@ -322,7 +325,10 @@ function js_compress($s){
                     $j += 1;
                 }
             }
-            $result .= substr($s,$i,$j+1);
+            $string = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
             $i = $i + $j + 1;
             continue;
         }

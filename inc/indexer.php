@@ -291,7 +291,6 @@ class Doku_Indexer {
                 $val_idx = array();
             }
 
-
             foreach ($values as $val) {
                 $val = (string)$val;
                 if ($val !== "") {
@@ -351,7 +350,7 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $pid = $this->getIndexKey('page', '', $page);
+        $pid = $this->addIndexKey('page', '', $page);
         if ($pid === false) {
             $this->unlock();
             return false;
@@ -389,6 +388,7 @@ class Doku_Indexer {
             $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
             $meta_idx = $this->getIndex($metaname.'_i', '');
             foreach ($val_idx as $id) {
+                if ($id === '') continue;
                 $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
             }
             $this->saveIndex($metaname.'_i', '', $meta_idx);
@@ -1174,18 +1174,8 @@ function & idx_get_stopwords() {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_addPage($page, $verbose=false, $force=false) {
-    // check if indexing needed
     $idxtag = metaFN($page,'.indexed');
-    if(!$force && @file_exists($idxtag)){
-        if(trim(io_readFile($idxtag)) == idx_get_version()){
-            $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($page))){
-                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
-                return false;
-            }
-        }
-    }
-
+    // check if page was deleted but is still in the index
     if (!page_exists($page)) {
         if (!@file_exists($idxtag)) {
             if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
@@ -1200,6 +1190,18 @@ function idx_addPage($page, $verbose=false, $force=false) {
         @unlink($idxtag);
         return $result;
     }
+
+    // check if indexing needed
+    if(!$force && @file_exists($idxtag)){
+        if(trim(io_readFile($idxtag)) == idx_get_version()){
+            $last = @filemtime($idxtag);
+            if($last > @filemtime(wikiFN($page))){
+                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
+                return false;
+            }
+        }
+    }
+
     $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
     if ($indexenabled === false) {
         $result = false;

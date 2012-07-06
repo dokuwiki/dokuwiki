@@ -63,7 +63,7 @@ function io_sweepNS($id,$basedir='datadir'){
  */
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
-    $data = array(array($file, false), getNS($id), noNS($id), $rev);
+    $data = array(array($file, true), getNS($id), noNS($id), $rev);
     return trigger_event('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
 }
 

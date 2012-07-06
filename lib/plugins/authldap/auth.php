@@ -25,7 +25,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     /**
      * Constructor
      */
-    function auth_plugin_authldap(){
+    function __construct(){
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
 
@@ -317,8 +317,6 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
             }
         }
         return $result;
-
-
     }
 
     /**
@@ -370,7 +368,6 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     function _constructPattern($filter) {
         $this->_pattern = array();
         foreach ($filter as $item => $pattern) {
-//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
             $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
         }
     }
@@ -469,3 +466,5 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         }
     }
 }
+
+//Setup VIM: ex: et ts=4 :

@@ -1,4 +1,4 @@
-Paĝo en via DokuVikio estis ŝanĝita aŭ aldonita. Jen detaloj:
+Paĝo en via DokuVikio ŝanĝiĝis aŭ aldoniĝis. Jen detaloj:
 
 Dato: @DATE@
 Foliumilo: @BROWSER@
@@ -7,10 +7,9 @@ RetNodo: @HOSTNAME@
 Antaŭa revizio: @OLDPAGE@
 Nova revizio: @NEWPAGE@
 Bulteno de ŝanĝoj: @SUMMARY@
-Uzulo: @USER@
+Uzanto: @USER@
 
 @DIFF@
 
 -- 
-Tiu ĉi mesaĝo estis kreita de DokuWiki, kiu lokiĝas tie:
-@DOKUWIKIURL@
+Tiu ĉi mesaĝo kreiĝis de DokuWiki, kiu lokiĝas ĉe @DOKUWIKIURL@

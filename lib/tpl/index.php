@@ -54,7 +54,7 @@ if ($ini) {
         echo '<td>'.htmlspecialchars($val).'</td>';
         echo '<td>';
         if(preg_match('/^#[0-f]{3,6}$/i',$val)){
-            echo '<div class="color" style="background-color:'.$val.';">&nbsp;</div>';
+            echo '<div class="color" style="background-color:'.$val.';">&#160;</div>';
         }
         echo '</td>';
         echo '</tr>';

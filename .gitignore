@@ -26,7 +26,10 @@
 /data/pages/*
 /data/tmp/*
 /lib/tpl/*
-/lib/plugins/*
+!/lib/tpl/default
+!/lib/tpl/dokuwiki
+!/lib/tpl/index.php
+!/lib/plugins/*
 !/lib/plugins/acl
 !/lib/plugins/config
 !/lib/plugins/info
@@ -34,6 +37,7 @@
 !/lib/plugins/popularity
 !/lib/plugins/revert
 !/lib/plugins/safefnrecode
+!/lib/plugins/testing
 !/lib/plugins/usermanager
 !/lib/plugins/action.php
 !/lib/plugins/admin.php

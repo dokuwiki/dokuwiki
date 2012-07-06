@@ -50,6 +50,8 @@ $config_cascade = array_merge(
             ),
         'userstyle' => array(
             'screen'  => DOKU_CONF.'userstyle.css',
+            // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
+            //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
             'rtl'     => DOKU_CONF.'userrtl.css',
             'print'   => DOKU_CONF.'userprint.css',
             'feed'    => DOKU_CONF.'userfeed.css',
@@ -64,8 +66,9 @@ $config_cascade = array_merge(
         'plainauth.users' => array(
             'default' => DOKU_CONF.'users.auth.php',
             ),
-        
+
         'plugins' => array(
+            'default'   => array(DOKU_CONF.'plugins.php'),
             'local'     => array(DOKU_CONF.'plugins.local.php'),
             'protected' => array(
                 DOKU_CONF.'plugins.required.php',

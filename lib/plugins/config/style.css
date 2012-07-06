@@ -15,6 +15,9 @@
   color: __text__;
   padding: 0 1em;
 }
+[dir=rtl] #config__manager fieldset {
+    clear: both;
+}
 #config__manager legend {
     font-size: 1.25em;
 }
@@ -28,24 +31,48 @@
 #config__manager fieldset td {
     text-align: left;
 }
+[dir=rtl] #config__manager fieldset td {
+    text-align: right;
+}
 #config__manager fieldset td.value {
     /* fixed data column width */
     width: 31em;
+}
+
+[dir=rtl] #config__manager label {
+    text-align: right;
+}
+[dir=rtl] #config__manager td.value input.checkbox {
+    float: right;
+    padding-left: 0;
+    padding-right: 0.7em;
+}
+[dir=rtl] #config__manager td.value label {
+    float: left;
 }
 
 #config__manager td.label {
     padding: 0.8em 0 0.6em 1em;
     vertical-align: top;
 }
+[dir=rtl] #config__manager td.label {
+    padding: 0.8em 1em 0.6em 0;
+}
 
 #config__manager td.label label {
     clear: left;
     display: block;
 }
+[dir=rtl] #config__manager td.label label {
+    clear: right;
+}
 #config__manager td.label img {
     padding: 0 10px;
     vertical-align: middle;
     float: right;
+}
+[dir=rtl] #config__manager td.label img {
+    float: left;
 }
 
 #config__manager td.label span.outkey {
@@ -59,6 +86,10 @@
     padding: 0 0.1em;
     position: relative;
     z-index: 1;
+}
+[dir=rtl] #config__manager td.label span.outkey {
+    float: right;
+    margin-right: 1em;
 }
 
 #config__manager td input.edit {
@@ -105,6 +136,11 @@
   width: 14.8em;
   float: left;
   margin: 0 0.3em 2px 0;
+}
+[dir=rtl] #config__manager .selection {
+  width: 14.8em;
+  float: right;
+  margin: 0 0 2px 0.3em;
 }
 
 #config__manager .selection label {

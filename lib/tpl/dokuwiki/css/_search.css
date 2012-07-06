@@ -1,0 +1,109 @@
+/**
+ * This file provides styles for the search results page (?do=search)
+ * and the AJAX search popup.
+ */
+
+/* search results page
+********************************************************************/
+
+/* loading gif */
+#dw__loading {
+    text-align: center;
+    margin-bottom: 1.4em;
+}
+
+/*____________ matching pagenames ____________*/
+
+.dokuwiki div.search_quickresult {
+    margin-bottom: 1.4em;
+}
+.dokuwiki div.search_quickresult h3 {
+}
+.dokuwiki div.search_quickresult ul {
+    padding: 0;
+}
+.dokuwiki div.search_quickresult ul li {
+    float: left;
+    width: 12em;
+    margin: 0 1.5em;
+}
+[dir=rtl] .dokuwiki div.search_quickresult ul li {
+    float: right;
+}
+
+/*____________ search results ____________*/
+
+.dokuwiki dl.search_results {
+    margin-bottom: 1.2em;
+}
+
+/* search heading */
+.dokuwiki dl.search_results dt {
+    font-weight: normal;
+    margin-bottom: .2em;
+}
+/* search snippet */
+.dokuwiki dl.search_results dd {
+    color: __text_alt__;
+    background-color: inherit;
+    margin: 0 0 1.2em 0;
+}
+
+/* search hit in normal text */
+.dokuwiki .search_hit {
+    color: __text__;
+    background-color: __highlight__;
+}
+/* search hit in search results */
+.dokuwiki .search_results strong.search_hit {
+    font-weight: normal;
+}
+/* ellipsis separating snippets */
+.dokuwiki .search_results .search_sep {
+    color: __text__;
+    background-color: inherit;
+}
+
+/* "nothing found" at search + media */
+.dokuwiki div.nothing {
+    margin-bottom: 1.4em;
+}
+
+
+/* AJAX quicksearch popup
+********************************************************************/
+
+.dokuwiki form.search div.no {
+    position: relative;
+}
+
+/* .JSpopup */
+.dokuwiki form.search div.ajax_qsearch {
+    position: absolute;
+    top: 0;
+    left: -13.5em; /* -( width of #qsearch__in + padding of .ajax_qsearch + a bit more ) */
+    width: 12em;
+    padding: 0.5em;
+    font-size: .9em;
+    z-index: 20;
+    text-align: left;
+    display: none;
+}
+[dir=rtl] .dokuwiki form.search div.ajax_qsearch {
+    left: auto;
+    right: -13.5em;
+    text-align: right;
+}
+.dokuwiki form.search div.ajax_qsearch strong {
+    display: block;
+    margin-bottom: .3em;
+}
+.dokuwiki form.search div.ajax_qsearch ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.dokuwiki form.search div.ajax_qsearch ul li {
+    margin: 0;
+    padding: 0;
+    display: block !important;
+}

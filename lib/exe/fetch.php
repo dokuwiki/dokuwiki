@@ -17,10 +17,10 @@
 
   //get input
   $MEDIA  = stripctl(getID('media',false)); // no cleaning except control chars - maybe external
-  $CACHE  = calc_cache($_REQUEST['cache']);
-  $WIDTH  = (int) $_REQUEST['w'];
-  $HEIGHT = (int) $_REQUEST['h'];
-  $REV   = (int) @$_REQUEST['rev'];
+  $CACHE  = calc_cache($INPUT->str('cache'));
+  $WIDTH  = $INPUT->int('w');
+  $HEIGHT = $INPUT->int('h');
+  $REV    = &$INPUT->ref('rev');
   //sanitize revision
   $REV = preg_replace('/[^0-9]/','',$REV);
 

@@ -1,0 +1,334 @@
+/**
+ * This file provides the styles for the page tools
+ * (fly out navigation beside the page to edit, etc).
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+
+#dokuwiki__site > .site {
+    /* give space to the right so the tools won't disappear on smaller screens */
+    /* it's 40px because the 30px wide icons will have 5px more spacing to the left and right */
+    padding-right: 40px;
+    /* give the same space to the left to balance it out */
+    padding-left: 40px;
+}
+.dokuwiki div.page {
+    height: 190px;
+    min-height: 190px; /* 30 (= height of icons) x 6 (= maximum number of possible tools) + 2x5 */
+    height: auto;
+}
+#dokuwiki__usertools {
+    /* move the tools just outside of the site */
+    right: 40px;
+}
+[dir=rtl] #dokuwiki__usertools {
+    right: auto;
+    left: 40px;
+}
+
+
+#dokuwiki__pagetools {
+    position: absolute;
+    right: -40px;
+    /* on same vertical level as first headline, because .page has 2em padding */
+    top: 2em;
+    width: 40px;
+}
+[dir=rtl] #dokuwiki__pagetools {
+    right: auto;
+    left: -40px;
+}
+
+#dokuwiki__pagetools div.tools {
+    position: fixed;
+    width: 40px;
+}
+
+#dokuwiki__pagetools ul {
+    position: absolute;
+    right: 0;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+    /* add transparent border to prevent jumping when proper border is added on hover */
+    border: 1px solid transparent;
+}
+[dir=rtl] #dokuwiki__pagetools ul {
+    right: auto;
+    left: 0;
+    text-align: left;
+}
+
+#dokuwiki__pagetools ul li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 0.875em;
+}
+
+#dokuwiki__pagetools ul li a {
+    display: block;
+    min-height: 20px; /* 30 - 2x5 */
+    line-height: 20px;
+    padding: 5px 40px 5px 5px;
+    background-image: url(images/pagetools-sprite.png);
+    background-position: right 0;
+    background-repeat: no-repeat;
+    /* add transparent border to prevent jumping when proper border is added on focus */
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a {
+    padding: 5px 5px 5px 40px;
+    background-position: left 0;
+}
+
+/* hide labels accessibly when neither on hover nor on focus */
+#dokuwiki__pagetools ul li a span {
+    position: absolute;
+    clip: rect(0 0 0 0); /* IE7, IE6 */
+    clip: rect(0, 0, 0, 0);
+}
+
+/* show all tools on hover and individual tools on focus */
+#dokuwiki__pagetools:hover ul,
+#dokuwiki__pagetools ul li a:focus {
+    background-color: __background__;
+    border-color: __border__;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px __text_alt__;
+}
+[dir=rtl] #dokuwiki__pagetools:hover ul,
+[dir=rtl] #dokuwiki__pagetools ul li a:focus {
+    box-shadow: -2px 2px 2px __text_alt__;
+}
+
+#dokuwiki__pagetools:hover ul li a span,
+#dokuwiki__pagetools ul li a:focus span {
+    display: inline;
+    position: static;
+}
+
+#dokuwiki__pagetools ul li a:hover,
+#dokuwiki__pagetools ul li a:active,
+#dokuwiki__pagetools ul li a:focus {
+    text-decoration: none;
+}
+#dokuwiki__pagetools ul li a:hover {
+    background-color: __background_alt__;
+}
+
+/*____________ all available icons in sprite ____________*/
+
+#dokuwiki__pagetools ul li a.edit {
+    background-position: right 0;
+}
+#dokuwiki__pagetools ul li a.edit:hover,
+#dokuwiki__pagetools ul li a.edit:active,
+#dokuwiki__pagetools ul li a.edit:focus {
+    background-position: right -45px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.edit {
+    background-position: left 0;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.edit:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.edit:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.edit:focus {
+    background-position: left -45px;
+}
+
+#dokuwiki__pagetools ul li a.create {
+    background-position: right -90px;
+}
+#dokuwiki__pagetools ul li a.create:hover,
+#dokuwiki__pagetools ul li a.create:active,
+#dokuwiki__pagetools ul li a.create:focus {
+    background-position: right -135px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.create {
+    background-position: left -90px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.create:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.create:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.create:focus {
+    background-position: left -135px;
+}
+
+#dokuwiki__pagetools ul li a.show {
+    background-position: right -270px;
+}
+#dokuwiki__pagetools ul li a.show:hover,
+#dokuwiki__pagetools ul li a.show:active,
+#dokuwiki__pagetools ul li a.show:focus {
+    background-position: right -315px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.show {
+    background-position: left -270px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.show:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.show:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.show:focus {
+    background-position: left -315px;
+}
+
+#dokuwiki__pagetools ul li a.source {
+    background-position: right -360px;
+}
+#dokuwiki__pagetools ul li a.source:hover,
+#dokuwiki__pagetools ul li a.source:active,
+#dokuwiki__pagetools ul li a.source:focus {
+    background-position: right -405px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.source {
+    background-position: left -360px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.source:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.source:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.source:focus {
+    background-position: left -405px;
+}
+
+#dokuwiki__pagetools ul li a.draft {
+    background-position: right -180px;
+}
+#dokuwiki__pagetools ul li a.draft:hover,
+#dokuwiki__pagetools ul li a.draft:active,
+#dokuwiki__pagetools ul li a.draft:focus {
+    background-position: right -225px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.draft {
+    background-position: left -180px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.draft:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.draft:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.draft:focus {
+    background-position: left -225px;
+}
+
+#dokuwiki__pagetools ul li a.revs {
+    background-position: right -540px;
+}
+#dokuwiki__pagetools ul li a.revs:hover,
+#dokuwiki__pagetools ul li a.revs:active,
+#dokuwiki__pagetools ul li a.revs:focus,
+.mode_revisions #dokuwiki__pagetools ul li a.revs {
+    background-position: right -585px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.revs {
+    background-position: left -540px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.revs:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.revs:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.revs:focus,
+.mode_revisions [dir=rtl] #dokuwiki__pagetools ul li a.revs {
+    background-position: left -585px;
+}
+
+#dokuwiki__pagetools ul li a.backlink {
+    background-position: right -630px;
+}
+#dokuwiki__pagetools ul li a.backlink:hover,
+#dokuwiki__pagetools ul li a.backlink:active,
+#dokuwiki__pagetools ul li a.backlink:focus,
+.mode_backlink #dokuwiki__pagetools ul li a.backlink {
+    background-position: right -675px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.backlink {
+    background-position: left -630px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.backlink:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.backlink:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.backlink:focus,
+.mode_backlink [dir=rtl] #dokuwiki__pagetools ul li a.backlink {
+    background-position: left -675px;
+}
+
+#dokuwiki__pagetools ul li a.top {
+    background-position: right -810px;
+}
+#dokuwiki__pagetools ul li a.top:hover,
+#dokuwiki__pagetools ul li a.top:active,
+#dokuwiki__pagetools ul li a.top:focus {
+    background-position: right -855px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.top {
+    background-position: left -810px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.top:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.top:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.top:focus {
+    background-position: left -855px;
+}
+
+#dokuwiki__pagetools ul li a.revert {
+    background-position: right -450px;
+}
+#dokuwiki__pagetools ul li a.revert:hover,
+#dokuwiki__pagetools ul li a.revert:active,
+#dokuwiki__pagetools ul li a.revert:focus,
+.mode_revert #dokuwiki__pagetools ul li a.revert {
+    background-position: right -495px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.revert {
+    background-position: left -450px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.revert:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.revert:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.revert:focus,
+.mode_revert [dir=rtl] #dokuwiki__pagetools ul li a.revert {
+    background-position: left -495px;
+}
+
+#dokuwiki__pagetools ul li a.subscribe {
+    background-position: right -720px;
+}
+#dokuwiki__pagetools ul li a.subscribe:hover,
+#dokuwiki__pagetools ul li a.subscribe:active,
+#dokuwiki__pagetools ul li a.subscribe:focus,
+.mode_subscribe #dokuwiki__pagetools ul li a.subscribe {
+    background-position: right -765px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.subscribe {
+    background-position: left -720px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.subscribe:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.subscribe:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.subscribe:focus,
+.mode_subscribe [dir=rtl] #dokuwiki__pagetools ul li a.subscribe {
+    background-position: left -765px;
+}
+
+#dokuwiki__pagetools ul li a.mediaManager {
+    background-position: right -900px;
+}
+#dokuwiki__pagetools ul li a.mediaManager:hover,
+#dokuwiki__pagetools ul li a.mediaManager:active,
+#dokuwiki__pagetools ul li a.mediaManager:focus {
+    background-position: right -945px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.mediaManager {
+    background-position: left -900px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.mediaManager:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.mediaManager:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.mediaManager:focus {
+    background-position: left -945px;
+}
+
+#dokuwiki__pagetools ul li a.back {
+    background-position: right -990px;
+}
+#dokuwiki__pagetools ul li a.back:hover,
+#dokuwiki__pagetools ul li a.back:active,
+#dokuwiki__pagetools ul li a.back:focus {
+    background-position: right -1035px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.back {
+    background-position: left -990px;
+}
+[dir=rtl] #dokuwiki__pagetools ul li a.back:hover,
+[dir=rtl] #dokuwiki__pagetools ul li a.back:active,
+[dir=rtl] #dokuwiki__pagetools ul li a.back:focus {
+    background-position: left -1035px;
+}

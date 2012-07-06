@@ -1,0 +1,165 @@
+/**
+ * This file provides the main design styles for the page content.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Clarence Lee <clarencedglee@gmail.com>
+ */
+
+
+/*____________ section indenting ____________
+
+.dokuwiki.page  h1 {margin-left: 0;}
+.dokuwiki.page  h2 {margin-left: .666em;}
+.dokuwiki.page  h3 {margin-left: 1.776em;}
+.dokuwiki.page  h4 {margin-left: 3em;}
+.dokuwiki.page  h5 {margin-left: 4.5712em;}
+.dokuwiki.page  div.level1 {margin-left: 0;}
+.dokuwiki.page  div.level2 {margin-left: 1em;}
+.dokuwiki.page  div.level3 {margin-left: 2em;}
+.dokuwiki.page  div.level4 {margin-left: 3em;}
+.dokuwiki.page  div.level5 {margin-left: 4em;}
+
+[dir=rtl] .dokuwiki .page h1 {margin-left: 0; margin-right: 0;}
+[dir=rtl] .dokuwiki .page h2 {margin-left: 0; margin-right: .666em;}
+[dir=rtl] .dokuwiki .page h3 {margin-left: 0; margin-right: 1.776em;}
+[dir=rtl] .dokuwiki .page h4 {margin-left: 0; margin-right: 3em;}
+[dir=rtl] .dokuwiki .page h5 {margin-left: 0; margin-right: 4.5712em;}
+[dir=rtl] .dokuwiki .page div.level1 {margin-left: 0; margin-right: 0;}
+[dir=rtl] .dokuwiki .page div.level2 {margin-left: 0; margin-right: 1em;}
+[dir=rtl] .dokuwiki .page div.level3 {margin-left: 0; margin-right: 2em;}
+[dir=rtl] .dokuwiki .page div.level4 {margin-left: 0; margin-right: 3em;}
+[dir=rtl] .dokuwiki .page div.level5 {margin-left: 0; margin-right: 4em;}
+*/
+/* hx margin-left = (1 / font-size) * .levelx-margin */
+
+
+/*____________ images ____________*/
+
+/* embedded images (styles are already partly set in lib/styles/all.css) */
+.dokuwiki img.media {
+    margin: .2em 0;
+}
+.dokuwiki img.medialeft {
+    margin: .2em 1em .2em 0;
+}
+.dokuwiki img.mediaright {
+    margin: .2em 0 .2em 1em;
+}
+.dokuwiki img.mediacenter {
+    margin: .2em auto;
+}
+
+
+/*____________ lists ____________*/
+
+#dokuwiki__content ul li,
+#dokuwiki__aside ul li {
+    color: __text_alt__;
+}
+#dokuwiki__content ol li,
+#dokuwiki__aside ol li {
+    color: __text_neu__;
+}
+#dokuwiki__content li .li,
+#dokuwiki__aside li .li {
+    color: __text__;
+}
+
+
+/*____________ tables ____________*/
+
+.dokuwiki div.table {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1.4em;
+}
+.dokuwiki div.table table {
+    margin-bottom: 0;
+}
+
+.dokuwiki table.inline {
+    min-width: 50%;
+    border-width: 0;
+}
+.dokuwiki table.inline th,
+.dokuwiki table.inline td {
+    border: 1px solid __border__;
+}
+.dokuwiki table.inline th {
+    color: inherit;
+    background-color: __background_alt__;
+}
+.dokuwiki table.inline td {
+}
+.dokuwiki table.inline tr:hover td {
+    background-color: __background_alt__;
+}
+.dokuwiki table.inline tr:hover th {
+    background-color: __border__;
+}
+
+
+/*____________ code ____________*/
+
+.dokuwiki pre,
+.dokuwiki tt,
+.dokuwiki code,
+.dokuwiki samp,
+.dokuwiki kbd {
+    background-color: __background_alt__;
+    color: __text__;
+}
+/* fix if background-color hides underlining */
+.dokuwiki em.u code {
+    text-decoration: underline;
+}
+.dokuwiki pre {
+    border: 1px solid __border__;
+    padding: .75em 1em;
+}
+/* for code in <file> */
+.dokuwiki pre.file {
+}
+
+/* filenames for downloadable file and code blocks */
+.dokuwiki dl.code,
+.dokuwiki dl.file {
+}
+
+.dokuwiki dl.code dt,
+.dokuwiki dl.file dt {
+    background-color: __background_alt__;
+    /*background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%); see FS#2447 */
+    background: -webkit-linear-gradient(top, __background__ 0%, __background_alt__ 100%);
+    background: -o-linear-gradient(     top, __background__ 0%, __background_alt__ 100%);
+    background: -ms-linear-gradient(    top, __background__ 0%, __background_alt__ 100%);
+    background: linear-gradient(        top, __background__ 0%, __background_alt__ 100%);
+    color: inherit;
+    border: 1px solid __border__;
+    border-bottom-color: __background_alt__;
+    border-top-left-radius: .3em;
+    border-top-right-radius: .3em;
+    padding: .3em .6em .1em;
+    margin-bottom: -1px;
+    float: left;
+}
+[dir=rtl] .dokuwiki dl.code dt,
+[dir=rtl] .dokuwiki dl.file dt {
+    margin-left: 0;
+    margin-right: 1em;
+}
+.dokuwiki dl.code dt a,
+.dokuwiki dl.file dt a {
+    background-color: transparent;
+    font-size: 0.875em;
+    font-weight: normal;
+    display: block;
+    min-height: 16px;
+}
+.dokuwiki dl.code dd,
+.dokuwiki dl.file dd {
+    margin: 0;
+    clear: left;
+}
+

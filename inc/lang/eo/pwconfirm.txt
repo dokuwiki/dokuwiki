@@ -1,14 +1,13 @@
-Saluton @FULLNAME@!
+Saluton, @FULLNAME@!
 
 Iu petis novan pasvorton por via @TITLE@
 ensalutnomo ĉe @DOKUWIKIURL@
 
-Se ne estas vi, kiu petis tion, do preterlasu tiun ĉi mesaĝon.
+Se ne vi petis tion, ignoru tiun ĉi mesaĝon.
 
-Por konfirmi, ke la peto estis vere via, bonvolu musklaki la jenan ligilon.
+Por konfirmi, ke la peto estis vere via, bonvolu musklaki jenan ligilon:
 
 @CONFIRM@
 
 -- 
-Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe
-@DOKUWIKIURL@
+Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@
