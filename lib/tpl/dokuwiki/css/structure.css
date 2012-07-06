@@ -23,9 +23,17 @@ body {
     #dokuwiki__header .headings {
         float: left;
     }
+    [dir=rtl] #dokuwiki__header .headings {
+        float: right;
+        text-align: right;
+    }
     #dokuwiki__header .tools {
         float: right;
         text-align: right;
+    }
+    [dir=rtl] #dokuwiki__header .tools {
+        float: left;
+        text-align: left;
     }
 
 #dokuwiki__site .wrapper {
@@ -38,17 +46,32 @@ body {
         position: relative;
         display: block;
     }
+    [dir=rtl] #dokuwiki__aside {
+        float: right;
+    }
     #dokuwiki__aside > .pad {
         margin: 0 1.5em 0 0;
     }
+    [dir=rtl] #dokuwiki__aside > .pad {
+        margin: 0 0 0 1.5em;
+    }
 
-    .hasSidebar #dokuwiki__content {
+    .showSidebar #dokuwiki__content {
         float: right;
         margin-left: -__sidebar_width__;
         width: 100%;
     }
-    .hasSidebar #dokuwiki__content > .pad {
+    [dir=rtl] .showSidebar #dokuwiki__content {
+        float: left;
+        margin-left: 0;
+        margin-right: -__sidebar_width__;
+    }
+    .showSidebar #dokuwiki__content > .pad {
         margin-left: __sidebar_width__;
+    }
+    [dir=rtl] .showSidebar #dokuwiki__content > .pad {
+        margin-left: 0;
+        margin-right: __sidebar_width__;
     }
 
 #dokuwiki__footer {

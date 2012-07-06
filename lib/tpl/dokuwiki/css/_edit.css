@@ -6,18 +6,24 @@
 /* edit view
 ********************************************************************/
 
+.dokuwiki div.editBox {
+}
+
 /*____________ toolbar ____________*/
 
 .dokuwiki div.toolbar {
     margin-bottom: .5em;
     overflow: hidden;
 }
-.dokuwiki div.toolbar #draft__status {
+#draft__status {
     float: right;
     color: __text_alt__;
     background-color: inherit;
 }
-.dokuwiki div.toolbar #tool__bar {
+[dir=rtl] #draft__status {
+    float: left;
+}
+#tool__bar {
     float: left;
 }
 
@@ -55,42 +61,49 @@ div.picker button.toolbutton {
 
 /*____________ below the textarea ____________*/
 
-.dokuwiki #wiki__editbar {
+.dokuwiki div.editBar {
     overflow: hidden;
     margin-bottom: .5em;
 }
 
 /* size and wrap controls */
-.dokuwiki #wiki__editbar #size__ctl {
+#size__ctl {
     float: right;
 }
-.dokuwiki #wiki__editbar #size__ctl img {
+[dir=rtl] #size__ctl {
+    float: left;
+}
+#size__ctl img {
     cursor: pointer;
 }
 
 /* edit buttons */
-.dokuwiki #wiki__editbar .editButtons {
+.dokuwiki .editBar .editButtons {
     display: inline;
     margin-right: 1em;
 }
-.dokuwiki #wiki__editbar .editButtons input {
+[dir=rtl] .dokuwiki .editBar .editButtons {
+    margin-right: 0;
+    margin-left: 1em;
+}
+.dokuwiki .editBar .editButtons input {
 }
 
 /* summary input and minor changes checkbox */
-.dokuwiki #wiki__editbar .summary {
+.dokuwiki .editBar .summary {
     display: inline;
 }
-.dokuwiki #wiki__editbar .summary label {
+.dokuwiki .editBar .summary label {
     vertical-align: middle;
     white-space: nowrap;
 }
-.dokuwiki #wiki__editbar .summary label span {
+.dokuwiki .editBar .summary label span {
     vertical-align: middle;
 }
-.dokuwiki #wiki__editbar .summary input {
+.dokuwiki .editBar .summary input {
 }
 /* change background colour if summary is missing */
-.dokuwiki #wiki__editbar .summary input.missing {
+.dokuwiki .editBar .summary input.missing {
     color: __text__;
     background-color: #ffcccc;
 }
@@ -111,6 +124,9 @@ div.picker button.toolbutton {
 .dokuwiki .secedit {
     float: right;
     margin-top: -1.4em;
+}
+[dir=rtl] .dokuwiki .secedit {
+    float: left;
 }
 .dokuwiki .secedit input.button {
     font-size: 75%;

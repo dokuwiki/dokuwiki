@@ -15,15 +15,7 @@ html {
 html,
 body {
     color: __text__;
-    background-color: __background_site__;
-    background-image: url(images/page-background.svg);
-    /*background-image: -moz-linear-gradient(   top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em); see FS#2447*/
-    background-image: -webkit-linear-gradient(top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-image: -o-linear-gradient(     top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-image: -ms-linear-gradient(    top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-image: linear-gradient(        top, __background_neu__ 0%, __background_alt__ 1em, __background_site__ 4em);
-    background-size: 1px 10em;
-    background-repeat: repeat-x;
+    background: __background_site__ url(images/page-gradient.png) top left repeat-x;
     margin: 0;
     padding: 0;
 }
@@ -53,7 +45,7 @@ legend {
 
 h1 {
     font-size: 2em;
-    margin: -.222em 0 0.444em;
+    margin: 0 0 0.444em;
 }
 h2 {
     font-size: 1.5em;
@@ -383,3 +375,38 @@ button[readonly] {
     cursor: auto;
 }
 
+/*____________ rtl corrections ____________*/
+
+[dir=rtl] caption,
+[dir=rtl] td,
+[dir=rtl] th {
+    text-align: right;
+}
+
+[dir=rtl] ul,
+[dir=rtl] ol {
+    padding: 0 1.5em 0 0;
+}
+[dir=rtl] li,
+[dir=rtl] dd {
+    margin: 0 1.5em 0 0;
+}
+[dir=rtl] blockquote {
+    border-width: 0 .25em 0 0;
+}
+
+[dir=rtl] h1,
+[dir=rtl] h2,
+[dir=rtl] h3,
+[dir=rtl] h4,
+[dir=rtl] h5,
+[dir=rtl] h6,
+[dir=rtl] caption,
+[dir=rtl] legend {
+    clear: right;
+}
+
+[dir=rtl] .a11y {
+    left: auto;
+    right: -9000px;
+}

@@ -19,6 +19,25 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
     protected $pluginsDisabled = array();
 
     /**
+     * Setup the data directory
+     *
+     * This is ran before each test class
+     */
+    public static function setUpBeforeClass() {
+        // just to be safe not to delete something undefined later
+        if(!defined('TMP_DIR')) die('no temporary directory');
+        if(!defined('DOKU_TMP_DATA')) die('no temporary data directory');
+
+        // remove any leftovers from the last run
+        if(is_dir(DOKU_TMP_DATA)){
+            TestUtils::rdelete(DOKU_TMP_DATA);
+        }
+
+        // populate default dirs
+        TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/../data/');
+    }
+
+    /**
      * Reset the DokuWiki environment before each test run. Makes sure loaded config,
      * language and plugins are correct.
      *
@@ -26,6 +45,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
      * @return void
      */
     public function setUp() {
+
         // reload config
         global $conf, $config_cascade;
         $conf = array();

@@ -354,12 +354,8 @@ function tpl_metaheaders($alt=true){
     }
 
     // load stylesheets
-    $head['link'][] = array('rel'=>'stylesheet', 'media'=>'screen', 'type'=>'text/css',
+    $head['link'][] = array('rel'=>'stylesheet', 'type'=>'text/css',
             'href'=>DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed);
-    $head['link'][] = array('rel'=>'stylesheet', 'media'=>'all', 'type'=>'text/css',
-            'href'=>DOKU_BASE.'lib/exe/css.php?s=all&t='.$conf['template'].'&tseed='.$tseed);
-    $head['link'][] = array('rel'=>'stylesheet', 'media'=>'print', 'type'=>'text/css',
-            'href'=>DOKU_BASE.'lib/exe/css.php?s=print&t='.$conf['template'].'&tseed='.$tseed);
 
     // make $INFO and other vars available to JavaScripts
     $json = new JSON();
@@ -596,7 +592,7 @@ function tpl_get_action($type) {
             $accesskey = 'x';
             break;
         case 'top':
-            $accesskey = 'x';
+            $accesskey = 't';
             $params = array();
             $id = '#dokuwiki__top';
             break;
@@ -718,7 +714,7 @@ function tpl_searchform($ajax=true,$autocomplete=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_breadcrumbs($sep='&bull;'){
+function tpl_breadcrumbs($sep='•'){
     global $lang;
     global $conf;
 
@@ -761,7 +757,7 @@ function tpl_breadcrumbs($sep='&bull;'){
  * @author <fredrik@averpil.com>
  * @todo   May behave strangely in RTL languages
  */
-function tpl_youarehere($sep=' &raquo; '){
+function tpl_youarehere($sep=' » '){
     global $conf;
     global $ID;
     global $lang;
@@ -847,7 +843,7 @@ function tpl_pageinfo($ret=false){
     if($INFO['exists']){
         $out = '';
         $out .= $fn;
-        $out .= ' &middot; ';
+        $out .= ' · ';
         $out .= $lang['lastmod'];
         $out .= ': ';
         $out .= $date;
@@ -858,7 +854,7 @@ function tpl_pageinfo($ret=false){
             $out .= ' ('.$lang['external_edit'].')';
         }
         if($INFO['locked']){
-            $out .= ' &middot; ';
+            $out .= ' · ';
             $out .= $lang['lockedby'];
             $out .= ': ';
             $out .= editorinfo($INFO['locked']);
@@ -1398,6 +1394,18 @@ function tpl_include_page($pageid,$print=true){
 
     if(!$print) return $html;
     echo $html;
+    return $html;
+}
+
+/**
+ * Include the sidebar, will check current namespaces first
+ */
+function tpl_sidebar($print=true){
+    global $conf;
+
+    $sidebar = page_findnearest($conf['sidebar']);
+    if($sidebar) return tpl_include_page($sidebar, $print);
+    return '';
 }
 
 /**

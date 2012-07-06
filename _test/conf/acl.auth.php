@@ -19,3 +19,9 @@
 # delete 16
 
 *               @ALL        8
+
+# for testing wildcards:
+users:*            @ALL         1
+users:%USER%:*     %USER%       16
+groups:*           @ALL         1
+groups:%GROUP%:*   %GROUP%      16

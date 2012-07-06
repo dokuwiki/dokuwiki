@@ -3,11 +3,7 @@
 class common_cleanText_test extends DokuWikiTest {
 
     function test_unix(){
-        $unix = 'one
-                two
-
-                three';
-
+        $unix = "one\n                two\n\n                three";
         $this->assertEquals($unix,cleanText($unix));
     }
 

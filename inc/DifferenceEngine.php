@@ -1039,8 +1039,8 @@ class TableDiffFormatter extends DiffFormatter {
         // Preserve whitespaces by converting some to non-breaking spaces.
         // Do not convert all of them to allow word-wrap.
         $val = parent::format($diff);
-        $val = str_replace('  ','&nbsp; ', $val);
-        $val = preg_replace('/ (?=<)|(?<=[ >]) /', '&nbsp;', $val);
+        $val = str_replace('  ','&#160; ', $val);
+        $val = preg_replace('/ (?=<)|(?<=[ >]) /', '&#160;', $val);
         return $val;
     }
 
@@ -1078,7 +1078,7 @@ class TableDiffFormatter extends DiffFormatter {
     }
 
     function emptyLine() {
-        return '<td colspan="2">&nbsp;</td>';
+        return '<td colspan="2">&#160;</td>';
     }
 
     function contextLine($line) {
@@ -1132,8 +1132,8 @@ class InlineDiffFormatter extends DiffFormatter {
         // Preserve whitespaces by converting some to non-breaking spaces.
         // Do not convert all of them to allow word-wrap.
         $val = parent::format($diff);
-        $val = str_replace('  ','&nbsp; ', $val);
-        $val = preg_replace('/ (?=<)|(?<=[ >]) /', '&nbsp;', $val);
+        $val = str_replace('  ','&#160; ', $val);
+        $val = preg_replace('/ (?=<)|(?<=[ >]) /', '&#160;', $val);
         return $val;
     }
 

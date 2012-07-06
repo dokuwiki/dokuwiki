@@ -9,8 +9,8 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“'; //&ldquo;
-$lang['doublequoteclosing']    = '”'; //&rdquo;
+$lang['doublequoteopening']    = '"'; //&ldquo;
+$lang['doublequoteclosing']    = '"'; //&rdquo;
 $lang['singlequoteopening']    = '‘'; //&lsquo;
 $lang['singlequoteclosing']    = '’'; //&rsquo;
 $lang['apostrophe']            = '’'; //&rsquo;
@@ -98,6 +98,7 @@ $lang['searchmedia_in']        = 'Търсене в %s';
 $lang['txt_upload']            = 'Изберете файл за качване';
 $lang['txt_filename']          = 'Качи като (незадължително)';
 $lang['txt_overwrt']           = 'Презапиши съществуващите файлове';
+$lang['maxuploadsize']         = 'Макс. размер за отделните файлове е %s.';
 $lang['lockedby']              = 'В момента е заключена от';
 $lang['lockexpire']            = 'Ще бъде отключена на';
 
@@ -161,7 +162,7 @@ $lang['deletefail']            = '"%s" не може да бъде изтрит 
 $lang['mediainuse']            = 'Файлът "%s" не бе изтрит - все още се ползва.';
 $lang['namespaces']            = 'Именни пространства';
 $lang['mediafiles']            = 'Налични файлове в';
-$lang['accessdenied']          = 'Нямате разрешение да преглеждате страницата.';
+$lang['accessdenied']          = 'Нямате необходимите права за преглеждане на страницата.';
 $lang['mediausage']            = 'Ползвайте следния синтаксис, за да упоменете файла:';
 $lang['mediaview']             = 'Преглед на оригиналния файл';
 $lang['mediaroot']             = 'root';
@@ -290,7 +291,6 @@ $lang['i_superuser']           = 'Супер потребител';
 $lang['i_problems']            = 'Открити са проблеми, които възпрепятстват инсталирането. Ще можете да продължите след като отстраните долуизброените проблеми.';
 $lang['i_modified']            = 'Поради мерки за сигурност инсталаторът работи само с нови и непроменени инсталационни файлове.
 								  Трябва да разархивирате отново файловете от сваления архив или да се посъветвате с <a href="http://dokuwiki.org/install">Инструкциите за инсталиране на Dokuwiki</a>.';
-
 $lang['i_funcna']              = 'PHP функцията <code>%s</code> не е достъпна. Може би е забранена от доставчика на хостинг.';
 $lang['i_phpver']              = 'Инсталираната версия <code>%s</code> на PHP е по-стара от необходимата <code>%s</code>. Актуализирайте PHP инсталацията.';
 $lang['i_permfail']            = '<code>%s</code> не е достъпна за писане от DokuWiki. Трябва да промените правата за достъп до директорията!';

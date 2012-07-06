@@ -343,18 +343,18 @@
 
 /*____________ Revisions form ____________*/
 
-#mediamanager__page #page__revisions ul {
+#mediamanager__page form.changes ul {
     margin-left: 10px;
     list-style-type: none;
 }
 
-#mediamanager__page #page__revisions ul li div.li div {
+#mediamanager__page form.changes ul li div.li div {
     font-size: 90%;
     color: __text_neu__;
     padding-left: 18px;
 }
 
-#mediamanager__page #page__revisions ul li div.li input {
+#mediamanager__page form.changes ul li div.li input {
     position: relative;
     top: 1px;
 }

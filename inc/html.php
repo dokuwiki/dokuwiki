@@ -46,6 +46,7 @@ function html_login(){
     global $lang;
     global $conf;
     global $ID;
+    global $INPUT;
 
     print p_locale_xhtml('login');
     print '<div class="centeralign">'.NL;
@@ -53,7 +54,7 @@ function html_login(){
     $form->startFieldset($lang['btn_login']);
     $form->addHidden('id', $ID);
     $form->addHidden('do', 'login');
-    $form->addElement(form_makeTextField('u', ((!$_REQUEST['http_credentials']) ? $_REQUEST['u'] : ''), $lang['user'], 'focus__this', 'block'));
+    $form->addElement(form_makeTextField('u', ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''), $lang['user'], 'focus__this', 'block'));
     $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
     if($conf['rememberme']) {
         $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
@@ -229,12 +230,12 @@ function html_show($txt=null){
         //PreviewHeader
         echo '<br id="scroll__here" />';
         echo p_locale_xhtml('preview');
-        echo '<div class="preview">';
+        echo '<div class="preview"><div class="pad">';
         $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         echo $html;
         echo '<div class="clearer"></div>';
-        echo '</div>';
+        echo '</div></div>';
 
     }else{
         if ($REV) print p_locale_xhtml('showrev');
@@ -326,11 +327,11 @@ function html_search(){
     flush();
 
     //show progressbar
-    print '<div class="centeralign" id="dw__loading">'.NL;
-    print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
+    print '<div id="dw__loading">'.NL;
+    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
     print 'showLoadBar();'.NL;
     print '//--><!]]></script>'.NL;
-    print '<br /></div>'.NL;
+    print '</div>'.NL;
     flush();
 
     //do quick pagesearch
@@ -366,26 +367,30 @@ function html_search(){
     //do fulltext search
     $data = ft_pageSearch($QUERY,$regex);
     if(count($data)){
+        print '<dl class="search_results">';
         $num = 1;
         foreach($data as $id => $cnt){
-            print '<div class="search_result">';
+            print '<dt>';
             print html_wikilink(':'.$id,useHeading('navigation')?null:$id,$regex);
             if($cnt !== 0){
-                print ': <span class="search_cnt">'.$cnt.' '.$lang['hits'].'</span><br />';
+                print ': '.$cnt.' '.$lang['hits'].'';
+            }
+            print '</dt>';
+            if($cnt !== 0){
                 if($num < FT_SNIPPET_NUMBER){ // create snippets for the first number of matches only
-                    print '<div class="search_snippet">'.ft_snippet($id,$regex).'</div>';
+                    print '<dd>'.ft_snippet($id,$regex).'</dd>';
                 }
                 $num++;
             }
-            print '</div>';
             flush();
         }
+        print '</dl>';
     }else{
         print '<div class="nothing">'.$lang['nothingfound'].'</div>';
     }
 
     //hide progressbar
-    print '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
     print 'hideLoadBar("dw__loading");'.NL;
     print '//--><!]]></script>'.NL;
     flush();
@@ -452,7 +457,7 @@ function html_revisions($first=0, $media_id = false){
 
     if (!$media_id) print p_locale_xhtml('revisions');
 
-    $params = array('id' => 'page__revisions');
+    $params = array('id' => 'page__revisions', 'class' => 'changes');
     if ($media_id) $params['action'] = media_managerURL(array('image' => $media_id), '&');
 
     $form = new Doku_Form($params);
@@ -490,7 +495,7 @@ function html_revisions($first=0, $media_id = false){
 
         if (!$media_id) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-            $form->addElement(' &ndash; ');
+            $form->addElement(' – ');
             $form->addElement(htmlspecialchars($INFO['sum']));
             $form->addElement(form_makeCloseTag('span'));
         }
@@ -569,7 +574,7 @@ function html_revisions($first=0, $media_id = false){
 
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-            if (!$media_id) $form->addElement(' &ndash; ');
+            if (!$media_id) $form->addElement(' – ');
             $form->addElement(htmlspecialchars($info['sum']));
             $form->addElement(form_makeCloseTag('span'));
         }
@@ -667,12 +672,13 @@ function html_recent($first=0, $show_changes='both'){
     if (getNS($ID) != '')
         print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
 
-    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET'));
+    $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
     $form->addHidden('sectok', null);
     $form->addHidden('do', 'recent');
     $form->addHidden('id', $ID);
 
     if ($conf['mediarevisions']) {
+        $form->addElement('<div class="changeType">');
         $form->addElement(form_makeListboxField(
                     'show_changes',
                     array(
@@ -685,6 +691,7 @@ function html_recent($first=0, $show_changes='both'){
                     array('class'=>'quickselect')));
 
         $form->addElement(form_makeButton('submit', 'recent', $lang['btn_apply']));
+        $form->addElement('</div>');
     }
 
     $form->addElement(form_makeOpenTag('ul'));
@@ -759,7 +766,7 @@ function html_recent($first=0, $show_changes='both'){
             $form->addElement(html_wikilink(':'.$recent['id'],useHeading('navigation')?null:$recent['id']));
         }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-        $form->addElement(' &ndash; '.htmlspecialchars($recent['sum']));
+        $form->addElement(' – '.htmlspecialchars($recent['sum']));
         $form->addElement(form_makeCloseTag('span'));
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
@@ -1070,8 +1077,9 @@ function html_diff($text='',$intro=true,$type=null){
     global $REV;
     global $lang;
     global $conf;
+    global $INPUT;
 
-    if(!$type) $type = $_REQUEST['difftype'];
+    if(!$type) $type = $INPUT->str('difftype');
     if($type != 'inline') $type = 'sidebyside';
 
     // we're trying to be clever here, revisions to compare can be either
@@ -1079,16 +1087,17 @@ function html_diff($text='',$intro=true,$type=null){
     // array in rev2.
     $rev1 = $REV;
 
-    if(is_array($_REQUEST['rev2'])){
-        $rev1 = (int) $_REQUEST['rev2'][0];
-        $rev2 = (int) $_REQUEST['rev2'][1];
+    $rev2 = $INPUT->ref('rev2');
+    if(is_array($rev2)){
+        $rev1 = (int) $rev2[0];
+        $rev2 = (int) $rev2[1];
 
         if(!$rev1){
             $rev1 = $rev2;
             unset($rev2);
         }
     }else{
-        $rev2 = (int) $_REQUEST['rev2'];
+        $rev2 = $INPUT->int('rev2');
     }
 
     $r_minor = '';
@@ -1246,6 +1255,7 @@ function html_register(){
     global $lang;
     global $conf;
     global $ID;
+    global $INPUT;
 
     print p_locale_xhtml('register');
     print '<div class="centeralign">'.NL;
@@ -1253,13 +1263,13 @@ function html_register(){
     $form->startFieldset($lang['btn_register']);
     $form->addHidden('do', 'register');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('login', $INPUT->post->str('login'), $lang['user'], '', 'block', array('size'=>'50')));
     if (!$conf['autopasswd']) {
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
     }
-    $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', array('size'=>'50')));
-    $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('fullname', $INPUT->post->str('fullname'), $lang['fullname'], '', 'block', array('size'=>'50')));
+    $form->addElement(form_makeTextField('email', $INPUT->post->str('email'), $lang['email'], '', 'block', array('size'=>'50')));
     $form->addElement(form_makeButton('submit', '', $lang['btn_register']));
     $form->endFieldset();
     html_form('register', $form);
@@ -1276,26 +1286,27 @@ function html_register(){
 function html_updateprofile(){
     global $lang;
     global $conf;
+    global $INPUT;
     global $ID;
     global $INFO;
     global $auth;
 
     print p_locale_xhtml('updateprofile');
 
-    if (empty($_POST['fullname'])) $_POST['fullname'] = $INFO['userinfo']['name'];
-    if (empty($_POST['email'])) $_POST['email'] = $INFO['userinfo']['mail'];
+    $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
+    $email = $INPUT->post->str('email', $INFO['userinfo']['mail'], true);
     print '<div class="centeralign">'.NL;
     $form = new Doku_Form(array('id' => 'dw__register'));
     $form->startFieldset($lang['profile']);
     $form->addHidden('do', 'profile');
     $form->addHidden('save', '1');
-    $form->addElement(form_makeTextField('fullname', $_SERVER['REMOTE_USER'], $lang['user'], '', 'block', array('size'=>'50', 'disabled'=>'disabled')));
+    $form->addElement(form_makeTextField('login', $_SERVER['REMOTE_USER'], $lang['user'], '', 'block', array('size'=>'50', 'disabled'=>'disabled')));
     $attr = array('size'=>'50');
     if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
-    $form->addElement(form_makeTextField('fullname', $_POST['fullname'], $lang['fullname'], '', 'block', $attr));
+    $form->addElement(form_makeTextField('fullname', $fullname, $lang['fullname'], '', 'block', $attr));
     $attr = array('size'=>'50');
     if (!$auth->canDo('modMail')) $attr['disabled'] = 'disabled';
-    $form->addElement(form_makeTextField('email', $_POST['email'], $lang['email'], '', 'block', $attr));
+    $form->addElement(form_makeTextField('email', $email, $lang['email'], '', 'block', $attr));
     $form->addElement(form_makeTag('br'));
     if ($auth->canDo('modPass')) {
         $form->addElement(form_makePasswordField('newpass', $lang['newpass'], '', 'block', array('size'=>'50')));
@@ -1320,6 +1331,7 @@ function html_updateprofile(){
  * @triggers HTML_EDITFORM_OUTPUT
  */
 function html_edit(){
+    global $INPUT;
     global $ID;
     global $REV;
     global $DATE;
@@ -1332,8 +1344,8 @@ function html_edit(){
     global $TEXT;
     global $RANGE;
 
-    if (isset($_REQUEST['changecheck'])) {
-        $check = $_REQUEST['changecheck'];
+    if ($INPUT->has('changecheck')) {
+        $check = $INPUT->str('changecheck');
     } elseif(!$INFO['exists']){
         // $TEXT has been loaded from page template
         $check = md5('');
@@ -1368,8 +1380,8 @@ function html_edit(){
     $data = array('form' => $form,
                   'wr'   => $wr,
                   'media_manager' => true,
-                  'target' => (isset($_REQUEST['target']) && $wr &&
-                               $RANGE !== '') ? $_REQUEST['target'] : 'section',
+                  'target' => ($INPUT->has('target') && $wr &&
+                               $RANGE !== '') ? $INPUT->str('target') : 'section',
                   'intro_locale' => $include);
 
     if ($data['target'] !== 'section') {
@@ -1384,7 +1396,7 @@ function html_edit(){
     }
 
     $form->addHidden('target', $data['target']);
-    $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar')));
+    $form->addElement(form_makeOpenTag('div', array('id'=>'wiki__editbar', 'class'=>'editBar')));
     $form->addElement(form_makeOpenTag('div', array('id'=>'size__ctl')));
     $form->addElement(form_makeCloseTag('div'));
     if ($wr) {
@@ -1412,17 +1424,16 @@ function html_edit(){
 
     if ($wr) {
         // sets changed to true when previewed
-        echo '<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--'. NL;
+        echo '<script type="text/javascript"><!--//--><![CDATA[//><!--'. NL;
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
         echo '//--><!]]></script>' . NL;
     } ?>
-    <div style="width:99%;">
+    <div class="editBox">
 
     <div class="toolbar">
-    <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
-    <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
-        target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
-
+        <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
+        <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
+            target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
     </div>
     <?php
 
@@ -1456,6 +1467,7 @@ function html_edit_form($param) {
 function html_minoredit(){
     global $conf;
     global $lang;
+    global $INPUT;
     // minor edits are for logged in users only
     if(!$conf['useacl'] || !$_SERVER['REMOTE_USER']){
         return false;
@@ -1463,7 +1475,7 @@ function html_minoredit(){
 
     $p = array();
     $p['tabindex'] = 3;
-    if(!empty($_REQUEST['minor'])) $p['checked']='checked';
+    if($INPUT->bool('minor')) $p['checked']='checked';
     return form_makeCheckboxField('minor', '1', $lang['minoredit'], 'minoredit', 'nowrap', $p);
 }
 
@@ -1669,8 +1681,9 @@ function html_resendpwd() {
     global $lang;
     global $conf;
     global $ID;
+    global $INPUT;
 
-    $token = preg_replace('/[^a-f0-9]+/','',$_REQUEST['pwauth']);
+    $token = preg_replace('/[^a-f0-9]+/','',$INPUT->str('pwauth'));
 
     if(!$conf['autopasswd'] && $token){
         print p_locale_xhtml('resetpwd');
@@ -1695,7 +1708,7 @@ function html_resendpwd() {
         $form->addHidden('do', 'resendpwd');
         $form->addHidden('save', '1');
         $form->addElement(form_makeTag('br'));
-        $form->addElement(form_makeTextField('login', $_POST['login'], $lang['user'], '', 'block'));
+        $form->addElement(form_makeTextField('login', $INPUT->post->str('login'), $lang['user'], '', 'block'));
         $form->addElement(form_makeTag('br'));
         $form->addElement(form_makeTag('br'));
         $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));
@@ -1714,11 +1727,11 @@ function html_TOC($toc){
     if(!count($toc)) return '';
     global $lang;
     $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div class="toc">'.DOKU_LF;
-    $out .= '<div class="tocheader toctoggle" id="toc__header">';
+    $out .= '<div id="dw__toc">'.DOKU_LF;
+    $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
-    $out .= '</div>'.DOKU_LF;
-    $out .= '<div id="toc__inside">'.DOKU_LF;
+    $out .= '</h3>'.DOKU_LF;
+    $out .= '<div>'.DOKU_LF;
     $out .= html_buildlist($toc,'toc','html_list_toc','html_li_default',true);
     $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
     $out .= '<!-- TOC END -->'.DOKU_LF;
@@ -1735,8 +1748,7 @@ function html_list_toc($item){
         $link = $item['link'];
     }
 
-    return '<span class="li"><a href="'.$link.'" class="toc">'.
-        hsc($item['title']).'</a></span>';
+    return '<a href="'.$link.'">'.hsc($item['title']).'</a>';
 }
 
 /**

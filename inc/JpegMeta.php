@@ -2972,7 +2972,7 @@ class JpegMeta {
             elseif ($c == 62)
                 $ascii .= '&gt;';
             elseif ($c == 32)
-                $ascii .= '&nbsp;';
+                $ascii .= '&#160;';
             elseif ($c > 32)
                 $ascii .= chr($c);
             else

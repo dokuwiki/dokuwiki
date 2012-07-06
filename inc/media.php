@@ -226,8 +226,9 @@ function media_delete($id,$auth){
  */
 function media_upload_xhr($ns,$auth){
     if(!checkSecurityToken()) return false;
+    global $INPUT;
 
-    $id = $_GET['qqfile'];
+    $id = $INPUT->get->str('qqfile');
     list($ext,$mime,$dl) = mimetype($id);
     $input = fopen("php://input", "r");
     if (!($tmp = io_mktmpdir())) return false;
@@ -247,7 +248,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($_REQUEST['ow'] == 'checked') ? true : false),
+        (($INPUT->get->str('ow') == 'checked') ? true : false),
         $auth,
         'copy'
     );
@@ -270,9 +271,10 @@ function media_upload_xhr($ns,$auth){
 function media_upload($ns,$auth,$file=false){
     if(!checkSecurityToken()) return false;
     global $lang;
+    global $INPUT;
 
     // get file and id
-    $id   = $_POST['mediaid'];
+    $id   = $INPUT->post->str('mediaid');
     if (!$file) $file = $_FILES['upload'];
     if(empty($id)) $id = $file['name'];
 
@@ -294,7 +296,7 @@ function media_upload($ns,$auth,$file=false){
     $res = media_save(array('name' => $file['tmp_name'],
                             'mime' => $imime,
                             'ext'  => $iext), $ns.':'.$id,
-                      $_REQUEST['ow'], $auth, 'move_uploaded_file');
+                      $INPUT->post->bool('ow'), $auth, 'move_uploaded_file');
     if (is_array($res)) {
         msg($res[0], $res[1]);
         return false;
@@ -641,7 +643,9 @@ function media_tabs_details($image, $selected_tab = ''){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_tab_files_options(){
-    global $lang, $NS;
+    global $lang;
+    global $NS;
+    global $INPUT;
     $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
                                 'action' => wl($ID)));
     $media_manager_params = media_managerURL(array(), '', false, true);
@@ -649,8 +653,8 @@ function media_tab_files_options(){
         $form->addHidden($pKey, $pVal);
     }
     $form->addHidden('sectok', null);
-    if (isset($_REQUEST['q'])) {
-        $form->addHidden('q', $_REQUEST['q']);
+    if ($INPUT->has('q')) {
+        $form->addHidden('q', $INPUT->str('q'));
     }
     $form->addElement('<ul>'.NL);
     foreach(array('list' => array('listType', array('thumbs', 'rows')),
@@ -694,9 +698,10 @@ function _media_get_list_type() {
 }
 
 function _media_get_display_param($param, $values) {
-    if (isset($_REQUEST[$param]) && in_array($_REQUEST[$param], $values)) {
+    global $INPUT;
+    if (in_array($INPUT->str($param), $values)) {
         // FIXME: Set cookie
-        return $_REQUEST[$param];
+        return $INPUT->str($param);
     } else {
         $val = get_doku_pref($param, $values['default']);
         if (!in_array($val, $values)) {
@@ -746,10 +751,10 @@ function media_tab_upload($ns,$auth=null,$jump='') {
  */
 function media_tab_search($ns,$auth=null) {
     global $lang;
+    global $INPUT;
 
-    $do = $_REQUEST['mediado'];
-    $query = $_REQUEST['q'];
-    if (!$query) $query = '';
+    $do = $INPUT->str('mediado');
+    $query = $INPUT->str('q');
     echo '<div class="search">'.NL;
 
     media_searchform($ns, $query, true);
@@ -801,14 +806,16 @@ function media_tab_edit($image, $ns, $auth=null) {
  */
 function media_tab_history($image, $ns, $auth=null) {
     global $lang;
+    global $INPUT;
+
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
-    $do = $_REQUEST['mediado'];
+    $do = $INPUT->str('mediado');
 
     if ($auth >= AUTH_READ && $image) {
         if ($do == 'diff'){
             media_diff($image, $ns, $auth);
         } else {
-            $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
+            $first = $INPUT->int('first');
             html_revisions($first, $image);
         }
     } else {
@@ -1002,21 +1009,23 @@ function media_details($image, $auth, $rev=false, $meta=false) {
 function media_diff($image, $ns, $auth, $fromajax = false) {
     global $lang;
     global $conf;
+    global $INPUT;
 
     if ($auth < AUTH_READ || !$image || !$conf['mediarevisions']) return '';
 
-    $rev1 = (int) $_REQUEST['rev'];
+    $rev1 = $INPUT->int('rev');
 
-    if(is_array($_REQUEST['rev2'])){
-        $rev1 = (int) $_REQUEST['rev2'][0];
-        $rev2 = (int) $_REQUEST['rev2'][1];
+    $rev2 = $INPUT->ref('rev2');
+    if(is_array($rev2)){
+        $rev1 = (int) $rev2[0];
+        $rev2 = (int) $rev2[1];
 
         if(!$rev1){
             $rev1 = $rev2;
             unset($rev2);
         }
     }else{
-        $rev2 = (int) $_REQUEST['rev2'];
+        $rev2 = $INPUT->int('rev2');
     }
 
     if ($rev1 && !file_exists(mediaFN($image, $rev1))) $rev1 = false;
@@ -1071,7 +1080,9 @@ function _media_file_diff($data) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
-    global $lang, $config_cascade;
+    global $lang;
+    global $config_cascade;
+    global $INPUT;
 
     $l_meta = new JpegMeta(mediaFN($image, $l_rev));
     $r_meta = new JpegMeta(mediaFN($image, $r_rev));
@@ -1082,7 +1093,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         $r_size = media_image_preview_size($image, $r_rev, $r_meta);
         $is_img = ($l_size && $r_size && ($l_size[0] >= 30 || $r_size[0] >= 30));
 
-        $difftype = $_REQUEST['difftype'];
+        $difftype = $INPUT->str('difftype');
 
         if (!$fromajax) {
             $form = new Doku_Form(array(
@@ -1442,7 +1453,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         $size .= (int) $item['meta']->getField('File.Height');
         echo '<dd class="size">'.$size.'</dd>'.NL;
     } else {
-        echo '<dd class="size">&nbsp;</dd>'.NL;
+        echo '<dd class="size">&#160;</dd>'.NL;
     }
     $date = dformat($item['mtime']);
     echo '<dd class="date">'.$date.'</dd>'.NL;
@@ -1527,11 +1538,12 @@ function media_printimgdetail($item, $fullscreen=false){
 function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
     global $conf;
     global $ID;
+    global $INPUT;
 
     $gets = array('do' => 'media');
     $media_manager_params = array('tab_files', 'tab_details', 'image', 'ns', 'list', 'sort');
     foreach ($media_manager_params as $x) {
-        if (isset($_REQUEST[$x])) $gets[$x] = $_REQUEST[$x];
+        if ($INPUT->has($x)) $gets[$x] = $INPUT->str($x);
     }
 
     if ($params) {
@@ -1555,7 +1567,9 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_uploadform($ns, $auth, $fullscreen = false){
-    global $lang, $conf;
+    global $lang;
+    global $conf;
+    global $INPUT;
 
     if($auth < AUTH_UPLOAD) {
         echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
@@ -1565,9 +1579,9 @@ function media_uploadform($ns, $auth, $fullscreen = false){
 
     $update = false;
     $id = '';
-    if ($auth >= $auth_ow && $fullscreen && $_REQUEST['mediado'] == 'update') {
+    if ($auth >= $auth_ow && $fullscreen && $INPUT->str('mediado') == 'update') {
         $update = true;
-        $id = cleanID($_REQUEST['image']);
+        $id = cleanID($INPUT->str('image'));
     }
 
     // The default HTML upload form
@@ -1697,12 +1711,13 @@ function media_nstree($ns){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function media_nstree_item($item){
+    global $INPUT;
     $pos   = strrpos($item['id'], ':');
     $label = substr($item['id'], $pos > 0 ? $pos + 1 : 0);
     if(!$item['label']) $item['label'] = $label;
 
     $ret  = '';
-    if (!($_REQUEST['do'] == 'media'))
+    if (!($INPUT->str('do') == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
     else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id'], false), 'tab_files' => 'files'))
         .'" class="idx_dir">';
@@ -1723,7 +1738,7 @@ function media_nstree_li($item){
     if($item['open']){
         $class .= ' open';
         $img   = DOKU_BASE.'lib/images/minus.gif';
-        $alt   = '&minus;';
+        $alt   = '−';
     }else{
         $class .= ' closed';
         $img   = DOKU_BASE.'lib/images/plus.gif';

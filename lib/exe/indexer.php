@@ -20,10 +20,10 @@ if(!$defer){
     sendGIF(); // send gif
 }
 
-$ID = cleanID($_REQUEST['id']);
+$ID = cleanID($INPUT->str('id'));
 
 // Catch any possible output (e.g. errors)
-$output = isset($_REQUEST['debug']) && $conf['allowdebug'];
+$output = $INPUT->has('debug') && $conf['allowdebug'];
 if(!$output) ob_start();
 
 // run one of the jobs
@@ -261,7 +261,8 @@ function sendDigest() {
  * @author Harry Fuecks <fuecks@gmail.com>
  */
 function sendGIF(){
-    if(isset($_REQUEST['debug'])){
+    global $INPUT;
+    if($INPUT->has('debug')){
         header('Content-Type: text/plain');
         return;
     }

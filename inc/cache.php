@@ -84,7 +84,8 @@ class cache {
      * it should only overwrite a dependency when the new value is more stringent than the old
      */
     function _addDependencies() {
-        if (isset($_REQUEST['purge'])) $this->depends['purge'] = true;   // purge requested
+        global $INPUT;
+        if ($INPUT->has('purge')) $this->depends['purge'] = true;   // purge requested
     }
 
     /**

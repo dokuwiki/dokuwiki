@@ -118,6 +118,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           // config setting group
           if ($in_fieldset) {
             ptln('  </table>');
+            ptln('  </div>');
             ptln('  </fieldset>');
           } else {
             $in_fieldset = true;

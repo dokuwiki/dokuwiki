@@ -12,8 +12,16 @@
     float: left;
     margin: 0 1.5em .5em 0;
 }
+[dir=rtl] #dokuwiki__detail div.content img {
+    float: right;
+    margin-right: 0;
+    margin-left: 1.5em;
+}
 #dokuwiki__detail div.img_detail {
     float: left;
+}
+[dir=rtl] #dokuwiki__detail div.content div.img_detail {
+    float: right
 }
 
 #dokuwiki__detail div.img_detail h2 {

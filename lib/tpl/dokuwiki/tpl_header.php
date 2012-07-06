@@ -1,7 +1,6 @@
 <!-- ********** HEADER ********** -->
 <div id="dokuwiki__header"><div class="pad group">
 
-    <?php html_msgarea() ?>
     <?php tpl_includeFile('header.html') ?>
 
     <div class="headings group">
@@ -76,6 +75,8 @@
             <?php endif ?>
         </div>
     <?php endif ?>
+
+    <?php html_msgarea() ?>
 
     <hr class="a11y" />
 </div></div><!-- /header -->

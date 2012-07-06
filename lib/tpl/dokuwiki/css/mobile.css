@@ -5,52 +5,79 @@
  * @author Anika Henke <anika@selfthinker.org>
  */
 
-/* up to 768px screen widths
+/* up to 979px screen widths
 ********************************************************************/
-@media only screen and (max-width: 768px), only screen and (max-device-width: 960px) {
+@media only screen and (max-width: 979px) {
 
 /* structure */
 #dokuwiki__aside {
     width: 100%;
     float: none;
 }
-#dokuwiki__aside > .pad {
+
+#dokuwiki__aside > .pad,
+[dir=rtl] #dokuwiki__aside > .pad {
     margin: 0 0 .5em;
+    /* style like .page */
+    background: __background__;
+    color: inherit;
+    border: 1px solid #eee;
+    box-shadow: 0 0 .5em #999;
+    border-radius: 2px;
+    padding: 1em;
+    margin-bottom: .5em;
 }
 
-.hasSidebar #dokuwiki__content {
+#dokuwiki__aside h3.toggle {
+    font-size: 1em;
+}
+#dokuwiki__aside h3.toggle.closed {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+#dokuwiki__aside h3.toggle.open {
+    border-bottom: 1px solid __border__;
+}
+
+.showSidebar #dokuwiki__content {
     float: none;
     margin-left: 0;
     width: 100%;
 }
-.hasSidebar #dokuwiki__content > .pad {
+.showSidebar #dokuwiki__content > .pad {
     margin-left: 0;
 }
 
+[dir=rtl] .showSidebar #dokuwiki__content,
+[dir=rtl] .showSidebar #dokuwiki__content > .pad {
+    margin-right: 0;
+}
+
 /* toc */
-.dokuwiki div.toc {
+#dw__toc {
     float: none;
     margin: 0 0 1em 0;
     width: auto;
     border-left-width: 0;
     border-bottom: 1px solid __border__;
 }
-.dokuwiki div.tocheader {
-    padding: 0 0 .5em;
+[dir=rtl] #dw__toc {
+    float: none;
+    margin: 0 0 1em 0;
+    border-right-width: 0;
 }
-.dokuwiki #toc__inside {
+
+.dokuwiki h3.toggle {
+    padding: 0 .5em .5em 0;
+}
+#dw__toc > div,
+#dokuwiki__aside div.content {
     padding: .2em 0 .5em;
 }
 
 /* page */
 .dokuwiki div.page {
     padding: 1em;
-}
-.dokuwiki .pageId span {
-    border-width: 0;
-    background-color: __background_site__;
-    color: __text_alt__;
-    box-shadow: 0 0 0;
 }
 
 /* _edit */
@@ -65,9 +92,11 @@
 }
 
 /* _recent */
-.dokuwiki #dw__recent ul,
-.dokuwiki #page__revisions ul {
+.dokuwiki form.changes ul {
     padding-left: 0;
+}
+[dir=rtl] .dokuwiki form.changes ul {
+    padding-right: 0;
 }
 
 
@@ -76,7 +105,7 @@
 
 /* up to 480px screen widths
 ********************************************************************/
-@media only screen and (max-width: 480px), only screen and (max-device-width: 960px) {
+@media only screen and (max-width: 480px) {
 
 /*____________ structure ____________*/
 
@@ -89,6 +118,7 @@
 #dokuwiki__header {
     padding: .5em 0;
 }
+
 
 /*____________ header ____________*/
 
@@ -103,9 +133,18 @@
     padding-left: 0;
     margin: 0;
 }
+[dir=rtl] #dokuwiki__header ul.a11y.skip {
+    left: auto !important;
+    right: 0 !important;
+    float: left;
+    padding-right: 0;
+}
 #dokuwiki__header ul.a11y.skip li {
     margin-left: .35em;
     display: inline;
+}
+[dir=rtl] #dokuwiki__header ul.a11y.skip li {
+    margin: 0 .35em 0 0;
 }
 
 #dokuwiki__header .headings,
@@ -115,8 +154,17 @@
     width: auto;
     margin-bottom: .5em;
 }
+[dir=rtl] #dokuwiki__header .headings,
+[dir=rtl] #dokuwiki__header .tools {
+    float: none;
+    text-align: right;
+    width: auto;
+}
 #dokuwiki__sitetools {
     text-align: left;
+}
+[dir=rtl] #dokuwiki__sitetools {
+    text-align: right;
 }
 #dokuwiki__usertools,
 #dokuwiki__sitetools ul,
@@ -133,6 +181,11 @@
     margin: 0 .2em .2em 0;
     width: 49%;
 }
+[dir=rtl] #dokuwiki__sitetools form.search {
+    float: right;
+    margin: 0 0 .2em .2em;
+}
+
 #dokuwiki__sitetools form.search input.edit {
     width: 100% !important;
 }
@@ -148,6 +201,9 @@
     float: right;
     width: 49%;
 }
+[dir=rtl] #dokuwiki__header .mobileTools {
+    float: left;
+}
 #dokuwiki__header .mobileTools select {
     padding: .3em .1em;
     width: 100% !important;
@@ -156,6 +212,7 @@
 
 /*____________ content ____________*/
 
+#dokuwiki__aside > .pad,
 .dokuwiki div.page {
     padding: .5em;
 }
@@ -177,6 +234,9 @@
 
 .dokuwiki label.block {
     text-align: left;
+}
+[dir=rtl] .dokuwiki label.block {
+    text-align: right;
 }
 .dokuwiki label.block span {
     display: block;

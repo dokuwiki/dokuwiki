@@ -19,9 +19,10 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getID($param='id',$clean=true){
+    global $INPUT;
     global $conf;
 
-    $id = isset($_REQUEST[$param]) ? $_REQUEST[$param] : null;
+    $id = $INPUT->str($param);
 
     //construct page id from request URI
     if(empty($id) && $conf['userewrite'] == 2){
@@ -622,3 +623,27 @@ function utf8_decodeFN($file){
     return urldecode($file);
 }
 
+/**
+ * Find a page in the current namespace (determined from $ID) or any
+ * higher namespace
+ *
+ * Used for sidebars, but can be used other stuff as well
+ *
+ * @todo   add event hook
+ * @param  string $page the pagename you're looking for
+ * @return string|false the full page id of the found page, false if any
+ */
+function page_findnearest($page){
+    global $ID;
+
+    $ns = $ID;
+    do {
+        $ns = getNS($ns);
+        $pageid = ltrim("$ns:$page",':');
+        if(page_exists($pageid)){
+            return $pageid;
+        }
+    } while($ns);
+
+    return false;
+}
