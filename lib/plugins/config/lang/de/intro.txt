@@ -1,4 +1,4 @@
-====== Konfiguration ======
+====== Konfigurations-Manager ======
 
 Dieses Plugin hilft Ihnen bei der Konfiguration von DokuWiki. Hilfe zu den einzelnen Einstellungen finden Sie unter [[doku>config]]. Mehr Information zu diesem Plugin ist unter [[doku>plugin:config]] erhältlich.
 
