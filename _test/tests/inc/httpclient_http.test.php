@@ -124,6 +124,11 @@ class httpclient_http_test extends DokuWikiTest {
         $http->max_bodysize = 250;
         $data = $http->get($this->server.'/stream/30');
         $this->assertTrue($data === false, 'HTTP response');
+        $http->max_bodysize_abort = false;
+        $data = $http->get($this->server.'/stream/30');
+        $this->assertFalse($data === false, 'HTTP response');
+        /* should read no more than max_bodysize+1 */
+        $this->assertLessThanOrEqual(251,strlen($data));
     }
 
     /**
@@ -175,6 +180,16 @@ class httpclient_http_test extends DokuWikiTest {
         $this->assertArrayHasKey('baz',$http->resp_headers);
         $this->assertArrayHasKey('foo',$http->resp_headers);
         $this->assertEquals('bar',$http->resp_headers['foo']);
+    }
+
+    /**
+     * @group internet
+     */
+    function test_chunked(){
+        $http = new HTTPClient();
+        $data = $http->get('http://whoopdedo.org/cgi-bin/chunked/2550');
+        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertEquals(2550,strlen($data));
     }
 }
 //Setup VIM: ex: et ts=4 :
