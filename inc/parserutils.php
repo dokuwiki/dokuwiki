@@ -318,8 +318,9 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
             // only update the file when the metadata has been changed
             if ($meta == $old_meta || p_save_metadata($id, $meta)) {
                 // store a timestamp in order to make sure that the cachefile is touched
+                // this timestamp is also stored when the meta data is still the same
                 $cachefile->storeCache(time());
-            } elseif ($meta != $old_meta) {
+            } else {
                 msg('Unable to save metadata file. Hint: disk full; file permissions; safe_mode setting.',-1);
             }
         }
