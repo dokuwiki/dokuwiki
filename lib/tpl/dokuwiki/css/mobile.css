@@ -209,6 +209,14 @@
     width: 100% !important;
 }
 
+/* force same height on search input and tools select */
+#dokuwiki__sitetools form.search input.edit,
+#dokuwiki__header .mobileTools select {
+    height: 2.1em;
+    line-height: 2.1em;
+    overflow: visible;
+}
+
 
 /*____________ content ____________*/
 
