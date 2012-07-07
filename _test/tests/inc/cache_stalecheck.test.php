@@ -1,7 +1,5 @@
 <?php
 
-require_once DOKU_INC . 'inc/parserutils.php';
-
 class cache_stalecheck_test extends DokuWikiTest {
 	function test_staleness() {
 		global $ID;
