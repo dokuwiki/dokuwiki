@@ -156,7 +156,7 @@ if (!class_exists('configuration')) {
         }else{
             $contents = '';
         }
-        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|@include|$))/s';
+        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|@?(?:require|include)(?:_once)?|$))/s';
         $matches=array();
         preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
 
