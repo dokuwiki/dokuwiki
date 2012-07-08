@@ -201,6 +201,7 @@ $lang['user_tools']            = 'User Tools';
 $lang['site_tools']            = 'Site Tools';
 $lang['page_tools']            = 'Page Tools';
 $lang['skip_to_content']       = 'skip to content';
+$lang['sidebar']               = 'Sidebar';
 
 $lang['mail_newpage']          = 'page added:';
 $lang['mail_changed']          = 'page changed:';

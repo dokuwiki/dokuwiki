@@ -38,7 +38,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             <?php if($showSidebar): ?>
                 <!-- ********** ASIDE ********** -->
                 <div id="dokuwiki__aside"><div class="pad include group">
-                    <h3 class="toggle"><?php echo hsc(ucfirst($conf['sidebar'])) ?></h3>
+                    <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
                     <div class="content">
                         <?php tpl_flush() ?>
                         <?php tpl_includeFile('sidebarheader.html') ?>
