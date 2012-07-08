@@ -121,7 +121,7 @@ $config_cascade = array(
         'default'   => DOKU_CONF.'users.auth.php',
     ),
     'plugins' => array( // needed since Angua
-        'default'   => array(DOKU_CONF.'plugins.php'),
+        'default'   => array(DOKU_INC.'conf/plugins.php'),
         'local'     => array(DOKU_CONF.'plugins.local.php'),
         'protected' => array(
             DOKU_INC.'conf/plugins.required.php',
