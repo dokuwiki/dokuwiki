@@ -46,8 +46,8 @@ function farm_confpath($farm) {
     if(isset($_REQUEST['animal']) || ('cli' == php_sapi_name() && isset($_SERVER['animal']))) {
         $mode = isset($_REQUEST['animal']) ? 'htaccess' : 'cli';
         $animal = $mode == 'htaccess' ? $_REQUEST['animal'] : $_SERVER['animal'];
-        // check that $animal is a string and specifies a subdirectory of $farm
-        if (!is_string($animal) || strpos(fullpath($farm.'/'.$animal), fullpath($farm).'/') !== 0)
+        // check that $animal is a string and just a directory name and not a path
+        if (!is_string($animal) || strpbrk($animal, '\\/') !== false)
             nice_die('Sorry! Invalid animal name!');
         if(!is_dir($farm.'/'.$animal))
             nice_die("Sorry! This Wiki doesn't exist!");
