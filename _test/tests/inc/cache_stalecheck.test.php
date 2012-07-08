@@ -24,4 +24,4 @@ class cache_stalecheck_test extends DokuWikiTest {
 		$this->assertNotEquals($fresh, $stale, 'Stale cache failed to expire');
 	}
 }
-?>
+
