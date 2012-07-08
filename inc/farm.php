@@ -17,14 +17,14 @@
  * @author Anika Henke <anika@selfthinker.org>
  * @author Michael Klier <chi@chimeric.de>
  * @author Christopher Smith <chris@jalakai.co.uk>
- * @author virtual host part of conf_path() based on conf_path() from Drupal.org's /includes/bootstrap.inc
+ * @author virtual host part of farm_confpath() based on conf_path() from Drupal.org's /includes/bootstrap.inc
  *   (see http://cvs.drupal.org/viewvc/drupal/drupal/includes/bootstrap.inc?view=markup)
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
 */
 
 // DOKU_FARMDIR needs to be set in preload.php, here the fallback is the same as DOKU_INC would be (if it was set already)
 if(!defined('DOKU_FARMDIR')) define('DOKU_FARMDIR', fullpath(dirname(__FILE__).'/../').'/');
-if(!defined('DOKU_CONF')) define('DOKU_CONF', conf_path(DOKU_FARMDIR));
+if(!defined('DOKU_CONF')) define('DOKU_CONF', farm_confpath(DOKU_FARMDIR));
 if(!defined('DOKU_FARM')) define('DOKU_FARM', false);
 
 
@@ -39,7 +39,7 @@ if(!defined('DOKU_FARM')) define('DOKU_FARM', false);
  * first configuration file found will be used; the remaining will ignored.
  * If no configuration file is found, return the default confdir './conf'.
  */
-function conf_path($farm) {
+function farm_confpath($farm) {
 
     // htaccess based or cli
     // cli usage example: animal=your_animal bin/indexer.php
