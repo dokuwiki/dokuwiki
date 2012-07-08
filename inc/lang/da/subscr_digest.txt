@@ -1,0 +1,20 @@
+Hej,
+
+Siden @PAGE@ i @TITLE@ wikien er blevet ændret.
+Her er ændringerne:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Gammel Revision: @OLDPAGE@
+Ny Revision: @NEWPAGE@
+
+For at stoppe notifikationer om sideændringer, login på wikien på
+@DOKUWIKIURL@ og besøg så
+@SUBSCRIBE@
+for at afmelde side og/eller navneområde ændringer.
+
+-- 
+Denne mail blev sendt af DokuWiki på
+@DOKUWIKIURL@

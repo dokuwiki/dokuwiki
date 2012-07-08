@@ -1,0 +1,17 @@
+Hej,
+
+Sider i navneområdet @PAGE@ i @TITLE@ wikien er blevet ændret.
+Her er de ændrede sider:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+For at stoppe notifikationer om sideændringer, login på wikien på
+@DOKUWIKIURL@ og besøg så
+@SUBSCRIBE@
+for at afmelde side og/eller navneområde ændringer.
+
+-- 
+Denne mail blev sendt af DokuWiki på
+@DOKUWIKIURL@
