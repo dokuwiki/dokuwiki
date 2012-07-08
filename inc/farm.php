@@ -41,12 +41,15 @@ if(!defined('DOKU_FARM')) define('DOKU_FARM', false);
  */
 function conf_path($farm) {
 
-    // htaccess based
-    if(isset($_REQUEST['animal'])) {
-        if(!is_dir($farm.'/'.$_REQUEST['animal']))
+    // htaccess based or cli
+    // cli usage example: animal=your_animal bin/indexer.php
+    if(isset($_REQUEST['animal']) || ('cli' == php_sapi_name() && isset($_SERVER['animal']))) {
+        $mode = isset($_REQUEST['animal']) ? 'htaccess' : 'cli';
+        $animal = $mode == 'htaccess' ? $_REQUEST['animal'] : $_SERVER['animal'];
+        if(!is_dir($farm.'/'.$animal))
             nice_die("Sorry! This Wiki doesn't exist!");
-        if(!defined('DOKU_FARM')) define('DOKU_FARM', 'htaccess');
-        return $farm.'/'.$_REQUEST['animal'].'/conf/';
+        if(!defined('DOKU_FARM')) define('DOKU_FARM', $mode);
+        return $farm.'/'.$animal.'/conf/';
     }
 
     // virtual host based
