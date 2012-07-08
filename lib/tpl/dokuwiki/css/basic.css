@@ -22,6 +22,7 @@ body {
 body {
     font: normal 87.5%/1.4 Arial, sans-serif;
     /* default font size: 100% => 16px; 93.75% => 15px; 87.5% => 14px; 81.25% => 13px; 75% => 12px */
+    -webkit-text-size-adjust: 100%;
 }
 
 

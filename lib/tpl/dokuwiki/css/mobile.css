@@ -107,6 +107,10 @@
 ********************************************************************/
 @media only screen and (max-width: 480px) {
 
+body {
+    font-size: 100%;
+}
+
 /*____________ structure ____________*/
 
 #dokuwiki__site {
