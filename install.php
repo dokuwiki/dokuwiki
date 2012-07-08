@@ -431,7 +431,7 @@ function check_configs(){
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
-        if (@file_exists($file)) {
+        if (@file_exists($file) && filesize($file)) {
             $file    = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}/', $file);
             $error[] = sprintf($lang['i_confexists'],$file);
             $ok      = false;
