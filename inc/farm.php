@@ -2,8 +2,9 @@
 /**
  * This overwrites DOKU_CONF. Each animal gets its own configuration and data directory.
  * This can be used together with preload.php. See preload.php.dist for an example setup.
+ * For more information see http://www.dokuwiki.org/farms.
  *
- * The farm ($farm) can be any directory and needs to be set.
+ * The farm directory (constant DOKU_FARMDIR) can be any directory and needs to be set.
  * Animals are direct subdirectories of the farm directory.
  * There are two different approaches:
  *  * An .htaccess based setup can use any animal directory name:
@@ -21,7 +22,7 @@
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
 */
 
-// DOKU_FARMDIR needs to be set in preload.php, here the fallback is the same as DOKU_INC (which isn't set yet)
+// DOKU_FARMDIR needs to be set in preload.php, here the fallback is the same as DOKU_INC would be (if it was set already)
 if(!defined('DOKU_FARMDIR')) define('DOKU_FARMDIR', fullpath(dirname(__FILE__).'/../').'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF', conf_path(DOKU_FARMDIR));
 if(!defined('DOKU_FARM')) define('DOKU_FARM', false);

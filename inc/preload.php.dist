@@ -1,7 +1,7 @@
 <?php
 /**
  * This is an example for a farm setup. Simply copy this file to preload.php and
- * uncomment what you need. See http://dokuwiki.org/farms for more information.
+ * uncomment what you need. See http://www.dokuwiki.org/farms for more information.
  * You can also use preload.php for other things than farming, e.g. for moving
  * local configuration files out of the main ./conf directory.
  */
