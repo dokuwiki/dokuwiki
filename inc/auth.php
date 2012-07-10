@@ -57,13 +57,6 @@ function auth_setup() {
 
     if(!$auth) return false;
 
-	if ($auth && $auth->success == false) {
-		// degrade to unauthenticated user
-	    unset($auth);
-	    auth_logoff();
-	    msg($lang['authtempfail'], -1);
-	}
-
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
     if(!$conf['rememberme']) $INPUT->set('r', false);

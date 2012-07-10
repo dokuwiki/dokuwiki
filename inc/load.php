@@ -34,6 +34,7 @@ require_once(DOKU_INC.'inc/subscription.php');
 require_once(DOKU_INC.'inc/template.php');
 require_once(DOKU_INC.'inc/toolbar.php');
 require_once(DOKU_INC.'inc/utf8.php');
+require_once(DOKU_INC.'inc/auth.php');
 
 /**
  * spl_autoload_register callback
@@ -80,6 +81,7 @@ function load_autoload($name){
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
+    		
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',

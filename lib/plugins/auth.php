@@ -19,7 +19,6 @@ if(!defined('DOKU_INC')) die();
  */
 class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
 
-class auth_basic {
     var $success = true;
 
     /**
