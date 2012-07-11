@@ -444,7 +444,7 @@ class auth_ldap extends auth_basic {
             if (defined('LDAP_OPT_NETWORK_TIMEOUT')) {
                 ldap_set_option($this->con, LDAP_OPT_NETWORK_TIMEOUT, 1);
             }
-            $bound = ldap_bind($this->con);
+            $bound = @ldap_bind($this->con);
             if ($bound) {
                 break;
             }
