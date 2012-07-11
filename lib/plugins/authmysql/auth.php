@@ -1,15 +1,24 @@
 <?php
 /**
+ * Plugin auth provider
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Jan Schumann <js@schumann-it.com>
+ */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+/**
  * MySQLP authentication backend
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
+ * @author     Jan Schumann <js@schumann-it.com>
  */
-
-class auth_mysql extends auth_basic {
-
+class auth_plugin_authmysql extends DokuWiki_Auth_Plugin
+{
     var $dbcon        = 0;
     var $dbver        = 0;    // database version
     var $dbrev        = 0;    // database revision

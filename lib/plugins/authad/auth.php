@@ -1,5 +1,16 @@
 <?php
 /**
+ * Plugin auth provider
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Jan Schumann <js@schumann-it.com>
+ */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+require_once(DOKU_INC.'inc/adLDAP.php');
+
+/**
  * Active Directory authentication backend for DokuWiki
  *
  * This makes authentication with a Active Directory server much easier
@@ -11,37 +22,34 @@
  *   $conf['useacl']         = 1;
  *   $conf['disableactions'] = 'register';
  *   $conf['autopasswd']     = 0;
- *   $conf['authtype']       = 'ad';
+ *   $conf['authtype']       = 'authad';
  *   $conf['passcrypt']      = 'ssha';
  *
- *   $conf['auth']['ad']['account_suffix']     = '@my.domain.org';
- *   $conf['auth']['ad']['base_dn']            = 'DC=my,DC=domain,DC=org';
- *   $conf['auth']['ad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
+ *   $conf['plugin']['authad']['account_suffix']     = '@my.domain.org';
+ *   $conf['plugin']['authad']['base_dn']            = 'DC=my,DC=domain,DC=org';
+ *   $conf['plugin']['authad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
  *
  *   //optional:
- *   $conf['auth']['ad']['sso']                = 1;
- *   $conf['auth']['ad']['ad_username']        = 'root';
- *   $conf['auth']['ad']['ad_password']        = 'pass';
- *   $conf['auth']['ad']['real_primarygroup']  = 1;
- *   $conf['auth']['ad']['use_ssl']            = 1;
- *   $conf['auth']['ad']['use_tls']            = 1;
- *   $conf['auth']['ad']['debug']              = 1;
- *   // warn user about expiring password this many days in advance:
- *   $conf['auth']['ad']['expirywarn']         = 5;
+ *   $conf['plugin']['authad']['sso']                = 1;
+ *   $conf['plugin']['authad']['ad_username']        = 'root';
+ *   $conf['plugin']['authad']['ad_password']        = 'pass';
+ *   $conf['plugin']['authad']['real_primarygroup']  = 1;
+ *   $conf['plugin']['authad']['use_ssl']            = 1;
+ *   $conf['plugin']['authad']['use_tls']            = 1;
+ *   $conf['plugin']['authad']['debug']              = 1;
  *
  *   // get additional information to the userinfo array
  *   // add a list of comma separated ldap contact fields.
- *   $conf['auth']['ad']['additional'] = 'field1,field2';
+ *   $conf['plugin']['authad']['additional'] = 'field1,field2';
  *
- * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author  James Van Lommel <jamesvl@gmail.com>
- * @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
- * @author  Andreas Gohr <andi@splitbrain.org>
+ *  @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *  @author  James Van Lommel <jamesvl@gmail.com>
+ *  @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
+ *  @author  Andreas Gohr <andi@splitbrain.org>
+ *  @author  Jan Schumann <js@schumann-it.com>
  */
-
-require_once(DOKU_INC.'inc/adLDAP.php');
-
-class auth_ad extends auth_basic {
+class auth_plugin_authad extends DokuWiki_Auth_Plugin
+{
     var $cnf = null;
     var $opts = null;
     var $adldap = null;

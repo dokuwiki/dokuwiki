@@ -1,0 +1,7 @@
+base   authad
+author
+email
+date
+name   active directory auth plugin
+desc   Provides authentication against a Microsoft Active Directory
+url

@@ -29,7 +29,7 @@
 !/lib/tpl/default
 !/lib/tpl/dokuwiki
 !/lib/tpl/index.php
-/lib/plugins/*
+!/lib/plugins/*
 !/lib/plugins/acl
 !/lib/plugins/config
 !/lib/plugins/info

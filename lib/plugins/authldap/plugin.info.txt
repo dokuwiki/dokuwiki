@@ -1,0 +1,7 @@
+base   authldap
+author
+email
+date
+name   ldap auth plugin
+desc   Provides authentication against am LDAP server
+url

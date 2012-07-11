@@ -40,29 +40,19 @@ function auth_setup() {
     global $INPUT;
     global $AUTH_ACL;
     global $lang;
+    global $config_cascade;
+    global $plugin_controller;
     $AUTH_ACL = array();
 
     if(!$conf['useacl']) return false;
 
-    // load the the backend auth functions and instantiate the auth object XXX
-    if(@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
-        require_once(DOKU_INC.'inc/auth/basic.class.php');
-        require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
-
-        $auth_class = "auth_".$conf['authtype'];
-        if(class_exists($auth_class)) {
-            $auth = new $auth_class();
-            if($auth->success == false) {
-                // degrade to unauthenticated user
-                unset($auth);
-                auth_logoff();
-                msg($lang['authtempfail'], -1);
-            }
-        } else {
-            nice_die($lang['authmodfailed']);
-        }
-    } else {
-        nice_die($lang['authmodfailed']);
+    // try to load auth backend from plugins
+    $plugins = $plugin_controller->getList('auth');
+    foreach ($plugin_controller->getList('auth') as $plugin) {
+    	if ($conf['authtype'] === $plugin) {
+    		$auth = $plugin_controller->load('auth', $plugin);
+    		break;
+    	}
     }
 
     if(!$auth) return false;

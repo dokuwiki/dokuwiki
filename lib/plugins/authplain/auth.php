@@ -1,14 +1,23 @@
 <?php
 /**
+ * Plugin auth provider
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Jan Schumann <js@schumann-it.com>
+ */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+/**
  * Plaintext authentication backend
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
+ * @author     Jan Schumann <js@schumann-it.com>
  */
-
-class auth_plain extends auth_basic {
-
+class auth_plugin_authplain extends DokuWiki_Auth_Plugin
+{
     var $users = null;
     var $_pattern = array();
 
@@ -21,12 +30,12 @@ class auth_plain extends auth_basic {
      * @author  Christopher Smith <chris@jalakai.co.uk>
      */
     function __construct() {
-        global $config_cascade;
+        $this->loadConfig();
 
-        if (!@is_readable($config_cascade['plainauth.users']['default'])){
+        if (!@is_readable($this->conf['users'])){
             $this->success = false;
         }else{
-            if(@is_writable($config_cascade['plainauth.users']['default'])){
+            if(@is_writable($this->conf['users'])){
                 $this->cando['addUser']      = true;
                 $this->cando['delUser']      = true;
                 $this->cando['modLogin']     = true;
@@ -89,7 +98,6 @@ class auth_plain extends auth_basic {
      */
     function createUser($user,$pwd,$name,$mail,$grps=null){
         global $conf;
-        global $config_cascade;
 
         // user mustn't already exist
         if ($this->getUserData($user) !== false) return false;
@@ -103,12 +111,12 @@ class auth_plain extends auth_basic {
         $groups = join(',',$grps);
         $userline = join(':',array($user,$pass,$name,$mail,$groups))."\n";
 
-        if (io_saveFile($config_cascade['plainauth.users']['default'],$userline,true)) {
+        if (io_saveFile($this->conf['users'],$userline,true)) {
             $this->users[$user] = compact('pass','name','mail','grps');
             return $pwd;
         }
 
-        msg('The '.$config_cascade['plainauth.users']['default'].
+        msg('The '.$this->conf['users'].
                 ' file is not writable. Please inform the Wiki-Admin',-1);
         return null;
     }
@@ -125,7 +133,6 @@ class auth_plain extends auth_basic {
         global $conf;
         global $ACT;
         global $INFO;
-        global $config_cascade;
 
         // sanity checks, user must already exist and there must be something to change
         if (($userinfo = $this->getUserData($user)) === false) return false;
@@ -150,7 +157,7 @@ class auth_plain extends auth_basic {
             return false;
         }
 
-        if (!io_saveFile($config_cascade['plainauth.users']['default'],$userline,true)) {
+        if (!io_saveFile($this->conf['users'],$userline,true)) {
             msg('There was an error modifying your user data. You should register again.',-1);
             // FIXME, user has been deleted but not recreated, should force a logout and redirect to login page
             $ACT == 'register';
@@ -169,7 +176,6 @@ class auth_plain extends auth_basic {
      * @return  int             the number of users deleted
      */
     function deleteUsers($users) {
-        global $config_cascade;
 
         if (!is_array($users) || empty($users)) return 0;
 
@@ -184,7 +190,7 @@ class auth_plain extends auth_basic {
 
         $pattern = '/^('.join('|',$deleted).'):/';
 
-        if (io_deleteFromFile($config_cascade['plainauth.users']['default'],$pattern,true)) {
+        if (io_deleteFromFile($this->conf['users'],$pattern,true)) {
             foreach ($deleted as $user) unset($this->users[$user]);
             return count($deleted);
         }
@@ -275,13 +281,12 @@ class auth_plain extends auth_basic {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function _loadUserData(){
-        global $config_cascade;
 
         $this->users = array();
 
-        if(!@file_exists($config_cascade['plainauth.users']['default'])) return;
+        if(!@file_exists($this->conf['users'])) return;
 
-        $lines = file($config_cascade['plainauth.users']['default']);
+        $lines = file($this->conf['users']);
         foreach($lines as $line){
             $line = preg_replace('/#.*$/','',$line); //ignore comments
             $line = trim($line);

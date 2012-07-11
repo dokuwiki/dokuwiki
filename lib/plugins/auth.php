@@ -1,14 +1,24 @@
 <?php
 /**
+ * Auth Plugin Prototype
+ *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Jan Schumann <js@jschumann-it.com>
+ */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+/**
  * auth/basic.class.php
  *
  * foundation authorisation class
  * all auth classes should inherit from this class
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
+ * @author    Jan Schumann <js@jschumann-it.com>
  */
+class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
 
-class auth_basic {
     var $success = true;
 
     /**
