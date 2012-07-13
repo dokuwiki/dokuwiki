@@ -13,7 +13,6 @@ session_write_close();
 
 header('Content-Type: text/html; charset=utf-8');
 
-
 //call the requested function
 if(isset($_POST['call'])){
     $call = $_POST['call'];
@@ -204,7 +203,7 @@ function ajax_medialist(){
     global $conf;
     global $NS;
 
-    $NS = $_POST['ns'];
+    $NS = cleanID($_POST['ns']);
     if ($_POST['do'] == 'media') {
         tpl_mediaFileList();
     } else {

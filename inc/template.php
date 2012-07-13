@@ -1151,7 +1151,7 @@ function tpl_mediaFileList(){
     echo '<div class="panelHeader">'.NL;
     echo '<h3>';
     $tabTitle = ($NS) ? $NS : '['.$lang['mediaroot'].']';
-    printf($lang['media_' . $opened_tab], '<strong>'.$tabTitle.'</strong>');
+    printf($lang['media_' . $opened_tab], '<strong>'.hsc($tabTitle).'</strong>');
     echo '</h3>'.NL;
     if ($opened_tab === 'search' || $opened_tab === 'files') {
         media_tab_files_options();
