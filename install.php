@@ -96,7 +96,7 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body style="">
     <h1 style="float:left">
-        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png&w=64"
+        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png&amp;w=64"
              style="vertical-align: middle;" alt="" />
         <?php echo $lang['i_installer']?>
     </h1>
@@ -178,7 +178,7 @@ function print_form($d){
 
         <fieldset style="margin-top: 1em;">
             <label for="acl">
-            <input type="checkbox" name="d[acl]" id="acl" <?php echo(($d['acl'] ? 'checked="checked"' : ''));?> />
+            <input type="checkbox" name="d[acl]" id="acl" <?php echo(($d['acl'] ? ' checked="checked"' : ''));?> />
             <?php echo $lang['i_enableacl']?></label>
 
             <fieldset id="acldep">
@@ -215,7 +215,7 @@ function print_form($d){
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
                 echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
-                     (($d['license'] == $key)?'checked="checked"':'').'>';
+                     (($d['license'] == $key)?' checked="checked"':'').'>';
                 echo htmlspecialchars($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
