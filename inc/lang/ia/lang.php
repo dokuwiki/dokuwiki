@@ -247,9 +247,9 @@ $lang['i_writeerr']            = 'Impossibile crear <code>%s</code>. Tu debe ver
 $lang['i_badhash']             = 'dokuwiki.php non recognoscite o modificate (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor vacue o invalide';
 $lang['i_success']             = 'Le configuration ha succedite. Tu pote ora deler le file install.php. Continua a
-<a href="doku.php">tu nove DokuWiki</a>.';
+<a href="doku.php?id=wiki;welcome">tu nove DokuWiki</a>.';
 $lang['i_failure']             = 'Alcun errores occurreva durante le scriptura del files de configuration. Es possibile que tu debe remediar iste errores manualmente ante que
-tu pote usar <a href="doku.php">tu nove DokuWiki</a>.';
+tu pote usar <a href="doku.php?id=wiki;welcome">tu nove DokuWiki</a>.';
 $lang['i_policy']              = 'Politica de ACL interne';
 $lang['i_pol0']                = 'Wiki aperte (lectura, scriptura, incargamento pro omnes)';
 $lang['i_pol1']                = 'Wiki public (lectura pro omnes, scriptura e incargamento pro usatores registrate)';

@@ -302,9 +302,9 @@ $lang['i_writeerr']            = 'Unable to create <code>%s</code>. You will nee
 $lang['i_badhash']             = 'unrecognised or modified dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - illegal or empty value';
 $lang['i_success']             = 'The configuration was finished successfully. You may delete the install.php file now. Continue to
-                                 <a href="doku.php">your new DokuWiki</a>.';
+                                 <a href="doku.php?id=wiki;welcome">your new DokuWiki</a>.';
 $lang['i_failure']             = 'Some errors occurred while writing the configuration files. You may need to fix them manually before
-                                  you can use <a href="doku.php">your new DokuWiki</a>.';
+                                  you can use <a href="doku.php?id=wiki;welcome">your new DokuWiki</a>.';
 $lang['i_policy']              = 'Initial ACL policy';
 $lang['i_pol0']                = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']                = 'Public Wiki (read for everyone, write and upload for registered users)';
