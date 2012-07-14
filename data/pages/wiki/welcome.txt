@@ -11,7 +11,8 @@ Your wiki needs to have a start page. As long as it doesn't exist, this link wil
 
 Go on, follow that link and create the page. If you need help with using the syntax you can always refer to the [[wiki:syntax|syntax page]].
 
-You might also want to use a sidebar. To create it, just edit the [[:sidebar]] page. Everything in that page will be shown in a margin column on the left side. A sidebar is a good place for a navigation, just place a list of links in it.
+You might also want to use a sidebar. To create it, just edit the [[:sidebar]] page. Everything in that page will be shown in a margin column on the side. A sidebar is a good place for a navigation, just place a list of links in it or install and use one of the [[http://www.dokuwiki.org/plugins?plugintag=navigation#extension__table|navigation plugins]].
+Please be aware that not all templates support sidebars.
 
 ===== Customize your Wiki =====
 
@@ -25,4 +26,4 @@ DokuWiki is an Open Source project that thrives through user contributions. A go
 
 The [[http://forum.dokuwiki.org|DokuWiki User Forum]] is an excellent way to get in contact with other DokuWiki users and is just one of the many ways to get [[doku>faq:support|support]].
 
-Of course we'd more than happy to have you [[doku>devel:getting_involved|getting involved]] into DokuWiki.
+Of course we'd be more than happy to have you [[doku>devel:getting_involved|getting involved]] with DokuWiki.
