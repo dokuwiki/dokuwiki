@@ -24,6 +24,9 @@
 /data/media_attic/*
 /data/meta/*
 /data/pages/*
+!/data/pages/wiki/dokuwiki.txt
+!/data/pages/wiki/syntax.txt
+!/data/pages/wiki/welcome.txt
 /data/tmp/*
 /lib/tpl/*
 !/lib/tpl/default
