@@ -568,12 +568,10 @@ function act_export($act){
             $output = rawWiki($ID,$REV);
             break;
         case 'xhtml':
-            $pre .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"' . DOKU_LF;
-            $pre .= ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . DOKU_LF;
-            $pre .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$conf['lang'].'"' . DOKU_LF;
-            $pre .= ' lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">' . DOKU_LF;
+            $pre .= '<!DOCTYPE html>' . DOKU_LF;
+            $pre .= '<html lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">' . DOKU_LF;
             $pre .= '<head>' . DOKU_LF;
-            $pre .= '  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . DOKU_LF;
+            $pre .= '  <meta charset="utf-8" />' . DOKU_LF;
             $pre .= '  <title>'.$ID.'</title>' . DOKU_LF;
 
             // get metaheaders
