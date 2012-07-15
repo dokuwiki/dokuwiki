@@ -1287,7 +1287,7 @@ function tpl_actiondropdown($empty='',$button='&gt;'){
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
     echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
 
-    echo '<select name="do" class="edit quickselect">';
+    echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
 
     echo '<optgroup label="'.$lang['page_tools'].'">';
