@@ -1,4 +1,4 @@
 ====== No such revision ======
 
-The specified revision doesn't exist. Use the ''Old revisions'' button for a list of old revisions of this document.
+The specified revision doesn't exist. Click on "Old revisions" for a list of old revisions of this document.
 
