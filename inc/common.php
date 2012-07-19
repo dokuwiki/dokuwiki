@@ -1181,6 +1181,22 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
             false
         );
     }
+
+    // add mail headers to identify page changes in same mail thread
+    if ($conf['mailthreads'] && $who != 'register') {
+        $file = wikiFN($id);
+        $cur = @filemtime($file);
+
+        $server = parse_url(DOKU_URL, PHP_URL_HOST);
+        $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
+        $listid = strtolower(trim($listid, '.'));
+
+        $mail->setHeader('Message-Id', "<$id?rev=$cur@$listid>", false);
+        if ($rev) {
+            $mail->setHeader('In-Reply-To', "<$id?rev=$rev@$listid>", false);
+        }
+    }
+
     return $mail->send();
 }
 

@@ -111,6 +111,7 @@ $conf['registernotify'] = '';            //send info about newly registered user
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
+$conf['mailthreads'] = 1;                //add threading headers to page change notification mails
 
 /* Syndication Settings */
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.
