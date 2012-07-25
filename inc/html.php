@@ -709,7 +709,7 @@ function html_recent($first=0, $show_changes='both'){
             $form->addElement(media_printicon($recent['id']));
         } else {
             $icon = DOKU_BASE.'lib/images/fileicons/file.png';
-            $form->addElement('<img src="'.$icon.'" alt="'.$filename.'" class="icon" />');
+            $form->addElement('<img src="'.$icon.'" alt="'.$recent['id'].'" class="icon" />');
         }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'date')));
