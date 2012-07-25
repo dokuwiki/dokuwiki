@@ -212,7 +212,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
 
     $cache = new cache_instructions($id, $file);
 
-    if ($cacheonly || $cache->useCache() || isset($run[$file])) {
+    if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
     } else if (@file_exists($file)) {
         // no cache - do some work
@@ -311,8 +311,10 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
             }
         }
         if ($do_render) {
-            ++$render_count;
-            $rendered_pages[$id] = true;
+            if (!defined('DOKU_UNITTEST')) {
+                ++$render_count;
+                $rendered_pages[$id] = true;
+            }
             $old_meta = $meta;
             $meta = p_render_metadata($id, $meta);
             // only update the file when the metadata has been changed
@@ -547,7 +549,7 @@ function p_get_parsermodes(){
 
     //reuse old data
     static $modes = null;
-    if($modes != null){
+    if($modes != null && !defined('DOKU_UNITTEST')){
         return $modes;
     }
 
