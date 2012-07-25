@@ -1810,7 +1810,7 @@ function html_form_output($data) {
  * @param array $flashvars - parameters to be passed in the flashvar parameter
  * @param array $atts      - additional attributes for the <object> tag
  * @param string $alt      - alternative content (is NOT automatically escaped!)
- * @returns string         - the XHTML markup
+ * @return string         - the XHTML markup
  */
 function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts=null,$alt=''){
     global $lang;

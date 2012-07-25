@@ -1131,7 +1131,7 @@ class Doku_Indexer {
 /**
  * Create an instance of the indexer.
  *
- * @return object               a Doku_Indexer
+ * @return Doku_Indexer               a Doku_Indexer
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
