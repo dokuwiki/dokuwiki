@@ -62,11 +62,11 @@ class Doku_Parser {
     var $connected = false;
 
     function addBaseMode(& $BaseMode) {
-        $this->modes['base'] = & $BaseMode;
+        $this->modes['base'] =& $BaseMode;
         if ( !$this->Lexer ) {
             $this->Lexer = new Doku_Lexer($this->Handler,'base', true);
         }
-        $this->modes['base']->Lexer = & $this->Lexer;
+        $this->modes['base']->Lexer =& $this->Lexer;
     }
 
     /**
@@ -78,7 +78,7 @@ class Doku_Parser {
             $this->addBaseMode(new Doku_Parser_Mode_base());
         }
         $Mode->Lexer = & $this->Lexer;
-        $this->modes[$name] = & $Mode;
+        $this->modes[$name] =& $Mode;
     }
 
     function connectModes() {
