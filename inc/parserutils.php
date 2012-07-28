@@ -664,7 +664,7 @@ function p_render($mode,$instructions,&$info){
     // Loop through the instructions
     foreach ( $instructions as $instruction ) {
         // Execute the callback against the Renderer
-        call_user_func_array(array(&$Renderer, $instruction[0]),$instruction[1]);
+        call_user_func_array(array(&$Renderer, $instruction[0]), $instruction[1] ? $instruction[1] : array());
     }
 
     //set info array
