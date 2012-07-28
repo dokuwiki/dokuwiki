@@ -254,11 +254,7 @@ class HTTPClient {
         if(!empty($uri['port'])) $headers['Host'].= ':'.$uri['port'];
         $headers['User-Agent'] = $this->agent;
         $headers['Referer']    = $this->referer;
-        if ($this->keep_alive) {
-            $headers['Connection'] = 'Keep-Alive';
-        } else {
-            $headers['Connection'] = 'Close';
-        }
+
         if($method == 'POST'){
             if(is_array($data)){
                 if($headers['Content-Type'] == 'multipart/form-data'){
@@ -299,12 +295,29 @@ class HTTPClient {
                 return false;
             }
 
+            // try establish a CONNECT tunnel for SSL
+            if($this->_ssltunnel($socket, $request_url)){
+                // no keep alive for tunnels
+                $this->keep_alive = false;
+                // tunnel is authed already
+                if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+            }
+
             // keep alive?
             if ($this->keep_alive) {
                 self::$connections[$connectionId] = $socket;
             } else {
                 unset(self::$connections[$connectionId]);
             }
+        }
+
+        if ($this->keep_alive && !$this->proxy_host) {
+            // RFC 2068, section 19.7.1: A client MUST NOT send the Keep-Alive
+            // connection token to a proxy server. We still do keep the connection the
+            // proxy alive (well except for CONNECT tunnels)
+            $headers['Connection'] = 'Keep-Alive';
+        } else {
+            $headers['Connection'] = 'Close';
         }
 
         try {
@@ -482,6 +495,49 @@ class HTTPClient {
         $this->_debug('response body',$this->resp_body);
         $this->redirect_count = 0;
         return true;
+    }
+
+    /**
+     * Tries to establish a CONNECT tunnel via Proxy
+     *
+     * Protocol, Servername and Port will be stripped from the request URL when a successful CONNECT happened
+     *
+     * @param ressource &$socket
+     * @param string &$requesturl
+     * @return bool true if a tunnel was established
+     */
+    function _ssltunnel(&$socket, &$requesturl){
+        if(!$this->proxy_host) return false;
+        $requestinfo = parse_url($requesturl);
+        if($requestinfo['scheme'] != 'https') return false;
+        if(!$requestinfo['port']) $requestinfo['port'] = 443;
+
+        // build request
+        $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;
+        $request .= "Host: {$requestinfo['host']}".HTTP_NL;
+        if($this->proxy_user) {
+                'Proxy-Authorization Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
+        }
+        $request .= HTTP_NL;
+
+        $this->_debug('SSL Tunnel CONNECT',$request);
+        $this->_sendData($socket, $request, 'SSL Tunnel CONNECT');
+
+        // read headers from socket
+        $r_headers = '';
+        do{
+            $r_line = $this->_readLine($socket, 'headers');
+            $r_headers .= $r_line;
+        }while($r_line != "\r\n" && $r_line != "\n");
+
+        $this->_debug('SSL Tunnel Response',$r_headers);
+        if(preg_match('/^HTTP\/1\.0 200/i',$r_headers)){
+            if (stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+                $requesturl = $requestinfo['path'];
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

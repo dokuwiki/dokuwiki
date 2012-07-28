@@ -1,8 +1,8 @@
 <?php
-require_once dirname(__FILE__).'/httpclient_http.test.php';
+require_once dirname(__FILE__).'/httpclient_http_proxy.test.php';
 
-class httpclient_https_test extends httpclient_http_test {
-    protected $server = 'https://httpbin.org/';
+class httpclient_https_proxy_test extends httpclient_http_proxy_test {
+    protected $url = 'https://www.dokuwiki.org/README';
 
     public function setUp(){
         // skip tests when this PHP has no SSL support
@@ -13,4 +13,3 @@ class httpclient_https_test extends httpclient_http_test {
         parent::setUp();
     }
 }
-//Setup VIM: ex: et ts=4 :
