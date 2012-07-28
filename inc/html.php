@@ -328,9 +328,9 @@ function html_search(){
 
     //show progressbar
     print '<div id="dw__loading">'.NL;
-    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
     print 'showLoadBar();'.NL;
-    print '//--><!]]></script>'.NL;
+    print '/*!]]>*/</script>'.NL;
     print '</div>'.NL;
     flush();
 
@@ -390,9 +390,9 @@ function html_search(){
     }
 
     //hide progressbar
-    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
     print 'hideLoadBar("dw__loading");'.NL;
-    print '//--><!]]></script>'.NL;
+    print '/*!]]>*/</script>'.NL;
     flush();
 }
 
@@ -1424,9 +1424,9 @@ function html_edit(){
 
     if ($wr) {
         // sets changed to true when previewed
-        echo '<script type="text/javascript"><!--//--><![CDATA[//><!--'. NL;
+        echo '<script type="text/javascript">/*<![CDATA[*/'. NL;
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
-        echo '//--><!]]></script>' . NL;
+        echo '/*!]]>*/</script>' . NL;
     } ?>
     <div class="editBox">
 
