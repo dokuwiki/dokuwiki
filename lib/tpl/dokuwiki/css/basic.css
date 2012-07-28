@@ -194,6 +194,10 @@ object {
     max-width: 100%;
     height: auto;
 }
+/* IE8 and below won't display the images otherwise */
+button img {
+    max-width: none;
+}
 
 hr {
     border-top: solid __border__;
