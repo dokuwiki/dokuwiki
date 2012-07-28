@@ -1036,7 +1036,7 @@ class Doku_Indexer {
         $fh = @fopen($cachename.'.tmp', 'w');
         if (!$fh) {
             trigger_error("Failed to write index cache", E_USER_ERROR);
-            return;
+            return $lengths;
         }
         @fwrite($fh, implode("\n", $lengths));
         @fclose($fh);

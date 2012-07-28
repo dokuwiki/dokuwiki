@@ -37,6 +37,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
         $info  = DOKU_PLUGIN.'/'.$parts[2].'/plugin.info.txt';
         if(@file_exists($info)) return confToHash($info);
         trigger_error('getInfo() not implemented in '.get_class($this).' and '.$info.' not found', E_USER_WARNING);
+        return array();
     }
 
     /**
