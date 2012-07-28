@@ -12,6 +12,10 @@
  * @link   http://dokuwiki.org/templates
  * @author Andreas Gohr <andi@splitbrain.org>
  */
+
+// must be run from within DokuWiki
+if (!defined('DOKU_INC')) die();
+
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>" lang="<?php echo $conf['lang']?>" dir="ltr">
 <head>

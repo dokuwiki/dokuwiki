@@ -1,3 +1,8 @@
+<?php
+// must be run from within DokuWiki
+if (!defined('DOKU_INC')) die();
+?>
+
 <!-- ********** HEADER ********** -->
 <div id="dokuwiki__header"><div class="pad group">
 

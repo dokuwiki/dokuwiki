@@ -1,3 +1,8 @@
+<?php
+// must be run from within DokuWiki
+if (!defined('DOKU_INC')) die();
+?>
+
 <!-- ********** FOOTER ********** -->
 <div id="dokuwiki__footer"><div class="pad">
     <?php tpl_license(''); // license text ?>
