@@ -646,6 +646,7 @@ function media_tab_files_options(){
     global $lang;
     global $NS;
     global $INPUT;
+    global $ID;
     $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
                                 'action' => wl($ID)));
     $media_manager_params = media_managerURL(array(), '', false, true);
