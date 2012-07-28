@@ -54,15 +54,16 @@ div.dokuwiki li ol {
 
 div.dokuwiki a.urlextern,
 div.dokuwiki a.interwiki,
+div.dokuwiki a.mediafile,
 div.dokuwiki a.windows,
 div.dokuwiki a.mail {
-  /* should work but doesn't - so we just disable icons here*/
-  /*
   background-position: right 1px;
   padding-right: 16px;
-  */
-  background-image: none !important;
-  padding: 0px 0px 0px 0px;
+  padding-left: 0;
+}
+
+div.dokuwiki a.mediafile {
+  padding-right: 18px;
 }
 
 div.dokuwiki div.secedit input.button {
