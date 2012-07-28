@@ -189,7 +189,7 @@ function media_delete($id,$auth){
 
     // trigger an event - MEDIA_DELETE_FILE
     $data['id']   = $id;
-    $data['name'] = basename($file);
+    $data['name'] = utf8_basename($file);
     $data['path'] = $file;
     $data['size'] = (@file_exists($file)) ? filesize($file) : 0;
 

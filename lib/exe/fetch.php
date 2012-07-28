@@ -122,9 +122,9 @@ function sendFile($file,$mime,$dl,$cache){
 
   //download or display?
   if($dl){
-    header('Content-Disposition: attachment; filename="'.basename($file).'";');
+    header('Content-Disposition: attachment; filename="'.utf8_basename($file).'";');
   }else{
-    header('Content-Disposition: inline; filename="'.basename($file).'";');
+    header('Content-Disposition: inline; filename="'.utf8_basename($file).'";');
   }
 
   //use x-sendfile header to pass the delivery to compatible webservers

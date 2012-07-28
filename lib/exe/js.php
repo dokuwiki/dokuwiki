@@ -143,7 +143,7 @@ function js_load($file){
 
         // is it a include_once?
         if($match[1]){
-            $base = basename($ifile);
+            $base = utf8_basename($ifile);
             if($loaded[$base]) continue;
             $loaded[$base] = true;
         }

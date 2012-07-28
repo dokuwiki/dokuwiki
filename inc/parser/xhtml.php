@@ -1067,7 +1067,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the picture
                 if (!$title) {
                     // just show the sourcename
-                    $title = $this->_xmlEntities(basename(noNS($src)));
+                    $title = $this->_xmlEntities(utf8_basename(noNS($src)));
                 }
                 return $title;
             }
@@ -1096,7 +1096,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the flash
                 if (!$title) {
                     // just show the sourcename
-                    $title = basename(noNS($src));
+                    $title = utf8_basename(noNS($src));
                 }
                 return $this->_xmlEntities($title);
             }
@@ -1115,7 +1115,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $ret .= $this->_xmlEntities($title);
         }else{
             // just show the sourcename
-            $ret .= $this->_xmlEntities(basename(noNS($src)));
+            $ret .= $this->_xmlEntities(utf8_basename(noNS($src)));
         }
 
         return $ret;

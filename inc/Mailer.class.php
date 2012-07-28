@@ -69,7 +69,7 @@ class Mailer {
      */
     public function attachFile($path, $mime, $name = '', $embed = '') {
         if(!$name) {
-            $name = basename($path);
+            $name = utf8_basename($path);
         }
 
         $this->attach[] = array(

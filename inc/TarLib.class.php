@@ -261,14 +261,14 @@ class TarLib {
     function sendClient($name = '', $archive = '', $headers = true) {
         if(!$name && !$this->_nomf) return -9;
         if(!$archive && !$this->_memdat) return -10;
-        if(!$name) $name = basename($this->_nomf);
+        if(!$name) $name = utf8_basename($this->_nomf);
 
         if($archive){ if(!file_exists($archive)) return -11; }
         else $decoded = $this->getDynamicArchive();
 
         if($headers) {
             header('Content-Type: application/x-gtar');
-            header('Content-Disposition: attachment; filename='.basename($name));
+            header('Content-Disposition: attachment; filename='.utf8_basename($name));
             header('Accept-Ranges: bytes');
             header('Content-Length: '.($archive ? filesize($archive) : strlen($decoded)));
         }

@@ -284,7 +284,7 @@ function msg($message,$lvl=0,$line='',$file=''){
     $errors[1]  = 'success';
     $errors[2]  = 'notify';
 
-    if($line || $file) $message.=' ['.basename($file).':'.$line.']';
+    if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
 
     if(!isset($MSG)) $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);

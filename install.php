@@ -489,7 +489,7 @@ function check_functions(){
         $ok = false;
     }
 
-    $funcs = explode(' ','addslashes basename call_user_func chmod copy fgets '.
+    $funcs = explode(' ','addslashes call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
                          'glob header ignore_user_abort ini_get mail mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.

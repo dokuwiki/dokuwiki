@@ -19,7 +19,7 @@ class Doku_Renderer_code extends Doku_Renderer {
         global $INPUT;
         if(!$language) $language = 'txt';
         if(!$filename) $filename = 'snippet.'.$language;
-        $filename = basename($filename);
+        $filename = utf8_basename($filename);
 
         if($this->_codeblock == $INPUT->str('codeblock')){
             header("Content-Type: text/plain; charset=utf-8");
