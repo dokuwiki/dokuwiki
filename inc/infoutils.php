@@ -148,36 +148,6 @@ function check(){
         }
     }
 
-    if(is_writable($conf['datadir'])){
-        msg('Datadir is writable',1);
-    }else{
-        msg('Datadir is not writable',-1);
-    }
-
-    if(is_writable($conf['olddir'])){
-        msg('Attic is writable',1);
-    }else{
-        msg('Attic is not writable',-1);
-    }
-
-    if(is_writable($conf['mediadir'])){
-        msg('Mediadir is writable',1);
-    }else{
-        msg('Mediadir is not writable',-1);
-    }
-
-    if(is_writable($conf['cachedir'])){
-        msg('Cachedir is writable',1);
-    }else{
-        msg('Cachedir is not writable',-1);
-    }
-
-    if(is_writable($conf['lockdir'])){
-        msg('Lockdir is writable',1);
-    }else{
-        msg('Lockdir is not writable',-1);
-    }
-
     if(is_writable(DOKU_CONF)){
         msg('conf directory is writable',1);
     }else{
