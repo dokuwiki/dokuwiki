@@ -53,6 +53,9 @@
     margin: 0 10px 10px 0;
     position: relative;
 }
+[dir=rtl] #mediamanager__page .panelContent {
+    text-align: right;
+}
 
 #mediamanager__page .file .panelHeader,
 #mediamanager__page .file .panelContent {
@@ -107,8 +110,16 @@
     padding: 0;
     list-style: none;
 }
+[dir=rtl] #mediamanager__page .namespaces ul {
+    margin-left: 0;
+    margin-right: .2em;
+}
 #mediamanager__page .namespaces ul ul {
     margin-left: 1em;
+}
+[dir=rtl] #mediamanager__page .namespaces ul ul {
+    margin-left: 0;
+    margin-right: 1em;
 }
 #mediamanager__page .namespaces ul ul li {
     margin: 0;
@@ -398,6 +409,10 @@
     text-align: left;
     border-color: __background__;
 }
+[dir=rtl] #mediamanager__diff td,
+[dir=rtl] #mediamanager__diff th {
+    text-align: right;
+}
 
 #mediamanager__diff th {
     font-weight: normal;
@@ -432,10 +447,6 @@
 #mediamanager__diff .imageDiff {
     position: relative;
 }
-#mediamanager__diff .imageDiff .image1,
-#mediamanager__diff .imageDiff .image2 {
-    width: 97%;
-}
 #mediamanager__diff .imageDiff .image2 {
     position: absolute;
     top: 0;
@@ -449,6 +460,10 @@
 #mediamanager__diff .imageDiff.portions .image2 {
     border-right: 1px solid red;
     overflow: hidden;
+}
+
+#mediamanager__diff .imageDiff.portions img {
+    float: left;
 }
 
 #mediamanager__diff .imageDiff img {
