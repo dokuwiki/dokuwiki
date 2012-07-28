@@ -466,6 +466,8 @@ function html_revisions($first=0, $media_id = false){
     if (!$media_id) $exists = $INFO['exists'];
     else $exists = @file_exists(mediaFN($id));
 
+    $display_name = (!$media_id && useHeading('navigation')) ? hsc(p_get_first_heading($id)) : $id;
+
     if($exists && $first==0){
         if (!$media_id && isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
             $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
@@ -488,7 +490,7 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
                         'href'  => $href)));
-        $form->addElement($id);
+        $form->addElement($display_name);
         $form->addElement(form_makeCloseTag('a'));
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
@@ -563,11 +565,11 @@ function html_revisions($first=0, $media_id = false){
             if (!$media_id) $href = wl($id,"rev=$rev",false,'&');
             else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
             $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'wikilink1')));
-            $form->addElement($id);
+            $form->addElement($display_name);
             $form->addElement(form_makeCloseTag('a'));
         }else{
             $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
-            $form->addElement($id);
+            $form->addElement($display_name);
         }
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
