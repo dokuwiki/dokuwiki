@@ -176,6 +176,16 @@ function check(){
         msg('mb_string extension not available - PHP only replacements will be used',0);
     }
 
+    $loc = setlocale(LC_ALL, 0);
+    if(!$loc){
+        msg('No valid locale is set for your PHP setup. You should fix this',-1);
+    }elseif(stripos($loc,'utf') === false){
+        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale, you should fix this if you encounter problems.',0);
+    }else{
+        msg('Valid locale '.hsc($loc).' found.', 1);
+    }
+
+
     if($conf['allowdebug']){
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
     }else{
