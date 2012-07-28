@@ -755,13 +755,15 @@ class Doku_Indexer {
             $val_idx = array();
             foreach ($index as $wid => $line) {
                 $freq = $this->countTuples($line);
-                if ($freq >= $min && (!$max || $freq <= $max) && strlen($val) >= $minlen)
+                if ($freq >= $min && (!$max || $freq <= $max))
                     $val_idx[$wid] = $freq;
             }
             if (!empty($val_idx)) {
                 $words = $this->getIndex($metaname.'_w', '');
-                foreach ($val_idx as $wid => $freq)
-                    $result[$words[$wid]] = $freq;
+                foreach ($val_idx as $wid => $freq) {
+                    if (strlen($words[$wid]) >= $minlen)
+                        $result[$words[$wid]] = $freq;
+                }
             }
         }
         else {
