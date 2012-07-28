@@ -115,7 +115,11 @@ function getWordblocks() {
     return $wordblocks;
 }
 
-
+/**
+ * Gets the list of configured schemes
+ *
+ * @return array the schemes
+ */
 function getSchemes() {
     static $schemes = null;
     if ( !$schemes ) {
@@ -182,7 +186,7 @@ function confToHash($file,$lower=false) {
  *
  * @param  string   $type     the configuration settings to be read, must correspond to a key/array in $config_cascade
  * @param  callback $fn       the function used to process the configuration file into an array
- * @param  array    $param    optional additional params to pass to the callback
+ * @param  array    $params   optional additional params to pass to the callback
  * @return array    configuration values
  */
 function retrieveConfig($type,$fn,$params=null) {
@@ -236,6 +240,7 @@ function actionOK($action){
     static $disabled = null;
     if(is_null($disabled)){
         global $conf;
+        /** @var auth_basic $auth */
         global $auth;
 
         // prepare disabled actions array and handle legacy options
@@ -272,7 +277,7 @@ function actionOK($action){
  *
  * @param   string  $linktype   'content'|'navigation', content applies to links in wiki text
  *                                                      navigation applies to all other links
- * @returns boolean             true if headings should be used for $linktype, false otherwise
+ * @return  boolean             true if headings should be used for $linktype, false otherwise
  */
 function useHeading($linktype) {
     static $useHeading = null;

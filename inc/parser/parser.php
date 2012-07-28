@@ -52,6 +52,9 @@ class Doku_Parser {
 
     var $Handler;
 
+    /**
+     * @var Doku_Lexer $Lexer
+     */
     var $Lexer;
 
     var $modes = array();
@@ -134,6 +137,9 @@ class Doku_Parser {
 */
 class Doku_Parser_Mode {
 
+    /**
+     * @var Doku_Lexer $Lexer
+     */
     var $Lexer;
 
     var $allowedModes = array();

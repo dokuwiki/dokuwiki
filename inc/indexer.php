@@ -463,8 +463,8 @@ class Doku_Indexer {
      * in the returned list is an array with the page names as keys and the
      * number of times that token appears on the page as value.
      *
-     * @param arrayref  $tokens list of words to search for
-     * @return array            list of page names with usage counts
+     * @param array  $tokens list of words to search for
+     * @return array         list of page names with usage counts
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -615,9 +615,9 @@ class Doku_Indexer {
      * The $result parameter can be used to merge the index locations with
      * the appropriate query term.
      *
-     * @param arrayref  $words  The query terms.
-     * @param arrayref  $result Set to word => array("length*id" ...)
-     * @return array            Set to length => array(id ...)
+     * @param array  $words  The query terms.
+     * @param array  $result Set to word => array("length*id" ...)
+     * @return array         Set to length => array(id ...)
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getIndexWords(&$words, &$result) {
@@ -728,7 +728,7 @@ class Doku_Indexer {
      *
      * @param int       $min    bottom frequency threshold
      * @param int       $max    upper frequency limit. No limit if $max<$min
-     * @param int       $length minimum length of words to count
+     * @param int       $minlen minimum length of words to count
      * @param string    $key    metadata key to list. Uses the fulltext index if not given
      * @return array            list of words as the keys and frequency as values
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -852,7 +852,8 @@ class Doku_Indexer {
      *
      * @param string    $idx    name of the index
      * @param string    $suffix subpart identifier
-     * @param arrayref  $linex  list of lines without LF
+     * @param array     $lines  list of lines without LF
+     * @return bool             If saving succeeded
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndex($idx, $suffix, &$lines) {
@@ -902,6 +903,7 @@ class Doku_Indexer {
      * @param string    $suffix subpart identifier
      * @param int       $id     the line number
      * @param string    $line   line to write
+     * @return bool             If saving succeeded
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndexKey($idx, $suffix, $id, $line) {
@@ -961,6 +963,11 @@ class Doku_Indexer {
         return $id;
     }
 
+    /**
+     * @param string $idx    The index file which should be added to the key.
+     * @param string $suffix The suffix of the file
+     * @param bool   $delete Unused
+     */
     protected function cacheIndexDir($idx, $suffix, $delete=false) {
         global $conf;
         if ($idx == 'i')
@@ -1263,8 +1270,8 @@ function idx_addPage($page, $verbose=false, $force=false) {
  * Important: No ACL checking is done here! All results are
  *            returned, regardless of permissions
  *
- * @param arrayref      $words  list of words to search for
- * @return array                list of pages found, associated with the search terms
+ * @param array      $words  list of words to search for
+ * @return array             list of pages found, associated with the search terms
  */
 function idx_lookup(&$words) {
     $Indexer = idx_get_indexer();

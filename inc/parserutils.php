@@ -92,8 +92,11 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
  * If $excuse is true an explanation is returned if the file
  * wasn't found
  *
- * @param string wiki page id
- * @param reference populated with page title from heading or page id
+ * @param string $id wiki page id
+ * @param string $title populated with page title from heading or page id
+ * @param string $rev revision string
+ * @param bool   $excuse if an excuse shall be renderer when no content is found
+ * @return string xhtml code
  * @deprecated
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
@@ -565,6 +568,7 @@ function p_get_parsermodes(){
         global $PARSER_MODES;
         $obj = null;
         foreach($pluginlist as $p){
+            /** @var DokuWiki_Syntax_Plugin $obj */
             if(!$obj =& plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
@@ -675,7 +679,12 @@ function p_render($mode,$instructions,&$info){
     return $Renderer->doc;
 }
 
+/**
+ * @param $mode string Mode of the renderer to get
+ * @return null|Doku_Renderer The renderer
+ */
 function & p_get_renderer($mode) {
+    /** @var Doku_Plugin_Controller $plugin_controller */
     global $conf, $plugin_controller;
 
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
@@ -723,6 +732,7 @@ function & p_get_renderer($mode) {
  *                                              METADATA_RENDER_USING_CACHE,
  *                                              METADATA_RENDER_UNLIMITED
  *
+ * @return string|null The first heading
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Hamann <michael@content-space.de>
  */
@@ -737,6 +747,7 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @param  string   $language   language to provide highlighting
  * @param  string   $wrapper    html element to wrap the returned highlighted text
  *
+ * @return string xhtml code
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
