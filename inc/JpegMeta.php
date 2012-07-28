@@ -1209,7 +1209,7 @@ class JpegMeta {
     function _parseFileInfo() {
         if (file_exists($this->_fileName) && is_file($this->_fileName)) {
             $this->_info['file'] = array();
-            $this->_info['file']['Name'] = utf8_basename($this->_fileName);
+            $this->_info['file']['Name'] = utf8_decodeFN(utf8_basename($this->_fileName));
             $this->_info['file']['Path'] = fullpath($this->_fileName);
             $this->_info['file']['Size'] = filesize($this->_fileName);
             if ($this->_info['file']['Size'] < 1024) {
