@@ -20,6 +20,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
         'toc'   => true, // render the TOC?
     );
 
+    var $doc = '';
+
     // keep some config options
     var $acronyms = array();
     var $smileys = array();
