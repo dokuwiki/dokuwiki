@@ -33,9 +33,6 @@ $_REQUEST['id'] = str_replace("\xC2\xAD", '', $INPUT->str('id')); //soft-hyphen
 $QUERY          = trim($INPUT->str('id'));
 $ID             = getID();
 
-// deprecated 2011-01-14
-$NS = getNS($ID);
-
 $REV   = $INPUT->int('rev');
 $IDX   = $INPUT->str('idx');
 $DATE  = $INPUT->int('date');
