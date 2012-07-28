@@ -1197,8 +1197,10 @@ function getGoogleQuery() {
     }
     $url = parse_url($_SERVER['HTTP_REFERER']);
 
-    $query = array();
+    // only handle common SEs
+    if(!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/',$url['host'])) return '';
 
+    $query = array();
     // temporary workaround against PHP bug #49733
     // see http://bugs.php.net/bug.php?id=49733
     if(UTF8_MBSTRING) $enc = mb_internal_encoding();
@@ -1206,16 +1208,16 @@ function getGoogleQuery() {
     if(UTF8_MBSTRING) mb_internal_encoding($enc);
 
     $q = '';
-    if(isset($query['q']))
-        $q = $query['q']; // google, live/msn, aol, ask, altavista, alltheweb, gigablast
-    elseif(isset($query['p']))
-        $q = $query['p']; // yahoo
-    elseif(isset($query['query']))
-        $q = $query['query']; // lycos, netscape, clusty, hotbot
-    elseif(preg_match("#a9\.com#i", $url['host'])) // a9
-        $q = urldecode(ltrim($url['path'], '/'));
+    if(isset($query['q'])){
+        $q = $query['q'];
+    }elseif(isset($query['p'])){
+        $q = $query['p'];
+    }elseif(isset($query['query'])){
+        $q = $query['query'];
+    }
+    $q = trim($q);
 
-    if($q === '') return '';
+    if(!$q) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
