@@ -5,9 +5,6 @@
  * This is the template you need to change for the overall look
  * of DokuWiki.
  *
- * You should leave the doctype at the very top - It should
- * always be the very first line of a document.
- *
  * @link   http://dokuwiki.org/templates
  * @author Andreas Gohr <andi@splitbrain.org>
  */
