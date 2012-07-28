@@ -60,6 +60,7 @@ div.dokuwiki a.mail {
   background-position: right 1px;
   padding-right: 16px;
   padding-left: 0;
+  display: inline-block; /* needed for IE7 */
 }
 
 div.dokuwiki a.mediafile {

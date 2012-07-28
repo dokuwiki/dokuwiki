@@ -1226,7 +1226,7 @@ function tpl_mediaFileDetails($image, $rev){
     list($ext,$mime,$dl) = mimetype($image,false);
     $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
     $class = 'select mediafile mf_'.$class;
-    $tabTitle = '<strong class="'.$class.'"><a href="'.ml($image).'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
+    $tabTitle = '<strong><a href="'.ml($image).'" class="'.$class.'" title="'.$lang['mediaview'].'">'.$image.'</a>'.'</strong>';
     if ($opened_tab === 'view' && $rev) {
         printf($lang['media_viewold'], $tabTitle, dformat($rev));
     } else {
