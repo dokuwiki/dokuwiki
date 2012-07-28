@@ -206,7 +206,6 @@ function p_cached_output($file, $format='xhtml', $id='') {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function p_cached_instructions($file,$cacheonly=false,$id='') {
-    global $conf;
     static $run = null;
     if(is_null($run)) $run = array();
 

@@ -65,7 +65,6 @@ define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
 function idx_get_version(){
     static $indexer_version = null;
     if ($indexer_version == null) {
-        global $conf;
         $version = INDEXER_VERSION;
 
         // DokuWiki version is included for the convenience of plugins
@@ -192,7 +191,6 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getPageWords($text) {
-        global $conf;
 
         $tokens = $this->tokenizer($text);
         $tokens = array_count_values($tokens);  // count the frequency of each token
@@ -415,8 +413,6 @@ class Doku_Indexer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function tokenizer($text, $wc=false) {
-        global $conf;
-        $words = array();
         $wc = ($wc) ? '' : '\*';
         $stopwords =& idx_get_stopwords();
 
