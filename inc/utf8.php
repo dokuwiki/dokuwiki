@@ -78,6 +78,31 @@ if(!function_exists('utf8_check')){
     }
 }
 
+if(!function_exists('utf8_basename')){
+    /**
+     * A locale independent basename() implementation
+     *
+     * works around a bug in PHP's basename() implementation
+     *
+     * @see basename()
+     * @link   https://bugs.php.net/bug.php?id=37738
+     * @param string $path     A path
+     * @param string $suffix   If the name component ends in suffix this will also be cut off
+     * @return string
+     */
+    function utf8_basename($path, $suffix=''){
+        $rpos = max(strrpos($path, '/'), strrpos($path, '\\'));
+        $file = substr($path, $rpos+1);
+
+        $suflen = strlen($suffix);
+        if($suflen && (substr($file, -$suflen) == $suffix)){
+            $file = substr($file, 0, -$suflen);
+        }
+
+        return $file;
+    }
+}
+
 if(!function_exists('utf8_strlen')){
     /**
      * Unicode aware replacement for strlen()
