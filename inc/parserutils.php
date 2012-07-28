@@ -570,7 +570,7 @@ function p_get_parsermodes(){
         $obj = null;
         foreach($pluginlist as $p){
             /** @var DokuWiki_Syntax_Plugin $obj */
-            if(!$obj =& plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
+            if(!$obj = plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
             $modes[] = array(

@@ -18,7 +18,7 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
     /**
      * Register its handlers with the dokuwiki's event controller
      */
-    function register(&$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('INDEXER_TASKS_RUN', 'AFTER',  $this, '_autosubmit', array());
     }
 
