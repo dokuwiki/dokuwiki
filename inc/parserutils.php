@@ -103,6 +103,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 function p_wiki_xhtml_summary($id, &$title, $rev='', $excuse=true){
     $file = wikiFN($id,$rev);
     $ret  = '';
+    $ins  = null;
 
     //ensure $id is in global $ID (needed for parsing)
     global $ID;
@@ -712,7 +713,7 @@ function & p_get_renderer($mode) {
             $Renderer =& $plugin_controller->load('renderer',$rname);
         }
 
-        if(is_null($Renderer)){
+        if(!isset($Renderer) || is_null($Renderer)){
             msg("No renderer '$rname' found for mode '$mode'",-1);
             return null;
         }

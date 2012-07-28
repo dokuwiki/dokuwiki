@@ -217,6 +217,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
       global $conf;            // definitely don't invoke "global $lang"
       $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
 
+      $lang = array();
       // don't include once, in case several plugin components require the same language file
       @include($path.'en/lang.php');
       if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
