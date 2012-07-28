@@ -495,12 +495,13 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 }
 
 /**
- * Just builds a link to a script
+ * Returns the URL to the DokuWiki base script
  *
- * @todo   maybe obsolete
+ * Consider using wl() instead, unless you absoutely need the doku.php endpoint
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function script($script = 'doku.php') {
+function script() {
     return DOKU_BASE.DOKU_SCRIPT;
 }
 
