@@ -92,14 +92,14 @@ if(!function_exists('utf8_basename')){
      */
     function utf8_basename($path, $suffix=''){
         $rpos = max(strrpos($path, '/'), strrpos($path, '\\'));
-        $file = substr($path, $rpos+1);
+        if($rpos) $path = substr($path, $rpos+1);
 
         $suflen = strlen($suffix);
-        if($suflen && (substr($file, -$suflen) == $suffix)){
-            $file = substr($file, 0, -$suflen);
+        if($suflen && (substr($path, -$suflen) == $suffix)){
+            $path = substr($path, 0, -$suflen);
         }
 
-        return $file;
+        return $path;
     }
 }
 
