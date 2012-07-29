@@ -62,6 +62,10 @@ class utf8_basename_test extends DokuWikiTest {
 
             array('bar.test.png', '', 'bar.test.png'),
             array('bar.test.png', '.png', 'bar.test'),
+
+            array('/bar.test.png', '', 'bar.test.png'),
+            array('\\bar.test.png', '', 'bar.test.png'),
+            array('/bar.test.png', '.png', 'bar.test'),
         );
 
         foreach($data as $test){
