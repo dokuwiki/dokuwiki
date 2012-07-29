@@ -91,10 +91,9 @@ if(!function_exists('utf8_basename')){
      * @return string
      */
     function utf8_basename($path, $suffix=''){
-        $slashrpos = strrpos($path, '/');
-        $bslashrpos = strrpos($path, '\\');
-        $rpos = max($slashrpos === false ? -1 : $slashrpos, $bslashrpos === false ? -1 : $bslashrpos);
-        $path = substr($path, $rpos+1);
+        $path = trim($path,'\\/');
+        $rpos = max(strrpos($path, '/'), strrpos($path, '\\'));
+        if($rpos) $path = substr($path, $rpos+1);
 
         $suflen = strlen($suffix);
         if($suflen && (substr($path, -$suflen) == $suffix)){
