@@ -296,12 +296,29 @@ function media_upload($ns,$auth,$file=false){
     $res = media_save(array('name' => $file['tmp_name'],
                             'mime' => $imime,
                             'ext'  => $iext), $ns.':'.$id,
-                      $INPUT->post->bool('ow'), $auth, 'move_uploaded_file');
+                      $INPUT->post->bool('ow'), $auth, 'copy_uploaded_file');
     if (is_array($res)) {
         msg($res[0], $res[1]);
         return false;
     }
     return $res;
+}
+
+/**
+ * An alternative to move_uploaded_file that copies
+ *
+ * Using copy, makes sure any setgid bits on the media directory are honored
+ *
+ * @see   move_uploaded_file()
+ * @param string $from
+ * @param string $to
+ * @return bool
+ */
+function copy_uploaded_file($from, $to){
+    if(!is_uploaded_file($from)) return false;
+    $ok = copy($from, $to);
+    @unlink($from);
+    return $ok;
 }
 
 /**
