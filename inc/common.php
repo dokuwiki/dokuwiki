@@ -1183,7 +1183,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     }
 
     // add mail headers to identify page changes in same mail thread
-    if ($conf['mailthreads'] && $who != 'register') {
+    if ($who != 'register') {
         $file = wikiFN($id);
         $cur = @filemtime($file);
 

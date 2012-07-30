@@ -178,7 +178,6 @@ $meta['registernotify'] = array('email');
 $meta['mailfrom']       = array('richemail');
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
-$meta['mailthreads']    = array('onoff');
 
 $meta['_syndication'] = array('fieldset');
 $meta['sitemap']     = array('numeric');
