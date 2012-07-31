@@ -188,11 +188,11 @@ img {
     color: #666;
     background-color: transparent;
     font-style: italic;
+    height: auto;
 }
 img,
 object {
     max-width: 100%;
-    height: auto;
 }
 /* IE8 and below won't display the images otherwise */
 button img {
