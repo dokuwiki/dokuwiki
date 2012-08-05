@@ -32,20 +32,25 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['
 /**
  * Prepare mailfrom replacement patterns
  *
+ * Also prepares a mailfromnone config that contains an autoconstructed address
+ * if the mailfrom one is userdependent and this might not be wanted (subscriptions)
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function mail_setup(){
     global $conf;
     global $USERINFO;
 
-    $replace = array();
+    // auto constructed address
+    $host = @parse_url(DOKU_URL,PHP_URL_HOST);
+    if(!$host) $host = 'example.com';
+    $noreply = 'noreply@'.$host;
 
+    $replace = array();
     if(!empty($USERINFO['mail'])){
         $replace['@MAIL@'] = $USERINFO['mail'];
     }else{
-        $host = @parse_url(DOKU_URL,PHP_URL_HOST);
-        if(!$host) $host = 'example.com';
-        $replace['@MAIL@'] = 'noreply@'.$host;
+        $replace['@MAIL@'] = $noreply;
     }
 
     if(!empty($_SERVER['REMOTE_USER'])){
@@ -60,9 +65,18 @@ function mail_setup(){
         $replace['@NAME@'] = '';
     }
 
-    $conf['mailfrom'] = str_replace(array_keys($replace),
-                                    array_values($replace),
-                                    $conf['mailfrom']);
+    // apply replacements
+    $from = str_replace(array_keys($replace),
+                        array_values($replace),
+                        $conf['mailfrom']);
+
+    // any replacements done? set different mailfromnone
+    if($from != $conf['mailfrom']){
+        $conf['mailfromnone'] = $noreply;
+    }else{
+        $conf['mailfromnone'] = $from;
+    }
+    $conf['mailfrom'] = $from;
 }
 
 /**
