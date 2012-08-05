@@ -191,7 +191,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '</div>'.NL;
 
         echo '<div class="footnotes"><div class="fn">'.NL;
-        echo '<sup><a id="fn__1" class="fn_bot" name="fn__1" href="#fnt__1">1)</a></sup>'.NL;
+        echo '<sup><a id="fn__1" class="fn_bot" href="#fnt__1">1)</a></sup>'.NL;
         echo $this->getLang('p_include');
         echo '</div></div>';
 
@@ -602,7 +602,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<tr>';
         echo '<th>'.$this->getLang('where').'</th>';
         echo '<th>'.$this->getLang('who').'</th>';
-        echo '<th>'.$this->getLang('perm').'<sup><a id="fnt__1" class="fn_top" name="fnt__1" href="#fn__1">1)</a></sup></th>';
+        echo '<th>'.$this->getLang('perm').'<sup><a id="fnt__1" class="fn_top" href="#fn__1">1)</a></sup></th>';
         echo '<th>'.$lang['btn_delete'].'</th>';
         echo '</tr>';
         foreach($this->acl as $where => $set){
@@ -630,7 +630,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 echo $this->_html_checkboxes($perm,$ispage,'acl['.$where.']['.$who.']');
                 echo '</td>';
 
-                echo '<td align="center">';
+                echo '<td class="check">';
                 echo '<input type="checkbox" name="del['.hsc($where).'][]" value="'.hsc($who).'" />';
                 echo '</td>';
                 echo '</tr>';
@@ -638,7 +638,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         echo '<tr>';
-        echo '<th align="right" colspan="4">';
+        echo '<th class="action" colspan="4">';
         echo '<input type="submit" value="'.$lang['btn_update'].'" name="cmd[update]" class="button" />';
         echo '</th>';
         echo '</tr>';
@@ -746,7 +746,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             }
 
             //build code
-            $ret .= '<label for="pbox'.$label.'" title="'.$this->getLang('acl_perm'.$perm).'"'.$class.'>';
+            $ret .= '<label for="pbox'.$label.'"'.$class.'>';
             $ret .= '<input '.buildAttributes($atts).' />&#160;';
             $ret .= $this->getLang('acl_perm'.$perm);
             $ret .= '</label>'.NL;

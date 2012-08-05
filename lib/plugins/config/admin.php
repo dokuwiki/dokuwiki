@@ -351,7 +351,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     }
 
     function _print_h1($id, $text) {
-      ptln('<h1><a name="'.$id.'" id="'.$id.'">'.$text.'</a></h1>');
+      ptln('<h1 id="'.$id.'">'.$text.'</h1>');
     }
 
 

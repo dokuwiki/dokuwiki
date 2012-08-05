@@ -67,6 +67,14 @@ div#acl_manager table.inline {
     margin: 0;
 }
 
+#acl_manager table .check {
+    text-align: center;
+}
+
+#acl_manager table .action {
+    text-align: right;
+}
+
 div#acl_manager .aclgroup {
     background: transparent url(pix/group.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
