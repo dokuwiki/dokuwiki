@@ -135,7 +135,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             $form .= '<label for="autosubmit">'
                 .'<input type="checkbox" name="autosubmit" id="autosubmit" '
                 .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
-                .'/>' . $this->getLang('autosubmit') .'<br />'
+                .'/> ' . $this->getLang('autosubmit') .'<br />'
                 .'</label>'
                 .'<input type="hidden" name="do" value="admin" />'
                 .'<input type="hidden" name="page" value="popularity" />';
