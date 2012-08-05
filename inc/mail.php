@@ -32,7 +32,7 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['
 /**
  * Prepare mailfrom replacement patterns
  *
- * Also prepares a mailfromnone config that contains an autoconstructed address
+ * Also prepares a mailfromnobody config that contains an autoconstructed address
  * if the mailfrom one is userdependent and this might not be wanted (subscriptions)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -72,9 +72,9 @@ function mail_setup(){
 
     // any replacements done? set different mailfromnone
     if($from != $conf['mailfrom']){
-        $conf['mailfromnone'] = $noreply;
+        $conf['mailfromnobody'] = $noreply;
     }else{
-        $conf['mailfromnone'] = $from;
+        $conf['mailfromnobody'] = $from;
     }
     $conf['mailfrom'] = $from;
 }

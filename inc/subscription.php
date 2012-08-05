@@ -373,6 +373,7 @@ function subscription_send_list($subscriber_mail, $ids, $ns_id) {
  * @param string $id              The page or namespace id
  * @param string $template        The name of the mail template
  *
+ * @return bool
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function subscription_send($subscriber_mail, $replaces, $subject, $id, $template) {
@@ -387,6 +388,7 @@ function subscription_send($subscriber_mail, $replaces, $subject, $id, $template
     $mail->bcc($subscriber_mail);
     $mail->subject($subject);
     $mail->setBody($text,$trep);
+    $mail->from($conf['mailfromnobody']);
     $mail->setHeader(
         'List-Unsubscribe',
         '<'.wl($id,array('do'=>'subscribe'),true,'&').'>',
