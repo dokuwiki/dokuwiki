@@ -12,7 +12,8 @@ class input_test extends DokuWikiTest {
         'zero'   => '0',
         'one'    => '1',
         'empty'  => '',
-        'emptya' => array()
+        'emptya' => array(),
+        'do'     => array('save' => 'Speichern'),
     );
 
     public function test_str() {
@@ -213,4 +214,20 @@ class input_test extends DokuWikiTest {
         $this->assertEquals('bla',$test);
     }
 
+    public function test_extract(){
+        $_REQUEST = $this->data;
+        $_POST    = $this->data;
+        $_GET     = $this->data;
+        $INPUT    = new Input();
+
+        $this->assertEquals('save', $INPUT->extract('do')->str('do'));
+        $this->assertEquals('', $INPUT->extract('emptya')->str('emptya'));
+        $this->assertEquals('foo', $INPUT->extract('string')->str('string'));
+        $this->assertEquals('foo', $INPUT->extract('array')->str('array'));
+
+        $this->assertEquals('save', $INPUT->post->extract('do')->str('do'));
+        $this->assertEquals('', $INPUT->post->extract('emptya')->str('emptya'));
+        $this->assertEquals('foo', $INPUT->post->extract('string')->str('string'));
+        $this->assertEquals('foo', $INPUT->post->extract('array')->str('array'));
+    }
 }
