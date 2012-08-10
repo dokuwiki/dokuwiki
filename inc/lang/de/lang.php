@@ -33,6 +33,7 @@ $lang['btn_edit']              = 'Diese Seite bearbeiten';
 $lang['btn_source']            = 'Zeige Quelltext';
 $lang['btn_show']              = 'Seite anzeigen';
 $lang['btn_create']            = 'Seite anlegen';
+$lang['btn_purge']             = 'Seite erneuern';
 $lang['btn_search']            = 'Suche';
 $lang['btn_save']              = 'Speichern';
 $lang['btn_preview']           = 'Vorschau';

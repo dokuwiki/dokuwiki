@@ -571,6 +571,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
  * Available actions are
  *
  *  edit        - edit/create/show/draft
+ *  purge       - show, but refresh from cache
  *  history     - old revisions
  *  recent      - recent changes
  *  login       - login/logout - if ACL enabled
@@ -629,6 +630,12 @@ function tpl_get_action($type) {
                 $type      = 'show';
                 $accesskey = 'v';
             }
+            break;
+        case 'purge':
+            if(!$INFO['exists'] || !$INFO['writable']) return false;
+            $accesskey       = 'c';
+            $params['do']    = 'show';
+            $params['purge'] = 'true';
             break;
         case 'revisions':
             $type      = 'revs';
