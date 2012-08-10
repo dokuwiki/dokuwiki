@@ -821,6 +821,7 @@ function tpl_breadcrumbs($sep = '•') {
  * @author Nigel McNie <oracle.shinoda@gmail.com>
  * @author Sean Coates <sean@caedmon.net>
  * @author <fredrik@averpil.com>
+ * @author Philipp A. Hartmann <pah@qo.cx>
  * @todo   May behave strangely in RTL languages
  * @param string $sep Separator between entries
  * @return bool
@@ -833,13 +834,17 @@ function tpl_youarehere($sep = ' » ') {
     // check if enabled
     if(!$conf['youarehere']) return false;
 
-    $parts = explode(':', $ID);
-    $count = count($parts);
+    $parts  = explode(':', $ID);
+    $count  = count($parts);
+    $cursep = '';
 
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
-    // always print the startpage
-    tpl_pagelink(':'.$conf['start']);
+    // print the startpage, if not disabled
+    if($ID == $conf['start'] || $conf['youarehere'] != 2) {
+        tpl_pagelink(':'.$conf['start']);
+        $cursep = $sep;
+    }
 
     // print intermediate namespace links
     $part = '';
@@ -849,7 +854,7 @@ function tpl_youarehere($sep = ' » ') {
         if($page == $conf['start']) continue; // Skip startpage
 
         // output
-        echo $sep;
+        echo $cursep; $cursep = $sep;
         tpl_pagelink($page);
     }
 
@@ -858,7 +863,7 @@ function tpl_youarehere($sep = ' » ') {
     if(isset($page) && $page == $part.$parts[$i]) return true;
     $page = $part.$parts[$i];
     if($page == $conf['start']) return true;
-    echo $sep;
+    echo $cursep; $cursep = $sep;
     tpl_pagelink($page);
     return true;
 }
