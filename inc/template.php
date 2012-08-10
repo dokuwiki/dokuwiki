@@ -1386,6 +1386,9 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     $act = tpl_get_action('edit');
     if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
+    $act = tpl_get_action('purge');
+    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
     $act = tpl_get_action('revert');
     if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
