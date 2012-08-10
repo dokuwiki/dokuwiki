@@ -199,6 +199,11 @@ $lang['ftp____root'] = 'FTP root directory for safemode hack';
 /* License Options */
 $lang['license_o_'] = 'None chosen';
 
+/* youarehere options */
+$lang['youarehere_o_0'] = 'no';
+$lang['youarehere_o_1'] = 'yes, including start page';
+$lang['youarehere_o_2'] = 'yes, excluding start page';
+
 /* typography options */
 $lang['typography_o_0'] = 'none';
 $lang['typography_o_1'] = 'excluding single quotes';
