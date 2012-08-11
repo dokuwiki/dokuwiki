@@ -68,7 +68,7 @@ function act_dispatch(){
         }
 
         //register
-        if($ACT == 'register' && $_POST['save'] && register()){
+        if($ACT == 'register' && $INPUT->post->bool('save') && register()){
             $ACT = 'login';
         }
 
