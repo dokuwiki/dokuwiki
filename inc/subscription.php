@@ -1,24 +1,11 @@
 <?php
 /**
- * Utilities for handling (email) subscriptions
- *
- * The public interface of this file consists of the functions
- * - subscription_find
- * - subscription_send_digest
- * - subscription_send_list
- * - subscription_set
- * - get_info_subscribed
- * - subscription_addresslist
- * - subscription_lock
- * - subscription_unlock
- *
- * @fixme handle $conf['subscribers'] and disable actions and $auth == null
+ * Class for handling (email) subscriptions
  *
  * @author  Adrian Lang <lang@cosmocode.de>
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
-
 class Subscription {
 
     /**
@@ -511,10 +498,9 @@ class Subscription {
      * @param array &$data Containing $id (the page id), $self (whether the author
      *                     should be notified, $addresslist (current email address
      *                     list)
-     * @return string
      */
     public function notifyaddresses(&$data) {
-        if(!$this->isenabled()) return false;
+        if(!$this->isenabled()) return;
 
         /** @var auth_basic $auth */
         global $auth;
