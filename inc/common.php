@@ -1117,7 +1117,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         $to   = $conf['notify'];
         $bcc  = '';
     } elseif($who == 'subscribers') {
-        if(!$conf['subscribers']) return false; //subscribers enabled?
+        if(!actionOK('subscribe')) return false; //subscribers enabled?
         if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return false; //skip minors
         $data = array('id' => $id, 'addresslist' => '', 'self' => false);
         trigger_event(

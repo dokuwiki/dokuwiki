@@ -170,7 +170,7 @@ function sendDigest() {
     global $ID;
 
     echo 'sendDigest(): started'.NL;
-    if (!$conf['subscribers']) {
+    if(!actionOK('subscribe')) {
         echo 'sendDigest(): disabled'.NL;
         return false;
     }

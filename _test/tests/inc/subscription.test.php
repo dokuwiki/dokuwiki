@@ -212,6 +212,10 @@ class MockupSubscription extends Subscription {
         $this->mails = array();
     }
 
+    public function isenabled(){
+        return true;
+    }
+
     public function buildregex($user = null, $style = null, $data = null) {
         return parent::buildregex($user, $style, $data);
     }

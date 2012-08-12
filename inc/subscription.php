@@ -22,6 +22,15 @@
 class Subscription {
 
     /**
+     * Check if subscription system is enabled
+     *
+     * @return bool
+     */
+    public function isenabled() {
+        return actionOK('subscribe');
+    }
+
+    /**
      * Return the subscription meta file for the given ID
      *
      * @author Adrian Lang <lang@cosmocode.de>
@@ -156,6 +165,8 @@ class Subscription {
      * @return array
      */
     public function subscribers($page, $user = null, $style = null, $data = null) {
+        if(!$this->isenabled()) return array();
+
         // Construct list of files which may contain relevant subscriptions.
         $files = array(':' => $this->file(':'));
         do {
@@ -201,6 +212,8 @@ class Subscription {
      * @return bool
      */
     public function add($id, $user, $style, $data = '') {
+        if(!$this->isenabled()) return false;
+
         // delete any existing subscription
         $this->remove($id, $user);
 
@@ -234,6 +247,8 @@ class Subscription {
      * @return bool
      */
     public function remove($id, $user = null, $style = null, $data = null) {
+        if(!$this->isenabled()) return false;
+
         $file = $this->file($id);
         if(!file_exists($file)) return true;
 
@@ -254,10 +269,9 @@ class Subscription {
      * @author Adrian Lang <lang@cosmocode.de>
      */
     function user_subscription($id = '', $user = '') {
-        global $ID;
-        global $conf;
-        if(!$conf['subscribers']) return false;
+        if(!$this->isenabled()) return false;
 
+        global $ID;
         if(!$id) $id = $ID;
         if(!$user) $user = $_SERVER['REMOTE_USER'];
 
@@ -288,6 +302,8 @@ class Subscription {
      * @return int number of sent mails
      */
     public function send_bulk($page) {
+        if(!$this->isenabled()) return 0;
+
         /** @var auth_basic $auth */
         global $auth;
         global $conf;
@@ -497,9 +513,11 @@ class Subscription {
      * @return string
      */
     public function notifyaddresses(&$data) {
-        global $conf;
+        if(!$this->isenabled()) return false;
+
         /** @var auth_basic $auth */
         global $auth;
+        global $conf;
 
         $id          = $data['id'];
         $self        = $data['self'];
