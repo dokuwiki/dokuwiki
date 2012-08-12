@@ -1122,7 +1122,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         $data = array('id' => $id, 'addresslist' => '', 'self' => false);
         trigger_event(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
-            'subscription_addresslist'
+            array(new Subscription(), 'notifyaddresses')
         );
         $bcc = $data['addresslist'];
         if(empty($bcc)) return false;

@@ -12,7 +12,7 @@
  * - subscription_lock
  * - subscription_unlock
  *
- * @fixme handle $conf['subscribers'] and disable actions
+ * @fixme handle $conf['subscribers'] and disable actions and $auth == null
  *
  * @author  Adrian Lang <lang@cosmocode.de>
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -480,26 +480,23 @@ class Subscription {
         return $mail->send();
     }
 
-
-
-    // FIXME no refactoring below, yet
-
     /**
-     * Return a string with the email addresses of all the
-     * users subscribed to a page
+     * Default callback for COMMON_NOTIFY_ADDRESSLIST
      *
-     * This is the default action for COMMON_NOTIFY_ADDRESSLIST.
+     * Aggregates all email addresses of user who have subscribed the given page with 'every' style
      *
      * @author Steven Danz <steven-danz@kc.rr.com>
      * @author Adrian Lang <lang@cosmocode.de>
      *
-     * @todo this does NOT return a string but uses a reference to write back, either fix function or docs
-     * @param array $data Containing $id (the page id), $self (whether the author
-     *                    should be notified, $addresslist (current email address
-     *                    list)
+     * @todo move the whole functionality into this class, trigger SUBSCRIPTION_NOTIFY_ADDRESSLIST instead,
+     *       use an array for the addresses within it
+     *
+     * @param array &$data Containing $id (the page id), $self (whether the author
+     *                     should be notified, $addresslist (current email address
+     *                     list)
      * @return string
      */
-    function subscription_addresslist(&$data) {
+    public function notifyaddresses(&$data) {
         global $conf;
         /** @var auth_basic $auth */
         global $auth;
@@ -508,30 +505,24 @@ class Subscription {
         $self        = $data['self'];
         $addresslist = $data['addresslist'];
 
-        if(!$conf['subscribers'] || $auth === null) {
-            return '';
-        }
-        $pres = array('style' => 'every', 'escaped' => true);
-        if(!$self && isset($_SERVER['REMOTE_USER'])) {
-            $pres['user'] = '((?!'.preg_quote_cb($_SERVER['REMOTE_USER']).
-                '(?: |$))\S+)';
-        }
-        $subs   = subscription_find($id, $pres);
-        $emails = array();
-        foreach($subs as $by_targets) {
-            foreach($by_targets as $sub) {
-                $info = $auth->getUserData($sub[0]);
-                if($info === false) continue;
-                $level = auth_aclcheck($id, $sub[0], $info['grps']);
+        $subscriptions = $this->subscribers($id, null, 'every');
+
+        $result = array();
+        foreach($subscriptions as $target => $users) {
+            foreach($users as $user => $info) {
+                $userinfo = $auth->getUserData($user);
+                if($userinfo === false) continue;
+                if(!$userinfo['mail']) continue;
+                if(!$self && $user == $_SERVER['REMOTE_USER']) continue; //skip our own changes
+
+                $level = auth_aclcheck($id, $user, $userinfo['grps']);
                 if($level >= AUTH_READ) {
-                    if(strcasecmp($info['mail'], $conf['notify']) != 0) {
-                        $emails[$sub[0]] = $info['mail'];
+                    if(strcasecmp($userinfo['mail'], $conf['notify']) != 0) { //skip user who get notified elsewhere
+                        $result[$user] = $userinfo['mail'];
                     }
                 }
             }
         }
-        $data['addresslist'] = trim($addresslist.','.implode(',', $emails), ',');
+        $data['addresslist'] = trim($addresslist.','.implode(',', $result), ',');
     }
-
-
 }
