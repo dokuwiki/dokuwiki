@@ -223,6 +223,7 @@ class Subscription {
 
         if(!$user) throw new Exception('no subscription user given');
         if(!$style) throw new Exception('no subscription style given');
+        if(!$data) $data = time(); //always add current time for new subscriptions
 
         $line = "$user $style";
         if($data) $line .= " $data";
