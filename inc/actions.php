@@ -700,21 +700,28 @@ function act_subscription($act){
 
     $target = $params['target'];
     $style  = $params['style'];
-    $data   = $params['data'];
     $action = $params['action'];
 
     // Perform action.
-    if (!subscription_set($_SERVER['REMOTE_USER'], $target, $style, $data)) {
+    $sub = new Subscription();
+    if($action == 'unsubscribe'){
+        $ok = $sub->remove($target, $_SERVER['REMOTE_USER'], $style);
+    }else{
+        $ok = $sub->add($target, $_SERVER['REMOTE_USER'], $style);
+    }
+
+    if($ok) {
+        msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                    prettyprint_id($target)), 1);
+        act_redirect($ID, $act);
+    } else {
         throw new Exception(sprintf($lang["subscr_{$action}_error"],
                                     hsc($INFO['userinfo']['name']),
                                     prettyprint_id($target)));
     }
-    msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
-                prettyprint_id($target)), 1);
-    act_redirect($ID, $act);
 
     // Assure that we have valid data if act_redirect somehow fails.
-    $INFO['subscribed'] = get_info_subscribed();
+    $INFO['subscribed'] = $sub->user_subscription();
     return 'show';
 }
 
