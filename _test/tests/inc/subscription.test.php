@@ -156,6 +156,43 @@ class subscription_test extends DokuWikiTest {
         $this->assertEquals(array('arthur@example.com','arthur@example.com','arthur@example.com'), $sub->mails);
     }
 
+    function test_bulklist(){
+        $sub = new MockupSubscription();
+
+        // let's start with nothing
+        $this->assertEquals(0, $sub->send_bulk('sub1:test'));
+
+        // create a subscription
+        $sub->add('sub1:', 'testuser', 'list', '978328800'); // last mod 2001-01-01
+
+        // now create change
+        $_SERVER['REMOTE_USER'] = 'someguy';
+        saveWikiText('sub1:test', 'foo bar', 'a subscription change', false);
+
+        // should trigger a mail
+        $this->assertEquals(1, $sub->send_bulk('sub1:test'));
+        $this->assertEquals(array('arthur@example.com'), $sub->mails);
+
+        $sub->reset();
+
+        // now create more changes
+        $_SERVER['REMOTE_USER'] = 'someguy';
+        saveWikiText('sub1:sub2:test', 'foo bar', 'a subscription change', false);
+        saveWikiText('sub1:another_test', 'foo bar', 'a subscription change', false);
+
+        // should not trigger a mail, because the subscription time has not been reached, yet
+        $this->assertEquals(0, $sub->send_bulk('sub1:test'));
+        $this->assertEquals(array(), $sub->mails);
+
+        // reset the subscription time
+        $sub->add('sub1:', 'testuser', 'list', '978328800'); // last mod 2001-01-01
+
+        // we now should get a single mail for all three changes
+        $this->assertEquals(1, $sub->send_bulk('sub1:test'));
+        $this->assertEquals(array('arthur@example.com'), $sub->mails);
+    }
+
+
 }
 
 /**
