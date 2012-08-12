@@ -107,9 +107,11 @@ function pageinfo() {
     $info['isadmin']   = false;
     $info['ismanager'] = false;
     if(isset($_SERVER['REMOTE_USER'])) {
+        $sub = new Subscription();
+
         $info['userinfo']   = $USERINFO;
         $info['perm']       = auth_quickaclcheck($ID);
-        $info['subscribed'] = get_info_subscribed();
+        $info['subscribed'] = $sub->user_subscription();
         $info['client']     = $_SERVER['REMOTE_USER'];
 
         if($info['perm'] == AUTH_ADMIN) {

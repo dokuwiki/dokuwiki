@@ -253,29 +253,236 @@ class Subscription {
      * @return array
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    function user_subscription($id='', $user='') {
+    function user_subscription($id = '', $user = '') {
         global $ID;
         global $conf;
         if(!$conf['subscribers']) return false;
 
-        if(!$id)   $id = $ID;
+        if(!$id) $id = $ID;
         if(!$user) $user = $_SERVER['REMOTE_USER'];
-
 
         $subs = $this->subscribers($id, $user);
         if(!count($subs)) return false;
 
         $result = array();
-        foreach($subs as $target => $data) {
+        foreach($subs as $target => $info) {
             $result[] = array(
                 'target' => $target,
-                'style'  => $data[$user][0],
-                'data'   => $data[$user][1]
+                'style'  => $info[$user][0],
+                'data'   => $info[$user][1]
             );
         }
 
         return $result;
     }
+
+    /**
+     * Send digest and list subscriptions
+     *
+     * This sends mails to all subscribers that have a subscription for namespaces above
+     * the given page if the needed $conf['subscribe_time'] has passed already.
+     *
+     * This function is called form lib/exe/indexer.php
+     *
+     * @param string $page
+     * @return int number of sent mails
+     */
+    public function send_bulk($page) {
+        /** @var auth_basic $auth */
+        global $auth;
+        global $conf;
+        global $USERINFO;
+        $count = 0;
+
+        $subscriptions = $this->subscribers($page, null, array('digest', 'list'));
+
+        // remember current user info
+        $olduinfo = $USERINFO;
+        $olduser  = $_SERVER['REMOTE_USER'];
+
+        foreach($subscriptions as $target => $users) {
+            if(!$this->lock($target)) continue;
+
+            foreach($users as $user => $info) {
+                list($style, $lastupdate) = $info;
+
+                $lastupdate = (int) $lastupdate;
+                if($lastupdate + $conf['subscribe_time'] > time()) {
+                    // Less than the configured time period passed since last
+                    // update.
+                    continue;
+                }
+
+                // Work as the user to make sure ACLs apply correctly
+                $USERINFO               = $auth->getUserData($user);
+                $_SERVER['REMOTE_USER'] = $user;
+                if($USERINFO === false) continue;
+                if(!$USERINFO['mail']) continue;
+
+                if(substr($target, -1, 1) === ':') {
+                    // subscription target is a namespace, get all changes within
+                    $changes = getRecentsSince($lastupdate, null, getNS($target));
+                } else {
+                    // single page subscription, check ACL ourselves
+                    if(auth_quickaclcheck($target) < AUTH_READ) continue;
+                    $meta    = p_get_metadata($target);
+                    $changes = array($meta['last_change']);
+                }
+
+                // Filter out pages only changed in small and own edits
+                $change_ids = array();
+                foreach($changes as $rev) {
+                    $n = 0;
+                    while(!is_null($rev) && $rev['date'] >= $lastupdate &&
+                        ($_SERVER['REMOTE_USER'] === $rev['user'] ||
+                            $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)) {
+                        $rev = getRevisions($rev['id'], $n++, 1);
+                        $rev = (count($rev) > 0) ? $rev[0] : null;
+                    }
+
+                    if(!is_null($rev) && $rev['date'] >= $lastupdate) {
+                        // Some change was not a minor one and not by myself
+                        $change_ids[] = $rev['id'];
+                    }
+                }
+
+                // send it
+                if($style === 'digest') {
+                    foreach($change_ids as $change_id) {
+                        $this->send_digest(
+                            $USERINFO['mail'], $change_id,
+                            $lastupdate
+                        );
+                        $count++;
+                    }
+                } elseif($style === 'list') {
+                    $this->send_list($USERINFO['mail'], $change_ids, $target);
+                    $count++;
+                }
+                // TODO: Handle duplicate subscriptions.
+
+                // Update notification time.
+                $this->add($target, $user, $style, time());
+            }
+            $this->unlock($target);
+        }
+
+        // restore current user info
+        $USERINFO               = $olduinfo;
+        $_SERVER['REMOTE_USER'] = $olduser;
+        return $count;
+    }
+
+    /**
+     * Send a digest mail
+     *
+     * Sends a digest mail showing a bunch of changes.
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
+     *
+     * @param string $subscriber_mail The target mail address
+     * @param array  $id              The ID
+     * @param int    $lastupdate      Time of the last notification
+     */
+    protected function send_digest($subscriber_mail, $id, $lastupdate) {
+        $n = 0;
+        do {
+            $rev = getRevisions($id, $n++, 1);
+            $rev = (count($rev) > 0) ? $rev[0] : null;
+        } while(!is_null($rev) && $rev > $lastupdate);
+
+        $replaces = array(
+            'NEWPAGE'   => wl($id, '', true, '&'),
+            'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
+        );
+        if(!is_null($rev)) {
+            $subject             = 'changed';
+            $replaces['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
+            $df                  = new Diff(explode("\n", rawWiki($id, $rev)),
+                                            explode("\n", rawWiki($id)));
+            $dformat             = new UnifiedDiffFormatter();
+            $replaces['DIFF']    = $dformat->format($df);
+        } else {
+            $subject             = 'newpage';
+            $replaces['OLDPAGE'] = 'none';
+            $replaces['DIFF']    = rawWiki($id);
+        }
+        $this->send(
+            $subscriber_mail, $replaces, $subject, $id,
+            'subscr_digest'
+        );
+    }
+
+    /**
+     * Send a list mail
+     *
+     * Sends a list mail showing a list of changed pages.
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
+     *
+     * @param string $subscriber_mail The target mail address
+     * @param array  $ids             Array of ids
+     * @param string $ns_id           The id of the namespace
+     */
+    protected function send_list($subscriber_mail, $ids, $ns_id) {
+        if(count($ids) === 0) return;
+        global $conf;
+        $list = '';
+        foreach($ids as $id) {
+            $list .= '* '.wl($id, array(), true).NL;
+        }
+        $this->send(
+            $subscriber_mail,
+            array(
+                 'DIFF'      => rtrim($list),
+                 'SUBSCRIBE' => wl(
+                     $ns_id.$conf['start'],
+                     array('do' => 'subscribe'),
+                     true, '&'
+                 )
+            ),
+            'subscribe_list',
+            prettyprint_id($ns_id),
+            'subscr_list'
+        );
+    }
+
+    /**
+     * Helper function for sending a mail
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
+     *
+     * @param string $subscriber_mail The target mail address
+     * @param array  $replaces        Predefined parameters used to parse the
+     *                                template
+     * @param string $subject         The lang id of the mail subject (without the
+     *                                prefix “mail_”)
+     * @param string $id              The page or namespace id
+     * @param string $template        The name of the mail template
+     * @return bool
+     */
+    protected function send($subscriber_mail, $replaces, $subject, $id, $template) {
+        global $lang;
+
+        $text = rawLocale($template);
+        $trep = array_merge($replaces, array('PAGE' => $id));
+
+        $subject = $lang['mail_'.$subject].' '.$id;
+        $mail    = new Mailer();
+        $mail->bcc($subscriber_mail);
+        $mail->subject($subject);
+        $mail->setBody($text, $trep);
+        $mail->setHeader(
+            'List-Unsubscribe',
+            '<'.wl($id, array('do'=> 'subscribe'), true, '&').'>',
+            false
+        );
+        return $mail->send();
+    }
+
+
+
+    // FIXME no refactoring below, yet
 
     /**
      * Return a string with the email addresses of all the
@@ -326,111 +533,5 @@ class Subscription {
         $data['addresslist'] = trim($addresslist.','.implode(',', $emails), ',');
     }
 
-    /**
-     * Send a digest mail
-     *
-     * Sends a digest mail showing a bunch of changes.
-     *
-     * @author Adrian Lang <lang@cosmocode.de>
-     *
-     * @param string $subscriber_mail The target mail address
-     * @param array  $id              The ID
-     * @param int    $lastupdate      Time of the last notification
-     */
-    function subscription_send_digest($subscriber_mail, $id, $lastupdate) {
-        $n = 0;
-        do {
-            $rev = getRevisions($id, $n++, 1);
-            $rev = (count($rev) > 0) ? $rev[0] : null;
-        } while(!is_null($rev) && $rev > $lastupdate);
-
-        $replaces = array(
-            'NEWPAGE'   => wl($id, '', true, '&'),
-            'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
-        );
-        if(!is_null($rev)) {
-            $subject             = 'changed';
-            $replaces['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-            $df                  = new Diff(explode("\n", rawWiki($id, $rev)),
-                                            explode("\n", rawWiki($id)));
-            $dformat             = new UnifiedDiffFormatter();
-            $replaces['DIFF']    = $dformat->format($df);
-        } else {
-            $subject             = 'newpage';
-            $replaces['OLDPAGE'] = 'none';
-            $replaces['DIFF']    = rawWiki($id);
-        }
-        subscription_send(
-            $subscriber_mail, $replaces, $subject, $id,
-            'subscr_digest'
-        );
-    }
-
-    /**
-     * Send a list mail
-     *
-     * Sends a list mail showing a list of changed pages.
-     *
-     * @author Adrian Lang <lang@cosmocode.de>
-     *
-     * @param string $subscriber_mail The target mail address
-     * @param array  $ids             Array of ids
-     * @param string $ns_id           The id of the namespace
-     */
-    function subscription_send_list($subscriber_mail, $ids, $ns_id) {
-        if(count($ids) === 0) return;
-        global $conf;
-        $list = '';
-        foreach($ids as $id) {
-            $list .= '* '.wl($id, array(), true).NL;
-        }
-        subscription_send(
-            $subscriber_mail,
-            array(
-                 'DIFF'      => rtrim($list),
-                 'SUBSCRIBE' => wl(
-                     $ns_id.$conf['start'],
-                     array('do' => 'subscribe'),
-                     true, '&'
-                 )
-            ),
-            'subscribe_list',
-            prettyprint_id($ns_id),
-            'subscr_list'
-        );
-    }
-
-    /**
-     * Helper function for sending a mail
-     *
-     * @author Adrian Lang <lang@cosmocode.de>
-     *
-     * @param string $subscriber_mail The target mail address
-     * @param array  $replaces        Predefined parameters used to parse the
-     *                                template
-     * @param string $subject         The lang id of the mail subject (without the
-     *                                prefix “mail_”)
-     * @param string $id              The page or namespace id
-     * @param string $template        The name of the mail template
-     * @return bool
-     */
-    function subscription_send($subscriber_mail, $replaces, $subject, $id, $template) {
-        global $lang;
-
-        $text = rawLocale($template);
-        $trep = array_merge($replaces, array('PAGE' => $id));
-
-        $subject = $lang['mail_'.$subject].' '.$id;
-        $mail    = new Mailer();
-        $mail->bcc($subscriber_mail);
-        $mail->subject($subject);
-        $mail->setBody($text, $trep);
-        $mail->setHeader(
-            'List-Unsubscribe',
-            '<'.wl($id, array('do'=> 'subscribe'), true, '&').'>',
-            false
-        );
-        return $mail->send();
-    }
 
 }
