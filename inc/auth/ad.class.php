@@ -15,6 +15,7 @@
  *   $conf['passcrypt']      = 'ssha';
  *
  *   $conf['auth']['ad']['account_suffix']     = '
+ *
  * @my.domain.org';
  *   $conf['auth']['ad']['base_dn']            = 'DC=my,DC=domain,DC=org';
  *   $conf['auth']['ad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
@@ -211,6 +212,12 @@ class auth_ad extends auth_basic {
             $info['grps'][] = $conf['defaultgroup'];
         }
 
+        // add the user's domain to the groups
+        $domain = $this->_userDomain($user);
+        if($domain && !in_array("domain-$domain", (array) $info['grps'])) {
+            $info['grps'][] = $this->cleanGroup("domain-$domain");
+        }
+
         // check expiry time
         if($info['expires'] && $this->cnf['expirywarn']) {
             $result            = $adldap->domain_info(array('maxpwdage')); // maximum pass age
@@ -263,6 +270,8 @@ class auth_ad extends auth_basic {
      * @return string
      */
     public function cleanUser($user) {
+        $domain = '';
+
         // get NTLM or Kerberos domain part
         list($dom, $user) = explode('\\', $user, 2);
         if(!$user) $user = $dom;
@@ -271,8 +280,8 @@ class auth_ad extends auth_basic {
         if($dom) $domain = $dom;
 
         // clean up both
-        $domain  = utf8_strtolower(trim($domain));
-        $user = utf8_strtolower(trim($user));
+        $domain = utf8_strtolower(trim($domain));
+        $user   = utf8_strtolower(trim($user));
 
         // is this a known, valid domain? if not discard
         if(!is_array($this->cnf[$domain])) {
