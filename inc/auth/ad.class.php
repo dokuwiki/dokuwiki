@@ -244,8 +244,8 @@ class auth_ad extends auth_basic {
         list($name, $dom) = explode('@', $name, 2);
 
         // clean up both
-        $dom  = strtolower(trim($dom));
-        $name = strtolower(trim($name));
+        $dom  = utf8_strtolower(trim($dom));
+        $name = utf8_strtolower(trim($name));
 
         // is this a known, valid domain? if not discard
         if(!is_array($this->cnf[$dom])) {
