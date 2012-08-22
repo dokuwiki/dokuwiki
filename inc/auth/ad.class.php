@@ -131,7 +131,8 @@ class auth_ad extends auth_basic {
 
         $adldap = $this->_adldap($this->_userDomain($user));
         if(!$adldap) return false;
-        return $adldap->authenticate($user, $pass);
+
+        return $adldap->authenticate($this->_userName($user), $pass);
     }
 
     /**
@@ -174,7 +175,7 @@ class auth_ad extends auth_basic {
         $fields = array_unique($fields);
 
         //get info for given user
-        $result = $adldap->user_info($user, $fields);
+        $result = $adldap->user_info($this->_userName($user), $fields);
         if($result == false) {
             return array();
         }
@@ -197,7 +198,7 @@ class auth_ad extends auth_basic {
         }
 
         // handle ActiveDirectory memberOf
-        $info['grps'] = $adldap->user_groups($user, (bool) $this->opts['recursive_groups']);
+        $info['grps'] = $adldap->user_groups($this->_userName($user), (bool) $this->opts['recursive_groups']);
 
         if(is_array($info['grps'])) {
             foreach($info['grps'] as $ndx => $group) {
@@ -258,28 +259,29 @@ class auth_ad extends auth_basic {
      * Normalizes domain parts, does not modify the user name itself (unlike cleanGroup)
      *
      * @author Andreas Gohr <gohr@cosmocode.de>
-     * @param string $name
+     * @param string $user
      * @return string
      */
-    public function cleanUser($name) {
+    public function cleanUser($user) {
         // get NTLM or Kerberos domain part
-        list($dom, $name) = explode('\\', $name, 2);
-        if(!$name) $name = $dom;
-        list($name, $dom) = explode('@', $name, 2);
+        list($dom, $user) = explode('\\', $user, 2);
+        if(!$user) $user = $dom;
+        if($dom) $domain = $dom;
+        list($user, $dom) = explode('@', $user, 2);
+        if($dom) $domain = $dom;
 
         // clean up both
-        $dom  = utf8_strtolower(trim($dom));
-        $name = utf8_strtolower(trim($name));
+        $domain  = utf8_strtolower(trim($domain));
+        $user = utf8_strtolower(trim($user));
 
         // is this a known, valid domain? if not discard
-        if(!is_array($this->cnf[$dom])) {
-            $dom = '';
+        if(!is_array($this->cnf[$domain])) {
+            $domain = '';
         }
 
         // reattach domain
-        if($dom) $name = "$name@$dom";
-
-        return $name;
+        if($domain) $user = "$user@$domain";
+        return $user;
     }
 
     /**
@@ -346,7 +348,7 @@ class auth_ad extends auth_basic {
         // password changing
         if(isset($changes['pass'])) {
             try {
-                $return = $adldap->user_password($user, $changes['pass']);
+                $return = $adldap->user_password($this->_userName($user), $changes['pass']);
             } catch(adLDAPException $e) {
                 if($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
@@ -368,7 +370,7 @@ class auth_ad extends auth_basic {
         }
         if(count($adchanges)) {
             try {
-                $return = $return & $adldap->user_modify($user, $adchanges);
+                $return = $return & $adldap->user_modify($this->_userName($user), $adchanges);
             } catch(adLDAPException $e) {
                 if($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
@@ -419,6 +421,17 @@ class auth_ad extends auth_basic {
     protected function _userDomain($user) {
         list(, $domain) = explode('@', $user, 2);
         return $domain;
+    }
+
+    /**
+     * Get the user part from a user
+     *
+     * @param $user
+     * @return string
+     */
+    protected function _userName($user) {
+        list($name) = explode('@', $user, 2);
+        return $name;
     }
 
     /**
