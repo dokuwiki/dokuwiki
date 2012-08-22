@@ -14,7 +14,8 @@
  *   $conf['authtype']       = 'ad';
  *   $conf['passcrypt']      = 'ssha';
  *
- *   $conf['auth']['ad']['account_suffix']     = '@my.domain.org';
+ *   $conf['auth']['ad']['account_suffix']     = '
+ * @my.domain.org';
  *   $conf['auth']['ad']['base_dn']            = 'DC=my,DC=domain,DC=org';
  *   $conf['auth']['ad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
  *
@@ -42,17 +43,38 @@
 require_once(DOKU_INC.'inc/adLDAP.php');
 
 class auth_ad extends auth_basic {
-    var $cnf = array();
-    var $opts = array();
-    var $adldap = array();
-    var $users = null;
-    var $msgshown = false;
-    var $_pattern = array();
+    /**
+     * @var array copy of the auth backend configuration
+     */
+    protected $cnf = array();
+    /**
+     * @var array hold connection data for a specific AD domain
+     */
+    protected $opts = array();
+    /**
+     * @var array open connections for each AD domain, as adLDAP objects
+     */
+    protected $adldap = array();
+
+    /**
+     * @var bool message state
+     */
+    protected $msgshown = false;
+
+    /**
+     * @var array user listing cache
+     */
+    protected $users = array();
+
+    /**
+     * @var array filter patterns for listing users
+     */
+    protected $_pattern = array();
 
     /**
      * Constructor
      */
-    function __construct() {
+    public function __construct() {
         global $conf;
         $this->cnf = $conf['auth']['ad'];
 
@@ -101,7 +123,7 @@ class auth_ad extends auth_basic {
      * @param string $pass
      * @return  bool
      */
-    function checkPass($user, $pass) {
+    public function checkPass($user, $pass) {
         if($_SERVER['REMOTE_USER'] &&
             $_SERVER['REMOTE_USER'] == $user &&
             $this->cnf['sso']
@@ -136,7 +158,7 @@ class auth_ad extends auth_basic {
      * @param string $user
      * @return array
      */
-    function getUserData($user) {
+    public function getUserData($user) {
         global $conf;
         global $lang;
         global $ID;
@@ -220,12 +242,14 @@ class auth_ad extends auth_basic {
      * Removes backslashes ('\'), pound signs ('#'), and converts spaces to underscores.
      *
      * @author  James Van Lommel (jamesvl@gmail.com)
+     * @param string $group
+     * @return string
      */
-    function cleanGroup($name) {
-        $sName = str_replace('\\', '', $name);
-        $sName = str_replace('#', '', $sName);
-        $sName = preg_replace('[\s]', '_', $sName);
-        return $sName;
+    public function cleanGroup($group) {
+        $group = str_replace('\\', '', $group);
+        $group = str_replace('#', '', $group);
+        $group = preg_replace('[\s]', '_', $group);
+        return $group;
     }
 
     /**
@@ -237,7 +261,7 @@ class auth_ad extends auth_basic {
      * @param string $name
      * @return string
      */
-    function cleanUser($name) {
+    public function cleanUser($name) {
         // get NTLM or Kerberos domain part
         list($dom, $name) = explode('\\', $name, 2);
         if(!$name) $name = $dom;
@@ -260,8 +284,10 @@ class auth_ad extends auth_basic {
 
     /**
      * Most values in LDAP are case-insensitive
+     *
+     * @return bool
      */
-    function isCaseSensitive() {
+    public function isCaseSensitive() {
         return false;
     }
 
@@ -274,7 +300,7 @@ class auth_ad extends auth_basic {
      * @param   array $filter    array of field/pattern pairs, null for no filter
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
-    function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
+    public function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
@@ -312,7 +338,7 @@ class auth_ad extends auth_basic {
      * @param   array  $changes   array of field/value pairs to be changed
      * @return  bool
      */
-    function modifyUser($user, $changes) {
+    public function modifyUser($user, $changes) {
         $return = true;
         $adldap = $this->_adldap($this->_userDomain($user));
         if(!$adldap) return false;
@@ -434,24 +460,35 @@ class auth_ad extends auth_basic {
     }
 
     /**
-     * return 1 if $user + $info match $filter criteria, 0 otherwise
+     * Check provided user and userinfo for matching patterns
      *
-     * @author   Chris Smith <chris@jalakai.co.uk>
+     * The patterns are set up with $this->_constructPattern()
+     *
+     * @author Chris Smith <chris@jalakai.co.uk>
+     * @param string $user
+     * @param array  $info
+     * @return bool
      */
-    function _filter($user, $info) {
+    protected function _filter($user, $info) {
         foreach($this->_pattern as $item => $pattern) {
             if($item == 'user') {
-                if(!preg_match($pattern, $user)) return 0;
+                if(!preg_match($pattern, $user)) return false;
             } else if($item == 'grps') {
-                if(!count(preg_grep($pattern, $info['grps']))) return 0;
+                if(!count(preg_grep($pattern, $info['grps']))) return false;
             } else {
-                if(!preg_match($pattern, $info[$item])) return 0;
+                if(!preg_match($pattern, $info[$item])) return false;
             }
         }
-        return 1;
+        return true;
     }
 
-    function _constructPattern($filter) {
+    /**
+     * Create a pattern for $this->_filter()
+     *
+     * @author Chris Smith <chris@jalakai.co.uk>
+     * @param array $filter
+     */
+    protected function _constructPattern($filter) {
         $this->_pattern = array();
         foreach($filter as $item => $pattern) {
             $this->_pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
