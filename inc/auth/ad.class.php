@@ -257,6 +257,7 @@ class auth_ad extends auth_basic {
         $group = str_replace('\\', '', $group);
         $group = str_replace('#', '', $group);
         $group = preg_replace('[\s]', '_', $group);
+        $group = utf8_strtolower(trim($group));
         return $group;
     }
 
