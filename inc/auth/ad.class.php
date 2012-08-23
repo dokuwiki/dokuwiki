@@ -427,7 +427,7 @@ class auth_ad extends auth_basic {
      * @param $user
      * @return string
      */
-    protected function _userDomain($user) {
+    public function _userDomain($user) {
         list(, $domain) = explode('@', $user, 2);
         return $domain;
     }
@@ -438,7 +438,7 @@ class auth_ad extends auth_basic {
      * @param $user
      * @return string
      */
-    protected function _userName($user) {
+    public function _userName($user) {
         list($name) = explode('@', $user, 2);
         return $name;
     }
