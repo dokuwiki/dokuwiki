@@ -199,7 +199,8 @@ function noNSorNS($id) {
  * Creates a XHTML valid linkid from a given headline title
  *
  * @param string  $title   The headline title
- * @param array   $check   Existing IDs (title => number)
+ * @param array|bool   $check   Existing IDs (title => number)
+ * @return string the title
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function sectionID($title,&$check) {
