@@ -13,6 +13,10 @@ if(!defined('NL')) define('NL',"\n");
  * Convenience function to quickly build a wikilink
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string  $id      id of the target page
+ * @param string  $name    the name of the link, i.e. the text that is displayed
+ * @param string|array  $search  search string(s) that shall be highlighted in the target page
+ * @return string the HTML code of the link
  */
 function html_wikilink($id,$name=null,$search=''){
     static $xhtml_renderer = null;
@@ -1000,6 +1004,14 @@ function html_backlinks(){
     }
 }
 
+/**
+ * Get header of diff HTML
+ * @param string $l_rev   Left revisions
+ * @param string $r_rev   Right revision
+ * @param string $id      Page id, if null $ID is used
+ * @param bool   $media   If it is for media files
+ * @return array HTML snippets for diff header
+ */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
     global $lang;
     if ($id === null) {
@@ -1075,7 +1087,8 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string $text - compare with this text with most current version
- * @param  bool   $intr - display the intro text
+ * @param  bool   $intro - display the intro text
+ * @param  string $type type of the diff (inline or sidebyside)
  */
 function html_diff($text='',$intro=true,$type=null){
     global $ID;
@@ -1233,6 +1246,7 @@ function html_conflict($text,$summary){
  */
 function html_msgarea(){
     global $MSG, $MSG_shown;
+    /** @var array $MSG */
     // store if the global $MSG has already been shown and thus HTML output has been started
     $MSG_shown = true;
 
@@ -1294,6 +1308,7 @@ function html_updateprofile(){
     global $INPUT;
     global $ID;
     global $INFO;
+    /** @var auth_basic $auth */
     global $auth;
 
     print p_locale_xhtml('updateprofile');
@@ -1492,6 +1507,7 @@ function html_minoredit(){
 function html_debug(){
     global $conf;
     global $lang;
+    /** @var auth_basic $auth */
     global $auth;
     global $INFO;
 
@@ -1578,12 +1594,14 @@ function html_admin(){
     global $INFO;
     global $lang;
     global $conf;
+    /** @var auth_basic $auth */
     global $auth;
 
     // build menu of admin functions from the plugins that handle them
     $pluginlist = plugin_list('admin');
     $menu = array();
     foreach ($pluginlist as $p) {
+        /** @var DokuWiki_Admin_Plugin $obj */
         if($obj =& plugin_load('admin',$p) === null) continue;
 
         // check permissions
@@ -1765,6 +1783,7 @@ function html_list_toc($item){
  * @param string $text  - what to display in the TOC
  * @param int    $level - nesting level
  * @param string $hash  - is prepended to the given $link, set blank if you want full links
+ * @return array the toc item
  */
 function html_mktocitem($link, $text, $level, $hash='#'){
     global $conf;
@@ -1779,6 +1798,8 @@ function html_mktocitem($link, $text, $level, $hash='#'){
  * Triggers an event with the form name: HTML_{$name}FORM_OUTPUT
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @param string     $name The name of the form
+ * @param Doku_Form  $form The form
  */
 function html_form($name, &$form) {
     // Safety check in case the caller forgets.
@@ -1789,6 +1810,7 @@ function html_form($name, &$form) {
 /**
  * Form print function.
  * Just calls printForm() on the data object.
+ * @param Doku_Form $data The form
  */
 function html_form_output($data) {
     $data->printForm();
@@ -1871,6 +1893,12 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     return $out;
 }
 
+/**
+ * Prints HTML code for the given tab structure
+ *
+ * @param array  $tabs        tab structure
+ * @param string $current_tab the current tab id
+ */
 function html_tabs($tabs, $current_tab = null) {
     echo '<ul class="tabs">'.NL;
 
