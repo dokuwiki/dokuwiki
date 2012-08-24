@@ -121,7 +121,7 @@ function html_secedit_get_button($data) {
     global $ID;
     global $INFO;
 
-    if (!isset($data['name']) || $data['name'] === '') return;
+    if (!isset($data['name']) || $data['name'] === '') return '';
 
     $name = $data['name'];
     unset($data['name']);
@@ -718,6 +718,9 @@ function html_recent($first=0, $show_changes='both'){
         $form->addElement($date);
         $form->addElement(form_makeCloseTag('span'));
 
+        $diff = false;
+        $href = '';
+
         if ($recent['media']) {
             $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
@@ -1116,7 +1119,7 @@ function html_diff($text='',$intro=true,$type=null){
         $r_text  = cleanText($text);
         $r_head  = $lang['yours'];
     }else{
-        if($rev1 && $rev2){            // two specific revisions wanted
+        if($rev1 && isset($rev2) && $rev2){            // two specific revisions wanted
             // make sure order is correct (older on the left)
             if($rev1 < $rev2){
                 $l_rev = $rev1;
