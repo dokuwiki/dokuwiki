@@ -157,7 +157,8 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * @param int    $first   number of first entry returned (for paginating
  * @param int    $num     return $num entries
  * @param string $ns      restrict to given namespace
- * @param bool   $flags   see above
+ * @param int    $flags   see above
+ * @return array recently changed files
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -177,6 +178,8 @@ function getRecents($first,$num,$ns='',$flags=0){
         $lines = @file($conf['changelog']);
     }
     $lines_position = count($lines)-1;
+    $media_lines_position = 0;
+    $media_lines = array();
 
     if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
         $media_lines = @file($conf['media_changelog']);
@@ -236,7 +239,8 @@ function getRecents($first,$num,$ns='',$flags=0){
  * @param int    $from    date of the oldest entry to return
  * @param int    $to      date of the newest entry to return (for pagination, optional)
  * @param string $ns      restrict to given namespace (optional)
- * @param bool   $flags   see above (optional)
+ * @param int    $flags   see above (optional)
+ * @return array of files
  *
  * @author Michael Hamann <michael@content-space.de>
  * @author Ben Coburn <btcoburn@silicodon.net>
