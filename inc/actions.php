@@ -637,7 +637,7 @@ function act_sitemap($act) {
     }
 
     $sitemap = Sitemapper::getFilePath();
-    if(strrchr($sitemap, '.') === '.gz'){
+    if (Sitemapper::sitemapIsCompressed()) {
         $mime = 'application/x-gzip';
     }else{
         $mime = 'application/xml; charset=utf-8';

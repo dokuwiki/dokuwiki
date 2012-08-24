@@ -100,11 +100,21 @@ class Sitemapper {
         global $conf;
 
         $sitemap = $conf['cachedir'].'/sitemap.xml';
-        if($conf['compression'] === 'bz2' || $conf['compression'] === 'gz'){
+        if (self::sitemapIsCompressed()) {
             $sitemap .= '.gz';
         }
 
         return $sitemap;
+    }
+
+    /**
+     * Helper function for checking if the sitemap is compressed
+     *
+     * @return bool If the sitemap file is compressed
+     */
+    public static function sitemapIsCompressed() {
+        global $conf;
+        return $conf['compression'] === 'bz2' || $conf['compression'] === 'gz';
     }
 
     /**

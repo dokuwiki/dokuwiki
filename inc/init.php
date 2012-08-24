@@ -129,9 +129,13 @@ if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
 
 // enable gzip compression if supported
 $conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
+global $ACT;
 if ($conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
-        function_exists('ob_gzhandler')) {
+        function_exists('ob_gzhandler') &&
+        // Disable compression when a compressed sitemap might be delivered
+        // See https://bugs.dokuwiki.org/index.php?do=details&task_id=2576
+        !($ACT == 'sitemap' && Sitemapper::sitemapIsCompressed())) {
     ob_start('ob_gzhandler');
 }
 
