@@ -65,7 +65,7 @@ function auth_setup() {
         nice_die($lang['authmodfailed']);
     }
 
-    if(!$auth) return false;
+    if(!isset($auth) || !$auth) return false;
 
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
