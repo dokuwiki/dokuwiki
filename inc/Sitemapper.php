@@ -63,11 +63,11 @@ class Sitemapper {
         $event = new Doku_Event('SITEMAP_GENERATE', $eventData);
         if ($event->advise_before(true)) {
             //save the new sitemap
-            $result = io_saveFile($sitemap, Sitemapper::getXML($items));
+            $event->result = io_saveFile($sitemap, Sitemapper::getXML($items));
         }
         $event->advise_after();
 
-        return $result;
+        return $event->result;
     }
 
     /**
@@ -82,6 +82,7 @@ class Sitemapper {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
         foreach ($items as $item) {
+            /** @var SitemapItem $item */
             echo $item->toXML();
         }
         echo '</urlset>'.NL;
@@ -93,7 +94,7 @@ class Sitemapper {
     /**
      * Helper function for getting the path to the sitemap file.
      *
-     * @return The path to the sitemap file.
+     * @return string The path to the sitemap file.
      * @author Michael Hamann
      */
     public static function getFilePath() {
@@ -185,7 +186,7 @@ class SitemapItem {
      * @param $id string A wikipage id.
      * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
      * @param $priority float|string The priority of the item relative to other URLs on your site. Valid values     range from 0.0 to 1.0.
-     * @return The sitemap item.
+     * @return SitemapItem The sitemap item.
      */
     public static function createFromID($id, $changefreq = null, $priority = null) {
         $id = trim($id);
@@ -197,7 +198,7 @@ class SitemapItem {
     /**
      * Get the XML representation of the sitemap item.
      *
-     * @return The XML representation.
+     * @return string The XML representation.
      */
     public function toXML() {
         $result = '  <url>'.NL
