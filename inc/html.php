@@ -150,7 +150,6 @@ function html_secedit_get_button($data) {
 function html_topbtn(){
     global $lang;
 
-    $ret  = '';
     $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'" /></a>';
 
     return $ret;
@@ -170,7 +169,6 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
         $label = $lang['btn_'.$name];
 
     $ret = '';
-    $tip = '';
 
     //filter id (without urlencoding)
     $id = idfilter($id,false);
@@ -260,7 +258,6 @@ function html_draft(){
     global $INFO;
     global $ID;
     global $lang;
-    global $conf;
     $draft = unserialize(io_readFile($INFO['draft'],false));
     $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
 
@@ -316,9 +313,7 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    global $conf;
     global $QUERY;
-    global $ID;
     global $lang;
 
     $intro = p_locale_xhtml('searchpage');
@@ -339,8 +334,6 @@ function html_search(){
     flush();
 
     //do quick pagesearch
-    $data = array();
-
     $data = ft_pageLookup($QUERY,true,useHeading('navigation'));
     if(count($data)){
         print '<div class="search_quickresult">';
@@ -834,7 +827,6 @@ function html_recent($first=0, $show_changes='both'){
 function html_index($ns){
     global $conf;
     global $ID;
-    $dir = $conf['datadir'];
     $ns  = cleanID($ns);
     #fixme use appropriate function
     if(empty($ns)){
@@ -984,7 +976,6 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
  */
 function html_backlinks(){
     global $ID;
-    global $conf;
     global $lang;
 
     print p_locale_xhtml('backlinks');
@@ -1094,7 +1085,6 @@ function html_diff($text='',$intro=true,$type=null){
     global $ID;
     global $REV;
     global $lang;
-    global $conf;
     global $INPUT;
 
     if(!$type) $type = $INPUT->str('difftype');
@@ -1273,7 +1263,6 @@ function html_msgarea(){
 function html_register(){
     global $lang;
     global $conf;
-    global $ID;
     global $INPUT;
 
     print p_locale_xhtml('register');
@@ -1306,7 +1295,6 @@ function html_updateprofile(){
     global $lang;
     global $conf;
     global $INPUT;
-    global $ID;
     global $INFO;
     /** @var auth_basic $auth */
     global $auth;
@@ -1592,7 +1580,6 @@ function html_debug(){
 function html_admin(){
     global $ID;
     global $INFO;
-    global $lang;
     global $conf;
     /** @var auth_basic $auth */
     global $auth;
@@ -1703,7 +1690,6 @@ function html_admin(){
 function html_resendpwd() {
     global $lang;
     global $conf;
-    global $ID;
     global $INPUT;
 
     $token = preg_replace('/[^a-f0-9]+/','',$INPUT->str('pwauth'));
@@ -1786,7 +1772,6 @@ function html_list_toc($item){
  * @return array the toc item
  */
 function html_mktocitem($link, $text, $level, $hash='#'){
-    global $conf;
     return  array( 'link'  => $hash.$link,
             'title' => $text,
             'type'  => 'ul',
