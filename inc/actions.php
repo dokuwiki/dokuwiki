@@ -64,7 +64,7 @@ function act_dispatch(){
 
         //sitemap
         if ($ACT == 'sitemap'){
-            $ACT = act_sitemap($ACT);
+            act_sitemap($ACT);
         }
 
         //register
@@ -137,6 +137,7 @@ function act_dispatch(){
                 if (in_array($page, $pluginlist)) {
                     // attempt to load the plugin
                     if ($plugin =& plugin_load('admin',$page) !== null){
+                        /** @var DokuWiki_Admin_Plugin $plugin */
                         if($plugin->forAdminOnly() && !$INFO['isadmin']){
                             // a manager tried to load a plugin that's for admins only
                             $INPUT->remove('page');
@@ -177,6 +178,11 @@ function act_dispatch(){
     // in function tpl_content()
 }
 
+/**
+ * Send the given headers using header()
+ *
+ * @param array $headers The headers that shall be sent
+ */
 function act_sendheaders($headers) {
     foreach ($headers as $hdr) header($hdr);
 }
@@ -437,6 +443,11 @@ function act_redirect($id,$preact){
     trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
 }
 
+/**
+ * Execute the redirect
+ *
+ * @param array $opts id and fragment for the redirect
+ */
 function act_redirect_execute($opts){
     $go = wl($opts['id'],'',true);
     if(isset($opts['fragment'])) $go .= '#'.$opts['fragment'];
