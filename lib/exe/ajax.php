@@ -162,7 +162,8 @@ function ajax_lock(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_draftdel(){
-    $id = cleanID($_REQUEST['id']);
+    global $INPUT;
+    $id = cleanID($INPUT->str('id'));
     if(empty($id)) return;
 
     $client = $_SERVER['REMOTE_USER'];
@@ -218,11 +219,11 @@ function ajax_medialist(){
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function ajax_mediadetails(){
-    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf, $INPUT;
     $fullscreen = true;
     require_once(DOKU_INC.'lib/exe/mediamanager.php');
 
-    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
     if (isset($IMG)) $image = $IMG;
     if (isset($JUMPTO)) $image = $JUMPTO;
     if (isset($REV) && !$JUMPTO) $rev = $REV;
@@ -237,25 +238,26 @@ function ajax_mediadetails(){
  */
 function ajax_mediadiff(){
     global $NS;
+    global $INPUT;
 
-    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
     $NS = $_POST['ns'];
-    $auth = auth_quickaclcheck("$ns:*");
+    $auth = auth_quickaclcheck("$NS:*");
     media_diff($image, $NS, $auth, true);
 }
 
 function ajax_mediaupload(){
-    global $NS, $MSG;
+    global $NS, $MSG, $INPUT;
 
     if ($_FILES['qqfile']['tmp_name']) {
-        $id = ((empty($_POST['mediaid'])) ? $_FILES['qqfile']['name'] : $_POST['mediaid']);
-    } elseif (isset($_GET['qqfile'])) {
-        $id = $_GET['qqfile'];
+        $id = $INPUT->post->str('mediaid', $_FILES['qqfile']['name']);
+    } elseif ($INPUT->get->has('qqfile')) {
+        $id = $INPUT->get->str('qqfile');
     }
 
     $id = cleanID($id);
 
-    $NS = $_REQUEST['ns'];
+    $NS = $INPUT->str('ns');
     $ns = $NS.':'.getNS($id);
 
     $AUTH = auth_quickaclcheck("$ns:*");
@@ -264,7 +266,7 @@ function ajax_mediaupload(){
     if ($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
 
     if ($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
-    if (isset($_GET['qqfile'])) $res = media_upload_xhr($NS, $AUTH);
+    if ($INPUT->get->has('qqfile')) $res = media_upload_xhr($NS, $AUTH);
 
     if ($res) $result = array('success' => true,
         'link' => media_managerURL(array('ns' => $ns, 'image' => $NS.':'.$id), '&'),

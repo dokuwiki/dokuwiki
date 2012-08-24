@@ -11,6 +11,10 @@ require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
+global $conf;
+global $ID;
+global $INPUT;
+
 //fix for Opera XMLHttpRequests
 $postData = http_get_raw_post_data();
 if(!count($_POST) && !empty($postData)){
@@ -22,20 +26,19 @@ if(!checkSecurityToken()) die('CRSF Attack');
 
 $ID    = getID();
 
+/** @var $acl admin_plugin_acl */
 $acl = plugin_load('admin','acl');
 $acl->handle();
 
-$ajax = $_REQUEST['ajax'];
+$ajax = $INPUT->str('ajax');
 header('Content-Type: text/html; charset=utf-8');
 
 if($ajax == 'info'){
     $acl->_html_info();
 }elseif($ajax == 'tree'){
-    global $conf;
-    global $ID;
 
     $dir = $conf['datadir'];
-    $ns  = $_REQUEST['ns'];
+    $ns  = $INPUT->str('ns');
     if($ns == '*'){
         $ns ='';
     }
