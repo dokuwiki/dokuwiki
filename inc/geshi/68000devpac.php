@@ -4,7 +4,7 @@
  * -------
  * Author: Warren Willmey
  * Copyright: (c) 2010 Warren Willmey.
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2010/06/09
  *
  * Motorola 68000 - HiSoft Devpac ST 2 Assembler language file for GeSHi.

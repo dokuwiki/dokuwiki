@@ -4,7 +4,7 @@
  * ----------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2010 Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2011/01/25
  *
  * ProFTPd language file for GeSHi.
