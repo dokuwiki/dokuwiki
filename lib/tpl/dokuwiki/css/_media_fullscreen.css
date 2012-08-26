@@ -87,6 +87,10 @@
 
 /*____________ namespaces panel ____________*/
 
+[dir=rtl] #mediamanager__page .namespaces {
+    text-align: right;
+}
+
 #mediamanager__page .namespaces h2 {
     font-size: 1em;
     display: inline-block;
@@ -102,6 +106,9 @@
 * html #mediamanager__page .namespaces h2,
 *+html #mediamanager__page .namespaces h2 {
     display: inline;
+}
+[dir=rtl] #mediamanager__page .namespaces h2 {
+    margin-right: 10px;
 }
 
 #mediamanager__page .namespaces ul {
@@ -175,6 +182,9 @@
 #mediamanager__page .filelist ul {
     padding: 0;
     margin: 0;
+}
+[dir=rtl] #mediamanager__page .filelist ul {
+    margin-right: 10px;
 }
 
 #mediamanager__page .filelist .panelContent ul li:hover {

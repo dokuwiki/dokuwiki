@@ -13,6 +13,9 @@
     margin: 0;
     list-style: none;
 }
+[dir=rtl] .dokuwiki ul.tabs li {
+    float: right;
+}
 
 .dokuwiki ul.tabs li strong,
 .dokuwiki ul.tabs li a {
@@ -22,6 +25,16 @@
     background-color: __background_neu__;
     color: __text__;
     border-radius: .5em .5em 0 0;
+}
+[dir=rtl] .dokuwiki ul.tabs li strong,
+[dir=rtl] .dokuwiki ul.tabs li a {
+    float: right;
+    margin: 0 0 0 .3em;
+}
+*+html[dir=rtl] .dokuwiki ul.tabs li strong,
+*+html[dir=rtl] .dokuwiki ul.tabs li a {
+    float: none;
+    display: inline-block;
 }
 .dokuwiki ul.tabs li strong {
     font-weight: normal;
