@@ -180,8 +180,9 @@
     font-size: 0.875em;
     position: relative;
 }
-[dir=rtl] #IE7 #dokuwiki__sitetools form.search {
+#IE7 #dokuwiki__sitetools form.search {
     min-height: 1px;
+    z-index: 21;
 }
 #dokuwiki__sitetools form.search input.edit {
     width: 18em;
