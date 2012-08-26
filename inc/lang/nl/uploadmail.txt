@@ -1,6 +1,7 @@
 Er is een bestand geüpload naar uw DokuWiki. Hier zijn de details;
 
 Bestand  : @MEDIA@
+Oude revisie: @OLD@
 Datum    : @DATE@
 Browser  : @BROWSER@
 IP-adres : @IPADDRESS@

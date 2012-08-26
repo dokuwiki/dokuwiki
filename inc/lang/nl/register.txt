@@ -1,4 +1,4 @@
 ====== Registreer als nieuwe gebruiker ======
 
-Vul alle informatie hieronder in om een nieuw account voor deze wiki aan te maken. Zorg dat je een **geldig e-mailadres** opgeeft - als je je wachtwoord hier niet in kunt vullen wordt het naar dit adres verzonden. De gebruikersnaam moet een geldige [[doku>wiki:pagename|pagename]] zijn.
+Vul alle informatie hieronder in om een nieuw account voor deze wiki aan te maken. Zorg dat je een **geldig e-mailadres** opgeeft - als je je wachtwoord hier niet in kunt vullen wordt het naar dit adres verzonden. De gebruikersnaam moet een geldige [[doku>pagename|paginanaam]] zijn.
 

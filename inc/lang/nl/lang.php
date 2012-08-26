@@ -16,6 +16,7 @@
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
+ * @author Gerrit <klapinklapin@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -58,7 +59,7 @@ $lang['btn_draftdel']          = 'Verwijder concept';
 $lang['btn_revert']            = 'Herstellen';
 $lang['btn_register']          = 'Registreren';
 $lang['btn_apply']             = 'Toepassen';
-$lang['btn_media']             = 'Media beheerder';
+$lang['btn_media']             = 'Mediabeheerder';
 $lang['loggedinas']            = 'Ingelogd als';
 $lang['user']                  = 'Gebruikersnaam';
 $lang['pass']                  = 'Wachtwoord';
@@ -201,6 +202,7 @@ $lang['user_tools']            = 'Gebruikershulpmiddelen';
 $lang['site_tools']            = 'Site-hulpmiddelen';
 $lang['page_tools']            = 'Paginahulpmiddelen';
 $lang['skip_to_content']       = 'spring naar tekst';
+$lang['sidebar']               = 'Zijbalk';
 $lang['mail_newpage']          = 'pagina toegevoegd:';
 $lang['mail_changed']          = 'pagina aangepast:';
 $lang['mail_subscribe_list']   = 'Pagina\'s veranderd in namespace:';
@@ -278,7 +280,7 @@ $lang['i_wikiname']            = 'Wikinaam';
 $lang['i_enableacl']           = 'ACLs inschakelen (aanbevolen)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'De installer vond problemen, hieronder aangegeven. Verhelp deze voor je doorgaat.';
-$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://wiki.splitbrain.org/wiki:install">Dokuwiki installatie-instructies</a>';
+$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
 $lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. Pas de permissie-instellingen van deze directory aan.';
