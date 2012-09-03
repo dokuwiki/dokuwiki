@@ -9,139 +9,163 @@ if(!defined('DOKU_PLUGIN')) define( 'DOKU_PLUGIN', DOKU_INC.'lib/plugins/' );
 require_once( DOKU_PLUGIN.'action.php' );
 require_once( DOKU_INC.'inc/auth.php' );
 
+
+/**
+ *
+ */
 class action_plugin_acl extends DokuWiki_Action_Plugin {
+    /**
+     * Load ACL config file
+     */
+    function __construct() {
+        global $AUTH_ACL;
+        
+        // load ACL into a global array
+        // TODO: Global arrays isn't nessecary correct within a plugin, fixme?
+        $AUTH_ACL = $this->auth_loadACL();
+    }
+    
+    
+    function register( &$controller ) {
+        $controller->register_hook( 'AUTH_ACL_CHECK', 'BEFORE', $this, 'aclcheck' );
+    }
+    
+    /**
+     * Returns the maximum rights a user has for
+     * the given ID or its namespace
+     *
+     * $event->data must contain an array of three elements:
+     *   id of page, as string
+     *   username as string
+     *   groups as array of strings
+     *
+     * this event handler overrides the defualt handler, if containing ACL data, and sets $event->return to auth level.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Max Sikström <max.sikstrom@op5.com>
+     *
+     * @param Doku_Event $event Event object
+     * @param null       $param Not used
+     */
+    function aclcheck( $event, $param=null ) {
+        global $conf;
+        global $AUTH_ACL;
+        global $auth;
+        
+        list( $id,$user,$groups ) = $event->data;
+        
+        $ci = '';
+        if(!$auth->isCaseSensitive()) $ci = 'ui';
 
-	function __construct() {
-		global $AUTH_ACL;
-		
-		// load ACL into a global array
-		// TODO: Global arrays isn't nessecary correct within a plugin, fixme?
-		$AUTH_ACL = $this->auth_loadACL();
-	}
+        $user = $auth->cleanUser($user);
+        $groups = array_map(array($auth,'cleanGroup'),(array)$groups);
+        $user = auth_nameencode($user);
 
-	function register( &$controller ) {
-		$controller->register_hook( 'AUTH_ACL_CHECK', 'BEFORE', $this, 'aclcheck' );
-	}
-	
-	function aclcheck( $event, $param ) {
-		global $conf;
-		global $AUTH_ACL;
-		global $auth;
-		
-		list( $id,$user,$groups ) = $event->data;
-		
-		$ci = '';
-		if(!$auth->isCaseSensitive()) $ci = 'ui';
+        //prepend groups with @ and nameencode
+        $cnt = count($groups);
+        for($i=0; $i<$cnt; $i++){
+            $groups[$i] = '@'.auth_nameencode($groups[$i]);
+        }
 
-		$user = $auth->cleanUser($user);
-		$groups = array_map(array($auth,'cleanGroup'),(array)$groups);
-		$user = auth_nameencode($user);
+        $ns    = getNS($id);
+        $perm  = -1;
 
-		//prepend groups with @ and nameencode
-		$cnt = count($groups);
-		for($i=0; $i<$cnt; $i++){
-			$groups[$i] = '@'.auth_nameencode($groups[$i]);
-		}
+        if($user || count($groups)){
+            //add ALL group
+            $groups[] = '@ALL';
+            //add User
+            if($user) $groups[] = $user;
+            //build regexp
+            $regexp   = join('|',$groups);
+        }else{
+            $regexp = '@ALL';
+        }
 
-		$ns	= getNS($id);
-		$perm  = -1;
+        //check exact match first
+        $matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+        if(count($matches)){
+            foreach($matches as $match){
+                $match = preg_replace('/#.*$/','',$match); //ignore comments
+                $acl   = preg_split('/\s+/',$match);
+                if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
+                if($acl[2] > $perm){
+                    $perm = $acl[2];
+                }
+            }
+            if($perm > -1){
+                //we had a match - return it
+                $event->preventDefault();
+                $event->result = $perm;
+                return;
+            }
+        }
 
-		if($user || count($groups)){
-			//add ALL group
-			$groups[] = '@ALL';
-			//add User
-			if($user) $groups[] = $user;
-			//build regexp
-			$regexp   = join('|',$groups);
-		}else{
-			$regexp = '@ALL';
-		}
+        //still here? do the namespace checks
+        if($ns){
+            $path = $ns.':*';
+        }else{
+            $path = '*'; //root document
+        }
 
-		//check exact match first
-		$matches = preg_grep('/^'.preg_quote($id,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
-		if(count($matches)){
-			foreach($matches as $match){
-				$match = preg_replace('/#.*$/','',$match); //ignore comments
-				$acl   = preg_split('/\s+/',$match);
-				if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
-				if($acl[2] > $perm){
-					$perm = $acl[2];
-				}
-			}
-			if($perm > -1){
-				//we had a match - return it
-				$event->preventDefault();
-				$event->result = $perm;
-				return;
-			}
-		}
+        do{
+            $matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
+            if(count($matches)){
+                foreach($matches as $match){
+                    $match = preg_replace('/#.*$/','',$match); //ignore comments
+                    $acl   = preg_split('/\s+/',$match);
+                    if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
+                    if($acl[2] > $perm){
+                        $perm = $acl[2];
+                    }
+                }
+                //we had a match - return it
+                $event->preventDefault();
+                $event->result = $perm;
+                return;
+            }
 
-		//still here? do the namespace checks
-		if($ns){
-			$path = $ns.':*';
-		}else{
-			$path = '*'; //root document
-		}
+            //get next higher namespace
+            $ns   = getNS($ns);
 
-		do{
-			$matches = preg_grep('/^'.preg_quote($path,'/').'\s+('.$regexp.')\s+/'.$ci,$AUTH_ACL);
-			if(count($matches)){
-				foreach($matches as $match){
-					$match = preg_replace('/#.*$/','',$match); //ignore comments
-					$acl   = preg_split('/\s+/',$match);
-					if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
-					if($acl[2] > $perm){
-						$perm = $acl[2];
-					}
-				}
-				//we had a match - return it
-				$event->preventDefault();
-				$event->result = $perm;
-				return;
-			}
+            if($path != '*'){
+                $path = $ns.':*';
+                if($path == ':*') $path = '*';
+            }else{
+                //we did this already
+                //looks like there is something wrong with the ACL
+                //break here
+                msg('No ACL setup yet, but ACL plugin loaded, using default handler.');
+                return;
+            }
+        }while(1); //this should never loop endless
+        
+        /* Unknown... just pass to default handler... */
+    }
+    
+    /**
+     * Loads the ACL setup and handle user wildcards
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @returns array
+     */
+    function auth_loadACL(){
+        global $config_cascade;
 
-			//get next higher namespace
-			$ns   = getNS($ns);
+        if(!is_readable($config_cascade['acl']['default'])) return array();
 
-			if($path != '*'){
-				$path = $ns.':*';
-				if($path == ':*') $path = '*';
-			}else{
-				//we did this already
-				//looks like there is something wrong with the ACL
-				//break here
-				msg('No ACL setup yet, but ACL plugin loaded, using default handler.');
-				return;
-			}
-		}while(1); //this should never loop endless
-		
-		/* Unknown... just pass to default handler... */
-	}
-	
-	/**
-	 * Loads the ACL setup and handle user wildcards
-	 *
-	 * @author Andreas Gohr <andi@splitbrain.org>
-	 * @returns array
-	 */
-	function auth_loadACL(){
-		global $config_cascade;
+        $acl = file($config_cascade['acl']['default']);
 
-		if(!is_readable($config_cascade['acl']['default'])) return array();
-
-		$acl = file($config_cascade['acl']['default']);
-
-		//support user wildcard
-		if(isset($_SERVER['REMOTE_USER'])){
-			$len = count($acl);
-			for($i=0; $i<$len; $i++){
-				if($acl[$i]{0} == '#') continue;
-				list($id,$rest) = preg_split('/\s+/',$acl[$i],2);
-				$id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
-				$rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
-				$acl[$i] = "$id\t$rest";
-			}
-		}
-		return $acl;
-	}
+        //support user wildcard
+        if(isset($_SERVER['REMOTE_USER'])){
+            $len = count($acl);
+            for($i=0; $i<$len; $i++){
+                if($acl[$i]{0} == '#') continue;
+                list($id,$rest) = preg_split('/\s+/',$acl[$i],2);
+                $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
+                $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
+                $acl[$i] = "$id\t$rest";
+            }
+        }
+        return $acl;
+    }
 }
