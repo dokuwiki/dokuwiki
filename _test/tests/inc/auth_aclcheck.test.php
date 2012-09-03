@@ -243,7 +243,7 @@ class auth_acl_test extends DokuWikiTest {
 
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['grps']       = array('test','töst','foo bar');
-        $AUTH_ACL = auth_loadACL(); // default test file
+        $AUTH_ACL = action_plugin_acl::auth_loadACL(); // default test file
 
         // default setting
         $this->assertEquals(AUTH_UPLOAD, auth_aclcheck('page', $_SERVER['REMOTE_USER'], $USERINFO['grps']));
