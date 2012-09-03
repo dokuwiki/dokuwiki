@@ -38,9 +38,7 @@ function auth_setup() {
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
-    global $AUTH_ACL;
     global $lang;
-    $AUTH_ACL = array();
 
     if(!$conf['useacl']) return false;
 
@@ -109,47 +107,7 @@ function auth_setup() {
         trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
     }
 
-    //load ACL into a global array XXX
-    $AUTH_ACL = auth_loadACL();
-
     return true;
-}
-
-/**
- * Loads the ACL setup and handle user wildcards
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @return array
- */
-function auth_loadACL() {
-    global $config_cascade;
-    global $USERINFO;
-
-    if(!is_readable($config_cascade['acl']['default'])) return array();
-
-    $acl = file($config_cascade['acl']['default']);
-
-    //support user wildcard
-    $out = array();
-    foreach($acl as $line) {
-        $line = trim($line);
-        if($line{0} == '#') continue;
-        list($id,$rest) = preg_split('/\s+/',$line,2);
-
-        if(strstr($line, '%GROUP%')){
-            foreach((array) $USERINFO['grps'] as $grp){
-                $nid   = str_replace('%GROUP%',cleanID($grp),$id);
-                $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
-                $out[] = "$nid\t$nrest";
-            }
-        } else {
-            $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
-            $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
-            $out[] = "$id\t$rest";
-        }
-    }
-
-    return $out;
 }
 
 /**
@@ -518,7 +476,6 @@ function auth_quickaclcheck($id) {
  */
 function auth_aclcheck($id, $user, $groups) {
     global $conf;
-    global $AUTH_ACL;
     /* @var auth_basic $auth */
     global $auth;
 
@@ -534,91 +491,12 @@ function auth_aclcheck($id, $user, $groups) {
         return AUTH_ADMIN;
     }
 
-    $ci = '';
-    if(!$auth->isCaseSensitive()) $ci = 'ui';
+    $data = array( $id, $user, $groups );
+    return trigger_event( 'AUTH_ACL_CHECK', $data, 'auth_aclcheck_noauth', true );
+}
 
-    $user   = $auth->cleanUser($user);
-    $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
-    $user   = auth_nameencode($user);
-
-    //prepend groups with @ and nameencode
-    $cnt = count($groups);
-    for($i = 0; $i < $cnt; $i++) {
-        $groups[$i] = '@'.auth_nameencode($groups[$i]);
-    }
-
-    $ns   = getNS($id);
-    $perm = -1;
-
-    if($user || count($groups)) {
-        //add ALL group
-        $groups[] = '@ALL';
-        //add User
-        if($user) $groups[] = $user;
-    } else {
-        $groups[] = '@ALL';
-    }
-
-    //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/'.$ci, $AUTH_ACL);
-    if(count($matches)) {
-        foreach($matches as $match) {
-            $match = preg_replace('/#.*$/', '', $match); //ignore comments
-            $acl   = preg_split('/\s+/', $match);
-            if(!in_array($acl[1], $groups)) {
-                continue;
-            }
-            if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
-            if($acl[2] > $perm) {
-                $perm = $acl[2];
-            }
-        }
-        if($perm > -1) {
-            //we had a match - return it
-            return $perm;
-        }
-    }
-
-    //still here? do the namespace checks
-    if($ns) {
-        $path = $ns.':*';
-    } else {
-        $path = '*'; //root document
-    }
-
-    do {
-        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/'.$ci, $AUTH_ACL);
-        if(count($matches)) {
-            foreach($matches as $match) {
-                $match = preg_replace('/#.*$/', '', $match); //ignore comments
-                $acl   = preg_split('/\s+/', $match);
-                if(!in_array($acl[1], $groups)) {
-                    continue;
-                }
-                if($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
-                if($acl[2] > $perm) {
-                    $perm = $acl[2];
-                }
-            }
-            //we had a match - return it
-            if($perm != -1) {
-                return $perm;
-            }
-        }
-        //get next higher namespace
-        $ns = getNS($ns);
-
-        if($path != '*') {
-            $path = $ns.':*';
-            if($path == ':*') $path = '*';
-        } else {
-            //we did this already
-            //looks like there is something wrong with the ACL
-            //break here
-            msg('No ACL setup yet! Denying access to everyone.');
-            return AUTH_NONE;
-        }
-    } while(1); //this should never loop endless
+function auth_aclcheck_noauth($data){
+    msg( "No ACL plugin handles the ACL request. Disable useacl config or install an ACL plugin. Defaults to no access!" );
     return AUTH_NONE;
 }
 
