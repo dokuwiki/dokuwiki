@@ -1,3 +1,3 @@
-====== Aseta uusi salasana ======
+===== Aseta salasana =====
 
-Syötä uusi salasanasi tätä wiki-sivustoa varten.
+Anna uusi salasanasi tässä wikissä.
