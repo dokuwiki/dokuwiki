@@ -175,6 +175,7 @@ function sendDigest() {
     }
     $subscriptions = subscription_find($ID, array('style' => '(digest|list)',
                                                   'escaped' => true));
+    /** @var auth_basic $auth */
     global $auth;
     global $lang;
     global $conf;
