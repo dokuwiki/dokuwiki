@@ -132,7 +132,7 @@ function subscription_set($user, $page, $style, $data = null,
     // Delete subscription if one exists and $overwrite is true. If $overwrite
     // is false, fail.
     $subs = subscription_find($page, array('user' => $user));
-    if (count($subs) > 0 && array_pop(array_keys($subs)) === $page) {
+    if (count($subs) > 0 && isset($subs[$page])) {
         if (!$overwrite) {
             msg(sprintf($lang['subscr_already_subscribed'], $user,
                         prettyprint_id($page)), -1);
