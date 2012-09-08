@@ -319,4 +319,3 @@ $lang['media_perm_read']       = 'Anteeksi. Sinulla ei ole riittävästi oikeuks
 $lang['media_perm_upload']     = 'Anteeksi. Sinulla ei ole riittävästi oikeuksia lähettääksesi tiedostoja.';
 $lang['media_update']          = 'Lähetä uusi versio';
 $lang['media_restore']         = 'Palauta tämä versio';
-$lang['plugin_install_err']    = 'Liitännäinen asentui virheellisesti. Nimeä liitännäisen hakemisto \'%s\' -> \'%s\'';

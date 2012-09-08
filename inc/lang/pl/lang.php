@@ -325,4 +325,3 @@ $lang['media_perm_read']       = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawnień do przesyłania plików.';
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
-$lang['plugin_install_err']    = 'Wtyczka zainstalowana nieprawidłowo. Zmień nazwę katalogu wtyczki \'%s\' na \'%s\'.';

@@ -318,4 +318,3 @@ $lang['media_perm_read']       = 'Bedaûrinde viaj rajtoj ne sufiĉas por legi d
 $lang['media_perm_upload']     = 'Bedaûrinde viaj rajtoj ne sufiĉas por alŝuti dosierojn.';
 $lang['media_update']          = 'Alŝuti novan version';
 $lang['media_restore']         = 'Restarigi ĉi tiun version';
-$lang['plugin_install_err']    = 'Kromaĵo instalita malĝuste. Renomu la kromaĵan dosierujon \'%s\' al \'%s\'.';

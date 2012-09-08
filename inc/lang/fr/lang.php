@@ -333,4 +333,3 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas les droits pour lir
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas les droits pour télécharger des fichiers.';
 $lang['media_update']          = 'Télécharger une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
-$lang['plugin_install_err']    = 'Extension mal installée. Renommez le dossier de l\'extension \'%s\' en \'%s\'.';

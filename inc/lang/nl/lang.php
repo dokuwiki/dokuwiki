@@ -328,4 +328,3 @@ $lang['media_perm_read']       = 'Sorry, u heeft niet voldoende rechten om besta
 $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om bestanden te uploaden.';
 $lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
-$lang['plugin_install_err']    = 'Plugin is juist geinstalleerd. Hernoem plugin map \'%s\' naar \'%s\'.';

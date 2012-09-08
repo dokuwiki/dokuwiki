@@ -338,4 +338,3 @@ $lang['media_perm_read']       = 'Disculpa, no tienes los permisos necesarios pa
 $lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios para cargar ficheros.';
 $lang['media_update']          = 'Actualizar nueva versión';
 $lang['media_restore']         = 'Restaurar esta versión';
-$lang['plugin_install_err']    = 'Plugin instalado incorrectamente. Renombra el directorio de plugins \'%s\' to \'%s\'.';

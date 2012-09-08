@@ -320,4 +320,3 @@ $lang['media_perm_read']       = 'Ne pare rău, dar nu aveți suficiente dreptur
 $lang['media_perm_upload']     = 'Ne pare rău, dar nu aveți suficiente drepturi pentru a putea încărca fișiere.';
 $lang['media_update']          = 'Încarcă noua versiune';
 $lang['media_restore']         = 'Restaurează această versiune';
-$lang['plugin_install_err']    = 'Modul instalat greșit. Redenumește directorul modulului \'%s\' în \'%s\'.';

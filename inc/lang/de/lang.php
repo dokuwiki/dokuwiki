@@ -329,4 +329,3 @@ $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
-$lang['plugin_install_err']    = 'Plugin nicht korrekt installiert. Plugin-Verzeichnis von \'%s\' nach \'%s\' umbenennen.';

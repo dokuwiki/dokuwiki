@@ -322,4 +322,3 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
-$lang['plugin_install_err']    = 'Plugin je špatně nainstalován. Přejmenujte adresář pluginu \'%s\' na \'%s\'.';

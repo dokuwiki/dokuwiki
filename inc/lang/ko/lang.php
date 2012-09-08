@@ -320,4 +320,3 @@ $lang['media_perm_read']       = '이 파일을 읽을 권한이 없습니다.';
 $lang['media_perm_upload']     = '파일을 올릴 권한이 없습니다.';
 $lang['media_update']          = '새 버전 올리기';
 $lang['media_restore']         = '이 버전으로 되돌리기';
-$lang['plugin_install_err']    = '플러그인 설치가 잘못되었습니다. 플러그인 디렉토리 \'%s\'(을)를 \'%s\'(으)로 바꾸십시오.';

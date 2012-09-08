@@ -314,4 +314,3 @@ $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per le
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
-$lang['plugin_install_err']    = 'Plugin installato non correttamente. Rinomino la cartella del plugin \'%s\' in \'%s\'.';

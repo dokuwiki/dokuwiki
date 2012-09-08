@@ -308,4 +308,3 @@ $lang['media_perm_read']       = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnenie na nahrávanie súborov.';
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
-$lang['plugin_install_err']    = 'Plugin nebol nainštalovaný úspešne. Premenujte adresár s pluginom \'%s\' na \'%s\'.';

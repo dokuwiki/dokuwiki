@@ -323,4 +323,3 @@ $lang['media_perm_read']       = '抱歉，您沒有足夠權限讀取檔案。'
 $lang['media_perm_upload']     = '抱歉，您沒有足夠權限上傳檔案。';
 $lang['media_update']          = '上傳新的版本';
 $lang['media_restore']         = '還原這個版本';
-$lang['plugin_install_err']    = '插件安裝錯誤。將插件目錄 "%s" 重新命名為 "%s" 。';

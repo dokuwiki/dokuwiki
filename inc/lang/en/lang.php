@@ -347,6 +347,4 @@ $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
 
-$lang['plugin_install_err']    = "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.";
-
 //Setup VIM: ex: et ts=2 :

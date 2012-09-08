@@ -318,4 +318,3 @@ $lang['media_perm_read']       = 'ファイルを閲覧する権限がありま�
 $lang['media_perm_upload']     = 'ファイルをアップロードする権限がありません。';
 $lang['media_update']          = '新しいバージョンをアップロード';
 $lang['media_restore']         = 'このバージョンを復元';
-$lang['plugin_install_err']    = 'プラグインが正しくインストールされませんでした。プラグインのディレクトリ名を \'%s\' から \'%s\' に変更してください。';
