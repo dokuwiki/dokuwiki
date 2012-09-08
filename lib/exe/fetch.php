@@ -152,12 +152,12 @@ function sendFile($file,$mime,$dl,$cache){
  * @returns array(STATUS, STATUSMESSAGE)
  */
 function checkFileStatus(&$media, &$file, $rev='') {
-  global $MIME, $EXT, $CACHE;
+  global $MIME, $EXT, $CACHE, $INPUT;
 
   //media to local file
   if(preg_match('#^(https?)://#i',$media)){
     //check hash
-    if(substr(md5(auth_cookiesalt().$media),0,6) != $_REQUEST['hash']){
+    if(substr(md5(auth_cookiesalt().$media),0,6) != $INPUT->str('hash')){
       return array( 412, 'Precondition Failed');
     }
     //handle external images
