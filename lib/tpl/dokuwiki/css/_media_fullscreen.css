@@ -158,6 +158,10 @@
     line-height: 1;
     padding-left: 3px;
 }
+[dir=rtl] #mediamanager__page .panelHeader ul li {
+    margin-right: 0;
+    margin-left: .5em;
+}
 
 #mediamanager__page .panelHeader ul li.listType {
     padding-left: 30px;
@@ -183,7 +187,7 @@
     padding: 0;
     margin: 0;
 }
-[dir=rtl] #mediamanager__page .filelist ul {
+[dir=rtl] #mediamanager__page .filelist ul.tabs {
     margin-right: 10px;
 }
 
@@ -221,6 +225,10 @@
     text-align: center;
     position: relative;
     line-height: 1.2;
+}
+[dir=rtl] #mediamanager__page .filelist .thumbs li {
+    margin-right: 0;
+    margin-left: 6px;
 }
 * html #mediamanager__page .filelist .thumbs li,
 *+html #mediamanager__page .filelist .thumbs li {
