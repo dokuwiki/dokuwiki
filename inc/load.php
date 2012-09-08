@@ -95,7 +95,7 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_([^_]+)(?:_([^_]+))?$/',
+    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_([a-z0-9]+)(?:_([^_]+))?$/',
                   $name, $m)) {
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
