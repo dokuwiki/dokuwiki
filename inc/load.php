@@ -101,7 +101,7 @@ function load_autoload($name){
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         if(@file_exists($plg)){
-            include DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+            include_once DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         }
         return;
     }
