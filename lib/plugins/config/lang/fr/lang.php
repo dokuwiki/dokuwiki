@@ -3,10 +3,9 @@
  * french language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -16,6 +15,8 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -50,6 +51,7 @@ $lang['lang']                  = 'Langue';
 $lang['basedir']               = 'Répertoire de base (ex. : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base. Laisser vide pour une détection automatique.';
 $lang['savedir']               = 'Répertoire de stockage';
+$lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
 $lang['start']                 = 'Nom de la page d\'accueil';
 $lang['title']                 = 'Titre du wiki';
 $lang['template']              = 'Modèle';
@@ -61,7 +63,7 @@ $lang['youarehere']            = 'Traces hiérarchiques';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
 $lang['htmlok']                = 'Permettre HTML dans les pages';
 $lang['phpok']                 = 'Permettre PHP dans les pages';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://www.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Signature';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';
 $lang['tocminheads']           = 'Nombre minimum de titres pour qu\'une table des matières soit construite';
@@ -73,6 +75,7 @@ $lang['useheading']            = 'Utiliser le titre de premier niveau';
 $lang['refcheck']              = 'Vérifier les références de média';
 $lang['refshow']               = 'Nombre de références de média à montrer';
 $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en avez besoin !</strong>)';
+$lang['mediarevisions']        = 'Activer les révisions (gestion de versions) des médias';
 $lang['usewordblock']          = 'Bloquer le spam selon les mots utilisés';
 $lang['indexdelay']            = 'Délai avant l\'indexation (en secondes)';
 $lang['relnofollow']           = 'Utiliser rel="nofollow" sur les liens extérieurs';
@@ -120,6 +123,7 @@ $lang['jpg_quality']           = 'Qualité de la compression JPEG (0-100)';
 $lang['subscribers']           = 'Activer l\'abonnement aux pages';
 $lang['subscribe_time']        = 'Délai après lequel les listes d\'abonnement et résumés sont envoyés (en secondes). Devrait être plus petit que le délai précisé dans recent_days.';
 $lang['compress']              = 'Compresser CSS et JavaScript';
+$lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS, les images qui y sont référencées. Cette technique minimise les requêtes HTTP. Pour IE, ceci ne fonctionne qu\'à partir de la version 8 !  Valeurs correctes entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['hidepages']             = 'Cacher les pages correspondant à (expression régulière)';
 $lang['send404']               = 'Renvoyer "HTTP 404/Page Non Trouvée" pour les pages introuvables';
 $lang['sitemap']               = 'Fréquence de génération une carte Google du site (en jours)';

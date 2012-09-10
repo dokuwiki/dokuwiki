@@ -8,6 +8,8 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
+ * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['menu']                  = 'Administrează plugin-uri';
 $lang['download']              = 'Descarcă şi instalează un nou plugin';
@@ -53,3 +55,4 @@ $lang['enabled']               = 'Plugin %s activat.';
 $lang['notenabled']            = 'Plugin-ul %s nu poate fi activat, verificaţi permisiunile fişierului.';
 $lang['disabled']              = 'Plugin %s dezactivat.';
 $lang['notdisabled']           = 'Plugin-ul %s nu poate fi dezactivat, verificaţi permisiunile fişierului.';
+$lang['packageinstalled']      = 'Pachet modul (%d modul(e): %s) instalat cu succes.';

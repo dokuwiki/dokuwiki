@@ -12,6 +12,8 @@
  * @author Leszek Stachowski <shazarre@gmail.com>
  * @author maros <dobrimaros@yahoo.pl>
  * @author Grzegorz Widła <dzesdzes@gmail.com>
+ * @author Łukasz Chmaj <teachmeter@gmail.com>
+ * @author Begina Felicysym <begina.felicysym@wp.eu>
  */
 $lang['menu']                  = 'Menadżer wtyczek';
 $lang['download']              = 'Ściągnij i zainstaluj nową wtyczkę';
@@ -55,5 +57,6 @@ $lang['error_copy']            = 'Wystąpił błąd podczas kopiowania pliku w t
 $lang['error_delete']          = 'Wystąpił błąd przy próbie usunięcia wtyczki <em>%s</em>. Prawdopodobną przyczyną są niewystarczające uprawnienia do katalogu.';
 $lang['enabled']               = 'Wtyczka %s włączona.';
 $lang['notenabled']            = 'Nie udało się uruchomić wtyczki %s, sprawdź uprawnienia dostępu do plików.';
-$lang['disabled']              = 'Wtyczka % wyłączona.';
+$lang['disabled']              = 'Wtyczka %s wyłączona.';
 $lang['notdisabled']           = 'Nie udało się wyłączyć wtyczki %s, sprawdź uprawnienia dostępu do plików.';
+$lang['packageinstalled']      = 'Pakiet wtyczek (%d wtyczki:% s) zainstalowany pomyślnie.';

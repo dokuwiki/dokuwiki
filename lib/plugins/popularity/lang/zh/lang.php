@@ -12,6 +12,8 @@
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
+ * @author lainme993@gmail.com
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['name']                  = '人气反馈（载入可能需要一些时间）';
 $lang['submit']                = '发送数据';

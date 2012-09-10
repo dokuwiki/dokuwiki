@@ -51,20 +51,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
     }
 
-    /**
-     * return some info
-     */
-    function getInfo(){
-
-        return array(
-            'author' => 'Chris Smith',
-            'email'  => 'chris@jalakai.co.uk',
-            'date'   => '2008-09-17',
-            'name'   => 'User Manager',
-            'desc'   => 'Manage users '.$this->disabled,
-            'url'    => 'http://dokuwiki.org/plugin:usermanager',
-        );
-    }
      /**
      * return prompt for admin menu
      */

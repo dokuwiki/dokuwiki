@@ -3,10 +3,9 @@
  * french language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -16,6 +15,8 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['menu']                  = 'Gestion des modules externes';
 $lang['download']              = 'Télécharger et installer un nouveau module';
@@ -61,4 +62,4 @@ $lang['enabled']               = 'Module %s activé.';
 $lang['notenabled']            = 'Le module %s n\'a pas pu être activé, vérifiez le fichier des permissions.';
 $lang['disabled']              = 'Module %s désactivé.';
 $lang['notdisabled']           = 'Le module %s n\'a pas pu être désactivé, vérifiez le fichier des permissions.';
-$lang['packageinstalled']      = 'Ensemble de modules (%d module%s: %s) installé avec succès.';
+$lang['packageinstalled']      = 'Ensemble de modules (%d module(s): %s) installé avec succès.';

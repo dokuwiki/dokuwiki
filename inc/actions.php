@@ -101,7 +101,7 @@ function act_dispatch(){
             if(checkSecurityToken()){
                 $ACT = act_save($ACT);
             }else{
-                $ACT = 'show';
+                $ACT = 'preview';
             }
         }
 
@@ -215,7 +215,7 @@ function act_clean($act){
     //disable all acl related commands if ACL is disabled
     if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
                     'subscribe','unsubscribe','profile','revert',
-                    'resendpwd','subscribens','unsubscribens',))){
+                    'resendpwd'))){
         msg('Command unavailable: '.htmlspecialchars($act),-1);
         return 'show';
     }
@@ -227,7 +227,7 @@ function act_clean($act){
                     'preview','search','show','check','index','revisions',
                     'diff','recent','backlink','admin','subscribe','revert',
                     'unsubscribe','profile','resendpwd','recover',
-                    'draftdel','subscribens','unsubscribens','sitemap')) && substr($act,0,7) != 'export_' ) {
+                    'draftdel','sitemap','media')) && substr($act,0,7) != 'export_' ) {
         msg('Command unknown: '.htmlspecialchars($act),-1);
         return 'show';
     }

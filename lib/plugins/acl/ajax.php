@@ -7,7 +7,7 @@
  */
 
 //fix for Opera XMLHttpRequests
-if(!count($_POST) && $HTTP_RAW_POST_DATA){
+if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
   parse_str($HTTP_RAW_POST_DATA, $_POST);
 }
 
@@ -44,13 +44,10 @@ if($ajax == 'info'){
 
     $data = $acl->_get_tree($ns,$ns);
 
-    foreach($data as $item){
-        $item['level'] = $lvl+1;
-        echo $acl->_html_li_acl($item);
-        echo '<div class="li">';
-        echo $acl->_html_list_acl($item);
-        echo '</div>';
-        echo '</li>';
+    foreach(array_keys($data) as $item){
+        $data[$item]['level'] = $lvl+1;
     }
+    echo html_buildlist($data, 'acl', array($acl, '_html_list_acl'),
+                        array($acl, '_html_li_acl'));
 }
 

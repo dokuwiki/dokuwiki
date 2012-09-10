@@ -74,7 +74,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
             'type'  => str_replace($strip, '', $type),
             'id'    => $id,
             'user'  => $user,
-            'sum'   => str_replace($strip, '', $summary),
+            'sum'   => utf8_substr(str_replace($strip, '', $summary),0,255),
             'extra' => str_replace($strip, '', $extra)
             );
 
@@ -131,13 +131,14 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
             'type'  => str_replace($strip, '', $type),
             'id'    => $id,
             'user'  => $user,
-            'sum'   => str_replace($strip, '', $summary),
+            'sum'   => utf8_substr(str_replace($strip, '', $summary),0,255),
             'extra' => str_replace($strip, '', $extra)
             );
 
     // add changelog lines
     $logline = implode("\t", $logline)."\n";
     io_saveFile($conf['media_changelog'],$logline,true); //global media changelog cache
+    io_saveFile(mediaMetaFN($id,'.changes'),$logline,true); //media file's changelog
 }
 
 /**
@@ -151,6 +152,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * RECENTS_SKIP_MINORS    - don't include minor changes
  * RECENTS_SKIP_SUBSPACES - don't include subspaces
  * RECENTS_MEDIA_CHANGES  - return media changes instead of page changes
+ * RECENTS_MEDIA_PAGES_MIXED  - return both media changes and page changes
  *
  * @param int    $first   number of first entry returned (for paginating
  * @param int    $num     return $num entries
@@ -158,6 +160,7 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * @param bool   $flags   see above
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRecents($first,$num,$ns='',$flags=0){
     global $conf;
@@ -173,20 +176,48 @@ function getRecents($first,$num,$ns='',$flags=0){
     } else {
         $lines = @file($conf['changelog']);
     }
+    $lines_position = count($lines)-1;
 
-    // handle lines
-    $seen = array(); // caches seen lines, _handleRecent() skips them
-    for($i = count($lines)-1; $i >= 0; $i--){
-        $rec = _handleRecent($lines[$i], $ns, $flags, $seen);
-        if($rec !== false) {
-            if(--$first >= 0) continue; // skip first entries
-            $recent[] = $rec;
-            $count++;
-            // break when we have enough entries
-            if($count >= $num){ break; }
-        }
+    if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
+        $media_lines = @file($conf['media_changelog']);
+        $media_lines_position = count($media_lines)-1;
     }
 
+    $seen = array(); // caches seen lines, _handleRecent() skips them
+
+    // handle lines
+    while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >=0)) {
+        if (empty($rec) && $lines_position >= 0) {
+            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags & ~RECENTS_MEDIA_CHANGES, $seen);
+            if (!$rec) {
+                $lines_position --;
+                continue;
+            }
+        }
+        if (($flags & RECENTS_MEDIA_PAGES_MIXED) && empty($media_rec) && $media_lines_position >= 0) {
+            $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags | RECENTS_MEDIA_CHANGES, $seen);
+            if (!$media_rec) {
+            	$media_lines_position --;
+            	continue;
+            }
+        }
+        if (($flags & RECENTS_MEDIA_PAGES_MIXED) && @$media_rec['date'] >= @$rec['date']) {
+            $media_lines_position--;
+            $x = $media_rec;
+            $x['media'] = true;
+            $media_rec = false;
+        } else {
+            $lines_position--;
+            $x = $rec;
+            if ($flags & RECENTS_MEDIA_CHANGES) $x['media'] = true;
+            $rec = false;
+        }
+        if(--$first >= 0) continue; // skip first entries
+        $recent[] = $x;
+        $count++;
+        // break when we have enough entries
+        if($count >= $num){ break; }
+    }
     return $recent;
 }
 
@@ -281,7 +312,11 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
 
     // check ACL
-    $recent['perms'] = auth_quickaclcheck($recent['id']);
+    if ($flags & RECENTS_MEDIA_CHANGES) {
+        $recent['perms'] = auth_quickaclcheck(getNS($recent['id']).':*');
+    } else {
+        $recent['perms'] = auth_quickaclcheck($recent['id']);
+    }
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
@@ -300,8 +335,9 @@ function _handleRecent($line,$ns,$flags,&$seen){
  * requested changelog line is read.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRevisionInfo($id, $rev, $chunk_size=8192) {
+function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
     global $cache_revinfo;
     $cache =& $cache_revinfo;
     if (!isset($cache[$id])) { $cache[$id] = array(); }
@@ -312,7 +348,11 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
         return $cache[$id][$rev];
     }
 
-    $file = metaFN($id, '.changes');
+    if ($media) {
+        $file = mediaMetaFN($id, '.changes');
+    } else {
+        $file = metaFN($id, '.changes');
+    }
     if (!@file_exists($file)) { return false; }
     if (filesize($file)<$chunk_size || $chunk_size==0) {
         // read whole file
@@ -397,8 +437,9 @@ function getRevisionInfo($id, $rev, $chunk_size=8192) {
  * lines are recieved.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRevisions($id, $first, $num, $chunk_size=8192) {
+function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
     global $cache_revinfo;
     $cache =& $cache_revinfo;
     if (!isset($cache[$id])) { $cache[$id] = array(); }
@@ -406,11 +447,16 @@ function getRevisions($id, $first, $num, $chunk_size=8192) {
     $revs = array();
     $lines = array();
     $count  = 0;
-    $file = metaFN($id, '.changes');
+    if ($media) {
+        $file = mediaMetaFN($id, '.changes');
+    } else {
+        $file = metaFN($id, '.changes');
+    }
     $num = max($num, 0);
     $chunk_size = max($chunk_size, 0);
-    if ($first<0) { $first = 0; }
-    else if (@file_exists(wikiFN($id))) {
+    if ($first<0) {
+        $first = 0;
+    } else if (!$media && @file_exists(wikiFN($id)) || $media && @file_exists(mediaFN($id))) {
         // skip current revision if the page exists
         $first = max($first+1, 0);
     }
@@ -431,13 +477,21 @@ function getRevisions($id, $first, $num, $chunk_size=8192) {
         $finger = max($tail-$chunk_size, 0);
         while ($count<$num+$first) {
             fseek($fp, $finger);
+            $nl = $finger;
             if ($finger>0) {
                 fgets($fp); // slip the finger forward to a new line
-                $finger = ftell($fp);
+                $nl = ftell($fp);
+            }
+
+            // was the chunk big enough? if not, take another bite
+            if($nl > 0 && $tail <= $nl){
+                $finger = max($finger-$chunk_size, 0);
+                continue;
+            }else{
+                $finger = $nl;
             }
 
             // read chunk
-            if ($tail<=$finger) { break; }
             $chunk = '';
             $read_size = max($tail-$finger, 0); // found chunk size
             $got = 0;

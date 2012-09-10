@@ -92,7 +92,7 @@ function getID($param='id',$clean=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
- * @param  boolean $media     Allow leading or trailing _ for media files
+ * @param  boolean $media     DEPRECATED
  */
 function cleanID($raw_id,$ascii=false,$media=false){
     global $conf;
@@ -132,8 +132,9 @@ function cleanID($raw_id,$ascii=false,$media=false){
     //clean up
     $id = preg_replace($sepcharpat,$sepchar,$id);
     $id = preg_replace('#:+#',':',$id);
-    $id = ($media ? trim($id,':.-') : trim($id,':._-'));
+    $id = trim($id,':._-');
     $id = preg_replace('#:[:\._\-]+#',':',$id);
+    $id = preg_replace('#[:\._\-]+:#',':',$id);
 
     $cache[(string)$raw_id] = $id;
     return($id);
@@ -295,8 +296,6 @@ function wikiLockFN($id) {
 /**
  * returns the full path to the meta file specified by ID and extension
  *
- * The filename is URL encoded to protect Unicode chars
- *
  * @author Steven Danz <steven-danz@kc.rr.com>
  */
 function metaFN($id,$ext){
@@ -304,6 +303,19 @@ function metaFN($id,$ext){
     $id = cleanID($id);
     $id = str_replace(':','/',$id);
     $fn = $conf['metadir'].'/'.utf8_encodeFN($id).$ext;
+    return $fn;
+}
+
+/**
+ * returns the full path to the media's meta file specified by ID and extension
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function mediaMetaFN($id,$ext){
+    global $conf;
+    $id = cleanID($id);
+    $id = str_replace(':','/',$id);
+    $fn = $conf['mediametadir'].'/'.utf8_encodeFN($id).$ext;
     return $fn;
 }
 
@@ -326,12 +338,19 @@ function metaFiles($id){
  * The filename is URL encoded to protect Unicode chars
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function mediaFN($id){
+function mediaFN($id, $rev=''){
     global $conf;
     $id = cleanID($id);
     $id = str_replace(':','/',$id);
-    $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
+    if(empty($rev)){
+        $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
+    }else{
+    	$ext = mimetype($id);
+    	$name = substr($id,0, -1*strlen($ext[0])-1);
+        $fn = $conf['mediaolddir'].'/'.utf8_encodeFN($name .'.'.( (int) $rev ).'.'.$ext[0]);
+    }
     return $fn;
 }
 

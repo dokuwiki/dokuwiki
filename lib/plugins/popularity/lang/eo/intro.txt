@@ -6,4 +6,4 @@ Ni instigas vin ripeti tiun agon iam kaj tiam por teni la disvolvigantojn inform
 
 La kolektita datenaro enhavas informon pri versio de la instalita DokuWiki, nombro kaj grandeco de la paĝoj kaj dosieroj, instalitaj kromaĵoj kaj informoj pri via PHP-sistemo.
 
-La kruda datenaro sendota estas montrita sube. Bonvole uzu la butonon "Sendi datenaron" por transŝuti tiun informaron.
+La kruda datenaro sendota estas montrita sube. Bonvole uzu la butonon &quot;Sendi datumaron&quot; por transŝuti tiun informaron.

@@ -1,6 +1,7 @@
 A file was uploaded to your DokuWiki. Here are the details:
 
 File        : @MEDIA@
+Old revision: @OLD@
 Date        : @DATE@
 Browser     : @BROWSER@
 IP-Address  : @IPADDRESS@

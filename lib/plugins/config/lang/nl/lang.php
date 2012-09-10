@@ -13,6 +13,8 @@
  * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
+ * @author Jeroen
+ * @author Ricardo Guijt <ricardoguijt@gmail.com>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -47,6 +49,7 @@ $lang['lang']                  = 'Taal';
 $lang['basedir']               = 'Basisdirectory';
 $lang['baseurl']               = 'Basis-URL';
 $lang['savedir']               = 'Directory om data op te slaan';
+$lang['cookiedir']             = 'Cookie pad. Laat leeg om de basis URL te gebruiken.';
 $lang['start']                 = 'Naam startpagina';
 $lang['title']                 = 'Titel van de wiki';
 $lang['template']              = 'Sjabloon';
@@ -70,6 +73,7 @@ $lang['useheading']            = 'Eerste kopje voor paginanaam gebruiken';
 $lang['refcheck']              = 'Controleer verwijzingen naar media';
 $lang['refshow']               = 'Aantal te tonen mediaverwijzingen';
 $lang['allowdebug']            = 'Debug toestaan <b>uitzetten indien niet noodzakelijk!</b>';
+$lang['mediarevisions']        = 'Media revisies activeren?';
 $lang['usewordblock']          = 'Blokkeer spam op basis van woordenlijst';
 $lang['indexdelay']            = 'Uitstel voor indexeren (sec)';
 $lang['relnofollow']           = 'Gebruik rel="nofollow" voor externe links';
@@ -117,6 +121,7 @@ $lang['jpg_quality']           = 'JPG compressiekwaliteit (0-100)';
 $lang['subscribers']           = 'Ondersteuning pagina-inschrijving aanzetten';
 $lang['subscribe_time']        = 'Inschrijvingsmeldingen en samenvattingen worden na deze tijdsduur (in seconden) verzonden. Deze waarde dient kleiner te zijn dan de tijd ingevuld bij "Hoeveel recente wijzigingen bewaren (dagen)"';
 $lang['compress']              = 'Compacte CSS en javascript output';
+$lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. Deze techniek werkt niet in IE7 en ouder! <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
 $lang['hidepages']             = 'Verberg deze pagina\'s (regular expressions)';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
 $lang['sitemap']               = 'Genereer Google sitemap (dagen)';

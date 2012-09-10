@@ -35,7 +35,7 @@
     $AUTH = auth_quickaclcheck("$NS:*");
 
     // do not display the manager if user does not have read access
-    if($AUTH < AUTH_READ) {
+    if($AUTH < AUTH_READ && !$fullscreen) {
         header('HTTP/1.0 403 Forbidden');
         die($lang['accessdenied']);
     }
@@ -76,8 +76,18 @@
     }
 
     // handle meta saving
-    if($IMG && $_REQUEST['do']['save']){
+    if($IMG && @array_key_exists('save', $_REQUEST['do'])){
         $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
+    }
+
+    if($IMG && ($_REQUEST['mediado'] == 'save' || @array_key_exists('save', $_REQUEST['mediado']))) {
+        $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
+    }
+
+    if ($_REQUEST['rev'] && $conf['mediarevisions']) $REV = (int) $_REQUEST['rev'];
+
+    if($_REQUEST['mediado'] == 'restore' && $conf['mediarevisions']){
+        $JUMPTO = media_restore($_REQUEST['image'], $REV, $AUTH);
     }
 
     // handle deletion
@@ -88,7 +98,7 @@
         }
         if ($res & DOKU_MEDIA_DELETED) {
             $msg = sprintf($lang['deletesucc'], noNS($DEL));
-            if ($res & DOKU_MEDIA_EMPTY_NS) {
+            if ($res & DOKU_MEDIA_EMPTY_NS && !$fullscreen) {
                 // current namespace was removed. redirecting to root ns passing msg along
                 send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
                         rawurlencode($msg).'&edid='.$_REQUEST['edid']);
@@ -102,9 +112,11 @@
             msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
         }
     }
-
     // finished - start output
-    header('Content-Type: text/html; charset=utf-8');
-    include(template('mediamanager.php'));
+
+    if (!$fullscreen) {
+        header('Content-Type: text/html; charset=utf-8');
+        include(template('mediamanager.php'));
+    }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

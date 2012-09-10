@@ -95,6 +95,7 @@ $meta['license']  = array('license');
 $meta['savedir']  = array('savedir');
 $meta['basedir']  = array('string');
 $meta['baseurl']  = array('string');
+$meta['cookiedir'] = array('string');
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['allowdebug']  = array('onoff');
@@ -163,6 +164,7 @@ $meta['target____media']     = array('string');
 $meta['target____windows']   = array('string');
 
 $meta['_media']      = array('fieldset');
+$meta['mediarevisions']  = array('onoff');
 $meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
 $meta['im_convert']  = array('im_convert');
 $meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
@@ -179,6 +181,7 @@ $meta['autoplural']  = array('onoff');
 $meta['mailfrom']    = array('richemail');
 $meta['mailprefix']  = array('string');
 $meta['compress']    = array('onoff');
+$meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');
 $meta['hidepages']   = array('string');
 $meta['send404']     = array('onoff');

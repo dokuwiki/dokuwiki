@@ -6,18 +6,12 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-//fix for Opera XMLHttpRequests
-if(!count($_POST) && !empty($HTTP_RAW_POST_DATA)){
-    parse_str($HTTP_RAW_POST_DATA, $_POST);
-}
-
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
 header('Content-Type: text/html; charset=utf-8');
-
 
 //call the requested function
 if(isset($_POST['call'])){
@@ -53,6 +47,8 @@ function ajax_qsearch(){
     $query = $_POST['q'];
     if(empty($query)) $query = $_GET['q'];
     if(empty($query)) return;
+
+    $query = urldecode($query);
 
     $data = ft_pageLookup($query, true, useHeading('navigation'));
 
@@ -192,12 +188,10 @@ function ajax_medians(){
 
     $data = array();
     search($data,$conf['mediadir'],'search_index',array('nofiles' => true),$dir);
-    foreach($data as $item){
-        $item['level'] = $lvl+1;
-        echo media_nstree_li($item);
-        echo media_nstree_item($item);
-        echo '</li>';
+    foreach(array_keys($data) as $item){
+        $data[$item]['level'] = $lvl+1;
     }
+    echo html_buildlist($data, 'idx', 'media_nstree_item', 'media_nstree_li');
 }
 
 /**
@@ -209,8 +203,102 @@ function ajax_medialist(){
     global $conf;
     global $NS;
 
+    $NS = cleanID($_POST['ns']);
+    if ($_POST['do'] == 'media') {
+        tpl_mediaFileList();
+    } else {
+        tpl_mediaContent(true);
+    }
+}
+
+/**
+ * Return the content of the right column
+ * (image details) for the Mediamanager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function ajax_mediadetails(){
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
+    $fullscreen = true;
+    require_once(DOKU_INC.'lib/exe/mediamanager.php');
+
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if (isset($IMG)) $image = $IMG;
+    if (isset($JUMPTO)) $image = $JUMPTO;
+    if (isset($REV) && !$JUMPTO) $rev = $REV;
+
+    html_msgarea();
+    tpl_mediaFileDetails($image, $rev);
+}
+
+/**
+ * Returns image diff representation for mediamanager
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function ajax_mediadiff(){
+    global $NS;
+
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
     $NS = $_POST['ns'];
-    tpl_mediaContent(true);
+    $auth = auth_quickaclcheck("$ns:*");
+    media_diff($image, $NS, $auth, true);
+}
+
+function ajax_mediaupload(){
+    global $NS, $MSG;
+
+    if ($_FILES['qqfile']['tmp_name']) {
+        $id = ((empty($_POST['mediaid'])) ? $_FILES['qqfile']['name'] : $_POST['mediaid']);
+    } elseif (isset($_GET['qqfile'])) {
+        $id = $_GET['qqfile'];
+    }
+
+    $id = cleanID($id);
+
+    $NS = $_REQUEST['ns'];
+    $ns = $NS.':'.getNS($id);
+
+    $AUTH = auth_quickaclcheck("$ns:*");
+    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$ns:xxx", 'media'); }
+
+    if ($_FILES['qqfile']['error']) unset($_FILES['qqfile']);
+
+    if ($_FILES['qqfile']['tmp_name']) $res = media_upload($NS, $AUTH, $_FILES['qqfile']);
+    if (isset($_GET['qqfile'])) $res = media_upload_xhr($NS, $AUTH);
+
+    if ($res) $result = array('success' => true,
+        'link' => media_managerURL(array('ns' => $ns, 'image' => $NS.':'.$id), '&'),
+        'id' => $NS.':'.$id, 'ns' => $NS);
+
+    if (!$result) {
+        $error = '';
+        if (isset($MSG)) {
+            foreach($MSG as $msg) $error .= $msg['msg'];
+        }
+        $result = array('error' => $msg['msg'], 'ns' => $NS);
+    }
+    $json = new JSON;
+    echo htmlspecialchars($json->encode($result), ENT_NOQUOTES);
+}
+
+function dir_delete($path) {
+    if (!is_string($path) || $path == "") return false;
+
+    if (is_dir($path) && !is_link($path)) {
+        if (!$dh = @opendir($path)) return false;
+
+        while ($f = readdir($dh)) {
+            if ($f == '..' || $f == '.') continue;
+            dir_delete("$path/$f");
+        }
+
+        closedir($dh);
+        return @rmdir($path);
+    } else {
+        return @unlink($path);
+    }
+
+    return false;
 }
 
 /**
@@ -229,14 +317,10 @@ function ajax_index(){
 
     $data = array();
     search($data,$conf['datadir'],'search_index',array('ns' => $ns),$dir);
-    foreach($data as $item){
-        $item['level'] = $lvl+1;
-        echo html_li_index($item);
-        echo '<div class="li">';
-        echo html_list_index($item);
-        echo '</div>';
-        echo '</li>';
+    foreach(array_keys($data) as $item){
+        $data[$item]['level'] = $lvl+1;
     }
+    echo html_buildlist($data, 'idx', 'html_list_index', 'html_li_index');
 }
 
 /**

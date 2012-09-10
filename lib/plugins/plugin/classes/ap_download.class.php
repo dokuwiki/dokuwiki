@@ -59,7 +59,7 @@ class ap_download extends ap_manage {
             return false;
         }
 
-        if (!$file = io_download($url, "$tmp/", true, $file)) {
+        if (!$file = io_download($url, "$tmp/", true, $file, 0)) {
             $this->manager->error = sprintf($this->lang['error_download'],$url)."\n";
         }
 
@@ -114,7 +114,7 @@ class ap_download extends ap_manage {
         if ($tmp) $this->dir_delete($tmp);
 
         if (!$this->manager->error) {
-            msg(sprintf($this->lang['packageinstalled'], count($this->downloaded), (count($this->downloaded) != 1?'s':''), join(',',$this->downloaded)),1);
+            msg(sprintf($this->lang['packageinstalled'], count($this->downloaded), join(',',$this->downloaded)),1);
             $this->refresh();
             return true;
         }

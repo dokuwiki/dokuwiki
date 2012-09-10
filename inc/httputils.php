@@ -197,3 +197,55 @@ function http_gzip_valid($uncompressed_file) {
 
     return true;
 }
+
+/**
+ * Set HTTP headers and echo cachefile, if useable
+ *
+ * This function handles output of cacheable resource files. It ses the needed
+ * HTTP headers. If a useable cache is present, it is passed to the web server
+ * and the scrpt is terminated.
+ */
+function http_cached($cache, $cache_ok) {
+    global $conf;
+
+    // check cache age & handle conditional request
+    // since the resource files are timestamped, we can use a long max age: 1 year
+    header('Cache-Control: public, max-age=31536000');
+    header('Pragma: public');
+    if($cache_ok){
+        http_conditionalRequest(filemtime($cache));
+        if($conf['allowdebug']) header("X-CacheUsed: $cache");
+
+        // finally send output
+        if ($conf['gzip_output'] && http_gzip_valid($cache)) {
+            header('Vary: Accept-Encoding');
+            header('Content-Encoding: gzip');
+            readfile($cache.".gz");
+        } else {
+            if (!http_sendfile($cache)) readfile($cache);
+        }
+        exit;
+    }
+
+    http_conditionalRequest(time());
+}
+
+/**
+ * Cache content and print it
+ */
+function http_cached_finish($file, $content) {
+    global $conf;
+
+    // save cache file
+    io_saveFile($file, $content);
+    if(function_exists('gzopen')) io_saveFile("$file.gz",$content);
+
+    // finally send output
+    if ($conf['gzip_output']) {
+        header('Vary: Accept-Encoding');
+        header('Content-Encoding: gzip');
+        print gzencode($content,9,FORCE_GZIP);
+    } else {
+        print $content;
+    }
+}

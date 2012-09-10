@@ -1,4 +1,4 @@
 ====== Registrer deg som bruker ======
 
-Angi all informasjon som det blir spurt om nedenfor for å skape en ny brukerkonto for denne wiki. Vær spesielt nøye med å angi en **gyldig e-postadresse** - ditt passord vil bli sendt til den e-postadressen du angir. Brukernavnet må være et gyldig [[doku>pagename|sidenavn]].
+Angi all informasjon som det blir spurt om nedenfor for å lage en ny brukerkonto for denne wikien. Vær spesielt nøye med å angi en **gyldig e-postadresse** - ditt passord vil bli sendt til den e-postadressen du angir. Brukernavnet må være et gyldig [[doku>pagename|sidenavn]].
 

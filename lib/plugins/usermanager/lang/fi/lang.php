@@ -5,6 +5,7 @@
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
+ * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['menu']                  = 'Käyttäjähallinta';
 $lang['noauth']                = '(autentikointi ei ole käytössä)';

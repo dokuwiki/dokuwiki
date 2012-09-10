@@ -7,6 +7,7 @@
  * @author Marcel Metz <marcel_metz@gmx.de>
  * @author Matthias Schulte <post@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Pierre Corell <info@joomla-praxis.de>
  */
 $lang['menu']                  = 'Einstellungen';
 $lang['error']                 = 'Einstellungen wurden nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -41,6 +42,7 @@ $lang['lang']                  = 'Sprache';
 $lang['basedir']               = 'Installationsverzeichnis';
 $lang['baseurl']               = 'Installationspfad (URL)';
 $lang['savedir']               = 'Ordner zum Speichern von Daten';
+$lang['cookiedir']             = 'Cookie Pfad. Leer lassen, um die Standard-Url zu belassen.';
 $lang['start']                 = 'Name der Startseite';
 $lang['title']                 = 'Wiki Titel';
 $lang['template']              = 'Vorlage';
@@ -54,7 +56,7 @@ $lang['htmlok']                = 'Erlaube eingebettetes HTML';
 $lang['phpok']                 = 'Erlaube eingebettetes PHP';
 $lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://www.php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
-$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftsgröße beginnen';
+$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
 $lang['tocminheads']           = 'Mindestanzahl der Überschriften die entscheidet, ob ein Inhaltsverzeichnis erscheinen soll';
 $lang['maxtoclevel']           = 'Maximale Überschriftsgröße für Inhaltsverzeichnis';
 $lang['maxseclevel']           = 'Abschnitte bis zu dieser Stufe einzeln editierbar machen';
@@ -62,8 +64,9 @@ $lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';
 $lang['deaccent']              = 'Seitennamen bereinigen';
 $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
 $lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
-$lang['refshow']               = 'Wieviele Verwendungsorte der Media-Datei zeigen';
+$lang['refshow']               = 'Wie viele Verwendungsorte der Media-Datei zeigen';
 $lang['allowdebug']            = 'Debug-Ausgaben erlauben <b>Abschalten wenn nicht benötigt!</b>';
+$lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
 $lang['usewordblock']          = 'Blockiere Spam basierend auf der Wortliste';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
@@ -106,14 +109,15 @@ $lang['mailfrom']              = 'Absenderadresse für automatisch erzeugte E-Ma
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
-$lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';
+$lang['im_convert']            = 'Pfad zu ImageMagicks-Konvertierwerkzeug';
 $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter! <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nicht existierende Seiten';
-$lang['sitemap']               = 'Erzeugte Google Sitemaps (Tage)';
+$lang['sitemap']               = 'Erzeuge Google Sitemaps (Tage)';
 $lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';

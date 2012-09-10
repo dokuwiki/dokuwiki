@@ -7,7 +7,7 @@ if(isset($HTTP_RAW_POST_DATA)) $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA);
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_XMLRPC_API_VERSION',5);
+define('DOKU_XMLRPC_API_VERSION', 6);
 
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
@@ -30,26 +30,9 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         global $USERINFO;
 
         if(!$conf['useacl']) return true; //no ACL - then no checks
+        if(trim($conf['xmlrpcuser']) == '') return true; //no restrictions
 
-        $allowed = explode(',',$conf['xmlrpcuser']);
-        $allowed = array_map('trim', $allowed);
-        $allowed = array_unique($allowed);
-        $allowed = array_filter($allowed);
-
-        if(!count($allowed)) return true; //no restrictions
-
-        $user   = $_SERVER['REMOTE_USER'];
-        $groups = (array) $USERINFO['grps'];
-
-        if(in_array($user,$allowed)) return true; //user explicitly mentioned
-
-        //check group memberships
-        foreach($groups as $group){
-            if(in_array('@'.$group,$allowed)) return true;
-        }
-
-        //still here? no access!
-        return false;
+        return auth_isMember($conf['xmlrpcuser'],$_SERVER['REMOTE_USER'],(array) $USERINFO['grps']);
     }
 
     /**
@@ -70,6 +53,11 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
      */
     function call($methodname, $args){
         if(!in_array($methodname,$this->public_methods) && !$this->checkAuth()){
+            if (!isset($_SERVER['REMOTE_USER'])) {
+                header('HTTP/1.1 401 Unauthorized');
+            } else {
+                header('HTTP/1.1 403 Forbidden');
+            }
             return new IXR_Error(-32603, 'server error. not authorized to call method "'.$methodname.'".');
         }
         return parent::call($methodname, $args);
@@ -423,7 +411,7 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
             $pages[] = array(
                 'id'      => $id,
-                'score'   => $score,
+                'score'   => intval($score),
                 'rev'     => filemtime($file),
                 'mtime'   => filemtime($file),
                 'size'    => filesize($file),
@@ -596,8 +584,12 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
 
         // save temporary file
         @unlink($ftmp);
-        $buff = base64_decode($file);
-        io_saveFile($ftmp, $buff);
+        if (preg_match('/^[A-Za-z0-9\+\/]*={0,2}$/', $file) === 1) {
+            // DEPRECATED: Double-decode file if it still looks like base64
+            // after first decoding (which is done by the library)
+            $file = base64_decode($file);
+        }
+        io_saveFile($ftmp, $file);
 
         $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
@@ -870,11 +862,22 @@ class dokuwiki_xmlrpc_server extends IXR_IntrospectionServer {
         global $auth;
         if(!$conf['useacl']) return 0;
         if(!$auth) return 0;
+
+        @session_start(); // reopen session for login
         if($auth->canDo('external')){
-            return $auth->trustExternal($user,$pass,false);
+            $ok = $auth->trustExternal($user,$pass,false);
         }else{
-            return auth_login($user,$pass,false,true);
+            $evdata = array(
+                'user'     => $user,
+                'password' => $pass,
+                'sticky'   => false,
+                'silent'   => true,
+            );
+            $ok = trigger_event('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
+        session_write_close(); // we're done with the session
+
+        return $ok;
     }
 
 

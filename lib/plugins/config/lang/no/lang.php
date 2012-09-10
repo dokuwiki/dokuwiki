@@ -12,6 +12,9 @@
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author Rune Rasmussen syntaxerror.no@gmail.com
+ * @author Jon Bøe <jonmagneboe@hotmail.com>
+ * @author Egil Hansen <egil@rosetta.no>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
@@ -22,10 +25,10 @@ $lang['locked']                = 'Innstillingene kan ikke oppdateres. Hvis dette
 forsikre deg om at fila med de lokale innstillingene har korrekt filnavn<br/>
 og tillatelser.';
 $lang['danger']                = 'Advarsel: Endrig av dette valget kan føre til at wiki og konfigurasjon menyen ikke blir tilgjengelig.';
-$lang['warning']               = 'Advarsel: Endring av dette valget kan føre til utilsiktede atferd.
+$lang['warning']               = 'Advarsel: Endring av dette valget kan føre til utilsiktet atferd.
 
 ';
-$lang['security']              = 'Sikkerhets Advarsel: Endring av dette valget kan føre til sikkerhetsrisiko.';
+$lang['security']              = 'Sikkerhetsadvarsel: Endring av dette valget kan innebære en sikkerhetsrisiko.';
 $lang['_configuration_manager'] = 'Konfigurasjonsinnstillinger';
 $lang['_header_dokuwiki']      = 'Innstillinger for DokuWiki';
 $lang['_header_plugin']        = 'Innstillinger for tillegg';
@@ -34,10 +37,10 @@ $lang['_header_undefined']     = 'Udefinerte innstillinger';
 $lang['_basic']                = 'Grunnleggende innstillinger';
 $lang['_display']              = 'Innstillinger for visning av sider';
 $lang['_authentication']       = 'Innstillinger for autentisering';
-$lang['_anti_spam']            = 'Motsøppel-innstillinger';
+$lang['_anti_spam']            = 'Anti-Spam innstillinger';
 $lang['_editing']              = 'Innstillinger for redigering';
 $lang['_links']                = 'Innstillinger for lenker';
-$lang['_media']                = 'Innstillinger for media-filer';
+$lang['_media']                = 'Innstillinger for mediafiler';
 $lang['_advanced']             = 'Avanserte innstillinger';
 $lang['_network']              = 'Nettverksinnstillinger';
 $lang['_plugin_sufix']         = '&ndash; innstillinger for tillegg';
@@ -51,6 +54,7 @@ $lang['lang']                  = 'Språk';
 $lang['basedir']               = 'Grunnkatalog';
 $lang['baseurl']               = 'Grunn-nettadresse';
 $lang['savedir']               = 'Mappe for lagring av data';
+$lang['cookiedir']             = 'Sti for informasjonskapsler. La stå blankt for å bruke grunn-nettadressa.';
 $lang['start']                 = 'Sidenavn på forsiden';
 $lang['title']                 = 'Navn på Wikien';
 $lang['template']              = 'Mal';
@@ -74,6 +78,7 @@ $lang['useheading']            = 'Bruk første overskrift som tittel';
 $lang['refcheck']              = 'Sjekk referanser før mediafiler slettes';
 $lang['refshow']               = 'Antall viste referanser til mediafiler';
 $lang['allowdebug']            = 'Tillat feilsøking <b>skru av om det ikke behøves!</b>';
+$lang['mediarevisions']        = 'Slå på mediaversjonering?';
 $lang['usewordblock']          = 'Blokker søppel basert på ordliste';
 $lang['indexdelay']            = 'Forsinkelse før indeksering (sekunder)';
 $lang['relnofollow']           = 'Bruk rel="nofollow" på eksterne lenker';
@@ -105,6 +110,7 @@ $lang['useslash']              = 'Bruk / som skilletegn mellom navnerom i URLer'
 $lang['usedraft']              = 'Lagre kladd automatisk under redigering';
 $lang['sepchar']               = 'Skilletegn mellom ord i sidenavn';
 $lang['canonical']             = 'Bruk fulle URLer (i stedet for relative)';
+$lang['fnencode']              = 'Metode for å kode ikke-ASCII-filnavn';
 $lang['autoplural']            = 'Se etter flertallsformer i lenker';
 $lang['compression']           = 'Metode for komprimering av gamle filer';
 $lang['cachetime']             = 'Maksimal alder på hurtiglager (sekunder)';
@@ -113,12 +119,15 @@ $lang['fetchsize']             = 'Maksimal størrelse (byter) fetch.php kan last
 $lang['notify']                = 'Send meldinger om endringer denne e-postadressen';
 $lang['registernotify']        = 'Send info om nylig registrerte brukere til denne e-postadressen';
 $lang['mailfrom']              = 'Avsenderadresse for automatiske e-poster';
+$lang['mailprefix']            = 'Prefiks for emne i automatiske e-poster ';
 $lang['gzip_output']           = 'Bruk gzip Content-Encoding for XHTML';
 $lang['gdlib']                 = 'Versjon av libGD';
 $lang['im_convert']            = 'Sti til ImageMagicks konverteringsverktøy';
 $lang['jpg_quality']           = 'JPEG-kvalitet (0-100)';
 $lang['subscribers']           = 'Åpne for abonnement på endringer av en side';
+$lang['subscribe_time']        = 'Hvor lenge det skal gå mellom utsending av e-poster med endringer (i sekunder). Denne verdien bør være mindre enn verdien i recent_days.';
 $lang['compress']              = 'Kompakt CSS og JavaScript';
+$lang['cssdatauri']            = 'Opp til denne størrelsen (i bytes) skal bilder som er vist til i CSS-filer kodes direkte inn i fila for å redusere antall HTTP-forespørsler. Denne teknikken fungerer ikke i IE < 8! Mellom <code>400</code> og <code>600</code> bytes er fornuftige verdier. Bruk <code>0</code> for å skru av funksjonen.';
 $lang['hidepages']             = 'Skjul sider fra automatiske lister (regulære uttrykk)';
 $lang['send404']               = 'Send "HTTP 404/Page Not Found" for ikke-eksisterende sider';
 $lang['sitemap']               = 'Lag Google-sidekart (dager)';
@@ -144,6 +153,7 @@ $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Brukernavn på proxyserver';
 $lang['proxy____pass']         = 'Passord på proxyserver';
 $lang['proxy____ssl']          = 'Bruk SSL for å koble til proxyserver';
+$lang['proxy____except']       = 'Regulært uttrykk for URLer som ikke trenger en proxy.';
 $lang['safemodehack']          = 'Bruk safemode-hack';
 $lang['ftp____host']           = 'FTP-server for safemode-hack';
 $lang['ftp____port']           = 'FTP-port for safemode-hack';
@@ -185,9 +195,10 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3']         = 'Priprietær Nginx X-Accel-Redirect header';
 $lang['showuseras_o_loginname'] = 'Brukernavn';
 $lang['showuseras_o_username'] = 'Brukerens fulle navn';
-$lang['showuseras_o_email']    = 'Brukerens epostadresse (tilpasset i henhold til mailguar-instilling)';
+$lang['showuseras_o_email']    = 'Brukerens e-postadresse (tilpasset i henhold til mailguar-instilling)';
 $lang['showuseras_o_email_link'] = 'Brukerens epost-addresse som "mailto:"-lenke';
 $lang['useheading_o_0']        = 'Aldri';
 $lang['useheading_o_navigation'] = 'Kun navigering';
 $lang['useheading_o_content']  = 'Kun wiki-innhold';
 $lang['useheading_o_1']        = 'Alltid';
+$lang['readdircache']          = 'Maksimal alder for mellomlagring av mappen med søkeindekser (sekunder)';

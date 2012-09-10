@@ -7,11 +7,10 @@
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
  * @author Gwenn Gueguen <contact@demisel.net>
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Fabien Chabreuil <fabien@integralpersonality.com>
  * @author Stéphane Chamberland <stephane.chamberland@ec.gc.ca>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -21,6 +20,8 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
 $lang['acl_group']             = 'Groupe';

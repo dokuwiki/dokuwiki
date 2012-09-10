@@ -18,8 +18,10 @@ $conf['dmode']       = 0755;              //set directory creation mode
 $conf['lang']        = 'en';              //your language
 $conf['basedir']     = '';                //absolute dir from serveroot - blank for autodetection
 $conf['baseurl']     = '';                //URL to server including protocol - blank for autodetect
+$conf['cookiedir']   = '';                //Cookie path. Leave blank for using baseurl.
 $conf['savedir']     = './data';          //where to store all the files
 $conf['allowdebug']  = 0;                 //allow debug output, enable if needed 0|1
+$conf['mediarevisions'] = 1;              //enable/disable media revisions
 
 /* Display Options */
 
@@ -108,6 +110,7 @@ $conf['subscribers'] = 0;                //enable change notice subscription sup
 $conf['subscribe_time'] = 24*60*60;      //Time after which digests / lists are sent (in sec, default 1 day)
                                          //Should be smaller than the time specified in recent_days
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0
+$conf['cssdatauri']  = 0;                //Maximum byte size of small images to embed into CSS, won't work on IE<8
 $conf['hidepages']   = '';               //Regexp for pages to be skipped from RSS, Search and Recent Changes
 $conf['send404']     = 0;                //Send a HTTP 404 status for non existing pages?
 $conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.

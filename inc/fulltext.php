@@ -135,7 +135,7 @@ function ft_backlinks($id){
 
     // check ACL permissions
     foreach(array_keys($result) as $idx){
-        if(auth_quickaclcheck($result[$idx]) < AUTH_READ){
+        if(isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ || !page_exists($result[$idx], '', false)){
             unset($result[$idx]);
         }
     }

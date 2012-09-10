@@ -8,4 +8,4 @@ La suba agordilo permesas al vi rigardi kaj modifi la rajtojn de elektita uzanto
 
 En la suba tabelo ĉiuj aktuale difinitaj alirkontrolaj reguloj estas montritaj. Vi povas uzi ĝin por rapide forigi aŭ ŝanĝi multoblajn regulojn.
 
-Legado de la [[doku>acl|oficiala dokumentaro pri ACL]] povus helpi vin bone kompreni kiel alirkontrolo funkcias en DokuWiki.
+Legado de la [[doku&gt;acl|oficiala dokumentaro pri ACL]] povus helpi vin bone kompreni kiel alirkontrolo funkcias en DokuWiki.

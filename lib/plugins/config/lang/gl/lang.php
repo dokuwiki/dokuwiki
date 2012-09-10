@@ -3,6 +3,7 @@
  * Galicianlanguage file
  *
  * @author Medúlio <medulio@ciberirmandade.org>
+ * @author Oscar M. Lage <r0sk10@gmail.com>
  */
 $lang['menu']                  = 'Opcións de Configuración';
 $lang['error']                 = 'Configuración non actualizada debido a un valor inválido, por favor revisa os teus trocos e volta envialos de novo.
@@ -39,6 +40,7 @@ $lang['lang']                  = 'Idioma';
 $lang['basedir']               = 'Directorio base';
 $lang['baseurl']               = 'URL base';
 $lang['savedir']               = 'Directorio no que se gardarán os datos';
+$lang['cookiedir']             = 'Ruta das cookies. Deixar en blanco para usar a url de base.';
 $lang['start']                 = 'Nome da páxina inicial';
 $lang['title']                 = 'Título do Wiki';
 $lang['template']              = 'Sobreplanta';
@@ -62,6 +64,7 @@ $lang['useheading']            = 'Utilizar a primeira cabeceira para os nomes de
 $lang['refcheck']              = 'Comprobar a referencia media';
 $lang['refshow']               = 'Número de referencias media a amosar';
 $lang['allowdebug']            = 'Permitir o depurado <b>desactívao se non o precisas!</b>';
+$lang['mediarevisions']        = 'Habilitar revisións dos arquivos-media?';
 $lang['usewordblock']          = 'Bloquear correo-lixo segundo unha lista de verbas';
 $lang['indexdelay']            = 'Retardo denantes de indexar (seg)';
 $lang['relnofollow']           = 'Utilizar rel="nofollow" nas ligazóns externas';
@@ -92,6 +95,7 @@ $lang['useslash']              = 'Utilizar a barra inclinada (/) como separador 
 $lang['usedraft']              = 'Gardar un borrador automaticamente no tempo da edición';
 $lang['sepchar']               = 'Verba separadora do nome de páxina';
 $lang['canonical']             = 'Utilizar URLs completamente canónicos';
+$lang['fnencode']              = 'Método para codificar os nomes de arquivo non-ASCII.';
 $lang['autoplural']            = 'Comprobar formas plurais nas ligazóns';
 $lang['compression']           = 'Método de compresión para arquivos attic';
 $lang['cachetime']             = 'Tempo máximo para a caché (seg.)';
@@ -100,6 +104,7 @@ $lang['fetchsize']             = 'Tamaño máximo (en bytes) que pode descargar 
 $lang['notify']                = 'Enviar notificacións de trocos a este enderezo de correo-e';
 $lang['registernotify']        = 'Enviar información de novos usuarios rexistrados a este enderezo de correo-e';
 $lang['mailfrom']              = 'Enderezo de correo-e a usar para as mensaxes automáticas';
+$lang['mailprefix']            = 'Prefixo de asunto de correo-e para as mensaxes automáticas';
 $lang['gzip_output']           = 'Utilizar Contido-Codificación gzip para o xhtml';
 $lang['gdlib']                 = 'Versión da Libraría GD';
 $lang['im_convert']            = 'Ruta deica a ferramenta de conversión ImageMagick';
@@ -132,6 +137,7 @@ $lang['proxy____port']         = 'Porto do Proxy';
 $lang['proxy____user']         = 'Nome de usuario do Proxy';
 $lang['proxy____pass']         = 'Contrasinal do Proxy';
 $lang['proxy____ssl']          = 'Utilizar ssl para conectar ao Proxy';
+$lang['proxy____except']       = 'Expresión regular para atopar URLs que deban ser omitidas polo Proxy.';
 $lang['safemodehack']          = 'Activar hack de modo seguro (safemode)';
 $lang['ftp____host']           = 'Servidor FTP para o hack de modo seguro (safemode)';
 $lang['ftp____port']           = 'Porto FTP para o hack de modo seguro(safemode)';
@@ -179,3 +185,4 @@ $lang['useheading_o_0']        = 'Endexamais';
 $lang['useheading_o_navigation'] = 'Só Navegación';
 $lang['useheading_o_content']  = 'Só Contido do Wiki';
 $lang['useheading_o_1']        = 'Sempre';
+$lang['readdircache']          = 'Edad máxima para o directorio de caché (seg)';

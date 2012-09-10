@@ -3,6 +3,7 @@
  * Galicianlanguage file
  *
  * @author Medúlio <medulio@ciberirmandade.org>
+ * @author Oscar M. Lage <r0sk10@gmail.com>
  */
 $lang['menu']                  = 'Xestor de Usuarios';
 $lang['noauth']                = '(autenticación de usuarios non dispoñible)';

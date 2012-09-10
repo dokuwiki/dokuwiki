@@ -7,6 +7,7 @@
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['name']                  = 'Visszajelzés a DokuWiki használatáról (sok időt vehet igénybe a betöltése)';
 $lang['submit']                = 'Adatok elküldése';

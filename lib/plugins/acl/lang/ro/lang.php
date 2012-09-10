@@ -8,6 +8,8 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
+ * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['admin_acl']             = 'Managementul Listei de Control a Accesului';
 $lang['acl_group']             = 'Grup';

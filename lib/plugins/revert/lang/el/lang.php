@@ -9,6 +9,7 @@
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
+ * @author Petros Vidalis <pvidalis@gmail.com>
  */
 $lang['menu']                  = 'Αποκατάσταση κακόβουλων αλλαγών σελίδων';
 $lang['filter']                = 'Αναζήτηση σελίδων που περιέχουν spam';

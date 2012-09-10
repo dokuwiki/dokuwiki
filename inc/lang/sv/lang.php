@@ -16,6 +16,7 @@
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
+ * @author mikael@mallander.net
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -101,7 +102,7 @@ $lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt)';
 $lang['txt_overwrt']           = 'Skriv över befintlig fil';
 $lang['lockedby']              = 'Låst av';
 $lang['lockexpire']            = 'Lås upphör att gälla';
-$lang['willexpire']            = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
+$lang['js']['willexpire']            = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
 $lang['js']['notsavedyet']     = 'Det finns ändringar som inte är sparade.
 Är du säker på att du vill fortsätta?';
 $lang['js']['searchmedia']     = 'Sök efter filer';
@@ -130,7 +131,6 @@ Du kan fortfarande klippa och klistra in länken om du använder en annan webbl�
 $lang['js']['linkwiz']         = 'Snabbguide Länkar';
 $lang['js']['linkto']          = 'Länk till:';
 $lang['js']['del_confirm']     = 'Vill du verkligen radera?';
-$lang['js']['mu_btn']          = 'Ladda upp flera filer samtidigt';
 $lang['rssfailed']             = 'Ett fel uppstod när detta RSS-flöde skulle hämtas: ';
 $lang['nothingfound']          = 'Inga filer hittades.';
 $lang['mediaselect']           = 'Mediafiler';
@@ -225,8 +225,8 @@ $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Nyckelord';
 $lang['subscr_m_new_header']   = 'Lägg till prenumeration';
 $lang['subscr_m_current_header'] = 'Nuvarande prenumerationer';
-$lang['subscr_m_unsubscribe']  = 'Prenumerera';
-$lang['subscr_m_subscribe']    = 'Avsluta prenumeration';
+$lang['subscr_m_unsubscribe']  = 'Avsluta prenumeration';
+$lang['subscr_m_subscribe']    = 'Prenumerera';
 $lang['subscr_m_receive']      = 'Ta emot';
 $lang['subscr_style_every']    = 'skicka epost vid varje ändring';
 $lang['authmodfailed']         = 'Felaktiga inställningar för användarautentisering. Var vänlig meddela wikiadministratören.';
@@ -256,21 +256,6 @@ $lang['i_pol0']                = 'Öppen wiki (alla får läsa, skriva och ladda
 $lang['i_pol1']                = 'Publik wiki (alla får läsa, registrerade användare för skriva och ladda upp filer)';
 $lang['i_pol2']                = 'Sluten wiki (endast registrerade användare får läsa, skriva och ladda upp filer)';
 $lang['i_retry']               = 'Försök igen';
-$lang['mu_intro']              = 'Här kan du ladda upp flera filer på en gång. Klicka på bläddra-knappen för att lägga till dem i kön. Tryck på ladda upp när du är klar.';
-$lang['mu_gridname']           = 'Filnamn';
-$lang['mu_gridsize']           = 'Storlek';
-$lang['mu_gridstat']           = 'Status';
-$lang['mu_namespace']          = 'Namnrymd';
-$lang['mu_browse']             = 'Bläddra';
-$lang['mu_toobig']             = 'för stor';
-$lang['mu_ready']              = 'redo att ladda upp';
-$lang['mu_done']               = 'komplett';
-$lang['mu_fail']               = 'misslyckades';
-$lang['mu_authfail']           = 'sessionen över tid';
-$lang['mu_progress']           = '@PCT@% uppladdade';
-$lang['mu_filetypes']          = 'Tillåtna filtyper';
-$lang['mu_info']               = 'filerna uppladdade.';
-$lang['mu_lasterr']            = 'Senaste fel:';
 $lang['recent_global']         = 'Du bevakar ändringar i namnrymden <b>%s</b>. Du kan också titta på <a href="%s">senaste ändringar för hela wikin</a>.';
 $lang['years']                 = '%d år sedan';
 $lang['months']                = '%d månader sedan';

@@ -1,4 +1,4 @@
-Nova uzulo estis registrata. Jen la detaloj:
+Nova uzanto estis registrata. Jen la detaloj:
 
 Uzantonomo: @NEWUSER@
 Kompleta nomo: @NEWNAME@

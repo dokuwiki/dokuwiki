@@ -805,8 +805,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($hash) $link['url'] .= '#'.$hash;
 
         //markup non existing files
-        if (!$exists)
-          $link['class'] .= ' wikilink2';
+        if (!$exists) {
+            $link['class'] .= ' wikilink2';
+        }
 
         //output formatted
         if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];

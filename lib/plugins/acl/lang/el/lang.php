@@ -13,6 +13,7 @@
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
+ * @author Petros Vidalis <pvidalis@gmail.com>
  */
 $lang['admin_acl']             = 'Διαχείριση Δικαιωμάτων Πρόσβασης';
 $lang['acl_group']             = 'Ομάδα';

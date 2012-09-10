@@ -2,10 +2,9 @@
 /**
  * french language file
  *
- * @author Guy Brand <gb@isis.u-strasbg.fr>
+ * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author gb@isis.u-strasbg.fr
  * @author stephane.gully@gmail.com
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -15,6 +14,8 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
+ * @author schplurtz@laposte.net
+ * @author skimpax@gmail.com
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification utilisateur non disponible)';

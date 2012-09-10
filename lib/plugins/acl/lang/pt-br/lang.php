@@ -18,6 +18,7 @@
  * @author Luis Dantas <luisdantas@gmail.com>
  * @author Sergio Motta sergio@cisne.com.br
  * @author Isaias Masiero Filho <masiero@masiero.org>
+ * @author Balaco Baco <balacobaco@imap.cc>
  */
 $lang['admin_acl']             = 'Administração da Lista de Controles de Acesso';
 $lang['acl_group']             = 'Grupo';

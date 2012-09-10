@@ -5,6 +5,7 @@
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
+ * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['menu']                  = 'Ylläpidä liitännäisiä';
 $lang['download']              = 'Lataa ja asenna uusi liitännäinen';
@@ -50,3 +51,4 @@ $lang['enabled']               = 'Liitännäinen %s käytössä';
 $lang['notenabled']            = 'Liitännäistä %s ei voitu ottaa käyttöön. Tarkista tiedostojen oikeudet.';
 $lang['disabled']              = 'Liitännäinen %s pois käytössä';
 $lang['notdisabled']           = 'Liitännäistä %s ei voitu ottaa pois käytöstä. Tarkista tiedostojen oikeudet.';
+$lang['packageinstalled']      = 'Pluginpaketti (%d plugin: %s:) asennettu onnistuneesti.';

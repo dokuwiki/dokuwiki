@@ -89,7 +89,8 @@ function tpl_content_core(){
                 $_REQUEST['first'] = $_REQUEST['first'][0];
             }
             $first = is_numeric($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
-            html_recent($first);
+            $show_changes = $_REQUEST['show_changes'];
+            html_recent($first, $show_changes);
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
@@ -121,6 +122,9 @@ function tpl_content_core(){
             break;
         case 'subscribe':
             tpl_subscribe();
+            break;
+        case 'media':
+            tpl_media();
             break;
         default:
             $evt = new Doku_Event('TPL_ACT_UNKNOWN',$ACT);
@@ -476,10 +480,15 @@ function tpl_actionlink($type,$pre='',$suf='',$inner='',$return=false){
             $linktarget = wl($id, $params);
         }
         $caption = $lang['btn_' . $type];
+        $akey = $addTitle = '';
+        if($accesskey){
+            $akey = 'accesskey="'.$accesskey.'" ';
+            $addTitle = ' ['.strtoupper($accesskey).']';
+        }
         $out = tpl_link($linktarget, $pre.(($inner)?$inner:$caption).$suf,
                         'class="action ' . $type . '" ' .
-                        'accesskey="' . $accesskey . '" rel="nofollow" ' .
-                        'title="' . hsc($caption) . '"', 1);
+                        $akey . 'rel="nofollow" ' .
+                        'title="' . hsc($caption).$addTitle . '"', 1);
     }
     if ($return) return $out;
     echo $out;
@@ -622,9 +631,7 @@ function tpl_get_action($type) {
                 return false;
             }
             break;
-        case 'subscribens':
-            // Superseded by subscribe/subscription
-            return '';
+        case 'media':
             break;
         default:
             return '[unknown %s type]';
@@ -963,17 +970,17 @@ function tpl_img($maxwidth=0,$maxheight=0,$link=true,$params=null){
  * Default action for TPL_IMG_DISPLAY
  */
 function _tpl_img_action($data, $param=NULL) {
+    global $lang;
     $p = buildAttributes($data['params']);
 
-    if($data['url']) print '<a href="'.hsc($data['url']).'">';
+    if($data['url']) print '<a href="'.hsc($data['url']).'" title="'.$lang['mediaview'].'">';
     print '<img '.$p.'/>';
     if($data['url']) print '</a>';
     return true;
 }
 
 /**
- * This function inserts a 1x1 pixel gif which in reality
- * is the indexer function.
+ * This function inserts a small gif which in reality is the indexer function.
  *
  * Should be called somewhere at the very end of the main.php
  * template
@@ -986,7 +993,7 @@ function tpl_indexerWebBug(){
     $p = array();
     $p['src']    = DOKU_BASE.'lib/exe/indexer.php?id='.rawurlencode($ID).
         '&'.time();
-    $p['width']  = 2;
+    $p['width']  = 2; //no more 1x1 px image because we live in times of ad blockers...
     $p['height'] = 1;
     $p['alt']    = '';
     $att = buildAttributes($p);
@@ -1104,9 +1111,7 @@ function tpl_mediaContent($fromajax=false){
     $evt = new Doku_Event('MEDIAMANAGER_CONTENT_OUTPUT', $data);
     if ($evt->advise_before()) {
         $do = $data['do'];
-        if($do == 'metaform'){
-            media_metaform($IMG,$AUTH);
-        }elseif($do == 'filesinuse'){
+        if($do == 'filesinuse'){
             media_filesinuse($INUSE,$IMG);
         }elseif($do == 'filelist'){
             media_filelist($NS,$AUTH,$JUMPTO);
@@ -1123,6 +1128,110 @@ function tpl_mediaContent($fromajax=false){
 }
 
 /**
+ * Prints the central column in full-screen media manager
+ * Depending on the opened tab this may be a list of
+ * files in a namespace, upload form or search form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_mediaFileList(){
+    global $AUTH;
+    global $NS;
+    global $JUMPTO;
+    global $lang;
+
+    $opened_tab = $_REQUEST['tab_files'];
+    if (!$opened_tab || !in_array($opened_tab, array('files', 'upload', 'search'))) $opened_tab = 'files';
+    if ($_REQUEST['mediado'] == 'update') $opened_tab = 'upload';
+
+    echo '<h2 class="a11y">' . $lang['mediaselect'] . '</h2>'.NL;
+
+    media_tabs_files($opened_tab);
+
+    echo '<div class="panelHeader">'.NL;
+    echo '<h3>';
+    $tabTitle = ($NS) ? $NS : '['.$lang['mediaroot'].']';
+    printf($lang['media_' . $opened_tab], '<strong>'.hsc($tabTitle).'</strong>');
+    echo '</h3>'.NL;
+    if ($opened_tab === 'search' || $opened_tab === 'files') {
+        media_tab_files_options();
+    }
+    echo '</div>'.NL;
+
+    echo '<div class="panelContent">'.NL;
+    if ($opened_tab == 'files') {
+        media_tab_files($NS,$AUTH,$JUMPTO);
+    } elseif ($opened_tab == 'upload') {
+        media_tab_upload($NS,$AUTH,$JUMPTO);
+    } elseif ($opened_tab == 'search') {
+        media_tab_search($NS,$AUTH);
+    }
+    echo '</div>'.NL;
+}
+
+/**
+ * Prints the third column in full-screen media manager
+ * Depending on the opened tab this may be details of the
+ * selected file, the meta editing dialog or
+ * list of file revisions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_mediaFileDetails($image, $rev){
+    global $AUTH, $NS, $conf, $DEL, $lang;
+
+    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
+    if (!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return '';
+    if ($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
+    if (isset($NS) && getNS($image) != $NS) return '';
+    $do = $_REQUEST['mediado'];
+
+    $opened_tab = $_REQUEST['tab_details'];
+
+    $tab_array = array('view');
+    list($ext, $mime) = mimetype($image);
+    if ($mime == 'image/jpeg') {
+        $tab_array[] = 'edit';
+    }
+    if ($conf['mediarevisions']) {
+        $tab_array[] = 'history';
+    }
+
+    if (!$opened_tab || !in_array($opened_tab, $tab_array)) $opened_tab = 'view';
+    if ($_REQUEST['edit']) $opened_tab = 'edit';
+    if ($do == 'restore') $opened_tab = 'view';
+
+    media_tabs_details($image, $opened_tab);
+
+    echo '<div class="panelHeader"><h3>';
+    list($ext,$mime,$dl) = mimetype($image,false);
+    $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
+    $class = 'select mediafile mf_'.$class;
+    $tabTitle = '<strong class="'.$class.'">'.$image.'</strong>';
+    if ($opened_tab === 'view' && $rev) {
+        printf($lang['media_viewold'], $tabTitle, dformat($rev));
+    } else {
+        printf($lang['media_' . $opened_tab], $tabTitle);
+    }
+
+    echo '</h3></div>'.NL;
+
+    echo '<div class="panelContent">'.NL;
+
+    if ($opened_tab == 'view') {
+        media_tab_view($image, $NS, $AUTH, $rev);
+
+    } elseif ($opened_tab == 'edit' && !$removed) {
+        media_tab_edit($image, $NS, $AUTH);
+
+    } elseif ($opened_tab == 'history' && $conf['mediarevisions']) {
+        media_tab_history($image,$NS,$AUTH);
+    }
+
+    echo '</div>'.NL;
+}
+
+/**
  * prints the namespace tree in the mediamanger popup
  *
  * Only allowed in mediamanager.php
@@ -1131,7 +1240,6 @@ function tpl_mediaContent($fromajax=false){
  */
 function tpl_mediaTree(){
     global $NS;
-
     ptln('<div id="media__tree">');
     media_nstree($NS);
     ptln('</div>');
@@ -1248,9 +1356,12 @@ function tpl_license($img='badge',$imgonly=false,$return=false){
  */
 function tpl_include_page($pageid,$print=true){
     global $ID;
-    $oldid = $ID;
+    global $TOC;
+    $oldid  = $ID;
+    $oldtoc = $TOC;
     $html = p_wiki_xhtml($pageid,'',false);
-    $ID = $oldid;
+    $ID  = $oldid;
+    $TOC = $oldtoc;
 
     if(!$print) return $html;
     echo $html;
@@ -1341,23 +1452,93 @@ function tpl_flush(){
 
 
 /**
- * Use favicon.ico from data/media root directory if it exists, otherwise use
+ * Returns icon from data/media root directory if it exists, otherwise
  * the one in the template's image directory.
  *
+ * @param  bool $abs        - if to use absolute URL
+ * @param  string $fileName - file name of icon
  * @author Anika Henke <anika@selfthinker.org>
  */
-function tpl_getFavicon($abs=false) {
-    if (file_exists(mediaFN('favicon.ico'))) {
-        return ml('favicon.ico', '', true, '', $abs);
+function tpl_getFavicon($abs=false, $fileName='favicon.ico') {
+    if (file_exists(mediaFN($fileName))) {
+        return ml($fileName, '', true, '', $abs);
     }
 
     if($abs) {
-        return DOKU_URL.substr(DOKU_TPL.'images/favicon.ico', strlen(DOKU_REL));
+        return DOKU_URL.substr(DOKU_TPL.'images/'.$fileName, strlen(DOKU_REL));
     }
-
-    return DOKU_TPL.'images/favicon.ico';
+    return DOKU_TPL.'images/'.$fileName;
 }
 
+/**
+ * Returns <link> tag for various icon types (favicon|mobile|generic)
+ *
+ * @param  array $types - list of icon types to display (favicon|mobile|generic)
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_favicon($types=array('favicon')) {
+
+    $return = '';
+
+    foreach ($types as $type) {
+        switch($type) {
+            case 'favicon':
+                $return .= '<link rel="shortcut icon" href="'.tpl_getFavicon().'" />'.NL;
+                break;
+            case 'mobile':
+                $return .= '<link rel="apple-touch-icon" href="'.tpl_getFavicon(false, 'apple-touch-icon.png').'" />'.NL;
+                break;
+            case 'generic':
+                // ideal world solution, which doesn't work in any browser yet
+                $return .= '<link rel="icon" href="'.tpl_getFavicon(false, 'icon.svg').'" type="image/svg+xml" />'.NL;
+                break;
+        }
+    }
+
+    return $return;
+}
+
+/**
+ * Prints full-screen media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function tpl_media() {
+    global $DEL, $NS, $IMG, $AUTH, $JUMPTO, $REV, $lang, $fullscreen, $conf;
+    $fullscreen = true;
+    require_once DOKU_INC.'lib/exe/mediamanager.php';
+
+    if ($_REQUEST['image']) $image = cleanID($_REQUEST['image']);
+    if (isset($IMG)) $image = $IMG;
+    if (isset($JUMPTO)) $image = $JUMPTO;
+    if (isset($REV) && !$JUMPTO) $rev = $REV;
+
+    echo '<div id="mediamanager__page">'.NL;
+    echo '<h1>'.$lang['btn_media'].'</h1>'.NL;
+    html_msgarea();
+
+    echo '<div class="panel namespaces">'.NL;
+    echo '<h2>'.$lang['namespaces'].'</h2>'.NL;
+    echo '<div class="panelHeader">';
+    echo $lang['media_namespaces'];
+    echo '</div>'.NL;
+
+    echo '<div class="panelContent" id="media__tree">'.NL;
+    media_nstree($NS);
+    echo '</div>'.NL;
+    echo '</div>'.NL;
+
+    echo '<div class="panel filelist">'.NL;
+    tpl_mediaFileList();
+    echo '</div>'.NL;
+
+    echo '<div class="panel file">'.NL;
+    echo '<h2 class="a11y">'.$lang['media_file'].'</h2>'.NL;
+    tpl_mediaFileDetails($image, $rev);
+    echo '</div>'.NL;
+
+    echo '</div>'.NL;
+}
 
 //Setup VIM: ex: et ts=4 :
 

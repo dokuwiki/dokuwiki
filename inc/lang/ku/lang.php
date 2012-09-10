@@ -60,7 +60,7 @@ $lang['txt_filename'] = 'Enter wikiname (optional)';
 $lang['txt_overwrt']  = 'Overwrite existing file';
 $lang['lockedby']     = 'Currently locked by';
 $lang['lockexpire']   = 'Lock expires at';
-$lang['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
+$lang['js']['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
 
 $lang['js']['notsavedyet'] = "Unsaved changes will be lost.\nReally continue?";
 

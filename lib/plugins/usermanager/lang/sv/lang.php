@@ -14,6 +14,7 @@
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
  * @author Håkan Sandell <hakan.sandell@home.se>
+ * @author mikael@mallander.net
  */
 $lang['menu']                  = 'Hantera användare';
 $lang['noauth']                = '(användarautentisering ej tillgänlig)';

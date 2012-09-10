@@ -95,7 +95,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             //Print the last time the data was sent
             $lastSent = $this->helper->lastSentTime();
             if ( $lastSent !== 0 ){
-                echo $this->getLang('lastSent') . datetime_h($lastSent);
+                echo $this->getLang('lastSent') . ' ' . datetime_h($lastSent);
             }
         } else {
             //If we just submitted the form

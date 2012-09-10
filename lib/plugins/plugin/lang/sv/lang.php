@@ -15,6 +15,7 @@
  * @author Bogge Bogge <bogge@bogge.com>
  * @author Peter Åström <eaustreum@gmail.com>
  * @author Håkan Sandell <hakan.sandell@home.se>
+ * @author mikael@mallander.net
  */
 $lang['menu']                  = 'Hantera insticksmoduler';
 $lang['download']              = 'Ladda ned och installera en ny insticksmodul';

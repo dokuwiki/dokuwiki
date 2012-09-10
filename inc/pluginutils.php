@@ -16,7 +16,7 @@ function plugin_list($type='',$all=false) {
     global $plugin_controller;
     return $plugin_controller->getList($type,$all);
 }
-function &plugin_load($type,$name,$new=false,$disabled=false) {
+function plugin_load($type,$name,$new=false,$disabled=false) {
     global $plugin_controller;
     return $plugin_controller->load($type,$name,$new,$disabled);
 }
@@ -35,4 +35,8 @@ function plugin_disable($plugin) {
 function plugin_directory($plugin) {
     global $plugin_controller;
     return $plugin_controller->get_directory($plugin);
+}
+function plugin_getcascade() {
+    global $plugin_controller;
+    return $plugin_controller->getCascade();
 }

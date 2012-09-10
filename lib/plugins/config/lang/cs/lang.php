@@ -9,6 +9,7 @@
  * @author Marek Sacha <sachamar@fel.cvut.cz>
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
+ * @author zbynek.krivka@seznam.cz
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -44,10 +45,11 @@ $lang['_msg_setting_no_default'] = 'Chybí výchozí hodnota položky.';
 $lang['fmode']                 = 'Přístupová práva pro vytváření souborů';
 $lang['dmode']                 = 'Přístupová práva pro vytváření adresářů';
 $lang['lang']                  = 'Jazyk';
-$lang['basedir']               = 'Kořenový adresář';
-$lang['baseurl']               = 'Kořenové URL';
+$lang['basedir']               = 'Kořenový adresář (např. <code>/dokuwiki/</code>). Pro autodetekci nechte prázdné.';
+$lang['baseurl']               = 'Kořenové URL (např. <code>http://www.yourserver.com</code>). Pro autodetekci nechte prázdné.';
 $lang['savedir']               = 'Adresář pro ukládání dat';
-$lang['start']                 = 'Název úvodních stránek';
+$lang['cookiedir']             = 'Cesta pro cookie. Není-li vyplněno, použije se kořenové URL.';
+$lang['start']                 = 'Název úvodní stránky';
 $lang['title']                 = 'Název celé wiki';
 $lang['template']              = 'Šablona';
 $lang['license']               = 'Pod jakou licencí má být tento obsah publikován?';
@@ -122,6 +124,7 @@ $lang['jpg_quality']           = 'Kvalita komprese JPEG (0-100)';
 $lang['subscribers']           = 'Možnost přihlásit se k odběru novinek stránky';
 $lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jsou posílány změny a souhrny změn. Interval by neměl být kratší než čas uvedený v recent_days.';
 $lang['compress']              = 'Zahustit CSS a JavaScript výstup';
+$lang['cssdatauri']            = 'Velikost [v bajtech] obrázků odkazovaných v CSS souborech, které budou pro ušetření HTTP požadavku vestavěny do stylu. Tato technika nefunguje v IE 7 a starším. Doporučená hodnota je mezi <code>400</code> a <code>600</code> bajty. Pro vypnutí nastavte na <code>0</code>.';
 $lang['hidepages']             = 'Skrýt stránky odpovídající vzoru (regulární výrazy)';
 $lang['send404']               = 'Posílat "HTTP 404/Page Not Found" pro neexistují stránky';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';

@@ -1507,7 +1507,8 @@ class Doku_Handler_Block {
         if (!$this->inParagraph) return;
         // look back if there was any content - we don't want empty paragraphs
         $content = '';
-        for($i=count($this->calls)-1; $i>=0; $i--){
+        $ccount = count($this->calls);
+        for($i=$ccount-1; $i>=0; $i--){
             if($this->calls[$i][0] == 'p_open'){
                 break;
             }elseif($this->calls[$i][0] == 'cdata'){
@@ -1520,7 +1521,8 @@ class Doku_Handler_Block {
 
         if(trim($content)==''){
             //remove the whole paragraph
-            array_splice($this->calls,$i);
+            //array_splice($this->calls,$i); // <- this is much slower than the loop below
+            for($x=$ccount; $x>$i; $x--) array_pop($this->calls);
         }else{
             // remove ending linebreaks in the paragraph
             $i=count($this->calls)-1;
@@ -1531,7 +1533,7 @@ class Doku_Handler_Block {
         $this->inParagraph = false;
         $this->skipEol = true;
     }
-    
+
     function addCall($call) {
         $key = count($this->calls);
         if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {

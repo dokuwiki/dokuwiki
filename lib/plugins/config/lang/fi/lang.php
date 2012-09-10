@@ -5,6 +5,7 @@
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
+ * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['menu']                  = 'Asetukset';
 $lang['error']                 = 'Asetuksia ei päivitetty väärän arvon vuoksi. Tarkista muutokset ja lähetä sivu uudestaan.
@@ -41,6 +42,7 @@ $lang['lang']                  = 'Kieli';
 $lang['basedir']               = 'Perushakemisto';
 $lang['baseurl']               = 'Perus URL';
 $lang['savedir']               = 'Hakemisto tietojen tallennukseen.';
+$lang['cookiedir']             = 'Cookien path. Jätä tyhjäksi käyttääksesi baseurl arvoa';
 $lang['start']                 = 'Alkusivun nimi';
 $lang['title']                 = 'Wikin nimi';
 $lang['template']              = 'Sivumalli';
@@ -111,6 +113,7 @@ $lang['jpg_quality']           = 'JPG pakkauslaatu (0-100)';
 $lang['subscribers']           = 'Salli tuki sivujen tilaamiselle';
 $lang['subscribe_time']        = 'Aika jonka jälkeen tilauslinkit ja yhteenveto lähetetään (sek). Tämän pitäisi olla pienempi, kuin recent_days aika.';
 $lang['compress']              = 'Pakkaa CSS ja javascript';
+$lang['cssdatauri']            = 'Maksimikoko tavuina jossa kuvat joihin viitataan CSS-tiedostoista olisi sisällytettynä suoraan tyylitiedostoon jotta HTTP-kyselyjen kaistaa saataisiin kutistettua. Tämä tekniikka ei toimi IE versiossa aikasempi kuin 8! <code>400:sta</code> <code>600:aan</code> tavua on hyvä arvo. Aseta <code>0</code> kytkeäksesi ominaisuuden pois.';
 $lang['hidepages']             = 'Piilota seuraavat sivut (säännönmukainen lauseke)';
 $lang['send404']               = 'Lähetä "HTTP 404/Page Not Found" puuttuvista sivuista';
 $lang['sitemap']               = 'Luo Google sitemap (päiviä)';

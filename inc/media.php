@@ -40,6 +40,7 @@ function media_filesinuse($data,$id){
  * Handles the saving of image meta data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_metasave($id,$auth,$data){
     if($auth < AUTH_UPLOAD) return false;
@@ -60,8 +61,19 @@ function media_metasave($id,$auth,$data){
         }
     }
 
+    $old = @filemtime($src);
+    if(!@file_exists(mediaFN($id, $old)) && @file_exists($src)) {
+        // add old revision to the attic
+        media_saveOldRevision($id);
+    }
+
     if($meta->save()){
         if($conf['fperm']) chmod($src, $conf['fperm']);
+
+        $new = @filemtime($src);
+        // add a log entry to the media changelog
+        addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, $lang['media_meta_edited']);
+
         msg($lang['metasaveok'],1);
         return $id;
     }else{
@@ -74,33 +86,35 @@ function media_metasave($id,$auth,$data){
  * Display the form to edit image meta data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_metaform($id,$auth){
-    if($auth < AUTH_UPLOAD) return false;
     global $lang, $config_cascade;
+
+    if($auth < AUTH_UPLOAD) {
+        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
+        return false;
+    }
 
     // load the field descriptions
     static $fields = null;
     if(is_null($fields)){
-
-        foreach (array('default','local') as $config_group) {
-            if (empty($config_cascade['mediameta'][$config_group])) continue;
-            foreach ($config_cascade['mediameta'][$config_group] as $config_file) {
-                if(@file_exists($config_file)){
-                    include($config_file);
-                }
-            }
+        $config_files = getConfigFiles('mediameta');
+        foreach ($config_files as $config_file) {
+            if(@file_exists($config_file)) include($config_file);
         }
     }
 
     $src = mediaFN($id);
 
     // output
-    echo '<h1>'.hsc(noNS($id)).'</h1>'.NL;
-    echo '<form action="'.DOKU_BASE.'lib/exe/mediamanager.php" accept-charset="utf-8" method="post" class="meta">'.NL;
-    formSecurityToken();
+    $form = new Doku_Form(array('action' => media_managerURL(array('tab_details' => 'view'), '&'),
+                                'class' => 'meta'));
+    $form->addHidden('img', $id);
+    $form->addHidden('mediado', 'save');
     foreach($fields as $key => $field){
         // get current value
+        if (empty($field[0])) continue;
         $tags = array($field[0]);
         if(is_array($field[3])) $tags = array_merge($tags,$field[3]);
         $value = tpl_img_getTag($tags,'',$src);
@@ -111,33 +125,22 @@ function media_metaform($id,$auth){
         $p['class'] = 'edit';
         $p['id']    = 'meta__'.$key;
         $p['name']  = 'meta['.$field[0].']';
+        $p_attrs    = array('class' => 'edit');
 
-        // put label
-        echo '<div class="metafield">';
-        echo '<label for="meta__'.$key.'">';
-        echo ($lang[$field[1]]) ? $lang[$field[1]] : $field[1];
-        echo ':</label>';
-
-        // put input field
+        $form->addElement('<div class="row">');
         if($field[2] == 'text'){
-            $p['value'] = $value;
-            $p['type']  = 'text';
-            $att = buildAttributes($p);
-            echo "<input $att/>".NL;
+            $form->addElement(form_makeField('text', $p['name'], $value, ($lang[$field[1]]) ? $lang[$field[1]] : $field[1] . ':', $p['id'], $p['class'], $p_attrs));
         }else{
             $att = buildAttributes($p);
-            echo "<textarea $att rows=\"6\" cols=\"50\">".formText($value).'</textarea>'.NL;
+            $form->addElement('<label for="meta__'.$key.'">'.$lang[$field[1]].'</label>');
+            $form->addElement("<textarea $att rows=\"6\" cols=\"50\">".formText($value).'</textarea>');
         }
-        echo '</div>'.NL;
+        $form->addElement('</div>'.NL);
     }
-    echo '<div class="buttons">'.NL;
-    echo '<input type="hidden" name="img" value="'.hsc($id).'" />'.NL;
-    echo '<input name="do[save]" type="submit" value="'.$lang['btn_save'].
-        '" title="'.$lang['btn_save'].' [S]" accesskey="s" class="button" />'.NL;
-    echo '<input name="do[cancel]" type="submit" value="'.$lang['btn_cancel'].
-        '" title="'.$lang['btn_cancel'].' [C]" accesskey="c" class="button" />'.NL;
-    echo '</div>'.NL;
-    echo '</form>'.NL;
+    $form->addElement('<div class="buttons">');
+    $form->addElement(form_makeButton('submit', '', $lang['btn_save'], array('accesskey' => 's', 'name' => 'mediado[save]')));
+    $form->addElement('</div>'.NL);
+    $form->printForm();
 }
 
 /**
@@ -178,6 +181,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
                        DOKU_MEDIA_INUSE
  */
 function media_delete($id,$auth){
+    global $lang;
     if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if(media_inuse($id)) return DOKU_MEDIA_INUSE;
 
@@ -193,9 +197,15 @@ function media_delete($id,$auth){
     $data['del'] = false;
     $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
     if ($evt->advise_before()) {
+        $old = @filemtime($file);
+        if(!@file_exists(mediaFN($id, $old)) && @file_exists($file)) {
+            // add old revision to the attic
+            media_saveOldRevision($id);
+        }
+
         $data['unl'] = @unlink($file);
         if($data['unl']){
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE);
+            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted']);
             $data['del'] = io_sweepNS($id,'mediadir');
         }
     }
@@ -210,19 +220,60 @@ function media_delete($id,$auth){
 }
 
 /**
+ * Handle file uploads via XMLHttpRequest
+ *
+ * @return mixed false on error, id of the new file on success
+ */
+function media_upload_xhr($ns,$auth){
+    if(!checkSecurityToken()) return false;
+
+    $id = $_GET['qqfile'];
+    list($ext,$mime,$dl) = mimetype($id);
+    $input = fopen("php://input", "r");
+    if (!($tmp = io_mktmpdir())) return false;
+    $path = $tmp.'/'.md5($id);
+    $target = fopen($path, "w");
+    $realSize = stream_copy_to_stream($input, $target);
+    fclose($target);
+    fclose($input);
+    if ($realSize != (int)$_SERVER["CONTENT_LENGTH"]){
+        unlink($target);
+        unlink($path);
+        return false;
+    }
+
+    $res = media_save(
+        array('name' => $path,
+            'mime' => $mime,
+            'ext'  => $ext),
+        $ns.':'.$id,
+        (($_REQUEST['ow'] == 'checked') ? true : false),
+        $auth,
+        'copy'
+    );
+    unlink($path);
+    if ($tmp) dir_delete($tmp);
+    if (is_array($res)) {
+        msg($res[0], $res[1]);
+        return false;
+    }
+    return $res;
+}
+
+/**
  * Handles media file uploads
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @return mixed false on error, id of the new file on success
  */
-function media_upload($ns,$auth){
+function media_upload($ns,$auth,$file=false){
     if(!checkSecurityToken()) return false;
     global $lang;
 
     // get file and id
-    $id   = $_POST['id'];
-    $file = $_FILES['upload'];
+    $id   = $_POST['mediaid'];
+    if (!$file) $file = $_FILES['upload'];
     if(empty($id)) $id = $file['name'];
 
     // check for errors (messages are done in lib/exe/mediamanager.php)
@@ -280,10 +331,10 @@ function media_save($file, $id, $ow, $auth, $move) {
         }
     }
 
-    global $lang;
+    global $lang, $conf;
 
     // get filename
-    $id   = cleanID($id,false,true);
+    $id   = cleanID($id);
     $fn   = mediaFN($id);
 
     // get filetype regexp
@@ -298,7 +349,8 @@ function media_save($file, $id, $ow, $auth, $move) {
 
     //check for overwrite
     $overwrite = @file_exists($fn);
-    if($overwrite && (!$ow || $auth < AUTH_DELETE)) {
+    $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
+    if($overwrite && (!$ow || $auth < $auth_ow)) {
         return array($lang['uploadexist'], 0);
     }
     // check for valid content
@@ -341,31 +393,80 @@ function _media_upload_action($data) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file') {
     global $conf;
     global $lang;
+    global $REV;
+
+    $old = @filemtime($fn);
+    if(!@file_exists(mediaFN($id, $old)) && @file_exists($fn)) {
+        // add old revision to the attic if missing
+        media_saveOldRevision($id);
+    }
 
     // prepare directory
     io_createNamespace($id, 'media');
 
     if($move($fn_tmp, $fn)) {
+        @clearstatcache(true,$fn);
+        $new = @filemtime($fn);
         // Set the correct permission here.
         // Always chmod media because they may be saved with different permissions than expected from the php umask.
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($fn, $conf['fmode']);
         msg($lang['uploadsucc'],1);
-        media_notify($id,$fn,$imime);
+        media_notify($id,$fn,$imime,$old);
         // add a log entry to the media changelog
-        if ($overwrite) {
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_EDIT);
+        if ($REV){
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, $lang['restored'], $REV);
+        } elseif ($overwrite) {
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT);
         } else {
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_CREATE);
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
         }
         return $id;
     }else{
         return array($lang['uploadfail'],-1);
     }
+}
+
+/**
+ * Moves the current version of media file to the media_attic
+ * directory
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $id
+ * @return int - revision date
+ */
+function media_saveOldRevision($id){
+    global $conf, $lang;
+
+    $oldf = mediaFN($id);
+    if(!@file_exists($oldf)) return '';
+    $date = filemtime($oldf);
+    if (!$conf['mediarevisions']) return $date;
+
+    if (!getRevisionInfo($id, $date, 8192, true)) {
+        // there was an external edit,
+        // there is no log entry for current version of file
+        if (!@file_exists(mediaMetaFN($id,'.changes'))) {
+            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
+        } else {
+            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_EDIT);
+        }
+    }
+
+    $newf = mediaFN($id,$date);
+    io_makeFileDir($newf);
+    if(copy($oldf, $newf)) {
+        // Set the correct permission here.
+        // Always chmod media because they may be saved with different permissions than expected from the php umask.
+        // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
+        chmod($newf, $conf['fmode']);
+    }
+    return $date;
 }
 
 /**
@@ -416,7 +517,7 @@ function media_contentcheck($file,$mime){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function media_notify($id,$file,$mime){
+function media_notify($id,$file,$mime,$old_rev=false){
     global $lang;
     global $conf;
     global $INFO;
@@ -434,8 +535,17 @@ function media_notify($id,$file,$mime){
     $text = str_replace('@MIME@',$mime,$text);
     $text = str_replace('@MEDIA@',ml($id,'',true,'&',true),$text);
     $text = str_replace('@SIZE@',filesize_h(filesize($file)),$text);
+    if ($old_rev && $conf['mediarevisions']) {
+        $text = str_replace('@OLD@', ml($id, "rev=$old_rev", true, '&', true), $text);
+    } else {
+        $text = str_replace('@OLD@', '', $text);
+    }
 
-    $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+    if(empty($conf['mailprefix'])) {
+        $subject = '['.$conf['title'].'] '.$lang['mail_upload'].' '.$id;
+    } else {
+        $subject = '['.$conf['mailprefix'].'] '.$lang['mail_upload'].' '.$id;
+    }
 
     mail_send($conf['notify'],$subject,$text,$conf['mailfrom']);
 }
@@ -443,7 +553,7 @@ function media_notify($id,$file,$mime){
 /**
  * List all files in a given Media namespace
  */
-function media_filelist($ns,$auth=null,$jump=''){
+function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
     global $conf;
     global $lang;
     $ns = cleanID($ns);
@@ -451,26 +561,698 @@ function media_filelist($ns,$auth=null,$jump=''){
     // check auth our self if not given (needed for ajax calls)
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    echo '<h1 id="media__ns">:'.hsc($ns).'</h1>'.NL;
+    if (!$fullscreenview) echo '<h1 id="media__ns">:'.hsc($ns).'</h1>'.NL;
 
     if($auth < AUTH_READ){
         // FIXME: print permission warning here instead?
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else{
-        media_uploadform($ns, $auth);
+        if (!$fullscreenview) media_uploadform($ns, $auth);
 
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
         search($data,$conf['mediadir'],'search_media',
-                array('showmsg'=>true,'depth'=>1),$dir);
+                array('showmsg'=>true,'depth'=>1),$dir,1,$sort);
 
         if(!count($data)){
             echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-        }else foreach($data as $item){
-            media_printfile($item,$auth,$jump);
+        }else {
+            if ($fullscreenview) {
+                echo '<ul class="' . _media_get_list_type() . '">';
+            }
+            foreach($data as $item){
+                if (!$fullscreenview) {
+                    media_printfile($item,$auth,$jump);
+                } else {
+                    media_printfile_thumbs($item,$auth,$jump);
+                }
+            }
+            if ($fullscreenview) echo '</ul>'.NL;
         }
     }
-    media_searchform($ns);
+    if (!$fullscreenview) media_searchform($ns);
+}
+
+/**
+ * Prints tabs for files list actions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @author Adrian Lang <mail@adrianlang.de>
+ *
+ * @param string $selected_tab - opened tab
+ */
+
+function media_tabs_files($selected_tab = ''){
+    global $lang;
+    $tabs = array();
+    foreach(array('files'  => 'mediaselect',
+                  'upload' => 'media_uploadtab',
+                  'search' => 'media_searchtab') as $tab => $caption) {
+        $tabs[$tab] = array('href'    => media_managerURL(array('tab_files' => $tab), '&'),
+                            'caption' => $lang[$caption]);
+    }
+
+    html_tabs($tabs, $selected_tab);
+}
+
+/**
+ * Prints tabs for files details actions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $selected_tab - opened tab
+ */
+function media_tabs_details($image, $selected_tab = ''){
+    global $lang, $conf;
+
+    $tabs = array();
+    $tabs['view'] = array('href'    => media_managerURL(array('tab_details' => 'view'), '&'),
+                          'caption' => $lang['media_viewtab']);
+
+    list($ext, $mime) = mimetype($image);
+    if ($mime == 'image/jpeg' && @file_exists(mediaFN($image))) {
+        $tabs['edit'] = array('href'    => media_managerURL(array('tab_details' => 'edit'), '&'),
+                              'caption' => $lang['media_edittab']);
+    }
+    if ($conf['mediarevisions']) {
+        $tabs['history'] = array('href'    => media_managerURL(array('tab_details' => 'history'), '&'),
+                                 'caption' => $lang['media_historytab']);
+    }
+
+    html_tabs($tabs, $selected_tab);
+}
+
+/**
+ * Prints options for the tab that displays a list of all files
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_files_options(){
+    global $lang, $NS;
+    $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
+                                'action' => wl($ID)));
+    $media_manager_params = media_managerURL(array(), '', false, true);
+    foreach($media_manager_params as $pKey => $pVal){
+        $form->addHidden($pKey, $pVal);
+    }
+    $form->addHidden('sectok', null);
+    if (isset($_REQUEST['q'])) {
+        $form->addHidden('q', $_REQUEST['q']);
+    }
+    $form->addElement('<ul>'.NL);
+    foreach(array('list' => array('listType', array('thumbs', 'rows')),
+                  'sort' => array('sortBy', array('name', 'date')))
+            as $group => $content) {
+        $checked = "_media_get_${group}_type";
+        $checked = $checked();
+
+        $form->addElement('<li class="' . $content[0] . '">');
+        foreach($content[1] as $option) {
+            $attrs = array();
+            if ($checked == $option) {
+                $attrs['checked'] = 'checked';
+            }
+            $form->addElement(form_makeRadioField($group, $option,
+                                       $lang['media_' . $group . '_' . $option],
+                                                  $content[0] . '__' . $option,
+                                                  $option, $attrs));
+        }
+        $form->addElement('</li>'.NL);
+    }
+    $form->addElement('<li>');
+    $form->addElement(form_makeButton('submit', '', $lang['btn_apply']));
+    $form->addElement('</li>'.NL);
+    $form->addElement('</ul>'.NL);
+    $form->printForm();
+}
+
+/**
+ * Returns type of sorting for the list of files in media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @return string - sort type
+ */
+function _media_get_sort_type() {
+    return _media_get_display_param('sort', array('default' => 'name', 'date'));
+}
+
+function _media_get_list_type() {
+    return _media_get_display_param('list', array('default' => 'thumbs', 'rows'));
+}
+
+function _media_get_display_param($param, $values) {
+    if (isset($_REQUEST[$param]) && in_array($_REQUEST[$param], $values)) {
+        // FIXME: Set cookie
+        return $_REQUEST[$param];
+    } else {
+        $val = get_doku_pref($param, $values['default']);
+        if (!in_array($val, $values)) {
+            $val = $values['default'];
+        }
+        return $val;
+    }
+}
+
+/**
+ * Prints tab that displays a list of all files
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_files($ns,$auth=null,$jump='') {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    if($auth < AUTH_READ){
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+    }else{
+        media_filelist($ns,$auth,$jump,true,_media_get_sort_type());
+    }
+}
+
+/**
+ * Prints tab that displays uploading form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_upload($ns,$auth=null,$jump='') {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    echo '<div class="upload">'.NL;
+    if ($auth >= AUTH_UPLOAD) {
+        echo '<p>' . $lang['mediaupload'] . '</p>';
+    }
+    media_uploadform($ns, $auth, true);
+    echo '</div>'.NL;
+}
+
+/**
+ * Prints tab that displays search form
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_search($ns,$auth=null) {
+    global $lang;
+
+    $do = $_REQUEST['mediado'];
+    $query = $_REQUEST['q'];
+    if (!$query) $query = '';
+    echo '<div class="search">'.NL;
+
+    media_searchform($ns, $query, true);
+    if ($do == 'searchlist' || $query) {
+        media_searchlist($query,$ns,$auth,true,_media_get_sort_type());
+    }
+    echo '</div>'.NL;
+}
+
+/**
+ * Prints tab that displays mediafile details
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_view($image, $ns, $auth=null, $rev=false) {
+    global $lang, $conf;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    if ($image && $auth >= AUTH_READ) {
+        $meta = new JpegMeta(mediaFN($image, $rev));
+        media_preview($image, $auth, $rev, $meta);
+        media_preview_buttons($image, $auth, $rev);
+        media_details($image, $auth, $rev, $meta);
+
+    } else {
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+    }
+}
+
+/**
+ * Prints tab that displays form for editing mediafile metadata
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_edit($image, $ns, $auth=null) {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+
+    if ($image) {
+        list($ext, $mime) = mimetype($image);
+        if ($mime == 'image/jpeg') media_metaform($image,$auth);
+    }
+}
+
+/**
+ * Prints tab that displays mediafile revisions
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_tab_history($image, $ns, $auth=null) {
+    global $lang;
+    if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
+    $do = $_REQUEST['mediado'];
+
+    if ($auth >= AUTH_READ && $image) {
+        if ($do == 'diff'){
+            media_diff($image, $ns, $auth);
+        } else {
+            $first = isset($_REQUEST['first']) ? intval($_REQUEST['first']) : 0;
+            html_revisions($first, $image);
+        }
+    } else {
+        echo '<div class="nothing">'.$lang['media_perm_read'].'</div>'.NL;
+    }
+}
+
+/**
+ * Prints mediafile details
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_preview($image, $auth, $rev=false, $meta=false) {
+
+    $size = media_image_preview_size($image, $rev, $meta);
+
+    if ($size) {
+        global $lang;
+        echo '<div class="image">';
+
+        $more = array();
+        if ($rev) {
+            $more['rev'] = $rev;
+        } else {
+            $t = @filemtime(mediaFN($image));
+            $more['t'] = $t;
+        }
+
+        $more['w'] = $size[0];
+        $more['h'] = $size[1];
+        $src = ml($image, $more);
+
+        echo '<a href="'.$src.'" target="_blank" title="'.$lang['mediaview'].'">';
+        echo '<img src="'.$src.'" alt="" style="max-width: '.$size[0].'px;" />';
+        echo '</a>';
+
+        echo '</div>'.NL;
+    }
+}
+
+/**
+ * Prints mediafile action buttons
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_preview_buttons($image, $auth, $rev=false) {
+    global $lang, $conf;
+
+    echo '<ul class="actions">'.NL;
+
+    if($auth >= AUTH_DELETE && !$rev && @file_exists(mediaFN($image))){
+
+        // delete button
+        $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
+            'action'=>media_managerURL(array('delete' => $image), '&')));
+        $form->addElement(form_makeButton('submit','',$lang['btn_delete']));
+        echo '<li>';
+        $form->printForm();
+        echo '</li>'.NL;
+    }
+
+    $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
+    if($auth >= $auth_ow && !$rev){
+
+        // upload new version button
+        $form = new Doku_Form(array('id' => 'mediamanager__btn_update',
+            'action'=>media_managerURL(array('image' => $image, 'mediado' => 'update'), '&')));
+        $form->addElement(form_makeButton('submit','',$lang['media_update']));
+        echo '<li>';
+        $form->printForm();
+        echo '</li>'.NL;
+    }
+
+    if($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && @file_exists(mediaFN($image, $rev))){
+
+        // restore button
+        $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
+            'action'=>media_managerURL(array('image' => $image), '&')));
+        $form->addHidden('mediado','restore');
+        $form->addHidden('rev',$rev);
+        $form->addElement(form_makeButton('submit','',$lang['media_restore']));
+        echo '<li>';
+        $form->printForm();
+        echo '</li>'.NL;
+    }
+
+    echo '</ul>'.NL;
+}
+
+/**
+ * Returns image width and height for mediamanager preview panel
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $image
+ * @param int $rev
+ * @param JpegMeta $meta
+ * @return array
+ */
+function media_image_preview_size($image, $rev, $meta, $size = 500) {
+    if (!preg_match("/\.(jpe?g|gif|png)$/", $image) || !file_exists(mediaFN($image, $rev))) return false;
+
+    $info = getimagesize(mediaFN($image, $rev));
+    $w = (int) $info[0];
+    $h = (int) $info[1];
+
+    if($meta && ($w > $size || $h > $size)){
+        $ratio = $meta->getResizeRatio($size, $size);
+        $w = floor($w * $ratio);
+        $h = floor($h * $ratio);
+    }
+    return array($w, $h);
+}
+
+/**
+ * Returns the requested EXIF/IPTC tag from the image meta
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param array $tags
+ * @param JpegMeta $meta
+ * @param string $alt
+ * @return string
+ */
+function media_getTag($tags,$meta,$alt=''){
+    if($meta === false) return $alt;
+    $info = $meta->getField($tags);
+    if($info == false) return $alt;
+    return $info;
+}
+
+/**
+ * Returns mediafile tags
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param JpegMeta $meta
+ * @return array
+ */
+function media_file_tags($meta) {
+    global $config_cascade;
+
+    // load the field descriptions
+    static $fields = null;
+    if(is_null($fields)){
+        $config_files = getConfigFiles('mediameta');
+        foreach ($config_files as $config_file) {
+            if(@file_exists($config_file)) include($config_file);
+        }
+    }
+
+    $tags = array();
+
+    foreach($fields as $key => $tag){
+        $t = array();
+        if (!empty($tag[0])) $t = array($tag[0]);
+        if(is_array($tag[3])) $t = array_merge($t,$tag[3]);
+        $value = media_getTag($t, $meta);
+        $tags[] = array('tag' => $tag, 'value' => $value);
+    }
+
+    return $tags;
+}
+
+/**
+ * Prints mediafile tags
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_details($image, $auth, $rev=false, $meta=false) {
+    global $lang;
+
+    if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
+    $tags = media_file_tags($meta);
+
+    echo '<dl>'.NL;
+    foreach($tags as $tag){
+        if ($tag['value']) {
+            $value = cleanText($tag['value']);
+            echo '<dt>'.$lang[$tag['tag'][1]].':</dt><dd>';
+            if ($tag['tag'][2] == 'date') echo dformat($value);
+            else echo hsc($value);
+            echo '</dd>'.NL;
+        }
+    }
+    echo '</dl>'.NL;
+}
+
+/**
+ * Shows difference between two revisions of file
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_diff($image, $ns, $auth, $fromajax = false) {
+    global $lang;
+    global $conf;
+
+    if ($auth < AUTH_READ || !$image || !$conf['mediarevisions']) return '';
+
+    $rev1 = (int) $_REQUEST['rev'];
+
+    if(is_array($_REQUEST['rev2'])){
+        $rev1 = (int) $_REQUEST['rev2'][0];
+        $rev2 = (int) $_REQUEST['rev2'][1];
+
+        if(!$rev1){
+            $rev1 = $rev2;
+            unset($rev2);
+        }
+    }else{
+        $rev2 = (int) $_REQUEST['rev2'];
+    }
+
+    if ($rev1 && !file_exists(mediaFN($image, $rev1))) $rev1 = false;
+    if ($rev2 && !file_exists(mediaFN($image, $rev2))) $rev2 = false;
+
+    if($rev1 && $rev2){            // two specific revisions wanted
+        // make sure order is correct (older on the left)
+        if($rev1 < $rev2){
+            $l_rev = $rev1;
+            $r_rev = $rev2;
+        }else{
+            $l_rev = $rev2;
+            $r_rev = $rev1;
+        }
+    }elseif($rev1){                // single revision given, compare to current
+        $r_rev = '';
+        $l_rev = $rev1;
+    }else{                        // no revision was given, compare previous to current
+        $r_rev = '';
+        $revs = getRevisions($image, 0, 1, 8192, true);
+        if (file_exists(mediaFN($image, $revs[0]))) {
+            $l_rev = $revs[0];
+        } else {
+            $l_rev = '';
+        }
+    }
+
+    // prepare event data
+    $data[0] = $image;
+    $data[1] = $l_rev;
+    $data[2] = $r_rev;
+    $data[3] = $ns;
+    $data[4] = $auth;
+    $data[5] = $fromajax;
+
+    // trigger event
+    return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
+
+}
+
+function _media_file_diff($data) {
+    if(is_array($data) && count($data)===6) {
+        return media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Shows difference between two revisions of image
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
+    global $lang, $config_cascade;
+
+    $l_meta = new JpegMeta(mediaFN($image, $l_rev));
+    $r_meta = new JpegMeta(mediaFN($image, $r_rev));
+
+    $is_img = preg_match("/\.(jpe?g|gif|png)$/", $image);
+    if ($is_img) {
+        $l_size = media_image_preview_size($image, $l_rev, $l_meta);
+        $r_size = media_image_preview_size($image, $r_rev, $r_meta);
+        $is_img = ($l_size && $r_size && ($l_size[0] >= 30 || $r_size[0] >= 30));
+
+        $difftype = $_REQUEST['difftype'];
+
+        if (!$fromajax) {
+            $form = new Doku_Form(array(
+                'action' => media_managerURL(array(), '&'),
+                'method' => 'get',
+                'id' => 'mediamanager__form_diffview',
+                'class' => 'diffView'
+            ));
+            $form->addHidden('sectok', null);
+            $form->addElement('<input type="hidden" name="rev2[]" value="'.$l_rev.'" ></input>');
+            $form->addElement('<input type="hidden" name="rev2[]" value="'.$r_rev.'" ></input>');
+            $form->addHidden('mediado', 'diff');
+            $form->printForm();
+
+            echo NL.'<div id="mediamanager__diff" >'.NL;
+        }
+
+        if ($difftype == 'opacity' || $difftype == 'portions') {
+            media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $difftype);
+            if (!$fromajax) echo '</div>';
+            return '';
+        }
+    }
+
+    list($l_head, $r_head) = html_diff_head($l_rev, $r_rev, $image, true);
+
+    ?>
+    <table>
+      <tr>
+        <th><?php echo $l_head; ?></th>
+        <th><?php echo $r_head; ?></th>
+      </tr>
+    <?php
+
+    echo '<tr class="image">';
+    echo '<td>';
+    media_preview($image, $auth, $l_rev, $l_meta);
+    echo '</td>';
+
+    echo '<td>';
+    media_preview($image, $auth, $r_rev, $r_meta);
+    echo '</td>';
+    echo '</tr>'.NL;
+
+    echo '<tr class="actions">';
+    echo '<td>';
+    media_preview_buttons($image, $auth, $l_rev);
+    echo '</td>';
+
+    echo '<td>';
+    media_preview_buttons($image, $auth, $r_rev);
+    echo '</td>';
+    echo '</tr>'.NL;
+
+    $l_tags = media_file_tags($l_meta);
+    $r_tags = media_file_tags($r_meta);
+    // FIXME r_tags-only stuff
+    foreach ($l_tags as $key => $l_tag) {
+        if ($l_tag['value'] != $r_tags[$key]['value']) {
+            $r_tags[$key]['highlighted'] = true;
+            $l_tags[$key]['highlighted'] = true;
+        } else if (!$l_tag['value'] || !$r_tags[$key]['value']) {
+            unset($r_tags[$key]);
+            unset($l_tags[$key]);
+        }
+    }
+
+    echo '<tr>';
+    foreach(array($l_tags,$r_tags) as $tags){
+        echo '<td>'.NL;
+
+        echo '<dl class="img_tags">';
+        foreach($tags as $tag){
+            $value = cleanText($tag['value']);
+            if (!$value) $value = '-';
+            echo '<dt>'.$lang[$tag['tag'][1]].':</dt>';
+            echo '<dd>';
+            if ($tag['highlighted']) {
+                echo '<strong>';
+            }
+            if ($tag['tag'][2] == 'date') echo dformat($value);
+            else echo hsc($value);
+            if ($tag['highlighted']) {
+                echo '</strong>';
+            }
+            echo '</dd>';
+        }
+        echo '</dl>'.NL;
+
+        echo '</td>';
+    }
+    echo '</tr>'.NL;
+
+    echo '</table>'.NL;
+
+    if ($is_img && !$fromajax) echo '</div>';
+}
+
+/**
+ * Prints two images side by side
+ * and slider
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param string $image
+ * @param int $l_rev
+ * @param int $r_rev
+ * @param array $l_size
+ * @param array $r_size
+ * @param string $type
+ */
+function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
+    if ($l_size != $r_size) {
+        if ($r_size[0] > $l_size[0]) {
+            $l_size = $r_size;
+        }
+    }
+
+    $l_more = array('rev' => $l_rev, 'h' => $l_size[1], 'w' => $l_size[0]);
+    $r_more = array('rev' => $r_rev, 'h' => $l_size[1], 'w' => $l_size[0]);
+
+    $l_src = ml($image, $l_more);
+    $r_src = ml($image, $r_more);
+
+    // slider
+    echo '<div class="slider" style="max-width: '.($l_size[0]-20).'px;" ></div>'.NL;
+
+    // two images in divs
+    echo '<div class="imageDiff ' . $type . '">'.NL;
+    echo '<div class="image1" style="max-width: '.$l_size[0].'px;">';
+    echo '<img src="'.$l_src.'" alt="" />';
+    echo '</div>'.NL;
+    echo '<div class="image2" style="max-width: '.$l_size[0].'px;">';
+    echo '<img src="'.$r_src.'" alt="" />';
+    echo '</div>'.NL;
+    echo '</div>'.NL;
+}
+
+/**
+ * Restores an old revision of a media file
+ *
+ * @param string $image
+ * @param int $rev
+ * @param int $auth
+ * @return string - file's id
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_restore($image, $rev, $auth){
+    global $conf;
+    if ($auth < AUTH_UPLOAD || !$conf['mediarevisions']) return false;
+    $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')));
+    if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return false;
+    if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
+    list($iext,$imime,$dl) = mimetype($image);
+    $res = media_upload_finish(mediaFN($image, $rev),
+        mediaFN($image),
+        $image,
+        $imime,
+        true,
+        'copy');
+    if (is_array($res)) {
+        msg($res[0], $res[1]);
+        return false;
+    }
+    return $res;
 }
 
 /**
@@ -478,11 +1260,13 @@ function media_filelist($ns,$auth=null,$jump=''){
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
  * @author Andreas Gohr <gohr@cosmocode.de>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  * @triggers MEDIA_SEARCH
  */
-function media_searchlist($query,$ns,$auth=null){
+function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
     global $conf;
     global $lang;
+
     $ns = cleanID($ns);
 
     if ($query) {
@@ -501,50 +1285,34 @@ function media_searchlist($query,$ns,$auth=null){
                     array('showmsg'=>false,'pattern'=>$pattern),
                     $dir);
         }
+
+        $data = array();
+        foreach ($evdata['data'] as $k => $v) {
+            $data[$k] = ($sort == 'date') ? $v['mtime'] : $v['id'];
+        }
+        array_multisort($data, SORT_DESC, SORT_NUMERIC, $evdata['data']);
+
         $evt->advise_after();
         unset($evt);
     }
 
-    echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'],hsc($ns).':*').'</h1>'.NL;
-    media_searchform($ns,$query);
+    if (!$fullscreen) {
+        echo '<h1 id="media__ns">'.sprintf($lang['searchmedia_in'],hsc($ns).':*').'</h1>'.NL;
+        media_searchform($ns,$query);
+    }
 
     if(!count($evdata['data'])){
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
-    }else foreach($evdata['data'] as $item){
-        media_printfile($item,$item['perm'],'',true);
+    }else {
+        if ($fullscreen) {
+            echo '<ul class="' . _media_get_list_type() . '">';
+        }
+        foreach($evdata['data'] as $item){
+            if (!$fullscreen) media_printfile($item,$item['perm'],'',true);
+            else media_printfile_thumbs($item,$item['perm'],false,true);
+        }
+        if ($fullscreen) echo '</ul>'.NL;
     }
-}
-
-/**
- * Print action links for a file depending on filetype
- * and available permissions
- */
-function media_fileactions($item,$auth){
-    global $lang;
-
-    // view button
-    $link = ml($item['id'],'',true);
-    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
-        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
-
-    // no further actions if not writable
-    if(!$item['writable']) return;
-
-    // delete button
-    if($auth >= AUTH_DELETE){
-        echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
-            '&amp;sectok='.getSecurityToken().'" class="btn_media_delete" title="'.$item['id'].'">'.
-            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
-            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
-    }
-
-    // edit button
-    if($auth >= AUTH_UPLOAD && $item['isimg'] && $item['meta']->getField('File.Mime') == 'image/jpeg'){
-        echo ' <a href="'.DOKU_BASE.'lib/exe/mediamanager.php?edit='.rawurlencode($item['id']).'">'.
-            '<img src="'.DOKU_BASE.'lib/images/pencil.png" alt="'.$lang['metaedit'].'" '.
-            'title="'.$lang['metaedit'].'" class="btn" /></a>';
-    }
-
 }
 
 /**
@@ -588,14 +1356,33 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     $info .= filesize_h($item['size']);
 
     // output
-    echo '<div class="'.$zebra.'"'.$jump.'>'.NL;
+    echo '<div class="'.$zebra.'"'.$jump.' title="'.hsc($item['id']).'">'.NL;
     if (!$display_namespace) {
         echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
     } else {
         echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
     }
     echo '<span class="info">('.$info.')</span>'.NL;
-    media_fileactions($item,$auth);
+
+    // view button
+    $link = ml($item['id'],'',true);
+    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/magnifier.png" '.
+        'alt="'.$lang['mediaview'].'" title="'.$lang['mediaview'].'" class="btn" /></a>';
+
+    // mediamanager button
+    $link = wl('',array('do'=>'media','image'=>$item['id'],'ns'=>getNS($item['id'])));
+    echo ' <a href="'.$link.'" target="_blank"><img src="'.DOKU_BASE.'lib/images/mediamanager.png" '.
+        'alt="'.$lang['btn_media'].'" title="'.$lang['btn_media'].'" class="btn" /></a>';
+
+    // delete button
+    if($item['writable'] && $auth >= AUTH_DELETE){
+        $link = DOKU_BASE.'lib/exe/mediamanager.php?delete='.rawurlencode($item['id']).
+            '&amp;sectok='.getSecurityToken();
+        echo ' <a href="'.$link.'" class="btn_media_delete" title="'.$item['id'].'">'.
+            '<img src="'.DOKU_BASE.'lib/images/trash.png" alt="'.$lang['btn_delete'].'" '.
+            'title="'.$lang['btn_delete'].'" class="btn" /></a>';
+    }
+
     echo '<div class="example" id="ex_'.str_replace(':','_',$item['id']).'">';
     echo $lang['mediausage'].' <code>{{:'.$item['id'].'}}</code>';
     echo '</div>';
@@ -604,27 +1391,108 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     echo '</div>'.NL;
 }
 
+function media_printicon($filename){
+    list($ext,$mime,$dl) = mimetype(mediaFN($filename),false);
+
+    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')) {
+        $icon = DOKU_BASE.'lib/images/fileicons/'.$ext.'.png';
+    } else {
+        $icon = DOKU_BASE.'lib/images/fileicons/file.png';
+    }
+
+    return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
+
+}
+
+/**
+ * Formats and prints one file in the list in the thumbnails view
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false){
+    global $lang;
+    global $conf;
+
+    // Prepare filename
+    $file = utf8_decodeFN($item['file']);
+
+    // output
+    echo '<li><dl title="'.hsc($item['id']).'">'.NL;
+
+        echo '<dt>';
+    if($item['isimg']) {
+        media_printimgdetail($item, true);
+
+    } else {
+        echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
+            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
+            'tab_details' => 'view')).'">';
+        echo media_printicon($item['id']);
+        echo '</a>';
+    }
+    echo '</dt>'.NL;
+    if (!$display_namespace) {
+        $name = hsc($file);
+    } else {
+        $name = hsc($item['id']);
+    }
+    echo '<dd class="name"><a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
+        'tab_details' => 'view')).'" name="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
+
+    if($item['isimg']){
+        $size = '';
+        $size .= (int) $item['meta']->getField('File.Width');
+        $size .= '&#215;';
+        $size .= (int) $item['meta']->getField('File.Height');
+        echo '<dd class="size">'.$size.'</dd>'.NL;
+    } else {
+        echo '<dd class="size">&nbsp;</dd>'.NL;
+    }
+    $date = dformat($item['mtime']);
+    echo '<dd class="date">'.$date.'</dd>'.NL;
+    $filesize = filesize_h($item['size']);
+    echo '<dd class="filesize">'.$filesize.'</dd>'.NL;
+    echo '</dl></li>'.NL;
+}
+
 /**
  * Prints a thumbnail and metainfos
  */
-function media_printimgdetail($item){
+function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
+    $size = $fullscreen ? 90 : 120;
+
     $w = (int) $item['meta']->getField('File.Width');
     $h = (int) $item['meta']->getField('File.Height');
-    if($w>120 || $h>120){
-        $ratio = $item['meta']->getResizeRatio(120);
+    if($w>$size || $h>$size){
+        if (!$fullscreen) {
+            $ratio = $item['meta']->getResizeRatio($size);
+        } else {
+            $ratio = $item['meta']->getResizeRatio($size,$size);
+        }
         $w = floor($w * $ratio);
         $h = floor($h * $ratio);
     }
-    $src = ml($item['id'],array('w'=>$w,'h'=>$h));
+    $src = ml($item['id'],array('w'=>$w,'h'=>$h,'t'=>$item['mtime']));
     $p = array();
-    $p['width']  = $w;
-    $p['height'] = $h;
+    if (!$fullscreen) {
+        // In fullscreen mediamanager view, image resizing is done via CSS.
+        $p['width']  = $w;
+        $p['height'] = $h;
+    }
     $p['alt']    = $item['id'];
-    $p['class']  = 'thumb';
     $att = buildAttributes($p);
 
     // output
+    if ($fullscreen) {
+        echo '<a name="l_:'.$item['id'].'" class="image thumb" href="'.
+            media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
+        echo '<img src="'.$src.'" '.$att.' />';
+        echo '</a>';
+    }
+
+    if ($fullscreen) return;
+
     echo '<div class="detail">';
     echo '<div class="thumb">';
     echo '<a name="d_:'.$item['id'].'" class="select">';
@@ -652,88 +1520,116 @@ function media_printimgdetail($item){
 }
 
 /**
+ * Build link based on the current, adding/rewriting
+ * parameters
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @param array $params
+ * @param string $amp - separator
+ * @return string - link
+ */
+function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
+    global $conf;
+    global $ID;
+
+    $gets = array('do' => 'media');
+    $media_manager_params = array('tab_files', 'tab_details', 'image', 'ns', 'list', 'sort');
+    foreach ($media_manager_params as $x) {
+        if (isset($_REQUEST[$x])) $gets[$x] = $_REQUEST[$x];
+    }
+
+    if ($params) {
+        $gets = $params + $gets;
+    }
+    unset($gets['id']);
+    if (isset($gets['delete'])) {
+        unset($gets['image']);
+        unset($gets['tab_details']);
+    }
+
+    if ($params_array) return $gets;
+
+    return wl($ID,$gets,$abs,$amp);
+}
+
+/**
  * Print the media upload form if permissions are correct
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_uploadform($ns, $auth){
-    global $lang;
+function media_uploadform($ns, $auth, $fullscreen = false){
+    global $lang, $conf;
 
-    if($auth < AUTH_UPLOAD) return; //fixme print info on missing permissions?
+    if($auth < AUTH_UPLOAD) {
+        echo '<div class="nothing">'.$lang['media_perm_upload'].'</div>'.NL;
+        return;
+    }
+    $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
+
+    $update = false;
+    $id = '';
+    if ($auth >= $auth_ow && $fullscreen && $_REQUEST['mediado'] == 'update') {
+        $update = true;
+        $id = cleanID($_REQUEST['image']);
+    }
 
     // The default HTML upload form
-    $form = new Doku_Form(array('id'      => 'dw__upload',
-                                'action'  => DOKU_BASE.'lib/exe/mediamanager.php',
-                                'enctype' => 'multipart/form-data'));
-    $form->addElement('<div class="upload">' . $lang['mediaupload'] . '</div>');
+    $params = array('id'      => 'dw__upload',
+                    'enctype' => 'multipart/form-data');
+    if (!$fullscreen) {
+        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+    } else {
+        $params['action'] = media_managerURL(array('tab_files' => 'files',
+            'tab_details' => 'view'), '&');
+    }
+
+    $form = new Doku_Form($params);
+    if (!$fullscreen) echo '<div class="upload">' . $lang['mediaupload'] . '</div>';
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
     $form->addElement(form_makeOpenTag('p'));
     $form->addElement(form_makeFileField('upload', $lang['txt_upload'].':', 'upload__file'));
     $form->addElement(form_makeCloseTag('p'));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('id', '', $lang['txt_filename'].':', 'upload__name'));
+    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'].':', 'upload__name'));
     $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
     $form->addElement(form_makeCloseTag('p'));
 
-    if($auth >= AUTH_DELETE){
+    if($auth >= $auth_ow){
         $form->addElement(form_makeOpenTag('p'));
-        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check'));
+        $attrs = array();
+        if ($update) $attrs['checked'] = 'checked';
+        $form->addElement(form_makeCheckboxField('ow', 1, $lang['txt_overwrt'], 'dw__ow', 'check', $attrs));
         $form->addElement(form_makeCloseTag('p'));
     }
+
+    echo NL.'<div id="mediamanager__uploader">'.NL;
     html_form('upload', $form);
-
-    // prepare flashvars for multiupload
-    $opt = array(
-            'L_gridname'  => $lang['mu_gridname'] ,
-            'L_gridsize'  => $lang['mu_gridsize'] ,
-            'L_gridstat'  => $lang['mu_gridstat'] ,
-            'L_namespace' => $lang['mu_namespace'] ,
-            'L_overwrite' => $lang['txt_overwrt'],
-            'L_browse'    => $lang['mu_browse'],
-            'L_upload'    => $lang['btn_upload'],
-            'L_toobig'    => $lang['mu_toobig'],
-            'L_ready'     => $lang['mu_ready'],
-            'L_done'      => $lang['mu_done'],
-            'L_fail'      => $lang['mu_fail'],
-            'L_authfail'  => $lang['mu_authfail'],
-            'L_progress'  => $lang['mu_progress'],
-            'L_filetypes' => $lang['mu_filetypes'],
-            'L_info'      => $lang['mu_info'],
-            'L_lasterr'   => $lang['mu_lasterr'],
-
-            'O_ns'        => ":$ns",
-            'O_backend'   => 'mediamanager.php?'.session_name().'='.session_id(),
-            'O_maxsize'   => php_to_byte(ini_get('upload_max_filesize')),
-            'O_extensions'=> join('|',array_keys(getMimeTypes())),
-            'O_overwrite' => ($auth >= AUTH_DELETE),
-            'O_sectok'    => getSecurityToken(),
-            'O_authtok'   => auth_createToken(),
-            );
-    $var = buildURLparams($opt);
-    // output the flash uploader
-    ?>
-        <div id="dw__flashupload" style="display:none">
-        <div class="upload"><?php echo $lang['mu_intro']?></div>
-        <?php echo html_flashobject('multipleUpload.swf','500','190',null,$opt); ?>
-        </div>
-        <?php
+    echo '</div>'.NL;
 }
 
 /**
  * Print the search field form
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
+ * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_searchform($ns,$query=''){
+function media_searchform($ns,$query='',$fullscreen=false){
     global $lang;
 
     // The default HTML search form
-    $form = new Doku_Form(array('id' => 'dw__mediasearch', 'action' => DOKU_BASE.'lib/exe/mediamanager.php'));
-    $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>');
-    $form->addElement(formSecurityToken());
+    $params = array('id' => 'dw__mediasearch');
+    if (!$fullscreen) {
+        $params['action'] = DOKU_BASE.'lib/exe/mediamanager.php';
+    } else {
+        $params['action'] = media_managerURL(array(), '&');
+    }
+    $form = new Doku_Form($params);
     $form->addHidden('ns', $ns);
-    $form->addHidden('do', 'searchlist');
+    $form->addHidden($fullscreen ? 'mediado' : 'do', 'searchlist');
+
+    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>'.NL);
     $form->addElement(form_makeOpenTag('p'));
     $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
@@ -763,15 +1659,10 @@ function media_nstree($ns){
     search($data,$conf['mediadir'],'search_index',array('ns' => $ns, 'nofiles' => true));
 
     // wrap a list with the root level around the other namespaces
-    $item = array( 'level' => 0, 'id' => '',
-            'open' =>'true', 'label' => '['.$lang['mediaroot'].']');
+    array_unshift($data, array('level' => 0, 'id' => '', 'open' =>'true',
+                               'label' => '['.$lang['mediaroot'].']'));
 
-    echo '<ul class="idx">';
-    echo media_nstree_li($item);
-    echo media_nstree_item($item);
     echo html_buildlist($data,'idx','media_nstree_item','media_nstree_li');
-    echo '</li>';
-    echo '</ul>';
 }
 
 /**
@@ -787,7 +1678,10 @@ function media_nstree_item($item){
     if(!$item['label']) $item['label'] = $label;
 
     $ret  = '';
+    if (!($_REQUEST['do'] == 'media'))
     $ret .= '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.idfilter($item['id']).'" class="idx_dir">';
+    else $ret .= '<a href="'.media_managerURL(array('ns' => idfilter($item['id'], false), 'tab_files' => 'files'))
+        .'" class="idx_dir">';
     $ret .= $item['label'];
     $ret .= '</a>';
     return $ret;
@@ -811,6 +1705,7 @@ function media_nstree_li($item){
         $img   = DOKU_BASE.'lib/images/plus.gif';
         $alt   = '+';
     }
+    // TODO: only deliver an image if it actually has a subtree...
     return '<li class="'.$class.'">'.
         '<img src="'.$img.'" alt="'.$alt.'" />';
 }
@@ -889,7 +1784,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
-    if( $mtime > filemtime($file) ||
+    if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
         if($conf['fperm']) chmod($local, $conf['fperm']);

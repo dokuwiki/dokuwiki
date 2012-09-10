@@ -19,6 +19,8 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
+ * @author Ruben Figols <ruben.figols@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';
@@ -47,7 +49,7 @@ $lang['delete_ok']             = '%d usuarios eliminados';
 $lang['delete_fail']           = '%d no se pudieron eliminar.';
 $lang['update_ok']             = 'Los datos del usuario se actualizaron exitosamente ';
 $lang['update_fail']           = 'Los datos del usuario no se actualizaron';
-$lang['update_exists']         = 'El cambio de nombre de usuario falló, el nombre especificado ($s) ya está en uso (los otros cambios se aplicaron).';
+$lang['update_exists']         = 'El cambio de nombre de usuario falló, el nombre especificado (%s) ya está en uso (los otros cambios se aplicaron).';
 $lang['start']                 = 'primera';
 $lang['prev']                  = 'anterior';
 $lang['next']                  = 'siguiente';

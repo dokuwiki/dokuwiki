@@ -11,6 +11,7 @@
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
+ * @author Petros Vidalis <pvidalis@gmail.com>
  */
 $lang['menu']                  = 'Ρυθμίσεις';
 $lang['error']                 = 'Οι ρυθμίσεις σας δεν έγιναν δεκτές λόγω λανθασμένης τιμής κάποιας ρύθμισης. Διορθώστε την λάθος τιμή και προσπαθήστε ξανά.
@@ -46,6 +47,7 @@ $lang['lang']                  = 'Γλώσσα';
 $lang['basedir']               = 'Αρχικός Φάκελος';
 $lang['baseurl']               = 'Αρχικό URL';
 $lang['savedir']               = 'Φάκελος για την αποθήκευση δεδομένων';
+$lang['cookiedir']             = 'Διαδρομή cookie. Αφήστε την κενή για την χρησιμοποίηση της αρχικής URL.';
 $lang['start']                 = 'Ονομασία αρχικής σελίδας';
 $lang['title']                 = 'Τίτλος Wiki';
 $lang['template']              = 'Πρότυπο προβολής';
@@ -116,6 +118,7 @@ $lang['jpg_quality']           = 'Ποιότητα συμπίεσης JPG (0-100
 $lang['subscribers']           = 'Να επιτρέπεται η εγγραφή στην ενημέρωση αλλαγών σελίδας';
 $lang['subscribe_time']        = 'Χρόνος μετά τον οποίο οι λίστες ειδοποιήσεων και τα συνοπτικά θα αποστέλλονται (δευτερόλεπτα). Αυτό θα πρέπει να είναι μικρότερο από τον χρόνο που έχει η ρύθμιση recent_days.';
 $lang['compress']              = 'Συμπίεση αρχείων CSS και javascript';
+$lang['cssdatauri']            = 'Το μέγεθος σε bytes στο οποίο οι εικόνες που αναφέρονται σε CSS αρχεία θα πρέπει να είναι ενσωματωμένες για τη μείωση των απαιτήσεων μιας κεφαλίδας αίτησης HTTP . Αυτή η τεχνική δεν θα λειτουργήσει σε IE <8! <code> 400 </ code> με <code> 600 </ code> bytes είναι μια καλή τιμή. Ορίστε την τιμή <code> 0 </ code> για να το απενεργοποιήσετε.';
 $lang['hidepages']             = 'Φίλτρο απόκρυψης σελίδων (regular expressions)';
 $lang['send404']               = 'Αποστολή "HTTP 404/Page Not Found" για σελίδες που δεν υπάρχουν';
 $lang['sitemap']               = 'Δημιουργία Google sitemap (ημέρες)';

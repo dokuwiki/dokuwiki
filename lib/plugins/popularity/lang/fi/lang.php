@@ -4,6 +4,7 @@
  *
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
+ * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['name']                  = 'Suosion palaute (voi kestää jonkun aikaa latautua)';
 $lang['submit']                = 'Lähetä tiedot';

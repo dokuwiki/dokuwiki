@@ -49,13 +49,15 @@ class FeedParser_File extends SimplePie_File {
      */
     function FeedParser_File($url, $timeout=10, $redirects=5,
                              $headers=null, $useragent=null, $force_fsockopen=false) {
-        parent::__construct();
         $this->http    = new DokuHTTPClient();
         $this->success = $this->http->sendRequest($url);
 
         $this->headers = $this->http->resp_headers;
         $this->body    = $this->http->resp_body;
         $this->error   = $this->http->error;
+
+        $this->method  = SIMPLEPIE_FILE_SOURCE_REMOTE | SIMPLEPIE_FILE_SOURCE_FSOCKOPEN;
+
         return $this->success;
     }
 

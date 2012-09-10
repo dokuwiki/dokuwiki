@@ -11,6 +11,7 @@
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
+ * @author Petros Vidalis <pvidalis@gmail.com>
  */
 $lang['menu']                  = 'Διαχείριση Επεκτάσεων';
 $lang['download']              = 'Κατεβάστε και εγκαταστήστε μια νέα επέκταση (plugin)';
@@ -56,3 +57,4 @@ $lang['enabled']               = 'Η επέκταση %s ενεργοποιήθ�
 $lang['notenabled']            = 'Η επέκταση %s δεν μπορεί να ενεργοποιηθεί. Ελέγξτε τα δικαιώματα πρόσβασης.';
 $lang['disabled']              = 'Η επέκταση %s απενεργοποιήθηκε.';
 $lang['notdisabled']           = 'Η επέκταση %s δεν μπορεί να απενεργοποιηθεί. Ελέγξτε τα δικαιώματα πρόσβασης.';
+$lang['packageinstalled']      = 'Το πακέτο της επέκτασης (%d επέκταση(εις): %s) εγκαστήθηκε επιτυχημένα.';

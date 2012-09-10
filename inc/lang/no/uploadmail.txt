@@ -1,6 +1,7 @@
 En fil ble lastet opp på din DokuWiki. Her er detaljene:
 
 Fil : @MEDIA@
+Gammel versjon: @OLD@
 Dato : @DATE@
 Nettleser : @BROWSER@
 IP-adresse : @IPADDRESS@

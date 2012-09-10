@@ -53,4 +53,4 @@ $lang['enabled']               = '%s 플러그인을 켰습니다.';
 $lang['notenabled']            = '%s 플러그인을 킬 수 없습니다. 파일 권한을 확인하십시오.';
 $lang['disabled']              = '%s 플러그인을 껐습니다.';
 $lang['notdisabled']           = '%s 플러그인을 끌 수 없습니다. 파일 권한을 확인하십시오.';
-$lang['packageinstalled']      = '플러그인 패키지(%d 개의 플러그인%s: %s)가 성공적으로 설치되었습니다.';
+$lang['packageinstalled']      = '플러그인 패키지(%d 개의 플러그인: %s)가 성공적으로 설치되었습니다.';

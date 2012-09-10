@@ -8,6 +8,8 @@
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Emanuel-Emeric Andrasi <em.andrasi@mandrivausers.ro>
+ * @author Marius OLAR <olarmariusalex@gmail.com>
+ * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['menu']                  = 'Setări de Configurare';
 $lang['error']                 = 'Setări nu au fost actualizate datorită unei valori incorecte; verificaţi modificările şi încercaţi din nou. <br /> Valorile incorecte vor apărea într-un chenar roşu.';
@@ -42,6 +44,7 @@ $lang['lang']                  = 'Limbă';
 $lang['basedir']               = 'Director bază';
 $lang['baseurl']               = 'URL bază ';
 $lang['savedir']               = 'Director pentru salvarea datelor';
+$lang['cookiedir']             = 'Cale Cookie. Lăsați gol pentru a utiliza baseurl.';
 $lang['start']                 = 'Numele paginii de start';
 $lang['title']                 = 'Titlul wiki';
 $lang['template']              = 'Şablon';
@@ -65,6 +68,7 @@ $lang['useheading']            = 'Foloseşte primul titlu pentru numele paginii'
 $lang['refcheck']              = 'Verificare referinţă media';
 $lang['refshow']               = 'Numărul de referinţe media de arătat';
 $lang['allowdebug']            = 'Permite depanarea <b>dezactivaţi dacă cu e necesar!</b>';
+$lang['mediarevisions']        = 'Activează revizii media?';
 $lang['usewordblock']          = 'Blochează spam-ul pe baza listei de cuvinte';
 $lang['indexdelay']            = 'Timpul de întârziere înainte de indexare (sec)';
 $lang['relnofollow']           = 'Folosiţi rel="nofollow" pentru legăturile externe';
@@ -112,6 +116,7 @@ $lang['jpg_quality']           = 'Calitatea compresiei JPG (0-100)';
 $lang['subscribers']           = 'Activează suportul pentru subscrierea paginii';
 $lang['subscribe_time']        = 'Timpul după care lista de abonare şi digestie sunt trimise (sec); Aceasta ar trebui să fie mai mic decât timpul specificat în recent_days.';
 $lang['compress']              = 'Compactează codul CSS şi javascript produs';
+$lang['cssdatauri']            = 'Dimensiunea în octeți până la care imaginile regasite în fișierele CSS ar trebui să fie incluse direct în stylesheet pentru a reduce supraîncărcarea antetului cererii HTTP. Această tehnică nu va funcționa în IE < 8! <code>400</code> până la <code>600</code> octeți sunt suficienți. Introduceți <code>0</code> pentru a dezactiva această opțiune.';
 $lang['hidepages']             = 'Ascunde paginile pereche (expresii regulate)';
 $lang['send404']               = 'Trimite mesajul "HTTP 404/Page Not Found" pentru paginile inexistente';
 $lang['sitemap']               = 'Generează Google sitemap (zile)';

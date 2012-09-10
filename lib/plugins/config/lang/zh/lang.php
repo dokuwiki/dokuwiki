@@ -13,6 +13,8 @@
  * @author caii <zhoucaiqi@gmail.com>
  * @author Hiphen Lee <jacob.b.leung@gmail.com>
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
+ * @author lainme993@gmail.com
+ * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -49,6 +51,7 @@ $lang['lang']                  = '语言';
 $lang['basedir']               = '根目录';
 $lang['baseurl']               = '根路径（URL）';
 $lang['savedir']               = '保存数据的目录';
+$lang['cookiedir']             = 'Cookie 路径。留空以使用 baseurl。';
 $lang['start']                 = '开始页面的名称';
 $lang['title']                 = '维基站点的标题';
 $lang['template']              = '模版';
@@ -120,6 +123,7 @@ $lang['subscribers']           = '启用页面订阅支持';
 $lang['subscribe_time']        = '订阅列表和摘要发送的时间间隔（秒）；这应当小于指定的最近更改保留时间（recent_days）。
 ';
 $lang['compress']              = '使 CSS 和 javascript 的输出更紧密';
+$lang['cssdatauri']            = '字节数。CSS 文件引用的图片若小于该字节，则被直接嵌入样式表中来减少 HTTP 请求头的开销。这个技术在 IE 中不起作用。<code>400</code> 到 <code>600</code> 字节是不错的值。设置为 <code>0</code> 则禁用。';
 $lang['hidepages']             = '隐藏匹配的界面（正则表达式）';
 $lang['send404']               = '发送 "HTTP 404/页面没有找到" 错误信息给不存在的页面';
 $lang['sitemap']               = '生成 Google sitemap（天）';

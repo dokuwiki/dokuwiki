@@ -18,6 +18,7 @@
  * @author Sergio Motta <sergio@cisne.com.br>
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Frederico Guimarães <frederico@teia.bio.br>
+ * @author Balaco Baco <balacobaco@imap.cc>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -103,7 +104,7 @@ $lang['txt_filename']          = 'Enviar como (opcional)';
 $lang['txt_overwrt']           = 'Substituir o arquivo existente';
 $lang['lockedby']              = 'Atualmente bloqueada por';
 $lang['lockexpire']            = 'O bloqueio expira em';
-$lang['willexpire']            = 'O seu bloqueio de edição deste página irá expirar em um minuto.\nPara evitar conflitos de edição, clique no botão de visualização para reiniciar o temporizador de bloqueio.';
+$lang['js']['willexpire']      = 'O seu bloqueio de edição deste página irá expirar em um minuto.\nPara evitar conflitos de edição, clique no botão de visualização para reiniciar o temporizador de bloqueio.';
 $lang['js']['notsavedyet']     = 'As alterações não salvas serão perdidas.
 Deseja realmente continuar?';
 $lang['js']['searchmedia']     = 'Buscar por arquivos';
@@ -135,7 +136,6 @@ Entretanto, você ainda pode copiar e colar o atalho.';
 $lang['js']['linkwiz']         = 'Link Wizard';
 $lang['js']['linkto']          = 'Link para:';
 $lang['js']['del_confirm']     = 'Deseja realmente excluir o(s) item(ns) selecionado(s)?';
-$lang['js']['mu_btn']          = 'Enviar vários arquivos de uma vez';
 $lang['rssfailed']             = 'Ocorreu um erro durante a atualização dessa fonte: ';
 $lang['nothingfound']          = 'Não foi encontrado nada.';
 $lang['mediaselect']           = 'Arquivos de mídia';
@@ -235,8 +235,8 @@ $lang['subscr_subscribe_error'] = 'Ocorreu um erro na adição de %s à lista de
 $lang['subscr_subscribe_noaddress'] = 'Como não há nenhum endereço associado ao seu usuário, você não pode ser adicionado à lista de monitoramento';
 $lang['subscr_unsubscribe_success'] = '%s foi removido da lista de monitoramento de %s';
 $lang['subscr_unsubscribe_error'] = 'Ocorreu um erro na remoção de %s da lista de monitoramentos de %s';
-$lang['subscr_already_subscribed'] = '%s já está monitorando s%';
-$lang['subscr_not_subscribed'] = 's% não está monitorando s%';
+$lang['subscr_already_subscribed'] = '%s já está monitorando %s';
+$lang['subscr_not_subscribed'] = '%s não está monitorando %s';
 $lang['subscr_m_not_subscribed'] = 'Você não está monitorando nem a página atual nem o espaço de nomes.';
 $lang['subscr_m_new_header']   = 'Adicionar monitoramento';
 $lang['subscr_m_current_header'] = 'Monitoramentos atuais';
@@ -271,21 +271,6 @@ $lang['i_pol1']                = 'Wiki público (leitura por todos, escrita e en
 $lang['i_pol2']                = 'Wiki fechado (leitura, escrita e envio de arquivos somente por usuários registrados)';
 $lang['i_retry']               = 'Tentar novamente';
 $lang['i_license']             = 'Por favor escolha a licença que voce deseja utilizar para seu conteúdo:';
-$lang['mu_intro']              = 'Aqui você pode enviar vários arquivos de uma só vez. Clique no botão de navegação e adicione-os à fila. Pressione Enviar quando estiver pronto.';
-$lang['mu_gridname']           = 'Nome do arquivo';
-$lang['mu_gridsize']           = 'Tamanho';
-$lang['mu_gridstat']           = 'Status';
-$lang['mu_namespace']          = 'Espaço de nomes';
-$lang['mu_browse']             = 'Navegar';
-$lang['mu_toobig']             = 'muito grande';
-$lang['mu_ready']              = 'pronto para enviar';
-$lang['mu_done']               = 'completo';
-$lang['mu_fail']               = 'falhou';
-$lang['mu_authfail']           = 'a sessão expirou';
-$lang['mu_progress']           = '@PCT@% enviado';
-$lang['mu_filetypes']          = 'Tipos de arquivo permitidos';
-$lang['mu_info']               = 'arquivos enviados.';
-$lang['mu_lasterr']            = 'Erro mais recente:';
 $lang['recent_global']         = 'Você está observando as alterações dentro do espaço de nomes <b>%s</b>. Também é possível ver as <a href="%s">modificações recentes no wiki inteiro</a>.';
 $lang['years']                 = '%d anos atrás';
 $lang['months']                = '%d meses atrás';

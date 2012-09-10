@@ -49,7 +49,7 @@ $lang['txt_upload']   = 'Chọn tệp để tải lên';
 $lang['txt_filename'] = 'Điền wikiname (tuỳ ý)';
 $lang['lockedby']     = 'Đang khoá bởi';
 $lang['lockexpire']   = 'Khoá sẽ hết hạn vào lúc';
-$lang['willexpire']   = 'Khoá của bạn để biên soạn trang này sẽ hết hạn trong vòng 1 phút.\nĐể tránh xung đột, bạn nên bấm nút xem trước để lập lại thời gian khoá';
+$lang['js']['willexpire']   = 'Khoá của bạn để biên soạn trang này sẽ hết hạn trong vòng 1 phút.\nĐể tránh xung đột, bạn nên bấm nút xem trước để lập lại thời gian khoá';
 
 $lang['js']['notsavedyet'] = "Hiện có những thay đổi chưa được bảo lưu, và sẽ mất.\nBạn thật sự muốn tiếp tục?";
 $lang['rssfailed']   = 'Rút nguồn này gặp phải lỗi';

@@ -133,12 +133,15 @@ function _clearindex(){
     _lock();
     _quietecho("Clearing index... ");
     io_saveFile($conf['indexdir'].'/page.idx','');
-    //io_saveFile($conf['indexdir'].'/title.idx','');
+    io_saveFile($conf['indexdir'].'/title.idx','');
+    io_saveFile($conf['indexdir'].'/pageword.idx','');
+    io_saveFile($conf['indexdir'].'/metadata.idx','');
     $dir = @opendir($conf['indexdir']);
     if($dir!==false){
         while(($f = readdir($dir)) !== false){
             if(substr($f,-4)=='.idx' &&
-               (substr($f,0,1)=='i' || substr($f,0,1)=='w'))
+               (substr($f,0,1)=='i' || substr($f,0,1)=='w'
+               || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
                 @unlink($conf['indexdir']."/$f");
         }
     }

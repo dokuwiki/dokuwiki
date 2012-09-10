@@ -20,6 +20,8 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
+ * @author Ruben Figols <ruben.figols@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -54,6 +56,7 @@ $lang['lang']                  = 'Idioma';
 $lang['basedir']               = 'Directorio de base';
 $lang['baseurl']               = 'URL de base';
 $lang['savedir']               = 'Directorio para guardar los datos';
+$lang['cookiedir']             = 'Ruta para las Cookie. Dejar en blanco para usar la ruta básica.';
 $lang['start']                 = 'Nombre de la página inicial';
 $lang['title']                 = 'Título del wiki';
 $lang['template']              = 'Plantilla';
@@ -77,6 +80,7 @@ $lang['useheading']            = 'Usar el primer encabezado para nombres de pág
 $lang['refcheck']              = 'Control de referencia a medios';
 $lang['refshow']               = 'Número de referencias a medios a mostrar';
 $lang['allowdebug']            = 'Permitir debug <b>deshabilítelo si no lo necesita!</b>';
+$lang['mediarevisions']        = '¿Habilitar Mediarevisions?';
 $lang['usewordblock']          = 'Bloquear spam usando una lista de palabras';
 $lang['indexdelay']            = 'Intervalo de tiempo antes de indexar (segundos)';
 $lang['relnofollow']           = 'Usar rel="nofollow" en enlaces externos';
@@ -124,18 +128,19 @@ $lang['jpg_quality']           = 'Calidad de compresión de JPG (0-100)';
 $lang['subscribers']           = 'Habilitar soporte para suscripción a páginas';
 $lang['subscribe_time']        = 'Tiempo después que alguna lista de suscripción fue enviada (seg); Debe ser menor que el tiempo especificado en días recientes.';
 $lang['compress']              = 'Compactar la salida de CSS y javascript';
+$lang['cssdatauri']            = 'Tamaño en bytes hasta el cual las imágenes referenciadas en archivos CSS deberían ir incrustadas en la hoja de estilos para reducir el número de cabeceras de petición HTTP. ¡Esta técnica no funcionará en IE < 8! De <code>400</code> a <code>600</code> bytes es un valor adecuado. Establezca <code>0</code> para deshabilitarlo.';
 $lang['hidepages']             = 'Ocultar páginas con coincidencias (expresiones regulares)';
 $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas no existentes';
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['broken_iua']            = '¿Se ha roto (broken) la función ignore_user_abort en su sistema? Esto puede causar que no funcione el index de búsqueda. Se sabe que IIS+PHP/CGI está roto. Vea <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>para más información.';
-$lang['xsendfile']             = 'Utilice el X-Sendfile header para permitirle sl servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
+$lang['xsendfile']             = '¿Utilizar la cabecera X-Sendfile para permitirle al servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['rememberme']            = 'Permitir cookies para acceso permanente (recordarme)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';
-$lang['rss_content']           = 'Que mostrar en los itemes del archivo XML?';
+$lang['rss_content']           = '¿Qué mostrar en los items del archivo XML?';
 $lang['rss_update']            = 'Intervalo de actualización de feed XML (segundos)';
 $lang['recent_days']           = 'Cuántos cambios recientes mantener (días)';
 $lang['rss_show_summary']      = 'Feed XML muestra el resumen en el título';

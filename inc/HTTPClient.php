@@ -338,7 +338,10 @@ class HTTPClient {
             }
 
             // wait for stream ready or timeout (1sec)
-            if(stream_select($sel_r,$sel_w,$sel_e,1) === false) continue;
+            if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+                usleep(1000);
+                continue;
+            }
 
             // write to stream
             $ret = fwrite($socket, substr($request,$written,4096));
@@ -368,6 +371,7 @@ class HTTPClient {
                 unset($this->connections[$connectionId]);
                 return false;
             }
+            usleep(1000);
             $r_headers .= fgets($socket,1024);
         }while(!preg_match('/\r?\n\r?\n$/',$r_headers));
 

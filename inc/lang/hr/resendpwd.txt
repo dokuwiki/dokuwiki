@@ -1,3 +1,3 @@
 ====== Slanje nove lozinke ======
 
-Ispunite potrebne podatke da biste dobili novu lozinku za Vaš korisnički račun.
+Ispunite potrebne podatke da biste dobili novu lozinku za Vaš korisnički račun. Link za potvrdu biti će poslan na Vašu email adresu.
