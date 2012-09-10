@@ -6,7 +6,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
-*/
+ */
 
 class auth_mysql extends auth_basic {
 
@@ -25,65 +25,74 @@ class auth_mysql extends auth_basic {
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
-    function auth_mysql() {
-      global $conf;
-      $this->cnf          = $conf['auth']['mysql'];
+    function __construct() {
+        global $conf;
+        $this->cnf = $conf['auth']['mysql'];
 
-      if (method_exists($this, 'auth_basic'))
-        parent::auth_basic();
+        if (method_exists($this, 'auth_basic')){
+            parent::__construct();
+        }
 
-      if(!function_exists('mysql_connect')) {
-        if ($this->cnf['debug'])
-          msg("MySQL err: PHP MySQL extension not found.",-1,__LINE__,__FILE__);
-        $this->success = false;
-        return;
-      }
+        if(!function_exists('mysql_connect')) {
+            if ($this->cnf['debug']){
+                msg("MySQL err: PHP MySQL extension not found.",-1,__LINE__,__FILE__);
+            }
+            $this->success = false;
+            return;
+        }
 
-      // default to UTF-8, you rarely want something else
-      if(!isset($this->cnf['charset'])) $this->cnf['charset'] = 'utf8';
+        // default to UTF-8, you rarely want something else
+        if(!isset($this->cnf['charset'])) $this->cnf['charset'] = 'utf8';
 
-      $this->defaultgroup = $conf['defaultgroup'];
+        $this->defaultgroup = $conf['defaultgroup'];
 
-      // set capabilities based upon config strings set
-      if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
-          !isset($this->cnf['password']) || empty($this->cnf['database'])){
-        if ($this->cnf['debug'])
-          msg("MySQL err: insufficient configuration.",-1,__LINE__,__FILE__);
-        $this->success = false;
-        return;
-      }
+        // set capabilities based upon config strings set
+        if (empty($this->cnf['server']) || empty($this->cnf['user']) ||
+            !isset($this->cnf['password']) || empty($this->cnf['database'])){
 
-      $this->cando['addUser']      = $this->_chkcnf(array('getUserInfo',
-                                                          'getGroups',
-                                                          'addUser',
-                                                          'getUserID',
-                                                          'getGroupID',
-                                                          'addGroup',
-                                                          'addUserGroup'),true);
-      $this->cando['delUser']      = $this->_chkcnf(array('getUserID',
-                                                          'delUser',
-                                                          'delUserRefs'),true);
-      $this->cando['modLogin']     = $this->_chkcnf(array('getUserID',
-                                                          'updateUser',
-                                                          'UpdateTarget'),true);
-      $this->cando['modPass']      = $this->cando['modLogin'];
-      $this->cando['modName']      = $this->cando['modLogin'];
-      $this->cando['modMail']      = $this->cando['modLogin'];
-      $this->cando['modGroups']    = $this->_chkcnf(array('getUserID',
-                                                          'getGroups',
-                                                          'getGroupID',
-                                                          'addGroup',
-                                                          'addUserGroup',
-                                                          'delGroup',
-                                                          'getGroupID',
-                                                          'delUserGroup'),true);
-      /* getGroups is not yet supported
-      $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
-                                                          'getGroupID'),false); */
-      $this->cando['getUsers']     = $this->_chkcnf(array('getUsers',
-                                                          'getUserInfo',
-                                                          'getGroups'),false);
-      $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'),false);
+            if ($this->cnf['debug']){
+                msg("MySQL err: insufficient configuration.",-1,__LINE__,__FILE__);
+            }
+            $this->success = false;
+            return;
+        }
+
+        $this->cando['addUser']      = $this->_chkcnf(array(
+                                            'getUserInfo',
+                                            'getGroups',
+                                            'addUser',
+                                            'getUserID',
+                                            'getGroupID',
+                                            'addGroup',
+                                            'addUserGroup'),true);
+        $this->cando['delUser']      = $this->_chkcnf(array(
+                                            'getUserID',
+                                            'delUser',
+                                            'delUserRefs'),true);
+        $this->cando['modLogin']     = $this->_chkcnf(array(
+                                            'getUserID',
+                                            'updateUser',
+                                            'UpdateTarget'),true);
+        $this->cando['modPass']      = $this->cando['modLogin'];
+        $this->cando['modName']      = $this->cando['modLogin'];
+        $this->cando['modMail']      = $this->cando['modLogin'];
+        $this->cando['modGroups']    = $this->_chkcnf(array(
+                                            'getUserID',
+                                            'getGroups',
+                                            'getGroupID',
+                                            'addGroup',
+                                            'addUserGroup',
+                                            'delGroup',
+                                            'getGroupID',
+                                            'delUserGroup'),true);
+        /* getGroups is not yet supported
+           $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
+           'getGroupID'),false); */
+        $this->cando['getUsers']     = $this->_chkcnf(array(
+                                            'getUsers',
+                                            'getUserInfo',
+                                            'getGroups'),false);
+        $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'),false);
     }
 
     /**
@@ -93,17 +102,17 @@ class auth_mysql extends auth_basic {
      * @return  bool
      */
     function _chkcnf($keys, $wop=false){
-      foreach ($keys as $key){
-        if (empty($this->cnf[$key])) return false;
-      }
+        foreach ($keys as $key){
+            if (empty($this->cnf[$key])) return false;
+        }
 
-      /* write operation and lock array filled with tables names? */
-      if ($wop && (!is_array($this->cnf['TablesToLock']) ||
-                   !count($this->cnf['TablesToLock']))){
-        return false;
-      }
+        /* write operation and lock array filled with tables names? */
+        if ($wop && (!is_array($this->cnf['TablesToLock']) ||
+                    !count($this->cnf['TablesToLock']))){
+            return false;
+        }
 
-      return true;
+        return true;
     }
 
     /**
@@ -122,23 +131,23 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function checkPass($user,$pass){
-      $rc  = false;
+        $rc  = false;
 
-      if($this->_openDB()) {
-        $sql    = str_replace('%{user}',$this->_escape($user),$this->cnf['checkPass']);
-        $sql    = str_replace('%{pass}',$this->_escape($pass),$sql);
-        $sql    = str_replace('%{dgroup}',$this->_escape($this->defaultgroup),$sql);
-        $result = $this->_queryDB($sql);
+        if($this->_openDB()) {
+            $sql    = str_replace('%{user}',$this->_escape($user),$this->cnf['checkPass']);
+            $sql    = str_replace('%{pass}',$this->_escape($pass),$sql);
+            $sql    = str_replace('%{dgroup}',$this->_escape($this->defaultgroup),$sql);
+            $result = $this->_queryDB($sql);
 
-        if($result !== false && count($result) == 1) {
-          if($this->cnf['forwardClearPass'] == 1)
-            $rc = true;
-          else
-            $rc = auth_verifyPassword($pass,$result[0]['pass']);
+            if($result !== false && count($result) == 1) {
+                if($this->cnf['forwardClearPass'] == 1)
+                    $rc = true;
+                else
+                    $rc = auth_verifyPassword($pass,$result[0]['pass']);
+            }
+            $this->_closeDB();
         }
-        $this->_closeDB();
-      }
-      return $rc;
+        return $rc;
     }
 
     /**
@@ -156,14 +165,14 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function getUserData($user){
-      if($this->_openDB()) {
-        $this->_lockTables("READ");
-        $info = $this->_getUserInfo($user);
-        $this->_unlockTables();
-        $this->_closeDB();
-      } else
-        $info = false;
-      return $info;
+        if($this->_openDB()) {
+            $this->_lockTables("READ");
+            $info = $this->_getUserInfo($user);
+            $this->_unlockTables();
+            $this->_closeDB();
+        } else
+            $info = false;
+        return $info;
     }
 
     /**
@@ -186,22 +195,22 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function createUser($user,$pwd,$name,$mail,$grps=null){
-      if($this->_openDB()) {
-        if (($info = $this->_getUserInfo($user)) !== false)
-          return false;  // user already exists
+        if($this->_openDB()) {
+            if (($info = $this->_getUserInfo($user)) !== false)
+                return false;  // user already exists
 
-        // set defaultgroup if no groups were given
-        if ($grps == null)
-          $grps = array($this->defaultgroup);
+            // set defaultgroup if no groups were given
+            if ($grps == null)
+                $grps = array($this->defaultgroup);
 
-        $this->_lockTables("WRITE");
-        $pwd = $this->cnf['forwardClearPass'] ? $pwd : auth_cryptPassword($pwd);
-        $rc = $this->_addUser($user,$pwd,$name,$mail,$grps);
-        $this->_unlockTables();
-        $this->_closeDB();
-        if ($rc) return true;
-      }
-      return null;  // return error
+            $this->_lockTables("WRITE");
+            $pwd = $this->cnf['forwardClearPass'] ? $pwd : auth_cryptPassword($pwd);
+            $rc = $this->_addUser($user,$pwd,$name,$mail,$grps);
+            $this->_unlockTables();
+            $this->_closeDB();
+            if ($rc) return true;
+        }
+        return null;  // return error
     }
 
     /**
@@ -233,36 +242,36 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function modifyUser($user, $changes) {
-      $rc = false;
+        $rc = false;
 
-      if (!is_array($changes) || !count($changes))
-        return true;  // nothing to change
+        if (!is_array($changes) || !count($changes))
+            return true;  // nothing to change
 
-      if($this->_openDB()) {
-        $this->_lockTables("WRITE");
+        if($this->_openDB()) {
+            $this->_lockTables("WRITE");
 
-        if (($uid = $this->_getUserID($user))) {
-          $rc = $this->_updateUserInfo($changes, $uid);
+            if (($uid = $this->_getUserID($user))) {
+                $rc = $this->_updateUserInfo($changes, $uid);
 
-          if ($rc && isset($changes['grps']) && $this->cando['modGroups']) {
-            $groups = $this->_getGroups($user);
-            $grpadd = array_diff($changes['grps'], $groups);
-            $grpdel = array_diff($groups, $changes['grps']);
+                if ($rc && isset($changes['grps']) && $this->cando['modGroups']) {
+                    $groups = $this->_getGroups($user);
+                    $grpadd = array_diff($changes['grps'], $groups);
+                    $grpdel = array_diff($groups, $changes['grps']);
 
-            foreach($grpadd as $group)
-              if (($this->_addUserToGroup($user, $group, 1)) == false)
-                $rc = false;
+                    foreach($grpadd as $group)
+                        if (($this->_addUserToGroup($user, $group, 1)) == false)
+                            $rc = false;
 
-            foreach($grpdel as $group)
-              if (($this->_delUserFromGroup($user, $group)) == false)
-                $rc = false;
-          }
+                    foreach($grpdel as $group)
+                        if (($this->_delUserFromGroup($user, $group)) == false)
+                            $rc = false;
+                }
+            }
+
+            $this->_unlockTables();
+            $this->_closeDB();
         }
-
-        $this->_unlockTables();
-        $this->_closeDB();
-      }
-      return $rc;
+        return $rc;
     }
 
     /**
@@ -277,20 +286,20 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function deleteUsers($users) {
-      $count = 0;
+        $count = 0;
 
-      if($this->_openDB()) {
-        if (is_array($users) && count($users)) {
-          $this->_lockTables("WRITE");
-          foreach ($users as $user) {
-            if ($this->_delUser($user))
-              $count++;
-          }
-          $this->_unlockTables();
+        if($this->_openDB()) {
+            if (is_array($users) && count($users)) {
+                $this->_lockTables("WRITE");
+                foreach ($users as $user) {
+                    if ($this->_delUser($user))
+                        $count++;
+                }
+                $this->_unlockTables();
+            }
+            $this->_closeDB();
         }
-        $this->_closeDB();
-      }
-      return $count;
+        return $count;
     }
 
     /**
@@ -304,23 +313,23 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function getUserCount($filter=array()) {
-      $rc = 0;
+        $rc = 0;
 
-      if($this->_openDB()) {
-        $sql = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
+        if($this->_openDB()) {
+            $sql = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
 
-        if ($this->dbver >= 4) {
-          $sql = substr($sql, 6);  /* remove 'SELECT' or 'select' */
-          $sql = "SELECT SQL_CALC_FOUND_ROWS".$sql." LIMIT 1";
-          $this->_queryDB($sql);
-          $result = $this->_queryDB("SELECT FOUND_ROWS()");
-          $rc = $result[0]['FOUND_ROWS()'];
-        } else if (($result = $this->_queryDB($sql)))
-          $rc = count($result);
+            if ($this->dbver >= 4) {
+                $sql = substr($sql, 6);  /* remove 'SELECT' or 'select' */
+                $sql = "SELECT SQL_CALC_FOUND_ROWS".$sql." LIMIT 1";
+                $this->_queryDB($sql);
+                $result = $this->_queryDB("SELECT FOUND_ROWS()");
+                $rc = $result[0]['FOUND_ROWS()'];
+            } else if (($result = $this->_queryDB($sql)))
+                $rc = count($result);
 
-        $this->_closeDB();
-      }
-      return $rc;
+            $this->_closeDB();
+        }
+        return $rc;
     }
 
     /**
@@ -334,24 +343,24 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function retrieveUsers($first=0,$limit=10,$filter=array()) {
-      $out   = array();
+        $out   = array();
 
-      if($this->_openDB()) {
-        $this->_lockTables("READ");
-        $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
-        $sql .= " ".$this->cnf['SortOrder']." LIMIT $first, $limit";
-        $result = $this->_queryDB($sql);
+        if($this->_openDB()) {
+            $this->_lockTables("READ");
+            $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
+            $sql .= " ".$this->cnf['SortOrder']." LIMIT $first, $limit";
+            $result = $this->_queryDB($sql);
 
-        if (!empty($result)) {
-          foreach ($result as $user)
-            if (($info = $this->_getUserInfo($user['user'])))
-              $out[$user['user']] = $info;
+            if (!empty($result)) {
+                foreach ($result as $user)
+                    if (($info = $this->_getUserInfo($user['user'])))
+                        $out[$user['user']] = $info;
+            }
+
+            $this->_unlockTables();
+            $this->_closeDB();
         }
-
-        $this->_unlockTables();
-        $this->_closeDB();
-      }
-      return $out;
+        return $out;
     }
 
     /**
@@ -364,15 +373,15 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function joinGroup($user, $group) {
-      $rc = false;
+        $rc = false;
 
-      if ($this->_openDB()) {
-        $this->_lockTables("WRITE");
-        $rc  = $this->_addUserToGroup($user, $group);
-        $this->_unlockTables();
-        $this->_closeDB();
-      }
-      return $rc;
+        if ($this->_openDB()) {
+            $this->_lockTables("WRITE");
+            $rc  = $this->_addUserToGroup($user, $group);
+            $this->_unlockTables();
+            $this->_closeDB();
+        }
+        return $rc;
     }
 
     /**
@@ -385,16 +394,16 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function leaveGroup($user, $group) {
-      $rc = false;
+        $rc = false;
 
-      if ($this->_openDB()) {
-        $this->_lockTables("WRITE");
-        $uid = $this->_getUserID($user);
-        $rc  = $this->_delUserFromGroup($user, $group);
-        $this->_unlockTables();
-        $this->_closeDB();
-      }
-      return $rc;
+        if ($this->_openDB()) {
+            $this->_lockTables("WRITE");
+            $uid = $this->_getUserID($user);
+            $rc  = $this->_delUserFromGroup($user, $group);
+            $this->_unlockTables();
+            $this->_closeDB();
+        }
+        return $rc;
     }
 
     /**
@@ -422,36 +431,36 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _addUserToGroup($user, $group, $force=0) {
-      $newgroup = 0;
+        $newgroup = 0;
 
-      if (($this->dbcon) && ($user)) {
-        $gid = $this->_getGroupID($group);
-        if (!$gid) {
-          if ($force) {  // create missing groups
-            $sql = str_replace('%{group}',$this->_escape($group),$this->cnf['addGroup']);
-            $gid = $this->_modifyDB($sql);
-            $newgroup = 1;  // group newly created
-          }
-          if (!$gid) return false; // group didn't exist and can't be created
-        }
+        if (($this->dbcon) && ($user)) {
+            $gid = $this->_getGroupID($group);
+            if (!$gid) {
+                if ($force) {  // create missing groups
+                    $sql = str_replace('%{group}',$this->_escape($group),$this->cnf['addGroup']);
+                    $gid = $this->_modifyDB($sql);
+                    $newgroup = 1;  // group newly created
+                }
+                if (!$gid) return false; // group didn't exist and can't be created
+            }
 
-        $sql = $this->cnf['addUserGroup'];
-        if(strpos($sql,'%{uid}') !== false){
-            $uid = $this->_getUserID($user);
-            $sql = str_replace('%{uid}',  $this->_escape($uid),$sql);
-        }
-        $sql = str_replace('%{user}', $this->_escape($user),$sql);
-        $sql = str_replace('%{gid}',  $this->_escape($gid),$sql);
-        $sql = str_replace('%{group}',$this->_escape($group),$sql);
-        if ($this->_modifyDB($sql) !== false) return true;
+            $sql = $this->cnf['addUserGroup'];
+            if(strpos($sql,'%{uid}') !== false){
+                $uid = $this->_getUserID($user);
+                $sql = str_replace('%{uid}',  $this->_escape($uid),$sql);
+            }
+            $sql = str_replace('%{user}', $this->_escape($user),$sql);
+            $sql = str_replace('%{gid}',  $this->_escape($gid),$sql);
+            $sql = str_replace('%{group}',$this->_escape($group),$sql);
+            if ($this->_modifyDB($sql) !== false) return true;
 
-        if ($newgroup) { // remove previously created group on error
-          $sql = str_replace('%{gid}',  $this->_escape($gid),$this->cnf['delGroup']);
-          $sql = str_replace('%{group}',$this->_escape($group),$sql);
-          $this->_modifyDB($sql);
+            if ($newgroup) { // remove previously created group on error
+                $sql = str_replace('%{gid}',  $this->_escape($gid),$this->cnf['delGroup']);
+                $sql = str_replace('%{group}',$this->_escape($group),$sql);
+                $this->_modifyDB($sql);
+            }
         }
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -464,24 +473,23 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _delUserFromGroup($user, $group) {
-      $rc = false;
+        $rc = false;
 
-
-      if (($this->dbcon) && ($user)) {
-        $sql = $this->cnf['delUserGroup'];
-        if(strpos($sql,'%{uid}') !== false){
-            $uid = $this->_getUserID($user);
-            $sql = str_replace('%{uid}',  $this->_escape($uid),$sql);
+        if (($this->dbcon) && ($user)) {
+            $sql = $this->cnf['delUserGroup'];
+            if(strpos($sql,'%{uid}') !== false){
+                $uid = $this->_getUserID($user);
+                $sql = str_replace('%{uid}',  $this->_escape($uid),$sql);
+            }
+            $gid = $this->_getGroupID($group);
+            if ($gid) {
+                $sql = str_replace('%{user}', $this->_escape($user),$sql);
+                $sql = str_replace('%{gid}',  $this->_escape($gid),$sql);
+                $sql = str_replace('%{group}',$this->_escape($group),$sql);
+                $rc  = $this->_modifyDB($sql) == 0 ? true : false;
+            }
         }
-        $gid = $this->_getGroupID($group);
-        if ($gid) {
-          $sql = str_replace('%{user}', $this->_escape($user),$sql);
-          $sql = str_replace('%{gid}',  $this->_escape($gid),$sql);
-          $sql = str_replace('%{group}',$this->_escape($group),$sql);
-          $rc  = $this->_modifyDB($sql) == 0 ? true : false;
-        }
-      }
-      return $rc;
+        return $rc;
     }
 
     /**
@@ -498,19 +506,19 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _getGroups($user) {
-      $groups = array();
+        $groups = array();
 
-      if($this->dbcon) {
-        $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getGroups']);
-        $result = $this->_queryDB($sql);
+        if($this->dbcon) {
+            $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getGroups']);
+            $result = $this->_queryDB($sql);
 
-        if($result !== false && count($result)) {
-          foreach($result as $row)
-            $groups[] = $row['group'];
+            if($result !== false && count($result)) {
+                foreach($result as $row)
+                    $groups[] = $row['group'];
+            }
+            return $groups;
         }
-        return $groups;
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -526,12 +534,12 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _getUserID($user) {
-      if($this->dbcon) {
-        $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getUserID']);
-        $result = $this->_queryDB($sql);
-        return $result === false ? false : $result[0]['id'];
-      }
-      return false;
+        if($this->dbcon) {
+            $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getUserID']);
+            $result = $this->_queryDB($sql);
+            return $result === false ? false : $result[0]['id'];
+        }
+        return false;
     }
 
     /**
@@ -553,33 +561,33 @@ class auth_mysql extends auth_basic {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _addUser($user,$pwd,$name,$mail,$grps){
-      if($this->dbcon && is_array($grps)) {
-        $sql = str_replace('%{user}', $this->_escape($user),$this->cnf['addUser']);
-        $sql = str_replace('%{pass}', $this->_escape($pwd),$sql);
-        $sql = str_replace('%{name}', $this->_escape($name),$sql);
-        $sql = str_replace('%{email}',$this->_escape($mail),$sql);
-        $uid = $this->_modifyDB($sql);
+        if($this->dbcon && is_array($grps)) {
+            $sql = str_replace('%{user}', $this->_escape($user),$this->cnf['addUser']);
+            $sql = str_replace('%{pass}', $this->_escape($pwd),$sql);
+            $sql = str_replace('%{name}', $this->_escape($name),$sql);
+            $sql = str_replace('%{email}',$this->_escape($mail),$sql);
+            $uid = $this->_modifyDB($sql);
 
-        if ($uid) {
-          foreach($grps as $group) {
-            $gid = $this->_addUserToGroup($user, $group, 1);
-            if ($gid === false) break;
-          }
+            if ($uid) {
+                foreach($grps as $group) {
+                    $gid = $this->_addUserToGroup($user, $group, 1);
+                    if ($gid === false) break;
+                }
 
-          if ($gid) return true;
-          else {
-            /* remove the new user and all group relations if a group can't
-             * be assigned. Newly created groups will remain in the database
-             * and won't be removed. This might create orphaned groups but
-             * is not a big issue so we ignore this problem here.
-             */
-            $this->_delUser($user);
-            if ($this->cnf['debug'])
-              msg ("MySQL err: Adding user '$user' to group '$group' failed.",-1,__LINE__,__FILE__);
-          }
+                if ($gid) return true;
+                else {
+                    /* remove the new user and all group relations if a group can't
+                     * be assigned. Newly created groups will remain in the database
+                     * and won't be removed. This might create orphaned groups but
+                     * is not a big issue so we ignore this problem here.
+                     */
+                    $this->_delUser($user);
+                    if ($this->cnf['debug'])
+                        msg ("MySQL err: Adding user '$user' to group '$group' failed.",-1,__LINE__,__FILE__);
+                }
+            }
         }
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -595,18 +603,18 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _delUser($user) {
-      if($this->dbcon) {
-        $uid = $this->_getUserID($user);
-        if ($uid) {
-          $sql = str_replace('%{uid}',$this->_escape($uid),$this->cnf['delUserRefs']);
-          $this->_modifyDB($sql);
-          $sql = str_replace('%{uid}',$this->_escape($uid),$this->cnf['delUser']);
-          $sql = str_replace('%{user}',  $this->_escape($user),$sql);
-          $this->_modifyDB($sql);
-          return true;
+        if($this->dbcon) {
+            $uid = $this->_getUserID($user);
+            if ($uid) {
+                $sql = str_replace('%{uid}',$this->_escape($uid),$this->cnf['delUserRefs']);
+                $this->_modifyDB($sql);
+                $sql = str_replace('%{uid}',$this->_escape($uid),$this->cnf['delUser']);
+                $sql = str_replace('%{user}',  $this->_escape($user),$sql);
+                $this->_modifyDB($sql);
+                return true;
+            }
         }
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -623,14 +631,14 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _getUserInfo($user){
-      $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getUserInfo']);
-      $result = $this->_queryDB($sql);
-      if($result !== false && count($result)) {
-        $info = $result[0];
-        $info['grps'] = $this->_getGroups($user);
-        return $info;
-      }
-      return false;
+        $sql = str_replace('%{user}',$this->_escape($user),$this->cnf['getUserInfo']);
+        $result = $this->_queryDB($sql);
+        if($result !== false && count($result)) {
+            $info = $result[0];
+            $info['grps'] = $this->_getGroups($user);
+            return $info;
+        }
+        return false;
     }
 
     /**
@@ -653,43 +661,43 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _updateUserInfo($changes, $uid) {
-      $sql  = $this->cnf['updateUser']." ";
-      $cnt = 0;
-      $err = 0;
+        $sql  = $this->cnf['updateUser']." ";
+        $cnt = 0;
+        $err = 0;
 
-      if($this->dbcon) {
-        foreach ($changes as $item => $value) {
-          if ($item == 'user') {
-            if (($this->_getUserID($changes['user']))) {
-              $err = 1; /* new username already exists */
-              break;    /* abort update */
+        if($this->dbcon) {
+            foreach ($changes as $item => $value) {
+                if ($item == 'user') {
+                    if (($this->_getUserID($changes['user']))) {
+                        $err = 1; /* new username already exists */
+                        break;    /* abort update */
+                    }
+                    if ($cnt++ > 0) $sql .= ", ";
+                    $sql .= str_replace('%{user}',$value,$this->cnf['UpdateLogin']);
+                } else if ($item == 'name') {
+                    if ($cnt++ > 0) $sql .= ", ";
+                    $sql .= str_replace('%{name}',$value,$this->cnf['UpdateName']);
+                } else if ($item == 'pass') {
+                    if (!$this->cnf['forwardClearPass'])
+                        $value = auth_cryptPassword($value);
+                    if ($cnt++ > 0) $sql .= ", ";
+                    $sql .= str_replace('%{pass}',$value,$this->cnf['UpdatePass']);
+                } else if ($item == 'mail') {
+                    if ($cnt++ > 0) $sql .= ", ";
+                    $sql .= str_replace('%{email}',$value,$this->cnf['UpdateEmail']);
+                }
             }
-            if ($cnt++ > 0) $sql .= ", ";
-            $sql .= str_replace('%{user}',$value,$this->cnf['UpdateLogin']);
-          } else if ($item == 'name') {
-            if ($cnt++ > 0) $sql .= ", ";
-            $sql .= str_replace('%{name}',$value,$this->cnf['UpdateName']);
-          } else if ($item == 'pass') {
-            if (!$this->cnf['forwardClearPass'])
-              $value = auth_cryptPassword($value);
-            if ($cnt++ > 0) $sql .= ", ";
-            $sql .= str_replace('%{pass}',$value,$this->cnf['UpdatePass']);
-          } else if ($item == 'mail') {
-            if ($cnt++ > 0) $sql .= ", ";
-            $sql .= str_replace('%{email}',$value,$this->cnf['UpdateEmail']);
-          }
-        }
 
-        if ($err == 0) {
-          if ($cnt > 0) {
-            $sql .= " ".str_replace('%{uid}', $uid, $this->cnf['UpdateTarget']);
-            if(get_class($this) == 'auth_mysql') $sql .= " LIMIT 1"; //some PgSQL inheritance comp.
-            $this->_modifyDB($sql);
-          }
-          return true;
+            if ($err == 0) {
+                if ($cnt > 0) {
+                    $sql .= " ".str_replace('%{uid}', $uid, $this->cnf['UpdateTarget']);
+                    if(get_class($this) == 'auth_mysql') $sql .= " LIMIT 1"; //some PgSQL inheritance comp.
+                    $this->_modifyDB($sql);
+                }
+                return true;
+            }
         }
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -705,12 +713,12 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _getGroupID($group) {
-      if($this->dbcon) {
-        $sql = str_replace('%{group}',$this->_escape($group),$this->cnf['getGroupID']);
-        $result = $this->_queryDB($sql);
-        return $result === false ? false : $result[0]['id'];
-      }
-      return false;
+        if($this->dbcon) {
+            $sql = str_replace('%{group}',$this->_escape($group),$this->cnf['getGroupID']);
+            $result = $this->_queryDB($sql);
+            return $result === false ? false : $result[0]['id'];
+        }
+        return false;
     }
 
     /**
@@ -723,32 +731,32 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _openDB() {
-      if (!$this->dbcon) {
-        $con = @mysql_connect ($this->cnf['server'], $this->cnf['user'], $this->cnf['password']);
-        if ($con) {
-          if ((mysql_select_db($this->cnf['database'], $con))) {
-            if ((preg_match("/^(\d+)\.(\d+)\.(\d+).*/", mysql_get_server_info ($con), $result)) == 1) {
-              $this->dbver = $result[1];
-              $this->dbrev = $result[2];
-              $this->dbsub = $result[3];
-            }
-            $this->dbcon = $con;
-            if(!empty($this->cnf['charset'])){
-                 mysql_query('SET CHARACTER SET "' . $this->cnf['charset'] . '"', $con);
-            }
-            return true;   // connection and database successfully opened
-          } else {
-            mysql_close ($con);
-            if ($this->cnf['debug'])
-              msg("MySQL err: No access to database {$this->cnf['database']}.",-1,__LINE__,__FILE__);
-          }
-        } else if ($this->cnf['debug'])
-          msg ("MySQL err: Connection to {$this->cnf['user']}@{$this->cnf['server']} not possible.",
-               -1,__LINE__,__FILE__);
+        if (!$this->dbcon) {
+            $con = @mysql_connect ($this->cnf['server'], $this->cnf['user'], $this->cnf['password']);
+            if ($con) {
+                if ((mysql_select_db($this->cnf['database'], $con))) {
+                    if ((preg_match("/^(\d+)\.(\d+)\.(\d+).*/", mysql_get_server_info ($con), $result)) == 1) {
+                        $this->dbver = $result[1];
+                        $this->dbrev = $result[2];
+                        $this->dbsub = $result[3];
+                    }
+                    $this->dbcon = $con;
+                    if(!empty($this->cnf['charset'])){
+                        mysql_query('SET CHARACTER SET "' . $this->cnf['charset'] . '"', $con);
+                    }
+                    return true;   // connection and database successfully opened
+                } else {
+                    mysql_close ($con);
+                    if ($this->cnf['debug'])
+                        msg("MySQL err: No access to database {$this->cnf['database']}.",-1,__LINE__,__FILE__);
+                }
+            } else if ($this->cnf['debug'])
+                msg ("MySQL err: Connection to {$this->cnf['user']}@{$this->cnf['server']} not possible.",
+                        -1,__LINE__,__FILE__);
 
-        return false;  // connection failed
-      }
-      return true;  // connection already open
+            return false;  // connection failed
+        }
+        return true;  // connection already open
     }
 
     /**
@@ -757,10 +765,10 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _closeDB() {
-      if ($this->dbcon) {
-        mysql_close ($this->dbcon);
-        $this->dbcon = 0;
-      }
+        if ($this->dbcon) {
+            mysql_close ($this->dbcon);
+            $this->dbcon = 0;
+        }
     }
 
     /**
@@ -776,23 +784,23 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _queryDB($query) {
-      if($this->cnf['debug'] >= 2){
-        msg('MySQL query: '.hsc($query),0,__LINE__,__FILE__);
-      }
-
-      $resultarray = array();
-      if ($this->dbcon) {
-        $result = @mysql_query($query,$this->dbcon);
-        if ($result) {
-          while (($t = mysql_fetch_assoc($result)) !== false)
-            $resultarray[]=$t;
-          mysql_free_result ($result);
-          return $resultarray;
+        if($this->cnf['debug'] >= 2){
+            msg('MySQL query: '.hsc($query),0,__LINE__,__FILE__);
         }
-        if ($this->cnf['debug'])
-          msg('MySQL err: '.mysql_error($this->dbcon),-1,__LINE__,__FILE__);
-      }
-      return false;
+
+        $resultarray = array();
+        if ($this->dbcon) {
+            $result = @mysql_query($query,$this->dbcon);
+            if ($result) {
+                while (($t = mysql_fetch_assoc($result)) !== false)
+                    $resultarray[]=$t;
+                mysql_free_result ($result);
+                return $resultarray;
+            }
+            if ($this->cnf['debug'])
+                msg('MySQL err: '.mysql_error($this->dbcon),-1,__LINE__,__FILE__);
+        }
+        return false;
     }
 
     /**
@@ -807,16 +815,16 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _modifyDB($query) {
-      if ($this->dbcon) {
-        $result = @mysql_query($query,$this->dbcon);
-        if ($result) {
-          $rc = mysql_insert_id($this->dbcon); //give back ID on insert
-          if ($rc !== false) return $rc;
+        if ($this->dbcon) {
+            $result = @mysql_query($query,$this->dbcon);
+            if ($result) {
+                $rc = mysql_insert_id($this->dbcon); //give back ID on insert
+                if ($rc !== false) return $rc;
+            }
+            if ($this->cnf['debug'])
+                msg('MySQL err: '.mysql_error($this->dbcon),-1,__LINE__,__FILE__);
         }
-        if ($this->cnf['debug'])
-          msg('MySQL err: '.mysql_error($this->dbcon),-1,__LINE__,__FILE__);
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -838,21 +846,21 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _lockTables($mode) {
-      if ($this->dbcon) {
-        if (is_array($this->cnf['TablesToLock']) && !empty($this->cnf['TablesToLock'])) {
-          if ($mode == "READ" || $mode == "WRITE") {
-            $sql = "LOCK TABLES ";
-            $cnt = 0;
-            foreach ($this->cnf['TablesToLock'] as $table) {
-              if ($cnt++ != 0) $sql .= ", ";
-              $sql .= "$table $mode";
+        if ($this->dbcon) {
+            if (is_array($this->cnf['TablesToLock']) && !empty($this->cnf['TablesToLock'])) {
+                if ($mode == "READ" || $mode == "WRITE") {
+                    $sql = "LOCK TABLES ";
+                    $cnt = 0;
+                    foreach ($this->cnf['TablesToLock'] as $table) {
+                        if ($cnt++ != 0) $sql .= ", ";
+                        $sql .= "$table $mode";
+                    }
+                    $this->_modifyDB($sql);
+                    return true;
+                }
             }
-            $this->_modifyDB($sql);
-            return true;
-          }
         }
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -862,11 +870,11 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _unlockTables() {
-      if ($this->dbcon) {
-        $this->_modifyDB("UNLOCK TABLES");
-        return true;
-      }
-      return false;
+        if ($this->dbcon) {
+            $this->_modifyDB("UNLOCK TABLES");
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -882,38 +890,38 @@ class auth_mysql extends auth_basic {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _createSQLFilter($sql, $filter) {
-      $SQLfilter = "";
-      $cnt = 0;
+        $SQLfilter = "";
+        $cnt = 0;
 
-      if ($this->dbcon) {
-        foreach ($filter as $item => $pattern) {
-          $tmp = '%'.$this->_escape($pattern).'%';
-          if ($item == 'user') {
-            if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%{user}',$tmp,$this->cnf['FilterLogin']);
-          } else if ($item == 'name') {
-            if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%{name}',$tmp,$this->cnf['FilterName']);
-          } else if ($item == 'mail') {
-            if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%{email}',$tmp,$this->cnf['FilterEmail']);
-          } else if ($item == 'grps') {
-            if ($cnt++ > 0) $SQLfilter .= " AND ";
-            $SQLfilter .= str_replace('%{group}',$tmp,$this->cnf['FilterGroup']);
-          }
+        if ($this->dbcon) {
+            foreach ($filter as $item => $pattern) {
+                $tmp = '%'.$this->_escape($pattern).'%';
+                if ($item == 'user') {
+                    if ($cnt++ > 0) $SQLfilter .= " AND ";
+                    $SQLfilter .= str_replace('%{user}',$tmp,$this->cnf['FilterLogin']);
+                } else if ($item == 'name') {
+                    if ($cnt++ > 0) $SQLfilter .= " AND ";
+                    $SQLfilter .= str_replace('%{name}',$tmp,$this->cnf['FilterName']);
+                } else if ($item == 'mail') {
+                    if ($cnt++ > 0) $SQLfilter .= " AND ";
+                    $SQLfilter .= str_replace('%{email}',$tmp,$this->cnf['FilterEmail']);
+                } else if ($item == 'grps') {
+                    if ($cnt++ > 0) $SQLfilter .= " AND ";
+                    $SQLfilter .= str_replace('%{group}',$tmp,$this->cnf['FilterGroup']);
+                }
+            }
+
+            // we have to check SQLfilter here and must not use $cnt because if
+            // any of cnf['Filter????'] is not defined, a malformed SQL string
+            // would be generated.
+
+            if (strlen($SQLfilter)) {
+                $glue = strpos(strtolower($sql),"where") ? " AND " : " WHERE ";
+                $sql = $sql.$glue.$SQLfilter;
+            }
         }
 
-        // we have to check SQLfilter here and must not use $cnt because if
-        // any of cnf['Filter????'] is not defined, a malformed SQL string
-        // would be generated.
-
-        if (strlen($SQLfilter)) {
-          $glue = strpos(strtolower($sql),"where") ? " AND " : " WHERE ";
-          $sql = $sql.$glue.$SQLfilter;
-        }
-      }
-
-      return $sql;
+        return $sql;
     }
 
     /**
@@ -924,15 +932,15 @@ class auth_mysql extends auth_basic {
      * @param  boolean $like   Escape wildcard chars as well?
      */
     function _escape($string,$like=false){
-      if($this->dbcon){
-        $string = mysql_real_escape_string($string, $this->dbcon);
-      }else{
-        $string = addslashes($string);
-      }
-      if($like){
-        $string = addcslashes($string,'%_');
-      }
-      return $string;
+        if($this->dbcon){
+            $string = mysql_real_escape_string($string, $this->dbcon);
+        }else{
+            $string = addslashes($string);
+        }
+        if($like){
+            $string = addcslashes($string,'%_');
+        }
+        return $string;
     }
 }
 

@@ -66,7 +66,7 @@ class DokuWiki_Plugin {
      * to try to minimise unnecessary loading of the strings when the plugin doesn't require them
      * e.g. when info plugin is querying plugins for information about themselves.
      *
-     * @param   $id     id of the string to be retrieved
+     * @param   string  $id     id of the string to be retrieved
      * @return  string  string in appropriate language or english if not available
      */
     function getLang($id) {

@@ -7,6 +7,7 @@
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ * @author Taisuke Shimamoto <dentostar@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -42,7 +43,7 @@ $lang['btn_backtomedia']       = 'メディアファイル選択に戻る';
 $lang['btn_subscribe']         = '変更履歴配信の登録';
 $lang['btn_profile']           = 'ユーザー情報の更新';
 $lang['btn_reset']             = 'リセット';
-$lang['btn_resendpwd']         = 'パスワード再発行';
+$lang['btn_resendpwd']         = '新しいパスワードをセット';
 $lang['btn_draft']             = 'ドラフトを編集';
 $lang['btn_recover']           = 'ドラフトを復元';
 $lang['btn_draftdel']          = 'ドラフトを削除';
@@ -79,7 +80,7 @@ $lang['profnoempty']           = 'ユーザー名とメールアドレスを入�
 $lang['profchanged']           = 'ユーザー情報は更新されました。';
 $lang['pwdforget']             = 'パスワードをお忘れですか？パスワード再発行';
 $lang['resendna']              = 'パスワードの再発行は出来ません。';
-$lang['resendpwd']             = '新しいパスワードを送信します：';
+$lang['resendpwd']             = '新しいパスワードをセット';
 $lang['resendpwdmissing']      = '全ての項目を入力して下さい。';
 $lang['resendpwdnouser']       = '入力されたユーザーが見つかりませんでした。';
 $lang['resendpwdbadauth']      = '申し訳ありません。この確認コードは有効ではありません。メール内に記載されたリンクを確認してください。';
@@ -185,6 +186,11 @@ $lang['external_edit']         = '外部編集';
 $lang['summary']               = '編集の概要';
 $lang['noflash']               = 'この内容を表示するためには <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> が必要です。';
 $lang['download']              = 'この部分をダウンロード';
+$lang['tools']                 = 'ツール';
+$lang['user_tools']            = 'ユーザ用ツール';
+$lang['site_tools']            = 'サイト用ツール';
+$lang['page_tools']            = 'ページ用ツール';
+$lang['skip_to_content']       = '内容へ移動';
 $lang['mail_newpage']          = '文書の追加：';
 $lang['mail_changed']          = '文書の変更：';
 $lang['mail_subscribe_list']   = '名前空間内でページが変更：';
@@ -255,6 +261,7 @@ $lang['subscr_style_digest']   = 'それぞれのページへの変更の要約�
 $lang['subscr_style_list']     = '前回のメールから変更されたページをリスト（%.2f 日毎）';
 $lang['authmodfailed']         = 'ユーザー認証の設定が正しくありません。Wikiの管理者に連絡して下さい。';
 $lang['authtempfail']          = 'ユーザー認証が一時的に使用できなくなっています。この状態が続いているようであれば、Wikiの管理者に連絡して下さい。';
+$lang['authpwdexpire']         = 'あなたのパスワードは、あと%d日で有効期限が切れます。パスワードを変更してください。';
 $lang['i_chooselang']          = '使用言語を選択してください';
 $lang['i_installer']           = 'DokuWiki インストーラー';
 $lang['i_wikiname']            = 'Wiki名';
@@ -311,4 +318,3 @@ $lang['media_perm_read']       = 'ファイルを閲覧する権限がありま�
 $lang['media_perm_upload']     = 'ファイルをアップロードする権限がありません。';
 $lang['media_update']          = '新しいバージョンをアップロード';
 $lang['media_restore']         = 'このバージョンを復元';
-$lang['plugin_install_err']    = 'プラグインが正しくインストールされませんでした。プラグインのディレクトリ名を \'%s\' から \'%s\' に変更してください。';

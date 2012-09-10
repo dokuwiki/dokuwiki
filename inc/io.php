@@ -18,8 +18,8 @@ if(!defined('DOKU_INC')) die('meh.');
  *
  * @todo use safemode hack
  * @param string $id      - a pageid, the namespace of that id will be tried to deleted
- * @param string $basadir - the config name of the type to delete (datadir or mediadir usally)
- * @returns bool - true if at least one namespace was deleted
+ * @param string $basedir - the config name of the type to delete (datadir or mediadir usally)
+ * @return bool - true if at least one namespace was deleted
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
@@ -63,7 +63,7 @@ function io_sweepNS($id,$basedir='datadir'){
  */
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
-    $data = array(array($file, false), getNS($id), noNS($id), $rev);
+    $data = array(array($file, true), getNS($id), noNS($id), $rev);
     return trigger_event('IO_WIKIPAGE_READ', $data, '_io_readWikiPage_action', false);
 }
 
@@ -113,6 +113,7 @@ function io_readFile($file,$clean=true){
 
 function bzfile($file){
     $bz = bzopen($file,"r");
+    $str = '';
     while (!feof($bz)){
         //8192 seems to be the maximum buffersize?
         $str = $str . bzread($bz,8192);
@@ -477,15 +478,15 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
     $data = $http->get($url);
     if(!$data) return false;
 
+    $name = '';
     if ($useAttachment) {
-        $name = '';
         if (isset($http->resp_headers['content-disposition'])) {
             $content_disposition = $http->resp_headers['content-disposition'];
             $match=array();
             if (is_string($content_disposition) &&
                     preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)) {
 
-                $name = basename($match[1]);
+                $name = utf8_basename($match[1]);
             }
 
         }
@@ -578,8 +579,8 @@ function io_exec($cmd, $input, &$output){
  * @param  string $file    The file to search
  * @param  string $pattern PCRE pattern
  * @param  int    $max     How many lines to return (0 for all)
- * @param  bool   $baxkref When true returns array with backreferences instead of lines
- * @return matching lines or backref, false on error
+ * @param  bool   $backref When true returns array with backreferences instead of lines
+ * @return array matching lines or backref, false on error
  */
 function io_grep($file,$pattern,$max=0,$backref=false){
     $fh = @fopen($file,'r');

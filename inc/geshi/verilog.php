@@ -4,7 +4,7 @@
  * -----------
  * Author: G�nter Dannoritzer <dannoritzer@web.de>
  * Copyright: (C) 2008 Guenter Dannoritzer
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2008/05/28
  *
  * Verilog language file for GeSHi.
@@ -53,7 +53,7 @@ $language_data = array (
             'casex', 'casez', 'cmos', 'deassign', 'default', 'defparam',
             'disable', 'edge', 'else', 'end', 'endcase', 'endfunction',
             'endmodule', 'endprimitive', 'endspecify', 'endtable', 'endtask',
-            'event', 'for', 'force', 'forever', 'function', 'highz0',
+            'event', 'fork', 'for', 'force', 'forever', 'function', 'highz0',
             'highz1', 'if', 'ifnone', 'initial', 'inout', 'input', 'integer',
             'join', 'large', 'macromodule', 'medium', 'module', 'nand',
             'negedge', 'nmos', 'nor', 'not', 'notif0', 'notif1', 'or',

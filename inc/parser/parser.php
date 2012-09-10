@@ -52,6 +52,9 @@ class Doku_Parser {
 
     var $Handler;
 
+    /**
+     * @var Doku_Lexer $Lexer
+     */
     var $Lexer;
 
     var $modes = array();
@@ -59,11 +62,11 @@ class Doku_Parser {
     var $connected = false;
 
     function addBaseMode(& $BaseMode) {
-        $this->modes['base'] = & $BaseMode;
+        $this->modes['base'] =& $BaseMode;
         if ( !$this->Lexer ) {
             $this->Lexer = new Doku_Lexer($this->Handler,'base', true);
         }
-        $this->modes['base']->Lexer = & $this->Lexer;
+        $this->modes['base']->Lexer =& $this->Lexer;
     }
 
     /**
@@ -75,7 +78,7 @@ class Doku_Parser {
             $this->addBaseMode(new Doku_Parser_Mode_base());
         }
         $Mode->Lexer = & $this->Lexer;
-        $this->modes[$name] = & $Mode;
+        $this->modes[$name] =& $Mode;
     }
 
     function connectModes() {
@@ -134,6 +137,9 @@ class Doku_Parser {
 */
 class Doku_Parser_Mode {
 
+    /**
+     * @var Doku_Lexer $Lexer
+     */
     var $Lexer;
 
     var $allowedModes = array();
@@ -929,7 +935,7 @@ class Doku_Parser_Mode_windowssharelink extends Doku_Parser_Mode {
     var $pattern;
 
     function preConnect() {
-        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w$]+)+";
+        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w-$]+)+";
     }
 
     function connectTo($mode) {

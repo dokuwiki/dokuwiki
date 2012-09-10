@@ -394,17 +394,24 @@ function ft_snippet_re_preprocess($term) {
         return $term;
     }
 
+    // unicode word boundaries
+    // see http://stackoverflow.com/a/2449017/172068
+    $BL = '(?<!\pL)';
+    $BR = '(?!\pL)';
+
     if(substr($term,0,2) == '\\*'){
         $term = substr($term,2);
     }else{
-        $term = '\b'.$term;
+        $term = $BL.$term;
     }
 
     if(substr($term,-2,2) == '\\*'){
         $term = substr($term,0,-2);
     }else{
-        $term = $term.'\b';
+        $term = $term.$BR;
     }
+
+    if($term == $BL || $term == $BR || $term == $BL.$BR) $term = '';
     return $term;
 }
 

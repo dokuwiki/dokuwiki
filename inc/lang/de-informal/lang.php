@@ -16,7 +16,7 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <mailinglist@lupo49.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  */
@@ -54,7 +54,7 @@ $lang['btn_backtomedia']       = 'Zurück zur Dateiauswahl';
 $lang['btn_subscribe']         = 'Aboverwaltung';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
-$lang['btn_resendpwd']         = 'Sende neues Passwort';
+$lang['btn_resendpwd']         = 'Setze neues Passwort';
 $lang['btn_draft']             = 'Entwurf bearbeiten';
 $lang['btn_recover']           = 'Entwurf wiederherstellen';
 $lang['btn_draftdel']          = 'Entwurf löschen';
@@ -91,7 +91,7 @@ $lang['profnoempty']           = 'Es muss ein Name oder eine E-Mail Adresse ange
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
-$lang['resendpwd']             = 'Neues Passwort senden für';
+$lang['resendpwd']             = 'Neues Passwort setzen für';
 $lang['resendpwdmissing']      = 'Es tut mir Leid, aber du musst alle Felder ausfüllen.';
 $lang['resendpwdnouser']       = 'Es tut mir Leid, aber der Benutzer existiert nicht in unserer Datenbank.';
 $lang['resendpwdbadauth']      = 'Es tut mir Leid, aber dieser Authentifizierungscode ist ungültig. Stelle sicher, dass du den kompletten Bestätigungslink verwendet haben.';
@@ -104,6 +104,7 @@ $lang['searchmedia_in']        = 'Suche in %s';
 $lang['txt_upload']            = 'Datei zum Hochladen auswählen';
 $lang['txt_filename']          = 'Hochladen als (optional)';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
+$lang['maxuploadsize']         = 'Max. %s pro Datei-Upload.';
 $lang['lockedby']              = 'Momentan gesperrt von';
 $lang['lockexpire']            = 'Sperre läuft ab am';
 $lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, solltest du sie durch einen Klick auf den Vorschau-Knopf verlängern.';
@@ -191,11 +192,16 @@ $lang['lastmod']               = 'Zuletzt geändert';
 $lang['by']                    = 'von';
 $lang['deleted']               = 'gelöscht';
 $lang['created']               = 'angelegt';
-$lang['restored']              = 'alte Version wiederhergestellt';
+$lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Download-Teil';
+$lang['tools']                 = 'Werkzeuge';
+$lang['user_tools']            = 'Benutzer-Werkzeuge';
+$lang['site_tools']            = 'Webseiten-Werkzeuge';
+$lang['page_tools']            = 'Seiten-Werkzeuge';
+$lang['skip_to_content']       = 'zum Inhalt springen';
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geändert:';
 $lang['mail_subscribe_list']   = 'Seite hat sich im Namespace geändert:';
@@ -248,13 +254,13 @@ $lang['img_keywords']          = 'Schlagwörter';
 $lang['img_width']             = 'Breite';
 $lang['img_height']            = 'Höhe';
 $lang['img_manager']           = 'Im Medien-Manager anzeigen';
-$lang['subscr_subscribe_success'] = 'Die Seite %s wurde zur Abonnementenliste von %s hinzugefügt';
-$lang['subscr_subscribe_error'] = 'Fehler beim Hinzufügen von %s zur Abonnementenliste von %s';
+$lang['subscr_subscribe_success'] = 'Die Seite %s wurde zur Abonnementliste von %s hinzugefügt';
+$lang['subscr_subscribe_error'] = 'Fehler beim Hinzufügen von %s zur Abonnementliste von %s';
 $lang['subscr_subscribe_noaddress'] = 'In deinem Account ist keine E-Mail-Adresse hinterlegt. Dadurch kann die Seite nicht abonniert werden';
-$lang['subscr_unsubscribe_success'] = 'Die Seite %s wurde von der Abonnementenliste von %s entfernt';
-$lang['subscr_unsubscribe_error'] = 'Fehler beim Entfernen von %s von der Abonnementenliste von %s';
-$lang['subscr_already_subscribed'] = '%s ist bereits auf der Abonnementenliste von %s';
-$lang['subscr_not_subscribed'] = '%s ist nicht auf der Abonnementenliste von %s';
+$lang['subscr_unsubscribe_success'] = 'Die Seite %s wurde von der Abonnementliste von %s entfernt';
+$lang['subscr_unsubscribe_error'] = 'Fehler beim Entfernen von %s von der Abonnementliste von %s';
+$lang['subscr_already_subscribed'] = '%s ist bereits auf der Abonnementliste von %s';
+$lang['subscr_not_subscribed'] = '%s ist nicht auf der Abonnementliste von %s';
 $lang['subscr_m_not_subscribed'] = 'Du hast kein Abonnement von dieser Seite oder dem Namensraum.';
 $lang['subscr_m_new_header']   = 'Abonnementen hinzufügen';
 $lang['subscr_m_current_header'] = 'Aktive Abonnements';
@@ -266,6 +272,7 @@ $lang['subscr_style_digest']   = 'E-Mail mit zusammengefasster Übersicht der Se
 $lang['subscr_style_list']     = 'Auflistung aller geänderten Seiten seit der letzten E-Mail (alle %.2f Tage)';
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wende dich an den Admin.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wende dich an den Admin.';
+$lang['authpwdexpire']         = 'Dein Passwort läuft in %d Tag(en) ab, du solltest es es bald ändern.';
 $lang['i_chooselang']          = 'Wähle deine Sprache';
 $lang['i_installer']           = 'DokuWiki-Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
@@ -320,4 +327,3 @@ $lang['media_perm_read']       = 'Du besitzt nicht die notwendigen Berechtigunge
 $lang['media_perm_upload']     = 'Du besitzt nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
-$lang['plugin_install_err']    = 'Plugin nicht korrekt installiert. Plugin-Verzeichnis von \'%s\' nach \'%s\' umbenennen.';

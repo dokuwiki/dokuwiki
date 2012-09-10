@@ -1,6 +1,6 @@
 # Jen listo de vortoj, kiujn la indeksilo ignoras, unu vorton po linio
 # Kiam vi modifas la dosieron, estu certa ke vi uzas UNIX-stilajn linifinaĵojn (unuopa novlinio)
-# Ne enmetu vortojn malpli longajn ol 3 literoj - tiuj ĉiukaze estas ignorataj
+# Ne enmetu vortojn malpli longajn ol 3 literoj - tiuj ĉiukaze ignoriĝas
 pri
 estas
 kaj

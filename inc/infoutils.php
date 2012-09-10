@@ -25,11 +25,14 @@ function checkUpdateMessages(){
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
+        dbglog("checkUpdatesMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
         $http->timeout = 8;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
+        @touch($cf);
     }else{
+        dbglog("checkUpdatesMessages(): messages.txt up to date");
         $data = io_readFile($cf);
     }
 
@@ -145,36 +148,6 @@ function check(){
         }
     }
 
-    if(is_writable($conf['datadir'])){
-        msg('Datadir is writable',1);
-    }else{
-        msg('Datadir is not writable',-1);
-    }
-
-    if(is_writable($conf['olddir'])){
-        msg('Attic is writable',1);
-    }else{
-        msg('Attic is not writable',-1);
-    }
-
-    if(is_writable($conf['mediadir'])){
-        msg('Mediadir is writable',1);
-    }else{
-        msg('Mediadir is not writable',-1);
-    }
-
-    if(is_writable($conf['cachedir'])){
-        msg('Cachedir is writable',1);
-    }else{
-        msg('Cachedir is not writable',-1);
-    }
-
-    if(is_writable($conf['lockdir'])){
-        msg('Lockdir is writable',1);
-    }else{
-        msg('Lockdir is not writable',-1);
-    }
-
     if(is_writable(DOKU_CONF)){
         msg('conf directory is writable',1);
     }else{
@@ -203,6 +176,16 @@ function check(){
         msg('mb_string extension not available - PHP only replacements will be used',0);
     }
 
+    $loc = setlocale(LC_ALL, 0);
+    if(!$loc){
+        msg('No valid locale is set for your PHP setup. You should fix this',-1);
+    }elseif(stripos($loc,'utf') === false){
+        msg('Your locale <code>'.hsc($loc).'</code> seems not to be a UTF-8 locale, you should fix this if you encounter problems.',0);
+    }else{
+        msg('Valid locale '.hsc($loc).' found.', 1);
+    }
+
+
     if($conf['allowdebug']){
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
     }else{
@@ -228,22 +211,6 @@ function check(){
         msg('The current page is writable by you',0);
     }else{
         msg('The current page is not writable by you',0);
-    }
-
-    $check = wl('','',true).'data/_dummy';
-    $http = new DokuHTTPClient();
-    $http->timeout = 6;
-    $res = $http->get($check);
-    if(strpos($res,'data directory') !== false){
-        msg('It seems like the data directory is accessible from the web.
-                Make sure this directory is properly protected
-                (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
-    }elseif($http->status == 404 || $http->status == 403){
-        msg('The data directory seems to be properly protected',1);
-    }else{
-        msg('Failed to check if the data directory is accessible from the web.
-                Make sure this directory is properly protected
-                (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
     }
 
     // Check for corrupted search index
@@ -301,7 +268,7 @@ function msg($message,$lvl=0,$line='',$file=''){
     $errors[1]  = 'success';
     $errors[2]  = 'notify';
 
-    if($line || $file) $message.=' ['.basename($file).':'.$line.']';
+    if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
 
     if(!isset($MSG)) $MSG = array();
     $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);

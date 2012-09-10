@@ -4,7 +4,7 @@
  * --------
  * Author: William Fry (william.fry@nyu.edu)
  * Copyright: (c) 2009 William Fry
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/02/04
  *
  * Linden Scripting Language (LSL2) language file for GeSHi.

@@ -10,6 +10,7 @@
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
+ * @author Mikael Lyngvig <mikael@lyngvig.org>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(Brugervalidering er ikke tilgængelig)';

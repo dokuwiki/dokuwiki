@@ -6,7 +6,7 @@
  *
  * Copyright (c) 1997-2004 The PHP Group
  *
-  * LICENSE: This source file is subject to the New BSD license that is
+ * LICENSE: This source file is subject to the New BSD license that is
  * available through the world-wide-web at the following URI:
  * http://www.opensource.org/licenses/bsd-license.php. If you did not receive
  * a copy of the New BSD License and are unable to obtain it through the web,
@@ -297,9 +297,8 @@ class Doku_Cli_Opts {
      * @access private
      * @return bool
      */
-    function _isShortOpt($arg)
-    {
-        return strlen($arg) == 2 && $arg[0] == '-' 
+    function _isShortOpt($arg){
+        return strlen($arg) == 2 && $arg[0] == '-'
                && preg_match('/[a-zA-Z]/', $arg[1]);
     }
 
@@ -311,8 +310,7 @@ class Doku_Cli_Opts {
      * @access private
      * @return bool
      */
-    function _isLongOpt($arg)
-    {
+    function _isLongOpt($arg){
         return strlen($arg) > 2 && $arg[0] == '-' && $arg[1] == '-' &&
                preg_match('/[a-zA-Z]+$/', substr($arg, 2));
     }

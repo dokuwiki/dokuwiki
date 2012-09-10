@@ -20,24 +20,24 @@ class auth_plain extends auth_basic {
      *
      * @author  Christopher Smith <chris@jalakai.co.uk>
      */
-    function auth_plain() {
-      global $config_cascade;
+    function __construct() {
+        global $config_cascade;
 
-      if (!@is_readable($config_cascade['plainauth.users']['default'])){
-        $this->success = false;
-      }else{
-        if(@is_writable($config_cascade['plainauth.users']['default'])){
-          $this->cando['addUser']      = true;
-          $this->cando['delUser']      = true;
-          $this->cando['modLogin']     = true;
-          $this->cando['modPass']      = true;
-          $this->cando['modName']      = true;
-          $this->cando['modMail']      = true;
-          $this->cando['modGroups']    = true;
+        if (!@is_readable($config_cascade['plainauth.users']['default'])){
+            $this->success = false;
+        }else{
+            if(@is_writable($config_cascade['plainauth.users']['default'])){
+                $this->cando['addUser']      = true;
+                $this->cando['delUser']      = true;
+                $this->cando['modLogin']     = true;
+                $this->cando['modPass']      = true;
+                $this->cando['modName']      = true;
+                $this->cando['modMail']      = true;
+                $this->cando['modGroups']    = true;
+            }
+            $this->cando['getUsers']     = true;
+            $this->cando['getUserCount'] = true;
         }
-        $this->cando['getUsers']     = true;
-        $this->cando['getUserCount'] = true;
-      }
     }
 
     /**
@@ -51,10 +51,10 @@ class auth_plain extends auth_basic {
      */
     function checkPass($user,$pass){
 
-      $userinfo = $this->getUserData($user);
-      if ($userinfo === false) return false;
+        $userinfo = $this->getUserData($user);
+        if ($userinfo === false) return false;
 
-      return auth_verifyPassword($pass,$this->users[$user]['pass']);
+        return auth_verifyPassword($pass,$this->users[$user]['pass']);
     }
 
     /**
@@ -71,8 +71,8 @@ class auth_plain extends auth_basic {
      */
     function getUserData($user){
 
-      if($this->users === null) $this->_loadUserData();
-      return isset($this->users[$user]) ? $this->users[$user] : false;
+        if($this->users === null) $this->_loadUserData();
+        return isset($this->users[$user]) ? $this->users[$user] : false;
     }
 
     /**
@@ -88,29 +88,29 @@ class auth_plain extends auth_basic {
      * @author  Chris Smith <chris@jalakai.co.uk>
      */
     function createUser($user,$pwd,$name,$mail,$grps=null){
-      global $conf;
-      global $config_cascade;
+        global $conf;
+        global $config_cascade;
 
-      // user mustn't already exist
-      if ($this->getUserData($user) !== false) return false;
+        // user mustn't already exist
+        if ($this->getUserData($user) !== false) return false;
 
-      $pass = auth_cryptPassword($pwd);
+        $pass = auth_cryptPassword($pwd);
 
-      // set default group if no groups specified
-      if (!is_array($grps)) $grps = array($conf['defaultgroup']);
+        // set default group if no groups specified
+        if (!is_array($grps)) $grps = array($conf['defaultgroup']);
 
-      // prepare user line
-      $groups = join(',',$grps);
-      $userline = join(':',array($user,$pass,$name,$mail,$groups))."\n";
+        // prepare user line
+        $groups = join(',',$grps);
+        $userline = join(':',array($user,$pass,$name,$mail,$groups))."\n";
 
-      if (io_saveFile($config_cascade['plainauth.users']['default'],$userline,true)) {
-        $this->users[$user] = compact('pass','name','mail','grps');
-        return $pwd;
-      }
+        if (io_saveFile($config_cascade['plainauth.users']['default'],$userline,true)) {
+            $this->users[$user] = compact('pass','name','mail','grps');
+            return $pwd;
+        }
 
-      msg('The '.$config_cascade['plainauth.users']['default'].
-          ' file is not writable. Please inform the Wiki-Admin',-1);
-      return null;
+        msg('The '.$config_cascade['plainauth.users']['default'].
+                ' file is not writable. Please inform the Wiki-Admin',-1);
+        return null;
     }
 
     /**
@@ -122,78 +122,78 @@ class auth_plain extends auth_basic {
      * @return  bool
      */
     function modifyUser($user, $changes) {
-      global $conf;
-      global $ACT;
-      global $INFO;
-      global $config_cascade;
+        global $conf;
+        global $ACT;
+        global $INFO;
+        global $config_cascade;
 
-      // sanity checks, user must already exist and there must be something to change
-      if (($userinfo = $this->getUserData($user)) === false) return false;
-      if (!is_array($changes) || !count($changes)) return true;
+        // sanity checks, user must already exist and there must be something to change
+        if (($userinfo = $this->getUserData($user)) === false) return false;
+        if (!is_array($changes) || !count($changes)) return true;
 
-      // update userinfo with new data, remembering to encrypt any password
-      $newuser = $user;
-      foreach ($changes as $field => $value) {
-        if ($field == 'user') {
-          $newuser = $value;
-          continue;
+        // update userinfo with new data, remembering to encrypt any password
+        $newuser = $user;
+        foreach ($changes as $field => $value) {
+            if ($field == 'user') {
+                $newuser = $value;
+                continue;
+            }
+            if ($field == 'pass') $value = auth_cryptPassword($value);
+            $userinfo[$field] = $value;
         }
-        if ($field == 'pass') $value = auth_cryptPassword($value);
-        $userinfo[$field] = $value;
-      }
 
-      $groups = join(',',$userinfo['grps']);
-      $userline = join(':',array($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $groups))."\n";
+        $groups = join(',',$userinfo['grps']);
+        $userline = join(':',array($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $groups))."\n";
 
-      if (!$this->deleteUsers(array($user))) {
-        msg('Unable to modify user data. Please inform the Wiki-Admin',-1);
-        return false;
-      }
+        if (!$this->deleteUsers(array($user))) {
+            msg('Unable to modify user data. Please inform the Wiki-Admin',-1);
+            return false;
+        }
 
-      if (!io_saveFile($config_cascade['plainauth.users']['default'],$userline,true)) {
-        msg('There was an error modifying your user data. You should register again.',-1);
-        // FIXME, user has been deleted but not recreated, should force a logout and redirect to login page
-        $ACT == 'register';
-        return false;
-      }
+        if (!io_saveFile($config_cascade['plainauth.users']['default'],$userline,true)) {
+            msg('There was an error modifying your user data. You should register again.',-1);
+            // FIXME, user has been deleted but not recreated, should force a logout and redirect to login page
+            $ACT == 'register';
+            return false;
+        }
 
-      $this->users[$newuser] = $userinfo;
-      return true;
+        $this->users[$newuser] = $userinfo;
+        return true;
     }
 
     /**
-     *  Remove one or more users from the list of registered users
+     * Remove one or more users from the list of registered users
      *
-     *  @author  Christopher Smith <chris@jalakai.co.uk>
-     *  @param   array  $users   array of users to be deleted
-     *  @return  int             the number of users deleted
+     * @author  Christopher Smith <chris@jalakai.co.uk>
+     * @param   array  $users   array of users to be deleted
+     * @return  int             the number of users deleted
      */
     function deleteUsers($users) {
-      global $config_cascade;
+        global $config_cascade;
 
-      if (!is_array($users) || empty($users)) return 0;
+        if (!is_array($users) || empty($users)) return 0;
 
-      if ($this->users === null) $this->_loadUserData();
+        if ($this->users === null) $this->_loadUserData();
 
-      $deleted = array();
-      foreach ($users as $user) {
-        if (isset($this->users[$user])) $deleted[] = preg_quote($user,'/');
-      }
+        $deleted = array();
+        foreach ($users as $user) {
+            if (isset($this->users[$user])) $deleted[] = preg_quote($user,'/');
+        }
 
-      if (empty($deleted)) return 0;
+        if (empty($deleted)) return 0;
 
-      $pattern = '/^('.join('|',$deleted).'):/';
+        $pattern = '/^('.join('|',$deleted).'):/';
 
-      if (io_deleteFromFile($config_cascade['plainauth.users']['default'],$pattern,true)) {
-        foreach ($deleted as $user) unset($this->users[$user]);
-        return count($deleted);
-      }
+        if (io_deleteFromFile($config_cascade['plainauth.users']['default'],$pattern,true)) {
+            foreach ($deleted as $user) unset($this->users[$user]);
+            return count($deleted);
+        }
 
-      // problem deleting, reload the user list and count the difference
-      $count = count($this->users);
-      $this->_loadUserData();
-      $count -= count($this->users);
-      return $count;
+        // problem deleting, reload the user list and count the difference
+        $count = count($this->users);
+        $this->_loadUserData();
+        $count -= count($this->users);
+        return $count;
     }
 
     /**
@@ -203,18 +203,18 @@ class auth_plain extends auth_basic {
      */
     function getUserCount($filter=array()) {
 
-      if($this->users === null) $this->_loadUserData();
+        if($this->users === null) $this->_loadUserData();
 
-      if (!count($filter)) return count($this->users);
+        if (!count($filter)) return count($this->users);
 
-      $count = 0;
-      $this->_constructPattern($filter);
+        $count = 0;
+        $this->_constructPattern($filter);
 
-      foreach ($this->users as $user => $info) {
-          $count += $this->_filter($user, $info);
-      }
+        foreach ($this->users as $user => $info) {
+            $count += $this->_filter($user, $info);
+        }
 
-      return $count;
+        return $count;
     }
 
     /**
@@ -228,27 +228,27 @@ class auth_plain extends auth_basic {
      */
     function retrieveUsers($start=0,$limit=0,$filter=array()) {
 
-      if ($this->users === null) $this->_loadUserData();
+        if ($this->users === null) $this->_loadUserData();
 
-      ksort($this->users);
+        ksort($this->users);
 
-      $i = 0;
-      $count = 0;
-      $out = array();
-      $this->_constructPattern($filter);
+        $i = 0;
+        $count = 0;
+        $out = array();
+        $this->_constructPattern($filter);
 
-      foreach ($this->users as $user => $info) {
-        if ($this->_filter($user, $info)) {
-          if ($i >= $start) {
-            $out[$user] = $info;
-            $count++;
-            if (($limit > 0) && ($count >= $limit)) break;
-          }
-          $i++;
+        foreach ($this->users as $user => $info) {
+            if ($this->_filter($user, $info)) {
+                if ($i >= $start) {
+                    $out[$user] = $info;
+                    $count++;
+                    if (($limit > 0) && ($count >= $limit)) break;
+                }
+                $i++;
+            }
         }
-      }
 
-      return $out;
+        return $out;
     }
 
     /**
@@ -275,26 +275,26 @@ class auth_plain extends auth_basic {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function _loadUserData(){
-      global $config_cascade;
+        global $config_cascade;
 
-      $this->users = array();
+        $this->users = array();
 
-      if(!@file_exists($config_cascade['plainauth.users']['default'])) return;
+        if(!@file_exists($config_cascade['plainauth.users']['default'])) return;
 
-      $lines = file($config_cascade['plainauth.users']['default']);
-      foreach($lines as $line){
-        $line = preg_replace('/#.*$/','',$line); //ignore comments
-        $line = trim($line);
-        if(empty($line)) continue;
+        $lines = file($config_cascade['plainauth.users']['default']);
+        foreach($lines as $line){
+            $line = preg_replace('/#.*$/','',$line); //ignore comments
+            $line = trim($line);
+            if(empty($line)) continue;
 
-        $row    = explode(":",$line,5);
-        $groups = array_values(array_filter(explode(",",$row[4])));
+            $row    = explode(":",$line,5);
+            $groups = array_values(array_filter(explode(",",$row[4])));
 
-        $this->users[$row[0]]['pass'] = $row[1];
-        $this->users[$row[0]]['name'] = urldecode($row[2]);
-        $this->users[$row[0]]['mail'] = $row[3];
-        $this->users[$row[0]]['grps'] = $groups;
-      }
+            $this->users[$row[0]]['pass'] = $row[1];
+            $this->users[$row[0]]['name'] = urldecode($row[2]);
+            $this->users[$row[0]]['mail'] = $row[3];
+            $this->users[$row[0]]['grps'] = $groups;
+        }
     }
 
     /**
@@ -317,11 +317,11 @@ class auth_plain extends auth_basic {
     }
 
     function _constructPattern($filter) {
-      $this->_pattern = array();
-      foreach ($filter as $item => $pattern) {
-//        $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
-        $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
-      }
+        $this->_pattern = array();
+        foreach ($filter as $item => $pattern) {
+            //        $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
+            $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
+        }
     }
 }
 

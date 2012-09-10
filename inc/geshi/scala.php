@@ -4,7 +4,7 @@
  * ----------
  * Author: Franco Lombardo (franco@francolombardo.net)
  * Copyright: (c) 2008 Franco Lombardo, Benny Baumann
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2008/02/08
  *
  * Scala language file for GeSHi.
@@ -41,9 +41,20 @@ $language_data = array (
     'LANG_NAME' => 'Scala',
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array('/*' => '*/'),
+    'COMMENT_REGEXP' => array(2 => "/\\'(?!\w\\'|\\\\)\w+(?=\s)/"),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array("'", '"'),
+    'QUOTEMARKS' => array("'",'"'),
     'ESCAPE_CHAR' => '\\',
+    'ESCAPE_REGEXP' => array(
+        //Simple Single Char Escapes
+        1 => "#\\\\[nfrtv\$\"\n\\\\]#i",
+        //Hexadecimal Char Specs
+        2 => "#\\\\x[\da-fA-F]{1,2}#i",
+        //Hexadecimal Char Specs (unicode)
+        3 => "#\\\\u[\da-fA-F]{1,4}#",
+        //Hexadecimal Char Specs (Extended Unicode)
+        4 => "#\\\\U[\da-fA-F]{1,8}#",
+        ),
     'KEYWORDS' => array(
         1 => array(
             'abstract', 'case', 'catch', 'class', 'def',
@@ -75,11 +86,16 @@ $language_data = array (
             2 => 'color: #9999cc; font-weight: bold;',
             ),
         'COMMENTS' => array(
-            1=> 'color: #008000; font-style: italic;',
+            1 => 'color: #008000; font-style: italic;',
+            2 => 'color: #CC66FF;',
             'MULTI' => 'color: #00ff00; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #0000ff; font-weight: bold;'
+            0 => 'color: #6666ff; font-weight: bold;',
+            1 => 'color: #6666ff; font-weight: bold;',
+            2 => 'color: #5555ff; font-weight: bold;',
+            3 => 'color: #4444ff; font-weight: bold;',
+            4 => 'color: #3333ff; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: #F78811;'

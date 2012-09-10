@@ -15,7 +15,7 @@ define('HTTP_CHUNK_SIZE',16*1024);
  *
  * @author   Simon Willison <swillison@gmail.com>
  * @link     http://simonwillison.net/2003/Apr/23/conditionalGet/
- * @param    timestamp $timestamp lastmodified time of the cache file
+ * @param    int $timestamp lastmodified time of the cache file
  * @returns  void or exits with previously header() commands executed
  */
 function http_conditionalRequest($timestamp){
@@ -248,4 +248,12 @@ function http_cached_finish($file, $content) {
     } else {
         print $content;
     }
+}
+
+function http_get_raw_post_data() {
+    static $postData = null;
+    if ($postData === null) {
+        $postData = file_get_contents('php://input');
+    }
+    return $postData;
 }

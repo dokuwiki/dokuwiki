@@ -4,7 +4,7 @@
  * -----------
  * Author: Florian Knorn (floz@gmx.de)
  * Copyright: (c) 2004 Florian Knorn (http://www.florian-knorn.com)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2005/02/09
  *
  * Matlab M-file language file for GeSHi.

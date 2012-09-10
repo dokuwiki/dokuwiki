@@ -7,7 +7,7 @@
  *  - Jack Lloyd (lloyd@randombit.net)
  *  - Michael Mol (mikemol@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2004/06/04
  *
  * C language file for GeSHi.
@@ -92,7 +92,85 @@ $language_data = array (
             'null', 'false', 'break', 'true', 'function', 'enum', 'extern', 'inline'
             ),
         3 => array(
-            'printf', 'cout'
+            // assert.h
+            'assert',
+
+            //complex.h
+            'cabs', 'cacos', 'cacosh', 'carg', 'casin', 'casinh', 'catan',
+            'catanh', 'ccos', 'ccosh', 'cexp', 'cimag', 'cis', 'clog', 'conj',
+            'cpow', 'cproj', 'creal', 'csin', 'csinh', 'csqrt', 'ctan', 'ctanh',
+
+            //ctype.h
+            'digittoint', 'isalnum', 'isalpha', 'isascii', 'isblank', 'iscntrl',
+            'isdigit', 'isgraph', 'islower', 'isprint', 'ispunct', 'isspace',
+            'isupper', 'isxdigit', 'toascii', 'tolower', 'toupper',
+
+            //inttypes.h
+            'imaxabs', 'imaxdiv', 'strtoimax', 'strtoumax', 'wcstoimax',
+            'wcstoumax',
+
+            //locale.h
+            'localeconv', 'setlocale',
+
+            //math.h
+            'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'exp',
+            'fabs', 'floor', 'frexp', 'ldexp', 'log', 'log10', 'modf', 'pow',
+            'sin', 'sinh', 'sqrt', 'tan', 'tanh',
+
+            //setjmp.h
+            'longjmp', 'setjmp',
+
+            //signal.h
+            'raise',
+
+            //stdarg.h
+            'va_arg', 'va_copy', 'va_end', 'va_start',
+
+            //stddef.h
+            'offsetof',
+
+            //stdio.h
+            'clearerr', 'fclose', 'fdopen', 'feof', 'ferror', 'fflush', 'fgetc',
+            'fgetpos', 'fgets', 'fopen', 'fprintf', 'fputc', 'fputchar',
+            'fputs', 'fread', 'freopen', 'fscanf', 'fseek', 'fsetpos', 'ftell',
+            'fwrite', 'getc', 'getch', 'getchar', 'gets', 'perror', 'printf',
+            'putc', 'putchar', 'puts', 'remove', 'rename', 'rewind', 'scanf',
+            'setbuf', 'setvbuf', 'snprintf', 'sprintf', 'sscanf', 'tmpfile',
+            'tmpnam', 'ungetc', 'vfprintf', 'vfscanf', 'vprintf', 'vscanf',
+            'vsprintf', 'vsscanf',
+
+            //stdlib.h
+            'abort', 'abs', 'atexit', 'atof', 'atoi', 'atol', 'bsearch',
+            'calloc', 'div', 'exit', 'free', 'getenv', 'itoa', 'labs', 'ldiv',
+            'ltoa', 'malloc', 'qsort', 'rand', 'realloc', 'srand', 'strtod',
+            'strtol', 'strtoul', 'system',
+
+            //string.h
+            'memchr', 'memcmp', 'memcpy', 'memmove', 'memset', 'strcat',
+            'strchr', 'strcmp', 'strcoll', 'strcpy', 'strcspn', 'strerror',
+            'strlen', 'strncat', 'strncmp', 'strncpy', 'strpbrk', 'strrchr',
+            'strspn', 'strstr', 'strtok', 'strxfrm',
+
+            //time.h
+            'asctime', 'clock', 'ctime', 'difftime', 'gmtime', 'localtime',
+            'mktime', 'strftime', 'time',
+
+            //wchar.h
+            'btowc', 'fgetwc', 'fgetws', 'fputwc', 'fputws', 'fwide',
+            'fwprintf', 'fwscanf', 'getwc', 'getwchar', 'mbrlen', 'mbrtowc',
+            'mbsinit', 'mbsrtowcs', 'putwc', 'putwchar', 'swprintf', 'swscanf',
+            'ungetwc', 'vfwprintf', 'vswprintf', 'vwprintf', 'wcrtomb',
+            'wcscat', 'wcschr', 'wcscmp', 'wcscoll', 'wcscpy', 'wcscspn',
+            'wcsftime', 'wcslen', 'wcsncat', 'wcsncmp', 'wcsncpy', 'wcspbrk',
+            'wcsrchr', 'wcsrtombs', 'wcsspn', 'wcsstr', 'wcstod', 'wcstok',
+            'wcstol', 'wcstoul', 'wcsxfrm', 'wctob', 'wmemchr', 'wmemcmp',
+            'wmemcpy', 'wmemmove', 'wmemset', 'wprintf', 'wscanf',
+
+            //wctype.h
+            'iswalnum', 'iswalpha', 'iswcntrl', 'iswctype', 'iswdigit',
+            'iswgraph', 'iswlower', 'iswprint', 'iswpunct', 'iswspace',
+            'iswupper', 'iswxdigit', 'towctrans', 'towlower', 'towupper',
+            'wctrans', 'wctype'
             ),
         4 => array(
             'auto', 'char', 'const', 'double',  'float', 'int', 'long',
@@ -111,7 +189,8 @@ $language_data = array (
             'int8_t', 'int16_t', 'int32_t', 'int64_t',
             'uint8_t', 'uint16_t', 'uint32_t', 'uint64_t',
 
-            'intmax_t', 'uintmax_t', 'intptr_t', 'uintptr_t'
+            'intmax_t', 'uintmax_t', 'intptr_t', 'uintptr_t',
+            'size_t', 'off_t'
             ),
         ),
     'SYMBOLS' => array(

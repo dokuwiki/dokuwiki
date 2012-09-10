@@ -43,7 +43,7 @@ $lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
 $lang['btn_reset']             = 'Reset';
-$lang['btn_resendpwd']         = 'Send new password';
+$lang['btn_resendpwd']         = 'Set new password';
 $lang['btn_draft']             = 'Edit draft';
 $lang['btn_recover']           = 'Recover draft';
 $lang['btn_draftdel']          = 'Delete draft';
@@ -84,7 +84,7 @@ $lang['profchanged']           = 'User profile successfully updated.';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
-$lang['resendpwd']             = 'Send new password for';
+$lang['resendpwd']             = 'Set new password for';
 $lang['resendpwdmissing']      = 'Sorry, you must fill in all fields.';
 $lang['resendpwdnouser']       = 'Sorry, we can\'t find this user in our database.';
 $lang['resendpwdbadauth']      = 'Sorry, this auth code is not valid. Make sure you used the complete confirmation link.';
@@ -99,6 +99,7 @@ $lang['searchmedia_in']        = 'Search in %s';
 $lang['txt_upload']            = 'Select file to upload';
 $lang['txt_filename']          = 'Upload as (optional)';
 $lang['txt_overwrt']           = 'Overwrite existing file';
+$lang['maxuploadsize']         = 'Upload max. %s per file.';
 $lang['lockedby']              = 'Currently locked by';
 $lang['lockexpire']            = 'Lock expires at';
 
@@ -190,11 +191,17 @@ $lang['lastmod']               = 'Last modified';
 $lang['by']                    = 'by';
 $lang['deleted']               = 'removed';
 $lang['created']               = 'created';
-$lang['restored']              = 'old revision restored';
+$lang['restored']              = 'old revision restored (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']               = 'Edit summary';
 $lang['noflash']               = 'The <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> is needed to display this content.';
 $lang['download']              = 'Download Snippet';
+$lang['tools']                 = 'Tools';
+$lang['user_tools']            = 'User Tools';
+$lang['site_tools']            = 'Site Tools';
+$lang['page_tools']            = 'Page Tools';
+$lang['skip_to_content']       = 'skip to content';
+$lang['sidebar']               = 'Sidebar';
 
 $lang['mail_newpage']          = 'page added:';
 $lang['mail_changed']          = 'page changed:';
@@ -275,6 +282,7 @@ $lang['subscr_style_list']          = 'list of changed pages since last email (e
 /* auth.class language support */
 $lang['authmodfailed']         = 'Bad user authentication configuration. Please inform your Wiki Admin.';
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
+$lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 
 /* installer strings */
 $lang['i_chooselang']          = 'Choose your language';
@@ -338,7 +346,5 @@ $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read f
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
-
-$lang['plugin_install_err']    = "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.";
 
 //Setup VIM: ex: et ts=2 :

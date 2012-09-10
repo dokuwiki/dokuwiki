@@ -1,0 +1,93 @@
+/**
+ * This file provides styles for the TOC (table of contents), the
+ * sitemap (?do=index) and backlinks (?do=backlink).
+ */
+
+/* toc
+********************************************************************/
+
+/* toc container */
+#dw__toc {
+    float: right;
+    margin: 0 0 1.4em 1.4em;
+    width: 12em;
+    background-color: __background_alt__;
+    color: inherit;
+}
+[dir=rtl] #dw__toc {
+    float: left;
+    margin: 0 1.4em 1.4em 0;
+}
+
+/*____________ toc header ____________*/
+
+.dokuwiki h3.toggle {
+    padding: .2em .5em;
+    font-weight: bold;
+}
+
+.dokuwiki .toggle strong {
+    float: right;
+    margin: 0 .2em;
+}
+[dir=rtl] .dokuwiki .toggle strong {
+    float: left;
+}
+
+/*____________ toc list ____________*/
+
+#dw__toc > div {
+    padding: .2em .5em;
+}
+#dw__toc ul {
+    padding: 0;
+    margin: 0;
+}
+#dw__toc ul li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.1;
+}
+#dw__toc ul li div.li {
+    padding: .15em 0;
+}
+#dw__toc ul ul {
+    padding-left: 1em;
+}
+[dir=rtl] #dw__toc ul ul {
+    padding-left: 0;
+    padding-right: 1em;
+}
+#dw__toc ul ul li {
+}
+#dw__toc ul li a {
+}
+
+/* in case of toc list jumping one level
+  (e.g. if heading level 3 follows directly after heading level 1) */
+#dw__toc ul li.clear {
+}
+
+
+/* sitemap (and backlinks)
+********************************************************************/
+
+.dokuwiki ul.idx {
+    padding-left: 0;
+}
+[dir=rtl] .dokuwiki ul.idx {
+    padding-right: 0;
+}
+.dokuwiki ul.idx li {
+    list-style-image: url(images/bullet.png);
+}
+.dokuwiki ul.idx li.open {
+    list-style-image: url(images/open.png);
+}
+.dokuwiki ul.idx li.closed {
+    list-style-image: url(images/closed.png);
+}
+[dir=rtl] .dokuwiki ul.idx li.closed {
+    list-style-image: url(images/closed-rtl.png);
+}

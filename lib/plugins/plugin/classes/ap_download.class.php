@@ -8,8 +8,9 @@ class ap_download extends ap_manage {
      */
     function process() {
         global $lang;
+        global $INPUT;
 
-        $plugin_url = $_REQUEST['url'];
+        $plugin_url = $INPUT->str('url');
         $this->download($plugin_url, $this->overwrite);
         return '';
     }
@@ -155,16 +156,16 @@ class ap_download extends ap_manage {
                     $info['type'] = 'plugin';
                     $info['tmp']  = "$base/$dir";
                     $conf = confToHash("$base/$dir/$f");
-                    $info['base'] = basename($conf['base']);
-                    if(!$info['base']) $info['base'] = basename("$base/$dir");
+                    $info['base'] = utf8_basename($conf['base']);
+                    if(!$info['base']) $info['base'] = utf8_basename("$base/$dir");
                     $result['new'][] = $info;
                 }elseif($f == 'template.info.txt'){
                     $info = array();
                     $info['type'] = 'template';
                     $info['tmp']  = "$base/$dir";
                     $conf = confToHash("$base/$dir/$f");
-                    $info['base'] = basename($conf['base']);
-                    if(!$info['base']) $info['base'] = basename("$base/$dir");
+                    $info['base'] = utf8_basename($conf['base']);
+                    if(!$info['base']) $info['base'] = utf8_basename("$base/$dir");
                     $result['new'][] = $info;
                 }
             }else{

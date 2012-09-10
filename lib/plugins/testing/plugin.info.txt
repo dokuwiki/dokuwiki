@@ -1,0 +1,7 @@
+base   testing
+author Tobias Sarnowski
+email  tobias@trustedco.de
+date   2012-04-26
+name   Testing Plugin
+desc   Used to test the test framework. Should always be disabled.
+url    http://www.dokuwiki.org/plugin:testing

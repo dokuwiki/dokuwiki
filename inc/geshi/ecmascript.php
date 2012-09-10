@@ -4,7 +4,7 @@
  * --------------
  * Author: Michel Mariani (http://www.tonton-pixel.com/site/)
  * Copyright: (c) 2010 Michel Mariani (http://www.tonton-pixel.com/site/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2010/01/08
  *
  * ECMAScript language file for GeSHi.

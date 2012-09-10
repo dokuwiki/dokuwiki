@@ -29,7 +29,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $doc = '';        // will contain the whole document
     var $toc = array();   // will contain the Table of Contents
 
-    private $sectionedits = array(); // A stack of section edit data
+    var $sectionedits = array(); // A stack of section edit data
 
     var $headers = array();
     var $footnotes = array();
@@ -109,7 +109,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
-                    $this->doc .= '<sup><a href="#fnt__'.$id.'" id="fn__'.$id.'" name="fn__'.$id.'" class="fn_bot">';
+                    $this->doc .= '<sup><a href="#fnt__'.$id.'" id="fn__'.$id.'" class="fn_bot">';
                     $this->doc .= $id.')</a></sup> '.DOKU_LF;
 
                     // get any other footnotes that use the same markup
@@ -118,7 +118,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if (count($alt)) {
                       foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" name="fn__'.($ref+1).'" class="fn_bot">';
+                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" class="fn_bot">';
                         $this->doc .= ($ref+1).')</a></sup> '.DOKU_LF;
                       }
                     }
@@ -181,9 +181,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ($level <= $conf['maxseclevel']) {
             $this->doc .= ' class="' . $this->startSectionEdit($pos, 'section', $text) . '"';
         }
-        $this->doc .= '><a name="'.$hid.'" id="'.$hid.'">';
+        $this->doc .= ' id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</a></h$level>".DOKU_LF;
+        $this->doc .= "</h$level>".DOKU_LF;
     }
 
     function section_open($level) {
@@ -316,7 +316,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__'.$id.'" name="fnt__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
+        $this->doc .= '<sup><a href="#fn__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
     }
 
     function listu_open() {
@@ -358,6 +358,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Execute PHP code if allowed
      *
+     * @param  string   $text      PHP code that is either executed or printed
      * @param  string   $wrapper   html element to wrap result if $conf['phpok'] is okff
      *
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -382,6 +383,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Insert HTML if allowed
      *
+     * @param  string   $text      html text
      * @param  string   $wrapper   html element to wrap result if $conf['htmlok'] is okff
      *
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -471,8 +473,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $title = $this->_xmlEntities($this->acronyms[$acronym]);
 
-            $this->doc .= '<acronym title="'.$title
-                .'">'.$this->_xmlEntities($acronym).'</acronym>';
+            $this->doc .= '<abbr title="'.$title
+                .'">'.$this->_xmlEntities($acronym).'</abbr>';
 
         } else {
             $this->doc .= $this->_xmlEntities($acronym);
@@ -483,7 +485,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( array_key_exists($smiley, $this->smileys) ) {
             $title = $this->_xmlEntities($this->smileys[$smiley]);
             $this->doc .= '<img src="'.DOKU_BASE.'lib/images/smileys/'.$this->smileys[$smiley].
-                '" class="middle" alt="'.
+                '" class="icon" alt="'.
                     $this->_xmlEntities($smiley).'" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);
@@ -549,7 +551,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $ID;
         $name  = $this->_getLinkTitle($name, $hash, $isImage);
         $hash  = $this->_headerToLink($hash);
-        $title = $ID.' &crarr;';
+        $title = $ID.' ↵';
         $this->doc .= '<a href="#'.$hash.'" title="'.$title.'" class="wikilink1">';
         $this->doc .= $name;
         $this->doc .= '</a>';
@@ -566,6 +568,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
+        global $INFO;
 
         $params = '';
         $parts = explode('?', $id, 2);
@@ -610,7 +613,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['pre']    = '';
         $link['suf']    = '';
         // highlight link to current page
-        if ($id == $ID) {
+        if ($id == $INFO['id']) {
             $link['pre']    = '<span class="curid">';
             $link['suf']    = '</span>';
         }
@@ -1066,17 +1069,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the picture
                 if (!$title) {
                     // just show the sourcename
-                    $title = $this->_xmlEntities(basename(noNS($src)));
+                    $title = $this->_xmlEntities(utf8_basename(noNS($src)));
                 }
                 return $title;
             }
             //add image tag
             $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
             $ret .= ' class="media'.$align.'"';
-
-            // make left/right alignment for no-CSS view work (feeds)
-            if($align == 'right') $ret .= ' align="right"';
-            if($align == 'left')  $ret .= ' align="left"';
 
             if ($title) {
                 $ret .= ' title="' . $title . '"';
@@ -1099,7 +1098,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 // return the title of the flash
                 if (!$title) {
                     // just show the sourcename
-                    $title = basename(noNS($src));
+                    $title = utf8_basename(noNS($src));
                 }
                 return $this->_xmlEntities($title);
             }
@@ -1118,7 +1117,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $ret .= $this->_xmlEntities($title);
         }else{
             // just show the sourcename
-            $ret .= $this->_xmlEntities(basename(noNS($src)));
+            $ret .= $this->_xmlEntities(utf8_basename(noNS($src)));
         }
 
         return $ret;

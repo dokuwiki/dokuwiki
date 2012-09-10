@@ -13,5 +13,4 @@ Por nuligi la paĝinformojn, ensalutu la vikion ĉe
 kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.
 
 --
-Tiu retpoŝtaĵo kreiĝis de DokuWiki ĉe
-@DOKUWIKIURL@
+Tiu retpoŝtaĵo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@

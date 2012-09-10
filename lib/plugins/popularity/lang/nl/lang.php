@@ -12,6 +12,7 @@
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
+ * @author Gerrit <klapinklapin@gmail.com>
  */
 $lang['name']                  = 'Populariteitsfeedback (kan even duren om in te laden)';
 $lang['submit']                = 'Verstuur';

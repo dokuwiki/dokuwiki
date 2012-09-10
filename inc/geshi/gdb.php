@@ -4,7 +4,7 @@
  * --------
  * Author: Milian Wolff (mail@milianw.de)
  * Copyright: (c) 2009 Milian Wolff
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/06/24
  *
  * GDB language file for GeSHi.
@@ -43,7 +43,7 @@ $language_data = array (
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"'),
-    'ESCAPE_CHAR' => '',
+    'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         0 => array(
             'Application',
@@ -54,8 +54,7 @@ $language_data = array (
             '[KCrash Handler]',
             ),
         ),
-    'NUMBERS' =>
-        GESHI_NUMBER_INT_BASIC,
+    'NUMBERS' => false,
     'SYMBOLS' => array(
         ),
     'CASE_SENSITIVE' => array(
@@ -79,7 +78,6 @@ $language_data = array (
             0 => 'color: #933;'
             ),
         'NUMBERS' => array(
-            0 => 'color: #cc66cc;',
             ),
         'METHODS' => array(
             ),
@@ -88,12 +86,14 @@ $language_data = array (
         'REGEXPS' => array(
             0 => 'color: #000066; font-weight:bold;',
             1 => 'color: #006600;',
-            2 => 'color: #000066;',
-            3 => 'color: #0066FF; text-style:italic;',
-            4 => 'color: #80B5FF; text-style:italic;',
-            5 => 'color: #A3007D;',
-            6 => 'color: #FF00BF;',
-            7 => 'font-weight: bold;'
+            2 => 'color: #B07E00;',
+            3 => 'color: #0057AE; text-style:italic;',
+            4 => 'color: #0057AE; text-style:italic;',
+            5 => 'color: #442886;',
+            6 => 'color: #442886; font-weight:bold;',
+            7 => 'color: #FF0000; font-weight:bold;',
+            8 => 'color: #006E26;',
+            9 => 'color: #555;',
             ),
         'SCRIPT' => array(
             )
@@ -132,7 +132,7 @@ $language_data = array (
             ),
         //Files with linenumbers
         3 => array(
-            GESHI_SEARCH => '(at )(.+)(:\d+\s*)$',
+            GESHI_SEARCH => '(at\s+)(.+)(:\d+\s*)$',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',
@@ -140,16 +140,14 @@ $language_data = array (
             ),
         //Libs without linenumbers
         4 => array(
-            GESHI_SEARCH => '(from )(.+)(\s*)$',
+            GESHI_SEARCH => '(from\s+)(.+)(\s*)$',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'm',
             GESHI_BEFORE => '\\1',
             GESHI_AFTER => '\\3'
             ),
-        //Hex mem address
-        5 => '0x[a-f0-9]+',
         //Line numbers
-        6 => array(
+        5 => array(
             GESHI_SEARCH => '(:)(\d+)(\s*)$',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'm',
@@ -157,19 +155,44 @@ $language_data = array (
             GESHI_AFTER => '\\3'
             ),
         //Location
-        7 => array(
-            GESHI_SEARCH => '( in )([^ \(\)]+)( \()',
-            GESHI_REPLACE => '\\2',
+        6 => array(
+            GESHI_SEARCH => '(\s+)(in\s+)?([^ 0-9][^ ]*)([ \n]+\()',
+            GESHI_REPLACE => '\\3',
             GESHI_MODIFIERS => '',
-            GESHI_BEFORE => '\\1',
-            GESHI_AFTER => '\\3'
+            GESHI_BEFORE => '\\1\\2',
+            GESHI_AFTER => '\\4'
             ),
+        // interesting parts: abort, qFatal, assertions, null ptrs, ...
+        7 => array(
+            GESHI_SEARCH => '\b((?:\*__GI_)?(?:__assert_fail|abort)|qFatal|0x0)\b([^\.]|$)',
+            GESHI_REPLACE => '\\1',
+            GESHI_MODIFIERS => '',
+            GESHI_BEFORE => '',
+            GESHI_AFTER => '\\2'
+            ),
+        // Namespace / Classes
+        8 => array(
+            GESHI_SEARCH => '\b(\w+)(::)',
+            GESHI_REPLACE => '\\1',
+            GESHI_MODIFIERS => 'U',
+            GESHI_BEFORE => '',
+            GESHI_AFTER => '\\2'
+            ),
+        // make ptr adresses and <value optimized out> uninteresting
+        9 => '\b(?:0x[a-f0-9]{2,}|value\s+optimized\s+out)\b'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
+    'PARSER_CONTROL' => array(
+        'ENABLE_FLAGS' => array(
+            'NUMBERS' => false
+            ),
         )
 );
+
+// kate: replace-tabs on; indent-width 4;
 
 ?>

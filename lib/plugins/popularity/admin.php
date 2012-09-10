@@ -50,15 +50,17 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
+        global $INPUT;
+
         //Send the data
-        if ( isset($_REQUEST['data']) ){
-            $this->sentStatus = $this->helper->sendData( $_REQUEST['data'] );
+        if ( $INPUT->has('data') ){
+            $this->sentStatus = $this->helper->sendData( $INPUT->str('data') );
             if ( $this->sentStatus === '' ){
                 //Update the last time we sent the data
                 touch ( $this->helper->popularityLastSubmitFile );
             }
             //Deal with the autosubmit option
-            $this->_enableAutosubmit( isset($_REQUEST['autosubmit']) );
+            $this->_enableAutosubmit( $INPUT->has('autosubmit') );
         }
     }
 
@@ -78,7 +80,9 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
      * Output HTML form
      */
     function html() {
-        if ( ! isset($_REQUEST['data']) ){
+        global $INPUT;
+
+        if ( ! $INPUT->has('data') ){
             echo $this->locale_xhtml('intro');
 
             //If there was an error the last time we tried to autosubmit, warn the user
@@ -106,7 +110,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
                 //If we failed to submit the data, try directly with the browser
                 echo $this->getLang('submissionFailed') . $this->sentStatus . '<br />';
                 echo $this->getLang('submitDirectly');
-                echo $this->buildForm('browser', $_REQUEST['data']);
+                echo $this->buildForm('browser', $INPUT->str('data'));
             }
         }
     }
@@ -135,7 +139,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
             $form .= '<label for="autosubmit">'
                 .'<input type="checkbox" name="autosubmit" id="autosubmit" '
                 .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
-                .'/>' . $this->getLang('autosubmit') .'<br />'
+                .'/> ' . $this->getLang('autosubmit') .'<br />'
                 .'</label>'
                 .'<input type="hidden" name="do" value="admin" />'
                 .'<input type="hidden" name="page" value="popularity" />';

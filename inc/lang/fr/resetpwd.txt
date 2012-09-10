@@ -1,0 +1,3 @@
+====== Définir un nouveau mot de passe ======
+
+Merci d'entrer un nouveau mot de passe pour votre compte sur ce wiki.

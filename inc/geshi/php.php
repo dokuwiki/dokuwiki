@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2004/06/20
  *
  * PHP language file for GeSHi.
@@ -96,8 +96,9 @@ $language_data = array(
             ),
         2 => array(
             '&amp;new','&lt;/script&gt;','&lt;?php','&lt;script language',
-            'class','const','declare','extends','function','global','interface',
-            'namespace','new','private','protected','public','self','use','var'
+            'abstract','class','const','declare','extends','function','global',
+            'interface','namespace','new','private','protected','public','self',
+            'use','var'
             ),
         3 => array(
             'abs','acos','acosh','addcslashes','addslashes','aggregate',
@@ -1061,7 +1062,7 @@ $language_data = array(
         ),
     'REGEXPS' => array(
         //Variables
-        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
+        0 => "[\\$]+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*"
         ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
@@ -1083,22 +1084,24 @@ $language_data = array(
             "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
             "(?>\"(?>[^\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
             "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
-            "\\/\\/(?>.*?$)|".
+            "\\/\\/(?>.*?(?:\\?>|$))|".
+            "#(?>.*?(?:\\?>|$))|".
             "\\/(?=[^*\\/])|".
             "<(?!<<)|".
             "<<<(?P<phpdoc>\w+)\s.*?\s\k<phpdoc>".
-            ")*(?P<end>\\?>|\Z)/sm",
+            ")*?(?P<end>\\?>|\Z)/sm",
         5 => "/(?P<start><%)(?:".
             "(?>[^\"'%\\/<]+)|".
             "%(?!>)|".
             "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
             "(?>\"(?>[^\\\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
             "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
-            "\\/\\/(?>.*?$)|".
+            "\\/\\/(?>.*?(?:%>|$))|".
+            "#(?>.*?(?:%>|$))|".
             "\\/(?=[^*\\/])|".
             "<(?!<<)|".
             "<<<(?P<phpdoc>\w+)\s.*?\s\k<phpdoc>".
-            ")*(?P<end>%>)/sm",
+            ")*?(?P<end>%>|\Z)/sm",
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

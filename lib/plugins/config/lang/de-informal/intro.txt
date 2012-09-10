@@ -1,4 +1,4 @@
-===== Einstellungs-Manager =====
+===== Konfigurations-Manager =====
 
 Benutze diese Seite zur Kontrolle der Einstellungen deiner DokuWiki-Installation. Für Hilfe zu individuellen Einstellungen gehe zu [[doku>config]]. Für mehr Details über diese Erweiterungen siehe [[doku>plugin:config]].
 

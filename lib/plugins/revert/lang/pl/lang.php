@@ -11,6 +11,7 @@
  * @author Grzegorz Widła <dzesdzes@gmail.com>
  * @author Łukasz Chmaj <teachmeter@gmail.com>
  * @author Begina Felicysym <begina.felicysym@wp.eu>
+ * @author Aoi Karasu <aoikarasu@gmail.com>
  */
 $lang['menu']                  = 'Menadżer przywracania';
 $lang['filter']                = 'Wyszukaj uszkodzone strony';

@@ -108,7 +108,7 @@ class TarLib {
      * represent the GZIP or BZIP compression level.  1 produce fast compression,
      * and 9 produce smaller files. See the RFC 1952 for more infos.
      */
-    function tarlib($p_filen = TarLib::ARCHIVE_DYNAMIC , $p_comptype = TarLib::COMPRESS_AUTO, $p_complevel = 9) {
+    function __construct($p_filen = TarLib::ARCHIVE_DYNAMIC , $p_comptype = TarLib::COMPRESS_AUTO, $p_complevel = 9) {
         $this->_initerror = 0;
         $this->_nomf = $p_filen;
         $flag=0;
@@ -127,7 +127,7 @@ class TarLib {
         }
 
         switch($p_comptype) {
-        case TarLib::COMPRESS_GZIP:
+            case TarLib::COMPRESS_GZIP:
                 if(!extension_loaded('zlib')) $this->_initerror = -1;
                 $this->_comptype = TarLib::COMPRESS_GZIP;
                 break;
@@ -261,14 +261,14 @@ class TarLib {
     function sendClient($name = '', $archive = '', $headers = true) {
         if(!$name && !$this->_nomf) return -9;
         if(!$archive && !$this->_memdat) return -10;
-        if(!$name) $name = basename($this->_nomf);
+        if(!$name) $name = utf8_basename($this->_nomf);
 
         if($archive){ if(!file_exists($archive)) return -11; }
         else $decoded = $this->getDynamicArchive();
 
         if($headers) {
             header('Content-Type: application/x-gtar');
-            header('Content-Disposition: attachment; filename='.basename($name));
+            header('Content-Disposition: attachment; filename='.utf8_basename($name));
             header('Accept-Ranges: bytes');
             header('Content-Length: '.($archive ? filesize($archive) : strlen($decoded)));
         }

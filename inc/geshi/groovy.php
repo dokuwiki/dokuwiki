@@ -4,7 +4,7 @@
  * ----------
  * Author: Ivan F. Villanueva B. (geshi_groovy@artificialidea.com)
  * Copyright: (c) 2006 Ivan F. Villanueva B.(http://www.artificialidea.com)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2006/04/29
  *
  * Groovy language file for GeSHi.
@@ -983,15 +983,15 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        1 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAMEL}',
-        2 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAMEL}',
+        1 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAMEL}',
+        2 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAMEL}',
         3 => 'http://www.google.de/search?as_q={FNAME}&amp;num=100&amp;hl=en&amp;as_occt=url&amp;as_sitesearch=java.sun.com%2Fj2se%2F1%2E5%2E0%2Fdocs%2Fapi%2F',
-        4 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAME}',
-        5 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAME}',
-        6 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAME}',
-        7 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAME}',
-        8 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAME}',
-        9 => 'http://www.google.de/search?q=site%3Adocs.codehaus.org/%20{FNAME}'
+        4 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAME}',
+        5 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAME}',
+        6 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAME}',
+        7 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAME}',
+        8 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAME}',
+        9 => 'http://www.google.de/search?q=site%3Agroovy.codehaus.org/%20{FNAME}'
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

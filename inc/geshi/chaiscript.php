@@ -6,7 +6,7 @@
  * Copyright: (c) 2010 Jason Turner (lefticus@gmail.com),
  *            (c) 2009 Jonathan Turner,
  *            (c) 2004 Ben Keen (ben.keen@gmail.com), Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/07/03
  *
  * ChaiScript language file for GeSHi.
@@ -52,7 +52,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-            'break', 'else', 'else if', 'eval', 'for', 'if', 'return', 'while', 'try', 'catch', 'finally',
+            'break', 'else', 'elseif', 'eval', 'for', 'if', 'return', 'while', 'try', 'catch', 'finally',
             ),
         2 => array(
             'def', 'false', 'fun', 'true', 'var', 'attr',

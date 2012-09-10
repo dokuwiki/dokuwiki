@@ -10,7 +10,7 @@ if(!defined('DOKU_INC')) die('meh.');
 
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.
- * 
+ *
  * @author Michael Hamann
  */
 class Sitemapper {
@@ -55,7 +55,7 @@ class Sitemapper {
             if(isHiddenPage($id)) continue;
             if(auth_aclcheck($id,'','') < AUTH_READ) continue;
             $item = SitemapItem::createFromID($id);
-            if ($item !== NULL)
+            if ($item !== null)
                 $items[] = $item;
         }
 
@@ -63,16 +63,16 @@ class Sitemapper {
         $event = new Doku_Event('SITEMAP_GENERATE', $eventData);
         if ($event->advise_before(true)) {
             //save the new sitemap
-            $result = io_saveFile($sitemap, Sitemapper::getXML($items));
+            $event->result = io_saveFile($sitemap, Sitemapper::getXML($items));
         }
         $event->advise_after();
 
-        return $result;
+        return $event->result;
     }
 
     /**
      * Builds the sitemap XML string from the given array auf SitemapItems.
-     * 
+     *
      * @param $items array The SitemapItems that shall be included in the sitemap.
      * @return string The sitemap XML.
      * @author Michael Hamann
@@ -82,6 +82,7 @@ class Sitemapper {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
         foreach ($items as $item) {
+            /** @var SitemapItem $item */
             echo $item->toXML();
         }
         echo '</urlset>'.NL;
@@ -92,15 +93,15 @@ class Sitemapper {
 
     /**
      * Helper function for getting the path to the sitemap file.
-     * 
-     * @return The path to the sitemap file.
+     *
+     * @return string The path to the sitemap file.
      * @author Michael Hamann
      */
     public static function getFilePath() {
         global $conf;
 
         $sitemap = $conf['cachedir'].'/sitemap.xml';
-        if($conf['compression'] === 'bz2' || $conf['compression'] === 'gz'){
+        if (self::sitemapIsCompressed()) {
             $sitemap .= '.gz';
         }
 
@@ -108,9 +109,19 @@ class Sitemapper {
     }
 
     /**
-     * Pings search engines with the sitemap url. Plugins can add or remove 
+     * Helper function for checking if the sitemap is compressed
+     *
+     * @return bool If the sitemap file is compressed
+     */
+    public static function sitemapIsCompressed() {
+        global $conf;
+        return $conf['compression'] === 'bz2' || $conf['compression'] === 'gz';
+    }
+
+    /**
+     * Pings search engines with the sitemap url. Plugins can add or remove
      * urls to ping using the SITEMAP_PING event.
-     * 
+     *
      * @author Michael Hamann
      */
     public static function pingSearchEngines() {
@@ -145,7 +156,7 @@ class Sitemapper {
 
 /**
  * An item of a sitemap.
- * 
+ *
  * @author Michael Hamann
  */
 class SitemapItem {
@@ -156,7 +167,7 @@ class SitemapItem {
 
     /**
      * Create a new item.
-     * 
+     *
      * @param $url string The url of the item
      * @param $lastmod int Timestamp of the last modification
      * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
@@ -171,31 +182,31 @@ class SitemapItem {
 
     /**
      * Helper function for creating an item for a wikipage id.
-     * 
+     *
      * @param $id string A wikipage id.
      * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
      * @param $priority float|string The priority of the item relative to other URLs on your site. Valid values     range from 0.0 to 1.0.
-     * @return The sitemap item.
+     * @return SitemapItem The sitemap item.
      */
     public static function createFromID($id, $changefreq = null, $priority = null) {
         $id = trim($id);
         $date = @filemtime(wikiFN($id));
-        if(!$date) return NULL;
+        if(!$date) return null;
         return new SitemapItem(wl($id, '', true), $date, $changefreq, $priority);
     }
 
     /**
      * Get the XML representation of the sitemap item.
-     * 
-     * @return The XML representation.
+     *
+     * @return string The XML representation.
      */
     public function toXML() {
         $result = '  <url>'.NL
                  .'    <loc>'.hsc($this->url).'</loc>'.NL
                  .'    <lastmod>'.date_iso8601($this->lastmod).'</lastmod>'.NL;
-        if ($this->changefreq !== NULL)
+        if ($this->changefreq !== null)
             $result .= '    <changefreq>'.hsc($this->changefreq).'</changefreq>'.NL;
-        if ($this->priority !== NULL)
+        if ($this->priority !== null)
             $result .= '    <priority>'.hsc($this->priority).'</priority>'.NL;
         $result .= '  </url>'.NL;
         return $result;

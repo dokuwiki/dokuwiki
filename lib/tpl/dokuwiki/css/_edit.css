@@ -1,0 +1,147 @@
+/**
+ * This file provides styles for the edit view (?do=edit), preview
+ * and section edit buttons.
+ */
+
+/* edit view
+********************************************************************/
+
+.dokuwiki div.editBox {
+}
+
+/*____________ toolbar ____________*/
+
+.dokuwiki div.toolbar {
+    margin-bottom: .5em;
+    overflow: hidden;
+}
+#draft__status {
+    float: right;
+    color: __text_alt__;
+    background-color: inherit;
+}
+[dir=rtl] #draft__status {
+    float: left;
+}
+#tool__bar {
+    float: left;
+}
+[dir=rtl] #tool__bar {
+    float: right;
+}
+
+/* buttons inside of toolbar */
+.dokuwiki div.toolbar button.toolbutton {
+}
+/* picker popups (outside of .dokuwiki) */
+div.picker {
+    width: 300px;
+    border: 1px solid __border__;
+    background-color: __background_alt__;
+    color: inherit;
+}
+/* picker for headlines */
+div.picker.pk_hl {
+    width: auto;
+}
+
+/* buttons inside of picker */
+div.picker button.pickerbutton,
+div.picker button.toolbutton {
+    padding: .1em .35em;
+    border-width: 0;
+}
+
+/*____________ edit textarea ____________*/
+
+.dokuwiki textarea.edit {
+    /* should just be "width: 100%", but IE8 doesn't like it, see FS#1910 + FS#1667 */
+    width: 700px;
+    min-width: 100%;
+    max-width: 100%;
+    margin-bottom: .5em;
+}
+
+/*____________ below the textarea ____________*/
+
+.dokuwiki div.editBar {
+    overflow: hidden;
+    margin-bottom: .5em;
+}
+
+/* size and wrap controls */
+#size__ctl {
+    float: right;
+}
+[dir=rtl] #size__ctl {
+    float: left;
+}
+#size__ctl img {
+    cursor: pointer;
+}
+
+/* edit buttons */
+.dokuwiki .editBar .editButtons {
+    display: inline;
+    margin-right: 1em;
+}
+[dir=rtl] .dokuwiki .editBar .editButtons {
+    margin-right: 0;
+    margin-left: 1em;
+}
+.dokuwiki .editBar .editButtons input {
+}
+
+/* summary input and minor changes checkbox */
+.dokuwiki .editBar .summary {
+    display: inline;
+}
+.dokuwiki .editBar .summary label {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.dokuwiki .editBar .summary label span {
+    vertical-align: middle;
+}
+.dokuwiki .editBar .summary input {
+}
+/* change background colour if summary is missing */
+.dokuwiki .editBar .summary input.missing {
+    color: __text__;
+    background-color: #ffcccc;
+}
+
+/* preview
+********************************************************************/
+
+.dokuwiki div.preview {
+    border: dotted __border__;
+    border-width: .2em 0;
+    padding: 1.4em 0;
+    margin-bottom: 1.4em;
+}
+
+/* section edit buttons
+********************************************************************/
+
+.dokuwiki .secedit {
+    float: right;
+    margin-top: -1.4em;
+}
+[dir=rtl] .dokuwiki .secedit {
+    float: left;
+}
+.dokuwiki .secedit input.button {
+    font-size: 75%;
+}
+
+/* generic style for section highlighting (including headings) */
+.dokuwiki .section_highlight {
+}
+/* style for section highlighting (only sections below headings) */
+.dokuwiki div.section_highlight {
+    margin: -3em -1em -.01em -1em; /* negative side margin = side padding + side border */
+    padding: 3em .5em .01em .5em;
+    border: solid __background_alt__;
+    border-width: 0 .5em;
+}

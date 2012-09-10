@@ -9,7 +9,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
-*/
+ */
 
 require_once(DOKU_INC.'inc/auth/mysql.class.php');
 
@@ -24,63 +24,72 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function auth_pgsql() {
-      global $conf;
-      $this->cnf          = $conf['auth']['pgsql'];
-      if(!$this->cnf['port']) $this->cnf['port'] = 5432;
+    function __construct() {
+        global $conf;
+        $this->cnf = $conf['auth']['pgsql'];
+        if(!$this->cnf['port']){
+            $this->cnf['port'] = 5432;
+        }
 
-      if (method_exists($this, 'auth_basic'))
-        parent::auth_basic();
+        if (method_exists($this, 'auth_basic')){
+            parent::auth_basic();
+        }
 
-      if(!function_exists('pg_connect')) {
-        if ($this->cnf['debug'])
-          msg("PgSQL err: PHP Postgres extension not found.",-1);
-        $this->success = false;
-        return;
-      }
+        if(!function_exists('pg_connect')) {
+            if ($this->cnf['debug'])
+                msg("PgSQL err: PHP Postgres extension not found.",-1);
+            $this->success = false;
+            return;
+        }
 
-      $this->defaultgroup = $conf['defaultgroup'];
+        $this->defaultgroup = $conf['defaultgroup'];
 
-      // set capabilities based upon config strings set
-      if (empty($this->cnf['user']) ||
-          empty($this->cnf['password']) || empty($this->cnf['database'])){
-        if ($this->cnf['debug'])
-          msg("PgSQL err: insufficient configuration.",-1,__LINE__,__FILE__);
-        $this->success = false;
-        return;
-      }
+        // set capabilities based upon config strings set
+        if (empty($this->cnf['user']) ||
+            empty($this->cnf['password']) || empty($this->cnf['database'])){
+            if ($this->cnf['debug']){
+                msg("PgSQL err: insufficient configuration.",-1,__LINE__,__FILE__);
+            }
+            $this->success = false;
+            return;
+        }
 
-      $this->cando['addUser']      = $this->_chkcnf(array('getUserInfo',
-                                                          'getGroups',
-                                                          'addUser',
-                                                          'getUserID',
-                                                          'getGroupID',
-                                                          'addGroup',
-                                                          'addUserGroup'));
-      $this->cando['delUser']      = $this->_chkcnf(array('getUserID',
-                                                          'delUser',
-                                                          'delUserRefs'));
-      $this->cando['modLogin']     = $this->_chkcnf(array('getUserID',
-                                                          'updateUser',
-                                                          'UpdateTarget'));
-      $this->cando['modPass']      = $this->cando['modLogin'];
-      $this->cando['modName']      = $this->cando['modLogin'];
-      $this->cando['modMail']      = $this->cando['modLogin'];
-      $this->cando['modGroups']    = $this->_chkcnf(array('getUserID',
-                                                          'getGroups',
-                                                          'getGroupID',
-                                                          'addGroup',
-                                                          'addUserGroup',
-                                                          'delGroup',
-                                                          'getGroupID',
-                                                          'delUserGroup'));
-      /* getGroups is not yet supported
-      $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
-                                                          'getGroupID')); */
-      $this->cando['getUsers']     = $this->_chkcnf(array('getUsers',
-                                                          'getUserInfo',
-                                                          'getGroups'));
-      $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'));
+        $this->cando['addUser']     = $this->_chkcnf(array(
+                                        'getUserInfo',
+                                        'getGroups',
+                                        'addUser',
+                                        'getUserID',
+                                        'getGroupID',
+                                        'addGroup',
+                                        'addUserGroup'));
+        $this->cando['delUser']      = $this->_chkcnf(array(
+                                        'getUserID',
+                                        'delUser',
+                                        'delUserRefs'));
+        $this->cando['modLogin']     = $this->_chkcnf(array(
+                                        'getUserID',
+                                        'updateUser',
+                                        'UpdateTarget'));
+        $this->cando['modPass']      = $this->cando['modLogin'];
+        $this->cando['modName']      = $this->cando['modLogin'];
+        $this->cando['modMail']      = $this->cando['modLogin'];
+        $this->cando['modGroups']    = $this->_chkcnf(array(
+                                        'getUserID',
+                                        'getGroups',
+                                        'getGroupID',
+                                        'addGroup',
+                                        'addUserGroup',
+                                        'delGroup',
+                                        'getGroupID',
+                                        'delUserGroup'));
+        /* getGroups is not yet supported
+           $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
+           'getGroupID')); */
+        $this->cando['getUsers']     = $this->_chkcnf(array(
+                                        'getUsers',
+                                        'getUserInfo',
+                                        'getGroups'));
+        $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'));
     }
 
     /**
@@ -90,10 +99,10 @@ class auth_pgsql extends auth_mysql {
      * @return  bool
      */
     function _chkcnf($keys, $wop=false){
-      foreach ($keys as $key){
-        if (empty($this->cnf[$key])) return false;
-      }
-      return true;
+        foreach ($keys as $key){
+            if (empty($this->cnf[$key])) return false;
+        }
+        return true;
     }
 
     // @inherit function checkPass($user,$pass)
@@ -114,18 +123,18 @@ class auth_pgsql extends auth_mysql {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function getUserCount($filter=array()) {
-      $rc = 0;
+        $rc = 0;
 
-      if($this->_openDB()) {
-        $sql = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
+        if($this->_openDB()) {
+            $sql = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
 
-        // no equivalent of SQL_CALC_FOUND_ROWS in pgsql?
-        if (($result = $this->_queryDB($sql))){
-          $rc = count($result);
+            // no equivalent of SQL_CALC_FOUND_ROWS in pgsql?
+            if (($result = $this->_queryDB($sql))){
+                $rc = count($result);
+            }
+            $this->_closeDB();
         }
-        $this->_closeDB();
-      }
-      return $rc;
+        return $rc;
     }
 
     /**
@@ -139,22 +148,22 @@ class auth_pgsql extends auth_mysql {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function retrieveUsers($first=0,$limit=10,$filter=array()) {
-      $out   = array();
+        $out   = array();
 
-      if($this->_openDB()) {
-        $this->_lockTables("READ");
-        $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
-        $sql .= " ".$this->cnf['SortOrder']." LIMIT $limit OFFSET $first";
-        $result = $this->_queryDB($sql);
+        if($this->_openDB()) {
+            $this->_lockTables("READ");
+            $sql  = $this->_createSQLFilter($this->cnf['getUsers'], $filter);
+            $sql .= " ".$this->cnf['SortOrder']." LIMIT $limit OFFSET $first";
+            $result = $this->_queryDB($sql);
 
-        foreach ($result as $user)
-          if (($info = $this->_getUserInfo($user['user'])))
-            $out[$user['user']] = $info;
+            foreach ($result as $user)
+                if (($info = $this->_getUserInfo($user['user'])))
+                    $out[$user['user']] = $info;
 
-        $this->_unlockTables();
-        $this->_closeDB();
-      }
-      return $out;
+            $this->_unlockTables();
+            $this->_closeDB();
+        }
+        return $out;
     }
 
     // @inherit function joinGroup($user, $group)
@@ -177,38 +186,38 @@ class auth_pgsql extends auth_mysql {
      * @author Andreas Gohr   <andi@splitbrain.org>
      */
     function _addUserToGroup($user, $group, $force=0) {
-      $newgroup = 0;
+        $newgroup = 0;
 
-      if (($this->dbcon) && ($user)) {
-        $gid = $this->_getGroupID($group);
-        if (!$gid) {
-          if ($force) {  // create missing groups
-            $sql = str_replace('%{group}',addslashes($group),$this->cnf['addGroup']);
-            $this->_modifyDB($sql);
-            //group should now exists try again to fetch it
+        if (($this->dbcon) && ($user)) {
             $gid = $this->_getGroupID($group);
-            $newgroup = 1;  // group newly created
-          }
-        }
-        if (!$gid) return false; // group didn't exist and can't be created
+            if (!$gid) {
+                if ($force) {  // create missing groups
+                    $sql = str_replace('%{group}',addslashes($group),$this->cnf['addGroup']);
+                    $this->_modifyDB($sql);
+                    //group should now exists try again to fetch it
+                    $gid = $this->_getGroupID($group);
+                    $newgroup = 1;  // group newly created
+                }
+            }
+            if (!$gid) return false; // group didn't exist and can't be created
 
-        $sql = $this->cnf['addUserGroup'];
-        if(strpos($sql,'%{uid}') !== false){
-            $uid = $this->_getUserID($user);
-            $sql = str_replace('%{uid}', addslashes($uid), $sql);
-        }
-        $sql = str_replace('%{user}', addslashes($user),$sql);
-        $sql = str_replace('%{gid}',  addslashes($gid),$sql);
-        $sql = str_replace('%{group}',addslashes($group),$sql);
-        if ($this->_modifyDB($sql) !== false) return true;
+            $sql = $this->cnf['addUserGroup'];
+            if(strpos($sql,'%{uid}') !== false){
+                $uid = $this->_getUserID($user);
+                $sql = str_replace('%{uid}', addslashes($uid), $sql);
+            }
+            $sql = str_replace('%{user}', addslashes($user),$sql);
+            $sql = str_replace('%{gid}',  addslashes($gid),$sql);
+            $sql = str_replace('%{group}',addslashes($group),$sql);
+            if ($this->_modifyDB($sql) !== false) return true;
 
-        if ($newgroup) { // remove previously created group on error
-          $sql = str_replace('%{gid}',  addslashes($gid),$this->cnf['delGroup']);
-          $sql = str_replace('%{group}',addslashes($group),$sql);
-          $this->_modifyDB($sql);
+            if ($newgroup) { // remove previously created group on error
+                $sql = str_replace('%{gid}',  addslashes($gid),$this->cnf['delGroup']);
+                $sql = str_replace('%{group}',addslashes($group),$sql);
+                $this->_modifyDB($sql);
+            }
         }
-      }
-      return false;
+        return false;
     }
 
     // @inherit function _delUserFromGroup($user $group)
@@ -234,37 +243,37 @@ class auth_pgsql extends auth_mysql {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _addUser($user,$pwd,$name,$mail,$grps){
-      if($this->dbcon && is_array($grps)) {
-        $sql = str_replace('%{user}', addslashes($user),$this->cnf['addUser']);
-        $sql = str_replace('%{pass}', addslashes($pwd),$sql);
-        $sql = str_replace('%{name}', addslashes($name),$sql);
-        $sql = str_replace('%{email}',addslashes($mail),$sql);
-        if($this->_modifyDB($sql)){
-          $uid = $this->_getUserID($user);
-        }else{
-          return false;
-        }
+        if($this->dbcon && is_array($grps)) {
+            $sql = str_replace('%{user}', addslashes($user),$this->cnf['addUser']);
+            $sql = str_replace('%{pass}', addslashes($pwd),$sql);
+            $sql = str_replace('%{name}', addslashes($name),$sql);
+            $sql = str_replace('%{email}',addslashes($mail),$sql);
+            if($this->_modifyDB($sql)){
+                $uid = $this->_getUserID($user);
+            }else{
+                return false;
+            }
 
-        if ($uid) {
-          foreach($grps as $group) {
-            $gid = $this->_addUserToGroup($user, $group, 1);
-            if ($gid === false) break;
-          }
+            if ($uid) {
+                foreach($grps as $group) {
+                    $gid = $this->_addUserToGroup($user, $group, 1);
+                    if ($gid === false) break;
+                }
 
-          if ($gid) return true;
-          else {
-            /* remove the new user and all group relations if a group can't
-             * be assigned. Newly created groups will remain in the database
-             * and won't be removed. This might create orphaned groups but
-             * is not a big issue so we ignore this problem here.
-             */
-            $this->_delUser($user);
-            if ($this->cnf['debug'])
-              msg("PgSQL err: Adding user '$user' to group '$group' failed.",-1,__LINE__,__FILE__);
-          }
+                if ($gid) return true;
+                else {
+                    /* remove the new user and all group relations if a group can't
+                     * be assigned. Newly created groups will remain in the database
+                     * and won't be removed. This might create orphaned groups but
+                     * is not a big issue so we ignore this problem here.
+                     */
+                    $this->_delUser($user);
+                    if ($this->cnf['debug'])
+                        msg("PgSQL err: Adding user '$user' to group '$group' failed.",-1,__LINE__,__FILE__);
+                }
+            }
         }
-      }
-      return false;
+        return false;
     }
 
     // @inherit function _delUser($user)
@@ -282,24 +291,24 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _openDB() {
-      if (!$this->dbcon) {
-        $dsn  = $this->cnf['server'] ? 'host='.$this->cnf['server'] : '';
-        $dsn .= ' port='.$this->cnf['port'];
-        $dsn .= ' dbname='.$this->cnf['database'];
-        $dsn .= ' user='.$this->cnf['user'];
-        $dsn .= ' password='.$this->cnf['password'];
+        if (!$this->dbcon) {
+            $dsn  = $this->cnf['server'] ? 'host='.$this->cnf['server'] : '';
+            $dsn .= ' port='.$this->cnf['port'];
+            $dsn .= ' dbname='.$this->cnf['database'];
+            $dsn .= ' user='.$this->cnf['user'];
+            $dsn .= ' password='.$this->cnf['password'];
 
-        $con = @pg_connect($dsn);
-        if ($con) {
-            $this->dbcon = $con;
-            return true;   // connection and database successfully opened
-        } else if ($this->cnf['debug']){
-            msg ("PgSQL err: Connection to {$this->cnf['user']}@{$this->cnf['server']} not possible.",
-                  -1,__LINE__,__FILE__);
+            $con = @pg_connect($dsn);
+            if ($con) {
+                $this->dbcon = $con;
+                return true;   // connection and database successfully opened
+            } else if ($this->cnf['debug']){
+                msg ("PgSQL err: Connection to {$this->cnf['user']}@{$this->cnf['server']} not possible.",
+                        -1,__LINE__,__FILE__);
+            }
+            return false;  // connection failed
         }
-        return false;  // connection failed
-      }
-      return true;  // connection already open
+        return true;  // connection already open
     }
 
     /**
@@ -308,10 +317,10 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _closeDB() {
-      if ($this->dbcon) {
-        pg_close ($this->dbcon);
-        $this->dbcon = 0;
-      }
+        if ($this->dbcon) {
+            pg_close ($this->dbcon);
+            $this->dbcon = 0;
+        }
     }
 
     /**
@@ -327,17 +336,17 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _queryDB($query) {
-      if ($this->dbcon) {
-        $result = @pg_query($this->dbcon,$query);
-        if ($result) {
-          while (($t = pg_fetch_assoc($result)) !== false)
-            $resultarray[]=$t;
-          pg_free_result ($result);
-          return $resultarray;
-        }elseif ($this->cnf['debug'])
-          msg('PgSQL err: '.pg_last_error($this->dbcon),-1,__LINE__,__FILE__);
-      }
-      return false;
+        if ($this->dbcon) {
+            $result = @pg_query($this->dbcon,$query);
+            if ($result) {
+                while (($t = pg_fetch_assoc($result)) !== false)
+                    $resultarray[]=$t;
+                pg_free_result ($result);
+                return $resultarray;
+            }elseif ($this->cnf['debug'])
+            msg('PgSQL err: '.pg_last_error($this->dbcon),-1,__LINE__,__FILE__);
+        }
+        return false;
     }
 
     /**
@@ -347,17 +356,17 @@ class auth_pgsql extends auth_mysql {
      * @author Andreas Gohr
      */
     function _modifyDB($query) {
-      if ($this->dbcon) {
-        $result = @pg_query($this->dbcon,$query);
-        if ($result) {
-          pg_free_result ($result);
-          return true;
+        if ($this->dbcon) {
+            $result = @pg_query($this->dbcon,$query);
+            if ($result) {
+                pg_free_result ($result);
+                return true;
+            }
+            if ($this->cnf['debug']){
+                msg('PgSQL err: '.pg_last_error($this->dbcon),-1,__LINE__,__FILE__);
+            }
         }
-        if ($this->cnf['debug']){
-          msg('PgSQL err: '.pg_last_error($this->dbcon),-1,__LINE__,__FILE__);
-        }
-      }
-      return false;
+        return false;
     }
 
     /**
@@ -367,11 +376,11 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _lockTables($mode) {
-      if ($this->dbcon) {
-        $this->_modifyDB('BEGIN');
-        return true;
-      }
-      return false;
+        if ($this->dbcon) {
+            $this->_modifyDB('BEGIN');
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -380,11 +389,11 @@ class auth_pgsql extends auth_mysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function _unlockTables() {
-      if ($this->dbcon) {
-        $this->_modifyDB('COMMIT');
-        return true;
-      }
-      return false;
+        if ($this->dbcon) {
+            $this->_modifyDB('COMMIT');
+            return true;
+        }
+        return false;
     }
 
     // @inherit function _createSQLFilter($sql, $filter)
@@ -398,11 +407,11 @@ class auth_pgsql extends auth_mysql {
      * @param  boolean $like   Escape wildcard chars as well?
      */
     function _escape($string,$like=false){
-      $string = pg_escape_string($string);
-      if($like){
-        $string = addcslashes($string,'%_');
-      }
-      return $string;
+        $string = pg_escape_string($string);
+        if($like){
+            $string = addcslashes($string,'%_');
+        }
+        return $string;
     }
 
 }

@@ -9,6 +9,7 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
+if(!defined('NL')) define('NL',"\n");
 require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -29,24 +30,27 @@ function css_out(){
     global $conf;
     global $lang;
     global $config_cascade;
+    global $INPUT;
 
-    $mediatype = 'screen';
-    if (isset($_REQUEST['s']) &&
-        in_array($_REQUEST['s'], array('all', 'print', 'feed'))) {
-        $mediatype = $_REQUEST['s'];
+    if ($INPUT->str('s') == 'feed') {
+        $mediatypes = array('feed');
+        $type = 'feed';
+    } else {
+        $mediatypes = array('screen', 'all', 'print');
+        $type = '';
     }
 
-    $tpl = trim(preg_replace('/[^\w-]+/','',$_REQUEST['t']));
+    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if($tpl){
         $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
         $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
     }else{
-        $tplinc = DOKU_TPLINC;
-        $tpldir = DOKU_TPL;
+        $tplinc = tpl_incdir();
+        $tpldir = tpl_basedir();
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$mediatype,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
 
     // load template styles
     $tplstyles = array();
@@ -57,57 +61,79 @@ function css_out(){
         }
     }
 
-    // Array of needed files and their web locations, the latter ones
-    // are needed to fix relative paths in the stylesheets
-    $files   = array();
-    // load core styles
-    $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
-    // load jQuery-UI theme
-    $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
-    // load plugin styles
-    $files = array_merge($files, css_pluginstyles($mediatype));
-    // load template styles
-    if (isset($tplstyles[$mediatype])) {
-        $files = array_merge($files, $tplstyles[$mediatype]);
-    }
-    // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
-    if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
-    }
-    // load user styles
-    if(isset($config_cascade['userstyle'][$mediatype])){
-        $files[$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
-    }
-    // load rtl styles
-    // @todo: this currently adds the rtl styles only to the 'screen' media type
-    //        but 'print' and 'all' should also be supported
-    if ($mediatype=='screen') {
-        if($lang['direction'] == 'rtl'){
-            if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
-        }
-    }
-
-    $cache_files = array_merge(array_keys($files), getConfigFiles('main'));
-    $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = __FILE__;
-
-    // check cache age & handle conditional request
-    // This may exit if a cache can be used
-    http_cached($cache->cache,
-                $cache->useCache(array('files' => $cache_files)));
-
-    // start output buffering and build the stylesheet
+    // start output buffering
     ob_start();
 
-    // print the default classes for interwiki links and file downloads
-    css_interwiki();
-    css_filetypes();
+    foreach($mediatypes as $mediatype) {
+        // Array of needed files and their web locations, the latter ones
+        // are needed to fix relative paths in the stylesheets
+        $files   = array();
+        // load core styles
+        $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+        // load jQuery-UI theme
+        if ($mediatype == 'screen') {
+            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
+        }
+        // load plugin styles
+        $files = array_merge($files, css_pluginstyles($mediatype));
+        // load template styles
+        if (isset($tplstyles[$mediatype])) {
+            $files = array_merge($files, $tplstyles[$mediatype]);
+        }
+        // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
+        if (isset($config_cascade['userstyle']['default'])) {
+            $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+        }
+        // load user styles
+        if(isset($config_cascade['userstyle'][$mediatype])){
+            $files[$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+        }
+        // load rtl styles
+        // note: this adds the rtl styles only to the 'screen' media type
+        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
+        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
+        if ($mediatype=='screen') {
+            if($lang['direction'] == 'rtl'){
+                if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
+            }
+        }
 
-    // load files
-    foreach($files as $file => $location){
-        print css_loadfile($file, $location);
+        $cache_files = array_merge(array_keys($files), getConfigFiles('main'));
+        $cache_files[] = $tplinc.'style.ini';
+        $cache_files[] = __FILE__;
+
+        // check cache age & handle conditional request
+        // This may exit if a cache can be used
+        http_cached($cache->cache,
+                    $cache->useCache(array('files' => $cache_files)));
+
+        // build the stylesheet
+
+        // print the default classes for interwiki links and file downloads
+        if ($mediatype == 'screen') {
+            css_interwiki();
+            css_filetypes();
+        }
+
+        // load files
+        $css_content = '';
+        foreach($files as $file => $location){
+            $css_content .= css_loadfile($file, $location);
+        }
+        switch ($mediatype) {
+            case 'screen':
+                print NL.'@media screen { /* START screen styles */'.NL.$css_content.NL.'} /* /@media END screen styles */'.NL;
+                break;
+            case 'print':
+                print NL.'@media print { /* START print styles */'.NL.$css_content.NL.'} /* /@media END print styles */'.NL;
+                break;
+            case 'all':
+            case 'feed':
+            default:
+                print NL.'/* START rest styles */ '.NL.$css_content.NL.'/* END rest styles */'.NL;
+                break;
+        }
     }
-
     // end output buffering and get contents
     $css = ob_get_contents();
     ob_end_clean();
@@ -275,6 +301,8 @@ function css_pluginstyles($mediatype='screen'){
         if ($mediatype=='screen') {
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
         }
+        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
+        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
         if($lang['direction'] == 'rtl'){
             $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
         }

@@ -156,7 +156,7 @@ if (!class_exists('configuration')) {
         }else{
             $contents = '';
         }
-        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|@include|$))/s';
+        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|$))/s';
         $matches=array();
         preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
 
@@ -279,10 +279,10 @@ if (!class_exists('configuration')) {
       }
 
       // the same for the active template
-      if (@file_exists(DOKU_TPLINC.$file)){
+      if (@file_exists(tpl_incdir().$file)){
         $meta = array();
-        @include(DOKU_TPLINC.$file);
-        @include(DOKU_TPLINC.$class);
+        @include(tpl_incdir().$file);
+        @include(tpl_incdir().$class);
         if (!empty($meta)) {
           $metadata['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] = array('fieldset');
         }
@@ -314,9 +314,9 @@ if (!class_exists('configuration')) {
       }
 
       // the same for the active template
-      if (@file_exists(DOKU_TPLINC.$file)){
+      if (@file_exists(tpl_incdir().$file)){
         $conf = array();
-        @include(DOKU_TPLINC.$file);
+        @include(tpl_incdir().$file);
         foreach ($conf as $key => $value){
           $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
         }
@@ -452,8 +452,8 @@ if (!class_exists('setting')) {
 
     function _out_key($pretty=false,$url=false) {
         if($pretty){
-            $out = str_replace(CM_KEYMARKER,"&raquo;",$this->_key);
-            if ($url && !strstr($out,'&raquo;')) {//provide no urls for plugins, etc.
+            $out = str_replace(CM_KEYMARKER,"»",$this->_key);
+            if ($url && !strstr($out,'»')) {//provide no urls for plugins, etc.
                 if ($out == 'start') //one exception
                     return '<a href="http://www.dokuwiki.org/config:startpage">'.$out.'</a>';
                 else
@@ -548,7 +548,7 @@ if (!class_exists('setting_email')) {
         if ($value == $input) return false;
 
         if ($this->_multiple) {
-            $mails = array_filter(array_map('trim', split(',', $input)));
+            $mails = array_filter(array_map('trim', explode(',', $input)));
         } else {
             $mails = array($input);
         }

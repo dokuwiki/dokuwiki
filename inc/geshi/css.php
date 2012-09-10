@@ -4,7 +4,7 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2004/06/18
  *
  * CSS language file for GeSHi.
@@ -58,12 +58,22 @@ $language_data = array (
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"', "'"),
-    'ESCAPE_CHAR' => '\\',
+    'ESCAPE_CHAR' => '',
+    'ESCAPE_REGEXP' => array(
+        //Simple Single Char Escapes
+        //1 => "#\\\\[nfrtv\$\"\n\\\\]#i",
+        //Hexadecimal Char Specs
+        2 => "#\\\\[\da-fA-F]{1,6}\s?#i",
+        //Unicode Char Specs
+        //3 => "#\\\\u[\da-fA-F]{1,8}#i",
+        ),
     'KEYWORDS' => array(
         1 => array(
             'aqua', 'azimuth', 'background-attachment', 'background-color',
             'background-image', 'background-position', 'background-repeat',
             'background', 'black', 'blue', 'border-bottom-color',
+            'border-radius', 'border-top-left-radius', 'border-top-right-radius',
+            'border-bottom-right-radius', 'border-bottom-left-radius',
             'border-bottom-style', 'border-bottom-width', 'border-left-color',
             'border-left-style', 'border-left-width', 'border-right',
             'border-right-color', 'border-right-style', 'border-right-width',
@@ -153,7 +163,10 @@ $language_data = array (
             'MULTI' => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #000099; font-weight: bold;'
+            0 => 'color: #000099; font-weight: bold;',
+            //1 => 'color: #000099; font-weight: bold;',
+            2 => 'color: #000099; font-weight: bold;'
+            //3 => 'color: #000099; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: #00AA00;'
@@ -204,7 +217,8 @@ $language_data = array (
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
-            'DISALLOWED_AFTER' => '(?![a-zA-Z0-9_\|%\\-&\.])'
+            'DISALLOWED_AFTER' => '(?![\-a-zA-Z0-9_\|%\\-&\.])',
+            'DISALLOWED_BEFORE' => '(?<![\-a-zA-Z0-9_\|%\\~&\.])'
         )
     )
 );

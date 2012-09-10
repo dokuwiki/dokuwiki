@@ -15,7 +15,7 @@ class auth_ldap extends auth_basic {
     /**
      * Constructor
      */
-    function auth_ldap(){
+    function __construct(){
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
 
@@ -307,8 +307,6 @@ class auth_ldap extends auth_basic {
             }
         }
         return $result;
-
-
     }
 
     /**
@@ -360,7 +358,6 @@ class auth_ldap extends auth_basic {
     function _constructPattern($filter) {
         $this->_pattern = array();
         foreach ($filter as $item => $pattern) {
-//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
             $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
         }
     }
@@ -390,48 +387,74 @@ class auth_ldap extends auth_basic {
         $this->bound = 0;
 
         $port = ($this->cnf['port']) ? $this->cnf['port'] : 389;
-        $this->con = @ldap_connect($this->cnf['server'],$port);
-        if(!$this->con){
+        $bound = false;
+        $servers = explode(',', $this->cnf['server']);
+        foreach ($servers as $server) {
+            $server = trim($server);
+            $this->con = @ldap_connect($server, $port);
+            if (!$this->con) {
+                continue;
+            }
+
+            /*
+             * When OpenLDAP 2.x.x is used, ldap_connect() will always return a resource as it does
+             * not actually connect but just initializes the connecting parameters. The actual
+             * connect happens with the next calls to ldap_* funcs, usually with ldap_bind().
+             *
+             * So we should try to bind to server in order to check its availability.
+             */
+
+            //set protocol version and dependend options
+            if($this->cnf['version']){
+                if(!@ldap_set_option($this->con, LDAP_OPT_PROTOCOL_VERSION,
+                                     $this->cnf['version'])){
+                    msg('Setting LDAP Protocol version '.$this->cnf['version'].' failed',-1);
+                    if($this->cnf['debug'])
+                        msg('LDAP version set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+                }else{
+                    //use TLS (needs version 3)
+                    if($this->cnf['starttls']) {
+                        if (!@ldap_start_tls($this->con)){
+                            msg('Starting TLS failed',-1);
+                            if($this->cnf['debug'])
+                                msg('LDAP TLS set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+                        }
+                    }
+                    // needs version 3
+                    if(isset($this->cnf['referrals'])) {
+                        if(!@ldap_set_option($this->con, LDAP_OPT_REFERRALS,
+                           $this->cnf['referrals'])){
+                            msg('Setting LDAP referrals to off failed',-1);
+                            if($this->cnf['debug'])
+                                msg('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+                        }
+                    }
+                }
+            }
+
+            //set deref mode
+            if($this->cnf['deref']){
+                if(!@ldap_set_option($this->con, LDAP_OPT_DEREF, $this->cnf['deref'])){
+                    msg('Setting LDAP Deref mode '.$this->cnf['deref'].' failed',-1);
+                    if($this->cnf['debug'])
+                        msg('LDAP deref set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
+                }
+            }
+            /* As of PHP 5.3.0 we can set timeout to speedup skipping of invalid servers */
+            if (defined('LDAP_OPT_NETWORK_TIMEOUT')) {
+                ldap_set_option($this->con, LDAP_OPT_NETWORK_TIMEOUT, 1);
+            }
+            $bound = @ldap_bind($this->con);
+            if ($bound) {
+                break;
+            }
+        }
+
+        if(!$bound) {
             msg("LDAP: couldn't connect to LDAP server",-1);
             return false;
         }
 
-        //set protocol version and dependend options
-        if($this->cnf['version']){
-            if(!@ldap_set_option($this->con, LDAP_OPT_PROTOCOL_VERSION,
-                                 $this->cnf['version'])){
-                msg('Setting LDAP Protocol version '.$this->cnf['version'].' failed',-1);
-                if($this->cnf['debug'])
-                    msg('LDAP version set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
-            }else{
-                //use TLS (needs version 3)
-                if($this->cnf['starttls']) {
-                    if (!@ldap_start_tls($this->con)){
-                        msg('Starting TLS failed',-1);
-                        if($this->cnf['debug'])
-                            msg('LDAP TLS set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
-                    }
-                }
-                // needs version 3
-                if(isset($this->cnf['referrals'])) {
-                    if(!@ldap_set_option($this->con, LDAP_OPT_REFERRALS,
-                       $this->cnf['referrals'])){
-                        msg('Setting LDAP referrals to off failed',-1);
-                        if($this->cnf['debug'])
-                            msg('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
-                    }
-                }
-            }
-        }
-
-        //set deref mode
-        if($this->cnf['deref']){
-            if(!@ldap_set_option($this->con, LDAP_OPT_DEREF, $this->cnf['deref'])){
-                msg('Setting LDAP Deref mode '.$this->cnf['deref'].' failed',-1);
-                if($this->cnf['debug'])
-                    msg('LDAP deref set: '.htmlspecialchars(ldap_error($this->con)),0,__LINE__,__FILE__);
-            }
-        }
 
         $this->canDo['getUsers'] = true;
         return true;

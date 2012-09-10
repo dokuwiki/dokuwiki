@@ -9,6 +9,8 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
+require_once(DOKU_INC.'inc/PassHash.class.php');
+
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
@@ -27,8 +29,10 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
 
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
-$LC = preg_replace('/[^a-z\-]+/','',$_REQUEST['l']);
-if(!$LC) $LC = 'en';
+if(isset($_REQUEST['l']) && !is_array($_REQUEST['l'])) {
+    $LC = preg_replace('/[^a-z\-]+/','',$_REQUEST['l']);
+}
+if(empty($LC)) $LC = 'en';
 if($LC && $LC != 'en' ) {
     require_once(DOKU_INC.'inc/lang/'.$LC.'/lang.php');
 }
@@ -50,19 +54,17 @@ $dokuwiki_hash = array(
     '2011-05-25'   => '4241865472edb6fa14a1227721008072',
     '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
+    '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3'
 );
-
 
 
 // begin output
 header('Content-Type: text/html; charset=utf-8');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $LC?>"
- lang="<?php echo $LC?>" dir="<?php echo $lang['direction']?>">
+<!DOCTYPE html>
+<html lang="<?php echo $LC?>" dir="<?php echo $lang['direction']?>">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title><?php echo $lang['i_installer']?></title>
     <style type="text/css">
         body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
@@ -74,7 +76,7 @@ header('Content-Type: text/html; charset=utf-8');
         select.text, input.text { width: 30em; margin: 0 0.5em; }
         a {text-decoration: none}
     </style>
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
         function acltoggle(){
             var cb = document.getElementById('acl');
             var fs = document.getElementById('acldep');
@@ -94,7 +96,7 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body style="">
     <h1 style="float:left">
-        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png&w=64"
+        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png&amp;w=64"
              style="vertical-align: middle;" alt="" />
         <?php echo $lang['i_installer']?>
     </h1>
@@ -128,17 +130,16 @@ header('Content-Type: text/html; charset=utf-8');
             }elseif(!check_configs()){
                 echo '<p>'.$lang['i_modified'].'</p>';
                 print_errors();
-            }elseif($_REQUEST['submit']){
-                if(!check_data($_REQUEST['d'])){
-                    print_errors();
-                    print_form($_REQUEST['d']);
-                }elseif(!store_data($_REQUEST['d'])){
+            }elseif(check_data($_REQUEST['d'])){
+                // check_data has sanitized all input parameters
+                if(!store_data($_REQUEST['d'])){
                     echo '<p>'.$lang['i_failure'].'</p>';
                     print_errors();
                 }else{
                     echo '<p>'.$lang['i_success'].'</p>';
                 }
             }else{
+                print_errors();
                 print_form($_REQUEST['d']);
             }
         ?>
@@ -177,7 +178,7 @@ function print_form($d){
 
         <fieldset style="margin-top: 1em;">
             <label for="acl">
-            <input type="checkbox" name="d[acl]" id="acl" <?php echo(($d['acl'] ? 'checked="checked"' : ''));?> />
+            <input type="checkbox" name="d[acl]" id="acl" <?php echo(($d['acl'] ? ' checked="checked"' : ''));?> />
             <?php echo $lang['i_enableacl']?></label>
 
             <fieldset id="acldep">
@@ -210,11 +211,11 @@ function print_form($d){
             <p><?php echo $lang['i_license']?></p>
             <?php
             array_unshift($license,array('name' => 'None', 'url'=>''));
-            if(!isset($d['license'])) $d['license'] = 'cc-by-sa';
+            if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
                 echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
-                     (($d['license'] == $key)?'checked="checked"':'').'>';
+                     (($d['license'] == $key)?' checked="checked"':'').'>';
                 echo htmlspecialchars($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
@@ -249,41 +250,65 @@ function print_retry() {
  * @author Andreas Gohr
  */
 function check_data(&$d){
+    static $form_default = array(
+        'title'     => '',
+        'acl'       => '1',
+        'superuser' => '',
+        'fullname'  => '',
+        'email'     => '',
+        'password'  => '',
+        'confirm'   => '',
+        'policy'    => '0',
+        'license'   => 'cc-by-sa'
+    );
     global $lang;
     global $error;
 
+    if(!is_array($d)) $d = array();
+    foreach($d as $k => $v) {
+        if(is_array($v))
+            unset($d[$k]);
+        else
+            $d[$k] = (string)$v;
+    }
+
     //autolowercase the username
-    $d['superuser'] = strtolower($d['superuser']);
+    $d['superuser'] = isset($d['superuser']) ? strtolower($d['superuser']) : "";
 
-    $ok = true;
+    $ok = false;
 
-    // check input
-    if(empty($d['title'])){
-        $error[] = sprintf($lang['i_badval'],$lang['i_wikiname']);
-        $ok      = false;
+    if(isset($_REQUEST['submit'])) {
+        $ok = true;
+
+        // check input
+        if(empty($d['title'])){
+            $error[] = sprintf($lang['i_badval'],$lang['i_wikiname']);
+            $ok      = false;
+        }
+        if(isset($d['acl'])){
+            if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
+                $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
+                $ok      = false;
+            }
+            if(empty($d['password'])){
+                $error[] = sprintf($lang['i_badval'],$lang['pass']);
+                $ok      = false;
+            }
+            elseif(!isset($d['confirm']) || $d['confirm'] != $d['password']){
+                $error[] = sprintf($lang['i_badval'],$lang['passchk']);
+                $ok      = false;
+            }
+            if(empty($d['fullname']) || strstr($d['fullname'],':')){
+                $error[] = sprintf($lang['i_badval'],$lang['fullname']);
+                $ok      = false;
+            }
+            if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
+                $error[] = sprintf($lang['i_badval'],$lang['email']);
+                $ok      = false;
+            }
+        }
     }
-    if($d['acl']){
-        if(!preg_match('/^[a-z0-9_]+$/',$d['superuser'])){
-            $error[] = sprintf($lang['i_badval'],$lang['i_superuser']);
-            $ok      = false;
-        }
-        if(empty($d['password'])){
-            $error[] = sprintf($lang['i_badval'],$lang['pass']);
-            $ok      = false;
-        }
-        if($d['confirm'] != $d['password']){
-            $error[] = sprintf($lang['i_badval'],$lang['passchk']);
-            $ok      = false;
-        }
-        if(empty($d['fullname']) || strstr($d['fullname'],':')){
-            $error[] = sprintf($lang['i_badval'],$lang['fullname']);
-            $ok      = false;
-        }
-        if(empty($d['email']) || strstr($d['email'],':') || !strstr($d['email'],'@')){
-            $error[] = sprintf($lang['i_badval'],$lang['email']);
-            $ok      = false;
-        }
-    }
+    $d = array_merge($form_default, $d);
     return $ok;
 }
 
@@ -318,9 +343,13 @@ EOT;
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
     if ($d['acl']) {
+        // hash the password
+        $phash = new PassHash();
+        $pass = $phash->hash_smd5($d['password']);
+
         // create users.auth.php
-        // --- user:MD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], md5($d['password']), $d['fullname'], $d['email'], 'admin,user'));
+        // --- user:SMD5password:Real Name:email:groups,comma,seperated
+        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
@@ -400,7 +429,7 @@ function check_configs(){
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
-        if (@file_exists($file)) {
+        if (@file_exists($file) && filesize($file)) {
             $file    = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}/', $file);
             $error[] = sprintf($lang['i_confexists'],$file);
             $ok      = false;
@@ -460,13 +489,13 @@ function check_functions(){
         $ok = false;
     }
 
-    $funcs = explode(' ','addslashes basename call_user_func chmod copy fgets '.
+    $funcs = explode(' ','addslashes call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
                          'glob header ignore_user_abort ini_get mail mkdir '.
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace file_get_contents htmlspecialchars_decode '.
-                         'spl_autoload_register');
+                         'spl_autoload_register stream_select fsockopen');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';
@@ -524,11 +553,13 @@ function langsel(){
  */
 function print_errors(){
     global $error;
-    echo '<ul>';
-    foreach ($error as $err){
-        echo "<li>$err</li>";
+    if(!empty($error)) {
+        echo '<ul>';
+        foreach ($error as $err){
+            echo "<li>$err</li>";
+        }
+        echo '</ul>';
     }
-    echo '</ul>';
 }
 
 /**

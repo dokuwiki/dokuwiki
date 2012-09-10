@@ -20,10 +20,10 @@ if(!$defer){
     sendGIF(); // send gif
 }
 
-$ID = cleanID($_REQUEST['id']);
+$ID = cleanID($INPUT->str('id'));
 
 // Catch any possible output (e.g. errors)
-$output = isset($_REQUEST['debug']) && $conf['allowdebug'];
+$output = $INPUT->has('debug') && $conf['allowdebug'];
 if(!$output) ob_start();
 
 // run one of the jobs
@@ -55,6 +55,8 @@ exit;
 function runTrimRecentChanges($media_changes = false) {
     global $conf;
 
+    echo "runTrimRecentChanges($media_changes): started".NL;
+
     $fn = ($media_changes ? $conf['media_changelog'] : $conf['changelog']);
 
     // Trim the Recent Changes
@@ -70,6 +72,7 @@ function runTrimRecentChanges($media_changes = false) {
             if (count($lines)<=$conf['recent']) {
                 // nothing to trim
                 io_unlock($fn);
+                echo "runTrimRecentChanges($media_changes): finished".NL;
                 return false;
             }
 
@@ -91,6 +94,7 @@ function runTrimRecentChanges($media_changes = false) {
               // nothing to trim
               @unlink($fn.'_tmp');
               io_unlock($fn);
+              echo "runTrimRecentChanges($media_changes): finished".NL;
               return false;
             }
 
@@ -114,10 +118,12 @@ function runTrimRecentChanges($media_changes = false) {
             } else {
                 io_unlock($fn);
             }
+            echo "runTrimRecentChanges($media_changes): finished".NL;
             return true;
     }
 
     // nothing done
+    echo "runTrimRecentChanges($media_changes): finished".NL;
     return false;
 }
 
@@ -160,14 +166,16 @@ function runSitemapper(){
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function sendDigest() {
-    echo 'sendDigest(): start'.NL;
+    echo 'sendDigest(): started'.NL;
     global $ID;
     global $conf;
     if (!$conf['subscribers']) {
-        return;
+        echo 'sendDigest(): disabled'.NL;
+        return false;
     }
     $subscriptions = subscription_find($ID, array('style' => '(digest|list)',
                                                   'escaped' => true));
+    /** @var auth_basic $auth */
     global $auth;
     global $lang;
     global $conf;
@@ -243,6 +251,8 @@ function sendDigest() {
     // restore current user info
     $USERINFO = $olduinfo;
     $_SERVER['REMOTE_USER'] = $olduser;
+    echo 'sendDigest(): finished'.NL;
+    return true;
 }
 
 /**
@@ -252,7 +262,8 @@ function sendDigest() {
  * @author Harry Fuecks <fuecks@gmail.com>
  */
 function sendGIF(){
-    if(isset($_REQUEST['debug'])){
+    global $INPUT;
+    if($INPUT->has('debug')){
         header('Content-Type: text/plain');
         return;
     }

@@ -1,0 +1,53 @@
+/**
+ * This file provides the styles for general tabs.
+ */
+
+.dokuwiki ul.tabs {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+.dokuwiki ul.tabs li {
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+[dir=rtl] .dokuwiki ul.tabs li {
+    float: right;
+}
+
+.dokuwiki ul.tabs li strong,
+.dokuwiki ul.tabs li a {
+    float: left;
+    padding: .3em .8em;
+    margin: 0 .3em 0 0;
+    background-color: __background_neu__;
+    color: __text__;
+    border-radius: .5em .5em 0 0;
+}
+[dir=rtl] .dokuwiki ul.tabs li strong,
+[dir=rtl] .dokuwiki ul.tabs li a {
+    float: right;
+    margin: 0 0 0 .3em;
+}
+*+html[dir=rtl] .dokuwiki ul.tabs li strong,
+*+html[dir=rtl] .dokuwiki ul.tabs li a {
+    float: none;
+    display: inline-block;
+}
+.dokuwiki ul.tabs li strong {
+    font-weight: normal;
+}
+
+.dokuwiki ul.tabs li a:link,
+.dokuwiki ul.tabs li a:visited {
+}
+.dokuwiki ul.tabs li a:hover,
+.dokuwiki ul.tabs li a:active,
+.dokuwiki ul.tabs li a:focus,
+.dokuwiki ul.tabs li strong {
+    background-color: __background_alt__;
+    color: __text__;
+    text-decoration: none;
+}

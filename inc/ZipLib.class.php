@@ -52,8 +52,8 @@ class ZipLib {
             $fn = $files[$i];
             if(!in_Array(dirname($fn[0]),$this->dirs))
                 $this->add_Dir(dirname($fn[0]));
-            if(basename($fn[0]))
-                $ret[basename($fn[0])]=$this->add_File($fn[1],$fn[0],$compact);
+            if(utf8_basename($fn[0]))
+                $ret[utf8_basename($fn[0])]=$this->add_File($fn[1],$fn[0],$compact);
         }
         return $ret;
     }

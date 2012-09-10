@@ -16,11 +16,12 @@ class Doku_Renderer_code extends Doku_Renderer {
      * When the correct block was found it exits the script.
      */
     function code($text, $language = NULL, $filename='' ) {
+        global $INPUT;
         if(!$language) $language = 'txt';
         if(!$filename) $filename = 'snippet.'.$language;
-        $filename = basename($filename);
+        $filename = utf8_basename($filename);
 
-        if($this->_codeblock == $_REQUEST['codeblock']){
+        if($this->_codeblock == $INPUT->str('codeblock')){
             header("Content-Type: text/plain; charset=utf-8");
             header("Content-Disposition: attachment; filename=$filename");
             header("X-Robots-Tag: noindex");

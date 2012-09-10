@@ -4,7 +4,7 @@
  * ----------
  * Author: Nicolas Joseph (nicolas.joseph@valaide.org)
  * Copyright: (c) 2009 Nicolas Joseph
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/04/29
  *
  * Vala language file for GeSHi.

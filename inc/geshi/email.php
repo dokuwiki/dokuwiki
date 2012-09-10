@@ -4,7 +4,7 @@
  * ---------------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2008 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2008/10/19
  *
  * Email (mbox \ eml \ RFC format) language file for GeSHi.
@@ -51,14 +51,14 @@ $language_data = array (
             'HTTP', 'SMTP', 'ASMTP', 'ESMTP'
             ),
         2 => array(
-            'Authentication-Results','Content-Description','Content-Type',
+            'Authentication-Results','Comment','Content-Description','Content-Type',
             'Content-Disposition','Content-Transfer-Encoding','Delivered-To',
             'Dkim-Signature','Domainkey-Signature','In-Reply-To','Message-Id',
             'MIME-Version','OpenPGP','Received','Received-SPF','References',
-            'Resend-From','Resend-To','Return-Path','User-Agent'
+            'Reply-To', 'Resend-From','Resend-To','Return-Path','User-Agent'
             ),
         3 => array(
-            'Date','From','Subject','To',
+            'Date','From','Sender','Subject','To','CC'
             ),
         4 => array(
             'by', 'for', 'from', 'id', 'with'
@@ -132,7 +132,7 @@ $language_data = array (
             ),
         //Email-Adresses or Mail-IDs
         2 => array(
-            GESHI_SEARCH => "\b[\w\.\-]+@\w+(?:(?:\.\w+)*\.\w{2,4})?",
+            GESHI_SEARCH => "\b(?<!\\/)(?P<q>\"?)[\w\.\-]+\k<q>@(?!-)[\w\-]+(?<!-)(?:(?:\.(?!-)[\w\-]+(?<!-))*)?",
             GESHI_REPLACE => "\\0",
             GESHI_MODIFIERS => "mi",
             GESHI_BEFORE => "",
@@ -152,7 +152,19 @@ $language_data = array (
         4 => array(
             GESHI_SEARCH => "(?<=\s)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?=\s)|".
                 "(?<=\[)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?=\])|".
-                "(?<==)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?=<)",
+                "(?<==)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?=<)|".
+
+                "(?<=\s)(?:[a-f\d]{1,4}\:)+(?:[a-f\d]{0,4})?(?:\:[a-f\d]{1,4})+(?=\s)|".
+                "(?<=\[)(?:[a-f\d]{1,4}\:)+(?:[a-f\d]{0,4})?(?:\:[a-f\d]{1,4})+(?=\])|".
+                "(?<==)(?:[a-f\d]{1,4}\:)+(?:[a-f\d]{0,4})?(?:\:[a-f\d]{1,4})+(?=<)|".
+
+                "(?<=\s)\:(?:\:[a-f\d]{1,4})+(?=\s)|".
+                "(?<=\[)\:(?:\:[a-f\d]{1,4})+(?=\])|".
+                "(?<==)\:(?:\:[a-f\d]{1,4})+(?=<)|".
+
+                "(?<=\s)(?:[a-f\d]{1,4}\:)+\:(?=\s)|".
+                "(?<=\[)(?:[a-f\d]{1,4}\:)+\:(?=\])|".
+                "(?<==)(?:[a-f\d]{1,4}\:)+\:(?=<)",
             GESHI_REPLACE => "\\0",
             GESHI_MODIFIERS => "i",
             GESHI_BEFORE => "",
@@ -178,7 +190,7 @@ $language_data = array (
         ),
     'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
     'SCRIPT_DELIMITERS' => array(
-        0 => "/(?P<start>^)[A-Z][a-zA-Z0-9\-]*\s*:\s*(?:.|(?=\n\s)\n)*(?P<end>$)/m"
+        0 => "/(?P<start>^)[A-Za-z][a-zA-Z0-9\-]*\s*:\s*(?:.|(?=\n\s)\n)*(?P<end>$)/m"
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

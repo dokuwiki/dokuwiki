@@ -7,7 +7,7 @@
  * - Uwe Dauernheim (uwe@dauernheim.net)
  * - Dan Forest-Barbier (dan@twisted.in)
  * Copyright: (c) 2008 Uwe Dauernheim (http://www.kreisquadratur.de/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2008-09-27
  *
  * Erlang language file for GeSHi.
@@ -355,7 +355,7 @@ $language_data = array(
         2 => ':'
         ),
     'REGEXPS' => array(
-        // Macro definitions
+        //ï¿½Macro definitions
         0 => array(
             GESHI_SEARCH => '(-define\s*\()([a-zA-Z0-9_]+)(\(|,)',
             GESHI_REPLACE => '\2',
@@ -403,7 +403,7 @@ $language_data = array(
             GESHI_BEFORE => '\1',
             GESHI_AFTER => ''
             ),
-        // ASCII codes
+        // ASCIIï¿½codes
         6 => '(\$[a-zA-Z0-9_])',
         // Records
         7 => array(
@@ -423,8 +423,8 @@ $language_data = array(
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
             3 => array(
-                'DISALLOWED_BEFORE' => '',
-                'DISALLOWED_AFTER' => '(?=\s*\()'
+                'DISALLOWED_BEFORE' => '(?<![\w])',
+                'DISALLOWED_AFTER' => ''//'(?=\s*\()'
             ),
             5 => array(
                 'DISALLOWED_BEFORE' => '(?<=\'|)',

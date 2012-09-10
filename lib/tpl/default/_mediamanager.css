@@ -36,6 +36,10 @@
     min-height: 20px;
     overflow: hidden;
 }
+[dir=rtl] #mediamanager__page .panelContent {
+    text-align: right;
+}
+
 
 #mediamanager__page .panelContent {
     overflow-y: auto;
@@ -62,6 +66,10 @@
 
 /*____________ Namespaces tree ____________*/
 
+[dir=rtl] #mediamanager__page .namespaces {
+    text-align: right;
+}
+
 #mediamanager__page .namespaces h2 {
     font-size: 1em;
     display: inline-block;
@@ -78,14 +86,32 @@
 *+html #mediamanager__page .namespaces h2 {
     display: inline;
 }
+[dir=rtl] #mediamanager__page .namespaces h2 {
+    margin-right: 10px;
+}
 
 #mediamanager__page .namespaces ul {
     margin-left: .2em;
+    margin-bottom: 0;
+    padding: 0;
     list-style: none;
 }
+[dir=rtl] #mediamanager__page .namespaces ul {
+    margin-left: 0;
+    margin-right: .2em;
+}
+
 #mediamanager__page .namespaces ul ul {
     margin-left: 1em;
 }
+[dir=rtl] #mediamanager__page .namespaces ul ul {
+    margin-left: 0;
+    margin-right: 1em;
+}
+#mediamanager__page .namespaces ul ul li {
+    margin: 0;
+}
+
 
 #mediamanager__page .namespaces ul .selected {
     background-color: __highlight__;
@@ -143,6 +169,9 @@
     padding: 0;
     margin: 0;
 }
+[dir=rtl] #mediamanager__page .filelist ul.tabs {
+    margin-right: 10px;
+}
 
 #mediamanager__page .filelist .panelContent ul li:hover {
     background-color: __background_alt__;
@@ -179,6 +208,10 @@
     position: relative;
     line-height: 1.2;
 }
+[dir=rtl] #mediamanager__page .filelist .thumbs li {
+    margin-right: 0;
+    margin-left: 6px;
+}
 * html #mediamanager__page .filelist .thumbs li,
 *+html #mediamanager__page .filelist .thumbs li {
     display: inline;
@@ -201,6 +234,7 @@
 #mediamanager__page .filelist .thumbs li .date {
     display: block;
     overflow: hidden;
+    text-overflow: ellipsis;
     width: 90px;
     white-space: nowrap;
 }
@@ -253,6 +287,7 @@
 #mediamanager__page .filelist .rows li .filesize,
 #mediamanager__page .filelist .rows li .date {
     overflow: hidden;
+    text-overflow: ellipsis;
     float: left;
     margin-left: 1%;
     white-space: nowrap;
@@ -325,6 +360,9 @@
 #mediamanager__page form.meta label span {
     display: block;
 }
+[dir=rtl] #mediamanager__page form.meta label span {
+    text-align: right;
+}
 
 #mediamanager__page form.meta input {
     width: 50%;
@@ -343,18 +381,18 @@
 
 /*____________ Revisions form ____________*/
 
-#mediamanager__page #page__revisions ul {
+#mediamanager__page form.changes ul {
     margin-left: 10px;
     list-style-type: none;
 }
 
-#mediamanager__page #page__revisions ul li div.li div {
+#mediamanager__page form.changes ul li div.li div {
     font-size: 90%;
     color: __text_neu__;
     padding-left: 18px;
 }
 
-#mediamanager__page #page__revisions ul li div.li input {
+#mediamanager__page form.changes ul li div.li input {
     position: relative;
     top: 1px;
 }
@@ -372,6 +410,10 @@
     padding: 0;
     vertical-align: top;
     text-align: left;
+}
+[dir=rtl] #mediamanager__diff td,
+[dir=rtl] #mediamanager__diff th {
+    text-align: right;
 }
 
 #mediamanager__diff th {
@@ -405,10 +447,6 @@
 #mediamanager__diff .imageDiff {
     position: relative;
 }
-#mediamanager__diff .imageDiff .image1,
-#mediamanager__diff .imageDiff .image2 {
-    width: 97%;
-}
 #mediamanager__diff .imageDiff .image2 {
     position: absolute;
     top: 0;
@@ -426,7 +464,12 @@
     overflow: hidden;
 }
 
+#mediamanager__diff .imageDiff.portions img {
+    float: left;
+}
+
 #mediamanager__diff .imageDiff img {
     width: 100%;
+    max-width: none;
 }
 

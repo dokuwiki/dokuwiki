@@ -69,7 +69,7 @@ class cache {
 
         if (!empty($this->depends['files'])) {
             foreach ($this->depends['files'] as $file) {
-                if ($this->_time < @filemtime($file)) return false;         // cache older than files it depends on?
+                if ($this->_time <= @filemtime($file)) return false;         // cache older than files it depends on?
             }
         }
 
@@ -84,7 +84,8 @@ class cache {
      * it should only overwrite a dependency when the new value is more stringent than the old
      */
     function _addDependencies() {
-        if (isset($_REQUEST['purge'])) $this->depends['purge'] = true;   // purge requested
+        global $INPUT;
+        if ($INPUT->has('purge')) $this->depends['purge'] = true;   // purge requested
     }
 
     /**
@@ -206,6 +207,8 @@ class cache_renderer extends cache_parser {
             return true;
         }
 
+        if ($this->_time < @filemtime(metaFN($this->page,'.meta'))) return false;         // meta cache older than file it depends on?
+
         // check current link existence is consistent with cache version
         // first check the purgefile
         // - if the cache is more recent than the purgefile we know no links can have been updated
@@ -237,9 +240,6 @@ class cache_renderer extends cache_parser {
 
         // page implies metadata and possibly some other dependencies
         if (isset($this->page)) {
-
-            $metafile = metaFN($this->page,'.meta');
-            $files[] = $metafile;                                       // ... the page's own metadata
 
             $valid = p_get_metadata($this->page, 'date valid');         // for xhtml this will render the metadata if needed
             if (!empty($valid['age'])) {

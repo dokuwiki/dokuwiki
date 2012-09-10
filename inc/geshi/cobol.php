@@ -4,7 +4,7 @@
  * ----------
  * Author: BenBE (BenBE@omorphia.org)
  * Copyright: (c) 2007-2008 BenBE (http://www.omorphia.de/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2007/07/02
  *
  * COBOL language file for GeSHi.

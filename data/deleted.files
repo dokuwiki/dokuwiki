@@ -4,6 +4,23 @@
 # A copy of this list is maintained at
 # http://www.dokuwiki.org/install:upgrade#files_to_remove
 
+# removed in 2012-09-10
+lib/images/arrow_down.gif
+lib/images/arrow_up.gif
+lib/images/at.gif
+lib/images/close.png
+lib/images/del.png
+lib/images/edit.gif
+lib/images/icon-file.png
+lib/images/icon-thumb.png
+lib/images/interwiki/skype.png
+lib/images/list-minus.gif
+lib/images/list-plus.gif
+lib/images/pencil.png
+lib/plugins/acl/rtl.css
+lib/plugins/config/rtl.css
+lib/plugins/plugin/rtl.css
+
 # removed in 2011-11-10
 lib/_fla/.htaccess
 lib/_fla/MultipleUpload.as

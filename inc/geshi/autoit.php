@@ -4,7 +4,7 @@
  * --------
  * Author: big_daddy (robert.i.anthony@gmail.com)
  * Copyright: (c) 2006 and to GESHi ;)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2006/01/26
  *
  * AutoIT language file for GeSHi.

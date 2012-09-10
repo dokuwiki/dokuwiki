@@ -4,7 +4,7 @@
  * ------
  * Author: Jason Curl (jason.curl@continental-corporation.com)
  * Copyright: (c) 2009 Jason Curl
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/09/05
  *
  * 4CS language file for GeSHi.

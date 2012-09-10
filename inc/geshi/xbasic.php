@@ -4,9 +4,8 @@
  * ----------
  * Author: José Gabriel Moya Yangüela (josemoya@gmail.com)
  * Copyright: (c) 2005 José Gabriel Moya Yangüela (http://aprenderadesaprender.6te.net)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2005/11/23
- * Last Modified: $Date: 2010/01/30 00:42:00 $
  *
  * XBasic language file for GeSHi.
  *
