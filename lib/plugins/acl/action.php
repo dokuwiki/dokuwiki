@@ -17,16 +17,16 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
     /**
      * Load ACL config file
      */
-    function __construct() {
+    public function __construct() {
         global $AUTH_ACL;
         
         // load ACL into a global array
         // TODO: Global arrays isn't nessecary correct within a plugin, fixme?
-        $AUTH_ACL = $this->auth_loadACL();
+        $AUTH_ACL = self::auth_loadACL();
     }
     
     
-    function register( &$controller ) {
+    public function register( &$controller ) {
         $controller->register_hook( 'AUTH_ACL_CHECK', 'BEFORE', $this, 'aclcheck' );
     }
     
@@ -47,7 +47,7 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
      * @param Doku_Event $event Event object
      * @param null       $param Not used
      */
-    function aclcheck( $event, $param=null ) {
+    public function aclcheck( $event, $param=null ) {
         global $conf;
         global $AUTH_ACL;
         global $auth;
@@ -148,7 +148,8 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
      * @author Andreas Gohr <andi@splitbrain.org>
      * @returns array
      */
-    function auth_loadACL(){
+    public static function auth_loadACL(){
+		// needs to be a public function to be able to use within tests.
         global $config_cascade;
 
         if(!is_readable($config_cascade['acl']['default'])) return array();
