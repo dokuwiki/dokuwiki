@@ -156,7 +156,7 @@ class Doku_Plugin_Controller {
                 } else {
                     $all_plugins[$plugin] = 1;
                 }
-                if ($all_plugins[$plugin] == 1 && preg_match('/^[a-zA-Z0-9\x7f-\xff]+$/', $plugin) !== 1) {
+                if ($all_plugins[$plugin] == 1 && preg_match('/^'.DOKU_PLUGIN_NAME_REGEX.'$/', $plugin) !== 1) {
                     msg(sprintf("Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ".
                                  'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)), -1);
                 }
