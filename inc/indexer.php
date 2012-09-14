@@ -6,8 +6,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
-if(!defined('DOKU_INC')) die('meh.');
 
+if(!defined('DOKU_INC')) die('meh.');
 
 // Version tag used to force rebuild on upgrade
 define('INDEXER_VERSION', 5);
@@ -104,8 +104,6 @@ function wordlen($w){
  */
 class Doku_Indexer {
 
-    public $pid = '0';  // page ID (pid) => result of last addPageWords or addMetaKeys
-
     /**
      * Adds the contents of a page to the fulltext index
      *
@@ -119,8 +117,6 @@ class Doku_Indexer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function addPageWords($page, $text) {
-        $this->pid = '0';
-
         if (!$this->lock())
             return "locked";
 
@@ -183,7 +179,6 @@ class Doku_Indexer {
         }
 
         $this->unlock();
-        $this->pid = $pid;
         return true;
     }
 
@@ -252,8 +247,6 @@ class Doku_Indexer {
      * @author Michael Hamann <michael@content-space.de>
      */
     public function addMetaKeys($page, $key, $value=null) {
-        $this->pid = '0';
-
         if (!is_array($key)) {
             $key = array($key => $value);
         } elseif (!is_null($value)) {
@@ -341,9 +334,35 @@ class Doku_Indexer {
         }
 
         $this->unlock();
-        $this->pid = $pid;
         return true;
     }
+
+
+    /**
+     * Get/Create a PID
+     *
+     * Used by plugins to obtain the PID for referencing metadata
+     * If missing it will be created
+     * PID => page ID => line location page index file
+     *
+     * @param string    $page   a page name
+     * @return string           the new/current PID
+     * @author Symon Bent <hendrybadao@gmail.com>
+     */
+    public function getPID($page) {
+        if (!$this->lock())
+            return "locked";
+
+        // load known documents
+        $pid = $this->getIndexKey('page', '', $page);
+        if ($pid === false) {
+            $this->unlock();
+            return false;
+        }
+        $this->unlock();
+        return $pid;
+    }
+
 
     /**
      * Remove a page from the index
@@ -1182,7 +1201,6 @@ function & idx_get_stopwords() {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_addPage($page, $verbose=false, $force=false) {
-
     // check if indexing needed
     $idxtag = metaFN($page,'.indexed');
     if(!$force && @file_exists($idxtag)){
@@ -1225,7 +1243,7 @@ function idx_addPage($page, $verbose=false, $force=false) {
         return $result;
     }
 
-    $body = rawWiki($page);
+    $body = '';
     $metadata = array();
     $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
     if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
@@ -1234,9 +1252,9 @@ function idx_addPage($page, $verbose=false, $force=false) {
         $metadata['relation_references'] = array();
     $data = compact('page', 'body', 'metadata');
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
-
-    // allow plugins to modify raw wiki page (in $data) before indexing
-    $evt->advise_before(false);
+    if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
+    $evt->advise_after();
+    unset($evt);
     extract($data);
 
     $Indexer = idx_get_indexer();
@@ -1253,11 +1271,6 @@ function idx_addPage($page, $verbose=false, $force=false) {
             return false;
         }
     }
-    // allow plugins to process other tasks after indexing
-    // page ID of indexed page is returned in event result
-    $evt->result['pid'] = $Indexer->pid;
-    $evt->advise_after();
-    unset($evt);
 
     if ($result)
         io_saveFile(metaFN($page,'.indexed'), idx_get_version());
