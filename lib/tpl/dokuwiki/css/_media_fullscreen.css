@@ -65,7 +65,7 @@
 #mediamanager__page .ui-resizable-e {
     width: 6px;
     right: 2px;
-    background: transparent url(images/resizecol.png) center center no-repeat;
+    background: transparent url(../../images/resizecol.png) center center no-repeat;
 }
 #mediamanager__page .ui-resizable-e:hover {
     background-color: __background_alt__;
