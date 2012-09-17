@@ -320,7 +320,7 @@ select:focus {
 input[type=radio],
 input[type=checkbox] {
     padding: 0;
-    border-width: 0;
+    border-style: none;
     box-shadow: none;
 }
 
