@@ -863,7 +863,8 @@ function html_list_index($item){
         $ret .= $base;
         $ret .= '</strong></a>';
     }else{
-        $ret .= html_wikilink(':'.$item['id']);
+        // default is noNSorNS($id), but we want noNS($id) when useheading is off FS#2605
+        $ret .= html_wikilink(':'.$item['id'], useHeading('navigation') ? null : noNS($item['id']));
     }
     return $ret;
 }
