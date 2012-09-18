@@ -396,12 +396,14 @@ function subscription_send($subscriber_mail, $replaces, $subject, $id, $template
 
     $text = rawLocale($template);
     $trep = array_merge($replaces, array('PAGE' => $id));
+    $hrep = $trep;
+    $hrep['DIFF'] = nl2br(htmlspecialchars($hrep['DIFF']));
 
     $subject = $lang['mail_' . $subject] . ' ' . $id;
     $mail = new Mailer();
     $mail->bcc($subscriber_mail);
     $mail->subject($subject);
-    $mail->setBody($text,$trep);
+    $mail->setBody($text,$trep,$hrep);
     $mail->from($conf['mailfromnobody']);
     $mail->setHeader(
         'List-Unsubscribe',
