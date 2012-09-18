@@ -66,9 +66,6 @@ function css_out(){
         $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
     }
 
-    // start output buffering
-    ob_start();
-
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
     $files = array();
@@ -113,6 +110,9 @@ function css_out(){
     // This may exit if a cache can be used
     http_cached($cache->cache,
                 $cache->useCache(array('files' => $cache_files)));
+
+    // start output buffering
+    ob_start();
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
