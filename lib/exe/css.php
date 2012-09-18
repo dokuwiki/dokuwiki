@@ -102,6 +102,7 @@ function css_out(){
         if ($mediatype=='screen') {
             if($lang['direction'] == 'rtl'){
                 if (isset($tplstyles['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $tplstyles['rtl']);
+                if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
             }
         }
 
