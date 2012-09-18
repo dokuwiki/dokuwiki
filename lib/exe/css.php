@@ -64,21 +64,27 @@ function css_out(){
     // start output buffering
     ob_start();
 
+    // Array of needed files and their web locations, the latter ones
+    // are needed to fix relative paths in the stylesheets
+    $files = array();
+
+    $cache_files = getConfigFiles('main');
+    $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = __FILE__;
+
     foreach($mediatypes as $mediatype) {
-        // Array of needed files and their web locations, the latter ones
-        // are needed to fix relative paths in the stylesheets
-        $files   = array();
+        $files[$mediatype] = array();
         // load core styles
-        $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+        $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
-            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
+            $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
         }
         // load plugin styles
-        $files = array_merge($files, css_pluginstyles($mediatype));
+        $files[$mediatype] = array_merge($files[$mediatype], css_pluginstyles($mediatype));
         // load template styles
         if (isset($tplstyles[$mediatype])) {
-            $files = array_merge($files, $tplstyles[$mediatype]);
+            $files[$mediatype] = array_merge($files[$mediatype], $tplstyles[$mediatype]);
         }
         // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
         if (isset($config_cascade['userstyle']['default'])) {
@@ -86,7 +92,7 @@ function css_out(){
         }
         // load user styles
         if(isset($config_cascade['userstyle'][$mediatype])){
-            $files[$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+            $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
         }
         // load rtl styles
         // note: this adds the rtl styles only to the 'screen' media type
@@ -94,20 +100,20 @@ function css_out(){
         //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
         if ($mediatype=='screen') {
             if($lang['direction'] == 'rtl'){
-                if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
+                if (isset($tplstyles['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $tplstyles['rtl']);
             }
         }
 
-        $cache_files = array_merge(array_keys($files), getConfigFiles('main'));
-        $cache_files[] = $tplinc.'style.ini';
-        $cache_files[] = __FILE__;
+        $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
+    }
 
-        // check cache age & handle conditional request
-        // This may exit if a cache can be used
-        http_cached($cache->cache,
-                    $cache->useCache(array('files' => $cache_files)));
+    // check cache age & handle conditional request
+    // This may exit if a cache can be used
+    http_cached($cache->cache,
+                $cache->useCache(array('files' => $cache_files)));
 
-        // build the stylesheet
+    // build the stylesheet
+    foreach ($mediatypes as $mediatype) {
 
         // print the default classes for interwiki links and file downloads
         if ($mediatype == 'screen') {
@@ -117,7 +123,7 @@ function css_out(){
 
         // load files
         $css_content = '';
-        foreach($files as $file => $location){
+        foreach($files[$mediatype] as $file => $location){
             $css_content .= css_loadfile($file, $location);
         }
         switch ($mediatype) {
