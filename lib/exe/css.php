@@ -61,6 +61,11 @@ function css_out(){
         }
     }
 
+    // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
+    if (isset($config_cascade['userstyle']['default'])) {
+        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+    }
+
     // start output buffering
     ob_start();
 
@@ -85,10 +90,6 @@ function css_out(){
         // load template styles
         if (isset($tplstyles[$mediatype])) {
             $files[$mediatype] = array_merge($files[$mediatype], $tplstyles[$mediatype]);
-        }
-        // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
-        if (isset($config_cascade['userstyle']['default'])) {
-            $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
         }
         // load user styles
         if(isset($config_cascade['userstyle'][$mediatype])){
