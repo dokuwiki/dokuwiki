@@ -116,8 +116,6 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * list currently logged in user info
      * @link https://www.dokuwiki.org/devel:environment#info
-     *
-     * uses some of the original renderer methods
      */
     function _userInfo($data, &$R){
         // disable cache, as this output is user specific
