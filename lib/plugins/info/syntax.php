@@ -77,6 +77,10 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                 case 'version':
                     $renderer->doc .= getVersion();
                     break;
+                case 'userinfo':
+                    global $INFO;
+                    $renderer->doc .= $this->_userInfo($INFO, $renderer);
+                    break;
                 case 'syntaxmodes':
                     $renderer->doc .= $this->_syntaxmodes_xhtml();
                     break;
@@ -107,6 +111,36 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             return true;
         }
         return false;
+    }
+
+    /**
+     * list currently logged in user info
+     * @link https://www.dokuwiki.org/devel:environment#info
+     *
+     * uses some of the original renderer methods
+     */
+    function _userInfo($data, &$R){
+        // disable cache, as this output is user specific
+        $R->info['cache'] = false;
+
+        $doc  = '';
+        $doc .= '<div class="table"><table class="inline"><tbody>';
+        foreach($data as $key => $value){
+            $doc .= '<tr>';
+            $doc .= '<td class="leftalign">';
+            $doc .= $key;
+            $doc .= '</td>';
+            $doc .= '<td class="leftalign">';
+            if (is_array($value)) {
+                $doc .= $this->_userInfo($value, $R);
+            } else {
+                $doc .= var_export($value, 1);
+            }
+            $doc .= '</td>';
+            $doc .= '</tr>';
+        }
+        $doc .= '</tbody></table></div>';
+        return $doc;
     }
 
     /**
