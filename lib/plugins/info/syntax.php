@@ -78,8 +78,8 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                     $renderer->doc .= getVersion();
                     break;
                 case 'userinfo':
-                    global $INFO;
-                    $renderer->doc .= $this->_userInfo($INFO, $renderer);
+                    global $USERINFO;
+                    $renderer->doc .= $this->_userInfo($USERINFO, $renderer);
                     break;
                 case 'syntaxmodes':
                     $renderer->doc .= $this->_syntaxmodes_xhtml();
