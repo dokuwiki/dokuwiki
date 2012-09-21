@@ -1113,9 +1113,8 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     // decide if there is something to do, eg. whom to mail
     if($who == 'admin') {
         if(empty($conf['notify'])) return false; //notify enabled?
-        $text = rawLocale('mailtext');
-        $to   = $conf['notify'];
-        $bcc  = '';
+        $tpl = 'mailtext';
+        $to  = $conf['notify'];
     } elseif($who == 'subscribers') {
         if(!actionOK('subscribe')) return false; //subscribers enabled?
         if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return false; //skip minors
@@ -1124,57 +1123,29 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
             'COMMON_NOTIFY_ADDRESSLIST', $data,
             array(new Subscription(), 'notifyaddresses')
         );
-        $bcc = $data['addresslist'];
-        if(empty($bcc)) return false;
-        $to   = '';
-        $text = rawLocale('subscr_single');
+        $to = $data['addresslist'];
+        if(empty($to)) return false;
+        $tpl = 'subscr_single';
     } elseif($who == 'register') {
         if(empty($conf['registernotify'])) return false;
         $text = rawLocale('registermail');
         $to   = $conf['registernotify'];
-        $bcc  = '';
     } else {
         return false; //just to be safe
     }
 
-    // prepare replacements (keys not set in hrep will be taken from trep)
-    $trep = array(
-        'NEWPAGE' => wl($id, '', true, '&'),
-        'PAGE'    => $id,
-        'SUMMARY' => $summary
-    );
-    $trep = array_merge($trep, $replace);
-    $hrep = array();
-
     // prepare content
     if($who == 'register') {
         $subject = $lang['mail_new_user'].' '.$summary;
-    } elseif($rev) {
-        $subject         = $lang['mail_changed'].' '.$id;
-        $trep['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-        $df              = new Diff(explode("\n", rawWiki($id, $rev)),
-                                    explode("\n", rawWiki($id)));
-        $dformat         = new UnifiedDiffFormatter();
-        $tdiff           = $dformat->format($df);
-
-        $DIFF_INLINESTYLES = true;
-        $dformat           = new InlineDiffFormatter();
-        $hdiff             = $dformat->format($df);
-        $hdiff             = '<table>'.$hdiff.'</table>';
-        $DIFF_INLINESTYLES = false;
     } else {
-        $subject         = $lang['mail_newpage'].' '.$id;
-        $trep['OLDPAGE'] = '---';
-        $tdiff           = rawWiki($id);
-        $hdiff           = nl2br(hsc($tdiff));
+        $subscription = new Subscription();
+        return $subscription->send_diff($to, $tpl, $id, $rev, $summary);
     }
-    $trep['DIFF'] = $tdiff;
-    $hrep['DIFF'] = $hdiff;
+
 
     // send mail
     $mail = new Mailer();
     $mail->to($to);
-    $mail->bcc($bcc);
     $mail->subject($subject);
     $mail->setBody($text, $trep, $hrep);
     if($who == 'subscribers') {

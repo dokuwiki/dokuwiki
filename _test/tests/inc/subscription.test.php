@@ -220,7 +220,7 @@ class MockupSubscription extends Subscription {
         return parent::buildregex($user, $style, $data);
     }
 
-    protected function send($subscriber_mail, $replaces, $subject, $id, $template){
+    protected function send($subscriber_mail, $subject, $id, $template, $trep, $hrep){
         $this->mails[] = $subscriber_mail;
         return true;
     }

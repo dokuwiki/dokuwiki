@@ -378,15 +378,89 @@ class Subscription {
     }
 
     /**
+     * Send the diff for some page change
+     *
+     * @param string   $subscriber_mail The target mail address
+     * @param string   $template        Mail template, should be 'subscr_digest' or 'subscr_single'
+     * @param string   $id              Page for which the notification is
+     * @param int|null $rev             Old revision if any
+     * @param string   $summary         Change summary if any
+     * @return bool                     true if successfully sent
+     */
+    public function send_diff($subscriber_mail, $template, $id, $rev = null, $summary = '') {
+        global $DIFF_INLINESTYLES;
+
+        // prepare replacements (keys not set in hrep will be taken from trep)
+        $trep = array(
+            'PAGE'      => $id,
+            'NEWPAGE'   => wl($id, '', true, '&'),
+            'SUMMARY'   => $summary,
+            'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
+        );
+        $hrep = array();
+
+        if($rev) {
+            $subject         = 'changed';
+            $trep['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
+            $df              = new Diff(explode("\n", rawWiki($id, $rev)),
+                                        explode("\n", rawWiki($id)));
+            $dformat         = new UnifiedDiffFormatter();
+            $tdiff           = $dformat->format($df);
+
+            $DIFF_INLINESTYLES = true;
+            $dformat           = new InlineDiffFormatter();
+            $hdiff             = $dformat->format($df);
+            $hdiff             = '<table>'.$hdiff.'</table>';
+            $DIFF_INLINESTYLES = false;
+
+        } else {
+            $subject         = 'newpage';
+            $trep['OLDPAGE'] = '---';
+            $tdiff           = rawWiki($id);
+            $hdiff           = nl2br(hsc($tdiff));
+        }
+
+        $trep['DIFF'] = $tdiff;
+        $hrep['DIFF'] = $hdiff;
+
+        return $this->send(
+            $subscriber_mail, $subject, $id,
+            $template, $trep, $hrep
+        );
+    }
+
+    public function send_register($login, $fullname, $email) {
+        global $conf;
+        global $ID;
+        if(empty($conf['registernotify'])) return false;
+
+        $trep = array(
+            'NEWUSER'  => $login,
+            'NEWNAME'  => $fullname,
+            'NEWEMAIL' => $email,
+        );
+
+        return $this->send(
+            $conf['registernotify'],
+            'new_user',
+            $ID,
+            'registermail',
+            $trep
+        );
+    }
+
+    /**
      * Send a digest mail
      *
-     * Sends a digest mail showing a bunch of changes.
+     * Sends a digest mail showing a bunch of changes of a single page. Basically the same as send_diff()
+     * but determines the last known revision first
      *
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param string $subscriber_mail The target mail address
      * @param array  $id              The ID
      * @param int    $lastupdate      Time of the last notification
+     * @return bool
      */
     protected function send_digest($subscriber_mail, $id, $lastupdate) {
         $n = 0;
@@ -395,25 +469,10 @@ class Subscription {
             $rev = (count($rev) > 0) ? $rev[0] : null;
         } while(!is_null($rev) && $rev > $lastupdate);
 
-        $replaces = array(
-            'NEWPAGE'   => wl($id, '', true, '&'),
-            'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
-        );
-        if(!is_null($rev)) {
-            $subject             = 'changed';
-            $replaces['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-            $df                  = new Diff(explode("\n", rawWiki($id, $rev)),
-                                            explode("\n", rawWiki($id)));
-            $dformat             = new UnifiedDiffFormatter();
-            $replaces['DIFF']    = $dformat->format($df);
-        } else {
-            $subject             = 'newpage';
-            $replaces['OLDPAGE'] = 'none';
-            $replaces['DIFF']    = rawWiki($id);
-        }
-        $this->send(
-            $subscriber_mail, $replaces, $subject, $id,
-            'subscr_digest'
+        return $this->send_diff(
+            $subscriber_mail,
+            'subscr_digest',
+            $id, $rev
         );
     }
 
@@ -427,27 +486,35 @@ class Subscription {
      * @param string $subscriber_mail The target mail address
      * @param array  $ids             Array of ids
      * @param string $ns_id           The id of the namespace
+     * @return bool
      */
     protected function send_list($subscriber_mail, $ids, $ns_id) {
         if(count($ids) === 0) return;
-        global $conf;
-        $list = '';
+
+        $tlist = '';
+        $hlist = '<ul>';
         foreach($ids as $id) {
-            $list .= '* '.wl($id, array(), true).NL;
+            $link = wl($id, array(), true);
+            $tlist .= '* '.$link.NL;
+            $hlist .= '<li><a href="'.$link.'">'.hsc($id).'</a></li>'.NL;
         }
-        $this->send(
+        $hlist = '</ul>';
+
+        $id = prettyprint_id($ns_id);
+        $trep = array(
+            'DIFF' => rtrim($tlist),
+            'PAGE' => $id,
+            'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
+        );
+        $hrep = array(
+            'DIFF' => $hlist
+        );
+
+        return $this->send(
             $subscriber_mail,
-            array(
-                 'DIFF'      => rtrim($list),
-                 'SUBSCRIBE' => wl(
-                     $ns_id.$conf['start'],
-                     array('do' => 'subscribe'),
-                     true, '&'
-                 )
-            ),
             'subscribe_list',
-            prettyprint_id($ns_id),
-            'subscr_list'
+
+            'subscr_list', $trep, $hrep
         );
     }
 
@@ -457,30 +524,34 @@ class Subscription {
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param string $subscriber_mail The target mail address
-     * @param array  $replaces        Predefined parameters used to parse the
-     *                                template
      * @param string $subject         The lang id of the mail subject (without the
      *                                prefix “mail_”)
      * @param string $id              The page or namespace id
      * @param string $template        The name of the mail template
+     * @param array  $trep            Predefined parameters used to parse the
+     *                                template (in text format)
+     * @param array  $hrep            Predefined parameters used to parse the
+     *                                template (in HTML format), null to default to $trep
      * @return bool
      */
-    protected function send($subscriber_mail, $replaces, $subject, $id, $template) {
+    protected function send($subscriber_mail, $subject, $id, $template, $trep, $hrep = null) {
         global $lang;
 
         $text = rawLocale($template);
-        $trep = array_merge($replaces, array('PAGE' => $id));
+        $trep = array_merge(
+            $trep, array(
+
+                   )
+        );
 
         $subject = $lang['mail_'.$subject].' '.$id;
         $mail    = new Mailer();
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
-        $mail->setBody($text, $trep);
-        $mail->setHeader(
-            'List-Unsubscribe',
-            '<'.wl($id, array('do'=> 'subscribe'), true, '&').'>',
-            false
-        );
+        $mail->setBody($text, $trep, $hrep);
+        if(isset($trep['SUBSCRIBE'])){
+            $mail->setHeader('List-Unsubscribe', '<'.$trep['SUBSCRIBE'].'>', false);
+        }
         return $mail->send();
     }
 
