@@ -1693,7 +1693,7 @@ function tpl_favicon($types = array('favicon')) {
                 $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'mobile':
-                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.ico');
+                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.png');
                 $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'generic':
