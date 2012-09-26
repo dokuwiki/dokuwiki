@@ -39,7 +39,7 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
-require_once(DOKU_INC.'inc/adLDAP.php');
+require_once(DOKU_INC.'inc/adLDAP/adLDAP.php');
 
 class auth_ad extends auth_basic {
     var $cnf = null;
@@ -164,7 +164,7 @@ class auth_ad extends auth_basic {
         $fields = array_unique($fields);
 
         //get info for given user
-        $result = $this->adldap->user_info($user, $fields);
+        $result = $this->adldap->user()->info($user, $fields);
         if($result == false){
             return array();
         }
@@ -187,7 +187,7 @@ class auth_ad extends auth_basic {
         }
 
         // handle ActiveDirectory memberOf
-        $info['grps'] = $this->adldap->user_groups($user,(bool) $this->opts['recursive_groups']);
+        $info['grps'] = $this->adldap->user()->groups($user,(bool) $this->opts['recursive_groups']);
 
         if (is_array($info['grps'])) {
             foreach ($info['grps'] as $ndx => $group) {
@@ -202,9 +202,7 @@ class auth_ad extends auth_basic {
 
         // check expiry time
         if($info['expires'] && $this->cnf['expirywarn']){
-            $result   = $this->adldap->domain_info(array('maxpwdage')); // maximum pass age
-            $maxage   = -1 * $result['maxpwdage'][0] / 10000000; // negative 100 nanosecs
-            $timeleft = $maxage - (time() - $info['lastpwd']);
+            $timeleft = $this->adldap->user()->passwordExpiry($user); // returns unixtime
             $timeleft = round($timeleft/(24*60*60));
             $info['expiresin'] = $timeleft;
 
@@ -268,7 +266,7 @@ class auth_ad extends auth_basic {
 
         if ($this->users === null) {
             //get info for given user
-            $result = $this->adldap->all_users();
+            $result = $this->adldap->user()->all();
             if (!$result) return array();
             $this->users = array_fill_keys($result, false);
         }
@@ -306,7 +304,7 @@ class auth_ad extends auth_basic {
         // password changing
         if(isset($changes['pass'])){
             try {
-                $return = $this->adldap->user_password($user,$changes['pass']);
+                $return = $this->adldap->user()->password($user,$changes['pass']);
             } catch (adLDAPException $e) {
                 if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
@@ -328,7 +326,7 @@ class auth_ad extends auth_basic {
         }
         if(count($adchanges)){
             try {
-                $return = $return & $this->adldap->user_modify($user,$adchanges);
+                $return = $return & $this->adldap->user()->modify($user,$adchanges);
             } catch (adLDAPException $e) {
                 if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
