@@ -110,3 +110,7 @@ $dh->close();
 // load dw
 require_once(DOKU_INC.'inc/init.php');
 
+// load the parser so $PARSER_MODES is defined before the tests start
+// otherwise PHPUnit unsets $PARSER_MODES in some cases which breaks p_get_parsermodes()
+require_once(DOKU_INC.'inc/parser/parser.php');
+
