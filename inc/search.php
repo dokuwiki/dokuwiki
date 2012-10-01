@@ -119,7 +119,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
         'listfiles' => !$opts['nofiles'],
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.$file.'(/|$)#','/'.$opts['ns']) ? 0 : -1
+        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$opts['ns']) ? 0 : -1
     );
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);
