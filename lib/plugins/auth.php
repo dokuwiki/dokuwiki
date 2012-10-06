@@ -1,4 +1,7 @@
 <?php
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
 /**
  * Auth Plugin Prototype
  *
@@ -8,11 +11,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author    Chris Smith <chris@jalakai.co.uk>
  * @author    Jan Schumann <js@jschumann-it.com>
-
  */
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
-
 class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     var $success = true;
 

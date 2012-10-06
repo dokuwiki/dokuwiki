@@ -1,7 +1,7 @@
 base   authplain
-author
-email
-date
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2012-10-06
 name   auth plugin
 desc   Provides authentication against local password storage
-url
+url    http://www.dokuwiki.org/plugin:authplain
