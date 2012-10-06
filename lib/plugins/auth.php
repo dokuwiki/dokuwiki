@@ -1,14 +1,19 @@
 <?php
 /**
- * auth/basic.class.php
+ * Auth Plugin Prototype
  *
  * foundation authorisation class
  * all auth classes should inherit from this class
  *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author    Chris Smith <chris@jalakai.co.uk>
- */
+ * @author    Jan Schumann <js@jschumann-it.com>
 
-class auth_basic {
+ */
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     var $success = true;
 
     /**
@@ -397,5 +402,22 @@ class auth_basic {
         return ($_SESSION[DOKU_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'].'/sessionpurge'));
     }
 
+
+  /**
+   * loadConfig()
+   * merges the plugin's default settings with any local settings
+   * this function is automatically called through getConf()
+   */
+    function loadConfig(){
+      global $conf;
+
+      parent::loadConfig();
+
+      $this->conf['debug'] = $conf['debug'];
+      $this->conf['useacl'] = $conf['useacl'];
+      $this->conf['disableactions'] = $conf['disableactions'];
+      $this->conf['autopasswd'] = $conf['autopasswd'];
+      $this->conf['passcrypt'] = $conf['ssha'];
+  }
+
 }
-//Setup VIM: ex: et ts=2 :

@@ -1,14 +1,16 @@
 <?php
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
 /**
  * Plaintext authentication backend
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Chris Smith <chris@jalakai.co.uk>
+ * @author     Jan Schumann <js@schumann-it.com>
  */
-
-class auth_plain extends auth_basic {
-
+class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
     var $users = null;
     var $_pattern = array();
 
@@ -324,5 +326,3 @@ class auth_plain extends auth_basic {
         }
     }
 }
-
-//Setup VIM: ex: et ts=2 :

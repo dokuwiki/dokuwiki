@@ -1,13 +1,16 @@
 <?php
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
 /**
  * LDAP authentication backend
  *
  * @license   GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author    Andreas Gohr <andi@splitbrain.org>
  * @author    Chris Smith <chris@jalakaic.co.uk>
+ * @author    Jan Schumann <js@schumann-it.com>
  */
-
-class auth_ldap extends auth_basic {
+class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
     var $cnf = null;
     var $con = null;
     var $bound = 0; // 0: anonymous, 1: user, 2: superuser
@@ -482,5 +485,3 @@ class auth_ldap extends auth_basic {
         }
     }
 }
-
-//Setup VIM: ex: et ts=4 :

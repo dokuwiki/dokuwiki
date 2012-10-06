@@ -1,4 +1,9 @@
 <?php
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
+require_once(DOKU_INC.'inc/adLDAP.php');
+
 /**
  * Active Directory authentication backend for DokuWiki
  *
@@ -11,7 +16,7 @@
  *   $conf['useacl']         = 1;
  *   $conf['disableactions'] = 'register';
  *   $conf['autopasswd']     = 0;
- *   $conf['authtype']       = 'ad';
+ *   $conf['authtype']       = 'authad';
  *   $conf['passcrypt']      = 'ssha';
  *
  *   $conf['auth']['ad']['account_suffix']     = '
@@ -33,17 +38,18 @@
  *
  *   // get additional information to the userinfo array
  *   // add a list of comma separated ldap contact fields.
- *   $conf['auth']['ad']['additional'] = 'field1,field2';
+ *   $conf['plugin']['authad']['additional'] = 'field1,field2';
  *
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author  James Van Lommel <jamesvl@gmail.com>
  * @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Jan Schumann <js@schumann-it.com>
  */
 
 require_once(DOKU_INC.'inc/adLDAP/adLDAP.php');
 
-class auth_ad extends auth_basic {
+class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**
      * @var array copy of the auth backend configuration
      */
@@ -516,5 +522,3 @@ class auth_ad extends auth_basic {
         }
     }
 }
-
-//Setup VIM: ex: et ts=4 :

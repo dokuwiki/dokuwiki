@@ -43,16 +43,53 @@ if (!class_exists('setting_authtype')) {
   class setting_authtype extends setting_multichoice {
 
     function initialize($default,$local,$protected) {
+	  global $plugin_controller;
 
-      // populate $this->_choices with a list of available auth mechanisms
-      $authtypes = glob(DOKU_INC.'inc/auth/*.class.php');
-      $authtypes = preg_replace('#^.*/([^/]*)\.class\.php$#i','$1', $authtypes);
-      $authtypes = array_diff($authtypes, array('basic'));
-      sort($authtypes);
-
-      $this->_choices = $authtypes;
+      // retrive auth types provided by plugins
+      foreach ($plugin_controller->getList('auth') as $plugin) {
+      	$this->_choices[] = $plugin;
+      }
 
       parent::initialize($default,$local,$protected);
+    }
+
+    function update($input) {
+    	global $plugin_controller;
+
+		// is an update posible?
+    	$mayUpdate = parent::update($input);
+
+    	// is it an auth plugin?
+    	if (in_array($input, $plugin_controller->getList('auth'))) {
+    		// reject disabled plugins
+    		if ($plugin_controller->isdisabled($input)) {
+	    		$this->_error = true;
+	    		msg('Auth type ' . $input . ' is disabled.');
+	    		return false;
+    		}
+
+    		// load the plugin
+	    	$auth_plugin = $plugin_controller->load('auth', $input);
+
+	    	// @TODO: throw an error in plugin controller instead of returning null
+	    	if (is_null($auth_plugin)) {
+	    		$this->_error = true;
+	    		msg('Cannot load Auth Plugin "' . $input . '"');
+	    		return false;
+	    	}
+
+	    	// verify proper instanciation (is this really a plugin?) @TODO use instanceof? impement interface?
+	    	if (is_object($auth_plugin) && !method_exists($auth_plugin, 'getPluginName')) {
+	    		$this->_error = true;
+				msg('Cannot create Auth Plugin "' . $input . '"');
+	    		return false;
+	    	}
+    	}
+
+    	msg('Successfully changed auth system. Please re-login.');
+    	auth_logoff();
+
+    	return true;
     }
   }
 }
