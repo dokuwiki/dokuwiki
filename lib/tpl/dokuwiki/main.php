@@ -91,7 +91,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     </div></div><!-- /site -->
 
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>
-    <div id="screen__mode" class="no"></div><?php /* helper to detect CSS media query in script.js */ ?></div>
+    <div id="screen__mode" class="no"></div><?php /* helper to detect CSS media query in script.js */ ?>
     <!--[if ( lte IE 7 | IE 8 ) ]></div><![endif]-->
 </body>
 </html>
