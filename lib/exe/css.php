@@ -49,14 +49,17 @@ function css_out(){
         $tpldir = tpl_basedir();
     }
 
+    // used style.ini file
+    $styleini = css_styleini($tplinc);
+
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
 
     // load template styles
     $tplstyles = array();
-    if(@file_exists($tplinc.'style.ini')){
-        $ini = parse_ini_file($tplinc.'style.ini',true);
-        foreach($ini['stylesheets'] as $file => $mode){
+    if ($styleini) {
+        $ini = parse_ini_file($styleini, true);
+        foreach($ini['stylesheets'] as $file => $mode) {
             $tplstyles[$mode][$tplinc.$file] = $tpldir;
         }
     }
@@ -71,7 +74,8 @@ function css_out(){
     $files = array();
 
     $cache_files = getConfigFiles('main');
-    $cache_files[] = $tplinc.'style.ini';
+    if ($styleini)
+        $cache_files[] = $styleini;
     $cache_files[] = __FILE__;
 
     foreach($mediatypes as $mediatype) {
@@ -173,11 +177,24 @@ function css_out(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_applystyle($css,$tplinc){
-    if(@file_exists($tplinc.'style.ini')){
-        $ini = parse_ini_file($tplinc.'style.ini',true);
+    $styleini = css_styleini($tplinc);
+
+    if($styleini){
+        $ini = parse_ini_file($styleini,true);
         $css = strtr($css,$ini['replacements']);
     }
     return $css;
+}
+
+/**
+ * If either exist, get the template's style.local.ini or style.ini file.
+ */
+function css_styleini($tplinc) {
+    if(@file_exists($tplinc.'style.local.ini'))
+        return $tplinc.'style.local.ini';
+    if(@file_exists($tplinc.'style.ini'))
+        return $tplinc.'style.ini';
+    return '';
 }
 
 /**

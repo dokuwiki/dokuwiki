@@ -43,7 +43,13 @@ require_once(DOKU_INC.'inc/init.php');
 </head>
 <body>
 <?php
-$ini = @parse_ini_file($conf['template'].'/style.ini',true);
+$styleini = '';
+if(@file_exists($conf['template'].'/style.local.ini'))
+    $styleini = $conf['template'].'/style.local.ini';
+else if(@file_exists($conf['template'].'/style.ini'))
+    $styleini = $conf['template'].'/style.ini';
+$ini = @parse_ini_file($styleini, true);
+
 if ($ini) {
     echo '<table>';
     echo "<caption>".htmlspecialchars($conf['template'])."'s style.ini</caption>";
@@ -60,7 +66,7 @@ if ($ini) {
     }
     echo '</table>';
 } else {
-    echo "<p>Non-existent template: <strong>".htmlspecialchars($conf['template'])."</strong></p>";
+    echo "<p>Non-existent or invalid template or style.ini: <strong>".htmlspecialchars($conf['template'])."</strong></p>";
 }
 ?>
 </body>
