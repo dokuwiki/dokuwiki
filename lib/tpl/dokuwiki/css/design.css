@@ -264,6 +264,7 @@
 /* make sidebar more condensed */
 
 #dokuwiki__aside h1 {
+    font-size: 1.7em;
     margin-bottom: .222em;
 }
 #dokuwiki__aside h2 {
