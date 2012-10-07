@@ -3,6 +3,7 @@
  * Basque language file
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
+ * @author Zigor Astarbe <astarbe@gmail.com>
  */
 $lang['admin_acl']             = 'Atzipen Kontrol Listaren Kudeaketa';
 $lang['acl_group']             = 'Taldea';
