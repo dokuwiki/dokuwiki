@@ -295,15 +295,16 @@
 
 #dokuwiki__aside ul,
 #dokuwiki__aside ol {
-    padding-left: 0;
+    padding-left: .5em;
 }
 [dir=rtl] #dokuwiki__aside ul,
 [dir=rtl] #dokuwiki__aside ol {
-    padding-right: 0;
+    padding-right: .5em;
 }
 #dokuwiki__aside li ul,
 #dokuwiki__aside li ol {
     margin-bottom: 0;
+    padding: 0;
 }
 
 #dokuwiki__aside a:link,
