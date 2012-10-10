@@ -6,7 +6,6 @@
  * @author Clarence Lee <clarencedglee@gmail.com>
  */
 
-
 /*____________ section indenting ____________
 
 .dokuwiki.page  h1 {margin-left: 0;}
@@ -32,6 +31,20 @@
 [dir=rtl] .dokuwiki .page div.level5 {margin-left: 0; margin-right: 4em;}
 */
 /* hx margin-left = (1 / font-size) * .levelx-margin */
+
+
+/*____________ links to wiki pages (addition to _links) ____________*/
+
+/* existing wikipage */
+.dokuwiki a.wikilink1 {
+    color: __existing__;
+    background-color: inherit;
+}
+/* not existing wikipage */
+.dokuwiki a.wikilink2 {
+    color: __missing__;
+    background-color: inherit;
+}
 
 
 /*____________ images ____________*/
