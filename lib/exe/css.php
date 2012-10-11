@@ -58,8 +58,7 @@ function css_out(){
     // load template styles
     $tplstyles = array();
     if ($styleini) {
-        $ini = parse_ini_file($styleini, true);
-        foreach($ini['stylesheets'] as $file => $mode) {
+        foreach($styleini['stylesheets'] as $file => $mode) {
             $tplstyles[$mode][$tplinc.$file] = $tpldir;
         }
     }
@@ -74,8 +73,8 @@ function css_out(){
     $files = array();
 
     $cache_files = getConfigFiles('main');
-    if ($styleini)
-        $cache_files[] = $styleini;
+    $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = $tplinc.'style.local.ini';
     $cache_files[] = __FILE__;
 
     foreach($mediatypes as $mediatype) {
@@ -180,21 +179,31 @@ function css_applystyle($css,$tplinc){
     $styleini = css_styleini($tplinc);
 
     if($styleini){
-        $ini = parse_ini_file($styleini,true);
-        $css = strtr($css,$ini['replacements']);
+        $css = strtr($css,$styleini['replacements']);
     }
     return $css;
 }
 
 /**
- * If either exist, get the template's style.local.ini or style.ini file.
+ * Get contents of merged style.ini and style.local.ini as an array.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
  */
 function css_styleini($tplinc) {
-    if(@file_exists($tplinc.'style.local.ini'))
-        return $tplinc.'style.local.ini';
-    if(@file_exists($tplinc.'style.ini'))
-        return $tplinc.'style.ini';
-    return '';
+    $styleini = array();
+
+    foreach (array($tplinc.'style.ini', $tplinc.'style.local.ini') as $ini) {
+        $tmp = (@file_exists($ini)) ? parse_ini_file($ini, true) : array();
+
+        foreach($tmp as $key => $value) {
+            if(array_key_exists($key, $styleini) && is_array($value)) {
+                $styleini[$key] = array_merge($styleini[$key], $tmp[$key]);
+            } else {
+                $styleini[$key] = $value;
+            }
+        }
+    }
+    return $styleini;
 }
 
 /**
