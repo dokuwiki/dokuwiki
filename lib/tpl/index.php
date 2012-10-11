@@ -43,12 +43,10 @@ require_once(DOKU_INC.'inc/init.php');
 </head>
 <body>
 <?php
-$styleini = '';
-if(@file_exists($conf['template'].'/style.local.ini'))
-    $styleini = $conf['template'].'/style.local.ini';
-else if(@file_exists($conf['template'].'/style.ini'))
-    $styleini = $conf['template'].'/style.ini';
-$ini = @parse_ini_file($styleini, true);
+// get merged style.ini
+define('SIMPLE_TEST', true); // hack to prevent css output and headers
+require_once(DOKU_INC.'lib/exe/css.php');
+$ini = css_styleini(tpl_incdir());
 
 if ($ini) {
     echo '<table>';
