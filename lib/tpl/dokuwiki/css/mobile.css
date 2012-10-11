@@ -92,8 +92,10 @@
 
 /* _edit */
 .dokuwiki div.section_highlight {
-    margin: -3em -1em -.01em -1em;
-    padding: 3em .5em .01em .5em;
+    margin-left: -1em;
+    margin-right: -1em;
+    padding-left: .5em;
+    padding-right: .5em;
     border-width: 0 .5em;
 }
 .dokuwiki div.preview {
