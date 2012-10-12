@@ -230,15 +230,9 @@
 }
 
 .dokuwiki div.section_highlight {
-    margin-left:  -2em;
-    margin-right: -2em;
-    padding-left: 1em;
-    padding-right: 1em;
+    margin: 0 -2em;
+    padding: 0 1em;
     border-width: 0 1em;
-}
-[dir=rtl] .dokuwiki div.section_highlight {
-    margin-right: -2em;
-    border-right-width: 1em;
 }
 
 .dokuwiki textarea.edit {
