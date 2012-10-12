@@ -49,14 +49,16 @@ function css_out(){
         $tpldir = tpl_basedir();
     }
 
+    // used style.ini file
+    $styleini = css_styleini($tplinc);
+
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
 
     // load template styles
     $tplstyles = array();
-    if(@file_exists($tplinc.'style.ini')){
-        $ini = parse_ini_file($tplinc.'style.ini',true);
-        foreach($ini['stylesheets'] as $file => $mode){
+    if ($styleini) {
+        foreach($styleini['stylesheets'] as $file => $mode) {
             $tplstyles[$mode][$tplinc.$file] = $tpldir;
         }
     }
@@ -72,6 +74,7 @@ function css_out(){
 
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = $tplinc.'style.local.ini';
     $cache_files[] = __FILE__;
 
     foreach($mediatypes as $mediatype) {
@@ -173,11 +176,34 @@ function css_out(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_applystyle($css,$tplinc){
-    if(@file_exists($tplinc.'style.ini')){
-        $ini = parse_ini_file($tplinc.'style.ini',true);
-        $css = strtr($css,$ini['replacements']);
+    $styleini = css_styleini($tplinc);
+
+    if($styleini){
+        $css = strtr($css,$styleini['replacements']);
     }
     return $css;
+}
+
+/**
+ * Get contents of merged style.ini and style.local.ini as an array.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function css_styleini($tplinc) {
+    $styleini = array();
+
+    foreach (array($tplinc.'style.ini', $tplinc.'style.local.ini') as $ini) {
+        $tmp = (@file_exists($ini)) ? parse_ini_file($ini, true) : array();
+
+        foreach($tmp as $key => $value) {
+            if(array_key_exists($key, $styleini) && is_array($value)) {
+                $styleini[$key] = array_merge($styleini[$key], $tmp[$key]);
+            } else {
+                $styleini[$key] = $value;
+            }
+        }
+    }
+    return $styleini;
 }
 
 /**

@@ -43,7 +43,11 @@ require_once(DOKU_INC.'inc/init.php');
 </head>
 <body>
 <?php
-$ini = @parse_ini_file($conf['template'].'/style.ini',true);
+// get merged style.ini
+define('SIMPLE_TEST', true); // hack to prevent css output and headers
+require_once(DOKU_INC.'lib/exe/css.php');
+$ini = css_styleini(tpl_incdir());
+
 if ($ini) {
     echo '<table>';
     echo "<caption>".htmlspecialchars($conf['template'])."'s style.ini</caption>";
@@ -60,7 +64,7 @@ if ($ini) {
     }
     echo '</table>';
 } else {
-    echo "<p>Non-existent template: <strong>".htmlspecialchars($conf['template'])."</strong></p>";
+    echo "<p>Non-existent or invalid template or style.ini: <strong>".htmlspecialchars($conf['template'])."</strong></p>";
 }
 ?>
 </body>
