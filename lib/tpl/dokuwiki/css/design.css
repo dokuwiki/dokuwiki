@@ -421,8 +421,10 @@
 }
 
 .dokuwiki div.section_highlight {
-    margin: -3em -2em -.01em -2em;
-    padding: 3em 1em .01em 1em;
+    margin-left:  -2em;
+    margin-right: -2em;
+    padding-left: 1em;
+    padding-right: 1em;
     border-width: 0 1em;
 }
 [dir=rtl] .dokuwiki div.section_highlight {
