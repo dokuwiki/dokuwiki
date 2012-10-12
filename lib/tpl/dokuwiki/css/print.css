@@ -14,16 +14,11 @@ body {
 
 /* hide certain sections */
 .a11y,
-div.notify,
-div.info,
-div.success,
-div.error,
 #dokuwiki__header .tools,
 #dokuwiki__aside,
 .dokuwiki .breadcrumbs,
 #dw__toc,
 h3.toggle,
-.dokuwiki .secedit,
 #dokuwiki__pagetools,
 #dokuwiki__footer {
     display: none;
@@ -57,14 +52,11 @@ h3.toggle,
     list-style-type: lower-roman;
 }
 
-/* undo icons */
 .dokuwiki a:link,
 .dokuwiki a:visited {
     text-decoration: underline;
     color: #333;
     background-color: inherit;
-    background-image: none;
-    padding: 0;
 }
 
 /* display href after link */
@@ -94,42 +86,12 @@ a.mail:after {
 }
 .dokuwiki img.medialeft {
     margin: .2em 1em .2em 0;
-    float: left;
 }
 .dokuwiki img.mediaright {
     margin: .2em 0 .2em 1em;
-    float: right;
 }
 .dokuwiki img.mediacenter {
     margin: .2em auto;
-    display: block;
-}
-
-/* align table cells */
-.dokuwiki .leftalign {
-    text-align: left;
-}
-.dokuwiki .centeralign {
-    text-align: center;
-}
-.dokuwiki .rightalign {
-    text-align: right;
-}
-
-/* underline */
-.dokuwiki em.u {
-    font-style: normal;
-    text-decoration: underline;
-}
-.dokuwiki em em.u {
-    font-style: italic;
-}
-
-div.clearer {
-    clear: both;
-    line-height: 0;
-    height: 0;
-    overflow: hidden;
 }
 
 .dokuwiki blockquote {
