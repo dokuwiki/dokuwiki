@@ -122,8 +122,10 @@ function css_out(){
 
         // print the default classes for interwiki links and file downloads
         if ($mediatype == 'screen') {
+            print '@media screen {';
             css_interwiki();
             css_filetypes();
+            print '}';
         }
 
         // load files
