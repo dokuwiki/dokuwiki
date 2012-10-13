@@ -120,15 +120,15 @@
 
 .dokuwiki dl.code dt,
 .dokuwiki dl.file dt {
-    background-color: __background_alt__;
+    background-color: __background_site__;
     /*background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%); see FS#2447 */
-    background: -webkit-linear-gradient(top, __background__ 0%, __background_alt__ 100%);
-    background: -o-linear-gradient(     top, __background__ 0%, __background_alt__ 100%);
-    background: -ms-linear-gradient(    top, __background__ 0%, __background_alt__ 100%);
-    background: linear-gradient(        top, __background__ 0%, __background_alt__ 100%);
+    background: -webkit-linear-gradient(top, __background_alt__ 0%, __background_site__ 100%);
+    background: -o-linear-gradient(     top, __background_alt__ 0%, __background_site__ 100%);
+    background: -ms-linear-gradient(    top, __background_alt__ 0%, __background_site__ 100%);
+    background: linear-gradient(        top, __background_alt__ 0%, __background_site__ 100%);
     color: inherit;
     border: 1px solid __border__;
-    border-bottom-color: __background_alt__;
+    border-bottom-color: __background_site__;
     border-top-left-radius: .3em;
     border-top-right-radius: .3em;
     padding: .3em .6em .1em;
@@ -152,6 +152,11 @@
 .dokuwiki dl.file dd {
     margin: 0;
     clear: left;
+}
+
+.dokuwiki dl.code pre,
+.dokuwiki dl.file pre {
+    box-shadow: inset -4px -4px .5em -.3em __border__;
 }
 
 

@@ -251,13 +251,17 @@ kbd {
     font-size: 1em;
     direction: ltr;
     text-align: left;
-    background-color: __background_alt__;
+    background-color: __background_site__;
     color: __text__;
+    box-shadow: inset 0 0 .3em __border__;
+    border-radius: 2px;
 }
 pre {
     overflow: auto;
     word-wrap: normal;
     border: 1px solid __border__;
+    border-radius: 2px;
+    box-shadow: inset 0 0 .5em __border__;
     padding: .7em 1em;
 }
 
