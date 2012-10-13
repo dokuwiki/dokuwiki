@@ -38,7 +38,6 @@ caption,
 legend {
     font-family: Arial, sans-serif;
     font-weight: bold;
-    background-color: inherit;
     padding: 0;
     line-height: 1.2;
     clear: left; /* ideally 'both', but problems with toc */

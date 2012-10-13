@@ -121,7 +121,7 @@
 .dokuwiki dl.code dt,
 .dokuwiki dl.file dt {
     background-color: __background_site__;
-    /*background: -moz-linear-gradient(   top, __background__ 0%, __background_alt__ 100%); see FS#2447 */
+    /* background: -moz-linear-gradient(   top, __background_alt__ 0%, __background_site__ 100%); see FS#2447 */
     background: -webkit-linear-gradient(top, __background_alt__ 0%, __background_site__ 100%);
     background: -o-linear-gradient(     top, __background_alt__ 0%, __background_site__ 100%);
     background: -ms-linear-gradient(    top, __background_alt__ 0%, __background_site__ 100%);
@@ -137,8 +137,7 @@
 }
 [dir=rtl] .dokuwiki dl.code dt,
 [dir=rtl] .dokuwiki dl.file dt {
-    margin-left: 0;
-    margin-right: 1em;
+    float: right;
 }
 .dokuwiki dl.code dt a,
 .dokuwiki dl.file dt a {
@@ -148,10 +147,16 @@
     display: block;
     min-height: 16px;
 }
+
 .dokuwiki dl.code dd,
 .dokuwiki dl.file dd {
     margin: 0;
     clear: left;
+    min-height: 1px; /* for IE7 */
+}
+[dir=rtl] .dokuwiki dl.code dd,
+[dir=rtl] .dokuwiki dl.file dd {
+    clear: right;
 }
 
 .dokuwiki dl.code pre,
