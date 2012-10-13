@@ -464,6 +464,7 @@ function html_revisions($first=0, $media_id = false){
     else $exists = @file_exists(mediaFN($id));
 
     $display_name = (!$media_id && useHeading('navigation')) ? hsc(p_get_first_heading($id)) : $id;
+    if (!$display_name) $display_name = $id;
 
     if($exists && $first==0){
         if (!$media_id && isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
@@ -862,7 +863,8 @@ function html_list_index($item){
         $ret .= $base;
         $ret .= '</strong></a>';
     }else{
-        $ret .= html_wikilink(':'.$item['id']);
+        // default is noNSorNS($id), but we want noNS($id) when useheading is off FS#2605
+        $ret .= html_wikilink(':'.$item['id'], useHeading('navigation') ? null : noNS($item['id']));
     }
     return $ret;
 }

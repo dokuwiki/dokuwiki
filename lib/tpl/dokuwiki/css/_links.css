@@ -6,13 +6,9 @@
 
 /* existing wikipage */
 .dokuwiki a.wikilink1 {
-    color: __existing__;
-    background-color: inherit;
 }
 /* not existing wikipage */
 .dokuwiki a.wikilink2 {
-    color: __missing__;
-    background-color: inherit;
     text-decoration: none;
 }
 .dokuwiki a.wikilink2:link,
@@ -43,15 +39,15 @@
 }
 /* external link */
 .dokuwiki a.urlextern {
-    background-image: url(images/external-link.png);
+    background-image: url(../../images/external-link.png);
 }
 /* windows share */
 .dokuwiki a.windows {
-    background-image: url(images/unc.png);
+    background-image: url(../../images/unc.png);
 }
 /* email link */
 .dokuwiki a.mail {
-    background-image: url(images/email.png);
+    background-image: url(../../images/email.png);
 }
 
 /* icons of the following are set by dokuwiki in lib/exe/css.php */

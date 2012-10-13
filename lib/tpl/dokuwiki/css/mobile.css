@@ -5,9 +5,19 @@
  * @author Anika Henke <anika@selfthinker.org>
  */
 
+/* for detecting media queries in JavaScript (see script.js): */
+#screen__mode {
+    position: relative;
+    z-index: 0;
+}
+
 /* up to 979px screen widths
 ********************************************************************/
 @media only screen and (max-width: 979px) {
+
+#screen__mode {
+    z-index: 1; /* for detecting media queries in JavaScript (see script.js) */
+}
 
 /* structure */
 #dokuwiki__aside {
@@ -82,8 +92,8 @@
 
 /* _edit */
 .dokuwiki div.section_highlight {
-    margin: -3em -1em -.01em -1em;
-    padding: 3em .5em .01em .5em;
+    margin: 0 -1em;
+    padding: 0 .5em;
     border-width: 0 .5em;
 }
 .dokuwiki div.preview {
@@ -106,6 +116,10 @@
 /* up to 480px screen widths
 ********************************************************************/
 @media only screen and (max-width: 480px) {
+
+#screen__mode {
+    z-index: 2; /* for detecting media queries in JavaScript (see script.js) */
+}
 
 body {
     font-size: 100%;

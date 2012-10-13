@@ -65,7 +65,7 @@
 #mediamanager__page .ui-resizable-e {
     width: 6px;
     right: 2px;
-    background: transparent url(images/resizecol.png) center center no-repeat;
+    background: transparent url(../../images/resizecol.png) center center no-repeat;
 }
 #mediamanager__page .ui-resizable-e:hover {
     background-color: __background_alt__;
@@ -91,24 +91,35 @@
     text-align: right;
 }
 
+/* make it look like a tab (as in _tabs.css) */
 #mediamanager__page .namespaces h2 {
     font-size: 1em;
     display: inline-block;
-    border-width: 0;
     padding: .3em .8em;
-    margin: 0 .3em 0 0;
+    margin: 0 0 0 .3em;
     border-radius: .5em .5em 0 0;
     font-weight: normal;
     background-color: __background_alt__;
     color: __text__;
+    border: 1px solid __border__;
+    border-bottom-color: __background_alt__;
     line-height: 1.4em;
+    position: relative;
+    bottom: -1px;
+    z-index: 2;
 }
 * html #mediamanager__page .namespaces h2,
 *+html #mediamanager__page .namespaces h2 {
     display: inline;
 }
 [dir=rtl] #mediamanager__page .namespaces h2 {
-    margin-right: 10px;
+    margin: 0 .3em 0 0;
+    position: relative;
+    right: 10px;
+}
+#mediamanager__page .namespaces .panelHeader {
+    border-top: 1px solid __border__;
+    z-index: 1;
 }
 
 #mediamanager__page .namespaces ul {
@@ -165,10 +176,12 @@
 
 #mediamanager__page .panelHeader ul li.listType {
     padding-left: 30px;
+    margin: 0 0 0 5px;
     background: url('../../images/icon-list.png') 3px 1px no-repeat;
 }
 #mediamanager__page .panelHeader ul li.sortBy {
     padding-left: 30px;
+    margin: 0 0 0 5px;
     background: url('../../images/icon-sort.png') 3px 1px no-repeat;
 }
 
@@ -185,10 +198,10 @@
 
 #mediamanager__page .filelist ul {
     padding: 0;
-    margin: 0;
+    margin: 0 10px 0 0;
 }
-[dir=rtl] #mediamanager__page .filelist ul.tabs {
-    margin-right: 10px;
+[dir=rtl] #mediamanager__page .filelist ul {
+    margin: 0 10px 0 0;
 }
 
 #mediamanager__page .filelist .panelContent ul li:hover {

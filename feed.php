@@ -202,6 +202,8 @@ function rss_buildItems(&$rss, &$data, $opt) {
             $id   = $ditem['id'];
             if(!$ditem['media']) {
                 $meta = p_get_metadata($id);
+            } else {
+                $meta = array();
             }
 
             // add date
@@ -209,6 +211,8 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $date = $ditem['date'];
             } elseif($meta['date']['modified']) {
                 $date = $meta['date']['modified'];
+            } else if ($ditem['media']) {
+                $date = @filemtime(mediaFN($id));
             } else {
                 $date = @filemtime(wikiFN($id));
             }

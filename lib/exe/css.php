@@ -49,44 +49,51 @@ function css_out(){
         $tpldir = tpl_basedir();
     }
 
+    // used style.ini file
+    $styleini = css_styleini($tplinc);
+
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
 
     // load template styles
     $tplstyles = array();
-    if(@file_exists($tplinc.'style.ini')){
-        $ini = parse_ini_file($tplinc.'style.ini',true);
-        foreach($ini['stylesheets'] as $file => $mode){
+    if ($styleini) {
+        foreach($styleini['stylesheets'] as $file => $mode) {
             $tplstyles[$mode][$tplinc.$file] = $tpldir;
         }
     }
 
-    // start output buffering
-    ob_start();
+    // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
+    if (isset($config_cascade['userstyle']['default'])) {
+        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+    }
+
+    // Array of needed files and their web locations, the latter ones
+    // are needed to fix relative paths in the stylesheets
+    $files = array();
+
+    $cache_files = getConfigFiles('main');
+    $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = $tplinc.'style.local.ini';
+    $cache_files[] = __FILE__;
 
     foreach($mediatypes as $mediatype) {
-        // Array of needed files and their web locations, the latter ones
-        // are needed to fix relative paths in the stylesheets
-        $files   = array();
+        $files[$mediatype] = array();
         // load core styles
-        $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+        $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
-            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
+            $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
         }
         // load plugin styles
-        $files = array_merge($files, css_pluginstyles($mediatype));
+        $files[$mediatype] = array_merge($files[$mediatype], css_pluginstyles($mediatype));
         // load template styles
         if (isset($tplstyles[$mediatype])) {
-            $files = array_merge($files, $tplstyles[$mediatype]);
-        }
-        // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
-        if (isset($config_cascade['userstyle']['default'])) {
-            $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+            $files[$mediatype] = array_merge($files[$mediatype], $tplstyles[$mediatype]);
         }
         // load user styles
         if(isset($config_cascade['userstyle'][$mediatype])){
-            $files[$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+            $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
         }
         // load rtl styles
         // note: this adds the rtl styles only to the 'screen' media type
@@ -94,30 +101,36 @@ function css_out(){
         //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
         if ($mediatype=='screen') {
             if($lang['direction'] == 'rtl'){
-                if (isset($tplstyles['rtl'])) $files = array_merge($files, $tplstyles['rtl']);
+                if (isset($tplstyles['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $tplstyles['rtl']);
+                if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
             }
         }
 
-        $cache_files = array_merge(array_keys($files), getConfigFiles('main'));
-        $cache_files[] = $tplinc.'style.ini';
-        $cache_files[] = __FILE__;
+        $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
+    }
 
-        // check cache age & handle conditional request
-        // This may exit if a cache can be used
-        http_cached($cache->cache,
-                    $cache->useCache(array('files' => $cache_files)));
+    // check cache age & handle conditional request
+    // This may exit if a cache can be used
+    http_cached($cache->cache,
+                $cache->useCache(array('files' => $cache_files)));
 
-        // build the stylesheet
+    // start output buffering
+    ob_start();
+
+    // build the stylesheet
+    foreach ($mediatypes as $mediatype) {
 
         // print the default classes for interwiki links and file downloads
         if ($mediatype == 'screen') {
+            print '@media screen {';
             css_interwiki();
             css_filetypes();
+            print '}';
         }
 
         // load files
         $css_content = '';
-        foreach($files as $file => $location){
+        foreach($files[$mediatype] as $file => $location){
             $css_content .= css_loadfile($file, $location);
         }
         switch ($mediatype) {
@@ -165,11 +178,34 @@ function css_out(){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_applystyle($css,$tplinc){
-    if(@file_exists($tplinc.'style.ini')){
-        $ini = parse_ini_file($tplinc.'style.ini',true);
-        $css = strtr($css,$ini['replacements']);
+    $styleini = css_styleini($tplinc);
+
+    if($styleini){
+        $css = strtr($css,$styleini['replacements']);
     }
     return $css;
+}
+
+/**
+ * Get contents of merged style.ini and style.local.ini as an array.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function css_styleini($tplinc) {
+    $styleini = array();
+
+    foreach (array($tplinc.'style.ini', $tplinc.'style.local.ini') as $ini) {
+        $tmp = (@file_exists($ini)) ? parse_ini_file($ini, true) : array();
+
+        foreach($tmp as $key => $value) {
+            if(array_key_exists($key, $styleini) && is_array($value)) {
+                $styleini[$key] = array_merge($styleini[$key], $tmp[$key]);
+            } else {
+                $styleini[$key] = $value;
+            }
+        }
+    }
+    return $styleini;
 }
 
 /**

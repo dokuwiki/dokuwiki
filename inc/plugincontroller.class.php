@@ -97,6 +97,9 @@ class Doku_Plugin_Controller {
             $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
             if($inf['base'] && $inf['base'] != $plugin){
                 msg(sprintf("Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.", hsc($plugin), hsc($inf['base'])), -1);
+            } elseif (preg_match('/^'.DOKU_PLUGIN_NAME_REGEX.'$/', $plugin) !== 1) {
+                msg(sprintf("Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ".
+                                'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)), -1);
             }
             return null;
         }
@@ -155,10 +158,6 @@ class Doku_Plugin_Controller {
                     $all_plugins[$plugin] = 1;
                 } else {
                     $all_plugins[$plugin] = 1;
-                }
-                if ($all_plugins[$plugin] == 1 && preg_match('/^'.DOKU_PLUGIN_NAME_REGEX.'$/', $plugin) !== 1) {
-                    msg(sprintf("Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ".
-                                 'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)), -1);
                 }
             }
             $this->tmp_plugins = $all_plugins;
