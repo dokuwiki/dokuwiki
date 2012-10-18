@@ -299,7 +299,7 @@ function auth_createToken() {
  *
  * This is neither unique nor unfakable - still it adds some
  * security. Using the first part of the IP makes sure
- * proxy farms like AOLs are stil okay.
+ * proxy farms like AOLs are still okay.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
@@ -313,6 +313,7 @@ function auth_browseruid() {
     $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
     $uid .= substr($ip, 0, strpos($ip, '.'));
+    $uid = strtolower($uid);
     return md5($uid);
 }
 
