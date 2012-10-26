@@ -1476,10 +1476,8 @@ function tpl_include_page($pageid, $print = true, $propagate = false) {
 
     if ($propagate) $pageid = page_findnearest($pageid);
 
-    $oldid  = $ID;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
-    $ID     = $oldid;
     $TOC    = $oldtoc;
 
     if(!$print) return $html;
