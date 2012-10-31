@@ -538,6 +538,14 @@ function getCacheName($data,$ext=''){
 function isHiddenPage($id){
     global $conf;
     global $ACT;
+
+    $data = array(
+        'id' => $id,
+        'hidden' => false
+    );
+    trigger_event('PAGEUTILS_ID_HIDEPAGE', $id);
+
+    if ($data['hidden']) return true;
     if(empty($conf['hidepages'])) return false;
     if($ACT == 'admin') return false;
 

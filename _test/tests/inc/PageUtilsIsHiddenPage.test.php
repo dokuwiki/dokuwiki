@@ -1,6 +1,6 @@
 <?php
 
-class inc_pageutils_isHiddenPage extends DokuWikiTest {
+class PageUtilsIsHiddenPageTest extends DokuWikiTest {
 
     function prepare($hidePages = '^:test$', $act = 'show') {
         global $conf;
@@ -31,6 +31,18 @@ class inc_pageutils_isHiddenPage extends DokuWikiTest {
         $this->prepare();
 
         $this->assertFalse(isHiddenPage('another'));
+    }
+
+    function testEventHandler() {
+        global $EVENT_HANDLER;
+        $this->prepare();
+        $EVENT_HANDLER->register_hook('PAGEUTILS_ID_HIDEPAGE', 'BEFORE', $this, 'alwaysHide');
+
+        $this->assertFalse(isHiddenPage('test'));
+    }
+
+    function alwaysHide(Doku_Event &$event, $params) {
+        $event->data['hide'] = true;
     }
 
 }
