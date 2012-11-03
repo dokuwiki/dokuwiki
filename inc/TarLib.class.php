@@ -327,21 +327,20 @@ class TarLib {
      *
      * This function will attempt to create a new archive with global headers
      * then add the given files into.  If the archive is a real file, the
-     * contents are written directly into the file, if it is a dynamic archive
+     * contents are written directly into the file. If it is a dynamic archive,
      * contents are only stored in memory. This function should not be used to
      * add files to an existing archive, you should use Add() instead.
      *
-     * The FileList actually supports three different modes :
+     * The FileList actually supports three different modes:
      *
      * - You can pass a string containing filenames separated by pipes '|'.
-     *   In this case the file are read from the webserver filesystem and the
-     *   root folder is the folder where the script using the MaxgTar is called.
+     *   In this case thes file are read from the filesystem and the root folder
+     *   is the folder running script located. NOT RECOMMENDED
      *
-     * - You can also give a unidimensional indexed array containing the
-     *   filenames. The behaviour for the content reading is the same that a
-     *   '|'ed string.
+     * - You can also give an indexed array containing the filenames. The
+     *   behaviour for the content reading is the same as above.
      *
-     * - The more useful usage is to pass bidimensional arrays, where the
+     * - You can pass an array of arrays. For each file use an array where the
      *   first element contains the filename and the second contains the file
      *   contents. You can even add empty folders to the package if the filename
      *   has a leading '/'. Once again, have a look at the exemples to understand
@@ -558,6 +557,14 @@ class TarLib {
         return $return;
     }
 
+    /**
+     *  Builds a normalized file list
+     *
+     * @todo remove string support, use saner format
+     *
+     * @param $p_filelist
+     * @return array|bool
+     */
     function _fetchFilelist($p_filelist) {
         if(!$p_filelist || (is_array($p_filelist) && !@count($p_filelist))) return false;
 
@@ -571,7 +578,7 @@ class TarLib {
 
     function _addFileList($p_fl, $p_addir, $p_remdir) {
         foreach($p_fl as $file) {
-            if(($file == $this->_nomf && $this->_nomf != TarLib::ARCHIVE_DYNAMIC) || !$file || (!file_exists($file) && !is_array($file)))
+            if(($file == $this->_nomf && $this->_nomf != TarLib::ARCHIVE_DYNAMIC) || !$file || (!is_array($file) && !file_exists($file)))
                 continue;
 
             if (!$this->_addFile($file, $p_addir, $p_remdir))
