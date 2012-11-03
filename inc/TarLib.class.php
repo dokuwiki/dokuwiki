@@ -375,17 +375,23 @@ class TarLib {
     /**
      * Add files to an existing package.
      *
-     * This function does exactly the same than Create() exept it
-     * will append the given files at the end of the archive.  Please not the is
-     * safe to call Add() on a newly created archive whereas the
-     * contrary will fail !
+     * This function does exactly the same as Create() exept it
+     * will append the given files at the end of the archive.
+     *
+     * Note: This is only supported for dynamic in memory files and uncompressed
+     *       tar files
      *
      * This function returns a status code, you can use TarErrorStr() on
      * it to get the human-readable description of the error.
      */
     function Add($p_filelist, $p_add = '', $p_rem = '') {
-        if (($this->_nomf != TarLib::ARCHIVE_DYNAMIC && @is_file($this->_nomf)) ||
-            ($this->_nomf == TarLib::ARCHIVE_DYNAMIC && !$this->_memdat)){
+        if($this->_nomf !== TarLib::ARCHIVE_DYNAMIC &&
+           $this->_comptype !== TarLib::COMPRESS_NONE) {
+            return -12;
+        }
+
+        if (($this->_nomf !== TarLib::ARCHIVE_DYNAMIC && !$this->_fp) ||
+            ($this->_nomf === TarLib::ARCHIVE_DYNAMIC && !$this->_memdat)){
              return $this->Create($p_filelist, $p_add, $p_rem);
         }
 
@@ -450,7 +456,8 @@ class TarLib {
                 -8 => "Can't create the directory to extract files !",
                 -9 => "Please pass a archive name to send if you made created an ARCHIVE_DYNAMIC !",
                 -10 => "You didn't pass an archive filename and there is no stored ARCHIVE_DYNAMIC !",
-                -11 => "Given archive doesn't exist !"
+                -11 => "Given archive doesn't exist !",
+                -12 => "Appending not supported for compressed files"
                 );
 
         return isset($ecodes[$i]) ? $ecodes[$i] : $ecodes[0];
@@ -578,7 +585,7 @@ class TarLib {
 
     function _addFileList($p_fl, $p_addir, $p_remdir) {
         foreach($p_fl as $file) {
-            if(($file == $this->_nomf && $this->_nomf != TarLib::ARCHIVE_DYNAMIC) || !$file || (!is_array($file) && !file_exists($file)))
+            if(($file == $this->_nomf && $this->_nomf !== TarLib::ARCHIVE_DYNAMIC) || !$file || (!is_array($file) && !file_exists($file)))
                 continue;
 
             if (!$this->_addFile($file, $p_addir, $p_remdir))
@@ -688,12 +695,13 @@ class TarLib {
     function _append($p_filelist, $p_addir="", $p_remdir="") {
         if(!$this->_fp) if(!$this->_OpenWrite('a')) return -6;
 
-        if($this->_nomf == TarLib::ARCHIVE_DYNAMIC) {
-            $s = strlen($this->_memdat);
-            $this->_memdat = substr($this->_memdat,0,-512);
+        if($this->_nomf === TarLib::ARCHIVE_DYNAMIC) {
+            $this->_memdat = substr($this->_memdat,0,-512*2); // remove footer
         } else {
+            clearstatcache();
             $s = filesize($this->_nomf);
-            $this->_seek($s-512);
+
+            $this->_seek($s - (512*2)); // remove footer
         }
 
         $ok = $this->_addFileList($p_filelist, $p_addir, $p_remdir);
