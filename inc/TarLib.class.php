@@ -715,7 +715,15 @@ class TarLib {
         return $r;
     }
 
+    /**
+     * Add the closing footer to the archive
+     *
+     * Physically, an archive consists of a series of file entries terminated by an end-of-archive entry, which
+     * consists of two 512 blocks of zero bytes
+     * @link http://www.gnu.org/software/tar/manual/html_chapter/tar_8.html#SEC134
+     */
     function _writeFooter() {
+        $this->_write(pack("a512", ""));
         $this->_write(pack("a512", ""));
     }
 
