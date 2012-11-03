@@ -113,8 +113,111 @@ class Tar_TestCase extends DokuWikiTest {
 
             TestUtils::rdelete($out);
         }
-
     }
+
+    /**
+     * Extract the prebuilt tar files with component stripping
+     */
+    public function test_compstripextract(){
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        foreach(array('tar', 'tgz', 'tbz') as $ext){
+            $tar  = new Tar();
+            $file = "$dir/test.$ext";
+
+            $tar->open($file);
+            $tar->extract($out,1);
+
+            clearstatcache();
+
+            $this->assertFileExists($out.'/testdata1.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/testdata1.txt'), "Extracted $file");
+
+            $this->assertFileExists($out.'/foobar/testdata2.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/foobar/testdata2.txt'), "Extracted $file");
+
+            TestUtils::rdelete($out);
+        }
+    }
+
+    /**
+     * Extract the prebuilt tar files with prefix stripping
+     */
+    public function test_prefixstripextract(){
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        foreach(array('tar', 'tgz', 'tbz') as $ext){
+            $tar  = new Tar();
+            $file = "$dir/test.$ext";
+
+            $tar->open($file);
+            $tar->extract($out,'tar/foobar/');
+
+            clearstatcache();
+
+            $this->assertFileExists($out.'/tar/testdata1.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/tar/testdata1.txt'), "Extracted $file");
+
+            $this->assertFileExists($out.'/testdata2.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/testdata2.txt'), "Extracted $file");
+
+            TestUtils::rdelete($out);
+        }
+    }
+
+    /**
+     * Extract the prebuilt tar files with include regex
+     */
+    public function test_includeextract(){
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        foreach(array('tar', 'tgz', 'tbz') as $ext){
+            $tar  = new Tar();
+            $file = "$dir/test.$ext";
+
+            $tar->open($file);
+            $tar->extract($out,'','','/\/foobar\//');
+
+            clearstatcache();
+
+            $this->assertFileNotExists($out.'/tar/testdata1.txt', "Extracted $file");
+
+
+            $this->assertFileExists($out.'/tar/foobar/testdata2.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/tar/foobar/testdata2.txt'), "Extracted $file");
+
+            TestUtils::rdelete($out);
+        }
+    }
+
+    /**
+     * Extract the prebuilt tar files with exclude regex
+     */
+    public function test_excludeextract(){
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        foreach(array('tar', 'tgz', 'tbz') as $ext){
+            $tar  = new Tar();
+            $file = "$dir/test.$ext";
+
+            $tar->open($file);
+            $tar->extract($out,'','/\/foobar\//');
+
+            clearstatcache();
+
+            $this->assertFileExists($out.'/tar/testdata1.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/tar/testdata1.txt'), "Extracted $file");
+
+            $this->assertFileNotExists($out.'/tar/foobar/testdata2.txt', "Extracted $file");
+
+            TestUtils::rdelete($out);
+        }
+    }
+
 
     /**
      * Check the extension to compression guesser
