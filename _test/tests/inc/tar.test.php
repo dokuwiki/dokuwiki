@@ -1,0 +1,134 @@
+<?php
+
+class Tar_TestCase extends DokuWikiTest {
+
+    /**
+     * simple test that checks that the given filenames and contents can be grepped from
+     * the uncompressed tar stream
+     *
+     * No check for format correctness
+     */
+    public function test_createdynamic(){
+        $tar = new Tar();
+
+        $dir = dirname(__FILE__).'/tar';
+
+        $tar->create();
+        $tar->AddFile("$dir/testdata1.txt");
+        $tar->AddFile("$dir/foobar/testdata2.txt", 'noway/testdata2.txt');
+        $tar->addData('another/testdata3.txt', 'testcontent3');
+
+        $data = $tar->getArchive();
+
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'Content in TAR');
+        $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
+        $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
+
+        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
+
+        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
+    }
+
+    /**
+     * simple test that checks that the given filenames and contents can be grepped from the
+     * uncompressed tar file
+     *
+     * No check for format correctness
+     */
+    public function test_createfile(){
+        $tar = new Tar();
+
+        $dir = dirname(__FILE__).'/tar';
+        $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
+
+        $tar->create($tmp, Tar::COMPRESS_NONE);
+        $tar->AddFile("$dir/testdata1.txt");
+        $tar->AddFile("$dir/foobar/testdata2.txt", 'noway/testdata2.txt');
+        $tar->addData('another/testdata3.txt', 'testcontent3');
+        $tar->close();
+
+        $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
+        $data = file_get_contents($tmp);
+
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'Content in TAR');
+        $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
+        $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
+
+        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
+
+        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
+
+        @unlink($tmp);
+    }
+
+    /**
+     * List the contents of the prebuilt TAR files
+     */
+    public function test_tarcontent(){
+        $dir = dirname(__FILE__).'/tar';
+
+        foreach(array('tar','tgz','tbz') as $ext){
+            $tar  = new Tar();
+            $file = "$dir/test.$ext";
+
+            $tar->open($file);
+            $content = $tar->contents();
+
+            $this->assertCount(4, $content, "Contents of $file");
+            $this->assertEquals('tar/testdata1.txt', $content[1]['filename'], "Contents of $file");
+            $this->assertEquals(13, $content[1]['size'], "Contents of $file");
+
+            $this->assertEquals('tar/foobar/testdata2.txt', $content[3]['filename'], "Contents of $file");
+            $this->assertEquals(13, $content[1]['size'], "Contents of $file");
+        }
+    }
+
+    /**
+     * Extract the prebuilt tar files
+     */
+    public function test_tarextract(){
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        foreach(array('tar', 'tgz', 'tbz') as $ext){
+            $tar  = new Tar();
+            $file = "$dir/test.$ext";
+
+            $tar->open($file);
+            $tar->extract($out);
+
+            clearstatcache();
+
+            $this->assertFileExists($out.'/tar/testdata1.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/tar/testdata1.txt'), "Extracted $file");
+
+            $this->assertFileExists($out.'/tar/foobar/testdata2.txt', "Extracted $file");
+            $this->assertEquals(13, filesize($out.'/tar/foobar/testdata2.txt'), "Extracted $file");
+
+            TestUtils::rdelete($out);
+        }
+
+    }
+
+    /**
+     * Check the extension to compression guesser
+     */
+    public function test_filetype(){
+        $tar  = new Tar();
+        $this->assertEquals(Tar::COMPRESS_NONE, $tar->filetype('foo'));
+        $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tgz'));
+        $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tGZ'));
+        $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tar.GZ'));
+        $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tar.gz'));
+        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tbz'));
+        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tBZ'));
+        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.BZ2'));
+        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz2'));
+    }
+}
