@@ -164,7 +164,7 @@ class TarLib {
      */
     function setArchive($p_name='', $p_comp = TarLib::COMPRESS_AUTO, $p_level=9) {
         $this->_CompTar();
-        $this->TarLib($p_name, $p_comp, $p_level);
+        $this->__construct($p_name, $p_comp, $p_level);
         return $this->_result;
     }
 
