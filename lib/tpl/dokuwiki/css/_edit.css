@@ -135,13 +135,10 @@ div.picker button.toolbutton {
     font-size: 75%;
 }
 
-/* generic style for section highlighting (including headings) */
-.dokuwiki .section_highlight {
-}
-/* style for section highlighting (only sections below headings) */
+/* style for section highlighting */
 .dokuwiki div.section_highlight {
-    margin: -3em -1em -.01em -1em; /* negative side margin = side padding + side border */
-    padding: 3em .5em .01em .5em;
+    margin: 0 -1em; /* negative side margin = side padding + side border */
+    padding: 0 .5em;
     border: solid __background_alt__;
     border-width: 0 .5em;
 }

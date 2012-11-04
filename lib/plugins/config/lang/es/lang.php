@@ -23,6 +23,7 @@
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
+ * @author Mercè López mercelz@gmail.com
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';

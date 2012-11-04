@@ -182,7 +182,7 @@ $lang['lastmod']               = 'Posledná úprava';
 $lang['by']                    = 'od';
 $lang['deleted']               = 'odstránené';
 $lang['created']               = 'vytvorené';
-$lang['restored']              = 'stará verzia bola obnovená';
+$lang['restored']              = 'stará verzia bola obnovená (%s)';
 $lang['external_edit']         = 'externá úprava';
 $lang['summary']               = 'Komentár k úpravám';
 $lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
@@ -318,4 +318,3 @@ $lang['media_perm_read']       = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnenie na nahrávanie súborov.';
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
-$lang['plugin_install_err']    = 'Plugin nebol nainštalovaný úspešne. Premenujte adresár s pluginom \'%s\' na \'%s\'.';

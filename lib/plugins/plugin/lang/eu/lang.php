@@ -3,6 +3,7 @@
  * Basque language file
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
+ * @author Zigor Astarbe <astarbe@gmail.com>
  */
 $lang['menu']                  = 'Plugin-ak Kudeatu';
 $lang['download']              = 'Plugin berri bat deskargatu eta instalatu';

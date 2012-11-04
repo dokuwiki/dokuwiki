@@ -3,6 +3,7 @@
  * Basque language file
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
+ * @author Zigor Astarbe <astarbe@gmail.com>
  */
 $lang['name']                  = 'Popularitate Feedback-a (denbora dezente iraun dezake kargatzen)';
 $lang['submit']                = 'Datuak Bidali';
