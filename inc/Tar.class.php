@@ -204,7 +204,7 @@ class Tar {
 
                 // is this a file?
                 if(!$header['typeflag']){
-                    $fp = @fopen($output, "wb");
+                    $fp = fopen($output, "wb");
                     if(!$fp) throw(new TarIOException('Could not open file for writing: '.$output));
 
                     $size = floor($header['size'] / 512);
@@ -508,7 +508,6 @@ class Tar {
     /**
      * Decode the given tar file header
      *
-     * @todo how to handle filenames >100 chars?
      * @param string $block a 512 byte block containign the header data
      * @return array|bool
      */
@@ -521,22 +520,36 @@ class Tar {
         for($i = 156, $chks += 256; $i < 512; $i++)
             $chks += ord($block[$i]);
 
-        $headers = @unpack("a100filename/a8perm/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $block);
-        if(!$headers) return false;
+        $header = @unpack("a100filename/a8perm/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $block);
+        if(!$header) return false;
 
-        $return['checksum'] = OctDec(trim($headers['checksum']));
+        $return['checksum'] = OctDec(trim($header['checksum']));
         if($return['checksum'] != $chks) return false;
 
-        $return['filename'] = trim($headers['filename']);
-        $return['perm']     = OctDec(trim($headers['perm']));
-        $return['uid']      = OctDec(trim($headers['uid']));
-        $return['gid']      = OctDec(trim($headers['gid']));
-        $return['size']     = OctDec(trim($headers['size']));
-        $return['mtime']    = OctDec(trim($headers['mtime']));
-        $return['typeflag'] = $headers['typeflag'];
-        $return['link']     = trim($headers['link']);
-        $return['uname']    = trim($headers['uname']);
-        $return['gname']    = trim($headers['gname']);
+        $return['filename'] = trim($header['filename']);
+        $return['perm']     = OctDec(trim($header['perm']));
+        $return['uid']      = OctDec(trim($header['uid']));
+        $return['gid']      = OctDec(trim($header['gid']));
+        $return['size']     = OctDec(trim($header['size']));
+        $return['mtime']    = OctDec(trim($header['mtime']));
+        $return['typeflag'] = $header['typeflag'];
+        $return['link']     = trim($header['link']);
+        $return['uname']    = trim($header['uname']);
+        $return['gname']    = trim($header['gname']);
+
+        // Handle ustar Posix compliant path prefixes
+        if(trim($header['prefix'])) $return['filename'] = trim($header['prefix']).'/'.$return['filename'];
+
+        // Handle Long-Link entries from GNU Tar
+        if($return['typeflag'] == 'L'){
+            // following data block(s) is the filename
+            $filename = trim($this->readbytes(ceil($header['size'] / 512) * 512));
+            // next block is the real header
+            $block = $this->readbytes(512);
+            $return = $this->parseHeader($block);
+            // overwrite the filename
+            $return['filename'] = $filename;
+        }
 
         return $return;
     }

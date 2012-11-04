@@ -218,7 +218,6 @@ class Tar_TestCase extends DokuWikiTest {
         }
     }
 
-
     /**
      * Check the extension to compression guesser
      */
@@ -234,4 +233,20 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.BZ2'));
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz2'));
     }
+
+    public function test_longpathextract(){
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        foreach(array('ustar','gnu') as $format){
+            $tar  = new Tar();
+            $tar->open("$dir/longpath-$format.tgz");
+            $tar->extract($out);
+
+            $this->assertFileExists($out.'/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/1234567890/test.txt');
+
+            TestUtils::rdelete($out);
+        }
+    }
+
 }
