@@ -8,7 +8,7 @@ class Tar_TestCase extends DokuWikiTest {
      *
      * No check for format correctness
      */
-    public function test_createdynamic(){
+    public function test_createdynamic() {
         $tar = new Tar();
 
         $dir = dirname(__FILE__).'/tar';
@@ -38,7 +38,7 @@ class Tar_TestCase extends DokuWikiTest {
      *
      * No check for format correctness
      */
-    public function test_createfile(){
+    public function test_createfile() {
         $tar = new Tar();
 
         $dir = dirname(__FILE__).'/tar';
@@ -70,10 +70,10 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * List the contents of the prebuilt TAR files
      */
-    public function test_tarcontent(){
+    public function test_tarcontent() {
         $dir = dirname(__FILE__).'/tar';
 
-        foreach(array('tar','tgz','tbz') as $ext){
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -92,11 +92,11 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * Extract the prebuilt tar files
      */
-    public function test_tarextract(){
+    public function test_tarextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext){
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -118,16 +118,16 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * Extract the prebuilt tar files with component stripping
      */
-    public function test_compstripextract(){
+    public function test_compstripextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext){
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
             $tar->open($file);
-            $tar->extract($out,1);
+            $tar->extract($out, 1);
 
             clearstatcache();
 
@@ -144,16 +144,16 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * Extract the prebuilt tar files with prefix stripping
      */
-    public function test_prefixstripextract(){
+    public function test_prefixstripextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext){
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
             $tar->open($file);
-            $tar->extract($out,'tar/foobar/');
+            $tar->extract($out, 'tar/foobar/');
 
             clearstatcache();
 
@@ -170,21 +170,20 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * Extract the prebuilt tar files with include regex
      */
-    public function test_includeextract(){
+    public function test_includeextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext){
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
             $tar->open($file);
-            $tar->extract($out,'','','/\/foobar\//');
+            $tar->extract($out, '', '', '/\/foobar\//');
 
             clearstatcache();
 
             $this->assertFileNotExists($out.'/tar/testdata1.txt', "Extracted $file");
-
 
             $this->assertFileExists($out.'/tar/foobar/testdata2.txt', "Extracted $file");
             $this->assertEquals(13, filesize($out.'/tar/foobar/testdata2.txt'), "Extracted $file");
@@ -196,16 +195,16 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * Extract the prebuilt tar files with exclude regex
      */
-    public function test_excludeextract(){
+    public function test_excludeextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext){
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
             $tar->open($file);
-            $tar->extract($out,'','/\/foobar\//');
+            $tar->extract($out, '', '/\/foobar\//');
 
             clearstatcache();
 
@@ -221,8 +220,8 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * Check the extension to compression guesser
      */
-    public function test_filetype(){
-        $tar  = new Tar();
+    public function test_filetype() {
+        $tar = new Tar();
         $this->assertEquals(Tar::COMPRESS_NONE, $tar->filetype('foo'));
         $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tgz'));
         $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tGZ'));
@@ -234,12 +233,12 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz2'));
     }
 
-    public function test_longpathextract(){
+    public function test_longpathextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('ustar','gnu') as $format){
-            $tar  = new Tar();
+        foreach(array('ustar', 'gnu') as $format) {
+            $tar = new Tar();
             $tar->open("$dir/longpath-$format.tgz");
             $tar->extract($out);
 
@@ -247,6 +246,56 @@ class Tar_TestCase extends DokuWikiTest {
 
             TestUtils::rdelete($out);
         }
+    }
+
+    public function test_createlongpathustar() {
+        $tar = new Tar();
+        $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
+
+        $path = '';
+        for($i=0; $i<11; $i++) $path .= '1234567890/';
+        $path = rtrim($path,'/');
+
+        $tar->create($tmp, Tar::COMPRESS_NONE);
+        $tar->addData("$path/test.txt", 'testcontent1');
+        $tar->close();
+
+        $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
+        $data = file_get_contents($tmp);
+
+        // We should find the path and filename separated, no longlink entry
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'content in TAR');
+        $this->assertTrue(strpos($data, 'test.txt') !== false, 'filename in TAR');
+        $this->assertTrue(strpos($data, $path) !== false, 'path in TAR');
+        $this->assertFalse(strpos($data, "$path/test.txt") !== false, 'full filename in TAR');
+        $this->assertFalse(strpos($data, '@LongLink') !== false, '@LongLink in TAR');
+
+        @unlink($tmp);
+    }
+
+    public function test_createlongpathgnu() {
+        $tar = new Tar();
+        $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
+
+        $path = '';
+        for($i=0; $i<20; $i++) $path .= '1234567890/';
+        $path = rtrim($path,'/');
+
+        $tar->create($tmp, Tar::COMPRESS_NONE);
+        $tar->addData("$path/test.txt", 'testcontent1');
+        $tar->close();
+
+        $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
+        $data = file_get_contents($tmp);
+
+        // We should find the complete path/filename and a longlink entry
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'content in TAR');
+        $this->assertTrue(strpos($data, 'test.txt') !== false, 'filename in TAR');
+        $this->assertTrue(strpos($data, $path) !== false, 'path in TAR');
+        $this->assertTrue(strpos($data, "$path/test.txt") !== false, 'full filename in TAR');
+        $this->assertTrue(strpos($data, '@LongLink') !== false, '@LongLink in TAR');
+
+        @unlink($tmp);
     }
 
 }

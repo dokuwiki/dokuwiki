@@ -4,6 +4,8 @@
  * To keep things simple, the modification of existing archives is not supported. It handles
  * uncompressed, gzip and bzip2 compressed tar files.
  *
+ * Long pathnames (>100 chars) are supported in POSIX ustar and GNU longlink formats.
+ *
  * To list the contents of an existing TAR archive, open() it and use contents() on it:
  *
  *     $tar = new Tar();
@@ -145,10 +147,10 @@ class Tar {
      * @throws TarIOException
      * @return array
      */
-    function extract($outdir, $strip='', $exclude='', $include='') {
+    function extract($outdir, $strip = '', $exclude = '', $include = '') {
         if($this->closed || !$this->file) throw(new TarIOException('Can not read from a closed archive'));
 
-        $outdir = rtrim($outdir,'/');
+        $outdir = rtrim($outdir, '/');
         io_mkdir_p($outdir);
         $striplen = strlen($strip);
 
@@ -164,32 +166,32 @@ class Tar {
             $filename = $this->cleanPath($header['filename']);
             if(is_int($strip)) {
                 // if $strip is an integer we strip this many path components
-                $parts = explode('/',$filename);
-                if(!$header['typeflag']){
+                $parts = explode('/', $filename);
+                if(!$header['typeflag']) {
                     $base = array_pop($parts); // keep filename itself
-                }else{
+                } else {
                     $base = '';
                 }
-                $filename = join('/',array_slice($parts,$strip));
+                $filename = join('/', array_slice($parts, $strip));
                 if($base) $filename .= "/$base";
-            }else{
+            } else {
                 // ifstrip is a string, we strip a prefix here
-                if(substr($filename,0,$striplen) == $strip) $filename = substr($filename,$striplen);
+                if(substr($filename, 0, $striplen) == $strip) $filename = substr($filename, $striplen);
             }
 
             // check if this should be extracted
             $extract = true;
-            if(!$filename){
+            if(!$filename) {
                 $extract = false;
-            }else{
-                if($include){
-                    if(preg_match($include, $filename)){
+            } else {
+                if($include) {
+                    if(preg_match($include, $filename)) {
                         $extract = true;
-                    }else{
+                    } else {
                         $extract = false;
                     }
                 }
-                if($exclude && preg_match($exclude, $filename)){
+                if($exclude && preg_match($exclude, $filename)) {
                     $extract = false;
                 }
             }
@@ -203,7 +205,7 @@ class Tar {
                 io_mkdir_p($directory);
 
                 // is this a file?
-                if(!$header['typeflag']){
+                if(!$header['typeflag']) {
                     $fp = fopen($output, "wb");
                     if(!$fp) throw(new TarIOException('Could not open file for writing: '.$output));
 
@@ -216,10 +218,10 @@ class Tar {
                     fclose($fp);
                     touch($output, $header['mtime']);
                     chmod($output, $header['perm']);
-                }else{
+                } else {
                     $this->skipbytes(ceil($header['size'] / 512) * 512); // the size is usually 0 for directories
                 }
-            }else{
+            } else {
                 $this->skipbytes(ceil($header['size'] / 512) * 512);
             }
         }
@@ -261,7 +263,7 @@ class Tar {
             if(!$this->fh) throw(new TarIOException('Could not open file for writing: '.$this->file));
         }
         $this->writeaccess = false;
-        $this->closed = false;
+        $this->closed      = false;
     }
 
     /**
@@ -270,7 +272,6 @@ class Tar {
      * @todo handle directory adding
      * @param string $file the original file
      * @param string $name the name to use for the file in the archive
-     * @throws TarBadFilename
      * @throws TarIOException
      */
     public function addFile($file, $name = '') {
@@ -278,9 +279,6 @@ class Tar {
 
         if(!$name) $name = $file;
         $name = $this->cleanPath($name);
-
-        // FIXME ustar should support up 256 chars
-        if(strlen($name) > 99) throw(new TarBadFilename('Filenames may not exceed 99 bytes: '.$name));
 
         $fp = fopen($file, 'rb');
         if(!$fp) throw(new TarIOException('Could not open file for reading: '.$file));
@@ -294,8 +292,7 @@ class Tar {
             $stat[5],
             fileperms($file),
             filesize($file),
-            filemtime($file),
-            false
+            filemtime($file)
         );
 
         while(!feof($fp)) {
@@ -306,26 +303,21 @@ class Tar {
     }
 
     /**
-     * Add a file to the current TAR archive using in memory data
+     * Add a file to the current TAR archive using the given $data as content
      *
-     * @param     $name
-     * @param     $data
-     * @param int $uid
-     * @param int $gid
-     * @param int $perm
-     * @param int $mtime
+     * @param string $name
+     * @param string $data
+     * @param int    $uid
+     * @param int    $gid
+     * @param int    $perm
+     * @param int    $mtime
      * @throws TarIOException
-     * @throws TarBadFilename
      */
     public function addData($name, $data, $uid = 0, $gid = 0, $perm = 0666, $mtime = 0) {
         if($this->closed) throw(new TarIOException('Archive has been closed, files can no longer be added'));
 
         $name = $this->cleanPath($name);
-
-        // FIXME ustar should support up 256 chars
-        if(strlen($name) > 99) throw(new TarBadFilename('Filenames may not exceed 99 bytes: '.$name));
-
-        $len = strlen($data);
+        $len  = strlen($data);
 
         $this->writeFileHeader(
             $name,
@@ -333,8 +325,7 @@ class Tar {
             $gid,
             $perm,
             $len,
-            ($mtime) ? $mtime : time(),
-            false
+            ($mtime) ? $mtime : time()
         );
 
         for($s = 0; $s < $len; $s += 512) {
@@ -357,23 +348,23 @@ class Tar {
         if($this->closed) return; // we did this already
 
         // write footer
-        if($this->writeaccess){
+        if($this->writeaccess) {
             $this->writebytes(pack("a512", ""));
             $this->writebytes(pack("a512", ""));
         }
 
         // close file handles
-        if($this->file){
-            if($this->comptype === Tar::COMPRESS_GZIP){
+        if($this->file) {
+            if($this->comptype === Tar::COMPRESS_GZIP) {
                 gzclose($this->fh);
-            }elseif($this->comptype === Tar::COMPRESS_BZIP){
+            } elseif($this->comptype === Tar::COMPRESS_BZIP) {
                 bzclose($this->fh);
-            }else{
+            } else {
                 fclose($this->fh);
             }
 
             $this->file = '';
-            $this->fh = 0;
+            $this->fh   = 0;
         }
 
         $this->closed = true;
@@ -460,12 +451,12 @@ class Tar {
      * @param int  $bytes seek to this position
      */
     function skipbytes($bytes) {
-        if($this->comptype === Tar::COMPRESS_GZIP){
+        if($this->comptype === Tar::COMPRESS_GZIP) {
             @gzseek($this->fh, $bytes, SEEK_CUR);
-        }elseif($this->comptype === Tar::COMPRESS_BZIP){
+        } elseif($this->comptype === Tar::COMPRESS_BZIP) {
             // there is no seek in bzip2, we simply read on
             @bzread($this->fh, $bytes);
-        }else{
+        } else {
             @fseek($this->fh, $bytes, SEEK_CUR);
         }
     }
@@ -479,19 +470,38 @@ class Tar {
      * @param int    $perm
      * @param int    $size
      * @param int    $mtime
-     * @param bool   $isdir
+     * @param string $typeflag Set to '5' for directories
      */
-    protected function writeFileHeader($name, $uid, $gid, $perm, $size, $mtime, $isdir = false) {
+    protected function writeFileHeader($name, $uid, $gid, $perm, $size, $mtime, $typeflag = '') {
+        // handle filename length restrictions
+        $prefix  = '';
+        $namelen = strlen($name);
+        if($namelen > 100) {
+            $file = basename($name);
+            $dir  = dirname($name);
+            if(strlen($file) > 100 || strlen($dir) > 155) {
+                // we're still too large, let's use GNU longlink
+                $this->writeFileHeader('././@LongLink', 0, 0, 0, $namelen, 0, 'L');
+                for($s = 0; $s < $namelen; $s += 512) {
+                    $this->writebytes(pack("a512", substr($name, $s, 512)));
+                }
+                $name = substr($name, 0, 100); // cut off name
+            } else {
+                // we're fine when splitting, use POSIX ustar
+                $prefix = $dir;
+                $name   = $file;
+            }
+        }
+
         // values are needed in octal
         $uid   = sprintf("%6s ", DecOct($uid));
         $gid   = sprintf("%6s ", DecOct($gid));
         $perm  = sprintf("%6s ", DecOct($perm));
         $size  = sprintf("%11s ", DecOct($size));
         $mtime = sprintf("%11s", DecOct($mtime));
-        $dir   = ($isdir) ? '5' : '';
 
         $data_first = pack("a100a8a8a8a12A12", $name, $perm, $uid, $gid, $size, $mtime);
-        $data_last  = pack("a1a100a6a2a32a32a8a8a155a12", $dir, '', '', '', '', '', '', '', '', "");
+        $data_last  = pack("a1a100a6a2a32a32a8a8a155a12", $typeflag, '', 'ustar', '', '', '', '', '', $prefix, "");
 
         for($i = 0, $chks = 0; $i < 148; $i++)
             $chks += ord($data_first[$i]);
@@ -541,11 +551,11 @@ class Tar {
         if(trim($header['prefix'])) $return['filename'] = trim($header['prefix']).'/'.$return['filename'];
 
         // Handle Long-Link entries from GNU Tar
-        if($return['typeflag'] == 'L'){
+        if($return['typeflag'] == 'L') {
             // following data block(s) is the filename
             $filename = trim($this->readbytes(ceil($header['size'] / 512) * 512));
             // next block is the real header
-            $block = $this->readbytes(512);
+            $block  = $this->readbytes(512);
             $return = $this->parseHeader($block);
             // overwrite the filename
             $return['filename'] = $filename;
@@ -615,9 +625,6 @@ class Tar {
         }
         return $comptype;
     }
-}
-
-class TarBadFilename extends Exception {
 }
 
 class TarIOException extends Exception {
