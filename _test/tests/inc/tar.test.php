@@ -298,4 +298,22 @@ class Tar_TestCase extends DokuWikiTest {
         @unlink($tmp);
     }
 
+    /**
+     * Extract a tarbomomb
+     */
+    public function test_tarbomb() {
+        $dir = dirname(__FILE__).'/tar';
+        $out = sys_get_temp_dir().'/dwtartest'.md5(time());
+
+        $tar  = new Tar();
+
+        $tar->open("$dir/tarbomb.tgz");
+        $tar->extract($out);
+
+        clearstatcache();
+
+        $this->assertFileExists($out.'/AAAAAAAAAAAAAAAAA/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB.txt');
+
+        TestUtils::rdelete($out);
+    }
 }
