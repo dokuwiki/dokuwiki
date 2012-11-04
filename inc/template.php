@@ -571,6 +571,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
  * Available actions are
  *
  *  edit        - edit/create/show/draft
+ *  refresh     - show, but refresh from cache
  *  history     - old revisions
  *  recent      - recent changes
  *  login       - login/logout - if ACL enabled
@@ -629,6 +630,12 @@ function tpl_get_action($type) {
                 $type      = 'show';
                 $accesskey = 'v';
             }
+            break;
+        case 'refresh':
+            if(!$INFO['exists'] || !$INFO['writable']) return false;
+            $accesskey       = 'c';
+            $params['do']    = 'show';
+            $params['purge'] = 'true';
             break;
         case 'revisions':
             $type      = 'revs';
@@ -1377,6 +1384,9 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
 
     echo '<optgroup label="'.$lang['page_tools'].'">';
     $act = tpl_get_action('edit');
+    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+
+    $act = tpl_get_action('refresh');
     if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
 
     $act = tpl_get_action('revert');
