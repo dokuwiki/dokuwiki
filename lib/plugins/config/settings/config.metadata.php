@@ -106,7 +106,7 @@ $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
 $meta['recent_days'] = array('numeric');
 $meta['breadcrumbs'] = array('numeric','_min' => 0);
-$meta['youarehere']  = array('onoff');
+$meta['youarehere']  = array('multichoice','_choices' => array(0,1,2));
 $meta['fullpath']    = array('onoff');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));
 $meta['dformat']     = array('string');
