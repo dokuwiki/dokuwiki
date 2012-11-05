@@ -536,23 +536,25 @@ function getCacheName($data,$ext=''){
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function isHiddenPage($id){
-    global $conf;
-    global $ACT;
-
     $data = array(
         'id' => $id,
         'hidden' => false
     );
-    trigger_event('PAGEUTILS_ID_HIDEPAGE', $id);
+    trigger_event('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
+    return $data['hidden'];
+}
 
-    if ($data['hidden']) return true;
-    if(empty($conf['hidepages'])) return false;
-    if($ACT == 'admin') return false;
+function _isHiddenPage(&$data) {
+    global $conf;
+    global $ACT;
 
-    if(preg_match('/'.$conf['hidepages'].'/ui',':'.$id)){
-        return true;
+    if ($data['hidden']) return;
+    if(empty($conf['hidepages'])) return;
+    if($ACT == 'admin') return;
+
+    if(preg_match('/'.$conf['hidepages'].'/ui',':'.$data['id'])){
+        $data['hidden'] = true;
     }
-    return false;
 }
 
 /**
