@@ -175,6 +175,40 @@ class Input {
         return (array) $this->access[$name];
     }
 
+    /**
+     * Create a simple key from an array key
+     *
+     * This is useful to access keys where the information is given as an array key or as a single array value.
+     * For example when the information was submitted as the name of a submit button.
+     *
+     * This function directly changes the access array.
+     *
+     * Eg. $_REQUEST['do']['save']='Speichern' becomes $_REQUEST['do'] = 'save'
+     *
+     * This function returns the $INPUT object itself for easy chaining
+     *
+     * @param $name
+     * @return Input
+     */
+    public function extract($name){
+        if(!isset($this->access[$name])) return $this;
+        if(!is_array($this->access[$name])) return $this;
+        $keys = array_keys($this->access[$name]);
+        if(!$keys){
+            // this was an empty array
+            $this->remove($name);
+            return $this;
+        }
+        // get the first key
+        $value = array_shift($keys);
+        if($value === 0){
+            // we had a numeric array, assume the value is not in the key
+            $value = array_shift($this->access[$name]);
+        }
+
+        $this->set($name, $value);
+        return $this;
+    }
 }
 
 /**

@@ -13,6 +13,7 @@
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
+ * @author AmirH Hassaneini <mytechmix@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -198,6 +199,7 @@ $lang['user_tools']            = 'ابزار کاربر';
 $lang['site_tools']            = 'ابزار سایت';
 $lang['page_tools']            = 'ابزار صفحه';
 $lang['skip_to_content']       = 'پرش به محتوا';
+$lang['sidebar']               = 'نوار کناری';
 $lang['mail_newpage']          = 'صفحه اضافه شد:';
 $lang['mail_changed']          = 'صفحه تغییر داده شد:';
 $lang['mail_subscribe_list']   = 'صفحات تغییر داده شده در فضای‌نام';
@@ -323,4 +325,3 @@ $lang['media_perm_read']       = 'متاسفانه ، شما حق خواندن �
 $lang['media_perm_upload']     = 'متاسفانه ، شما حق آپلود این فایل ها را ندارید.';
 $lang['media_update']          = 'آپلود نسخه جدید';
 $lang['media_restore']         = 'بازیابی این نسخه';
-$lang['plugin_install_err']    = 'افزونه به صورت نادرست نصب شده است. دایرکتوری افزونه را از \'%s\' به \'%s\' تغییر دهید.';

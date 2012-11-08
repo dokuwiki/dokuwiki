@@ -53,6 +53,9 @@
     margin: 0 10px 10px 0;
     position: relative;
 }
+[dir=rtl] #mediamanager__page .panelContent {
+    text-align: right;
+}
 
 #mediamanager__page .file .panelHeader,
 #mediamanager__page .file .panelContent {
@@ -62,7 +65,7 @@
 #mediamanager__page .ui-resizable-e {
     width: 6px;
     right: 2px;
-    background: transparent url(images/resizecol.png) center center no-repeat;
+    background: transparent url(../../images/resizecol.png) center center no-repeat;
 }
 #mediamanager__page .ui-resizable-e:hover {
     background-color: __background_alt__;
@@ -84,21 +87,39 @@
 
 /*____________ namespaces panel ____________*/
 
+[dir=rtl] #mediamanager__page .namespaces {
+    text-align: right;
+}
+
+/* make it look like a tab (as in _tabs.css) */
 #mediamanager__page .namespaces h2 {
     font-size: 1em;
     display: inline-block;
-    border-width: 0;
     padding: .3em .8em;
-    margin: 0 .3em 0 0;
+    margin: 0 0 0 .3em;
     border-radius: .5em .5em 0 0;
     font-weight: normal;
     background-color: __background_alt__;
     color: __text__;
+    border: 1px solid __border__;
+    border-bottom-color: __background_alt__;
     line-height: 1.4em;
+    position: relative;
+    bottom: -1px;
+    z-index: 2;
 }
 * html #mediamanager__page .namespaces h2,
 *+html #mediamanager__page .namespaces h2 {
     display: inline;
+}
+[dir=rtl] #mediamanager__page .namespaces h2 {
+    margin: 0 .3em 0 0;
+    position: relative;
+    right: 10px;
+}
+#mediamanager__page .namespaces .panelHeader {
+    border-top: 1px solid __border__;
+    z-index: 1;
 }
 
 #mediamanager__page .namespaces ul {
@@ -107,8 +128,16 @@
     padding: 0;
     list-style: none;
 }
+[dir=rtl] #mediamanager__page .namespaces ul {
+    margin-left: 0;
+    margin-right: .2em;
+}
 #mediamanager__page .namespaces ul ul {
     margin-left: 1em;
+}
+[dir=rtl] #mediamanager__page .namespaces ul ul {
+    margin-left: 0;
+    margin-right: 1em;
 }
 #mediamanager__page .namespaces ul ul li {
     margin: 0;
@@ -140,13 +169,19 @@
     line-height: 1;
     padding-left: 3px;
 }
+[dir=rtl] #mediamanager__page .panelHeader ul li {
+    margin-right: 0;
+    margin-left: .5em;
+}
 
 #mediamanager__page .panelHeader ul li.listType {
     padding-left: 30px;
+    margin: 0 0 0 5px;
     background: url('../../images/icon-list.png') 3px 1px no-repeat;
 }
 #mediamanager__page .panelHeader ul li.sortBy {
     padding-left: 30px;
+    margin: 0 0 0 5px;
     background: url('../../images/icon-sort.png') 3px 1px no-repeat;
 }
 
@@ -163,7 +198,10 @@
 
 #mediamanager__page .filelist ul {
     padding: 0;
-    margin: 0;
+    margin: 0 10px 0 0;
+}
+[dir=rtl] #mediamanager__page .filelist ul {
+    margin: 0 10px 0 0;
 }
 
 #mediamanager__page .filelist .panelContent ul li:hover {
@@ -200,6 +238,10 @@
     text-align: center;
     position: relative;
     line-height: 1.2;
+}
+[dir=rtl] #mediamanager__page .filelist .thumbs li {
+    margin-right: 0;
+    margin-left: 6px;
 }
 * html #mediamanager__page .filelist .thumbs li,
 *+html #mediamanager__page .filelist .thumbs li {
@@ -398,6 +440,10 @@
     text-align: left;
     border-color: __background__;
 }
+[dir=rtl] #mediamanager__diff td,
+[dir=rtl] #mediamanager__diff th {
+    text-align: right;
+}
 
 #mediamanager__diff th {
     font-weight: normal;
@@ -432,10 +478,6 @@
 #mediamanager__diff .imageDiff {
     position: relative;
 }
-#mediamanager__diff .imageDiff .image1,
-#mediamanager__diff .imageDiff .image2 {
-    width: 97%;
-}
 #mediamanager__diff .imageDiff .image2 {
     position: absolute;
     top: 0;
@@ -449,6 +491,10 @@
 #mediamanager__diff .imageDiff.portions .image2 {
     border-right: 1px solid red;
     overflow: hidden;
+}
+
+#mediamanager__diff .imageDiff.portions img {
+    float: left;
 }
 
 #mediamanager__diff .imageDiff img {

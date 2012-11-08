@@ -102,8 +102,12 @@ function js_out(){
 
     // load files
     foreach($files as $file){
+        $ismin = (substr($file,-7) == '.min.js');
+
         echo "\n\n/* XXXXXXXXXX begin of ".str_replace(DOKU_INC, '', $file) ." XXXXXXXXXX */\n\n";
+        if($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";
         js_load($file);
+        if($ismin) echo "\n/* END NOCOMPRESS */\n";
         echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
 
@@ -262,7 +266,18 @@ function js_compress($s){
         if($ch == '/' && $s{$i+1} == '*' && $s{$i+2} != '@'){
             $endC = strpos($s,'*/',$i+2);
             if($endC === false) trigger_error('Found invalid /*..*/ comment', E_USER_ERROR);
-            $i = $endC + 2;
+
+            // check if this is a NOCOMPRESS comment
+            if(substr($s, $i, $endC+2-$i) == '/* BEGIN NOCOMPRESS */'){
+                $endNC = strpos($s, '/* END NOCOMPRESS */', $endC+2);
+                if($endNC === false) trigger_error('Found invalid NOCOMPRESS comment', E_USER_ERROR);
+
+                // verbatim copy contents, trimming but putting it on its own line
+                $result .= "\n".trim(substr($s, $i + 22, $endNC - ($i + 22)))."\n"; // BEGIN comment = 22 chars
+                $i = $endNC + 20; // END comment = 20 chars
+            }else{
+                $i = $endC + 2;
+            }
             continue;
         }
 
@@ -286,10 +301,8 @@ function js_compress($s){
                 // now move forward and find the end of it
                 $j = 1;
                 while($s{$i+$j} != '/'){
-                    while( ($s{$i+$j} != '\\') && ($s{$i+$j} != '/')){
-                        $j = $j + 1;
-                    }
                     if($s{$i+$j} == '\\') $j = $j + 2;
+                    else $j++;
                 }
                 $result .= substr($s,$i,$j+1);
                 $i = $i + $j + 1;

@@ -13,6 +13,10 @@ if(!defined('NL')) define('NL',"\n");
  * Convenience function to quickly build a wikilink
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string  $id      id of the target page
+ * @param string  $name    the name of the link, i.e. the text that is displayed
+ * @param string|array  $search  search string(s) that shall be highlighted in the target page
+ * @return string the HTML code of the link
  */
 function html_wikilink($id,$name=null,$search=''){
     static $xhtml_renderer = null;
@@ -121,7 +125,7 @@ function html_secedit_get_button($data) {
     global $ID;
     global $INFO;
 
-    if (!isset($data['name']) || $data['name'] === '') return;
+    if (!isset($data['name']) || $data['name'] === '') return '';
 
     $name = $data['name'];
     unset($data['name']);
@@ -146,7 +150,6 @@ function html_secedit_get_button($data) {
 function html_topbtn(){
     global $lang;
 
-    $ret  = '';
     $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'" /></a>';
 
     return $ret;
@@ -166,7 +169,6 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
         $label = $lang['btn_'.$name];
 
     $ret = '';
-    $tip = '';
 
     //filter id (without urlencoding)
     $id = idfilter($id,false);
@@ -256,7 +258,6 @@ function html_draft(){
     global $INFO;
     global $ID;
     global $lang;
-    global $conf;
     $draft = unserialize(io_readFile($INFO['draft'],false));
     $text  = cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
 
@@ -312,9 +313,7 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    global $conf;
     global $QUERY;
-    global $ID;
     global $lang;
 
     $intro = p_locale_xhtml('searchpage');
@@ -328,15 +327,13 @@ function html_search(){
 
     //show progressbar
     print '<div id="dw__loading">'.NL;
-    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
     print 'showLoadBar();'.NL;
-    print '//--><!]]></script>'.NL;
+    print '/*!]]>*/</script>'.NL;
     print '</div>'.NL;
     flush();
 
     //do quick pagesearch
-    $data = array();
-
     $data = ft_pageLookup($QUERY,true,useHeading('navigation'));
     if(count($data)){
         print '<div class="search_quickresult">';
@@ -390,9 +387,9 @@ function html_search(){
     }
 
     //hide progressbar
-    print '<script type="text/javascript"><!--//--><![CDATA[//><!--'.NL;
+    print '<script type="text/javascript">/*<![CDATA[*/'.NL;
     print 'hideLoadBar("dw__loading");'.NL;
-    print '//--><!]]></script>'.NL;
+    print '/*!]]>*/</script>'.NL;
     flush();
 }
 
@@ -466,6 +463,9 @@ function html_revisions($first=0, $media_id = false){
     if (!$media_id) $exists = $INFO['exists'];
     else $exists = @file_exists(mediaFN($id));
 
+    $display_name = (!$media_id && useHeading('navigation')) ? hsc(p_get_first_heading($id)) : $id;
+    if (!$display_name) $display_name = $id;
+
     if($exists && $first==0){
         if (!$media_id && isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
             $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
@@ -488,7 +488,7 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
                         'href'  => $href)));
-        $form->addElement($id);
+        $form->addElement($display_name);
         $form->addElement(form_makeCloseTag('a'));
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
@@ -563,11 +563,11 @@ function html_revisions($first=0, $media_id = false){
             if (!$media_id) $href = wl($id,"rev=$rev",false,'&');
             else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
             $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'wikilink1')));
-            $form->addElement($id);
+            $form->addElement($display_name);
             $form->addElement(form_makeCloseTag('a'));
         }else{
             $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
-            $form->addElement($id);
+            $form->addElement($display_name);
         }
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
@@ -716,6 +716,9 @@ function html_recent($first=0, $show_changes='both'){
         $form->addElement($date);
         $form->addElement(form_makeCloseTag('span'));
 
+        $diff = false;
+        $href = '';
+
         if ($recent['media']) {
             $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
@@ -825,7 +828,6 @@ function html_recent($first=0, $show_changes='both'){
 function html_index($ns){
     global $conf;
     global $ID;
-    $dir = $conf['datadir'];
     $ns  = cleanID($ns);
     #fixme use appropriate function
     if(empty($ns)){
@@ -861,7 +863,8 @@ function html_list_index($item){
         $ret .= $base;
         $ret .= '</strong></a>';
     }else{
-        $ret .= html_wikilink(':'.$item['id']);
+        // default is noNSorNS($id), but we want noNS($id) when useheading is off FS#2605
+        $ret .= html_wikilink(':'.$item['id'], useHeading('navigation') ? null : noNS($item['id']));
     }
     return $ret;
 }
@@ -975,7 +978,6 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
  */
 function html_backlinks(){
     global $ID;
-    global $conf;
     global $lang;
 
     print p_locale_xhtml('backlinks');
@@ -995,6 +997,14 @@ function html_backlinks(){
     }
 }
 
+/**
+ * Get header of diff HTML
+ * @param string $l_rev   Left revisions
+ * @param string $r_rev   Right revision
+ * @param string $id      Page id, if null $ID is used
+ * @param bool   $media   If it is for media files
+ * @return array HTML snippets for diff header
+ */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
     global $lang;
     if ($id === null) {
@@ -1070,13 +1080,13 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string $text - compare with this text with most current version
- * @param  bool   $intr - display the intro text
+ * @param  bool   $intro - display the intro text
+ * @param  string $type type of the diff (inline or sidebyside)
  */
 function html_diff($text='',$intro=true,$type=null){
     global $ID;
     global $REV;
     global $lang;
-    global $conf;
     global $INPUT;
 
     if(!$type) $type = $INPUT->str('difftype');
@@ -1114,7 +1124,7 @@ function html_diff($text='',$intro=true,$type=null){
         $r_text  = cleanText($text);
         $r_head  = $lang['yours'];
     }else{
-        if($rev1 && $rev2){            // two specific revisions wanted
+        if($rev1 && isset($rev2) && $rev2){            // two specific revisions wanted
             // make sure order is correct (older on the left)
             if($rev1 < $rev2){
                 $l_rev = $rev1;
@@ -1228,6 +1238,7 @@ function html_conflict($text,$summary){
  */
 function html_msgarea(){
     global $MSG, $MSG_shown;
+    /** @var array $MSG */
     // store if the global $MSG has already been shown and thus HTML output has been started
     $MSG_shown = true;
 
@@ -1254,7 +1265,6 @@ function html_msgarea(){
 function html_register(){
     global $lang;
     global $conf;
-    global $ID;
     global $INPUT;
 
     print p_locale_xhtml('register');
@@ -1287,8 +1297,8 @@ function html_updateprofile(){
     global $lang;
     global $conf;
     global $INPUT;
-    global $ID;
     global $INFO;
+    /** @var auth_basic $auth */
     global $auth;
 
     print p_locale_xhtml('updateprofile');
@@ -1424,9 +1434,9 @@ function html_edit(){
 
     if ($wr) {
         // sets changed to true when previewed
-        echo '<script type="text/javascript"><!--//--><![CDATA[//><!--'. NL;
+        echo '<script type="text/javascript">/*<![CDATA[*/'. NL;
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
-        echo '//--><!]]></script>' . NL;
+        echo '/*!]]>*/</script>' . NL;
     } ?>
     <div class="editBox">
 
@@ -1487,6 +1497,7 @@ function html_minoredit(){
 function html_debug(){
     global $conf;
     global $lang;
+    /** @var auth_basic $auth */
     global $auth;
     global $INFO;
 
@@ -1571,14 +1582,15 @@ function html_debug(){
 function html_admin(){
     global $ID;
     global $INFO;
-    global $lang;
     global $conf;
+    /** @var auth_basic $auth */
     global $auth;
 
     // build menu of admin functions from the plugins that handle them
     $pluginlist = plugin_list('admin');
     $menu = array();
     foreach ($pluginlist as $p) {
+        /** @var DokuWiki_Admin_Plugin $obj */
         if($obj =& plugin_load('admin',$p) === null) continue;
 
         // check permissions
@@ -1680,7 +1692,6 @@ function html_admin(){
 function html_resendpwd() {
     global $lang;
     global $conf;
-    global $ID;
     global $INPUT;
 
     $token = preg_replace('/[^a-f0-9]+/','',$INPUT->str('pwauth'));
@@ -1760,9 +1771,9 @@ function html_list_toc($item){
  * @param string $text  - what to display in the TOC
  * @param int    $level - nesting level
  * @param string $hash  - is prepended to the given $link, set blank if you want full links
+ * @return array the toc item
  */
 function html_mktocitem($link, $text, $level, $hash='#'){
-    global $conf;
     return  array( 'link'  => $hash.$link,
             'title' => $text,
             'type'  => 'ul',
@@ -1774,6 +1785,8 @@ function html_mktocitem($link, $text, $level, $hash='#'){
  * Triggers an event with the form name: HTML_{$name}FORM_OUTPUT
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
+ * @param string     $name The name of the form
+ * @param Doku_Form  $form The form
  */
 function html_form($name, &$form) {
     // Safety check in case the caller forgets.
@@ -1784,6 +1797,7 @@ function html_form($name, &$form) {
 /**
  * Form print function.
  * Just calls printForm() on the data object.
+ * @param Doku_Form $data The form
  */
 function html_form_output($data) {
     $data->printForm();
@@ -1866,6 +1880,12 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     return $out;
 }
 
+/**
+ * Prints HTML code for the given tab structure
+ *
+ * @param array  $tabs        tab structure
+ * @param string $current_tab the current tab id
+ */
 function html_tabs($tabs, $current_tab = null) {
     echo '<ul class="tabs">'.NL;
 

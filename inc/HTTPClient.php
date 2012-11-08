@@ -565,15 +565,17 @@ class HTTPClient {
             if(feof($socket))
                 throw new HTTPClientException("Socket disconnected while writing $message");
 
-            // wait for stream ready or timeout
-            self::selecttimeout($this->timeout - $time_used, $sec, $usec);
-            if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
-                // write to stream
-                $nbytes = fwrite($socket, substr($data,$written,4096));
-                if($nbytes === false)
-                    throw new HTTPClientException("Failed writing to socket while sending $message", -100);
-                $written += $nbytes;
+            // wait for stream ready or timeout (1sec)
+            if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+                 usleep(1000);
+                 continue;
             }
+
+            // write to stream
+            $nbytes = fwrite($socket, substr($data,$written,4096));
+            if($nbytes === false)
+                throw new HTTPClientException("Failed writing to socket while sending $message", -100);
+            $written += $nbytes;
         }
     }
 
@@ -612,15 +614,17 @@ class HTTPClient {
             }
 
             if ($to_read > 0) {
-                // wait for stream ready or timeout
-                self::selecttimeout($this->timeout - $time_used, $sec, $usec);
-                if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
-                    $bytes = fread($socket, $to_read);
-                    if($bytes === false)
-                        throw new HTTPClientException("Failed reading from socket while reading $message", -100);
-                    $r_data .= $bytes;
-                    $to_read -= strlen($bytes);
+                // wait for stream ready or timeout (1sec)
+                if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+                     usleep(1000);
+                     continue;
                 }
+
+                $bytes = fread($socket, $to_read);
+                if($bytes === false)
+                    throw new HTTPClientException("Failed reading from socket while reading $message", -100);
+                $r_data .= $bytes;
+                $to_read -= strlen($bytes);
             }
         } while ($to_read > 0 && strlen($r_data) < $nbytes);
         return $r_data;
@@ -651,11 +655,13 @@ class HTTPClient {
             if(feof($socket))
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
 
-            // wait for stream ready or timeout
-            self::selecttimeout($this->timeout - $time_used, $sec, $usec);
-            if(@stream_select($sel_r, $sel_w, $sel_e, $sec, $usec) !== false){
-                $r_data = fgets($socket, 1024);
+            // wait for stream ready or timeout (1sec)
+            if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
+                 usleep(1000);
+                 continue;
             }
+
+            $r_data = fgets($socket, 1024);
         } while (!preg_match('/\n$/',$r_data));
         return $r_data;
     }
@@ -683,14 +689,6 @@ class HTTPClient {
     static function _time(){
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
-    }
-
-    /**
-     * Calculate seconds and microseconds
-     */
-    static function selecttimeout($time, &$sec, &$usec){
-        $sec = floor($time);
-        $usec = (int)(($time - $sec) * 1000000);
     }
 
     /**

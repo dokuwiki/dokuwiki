@@ -548,7 +548,7 @@ if (!class_exists('setting_email')) {
         if ($value == $input) return false;
 
         if ($this->_multiple) {
-            $mails = array_filter(array_map('trim', split(',', $input)));
+            $mails = array_filter(array_map('trim', explode(',', $input)));
         } else {
             $mails = array($input);
         }

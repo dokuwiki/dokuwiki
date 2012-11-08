@@ -1,6 +1,7 @@
+base   revert
 author Andreas Gohr
 email  andi@splitbrain.org
-date   2008-12-10
+date   2012-08-05
 name   Revert Manager
 desc   Allows you to mass revert recent edits
 url    http://dokuwiki.org/plugin:revert

@@ -15,6 +15,7 @@
 *.old
 *~
 *.DS_Store
+*.iml
 /data/attic/*
 /data/cache/*
 /data/index/*

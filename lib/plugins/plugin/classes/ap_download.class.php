@@ -8,8 +8,9 @@ class ap_download extends ap_manage {
      */
     function process() {
         global $lang;
+        global $INPUT;
 
-        $plugin_url = $_REQUEST['url'];
+        $plugin_url = $INPUT->str('url');
         $this->download($plugin_url, $this->overwrite);
         return '';
     }

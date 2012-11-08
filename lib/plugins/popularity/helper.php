@@ -143,7 +143,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
         // number and size of pages
         $list = array();
-        search($list,$conf['datadir'],array($this,'_search_count'),'','');
+        search($list,$conf['datadir'],array($this,'_search_count'),array('all'=>false),'');
         $data['page_count']    = $list['file_count'];
         $data['page_size']     = $list['file_size'];
         $data['page_biggest']  = $list['file_max'];

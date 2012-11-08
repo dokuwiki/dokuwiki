@@ -70,7 +70,6 @@ class Doku_Plugin_Controller {
 
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
-        global $lang;
 
         list($plugin,$component) = $this->_splitName($name);
 
@@ -97,7 +96,10 @@ class Doku_Plugin_Controller {
             $dir = $this->get_directory($plugin);
             $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
             if($inf['base'] && $inf['base'] != $plugin){
-                msg(sprintf($lang['plugin_install_err'],hsc($plugin),hsc($inf['base'])),-1);
+                msg(sprintf("Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.", hsc($plugin), hsc($inf['base'])), -1);
+            } elseif (preg_match('/^'.DOKU_PLUGIN_NAME_REGEX.'$/', $plugin) !== 1) {
+                msg(sprintf("Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ".
+                                'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)), -1);
             }
             return null;
         }

@@ -324,4 +324,3 @@ $lang['media_perm_read']       = 'عفوا، لست مخولا بقراءة ال
 $lang['media_perm_upload']     = 'عفوا، لست مخولا برفع الملفات.';
 $lang['media_update']          = 'ارفع إصدارا أحدث';
 $lang['media_restore']         = 'استرجع هذه النسخة';
-$lang['plugin_install_err']    = 'ثبتت الإضافة بشكل خاطئ. أعد تسمية دليل الإضافة \'%s\' إلى \'%s\'.';

@@ -25,7 +25,7 @@
     <rule ref="Generic.CodeAnalysis.EmptyStatement" />
     <rule ref="Generic.CodeAnalysis.UselessOverridingMethod" />
     <rule ref="Generic.Commenting.Todo" />
-    <ruke ref="Generic.Files.ByteOrderMark" />
+    <rule ref="Generic.Files.ByteOrderMark" />
     <rule ref="Generic.Files.LineEndings" />
     <rule ref="Generic.Formatting.DisallowMultipleStatements" />
     <rule ref="Generic.Metrics.NestingLevel">

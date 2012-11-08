@@ -317,4 +317,3 @@ $lang['js']['media_drop']       = 'Largue ficheiros aqui para enviar';
 $lang['js']['media_cancel']     = 'remover';
 $lang['js']['media_overwrt']    = 'Escrever por cima de ficheiros existentes';
 
-$lang['plugin_install_err'] = "Plugin instalado incorrectamente. Renomeie a pasta do plugin de '%s' para '%s'.";

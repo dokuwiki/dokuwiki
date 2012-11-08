@@ -323,4 +323,3 @@ $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese file
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';
 $lang['media_update']          = 'Last opp ny versjon';
 $lang['media_restore']         = 'Gjenopprett denne versjonen';
-$lang['plugin_install_err']    = 'Tillegget ble feil installert. Skift navn på mappen \'%s\' til \'%s\'.';

@@ -95,13 +95,13 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_([^_]+)(?:_([^_]+))?$/',
+    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
                   $name, $m)) {
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         if(@file_exists($plg)){
-            include DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+            include_once DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         }
         return;
     }

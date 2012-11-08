@@ -67,6 +67,14 @@ div#acl_manager table.inline {
     margin: 0;
 }
 
+#acl_manager table .check {
+    text-align: center;
+}
+
+#acl_manager table .action {
+    text-align: right;
+}
+
 div#acl_manager .aclgroup {
     background: transparent url(pix/group.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
@@ -74,6 +82,7 @@ div#acl_manager .aclgroup {
 [dir=rtl] div#acl_manager .aclgroup {
     background: transparent url(pix/group.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
+    display: inline-block; /* needed for IE7 */
 }
 
 div#acl_manager .acluser {
@@ -83,6 +92,7 @@ div#acl_manager .acluser {
 [dir=rtl] div#acl_manager .acluser {
     background: transparent url(pix/user.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
+    display: inline-block; /* needed for IE7 */
 }
 
 div#acl_manager .aclpage {
@@ -92,6 +102,7 @@ div#acl_manager .aclpage {
 [dir=rtl] div#acl_manager .aclpage {
     background: transparent url(pix/page.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
+    display: inline-block; /* needed for IE7 */
 }
 
 div#acl_manager .aclns {
@@ -101,6 +112,7 @@ div#acl_manager .aclns {
 [dir=rtl] div#acl_manager .aclns {
     background: transparent url(pix/ns.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
+    display: inline-block; /* needed for IE7 */
 }
 
 div#acl_manager label.disabled {

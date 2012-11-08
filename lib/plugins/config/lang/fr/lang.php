@@ -18,6 +18,7 @@
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
+ * @author Olivier DUVAL <zorky00@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur non valide, vérifiez vos réglages et réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -95,6 +96,7 @@ $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 $lang['securecookie']          = 'Les cookies mis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Ne désactivez cette option que si la connexion à votre wiki est sécurisée avec SSL mais que la navigation sur le wiki n\'est pas sécurisée.';
 $lang['remote']                = 'Active l\'API système distante. Ceci autorise d\'autres applications à accéder au wiki via XML-RPC ou d\'autres mécanismes.';
+$lang['remoteuser']            = 'Restreindre l\'accès à l\'API par une liste de groupes ou d\'utilisateurs séparés par une virgule. Laisser vide pour donner l\'accès à n\'importe qui.';
 $lang['usewordblock']          = 'Bloquer le spam selon les mots utilisés';
 $lang['relnofollow']           = 'Utiliser rel="nofollow" sur les liens extérieurs';
 $lang['indexdelay']            = 'Délai avant l\'indexation (en secondes)';

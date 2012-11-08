@@ -1,9 +1,9 @@
 ====== Retorno de Popularidade ======
 
-Essa ferramenta coleta dados anônimos sobre o seu wiki e permite que você os envie para os desenvolvedores do DokuWiki. Isso ajuda-os a compreender como o DokuWiki é utilizado pelos seus usuários e garante que decisões para futuros desenvolvimentos sejam respaldadas por estatísticas de uso real.
+Essa [[doku>popularity|ferramenta]] coleta dados anônimos sobre o seu wiki e permite que você os envie para os desenvolvedores do DokuWiki. Isso ajuda-os a compreender como o DokuWiki é utilizado pelos seus usuários e garante que decisões para futuros desenvolvimentos sejam respaldadas por estatísticas de uso real.
 
 Você é encorajado a repetir esse procedimento de tempos em tempos, para manter os desenvolvedores informados quando o seu wiki for alterado. Seus pacotes de dados repetidos serão categorizados por uma identificação anônima.
 
 Os dados coletados contém informações do tipo: a versão do seu DokuWiki, o número e tamanho das suas páginas e arquivos, plug-ins instalados e informações sobre a sua instalação do PHP.
 
-Os dados brutos que serão enviados é mostrado abaixo. Por favor, utilize o botão "Enviar dados" para transferir a informação.
+Os dados brutos que serão enviados serão exibidos abaixo. Por favor, utilize o botão "Enviar dados" para transferir a informação.

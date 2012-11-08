@@ -1,7 +1,7 @@
 Hola!
 
 La página @PAGE@ en @TITLE@ wiki ha cambiado.
-Estos son los cambioss:
+Estos son los cambios:
 
 --------------------------------------------------------
 @DIFF@
@@ -9,7 +9,7 @@ Estos son los cambioss:
 
 Fecha : @DATE@
 Usuario : @USER@
-Resúmen de edición: @SUMMARY@
+Resumen de edición: @SUMMARY@
 Revisión Anterior: @OLDPAGE@
 Nueva Revisión: @NEWPAGE@
 

@@ -10,6 +10,7 @@
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert BOGENSCHNEIDER <robog@gmx.de>
  * @author Robert Bogenschneider <bogi@uea.org>
+ * @author Robert Bogenschneider <robog@gmx.de>
  */
 $lang['menu']                  = 'Administri Kromaĵojn';
 $lang['download']              = 'Elŝuti kaj instali novan kromaĵon';

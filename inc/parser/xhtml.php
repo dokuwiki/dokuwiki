@@ -358,6 +358,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Execute PHP code if allowed
      *
+     * @param  string   $text      PHP code that is either executed or printed
      * @param  string   $wrapper   html element to wrap result if $conf['phpok'] is okff
      *
      * @author Andreas Gohr <andi@splitbrain.org>
@@ -382,6 +383,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Insert HTML if allowed
      *
+     * @param  string   $text      html text
      * @param  string   $wrapper   html element to wrap result if $conf['htmlok'] is okff
      *
      * @author Andreas Gohr <andi@splitbrain.org>

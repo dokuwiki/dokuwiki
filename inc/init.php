@@ -129,9 +129,13 @@ if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
 
 // enable gzip compression if supported
 $conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
+global $ACT;
 if ($conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
-        function_exists('ob_gzhandler')) {
+        function_exists('ob_gzhandler') &&
+        // Disable compression when a (compressed) sitemap might be delivered
+        // See https://bugs.dokuwiki.org/index.php?do=details&task_id=2576
+        $ACT != 'sitemap') {
     ob_start('ob_gzhandler');
 }
 
@@ -162,7 +166,7 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
     @ini_set('magic_quotes_gpc', 0);
     define('MAGIC_QUOTES_STRIPPED',1);
 }
-@set_magic_quotes_runtime(0);
+if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 @ini_set('magic_quotes_sybase',0);
 
 // don't let cookies ever interfere with request vars

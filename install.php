@@ -24,7 +24,7 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
     @ini_set('magic_quotes_gpc', 0);
     define('MAGIC_QUOTES_STRIPPED',1);
 }
-@set_magic_quotes_runtime(0);
+if (function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 @ini_set('magic_quotes_sybase',0);
 
 // language strings
@@ -54,7 +54,7 @@ $dokuwiki_hash = array(
     '2011-05-25'   => '4241865472edb6fa14a1227721008072',
     '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
-    'devel'        => 'eb0b3fc90056fbc12bac6f49f7764df3'
+    '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3'
 );
 
 

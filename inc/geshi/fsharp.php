@@ -4,7 +4,7 @@
  * ----------
  * Author: julien ortin (jo_spam-divers@yahoo.fr)
  * Copyright: (c) 2009 julien ortin
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2009/09/20
  *
  * F# language file for GeSHi.
@@ -44,7 +44,7 @@ $language_data = array(
     'LANG_NAME' => 'F#',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
-    'COMMENT_REGEXP' => array(3 => '/\(\*(?!\)).*?\*\)/'),
+    'COMMENT_REGEXP' => array(3 => '/\(\*(?!\)).*?\*\)/s'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'HARDQUOTE' => array('@"', '"'),

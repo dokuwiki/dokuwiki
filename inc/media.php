@@ -296,12 +296,29 @@ function media_upload($ns,$auth,$file=false){
     $res = media_save(array('name' => $file['tmp_name'],
                             'mime' => $imime,
                             'ext'  => $iext), $ns.':'.$id,
-                      $INPUT->post->bool('ow'), $auth, 'move_uploaded_file');
+                      $INPUT->post->bool('ow'), $auth, 'copy_uploaded_file');
     if (is_array($res)) {
         msg($res[0], $res[1]);
         return false;
     }
     return $res;
+}
+
+/**
+ * An alternative to move_uploaded_file that copies
+ *
+ * Using copy, makes sure any setgid bits on the media directory are honored
+ *
+ * @see   move_uploaded_file()
+ * @param string $from
+ * @param string $to
+ * @return bool
+ */
+function copy_uploaded_file($from, $to){
+    if(!is_uploaded_file($from)) return false;
+    $ok = copy($from, $to);
+    @unlink($from);
+    return $ok;
 }
 
 /**
@@ -646,6 +663,7 @@ function media_tab_files_options(){
     global $lang;
     global $NS;
     global $INPUT;
+    global $ID;
     $form = new Doku_Form(array('class' => 'options', 'method' => 'get',
                                 'action' => wl($ID)));
     $media_manager_params = media_managerURL(array(), '', false, true);
@@ -1365,9 +1383,9 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     // output
     echo '<div class="'.$zebra.'"'.$jump.' title="'.hsc($item['id']).'">'.NL;
     if (!$display_namespace) {
-        echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
+        echo '<a id="h_:'.$item['id'].'" class="'.$class.'">'.hsc($file).'</a> ';
     } else {
-        echo '<a name="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
+        echo '<a id="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
     }
     echo '<span class="info">('.$info.')</span>'.NL;
 
@@ -1431,7 +1449,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         media_printimgdetail($item, true);
 
     } else {
-        echo '<a name="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
+        echo '<a id="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
             media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
             'tab_details' => 'view')).'">';
         echo media_printicon($item['id']);
@@ -1444,7 +1462,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         $name = hsc($item['id']);
     }
     echo '<dd class="name"><a href="'.media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
-        'tab_details' => 'view')).'" name="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
+        'tab_details' => 'view')).'" id="h_:'.$item['id'].'">'.$name.'</a></dd>'.NL;
 
     if($item['isimg']){
         $size = '';
@@ -1492,7 +1510,7 @@ function media_printimgdetail($item, $fullscreen=false){
 
     // output
     if ($fullscreen) {
-        echo '<a name="l_:'.$item['id'].'" class="image thumb" href="'.
+        echo '<a id="l_:'.$item['id'].'" class="image thumb" href="'.
             media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']), 'tab_details' => 'view')).'">';
         echo '<img src="'.$src.'" '.$att.' />';
         echo '</a>';
@@ -1502,7 +1520,7 @@ function media_printimgdetail($item, $fullscreen=false){
 
     echo '<div class="detail">';
     echo '<div class="thumb">';
-    echo '<a name="d_:'.$item['id'].'" class="select">';
+    echo '<a id="d_:'.$item['id'].'" class="select">';
     echo '<img src="'.$src.'" '.$att.' />';
     echo '</a>';
     echo '</div>';

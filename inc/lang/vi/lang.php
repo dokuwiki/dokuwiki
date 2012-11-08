@@ -263,6 +263,4 @@ $lang['media_perm_upload']     = 'Xin lỗi, bạn không đủ quyền để up
 $lang['media_update']          = 'Tải lên phiên bản mới';
 $lang['media_restore']         = 'Phục hồi phiên bản này';
 
-$lang['plugin_install_err']    = "Plugin không được cài đặt chính xác.Đổi tên thư mục plugin '%s' thành '%s'.";
-
 //Setup VIM: ex: et ts=2 :

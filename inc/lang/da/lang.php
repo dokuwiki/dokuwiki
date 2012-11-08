@@ -325,4 +325,3 @@ $lang['media_perm_read']       = 'Du har ikke nok rettigheder til at læse filer
 $lang['media_perm_upload']     = 'Du har ikke nok rettigheder til at uploade filer.';
 $lang['media_update']          = 'Upload ny version';
 $lang['media_restore']         = 'Genskab denne version';
-$lang['plugin_install_err']    = 'Plugin installeret forkert.  Omdøb plugin folder \'%s\' til \'%s\'.';

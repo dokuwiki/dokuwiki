@@ -26,6 +26,8 @@
  * @author emezeta <emezeta@infoprimo.com>
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
+ * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
+ * @author Mercè López mercelz@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -56,11 +58,12 @@ $lang['btn_admin']             = 'Administrar';
 $lang['btn_update']            = 'Actualizar';
 $lang['btn_delete']            = 'Borrar';
 $lang['btn_back']              = 'Atrás';
-$lang['btn_backlink']          = 'Enlaces anteriores';
+$lang['btn_backlink']          = 'Enlaces a esta página';
 $lang['btn_backtomedia']       = 'Volver a la selección de archivos multimedia';
 $lang['btn_subscribe']         = 'Suscribirse a cambios de la página';
 $lang['btn_profile']           = 'Actualizar perfil';
 $lang['btn_reset']             = 'Restablecer';
+$lang['btn_resendpwd']         = 'Establecer nueva contraseña';
 $lang['btn_draft']             = 'Editar borrador';
 $lang['btn_recover']           = 'Recuperar borrador';
 $lang['btn_draftdel']          = 'Eliminar borrador';
@@ -97,6 +100,7 @@ $lang['profnoempty']           = 'No se permite que el nombre o la dirección de
 $lang['profchanged']           = 'Se actualizó correctamente el perfil del usuario.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
+$lang['resendpwd']             = 'Establecer nueva contraseña para';
 $lang['resendpwdmissing']      = 'Lo siento, debes completar todos los campos.';
 $lang['resendpwdnouser']       = 'Lo siento, no se encuentra este usuario en nuestra base de datos.';
 $lang['resendpwdbadauth']      = 'Lo siento, este código de autenticación no es válido. Asegúrate de haber usado el enlace de confirmación entero.';
@@ -109,6 +113,7 @@ $lang['searchmedia_in']        = 'Buscar en %s';
 $lang['txt_upload']            = 'Selecciona el archivo a subir';
 $lang['txt_filename']          = 'Subir como (opcional)';
 $lang['txt_overwrt']           = 'Sobreescribir archivo existente';
+$lang['maxuploadsize']         = 'Peso máximo de %s por archivo';
 $lang['lockedby']              = 'Actualmente bloqueado por';
 $lang['lockexpire']            = 'El bloqueo expira en';
 $lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos uso el botón Previsualizar para restaurar el contador de bloqueo.';
@@ -203,6 +208,12 @@ $lang['external_edit']         = 'editor externo';
 $lang['summary']               = 'Resumen de la edición';
 $lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a>.';
 $lang['download']              = 'Descargar trozo de código fuente';
+$lang['tools']                 = 'Herramientas';
+$lang['user_tools']            = 'Herramientas de usuario';
+$lang['site_tools']            = 'Herramientas del sitio';
+$lang['page_tools']            = 'Herramientas de la página';
+$lang['skip_to_content']       = 'Saltar a contenido';
+$lang['sidebar']               = 'Barra lateral';
 $lang['mail_newpage']          = 'página añadida:';
 $lang['mail_changed']          = 'página cambiada:';
 $lang['mail_subscribe_list']   = 'páginas cambiadas en el espacio de nombre:';
@@ -273,6 +284,7 @@ $lang['subscr_style_digest']   = 'recopilar correo de cambios por cada página';
 $lang['subscr_style_list']     = 'lista de páginas con cambios desde el último correo';
 $lang['authmodfailed']         = 'Está mal configurada la autenticación de usuarios. Por favor, avisa al administrador del wiki.';
 $lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
+$lang['authpwdexpire']         = 'Su contraseña caducara en %d días, debería cambiarla lo antes posible';
 $lang['i_chooselang']          = 'Elija su idioma';
 $lang['i_installer']           = 'Instalador de DokuWiki';
 $lang['i_wikiname']            = 'Nombre del wiki';
@@ -327,4 +339,3 @@ $lang['media_perm_read']       = 'Disculpa, no tienes los permisos necesarios pa
 $lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios para cargar ficheros.';
 $lang['media_update']          = 'Actualizar nueva versión';
 $lang['media_restore']         = 'Restaurar esta versión';
-$lang['plugin_install_err']    = 'Plugin instalado incorrectamente. Renombra el directorio de plugins \'%s\' to \'%s\'.';

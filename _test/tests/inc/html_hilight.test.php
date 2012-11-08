@@ -97,4 +97,36 @@ class html_hilight_test extends DokuWikiTest {
             html_hilight($html,'x/')
         );
     }
+
+    function testMB() {
+        $html = 'foo ДокуВики bar';
+        $this->assertRegExp(
+            '/foo <span.*>ДокуВики<\/span> bar/',
+            html_hilight($html,'ДокуВики')
+        );
+    }
+
+    function testMBright() {
+        $html = 'foo ДокуВики bar';
+        $this->assertRegExp(
+            '/foo <span.*>Доку<\/span>Вики bar/',
+            html_hilight($html,'Доку*')
+        );
+    }
+
+    function testMBleft() {
+        $html = 'foo ДокуВики bar';
+        $this->assertRegExp(
+            '/foo Доку<span.*>Вики<\/span> bar/',
+            html_hilight($html,'*Вики')
+        );
+    }
+
+    function testMBboth() {
+        $html = 'foo ДокуВики bar';
+        $this->assertRegExp(
+            '/foo До<span.*>куВи<\/span>ки bar/',
+            html_hilight($html,'*куВи*')
+        );
+    }
 }

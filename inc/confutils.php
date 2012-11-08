@@ -143,6 +143,9 @@ function getSchemes() {
  */
 function linesToHash($lines, $lower=false) {
     $conf = array();
+    // remove BOM
+    if (isset($lines[0]) && substr($lines[0],0,3) == pack('CCC',0xef,0xbb,0xbf))
+        $lines[0] = substr($lines[0],3);
     foreach ( $lines as $line ) {
         //ignore comments (except escaped ones)
         $line = preg_replace('/(?<![&\\\\])#.*$/','',$line);

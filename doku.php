@@ -9,7 +9,7 @@
  */
 
 // update message version
-$updateVersion = 36.2;
+$updateVersion = 38;
 
 //  xdebug_start_profiling();
 
@@ -32,9 +32,6 @@ require_once(DOKU_INC.'inc/init.php');
 $_REQUEST['id'] = str_replace("\xC2\xAD", '', $INPUT->str('id')); //soft-hyphen
 $QUERY          = trim($INPUT->str('id'));
 $ID             = getID();
-
-// deprecated 2011-01-14
-$NS = getNS($ID);
 
 $REV   = $INPUT->int('rev');
 $IDX   = $INPUT->str('idx');

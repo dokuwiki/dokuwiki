@@ -4,7 +4,7 @@
  * --------
  * Author: Robert AH Prins (robert@prino.org)
  * Copyright: (c) 2011 Robert AH Prins (http://hitchwiki.org/en/User:Prino)
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2011/02/09
  *
  * PL/I language file for GeSHi.

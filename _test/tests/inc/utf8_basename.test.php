@@ -59,6 +59,28 @@ class utf8_basename_test extends DokuWikiTest {
             array('\\this\\foo\\ДокуВики.test.Вик', '.Вик', 'ДокуВики.test'),
             array('/this\\foo/ДокуВики.test.Вик',   '.Вик', 'ДокуВики.test'),
             array('/this/foo\\ДокуВики.test.Вик',   '.Вик', 'ДокуВики.test'),
+
+            array('bar.test.png', '', 'bar.test.png'),
+            array('bar.test.png', '.png', 'bar.test'),
+
+            array('/bar.test.png', '', 'bar.test.png'),
+            array('/bar.test.png', '.png', 'bar.test'),
+            array('\\bar.test.png', '', 'bar.test.png'),
+            array('\\bar.test.png', '.png', 'bar.test'),
+            array('\\/bar.test.png', '', 'bar.test.png'),
+            array('\\/bar.test.png', '.png', 'bar.test'),
+            array('/\\bar.test.png', '', 'bar.test.png'),
+            array('/\\bar.test.png', '.png', 'bar.test'),
+
+            // PHP's basename does this too:
+            array('foo/',   '', 'foo'),
+            array('foo\\',  '', 'foo'),
+            array('foo\\/', '', 'foo'),
+            array('foo/\\', '', 'foo'),
+            array('foo.png/',   '.png', 'foo'),
+            array('foo.png\\',  '.png', 'foo'),
+            array('foo.png\\/', '.png', 'foo'),
+            array('foo.png/\\', '.png', 'foo'),
         );
 
         foreach($data as $test){

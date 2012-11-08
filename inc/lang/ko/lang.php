@@ -7,7 +7,7 @@
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
- * @author Seung-Chul Yoo  <dryoo@live.com>
+ * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  */
@@ -37,13 +37,13 @@ $lang['btn_secedit']           = '편집';
 $lang['btn_login']             = '로그인';
 $lang['btn_logout']            = '로그아웃';
 $lang['btn_admin']             = '관리';
-$lang['btn_update']            = '변경';
+$lang['btn_update']            = '바꾸기';
 $lang['btn_delete']            = '삭제';
 $lang['btn_back']              = '뒤로';
 $lang['btn_backlink']          = '가리키는 링크';
 $lang['btn_backtomedia']       = '미디어 파일 선택으로 돌아가기';
 $lang['btn_subscribe']         = '구독 관리';
-$lang['btn_profile']           = '개인 정보 변경';
+$lang['btn_profile']           = '개인 정보 바꾸기';
 $lang['btn_reset']             = '초기화';
 $lang['btn_resendpwd']         = '새 비밀번호 설정';
 $lang['btn_draft']             = '문서 초안 편집';
@@ -53,7 +53,7 @@ $lang['btn_revert']            = '복원';
 $lang['btn_register']          = '등록';
 $lang['btn_apply']             = '적용';
 $lang['btn_media']             = '미디어 관리';
-$lang['loggedinas']            = '다른 사용자로 로그인';
+$lang['loggedinas']            = '다음 사용자로 로그인';
 $lang['user']                  = '사용자 이름';
 $lang['pass']                  = '비밀번호';
 $lang['newpass']               = '새 비밀번호';
@@ -66,7 +66,7 @@ $lang['profile']               = '개인 정보';
 $lang['badlogin']              = '잘못된 사용자 이름이거나 비밀번호입니다.';
 $lang['minoredit']             = '사소한 바뀜';
 $lang['draftdate']             = '문서 초안 자동 저장 시간';
-$lang['nosecedit']             = '문서가 수정되어 세션 정보의 유효 시간이 지나 문서 전부를 다시 읽습니다.';
+$lang['nosecedit']             = '한동안 문서가 바뀌어 세션 정보의 유효 시간이 지나 문서 전부를 다시 읽습니다.';
 $lang['regmissing']            = '모든 항목을 입력해야 합니다.';
 $lang['reguexists']            = '같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자를 만들었으며 비밀번호는 이메일로 보냈습니다.';
@@ -193,6 +193,7 @@ $lang['user_tools']            = '사용자 도구';
 $lang['site_tools']            = '사이트 도구';
 $lang['page_tools']            = '문서 도구';
 $lang['skip_to_content']       = '콘텐츠 넘기기';
+$lang['sidebar']               = '사이드바';
 $lang['mail_newpage']          = '문서 추가:';
 $lang['mail_changed']          = '문서 바뀜:';
 $lang['mail_subscribe_list']   = '이름공간에서 바뀐 문서:';
@@ -218,7 +219,7 @@ $lang['qb_hplus']              = '상위 문단 제목';
 $lang['qb_hminus']             = '하위 문단 제목';
 $lang['qb_hequal']             = '동급 문단 제목';
 $lang['qb_link']               = '내부 링크';
-$lang['qb_extlink']            = '외부 링크';
+$lang['qb_extlink']            = '바깥 링크';
 $lang['qb_hr']                 = '가로줄';
 $lang['qb_ol']                 = '순서 있는 목록';
 $lang['qb_ul']                 = '순서 없는 목록';
@@ -295,7 +296,7 @@ $lang['days']                  = '%d일 전';
 $lang['hours']                 = '%d시간 전';
 $lang['minutes']               = '%d분 전';
 $lang['seconds']               = '%d초 전';
-$lang['wordblock']             = '스팸 문구를 포함하고 있어서 저장되지 않았습니다.';
+$lang['wordblock']             = '스팸 문구를 포함하고 있어서 저장하지 않았습니다.';
 $lang['media_uploadtab']       = '올리기';
 $lang['media_searchtab']       = '찾기';
 $lang['media_file']            = '파일';
@@ -312,11 +313,10 @@ $lang['media_upload']          = '%s에 올리기';
 $lang['media_search']          = '%s 찾기';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s의 %s';
-$lang['media_edit']            = '%s 수정';
-$lang['media_history']         = '%s 변경 내력';
+$lang['media_edit']            = '%s 편집';
+$lang['media_history']         = '%s 바뀜 내역';
 $lang['media_meta_edited']     = '메타데이터가 수정됨';
 $lang['media_perm_read']       = '이 파일을 읽을 권한이 없습니다.';
 $lang['media_perm_upload']     = '파일을 올릴 권한이 없습니다.';
 $lang['media_update']          = '새 버전 올리기';
 $lang['media_restore']         = '이 버전으로 되돌리기';
-$lang['plugin_install_err']    = '플러그인 설치가 잘못되었습니다. 플러그인 디렉토리 \'%s\'(을)를 \'%s\'(으)로 바꾸십시오.';

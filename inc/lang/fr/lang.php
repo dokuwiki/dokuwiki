@@ -24,6 +24,7 @@
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
+ * @author Olivier DUVAL <zorky00@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -109,6 +110,7 @@ $lang['searchmedia_in']        = 'Chercher dans %s';
 $lang['txt_upload']            = 'Sélectionnez un fichier à envoyer ';
 $lang['txt_filename']          = 'Donnez un « wikiname » (optionnel) ';
 $lang['txt_overwrt']           = 'Écraser le fichier cible';
+$lang['maxuploadsize']         = 'Téléverser max. %s par fichier';
 $lang['lockedby']              = 'Actuellement bloqué par';
 $lang['lockexpire']            = 'Le blocage expire à';
 $lang['js']['willexpire']      = 'Votre verrouillage pour la modification de cette page expire dans une minute.\nPour éviter les conflits, utilisez le bouton « Aperçu » pour réinitialiser le minuteur.';
@@ -331,4 +333,3 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas les droits pour lir
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas les droits pour télécharger des fichiers.';
 $lang['media_update']          = 'Télécharger une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
-$lang['plugin_install_err']    = 'Extension mal installée. Renommez le dossier de l\'extension \'%s\' en \'%s\'.';

@@ -311,4 +311,3 @@ $lang['media_perm_read']       = 'Ni ustreznih dovoljenj za branje datotek.';
 $lang['media_perm_upload']     = 'Ni ustreznih dovoljenj za nalaganje datotek.';
 $lang['media_update']          = 'Naloži novo različico';
 $lang['media_restore']         = 'Obnovi to različico';
-$lang['plugin_install_err']    = 'Vstavek ni pravilno nameščen. Preimenujte mapo vstavka\'%s\' v \'%s\'.';
