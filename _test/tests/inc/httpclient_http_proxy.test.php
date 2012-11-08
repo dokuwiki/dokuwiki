@@ -8,8 +8,9 @@ class httpclient_http_proxy_test extends DokuWikiTest {
      */
     function test_simpleget(){
         $http = new HTTPClient();
-        $http->proxy_host = 'localhost'; //FIXME we need a public server
-        $http->proxy_port = 3128;
+        // proxy provided by  Andrwe Lord Weber <dokuwiki@andrwe.org>
+        $http->proxy_host = 'proxy.andrwe.org';
+        $http->proxy_port = 8080;
 
         $data = $http->get($this->url);
         $this->assertFalse($data === false, 'HTTP response');
