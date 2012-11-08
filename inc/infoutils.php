@@ -176,6 +176,13 @@ function check(){
         msg('mb_string extension not available - PHP only replacements will be used',0);
     }
 
+    if (!preg_match("/^.$/u", "ñ")) {
+        msg('PHP is missing UTF-8 support in Perl-Compatible Regular Expressions (PCRE)', -1);
+    }
+    if (!preg_match("/^\pL$/u", "ñ")) {
+        msg('PHP is missing Unicode properties support in Perl-Compatible Regular Expressions (PCRE)', -1);
+    }
+
     $loc = setlocale(LC_ALL, 0);
     if(!$loc){
         msg('No valid locale is set for your PHP setup. You should fix this',-1);
