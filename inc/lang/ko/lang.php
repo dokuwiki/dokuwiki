@@ -280,8 +280,8 @@ $lang['i_confexists']          = '<code>%s</code>(은)는 이미 존재합니다
 $lang['i_writeerr']            = '<code>%s</code>(을)를 만들 수 없습니다. 먼저 디렉토리/파일 권한을 확인하고 파일을 수동으로 만들기 바랍니다.';
 $lang['i_badhash']             = 'dokuwiki.php를 인식할 수 없거나 원본 파일이 아닙니다. (해시=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - 유효하지 않거나 빈 값입니다.';
-$lang['i_success']             = '환경 설정이 성공적으로 끝났습니다. 지금 install.php를 지워도 상관없습니다. <a href="doku.php">새 DokuWiki</a>로 들어갑니다.';
-$lang['i_failure']             = '환경 설정 파일에 쓰는 도중에 오류가 발생했습니다. <a href="doku.php">새 DokuWiki</a>를 사용하기 전에 수동으로 문제를 해결할 필요가 있습니다.';
+$lang['i_success']             = '환경 설정이 성공적으로 끝났습니다. 지금 install.php를 지워도 상관없습니다. <a href="doku.php?id=wiki;welcome">새 DokuWiki</a>로 들어갑니다.';
+$lang['i_failure']             = '환경 설정 파일에 쓰는 도중에 오류가 발생했습니다. <a href="doku.php?id=wiki;welcome">새 DokuWiki</a>를 사용하기 전에 수동으로 문제를 해결할 필요가 있습니다.';
 $lang['i_policy']              = '초기 ACL 정책';
 $lang['i_pol0']                = '열린 위키 (누구나 읽기, 쓰기, 올리기가 가능합니다.)';
 $lang['i_pol1']                = '공개 위키 (누구나 읽을 수 있지만, 등록된 사용자만 쓰기와 올리기가 가능합니다.)';
