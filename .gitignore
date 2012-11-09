@@ -35,6 +35,7 @@
 !/lib/plugins/authldap
 !/lib/plugins/authmysql
 !/lib/plugins/authpgsql
+!/lib/plugins/authplain
 !/lib/plugins/acl
 !/lib/plugins/config
 !/lib/plugins/info
