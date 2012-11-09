@@ -22,6 +22,7 @@ class DokuWiki_Plugin {
      *
      * Needs to return a associative array with the following values:
      *
+     * base   - the plugin's base name (eg. the directory it needs to be installed in)
      * author - Author of the plugin
      * email  - Email address to contact the author
      * date   - Last modified date of the plugin in YYYY-MM-DD format
