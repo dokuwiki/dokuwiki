@@ -2,8 +2,6 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-require_once(DOKU_INC.'inc/adLDAP.php');
-
 /**
  * Active Directory authentication backend for DokuWiki
  *
@@ -41,7 +39,7 @@ require_once(DOKU_INC.'inc/adLDAP.php');
  * @author  Jan Schumann <js@schumann-it.com>
  */
 
-require_once(DOKU_INC.'inc/adLDAP/adLDAP.php');
+require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
 
 class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**

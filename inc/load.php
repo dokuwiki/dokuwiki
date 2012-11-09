@@ -51,7 +51,6 @@ function load_autoload($name){
         'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
         'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
         'JSON'                  => DOKU_INC.'inc/JSON.php',
-        'adLDAP'                => DOKU_INC.'inc/adLDAP.php',
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
         'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
         'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
