@@ -13,15 +13,9 @@ require_once(DOKU_INC.'inc/adLDAP.php');
  * Usage:
  *   Set DokuWiki's local.protected.php auth setting to read
  *
- *   $conf['useacl']         = 1;
- *   $conf['disableactions'] = 'register';
- *   $conf['autopasswd']     = 0;
  *   $conf['authtype']       = 'authad';
- *   $conf['passcrypt']      = 'ssha';
  *
- *   $conf['auth']['ad']['account_suffix']     = '
- *
- * @my.domain.org';
+ *   $conf['auth']['ad']['account_suffix']     = '@my.domain.org';
  *   $conf['auth']['ad']['base_dn']            = 'DC=my,DC=domain,DC=org';
  *   $conf['auth']['ad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
  *
