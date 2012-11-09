@@ -31,6 +31,10 @@
 !/lib/tpl/dokuwiki
 !/lib/tpl/index.php
 /lib/plugins/*
+!/lib/plugins/authad
+!/lib/plugins/authldap
+!/lib/plugins/authmysql
+!/lib/plugins/authpgsql
 !/lib/plugins/acl
 !/lib/plugins/config
 !/lib/plugins/info
