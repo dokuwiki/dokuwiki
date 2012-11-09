@@ -2,6 +2,8 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
+
 /**
  * Active Directory authentication backend for DokuWiki
  *
@@ -13,20 +15,20 @@ if(!defined('DOKU_INC')) die();
  *
  *   $conf['authtype']       = 'authad';
  *
- *   $conf['auth']['ad']['account_suffix']     = '@my.domain.org';
- *   $conf['auth']['ad']['base_dn']            = 'DC=my,DC=domain,DC=org';
- *   $conf['auth']['ad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
+ *   $conf['plugin']['authad']['account_suffix']     = '@my.domain.org';
+ *   $conf['plugin']['authad']['base_dn']            = 'DC=my,DC=domain,DC=org';
+ *   $conf['plugin']['authad']['domain_controllers'] = 'srv1.domain.org,srv2.domain.org';
  *
  *   //optional:
- *   $conf['auth']['ad']['sso']                = 1;
- *   $conf['auth']['ad']['ad_username']        = 'root';
- *   $conf['auth']['ad']['ad_password']        = 'pass';
- *   $conf['auth']['ad']['real_primarygroup']  = 1;
- *   $conf['auth']['ad']['use_ssl']            = 1;
- *   $conf['auth']['ad']['use_tls']            = 1;
- *   $conf['auth']['ad']['debug']              = 1;
+ *   $conf['plugin']['authad']['sso']                = 1;
+ *   $conf['plugin']['authad']['ad_username']        = 'root';
+ *   $conf['plugin']['authad']['ad_password']        = 'pass';
+ *   $conf['plugin']['authad']['real_primarygroup']  = 1;
+ *   $conf['plugin']['authad']['use_ssl']            = 1;
+ *   $conf['plugin']['authad']['use_tls']            = 1;
+ *   $conf['plugin']['authad']['debug']              = 1;
  *   // warn user about expiring password this many days in advance:
- *   $conf['auth']['ad']['expirywarn']         = 5;
+ *   $conf['plugin']['authad']['expirywarn']         = 5;
  *
  *   // get additional information to the userinfo array
  *   // add a list of comma separated ldap contact fields.
@@ -38,18 +40,13 @@ if(!defined('DOKU_INC')) die();
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Jan Schumann <js@schumann-it.com>
  */
-
-require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
-
 class auth_plugin_authad extends DokuWiki_Auth_Plugin {
-    /**
-     * @var array copy of the auth backend configuration
-     */
-    protected $cnf = array();
+
     /**
      * @var array hold connection data for a specific AD domain
      */
     protected $opts = array();
+
     /**
      * @var array open connections for each AD domain, as adLDAP objects
      */
@@ -76,18 +73,18 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function __construct() {
         parent::__construct();
 
-        global $conf;
-        $this->cnf = $conf['auth']['ad'];
+        // we load the config early to modify it a bit here
+        $this->loadConfig();
 
         // additional information fields
-        if(isset($this->cnf['additional'])) {
-            $this->cnf['additional'] = str_replace(' ', '', $this->cnf['additional']);
-            $this->cnf['additional'] = explode(',', $this->cnf['additional']);
-        } else $this->cnf['additional'] = array();
+        if(isset($this->conf['additional'])) {
+            $this->conf['additional'] = str_replace(' ', '', $this->conf['additional']);
+            $this->conf['additional'] = explode(',', $this->conf['additional']);
+        } else $this->conf['additional'] = array();
 
         // ldap extension is needed
         if(!function_exists('ldap_connect')) {
-            if($this->cnf['debug'])
+            if($this->conf['debug'])
                 msg("AD Auth: PHP LDAP extension not found.", -1);
             $this->success = false;
             return;
@@ -97,7 +94,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         if(!utf8_check($_SERVER['REMOTE_USER'])) {
             $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
         }
-        if($_SERVER['REMOTE_USER'] && $this->cnf['sso']) {
+        if($_SERVER['REMOTE_USER'] && $this->conf['sso']) {
             $_SERVER['REMOTE_USER'] = $this->cleanUser($_SERVER['REMOTE_USER']);
 
             // we need to simulate a login
@@ -127,7 +124,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function checkPass($user, $pass) {
         if($_SERVER['REMOTE_USER'] &&
             $_SERVER['REMOTE_USER'] == $user &&
-            $this->cnf['sso']
+            $this->conf['sso']
         ) return true;
 
         $adldap = $this->_adldap($this->_userDomain($user));
@@ -172,11 +169,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $fields = array('mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol');
 
         // add additional fields to read
-        $fields = array_merge($fields, $this->cnf['additional']);
+        $fields = array_merge($fields, $this->conf['additional']);
         $fields = array_unique($fields);
 
         //get info for given user
-        $result = $this->adldap->user()->info($this->_userName($user), $fields);
+        $result = $adldap->user()->info($this->_userName($user), $fields);
         if($result == false){
             return array();
         }
@@ -192,14 +189,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $info['expires'] = !($result[0]['useraccountcontrol'][0] & 0x10000); //ADS_UF_DONT_EXPIRE_PASSWD
 
         // additional information
-        foreach($this->cnf['additional'] as $field) {
+        foreach($this->conf['additional'] as $field) {
             if(isset($result[0][strtolower($field)])) {
                 $info[$field] = $result[0][strtolower($field)][0];
             }
         }
 
         // handle ActiveDirectory memberOf
-        $info['grps'] = $this->adldap->user()->groups($this->_userName($user),(bool) $this->opts['recursive_groups']);
+        $info['grps'] = $adldap->user()->groups($this->_userName($user),(bool) $this->opts['recursive_groups']);
 
         if(is_array($info['grps'])) {
             foreach($info['grps'] as $ndx => $group) {
@@ -219,14 +216,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // check expiry time
-        if($info['expires'] && $this->cnf['expirywarn']){
-            $timeleft = $this->adldap->user()->passwordExpiry($user); // returns unixtime
+        if($info['expires'] && $this->conf['expirywarn']){
+            $timeleft = $adldap->user()->passwordExpiry($user); // returns unixtime
             $timeleft = round($timeleft/(24*60*60));
             $info['expiresin'] = $timeleft;
 
             // if this is the current user, warn him (once per request only)
             if(($_SERVER['REMOTE_USER'] == $user) &&
-                ($timeleft <= $this->cnf['expirywarn']) &&
+                ($timeleft <= $this->conf['expirywarn']) &&
                 !$this->msgshown
             ) {
                 $msg = sprintf($lang['authpwdexpire'], $timeleft);
@@ -283,7 +280,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $user   = utf8_strtolower(trim($user));
 
         // is this a known, valid domain? if not discard
-        if(!is_array($this->cnf[$domain])) {
+        if(!is_array($this->conf[$domain])) {
             $domain = '';
         }
 
@@ -316,7 +313,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
         if($this->users === null) {
             //get info for given user
-            $result = $this->adldap->user()->all();
+            $result = $adldap->user()->all();
             if (!$result) return array();
             $this->users = array_fill_keys($result, false);
         }
@@ -356,9 +353,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // password changing
         if(isset($changes['pass'])) {
             try {
-                $return = $this->adldap->user()->password($this->_userName($user),$changes['pass']);
+                $return = $adldap->user()->password($this->_userName($user),$changes['pass']);
             } catch (adLDAPException $e) {
-                if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
             if(!$return) msg('AD Auth: failed to change the password. Maybe the password policy was not met?', -1);
@@ -378,9 +375,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
         if(count($adchanges)) {
             try {
-                $return = $return & $this->adldap->user()->modify($this->_userName($user),$adchanges);
+                $return = $return & $adldap->user()->modify($this->_userName($user),$adchanges);
             } catch (adLDAPException $e) {
-                if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
         }
@@ -411,7 +408,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->adldap[$domain] = new adLDAP($this->opts);
             return $this->adldap[$domain];
         } catch(adLDAPException $e) {
-            if($this->cnf['debug']) {
+            if($this->conf['debug']) {
                 msg('AD Auth: '.$e->getMessage(), -1);
             }
             $this->success         = false;
@@ -450,12 +447,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     protected function _loadServerConfig($domain) {
         // prepare adLDAP standard configuration
-        $opts = $this->cnf;
+        $opts = $this->conf;
 
         $opts['domain'] = $domain;
 
         // add possible domain specific configuration
-        if($domain && is_array($this->cnf[$domain])) foreach($this->cnf[$domain] as $key => $val) {
+        if($domain && is_array($this->conf[$domain])) foreach($this->conf[$domain] as $key => $val) {
             $opts[$key] = $val;
         }
 
