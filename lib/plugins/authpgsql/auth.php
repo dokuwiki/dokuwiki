@@ -1,15 +1,9 @@
 <?php
-/**
- * Plugin auth provider
- *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Jan Schumann <js@schumann-it.com>
- */
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
 /**
- * PgSQL authentication backend
+ * PostgreSQL authentication backend
  *
  * This class inherits much functionality from the MySQL class
  * and just reimplements the Postgres specific parts.
@@ -19,315 +13,406 @@ if(!defined('DOKU_INC')) die();
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
  * @author     Jan Schumann <js@schumann-it.com>
-*/
-class auth_plugin_authpgsql extends auth_plugin_authmysql
-{
-    var $cnf = null;
-    var $opts = null;
-    var $adldap = null;
-    var $users = null;
+ */
+class auth_plugin_authpgsql extends auth_plugin_authmysql {
 
     /**
      * Constructor
+     *
+     * checks if the pgsql interface is available, otherwise it will
+     * set the variable $success of the basis class to false
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function auth_plugin_authpgsql() {
-        parent::__construct();
+    public function __construct() {
+        // we don't want the stuff the MySQL constructor does, but the grandparent might do something
+        DokuWiki_Auth_Plugin::__construct();
 
-        global $conf;
-        $this->cnf = $conf['auth']['ad'];
-
-
-        // additional information fields
-        if (isset($this->cnf['additional'])) {
-            $this->cnf['additional'] = str_replace(' ', '', $this->cnf['additional']);
-            $this->cnf['additional'] = explode(',', $this->cnf['additional']);
-        } else $this->cnf['additional'] = array();
-
-        // ldap extension is needed
-        if (!function_exists('ldap_connect')) {
-            if ($this->cnf['debug'])
-                msg("AD Auth: PHP LDAP extension not found.",-1);
+        if(!function_exists('pg_connect')) {
+            $this->_debug("PgSQL err: PHP Postgres extension not found.", -1, __LINE__, __FILE__);
             $this->success = false;
             return;
         }
 
-        // Prepare SSO
-        if($_SERVER['REMOTE_USER'] && $this->cnf['sso']){
-             // remove possible NTLM domain
-             list($dom,$usr) = explode('\\',$_SERVER['REMOTE_USER'],2);
-             if(!$usr) $usr = $dom;
+        $this->loadConfig();
 
-             // remove possible Kerberos domain
-             list($usr,$dom) = explode('@',$usr);
-
-             $dom = strtolower($dom);
-             $_SERVER['REMOTE_USER'] = $usr;
-
-             // we need to simulate a login
-             if(empty($_COOKIE[DOKU_COOKIE])){
-                 $_REQUEST['u'] = $_SERVER['REMOTE_USER'];
-                 $_REQUEST['p'] = 'sso_only';
-             }
+        // set capabilities based upon config strings set
+        if(empty($this->conf['user']) ||
+            empty($this->conf['password']) || empty($this->conf['database'])
+        ) {
+            $this->_debug("PgSQL err: insufficient configuration.", -1, __LINE__, __FILE__);
+            $this->success = false;
+            return;
         }
 
-        // prepare adLDAP standard configuration
-        $this->opts = $this->cnf;
-
-        // add possible domain specific configuration
-        if($dom && is_array($this->cnf[$dom])) foreach($this->cnf[$dom] as $key => $val){
-            $this->opts[$key] = $val;
-        }
-
-        // handle multiple AD servers
-        $this->opts['domain_controllers'] = explode(',',$this->opts['domain_controllers']);
-        $this->opts['domain_controllers'] = array_map('trim',$this->opts['domain_controllers']);
-        $this->opts['domain_controllers'] = array_filter($this->opts['domain_controllers']);
-
-        // we can change the password if SSL is set
-        if($this->opts['use_ssl'] || $this->opts['use_tls']){
-            $this->cando['modPass'] = true;
-        }
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
+        $this->cando['addUser']   = $this->_chkcnf(
+            array(
+                 'getUserInfo',
+                 'getGroups',
+                 'addUser',
+                 'getUserID',
+                 'getGroupID',
+                 'addGroup',
+                 'addUserGroup'
+            )
+        );
+        $this->cando['delUser']   = $this->_chkcnf(
+            array(
+                 'getUserID',
+                 'delUser',
+                 'delUserRefs'
+            )
+        );
+        $this->cando['modLogin']  = $this->_chkcnf(
+            array(
+                 'getUserID',
+                 'updateUser',
+                 'UpdateTarget'
+            )
+        );
+        $this->cando['modPass']   = $this->cando['modLogin'];
+        $this->cando['modName']   = $this->cando['modLogin'];
+        $this->cando['modMail']   = $this->cando['modLogin'];
+        $this->cando['modGroups'] = $this->_chkcnf(
+            array(
+                 'getUserID',
+                 'getGroups',
+                 'getGroupID',
+                 'addGroup',
+                 'addUserGroup',
+                 'delGroup',
+                 'getGroupID',
+                 'delUserGroup'
+            )
+        );
+        /* getGroups is not yet supported
+           $this->cando['getGroups']    = $this->_chkcnf(array('getGroups',
+           'getGroupID')); */
+        $this->cando['getUsers']     = $this->_chkcnf(
+            array(
+                 'getUsers',
+                 'getUserInfo',
+                 'getGroups'
+            )
+        );
+        $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'));
     }
 
     /**
-     * Check user+password [required auth function]
+     * Check if the given config strings are set
      *
-     * Checks if the given user exists and the given
-     * plaintext password is correct by trying to bind
-     * to the LDAP server
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
-     * @author  James Van Lommel <james@nosq.com>
+     * @param   array $keys
+     * @param   bool  $wop
      * @return  bool
      */
-    function checkPass($user, $pass){
-        if($_SERVER['REMOTE_USER'] &&
-           $_SERVER['REMOTE_USER'] == $user &&
-           $this->cnf['sso']) return true;
-
-        if(!$this->_init()) return false;
-        return $this->adldap->authenticate($user, $pass);
+    protected function _chkcnf($keys, $wop = false) {
+        foreach($keys as $key) {
+            if(empty($this->conf[$key])) return false;
+        }
+        return true;
     }
 
     /**
-     * Return user info [required auth function]
+     * Counts users which meet certain $filter criteria.
      *
-     * Returns info about the given user needs to contain
-     * at least these fields:
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
-     * name string  full name of the user
-     * mail string  email address of the user
-     * grps array   list of groups the user is in
-     *
-     * This LDAP specific function returns the following
-     * addional fields:
-     *
-     * dn   string  distinguished name (DN)
-     * uid  string  Posix User ID
-     *
-     * @author  James Van Lommel <james@nosq.com>
+     * @param  array  $filter  filter criteria in item/pattern pairs
+     * @return int count of found users.
      */
-   function getUserData($user){
-        global $conf;
-        if(!$this->_init()) return false;
+    public function getUserCount($filter = array()) {
+        $rc = 0;
 
-        $fields = array('mail','displayname','samaccountname');
+        if($this->_openDB()) {
+            $sql = $this->_createSQLFilter($this->conf['getUsers'], $filter);
 
-        // add additional fields to read
-        $fields = array_merge($fields, $this->cnf['additional']);
-        $fields = array_unique($fields);
-
-        //get info for given user
-        $result = $this->adldap->user_info($user, $fields);
-        //general user info
-        $info['name'] = $result[0]['displayname'][0];
-        $info['mail'] = $result[0]['mail'][0];
-        $info['uid']  = $result[0]['samaccountname'][0];
-        $info['dn']   = $result[0]['dn'];
-
-        // additional information
-        foreach ($this->cnf['additional'] as $field) {
-            if (isset($result[0][strtolower($field)])) {
-                $info[$field] = $result[0][strtolower($field)][0];
+            // no equivalent of SQL_CALC_FOUND_ROWS in pgsql?
+            if(($result = $this->_queryDB($sql))) {
+                $rc = count($result);
             }
+            $this->_closeDB();
         }
-
-        // handle ActiveDirectory memberOf
-        $info['grps'] = $this->adldap->user_groups($user,(bool) $this->opts['recursive_groups']);
-
-        if (is_array($info['grps'])) {
-            foreach ($info['grps'] as $ndx => $group) {
-                $info['grps'][$ndx] = $this->cleanGroup($group);
-            }
-        }
-
-        // always add the default group to the list of groups
-        if(!is_array($info['grps']) || !in_array($conf['defaultgroup'],$info['grps'])){
-            $info['grps'][] = $conf['defaultgroup'];
-        }
-
-        return $info;
-    }
-
-    /**
-     * Make AD group names usable by DokuWiki.
-     *
-     * Removes backslashes ('\'), pound signs ('#'), and converts spaces to underscores.
-     *
-     * @author  James Van Lommel (jamesvl@gmail.com)
-     */
-    function cleanGroup($name) {
-        $sName = str_replace('\\', '', $name);
-        $sName = str_replace('#', '', $sName);
-        $sName = preg_replace('[\s]', '_', $sName);
-        return $sName;
-    }
-
-    /**
-     * Sanitize user names
-     */
-    function cleanUser($name) {
-        return $this->cleanGroup($name);
-    }
-
-    /**
-     * Most values in LDAP are case-insensitive
-     */
-    function isCaseSensitive(){
-        return false;
+        return $rc;
     }
 
     /**
      * Bulk retrieval of user data
      *
-     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
-     * @param   start     index of first user to be returned
-     * @param   limit     max number of users to be returned
-     * @param   filter    array of field/pattern pairs, null for no filter
-     * @return  array of userinfo (refer getUserData for internal userinfo details)
-     */
-    function retrieveUsers($start=0,$limit=-1,$filter=array()) {
-        if(!$this->_init()) return false;
-
-        if ($this->users === null) {
-            //get info for given user
-            $result = $this->adldap->all_users();
-            if (!$result) return array();
-            $this->users = array_fill_keys($result, false);
-        }
-
-        $i = 0;
-        $count = 0;
-        $this->_constructPattern($filter);
-        $result = array();
-
-        foreach ($this->users as $user => &$info) {
-            if ($i++ < $start) {
-                continue;
-            }
-            if ($info === false) {
-                $info = $this->getUserData($user);
-            }
-            if ($this->_filter($user, $info)) {
-                $result[$user] = $info;
-                if (($limit >= 0) && (++$count >= $limit)) break;
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Modify user data
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
-     * @param   $user      nick of the user to be changed
-     * @param   $changes   array of field/value pairs to be changed
-     * @return  bool
-    */
-    function modifyUser($user, $changes) {
-        $return = true;
+     * @param   int   $first     index of first user to be returned
+     * @param   int   $limit     max number of users to be returned
+     * @param   array $filter    array of field/pattern pairs
+     * @return  array userinfo (refer getUserData for internal userinfo details)
+     */
+    public function retrieveUsers($first = 0, $limit = 10, $filter = array()) {
+        $out = array();
 
-        // password changing
-        if(isset($changes['pass'])){
-            try {
-                $return = $this->adldap->user_password($user,$changes['pass']);
-            } catch (adLDAPException $e) {
-                if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
-                $return = false;
-            }
-            if(!$return) msg('AD Auth: failed to change the password. Maybe the password policy was not met?',-1);
-        }
+        if($this->_openDB()) {
+            $this->_lockTables("READ");
+            $sql = $this->_createSQLFilter($this->conf['getUsers'], $filter);
+            $sql .= " ".$this->conf['SortOrder']." LIMIT $limit OFFSET $first";
+            $result = $this->_queryDB($sql);
 
-        // changing user data
-        $adchanges = array();
-        if(isset($changes['name'])){
-            // get first and last name
-            $parts = explode(' ',$changes['name']);
-            $adchanges['surname']   = array_pop($parts);
-            $adchanges['firstname'] = join(' ',$parts);
-            $adchanges['display_name'] = $changes['name'];
-        }
-        if(isset($changes['mail'])){
-            $adchanges['email'] = $changes['mail'];
-        }
-        if(count($adchanges)){
-            try {
-                $return = $return & $this->adldap->user_modify($user,$adchanges);
-            } catch (adLDAPException $e) {
-                if ($this->cnf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
-                $return = false;
-            }
-        }
+            foreach($result as $user)
+                if(($info = $this->_getUserInfo($user['user'])))
+                    $out[$user['user']] = $info;
 
-        return $return;
+            $this->_unlockTables();
+            $this->_closeDB();
+        }
+        return $out;
     }
 
-    /**
-     * Initialize the AdLDAP library and connect to the server
-     */
-    function _init(){
-        if(!is_null($this->adldap)) return true;
+    // @inherit function joinGroup($user, $group)
+    // @inherit function leaveGroup($user, $group) {
 
-        // connect
-        try {
-            $this->adldap = new adLDAP($this->opts);
-            if (isset($this->opts['ad_username']) && isset($this->opts['ad_password'])) {
-                $this->canDo['getUsers'] = true;
+    /**
+     * Adds a user to a group.
+     *
+     * If $force is set to true non existing groups would be created.
+     *
+     * The database connection must already be established. Otherwise
+     * this function does nothing and returns 'false'.
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @author Andreas Gohr   <andi@splitbrain.org>
+     *
+     * @param   string $user    user to add to a group
+     * @param   string $group   name of the group
+     * @param   bool   $force   create missing groups
+     * @return  bool   true on success, false on error
+     */
+    protected function _addUserToGroup($user, $group, $force = false) {
+        $newgroup = 0;
+
+        if(($this->dbcon) && ($user)) {
+            $gid = $this->_getGroupID($group);
+            if(!$gid) {
+                if($force) { // create missing groups
+                    $sql = str_replace('%{group}', addslashes($group), $this->conf['addGroup']);
+                    $this->_modifyDB($sql);
+                    //group should now exists try again to fetch it
+                    $gid      = $this->_getGroupID($group);
+                    $newgroup = 1; // group newly created
+                }
             }
-            return true;
-        } catch (adLDAPException $e) {
-            if ($this->cnf['debug']) {
-                msg('AD Auth: '.$e->getMessage(), -1);
+            if(!$gid) return false; // group didn't exist and can't be created
+
+            $sql = $this->conf['addUserGroup'];
+            if(strpos($sql, '%{uid}') !== false) {
+                $uid = $this->_getUserID($user);
+                $sql = str_replace('%{uid}', addslashes($uid), $sql);
             }
-            $this->success = false;
-            $this->adldap  = null;
+            $sql = str_replace('%{user}', addslashes($user), $sql);
+            $sql = str_replace('%{gid}', addslashes($gid), $sql);
+            $sql = str_replace('%{group}', addslashes($group), $sql);
+            if($this->_modifyDB($sql) !== false) return true;
+
+            if($newgroup) { // remove previously created group on error
+                $sql = str_replace('%{gid}', addslashes($gid), $this->conf['delGroup']);
+                $sql = str_replace('%{group}', addslashes($group), $sql);
+                $this->_modifyDB($sql);
+            }
+        }
+        return false;
+    }
+
+    // @inherit function _delUserFromGroup($user $group)
+    // @inherit function _getGroups($user)
+    // @inherit function _getUserID($user)
+
+    /**
+     * Adds a new User to the database.
+     *
+     * The database connection must already be established
+     * for this function to work. Otherwise it will return
+     * 'false'.
+     *
+     * @param  string $user  login of the user
+     * @param  string $pwd   encrypted password
+     * @param  string $name  full name of the user
+     * @param  string $mail  email address
+     * @param  array  $grps  array of groups the user should become member of
+     * @return bool
+     *
+     * @author  Andreas Gohr <andi@splitbrain.org>
+     * @author  Chris Smith <chris@jalakai.co.uk>
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     */
+    protected function _addUser($user, $pwd, $name, $mail, $grps) {
+        if($this->dbcon && is_array($grps)) {
+            $sql = str_replace('%{user}', addslashes($user), $this->conf['addUser']);
+            $sql = str_replace('%{pass}', addslashes($pwd), $sql);
+            $sql = str_replace('%{name}', addslashes($name), $sql);
+            $sql = str_replace('%{email}', addslashes($mail), $sql);
+            if($this->_modifyDB($sql)) {
+                $uid = $this->_getUserID($user);
+            } else {
+                return false;
+            }
+
+            $group = '';
+            $gid = false;
+
+            if($uid) {
+                foreach($grps as $group) {
+                    $gid = $this->_addUserToGroup($user, $group, 1);
+                    if($gid === false) break;
+                }
+
+                if($gid !== false){
+                    return true;
+                } else {
+                    /* remove the new user and all group relations if a group can't
+                     * be assigned. Newly created groups will remain in the database
+                     * and won't be removed. This might create orphaned groups but
+                     * is not a big issue so we ignore this problem here.
+                     */
+                    $this->_delUser($user);
+                    $this->_debug("PgSQL err: Adding user '$user' to group '$group' failed.", -1, __LINE__, __FILE__);
+                }
+            }
         }
         return false;
     }
 
     /**
-     * return 1 if $user + $info match $filter criteria, 0 otherwise
+     * Opens a connection to a database and saves the handle for further
+     * usage in the object. The successful call to this functions is
+     * essential for most functions in this object.
      *
-     * @author   Chris Smith <chris@jalakai.co.uk>
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @return bool
      */
-    function _filter($user, $info) {
-        foreach ($this->_pattern as $item => $pattern) {
-            if ($item == 'user') {
-                if (!preg_match($pattern, $user)) return 0;
-            } else if ($item == 'grps') {
-                if (!count(preg_grep($pattern, $info['grps']))) return 0;
+    protected function _openDB() {
+        if(!$this->dbcon) {
+            $dsn = $this->conf['server'] ? 'host='.$this->conf['server'] : '';
+            $dsn .= ' port='.$this->conf['port'];
+            $dsn .= ' dbname='.$this->conf['database'];
+            $dsn .= ' user='.$this->conf['user'];
+            $dsn .= ' password='.$this->conf['password'];
+
+            $con = @pg_connect($dsn);
+            if($con) {
+                $this->dbcon = $con;
+                return true; // connection and database successfully opened
             } else {
-                if (!preg_match($pattern, $info[$item])) return 0;
+                $this->_debug(
+                        "PgSQL err: Connection to {$this->conf['user']}@{$this->conf['server']} not possible.",
+                        -1, __LINE__, __FILE__
+                    );
             }
+            return false; // connection failed
         }
-        return 1;
+        return true; // connection already open
     }
 
-    function _constructPattern($filter) {
-        $this->_pattern = array();
-        foreach ($filter as $item => $pattern) {
-//          $this->_pattern[$item] = '/'.preg_quote($pattern,"/").'/i';          // don't allow regex characters
-            $this->_pattern[$item] = '/'.str_replace('/','\/',$pattern).'/i';    // allow regex characters
+    /**
+     * Closes a database connection.
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     */
+    protected function _closeDB() {
+        if($this->dbcon) {
+            pg_close($this->dbcon);
+            $this->dbcon = 0;
         }
+    }
+
+    /**
+     * Sends a SQL query to the database and transforms the result into
+     * an associative array.
+     *
+     * This function is only able to handle queries that returns a
+     * table such as SELECT.
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @param  string $query  SQL string that contains the query
+     * @return array the result table
+     */
+    protected function _queryDB($query) {
+        $resultarray = array();
+        if($this->dbcon) {
+            $result = @pg_query($this->dbcon, $query);
+            if($result) {
+                while(($t = pg_fetch_assoc($result)) !== false)
+                    $resultarray[] = $t;
+                pg_free_result($result);
+                return $resultarray;
+            } else{
+                $this->_debug('PgSQL err: '.pg_last_error($this->dbcon), -1, __LINE__, __FILE__);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Executes an update or insert query. This differs from the
+     * MySQL one because it does NOT return the last insertID
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    protected function _modifyDB($query) {
+        if($this->dbcon) {
+            $result = @pg_query($this->dbcon, $query);
+            if($result) {
+                pg_free_result($result);
+                return true;
+            }
+            $this->_debug('PgSQL err: '.pg_last_error($this->dbcon), -1, __LINE__, __FILE__);
+        }
+        return false;
+    }
+
+    /**
+     * Start a transaction
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @param string $mode  could be 'READ' or 'WRITE'
+     * @return bool
+     */
+    protected function _lockTables($mode) {
+        if($this->dbcon) {
+            $this->_modifyDB('BEGIN');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Commit a transaction
+     *
+     * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     */
+    protected function _unlockTables() {
+        if($this->dbcon) {
+            $this->_modifyDB('COMMIT');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Escape a string for insertion into the database
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param  string  $string The string to escape
+     * @param  bool    $like   Escape wildcard chars as well?
+     * @return string
+     */
+    protected function _escape($string, $like = false) {
+        $string = pg_escape_string($string);
+        if($like) {
+            $string = addcslashes($string, '%_');
+        }
+        return $string;
     }
 }
