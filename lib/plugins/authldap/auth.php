@@ -19,6 +19,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * Constructor
      */
     function __construct(){
+        parent::__construct();
+
         global $conf;
         $this->cnf = $conf['auth']['ldap'];
 

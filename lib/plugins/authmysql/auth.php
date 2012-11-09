@@ -28,6 +28,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
     function __construct() {
+        parent::__construct();
+
         global $conf;
         $this->cnf = $conf['auth']['mysql'];
 

@@ -23,6 +23,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
      * @author  Christopher Smith <chris@jalakai.co.uk>
      */
     function __construct() {
+        parent::__construct();
         global $config_cascade;
 
         if (!@is_readable($config_cascade['plainauth.users']['default'])){

@@ -31,6 +31,8 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql
      * Constructor
      */
     function auth_plugin_authpgsql() {
+        parent::__construct();
+
         global $conf;
         $this->cnf = $conf['auth']['ad'];
 

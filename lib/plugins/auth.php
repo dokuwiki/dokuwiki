@@ -42,6 +42,9 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * able to operate. Set capabilities in $this->cando
      * array here
      *
+     * For future compatibility, sub classes should always include a call
+     * to parent::__constructor() in their constructors!
+     *
      * Set $this->success to false if checks fail
      *
      * @author  Christopher Smith <chris@jalakai.co.uk>
