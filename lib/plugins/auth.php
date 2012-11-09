@@ -416,21 +416,4 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
         global $conf;
         return ($_SESSION[DOKU_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'].'/sessionpurge'));
     }
-
-    /**
-     * loadConfig()
-     * merges the plugin's default settings with any local settings
-     * this function is automatically called through getConf()
-     */
-    function loadConfig() {
-        global $conf;
-
-        parent::loadConfig();
-
-        $this->conf['debug']          = $conf['debug'];
-        $this->conf['useacl']         = $conf['useacl'];
-        $this->conf['disableactions'] = $conf['disableactions'];
-        $this->conf['autopasswd']     = $conf['autopasswd'];
-        $this->conf['passcrypt']      = $conf['ssha'];
-    }
 }
