@@ -139,32 +139,13 @@ if (!class_exists('configuration')) {
     function _read_config($file) {
 
       if (!$file) return array();
+      if (!file_exists($file)) return array();
 
       $config = array();
 
       if ($this->_format == 'php') {
-
-        if(@file_exists($file)){
-            $contents = @php_strip_whitespace($file);
-        }else{
-            $contents = '';
-        }
-        $pattern = '/\$'.$this->_name.'\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$'.$this->_name.'|$))/s';
-        $matches=array();
-        preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
-
-        for ($i=0; $i<count($matches); $i++) {
-
-          // correct issues with the incoming data
-          // FIXME ... for now merge multi-dimensional array indices using ____
-          $key = preg_replace('/.\]\[./',CM_KEYMARKER,$matches[$i][1]);
-
-          // remove quotes from quoted strings & unescape escaped data
-          $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$matches[$i][2]);
-          $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
-
-          $config[$key] = $value;
-        }
+          include($file);
+          $config = ${$this->_name};
       }
 
       return $config;
