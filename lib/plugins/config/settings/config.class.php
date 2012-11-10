@@ -35,6 +35,7 @@ if (!class_exists('configuration')) {
           msg('No configuration metadata found at - '.htmlspecialchars($datafile),-1);
           return;
         }
+        $meta = array();
         include($datafile);
 
         if (isset($config['varname'])) $this->_name = $config['varname'];
@@ -68,6 +69,7 @@ if (!class_exists('configuration')) {
           $keys = array_merge(array_keys($this->_metadata),array_keys($default), array_keys($local), array_keys($protected));
           $keys = array_unique($keys);
 
+          $param = null;
           foreach ($keys as $key) {
             if (isset($this->_metadata[$key])) {
               $class = $this->_metadata[$key][0];
@@ -425,11 +427,9 @@ if (!class_exists('setting')) {
       $out = '';
 
       if ($fmt=='php') {
-        // translation string needs to be improved FIXME
-        $tr = array("\n"=>'\n', "\r"=>'\r', "\t"=>'\t', "\\" => '\\\\', "'" => '\\\'');
         $tr = array("\\" => '\\\\', "'" => '\\\'');
 
-        $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr($this->_local, $tr)."';\n";
+        $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr( cleanText($this->_local), $tr)."';\n";
       }
 
       return $out;
@@ -492,6 +492,33 @@ if (!class_exists('setting_string')) {
         return array($label,$input);
     }
   }
+}
+
+if (!class_exists('setting_text')) {
+    class setting_text extends setting {
+        function html(&$plugin, $echo=false) {
+            $value = '';
+            $disable = '';
+
+            if ($this->is_protected()) {
+                $value = $this->_protected;
+                $disable = 'disabled="disabled"';
+            } else {
+                if ($echo && $this->_error) {
+                    $value = $this->_input;
+                } else {
+                    $value = is_null($this->_local) ? $this->_default : $this->_local;
+                }
+            }
+
+            $key = htmlspecialchars($this->_key);
+            $value = formText($value);
+
+            $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+            $input = '<textarea id="config___'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
+            return array($label,$input);
+        }
+    }
 }
 
 if (!class_exists('setting_password')) {
