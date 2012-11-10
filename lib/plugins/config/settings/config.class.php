@@ -45,14 +45,8 @@ if (!class_exists('configuration')) {
         $this->_local_files = $config_cascade['main']['local'];
         $this->_protected_files = $config_cascade['main']['protected'];
 
-#        if (isset($file['default'])) $this->_default_file = $file['default'];
-#        if (isset($file['local'])) $this->_local_file = $file['local'];
-#        if (isset($file['protected'])) $this->_protected_file = $file['protected'];
-
         $this->locked = $this->_is_locked();
-
         $this->_metadata = array_merge($meta, $this->get_plugintpl_metadata($conf['template']));
-
         $this->retrieve_settings();
     }
 
@@ -147,7 +141,6 @@ if (!class_exists('configuration')) {
       if (!$file) return array();
 
       $config = array();
-#      $file = eval('return '.$file.';');
 
       if ($this->_format == 'php') {
 
@@ -195,9 +188,6 @@ if (!class_exists('configuration')) {
     function _out_footer() {
       $out = '';
       if ($this->_format == 'php') {
- #         if ($this->_protected_file) {
- #           $out .= "\n@include(".$this->_protected_file.");\n";
- #         }
           $out .= "\n// end auto-generated content\n";
       }
 
@@ -209,7 +199,6 @@ if (!class_exists('configuration')) {
     function _is_locked() {
       if (!$this->_local_files) return true;
 
-#      $local = eval('return '.$this->_local_file.';');
       $local = $this->_local_files[0];
 
       if (!is_writable(dirname($local))) return true;
@@ -425,8 +414,6 @@ if (!class_exists('setting')) {
       $out = '';
 
       if ($fmt=='php') {
-        // translation string needs to be improved FIXME
-        $tr = array("\n"=>'\n', "\r"=>'\r', "\t"=>'\t', "\\" => '\\\\', "'" => '\\\'');
         $tr = array("\\" => '\\\\', "'" => '\\\'');
 
         $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr($this->_local, $tr)."';\n";
