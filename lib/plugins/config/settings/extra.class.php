@@ -64,7 +64,7 @@ if (!class_exists('setting_authtype')) {
     		// reject disabled plugins
     		if ($plugin_controller->isdisabled($input)) {
 	    		$this->_error = true;
-	    		msg('Auth type ' . $input . ' is disabled.');
+	    		msg('Auth type ' . $input . ' is disabled.', -1);
 	    		return false;
     		}
 
@@ -74,21 +74,24 @@ if (!class_exists('setting_authtype')) {
 	    	// @TODO: throw an error in plugin controller instead of returning null
 	    	if (is_null($auth_plugin)) {
 	    		$this->_error = true;
-	    		msg('Cannot load Auth Plugin "' . $input . '"');
+	    		msg('Cannot load Auth Plugin "' . $input . '"', -1);
 	    		return false;
 	    	}
 
 	    	// verify proper instanciation (is this really a plugin?) @TODO use instanceof? impement interface?
 	    	if (is_object($auth_plugin) && !method_exists($auth_plugin, 'getPluginName')) {
 	    		$this->_error = true;
-				msg('Cannot create Auth Plugin "' . $input . '"');
+				msg('Cannot create Auth Plugin "' . $input . '"', -1);
 	    		return false;
 	    	}
     	}
 
-    	msg('Successfully changed auth system. Please re-login.');
-    	auth_logoff();
-
+        // did we change the auth type? logout
+        global $conf;
+        if($conf['authtype'] != $input) {
+    	    msg('Authentication system changed. Please re-login.');
+    	    auth_logoff();
+        }
     	return true;
     }
   }
