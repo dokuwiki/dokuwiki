@@ -15,7 +15,6 @@
  *   -------------------------------------------
  *   ''             - default class ('setting'), textarea, minimal input validation, setting output in quotes
  *   'string'       - single line text input, minimal input validation, setting output in quotes
- *   'text'         - multi line text input, minimal input validation, setting output in quotes
  *   'numeric'      - text input, accepts numbers and arithmetic operators, setting output without quotes
  *                    if given the '_min' and '_max' parameters are used for validation
  *   'numericopt'   - like above, but accepts empty values

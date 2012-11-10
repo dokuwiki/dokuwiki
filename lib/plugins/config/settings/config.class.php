@@ -409,7 +409,7 @@ if (!class_exists('setting')) {
         }
 
         $key = htmlspecialchars($this->_key);
-        $value = htmlspecialchars($value);
+        $value = formText($value);
 
         $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
         $input = '<textarea rows="3" cols="40" id="config___'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
@@ -492,33 +492,6 @@ if (!class_exists('setting_string')) {
         return array($label,$input);
     }
   }
-}
-
-if (!class_exists('setting_text')) {
-    class setting_text extends setting {
-        function html(&$plugin, $echo=false) {
-            $value = '';
-            $disable = '';
-
-            if ($this->is_protected()) {
-                $value = $this->_protected;
-                $disable = 'disabled="disabled"';
-            } else {
-                if ($echo && $this->_error) {
-                    $value = $this->_input;
-                } else {
-                    $value = is_null($this->_local) ? $this->_default : $this->_local;
-                }
-            }
-
-            $key = htmlspecialchars($this->_key);
-            $value = formText($value);
-
-            $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-            $input = '<textarea id="config___'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
-            return array($label,$input);
-        }
-    }
 }
 
 if (!class_exists('setting_password')) {
