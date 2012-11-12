@@ -11,6 +11,7 @@
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
+ * @author Jakub A. Těšínský (j@kub.cz)
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';
