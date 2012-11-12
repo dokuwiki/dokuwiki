@@ -176,10 +176,10 @@ function check(){
         msg('mb_string extension not available - PHP only replacements will be used',0);
     }
 
-    if (!preg_match("/^.$/u", "ñ")) {
+    if (!UTF8_PREGSUPPORT) {
         msg('PHP is missing UTF-8 support in Perl-Compatible Regular Expressions (PCRE)', -1);
     }
-    if (!preg_match("/^\pL$/u", "ñ")) {
+    if (!UTF8_PROPERTYSUPPORT) {
         msg('PHP is missing Unicode properties support in Perl-Compatible Regular Expressions (PCRE)', -1);
     }
 
