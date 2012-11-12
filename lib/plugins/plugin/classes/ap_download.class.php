@@ -200,31 +200,26 @@ class ap_download extends ap_manage {
         if (in_array($ext, array('tar','bz','gz'))) {
             switch($ext){
                 case 'bz':
-                    $compress_type = TarLib::COMPRESS_BZIP;
+                    $compress_type = Tar::COMPRESS_BZIP;
                     break;
                 case 'gz':
-                    $compress_type = TarLib::COMPRESS_GZIP;
+                    $compress_type = Tar::COMPRESS_GZIP;
                     break;
                 default:
-                    $compress_type = TarLib::COMPRESS_NONE;
+                    $compress_type = Tar::COMPRESS_NONE;
             }
 
-            $tar = new TarLib($file, $compress_type);
-            if($tar->_initerror < 0){
+            $tar = new Tar();
+            try {
+                $tar->open($file, $compress_type);
+                $tar->extract($target);
+                return true;
+            }catch(Exception $e){
                 if($conf['allowdebug']){
-                    msg('TarLib Error: '.$tar->TarErrorStr($tar->_initerror),-1);
+                    msg('Tar Error: '.$e->getMessage().' ['.$e->getFile().':'.$e->getLine().']',-1);
                 }
                 return false;
             }
-            $ok = $tar->Extract(TarLib::FULL_ARCHIVE, $target, '', 0777);
-
-            if($ok<1){
-                if($conf['allowdebug']){
-                    msg('TarLib Error: '.$tar->TarErrorStr($ok),-1);
-                }
-                return false;
-            }
-            return true;
         } else if ($ext == 'zip') {
 
             $zip = new ZipLib();
