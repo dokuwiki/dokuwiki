@@ -1,4 +1,4 @@
 ====== Envoyer un nouveau mot de passe ======
 
-Veuillez compléter les champs ci-dessous pour obtenir un nouveau mot de passe pour votre compte dans ce wiki. Un lien de confirmation vous sera envoyé à l'adresse de courriel utilisée lors de votre enregistrement.
+Veuillez compléter les champs ci-dessous pour obtenir un nouveau mot de passe pour votre compte dans ce wiki. Un lien de confirmation vous sera expédié à l'adresse de courriel utilisée lors de votre enregistrement.
 

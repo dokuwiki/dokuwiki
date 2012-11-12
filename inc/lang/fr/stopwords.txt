@@ -1,5 +1,5 @@
-# Cette liste regroupe des mots ignorés par l'indexeur
-# Chaque ligne comporte un mot
+# Cette liste regroupe les mots ignorés par l'indexeur
+# Un seul mot par ligne
 # Les fins de ligne de ce fichier doivent être de type UNIX
 # Les mots de moins de 3 lettres sont ignorés par défaut.
 # Cette liste est basée sur http://www.ranks.nl/stopwords/
