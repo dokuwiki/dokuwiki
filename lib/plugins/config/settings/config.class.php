@@ -6,6 +6,9 @@
  *  @author  Ben Coburn <btcoburn@silicodon.net>
  */
 
+
+if(!defined('CM_KEYMARKER')) define('CM_KEYMARKER','____');
+
 if (!class_exists('configuration')) {
 
   class configuration {
