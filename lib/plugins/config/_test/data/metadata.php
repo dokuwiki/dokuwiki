@@ -9,3 +9,5 @@ $meta['str3'] = array('string');
 $meta['str4'] = array('string');
 $meta['str5'] = array('string');
 
+$meta['arr1'] = array('array');
+

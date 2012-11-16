@@ -26,6 +26,8 @@ class plugin_config_configuration_test extends DokuWikiTest {
         $this->assertEquals('Hello World', $conf['str3']);
         $this->assertEquals("Hello 'World'", $conf['str4']);
         $this->assertEquals('Hello "World"', $conf['str5']);
+
+        $this->assertEquals(array('foo', 'bar', 'baz'), $conf['arr1']);
     }
 
 }
