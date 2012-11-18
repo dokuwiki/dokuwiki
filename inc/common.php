@@ -320,13 +320,15 @@ function idfilter($id, $ue = true) {
     if($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
     } elseif(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
-        $conf['userewrite']
+        $conf['userewrite'] &&
+        strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') === false
     ) {
         $id = strtr($id, ':', ';');
     }
     if($ue) {
         $id = rawurlencode($id);
         $id = str_replace('%3A', ':', $id); //keep as colon
+        $id = str_replace('%3B', ';', $id); //keep as semicolon
         $id = str_replace('%2F', '/', $id); //keep as slash
     }
     return $id;
