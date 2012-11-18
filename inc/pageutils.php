@@ -645,6 +645,7 @@ function utf8_decodeFN($file){
  * @return string|false the full page id of the found page, false if any
  */
 function page_findnearest($page){
+    if (!$page) return false;
     global $ID;
 
     $ns = $ID;
