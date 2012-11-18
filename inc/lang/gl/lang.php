@@ -269,9 +269,9 @@ $lang['i_writeerr']            = 'Non se puido crear <code>%s</code>. Terás de 
 $lang['i_badhash']             = 'dokuwiki.php irrecoñecíbel ou modificado (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - ilegal ou valor baleiro';
 $lang['i_success']             = 'A configuración rematou correctamente. Agora podes eliminar o arquivo install.php. Continúa deica o
-                        <a href="doku.php?id=wiki;welcome">teu novo DokuWiki</a>.';
+                        <a href="doku.php?id=wiki:welcome">teu novo DokuWiki</a>.';
 $lang['i_failure']             = 'Houbo algúns erros ao tentar escribir os arquivos de configuración. Pode que precises solucionalos de xeito manual antes
-                         de poderes empregar <a href="doku.php?id=wiki;welcome">o teu novo DokuWiki</a>.';
+                         de poderes empregar <a href="doku.php?id=wiki:welcome">o teu novo DokuWiki</a>.';
 $lang['i_policy']              = 'Regras iniciais da ACL';
 $lang['i_pol0']                = 'Wiki Aberto (lectura, escritura, subida de arquivos para todas as persoas)';
 $lang['i_pol1']                = 'Wiki Público (lectura para todas as persoas, escritura e subida de arquivos para usuarios rexistrados)';

@@ -223,8 +223,8 @@ $lang['i_permfail']            = 'Dokuwiki ei saa kirjutada faili <code>%s</code
 $lang['i_confexists']          = '<code>%s</code> on juba olemas';
 $lang['i_writeerr']            = 'Faili <code>%s</code> ei lubata tekitada. Kontrolli kataloogi ja faili õigusi.';
 $lang['i_badval']              = '<code>%s</code> - lubamatu või tühi väärtus';
-$lang['i_success']             = 'Seadistamine on õnnelikult lõpule viidud. Sa võid nüüd kustutada faili install.php. Alusta oma <a href="doku.php?id=wiki;welcome">uue DokuWiki</a> täitmist.';
-$lang['i_failure']             = 'Konfiguratsiooni faili kirjutamisel esines vigu. Võimalik, et pead need käsitsi parandama enne <a href="doku.php?id=wiki;welcome">uue DokuWiki</a> täitma asumist.';
+$lang['i_success']             = 'Seadistamine on õnnelikult lõpule viidud. Sa võid nüüd kustutada faili install.php. Alusta oma <a href="doku.php?id=wiki:welcome">uue DokuWiki</a> täitmist.';
+$lang['i_failure']             = 'Konfiguratsiooni faili kirjutamisel esines vigu. Võimalik, et pead need käsitsi parandama enne <a href="doku.php?id=wiki:welcome">uue DokuWiki</a> täitma asumist.';
 $lang['i_policy']              = 'Wiki õiguste algne poliitika';
 $lang['i_pol0']                = 'Avatud (lugemine, kirjutamine ja üleslaadimine kõigile lubatud)';
 $lang['i_pol1']                = 'Avalikuks lugemiseks (lugeda saavad kõik, kirjutada ja üles laadida vaid registreeritud kasutajad)';
