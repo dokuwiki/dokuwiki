@@ -555,6 +555,7 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
+            if ($val === '') continue;
             $headers .= "$key: $val".MAILHEADER_EOL;
         }
         return $headers;
