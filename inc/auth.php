@@ -34,38 +34,37 @@ define('AUTH_ADMIN', 255);
  */
 function auth_setup() {
     global $conf;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
     global $AUTH_ACL;
     global $lang;
+    global $config_cascade;
+    global $plugin_controller;
     $AUTH_ACL = array();
 
     if(!$conf['useacl']) return false;
 
-    // load the the backend auth functions and instantiate the auth object XXX
-    if(@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
-        require_once(DOKU_INC.'inc/auth/basic.class.php');
-        require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
-
-        $auth_class = "auth_".$conf['authtype'];
-        if(class_exists($auth_class)) {
-            $auth = new $auth_class();
-            if($auth->success == false) {
-                // degrade to unauthenticated user
-                unset($auth);
-                auth_logoff();
-                msg($lang['authtempfail'], -1);
-            }
-        } else {
-            nice_die($lang['authmodfailed']);
-        }
-    } else {
-        nice_die($lang['authmodfailed']);
+    // try to load auth backend from plugins
+    foreach ($plugin_controller->getList('auth') as $plugin) {
+    	if ($conf['authtype'] === $plugin) {
+    		$auth = $plugin_controller->load('auth', $plugin);
+    		break;
+    	}
     }
 
-    if(!isset($auth) || !$auth) return false;
+	if(!$auth){
+        msg($lang['authtempfail'], -1);
+        return false;
+    }
+
+	if ($auth && $auth->success == false) {
+		// degrade to unauthenticated user
+	    unset($auth);
+	    auth_logoff();
+	    msg($lang['authtempfail'], -1);
+	}
 
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
@@ -91,7 +90,9 @@ function auth_setup() {
     }
 
     // apply cleaning
-    $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
+    if (true === $auth->success) {
+    	$_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+    }
 
     if($INPUT->str('authtok')) {
         // when an authentication token is given, trust the session

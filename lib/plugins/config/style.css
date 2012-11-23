@@ -104,6 +104,10 @@
     height: 4em;
 }
 
+#config__manager td textarea.edit:focus {
+    height: 10em;
+}
+
 #config__manager tr .input,
 #config__manager tr input,
 #config__manager tr textarea,

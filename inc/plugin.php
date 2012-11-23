@@ -22,6 +22,7 @@ class DokuWiki_Plugin {
      *
      * Needs to return a associative array with the following values:
      *
+     * base   - the plugin's base name (eg. the directory it needs to be installed in)
      * author - Author of the plugin
      * email  - Email address to contact the author
      * date   - Last modified date of the plugin in YYYY-MM-DD format
@@ -133,12 +134,20 @@ class DokuWiki_Plugin {
      * getConf($setting)
      *
      * use this function to access plugin configuration variables
+     *
+     * @param string $setting the setting to access
+     * @param mixed  $notset  what to return if the setting is not available
+     * @return mixed
      */
-    function getConf($setting){
+    function getConf($setting, $notset=false){
 
         if (!$this->configloaded){ $this->loadConfig(); }
 
-        return $this->conf[$setting];
+        if(isset($this->conf[$setting])){
+            return $this->conf[$setting];
+        }else{
+            return $notset;
+        }
     }
 
     /**

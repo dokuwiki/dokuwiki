@@ -1,22 +1,26 @@
 <?php
+// must be run within Dokuwiki
+if(!defined('DOKU_INC')) die();
+
 /**
- * auth/basic.class.php
+ * Auth Plugin Prototype
  *
  * foundation authorisation class
  * all auth classes should inherit from this class
  *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author    Chris Smith <chris@jalakai.co.uk>
+ * @author    Jan Schumann <js@jschumann-it.com>
  */
-
-class auth_basic {
-    var $success = true;
+class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
+    public $success = true;
 
     /**
-     * Posible things an auth backend module may be able to
+     * Possible things an auth backend module may be able to
      * do. The things a backend can do need to be set to true
      * in the constructor.
      */
-    var $cando = array (
+    protected $cando = array(
         'addUser'     => false, // can Users be created?
         'delUser'     => false, // can Users be deleted?
         'modLogin'    => false, // can login names be changed?
@@ -28,7 +32,7 @@ class auth_basic {
         'getUserCount'=> false, // can the number of users be retrieved?
         'getGroups'   => false, // can a list of available groups be retrieved?
         'external'    => false, // does the module do external auth checking?
-        'logout'      => true,  // can the user logout again? (eg. not possible with HTTP auth)
+        'logout'      => true, // can the user logout again? (eg. not possible with HTTP auth)
     );
 
     /**
@@ -38,11 +42,14 @@ class auth_basic {
      * able to operate. Set capabilities in $this->cando
      * array here
      *
+     * For future compatibility, sub classes should always include a call
+     * to parent::__constructor() in their constructors!
+     *
      * Set $this->success to false if checks fail
      *
      * @author  Christopher Smith <chris@jalakai.co.uk>
      */
-    function __construct() {
+    public function __construct() {
         // the base class constructor does nothing, derived class
         // constructors do the real work
     }
@@ -58,29 +65,30 @@ class auth_basic {
      * shortcut capabilities start with uppercase letter
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
+     * @param   string $cap the capability to check
      * @return  bool
      */
-    function canDo($cap) {
-        switch($cap){
+    public function canDo($cap) {
+        switch($cap) {
             case 'Profile':
                 // can at least one of the user's properties be changed?
-                return ( $this->cando['modPass']  ||
-                        $this->cando['modName']  ||
-                        $this->cando['modMail'] );
+                return ($this->cando['modPass'] ||
+                    $this->cando['modName'] ||
+                    $this->cando['modMail']);
                 break;
             case 'UserMod':
                 // can at least anything be changed?
-                return ( $this->cando['modPass']   ||
-                        $this->cando['modName']   ||
-                        $this->cando['modMail']   ||
-                        $this->cando['modLogin']  ||
-                        $this->cando['modGroups'] ||
-                        $this->cando['modMail'] );
+                return ($this->cando['modPass'] ||
+                    $this->cando['modName'] ||
+                    $this->cando['modMail'] ||
+                    $this->cando['modLogin'] ||
+                    $this->cando['modGroups'] ||
+                    $this->cando['modMail']);
                 break;
             default:
                 // print a helping message for developers
-                if(!isset($this->cando[$cap])){
-                    msg("Check for unknown capability '$cap' - Do you use an outdated Plugin?",-1);
+                if(!isset($this->cando[$cap])) {
+                    msg("Check for unknown capability '$cap' - Do you use an outdated Plugin?", -1);
                 }
                 return $this->cando[$cap];
         }
@@ -95,10 +103,10 @@ class auth_basic {
      *
      * @author Gabriel Birke <birke@d-scribe.de>
      * @param string $type Modification type ('create', 'modify', 'delete')
-     * @param array $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
+     * @param array  $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
      * @return mixed Result from the modification function or false if an event handler has canceled the action
      */
-    function triggerUserMod($type, $params) {
+    public function triggerUserMod($type, $params) {
         $validTypes = array(
             'create' => 'createUser',
             'modify' => 'modifyUser',
@@ -107,9 +115,9 @@ class auth_basic {
         if(empty($validTypes[$type]))
             return false;
         $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
-        $evt = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
-        if ($evt->advise_before(true)) {
-            $result = call_user_func_array(array($this, $validTypes[$type]), $params);
+        $evt       = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
+        if($evt->advise_before(true)) {
+            $result                           = call_user_func_array(array($this, $validTypes[$type]), $params);
             $evt->data['modification_result'] = $result;
         }
         $evt->advise_after();
@@ -126,7 +134,7 @@ class auth_basic {
      * @see     auth_logoff()
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
-    function logOff(){
+    public function logOff() {
     }
 
     /**
@@ -162,7 +170,7 @@ class auth_basic {
      * @param   bool    $sticky  Cookie should not expire
      * @return  bool             true on successful auth
      */
-    function trustExternal($user,$pass,$sticky=false){
+    public function trustExternal($user, $pass, $sticky = false) {
         /* some example:
 
         global $USERINFO;
@@ -193,9 +201,11 @@ class auth_basic {
      * May be ommited if trustExternal is used.
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
+     * @param   string $user the user name
+     * @param   string $pass the clear text password
      * @return  bool
      */
-    function checkPass($user,$pass){
+    public function checkPass($user, $pass) {
         msg("no valid authorisation system in use", -1);
         return false;
     }
@@ -211,9 +221,10 @@ class auth_basic {
      * grps array   list of groups the user is in
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
+     * @param   string $user the user name
      * @return  array containing user data or false
      */
-    function getUserData($user) {
+    public function getUserData($user) {
         if(!$this->cando['external']) msg("no valid authorisation system in use", -1);
         return false;
     }
@@ -230,8 +241,14 @@ class auth_basic {
      * Set addUser capability when implemented
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
+     * @param  string     $user
+     * @param  string     $pass
+     * @param  string     $name
+     * @param  string     $mail
+     * @param  null|array $grps
+     * @return bool|null
      */
-    function createUser($user,$pass,$name,$mail,$grps=null){
+    public function createUser($user, $pass, $name, $mail, $grps = null) {
         msg("authorisation method does not allow creation of new users", -1);
         return null;
     }
@@ -242,11 +259,11 @@ class auth_basic {
      * Set the mod* capabilities according to the implemented features
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
-     * @param   $user      nick of the user to be changed
-     * @param   $changes   array of field/value pairs to be changed (password will be clear text)
+     * @param   string $user    nick of the user to be changed
+     * @param   array  $changes array of field/value pairs to be changed (password will be clear text)
      * @return  bool
      */
-    function modifyUser($user, $changes) {
+    public function modifyUser($user, $changes) {
         msg("authorisation method does not allow modifying of user data", -1);
         return false;
     }
@@ -260,7 +277,7 @@ class auth_basic {
      * @param   array  $users
      * @return  int    number of users deleted
      */
-    function deleteUsers($users) {
+    public function deleteUsers($users) {
         msg("authorisation method does not allow deleting of users", -1);
         return false;
     }
@@ -271,9 +288,11 @@ class auth_basic {
      *
      * Set getUserCount capability when implemented
      *
-     * @author  Chris Smith <chris@jalakai.co.uk>
+     * @author Chris Smith <chris@jalakai.co.uk>
+     * @param  array $filter array of field/pattern pairs, empty array for no filter
+     * @return int
      */
-    function getUserCount($filter=array()) {
+    public function getUserCount($filter = array()) {
         msg("authorisation method does not provide user counts", -1);
         return 0;
     }
@@ -284,12 +303,12 @@ class auth_basic {
      * Set getUsers capability when implemented
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
-     * @param   start     index of first user to be returned
-     * @param   limit     max number of users to be returned
-     * @param   filter    array of field/pattern pairs, null for no filter
-     * @return  array of userinfo (refer getUserData for internal userinfo details)
+     * @param   int   $start     index of first user to be returned
+     * @param   int   $limit     max number of users to be returned
+     * @param   array $filter    array of field/pattern pairs, null for no filter
+     * @return  array list of userinfo (refer getUserData for internal userinfo details)
      */
-    function retrieveUsers($start=0,$limit=-1,$filter=null) {
+    public function retrieveUsers($start = 0, $limit = -1, $filter = null) {
         msg("authorisation method does not support mass retrieval of user data", -1);
         return array();
     }
@@ -300,9 +319,10 @@ class auth_basic {
      * Set addGroup capability when implemented
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
+     * @param   string $group
      * @return  bool
      */
-    function addGroup($group) {
+    public function addGroup($group) {
         msg("authorisation method does not support independent group creation", -1);
         return false;
     }
@@ -313,9 +333,11 @@ class auth_basic {
      * Set getGroups capability when implemented
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
+     * @param   int $start
+     * @param   int $limit
      * @return  array
      */
-    function retrieveGroups($start=0,$limit=0) {
+    public function retrieveGroups($start = 0, $limit = 0) {
         msg("authorisation method does not support group list retrieval", -1);
         return array();
     }
@@ -325,8 +347,10 @@ class auth_basic {
      *
      * When your backend is caseinsensitive (eg. you can login with USER and
      * user) then you need to overwrite this method and return false
+     *
+     * @return bool
      */
-    function isCaseSensitive(){
+    public function isCaseSensitive() {
         return true;
     }
 
@@ -340,10 +364,10 @@ class auth_basic {
      * This should be used to enforce username restrictions.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @param string $user - username
-     * @param string - the cleaned username
+     * @param string $user username
+     * @return string the cleaned username
      */
-    function cleanUser($user){
+    public function cleanUser($user) {
         return $user;
     }
 
@@ -359,13 +383,12 @@ class auth_basic {
      * Groupnames are to be passed without a leading '@' here.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @param string $group - groupname
-     * @param string - the cleaned groupname
+     * @param  string $group groupname
+     * @return string the cleaned groupname
      */
-    function cleanGroup($group){
+    public function cleanGroup($group) {
         return $group;
     }
-
 
     /**
      * Check Session Cache validity [implement only where required/possible]
@@ -392,10 +415,25 @@ class auth_basic {
      * @author Andreas Gohr <andi@splitbrain.org>
      * @return bool
      */
-    function useSessionCache($user){
+    public function useSessionCache($user) {
         global $conf;
         return ($_SESSION[DOKU_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'].'/sessionpurge'));
     }
 
+    /**
+     * Overrides the standard config loading to integrate old auth module style configs
+     *
+     * @deprecated 2012-11-09
+     */
+    public function loadConfig(){
+        global $conf;
+        $plugin = $this->getPluginName();
+
+        $default = $this->readDefaultSettings();
+        $oldconf = array();
+        if(isset($conf['auth'][$plugin])) $oldconf = (array) $conf['auth'][$plugin];
+
+        $conf['plugin'][$plugin] = array_merge($default, $oldconf, $conf['plugin'][$plugin]);
+        $this->configloaded = true;
+    }
 }
-//Setup VIM: ex: et ts=2 :
