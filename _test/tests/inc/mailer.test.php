@@ -7,6 +7,14 @@ class TestMailer extends Mailer {
     public function prop($name){
         return $this->$name;
     }
+
+    public function &propRef($name) {
+        return $this->$name;
+    }
+
+    public function prepareHeaders() {
+        return parent::prepareHeaders();
+    }
 }
 
 class mailer_test extends DokuWikiTest {
@@ -90,5 +98,14 @@ class mailer_test extends DokuWikiTest {
         }
     }
 
+    function test_emptyBCCorCC() {
+        $mail = new TestMailer();
+        $headers = &$mail->propRef('headers');
+        $headers['Bcc'] = '';
+        $headers['Cc'] = '';
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Bcc found in headers.');
+    }
 }
 //Setup VIM: ex: et ts=4 :

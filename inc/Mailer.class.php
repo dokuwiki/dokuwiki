@@ -553,11 +553,22 @@ class Mailer {
      * @returns string the headers
      */
     protected function prepareHeaders() {
+        $this->removeEmptyBccOrCcHeader();
         $headers = '';
         foreach($this->headers as $key => $val) {
             $headers .= "$key: $val".MAILHEADER_EOL;
         }
         return $headers;
+    }
+
+    /**
+     * Removes empty BCC and CC Header.
+     *
+     * Empty BCC/CC Header can cause an error with Microsoft IIS.
+     */
+    protected function removeEmptyBccOrCcHeader() {
+        if (isset($this->headers['Bcc']) && empty($this->headers['Bcc'])) unset($this->headers['Bcc']);
+        if (isset($this->headers['Cc']) && empty($this->headers['Cc'])) unset($this->headers['Cc']);
     }
 
     /**
