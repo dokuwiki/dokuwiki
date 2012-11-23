@@ -98,6 +98,9 @@ class mailer_test extends DokuWikiTest {
         }
     }
 
+    /**
+     * @see https://forum.dokuwiki.org/post/35822
+     */
     function test_emptyBCCorCC() {
         $mail = new TestMailer();
         $headers = &$mail->propRef('headers');
