@@ -538,6 +538,10 @@ function auth_aclcheck($id, $user, $groups) {
     $ci = '';
     if(!$auth->isCaseSensitive()) $ci = 'ui';
 
+    if(!$auth->isCaseSensitive()) {
+        $user   = utf8_strtolower($user);
+        $groups = array_map('utf8_strtolower', $groups);
+    }
     $user   = $auth->cleanUser($user);
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
     $user   = auth_nameencode($user);
@@ -566,6 +570,7 @@ function auth_aclcheck($id, $user, $groups) {
         foreach($matches as $match) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
             $acl   = preg_split('/\s+/', $match);
+            if(!$auth->isCaseSensitive()) $acl[1] = utf8_strtolower($acl[1]);
             if(!in_array($acl[1], $groups)) {
                 continue;
             }
@@ -593,6 +598,7 @@ function auth_aclcheck($id, $user, $groups) {
             foreach($matches as $match) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
                 $acl   = preg_split('/\s+/', $match);
+                if(!$auth->isCaseSensitive()) $acl[1] = utf8_strtolower($acl[1]);
                 if(!in_array($acl[1], $groups)) {
                     continue;
                 }
