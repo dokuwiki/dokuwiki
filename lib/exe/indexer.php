@@ -181,6 +181,8 @@ function sendDigest() {
     global $conf;
     global $USERINFO;
 
+    $sent = false;
+
     // remember current user info
     $olduinfo = $USERINFO;
     $olduser  = $_SERVER['REMOTE_USER'];
@@ -236,9 +238,11 @@ function sendDigest() {
                 foreach($change_ids as $change_id) {
                     subscription_send_digest($USERINFO['mail'], $change_id,
                                              $lastupdate);
+                    $sent = true;
                 }
             } elseif ($style === 'list') {
                 subscription_send_list($USERINFO['mail'], $change_ids, $id);
+                $sent = true;
             }
             // TODO: Handle duplicate subscriptions.
 
@@ -252,7 +256,7 @@ function sendDigest() {
     $USERINFO = $olduinfo;
     $_SERVER['REMOTE_USER'] = $olduser;
     echo 'sendDigest(): finished'.NL;
-    return true;
+    return $sent;
 }
 
 /**
