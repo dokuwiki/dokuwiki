@@ -7,28 +7,25 @@ class auth_acl_caseinsensitive_auth extends auth_basic {
 }
 
 class auth_acl_caseinsensitive_test extends DokuWikiTest {
-    protected $oldConf;
     protected $oldAuth;
     protected $oldAuthAcl;
 
-    function setup() {
-        global $conf;
+    function setUp() {
+        parent::setUp();
         global $auth;
         global $AUTH_ACL;
 
-        $this->oldConf    = $conf;
         $this->oldAuth    = $auth;
         $this->oldAuthAcl = $AUTH_ACL;
 
         $auth = new auth_acl_caseinsensitive_auth();
     }
 
-    function teardown() {
+    function tearDown() {
         global $conf;
         global $AUTH_ACL;
         global $auth;
 
-        $conf     = $this->oldConf;
         $auth     = $this->oldAuth;
         $AUTH_ACL = $this->oldAuthAcl;
     }

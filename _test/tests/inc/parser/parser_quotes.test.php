@@ -3,8 +3,8 @@ require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
 
-    function setup() {
-        parent::setup();
+    function setUp() {
+        parent::setUp();
         global $conf;
         $conf['typography'] = 2;
     }

@@ -3,8 +3,8 @@ require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
 
-    function setup() {
-        parent::setup();
+    function setUp() {
+        parent::setUp();
         $this->P->addMode('footnote',new Doku_Parser_Mode_Footnote());
     }
 
