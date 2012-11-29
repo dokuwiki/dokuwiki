@@ -7,7 +7,6 @@ class ap_download extends ap_manage {
      * Initiate the plugin download
      */
     function process() {
-        global $lang;
         global $INPUT;
 
         $plugin_url = $INPUT->str('url');
@@ -45,7 +44,6 @@ class ap_download extends ap_manage {
      * Process the downloaded file
      */
     function download($url, $overwrite=false) {
-        global $lang;
         // check the url
         $matches = array();
         if (!preg_match("/[^\/]*$/", $url, $matches) || !$matches[0]) {
@@ -241,7 +239,7 @@ class ap_download extends ap_manage {
      * if neither bz, gz or zip are recognized, tar is assumed.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @returns false if the file can't be read, otherwise an "extension"
+     * @returns boolean|string false if the file can't be read, otherwise an "extension"
      */
     function guess_archive($file){
         $fh = fopen($file,'rb');

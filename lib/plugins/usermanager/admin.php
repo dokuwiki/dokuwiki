@@ -73,8 +73,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
-        global $ID;
-
         if (is_null($this->_auth)) return false;
 
         // extract the command and any specific parameters
@@ -308,7 +306,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
         $class = $cando ? '' : ' class="disabled"';
-        $disabled = $cando ? '' : ' disabled="disabled"';
         echo str_pad('',$indent);
 
         if($name == 'userpass'){
@@ -549,7 +546,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * retrieve & clean user data from the form
      *
-     * @return  array(user, password, full name, email, array(groups))
+     * @return array (user, password, full name, email, array(groups))
      */
     function _retrieveUser($clean=true) {
         global $auth;

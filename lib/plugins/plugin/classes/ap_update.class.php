@@ -5,8 +5,6 @@ class ap_update extends ap_download {
     var $overwrite = true;
 
     function process() {
-        global $lang;
-
         $plugin_url = $this->plugin_readlog($this->plugin, 'url');
         $this->download($plugin_url, $this->overwrite);
         return '';

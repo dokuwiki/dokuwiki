@@ -84,13 +84,13 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      *
      * Usually you should only need the $match param.
      *
-     * @param   $match   string    The text matched by the patterns
-     * @param   $state   int       The lexer state for the match
-     * @param   $pos     int       The character position of the matched text
-     * @param   $handler Doku_Handler Reference to the Doku_Handler object
-     * @return  array              Return an array with all data you want to use in render
+     * @param   string       $match   The text matched by the patterns
+     * @param   int          $state   The lexer state for the match
+     * @param   int          $pos     The character position of the matched text
+     * @param   Doku_Handler $handler Reference to the Doku_Handler object
+     * @return  array Return an array with all data you want to use in render
      */
-    function handle($match, $state, $pos, &$handler){
+    function handle($match, $state, $pos, Doku_Handler &$handler){
         trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
@@ -117,7 +117,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * @param   $data     array         data created by handler()
      * @return  boolean                 rendered correctly?
      */
-    function render($format, &$renderer, $data) {
+    function render($format, Doku_Renderer &$renderer, $data) {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
 
     }
