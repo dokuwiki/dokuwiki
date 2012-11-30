@@ -1126,36 +1126,13 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
         $to = $data['addresslist'];
         if(empty($to)) return false;
         $tpl = 'subscr_single';
-    } elseif($who == 'register') {
-        if(empty($conf['registernotify'])) return false;
-        $text = rawLocale('registermail');
-        $to   = $conf['registernotify'];
     } else {
         return false; //just to be safe
     }
 
     // prepare content
-    if($who == 'register') {
-        $subject = $lang['mail_new_user'].' '.$summary;
-    } else {
-        $subscription = new Subscription();
-        return $subscription->send_diff($to, $tpl, $id, $rev, $summary);
-    }
-
-
-    // send mail
-    $mail = new Mailer();
-    $mail->to($to);
-    $mail->subject($subject);
-    $mail->setBody($text, $trep, $hrep);
-    if($who == 'subscribers') {
-        $mail->setHeader(
-            'List-Unsubscribe',
-            '<'.wl($id, array('do'=> 'subscribe'), true, '&').'>',
-            false
-        );
-    }
-    return $mail->send();
+    $subscription = new Subscription();
+    return $subscription->send_diff($to, $tpl, $id, $rev, $summary);
 }
 
 /**

@@ -429,9 +429,18 @@ class Subscription {
         );
     }
 
+    /**
+     * Send a notify mail on new registration
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $login    login name of the new user
+     * @param string $fullname full name of the new user
+     * @param string $email    email address of the new user
+     * @return bool true if a mail was sent
+     */
     public function send_register($login, $fullname, $email) {
         global $conf;
-        global $ID;
         if(empty($conf['registernotify'])) return false;
 
         $trep = array(
@@ -443,7 +452,7 @@ class Subscription {
         return $this->send(
             $conf['registernotify'],
             'new_user',
-            $ID,
+            $login,
             'registermail',
             $trep
         );
@@ -486,10 +495,10 @@ class Subscription {
      * @param string $subscriber_mail The target mail address
      * @param array  $ids             Array of ids
      * @param string $ns_id           The id of the namespace
-     * @return bool
+     * @return bool true if a mail was sent
      */
     protected function send_list($subscriber_mail, $ids, $ns_id) {
-        if(count($ids) === 0) return;
+        if(count($ids) === 0) return false;
 
         $tlist = '';
         $hlist = '<ul>';
@@ -526,7 +535,7 @@ class Subscription {
      * @param string $subscriber_mail The target mail address
      * @param string $subject         The lang id of the mail subject (without the
      *                                prefix “mail_”)
-     * @param string $id              The page or namespace id
+     * @param string $context         The context of this mail, eg. page or namespace id
      * @param string $template        The name of the mail template
      * @param array  $trep            Predefined parameters used to parse the
      *                                template (in text format)
@@ -534,17 +543,11 @@ class Subscription {
      *                                template (in HTML format), null to default to $trep
      * @return bool
      */
-    protected function send($subscriber_mail, $subject, $id, $template, $trep, $hrep = null) {
+    protected function send($subscriber_mail, $subject, $context, $template, $trep, $hrep = null) {
         global $lang;
 
         $text = rawLocale($template);
-        $trep = array_merge(
-            $trep, array(
-
-                   )
-        );
-
-        $subject = $lang['mail_'.$subject].' '.$id;
+        $subject = $lang['mail_'.$subject].' '.$context;
         $mail    = new Mailer();
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
