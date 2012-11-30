@@ -4,7 +4,7 @@
  * --------
  * Author: Chris Iverson (cj.no.one@gmail.com)
  * Copyright: (c) 2010 Chris Iverson
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2010/07/18
  *
  * Liberty BASIC language file for GeSHi.

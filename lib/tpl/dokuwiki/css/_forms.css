@@ -36,6 +36,7 @@
     text-align: right;
 }
 
+.dokuwiki label.block select,
 .dokuwiki label.block input.edit {
   width: 50%;
 }

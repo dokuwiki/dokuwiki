@@ -38,10 +38,19 @@ caption,
 legend {
     font-family: Arial, sans-serif;
     font-weight: bold;
-    background-color: inherit;
     padding: 0;
     line-height: 1.2;
     clear: left; /* ideally 'both', but problems with toc */
+}
+[dir=rtl] h1,
+[dir=rtl] h2,
+[dir=rtl] h3,
+[dir=rtl] h4,
+[dir=rtl] h5,
+[dir=rtl] h6,
+[dir=rtl] caption,
+[dir=rtl] legend {
+    clear: right;
 }
 
 h1 {
@@ -99,10 +108,19 @@ ul,
 ol {
     padding: 0 0 0 1.5em;
 }
+[dir=rtl] ul,
+[dir=rtl] ol {
+    padding: 0 1.5em 0 0;
+}
+
 li,
 dd {
     padding: 0;
     margin: 0 0 0 1.5em;
+}
+[dir=rtl] li,
+[dir=rtl] dd {
+    margin: 0 1.5em 0 0;
 }
 dt {
     font-weight: bold;
@@ -145,6 +163,9 @@ caption {
     text-align: left;
     margin: 0 0 .3em;
 }
+[dir=rtl] caption {
+    text-align: right;
+}
 
 th,
 td {
@@ -157,6 +178,10 @@ td {
 th {
     font-weight: bold;
     background-color: __background_alt__;
+}
+[dir=rtl] td,
+[dir=rtl] th {
+    text-align: right;
 }
 
 
@@ -225,16 +250,27 @@ kbd {
     font-size: 1em;
     direction: ltr;
     text-align: left;
+    background-color: __background_site__;
+    color: __text__;
+    box-shadow: inset 0 0 .3em __border__;
+    border-radius: 2px;
 }
 pre {
     overflow: auto;
     word-wrap: normal;
+    border: 1px solid __border__;
+    border-radius: 2px;
+    box-shadow: inset 0 0 .5em __border__;
+    padding: .7em 1em;
 }
 
 blockquote {
     padding: 0 .5em;
     border: solid __border__;
     border-width: 0 0 0 .25em;
+}
+[dir=rtl] blockquote {
+    border-width: 0 .25em 0 0;
 }
 q:before,
 q:after {
@@ -320,7 +356,7 @@ select:focus {
 input[type=radio],
 input[type=checkbox] {
     padding: 0;
-    border-width: 0;
+    border-style: none;
     box-shadow: none;
 }
 
@@ -342,6 +378,10 @@ button,
     border-radius: 2px;
     padding: .1em .5em;
     cursor: pointer;
+}
+#IE7 input.button,
+#IE7 button {
+    line-height: 1.4;
 }
 
 input[type=submit]:hover,
@@ -378,40 +418,4 @@ button[disabled],
 input[readonly],
 button[readonly] {
     cursor: auto;
-}
-
-/*____________ rtl corrections ____________*/
-
-[dir=rtl] caption,
-[dir=rtl] td,
-[dir=rtl] th {
-    text-align: right;
-}
-
-[dir=rtl] ul,
-[dir=rtl] ol {
-    padding: 0 1.5em 0 0;
-}
-[dir=rtl] li,
-[dir=rtl] dd {
-    margin: 0 1.5em 0 0;
-}
-[dir=rtl] blockquote {
-    border-width: 0 .25em 0 0;
-}
-
-[dir=rtl] h1,
-[dir=rtl] h2,
-[dir=rtl] h3,
-[dir=rtl] h4,
-[dir=rtl] h5,
-[dir=rtl] h6,
-[dir=rtl] caption,
-[dir=rtl] legend {
-    clear: right;
-}
-
-[dir=rtl] .a11y {
-    left: auto;
-    right: -9000px;
 }

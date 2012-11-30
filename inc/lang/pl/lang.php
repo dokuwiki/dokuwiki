@@ -285,8 +285,8 @@ $lang['i_confexists']          = '<code>%s</code> już istnieje';
 $lang['i_writeerr']            = 'Nie można utworzyć <code>%s</code>. Sprawdź uprawnienia do katalogu lub pliku i stwórz plik ręcznie.';
 $lang['i_badhash']             = 'nierozpoznany lub zmodyfikowany plik dokuwiki.php (skrót=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - nieprawidłowa wartość lub jej brak';
-$lang['i_success']             = 'Konfiguracja pomyślnie zakończona. Możesz teraz usunąć plik install.php. Przejdź do <a href="doku.php">Twojego nowego DokuWiki</a>.';
-$lang['i_failure']             = 'Podczas zapisu plików konfiguracyjnych wystąpiły błędy. Musisz usunąć wszystkie problemy, zanim zaczniesz korzystać z <a href="doku.php">Twojego nowego DokuWiki</a>.';
+$lang['i_success']             = 'Konfiguracja pomyślnie zakończona. Możesz teraz usunąć plik install.php. Przejdź do <a href="doku.php?id=wiki:welcome">Twojego nowego DokuWiki</a>.';
+$lang['i_failure']             = 'Podczas zapisu plików konfiguracyjnych wystąpiły błędy. Musisz usunąć wszystkie problemy, zanim zaczniesz korzystać z <a href="doku.php?id=wiki:welcome">Twojego nowego DokuWiki</a>.';
 $lang['i_policy']              = 'Wstępna polityka uprawnień ACL';
 $lang['i_pol0']                = 'Otwarte Wiki (odczyt, zapis i dodawanie plików dla wszystkich)';
 $lang['i_pol1']                = 'Publiczne Wiki (odczyt dla wszystkich, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
@@ -325,4 +325,3 @@ $lang['media_perm_read']       = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawnień do przesyłania plików.';
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
-$lang['plugin_install_err']    = 'Wtyczka zainstalowana nieprawidłowo. Zmień nazwę katalogu wtyczki \'%s\' na \'%s\'.';

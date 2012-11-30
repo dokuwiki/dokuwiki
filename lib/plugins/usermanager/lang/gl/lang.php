@@ -4,6 +4,7 @@
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
+ * @author Leandro Regueiro <leandro.regueiro@gmail.com>
  */
 $lang['menu']                  = 'Xestor de Usuarios';
 $lang['noauth']                = '(autenticación de usuarios non dispoñible)';

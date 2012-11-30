@@ -38,10 +38,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
-      global $ID;
+      global $ID, $INPUT;
 
       if (!$this->_restore_session()) return $this->_close_session();
-      if (!isset($_REQUEST['save']) || ($_REQUEST['save'] != 1)) return $this->_close_session();
+      if ($INPUT->int('save') != 1) return $this->_close_session();
       if (!checkSecurityToken()) return $this->_close_session();
 
       if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
@@ -49,7 +49,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       // don't go any further if the configuration is locked
       if ($this->_config->_locked) return $this->_close_session();
 
-      $this->_input = $_REQUEST['config'];
+      $this->_input = $INPUT->arr('config');
 
       while (list($key) = each($this->_config->setting)) {
         $input = isset($this->_input[$key]) ? $this->_input[$key] : NULL;

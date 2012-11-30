@@ -65,7 +65,7 @@ function auth_setup() {
         nice_die($lang['authmodfailed']);
     }
 
-    if(!$auth) return false;
+    if(!isset($auth) || !$auth) return false;
 
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
@@ -299,7 +299,7 @@ function auth_createToken() {
  *
  * This is neither unique nor unfakable - still it adds some
  * security. Using the first part of the IP makes sure
- * proxy farms like AOLs are stil okay.
+ * proxy farms like AOLs are still okay.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
@@ -313,6 +313,7 @@ function auth_browseruid() {
     $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
     $uid .= substr($ip, 0, strpos($ip, '.'));
+    $uid = strtolower($uid);
     return md5($uid);
 }
 
@@ -534,9 +535,10 @@ function auth_aclcheck($id, $user, $groups) {
         return AUTH_ADMIN;
     }
 
-    $ci = '';
-    if(!$auth->isCaseSensitive()) $ci = 'ui';
-
+    if(!$auth->isCaseSensitive()) {
+        $user   = utf8_strtolower($user);
+        $groups = array_map('utf8_strtolower', $groups);
+    }
     $user   = $auth->cleanUser($user);
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
     $user   = auth_nameencode($user);
@@ -560,11 +562,14 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/'.$ci, $AUTH_ACL);
+    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
     if(count($matches)) {
         foreach($matches as $match) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
             $acl   = preg_split('/\s+/', $match);
+            if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
+                $acl[1] = utf8_strtolower($acl[1]);
+            }
             if(!in_array($acl[1], $groups)) {
                 continue;
             }
@@ -587,11 +592,14 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     do {
-        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/'.$ci, $AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
         if(count($matches)) {
             foreach($matches as $match) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
                 $acl   = preg_split('/\s+/', $match);
+                if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
+                    $acl[1] = utf8_strtolower($acl[1]);
+                }
                 if(!in_array($acl[1], $groups)) {
                     continue;
                 }
@@ -733,63 +741,62 @@ function register() {
     global $conf;
     /* @var auth_basic $auth */
     global $auth;
+    global $INPUT;
 
-    if(!$_POST['save']) return false;
+    if(!$INPUT->post->bool('save')) return false;
     if(!actionOK('register')) return false;
 
-    //clean username
-    $_POST['login'] = trim($auth->cleanUser($_POST['login']));
+    // gather input
+    $login    = trim($auth->cleanUser($INPUT->post->str('login')));
+    $fullname = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $INPUT->post->str('fullname')));
+    $email    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $INPUT->post->str('email')));
+    $pass     = $INPUT->post->str('pass');
+    $passchk  = $INPUT->post->str('passchk');
 
-    //clean fullname and email
-    $_POST['fullname'] = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $_POST['fullname']));
-    $_POST['email']    = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $_POST['email']));
-
-    if(empty($_POST['login']) ||
-        empty($_POST['fullname']) ||
-        empty($_POST['email'])
-    ) {
+    if(empty($login) || empty($fullname) || empty($email)) {
         msg($lang['regmissing'], -1);
         return false;
     }
 
     if($conf['autopasswd']) {
         $pass = auth_pwgen(); // automatically generate password
-    } elseif(empty($_POST['pass']) ||
-        empty($_POST['passchk'])
-    ) {
+    } elseif(empty($pass) || empty($passchk)) {
         msg($lang['regmissing'], -1); // complain about missing passwords
         return false;
-    } elseif($_POST['pass'] != $_POST['passchk']) {
+    } elseif($pass != $passchk) {
         msg($lang['regbadpass'], -1); // complain about misspelled passwords
         return false;
-    } else {
-        $pass = $_POST['pass']; // accept checked and valid password
     }
 
     //check mail
-    if(!mail_isvalid($_POST['email'])) {
+    if(!mail_isvalid($email)) {
         msg($lang['regbadmail'], -1);
         return false;
     }
 
     //okay try to create the user
-    if(!$auth->triggerUserMod('create', array($_POST['login'], $pass, $_POST['fullname'], $_POST['email']))) {
+    if(!$auth->triggerUserMod('create', array($login, $pass, $fullname, $email))) {
         msg($lang['reguexists'], -1);
         return false;
     }
 
-    $subscription = new Subscription();
+    // create substitutions for use in notification email
+    $substitutions = array(
+        'NEWUSER'  => $_POST['login'],
+        'NEWNAME'  => $_POST['fullname'],
+        'NEWEMAIL' => $_POST['email'],
+    );
 
     if(!$conf['autopasswd']) {
         msg($lang['regsuccess2'], 1);
-        $subscription->send_register($_POST['login'], $_POST['fullname'], $_POST['email']);
+        notify('', 'register', '', $_POST['login'], false, $substitutions);
         return true;
     }
 
     // autogenerated password? then send him the password
-    if(auth_sendPassword($_POST['login'], $pass)) {
+    if(auth_sendPassword($login, $pass)) {
         msg($lang['regsuccess'], 1);
-        $subscription->send_register($_POST['login'], $_POST['fullname'], $_POST['email']);
+        notify('', 'register', '', $_POST['login'], false, $substitutions);
         return true;
     } else {
         msg($lang['regmailfail'], -1);

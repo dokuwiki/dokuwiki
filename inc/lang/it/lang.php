@@ -14,6 +14,7 @@
  * @author Osman Tekin <osman.tekin93@hotmail.it>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
+ * @author snarchio@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -177,6 +178,7 @@ $lang['diff']                  = 'differenze con la versione attuale';
 $lang['diff2']                 = 'differenze tra le versioni selezionate';
 $lang['difflink']              = 'Link a questa pagina di confronto';
 $lang['diff_type']             = 'Guarda le differenze:';
+$lang['diff_inline']           = 'In linea';
 $lang['diff_side']             = 'Fianco a Fianco';
 $lang['line']                  = 'Linea';
 $lang['breadcrumb']            = 'Traccia';
@@ -195,6 +197,7 @@ $lang['user_tools']            = 'Strumenti Utente';
 $lang['site_tools']            = 'Strumenti Sito';
 $lang['page_tools']            = 'Strumenti Pagina';
 $lang['skip_to_content']       = 'salta al contenuto';
+$lang['sidebar']               = 'Barra laterale';
 $lang['mail_newpage']          = 'pagina aggiunta:';
 $lang['mail_changed']          = 'pagina modificata:';
 $lang['mail_subscribe_list']   = 'pagine modificate nella categoria:';
@@ -281,8 +284,8 @@ $lang['i_confexists']          = '<code>%s</code> esiste già';
 $lang['i_writeerr']            = 'Impossibile creare <code>%s</code>. E\' necessario verificare i permessi della directory o del file oppure creare il file manualmente.';
 $lang['i_badhash']             = 'dokuwiki.php (hash=<code>%s</code>) non riconosciuto o modificato';
 $lang['i_badval']              = '<code>%s</code> - valore vuoto o non valido';
-$lang['i_success']             = 'La configurazione è stata completata correttamente. Ora è possibile eliminare il file install.php. Poi, visita <a href="doku.php">il tuo nuovo DokuWiki</a>.';
-$lang['i_failure']             = 'Si sono verificati errori durante la scrittura dei file di configurazione. Potrebbe essere necessario correggerli manualmente prima di poter utilizzare <a href="doku.php">il tuo nuovo DokuWiki</a>.';
+$lang['i_success']             = 'La configurazione è stata completata correttamente. Ora è possibile eliminare il file install.php. Poi, visita <a href="doku.php?id=wiki:welcome">il tuo nuovo DokuWiki</a>.';
+$lang['i_failure']             = 'Si sono verificati errori durante la scrittura dei file di configurazione. Potrebbe essere necessario correggerli manualmente prima di poter utilizzare <a href="doku.php?id=wiki:welcome">il tuo nuovo DokuWiki</a>.';
 $lang['i_policy']              = 'Regole di accesso iniziali';
 $lang['i_pol0']                = 'Wiki Aperto (lettura, scrittura, caricamento file per tutti)';
 $lang['i_pol1']                = 'Wiki Pubblico (lettura per tutti, scrittura e caricamento file per gli utenti registrati)';
@@ -298,20 +301,24 @@ $lang['hours']                 = '%d ore fa';
 $lang['minutes']               = '%d minuti fa';
 $lang['seconds']               = '%d secondi fa';
 $lang['wordblock']             = 'La modifica non è stata salvata perché contiene testo bloccato (spam).';
+$lang['media_uploadtab']       = 'Upload';
 $lang['media_searchtab']       = 'Cerca';
+$lang['media_file']            = 'File';
 $lang['media_viewtab']         = 'Guarda';
 $lang['media_edittab']         = 'Modifica';
 $lang['media_historytab']      = 'Storia';
+$lang['media_list_thumbs']     = 'Miniatura';
 $lang['media_list_rows']       = 'Righe';
 $lang['media_sort_name']       = 'Nome';
 $lang['media_sort_date']       = 'Data';
 $lang['media_namespaces']      = 'Scegli il namespace';
 $lang['media_files']           = 'File in %s';
+$lang['media_upload']          = 'Upload al %s';
 $lang['media_search']          = 'Cerca in %s';
+$lang['media_view']            = '%s';
 $lang['media_edit']            = 'Modifica %s';
 $lang['media_history']         = 'Storia di %s';
 $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per leggere i files.';
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
-$lang['plugin_install_err']    = 'Plugin installato non correttamente. Rinomino la cartella del plugin \'%s\' in \'%s\'.';

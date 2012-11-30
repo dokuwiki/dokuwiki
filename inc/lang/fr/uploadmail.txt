@@ -1,4 +1,4 @@
-Un fichier a été téléversé dans votre wiki. En voici les détails :
+Un fichier a été envoyé dans votre wiki. Voici les détails :
 
 Fichier     : @MEDIA@
 Date        : @DATE@
@@ -10,5 +10,5 @@ Type MIME   : @MIME@
 Utilisateur : @USER@
 
 -- 
-Ce message a été généré par DokuWiki
+Ce message a été généré par DokuWiki depuis
 @DOKUWIKIURL@

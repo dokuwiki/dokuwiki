@@ -9,6 +9,7 @@
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin <danny0838@pchome.com.tw>
  * @author Shuo-Ting Jian <shoting@gmail.com>
+ * @author syaoranhinata@gmail.com
  */
 $lang['menu']                  = '還原管理';
 $lang['filter']                = '搜索包含垃圾訊息的頁面';

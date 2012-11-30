@@ -8,6 +8,7 @@
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
+ * @author AmirH Hassaneini <mytechmix@gmail.com>
  */
 $lang['menu']                  = 'تنظیمات پیکر‌بندی';
 $lang['error']                 = 'به دلیل ایراد در مقادیر وارد شده، تنظیمات اعمال نشد، خواهشمندیم تغییرات را مجددن کنترل نمایید و دوباره ارسال کنید.<br/> مقادیر مشکل‌دار با کادر قرمز مشخص شده‌اند.';

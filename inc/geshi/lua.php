@@ -4,7 +4,7 @@
  * -------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2004/07/10
  *
  * LUA language file for GeSHi.
@@ -46,7 +46,7 @@ $language_data = array (
     'LANG_NAME' => 'Lua',
     'COMMENT_SINGLE' => array(1 => "--"),
     'COMMENT_MULTI' => array('--[[' => ']]'),
-    'COMMENT_REGEXP' => array(2 => "/\[(=*)\[.*?\]\1\]/s"),
+    'COMMENT_REGEXP' => array(2 => '/\[(=*)\[.*?\]\1\]/s'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '',

@@ -278,8 +278,8 @@ $lang['i_confexists']          = '<code>%s</code> は既に存在します';
 $lang['i_writeerr']            = '<code>%s</code> を作成できません。ディレクトリとファイルの権限を確認し、それらを手動で作成する必要があります。';
 $lang['i_badhash']             = 'dokuwiki.php が認識できないか、編集されています（hash=<code>%s</code>）';
 $lang['i_badval']              = '<code>%s</code> - 正しくない、もしくは値が空です';
-$lang['i_success']             = '設定ファイルは正しく作成されました。<a href="doku.php">作成した DokuWiki</a>を使用するには install.php を削除してください。';
-$lang['i_failure']             = '設定ファイルの作成中にエラーが発生しました。<a href="doku.php">作成した DokuWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
+$lang['i_success']             = '設定ファイルは正しく作成されました。<a href="doku.php?id=wiki:welcome">作成した DokuWiki</a>を使用するには install.php を削除してください。';
+$lang['i_failure']             = '設定ファイルの作成中にエラーが発生しました。<a href="doku.php?id=wiki:welcome">作成した DokuWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
 $lang['i_policy']              = 'ACL初期設定';
 $lang['i_pol0']                = 'オープン Wiki（全ての人に、閲覧・書き込み・アップロードを許可）';
 $lang['i_pol1']                = 'パブリック Wiki（閲覧は全ての人が可能、書き込み・アップロードは登録ユーザーのみ）';
@@ -318,4 +318,3 @@ $lang['media_perm_read']       = 'ファイルを閲覧する権限がありま�
 $lang['media_perm_upload']     = 'ファイルをアップロードする権限がありません。';
 $lang['media_update']          = '新しいバージョンをアップロード';
 $lang['media_restore']         = 'このバージョンを復元';
-$lang['plugin_install_err']    = 'プラグインが正しくインストールされませんでした。プラグインのディレクトリ名を \'%s\' から \'%s\' に変更してください。';

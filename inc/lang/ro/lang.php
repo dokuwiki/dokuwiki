@@ -280,8 +280,8 @@ $lang['i_confexists']          = '<code>%s</code> există deja';
 $lang['i_writeerr']            = 'Nu s-a putut crea <code>%s</code>. Trebuie să verificaţi drepturile directorului/fişierului şi să creaţi fişierul manual.';
 $lang['i_badhash']             = 'dokuwiki.php nu a fost recunoscut sau a fost modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valoare nepemisă sau neintrodusă';
-$lang['i_success']             = 'Configurarea a fost finalizată cu succes. Acum puteţi sterge fişierul install.php. Continuaţi cu <a href="doku.php">your new DokuWiki</a>.';
-$lang['i_failure']             = 'Au apărut erori la scrierea fişierelor de configurare. Va trebui să le corectaţi manual înainte de a putea folosi <a href="doku.php">your new DokuWiki</a>.';
+$lang['i_success']             = 'Configurarea a fost finalizată cu succes. Acum puteţi sterge fişierul install.php. Continuaţi cu <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
+$lang['i_failure']             = 'Au apărut erori la scrierea fişierelor de configurare. Va trebui să le corectaţi manual înainte de a putea folosi <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
 $lang['i_policy']              = 'Politica ACL iniţială';
 $lang['i_pol0']                = 'Wiki Deschisă (citeşte, scrie şi încarcă oricine)';
 $lang['i_pol1']                = 'Wiki Deschisă (citeste oricine, scrie şi încarcă doar utilizatorul înregistrat)';
@@ -320,4 +320,3 @@ $lang['media_perm_read']       = 'Ne pare rău, dar nu aveți suficiente dreptur
 $lang['media_perm_upload']     = 'Ne pare rău, dar nu aveți suficiente drepturi pentru a putea încărca fișiere.';
 $lang['media_update']          = 'Încarcă noua versiune';
 $lang['media_restore']         = 'Restaurează această versiune';
-$lang['plugin_install_err']    = 'Modul instalat greșit. Redenumește directorul modulului \'%s\' în \'%s\'.';

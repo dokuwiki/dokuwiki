@@ -42,17 +42,28 @@
     float: left;
     padding: 0.5em 0.3em 0 0;
 }
+[dir=rtl] #media__tree img {
+    float: right;
+    padding: 0.5em 0 0 0.3em;
+}
 
 #media__tree ul {
     list-style-type: none;
     list-style-image: none;
     margin-left: 1.5em;
 }
+[dir=rtl] #media__tree ul {
+    margin-left: 0;
+    margin-right: 1.5em;
+}
 
 #media__tree li {
     clear: left;
     list-style-type: none;
     list-style-image: none;
+}
+[dir=rtl] #media__tree li {
+    clear: right;
 }
 *+html #media__tree li,
 * html #media__tree li {

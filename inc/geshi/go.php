@@ -4,7 +4,7 @@
  * --------
  * Author: Markus Jarderot (mizardx at gmail dot com)
  * Copyright: (c) 2010 Markus Jarderot
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2010/05/20
  *
  * Go language file for GeSHi.

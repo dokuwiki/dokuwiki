@@ -3,6 +3,7 @@
  * Basque language file
  *
  * @author Inko Illarramendi <inko.i.a@gmail.com>
+ * @author Zigor Astarbe <astarbe@gmail.com>
  */
 $lang['menu']                  = 'Berrezartze Kudeatzailea';
 $lang['filter']                = 'Bilatu spam duten orriak';

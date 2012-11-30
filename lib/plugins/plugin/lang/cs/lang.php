@@ -12,6 +12,7 @@
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
+ * @author Jakub A. Těšínský (j@kub.cz)
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';

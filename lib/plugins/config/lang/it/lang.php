@@ -14,6 +14,7 @@
  * @author Osman Tekin osman.tekin93@hotmail.it
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
+ * @author snarchio@gmail.com
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.
@@ -49,6 +50,7 @@ $lang['title']                 = 'Titolo del wiki';
 $lang['start']                 = 'Nome della pagina iniziale';
 $lang['lang']                  = 'Lingua';
 $lang['template']              = 'Modello';
+$lang['tagline']               = 'Tagline (se il template lo supporta)';
 $lang['sidebar']               = 'Nome pagina in barra laterale (se il template lo supporta), il campo vuoto disabilita la barra laterale';
 $lang['license']               = 'Sotto quale licenza vorresti rilasciare il tuo contenuto?';
 $lang['savedir']               = 'Directory per il salvataggio dei dati';
@@ -140,6 +142,7 @@ $lang['autoplural']            = 'Controlla il plurale nei collegamenti';
 $lang['compression']           = 'Usa la compressione per i file dell\'archivio';
 $lang['gzip_output']           = 'Usa il Content-Encoding gzip per xhtml';
 $lang['compress']              = 'Comprimi i file CSS e javascript';
+$lang['cssdatauri']            = 'Dimensione massima in byte di un\'immagine che può essere integrata nel CSS per ridurre l\'overhead delle richieste HTTP. Questa tecnica non funziona con IE7 e precedenti! Da <code>400</code> a <code>600</code> bytes è un buon valore. Impostare a <code>0</code> per disabilitare.';
 $lang['send404']               = 'Invia "HTTP 404/Pagina non trovata" per le pagine inesistenti';
 $lang['broken_iua']            = 'La funzione ignore_user_abort non funziona sul tuo sistema? Questo potrebbe far sì che l\'indice di ricerca sia inutilizzabile. È noto che nella configurazione IIS+PHP/CGI non funziona. Vedi il<a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> per maggiori informazioni.';
 $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al webserver di fornire file statici? Questa funzione deve essere supportata dal tuo webserver.';

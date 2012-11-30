@@ -1465,34 +1465,23 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
 }
 
 /**
- * Includes the rendered XHTML of a given page
+ * Includes the rendered HTML of a given page
  *
  * This function is useful to populate sidebars or similar features in a
  * template
  */
-function tpl_include_page($pageid, $print = true) {
-    global $ID;
+function tpl_include_page($pageid, $print = true, $propagate = false) {
+    if (!$pageid) return false;
+    if ($propagate) $pageid = page_findnearest($pageid);
+
     global $TOC;
-    $oldid  = $ID;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
-    $ID     = $oldid;
     $TOC    = $oldtoc;
 
     if(!$print) return $html;
     echo $html;
     return $html;
-}
-
-/**
- * Include the sidebar, will check current namespaces first
- */
-function tpl_sidebar($print = true) {
-    global $conf;
-
-    $sidebar = page_findnearest($conf['sidebar']);
-    if($sidebar) return tpl_include_page($sidebar, $print);
-    return '';
 }
 
 /**
@@ -1693,7 +1682,7 @@ function tpl_favicon($types = array('favicon')) {
                 $return .= '<link rel="shortcut icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'mobile':
-                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.ico');
+                $look = array(':wiki:apple-touch-icon.png', ':apple-touch-icon.png', 'images/apple-touch-icon.png');
                 $return .= '<link rel="apple-touch-icon" href="'.tpl_getMediaFile($look).'" />'.NL;
                 break;
             case 'generic':

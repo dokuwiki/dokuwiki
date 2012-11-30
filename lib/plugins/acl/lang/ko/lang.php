@@ -41,4 +41,4 @@ $lang['acl_perm4']             = '만들기';
 $lang['acl_perm8']             = '올리기';
 $lang['acl_perm16']            = '삭제';
 $lang['acl_new']               = '새 항목 추가';
-$lang['acl_mod']               = '선택 항목 변경';
+$lang['acl_mod']               = '선택 항목 수정';

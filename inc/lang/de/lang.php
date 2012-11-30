@@ -289,8 +289,8 @@ $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Sie sollten die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
 $lang['i_badhash']             = 'Unbekannte oder modifizierte dokuwiki.php (Hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - unerlaubter oder leerer Wert';
-$lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Sie können jetzt die install.php löschen. Ihr <a href="doku.php">neues DokuWiki</a> ist jetzt für Sie bereit.';
-$lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Sie müssen diese vermutlich von Hand beheben, bevor Sie Ihr <a href="doku.php">neues DokuWiki</a> nutzen können.';
+$lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Sie können jetzt die install.php löschen. Ihr <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> ist jetzt für Sie bereit.';
+$lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Sie müssen diese vermutlich von Hand beheben, bevor Sie Ihr <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> nutzen können.';
 $lang['i_policy']              = 'Anfangseinstellung für Zugangskontrolle (ACL)';
 $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben, hochladen für alle)';
 $lang['i_pol1']                = 'Öffentliches Wiki (lesen für alle, schreiben und hochladen für registrierte Nutzer)';
@@ -329,4 +329,3 @@ $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
-$lang['plugin_install_err']    = 'Plugin nicht korrekt installiert. Plugin-Verzeichnis von \'%s\' nach \'%s\' umbenennen.';

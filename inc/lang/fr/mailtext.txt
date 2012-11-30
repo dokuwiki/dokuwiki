@@ -7,7 +7,6 @@ Adresse IP        : @IPADDRESS@
 Nom d'hôte        : @HOSTNAME@
 Ancienne révision : @OLDPAGE@
 Nouvelle révision : @NEWPAGE@
-Différences       : @OLDPAGE@&do=diff
 Résumé            : @SUMMARY@
 Utilisateur       : @USER@
 
@@ -15,5 +14,5 @@ Utilisateur       : @USER@
 
 
 -- 
-Ce courriel a été généré par DokuWiki
+Ce courriel a été généré par DokuWiki depuis
 @DOKUWIKIURL@

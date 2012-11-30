@@ -69,7 +69,6 @@ class ap_manage {
     }
 
     function html_pluginlist() {
-        global $ID;
         global $plugin_protected;
 
         foreach ($this->manager->plugin_list as $plugin) {
@@ -141,9 +140,18 @@ class ap_manage {
                 break;
 
             case 'update' :
+                $url = $data[0];
                 $date = date('r');
-                if (!$fp = @fopen($file, 'a')) return;
-                fwrite($fp, "updated=$date\n");
+                if (!$fp = @fopen($file, 'r+')) return;
+                $buffer = "";
+                while (($line = fgets($fp)) !== false) {
+                    $urlFound = strpos($line,"url");
+                    if($urlFound !== false) $line="url=$url\n";
+                    $buffer .= $line;
+                }
+                $buffer .= "updated=$date\n";
+                fseek($fp, 0);
+                fwrite($fp, $buffer);
                 fclose($fp);
                 break;
         }
@@ -186,11 +194,8 @@ class ap_manage {
 
             closedir($dh);
             return @rmdir($path);
-        } else {
-            return @unlink($path);
         }
-
-        return false;
+        return @unlink($path);
     }
 
 

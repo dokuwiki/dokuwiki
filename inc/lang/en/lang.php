@@ -302,9 +302,9 @@ $lang['i_writeerr']            = 'Unable to create <code>%s</code>. You will nee
 $lang['i_badhash']             = 'unrecognised or modified dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - illegal or empty value';
 $lang['i_success']             = 'The configuration was finished successfully. You may delete the install.php file now. Continue to
-                                 <a href="doku.php">your new DokuWiki</a>.';
+                                 <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
 $lang['i_failure']             = 'Some errors occurred while writing the configuration files. You may need to fix them manually before
-                                  you can use <a href="doku.php">your new DokuWiki</a>.';
+                                  you can use <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
 $lang['i_policy']              = 'Initial ACL policy';
 $lang['i_pol0']                = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']                = 'Public Wiki (read for everyone, write and upload for registered users)';
@@ -346,7 +346,5 @@ $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read f
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
-
-$lang['plugin_install_err']    = "Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.";
 
 //Setup VIM: ex: et ts=2 :

@@ -73,8 +73,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
-        global $ID;
-
         if (is_null($this->_auth)) return false;
 
         // extract the command and any specific parameters
@@ -308,7 +306,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
         $class = $cando ? '' : ' class="disabled"';
-        $disabled = $cando ? '' : ' disabled="disabled"';
         echo str_pad('',$indent);
 
         if($name == 'userpass'){
@@ -549,16 +546,17 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * retrieve & clean user data from the form
      *
-     * @return  array(user, password, full name, email, array(groups))
+     * @return array (user, password, full name, email, array(groups))
      */
     function _retrieveUser($clean=true) {
         global $auth;
+        global $INPUT;
 
-        $user[0] = ($clean) ? $auth->cleanUser($_REQUEST['userid']) : $_REQUEST['userid'];
-        $user[1] = $_REQUEST['userpass'];
-        $user[2] = $_REQUEST['username'];
-        $user[3] = $_REQUEST['usermail'];
-        $user[4] = explode(',',$_REQUEST['usergroups']);
+        $user[0] = ($clean) ? $auth->cleanUser($INPUT->str('userid')) : $INPUT->str('userid');
+        $user[1] = $INPUT->str('userpass');
+        $user[2] = $INPUT->str('username');
+        $user[3] = $INPUT->str('usermail');
+        $user[4] = explode(',',$INPUT->str('usergroups'));
 
         $user[4] = array_map('trim',$user[4]);
         if($clean) $user[4] = array_map(array($auth,'cleanGroup'),$user[4]);
@@ -584,9 +582,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     function _retrieveFilter() {
+        global $INPUT;
 
-        $t_filter = $_REQUEST['filter'];
-        if (!is_array($t_filter)) return array();
+        $t_filter = $INPUT->arr('filter');
 
         // messy, but this way we ensure we aren't getting any additional crap from malicious users
         $filter = array();

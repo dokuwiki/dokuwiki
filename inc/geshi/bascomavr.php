@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: aquaticus.info
  * Copyright: (c) 2008 aquaticus.info
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2008/01/09
  *
  * BASCOM AVR language file for GeSHi.

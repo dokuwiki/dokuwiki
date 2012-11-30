@@ -301,10 +301,8 @@ function js_compress($s){
                 // now move forward and find the end of it
                 $j = 1;
                 while($s{$i+$j} != '/'){
-                    while( ($s{$i+$j} != '\\') && ($s{$i+$j} != '/')){
-                        $j = $j + 1;
-                    }
                     if($s{$i+$j} == '\\') $j = $j + 2;
+                    else $j++;
                 }
                 $result .= substr($s,$i,$j+1);
                 $i = $i + $j + 1;

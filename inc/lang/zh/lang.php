@@ -190,7 +190,7 @@ $lang['lastmod']               = '最后更改';
 $lang['by']                    = '由';
 $lang['deleted']               = '移除';
 $lang['created']               = '创建';
-$lang['restored']              = '已恢复为旧版';
+$lang['restored']              = '已恢复为旧版 (%s)';
 $lang['external_edit']         = '外部编辑';
 $lang['summary']               = '编辑摘要';
 $lang['noflash']               = '需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 插件</a> 来播放本内容。 ';
@@ -200,6 +200,7 @@ $lang['user_tools']            = '用户工具';
 $lang['site_tools']            = '站点工具';
 $lang['page_tools']            = '页面工具';
 $lang['skip_to_content']       = '跳至内容';
+$lang['sidebar']               = '侧边栏';
 $lang['mail_newpage']          = '添加页面：';
 $lang['mail_changed']          = '更改页面：';
 $lang['mail_subscribe_list']   = '命名空间中改变的页面：';
@@ -288,8 +289,8 @@ $lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查
 $lang['i_badhash']             = '无法识别的或被修改的 dokuwiki.php（值=<code>%s</code>）';
 $lang['i_badval']              = '<code>%s</code> - 非法或空值';
 $lang['i_success']             = '配置成功完成。您现在可以删除 install.php 了。继续进入
-                        <a href="doku.php">您全新的 DokuWiki</a>。';
-$lang['i_failure']             = '写入配置文件的时候产生一些错误。在使用 <a href="doku.php">您全新安装的 DokuWiki</a> 前
+                        <a href="doku.php?id=wiki:welcome">您全新的 DokuWiki</a>。';
+$lang['i_failure']             = '写入配置文件的时候产生一些错误。在使用 <a href="doku.php?id=wiki:welcome">您全新安装的 DokuWiki</a> 前
                          您需要手动修复它们。';
 $lang['i_policy']              = '初始的 ACL 政策';
 $lang['i_pol0']                = '开放的维基（任何人都有读、写、上传的权限）';
@@ -329,4 +330,3 @@ $lang['media_perm_read']       = '抱歉，您没有足够权限读取这些文�
 $lang['media_perm_upload']     = '抱歉，您没有足够权限来上传文件。';
 $lang['media_update']          = '上传新版本';
 $lang['media_restore']         = '恢复这个版本';
-$lang['plugin_install_err']    = '插件安装不正确。重命名插件目录“%s”为“%s”。';

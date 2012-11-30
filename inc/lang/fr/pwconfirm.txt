@@ -1,15 +1,15 @@
 Bonjour @FULLNAME@ !
 
 Quelqu'un a demandé un nouveau mot de passe pour votre identifiant
-@TITLE@ sur @DOKUWIKIURL@
+@TITLE@ depuis @DOKUWIKIURL@
 
 Si vous n'êtes pas à l'origine de cette requête d'un nouveau mot de
-passe, ignorez ce message.
+passe, ignorez simplement ce message.
 
-Pour confirmer que cette requête émane bien de vous, merci de suivre le lien ci-dessous.
+Pour confirmer que cette requête émane bien de vous, merci de cliquer sur le lien ci-dessous.
 
 @CONFIRM@
 
 -- 
-Ce courriel a été généré par DokuWiki
+Ce courriel a été généré par DokuWiki depuis
 @DOKUWIKIURL@

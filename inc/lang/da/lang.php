@@ -285,8 +285,8 @@ $lang['i_confexists']          = '<code>%s</code> eksisterer allerede';
 $lang['i_writeerr']            = 'Kunne ikke oprette <code>%s</code>. Du bliver nød til at tjekke mappe/fil- tilladelserne og oprette filen manuelt.';
 $lang['i_badhash']             = 'uigenkendelig eller modificeret dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - ulovlig eller tom værdi';
-$lang['i_success']             = 'Konfigurationen fulførtedes med success.  Du kan nu slette install.php filen. Fortsætte til <a href="doku.php">din nye DokuWiki</a>.';
-$lang['i_failure']             = 'Nogle fejl forekom mens konfigurations filerne skulle skrives. Du er mulighvis nød til at fixe dem manuelt før du kan bruge <a href="doku.php">din nye DokuWiki</a>.';
+$lang['i_success']             = 'Konfigurationen fulførtedes med success.  Du kan nu slette install.php filen. Fortsætte til <a href="doku.php?id=wiki:welcome">din nye DokuWiki</a>.';
+$lang['i_failure']             = 'Nogle fejl forekom mens konfigurations filerne skulle skrives. Du er mulighvis nød til at fixe dem manuelt før du kan bruge <a href="doku.php?id=wiki:welcome">din nye DokuWiki</a>.';
 $lang['i_policy']              = 'Begyndende ACL politik';
 $lang['i_pol0']                = 'Åben Wiki (alle kan læse, skrive og uploade)';
 $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrerede brugere kan skrive og overføre)';
@@ -325,4 +325,3 @@ $lang['media_perm_read']       = 'Du har ikke nok rettigheder til at læse filer
 $lang['media_perm_upload']     = 'Du har ikke nok rettigheder til at uploade filer.';
 $lang['media_update']          = 'Upload ny version';
 $lang['media_restore']         = 'Genskab denne version';
-$lang['plugin_install_err']    = 'Plugin installeret forkert.  Omdøb plugin folder \'%s\' til \'%s\'.';

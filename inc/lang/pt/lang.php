@@ -268,8 +268,8 @@ $lang['i_confexists']          = '<code>%s</code> já existe';
 $lang['i_writeerr']            = 'Não foi possível criar <code>%s</code>. É preciso verificar as permissões e criar o ficheiro manualmente.';
 $lang['i_badhash']             = 'dokuwiki.php não é o original ou não é reconhecido (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor ilegal ou vazio';
-$lang['i_success']             = 'A instalação e configuração inicial foram bem sucedidas. Pode remover o install.php. Aceda ao seu novo <a href="doku.php">Wiki</a> a correr o DokuWiki.';
-$lang['i_failure']             = 'Ocorreram alguns erros durante a escrita nos ficheiros de configuração. Poderá ser preciso corrigi-los manualmente antes de poder aceder ao seu novo <a href="doku.php">Wiki</a> a correr o DokuWiki.';
+$lang['i_success']             = 'A instalação e configuração inicial foram bem sucedidas. Pode remover o install.php. Aceda ao seu novo <a href="doku.php?id=wiki:welcome">Wiki</a> a correr o DokuWiki.';
+$lang['i_failure']             = 'Ocorreram alguns erros durante a escrita nos ficheiros de configuração. Poderá ser preciso corrigi-los manualmente antes de poder aceder ao seu novo <a href="doku.php?id=wiki:welcome">Wiki</a> a correr o DokuWiki.';
 $lang['i_policy']              = 'Politica ACL inicial';
 $lang['i_pol0']                = 'Wiki Aberto (ler, escrever e carregar para todos)';
 $lang['i_pol1']                = 'Wiki Público (ler para todos, escrever e carregar para utilizadores inscritos)';
@@ -317,4 +317,3 @@ $lang['js']['media_drop']       = 'Largue ficheiros aqui para enviar';
 $lang['js']['media_cancel']     = 'remover';
 $lang['js']['media_overwrt']    = 'Escrever por cima de ficheiros existentes';
 
-$lang['plugin_install_err'] = "Plugin instalado incorrectamente. Renomeie a pasta do plugin de '%s' para '%s'.";

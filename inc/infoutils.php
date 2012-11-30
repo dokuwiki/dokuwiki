@@ -25,12 +25,12 @@ function checkUpdateMessages(){
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
+        @touch($cf);
         dbglog("checkUpdatesMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
-        $http->timeout = 8;
+        $http->timeout = 12;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
-        @touch($cf);
     }else{
         dbglog("checkUpdatesMessages(): messages.txt up to date");
         $data = io_readFile($cf);
@@ -176,6 +176,13 @@ function check(){
         msg('mb_string extension not available - PHP only replacements will be used',0);
     }
 
+    if (!UTF8_PREGSUPPORT) {
+        msg('PHP is missing UTF-8 support in Perl-Compatible Regular Expressions (PCRE)', -1);
+    }
+    if (!UTF8_PROPERTYSUPPORT) {
+        msg('PHP is missing Unicode properties support in Perl-Compatible Regular Expressions (PCRE)', -1);
+    }
+
     $loc = setlocale(LC_ALL, 0);
     if(!$loc){
         msg('No valid locale is set for your PHP setup. You should fix this',-1);
@@ -211,22 +218,6 @@ function check(){
         msg('The current page is writable by you',0);
     }else{
         msg('The current page is not writable by you',0);
-    }
-
-    $check = wl('','',true).'data/_dummy';
-    $http = new DokuHTTPClient();
-    $http->timeout = 6;
-    $res = $http->get($check);
-    if(strpos($res,'data directory') !== false){
-        msg('It seems like the data directory is accessible from the web.
-                Make sure this directory is properly protected
-                (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
-    }elseif($http->status == 404 || $http->status == 403){
-        msg('The data directory seems to be properly protected',1);
-    }else{
-        msg('Failed to check if the data directory is accessible from the web.
-                Make sure this directory is properly protected
-                (See <a href="http://www.dokuwiki.org/security">security</a>)',-1);
     }
 
     // Check for corrupted search index

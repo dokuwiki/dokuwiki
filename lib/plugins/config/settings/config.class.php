@@ -369,7 +369,7 @@ if (!class_exists('setting')) {
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
@@ -426,7 +426,6 @@ if (!class_exists('setting')) {
 
       if ($fmt=='php') {
         // translation string needs to be improved FIXME
-        $tr = array("\n"=>'\n', "\r"=>'\r', "\t"=>'\t', "\\" => '\\\\', "'" => '\\\'');
         $tr = array("\\" => '\\\\', "'" => '\\\'');
 
         $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr($this->_local, $tr)."';\n";
@@ -538,7 +537,7 @@ if (!class_exists('setting_email')) {
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
@@ -548,7 +547,7 @@ if (!class_exists('setting_email')) {
         if ($value == $input) return false;
 
         if ($this->_multiple) {
-            $mails = array_filter(array_map('trim', split(',', $input)));
+            $mails = array_filter(array_map('trim', explode(',', $input)));
         } else {
             $mails = array($input);
         }
@@ -574,7 +573,7 @@ if (!class_exists('setting_richemail')) {
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;

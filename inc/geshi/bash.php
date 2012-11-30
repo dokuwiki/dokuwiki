@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.8.11
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -157,8 +157,8 @@ $language_data = array (
 
             'ed', 'egrep', 'env', 'expr',
 
-            'false', 'fbset', 'ffmpeg', 'fgconsole','fgrep', 'file', 'find',
-            'flex', 'flex++', 'fmt', 'free', 'ftp', 'funzip', 'fuser',
+            'false', 'fbset', 'fdisk', 'ffmpeg', 'fgconsole','fgrep', 'file',
+            'find', 'flex', 'flex++', 'fmt', 'free', 'ftp', 'funzip', 'fuser',
 
             'g++', 'gawk', 'gc','gcc', 'gdb', 'getent', 'getkeycodes',
             'getopt', 'gettext', 'gettextize', 'gimp', 'gimp-remote',
