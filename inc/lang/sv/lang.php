@@ -172,7 +172,7 @@ $lang['lastmod']               = 'Senast uppdaterad';
 $lang['by']                    = 'av';
 $lang['deleted']               = 'raderad';
 $lang['created']               = 'skapad';
-$lang['restored']              = 'tidigare version återställd';
+$lang['restored']              = 'tidigare version återställd (%s)';
 $lang['external_edit']         = 'extern redigering';
 $lang['summary']               = 'Redigeringskommentar';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
