@@ -184,8 +184,8 @@ class DokuWiki_Plugin {
      *
      * @author  Esther Brunner <wikidesign@gmail.com>
      *
-     * @param   $name   name of plugin to load
-     * @param   $msg    message to display in case the plugin is not available
+     * @param   string $name   name of plugin to load
+     * @param   bool   $msg    if a message should be displayed in case the plugin is not available
      *
      * @return  object  helper plugin object
      */
