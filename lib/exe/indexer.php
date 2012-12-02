@@ -37,9 +37,12 @@ if ($evt->advise_before()) {
   runTrimRecentChanges(true) or
   $evt->advise_after();
 }
-if($defer) sendGIF();
 
-if(!$output) ob_end_clean();
+if(!$output) {
+    ob_end_clean();
+    if($defer) sendGIF();
+}
+
 exit;
 
 // --------------------------------------------------------------------
