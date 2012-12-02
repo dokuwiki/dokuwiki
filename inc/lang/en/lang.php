@@ -311,7 +311,7 @@ $lang['i_pol1']                = 'Public Wiki (read for everyone, write and uplo
 $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registered users only)';
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
-$lang['i_license_none']        = 'None of the above';
+$lang['i_license_none']        = 'Do not show any license information';
 
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';
