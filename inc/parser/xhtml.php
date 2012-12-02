@@ -30,6 +30,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $toc = array();   // will contain the Table of Contents
 
     var $sectionedits = array(); // A stack of section edit data
+    private $lastsecid = 0; // last section edit id, used by startSectionEdit
 
     var $headers = array();
     var $footnotes = array();
@@ -50,9 +51,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function startSectionEdit($start, $type, $title = null) {
-        static $lastsecid = 0;
-        $this->sectionedits[] = array(++$lastsecid, $start, $type, $title);
-        return 'sectionedit' . $lastsecid;
+        $this->sectionedits[] = array(++$this->lastsecid, $start, $type, $title);
+        return 'sectionedit' . $this->lastsecid;
     }
 
     /**
