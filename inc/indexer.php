@@ -102,6 +102,10 @@ function wordlen($w){
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 class Doku_Indexer {
+    /**
+     * @var array $pidCache Cache for getPID()
+     */
+    protected $pidCache = array();
 
     /**
      * Adds the contents of a page to the fulltext index
@@ -460,6 +464,9 @@ class Doku_Indexer {
      * @return bool|int The page id on success, false on error
      */
     public function getPID($page) {
+        // return PID without locking when it is in the cache
+        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+
         if (!$this->lock())
             return false;
 
@@ -482,7 +489,14 @@ class Doku_Indexer {
      * @return bool|int The page id on success, false on error
      */
     protected function getPIDNoLock($page) {
-        return $this->addIndexKey('page', '', $page);
+        // avoid expensive addIndexKey operation for the most recently requested pages by using a cache
+        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+        $pid = $this->addIndexKey('page', '', $page);
+        // limit cache to 10 entries by discarding the oldest element as in DokuWiki usually only the most recently
+        // added item will be requested again
+        if (count($this->pidCache) > 10) array_shift($this->pidCache);
+        $this->pidCache[$page] = $pid;
+        return $pid;
     }
 
     /**
