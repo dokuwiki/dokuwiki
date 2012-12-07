@@ -93,27 +93,27 @@ class Subscription {
      */
     protected function buildregex($user = null, $style = null, $data = null) {
         // always work with arrays
-        $user  = (array) $user;
+        $user = (array) $user;
         $style = (array) $style;
-        $data  = (array) $data;
+        $data = (array) $data;
 
         // clean
-        $user  = array_filter(array_map('trim', $user));
+        $user = array_filter(array_map('trim', $user));
         $style = array_filter(array_map('trim', $style));
-        $data  = array_filter(array_map('trim', $data));
+        $data = array_filter(array_map('trim', $data));
 
         // user names are encoded
         $user = array_map('auth_nameencode', $user);
 
         // quote
-        $user  = array_map('preg_quote_cb', $user);
+        $user = array_map('preg_quote_cb', $user);
         $style = array_map('preg_quote_cb', $style);
-        $data  = array_map('preg_quote_cb', $data);
+        $data = array_map('preg_quote_cb', $data);
 
         // join
-        $user  = join('|', $user);
+        $user = join('|', $user);
         $style = join('|', $style);
-        $data  = join('|', $data);
+        $data = join('|', $data);
 
         // any data at all?
         if($user.$style.$data === '') throw new Exception('no data passed');
@@ -126,7 +126,7 @@ class Subscription {
         }
         if($style === '') {
             $style = '\S+';
-            $sopt  = '?';
+            $sopt = '?';
         }
         if($data === '') {
             $data = '\S+';
@@ -158,7 +158,7 @@ class Subscription {
         $files = array(':' => $this->file(':'));
         do {
             $files[$page] = $this->file($page);
-            $page         = getNS(rtrim($page, ':')).':';
+            $page = getNS(rtrim($page, ':')).':';
         } while($page !== ':');
 
         $re = $this->buildregex($user, $style, $data);
@@ -204,9 +204,9 @@ class Subscription {
         // delete any existing subscription
         $this->remove($id, $user);
 
-        $user  = auth_nameencode(trim($user));
+        $user = auth_nameencode(trim($user));
         $style = trim($style);
-        $data  = trim($data);
+        $data = trim($data);
 
         if(!$user) throw new Exception('no subscription user given');
         if(!$style) throw new Exception('no subscription style given');
@@ -270,8 +270,8 @@ class Subscription {
         foreach($subs as $target => $info) {
             $result[] = array(
                 'target' => $target,
-                'style'  => $info[$user][0],
-                'data'   => $info[$user][1]
+                'style' => $info[$user][0],
+                'data' => $info[$user][1]
             );
         }
 
@@ -302,7 +302,7 @@ class Subscription {
 
         // remember current user info
         $olduinfo = $USERINFO;
-        $olduser  = $_SERVER['REMOTE_USER'];
+        $olduser = $_SERVER['REMOTE_USER'];
 
         foreach($subscriptions as $target => $users) {
             if(!$this->lock($target)) continue;
@@ -318,7 +318,7 @@ class Subscription {
                 }
 
                 // Work as the user to make sure ACLs apply correctly
-                $USERINFO               = $auth->getUserData($user);
+                $USERINFO = $auth->getUserData($user);
                 $_SERVER['REMOTE_USER'] = $user;
                 if($USERINFO === false) continue;
                 if(!$USERINFO['mail']) continue;
@@ -329,7 +329,7 @@ class Subscription {
                 } else {
                     // single page subscription, check ACL ourselves
                     if(auth_quickaclcheck($target) < AUTH_READ) continue;
-                    $meta    = p_get_metadata($target);
+                    $meta = p_get_metadata($target);
                     $changes = array($meta['last_change']);
                 }
 
@@ -372,7 +372,7 @@ class Subscription {
         }
 
         // restore current user info
-        $USERINFO               = $olduinfo;
+        $USERINFO = $olduinfo;
         $_SERVER['REMOTE_USER'] = $olduser;
         return $count;
     }
@@ -392,32 +392,32 @@ class Subscription {
 
         // prepare replacements (keys not set in hrep will be taken from trep)
         $trep = array(
-            'PAGE'      => $id,
-            'NEWPAGE'   => wl($id, '', true, '&'),
-            'SUMMARY'   => $summary,
+            'PAGE' => $id,
+            'NEWPAGE' => wl($id, '', true, '&'),
+            'SUMMARY' => $summary,
             'SUBSCRIBE' => wl($id, array('do' => 'subscribe'), true, '&')
         );
         $hrep = array();
 
         if($rev) {
-            $subject         = 'changed';
+            $subject = 'changed';
             $trep['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-            $df              = new Diff(explode("\n", rawWiki($id, $rev)),
-                                        explode("\n", rawWiki($id)));
-            $dformat         = new UnifiedDiffFormatter();
-            $tdiff           = $dformat->format($df);
+            $df = new Diff(explode("\n", rawWiki($id, $rev)),
+                           explode("\n", rawWiki($id)));
+            $dformat = new UnifiedDiffFormatter();
+            $tdiff = $dformat->format($df);
 
             $DIFF_INLINESTYLES = true;
-            $dformat           = new InlineDiffFormatter();
-            $hdiff             = $dformat->format($df);
-            $hdiff             = '<table>'.$hdiff.'</table>';
+            $dformat = new InlineDiffFormatter();
+            $hdiff = $dformat->format($df);
+            $hdiff = '<table>'.$hdiff.'</table>';
             $DIFF_INLINESTYLES = false;
 
         } else {
-            $subject         = 'newpage';
+            $subject = 'newpage';
             $trep['OLDPAGE'] = '---';
-            $tdiff           = rawWiki($id);
-            $hdiff           = nl2br(hsc($tdiff));
+            $tdiff = rawWiki($id);
+            $hdiff = nl2br(hsc($tdiff));
         }
 
         $trep['DIFF'] = $tdiff;
@@ -444,8 +444,8 @@ class Subscription {
         if(empty($conf['registernotify'])) return false;
 
         $trep = array(
-            'NEWUSER'  => $login,
-            'NEWNAME'  => $fullname,
+            'NEWUSER' => $login,
+            'NEWNAME' => $fullname,
             'NEWEMAIL' => $email,
         );
 
@@ -548,11 +548,11 @@ class Subscription {
 
         $text = rawLocale($template);
         $subject = $lang['mail_'.$subject].' '.$context;
-        $mail    = new Mailer();
+        $mail = new Mailer();
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
         $mail->setBody($text, $trep, $hrep);
-        if(isset($trep['SUBSCRIBE'])){
+        if(isset($trep['SUBSCRIBE'])) {
             $mail->setHeader('List-Unsubscribe', '<'.$trep['SUBSCRIBE'].'>', false);
         }
         return $mail->send();
@@ -580,8 +580,8 @@ class Subscription {
         global $auth;
         global $conf;
 
-        $id          = $data['id'];
-        $self        = $data['self'];
+        $id = $data['id'];
+        $self = $data['self'];
         $addresslist = $data['addresslist'];
 
         $subscriptions = $this->subscribers($id, null, 'every');
@@ -616,7 +616,7 @@ class Subscription {
  *
  * @deprecated 2012-12-07
  */
-function subscription_addresslist(&$data){
+function subscription_addresslist(&$data) {
     $sub = new Subscription();
     $sub->notifyaddresses($data);
 }
