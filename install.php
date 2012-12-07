@@ -167,6 +167,7 @@ function print_form($d){
     $d = array_map('htmlspecialchars',$d);
 
     if(!isset($d['acl'])) $d['acl']=1;
+    if(!isset($d['pop'])) $d['pop']=1;
 
     ?>
     <form action="" method="post">
@@ -221,6 +222,14 @@ function print_form($d){
                 echo '</label>';
             }
             ?>
+        </fieldset>
+
+        <fieldset>
+            <p><?php echo $lang['i_pop_field']?></p>
+            <label for="pop">
+                <input type="checkbox" name="d[pop]" id="pop" <?php echo(($d['pop'] ? ' checked="checked"' : ''));?> />
+                <?php echo $lang['i_pop_label']?> <a href="http://www.dokuwiki.org/plugin:popularity" target="_blank"><sup>[?]</sup></a>
+            </label>
         </fieldset>
 
     </fieldset>
@@ -376,6 +385,12 @@ EOT;
         }
         $ok = $ok && fileWrite(DOKU_LOCAL.'acl.auth.php', $output);
     }
+
+    // enable popularity submission
+    if($d['pop']){
+        @touch(DOKU_INC.'data/cache/autosubmit.txt');
+    }
+
     return $ok;
 }
 

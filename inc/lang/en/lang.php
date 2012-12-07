@@ -312,6 +312,8 @@ $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registere
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
 $lang['i_license_none']        = 'Do not show any license information';
+$lang['i_pop_field']           = 'Please, help us to improve the DokuWiki experience:';
+$lang['i_pop_label']           = 'Once a month, send anonymous usage data to the DokuWiki developers';
 
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';
