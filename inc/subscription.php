@@ -605,3 +605,18 @@ class Subscription {
         $data['addresslist'] = trim($addresslist.','.implode(',', $result), ',');
     }
 }
+
+/**
+ * Compatibility wrapper around Subscription:notifyaddresses
+ *
+ * for plugins emitting COMMON_NOTIFY_ADDRESSLIST themselves and relying on on this to
+ * be the default handler
+ *
+ * @param array $data event data for
+ *
+ * @deprecated 2012-12-07
+ */
+function subscription_addresslist(&$data){
+    $sub = new Subscription();
+    $sub->notifyaddresses($data);
+}
