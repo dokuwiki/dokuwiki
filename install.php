@@ -228,7 +228,7 @@ function print_form($d){
             <p><?php echo $lang['i_pop_field']?></p>
             <label for="pop">
                 <input type="checkbox" name="d[pop]" id="pop" <?php echo(($d['pop'] ? ' checked="checked"' : ''));?> />
-                <?php echo $lang['i_pop_label']?> <a href="http://www.dokuwiki.org/plugin:popularity" target="_blank"><sup>[?]</sup></a>
+                <?php echo $lang['i_pop_label']?> <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
             </label>
         </fieldset>
 
