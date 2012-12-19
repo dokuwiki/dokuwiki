@@ -77,7 +77,8 @@ function getVersionData(){
             if($date) $version['date'] = $date;
         }
     }else{
-        $version['date'] = 'unknown';
+        global $updateVersion;
+        $version['date'] = 'update version '.$updateVersion;
         $version['type'] = 'snapshot?';
     }
     return $version;
