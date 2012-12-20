@@ -1228,7 +1228,7 @@ class Doku_Indexer {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
-    global $Indexer;
+    static $Indexer;
     if (!isset($Indexer)) {
         $Indexer = new Doku_Indexer();
     }
