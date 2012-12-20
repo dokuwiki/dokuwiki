@@ -402,6 +402,38 @@ class Doku_Indexer {
     }
 
     /**
+     * Clear the whole index
+     *
+     * @return bool If the index has been cleared successfully
+     */
+    public function clear() {
+        global $conf;
+
+        if (!$this->lock()) return false;
+
+        @unlink($conf['indexdir'].'/page.idx');
+        @unlink($conf['indexdir'].'/title.idx');
+        @unlink($conf['indexdir'].'/pageword.idx');
+        @unlink($conf['indexdir'].'/metadata.idx');
+        $dir = @opendir($conf['indexdir']);
+        if($dir!==false){
+            while(($f = readdir($dir)) !== false){
+                if(substr($f,-4)=='.idx' &&
+                    (substr($f,0,1)=='i' || substr($f,0,1)=='w'
+                        || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
+                    @unlink($conf['indexdir']."/$f");
+            }
+        }
+        @unlink($conf['indexdir'].'/lengths.idx');
+
+        // clear the pid cache
+        $this->pidCache = array();
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
      * Split the text into words for fulltext search
      *
      * TODO: does this also need &$stopwords ?

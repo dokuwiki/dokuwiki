@@ -92,62 +92,12 @@ function _index($id){
 }
 
 /**
- * lock the indexer system
- */
-function _lock(){
-    global $conf;
-    $lock = $conf['lockdir'].'/_indexer.lock';
-    $said = false;
-    while(!@mkdir($lock, $conf['dmode'])){
-        if(time()-@filemtime($lock) > 60*5){
-            // looks like a stale lock - remove it
-            @rmdir($lock);
-        }else{
-            if($said){
-                _quietecho(".");
-            }else{
-                _quietecho("Waiting for lockfile (max. 5 min)");
-                $said = true;
-            }
-            sleep(15);
-        }
-    }
-    if($conf['dperm']) chmod($lock, $conf['dperm']);
-    if($said) _quietecho("\n");
-}
-
-/**
- * unlock the indexer sytem
- */
-function _unlock(){
-    global $conf;
-    $lock = $conf['lockdir'].'/_indexer.lock';
-    @rmdir($lock);
-}
-
-/**
  * Clear all index files
  */
 function _clearindex(){
-    global $conf;
-    _lock();
     _quietecho("Clearing index... ");
-    io_saveFile($conf['indexdir'].'/page.idx','');
-    io_saveFile($conf['indexdir'].'/title.idx','');
-    io_saveFile($conf['indexdir'].'/pageword.idx','');
-    io_saveFile($conf['indexdir'].'/metadata.idx','');
-    $dir = @opendir($conf['indexdir']);
-    if($dir!==false){
-        while(($f = readdir($dir)) !== false){
-            if(substr($f,-4)=='.idx' &&
-               (substr($f,0,1)=='i' || substr($f,0,1)=='w'
-               || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
-                @unlink($conf['indexdir']."/$f");
-        }
-    }
-    @unlink($conf['indexdir'].'/lengths.idx');
+    idx_get_indexer()->clear();
     _quietecho("done.\n");
-    _unlock();
 }
 
 function _quietecho($msg) {
