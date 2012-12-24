@@ -440,7 +440,7 @@ class RemoteAPICore {
         // run the indexer if page wasn't indexed yet
         idx_addPage($id);
 
-        return 0;
+        return true;
     }
 
     /**
