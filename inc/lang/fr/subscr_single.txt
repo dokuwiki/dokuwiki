@@ -14,7 +14,7 @@ Nouvelle révision : @NEWPAGE@
 
 Pour annuler les notifications de page, connectez-vous au wiki à l'adresse
 @DOKUWIKIURL@ puis visitez
-@SUBSCRIBE@
+@NEWPAGE@
 et désabonnez-vous de la page ou de la catégorie.
 
 --

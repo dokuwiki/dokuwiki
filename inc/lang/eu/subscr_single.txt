@@ -15,7 +15,7 @@ Berrikuste Berria: @NEWPAGE@
 
 Orri jakinarazpenak ezeztatzeko, sartu wikian 
 @DOKUWIKIURL@ helbidean, bisitatu
-@SUBSCRIBE@
+@NEWPAGE@
 eta ezabatu orri eta/edo izen-espazio aldaketen harpidetza.
 
 --

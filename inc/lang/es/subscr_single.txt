@@ -15,7 +15,7 @@ Nueva Revisión: @NEWPAGE@
 
 Para cancelar la página de notificaciones, entra a la wiki en
 @DOKUWIKIURL@ luego visita
-@SUBSCRIBE@
+@NEWPAGE@
 y date de baja en la página y/o cambios en el espacio de nombre.
 
 --
