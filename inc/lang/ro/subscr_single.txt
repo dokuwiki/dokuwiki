@@ -15,7 +15,7 @@ Noua revizie: @NEWPAGE@
 
 Pentru a anula notificarea paginii, logaţi-vă pe wiki la
 @DOKUWIKIURL@ apoi navigaţi la
-@SUBSCRIBE@
+@NEWPAGE@
 şi dezabonaţi-vă de la pagină şi/sau modificările numelui de spaţiu.
 
 --

@@ -15,7 +15,7 @@ Uusi versio: @NEWPAGE@
 
 Peruttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
 @DOKUWIKIURL@ , jonka jälkeen katso
-@SUBSCRIBE@
+@NEWPAGE@
 ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
 
 -- 

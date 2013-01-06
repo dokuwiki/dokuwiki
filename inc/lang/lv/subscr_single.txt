@@ -15,7 +15,7 @@ Jaunā versija: @NEWPAGE@
 
 Lai atceltu izmaiņu paziņošanu, ielogojieties 
 @DOKUWIKIURL@, apmeklējiet 
-@SUBSCRIBE@
+@NEWPAGE@
 un atsakieties no lapas vai nodaļas izmaiņu paziņojumiem .
 
 --

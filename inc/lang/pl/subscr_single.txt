@@ -15,7 +15,7 @@ Nowa wersja: @NEWPAGE@
 
 Aby zrezygnować z powiadomień o zmianach zaloguj się do wiki na
 @DOKUWIKIURL@, a następnie odwiedź
-@SUBSCRIBE@
+@NEWPAGE@
 i anuluj otrzymywanie powiadomień o zmianach na stronach i/lub
 katalogach.
 
