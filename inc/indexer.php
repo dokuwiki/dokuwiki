@@ -102,6 +102,10 @@ function wordlen($w){
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 class Doku_Indexer {
+    /**
+     * @var array $pidCache Cache for getPID()
+     */
+    protected $pidCache = array();
 
     /**
      * Adds the contents of a page to the fulltext index
@@ -120,7 +124,7 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $pid = $this->addIndexKey('page', '', $page);
+        $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
             $this->unlock();
             return false;
@@ -256,7 +260,7 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $pid = $this->addIndexKey('page', '', $page);
+        $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
             $this->unlock();
             return false;
@@ -348,7 +352,7 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $pid = $this->addIndexKey('page', '', $page);
+        $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
             $this->unlock();
             return false;
@@ -392,6 +396,38 @@ class Doku_Indexer {
             $this->saveIndex($metaname.'_i', '', $meta_idx);
             $this->saveIndexKey($metaname.'_p', '', $pid, '');
         }
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
+     * Clear the whole index
+     *
+     * @return bool If the index has been cleared successfully
+     */
+    public function clear() {
+        global $conf;
+
+        if (!$this->lock()) return false;
+
+        @unlink($conf['indexdir'].'/page.idx');
+        @unlink($conf['indexdir'].'/title.idx');
+        @unlink($conf['indexdir'].'/pageword.idx');
+        @unlink($conf['indexdir'].'/metadata.idx');
+        $dir = @opendir($conf['indexdir']);
+        if($dir!==false){
+            while(($f = readdir($dir)) !== false){
+                if(substr($f,-4)=='.idx' &&
+                    (substr($f,0,1)=='i' || substr($f,0,1)=='w'
+                        || substr($f,-6)=='_w.idx' || substr($f,-6)=='_i.idx' || substr($f,-6)=='_p.idx'))
+                    @unlink($conf['indexdir']."/$f");
+            }
+        }
+        @unlink($conf['indexdir'].'/lengths.idx');
+
+        // clear the pid cache
+        $this->pidCache = array();
 
         $this->unlock();
         return true;
@@ -451,6 +487,58 @@ class Doku_Indexer {
                 unset($wordlist[$i]);
         }
         return array_values($wordlist);
+    }
+
+    /**
+     * Get the numeric PID of a page
+     *
+     * @param string $page The page to get the PID for
+     * @return bool|int The page id on success, false on error
+     */
+    public function getPID($page) {
+        // return PID without locking when it is in the cache
+        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+
+        if (!$this->lock())
+            return false;
+
+        // load known documents
+        $pid = $this->getPIDNoLock($page);
+        if ($pid === false) {
+            $this->unlock();
+            return false;
+        }
+
+        $this->unlock();
+        return $pid;
+    }
+
+    /**
+     * Get the numeric PID of a page without locking the index.
+     * Only use this function when the index is already locked.
+     *
+     * @param string $page The page to get the PID for
+     * @return bool|int The page id on success, false on error
+     */
+    protected function getPIDNoLock($page) {
+        // avoid expensive addIndexKey operation for the most recently requested pages by using a cache
+        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+        $pid = $this->addIndexKey('page', '', $page);
+        // limit cache to 10 entries by discarding the oldest element as in DokuWiki usually only the most recently
+        // added item will be requested again
+        if (count($this->pidCache) > 10) array_shift($this->pidCache);
+        $this->pidCache[$page] = $pid;
+        return $pid;
+    }
+
+    /**
+     * Get the page id of a numeric PID
+     *
+     * @param int $pid The PID to get the page id for
+     * @return string The page id
+     */
+    public function getPageFromPID($pid) {
+        return $this->getIndexKey('page', '', $pid);
     }
 
     /**
@@ -946,7 +1034,7 @@ class Doku_Indexer {
      * @param string    $idx    name of the index
      * @param string    $suffix subpart identifier
      * @param string    $value  line to find in the index
-     * @return int              line number of the value in the index
+     * @return int|bool          line number of the value in the index or false if writing the index failed
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function addIndexKey($idx, $suffix, $value) {
@@ -1140,8 +1228,8 @@ class Doku_Indexer {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
-    static $Indexer = null;
-    if (is_null($Indexer)) {
+    static $Indexer;
+    if (!isset($Indexer)) {
         $Indexer = new Doku_Indexer();
     }
     return $Indexer;
@@ -1223,6 +1311,12 @@ function idx_addPage($page, $verbose=false, $force=false) {
         return $result;
     }
 
+    $Indexer = idx_get_indexer();
+    $pid = $Indexer->getPID($page);
+    if ($pid === false) {
+        if ($verbose) print("Indexer: getting the PID failed for $page".DOKU_LF);
+        return false;
+    }
     $body = '';
     $metadata = array();
     $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
@@ -1230,14 +1324,13 @@ function idx_addPage($page, $verbose=false, $force=false) {
         $metadata['relation_references'] = array_keys($references);
     else
         $metadata['relation_references'] = array();
-    $data = compact('page', 'body', 'metadata');
+    $data = compact('page', 'body', 'metadata', 'pid');
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
     if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
     $evt->advise_after();
     unset($evt);
     extract($data);
 
-    $Indexer = idx_get_indexer();
     $result = $Indexer->addPageWords($page, $body);
     if ($result === "locked") {
         if ($verbose) print("Indexer: locked".DOKU_LF);
