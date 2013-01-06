@@ -48,7 +48,7 @@ class RemoteAPICore {
                 'public' => '1'
             ), 'dokuwiki.appendPage' => array(
                 'args' => array('string', 'string', 'array'),
-                'return' => 'int',
+                'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
             ),  'wiki.getPage' => array(
                 'args' => array('string'),
@@ -102,7 +102,7 @@ class RemoteAPICore {
                 'name' => 'pageVersions'
             ), 'wiki.putPage' => array(
                 'args' => array('string', 'string', 'array'),
-                'return' => 'int',
+                'return' => 'bool',
                 'doc' => 'Saves a wiki page.'
             ), 'wiki.listLinks' => array(
                 'args' => array('string'),
