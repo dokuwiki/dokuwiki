@@ -580,7 +580,7 @@ function auth_aclcheck($id, $user, $groups) {
         }
         if($perm > -1) {
             //we had a match - return it
-            return $perm;
+            return (int) $perm;
         }
     }
 
@@ -610,7 +610,7 @@ function auth_aclcheck($id, $user, $groups) {
             }
             //we had a match - return it
             if($perm != -1) {
-                return $perm;
+                return (int) $perm;
             }
         }
         //get next higher namespace
