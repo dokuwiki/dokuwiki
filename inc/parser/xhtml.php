@@ -803,6 +803,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
             $link['class'] .= ' mediafile mf_'.$class;
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+            $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))).')';
         }
 
         if($hash) $link['url'] .= '#'.$hash;
