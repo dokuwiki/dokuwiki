@@ -247,11 +247,16 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
+    if(isset($opts['depth'])){
+        $parts = explode('/',ltrim($file,'/'));
+        if(($type == 'd' && count($parts) > $opts['depth'])
+          || ($type != 'd' && count($parts) > $opts['depth'] + 1)){
+            return false; // depth reached
+        }
+    }
+
     //we do nothing with directories
     if($type == 'd'){
-        if(!$opts['depth']) return true; // recurse forever
-        $parts = explode('/',ltrim($file,'/'));
-        if(count($parts) == $opts['depth']) return false; // depth reached
         return true;
     }
 
