@@ -654,7 +654,9 @@ class RemoteAPICore {
 
         if(count($revisions)>0 && $first==0) {
             array_unshift($revisions, '');  // include current revision
-            array_pop($revisions);          // remove extra log entry
+            if ( count($revisions) > $conf['recent'] ){
+                array_pop($revisions);          // remove extra log entry
+            }
         }
 
         if(count($revisions) > $conf['recent']) {
