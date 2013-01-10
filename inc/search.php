@@ -247,7 +247,7 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
-    if(isset($opts['depth'])){
+    if(isset($opts['depth']) && $opts['depth']){
         $parts = explode('/',ltrim($file,'/'));
         if(($type == 'd' && count($parts) > $opts['depth'])
           || ($type != 'd' && count($parts) > $opts['depth'] + 1)){
