@@ -81,6 +81,8 @@ class auth_ldap extends auth_basic {
             }
         }
 
+		
+		
         // Try to bind to with the dn if we have one.
         if(!empty($dn)) {
             // User/Password bind
@@ -244,11 +246,45 @@ class auth_ldap extends auth_basic {
                 }
             }
         }
+		
+		// open the groups config file
+			 
+		$filename=$this->cnf['groups.conf'];
+		//$file = fopen($filename, "r") or exit("Unable to open file!");
+		//Accesses the lines then seperating the content before and after the "="
+		if (!file_exists($filename))
+			die("Unable to open file:" . $filename);
+		$lines = file($filename);
+		$groups = array();
+		foreach($lines as $line){
+			$line = preg_replace('/#.*$/','',$line); //ignore comments
+			$line = trim($line);
+			if(empty($line)) continue;
+			$a = explode('=', $line, 2);
+			$groupname = trim($a[0]);
+			
+			// explode users: $arrayusers
+			
+			$arrayusers = explode(',', $a[1]);
+			$arrayusers = array_map('trim', $arrayusers);
+			
+			// check if $user is in the array $arrayusers
+			if (in_array($user, $arrayusers))
+			{
+				// if yes, add $groupname to $groups
+				$groups[] = $groupname;
+				//echo "in group: ". $groupname;
+			}
+		}
+
+		$info['grps'] = $groups;
 
         // always add the default group to the list of groups
         if(!in_array($conf['defaultgroup'],$info['grps'])){
             $info['grps'][] = $conf['defaultgroup'];
         }
+
+		
         return $info;
     }
 
