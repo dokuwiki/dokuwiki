@@ -166,12 +166,13 @@ if (!class_exists('configuration')) {
 
 
           // handle arrays
-          if(preg_match('/array ?\((.*)\)/', $value, $match)){
+          if(preg_match('/^array ?\((.*)\)/', $value, $match)){
             $arr = explode(',', $match[1]);
 
             // remove quotes from quoted strings & unescape escaped data
             $len = count($arr);
             for($j=0; $j<$len; $j++){
+                $arr[$j] = trim($arr[$j]);
                 $arr[$j] = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$arr[$j]);
                 $arr[$j] = strtr($arr[$j], array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
             }
