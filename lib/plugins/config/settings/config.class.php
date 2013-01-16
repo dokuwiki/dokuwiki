@@ -157,14 +157,31 @@ if (!class_exists('configuration')) {
         preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
 
         for ($i=0; $i<count($matches); $i++) {
+          $value = $matches[$i][2];
+
 
           // correct issues with the incoming data
           // FIXME ... for now merge multi-dimensional array indices using ____
           $key = preg_replace('/.\]\[./',CM_KEYMARKER,$matches[$i][1]);
 
-          // remove quotes from quoted strings & unescape escaped data
-          $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$matches[$i][2]);
-          $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+
+          // handle arrays
+          if(preg_match('/array ?\((.*)\)/', $value, $match)){
+            $arr = explode(',', $match[1]);
+
+            // remove quotes from quoted strings & unescape escaped data
+            $len = count($arr);
+            for($j=0; $j<$len; $j++){
+                $arr[$j] = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$arr[$j]);
+                $arr[$j] = strtr($arr[$j], array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+            }
+
+            $value = $arr;
+          }else{
+            // remove quotes from quoted strings & unescape escaped data
+            $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$value);
+            $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+          }
 
           $config[$key] = $value;
         }
