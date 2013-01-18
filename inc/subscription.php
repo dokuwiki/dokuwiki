@@ -503,7 +503,7 @@ class Subscription {
             $tlist .= '* '.$link.NL;
             $hlist .= '<li><a href="'.$link.'">'.hsc($id).'</a></li>'.NL;
         }
-        $hlist = '</ul>';
+        $hlist .= '</ul>';
 
         $id = prettyprint_id($ns_id);
         $trep = array(
