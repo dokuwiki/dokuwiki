@@ -398,17 +398,22 @@ class Subscription {
         if($rev) {
             $subject = 'changed';
             $trep['OLDPAGE'] = wl($id, "rev=$rev", true, '&');
-            $df = new Diff(explode("\n", rawWiki($id, $rev)),
-                           explode("\n", rawWiki($id)));
+
+            $old_content = rawWiki($id, $rev);
+            $new_content = rawWiki($id);
+
+            $df = new Diff(explode("\n", $old_content),
+                           explode("\n", $new_content));
             $dformat = new UnifiedDiffFormatter();
             $tdiff = $dformat->format($df);
 
             $DIFF_INLINESTYLES = true;
+            $df = new Diff(explode("\n", hsc($old_content)),
+                           explode("\n", hsc($new_content)));
             $dformat = new InlineDiffFormatter();
             $hdiff = $dformat->format($df);
             $hdiff = '<table>'.$hdiff.'</table>';
             $DIFF_INLINESTYLES = false;
-
         } else {
             $subject = 'newpage';
             $trep['OLDPAGE'] = '---';
