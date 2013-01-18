@@ -1105,10 +1105,7 @@ function saveOldRevision($id) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = array()) {
-    global $lang;
     global $conf;
-    global $INFO;
-    global $DIFF_INLINESTYLES;
 
     // decide if there is something to do, eg. whom to mail
     if($who == 'admin') {
