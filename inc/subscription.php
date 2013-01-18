@@ -204,20 +204,16 @@ class Subscription {
         // delete any existing subscription
         $this->remove($id, $user);
 
-        $user = auth_nameencode(trim($user));
+        $user  = auth_nameencode(trim($user));
         $style = trim($style);
-        $data = trim($data);
+        $data  = trim($data);
 
         if(!$user) throw new Exception('no subscription user given');
         if(!$style) throw new Exception('no subscription style given');
         if(!$data) $data = time(); //always add current time for new subscriptions
 
-        $line = "$user $style";
-        if($data) $line .= " $data";
-        $line .= "\n";
-
+        $line = "$user $style $data\n";
         $file = $this->file($id);
-
         return io_saveFile($file, $line, true);
     }
 
