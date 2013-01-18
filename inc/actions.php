@@ -784,8 +784,7 @@ function subscription_handle_post(&$params) {
         $style = null;
     }
 
-    $data = in_array($style, array('list', 'digest')) ? time() : null;
-    $params = compact('target', 'style', 'data', 'action');
+    $params = compact('target', 'style', 'action');
 }
 
 //Setup VIM: ex: et ts=2 :
