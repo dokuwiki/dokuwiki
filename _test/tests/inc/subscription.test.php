@@ -120,7 +120,7 @@ class subscription_test extends DokuWikiTest {
         );
     }
 
-    function test_bulkdigest(){
+    function test_bulkdigest() {
         $sub = new MockupSubscription();
 
         // let's start with nothing
@@ -153,10 +153,10 @@ class subscription_test extends DokuWikiTest {
 
         // we now should get mails for three changes
         $this->assertEquals(3, $sub->send_bulk('sub1:test'));
-        $this->assertEquals(array('arthur@example.com','arthur@example.com','arthur@example.com'), $sub->mails);
+        $this->assertEquals(array('arthur@example.com', 'arthur@example.com', 'arthur@example.com'), $sub->mails);
     }
 
-    function test_bulklist(){
+    function test_bulklist() {
         $sub = new MockupSubscription();
 
         // let's start with nothing
@@ -192,7 +192,24 @@ class subscription_test extends DokuWikiTest {
         $this->assertEquals(array('arthur@example.com'), $sub->mails);
     }
 
+    /**
+     * Tests, if overwriting subscriptions works even when subscriptions for the same
+     * user exist for two nested namespaces, this is a test for the bug described in FS#2580
+     */
+    function test_overwrite() {
+        $sub = new MockupSubscription();
 
+        $sub->add(':', 'admin', 'digest', '123456789');
+        $sub->add(':wiki:', 'admin', 'digest', '123456789');
+        $sub->add(':', 'admin', 'digest', '1234');
+        $sub->add(':wiki:', 'admin', 'digest', '1234');
+
+        $subscriptions = $sub->subscribers(':wiki:', 'admin');
+
+        $this->assertCount(1, $subscriptions[':'], 'More than one subscription saved for the root namespace even though the old one should have been overwritten.');
+        $this->assertCount(1, $subscriptions[':wiki:'], 'More than one subscription saved for the wiki namespace even though the old one should have been overwritten.');
+        $this->assertCount(2, $subscriptions, 'Didn\'t find the expected two subscriptions');
+    }
 }
 
 /**
@@ -201,18 +218,18 @@ class subscription_test extends DokuWikiTest {
 class MockupSubscription extends Subscription {
     public $mails; // we keep sent mails here
 
-    public function __construct(){
+    public function __construct() {
         $this->reset();
     }
 
     /**
      * resets the mail array
      */
-    public function reset(){
+    public function reset() {
         $this->mails = array();
     }
 
-    public function isenabled(){
+    public function isenabled() {
         return true;
     }
 
@@ -220,7 +237,7 @@ class MockupSubscription extends Subscription {
         return parent::buildregex($user, $style, $data);
     }
 
-    protected function send($subscriber_mail, $subject, $id, $template, $trep, $hrep){
+    protected function send($subscriber_mail, $subject, $id, $template, $trep, $hrep = null) {
         $this->mails[] = $subscriber_mail;
         return true;
     }
