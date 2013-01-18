@@ -546,6 +546,7 @@ class Subscription {
      */
     protected function send($subscriber_mail, $subject, $context, $template, $trep, $hrep = null) {
         global $lang;
+        global $conf;
 
         $text = rawLocale($template);
         $subject = $lang['mail_'.$subject].' '.$context;
@@ -553,6 +554,7 @@ class Subscription {
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
         $mail->setBody($text, $trep, $hrep);
+        $mail->from($conf['mailfromnobody']);
         if(isset($trep['SUBSCRIBE'])) {
             $mail->setHeader('List-Unsubscribe', '<'.$trep['SUBSCRIBE'].'>', false);
         }
