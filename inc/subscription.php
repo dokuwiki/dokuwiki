@@ -381,7 +381,7 @@ class Subscription {
      * Send the diff for some page change
      *
      * @param string   $subscriber_mail The target mail address
-     * @param string   $template        Mail template, should be 'subscr_digest' or 'subscr_single'
+     * @param string   $template        Mail template ('subscr_digest', 'subscr_single', 'mailtext', ...)
      * @param string   $id              Page for which the notification is
      * @param int|null $rev             Old revision if any
      * @param string   $summary         Change summary if any
