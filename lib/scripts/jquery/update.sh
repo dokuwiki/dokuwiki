@@ -25,5 +25,5 @@ do
 done
  
 # remove font family declarations from smoothness CSS
-cat jquery-ui-theme/smoothness.css.ori | sed "s/font-family:[^;]*;//" >> jquery-ui-theme/smoothness.css
+cat jquery-ui-theme/smoothness.css.ori | sed "s/font-family:[^;]*;//" > jquery-ui-theme/smoothness.css
 rm jquery-ui-theme/smoothness.css.ori
