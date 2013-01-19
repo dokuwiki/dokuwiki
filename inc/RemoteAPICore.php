@@ -344,6 +344,8 @@ class RemoteAPICore {
 
             for($i=0; $i<$len; $i++) {
                 unset($data[$i]['meta']);
+                $data[$i]['perms'] = $data[$i]['perm'];
+                unset($data[$i]['perm']);
                 $data[$i]['lastModified'] = $this->api->toDate($data[$i]['mtime']);
             }
             return $data;
