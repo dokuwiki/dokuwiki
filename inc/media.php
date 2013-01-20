@@ -560,6 +560,19 @@ function media_notify($id,$file,$mime,$old_rev=false){
     $mail->to($conf['notify']);
     $mail->subject($lang['mail_upload'].' '.$id);
     $mail->setBody($text,$trep);
+
+    $file = mediaFN($id);
+    $cur = @filemtime($file);
+
+    $server = parse_url(DOKU_URL, PHP_URL_HOST);
+    $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
+    $listid = strtolower(trim($listid, '.'));
+
+    $mail->setHeader('Message-Id', "<$id?rev=$cur@$listid>", false);
+    if ($old_rev) {
+        $mail->setHeader('In-Reply-To', "<$id?rev=$old_rev@$listid>", false);
+    }
+
     return $mail->send();
 }
 
