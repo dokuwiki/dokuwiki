@@ -3,7 +3,7 @@
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_API_VERSION', 7);
+define('DOKU_API_VERSION', 8);
 
 class RemoteAPICore {
 
