@@ -73,7 +73,7 @@ class Tar_TestCase extends DokuWikiTest {
     public function test_tarcontent() {
         $dir = dirname(__FILE__).'/tar';
 
-        foreach(array('tar', 'tgz', 'tbz', 'tbz2') as $ext) {
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -96,7 +96,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz', 'tbz2') as $ext) {
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -122,7 +122,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz', 'tbz2') as $ext) {
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -148,7 +148,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz', 'tbz2') as $ext) {
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -174,7 +174,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz', 'tbz2') as $ext) {
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -199,7 +199,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz', 'tbz2') as $ext) {
+        foreach(array('tar', 'tgz', 'tbz') as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -229,10 +229,6 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertEquals(Tar::COMPRESS_GZIP, $tar->filetype('foo.tar.gz'));
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tbz'));
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tBZ'));
-        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tbz2'));
-        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tBZ2'));
-        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz'));
-        $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.BZ'));
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.BZ2'));
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz2'));
     }

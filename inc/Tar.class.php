@@ -618,7 +618,7 @@ class Tar {
         $file = strtolower($file);
         if(substr($file, -3) == '.gz' || substr($file, -4) == '.tgz') {
             $comptype = Tar::COMPRESS_GZIP;
-        } elseif(substr($file, -4) == '.bz2' || substr($file, -3) == '.bz' || substr($file, -4) == '.tbz' || substr($file, -5) == ".tbz2") {
+        } elseif(substr($file, -4) == '.bz2' || substr($file, -4) == '.tbz') {
             $comptype = Tar::COMPRESS_BZIP;
         } else {
             $comptype = Tar::COMPRESS_NONE;
