@@ -29,7 +29,6 @@ class search_test extends DokuWikiTest {
     }
 
     function test_search_index(){
-      return;
         $data = array();
         search($data, dirname(__FILE__) . '/data', 'search_index',
                array('ns' => 'ns2'));
