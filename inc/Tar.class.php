@@ -17,7 +17,7 @@
  *
  *     $tar = new Tar();
  *     $tar->open('myfile.tgz');
- *     $tar->extract(/tmp);
+ *     $tar->extract('/tmp');
  *
  * To create a new TAR archive directly on the filesystem (low memory requirements), create() it,
  * add*() files and close() it:
@@ -81,7 +81,7 @@ class Tar {
             $this->fh = @fopen($this->file, 'rb');
         }
 
-        if(!$this->fh) throw(new TarIOException('Could not open file for reading: '.$this->file));
+        if(!$this->fh) throw new TarIOException('Could not open file for reading: '.$this->file);
         $this->closed = false;
     }
 
@@ -107,9 +107,9 @@ class Tar {
      * Reopen the file with open() again if you want to do additional operations
      */
     public function contents() {
-        if($this->closed || !$this->file) throw(new TarIOException('Can not read from a closed archive'));
+        if($this->closed || !$this->file) throw new TarIOException('Can not read from a closed archive');
 
-        $result = Array();
+        $result = array();
         while($read = $this->readbytes(512)) {
             $header = $this->parseHeader($read);
             if(!is_array($header)) continue;
@@ -148,7 +148,7 @@ class Tar {
      * @return array
      */
     function extract($outdir, $strip = '', $exclude = '', $include = '') {
-        if($this->closed || !$this->file) throw(new TarIOException('Can not read from a closed archive'));
+        if($this->closed || !$this->file) throw new TarIOException('Can not read from a closed archive');
 
         $outdir = rtrim($outdir, '/');
         io_mkdir_p($outdir);
@@ -207,7 +207,7 @@ class Tar {
                 // is this a file?
                 if(!$header['typeflag']) {
                     $fp = fopen($output, "wb");
-                    if(!$fp) throw(new TarIOException('Could not open file for writing: '.$output));
+                    if(!$fp) throw new TarIOException('Could not open file for writing: '.$output);
 
                     $size = floor($header['size'] / 512);
                     for($i = 0; $i < $size; $i++) {
@@ -260,7 +260,7 @@ class Tar {
                 $this->fh = @fopen($this->file, 'wb');
             }
 
-            if(!$this->fh) throw(new TarIOException('Could not open file for writing: '.$this->file));
+            if(!$this->fh) throw new TarIOException('Could not open file for writing: '.$this->file);
         }
         $this->writeaccess = false;
         $this->closed      = false;
@@ -275,13 +275,13 @@ class Tar {
      * @throws TarIOException
      */
     public function addFile($file, $name = '') {
-        if($this->closed) throw(new TarIOException('Archive has been closed, files can no longer be added'));
+        if($this->closed) throw new TarIOException('Archive has been closed, files can no longer be added');
 
         if(!$name) $name = $file;
         $name = $this->cleanPath($name);
 
         $fp = fopen($file, 'rb');
-        if(!$fp) throw(new TarIOException('Could not open file for reading: '.$file));
+        if(!$fp) throw new TarIOException('Could not open file for reading: '.$file);
 
         // create file header and copy all stat info from the original file
         clearstatcache(false, $file);
@@ -314,7 +314,7 @@ class Tar {
      * @throws TarIOException
      */
     public function addData($name, $data, $uid = 0, $gid = 0, $perm = 0666, $mtime = 0) {
-        if($this->closed) throw(new TarIOException('Archive has been closed, files can no longer be added'));
+        if($this->closed) throw new TarIOException('Archive has been closed, files can no longer be added');
 
         $name = $this->cleanPath($name);
         $len  = strlen($data);
@@ -401,7 +401,7 @@ class Tar {
         if($comptype === Tar::COMPRESS_AUTO) $comptype = $this->filetype($file);
 
         if(!file_put_contents($file, $this->getArchive($comptype, $complevel))) {
-            throw(new TarIOException('Could not write to file: '.$file));
+            throw new TarIOException('Could not write to file: '.$file);
         }
     }
 
@@ -439,14 +439,14 @@ class Tar {
         } else {
             $written = @fwrite($this->fh, $data);
         }
-        if($written === false) throw(new TarIOException('Failed to write to archive stream'));
+        if($written === false) throw new TarIOException('Failed to write to archive stream');
         return $written;
     }
 
     /**
      * Skip forward in the open file pointer
      *
-     * This is basically a wrapper around seek() (and a workarounf for bzip2)
+     * This is basically a wrapper around seek() (and a workaround for bzip2)
      *
      * @param int  $bytes seek to this position
      */
@@ -494,11 +494,11 @@ class Tar {
         }
 
         // values are needed in octal
-        $uid   = sprintf("%6s ", DecOct($uid));
-        $gid   = sprintf("%6s ", DecOct($gid));
-        $perm  = sprintf("%6s ", DecOct($perm));
-        $size  = sprintf("%11s ", DecOct($size));
-        $mtime = sprintf("%11s", DecOct($mtime));
+        $uid   = sprintf("%6s ", decoct($uid));
+        $gid   = sprintf("%6s ", decoct($gid));
+        $perm  = sprintf("%6s ", decoct($perm));
+        $size  = sprintf("%11s ", decoct($size));
+        $mtime = sprintf("%11s", decoct($mtime));
 
         $data_first = pack("a100a8a8a8a12A12", $name, $perm, $uid, $gid, $size, $mtime);
         $data_last  = pack("a1a100a6a2a32a32a8a8a155a12", $typeflag, '', 'ustar', '', '', '', '', '', $prefix, "");
@@ -511,7 +511,7 @@ class Tar {
 
         $this->writebytes($data_first);
 
-        $chks = pack("a8", sprintf("%6s ", DecOct($chks)));
+        $chks = pack("a8", sprintf("%6s ", decoct($chks)));
         $this->writebytes($chks.$data_last);
     }
 
@@ -598,11 +598,11 @@ class Tar {
      */
     protected function compressioncheck($comptype) {
         if($comptype === Tar::COMPRESS_GZIP && !function_exists('gzopen')) {
-            throw(new TarIllegalCompressionException('No gzip support available'));
+            throw new TarIllegalCompressionException('No gzip support available');
         }
 
         if($comptype === Tar::COMPRESS_BZIP && !function_exists('bzopen')) {
-            throw(new TarIllegalCompressionException('No bzip2 support available'));
+            throw new TarIllegalCompressionException('No bzip2 support available');
         }
     }
 
