@@ -1,6 +1,7 @@
 <?php
 
 class search_test extends DokuWikiTest {
+
     function strip_index_data($entry) {
         $n_entry = array();
         foreach(array('id', 'type', 'level', 'open') as $k) {
@@ -9,7 +10,26 @@ class search_test extends DokuWikiTest {
         return $n_entry;
     }
 
+    function test_search_allpages(){
+      $data = array();
+
+      //depth is 0 hence we should recurse endlesly
+      search($data, dirname(__FILE__) . '/data', 'search_allpages',  array('depth' => 0), 'ns1');
+      $this->assertEquals(3, count($data));
+
+      //depth is 1 and we start too deep to expect results
+      $data = array();
+      search($data, dirname(__FILE__) . '/data', 'search_allpages',  array('depth' => 1), 'ns1/ns3');
+      $this->assertEquals(0, count($data));
+
+      //depth is 1 so I should get only pages from ns1
+      $data = array();
+      search($data, dirname(__FILE__) . '/data', 'search_allpages', array('depth' => 1), 'ns1');
+      $this->assertEquals(2, count($data));
+    }
+
     function test_search_index(){
+      return;
         $data = array();
         search($data, dirname(__FILE__) . '/data', 'search_index',
                array('ns' => 'ns2'));
