@@ -195,7 +195,7 @@ class ap_download extends ap_manage {
         if (substr($target, -1) == "/") $target = substr($target, 0, -1);
 
         $ext = $this->guess_archive($file);
-        if (in_array($ext, array('tar','bz','gz'))) {
+        if (in_array($ext, array('tar','bz','bz2','gz'))) {
             switch($ext){
                 case 'bz':
                     $compress_type = Tar::COMPRESS_BZIP;
