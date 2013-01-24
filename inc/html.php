@@ -1390,8 +1390,7 @@ function html_edit(){
     $data = array('form' => $form,
                   'wr'   => $wr,
                   'media_manager' => true,
-                  'target' => ($INPUT->has('target') && $wr &&
-                               $RANGE !== '') ? $INPUT->str('target') : 'section',
+                  'target' => ($INPUT->has('target') && $wr) ? $INPUT->str('target') : 'section',
                   'intro_locale' => $include);
 
     if ($data['target'] !== 'section') {
