@@ -554,7 +554,9 @@ class Subscription {
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
         $mail->setBody($text, $trep, $hrep);
-        $mail->from($conf['mailfromnobody']);
+        if(in_array($template, array('subscr_list', 'subscr_digest'))){
+            $mail->from($conf['mailfromnobody']);
+        }
         if(isset($trep['SUBSCRIBE'])) {
             $mail->setHeader('List-Unsubscribe', '<'.$trep['SUBSCRIBE'].'>', false);
         }
