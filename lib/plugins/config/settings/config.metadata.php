@@ -32,6 +32,9 @@
  *                    separated list of checked choices
  *   'fieldset'     - used to group configuration settings, but is not itself a setting. To make this clear in
  *                    the language files the keys for this type should start with '_'.
+ *   'array'        - a simple (one dimensional) array of string values, shown as comma separated list in the
+ *                    config manager but saved as PHP array(). Values may not contain commas themselves.
+ *                    _pattern matching on the array values supported.
  *
  *  Single Setting (source: settings/extra.class.php)
  *  -------------------------------------------------

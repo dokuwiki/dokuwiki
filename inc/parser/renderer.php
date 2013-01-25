@@ -62,7 +62,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     //handle plugin rendering
     function plugin($name,$data){
-        $plugin =& plugin_load('syntax',$name);
+        $plugin = plugin_load('syntax',$name);
         if($plugin != null){
             $plugin->render($this->getFormat(),$this,$data);
         }

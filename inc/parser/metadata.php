@@ -133,27 +133,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     }
   }
 
-  function strong_open(){}
-  function strong_close(){}
-
-  function emphasis_open(){}
-  function emphasis_close(){}
-
-  function underline_open(){}
-  function underline_close(){}
-
-  function monospace_open(){}
-  function monospace_close(){}
-
-  function subscript_open(){}
-  function subscript_close(){}
-
-  function superscript_open(){}
-  function superscript_close(){}
-
-  function deleted_open(){}
-  function deleted_close(){}
-
   /**
    * Callback for footnote start syntax
    *
@@ -217,14 +196,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function unformatted($text){
     if ($this->capture) $this->doc .= $text;
   }
-
-  function php($text){}
-
-  function phpblock($text){}
-
-  function html($text){}
-
-  function htmlblock($text){}
 
   function preformatted($text){
     if ($this->capture) $this->doc .= $text;
@@ -392,18 +363,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
                 min($this->meta['date']['valid']['age'],$params['refresh']) :
                 $params['refresh'];
   }
-
-  function table_open($maxcols = NULL, $numrows = NULL){}
-  function table_close(){}
-
-  function tablerow_open(){}
-  function tablerow_close(){}
-
-  function tableheader_open($colspan = 1, $align = NULL, $rowspan = 1){}
-  function tableheader_close(){}
-
-  function tablecell_open($colspan = 1, $align = NULL, $rowspan = 1){}
-  function tablecell_close(){}
 
   //----------------------------------------------------------
   // Utils

@@ -200,7 +200,7 @@ class DokuWiki_Plugin {
      */
     function loadHelper($name, $msg){
         if (!plugin_isdisabled($name)){
-            $obj =& plugin_load('helper',$name);
+            $obj = plugin_load('helper',$name);
         }else{
             $obj = null;
         }

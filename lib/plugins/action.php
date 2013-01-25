@@ -17,7 +17,7 @@ class DokuWiki_Action_Plugin extends DokuWiki_Plugin {
      /**
       * Registers a callback function for a given event
       */
-      function register($controller) {
+      function register(Doku_Event_Handler $controller) {
         trigger_error('register() not implemented in '.get_class($this), E_USER_WARNING);
       }
 }

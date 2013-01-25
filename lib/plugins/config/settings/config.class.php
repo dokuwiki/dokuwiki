@@ -6,6 +6,9 @@
  *  @author  Ben Coburn <btcoburn@silicodon.net>
  */
 
+
+if(!defined('CM_KEYMARKER')) define('CM_KEYMARKER','____');
+
 if (!class_exists('configuration')) {
 
   class configuration {
@@ -46,14 +49,8 @@ if (!class_exists('configuration')) {
         $this->_local_files = $config_cascade['main']['local'];
         $this->_protected_files = $config_cascade['main']['protected'];
 
-#        if (isset($file['default'])) $this->_default_file = $file['default'];
-#        if (isset($file['local'])) $this->_local_file = $file['local'];
-#        if (isset($file['protected'])) $this->_protected_file = $file['protected'];
-
         $this->locked = $this->_is_locked();
-
         $this->_metadata = array_merge($meta, $this->get_plugintpl_metadata($conf['template']));
-
         $this->retrieve_settings();
     }
 
@@ -149,7 +146,6 @@ if (!class_exists('configuration')) {
       if (!$file) return array();
 
       $config = array();
-#      $file = eval('return '.$file.';');
 
       if ($this->_format == 'php') {
 
@@ -197,9 +193,6 @@ if (!class_exists('configuration')) {
     function _out_footer() {
       $out = '';
       if ($this->_format == 'php') {
- #         if ($this->_protected_file) {
- #           $out .= "\n@include(".$this->_protected_file.");\n";
- #         }
           $out .= "\n// end auto-generated content\n";
       }
 
@@ -211,7 +204,6 @@ if (!class_exists('configuration')) {
     function _is_locked() {
       if (!$this->_local_files) return true;
 
-#      $local = eval('return '.$this->_local_file.';');
       $local = $this->_local_files[0];
 
       if (!is_writable(dirname($local))) return true;
@@ -465,6 +457,110 @@ if (!class_exists('setting')) {
         }
     }
   }
+}
+
+
+if (!class_exists('setting_array')) {
+    class setting_array extends setting {
+
+        /**
+         * Create an array from a string
+         *
+         * @param $string
+         * @return array
+         */
+        protected function _from_string($string){
+            $array = explode(',', $string);
+            $array = array_map('trim', $array);
+            $array = array_filter($array);
+            $array = array_unique($array);
+            return $array;
+        }
+
+        /**
+         * Create a string from an array
+         *
+         * @param $array
+         * @return string
+         */
+        protected function _from_array($array){
+            return join(', ', (array) $array);
+        }
+
+        /**
+         * update setting with user provided value $input
+         * if value fails error check, save it
+         *
+         * @param string $input
+         * @return bool true if changed, false otherwise (incl. on error)
+         */
+        function update($input) {
+            if (is_null($input)) return false;
+            if ($this->is_protected()) return false;
+
+            $input = $this->_from_string($input);
+
+            $value = is_null($this->_local) ? $this->_default : $this->_local;
+            if ($value == $input) return false;
+
+            foreach($input as $item){
+                if ($this->_pattern && !preg_match($this->_pattern,$item)) {
+                    $this->_error = true;
+                    $this->_input = $input;
+                    return false;
+                }
+            }
+
+            $this->_local = $input;
+            return true;
+        }
+
+        protected function _escape($string) {
+            $tr = array("\\" => '\\\\', "'" => '\\\'');
+            return "'".strtr( cleanText($string), $tr)."'";
+        }
+
+        /**
+         * generate string to save setting value to file according to $fmt
+         */
+        function out($var, $fmt='php') {
+
+            if ($this->is_protected()) return '';
+            if (is_null($this->_local) || ($this->_default == $this->_local)) return '';
+
+            $out = '';
+
+            if ($fmt=='php') {
+                $vals = array_map(array($this, '_escape'), $this->_local);
+                $out =  '$'.$var."['".$this->_out_key()."'] = array(".join(', ',$vals).");\n";
+            }
+
+            return $out;
+        }
+
+        function html(&$plugin, $echo=false) {
+            $value = '';
+            $disable = '';
+
+            if ($this->is_protected()) {
+                $value = $this->_protected;
+                $disable = 'disabled="disabled"';
+            } else {
+                if ($echo && $this->_error) {
+                    $value = $this->_input;
+                } else {
+                    $value = is_null($this->_local) ? $this->_default : $this->_local;
+                }
+            }
+
+            $key = htmlspecialchars($this->_key);
+            $value = htmlspecialchars($this->_from_array($value));
+
+            $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+            $input = '<input id="config___'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+            return array($label,$input);
+        }
+    }
 }
 
 if (!class_exists('setting_string')) {
