@@ -523,7 +523,7 @@ class Subscription {
         return $this->send(
             $subscriber_mail,
             'subscribe_list',
-
+            $ns_id,
             'subscr_list', $trep, $hrep
         );
     }
