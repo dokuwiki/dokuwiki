@@ -9,7 +9,7 @@ Her er endringene:
 
 For å avslutte varslinga, logg inn på
 @DOKUWIKIURL@ og gå til 
-@NEWPAGE@
+@SUBSCRIBE@
 og avslutt abonnementet på endringer av sida eller i navnerommet.
 
 --
