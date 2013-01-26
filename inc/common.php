@@ -1582,7 +1582,7 @@ function set_doku_pref($pref, $val) {
     }
 
     if (!empty($cookieVal)) {
-        setcookie('DOKU_PREFS', $cookieVal, mktime('+1 year'), DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
+        setcookie('DOKU_PREFS', $cookieVal, strtotime('+1 year'), DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
     }
 }
 
