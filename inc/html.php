@@ -1226,8 +1226,8 @@ function html_softbreak_callback($match){
   // breaking character (zero length space, U+200B / #8203) in front them.
   $regex = <<< REGEX
 (?(?=                                 # start a conditional expression with a positive look ahead ...
-&(\#\\d{1,4}|[[:alpha:]]{1,4});)      # ... for html entities - we don't want to split them
-&\#?\\w{1,4};                         # yes pattern - a quicker match for the html entity, since we know we have one
+&\#?\\w{1,6};)                        # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
+&\#?\\w{1,6};                         # yes pattern - a quicker match for the html entity, since we know we have one
 |
 [?/,&\#;:]+                           # no pattern - any other group of 'special' characters to insert a breaking character after
 )                                     # end conditional expression
