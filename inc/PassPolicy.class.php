@@ -26,6 +26,14 @@ class PassPolicy {
     /** @var int number of consecutive letters that may not be in the username, 0 to disable */
     public $usernamecheck = 0;
 
+    /** @var int policy violation error */
+    public $error = 0;
+
+
+    const LENGTH_VIOLATION = 1;
+    const POOL_VIOLATION = 2;
+    const USERNAME_VIOLATION = 4;
+
     /**
      * @param $username
      * @return bool|string
@@ -76,19 +84,33 @@ class PassPolicy {
      * @return bool
      */
     public function checkPolicy($pass, $username) {
+        $this->error = 0;
+
+        // check length first:
+        if(strlen($pass) < $this->min_length){
+            $this->error = PassPolicy::LENGTH_VIOLATION;
+            return false;
+        }
+
         $matched_pools = 0;
         if(!empty($this->usepools['lower'])) $matched_pools += (int) preg_match('/[a-z]/', $pass);
         if(!empty($this->usepools['upper'])) $matched_pools += (int) preg_match('/[A-Z]/', $pass);
         if(!empty($this->usepools['numeric'])) $matched_pools += (int) preg_match('/[0-9]/', $pass);
         if(!empty($this->usepools['special'])) $matched_pools += (int) preg_match('/[^A-Za-z0-9]/', $pass); // we consider everything else special
-        if($matched_pools < $this->usepools) return false;
+        if($matched_pools < $this->min_pools){
+            $this->error = PassPolicy::POOL_VIOLATION;
+            return false;
+        }
 
         if($this->usernamecheck && $username) {
             $pass     = utf8_strtolower($pass);
             $username = utf8_strtolower($username);
 
             // simplest case first
-            if(utf8_stripspecials($pass,'','\._\-:\*') == utf8_stripspecials($username,'','\._\-:\*')) return false;
+            if(utf8_stripspecials($pass,'','\._\-:\*') == utf8_stripspecials($username,'','\._\-:\*')){
+                $this->error = PassPolicy::USERNAME_VIOLATION;
+                return false;
+            }
 
             // find possible chunks in the lenght defined in policy
             $chunks = array();
@@ -103,7 +125,10 @@ class PassPolicy {
             $chunks = array_map('preg_quote_cb', $chunks);
             $re     = join('|', $chunks);
 
-            if(preg_match("/($re)/", $username)) return false;
+            if(preg_match("/($re)/", $username)){
+                $this->error = PassPolicy::USERNAME_VIOLATION;
+                return false;
+            }
         }
 
         return true;
