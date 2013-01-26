@@ -339,6 +339,109 @@ class Doku_Indexer {
     }
 
     /**
+     * Rename a page in the search index without changing the indexed content. This function doesn't check if the
+     * old or new name exists in the filesystem. It returns an error if the old page isn't in the page list of the
+     * indexer and it deletes all previously indexed content of the new page.
+     *
+     * @param string $oldpage The old page name
+     * @param string $newpage The new page name
+     * @return string|bool If the page was successfully renamed, can be a message in the case of an error
+     */
+    public function renamePage($oldpage, $newpage) {
+        if (!$this->lock()) return 'locked';
+
+        $pages = $this->getPages();
+
+        $id = array_search($oldpage, $pages);
+        if ($id === false) {
+            $this->unlock();
+            return 'page is not in index';
+        }
+
+        $new_id = array_search($newpage, $pages);
+        if ($new_id !== false) {
+            // make sure the page is not in the index anymore
+            if ($this->deletePageNoLock($newpage) !== true) {
+                return false;
+            }
+
+            $pages[$new_id] = 'deleted:'.time().rand(0, 9999);
+        }
+
+        $pages[$id] = $newpage;
+
+        // update index
+        if (!$this->saveIndex('page', '', $pages)) {
+            $this->unlock();
+            return false;
+        }
+
+        // reset the pid cache
+        $this->pidCache = array();
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
+     * Renames a meta value in the index. This doesn't change the meta value in the pages, it assumes that all pages
+     * will be updated.
+     *
+     * @param string $key       The metadata key of which a value shall be changed
+     * @param string $oldvalue  The old value that shall be renamed
+     * @param string $newvalue  The new value to which the old value shall be renamed, can exist (then values will be merged)
+     * @return bool|string      If renaming the value has been successful, false or error message on error.
+     */
+    public function renameMetaValue($key, $oldvalue, $newvalue) {
+        if (!$this->lock()) return 'locked';
+
+        // change the relation references index
+        $metavalues = $this->getIndex($key, '_w');
+        $oldid = array_search($oldvalue, $metavalues);
+        if ($oldid !== false) {
+            $newid = array_search($newvalue, $metavalues);
+            if ($newid !== false) {
+                // free memory
+                unset ($metavalues);
+
+                // okay, now we have two entries for the same value. we need to merge them.
+                $indexline = $this->getIndexKey($key, '_i', $oldid);
+                if ($indexline != '') {
+                    $newindexline = $this->getIndexKey($key, '_i', $newid);
+                    $pagekeys     = $this->getIndex($key, '_p');
+                    $parts = explode(':', $indexline);
+                    foreach ($parts as $part) {
+                        list($id, $count) = explode('*', $part);
+                        $newindexline =  $this->updateTuple($newindexline, $id, $count);
+
+                        $keyline = explode(':', $pagekeys[$id]);
+                        // remove old meta value
+                        $keyline = array_diff($keyline, array($oldid));
+                        // add new meta value when not already present
+                        if (!in_array($newid, $keyline)) {
+                            array_push($keyline, $newid);
+                        }
+                        $pagekeys[$id] = implode(':', $keyline);
+                    }
+                    $this->saveIndex($key, '_p', $pagekeys);
+                    unset($pagekeys);
+                    $this->saveIndexKey($key, '_i', $oldid, '');
+                    $this->saveIndexKey($key, '_i', $newid, $newindexline);
+                }
+            } else {
+                $metavalues[$oldid] = $newvalue;
+                if (!$this->saveIndex($key, '_w', $metavalues)) {
+                    $this->unlock();
+                    return false;
+                }
+            }
+        }
+
+        $this->unlock();
+        return true;
+    }
+
+    /**
      * Remove a page from the index
      *
      * Erases entries in all known indexes.
@@ -351,10 +454,26 @@ class Doku_Indexer {
         if (!$this->lock())
             return "locked";
 
+        $result = $this->deletePageNoLock($page);
+
+        $this->unlock();
+
+        return $result;
+    }
+
+    /**
+     * Remove a page from the index without locking the index, only use this function if the index is already locked
+     *
+     * Erases entries in all known indexes.
+     *
+     * @param string    $page   a page name
+     * @return boolean          the function completed successfully
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function deletePageNoLock($page) {
         // load known documents
         $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
-            $this->unlock();
             return false;
         }
 
@@ -380,7 +499,6 @@ class Doku_Indexer {
         }
         // Save the reverse index
         if (!$this->saveIndexKey('pageword', '', $pid, "")) {
-            $this->unlock();
             return false;
         }
 
@@ -397,7 +515,6 @@ class Doku_Indexer {
             $this->saveIndexKey($metaname.'_p', '', $pid, '');
         }
 
-        $this->unlock();
         return true;
     }
 
