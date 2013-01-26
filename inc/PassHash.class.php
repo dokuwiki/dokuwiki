@@ -4,7 +4,7 @@
  *
  * This class implements various mechanisms used to hash passwords
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author  Andreas Gohr <andi@splitbrain.org>
  * @license LGPL2
  */
 class PassHash {
@@ -58,6 +58,9 @@ class PassHash {
         } elseif(substr($hash, 0, 6) == '{SMD5}') {
             $method = 'lsmd5';
             $salt   = substr(base64_decode(substr($hash, 6)), 16);
+        } elseif(preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {
+            $method = 'mediawiki';
+            $salt   = $m[1];
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
@@ -104,7 +107,7 @@ class PassHash {
      * applied.
      *
      * @param string &$salt The salt, pass null if you want one generated
-     * @param int    $len The length of the salt
+     * @param int    $len   The length of the salt
      */
     public function init_salt(&$salt, $len = 32) {
         if(is_null($salt)) $salt = $this->gen_salt($len);
@@ -263,7 +266,7 @@ class PassHash {
      *
      * This method was used by old MySQL systems
      *
-     * @link http://www.php.net/mysql
+     * @link   http://www.php.net/mysql
      * @author <soren at byu dot edu>
      * @param string $clear The clear text to hash
      * @return string Hashed password
@@ -327,9 +330,9 @@ class PassHash {
      * an exception.
      *
      * @link  http://www.openwall.com/phpass/
-     * @param string $clear The clear text to hash
-     * @param string $salt  The salt to use, null for random
-     * @param string $magic The hash identifier (P or H)
+     * @param string $clear   The clear text to hash
+     * @param string $salt    The salt to use, null for random
+     * @param string $magic   The hash identifier (P or H)
      * @param int    $compute The iteration count for new passwords
      * @throws Exception
      * @return string Hashed password
@@ -430,8 +433,8 @@ class PassHash {
      * will break. When no salt is given, the iteration count can be set
      * through the $compute variable.
      *
-     * @param string $clear The clear text to hash
-     * @param string $salt  The salt to use, null for random
+     * @param string $clear   The clear text to hash
+     * @param string $salt    The salt to use, null for random
      * @param int    $compute The iteration count (between 4 and 31)
      * @throws Exception
      * @return string Hashed password
@@ -450,4 +453,19 @@ class PassHash {
         return crypt($clear, $salt);
     }
 
+    /**
+     * Password hashing method 'mediawiki'
+     *
+     * Uses salted MD5, this is referred to as Method B in MediaWiki docs. Unsalted md5
+     * method 'A' is not supported.
+     *
+     * @link  http://www.mediawiki.org/wiki/Manual_talk:User_table#user_password_column
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @return string Hashed password
+     */
+    public function hash_mediawiki($clear, $salt = null) {
+        $this->init_salt($salt, 8);
+        return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
+    }
 }
