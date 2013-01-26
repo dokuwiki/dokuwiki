@@ -746,13 +746,17 @@ function register() {
         return false;
     }
 
+    $policy = new PassPolicy();
     if($conf['autopasswd']) {
-        $pass = auth_pwgen($login); // automatically generate password
+        $pass = $policy->generatePassword($login); // automatically generate password
     } elseif(empty($pass) || empty($passchk)) {
         msg($lang['regmissing'], -1); // complain about missing passwords
         return false;
     } elseif($pass != $passchk) {
         msg($lang['regbadpass'], -1); // complain about misspelled passwords
+        return false;
+    } elseif(!$policy->checkPolicy($pass, $login)){
+        msg($lang['badpasspolicy'], -1); // complain about password not matching policy
         return false;
     }
 
@@ -856,6 +860,13 @@ function updateprofile() {
         }
     }
 
+    // password valid?
+    $policy = new PassPolicy();
+    if($changes['pass'] && !$policy->checkPolicy($changes['pass'], $_SERVER['REMOTE_USER'])){
+        msg($lang['badpasspolicy'], -1);
+        return false;
+    }
+
     if($result = $auth->triggerUserMod('modify', array($_SERVER['REMOTE_USER'], $changes))) {
         // update cookie and session with the changed data
         if($changes['pass']) {
@@ -929,6 +940,13 @@ function act_resendpwd() {
             if(!$pass) return false;
             if($pass != $INPUT->str('passchk')) {
                 msg($lang['regbadpass'], -1);
+                return false;
+            }
+
+            // valid password?
+            $policy = new PassPolicy();
+            if(!$policy->checkPolicy($pass, $user)){
+                msg($lang['badpasspolicy'], -1);
                 return false;
             }
 
