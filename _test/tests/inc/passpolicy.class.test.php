@@ -2,8 +2,8 @@
 
 class PassPolicy_test extends DokuWikiTest {
 
-    public function newPolicy($minl, $minp, $lower, $upper, $num, $special, $ucheck) {
-        $policy                = new MockPassPolicy();
+    public function newPolicy($minl, $minp, $lower, $upper, $num, $special, $ucheck, $pron=true) {
+        $policy                = new PassPolicy();
         $policy->min_pools     = $minp;
         $policy->min_length    = $minl;
         $policy->usepools      = array(
@@ -13,6 +13,7 @@ class PassPolicy_test extends DokuWikiTest {
             'special' => $special
         );
         $policy->usernamecheck = $ucheck;
+        $policy->pronouncable = $pron;
 
         return $policy;
     }
@@ -39,19 +40,95 @@ class PassPolicy_test extends DokuWikiTest {
         $this->assertFalse($policy->checkPolicy('tested99!','comptessa'), '1 pool1, user check '.$policy->error);
         $this->assertEquals(PassPolicy::USERNAME_VIOLATION, $policy->error);
     }
+
+    public function test_selfcheck() {
+        $policy = $this->newPolicy(6, 4, true, true, true, true, 0, true);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 6, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 6, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(18, 4, true, true, true, true, 0, true);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 18, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 18, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(6, 4, true, true, true, true, 0, false);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 6, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 6, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(18, 4, true, true, true, true, 0, false);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 18, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 18, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(18, 1, false, false, false, true, 0, false);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 18, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 18, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(18, 1, false, false, true, false, 0, false);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 18, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 18, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(18, 1, false, true, false, false, 0, false);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 18, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 18, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+
+        $policy = $this->newPolicy(18, 1, true, false, false, false, 0, false);
+        $pw1 = $policy->generatePassword('test');
+        $pw2 = $policy->generatePassword('test');
+        $this->assertNotEquals($pw1, $pw2, 'randomness broken');
+        $this->assertTrue(strlen($pw1) >= 18, 'pw too short');
+        $this->assertTrue(strlen($pw2) >= 18, 'pw too short');
+        $this->assertTrue(utf8_isASCII($pw1), 'pw contains non-ASCII, something went wrong');
+        $this->assertTrue(utf8_isASCII($pw2), 'pw contains non-ASCII, something went wrong');
+
+        //echo "\n$pw1\n$pw2\n";
+    }
 }
 
-/**
- * Mockup class to make internal functions visible
- */
-class MockPassPolicy extends PassPolicy {
-
-    public function pronouncablePassword() {
-        return parent::pronouncablePassword();
-    }
-
-    public function randomPassword() {
-        return parent::randomPassword();
-    }
-
-}

@@ -56,6 +56,8 @@ class PassPolicy {
 
         for($i=0; $i < 5; $i++){
             $pw = $this->randomPassword();
+            if($pw === false) break; // we'll never get a pronouncable password
+
             // check if policy is matched
             if($this->checkPolicy($pw, $username)) break;
             // try again
@@ -144,17 +146,22 @@ class PassPolicy {
         $pools['lower']   = 'abcdefghijklmnopqrstuvwxyz';
         $pools['upper']   = strtoupper($pools['lower']);
         $pools['numeric'] = '0123456789';
-        $pools['special'] = '°^!"§$%&/()=?{[]}\\*+~\'#,;.:-_<>|@';
+        $pools['special'] = '!"$%&/()=?{[]}\\*+~\'#,;.:-_<>|@';
 
+        $usablepools = array();
         $pw = '';
         // make sure all char pools are used
         foreach($this->usepools as $pool => $on) {
-            if($on) $pw .= $pools[$pool][rand(0, strlen($pools[$pool]) - 1)];
+            if($on){
+                $pw .= $pools[$pool][rand(0, strlen($pools[$pool]) - 1)];
+                $usablepools[] = $pool;
+            }
         }
+        if(!$usablepools) return false;
 
         // now fill up
         for($i = strlen($pw); $i < $this->min_length; $i++) {
-            $pool = $pools[array_rand($pools)];
+            $pool = $pools[$usablepools[array_rand($usablepools)]];
             $pw .= $pool[rand(0, strlen($pool) - 1)];
         }
 
@@ -175,7 +182,7 @@ class PassPolicy {
         // prepare speakable char classes
         $consonants = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
         $first      = $consonants;
-        if(!empty($this->usepools['lower'])) $consonants = strtoupper($consonants);
+        if(empty($this->usepools['lower']))  $consonants = strtoupper($consonants);
         if(!empty($this->usepools['upper'])) $first = strtoupper($consonants); // prefer upper for first syllable letter
         $vowels   = 'aeiou';
         $all      = $consonants.$vowels;
@@ -197,7 +204,7 @@ class PassPolicy {
 
         // add a nice numbers and specials
         if(!empty($this->usepools['numeric'])) $pw .= rand(10, 99);
-        if(!empty($this->usepools['specials'])) $pw .= $specials[rand(0, strlen($specials) - 1)];
+        if(!empty($this->usepools['special'])) $pw .= $specials[rand(0, strlen($specials) - 1)];
 
         return $pw;
     }
