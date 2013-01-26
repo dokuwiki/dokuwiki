@@ -278,6 +278,26 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
   }
 
     /**
+     * Loads a given helper plugin (if enabled)
+     *
+     * @author  Esther Brunner <wikidesign@gmail.com>
+     *
+     * @param   string $name   name of plugin to load
+     * @param   bool   $msg    if a message should be displayed in case the plugin is not available
+     *
+     * @return  object  helper plugin object
+     */
+    function loadHelper($name, $msg){
+        if (!plugin_isdisabled($name)){
+            $obj = plugin_load('helper',$name);
+        }else{
+            $obj = null;
+        }
+        if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.",-1);
+        return $obj;
+    }
+
+    /**
      * Allow the plugin to prevent DokuWiki from reusing an instance
      *
      * @return bool   false if the plugin has to be instantiated
