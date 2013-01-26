@@ -91,13 +91,32 @@ class PassPolicy {
     }
 
     /**
-     * Gives a human readable explanation of the current policy
+     * Gives a human readable explanation of the current policy as plain text.
      *
      * @return string
      */
     public function explainPolicy(){
-        // FIXME implement
-        return 'Policy explanation not implemented, yet';
+        global $lang;
+
+        $text = '';
+
+        // load pool names from config plugin
+        $confplugin = plugin_load('admin','config');
+        $pools = array();
+        foreach($this->usepools as $pool => $on){
+            if($on) $pools[] = $confplugin->getLang('passpolicypools_'.$pool);
+        }
+
+        if($this->min_length)
+            $text .= sprintf($lang['passpolicy_length'], $this->min_length)."\n";
+        if($this->min_pools)
+            $text .= sprintf($lang['passpolicy_pools'], $this->min_length, join(', ', $pools))."\n";
+        if($this->usernamecheck == 1)
+            $text .= $lang['passpolica_user1']."\n";
+        if($this->usernamecheck > 1)
+            $text .= sprintf($lang['passpolica_user2'], $this->usernamecheck)."\n";
+
+        return trim($text);
     }
 
     /**
@@ -139,8 +158,8 @@ class PassPolicy {
             // find possible chunks in the lenght defined in policy
             if($this->usernamecheck > 1) {
                 $chunks = array();
-                for($i = 0; $i < utf8_strlen($pass) - $this->usernamecheck; $i++) {
-                    $chunk = utf8_substr($pass, $i, $this->usernamecheck);
+                for($i = 0; $i < utf8_strlen($pass) - $this->usernamecheck+1; $i++) {
+                    $chunk = utf8_substr($pass, $i, $this->usernamecheck+1);
                     if($chunk == utf8_stripspecials($chunk,'','\._\-:\*')){
                         $chunks[] = $chunk; // only word chars are checked
                     }
