@@ -209,12 +209,14 @@ function rss_buildItems(&$rss, &$data, $opt) {
             // add date
             if($ditem['date']) {
                 $date = $ditem['date'];
+            } elseif ($ditem['media']) {
+                $date = @filemtime(mediaFN($id));
+            } elseif (@file_exists(wikiFN($id))) {
+                $date = @filemtime(wikiFN($id));
             } elseif($meta['date']['modified']) {
                 $date = $meta['date']['modified'];
-            } else if ($ditem['media']) {
-                $date = @filemtime(mediaFN($id));
             } else {
-                $date = @filemtime(wikiFN($id));
+                $date = 0;
             }
             if($date) $item->date = date('r', $date);
 
@@ -350,7 +352,11 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             $content = '';
                         }
                     } else {
-                        $content = p_wiki_xhtml($id, $date, false);
+                        if (@filemtime(wikiFN($id)) === $date) {
+                            $content = p_wiki_xhtml($id, '', false);
+                        } else {
+                            $content = p_wiki_xhtml($id, $date, false);
+                        }
                         // no TOC in feeds
                         $content = preg_replace('/(<!-- TOC START -->).*(<!-- TOC END -->)/s', '', $content);
 

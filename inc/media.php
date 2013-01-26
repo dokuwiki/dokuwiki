@@ -535,32 +535,13 @@ function media_contentcheck($file,$mime){
  * Send a notify mail on uploads
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @fixme this should embed thumbnails of images in HTML version
  */
 function media_notify($id,$file,$mime,$old_rev=false){
-    global $lang;
     global $conf;
-    global $INFO;
     if(empty($conf['notify'])) return; //notify enabled?
 
-    $text = rawLocale('uploadmail');
-    $trep = array(
-                'MIME'  => $mime,
-                'MEDIA' => ml($id,'',true,'&',true),
-                'SIZE'  => filesize_h(filesize($file)),
-            );
-
-    if ($old_rev && $conf['mediarevisions']) {
-        $trep['OLD'] = ml($id, "rev=$old_rev", true, '&', true);
-    } else {
-        $trep['OLD'] = '---';
-    }
-
-    $mail = new Mailer();
-    $mail->to($conf['notify']);
-    $mail->subject($lang['mail_upload'].' '.$id);
-    $mail->setBody($text,$trep);
-    return $mail->send();
+    $subscription = new Subscription();
+    return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev, '');
 }
 
 /**

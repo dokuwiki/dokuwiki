@@ -81,8 +81,8 @@ class DokuWiki_Plugin {
      * retrieve a language dependent file and pass to xhtml renderer for display
      * plugin equivalent of p_locale_xhtml()
      *
-     * @param   $id     id of language dependent wiki page
-     * @return  string  parsed contents of the wiki page in xhtml format
+     * @param   string $id id of language dependent wiki page
+     * @return  string     parsed contents of the wiki page in xhtml format
      */
     function locale_xhtml($id) {
         return p_cached_output($this->localFN($id));

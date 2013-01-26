@@ -53,6 +53,7 @@
     padding: 0;
     /* add transparent border to prevent jumping when proper border is added on hover */
     border: 1px solid transparent;
+    z-index: 10;
 }
 [dir=rtl] #dokuwiki__pagetools ul {
     right: auto;

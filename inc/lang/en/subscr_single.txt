@@ -15,7 +15,7 @@ New Revision: @NEWPAGE@
 
 To cancel the page notifications, log into the wiki at
 @DOKUWIKIURL@ then visit
-@NEWPAGE@
+@SUBSCRIBE@
 and unsubscribe page and/or namespace changes.
 
 -- 

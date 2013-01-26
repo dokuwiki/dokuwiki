@@ -6,6 +6,7 @@
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
+ * @author farukerdemoncel@gmail.com
  */
 $lang['menu']                  = 'Kullanıcı Yönetimi';
 $lang['noauth']                = '(kullanıcı onaylaması yoktur)';

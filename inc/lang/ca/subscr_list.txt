@@ -1,0 +1,21 @@
+Hola!
+
+Alguna(es) pàgina(es) de l'espai @PAGE@ al wiki @TITLE@ han canviat.
+A continuació podeu veure els canvis:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Versió anterior: @OLDPAGE@
+Nova versió: @NEWPAGE@
+
+Si voleu cancel·lar les notificacions per a la pàgina, accediu al wiki a
+@DOKUWIKIURL@, visiteu
+@SUBSCRIBE@
+i doneu-vos de baixa dels canvis de la pàgina o de l'espai.
+
+
+--
+Aquest mail ha estat generat per DokuWiki a
+@DOKUWIKIURL@

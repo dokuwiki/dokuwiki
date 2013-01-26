@@ -15,7 +15,7 @@ Noua recensio: @NEWPAGE@
 
 Ut paginae adnotationes deleas, in uicem ineas in
 @DOKUWIKIURL@, deinde uideas
-@NEWPAGE@
+@SUBSCRIBE@
 et paginarum et\aut generum optiones mutasa.
 
 --

@@ -3,7 +3,7 @@
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_API_VERSION', 7);
+define('DOKU_API_VERSION', 8);
 
 class RemoteAPICore {
 
@@ -344,6 +344,8 @@ class RemoteAPICore {
 
             for($i=0; $i<$len; $i++) {
                 unset($data[$i]['meta']);
+                $data[$i]['perms'] = $data[$i]['perm'];
+                unset($data[$i]['perm']);
                 $data[$i]['lastModified'] = $this->api->toDate($data[$i]['mtime']);
             }
             return $data;
@@ -654,7 +656,9 @@ class RemoteAPICore {
 
         if(count($revisions)>0 && $first==0) {
             array_unshift($revisions, '');  // include current revision
-            array_pop($revisions);          // remove extra log entry
+            if ( count($revisions) > $conf['recent'] ){
+                array_pop($revisions);          // remove extra log entry
+            }
         }
 
         if(count($revisions) > $conf['recent']) {

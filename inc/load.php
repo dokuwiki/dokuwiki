@@ -82,6 +82,7 @@ function load_autoload($name){
         'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
+        'Subscription'          => DOKU_INC.'inc/subscription.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
