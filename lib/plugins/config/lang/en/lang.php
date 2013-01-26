@@ -268,9 +268,9 @@ $lang['useheading_o_content'] = 'Wiki Content Only';
 $lang['useheading_o_1'] = 'Always';
 
 /* passpolicypool options */
-$lang['passpolicypools_lower']   = 'Lower case letters';
-$lang['passpolicypools_upper']   = 'Upper case letters';
-$lang['passpolicypools_numeric'] = 'Numbers';
-$lang['passpolicypools_special'] = 'Special chars';
+$lang['passpolicypools_lower']   = 'lower case letters';
+$lang['passpolicypools_upper']   = 'upper case letters';
+$lang['passpolicypools_numeric'] = 'numbers';
+$lang['passpolicypools_special'] = 'special chars';
 
 $lang['readdircache'] = 'Maximum age for readdir cache (sec)';

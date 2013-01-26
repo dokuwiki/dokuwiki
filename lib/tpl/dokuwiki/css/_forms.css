@@ -68,6 +68,10 @@
     vertical-align: middle;
 }
 
+.dokuwiki .passpolicy {
+    font-size: small;
+}
+
 /**
  * Styles for the subscription page
  */

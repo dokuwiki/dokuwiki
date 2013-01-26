@@ -110,11 +110,11 @@ class PassPolicy {
         if($this->min_length)
             $text .= sprintf($lang['passpolicy_length'], $this->min_length)."\n";
         if($this->min_pools)
-            $text .= sprintf($lang['passpolicy_pools'], $this->min_length, join(', ', $pools))."\n";
+            $text .= sprintf($lang['passpolicy_pools'], $this->min_pools, join(', ', $pools))."\n";
         if($this->usernamecheck == 1)
-            $text .= $lang['passpolica_user1']."\n";
+            $text .= $lang['passpolicy_user1']."\n";
         if($this->usernamecheck > 1)
-            $text .= sprintf($lang['passpolica_user2'], $this->usernamecheck)."\n";
+            $text .= sprintf($lang['passpolicy_user2'], $this->usernamecheck)."\n";
 
         return trim($text);
     }
