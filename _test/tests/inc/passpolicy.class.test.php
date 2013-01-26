@@ -30,7 +30,7 @@ class PassPolicy_test extends DokuWikiTest {
         $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
         $this->assertTrue($policy->checkPolicy('tested99!','tested'), '3 pools, no user check '.$policy->error);
 
-        $policy = $this->newPolicy(6, 1, true, true, true, true, 3);
+        $policy = $this->newPolicy(6, 1, true, true, true, true, 2);
         $this->assertFalse($policy->checkPolicy('tested','tested'), '1 pool, user check '.$policy->error);
         $this->assertEquals(PassPolicy::USERNAME_VIOLATION, $policy->error);
         $this->assertFalse($policy->checkPolicy('tested99!','tested'), '1 pool, user check '.$policy->error);
