@@ -80,8 +80,8 @@ $lang['badpasspolicy']         = 'Your password does not match our password poli
 
 $lang['passpolicy_length']     = 'Your password needs to be at least %d characters long.';
 $lang['passpolicy_pools']      = 'Your password needs to use characters from at least %d of the following classes: %s.';
-$lang['passpolica_user1']      = 'Your password may not contain your username.';
-$lang['passpolica_user2']      = 'Your password may only use %d or less consecutive characters that appear in your username.';
+$lang['passpolicy_user1']      = 'Your password may not contain your username.';
+$lang['passpolicy_user2']      = 'Your password may only use %d or less consecutive characters that appear in your username.';
 
 $lang['profna']                = 'This wiki does not support profile modification';
 $lang['profnochange']          = 'No changes, nothing to do.';
