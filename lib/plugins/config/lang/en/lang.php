@@ -95,6 +95,12 @@ $lang['useacl']      = 'Use access control lists';
 $lang['autopasswd']  = 'Autogenerate passwords';
 $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';
+
+$lang['passpolicyminlen']   = 'Mimimal length for user passwords';
+$lang['passpolicypools']    = 'Character classes to use in passwords';
+$lang['passpolicyminpools'] = 'Minimal number of different character classes that have to be used in passwords. May not be higher than the number of selected classes above';
+$lang['passpolicyuser']     = 'Check if password matches against the user\'s name. 0 to disable. 1 for exact matches. Any other number for the number of consecutive characters that may be contained in both password and username';
+
 $lang['defaultgroup']= 'Default group, all new users will be placed in this group';
 $lang['superuser']   = 'Superuser - group, user or comma separated list user1,@group1,user2 with full access to all pages and functions regardless of the ACL settings';
 $lang['manager']     = 'Manager - group, user or comma separated list user1,@group1,user2 with access to certain management functions';
@@ -260,5 +266,11 @@ $lang['useheading_o_0'] = 'Never';
 $lang['useheading_o_navigation'] = 'Navigation Only';
 $lang['useheading_o_content'] = 'Wiki Content Only';
 $lang['useheading_o_1'] = 'Always';
+
+/* passpolicypool options */
+$lang['passpolicypools_lower']   = 'Lower case letters';
+$lang['passpolicypools_upper']   = 'Upper case letters';
+$lang['passpolicypools_numeric'] = 'Numbers';
+$lang['passpolicypools_special'] = 'Special chars';
 
 $lang['readdircache'] = 'Maximum age for readdir cache (sec)';

@@ -35,6 +35,25 @@ class PassPolicy {
     const USERNAME_VIOLATION = 4;
 
     /**
+     * Constructor
+     *
+     * Sets the policy from the DokuWiki config
+     */
+    public function __construct(){
+        global $conf;
+
+        $this->min_length = $conf['passpolicyminlen'];
+        $this->min_pools  = $conf['passpolicyminpools'];
+        $this->usernamecheck = $conf['passpolicyuser'];
+
+        $opts = explode(',',$conf['passpolicypools']);
+        $this->usepools = array();
+        foreach($opts as $pool){
+            $this->usepools[$pool] = true;
+        }
+    }
+
+    /**
      * @param $username
      * @return bool|string
      * @throws Exception when no password matching the current policy can be created
@@ -115,21 +134,23 @@ class PassPolicy {
             }
 
             // find possible chunks in the lenght defined in policy
-            $chunks = array();
-            for($i = 0; $i < utf8_strlen($pass) - $this->usernamecheck; $i++) {
-                $chunk = utf8_substr($pass, $i, $this->usernamecheck);
-                if($chunk == utf8_stripspecials($chunk,'','\._\-:\*')){
-                    $chunks[] = $chunk; // only word chars are checked
+            if($this->usernamecheck > 1) {
+                $chunks = array();
+                for($i = 0; $i < utf8_strlen($pass) - $this->usernamecheck; $i++) {
+                    $chunk = utf8_substr($pass, $i, $this->usernamecheck);
+                    if($chunk == utf8_stripspecials($chunk,'','\._\-:\*')){
+                        $chunks[] = $chunk; // only word chars are checked
+                    }
                 }
-            }
 
-            // check chunks against user name
-            $chunks = array_map('preg_quote_cb', $chunks);
-            $re     = join('|', $chunks);
+                // check chunks against user name
+                $chunks = array_map('preg_quote_cb', $chunks);
+                $re     = join('|', $chunks);
 
-            if(preg_match("/($re)/", $username)){
-                $this->error = PassPolicy::USERNAME_VIOLATION;
-                return false;
+                if(preg_match("/($re)/", $username)){
+                    $this->error = PassPolicy::USERNAME_VIOLATION;
+                    return false;
+                }
             }
         }
 
