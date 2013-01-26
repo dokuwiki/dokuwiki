@@ -339,7 +339,9 @@ class Doku_Indexer {
     }
 
     /**
-     * Rename a page in the search index without changing the indexed content
+     * Rename a page in the search index without changing the indexed content. This function doesn't check if the
+     * old or new name exists in the filesystem. It returns an error if the old page isn't in the page list of the
+     * indexer and it deletes all previously indexed content of the new page.
      *
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
