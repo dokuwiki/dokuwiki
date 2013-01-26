@@ -1560,4 +1560,30 @@ function get_doku_pref($pref, $default) {
     return $default;
 }
 
+/**
+ * Add a preference to the DokuWiki cookie
+ */
+function set_doku_pref($pref, $val) {
+    global $conf;
+    $orig = get_doku_pref($pref, false);
+    $cookieVal = '';
+
+    if($orig && ($orig != $val)) {
+        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+        $cnt   = count($parts);
+        for($i = 0; $i < $cnt; $i += 2) {
+            if($parts[$i] == $pref) {
+                $parts[$i + 1] = urlencode($val);
+            }
+        }
+        $cookieVal = implode('#', $parts);
+    } else if (!$orig) {
+        $cookieVal = $_COOKIE['DOKU_PREFS'].'#'.urlencode($pref).'#'.urlencode($val);
+    }
+
+    if (!empty($cookieVal)) {
+        setcookie('DOKU_PREFS', $cookieVal, mktime('+1 year'), DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
+    }
+}
+
 //Setup VIM: ex: et ts=2 :
