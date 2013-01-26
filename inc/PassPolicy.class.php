@@ -47,10 +47,13 @@ class PassPolicy {
         $this->usernamecheck = $conf['passpolicyuser'];
 
         $opts = explode(',',$conf['passpolicypools']);
-        $this->usepools = array();
-        foreach($opts as $pool){
-            $this->usepools[$pool] = true;
+        if(count($opts)){ // ignore empty pool setups
+            $this->usepools = array();
+            foreach($opts as $pool){
+                $this->usepools[$pool] = true;
+            }
         }
+        if($this->min_pools > count($this->usepools)) $this->min_pools = $this->usepools;
     }
 
     /**
