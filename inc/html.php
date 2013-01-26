@@ -1154,8 +1154,7 @@ function html_diff($text='',$intro=true,$type=null){
         list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
     }
 
-    $df = new Diff(explode("\n",htmlspecialchars($l_text)),
-        explode("\n",htmlspecialchars($r_text)));
+    $df = new Diff(explode("\n",hsc($l_text)),explode("\n",hsc($r_text)));
 
     if($type == 'inline'){
         $tdf = new InlineDiffFormatter();
@@ -1205,10 +1204,36 @@ function html_diff($text='',$intro=true,$type=null){
     <?php echo $r_head?>
     </th>
     </tr>
-    <?php echo $tdf->format($df)?>
+    <?php echo html_insert_softbreaks($tdf->format($df)); ?>
     </table>
     </div>
     <?php
+}
+
+function html_insert_softbreaks($diffhtml) {
+  // search the diff html string for both:
+  // - html tags, so these can be ignored
+  // - long strings of characters without breaking characters
+  return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/','html_softbreak_callback',$diffhtml);
+}
+
+function html_softbreak_callback($match){
+  // if match is an html tag, return it intact
+  if ($match[0]{0} == '<') return $match[0];
+
+  // its a long string without a breaking character,
+  // make certain characters into breaking characters by inserting a
+  // breaking character (zero length space, U+200B / #8203) in front them.
+  $regex = <<< REGEX
+(?(?=                                 # start a conditional expression with a positive look ahead ...
+&(\#\\d{1,4}|[[:alpha:]]{1,4});)      # ... for html entities - we don't want to split them
+&\#?\\w{1,4};                         # yes pattern - a quicker match for the html entity, since we know we have one
+|
+[?/,&\#;:]+                           # no pattern - any other group of 'special' characters to insert a breaking character after
+)                                     # end conditional expression
+REGEX;
+
+  return preg_replace('<'.$regex.'>xu','\0&#8203;',$match[0]);
 }
 
 /**
