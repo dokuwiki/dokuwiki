@@ -670,29 +670,17 @@ function auth_nameencode($name, $skip_group = false) {
 }
 
 /**
- * Create a pronouncable password
+ * Create a password
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @link    http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * just wraps around PassPolicy->generatePassword()
  *
- * @return string  pronouncable password
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param  string  $user Username for whom the password is generated
+ * @return string  generated password
  */
-function auth_pwgen() {
-    $pw = '';
-    $c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
-    $v  = 'aeiou'; //vowels
-    $a  = $c.$v; //both
-
-    //use two syllables...
-    for($i = 0; $i < 2; $i++) {
-        $pw .= $c[rand(0, strlen($c) - 1)];
-        $pw .= $v[rand(0, strlen($v) - 1)];
-        $pw .= $a[rand(0, strlen($a) - 1)];
-    }
-    //... and add a nice number
-    $pw .= rand(10, 99);
-
-    return $pw;
+function auth_pwgen($user='') {
+    $policy = new PassPolicy();
+    return $policy->generatePassword($user);
 }
 
 /**
@@ -759,7 +747,7 @@ function register() {
     }
 
     if($conf['autopasswd']) {
-        $pass = auth_pwgen(); // automatically generate password
+        $pass = auth_pwgen($login); // automatically generate password
     } elseif(empty($pass) || empty($passchk)) {
         msg($lang['regmissing'], -1); // complain about missing passwords
         return false;
@@ -952,7 +940,7 @@ function act_resendpwd() {
 
         } else { // autogenerate the password and send by mail
 
-            $pass = auth_pwgen();
+            $pass = auth_pwgen($user);
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
                 msg('error modifying user data', -1);
                 return false;
