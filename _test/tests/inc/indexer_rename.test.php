@@ -22,7 +22,7 @@ class indexer_rename_test extends DokuWikiTest {
 
         $oldpid = $this->indexer->getPID($this->old_id);
 
-        $this->indexer->renamePage($this->old_id, $newid);
+        $this->assertTrue($this->indexer->renamePage($this->old_id, $newid), 'Renaming the page to a new id failed');
         io_rename(wikiFN($this->old_id), wikiFN($newid));
 
         $this->assertNotEquals($this->indexer->getPID($this->old_id), $oldpid, 'PID for the old page unchanged after rename.');
@@ -39,7 +39,7 @@ class indexer_rename_test extends DokuWikiTest {
         $oldpid = $this->indexer->getPID($this->old_id);
         $existingpid = $this->indexer->getPID($newid);
 
-        $this->indexer->renamePage($this->old_id, $newid);
+        $this->assertTrue($this->indexer->renamePage($this->old_id, $newid), 'Renaming the page to an existing id failed');
 
         $this->assertNotEquals($this->indexer->getPID($this->old_id), $oldpid, 'PID for old page unchanged after rename.');
         $this->assertNotEquals($this->indexer->getPID($this->old_id), $existingpid, 'PID for old page is now PID of the existing page.');
@@ -53,7 +53,7 @@ class indexer_rename_test extends DokuWikiTest {
     function test_meta_rename_to_new_value() {
         $this->indexer->addMetaKeys($this->old_id, array('mkey' => 'old_value'));
 
-        $this->indexer->renameMetaValue('mkey', 'old_value', 'new_value');
+        $this->assertTrue($this->indexer->renameMetaValue('mkey', 'old_value', 'new_value'), 'Meta value rename to new value failed.');
         $query = 'old_value';
         $this->assertEquals(array(), $this->indexer->lookupKey('mkey', $query), 'Page can still be found under old value.');
         $query = 'new_value';
@@ -71,7 +71,7 @@ class indexer_rename_test extends DokuWikiTest {
         idx_addPage('oldvalue');
         $this->indexer->addMetaKeys('oldvalue', array('mkey' => array('old_value')));
 
-        $this->indexer->renameMetaValue('mkey', 'old_value', 'new_value');
+        $this->assertTrue($this->indexer->renameMetaValue('mkey', 'old_value', 'new_value'), 'Meta value rename to existing value failed');
         $query = 'old_value';
         $this->assertEquals(array(), $this->indexer->lookupKey('mkey', $query), 'Page can still be found under old value.');
         $query = 'new_value';
