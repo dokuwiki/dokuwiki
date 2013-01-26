@@ -361,7 +361,9 @@ class Doku_Indexer {
         $new_id = array_search($newpage, $pages);
         if ($new_id !== false) {
             // make sure the page is not in the index anymore
-            $this->deletePageNoLock($newpage);
+            if ($this->deletePageNoLock($newpage) !== true) {
+                return false;
+            }
 
             $pages[$new_id] = 'deleted:'.time().rand(0, 9999);
         }
