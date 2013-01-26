@@ -226,56 +226,56 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
       $this->localised = true;
     }
 
-  // configuration methods
-  /**
-   * getConf($setting)
-   *
-   * use this function to access plugin configuration variables
-   */
-  function getConf($setting){
+    // configuration methods
+    /**
+     * getConf($setting)
+     *
+     * use this function to access plugin configuration variables
+     */
+    function getConf($setting) {
 
-    if (!$this->configloaded){ $this->loadConfig(); }
+        if(!$this->configloaded) { $this->loadConfig(); }
 
-    return $this->conf[$setting];
-  }
-
-  /**
-   * loadConfig()
-   * merges the plugin's default settings with any local settings
-   * this function is automatically called through getConf()
-   */
-  function loadConfig(){
-    global $conf;
-
-    $defaults = $this->readDefaultSettings();
-    $plugin = $this->getPluginName();
-
-    foreach ($defaults as $key => $value) {
-      if (isset($conf['plugin'][$plugin][$key])) continue;
-      $conf['plugin'][$plugin][$key] = $value;
+        return $this->conf[$setting];
     }
 
-    $this->configloaded = true;
-    $this->conf =& $conf['plugin'][$plugin];
-  }
+    /**
+     * loadConfig()
+     * merges the plugin's default settings with any local settings
+     * this function is automatically called through getConf()
+     */
+    function loadConfig() {
+        global $conf;
 
-  /**
-   * read the plugin's default configuration settings from conf/default.php
-   * this function is automatically called through getConf()
-   *
-   * @return    array    setting => value
-   */
-  function readDefaultSettings() {
+        $defaults = $this->readDefaultSettings();
+        $plugin   = $this->getPluginName();
 
-    $path = DOKU_PLUGIN.$this->getPluginName().'/conf/';
-    $conf = array();
+        foreach($defaults as $key => $value) {
+            if(isset($conf['plugin'][$plugin][$key])) continue;
+            $conf['plugin'][$plugin][$key] = $value;
+        }
 
-    if (@file_exists($path.'default.php')) {
-      include($path.'default.php');
+        $this->configloaded = true;
+        $this->conf         =& $conf['plugin'][$plugin];
     }
 
-    return $conf;
-  }
+    /**
+     * read the plugin's default configuration settings from conf/default.php
+     * this function is automatically called through getConf()
+     *
+     * @return    array    setting => value
+     */
+    function readDefaultSettings() {
+
+        $path = DOKU_PLUGIN.$this->getPluginName().'/conf/';
+        $conf = array();
+
+        if(@file_exists($path.'default.php')) {
+            include($path.'default.php');
+        }
+
+        return $conf;
+    }
 
     /**
      * Loads a given helper plugin (if enabled)
@@ -287,13 +287,13 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      *
      * @return  object  helper plugin object
      */
-    function loadHelper($name, $msg){
-        if (!plugin_isdisabled($name)){
-            $obj = plugin_load('helper',$name);
-        }else{
+    function loadHelper($name, $msg) {
+        if(!plugin_isdisabled($name)) {
+            $obj = plugin_load('helper', $name);
+        } else {
             $obj = null;
         }
-        if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.",-1);
+        if(is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.", -1);
         return $obj;
     }
 
