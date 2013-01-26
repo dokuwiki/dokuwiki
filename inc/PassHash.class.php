@@ -104,14 +104,18 @@ class PassHash {
      * Initialize the passed variable with a salt if needed.
      *
      * If $salt is not null, the value is kept, but the lenght restriction is
-     * applied.
+     * applied (unless, $cut is false).
      *
      * @param string &$salt The salt, pass null if you want one generated
      * @param int    $len   The length of the salt
+     * @param bool   $cut   Apply length restriction to existing salt?
      */
-    public function init_salt(&$salt, $len = 32) {
-        if(is_null($salt)) $salt = $this->gen_salt($len);
-        if(strlen($salt) > $len) $salt = substr($salt, 0, $len);
+    public function init_salt(&$salt, $len = 32, $cut = true) {
+        if(is_null($salt)) {
+            $salt = $this->gen_salt($len);
+            $cut  = true; // for new hashes we alway apply length restriction
+        }
+        if(strlen($salt) > $len && $cut) $salt = substr($salt, 0, $len);
     }
 
     // Password hashing methods follow below
@@ -465,7 +469,7 @@ class PassHash {
      * @return string Hashed password
      */
     public function hash_mediawiki($clear, $salt = null) {
-        $this->init_salt($salt, 8);
+        $this->init_salt($salt, 8, false);
         return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
     }
 }
