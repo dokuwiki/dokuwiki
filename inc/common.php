@@ -1574,15 +1574,16 @@ function set_doku_pref($pref, $val) {
         for($i = 0; $i < $cnt; $i += 2) {
             if($parts[$i] == $pref) {
                 $parts[$i + 1] = urlencode($val);
+                break;
             }
         }
         $cookieVal = implode('#', $parts);
     } else if (!$orig) {
-        $cookieVal = $_COOKIE['DOKU_PREFS'].'#'.urlencode($pref).'#'.urlencode($val);
+        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').urlencode($pref).'#'.urlencode($val);
     }
 
     if (!empty($cookieVal)) {
-        setcookie('DOKU_PREFS', $cookieVal, strtotime('+1 year'), DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
+        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
     }
 }
 
