@@ -360,10 +360,8 @@ class Doku_Indexer {
 
         $new_id = array_search($newpage, $pages);
         if ($new_id !== false) {
-            $this->unlock();
             // make sure the page is not in the index anymore
-            $this->deletePage($newpage);
-            if (!$this->lock()) return 'locked';
+            $this->deletePageNoLock($newpage);
 
             $pages[$new_id] = 'deleted:'.time().rand(0, 9999);
         }
@@ -440,6 +438,7 @@ class Doku_Indexer {
         $this->unlock();
         return true;
     }
+
     /**
      * Remove a page from the index
      *
@@ -453,10 +452,26 @@ class Doku_Indexer {
         if (!$this->lock())
             return "locked";
 
+        $result = $this->deletePageNoLock($page);
+
+        $this->unlock();
+
+        return $result;
+    }
+
+    /**
+     * Remove a page from the index without locking the index, only use this function if the index is already locked
+     *
+     * Erases entries in all known indexes.
+     *
+     * @param string    $page   a page name
+     * @return boolean          the function completed successfully
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    protected function deletePageNoLock($page) {
         // load known documents
         $pid = $this->getPIDNoLock($page);
         if ($pid === false) {
-            $this->unlock();
             return false;
         }
 
@@ -482,7 +497,6 @@ class Doku_Indexer {
         }
         // Save the reverse index
         if (!$this->saveIndexKey('pageword', '', $pid, "")) {
-            $this->unlock();
             return false;
         }
 
@@ -499,7 +513,6 @@ class Doku_Indexer {
             $this->saveIndexKey($metaname.'_p', '', $pid, '');
         }
 
-        $this->unlock();
         return true;
     }
 
