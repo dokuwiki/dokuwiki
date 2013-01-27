@@ -703,6 +703,7 @@ function tpl_get_action($type) {
             }
             break;
         case 'media':
+            $params['ns'] = getNS($ID);
             break;
         default:
             return '[unknown %s type]';
