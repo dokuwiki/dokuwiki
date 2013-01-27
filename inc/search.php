@@ -19,9 +19,10 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param   callback  $func Callback (function name or array with object,method)
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
+ * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort=false){
+function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
     $dirs   = array();
     $files  = array();
     $filepaths = array();
