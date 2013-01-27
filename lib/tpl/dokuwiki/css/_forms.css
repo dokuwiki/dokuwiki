@@ -68,8 +68,8 @@
     vertical-align: middle;
 }
 
-.dokuwiki .passpolicy {
-    font-size: small;
+.dokuwiki .hint {
+    font-size: .875em;
 }
 
 /**
