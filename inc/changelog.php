@@ -543,4 +543,217 @@ function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
     return $revs;
 }
 
+/**
+ * Get the nth revision left or right handside  for a specific page id
+ * and revision (timestamp). For large changelog files, only the chunk containing the
+ * reference revision $rev is read and sometimes a next chunck.
+ *
+ * Adjacent changelog lines are optimistically parsed and cached to speed up
+ * consecutive calls to getRevisionInfo.
+ *
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ *
+ * based on getRevisionInfo by
+ * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $id pageid
+ * @param int        $rev revision timestamp used as startdate (doesn't need to be revisionnumber)
+ * @param int        $direction give position of returned revision with respect to $rev; positive=next, negative=prev
+ * @param int        $chunk_size maximum block size
+ * @param bool       $media
+ * @return bool|string
+ */
+function getRelativeRevision($id, $rev, $direction, $chunk_size = 8192, $media = false) {
+    global $cache_revinfo;
+    global $INFO;
+    $cache =& $cache_revinfo;
+    if(!isset($cache[$id])) {
+        $cache[$id] = array();
+    }
+    $rev = max($rev, 0);
 
+    //no direction given or last rev, so no follow-up
+    if(!$direction || ($direction > 0 && $rev == $INFO['meta']['last_change']['date'])) {
+        return false;
+    }
+
+    if($media) {
+        $file = mediaMetaFN($id, '.changes');
+    } else {
+        $file = metaFN($id, '.changes');
+    }
+    if(!@file_exists($file)) {
+        return false;
+    }
+
+    //get $lines from changelog
+    $lines = array();
+    $fp    = null;
+    $tail  = 0;
+    $head  = 0;
+    $eof   = 0;
+    if(filesize($file) < $chunk_size || $chunk_size == 0) {
+        // read whole file
+        $uses_chuncks = false;
+        $lines        = file($file);
+        if($lines === false) {
+            return false;
+        }
+    } else {
+        // read by chunk
+        $uses_chuncks = true;
+        $fp           = fopen($file, 'rb'); // "file pointer"
+        if($fp === false) {
+            return false;
+        } //error
+        $head = 0;
+        fseek($fp, 0, SEEK_END); //set file position indicator 0 byte from end.
+        $tail       = ftell($fp); //return current position of pointer as integer
+        $eof        = $tail;
+        $finger     = 0;
+        $finger_rev = 0;
+
+        // find chunk
+        while($tail - $head > $chunk_size) {
+            $finger     = $head + floor(($tail - $head) / 2.0);
+            $finger     = getNewlinepointer($fp, $finger);
+            $tmp        = fgets($fp); // then read at that location
+            $tmp        = parseChangelogLine($tmp);
+            $finger_rev = $tmp['date'];
+            if($finger == $head || $finger == $tail) {
+                break;
+            }
+            if($finger_rev > $rev) {
+                $tail = $finger;
+            } else {
+                $head = $finger;
+            }
+        }
+
+        if($tail - $head < 1) {
+            // cound not find chunk, assume requested rev is missing
+            fclose($fp);
+            return false;
+        }
+
+        $lines = readChunk($fp, $head, $tail);
+    }
+
+    // look for revisions later then $rev, when founded count till the wanted revision is reached
+    // also parse and cache changelog lines that pass
+    $revcounter       = 0;
+    $relrev           = false;
+    $tmp              = array();
+    $checkotherchunck = true; //always runs once
+    while(!$relrev && $checkotherchunck) {
+
+        if($direction > 0) {
+            foreach($lines as $value) {
+                $tmp = parseChangelogLine($value);
+                if($tmp !== false) {
+                    $cache[$id][$tmp['date']] = $tmp;
+                    //look for revs older then reference $rev and select $direction-th one
+                    if($tmp['date'] > $rev) {
+                        $revcounter++;
+                        if($revcounter == $direction) {
+                            $relrev = $tmp['date'];
+                        }
+                    }
+                }
+            }
+        } else {
+            //parse in reverse order
+            for($i = count($lines) - 1; $i >= 0; $i--) {
+                $tmp = parseChangelogLine($lines[$i]);
+                if($tmp !== false) {
+                    $cache[$id][$tmp['date']] = $tmp;
+                    //look for revs older then reference $rev and select $direction-th one
+                    if($tmp['date'] < $rev) {
+                        $revcounter++;
+                        if($revcounter == abs($direction)) {
+                            $relrev = $tmp['date'];
+                        }
+                    }
+                }
+            }
+        }
+
+        //true when $rev is found, but not the wanted follow-up.
+        $checkotherchunck = $uses_chuncks
+                            && ($tmp['date'] == $rev || ($revcounter > 0 && !$relrev))
+                            && !feof($fp);
+
+        if($checkotherchunck) {
+            if($direction > 0) {
+                //get interval of next chunck, smaller than $chunck_size
+                $head        = $tail;
+                $lookpointer = true;
+                $tail        = $head + floor($chunk_size * (2 / 3));
+                while($lookpointer) {
+                    $tail        = min($tail, $eof);
+                    $tail        = getNewlinepointer($fp, $tail);
+                    $lookpointer = $tail - $head > $chunk_size;
+                    if($lookpointer) {
+                        $tail = $head + floor(($tail - $head) / 2);
+                    }
+                }
+            } else {
+                $tail = $head;
+                $head = max($tail - $chunk_size, 0);
+                $head = getNewlinepointer($fp, $head);
+            }
+
+            //load next chunck
+            $lines = readChunk($fp, $head, $tail);
+        }
+    }
+    if($uses_chuncks) {
+        fclose($fp);
+    }
+
+    if($relrev == $INFO['meta']['last_change']['date']) {
+        return 'current';
+    }
+    return $relrev;
+}
+
+/**
+ * Read chunk and return array with lines of given chunck.
+ * Has no check if $head and $tail are really at a new line
+ *
+ * @param $fp resource filepointer
+ * @param $head int start point chunck
+ * @param $tail int end point chunck
+ * @return array lines read from chunck
+ */
+function readChunk($fp, $head, $tail) {
+    $chunk      = '';
+    $chunk_size = max($tail - $head, 0); // found chunk size
+    $got        = 0;
+    fseek($fp, $head);
+    while($got < $chunk_size && !feof($fp)) {
+        $tmp = @fread($fp, max($chunk_size - $got, 0));
+        if($tmp === false) {
+            break;
+        } //error state
+        $got += strlen($tmp);
+        $chunk .= $tmp;
+    }
+    $lines = explode("\n", $chunk);
+    array_pop($lines); // remove trailing newline
+    return $lines;
+}
+
+/**
+ * Set pointer to first new line after $finger and return its position
+ *
+ * @param $fp resource filepointer
+ * @param $finger int a pointer
+ * @return int pointer
+ */
+function getNewlinepointer($fp, $finger) {
+    fseek($fp, $finger);
+    fgets($fp); // slip the finger forward to a new line
+    return ftell($fp);
+}

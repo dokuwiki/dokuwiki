@@ -1151,6 +1151,18 @@ function html_diff($text='',$intro=true,$type=null){
         }
         $r_text = rawWiki($ID,$r_rev);
 
+        //look for previous/next revision
+        if($r_rev) {
+            $next_rev = getRelativeRevision($ID, $r_rev, 1);
+        } else {
+            $next_rev = false;
+        }
+        if($l_rev) {
+            $prev_rev = getRelativeRevision($ID, $l_rev, -1);
+        } else {
+            $prev_rev = false;
+        }
+
         list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
     }
 
@@ -1191,7 +1203,40 @@ function html_diff($text='',$intro=true,$type=null){
                         'rev2[1]'  => $r_rev,
                         'difftype' => $type,
                       ));
-        ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a></p>');
+        ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a><br />');
+        if($prev_rev){
+            $diffurlprev = wl($ID, array(
+                                'do'       => 'diff',
+                                'rev2[0]'  => $prev_rev,
+                                'rev2[1]'  => $l_rev,
+                                'difftype' => $type,
+                              ));
+            ptln('<a class="wikilink1" href="'.$diffurlprev.'">← '.$lang['diffpreviousedit'].'</a> - ');
+        }
+        $recenturl = wl($ID, array(
+                        'do'       => 'revisions'
+                      ));
+        ptln('<a class="wikilink1" href="'.$recenturl.'">'.$lang['overviewrevs'].'</a>');
+        if($next_rev){
+            if($next_rev=='current') {
+                $diffurlnextparam = array(
+                                'do'       => 'diff',
+                                'rev'      => $r_rev,
+                                'difftype' => $type,
+                           );
+                $navnexttitle = $lang['difflastedit'];
+            } else {
+                $diffurlnextparam = array(
+                                'do'       => 'diff',
+                                'rev2[0]'  => $r_rev,
+                                'rev2[1]'  => $next_rev,
+                                'difftype' => $type,
+                           );
+                $navnexttitle = $lang['diffnextedit'];
+            }
+            ptln(' - <a class="wikilink1" href="'.wl($ID, $diffurlnextparam).'">'.$navnexttitle.' →</a>');
+        }
+        ptln('</p>');
         ptln('</div>');
     }
     ?>
