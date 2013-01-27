@@ -16,7 +16,7 @@ if(!defined('DOKU_INC')) die('meh.');
  *
  * @param   array ref $data The results of the search are stored here
  * @param   string    $base Where to start the search
- * @param   callback  $func Callback (function name or arayy with object,method)
+ * @param   callback  $func Callback (function name or array with object,method)
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
  * @author  Andreas Gohr <andi@splitbrain.org>
