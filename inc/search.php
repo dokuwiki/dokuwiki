@@ -50,7 +50,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
     //give directories to userfunction then recurse
     foreach($dirs as $dir){
         if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
-            search($data,$base,$func,$opts,$dir,$lvl+1);
+            search($data,$base,$func,$opts,$dir,$lvl+1,$sort);
         }
     }
     //now handle the files
