@@ -79,7 +79,7 @@ $lang['reghere']               = 'You don\'t have an account yet? Just get one';
 $lang['badpasspolicy']         = 'Your password does not match our password policy';
 
 $lang['passpolicy_length']     = 'Your password needs to be at least %d characters long.';
-$lang['passpolicy_pools']      = 'Your password needs to use characters from at least %d of the following classes: %s.';
+$lang['passpolicy_pools']      = 'Your password needs to use characters from at least %d of the following types: %s.';
 $lang['passpolicy_user1']      = 'Your password may not contain your username.';
 $lang['passpolicy_user2']      = 'Your password may only use %d or less consecutive characters that appear in your username.';
 
