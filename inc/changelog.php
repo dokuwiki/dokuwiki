@@ -574,7 +574,7 @@ function getRelativeRevision($id, $rev, $direction, $chunk_size = 8192, $media =
     $rev = max($rev, 0);
 
     //no direction given or last rev, so no follow-up
-    if(!$direction || ($direction > 0 && $rev == $INFO['meta']['last_change']['date'])) {
+    if(!$direction || ($direction > 0 && isset($INFO['meta']['last_change']['date']) &&  $rev == $INFO['meta']['last_change']['date'])) {
         return false;
     }
 
@@ -682,7 +682,7 @@ function getRelativeRevision($id, $rev, $direction, $chunk_size = 8192, $media =
         //true when $rev is found, but not the wanted follow-up.
         $checkotherchunck = $uses_chuncks
                             && ($tmp['date'] == $rev || ($revcounter > 0 && !$relrev))
-                            && !feof($fp);
+                            && !(($tail == $eof && $direction > 0) || ($head == 0 && $direction < 0));
 
         if($checkotherchunck) {
             if($direction > 0) {
@@ -712,7 +712,7 @@ function getRelativeRevision($id, $rev, $direction, $chunk_size = 8192, $media =
         fclose($fp);
     }
 
-    if($relrev == $INFO['meta']['last_change']['date']) {
+    if(isset($INFO['meta']['last_change']) && $relrev == $INFO['meta']['last_change']['date']) {
         return 'current';
     }
     return $relrev;
