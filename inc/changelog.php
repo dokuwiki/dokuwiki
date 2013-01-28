@@ -697,6 +697,7 @@ function getRelativeRevision($id, $rev, $direction, $chunk_size = 8192, $media =
                     if($lookpointer) {
                         $tail = $head + floor(($tail - $head) / 2);
                     }
+                    if($tail == $head) break;
                 }
             } else {
                 $tail = $head;
@@ -706,6 +707,7 @@ function getRelativeRevision($id, $rev, $direction, $chunk_size = 8192, $media =
 
             //load next chunck
             $lines = readChunk($fp, $head, $tail);
+            if(empty($lines)) break;
         }
     }
     if($uses_chuncks) {
