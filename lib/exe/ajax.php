@@ -57,6 +57,7 @@ function ajax_qsearch(){
 
     print '<strong>'.$lang['quickhits'].'</strong>';
     print '<ul>';
+    $counter = 0;
     foreach($data as $id => $title){
         if (useHeading('navigation')) {
             $name = $title;
@@ -69,6 +70,12 @@ function ajax_qsearch(){
             }
         }
         echo '<li>' . html_wikilink(':'.$id,$name) . '</li>';
+
+        $counter ++;
+        if($counter > 50) {
+            echo '<li>...</li>';
+            break;
+        }
     }
     print '</ul>';
 }
