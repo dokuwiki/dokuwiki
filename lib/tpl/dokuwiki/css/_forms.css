@@ -70,16 +70,6 @@
 /**
  * Styles for auth forms
  */
-
-.mode_profile #dokuwiki__content .page,
-.mode_login #dokuwiki__content .page,
-.mode_resendpwd #dokuwiki__content .page,
-.mode_register #dokuwiki__content .page {
-    width: 402px;
-    padding-right: 2em;
-    margin-left: auto;
-    margin-right: auto;
-}
 #dw__login label[for="remember__me"] {
     margin-left: 50%;
     margin-bottom: 1.5em;
