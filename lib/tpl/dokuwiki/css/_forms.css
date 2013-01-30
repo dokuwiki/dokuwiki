@@ -84,6 +84,11 @@
     margin-left: 50%;
     margin-bottom: 1.5em;
 }
+#dw__login fieldset,
+#dw__resendpwd fieldset,
+#dw__register fieldset {
+    padding-bottom: 1em;
+}
 
 
 /**
