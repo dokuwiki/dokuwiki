@@ -311,7 +311,7 @@ function breadcrumbs() {
  *
  * This is run on a ID before it is outputted somewhere
  * currently used to replace the colon with something else
- * on Windows systems and to have proper URL encoding
+ * on Windows non-IIS systems and to have proper URL encoding
  *
  * Urlencoding is ommitted when the second parameter is false
  *
@@ -322,7 +322,8 @@ function idfilter($id, $ue = true) {
     if($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
     } elseif(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
-        $conf['userewrite']
+        $conf['userewrite'] &&
+        strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') === false
     ) {
         $id = strtr($id, ':', ';');
     }
