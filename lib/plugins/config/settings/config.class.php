@@ -130,6 +130,15 @@ if (!class_exists('configuration')) {
       return true;
     }
 
+    /**
+     * Update last modified time stamp of the config file
+     */
+    function touch_settings(){
+        if ($this->locked) return false;
+        $file = end($this->_local_files);
+        return @touch($file);
+    }
+
     function _read_config_group($files) {
       $config = array();
       foreach ($files as $file) {
