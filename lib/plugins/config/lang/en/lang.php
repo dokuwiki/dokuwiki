@@ -163,6 +163,7 @@ $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs 
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['sepchar']     = 'Page name word separator';
+$lang['usespacesintitle'] = 'When page name is used as link title, replace word separator by spaces.';
 $lang['canonical']   = 'Use fully canonical URLs';
 $lang['fnencode']    = 'Method for encoding non-ASCII filenames.';
 $lang['autoplural']  = 'Check for plural forms in links';

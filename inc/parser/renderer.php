@@ -280,7 +280,14 @@ class Doku_Renderer extends DokuWiki_Plugin {
             $name = strtr($name,';',':');
         }
 
-        return noNSorNS($name);
+        $name = noNSorNS($name);
+
+        //replace _, - or . by spaces in titles
+        if($conf['usespacesintitle']) {
+            return strtr($name, $conf['sepchar'], ' ');
+        } else {
+            return $name;
+        }
     }
 
     /**

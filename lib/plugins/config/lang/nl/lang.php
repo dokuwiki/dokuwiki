@@ -136,6 +136,7 @@ $lang['updatecheck']           = 'Controleer op nieuwe versies en beveiligingswa
 $lang['userewrite']            = 'Gebruik nette URL\'s';
 $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepaces in URL\'s';
 $lang['sepchar']               = 'Woordscheider in paginanamen';
+$lang['usespacesintitle']      = 'Als de paginanaam wordt gebruikt als linktitel, de woordscheider vervangen door spaties.';
 $lang['canonical']             = 'Herleid URL\'s tot hun basisvorm';
 $lang['fnencode']              = 'Methode om niet-ASCII bestandsnamen te coderen.';
 $lang['autoplural']            = 'Controleer op meervoudsvormen in links';
