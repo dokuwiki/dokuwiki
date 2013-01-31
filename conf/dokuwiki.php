@@ -143,7 +143,7 @@ $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htac
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
 $conf['sepchar']     = '_';              //word separator character in page names; may be a
                                          //  letter, a digit, '_', '-', or '.'.
-$conf['usespacesintitle'] = 0;             //when pagename is link title, replace conf[sepchar] by spaces.
+$conf['usespacesintitle'] = 0;           //when pagename is link title, replace conf[sepchar] by spaces.
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
 $conf['fnencode']    = 'url';            //encode filenames (url|safe|utf-8)
 $conf['autoplural']  = 0;                //try (non)plural form of nonexisting files?
