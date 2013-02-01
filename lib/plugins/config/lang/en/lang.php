@@ -97,8 +97,8 @@ $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';
 
 $lang['passpolicyminlen']   = 'Mimimal length for user passwords';
-$lang['passpolicypools']    = 'Character classes to use in passwords';
-$lang['passpolicyminpools'] = 'Minimal number of different character classes that have to be used in passwords. May not be higher than the number of selected classes above';
+$lang['passpolicypools']    = 'Character types to use in passwords';
+$lang['passpolicyminpools'] = 'Minimal number of different character types that have to be used in passwords. May not be higher than the number of selected types above';
 $lang['passpolicyuser']     = 'Check if password matches against the user\'s name. 0 to disable. 1 for exact matches. Any other number for the number of consecutive characters that may be contained in both password and username';
 
 $lang['defaultgroup']= 'Default group, all new users will be placed in this group';
@@ -271,6 +271,6 @@ $lang['useheading_o_1'] = 'Always';
 $lang['passpolicypools_lower']   = 'lower case letters';
 $lang['passpolicypools_upper']   = 'upper case letters';
 $lang['passpolicypools_numeric'] = 'numbers';
-$lang['passpolicypools_special'] = 'special chars';
+$lang['passpolicypools_special'] = 'special chars (eg. !, $, #, %)';
 
 $lang['readdircache'] = 'Maximum age for readdir cache (sec)';
