@@ -41,6 +41,44 @@ class PassPolicy_test extends DokuWikiTest {
         $this->assertEquals(PassPolicy::USERNAME_VIOLATION, $policy->error);
     }
 
+    public function test_minpools(){
+        $policy = $this->newPolicy(3, 0, true, true, true, true, 0);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123!"','tester'), '0 required, 4 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123','tester'), '0 required, 3 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER','tester'), '0 required, 2 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lower','tester'), '0 required, 1 given '.$policy->error);
+
+        $policy = $this->newPolicy(3, 1, true, true, true, true, 0);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123!"','tester'), '1 required, 4 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123','tester'), '1 required, 3 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER','tester'), '1 required, 2 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lower','tester'), '1 required, 1 given '.$policy->error);
+
+        $policy = $this->newPolicy(3, 2, true, true, true, true, 0);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123!"','tester'), '2 required, 4 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123','tester'), '2 required, 3 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER','tester'), '2 required, 2 given '.$policy->error);
+        $this->assertFalse($policy->checkPolicy('lower','tester'), '2 required, 1 given '.$policy->error);
+        $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
+
+        $policy = $this->newPolicy(3, 3, true, true, true, true, 0);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123!"','tester'), '3 required, 4 given '.$policy->error);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123','tester'), '3 required, 3 given '.$policy->error);
+        $this->assertFalse($policy->checkPolicy('lowerUPPER','tester'), '3 required, 2 given '.$policy->error);
+        $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
+        $this->assertFalse($policy->checkPolicy('lower','tester'), '3 required, 1 given '.$policy->error);
+        $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
+
+        $policy = $this->newPolicy(3, 4, true, true, true, true, 0);
+        $this->assertTrue($policy->checkPolicy('lowerUPPER123!"','tester'), '4 required, 4 given '.$policy->error);
+        $this->assertFalse($policy->checkPolicy('lowerUPPER123','tester'), '4 required, 3 given '.$policy->error);
+        $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
+        $this->assertFalse($policy->checkPolicy('lowerUPPER','tester'), '4 required, 2 given '.$policy->error);
+        $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
+        $this->assertFalse($policy->checkPolicy('lower','tester'), '4 required, 1 given '.$policy->error);
+        $this->assertEquals(PassPolicy::POOL_VIOLATION, $policy->error);
+    }
+
     public function test_selfcheck() {
         $policy = $this->newPolicy(6, 4, true, true, true, true, 0, true);
         $pw1 = $policy->generatePassword('test');

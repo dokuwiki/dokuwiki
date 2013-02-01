@@ -129,7 +129,7 @@ $meta['authtype']    = array('authtype');
 $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','sha512'));
 $meta['passpolicyminlen']   = array('numeric', '_min' => 0);
 $meta['passpolicypools']    = array('multicheckbox', '_choices' => array('lower','upper','numeric','special'));
-$meta['passpolicyminpools'] = array('numeric', '_min' => 1, '_max' => 4);
+$meta['passpolicyminpools'] = array('numeric', '_min' => 0, '_max' => 4);
 $meta['passpolicyuser']     = array('numeric', '_min' => 0);
 
 $meta['defaultgroup']= array('string');
