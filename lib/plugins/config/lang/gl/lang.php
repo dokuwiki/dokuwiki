@@ -4,7 +4,7 @@
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
- * @author Leandro Regueiro <leandro.regueiro@gmail.com>
+ * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
 $lang['menu']                  = 'Opcións de Configuración';
 $lang['error']                 = 'Configuración non actualizada debido a un valor inválido, por favor revisa os teus trocos e volta envialos de novo.
@@ -28,8 +28,8 @@ $lang['_anti_spam']            = 'Configuración de Anti-Correo-lixo';
 $lang['_editing']              = 'Configuración de Edición';
 $lang['_links']                = 'Configuración de Ligazóns';
 $lang['_media']                = 'Configuración de Media';
-$lang['_notifications']        = 'Configuración de notificación';
-$lang['_syndication']          = 'Configuración de afiliación';
+$lang['_notifications']        = 'Opcións de Notificación';
+$lang['_syndication']          = 'Opcións de Sindicación';
 $lang['_advanced']             = 'Configuración Avanzada';
 $lang['_network']              = 'Configuración de Rede';
 $lang['_plugin_sufix']         = 'Configuración de Extensións';
@@ -41,8 +41,8 @@ $lang['title']                 = 'Título do Wiki';
 $lang['start']                 = 'Nome da páxina inicial';
 $lang['lang']                  = 'Idioma';
 $lang['template']              = 'Sobreplanta';
-$lang['tagline']               = 'Slogan (se o modelo o admite)';
-$lang['sidebar']               = 'Nome da páxina de barra lateral (se o modelo o admite), se o campo está baleiro desactívase a barra lateral';
+$lang['tagline']               = 'Tagline (si a plantilla o soporta)';
+$lang['sidebar']               = 'Nome de páxina da barra lateral (si a platilla o soporta), o campo en baleiro deshabilita a barra lateral';
 $lang['license']               = 'Baixo de que licenza será ceibado o teu contido?';
 $lang['savedir']               = 'Directorio no que se gardarán os datos';
 $lang['basedir']               = 'Directorio base';
@@ -85,8 +85,8 @@ $lang['disableactions_wikicode'] = 'Ver fonte/Exportar Datos Raw';
 $lang['disableactions_other']  = 'Outras accións (separadas por comas)';
 $lang['auth_security_timeout'] = 'Tempo Límite de Seguridade de Autenticación (segundos)';
 $lang['securecookie']          = 'Deben enviarse só vía HTTPS polo navegador as cookies configuradas vía HTTPS? Desactiva esta opción cando só o inicio de sesión do teu wiki estea asegurado con SSL pero a navegación do mesmo se faga de xeito inseguro.';
-$lang['remote']                = 'Activar o sistema de API remota. Isto permítelle a outras aplicacións acceder ao wiki a través de XML-RPC ou outros mecanismos.';
-$lang['remoteuser']            = 'Restrinxir o acceso remoto á API aos grupos ou usuarios separados por comas especificados aquí. Déixeo baleiro para concederlle acceso a todos.';
+$lang['remote']                = 'Permite o uso do sistema API remoto. Isto permite a outras aplicacións acceder ao wiki mediante XML-RPC ou outros mecanismos.';
+$lang['remoteuser']            = 'Restrinxe o uso remoto da API aos grupos ou usuarios indicados, separados por comas. Deixar baleiro para dar acceso a todo o mundo.';
 $lang['usewordblock']          = 'Bloquear correo-lixo segundo unha lista de verbas';
 $lang['relnofollow']           = 'Utilizar rel="nofollow" nas ligazóns externas';
 $lang['indexdelay']            = 'Retardo denantes de indexar (seg)';
@@ -115,14 +115,14 @@ $lang['notify']                = 'Enviar notificacións de trocos a este enderez
 $lang['registernotify']        = 'Enviar información de novos usuarios rexistrados a este enderezo de correo-e';
 $lang['mailfrom']              = 'Enderezo de correo-e a usar para as mensaxes automáticas';
 $lang['mailprefix']            = 'Prefixo de asunto de correo-e para as mensaxes automáticas';
-$lang['htmlmail']              = 'Enviar mensaxes de e-mail HTML multiparte con mellor aspecto, pero de tamaño maior. Desactivar para as mensaxes de só texto plano.';
+$lang['htmlmail']              = 'Enviar correos electrónicos HTML multiparte máis estéticos, pero máis grande en tamaño. Deshabilitar para mandar correos electrónicos en texto claro.';
 $lang['sitemap']               = 'Xerar mapa do sitio co Google (días)';
 $lang['rss_type']              = 'Tipo de corrente RSS XML';
 $lang['rss_linkto']            = 'A corrente XML liga para';
 $lang['rss_content']           = 'Que queres amosar nos elementos da corrente XML?';
 $lang['rss_update']            = 'Intervalo de actualización da corrente XML (seg.)';
 $lang['rss_show_summary']      = 'Amosar sumario no título da corrente XML';
-$lang['rss_media']             = 'Que tipo de cambios se deben mostrar na fonte XML?';
+$lang['rss_media']             = 'Qué tipo de cambios deben ser listados no feed XML?';
 $lang['updatecheck']           = 'Comprobar se hai actualizacións e avisos de seguridade? O DokuWiki precisa contactar con update.dokuwiki.org para executar esta característica.';
 $lang['userewrite']            = 'Utilizar URLs amigábeis';
 $lang['useslash']              = 'Utilizar a barra inclinada (/) como separador de nome de espazo nos URLs';
@@ -133,14 +133,14 @@ $lang['autoplural']            = 'Comprobar formas plurais nas ligazóns';
 $lang['compression']           = 'Método de compresión para arquivos attic';
 $lang['gzip_output']           = 'Utilizar Contido-Codificación gzip para o xhtml';
 $lang['compress']              = 'Saída compacta de CSS e Javascript';
-$lang['cssdatauri']            = 'Tamaño en bytes ata o cal as imaxes referenciadas nos ficheiros CSS se deben incorporar directamente na folla de estilos para reducir o exceso de cabeceiras de solicitudes HTTP. Esta técnica non funciona con IE 7 ou inferior! Valores entre <code>400</code> e <code>600</code> son axeitados. Defina <code>0</code> para desactivar.';
+$lang['cssdatauri']            = 'Tamaño en bytes ata o cal as imaxes referenciadas nos CSS serán incrustadas na folla de estilos para disminuir o tamaño das cabeceiras das solicitudes HTTP. Esta técnica non funcionará en IE 7 ou anteriores! entre <code>400</code> e <code>600</code> bytes é un valor axeitado. Establecer a <code>0</code> para deshabilitar.';
 $lang['send404']               = 'Enviar "HTTP 404/Páxina non atopada" para as páxinas inexistentes';
 $lang['broken_iua']            = 'Rachou a función ignore_user_abort no teu sistema? Isto podería causar que o índice de procura non funcione. Coñécese que o IIS+PHP/CGI ráchaa. Bótalle un ollo ao <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> para obter máis información.';
 $lang['xsendfile']             = 'Empregar a cabeceira X-Sendfile para que o servidor web envie arquivos estáticos? O teu servidor web precisa soportar isto.';
 $lang['renderer_xhtml']        = 'Intérprete a empregar para a saída principal (XHTML) do Wiki';
 $lang['renderer__core']        = '%s (núcleo do Dokuwiki)';
 $lang['renderer__plugin']      = '%s (extensión)';
-$lang['dnslookups']            = 'DokuWiki buscará os nomes de máquina ou enderezos IP remotos dos usuarios que editen páxinas. Se ten un servidor DNS lento ou que non funciona ou en caso de non querer esta característica, desactive esta opción.';
+$lang['dnslookups']            = 'DokuWiki resolverá os nomes de host das direccións IP dos usuarios que editan as páxinas. Si contas un servidor DNS lento, que non funciona ou non che interesa esta característica, deshabilita esta opción';
 $lang['proxy____host']         = 'Nome do servidor Proxy';
 $lang['proxy____port']         = 'Porto do Proxy';
 $lang['proxy____user']         = 'Nome de usuario do Proxy';

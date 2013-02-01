@@ -4,7 +4,7 @@
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
- * @author Leandro Regueiro <leandro.regueiro@gmail.com>
+ * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
 $lang['menu']                  = 'Xestionar Extensións';
 $lang['download']              = 'Descargar e instalar unha nova extensión';
