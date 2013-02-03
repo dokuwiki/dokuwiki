@@ -1553,7 +1553,7 @@ function get_doku_pref($pref, $default) {
         $cnt   = count($parts);
         for($i = 0; $i < $cnt; $i += 2) {
             if($parts[$i] == $pref) {
-                return $parts[$i + 1];
+                return urldecode($parts[$i + 1]);
             }
         }
     }
