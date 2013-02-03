@@ -56,6 +56,11 @@ $conf['useacl']      = 0;                //Use Access Control Lists to restrict 
 $conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
 $conf['authtype']    = 'plain';          //which authentication backend should be used
 $conf['passcrypt']   = 'smd5';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411)
+$conf['passpolicyminlen']   = 6;         //Minimum length for passwords
+$conf['passpolicypools']    = 'lower,numeric'; //Used character classes for generated passwords
+$conf['passpolicyminpools'] = 0;         //How many of the selected classes have to be used by user passwords
+$conf['passpolicyuser']     = 0;         //Check password against matches in username? 0=off, 1=yes, 2+ number of chars to match
+
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
 $conf['superuser']   = '!!not set!!';    //The admin can be user or @group or comma separated list user1,@group1,user2
 $conf['manager']     = '!!not set!!';    //The manager can be user or @group or comma separated list user1,@group1,user2

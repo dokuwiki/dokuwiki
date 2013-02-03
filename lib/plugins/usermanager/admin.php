@@ -354,7 +354,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_auth->canDo('modPass')){
           if (empty($pass)){
             if(!empty($_REQUEST['usernotify'])){
-              $pass = auth_pwgen();
+              $pass = auth_pwgen($user);
             } else {
               msg($this->lang['add_fail'], -1);
               return false;
@@ -495,7 +495,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         // generate password if left empty and notification is on
         if(!empty($_REQUEST['usernotify']) && empty($newpass)){
-            $newpass = auth_pwgen();
+            $newpass = auth_pwgen($newuser);
         }
 
         if (!empty($newpass) && $this->_auth->canDo('modPass'))

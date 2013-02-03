@@ -1277,6 +1277,8 @@ function html_register(){
     if (!$conf['autopasswd']) {
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
+        $policy = new PassPolicy();
+        $form->addElement('<p class="hint">'.nl2br($policy->explainPolicy()).'</p>');
     }
     $form->addElement(form_makeTextField('fullname', $INPUT->post->str('fullname'), $lang['fullname'], '', 'block', array('size'=>'50')));
     $form->addElement(form_makeTextField('email', $INPUT->post->str('email'), $lang['email'], '', 'block', array('size'=>'50')));
@@ -1321,6 +1323,8 @@ function html_updateprofile(){
     if ($auth->canDo('modPass')) {
         $form->addElement(form_makePasswordField('newpass', $lang['newpass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
+        $policy = new PassPolicy();
+        $form->addElement('<p class="hint">'.nl2br($policy->explainPolicy()).'</p>');
     }
     if ($conf['profileconfirm']) {
         $form->addElement(form_makeTag('br'));
@@ -1705,6 +1709,8 @@ function html_resendpwd() {
 
         $form->addElement(form_makePasswordField('pass', $lang['pass'], '', 'block', array('size'=>'50')));
         $form->addElement(form_makePasswordField('passchk', $lang['passchk'], '', 'block', array('size'=>'50')));
+        $policy = new PassPolicy();
+        $form->addElement('<p class="hint">'.nl2br($policy->explainPolicy()).'</p>');
 
         $form->addElement(form_makeButton('submit', '', $lang['btn_resendpwd']));
         $form->endFieldset();

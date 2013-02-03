@@ -76,6 +76,12 @@ $lang['regbadmail']            = 'The given email address looks invalid - if you
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
 $lang['regpwmail']             = 'Your DokuWiki password';
 $lang['reghere']               = 'You don\'t have an account yet? Just get one';
+$lang['badpasspolicy']         = 'You must use a stronger password.';
+
+$lang['passpolicy_length']     = 'Your password needs to be at least %d characters long.';
+$lang['passpolicy_pools']      = 'Your password needs to use characters from at least %d of the following types: %s.';
+$lang['passpolicy_user1']      = 'Your password may not contain your username.';
+$lang['passpolicy_user2']      = 'Your password may only use %d or less consecutive characters that appear in your username.';
 
 $lang['profna']                = 'This wiki does not support profile modification';
 $lang['profnochange']          = 'No changes, nothing to do.';

@@ -68,6 +68,10 @@
     vertical-align: middle;
 }
 
+.dokuwiki .hint {
+    font-size: .875em;
+}
+
 /**
  * Styles for the subscription page
  */
