@@ -43,7 +43,6 @@ function js_out(){
                 DOKU_INC."lib/scripts/jquery/jquery$min.js",
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
-                DOKU_INC."lib/scripts/jquery/jquery.mb.browser.js",
                 DOKU_INC."lib/scripts/jquery/jquery-migrate$min.js",
                 DOKU_INC."lib/scripts/fileuploader.js",
                 DOKU_INC."lib/scripts/fileuploaderextended.js",
