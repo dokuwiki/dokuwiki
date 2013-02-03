@@ -67,6 +67,22 @@ function act_dispatch(){
             act_sitemap($ACT);
         }
 
+        //recent changes
+        if ($ACT == 'recent'){
+            $show_changes = $INPUT->str('show_changes');
+            if (!empty($show_changes)) {
+                set_doku_pref('show_changes', $show_changes);
+            }
+        }
+
+        //diff
+        if ($ACT == 'diff'){
+            $difftype = $INPUT->str('difftype');
+            if (!empty($difftype)) {
+                set_doku_pref('difftype', $difftype);
+            }
+        }
+
         //register
         if($ACT == 'register' && $INPUT->post->bool('save') && register()){
             $ACT = 'login';
