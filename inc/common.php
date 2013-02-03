@@ -1546,16 +1546,16 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
 
 /**
  * Read a preference from the DokuWiki cookie
+ * (remembering both keys & values are urlencoded)
  */
 function get_doku_pref($pref, $default) {
-    // first, urldecode the cookie value
-    $doku_prefs = urldecode($_COOKIE['DOKU_PREFS']);
-    if(strpos($doku_prefs, $pref) !== false) {
-        $parts = explode('#', $doku_prefs);
+    $enc_pref = urlencode($pref);
+    if(strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
+        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
         for($i = 0; $i < $cnt; $i += 2) {
-            if($parts[$i] == $pref) {
-                return $parts[$i + 1];
+            if($parts[$i] == $enc_pref) {
+                return urldecode($parts[$i + 1]);
             }
         }
     }
