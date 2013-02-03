@@ -29,6 +29,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      */
     var $popularityLastSubmitFile;
 
+    var $version;
+
 
     function helper_plugin_popularity(){
         global $conf;
@@ -69,7 +71,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Check if autosubmit is enabled
-     * @return TRUE if we should send data once a month, FALSE otherwise
+     * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
     function isAutoSubmitEnabled(){
         return @file_exists($this->autosubmitFile);
@@ -78,7 +80,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     /**
      * Send the data, to the submit url
      * @param string $data The popularity data
-     * @return An empty string if everything worked fine, a string describing the error otherwise
+     * @return string An empty string if everything worked fine, a string describing the error otherwise
      */
     function sendData($data){
         $error = '';
@@ -102,7 +104,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Gather all information
-     * @return The popularity data as a string
+     * @return string The popularity data as a string
      */
     function gatherAsString(){
         $data = $this->_gather();
@@ -119,7 +121,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Gather all information
-     * @return The popularity data as an array
+     * @return array The popularity data as an array
      */
     function _gather(){
         global $conf;

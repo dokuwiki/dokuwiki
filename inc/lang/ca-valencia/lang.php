@@ -211,9 +211,9 @@ $lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Haurà de com
 $lang['i_badhash']             = 'dokuwiki.php substituït o modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor illegal o buit';
 $lang['i_success']             = 'La configuració ha finalisat correctament. Ya pot borrar l\'archiu install.php. Passe al
-<a href="doku.php">nou DokuWiki</a>.';
+<a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
 $lang['i_failure']             = 'Han aparegut alguns erros escrivint els archius de configuració. Deurà arreglar-los manualment abans de que
-puga utilisar el <a href="doku.php">nou DokuWiki</a>.';
+puga utilisar el <a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
 $lang['i_policy']              = 'Política inicial ACL';
 $lang['i_pol0']                = 'Wiki obert (llegir, escriure i enviar tots)';
 $lang['i_pol1']                = 'Wiki públic (llegir tots, escriure i enviar només usuaris registrats)';

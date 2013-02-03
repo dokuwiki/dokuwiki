@@ -82,8 +82,8 @@ class DokuWiki_Plugin {
      * retrieve a language dependent file and pass to xhtml renderer for display
      * plugin equivalent of p_locale_xhtml()
      *
-     * @param   $id     id of language dependent wiki page
-     * @return  string  parsed contents of the wiki page in xhtml format
+     * @param   string $id id of language dependent wiki page
+     * @return  string     parsed contents of the wiki page in xhtml format
      */
     function locale_xhtml($id) {
         return p_cached_output($this->localFN($id));
@@ -193,12 +193,12 @@ class DokuWiki_Plugin {
      *
      * @author  Esther Brunner <wikidesign@gmail.com>
      *
-     * @param   $name   name of plugin to load
-     * @param   $msg    message to display in case the plugin is not available
+     * @param   string $name   name of plugin to load
+     * @param   bool   $msg    if a message should be displayed in case the plugin is not available
      *
      * @return  object  helper plugin object
      */
-    function loadHelper($name, $msg){
+    function loadHelper($name, $msg = true){
         if (!plugin_isdisabled($name)){
             $obj = plugin_load('helper',$name);
         }else{

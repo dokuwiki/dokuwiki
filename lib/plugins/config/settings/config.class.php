@@ -129,6 +129,15 @@ if (!class_exists('configuration')) {
       return true;
     }
 
+    /**
+     * Update last modified time stamp of the config file
+     */
+    function touch_settings(){
+        if ($this->locked) return false;
+        $file = end($this->_local_files);
+        return @touch($file);
+    }
+
     function _read_config_group($files) {
       $config = array();
       foreach ($files as $file) {
@@ -381,7 +390,7 @@ if (!class_exists('setting')) {
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
@@ -652,7 +661,7 @@ if (!class_exists('setting_email')) {
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
@@ -688,7 +697,7 @@ if (!class_exists('setting_richemail')) {
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;

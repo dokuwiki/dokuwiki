@@ -66,6 +66,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $_SESSION['PLUGIN_CONFIG'] = array('state' => 'updated', 'time' => time());
         $this->_close_session();
         send_redirect(wl($ID,array('do'=>'admin','page'=>'config'),true,'&'));
+        exit();
+      } elseif(!$this->_error) {
+          $this->_config->touch_settings(); // just touch to refresh cache
       }
 
       $this->_close_session();

@@ -172,7 +172,7 @@ $lang['lastmod']               = 'Senast uppdaterad';
 $lang['by']                    = 'av';
 $lang['deleted']               = 'raderad';
 $lang['created']               = 'skapad';
-$lang['restored']              = 'tidigare version återställd';
+$lang['restored']              = 'tidigare version återställd (%s)';
 $lang['external_edit']         = 'extern redigering';
 $lang['summary']               = 'Redigeringskommentar';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
@@ -246,9 +246,9 @@ $lang['i_writeerr']            = 'Kan inte skapa <code>%s</code>. Kontrollera fi
 $lang['i_badhash']             = 'okänd eller ändrad dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - felaktig eller blank';
 $lang['i_success']             = 'Konfigurationen avslutades utan fel. Du kan radera filen install.php nu. Fortsätt till
-                        <a href="doku.php">din nya DokuWiki</a>.';
+                        <a href="doku.php?id=wiki:welcome">din nya DokuWiki</a>.';
 $lang['i_failure']             = 'Fel uppstod vid skrivning av konfigurationsfilerna. Du kan behöva ordna till dem manuellt innan
-                         du kan använda <a href="doku.php">din nya DokuWiki</a>.';
+                         du kan använda <a href="doku.php?id=wiki:welcome">din nya DokuWiki</a>.';
 $lang['i_policy']              = 'Initial ACL-policy';
 $lang['i_pol0']                = 'Öppen wiki (alla får läsa, skriva och ladda upp filer)';
 $lang['i_pol1']                = 'Publik wiki (alla får läsa, registrerade användare för skriva och ladda upp filer)';

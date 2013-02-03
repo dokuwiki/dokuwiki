@@ -12,6 +12,7 @@
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
+ * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
  */
 $lang['menu']                  = 'Διαχείριση Επεκτάσεων';
 $lang['download']              = 'Κατεβάστε και εγκαταστήστε μια νέα επέκταση (plugin)';

@@ -703,6 +703,7 @@ function tpl_get_action($type) {
             }
             break;
         case 'media':
+            $params['ns'] = getNS($ID);
             break;
         default:
             return '[unknown %s type]';
@@ -839,7 +840,9 @@ function tpl_youarehere($sep = ' » ') {
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
     // always print the startpage
+    echo '<span class="home">';
     tpl_pagelink(':'.$conf['start']);
+    echo '</span>';
 
     // print intermediate namespace links
     $part = '';
@@ -1471,11 +1474,10 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  * template
  */
 function tpl_include_page($pageid, $print = true, $propagate = false) {
-    global $ID;
-    global $TOC;
-
+    if (!$pageid) return false;
     if ($propagate) $pageid = page_findnearest($pageid);
 
+    global $TOC;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
     $TOC    = $oldtoc;

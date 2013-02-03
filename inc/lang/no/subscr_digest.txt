@@ -12,7 +12,7 @@ Ny versjon: @NEWPAGE@
 
 For å avslutte varslingen, logg inn på
 @DOKUWIKIURL@ og gå til 
-@NEWPAGE@
+@SUBSCRIBE@
 og avslutt abonnementet på endringer av siden eller i navnerommet.
 
 --

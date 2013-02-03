@@ -15,7 +15,7 @@ Ny Revision: @NEWPAGE@
 
 For at slå side notifikationer fra, skal du logge ind på 
 @DOKUWIKIURL@ og besøge
-@NEWPAGE@
+@SUBSCRIBE@
 og slå abonnoment for side / navnerum ændringer fra.
 
 --

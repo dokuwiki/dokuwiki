@@ -73,8 +73,6 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
      * Start the reversion process
      */
     function _revert($revert,$filter){
-        global $conf;
-
         echo '<hr /><br />';
         echo '<p>'.$this->getLang('revstart').'</p>';
 

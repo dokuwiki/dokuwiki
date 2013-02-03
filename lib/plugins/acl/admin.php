@@ -173,8 +173,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function html() {
-        global $ID;
-
         echo '<div id="acl_manager">'.NL;
         echo '<h1>'.$this->getLang('admin_acl').'</h1>'.NL;
         echo '<div class="level1">'.NL;
@@ -208,7 +206,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _get_opts($addopts=null){
-        global $ID;
         $opts = array(
                     'do'=>'admin',
                     'page'=>'acl',
@@ -230,7 +227,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $ID;
         global $lang;
 
-        $dir = $conf['datadir'];
         $ns  = $this->ns;
         if(empty($ns)){
             $ns = dirname(str_replace(':','/',$ID));
@@ -326,7 +322,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _html_detail(){
-        global $conf;
         global $ID;
 
         echo '<form action="'.wl().'" method="post" accept-charset="utf-8"><div class="no">'.NL;
@@ -493,7 +488,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _html_list_acl($item){
-        global $ID;
         $ret = '';
         // what to display
         if($item['label']){
@@ -764,7 +758,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      */
     function _html_select(){
-        global $conf;
         $inlist = false;
 
         if($this->who &&

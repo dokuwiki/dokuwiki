@@ -1,2 +1,3 @@
 ====== Enquête de popularité ======
-Les données ont été envoyées avec succès.
+
+Les données ont été expédiées avec succès.

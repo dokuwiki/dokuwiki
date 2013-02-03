@@ -6,6 +6,7 @@
  * @author carles.bellver@gmail.com
  * @author carles.bellver@cent.uji.es
  * @author Carles Bellver <carles.bellver@cent.uji.es>
+ * @author daniel@6temes.cat
  */
 $lang['menu']                  = 'Gestió de reversions';
 $lang['filter']                = 'Cerca pàgines brossa';

@@ -167,6 +167,7 @@ function print_form($d){
     $d = array_map('htmlspecialchars',$d);
 
     if(!isset($d['acl'])) $d['acl']=1;
+    if(!isset($d['pop'])) $d['pop']=1;
 
     ?>
     <form action="" method="post">
@@ -210,17 +211,25 @@ function print_form($d){
         <fieldset>
             <p><?php echo $lang['i_license']?></p>
             <?php
-            array_unshift($license,array('name' => 'None', 'url'=>''));
+            array_push($license,array('name' => $lang['i_license_none'], 'url'=>''));
             if(empty($d['license'])) $d['license'] = 'cc-by-sa';
             foreach($license as $key => $lic){
                 echo '<label for="lic_'.$key.'">';
                 echo '<input type="radio" name="d[license]" value="'.htmlspecialchars($key).'" id="lic_'.$key.'"'.
-                     (($d['license'] == $key)?' checked="checked"':'').'>';
+                     (($d['license'] === $key)?' checked="checked"':'').'>';
                 echo htmlspecialchars($lic['name']);
                 if($lic['url']) echo ' <a href="'.$lic['url'].'" target="_blank"><sup>[?]</sup></a>';
                 echo '</label>';
             }
             ?>
+        </fieldset>
+
+        <fieldset>
+            <p><?php echo $lang['i_pop_field']?></p>
+            <label for="pop">
+                <input type="checkbox" name="d[pop]" id="pop" <?php echo(($d['pop'] ? ' checked="checked"' : ''));?> />
+                <?php echo $lang['i_pop_label']?> <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
+            </label>
         </fieldset>
 
     </fieldset>
@@ -376,6 +385,12 @@ EOT;
         }
         $ok = $ok && fileWrite(DOKU_LOCAL.'acl.auth.php', $output);
     }
+
+    // enable popularity submission
+    if($d['pop']){
+        @touch(DOKU_INC.'data/cache/autosubmit.txt');
+    }
+
     return $ok;
 }
 

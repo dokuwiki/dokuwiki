@@ -6,6 +6,7 @@
  * @author carles.bellver@gmail.com
  * @author carles.bellver@cent.uji.es
  * @author Carles Bellver <carles.bellver@cent.uji.es>
+ * @author daniel@6temes.cat
  */
 $lang['menu']                  = 'Gestió de connectors';
 $lang['download']              = 'Baixa i instal·la un nou connector';
@@ -51,3 +52,4 @@ $lang['enabled']               = 'S\'ha habilitat el connector %s.';
 $lang['notenabled']            = 'No s\'ha pogut habilitar el connector %s. Comproveu els permisos dels fitxers.';
 $lang['disabled']              = 'S\'ha inhabilitat el connector %s.';
 $lang['notdisabled']           = 'No s\'ha pogut inhabilitar el connector %s. Comproveu els permisos dels fitxers.';
+$lang['packageinstalled']      = 'El paquet del connector (%d plugins(s): %s) s\'ha instal·lat correctament.';

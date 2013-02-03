@@ -4,6 +4,7 @@
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
+ * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
 $lang['admin_acl']             = 'Xestión da Lista de Control de Acceso (ACL)';
 $lang['acl_group']             = 'Grupo';

@@ -16,6 +16,7 @@ class auth_password_test extends PHPUnit_Framework_TestCase {
         'kmd5'  => 'a579299436d7969791189acadd86fcb716',
         'djangomd5'  => 'md5$abcde$d0fdddeda8cd92725d2b54148ac09158',
         'djangosha1' => 'sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678',
+        'sha512' => '$6$abcdefgh12345678$J9.zOcgx0lotwZdcz0uulA3IVQMinZvFZVjA5vapRLVAAqtay23XD4xeeUxQ3B4JvDWYFBIxVWW1tOYlHX13k1'
     );
 
 
@@ -60,6 +61,11 @@ class auth_password_test extends PHPUnit_Framework_TestCase {
         $this->assertTrue(auth_verifyPassword('test12345','$P$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
         $this->assertTrue(auth_verifyPassword('test12345','$H$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
     }
+
+    function test_veryPassword_mediawiki(){
+        $this->assertTrue(auth_verifyPassword('password', ':B:838c83e1:e4ab7024509eef084cdabd03d8b2972c'));
+    }
+
 
     /**
      * pmd5 checking should throw an exception when a hash with a too high
