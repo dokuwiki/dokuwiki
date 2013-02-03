@@ -455,7 +455,13 @@ button::-moz-focus-inner {
 
 input[disabled],
 button[disabled],
+select[disabled],
+textarea[disabled],
 input[readonly],
-button[readonly] {
+button[readonly],
+select[readonly],
+textarea[readonly] {
     cursor: auto;
+    opacity: .5;
+    background-color: #eee;
 }
