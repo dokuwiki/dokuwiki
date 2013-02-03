@@ -45,6 +45,8 @@ function ajax_qsearch(){
     global $lang;
     global $INPUT;
 
+    $maxnumbersuggestions = 50;
+
     $query = $INPUT->post->str('q');
     if(empty($query)) $query = $INPUT->get->str('q');
     if(empty($query)) return;
@@ -72,7 +74,7 @@ function ajax_qsearch(){
         echo '<li>' . html_wikilink(':'.$id,$name) . '</li>';
 
         $counter ++;
-        if($counter > 50) {
+        if($counter > $maxnumbersuggestions) {
             echo '<li>...</li>';
             break;
         }
