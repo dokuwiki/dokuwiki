@@ -1548,12 +1548,14 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
  * Read a preference from the DokuWiki cookie
  */
 function get_doku_pref($pref, $default) {
-    if(strpos($_COOKIE['DOKU_PREFS'], $pref) !== false) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+    // first, urldecode the cookie value
+    $doku_prefs = urldecode($_COOKIE['DOKU_PREFS']);
+    if(strpos($doku_prefs, $pref) !== false) {
+        $parts = explode('#', $doku_prefs);
         $cnt   = count($parts);
         for($i = 0; $i < $cnt; $i += 2) {
-            if(urldecode($parts[$i]) == $pref) {
-                return urldecode($parts[$i + 1]);
+            if($parts[$i] == $pref) {
+                return $parts[$i + 1];
             }
         }
     }
@@ -1562,6 +1564,7 @@ function get_doku_pref($pref, $default) {
 
 /**
  * Add a preference to the DokuWiki cookie
+ * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
  */
 function set_doku_pref($pref, $val) {
     global $conf;
@@ -1571,15 +1574,17 @@ function set_doku_pref($pref, $val) {
     if($orig && ($orig != $val)) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
+        // urlencode $pref for the comparison
+        $enc_pref = rawurlencode($pref);
         for($i = 0; $i < $cnt; $i += 2) {
-            if(urldecode($parts[$i]) == $pref) {
-                $parts[$i + 1] = urlencode($val);
+            if($parts[$i] == $enc_pref) {
+                $parts[$i + 1] = rawurlencode($val);
                 break;
             }
         }
         $cookieVal = implode('#', $parts);
     } else if (!$orig) {
-        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').urlencode($pref).'#'.urlencode($val);
+        $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').rawurlencode($pref).'#'.rawurlencode($val);
     }
 
     if (!empty($cookieVal)) {
