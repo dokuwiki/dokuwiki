@@ -124,7 +124,11 @@ function tpl_content_core() {
             html_diff();
             break;
         case 'recent':
-            html_recent($INPUT->extract('first')->int('first'), $INPUT->str('show_changes'));
+            $show_changes = $INPUT->str('show_changes');
+            if (empty($show_changes)) {
+                $show_changes = get_doku_pref('show_changes', $show_changes);
+            }
+            html_recent($INPUT->extract('first')->int('first'), $show_changes);
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?

@@ -1088,8 +1088,17 @@ function html_diff($text='',$intro=true,$type=null){
     global $REV;
     global $lang;
     global $INPUT;
+    global $INFO;
 
-    if(!$type) $type = $INPUT->str('difftype');
+    if(!$type) {
+        $type = $INPUT->str('difftype');
+        if (empty($type)) {
+            $type = get_doku_pref('difftype', $type);
+            if (empty($type) && $INFO['ismobile']) {
+                $type = 'inline';
+            }
+        }
+    }
     if($type != 'inline') $type = 'sidebyside';
 
     // we're trying to be clever here, revisions to compare can be either
