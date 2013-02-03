@@ -16,12 +16,13 @@ if(!defined('DOKU_INC')) die('meh.');
  *
  * @param   array ref $data The results of the search are stored here
  * @param   string    $base Where to start the search
- * @param   callback  $func Callback (function name or arayy with object,method)
+ * @param   callback  $func Callback (function name or array with object,method)
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
+ * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime; leave empty to skip sorting.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort=false){
+function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
     $dirs   = array();
     $files  = array();
     $filepaths = array();
@@ -39,17 +40,19 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort=false){
         $filepaths[] = $base.'/'.$dir.'/'.$file;
     }
     closedir($dh);
-    if ($sort == 'date') {
-        @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
-    } else {
-        sort($files);
+    if (!empty($sort)) {
+        if ($sort == 'date') {
+            @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
+        } else /* natural */ {
+            natsort($files);
+        }
+        natsort($dirs);
     }
-    sort($dirs);
 
     //give directories to userfunction then recurse
     foreach($dirs as $dir){
         if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
-            search($data,$base,$func,$opts,$dir,$lvl+1);
+            search($data,$base,$func,$opts,$dir,$lvl+1,$sort);
         }
     }
     //now handle the files
