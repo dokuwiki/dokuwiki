@@ -1572,7 +1572,7 @@ function set_doku_pref($pref, $val) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
         for($i = 0; $i < $cnt; $i += 2) {
-            if($parts[$i] == $pref) {
+            if(urldecode($parts[$i]) == $pref) {
                 $parts[$i + 1] = urlencode($val);
                 break;
             }
