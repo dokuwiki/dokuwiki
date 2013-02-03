@@ -1552,7 +1552,7 @@ function get_doku_pref($pref, $default) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
         for($i = 0; $i < $cnt; $i += 2) {
-            if($parts[$i] == $pref) {
+            if(urldecode($parts[$i]) == $pref) {
                 return urldecode($parts[$i + 1]);
             }
         }
