@@ -72,12 +72,12 @@
  */
 #dw__login label[for="remember__me"] {
     margin-left: 50%;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.4em;
 }
 #dw__login fieldset,
 #dw__resendpwd fieldset,
 #dw__register fieldset {
-    padding-bottom: 1em;
+    padding-bottom: 0.7em;
 }
 
 
