@@ -246,9 +246,13 @@ abbr {
     border-bottom: 1px dotted;
     font-style: normal;
 }
+em acronym,
+em abbr {
+    font-style: italic;
+}
 
 mark {
-    background: __highlight__;
+    background-color: __highlight__;
     color: inherit;
 }
 
