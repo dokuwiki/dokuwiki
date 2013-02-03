@@ -311,7 +311,11 @@ function breadcrumbs() {
  *
  * This is run on a ID before it is outputted somewhere
  * currently used to replace the colon with something else
- * on Windows non-IIS systems and to have proper URL encoding
+ * on Windows (non-IIS) systems and to have proper URL encoding
+ *
+ * See discussions at https://github.com/splitbrain/dokuwiki/pull/84 and
+ * https://github.com/splitbrain/dokuwiki/pull/173 why we use a whitelist of
+ * unaffected servers instead of blacklisting affected servers here.
  *
  * Urlencoding is ommitted when the second parameter is false
  *
