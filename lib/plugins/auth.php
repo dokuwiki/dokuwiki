@@ -434,6 +434,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
         if(isset($conf['auth'][$plugin])) $oldconf = (array) $conf['auth'][$plugin];
 
         $conf['plugin'][$plugin] = array_merge($default, $oldconf, $conf['plugin'][$plugin]);
+	$this->conf =& $conf['plugin'][$plugin];
         $this->configloaded = true;
     }
 }
