@@ -4,6 +4,7 @@ $lang['server']           = 'Your MySQL server';
 $lang['user']             = 'MySQL user name';
 $lang['password']         = 'Password for above user';
 $lang['database']         = 'Database to use';
+$lang['charset']          = 'Character set used in database';
 $lang['debug']            = 'Display additional debug information';
 $lang['forwardClearPass'] = 'Pass user passwords as cleartext to the SQL statements below, instead of using the passcrypt option';
 $lang['TablesToLock']     = 'Comma separated list of tables that should be locked on write operations';

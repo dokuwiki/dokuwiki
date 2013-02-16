@@ -4,6 +4,7 @@ $meta['server']           = array('string');
 $meta['user']             = array('string');
 $meta['password']         = array('password');
 $meta['database']         = array('string');
+$meta['charset']          = array('string');
 $meta['debug']            = array('multichoice','_choices' => array(0,1,2));
 $meta['forwardClearPass'] = array('onoff');
 $meta['TablesToLock']     = array('array');
