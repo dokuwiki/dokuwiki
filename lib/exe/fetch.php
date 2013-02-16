@@ -9,81 +9,84 @@
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/../../');
 define('DOKU_DISABLE_GZIP_OUTPUT', 1);
 require_once(DOKU_INC.'inc/init.php');
-//close session
-session_write_close();
+session_write_close(); //close session
 
-$mimetypes = getMimeTypes();
+// BEGIN main (if not testing)
+if(!defined('SIMPLE_TEST')) {
+    $mimetypes = getMimeTypes();
 
-//get input
-$MEDIA  = stripctl(getID('media', false)); // no cleaning except control chars - maybe external
-$CACHE  = calc_cache($INPUT->str('cache'));
-$WIDTH  = $INPUT->int('w');
-$HEIGHT = $INPUT->int('h');
-$REV    = & $INPUT->ref('rev');
-//sanitize revision
-$REV = preg_replace('/[^0-9]/', '', $REV);
+    //get input
+    $MEDIA  = stripctl(getID('media', false)); // no cleaning except control chars - maybe external
+    $CACHE  = calc_cache($INPUT->str('cache'));
+    $WIDTH  = $INPUT->int('w');
+    $HEIGHT = $INPUT->int('h');
+    $REV    = & $INPUT->ref('rev');
+    //sanitize revision
+    $REV = preg_replace('/[^0-9]/', '', $REV);
 
-list($EXT, $MIME, $DL) = mimetype($MEDIA, false);
-if($EXT === false) {
-    $EXT  = 'unknown';
-    $MIME = 'application/octet-stream';
-    $DL   = true;
-}
-
-// check for permissions, preconditions and cache external files
-list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE, $REV);
-
-// prepare data for plugin events
-$data = array(
-    'media'         => $MEDIA,
-    'file'          => $FILE,
-    'orig'          => $FILE,
-    'mime'          => $MIME,
-    'download'      => $DL,
-    'cache'         => $CACHE,
-    'ext'           => $EXT,
-    'width'         => $WIDTH,
-    'height'        => $HEIGHT,
-    'status'        => $STATUS,
-    'statusmessage' => $STATUSMESSAGE,
-);
-
-// handle the file status
-$evt = new Doku_Event('FETCH_MEDIA_STATUS', $data);
-if($evt->advise_before()) {
-    // redirects
-    if($data['status'] > 300 && $data['status'] <= 304) {
-        send_redirect($data['statusmessage']);
+    list($EXT, $MIME, $DL) = mimetype($MEDIA, false);
+    if($EXT === false) {
+        $EXT  = 'unknown';
+        $MIME = 'application/octet-stream';
+        $DL   = true;
     }
-    // send any non 200 status
-    if($data['status'] != 200) {
-        header('HTTP/1.0 '.$data['status'].' '.$data['statusmessage']);
-    }
-    // die on errors
-    if($data['status'] > 203) {
-        print $data['statusmessage'];
-        exit;
-    }
-}
-$evt->advise_after();
-unset($evt);
 
-//handle image resizing/cropping
-if((substr($MIME, 0, 5) == 'image') && $WIDTH) {
-    if($HEIGHT) {
-        $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
-    } else {
-        $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
-    }
-}
+    // check for permissions, preconditions and cache external files
+    list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE, $REV);
 
-// finally send the file to the client
-$evt = new Doku_Event('MEDIA_SENDFILE', $data);
-if($evt->advise_before()) {
-    sendFile($data['file'], $data['mime'], $data['download'], $data['cache']);
-}
-// Do something after the download finished.
-$evt->advise_after();
+    // prepare data for plugin events
+    $data = array(
+        'media'         => $MEDIA,
+        'file'          => $FILE,
+        'orig'          => $FILE,
+        'mime'          => $MIME,
+        'download'      => $DL,
+        'cache'         => $CACHE,
+        'ext'           => $EXT,
+        'width'         => $WIDTH,
+        'height'        => $HEIGHT,
+        'status'        => $STATUS,
+        'statusmessage' => $STATUSMESSAGE,
+    );
+
+    // handle the file status
+    $evt = new Doku_Event('FETCH_MEDIA_STATUS', $data);
+    if($evt->advise_before()) {
+        // redirects
+        if($data['status'] > 300 && $data['status'] <= 304) {
+            send_redirect($data['statusmessage']);
+        }
+        // send any non 200 status
+        if($data['status'] != 200) {
+            header('HTTP/1.0 '.$data['status'].' '.$data['statusmessage']);
+        }
+        // die on errors
+        if($data['status'] > 203) {
+            print $data['statusmessage'];
+            exit;
+        }
+    }
+    $evt->advise_after();
+    unset($evt);
+
+    //handle image resizing/cropping
+    if((substr($MIME, 0, 5) == 'image') && $WIDTH) {
+        if($HEIGHT) {
+            $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
+        } else {
+            $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
+        }
+    }
+
+    // finally send the file to the client
+    $evt = new Doku_Event('MEDIA_SENDFILE', $data);
+    if($evt->advise_before()) {
+        sendFile($data['file'], $data['mime'], $data['download'], $data['cache']);
+    }
+    // Do something after the download finished.
+    $evt->advise_after();
+
+}// END DO main
 
 /* ------------------------------------------------------------------------ */
 
