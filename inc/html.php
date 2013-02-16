@@ -1636,11 +1636,16 @@ function html_admin(){
     }
 
     // data security check
-    // @todo: could be checked and only displayed if $conf['savedir'] is under the web root
-    echo '<a style="border:none; float:right;"
-            href="http://www.dokuwiki.org/security#web_access_security">
-            <img src="data/security.png" alt="Your data directory seems to be protected properly."
-             onerror="this.parentNode.style.display=\'none\'" /></a>';
+    // simple check if the 'savedir' is relative and accessible when appended to DOKU_URL
+    // it verifies either:
+    //   'savedir' has been moved elsewhere, or
+    //   has protection to prevent the webserver serving files from it
+    if (substr($conf['savedir'],0,2) == './'){
+        echo '<a style="border:none; float:right;"
+                href="http://www.dokuwiki.org/security#web_access_security">
+                <img src="'.DOKU_URL.$conf['savedir'].'/security.png" alt="Your data directory seems to be protected properly."
+                onerror="this.parentNode.style.display=\'none\'" /></a>';
+    }
 
     print p_locale_xhtml('admin');
 
