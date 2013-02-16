@@ -632,7 +632,6 @@ div.dokuwiki td.diff-blockheader {
 div.dokuwiki table.diff th {
   border-bottom: 1px solid __border__;
   font-size: 110%;
-  width: 50%;
   font-weight: normal;
   text-align: left;
 }
@@ -650,6 +649,17 @@ div.dokuwiki table.diff th span.sum {
 div.dokuwiki table.diff th.minor {
   font-style: italic;
 }
+.dokuwiki table.diff_sidebyside th {
+    width: 50%;
+}
+.dokuwiki table.diff .diff-lineheader {
+    width: .7em;
+    text-align: right;
+}
+[dir=rtl] .dokuwiki table.diff .diff-lineheader {
+    text-align: left;
+}
+.dokuwiki table.diff .diff-lineheader,
 div.dokuwiki table.diff td {
   font-family: monospace;
   font-size: 100%;
