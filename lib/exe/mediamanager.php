@@ -36,7 +36,7 @@
 
     // do not display the manager if user does not have read access
     if($AUTH < AUTH_READ && !$fullscreen) {
-        header('HTTP/1.0 403 Forbidden');
+        http_status(403);
         die($lang['accessdenied']);
     }
 
@@ -48,7 +48,7 @@
         $_FILES['upload'] =& $_FILES['Filedata'];
         $JUMPTO = media_upload($NS,$AUTH);
         if($JUMPTO == false){
-            header("HTTP/1.0 400 Bad Request");
+            http_status(400);
             echo 'Upload failed';
         }
         echo 'ok';

@@ -172,7 +172,7 @@ function act_dispatch(){
     $evt->advise_after();
     // Make sure plugs can handle 'denied'
     if($conf['send404'] && $ACT == 'denied') {
-        header('HTTP/1.0 403 Forbidden');
+        http_status(403);
     }
     unset($evt);
 
@@ -658,7 +658,7 @@ function act_sitemap($act) {
     global $conf;
 
     if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
-        header("HTTP/1.0 404 Not Found");
+        http_status(404);
         print "Sitemap generation is disabled.";
         exit;
     }
@@ -690,7 +690,7 @@ function act_sitemap($act) {
         exit;
     }
 
-    header("HTTP/1.0 500 Internal Server Error");
+    http_status(500);
     print "Could not read the sitemap file - bad permissions?";
     exit;
 }

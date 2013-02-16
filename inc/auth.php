@@ -267,7 +267,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
 function auth_validateToken($token) {
     if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {
         // bad token
-        header("HTTP/1.0 401 Unauthorized");
+        http_status(401);
         print 'Invalid auth token - maybe the session timed out';
         unset($_SESSION[DOKU_COOKIE]['auth']['token']); // no second chance
         exit;
