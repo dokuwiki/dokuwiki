@@ -1163,7 +1163,7 @@ function html_diff($text='',$intro=true,$type=null){
         list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
     }
 
-    $df = new Diff(explode("\n",hsc($l_text)),explode("\n",hsc($r_text)));
+    $df = new Diff(explode("\n",$l_text),explode("\n",$r_text));
 
     if($type == 'inline'){
         $tdf = new InlineDiffFormatter();
@@ -1238,8 +1238,8 @@ function html_softbreak_callback($match){
 &\#?\\w{1,6};)                        # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
 &\#?\\w{1,6};                         # yes pattern - a quicker match for the html entity, since we know we have one
 |
-[?/,&\#;:]+                           # no pattern - any other group of 'special' characters to insert a breaking character after
-)                                     # end conditional expression
+[?/,&\#;:]                            # no pattern - any other group of 'special' characters to insert a breaking character after
+)+                                    # end conditional expression
 REGEX;
 
   return preg_replace('<'.$regex.'>xu','\0&#8203;',$match[0]);
