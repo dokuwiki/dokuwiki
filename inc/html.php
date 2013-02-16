@@ -1209,12 +1209,12 @@ function html_diff($text='',$intro=true,$type=null){
     <table class="diff diff_<?php echo $type?>">
     <?php if ($type == 'inline') { ?>
     <tr>
-    <th>---</th><th <?php echo $l_minor?>>
+    <td>---</td><th <?php echo $l_minor?>>
     <?php echo $l_head?>
     </th>
     </tr>
     <tr>
-    <th>+++</th><th <?php echo $r_minor?>>
+    <td>+++</td><th <?php echo $r_minor?>>
     <?php echo $r_head?>
     </th>
     </tr>
