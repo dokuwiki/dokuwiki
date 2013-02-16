@@ -628,8 +628,8 @@ class HTTPClient {
             $time_used = $this->_time() - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
-                        sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
-                        -100);
+                        sprintf('Timeout while reading %s after %d bytes (%.3fs)', $message,
+                                strlen($r_data), $time_used), -100);
             if(feof($socket)) {
                 if(!$ignore_eof)
                     throw new HTTPClientException("Premature End of File (socket) while reading $message");
