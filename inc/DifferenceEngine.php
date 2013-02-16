@@ -1151,7 +1151,7 @@ class InlineDiffFormatter extends DiffFormatter {
             $xbeg .= "," . $xlen;
         if ($ylen != 1)
             $ybeg .= "," . $ylen;
-        $r = '<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-blockheader').'>@@ '.$lang['line']." -$xbeg +$ybeg @@";
+        $r = '<tr><td colspan="2" '.HTMLDiff::css('diff-blockheader').'>@@ '.$lang['line']." -$xbeg +$ybeg @@";
         $r .= ' <span '.HTMLDiff::css('diff-deletedline').'><del>'.$lang['deleted'].'</del></span>';
         $r .= ' <span '.HTMLDiff::css('diff-addedline').'>'.$lang['created'].'</span>';
         $r .= "</td></tr>\n";
@@ -1170,19 +1170,19 @@ class InlineDiffFormatter extends DiffFormatter {
 
     function _added($lines) {
         foreach ($lines as $line) {
-            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>+</td><td colspan="'.($this->colspan-1).'" '.HTMLDiff::css('diff-addedline').'>'. $line . "</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>+</td><td '.HTMLDiff::css('diff-addedline').'>'. $line . "</td></tr>\n");
         }
     }
 
     function _deleted($lines) {
         foreach ($lines as $line) {
-            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>-</td><td colspan="'.($this->colspan-1).'" '.HTMLDiff::css('diff-deletedline').'><del>' . $line . "</del></td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>-</td><td '.HTMLDiff::css('diff-deletedline').'><del>' . $line . "</del></td></tr>\n");
         }
     }
 
     function _context($lines) {
         foreach ($lines as $line) {
-            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td colspan="'.($this->colspan-1).'" '.HTMLDiff::css('diff-context').'>'.$line."</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-context').'>'.$line."</td></tr>\n");
         }
     }
 
@@ -1191,7 +1191,7 @@ class InlineDiffFormatter extends DiffFormatter {
         $add = $diff->inline();
 
         foreach ($add as $line)
-            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>!</td><td colspan="'.($this->colspan-1).'">'.$line."</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>!</td><td>'.$line."</td></tr>\n");
     }
 }
 
