@@ -1878,6 +1878,8 @@ function media_get_from_URL($url,$ext,$cache){
 function media_image_download($url,$file){
     global $conf;
     $http = new DokuHTTPClient();
+    $http->keep_alive = false; // we do single ops here, no need for keep-alive
+
     $http->max_bodysize = $conf['fetchsize'];
     $http->timeout = 25; //max. 25 sec
     $http->header_regexp = '!\r\nContent-Type: image/(jpe?g|gif|png)!i';
