@@ -177,7 +177,7 @@ $lang['lastmod']               = 'Zadnja sprememba';
 $lang['by']                    = 'uporabnika';
 $lang['deleted']               = 'odstranjena';
 $lang['created']               = 'ustvarjena';
-$lang['restored']              = 'povrnjena stara različica';
+$lang['restored']              = 'povrnjena stara različica (%s)';
 $lang['external_edit']         = 'urejanje v zunanjem urejevalniku';
 $lang['summary']               = 'Povzetek urejanja';
 $lang['noflash']               = 'Za prikaz vsebine je treba namestiti <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>';

@@ -132,7 +132,7 @@ $lang['lastmod']               = 'Keista';
 $lang['by']                    = 'vartotojo';
 $lang['deleted']               = 'ištrintas';
 $lang['created']               = 'sukurtas';
-$lang['restored']              = 'atstatyta sena versija';
+$lang['restored']              = 'atstatyta sena versija (%s)';
 $lang['external_edit']         = 'redaguoti papildomomis priemonėmis';
 $lang['summary']               = 'Redaguoti santrauką';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> reikalingas šios medžiagos peržiūrai.';

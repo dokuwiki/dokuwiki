@@ -180,7 +180,7 @@ $lang['lastmod']               = 'Darrera modificació';
 $lang['by']                    = 'per';
 $lang['deleted']               = 'suprimit';
 $lang['created']               = 'creat';
-$lang['restored']              = 's\'ha restaurat una versió anterior';
+$lang['restored']              = 's\'ha restaurat una versió anterior %s';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Resum d\'edició';
 $lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://www.adobe.com/products/flashplayer/">connector d\'Adobe Flash</a>.';

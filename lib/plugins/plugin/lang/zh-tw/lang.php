@@ -56,4 +56,4 @@ $lang['enabled']               = '附加元件 %s 已啟用。';
 $lang['notenabled']            = '附加元件 %s 無法啟用，請檢查檔案權限。';
 $lang['disabled']              = '附加元件 %s 已停用。';
 $lang['notdisabled']           = '附加元件 %s 無法停用，請檢查檔案權限。';
-$lang['packageinstalled']      = '附加元件 (%d 附加元件%s: %s) 已安裝好。';
+$lang['packageinstalled']      = '附加元件 (%d 附加元件: %s) 已安裝好。';

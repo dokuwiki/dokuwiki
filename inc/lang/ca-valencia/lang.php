@@ -137,7 +137,7 @@ $lang['lastmod']               = 'Última modificació el';
 $lang['by']                    = 'per';
 $lang['deleted']               = 'borrat';
 $lang['created']               = 'creat';
-$lang['restored']              = 'restaurada l\'última versió';
+$lang['restored']              = 'restaurada l\'última versió (%s)';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Editar sumari';
 $lang['noflash']               = 'Necessita el <a href="http://www.adobe.com/products/flashplayer/">plúgin d\'Adobe Flash</a> per a vore este contingut.';

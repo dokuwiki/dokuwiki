@@ -188,7 +188,7 @@ $lang['lastmod']               = 'Sidst ændret';
 $lang['by']                    = 'af';
 $lang['deleted']               = 'slettet';
 $lang['created']               = 'oprettet';
-$lang['restored']              = 'gammel udgave reetableret';
+$lang['restored']              = 'gammel udgave reetableret (%s)';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigerings resumé';
 $lang['noflash']               = 'Den <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> er nødvendig til at vise denne indehold.';

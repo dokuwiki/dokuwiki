@@ -162,7 +162,7 @@ $lang['lastmod']               = 'Последњи пут мењано';
 $lang['by']                    = 'од';
 $lang['deleted']               = 'избрисано';
 $lang['created']               = 'направљено';
-$lang['restored']              = 'стара верзија повраћена';
+$lang['restored']              = 'стара верзија повраћена (%s)';
 $lang['external_edit']         = 'спољна измена';
 $lang['summary']               = 'Сажетак измене';
 $lang['noflash']               = 'За приказивање ове врсте материјала потребан вам је <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';

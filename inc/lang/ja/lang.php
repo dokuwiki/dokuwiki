@@ -181,7 +181,7 @@ $lang['lastmod']               = '最終更新';
 $lang['by']                    = 'by';
 $lang['deleted']               = '削除';
 $lang['created']               = '作成';
-$lang['restored']              = '以前のバージョンを復元';
+$lang['restored']              = '以前のバージョンを復元 (%s)';
 $lang['external_edit']         = '外部編集';
 $lang['summary']               = '編集の概要';
 $lang['noflash']               = 'この内容を表示するためには <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> が必要です。';
