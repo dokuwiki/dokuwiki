@@ -40,9 +40,6 @@
         die($lang['accessdenied']);
     }
 
-    // create the given namespace (just for beautification)
-    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
-
     // handle flash upload
     if(isset($_FILES['Filedata'])){
         $_FILES['upload'] =& $_FILES['Filedata'];
