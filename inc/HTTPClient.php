@@ -215,6 +215,9 @@ class HTTPClient {
         $this->start  = $this->_time();
         $this->error  = '';
         $this->status = 0;
+        $this->status = 0;
+        $this->resp_body = '';
+        $this->resp_headers = array();
 
         // don't accept gzip if truncated bodies might occur
         if($this->max_bodysize &&
@@ -440,25 +443,37 @@ class HTTPClient {
                         $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
-            }elseif($this->max_bodysize){
-                // read just over the max_bodysize
-                $r_body = $this->_readData($socket, $this->max_bodysize+1, 'response', true);
+            }elseif(isset($this->resp_headers['content-length']) && !isset($this->resp_headers['transfer-encoding'])){
+                /* RFC 2616
+                 * If a message is received with both a Transfer-Encoding header field and a Content-Length
+                 * header field, the latter MUST be ignored.
+                 */
+
+                // read up to the content-length or max_bodysize
+                // for keep alive we need to read the whole message to clean up the socket for the next read
+                if(!$this->keep_alive && $this->max_bodysize && $this->max_bodysize < $this->resp_headers['content-length']){
+                    $length = $this->max_bodysize;
+                }else{
+                    $length = $this->resp_headers['content-length'];
+                }
+
+                $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
+            }else{
+                // read entire socket
+                $r_size = 0;
+                while (!feof($socket)) {
+                    $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
+                }
+            }
+
+            // recheck body size, we might had to read the whole body, so we abort late or trim here
+            if($this->max_bodysize){
                 if(strlen($r_body) > $this->max_bodysize){
                     if ($this->max_bodysize_abort) {
                         throw new HTTPClientException('Allowed response size exceeded');
                     } else {
                         $this->error = 'Allowed response size exceeded';
                     }
-                }
-            }elseif(isset($this->resp_headers['content-length']) &&
-                    !isset($this->resp_headers['transfer-encoding'])){
-                // read up to the content-length
-                $r_body = $this->_readData($socket, $this->resp_headers['content-length'], 'response', true);
-            }else{
-                // read entire socket
-                $r_size = 0;
-                while (!feof($socket)) {
-                    $r_body .= $this->_readData($socket, 4096, 'response', true);
                 }
             }
 
