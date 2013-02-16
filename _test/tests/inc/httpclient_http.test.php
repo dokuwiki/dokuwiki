@@ -134,6 +134,19 @@ class httpclient_http_test extends DokuWikiTest {
     /**
      * @group internet
      */
+    function test_maxbodyok(){
+        $http = new HTTPClient();
+        $http->max_bodysize = 500*1024;
+        $data = $http->get($this->server.'/stream/5');
+        $this->assertTrue($data !== false, 'HTTP response');
+        $http->max_bodysize_abort = false;
+        $data = $http->get($this->server.'/stream/5');
+        $this->assertTrue($data !== false, 'HTTP response');
+    }
+
+    /**
+     * @group internet
+     */
     function test_basicauth(){
         $http = new HTTPClient();
         $http->user = 'user';
