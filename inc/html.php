@@ -1003,14 +1003,16 @@ function html_backlinks(){
  * @param string $r_rev   Right revision
  * @param string $id      Page id, if null $ID is used
  * @param bool   $media   If it is for media files
+ * @param bool   $inline  Return the header on a single line
  * @return array HTML snippets for diff header
  */
-function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
     global $lang;
     if ($id === null) {
         global $ID;
         $id = $ID;
     }
+    $head_separator = $inline ? ' ' : '<br />';
     $media_or_wikiFN = $media ? 'mediaFN' : 'wikiFN';
     $ml_or_wl = $media ? 'ml' : 'wl';
     $l_minor = $r_minor = '';
@@ -1032,7 +1034,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $l_head_title = ($media) ? dformat($l_rev) : $id.' ['.dformat($l_rev).']';
         $l_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
         $l_head_title.'</a>'.
-        '<br />'.$l_user.' '.$l_sum;
+        $head_separator.$l_user.' '.$l_sum;
     }
 
     if($r_rev){
@@ -1050,7 +1052,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $r_head_title = ($media) ? dformat($r_rev) : $id.' ['.dformat($r_rev).']';
         $r_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
         $r_head_title.'</a>'.
-        '<br />'.$r_user.' '.$r_sum;
+        $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
         $_info   = getRevisionInfo($id,$_rev,true, $media);
         if($_info['user']){
@@ -1067,7 +1069,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $r_head  = '<a class="wikilink1" href="'.$ml_or_wl($id).'">'.
         $r_head_title.'</a> '.
         '('.$lang['current'].')'.
-        '<br />'.$_user.' '.$_sum;
+        $head_separator.$_user.' '.$_sum;
     }else{
         $r_head = '&mdash; ('.$lang['current'].')';
     }
@@ -1160,7 +1162,7 @@ function html_diff($text='',$intro=true,$type=null){
         }
         $r_text = rawWiki($ID,$r_rev);
 
-        list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
+        list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev, null, false, $type == 'inline');
     }
 
     $df = new Diff(explode("\n",hsc($l_text)),explode("\n",hsc($r_text)));
@@ -1205,6 +1207,18 @@ function html_diff($text='',$intro=true,$type=null){
     ?>
     <div class="table">
     <table class="diff diff_<?php echo $type?>">
+    <?php if ($type == 'inline') { ?>
+    <tr>
+    <th>---</th><th <?php echo $l_minor?>>
+    <?php echo $l_head?>
+    </th>
+    </tr>
+    <tr>
+    <th>+++</th><th <?php echo $r_minor?>>
+    <?php echo $r_head?>
+    </th>
+    </tr>
+    <?php } else { ?>
     <tr>
     <th colspan="2" <?php echo $l_minor?>>
     <?php echo $l_head?>
@@ -1213,7 +1227,8 @@ function html_diff($text='',$intro=true,$type=null){
     <?php echo $r_head?>
     </th>
     </tr>
-    <?php echo html_insert_softbreaks($tdf->format($df)); ?>
+    <?php }
+    echo html_insert_softbreaks($tdf->format($df)); ?>
     </table>
     </div>
     <?php
