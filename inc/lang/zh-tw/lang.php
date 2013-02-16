@@ -186,7 +186,7 @@ $lang['lastmod']               = '上一次變更';
 $lang['by']                    = '由';
 $lang['deleted']               = '移除';
 $lang['created']               = '建立';
-$lang['restored']              = '恢復為舊版';
+$lang['restored']              = '恢復為舊版 (%s)';
 $lang['external_edit']         = '外部編輯';
 $lang['summary']               = '編輯摘要';
 $lang['noflash']               = '顯示此內容需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 附加元件</a>。';

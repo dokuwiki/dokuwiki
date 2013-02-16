@@ -43,7 +43,7 @@ class Doku_Renderer_code extends Doku_Renderer {
      * This should never be reached, if it is send a 404
      */
     function document_end() {
-        header("HTTP/1.0 404 Not Found");
+        http_status(404);
         echo '404 - Not found';
         exit;
     }

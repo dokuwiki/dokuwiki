@@ -60,9 +60,6 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         if($format == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
-                case 'version':
-                    $renderer->doc .= getVersion();
-                    break;
                 case 'syntaxmodes':
                     $renderer->doc .= $this->_syntaxmodes_xhtml();
                     break;

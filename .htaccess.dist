@@ -15,7 +15,16 @@
 ## $conf['userewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
 #
-## Not all installations will require the following line.  If you do, 
+#RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
+#RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
+#RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
+#RewriteRule ^$                        doku.php  [L]
+#RewriteCond %{REQUEST_FILENAME}       !-f
+#RewriteCond %{REQUEST_FILENAME}       !-d
+#RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
+#RewriteRule ^index.php$               doku.php
+#
+## Not all installations will require the following line.  If you do,
 ## change "/dokuwiki" to the path to your dokuwiki directory relative
 ## to your document root.
 #RewriteBase /dokuwiki
@@ -25,12 +34,3 @@
 ## rules if your server setup allows HTTPS.
 #RewriteCond %{HTTPS} !=on
 #RewriteRule ^lib/exe/xmlrpc.php$      https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
-#
-#RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
-#RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
-#RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
-#RewriteRule ^$                        doku.php  [L]
-#RewriteCond %{REQUEST_FILENAME}       !-f
-#RewriteCond %{REQUEST_FILENAME}       !-d
-#RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
-#RewriteRule ^index.php$               doku.php

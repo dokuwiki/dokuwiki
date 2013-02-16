@@ -179,7 +179,7 @@ $lang['lastmod']               = 'Esta página foi modificada pela última vez e
 $lang['by']                    = 'por';
 $lang['deleted']               = 'Documento automaticamente removido.';
 $lang['created']               = 'Criação deste novo documento.';
-$lang['restored']              = 'Versão anterior restaurada.';
+$lang['restored']              = 'Versão anterior restaurada (%s)';
 $lang['external_edit']         = 'Edição externa';
 $lang['summary']               = 'Sumário da Edição';
 $lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a> é necessário para exibir este conteúdo.';

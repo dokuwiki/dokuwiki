@@ -124,7 +124,7 @@ $lang['lastmod']               = 'Fir d\'lescht g\'ännert';
 $lang['by']                    = 'vun';
 $lang['deleted']               = 'geläscht';
 $lang['created']               = 'erstallt';
-$lang['restored']              = 'al Versioun zeréckgeholl';
+$lang['restored']              = 'al Versioun zeréckgeholl (%s)';
 $lang['external_edit']         = 'extern Ännerung';
 $lang['summary']               = 'Resumé vun den Ännerungen';
 $lang['noflash']               = 'Den <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> get gebraucht fir dësen Inhalt unzeweisen.';

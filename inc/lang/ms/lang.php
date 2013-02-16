@@ -93,5 +93,5 @@ $lang['uploadfail']            = 'Ralat muat naik';
 $lang['uploadxss']             = 'Fail ini mengandungi kod HTML atau kod skrip yang mungkin boleh disalah tafsir oleh pelayar web.';
 $lang['toc']                   = 'Jadual Kandungan';
 $lang['current']               = 'kini';
-$lang['restored']              = 'Telah dikembalikan ke semakan sebelumnya';
+$lang['restored']              = 'Telah dikembalikan ke semakan sebelumnya (%s)';
 $lang['summary']               = 'Paparan';

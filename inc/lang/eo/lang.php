@@ -184,7 +184,7 @@ $lang['lastmod']               = 'Lastaj ŝanĝoj';
 $lang['by']                    = 'de';
 $lang['deleted']               = 'forigita';
 $lang['created']               = 'kreita';
-$lang['restored']              = 'malnova revizio restarigita';
+$lang['restored']              = 'malnova revizio restarigita (%s)';
 $lang['external_edit']         = 'ekstera redakto';
 $lang['summary']               = 'Bulteno de ŝanĝoj';
 $lang['noflash']               = 'La <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> necesas por montri tiun ĉi enhavon.';

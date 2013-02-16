@@ -20,9 +20,7 @@
  *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
- *   'email'        - text input, input must conform to email address format, setting output in quotes
- *   'richemail'    - text input, input must conform to email address format but accepts variables and
- *                    emails with a real name prepended (when email address is given in <>)
+ *   'email'        - text input, input must conform to email address format
  *   'password'     - password input, minimal input validation, setting output text in quotes, maybe encoded
  *                    according to the _code parameter
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
@@ -129,7 +127,7 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','sha512'));
+$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','djangomd5','djangosha1','sha512'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');
@@ -177,8 +175,8 @@ $meta['_notifications'] = array('fieldset');
 $meta['subscribers']    = array('onoff');
 $meta['subscribe_time'] = array('numeric');
 $meta['notify']         = array('email', '_multiple' => true);
-$meta['registernotify'] = array('email');
-$meta['mailfrom']       = array('richemail');
+$meta['registernotify'] = array('email', '_multiple' => true);
+$meta['mailfrom']       = array('email', '_placeholders' => true);
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
 

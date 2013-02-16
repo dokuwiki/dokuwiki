@@ -136,7 +136,7 @@ $lang['lastmod']               = 'Son dəyişiklər';
 $lang['by']                    = ' Kimdən';
 $lang['deleted']               = 'silinib';
 $lang['created']               = 'yaranıb';
-$lang['restored']              = 'köhnə versiya qaytarıldı';
+$lang['restored']              = 'köhnə versiya qaytarıldı (%s)';
 $lang['external_edit']         = 'bayırdan dəyişik';
 $lang['summary']               = 'Dəyişiklər xülasəsi';
 $lang['noflash']               = 'Bu məzmuna baxmaq üçün <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> tələb olunur.';

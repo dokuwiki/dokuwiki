@@ -178,7 +178,7 @@ $lang['lastmod']               = 'Labota';
 $lang['by']                    = ', labojis';
 $lang['deleted']               = 'dzēsts';
 $lang['created']               = 'izveidots';
-$lang['restored']              = 'vecā versija atjaunota';
+$lang['restored']              = 'vecā versija atjaunota (%s)';
 $lang['external_edit']         = 'ārpussistēmas labojums';
 $lang['summary']               = 'Anotācija';
 $lang['noflash']               = 'Lai attēlotu lapas saturu, vajag <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';

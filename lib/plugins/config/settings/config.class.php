@@ -84,7 +84,7 @@ if (!class_exists('configuration')) {
               array_shift($param);
             } else {
               $class = 'setting_undefined';
-              $param = NULL;
+              $param = null;
             }
 
             if (!in_array($class, $no_default_check) && !isset($default[$key])) {
@@ -358,13 +358,13 @@ if (!class_exists('setting')) {
   class setting {
 
     var $_key = '';
-    var $_default = NULL;
-    var $_local = NULL;
-    var $_protected = NULL;
+    var $_default = null;
+    var $_local = null;
+    var $_protected = null;
 
     var $_pattern = '';
     var $_error = false;            // only used by those classes which error check
-    var $_input = NULL;             // only used by those classes which error check
+    var $_input = null;             // only used by those classes which error check
 
     var $_cautionList = array(
         'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'cookiedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
@@ -372,7 +372,7 @@ if (!class_exists('setting')) {
         'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'xmlrpc' => 'security', 'fullpath' => 'security'
     );
 
-    function setting($key, $params=NULL) {
+    function setting($key, $params=null) {
         $this->_key = $key;
 
         if (is_array($params)) {
@@ -661,6 +661,7 @@ if (!class_exists('setting_email')) {
   class setting_email extends setting_string {
     var $_pattern = SETTING_EMAIL_PATTERN;       // no longer required, retained for backward compatibility - FIXME, may not be necessary
     var $_multiple = false;
+    var $_placeholders = false;
 
     /**
      *  update setting with user provided value $input
@@ -674,15 +675,36 @@ if (!class_exists('setting_email')) {
 
         $value = is_null($this->_local) ? $this->_default : $this->_local;
         if ($value == $input) return false;
+        if($input === ''){
+            $this->_local = $input;
+            return true;
+        }
+        $mail = $input;
 
-        if ($this->_multiple) {
-            $mails = array_filter(array_map('trim', explode(',', $input)));
-        } else {
-            $mails = array($input);
+        if($this->_placeholders){
+            // replace variables with pseudo values
+            $mail = str_replace('@USER@','joe',$mail);
+            $mail = str_replace('@NAME@','Joe Schmoe',$mail);
+            $mail = str_replace('@MAIL@','joe@example.com',$mail);
         }
 
+        // multiple mail addresses?
+        if ($this->_multiple) {
+            $mails = array_filter(array_map('trim', explode(',', $mail)));
+        } else {
+            $mails = array($mail);
+        }
+
+        // check them all
         foreach ($mails as $mail) {
-            if (!mail_isvalid($mail)) {
+            // only check the address part
+            if(preg_match('#(.*?)<(.*?)>#', $mail, $matches)){
+                $addr = $matches[2];
+            }else{
+                $addr = $mail;
+            }
+
+            if (!mail_isvalid($addr)) {
               $this->_error = true;
               $this->_input = $input;
               return false;
@@ -695,46 +717,15 @@ if (!class_exists('setting_email')) {
   }
 }
 
+/**
+ * @deprecated 2013-02-16
+ */
 if (!class_exists('setting_richemail')) {
   class setting_richemail extends setting_email {
-
-    /**
-     *  update setting with user provided value $input
-     *  if value fails error check, save it
-     *
-     *  @return boolean true if changed, false otherwise (incl. on error)
-     */
-    function update($input) {
-        if (is_null($input)) return false;
-        if ($this->is_protected()) return false;
-
-        $value = is_null($this->_local) ? $this->_default : $this->_local;
-        if ($value == $input) return false;
-
-        // replace variables with pseudo values
-        $test = $input;
-        $test = str_replace('@USER@','joe',$test);
-        $test = str_replace('@NAME@','Joe Schmoe',$test);
-        $test = str_replace('@MAIL@','joe@example.com',$test);
-
-        // now only check the address part
-        if(preg_match('#(.*?)<(.*?)>#',$test,$matches)){
-          $text = trim($matches[1]);
-          $addr = $matches[2];
-        }else{
-          $addr = $test;
-        }
-
-        if ($test !== '' && !mail_isvalid($addr)) {
-          $this->_error = true;
-          $this->_input = $input;
-          return false;
-        }
-
-        $this->_local = $input;
-        return true;
-    }
-
+      function update($input) {
+          $this->_placeholders = true;
+          return parent::update($input);
+      }
   }
 }
 

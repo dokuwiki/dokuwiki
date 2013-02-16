@@ -169,7 +169,7 @@ $lang['lastmod']               = 'В останнє змінено';
 $lang['by']                    = ' ';
 $lang['deleted']               = 'знищено';
 $lang['created']               = 'створено';
-$lang['restored']              = 'відновлено стару ревізію';
+$lang['restored']              = 'відновлено стару ревізію (%s)';
 $lang['external_edit']         = 'зовнішнє редагування';
 $lang['summary']               = 'Підсумок змін';
 $lang['noflash']               = 'Для перегляду цієї сторінки необхідно встановити <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
