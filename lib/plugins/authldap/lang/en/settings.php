@@ -14,5 +14,3 @@ $lang['userscope']   = 'Limit search scope for user search';
 $lang['groupscope']  = 'Limit search scope for group search';
 $lang['groupkey']    = 'Group member ship from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
 $lang['debug']       = 'Display additional debug information on errors';
-
-

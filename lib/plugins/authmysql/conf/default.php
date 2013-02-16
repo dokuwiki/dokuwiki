@@ -2,7 +2,7 @@
 
 $conf['charset']          = 'utf8';
 $conf['server']           = '';
-$conf['user']             ='';
+$conf['user']             = '';
 $conf['password']         = '';
 $conf['database']         = '';
 $conf['debug']            = 0;
