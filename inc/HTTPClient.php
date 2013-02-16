@@ -150,6 +150,7 @@ class HTTPClient {
      *
      * @param  string $url       The URL to fetch
      * @param  bool   $sloppy304 Return body on 304 not modified
+     * @return bool|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function get($url,$sloppy304=false){
@@ -170,6 +171,7 @@ class HTTPClient {
      * @param  string $url       The URL to fetch
      * @param  array  $data      Associative array of parameters
      * @param  bool   $sloppy304 Return body on 304 not modified
+     * @return bool|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function dget($url,$data,$sloppy304=false){
@@ -187,6 +189,9 @@ class HTTPClient {
      *
      * Returns the resulting page or false on an error;
      *
+     * @param  string $url       The URL to fetch
+     * @param  array  $data      Associative array of parameters
+     * @return bool|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function post($url,$data){
@@ -517,8 +522,8 @@ class HTTPClient {
      *
      * Protocol, Servername and Port will be stripped from the request URL when a successful CONNECT happened
      *
-     * @param ressource &$socket
-     * @param string &$requesturl
+     * @param resource &$socket
+     * @param string   &$requesturl
      * @return bool true if a tunnel was established
      */
     function _ssltunnel(&$socket, &$requesturl){
@@ -558,9 +563,10 @@ class HTTPClient {
     /**
      * Safely write data to a socket
      *
-     * @param  handle $socket     An open socket handle
-     * @param  string $data       The data to write
-     * @param  string $message    Description of what is being read
+     * @param  resource $socket     An open socket handle
+     * @param  string   $data       The data to write
+     * @param  string   $message    Description of what is being read
+     * @throws HTTPClientException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _sendData($socket, $data, $message) {
@@ -600,10 +606,12 @@ class HTTPClient {
      * Reads up to a given number of bytes or throws an exception if the
      * response times out or ends prematurely.
      *
-     * @param  handle $socket     An open socket handle in non-blocking mode
-     * @param  int    $nbytes     Number of bytes to read
-     * @param  string $message    Description of what is being read
-     * @param  bool   $ignore_eof End-of-file is not an error if this is set
+     * @param  resource $socket     An open socket handle in non-blocking mode
+     * @param  int      $nbytes     Number of bytes to read
+     * @param  string   $message    Description of what is being read
+     * @param  bool     $ignore_eof End-of-file is not an error if this is set
+     * @throws HTTPClientException
+     * @return string
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readData($socket, $nbytes, $message, $ignore_eof = false) {
@@ -650,8 +658,10 @@ class HTTPClient {
      *
      * Always returns a complete line, including the terminating \n.
      *
-     * @param  handle $socket     An open socket handle in non-blocking mode
-     * @param  string $message    Description of what is being read
+     * @param  resource $socket     An open socket handle in non-blocking mode
+     * @param  string   $message    Description of what is being read
+     * @throws HTTPClientException
+     * @return string
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readLine($socket, $message) {
@@ -840,6 +850,8 @@ class HTTPClient {
     /**
      * Generates a unique identifier for a connection.
      *
+     * @param  string $server
+     * @param  string $port
      * @return string unique identifier
      */
     function _uniqueConnectionId($server, $port) {
