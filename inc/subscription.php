@@ -350,13 +350,13 @@ class Subscription {
                 if($style === 'digest') {
                     foreach($change_ids as $change_id) {
                         $this->send_digest(
-                            $USERINFO['mail'], $change_id,
+                            array($USERINFO['mail']), $change_id,
                             $lastupdate
                         );
                         $count++;
                     }
                 } elseif($style === 'list') {
-                    $this->send_list($USERINFO['mail'], $change_ids, $target);
+                    $this->send_list(array($USERINFO['mail']), $change_ids, $target);
                     $count++;
                 }
                 // TODO: Handle duplicate subscriptions.

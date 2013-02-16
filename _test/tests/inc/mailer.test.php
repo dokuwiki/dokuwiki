@@ -110,5 +110,23 @@ class mailer_test extends DokuWikiTest {
         $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
         $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Bcc found in headers.');
     }
+
+    function test_cleanAddress() {
+        $mail = new TestMailer();
+
+        $input    = 'Joe <joe@example.com>, test@example.com, Sülz <suelz@example.com>';
+        $expected = '"Joe" <joe@example.com>, test@example.com, =?UTF-8?B?IlPDvGx6Ig==?= <suelz@example.com>';
+        $this->assertEquals($expected, $mail->cleanAddress($input));
+
+        $input    = array(
+            'Joe <joe@example.com>',
+            'test@example.com',
+            'Sülz <suelz@example.com>',
+            'Doe, John <doe@example.com>',
+            '"Doe, Jane" <jane@example.com>',
+        );
+        $expected = '"Joe" <joe@example.com>, test@example.com, =?UTF-8?B?IlPDvGx6Ig==?= <suelz@example.com>, "Doe, John" <doe@example.com>, "\'Doe, Jane\'" <jane@example.com>';
+        $this->assertEquals($expected, $mail->cleanAddress($input));
+    }
 }
 //Setup VIM: ex: et ts=4 :
