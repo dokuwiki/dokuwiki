@@ -669,10 +669,26 @@ class HTTPClient {
     /**
      * print debug info
      *
+     * Uses _debug_text or _debug_html depending on the SAPI name
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _debug($info,$var=null){
         if(!$this->debug) return;
+        if(php_sapi_name() == 'cli'){
+            $this->_debug_text($info, $var);
+        }else{
+            $this->_debug_html($info, $var);
+        }
+    }
+
+    /**
+     * print debug info as HTML
+     *
+     * @param      $info
+     * @param null $var
+     */
+    function _debug_html($info, $var=null){
         print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
         if(!is_null($var)){
             ob_start();
@@ -681,6 +697,18 @@ class HTTPClient {
             ob_end_clean();
             print '<pre>'.$content.'</pre>';
         }
+    }
+
+    /**
+     * prints debug info as plain text
+     *
+     * @param      $info
+     * @param null $var
+     */
+    function _debug_text($info, $var=null){
+        print '*'.$info.'* '.($this->_time() - $this->start)."s\n";
+        if(!is_null($var)) print_r($var);
+        print "\n-----------------------------------------------\n";
     }
 
     /**
