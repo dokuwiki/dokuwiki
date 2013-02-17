@@ -20,6 +20,7 @@ if (!class_exists('configuration')) {
     var $_metadata = array();      // holds metadata describing the settings
     var $setting = array();        // array of setting objects
     var $locked = false;           // configuration is considered locked if it can't be updated
+    var $show_disabled_plugins = false;
 
     // configuration filenames
     var $_default_files  = array();
@@ -262,7 +263,7 @@ if (!class_exists('configuration')) {
 
     function get_plugin_list() {
       if (is_null($this->_plugin_list)) {
-        $list = plugin_list('',true);     // all plugins, including disabled ones
+        $list = plugin_list('',$this->show_disabled_plugins);
 
         // remove this plugin from the list
         $idx = array_search('config',$list);
