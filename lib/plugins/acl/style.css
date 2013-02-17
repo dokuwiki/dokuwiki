@@ -116,7 +116,8 @@ div#acl_manager .aclns {
 }
 
 div#acl_manager label.disabled {
-  color: __text_neu__!important;
+  opacity: .5;
+  cursor: auto;
 }
 
 #acl_manager label {
