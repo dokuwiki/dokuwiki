@@ -14,4 +14,5 @@ $meta['bindpw']      = array('password');
 //$meta['mapping']['grps']  unsupported in config manager
 $meta['userscope']   = array('multichoice','_choices' => array('sub','one','base'));
 $meta['groupscope']  = array('multichoice','_choices' => array('sub','one','base'));
+$meta['groupkey']    = array('string');
 $meta['debug']       = array('onoff');
