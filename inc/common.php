@@ -88,8 +88,8 @@ function formSecurityToken($print = true) {
 /**
  * Determine basic information for a request of $id
  *
- * @param unknown_type $id
- * @param unknown_type $httpClient
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Chris Smith <chris@jalakai.co.uk>
  */
 function basicinfo($id, $htmlClient=true){
     global $USERINFO;
@@ -116,7 +116,6 @@ function basicinfo($id, $htmlClient=true){
 
     } else {
         $info['perm']       = auth_aclcheck($id, '', null);
-        $info['subscribed'] = false;
         $info['client']     = clientIP(true);
     }
 
@@ -148,6 +147,13 @@ function pageinfo() {
     // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
     $info['id']  = $ID;
     $info['rev'] = $REV;
+
+    if(isset($_SERVER['REMOTE_USER'])) {
+        $sub = new Subscription();
+        $info['subscribed'] = $sub->user_subscription();
+    } else {
+        $info['subscribed'] = false;
+    }
 
     $info['locked']    = checklock($ID);
     $info['filepath']  = fullpath(wikiFN($ID));
