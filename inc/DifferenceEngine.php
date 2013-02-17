@@ -1037,6 +1037,7 @@ class UnifiedDiffFormatter extends DiffFormatter {
  *
  */
 class TableDiffFormatter extends DiffFormatter {
+    var $colspan = 2;
 
     function __construct() {
         $this->leading_context_lines = 2;
@@ -1061,8 +1062,8 @@ class TableDiffFormatter extends DiffFormatter {
         global $lang;
         $l1 = $lang['line'].' '.$xbeg;
         $l2 = $lang['line'].' '.$ybeg;
-        $r = '<tr><td '.HTMLDiff::css('diff-blockheader').' colspan="2">'.$l1.":</td>\n".
-             '<td '.HTMLDiff::css('diff-blockheader').' colspan="2">'.$l2.":</td>\n".
+        $r = '<tr><td '.HTMLDiff::css('diff-blockheader').' colspan="'.$this->colspan.'">'.$l1.":</td>\n".
+             '<td '.HTMLDiff::css('diff-blockheader').' colspan="'.$this->colspan.'">'.$l2.":</td>\n".
              "</tr>\n";
         return $r;
     }
@@ -1094,7 +1095,7 @@ class TableDiffFormatter extends DiffFormatter {
     }
 
     function emptyLine() {
-        return '<td colspan="2">&#160;</td>';
+        return '<td colspan="'.$this->colspan.'">&#160;</td>';
     }
 
     function contextLine($line) {
@@ -1173,7 +1174,7 @@ class InlineDiffFormatter extends DiffFormatter {
             $xbeg .= "," . $xlen;
         if ($ylen != 1)
             $ybeg .= "," . $ylen;
-        $r = '<tr><td colspan="2" '.HTMLDiff::css('diff-blockheader').'>@@ '.$lang['line']." -$xbeg +$ybeg @@";
+        $r = '<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-blockheader').'>@@ '.$lang['line']." -$xbeg +$ybeg @@";
         $r .= ' <span '.HTMLDiff::css('diff-deletedline').'><del>'.$lang['deleted'].'</del></span>';
         $r .= ' <span '.HTMLDiff::css('diff-addedline').'>'.$lang['created'].'</span>';
         $r .= "</td></tr>\n";
