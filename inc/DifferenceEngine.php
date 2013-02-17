@@ -1081,14 +1081,16 @@ class TableDiffFormatter extends DiffFormatter {
         if (!$escaped){
             $line = $this->_escape($line);
         }
-        return '<td>+</td><td '.HTMLDiff::css('diff-addedline').'>' .  $line.'</td>';
+        return '<td '.HTMLDiff::css('diff-lineheader').'>+</td>'.
+               '<td '.HTMLDiff::css('diff-addedline').'>' .  $line.'</td>';
     }
 
     function deletedLine($line,$escaped=false) {
         if (!$escaped){
             $line = $this->_escape($line);
         }
-        return '<td>-</td><td '.HTMLDiff::css('diff-deletedline').'>' .  $line.'</td>';
+        return '<td '.HTMLDiff::css('diff-lineheader').'>-</td>'.
+               '<td '.HTMLDiff::css('diff-deletedline').'>' .  $line.'</td>';
     }
 
     function emptyLine() {
@@ -1096,7 +1098,8 @@ class TableDiffFormatter extends DiffFormatter {
     }
 
     function contextLine($line) {
-        return '<td> </td><td '.HTMLDiff::css('diff-context').'>'.$this->_escape($line).'</td>';
+        return '<td '.HTMLDiff::css('diff-lineheader').'>&#160;</td>'.
+               '<td '.HTMLDiff::css('diff-context').'>'.$this->_escape($line).'</td>';
     }
 
     function _added($lines) {
@@ -1143,7 +1146,7 @@ class TableDiffFormatter extends DiffFormatter {
  *
  */
 class InlineDiffFormatter extends DiffFormatter {
-    var $colspan = 4;
+    var $colspan = 2;
 
     function __construct() {
         $this->leading_context_lines = 2;
@@ -1170,7 +1173,7 @@ class InlineDiffFormatter extends DiffFormatter {
             $xbeg .= "," . $xlen;
         if ($ylen != 1)
             $ybeg .= "," . $ylen;
-        $r = '<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-blockheader').'>@@ '.$lang['line']." -$xbeg +$ybeg @@";
+        $r = '<tr><td colspan="2" '.HTMLDiff::css('diff-blockheader').'>@@ '.$lang['line']." -$xbeg +$ybeg @@";
         $r .= ' <span '.HTMLDiff::css('diff-deletedline').'><del>'.$lang['deleted'].'</del></span>';
         $r .= ' <span '.HTMLDiff::css('diff-addedline').'>'.$lang['created'].'</span>';
         $r .= "</td></tr>\n";
@@ -1189,19 +1192,19 @@ class InlineDiffFormatter extends DiffFormatter {
 
     function _added($lines) {
         foreach ($lines as $line) {
-            print('<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-addedline').'>'. $this->_escape($line) . "</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-addedline').'>'. $this->_escape($line) . "</td></tr>\n");
         }
     }
 
     function _deleted($lines) {
         foreach ($lines as $line) {
-            print('<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-deletedline').'><del>' . $this->_escape($line) . "</del></td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-deletedline').'><del>' . $this->_escape($line) . "</del></td></tr>\n");
         }
     }
 
     function _context($lines) {
         foreach ($lines as $line) {
-            print('<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-context').'>'.$this->_escape($line)."</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-context').'>'. $this->_escape($line) ."</td></tr>\n");
         }
     }
 
@@ -1210,7 +1213,7 @@ class InlineDiffFormatter extends DiffFormatter {
         $add = $diff->inline();
 
         foreach ($add as $line)
-            print('<tr><td colspan="'.$this->colspan.'">'.$line."</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td>'.$line."</td></tr>\n");
     }
 
     function _escape($str) {
