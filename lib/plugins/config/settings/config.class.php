@@ -70,9 +70,14 @@ if (!class_exists('configuration')) {
           foreach ($keys as $key) {
             if (isset($this->_metadata[$key])) {
               $class = $this->_metadata[$key][0];
-              $class = ($class && class_exists('setting_'.$class)) ? 'setting_'.$class : 'setting';
-              if ($class=='setting') {
-                $this->setting[] = new setting_no_class($key,$param);
+
+              if($class && class_exists('setting_'.$class)){
+                $class = 'setting_'.$class;
+              } else {
+                if($class != '') {
+                  $this->setting[] = new setting_no_class($key,$param);
+                }
+                $class = 'setting';
               }
 
               $param = $this->_metadata[$key];
