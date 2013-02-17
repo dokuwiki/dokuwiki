@@ -20,6 +20,7 @@ if (!class_exists('configuration')) {
     var $_metadata = array();      // holds metadata describing the settings
     var $setting = array();        // array of setting objects
     var $locked = false;           // configuration is considered locked if it can't be updated
+    var $show_disabled_plugins = false;
 
     // configuration filenames
     var $_default_files  = array();
@@ -267,7 +268,7 @@ if (!class_exists('configuration')) {
 
     function get_plugin_list() {
       if (is_null($this->_plugin_list)) {
-        $list = plugin_list('',true);     // all plugins, including disabled ones
+        $list = plugin_list('',$this->show_disabled_plugins);
 
         // remove this plugin from the list
         $idx = array_search('config',$list);
@@ -392,10 +393,12 @@ if (!class_exists('setting')) {
     }
 
     /**
-     *  update setting with user provided value $input
-     *  if value fails error check, save it
+     *  update changed setting with user provided value $input
+     *  - if changed value fails error check, save it to $this->_input (to allow echoing later)
+     *  - if changed value passes error check, set $this->_local to the new value
      *
-     *  @return boolean true if changed, false otherwise (incl. on error)
+     *  @param  mixed   $input   the new value
+     *  @return boolean          true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
