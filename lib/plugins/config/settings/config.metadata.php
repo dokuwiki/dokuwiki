@@ -70,14 +70,6 @@ $config['varname'] = 'conf';     // name of the config variable, sans $
 // this value can be overriden when calling save_settings() method
 $config['heading'] = 'Dokuwiki\'s Main Configuration File - Local Settings';
 
-/* DEPRECATED
-// ---------------[ setting files ]--------------------------------------
-// these values can be string expressions, they will be eval'd before use
-$file['local']     = "DOKU_CONF.'local.php'";            // mandatory (file doesn't have to exist)
-$file['default']   = "DOKU_CONF.'dokuwiki.php'";         // optional
-$file['protected'] = "DOKU_CONF.'local.protected.php'";  // optional
- */
-
 // test value (FIXME, remove before publishing)
 //$meta['test']     = array('multichoice','_choices' => array(''));
 

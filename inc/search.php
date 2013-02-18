@@ -62,15 +62,6 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
 }
 
 /**
- * Wrapper around call_user_func_array.
- *
- * @deprecated
- */
-function search_callback($func,&$data,$base,$file,$type,$lvl,$opts){
-    return call_user_func_array($func, array(&$data,$base,$file,$type,$lvl,$opts));
-}
-
-/**
  * The following functions are userfunctions to use with the search
  * function above. This function is called for every found file or
  * directory. When a directory is given to the function it has to
@@ -283,125 +274,25 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
 }
 
 /**
- * Search for backlinks to a given page
+ * Reference search
+ * This fuction searches for existing references to a given media file
+ * and returns an array with the found pages. It doesn't pay any
+ * attention to ACL permissions to find every reference. The caller
+ * must check if the user has the appropriate rights to see the found
+ * page and eventually have to prevent the result from displaying.
  *
- * $opts['ns']    namespace of the page
- * $opts['name']  name of the page without namespace
+ * @param array  $data Reference to the result data structure
+ * @param string $base Base usually $conf['datadir']
+ * @param string $file current file or directory relative to $base
+ * @param char   $type Type either 'd' for directory or 'f' for file
+ * @param int    $lvl  Current recursion depht
+ * @param mixed  $opts option array as given to search()
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @deprecated Replaced by ft_backlinks()
- */
-function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
-    //we do nothing with directories
-    if($type == 'd') return true;
-    //only search txt files
-    if(substr($file,-4) != '.txt') return true;
-
-    //absolute search id
-    $sid = cleanID($opts['ns'].':'.$opts['name']);
-
-    //current id and namespace
-    $cid = pathID($file);
-    $cns = getNS($cid);
-
-    //check ACL
-    if(auth_quickaclcheck($cid) < AUTH_READ){
-        return false;
-    }
-
-    //fetch instructions
-    $instructions = p_cached_instructions($base.$file,true);
-    if(is_null($instructions)) return false;
-
-    global $conf;
-    //check all links for match
-    foreach($instructions as $ins){
-        if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
-            $mid = $ins[1][0];
-            resolve_pageid($cns,$mid,$exists); //exists is not used
-            if($mid == $sid){
-                //we have a match - finish
-                $data[]['id'] = $cid;
-                break;
-            }
-        }
-    }
-
-    return false;
-}
-
-/**
- * Fulltextsearch
- *
- * $opts['query'] is the search query
+ * $opts['query'] is the demanded media file name
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- * @deprecated - fulltext indexer is used instead
+ * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  */
-function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
-    //we do nothing with directories
-    if($type == 'd') return true;
-    //only search txt files
-    if(substr($file,-4) != '.txt') return true;
-
-    //check ACL
-    $id = pathID($file);
-    if(auth_quickaclcheck($id) < AUTH_READ){
-        return false;
-    }
-
-    //create regexp from queries
-    $poswords = array();
-    $negwords = array();
-    $qpreg = preg_split('/\s+/',$opts['query']);
-
-    foreach($qpreg as $word){
-        switch(substr($word,0,1)){
-            case '-':
-                if(strlen($word) > 1){  // catch single '-'
-                    array_push($negwords,preg_quote(substr($word,1),'#'));
-                }
-                break;
-            case '+':
-                if(strlen($word) > 1){  // catch single '+'
-                    array_push($poswords,preg_quote(substr($word,1),'#'));
-                }
-                break;
-            default:
-                array_push($poswords,preg_quote($word,'#'));
-                break;
-        }
-    }
-
-    // a search without any posword is useless
-    if (!count($poswords)) return true;
-
-    $reg  = '^(?=.*?'.join(')(?=.*?',$poswords).')';
-            $reg .= count($negwords) ? '((?!'.join('|',$negwords).').)*$' : '.*$';
-            search_regex($data,$base,$file,$reg,$poswords);
-            return true;
-            }
-
-            /**
-             * Reference search
-             * This fuction searches for existing references to a given media file
-             * and returns an array with the found pages. It doesn't pay any
-             * attention to ACL permissions to find every reference. The caller
-             * must check if the user has the appropriate rights to see the found
-             * page and eventually have to prevent the result from displaying.
-             *
-             * @param array  $data Reference to the result data structure
-             * @param string $base Base usually $conf['datadir']
-             * @param string $file current file or directory relative to $base
-             * @param char   $type Type either 'd' for directory or 'f' for file
-             * @param int    $lvl  Current recursion depht
-             * @param mixed  $opts option array as given to search()
-             *
-             * $opts['query'] is the demanded media file name
-             *
-             * @author  Andreas Gohr <andi@splitbrain.org>
-             * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
-             */
 function search_reference(&$data,$base,$file,$type,$lvl,$opts){
     global $conf;
 
@@ -422,57 +313,6 @@ function search_reference(&$data,$base,$file,$type,$lvl,$opts){
 }
 
 /* ------------- helper functions below -------------- */
-
-/**
- * fulltext search helper
- * searches a text file with a given regular expression
- * no ACL checks are performed. This have to be done by
- * the caller if necessary.
- *
- * @param array  $data  reference to array for results
- * @param string $base  base directory
- * @param string $file  file name to search in
- * @param string $reg   regular expression to search for
- * @param array  $words words that should be marked in the results
- *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
- *
- * @deprecated - fulltext indexer is used instead
- */
-function search_regex(&$data,$base,$file,$reg,$words){
-
-    //get text
-    $text = io_readfile($base.'/'.$file);
-    //lowercase text (u modifier does not help with case)
-    $lctext = utf8_strtolower($text);
-
-    //do the fulltext search
-    $matches = array();
-    if($cnt = preg_match_all('#'.$reg.'#usi',$lctext,$matches)){
-        //this is not the best way for snippet generation but the fastest I could find
-        $q = $words[0];  //use first word for snippet creation
-        $p = utf8_strpos($lctext,$q);
-        $f = $p - 100;
-        $l = utf8_strlen($q) + 200;
-        if($f < 0) $f = 0;
-        $snippet = '<span class="search_sep"> ... </span>'.
-            htmlspecialchars(utf8_substr($text,$f,$l)).
-            '<span class="search_sep"> ... </span>';
-        $mark    = '('.join('|', $words).')';
-        $snippet = preg_replace('#'.$mark.'#si','<strong class="search_hit">\\1</strong>',$snippet);
-
-        $data[] = array(
-                'id'       => pathID($file),
-                'count'    => preg_match_all('#'.$mark.'#usi',$lctext,$matches),
-                'poswords' => join(' ',$words),
-                'snippet'  => $snippet,
-                );
-    }
-
-    return true;
-}
-
 
 /**
  * fulltext sort

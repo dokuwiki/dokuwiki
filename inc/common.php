@@ -1175,27 +1175,6 @@ function getGoogleQuery() {
 }
 
 /**
- * Try to set correct locale
- *
- * @deprecated No longer used
- * @author     Andreas Gohr <andi@splitbrain.org>
- */
-function setCorrectLocale() {
-    global $conf;
-    global $lang;
-
-    $enc = strtoupper($lang['encoding']);
-    foreach($lang['locales'] as $loc) {
-        //try locale
-        if(@setlocale(LC_ALL, $loc)) return;
-        //try loceale with encoding
-        if(@setlocale(LC_ALL, "$loc.$enc")) return;
-    }
-    //still here? try to set from environment
-    @setlocale(LC_ALL, "");
-}
-
-/**
  * Return the human readable size of a file
  *
  * @param       int    $size   A file size
