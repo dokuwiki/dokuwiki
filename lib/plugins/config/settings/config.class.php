@@ -366,12 +366,11 @@ if (!class_exists('setting')) {
     var $_pattern = '';
     var $_error = false;            // only used by those classes which error check
     var $_input = null;             // only used by those classes which error check
+    var $_caution = null;           // used by any setting to provide an alert along with the setting
+                                    // valid alerts, 'warning', 'danger', 'security'
+                                    // images matching the alerts are in the plugin's images directory
 
-    var $_cautionList = array(
-        'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'cookiedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
-        'start' => 'warning', 'camelcase' => 'warning', 'deaccent' => 'warning', 'sepchar' => 'warning', 'compression' => 'warning', 'xsendfile' => 'warning', 'renderer_xhtml' => 'warning', 'fnencode' => 'warning',
-        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'remote' => 'security', 'fullpath' => 'security'
-    );
+    static protected $_validCautions = array('warning','danger','security');
 
     function setting($key, $params=null) {
         $this->_key = $key;
@@ -473,8 +472,22 @@ if (!class_exists('setting')) {
     function error() { return $this->_error; }
 
     function caution() {
-        if (!array_key_exists($this->_key, $this->_cautionList)) return false;
-        return $this->_cautionList[$this->_key];
+        if (!empty($this->_caution)) {
+            if (!in_array($this->_caution, setting::$_validCautions)) {
+                trigger_error('Invalid caution string ('.$this->_caution.') in metadata for setting "'.$this->_key.'"', E_USER_WARNING);
+                return false;
+            }
+            return $this->_caution;
+        }
+        // compatibility with previous cautionList
+        // TODO: check if any plugins use; remove
+        if (!empty($this->_cautionList[$this->_key])) {
+            $this->_caution = $this->_cautionList[$this->_key];
+            unset($this->_cautionList);
+
+            return $this->caution();
+        }
+        return false;
     }
 
     function _out_key($pretty=false,$url=false) {
