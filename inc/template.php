@@ -1377,7 +1377,6 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
 
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
