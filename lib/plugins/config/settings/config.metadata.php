@@ -33,6 +33,9 @@
  *   'array'        - a simple (one dimensional) array of string values, shown as comma separated list in the
  *                    config manager but saved as PHP array(). Values may not contain commas themselves.
  *                    _pattern matching on the array values supported.
+ *   'regex'        - regular expression string, normally without delimiters; as for string, in addition tested
+ *                    to see if will compile & run as a regex.  in addition to _pattern, also accepts _delimiter
+ *                    (default '/') and _pregflags (default 'ui')
  *
  *  Single Setting (source: settings/extra.class.php)
  *  -------------------------------------------------
@@ -60,6 +63,9 @@
  *   '_code'       - encoding method to use, accepted values: 'base64','uuencode','plain'.  defaults to plain.
  *   '_min'        - minimum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
+ *   '_delimiter'  - string, default '/', a single character used as a delimiter for testing regex input values
+ *   '_pregflags'  - string, default 'ui', valid preg pattern modifiers used when testing regex input values, for more
+ *                   information see http://uk1.php.net/manual/en/reference.pcre.pattern.modifiers.php
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
@@ -115,7 +121,7 @@ $meta['camelcase']   = array('onoff');
 $meta['deaccent']    = array('multichoice','_choices' => array(0,1,2));
 $meta['useheading']  = array('multichoice','_choices' => array(0,'navigation','content',1));
 $meta['sneaky_index'] = array('onoff');
-$meta['hidepages']   = array('string');
+$meta['hidepages']   = array('regex');
 
 $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
