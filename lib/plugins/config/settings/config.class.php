@@ -659,10 +659,8 @@ if (!class_exists('setting_password')) {
 }
 
 if (!class_exists('setting_email')) {
-  if (!defined('SETTING_EMAIL_PATTERN')) define('SETTING_EMAIL_PATTERN','<^'.PREG_PATTERN_VALID_EMAIL.'$>');
 
   class setting_email extends setting_string {
-    var $_pattern = SETTING_EMAIL_PATTERN;       // no longer required, retained for backward compatibility - FIXME, may not be necessary
     var $_multiple = false;
     var $_placeholders = false;
 
