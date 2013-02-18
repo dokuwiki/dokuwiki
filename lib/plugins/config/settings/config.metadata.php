@@ -42,6 +42,8 @@
  *   'im_convert'  - as 'setting', input must exist and be an im_convert module
  *   'disableactions' - as 'setting'
  *   'compression' - no additional parameters. checks php installation supports possible compression alternatives
+ *   'licence'     - as multichoice, selection constructed from licence strings in language files
+ *   'renderer'    - as multichoice, selection constructed from enabled renderer plugins which canRender()
  *
  *  Any setting commented or missing will use 'setting' class - text input, minimal validation, quoted output
  *
