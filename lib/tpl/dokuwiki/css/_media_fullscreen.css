@@ -501,4 +501,9 @@
     width: 100%;
     max-width: none;
 }
+/* enable horizontal scrolling on narrow screens */
+.tablet .mode_media div.page,
+.phone .mode_media div.page {
+    overflow: auto;
+}
 
