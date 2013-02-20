@@ -54,16 +54,17 @@ function auth_setup() {
     	}
     }
 
-	if(!$auth){
+	if(!isset($auth) || !$auth){
         msg($lang['authtempfail'], -1);
         return false;
     }
 
-	if ($auth && $auth->success == false) {
+    if ($auth->success == false) {
 		// degrade to unauthenticated user
 	    unset($auth);
 	    auth_logoff();
 	    msg($lang['authtempfail'], -1);
+        return false;
 	}
 
     // do the login either by cookie or provided credentials XXX
