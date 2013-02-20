@@ -92,7 +92,7 @@ function auth_setup() {
 
     // apply cleaning
     if (true === $auth->success) {
-    	$_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+        $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
     }
 
     if($INPUT->str('authtok')) {
