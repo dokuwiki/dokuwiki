@@ -29,7 +29,7 @@ if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
 require_once(DOKU_INC.'inc/init.php');
 
 //import variables
-$_REQUEST['id'] = str_replace("\xC2\xAD", '', $INPUT->str('id')); //soft-hyphen
+$INPUT->set('id', str_replace("\xC2\xAD", '', $INPUT->str('id'))); //soft-hyphen
 $QUERY          = trim($INPUT->str('id'));
 $ID             = getID();
 
