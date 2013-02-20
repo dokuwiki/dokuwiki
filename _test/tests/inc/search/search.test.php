@@ -22,9 +22,9 @@ class search_test extends DokuWikiTest {
       search($data, dirname(__FILE__) . '/data', 'search_allpages',  array('depth' => 1), 'ns1/ns3');
       $this->assertEquals(0, count($data));
 
-      //depth is 1 so I should get only pages from ns1
+      //depth is 2 so I should get only pages from ns1
       $data = array();
-      search($data, dirname(__FILE__) . '/data', 'search_allpages', array('depth' => 1), 'ns1');
+      search($data, dirname(__FILE__) . '/data', 'search_allpages', array('depth' => 2), 'ns1');
       $this->assertEquals(2, count($data));
     }
 
