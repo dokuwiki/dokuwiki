@@ -92,6 +92,8 @@ class common_infofunctions_test extends DokuWikiTest {
         // TODO: test with true revision
         
         // TODO: test with revision & range
+
+        // TODO: validate against the same test run on master branch pre this change
     }
     
     /**
