@@ -279,6 +279,12 @@ body {
     padding: .5em;
 }
 
+/* media manager
+   enable horizontal scrolling on narrow screens */
+.mode_media div.page,
+.mode_media div.page {
+    overflow: auto;
+}
 
 
 } /* /@media */
