@@ -83,9 +83,9 @@ Windows shares like [[\\server\share|this]] are recognized, too. Please note tha
 Notes:
 
   * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
-  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_do_not_work|Mozilla Knowledge Base]]. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in ''conf/local.protected.php'':
+  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_do_not_work|Mozilla Knowledge Base]]. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in ''conf/userscript.js'':
 
-  $lang['js']['nosmblinks'] = '';
+  LANG.nosmblinks = '';
 
 ==== Image Links ====
 
