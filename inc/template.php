@@ -1373,11 +1373,13 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $REV;
     global $lang;
 
-    echo '<form action="'.DOKU_SCRIPT.'" method="post" accept-charset="utf-8">';
+    echo '<form action="'.DOKU_SCRIPT.'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+    if ($_SERVER['REMOTE_USER']) {
+        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+    }
 
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
