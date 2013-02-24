@@ -889,7 +889,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     // title is escaped by SimplePie, we unescape here because it
                     // is escaped again in externallink() FS#1705
                     $this->externallink($item->get_permalink(),
-                                        htmlspecialchars_decode($item->get_title()));
+                                        html_entity_decode($item->get_title(), ENT_QUOTES, 'UTF-8'));
                 }else{
                     $this->doc .= ' '.$item->get_title();
                 }
