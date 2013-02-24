@@ -222,7 +222,7 @@
 [dir=rtl] #dokuwiki__pagetools ul li a.revs:hover,
 [dir=rtl] #dokuwiki__pagetools ul li a.revs:active,
 [dir=rtl] #dokuwiki__pagetools ul li a.revs:focus,
-.mode_revisions [dir=rtl] #dokuwiki__pagetools ul li a.revs {
+[dir=rtl] .mode_revisions #dokuwiki__pagetools ul li a.revs {
     background-position: left -585px;
 }
 
@@ -241,7 +241,7 @@
 [dir=rtl] #dokuwiki__pagetools ul li a.backlink:hover,
 [dir=rtl] #dokuwiki__pagetools ul li a.backlink:active,
 [dir=rtl] #dokuwiki__pagetools ul li a.backlink:focus,
-.mode_backlink [dir=rtl] #dokuwiki__pagetools ul li a.backlink {
+[dir=rtl] .mode_backlink #dokuwiki__pagetools ul li a.backlink {
     background-position: left -675px;
 }
 
@@ -277,7 +277,7 @@
 [dir=rtl] #dokuwiki__pagetools ul li a.revert:hover,
 [dir=rtl] #dokuwiki__pagetools ul li a.revert:active,
 [dir=rtl] #dokuwiki__pagetools ul li a.revert:focus,
-.mode_revert [dir=rtl] #dokuwiki__pagetools ul li a.revert {
+[dir=rtl] .mode_revert #dokuwiki__pagetools ul li a.revert {
     background-position: left -495px;
 }
 
@@ -296,7 +296,7 @@
 [dir=rtl] #dokuwiki__pagetools ul li a.subscribe:hover,
 [dir=rtl] #dokuwiki__pagetools ul li a.subscribe:active,
 [dir=rtl] #dokuwiki__pagetools ul li a.subscribe:focus,
-.mode_subscribe [dir=rtl] #dokuwiki__pagetools ul li a.subscribe {
+[dir=rtl] .mode_subscribe #dokuwiki__pagetools ul li a.subscribe {
     background-position: left -765px;
 }
 
