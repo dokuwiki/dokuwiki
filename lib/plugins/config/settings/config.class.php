@@ -20,6 +20,7 @@ if (!class_exists('configuration')) {
     var $_metadata = array();      // holds metadata describing the settings
     var $setting = array();        // array of setting objects
     var $locked = false;           // configuration is considered locked if it can't be updated
+    var $show_disabled_plugins = false;
 
     // configuration filenames
     var $_default_files  = array();
@@ -70,9 +71,14 @@ if (!class_exists('configuration')) {
           foreach ($keys as $key) {
             if (isset($this->_metadata[$key])) {
               $class = $this->_metadata[$key][0];
-              $class = ($class && class_exists('setting_'.$class)) ? 'setting_'.$class : 'setting';
-              if ($class=='setting') {
-                $this->setting[] = new setting_no_class($key,$param);
+
+              if($class && class_exists('setting_'.$class)){
+                $class = 'setting_'.$class;
+              } else {
+                if($class != '') {
+                  $this->setting[] = new setting_no_class($key,$param);
+                }
+                $class = 'setting';
               }
 
               $param = $this->_metadata[$key];
@@ -262,7 +268,7 @@ if (!class_exists('configuration')) {
 
     function get_plugin_list() {
       if (is_null($this->_plugin_list)) {
-        $list = plugin_list('',true);     // all plugins, including disabled ones
+        $list = plugin_list('',$this->show_disabled_plugins);
 
         // remove this plugin from the list
         $idx = array_search('config',$list);
@@ -364,7 +370,7 @@ if (!class_exists('setting')) {
     var $_cautionList = array(
         'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'cookiedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
         'start' => 'warning', 'camelcase' => 'warning', 'deaccent' => 'warning', 'sepchar' => 'warning', 'compression' => 'warning', 'xsendfile' => 'warning', 'renderer_xhtml' => 'warning', 'fnencode' => 'warning',
-        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'xmlrpc' => 'security', 'fullpath' => 'security'
+        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'remote' => 'security', 'fullpath' => 'security'
     );
 
     function setting($key, $params=null) {
@@ -387,10 +393,12 @@ if (!class_exists('setting')) {
     }
 
     /**
-     *  update setting with user provided value $input
-     *  if value fails error check, save it
+     *  update changed setting with user provided value $input
+     *  - if changed value fails error check, save it to $this->_input (to allow echoing later)
+     *  - if changed value passes error check, set $this->_local to the new value
      *
-     *  @return boolean true if changed, false otherwise (incl. on error)
+     *  @param  mixed   $input   the new value
+     *  @return boolean          true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;

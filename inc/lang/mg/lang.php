@@ -88,7 +88,7 @@ $lang['lastmod']    = 'Novaina farany:';
 $lang['by']         = '/';
 $lang['deleted']    = 'voafafa';
 $lang['created']    = 'Voamboatra';
-$lang['restored']   = 'Naverina tamin\'ny kinova taloha';
+$lang['restored']   = 'Naverina tamin\'ny kinova taloha (%s)';
 $lang['summary']    = 'Fanovana teo';
 
 $lang['mail_newpage'] = 'pejy niampy:';

@@ -169,7 +169,7 @@ $lang['lastmod']               = 'Utolsó módosítás';
 $lang['by']                    = 'szerkesztette:';
 $lang['deleted']               = 'eltávolítva';
 $lang['created']               = 'létrehozva';
-$lang['restored']              = 'az előző változat helyreállítva';
+$lang['restored']              = 'az előző változat helyreállítva (%s)';
 $lang['external_edit']         = 'külső szerkesztés';
 $lang['summary']               = 'A változások összefoglalása';
 $lang['noflash']               = 'Ennek a tartalomnak a megtekintéséhez <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> szükséges.';

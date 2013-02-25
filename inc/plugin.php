@@ -258,11 +258,4 @@ class DokuWiki_Plugin {
     function isSingleton() {
         return true;
     }
-
-    // deprecated functions
-    function plugin_localFN($id) { return $this->localFN($id); }
-    function plugin_locale_xhtml($id) { return $this->locale_xhtml($id); }
-    function plugin_email($e, $n='', $c='', $m='') { return $this->email($e, $n, $c, $m); }
-    function plugin_link($l, $t='', $c='', $to='', $m='') { return $this->external_link($l, $t, $c, $to, $m); }
-    function plugin_render($t, $f='xhtml') { return $this->render($t, $f); }
 }

@@ -764,7 +764,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     global $QUERY;
 
     // don't print the search form if search action has been disabled
-    if(!actionOk('search')) return false;
+    if(!actionOK('search')) return false;
 
     print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
@@ -1373,11 +1373,13 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $REV;
     global $lang;
 
-    echo '<form action="'.DOKU_SCRIPT.'" method="post" accept-charset="utf-8">';
+    echo '<form action="'.DOKU_SCRIPT.'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+    if ($_SERVER['REMOTE_USER']) {
+        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+    }
 
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';

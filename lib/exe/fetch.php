@@ -58,7 +58,7 @@ if(!defined('SIMPLE_TEST')) {
         }
         // send any non 200 status
         if($data['status'] != 200) {
-            header('HTTP/1.0 '.$data['status'].' '.$data['statusmessage']);
+            http_status($data['status'], $data['statusmessage']);
         }
         // die on errors
         if($data['status'] > 203) {
@@ -137,7 +137,7 @@ function sendFile($file, $mime, $dl, $cache) {
     if($fp) {
         http_rangeRequest($fp, filesize($file), $mime);
     } else {
-        header("HTTP/1.0 500 Internal Server Error");
+        http_status(500);
         print "Could not read $file - bad permissions?";
     }
 }

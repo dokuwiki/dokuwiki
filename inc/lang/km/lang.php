@@ -132,7 +132,6 @@ $lang['lastmod']    = 'ពេលកែចុងក្រោយ';
 $lang['by']         = 'និពន្ឋដោយ';
 $lang['deleted']    = 'យកចេញ';
 $lang['created']    = 'បង្កើត';
-$lang['restored']   = 'ស្ដារបុនរាព្រឹតចាស់';
 $lang['external_edit'] = 'កំរេពីក្រៅ';
 $lang['summary']    = 'កែតម្រា';
 
@@ -207,7 +206,6 @@ $lang['i_superuser']  = 'អ្នកកំពូល';
 $lang['i_problems']   = 'កម្មវិធី​ដំឡើងបានប៉ះឧបសគ្គ។ អ្នកមិនអាចបន្តទៅទៀត ដល់អ្នកជួសជុលវា។';
 $lang['i_modified']   = '';
 $lang['i_funcna']     = '<code>%s</code> ';
-$lang['i_phpver']     = 'PHP ប្រវត់លេខ<code>%s</code> ជា';
 $lang['i_permfail']   = '<code>%s</code> មិនអាចសាស';
 $lang['i_confexists'] = '<code>%s</code> មានហាយ';
 $lang['i_writeerr']   = 'មិនអាចបណ្កើ<code>%s</code>។ អ្នកត្រវការពិនិត្យអធិក្រឹតិរបស់ថតនឹងឯកសារ។';

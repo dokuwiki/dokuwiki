@@ -190,7 +190,7 @@ $lang['lastmod']               = 'Последна промяна';
 $lang['by']                    = 'от';
 $lang['deleted']               = 'изтрита';
 $lang['created']               = 'създадена';
-$lang['restored']              = 'възстановена предишна версия';
+$lang['restored']              = 'възстановена предишна версия (%s)';
 $lang['external_edit']         = 'външна редакция';
 $lang['summary']               = 'Обобщение';
 $lang['noflash']               = 'Необходим е <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> за изобразяване на съдържанието.';

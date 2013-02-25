@@ -70,14 +70,6 @@ $config['varname'] = 'conf';     // name of the config variable, sans $
 // this value can be overriden when calling save_settings() method
 $config['heading'] = 'Dokuwiki\'s Main Configuration File - Local Settings';
 
-/* DEPRECATED
-// ---------------[ setting files ]--------------------------------------
-// these values can be string expressions, they will be eval'd before use
-$file['local']     = "DOKU_CONF.'local.php'";            // mandatory (file doesn't have to exist)
-$file['default']   = "DOKU_CONF.'dokuwiki.php'";         // optional
-$file['protected'] = "DOKU_CONF.'local.protected.php'";  // optional
- */
-
 // test value (FIXME, remove before publishing)
 //$meta['test']     = array('multichoice','_choices' => array(''));
 
@@ -127,7 +119,7 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','sha512'));
+$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','djangomd5','djangosha1','sha512'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');

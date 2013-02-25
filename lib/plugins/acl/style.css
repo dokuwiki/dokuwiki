@@ -1,5 +1,5 @@
 
-div#acl_manager div#acl__tree {
+#acl__tree {
     font-size: 90%;
     width: 25%;
     height: 300px;
@@ -8,61 +8,61 @@ div#acl_manager div#acl__tree {
     border: 1px solid __border__;
     text-align: left;
 }
-[dir=rtl] div#acl_manager div#acl__tree {
+[dir=rtl] #acl__tree {
     float: right;
     text-align: right;
 }
 
-div#acl_manager div#acl__tree a.cur {
+#acl__tree a.cur {
     background-color: __highlight__;
     font-weight: bold;
 }
 
-div#acl_manager div#acl__tree ul {
+#acl__tree ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-div#acl_manager div#acl__tree li {
+#acl__tree li {
     padding-left: 1em;
     list-style-image: none;
 }
-[dir=rtl] div#acl_manager div#acl__tree li {
+[dir=rtl] #acl__tree li {
     padding-left: 0em;
     padding-right: 1em;
 }
 
-div#acl_manager div#acl__tree ul img {
+#acl__tree ul img {
     margin-right: 0.25em;
     cursor: pointer;
 }
-[dir=rtl] div#acl_manager div#acl__tree ul img {
+[dir=rtl] #acl__tree ul img {
     margin-left: 0.25em;
     margin-right: 0em;
 }
 
-div#acl_manager div#acl__detail {
+#acl__detail {
     width: 73%;
     height: 300px;
     float: right;
     overflow: auto;
 }
-[dir=rtl] div#acl_manager div#acl__detail {
+[dir=rtl] #acl__detail {
     float: left;
 }
 
-div#acl_manager div#acl__detail fieldset {
+#acl__detail fieldset {
     width: 90%;
 }
 
-div#acl_manager div#acl__detail div#acl__user {
+#acl__detail div#acl__user {
     border: 1px solid __border__;
     padding: 0.5em;
     margin-bottom: 0.6em;
 }
 
-div#acl_manager table.inline {
+#acl_manager table.inline {
     width: 100%;
     margin: 0;
 }
@@ -75,59 +75,60 @@ div#acl_manager table.inline {
     text-align: right;
 }
 
-div#acl_manager .aclgroup {
+#acl_manager .aclgroup {
     background: transparent url(pix/group.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
-[dir=rtl] div#acl_manager .aclgroup {
+[dir=rtl] #acl_manager .aclgroup {
     background: transparent url(pix/group.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
     display: inline-block; /* needed for IE7 */
 }
 
-div#acl_manager .acluser {
+#acl_manager .acluser {
     background: transparent url(pix/user.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
-[dir=rtl] div#acl_manager .acluser {
+[dir=rtl] #acl_manager .acluser {
     background: transparent url(pix/user.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
     display: inline-block; /* needed for IE7 */
 }
 
-div#acl_manager .aclpage {
+#acl_manager .aclpage {
     background: transparent url(pix/page.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
-[dir=rtl] div#acl_manager .aclpage {
+[dir=rtl] #acl_manager .aclpage {
     background: transparent url(pix/page.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
     display: inline-block; /* needed for IE7 */
 }
 
-div#acl_manager .aclns {
+#acl_manager .aclns {
     background: transparent url(pix/ns.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
-[dir=rtl] div#acl_manager .aclns {
+[dir=rtl] #acl_manager .aclns {
     background: transparent url(pix/ns.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
     display: inline-block; /* needed for IE7 */
 }
 
-div#acl_manager label.disabled {
-  color: __text_neu__!important;
+#acl_manager label.disabled {
+    opacity: .5;
+    cursor: auto;
 }
 
 #acl_manager label {
-  text-align: left;
-  font-weight: normal;
-  display: inline;
+    text-align: left;
+    font-weight: normal;
+    display: inline;
 }
 
 #acl_manager table {
-  margin-left: 10%;
-  width: 80%;
+    margin-left: 10%;
+    width: 80%;
 }
 
 #acl_manager table tr {

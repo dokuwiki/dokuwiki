@@ -529,25 +529,6 @@ function io_rename($from,$to){
     return true;
 }
 
-
-/**
- * Runs an external command and returns its output as string
- *
- * @author Harry Brueckner <harry_b@eml.cc>
- * @author Andreas Gohr <andi@splitbrain.org>
- * @deprecated
- */
-function io_runcmd($cmd){
-    $fh = popen($cmd, "r");
-    if(!$fh) return false;
-    $ret = '';
-    while (!feof($fh)) {
-        $ret .= fread($fh, 8192);
-    }
-    pclose($fh);
-    return $ret;
-}
-
 /**
  * Runs an external command with input and output pipes.
  * Returns the exit code from the process.

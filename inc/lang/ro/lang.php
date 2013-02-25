@@ -184,7 +184,7 @@ $lang['lastmod']               = 'Ultima modificare';
 $lang['by']                    = 'de către';
 $lang['deleted']               = 'şters';
 $lang['created']               = 'creat';
-$lang['restored']              = 'versiune veche restaurată';
+$lang['restored']              = 'versiune veche restaurată (%s)';
 $lang['external_edit']         = 'editare externă';
 $lang['summary']               = 'Editează sumarul';
 $lang['noflash']               = 'Plugin-ul <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> este necesar pentru afişarea corectă a conţinutului.';

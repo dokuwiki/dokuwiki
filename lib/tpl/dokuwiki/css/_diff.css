@@ -21,7 +21,6 @@
 .dokuwiki table.diff th {
     border-bottom: 1px solid __border__;
     font-size: 110%;
-    width: 50%;
     font-weight: normal;
 }
 .dokuwiki table.diff th a {
@@ -37,8 +36,19 @@
 .dokuwiki table.diff th.minor {
     color: #999;
 }
+.dokuwiki table.diff_sidebyside th {
+    width: 50%;
+}
 
 /* table body */
+.dokuwiki table.diff .diff-lineheader {
+    width: .7em;
+    text-align: right;
+}
+[dir=rtl] .dokuwiki table.diff .diff-lineheader {
+    text-align: left;
+}
+.dokuwiki table.diff .diff-lineheader,
 .dokuwiki table.diff td {
     font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
 }

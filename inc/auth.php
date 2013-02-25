@@ -54,16 +54,17 @@ function auth_setup() {
     	}
     }
 
-	if(!$auth){
+	if(!isset($auth) || !$auth){
         msg($lang['authtempfail'], -1);
         return false;
     }
 
-	if ($auth && $auth->success == false) {
+    if ($auth->success == false) {
 		// degrade to unauthenticated user
 	    unset($auth);
 	    auth_logoff();
 	    msg($lang['authtempfail'], -1);
+        return false;
 	}
 
     // do the login either by cookie or provided credentials XXX
@@ -91,7 +92,7 @@ function auth_setup() {
 
     // apply cleaning
     if (true === $auth->success) {
-    	$_REQUEST['u'] = $auth->cleanUser($_REQUEST['u']);
+        $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
     }
 
     if($INPUT->str('authtok')) {
@@ -267,7 +268,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
 function auth_validateToken($token) {
     if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {
         // bad token
-        header("HTTP/1.0 401 Unauthorized");
+        http_status(401);
         print 'Invalid auth token - maybe the session timed out';
         unset($_SESSION[DOKU_COOKIE]['auth']['token']); // no second chance
         exit;
@@ -311,7 +312,6 @@ function auth_browseruid() {
     $uid = '';
     $uid .= $_SERVER['HTTP_USER_AGENT'];
     $uid .= $_SERVER['HTTP_ACCEPT_ENCODING'];
-    $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
     $uid .= substr($ip, 0, strpos($ip, '.'));
     $uid = strtolower($uid);

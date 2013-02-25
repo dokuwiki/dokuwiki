@@ -71,6 +71,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * Constructor
      */
     public function __construct() {
+        global $INPUT;
         parent::__construct();
 
         // we load the config early to modify it a bit here
@@ -99,8 +100,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
             // we need to simulate a login
             if(empty($_COOKIE[DOKU_COOKIE])) {
-                $_REQUEST['u'] = $_SERVER['REMOTE_USER'];
-                $_REQUEST['p'] = 'sso_only';
+                $INPUT->set('u', $_SERVER['REMOTE_USER']);
+                $INPUT->set('p', 'sso_only');
             }
         }
 

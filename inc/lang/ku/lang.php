@@ -95,7 +95,7 @@ $lang['lastmod']    = 'Guherandina dawî';
 $lang['by']         = 'by';
 $lang['deleted']    = 'hat jê birin';
 $lang['created']    = 'hat afirandin';
-$lang['restored']   = 'old revision restored';
+$lang['restored']   = 'old revision restored (%s)';
 $lang['summary']    = 'Kurteya guhartinê';
 
 $lang['mail_newpage'] = 'page added:';

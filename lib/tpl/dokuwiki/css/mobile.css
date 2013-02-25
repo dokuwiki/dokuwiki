@@ -89,6 +89,10 @@
 .dokuwiki div.page {
     padding: 1em;
 }
+/* enable horizontal scrolling in media manager */
+.mode_media div.page {
+    overflow: auto;
+}
 
 /* _edit */
 .dokuwiki div.section_highlight {

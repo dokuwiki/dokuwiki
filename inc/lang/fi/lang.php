@@ -183,7 +183,7 @@ $lang['lastmod']               = 'Viimeksi muutettu';
 $lang['by']                    = '/';
 $lang['deleted']               = 'poistettu';
 $lang['created']               = 'luotu';
-$lang['restored']              = 'vanha versio palautettu';
+$lang['restored']              = 'vanha versio palautettu (%s)';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
 $lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';

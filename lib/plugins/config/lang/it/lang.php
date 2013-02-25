@@ -39,6 +39,7 @@ $lang['_editing']              = 'Impostazioni Modifica';
 $lang['_links']                = 'Impostazioni Collegamenti';
 $lang['_media']                = 'Impostazioni File';
 $lang['_notifications']        = 'Impostazioni di notifica';
+$lang['_syndication']          = 'Impostazioni di collaborazione';
 $lang['_advanced']             = 'Impostazioni Avanzate';
 $lang['_network']              = 'Impostazioni Rete';
 $lang['_plugin_sufix']         = 'Impostazioni Plugin';
