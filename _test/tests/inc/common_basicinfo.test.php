@@ -59,56 +59,6 @@ class common_infofunctions_test extends DokuWikiTest {
         $this->assertEquals(basicinfo($ID,true),$info);
     }
     
-    /**
-     * We're interested in the extra keys required for $INFO when its a page request
-     * and that $REV, $RANGE globals are set/cleared correctly
-     */
-    function test_pageinfo(){
-        global $ID,$conf;
-        $ID = 'wiki:start';
-        
-        $info = $this->_get_info();
-        $info['id'] = 'wiki:start';
-        $info['namespace'] = 'wiki';
-        $info['rev'] = null;
-        $info['subscribed'] = false;
-        $info['locked'] = false;
-        $info['filepath'] = $conf['datadir'].'/wiki/start.txt';
-        $info['exists'] = false;
-        $info['writable'] = true;
-        $info['editable'] = true;
-        $info['lastmod'] = false;
-        $info['meta'] = array();
-        $info['ip'] = null;
-        $info['user'] = null;
-        $info['sum'] = null;
-        $info['editor'] = null;
-
-        // basic test, no revision
-        $this->assertEquals(pageinfo(),$info);
-        
-        // TODO: test with revision = current page
-        
-        // TODO: test with true revision
-        
-        // TODO: test with revision & range
-
-        // TODO: validate against the same test run on master branch pre this change
-    }
-    
-    /**
-     * We're interested in the extra keys for $INFO when its a media request
-     */
-    function test_mediainfo(){
-        global $NS, $IMG;
-        $NS = '';
-        $IMG = 'testimage.png';
-         
-        $info = $this->_get_info();
-        $info['image'] = 'testimage.png';
-        
-        $this->assertEquals(mediainfo(),$info);
-    }
 }
 
 //Setup VIM: ex: et ts=4 :
