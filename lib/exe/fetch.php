@@ -98,27 +98,12 @@ if(!defined('SIMPLE_TEST')) {
  */
 function sendFile($file, $mime, $dl, $cache) {
     global $conf;
-    $fmtime = @filemtime($file);
     // send headers
     header("Content-Type: $mime");
-    // smart http caching headers
-    if($cache == -1) {
-        // cache
-        // cachetime or one hour
-        header('Expires: '.gmdate("D, d M Y H:i:s", time() + max($conf['cachetime'], 3600)).' GMT');
-        header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($conf['cachetime'], 3600));
-        header('Pragma: public');
-    } else if($cache > 0) {
-        // recache
-        // remaining cachetime + 10 seconds so the newly recached media is used
-        header('Expires: '.gmdate("D, d M Y H:i:s", $fmtime + $conf['cachetime'] + 10).' GMT');
-        header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($fmtime - time() + $conf['cachetime'] + 10, 0));
-        header('Pragma: public');
-    } else if($cache == 0) {
-        // nocache
-        header('Cache-Control: must-revalidate, no-transform, post-check=0, pre-check=0');
-        header('Pragma: public');
-    }
+    // avoid resending files from intermediate caches without revalidation
+    header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+    header('Cache-Control: private, no-transform, max-age=0');
+    header('Pragma: no-cache');
     //send important headers first, script stops here if '304 Not Modified' response
     http_conditionalRequest($fmtime);
 
