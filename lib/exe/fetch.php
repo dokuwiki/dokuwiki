@@ -47,6 +47,7 @@ if(!defined('SIMPLE_TEST')) {
         'height'        => $HEIGHT,
         'status'        => $STATUS,
         'statusmessage' => $STATUSMESSAGE,
+        'ispublic'      => media_ispublic($MEDIA),
     );
 
     // handle the file status
@@ -81,10 +82,13 @@ if(!defined('SIMPLE_TEST')) {
     // finally send the file to the client
     $evt = new Doku_Event('MEDIA_SENDFILE', $data);
     if($evt->advise_before()) {
-        sendFile($data['file'], $data['mime'], $data['download'], $data['cache']);
+        $cache = $data['cache'];
+        if($cache != 0 && !$data['ispublic']) $cache = 0; // no cache headers for private files FS#2734
+
+        sendFile($data['file'], $data['mime'], $data['download'], $cache);
     }
     // Do something after the download finished.
-    $evt->advise_after();
+    $evt->advise_after();  // will not be emitted on 304 or x-sendfile
 
 }// END DO main
 
@@ -93,8 +97,18 @@ if(!defined('SIMPLE_TEST')) {
 /**
  * Set headers and send the file to the client
  *
+ * Unless $cache is set to 0, the data may end up in intermediate proxy servers. Therefor,
+ * if you're sending (ACL protected) private files, $cache should be 0.
+ *
+ * This function will abort the current script when a 304 is sent or file sending is handled
+ * through x-sendfile
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @param string $file  local file to send
+ * @param string $mime  mime type of the file
+ * @param bool   $dl    set to true to force a browser download
+ * @param int    $cache remaining cache time in seconds (-1 for $conf['cache'], 0 for off)
  */
 function sendFile($file, $mime, $dl, $cache) {
     global $conf;
@@ -115,9 +129,10 @@ function sendFile($file, $mime, $dl, $cache) {
         header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($fmtime - time() + $conf['cachetime'] + 10, 0));
         header('Pragma: public');
     } else if($cache == 0) {
-        // nocache
-        header('Cache-Control: must-revalidate, no-transform, post-check=0, pre-check=0');
-        header('Pragma: public');
+        // nocache, avoid resending files from intermediate caches without revalidation FS#2734
+        header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+        header('Cache-Control: private, no-transform, max-age=0');
+        header('Pragma: no-cache');
     }
     //send important headers first, script stops here if '304 Not Modified' response
     http_conditionalRequest($fmtime);
