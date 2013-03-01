@@ -9,8 +9,8 @@ if(!defined('DOKU_INC')) die();
  * all auth classes should inherit from this class
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author    Chris Smith <chris@jalakai.co.uk>
- * @author    Jan Schumann <js@jschumann-it.com>
+ * @author     Chris Smith <chris@jalakai.co.uk>
+ * @author     Jan Schumann <js@jschumann-it.com>
  */
 class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     public $success = true;
@@ -21,18 +21,18 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * in the constructor.
      */
     protected $cando = array(
-        'addUser'     => false, // can Users be created?
-        'delUser'     => false, // can Users be deleted?
-        'modLogin'    => false, // can login names be changed?
-        'modPass'     => false, // can passwords be changed?
-        'modName'     => false, // can real names be changed?
-        'modMail'     => false, // can emails be changed?
-        'modGroups'   => false, // can groups be changed?
-        'getUsers'    => false, // can a (filtered) list of users be retrieved?
-        'getUserCount'=> false, // can the number of users be retrieved?
-        'getGroups'   => false, // can a list of available groups be retrieved?
-        'external'    => false, // does the module do external auth checking?
-        'logout'      => true, // can the user logout again? (eg. not possible with HTTP auth)
+        'addUser'      => false, // can Users be created?
+        'delUser'      => false, // can Users be deleted?
+        'modLogin'     => false, // can login names be changed?
+        'modPass'      => false, // can passwords be changed?
+        'modName'      => false, // can real names be changed?
+        'modMail'      => false, // can emails be changed?
+        'modGroups'    => false, // can groups be changed?
+        'getUsers'     => false, // can a (filtered) list of users be retrieved?
+        'getUserCount' => false, // can the number of users be retrieved?
+        'getGroups'    => false, // can a list of available groups be retrieved?
+        'external'     => false, // does the module do external auth checking?
+        'logout'       => true, // can the user logout again? (eg. not possible with HTTP auth)
     );
 
     /**
@@ -102,7 +102,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * example for enforcing a user name schema.
      *
      * @author Gabriel Birke <birke@d-scribe.de>
-     * @param string $type Modification type ('create', 'modify', 'delete')
+     * @param string $type   Modification type ('create', 'modify', 'delete')
      * @param array  $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
      * @return mixed Result from the modification function or false if an event handler has canceled the action
      */
@@ -162,7 +162,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * The function needs to set some globals needed by
      * DokuWiki like auth_login() does.
      *
-     * @see auth_login()
+     * @see     auth_login()
      * @author  Andreas Gohr <andi@splitbrain.org>
      *
      * @param   string  $user    Username
@@ -425,16 +425,17 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      *
      * @deprecated 2012-11-09
      */
-    public function loadConfig(){
+    public function loadConfig() {
         global $conf;
-        $plugin = $this->getPluginName();
+        $plugin  = $this->getPluginName();
+        $oldname = preg_replace('/^auth/', '', $plugin);
 
         $default = $this->readDefaultSettings();
         $oldconf = array();
-        if(isset($conf['auth'][$plugin])) $oldconf = (array) $conf['auth'][$plugin];
+        if(isset($conf['auth'][$oldname])) $oldconf = (array) $conf['auth'][$oldname];
+        $conf['plugin'][$plugin] = array_merge($default, $oldconf, (array) $conf['plugin'][$plugin]);
 
-        $conf['plugin'][$plugin] = array_merge($default, $oldconf, $conf['plugin'][$plugin]);
-	$this->conf =& $conf['plugin'][$plugin];
+        $this->conf         =& $conf['plugin'][$plugin];
         $this->configloaded = true;
     }
 }
