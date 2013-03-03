@@ -54,7 +54,7 @@
         exit;
     }
 
-    // give info on PHP catched upload errors
+    // give info on PHP caught upload errors
     if($_FILES['upload']['error']){
         switch($_FILES['upload']['error']){
             case 1:
