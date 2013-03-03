@@ -12,6 +12,7 @@
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);
 
+    global $DEL;
     // get namespace to display (either direct or from deletion order)
     if($INPUT->str('delete')){
         $DEL = cleanID($INPUT->str('delete'));
@@ -28,7 +29,8 @@
         $IMG = null;
     }
 
-    $INFO = mediainfo();
+    global $INFO;
+    $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
