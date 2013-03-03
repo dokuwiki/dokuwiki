@@ -136,7 +136,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
             // cache in browser
             header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
             header('Cache-Control: private, no-transform, max-age='.$maxage);
-            header('Pragma: private');
+            header('Pragma: no-cache');
         }
     } else {
         // no cache at all
