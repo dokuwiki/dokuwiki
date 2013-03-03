@@ -141,7 +141,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
     } else {
         // no cache at all
         header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
-        header('Cache-Control: no-cache, no-transform, max-age=0');
+        header('Cache-Control: no-cache, no-transform');
         header('Pragma: no-cache');
     }
 
