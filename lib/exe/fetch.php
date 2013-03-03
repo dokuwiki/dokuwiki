@@ -141,8 +141,8 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
     } else {
         // no cache at all
         header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
-        header('Cache-Control: private, no-transform, max-age=0');
-        header('Pragma: no-store');
+        header('Cache-Control: no-cache, no-transform, max-age=0');
+        header('Pragma: no-cache');
     }
 
     //send important headers first, script stops here if '304 Not Modified' response
