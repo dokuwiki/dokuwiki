@@ -82,10 +82,7 @@ if(!defined('SIMPLE_TEST')) {
     // finally send the file to the client
     $evt = new Doku_Event('MEDIA_SENDFILE', $data);
     if($evt->advise_before()) {
-        $cache = $data['cache'];
-        if($cache != 0 && !$data['ispublic']) $cache = 0; // no cache headers for private files FS#2734
-
-        sendFile($data['file'], $data['mime'], $data['download'], $cache);
+        sendFile($data['file'], $data['mime'], $data['download'], $cache, $data['ispublic']);
     }
     // Do something after the download finished.
     $evt->advise_after();  // will not be emitted on 304 or x-sendfile
@@ -97,44 +94,59 @@ if(!defined('SIMPLE_TEST')) {
 /**
  * Set headers and send the file to the client
  *
- * Unless $cache is set to 0, the data may end up in intermediate proxy servers. Therefor,
- * if you're sending (ACL protected) private files, $cache should be 0.
+ * The $cache parameter influences how long files may be kept in caches, the $public parameter
+ * influences if this caching may happen in public proxis or in the browser cache only FS#2734
  *
  * This function will abort the current script when a 304 is sent or file sending is handled
  * through x-sendfile
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
- * @param string $file  local file to send
- * @param string $mime  mime type of the file
- * @param bool   $dl    set to true to force a browser download
- * @param int    $cache remaining cache time in seconds (-1 for $conf['cache'], 0 for off)
+ * @param string $file   local file to send
+ * @param string $mime   mime type of the file
+ * @param bool   $dl     set to true to force a browser download
+ * @param int    $cache  remaining cache time in seconds (-1 for $conf['cache'], 0 for no-cache)
+ * @param bool   $public is this a public ressource or a private one?
  */
-function sendFile($file, $mime, $dl, $cache) {
+function sendFile($file, $mime, $dl, $cache, $public = false) {
     global $conf;
-    $fmtime = @filemtime($file);
-    // send headers
+    // send mime headers
     header("Content-Type: $mime");
-    // smart http caching headers
+
+    // calculate cache times
     if($cache == -1) {
-        // cache
-        // cachetime or one hour
-        header('Expires: '.gmdate("D, d M Y H:i:s", time() + max($conf['cachetime'], 3600)).' GMT');
-        header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($conf['cachetime'], 3600));
-        header('Pragma: public');
+        $maxage  = max($conf['cachetime'], 3600); // cachetime or one hour
+        $expires = time() + $maxage;
     } else if($cache > 0) {
-        // recache
-        // remaining cachetime + 10 seconds so the newly recached media is used
-        header('Expires: '.gmdate("D, d M Y H:i:s", $fmtime + $conf['cachetime'] + 10).' GMT');
-        header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.max($fmtime - time() + $conf['cachetime'] + 10, 0));
-        header('Pragma: public');
-    } else if($cache == 0) {
-        // nocache, avoid resending files from intermediate caches without revalidation FS#2734
+        $maxage  = $cache; // given time
+        $expires = time() + $maxage;
+    } else { // $cache == 0
+        $maxage  = 0;
+        $expires = 0; // 1970-01-01
+    }
+
+    // smart http caching headers
+    if($maxage) {
+        if($public) {
+            // cache publically
+            header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
+            header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.$maxage);
+            header('Pragma: public');
+        } else {
+            // cache in browser
+            header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
+            header('Cache-Control: private, no-transform, max-age='.$maxage);
+            header('Pragma: private');
+        }
+    } else {
+        // no cache at all
         header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
         header('Cache-Control: private, no-transform, max-age=0');
-        header('Pragma: no-cache');
+        header('Pragma: no-store');
     }
+
     //send important headers first, script stops here if '304 Not Modified' response
+    $fmtime = @filemtime($file);
     http_conditionalRequest($fmtime);
 
     //download or display?
