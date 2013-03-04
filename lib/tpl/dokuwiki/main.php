@@ -29,7 +29,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <!--[if lte IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
     <div id="dokuwiki__site"><div id="dokuwiki__top"
         class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'showSidebar' : '';
-        ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
+        ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?> <?php echo ($_SERVER['REMOTE_USER']) ? 'loggedIn' : '' ?>">
 
         <?php include('tpl_header.php') ?>
 
