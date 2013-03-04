@@ -10,8 +10,9 @@
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin <danny0838@pchome.com.tw>
  * @author Shuo-Ting Jian <shoting@gmail.com>
+ * @author syaoranhinata@gmail.com
  */
-$lang['menu']                  = '帳號管理員';
+$lang['menu']                  = '帳號管理器';
 $lang['noauth']                = '(帳號認證尚未開放)';
 $lang['nosupport']             = '(尚不支援帳號管理)';
 $lang['badauth']               = '錯誤的認證機制';
@@ -35,8 +36,8 @@ $lang['filter']                = '篩選條件(Filter)';
 $lang['summary']               = '顯示帳號 %1$d-%2$d，共 %3$d 筆符合。共有 %4$d 個帳號。';
 $lang['nonefound']             = '找不到帳號。共有 %d 個帳號。';
 $lang['delete_ok']             = '已刪除 %d 個帳號';
-$lang['delete_fail']           = '%d 個帳號刪除失敗';
-$lang['update_ok']             = '成功更新該帳號';
+$lang['delete_fail']           = '%d 個帳號刪除失敗。';
+$lang['update_ok']             = '已更新該帳號';
 $lang['update_fail']           = '更新該帳號時失敗';
 $lang['update_exists']         = '變更帳號名稱 (%s) 失敗，因為有同名帳號存在（其他修改已套用）。';
 $lang['start']                 = '開始';

@@ -4,7 +4,7 @@
  * -----
  * Author: Quinn Taylor (quinntaylor@mac.com)
  * Copyright: (c) 2009 Quinn Taylor (quinntaylor@mac.com), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/04/29
  *
  * BibTeX language file for GeSHi.

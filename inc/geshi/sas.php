@@ -4,7 +4,7 @@
  * -------
  * Author: Galen Johnson (solitaryr@gmail.com)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2005/12/27
  *
  * SAS language file for GeSHi. Based on the sas vim file.
@@ -44,7 +44,7 @@
 $language_data = array (
     'LANG_NAME' => 'SAS',
     'COMMENT_SINGLE' => array(),
-    'COMMENT_MULTI' => array('/*' => '*/'),
+    'COMMENT_MULTI' => array('/*' => '*/', '*' => ';'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '\\',

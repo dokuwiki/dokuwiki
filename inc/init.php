@@ -3,7 +3,9 @@
  * Initialize some defaults needed for DokuWiki
  */
 
-// start timing Dokuwiki execution
+/**
+ * timing Dokuwiki execution
+ */
 function delta_time($start=0) {
     return microtime(true)-((float)$start);
 }
@@ -69,16 +71,6 @@ foreach (array('default','local','protected') as $config_group) {
     }
 }
 
-//prepare language array
-global $lang;
-$lang = array();
-
-//load the language files
-require_once(DOKU_INC.'inc/lang/en/lang.php');
-if ( $conf['lang'] && $conf['lang'] != 'en' ) {
-    require_once(DOKU_INC.'inc/lang/'.$conf['lang'].'/lang.php');
-}
-
 //prepare license array()
 global $license;
 $license = array();
@@ -118,11 +110,11 @@ if (!defined('DOKU_COOKIE')) define('DOKU_COOKIE', 'DW'.md5(DOKU_REL.(($conf['se
 // define main script
 if(!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT','doku.php');
 
-// define Template baseURL
+// DEPRECATED, use tpl_basedir() instead
 if(!defined('DOKU_TPL')) define('DOKU_TPL',
         DOKU_BASE.'lib/tpl/'.$conf['template'].'/');
 
-// define real Template directory
+// DEPRECATED, use tpl_incdir() instead
 if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
         DOKU_INC.'lib/tpl/'.$conf['template'].'/');
 
@@ -137,9 +129,13 @@ if(!defined('DOKU_TPLINC')) define('DOKU_TPLINC',
 
 // enable gzip compression if supported
 $conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
+global $ACT;
 if ($conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
-        function_exists('ob_gzhandler')) {
+        function_exists('ob_gzhandler') &&
+        // Disable compression when a (compressed) sitemap might be delivered
+        // See https://bugs.dokuwiki.org/index.php?do=details&task_id=2576
+        $ACT != 'sitemap') {
     ob_start('ob_gzhandler');
 }
 
@@ -170,7 +166,7 @@ if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
     @ini_set('magic_quotes_gpc', 0);
     define('MAGIC_QUOTES_STRIPPED',1);
 }
-@set_magic_quotes_runtime(0);
+if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 @ini_set('magic_quotes_sybase',0);
 
 // don't let cookies ever interfere with request vars
@@ -200,12 +196,16 @@ init_paths();
 init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('admin','syntax','action','renderer', 'helper');
+$plugin_types = array('admin','syntax','action','renderer', 'helper','remote');
 global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
 
 // load libraries
 require_once(DOKU_INC.'inc/load.php');
+
+// input handle class
+global $INPUT;
+$INPUT = new Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
@@ -213,6 +213,10 @@ $plugin_controller = new $plugin_controller_class();
 // initialize the event handler
 global $EVENT_HANDLER;
 $EVENT_HANDLER = new Doku_Event_Handler();
+
+$local = $conf['lang'];
+trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+
 
 // setup authentication system
 if (!defined('NOSESSION')) {
@@ -239,10 +243,11 @@ function init_paths(){
             'lockdir'   => 'locks',
             'tmpdir'    => 'tmp');
 
-    foreach($paths as $c => $p){
-        if(empty($conf[$c]))  $conf[$c] = $conf['savedir'].'/'.$p;
-        $conf[$c]             = init_path($conf[$c]);
-        if(empty($conf[$c]))  nice_die("The $c ('$p') does not exist, isn't accessible or writable.
+    foreach($paths as $c => $p) {
+        $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
+        $conf[$c] = init_path($path);
+        if(empty($conf[$c]))
+            nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
                 You should check your config and permission settings.
                 Or maybe you want to <a href=\"install.php\">run the
                 installer</a>?");
@@ -256,8 +261,22 @@ function init_paths(){
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
 }
 
+function init_lang($langCode) {
+    //prepare language array
+    global $lang;
+    $lang = array();
+
+    //load the language files
+    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    if ($langCode && $langCode != 'en') {
+        if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
+            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+        }
+    }
+}
+
 /**
- * Checks the existance of certain files and creates them if missing.
+ * Checks the existence of certain files and creates them if missing.
  */
 function init_files(){
     global $conf;
@@ -299,12 +318,12 @@ function init_files(){
  * Returns absolute path
  *
  * This tries the given path first, then checks in DOKU_INC.
- * Check for accessability on directories as well.
+ * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function init_path($path){
-    // check existance
+    // check existence
     $p = fullpath($path);
     if(!@file_exists($p)){
         $p = fullpath(DOKU_INC.$path);
@@ -482,8 +501,7 @@ function is_ssl(){
  */
 function nice_die($msg){
     echo<<<EOT
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head><title>DokuWiki Setup Error</title></head>
 <body style="font-family: Arial, sans-serif">
@@ -552,7 +570,7 @@ function fullpath($path,$exists=false){
     }
     $finalpath = $root.implode('/', $newpath);
 
-    // check for existance when needed (except when unit testing)
+    // check for existence when needed (except when unit testing)
     if($exists && !defined('DOKU_UNITTEST') && !@file_exists($finalpath)) {
         return false;
     }

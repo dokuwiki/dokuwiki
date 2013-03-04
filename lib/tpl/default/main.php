@@ -5,9 +5,6 @@
  * This is the template you need to change for the overall look
  * of DokuWiki.
  *
- * You should leave the doctype at the very top - It should
- * always be the very first line of a document.
- *
  * @link   http://dokuwiki.org/templates
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -61,7 +58,7 @@ if (!defined('DOKU_INC')) die();
 
       <div class="bar-right" id="bar__topright">
         <?php tpl_button('recent')?>
-        <?php tpl_searchform()?>&nbsp;
+        <?php tpl_searchform()?>&#160;
       </div>
 
       <div class="clearer"></div>
@@ -121,7 +118,7 @@ if (!defined('DOKU_INC')) die();
         <?php tpl_button('profile')?>
         <?php tpl_button('login')?>
         <?php tpl_button('index')?>
-        <?php tpl_button('top')?>&nbsp;
+        <?php tpl_button('top')?>&#160;
       </div>
       <div class="clearer"></div>
     </div>

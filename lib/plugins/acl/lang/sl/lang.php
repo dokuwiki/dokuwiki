@@ -5,7 +5,7 @@
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
-  * @author Matej Urbančič (mateju@svn.gnome.org)
+ * @author Matej Urbančič (mateju@svn.gnome.org)
  */
 $lang['admin_acl']             = 'Upravljanje dostopa';
 $lang['acl_group']             = 'Skupina';

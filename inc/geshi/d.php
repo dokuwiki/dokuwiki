@@ -3,14 +3,18 @@
  * d.php
  * -----
  * Author: Thomas Kuehne (thomas@kuehne.cn)
+ * Contributors:
+ *  - Jimmy Cao
  * Copyright: (c) 2005 Thomas Kuehne (http://thomas.kuehne.cn/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2005/04/22
  *
  * D language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2011/06/28 (0.0.3) (Jimmy Cao)
+ *  -  added D2 features
  * 2005/04/22 (0.0.2)
  *  -  added _d_* and sizeof/ptrdiff_t
  * 2005/04/20 (0.0.1)
@@ -45,7 +49,7 @@
 $language_data = array (
     'LANG_NAME' => 'D',
     'COMMENT_SINGLE' => array(2 => '///', 1 => '//'),
-    'COMMENT_MULTI' => array('/*' => '*/'),
+    'COMMENT_MULTI' => array('/*' => '*/', '/+' => '+/'),
     'COMMENT_REGEXP' => array(
         // doxygen comments
         3 => '#/\*\*(?![\*\/]).*\*/#sU',
@@ -126,63 +130,39 @@ $language_data = array (
         1 => array(
                 'break', 'case', 'continue', 'do', 'else',
                 'for', 'foreach', 'goto', 'if', 'return',
-                'switch', 'while'
+                'switch', 'while', 'foreach_reverse'
             ),
         2 => array(
                 'alias', 'asm', 'assert', 'body', 'cast',
                 'catch', 'default', 'delegate', 'delete',
                 'extern', 'false', 'finally', 'function',
-                'import', 'in', 'inout', 'interface',
-                'invariant', 'is', 'mixin', 'module', 'new',
+                'import', 'in', 'inout',
+                'invariant', 'is', 'lazy', 'mixin', 'module', 'new',
                 'null', 'out', 'pragma', 'ref', 'super', 'this',
-                'throw', 'true', 'try', 'typedef', 'typeid',
-                'typeof', 'union', 'with'
+                'throw', 'true', 'try', 'typeid',
+                'typeof', 'union', 'with', 'scope'
             ),
         3 => array(
-                'ArrayBoundsError', 'AssertError',
                 'ClassInfo', 'Error', 'Exception',
-                'Interface', 'ModuleInfo', 'Object',
-                'OutOfMemoryException', 'SwitchError',
-                'TypeInfo', '_d_arrayappend',
-                '_d_arrayappendb', '_d_arrayappendc',
-                '_d_arrayappendcb', '_d_arraycast',
-                '_d_arraycast_frombit', '_d_arraycat',
-                '_d_arraycatb', '_d_arraycatn',
-                '_d_arraycopy', '_d_arraycopybit',
-                '_d_arraysetbit', '_d_arraysetbit2',
-                '_d_arraysetlength', '_d_arraysetlengthb',
-                '_d_callfinalizer',
-                '_d_create_exception_object',
-                '_d_criticalenter', '_d_criticalexit',
-                '_d_delarray', '_d_delclass',
-                '_d_delinterface', '_d_delmemory',
-                '_d_dynamic_cast', '_d_exception',
-                '_d_exception_filter', '_d_framehandler',
-                '_d_interface_cast', '_d_interface_vtbl',
-                '_d_invariant', '_d_isbaseof',
-                '_d_isbaseof2', '_d_local_unwind',
-                '_d_monitorenter', '_d_monitorexit',
-                '_d_monitorrelease', '_d_monitor_epilog',
-                '_d_monitor_handler', '_d_monitor_prolog',
-                '_d_new', '_d_newarrayi', '_d_newbitarray',
-                '_d_newclass', '_d_obj_cmp', '_d_obj_eq',
-                '_d_OutOfMemory', '_d_switch_dstring',
-                '_d_switch_string', '_d_switch_ustring',
-                '_d_throw',
+                'Interface', 'Object', 'IMonitor',
+                'OffsetTypeInfo', 'Throwable',
+                'TypeInfo_Class', 'TypeInfo', '__traits',
+                '__EOF__', '__FILE__', '__LINE__',
             ),
         4 => array(
                 'abstract', 'align', 'auto', 'bit', 'bool',
-                'byte', 'cdouble', 'cent', 'cfloat', 'char',
-                'class', 'const', 'creal', 'dchar', 'debug',
+                'byte', 'cdouble', 'cfloat', 'char',
+                'class', 'const', 'creal', 'dchar', 'dstring', 'debug',
                 'deprecated', 'double', 'enum', 'export',
-                'final', 'float', 'idouble', 'ifloat', 'int',
-                'ireal', 'long', 'override', 'package',
-                'private', 'protected', 'ptrdiff_t',
-                'public', 'real', 'short', 'size_t',
-                'static', 'struct', 'synchronized',
+                'final', 'float', 'idouble', 'ifloat', 'immutable', 'int',
+                'interface', 'ireal', 'long', 'nothrow', 'override',
+                'package', 'private', 'protected', 'ptrdiff_t',
+                'public', 'real', 'short', 'shared', 'size_t',
+                'static', 'string', 'struct', 'synchronized',
                 'template', 'ubyte', 'ucent', 'uint',
                 'ulong', 'unittest', 'ushort', 'version',
-                'void', 'volatile', 'wchar'
+                'void', 'volatile', 'wchar', 'wstring',
+                '__gshared', '@disable', '@property', 'pure', 'safe'
             )
         ),
     'SYMBOLS' => array(

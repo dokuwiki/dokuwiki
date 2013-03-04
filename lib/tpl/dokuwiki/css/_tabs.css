@@ -1,0 +1,82 @@
+/**
+ * This file provides the styles for general tabs.
+ */
+
+.dokuwiki .tabs > ul,
+.dokuwiki ul.tabs {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+/* border underneath */
+.dokuwiki .tabs > ul:after,
+.dokuwiki ul.tabs:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid __border__;
+    z-index: 1;
+}
+
+.dokuwiki .tabs > ul li,
+.dokuwiki ul.tabs li {
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+[dir=rtl] .dokuwiki .tabs > ul li,
+[dir=rtl] .dokuwiki ul.tabs li {
+    float: right;
+}
+
+.dokuwiki .tabs > ul li a,
+.dokuwiki ul.tabs li strong,
+.dokuwiki ul.tabs li a {
+    display: inline-block;
+    padding: .3em .8em;
+    margin: 0 0 0 .3em;
+    background-color: __background_neu__;
+    color: __text__;
+    border: 1px solid __border__;
+    border-radius: .5em .5em 0 0;
+    position: relative;
+    z-index: 0;
+}
+[dir=rtl] .dokuwiki .tabs > ul li a,
+[dir=rtl] .dokuwiki ul.tabs li strong,
+[dir=rtl] .dokuwiki ul.tabs li a {
+    margin: 0 .3em 0 0;
+}
+
+.dokuwiki ul.tabs li strong {
+    font-weight: normal;
+}
+
+.dokuwiki ul.tabs li a:link,
+.dokuwiki ul.tabs li a:visited {
+}
+.dokuwiki .tabs > ul li a:hover,
+.dokuwiki .tabs > ul li a:active,
+.dokuwiki .tabs > ul li a:focus,
+.dokuwiki .tabs > ul li .curid a,
+.dokuwiki .tabs > ul .active a,
+.dokuwiki ul.tabs li a:hover,
+.dokuwiki ul.tabs li a:active,
+.dokuwiki ul.tabs li a:focus,
+.dokuwiki ul.tabs li strong {
+    background-color: __background_alt__;
+    color: __text__;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.dokuwiki .tabs > ul li .curid a,
+.dokuwiki .tabs > ul li .active a,
+.dokuwiki ul.tabs li strong {
+    z-index: 2;
+    border-bottom-color: __background_alt__;
+}

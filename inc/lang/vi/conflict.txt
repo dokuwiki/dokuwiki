@@ -2,4 +2,4 @@
 
 Trang bạn đang biên soạn có một phiên bản mới hơn. Việc này xảy ra khi một bạn đổi trang ấy khi bạn đang biên soạn trang này.
 
-Xem kỹ những thay đổi dưới đây, rồi quyết định giữ phiên bản nào. Nếu chọn ''bảo lưu'', phiên bản của bạn được giữ lại. Bấm ''huỷ'' để giữ phiên bản kia.
+Xem kỹ những thay đổi dưới đây, rồi quyết định giữ phiên bản nào. Nếu chọn ''Lưu'', phiên bản của bạn được giữ lại. Bấm ''huỷ'' để giữ phiên bản kia.

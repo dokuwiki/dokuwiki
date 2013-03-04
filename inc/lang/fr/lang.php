@@ -23,6 +23,8 @@
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
  * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
+ * @author Yannick Aure <yannick.aure@gmail.com>
+ * @author Olivier DUVAL <zorky00@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -58,7 +60,7 @@ $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
 $lang['btn_subscribe']         = 'S\'abonner à la page';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
-$lang['btn_resendpwd']         = 'Envoyer le mot de passe';
+$lang['btn_resendpwd']         = 'Définir un nouveau mot de passe';
 $lang['btn_draft']             = 'Modifier le brouillon';
 $lang['btn_recover']           = 'Récupérer le brouillon';
 $lang['btn_draftdel']          = 'Effacer le brouillon';
@@ -95,7 +97,7 @@ $lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est 
 $lang['profchanged']           = 'Mise à jour du profil réussie.';
 $lang['pwdforget']             = 'Mot de passe oublié ? Faites-vous envoyer votre mot de passe ';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
-$lang['resendpwd']             = 'Renvoyer le mot de passe de';
+$lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
 $lang['resendpwdmissing']      = 'Désolé, vous devez remplir tous les champs.';
 $lang['resendpwdnouser']       = 'Désolé, cet utilisateur est introuvable dans notre base.';
 $lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez-vous d\'avoir utilisé le lien de confirmation.';
@@ -108,6 +110,7 @@ $lang['searchmedia_in']        = 'Chercher dans %s';
 $lang['txt_upload']            = 'Sélectionnez un fichier à envoyer ';
 $lang['txt_filename']          = 'Donnez un « wikiname » (optionnel) ';
 $lang['txt_overwrt']           = 'Écraser le fichier cible';
+$lang['maxuploadsize']         = 'Téléverser max. %s par fichier';
 $lang['lockedby']              = 'Actuellement bloqué par';
 $lang['lockexpire']            = 'Le blocage expire à';
 $lang['js']['willexpire']      = 'Votre verrouillage pour la modification de cette page expire dans une minute.\nPour éviter les conflits, utilisez le bouton « Aperçu » pour réinitialiser le minuteur.';
@@ -200,6 +203,11 @@ $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'Le greffon <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash</a> est nécessaire pour afficher ce contenu.';
 $lang['download']              = 'Télécharger un extrait';
+$lang['tools']                 = 'Outils';
+$lang['user_tools']            = 'Outils d\'utilisateurs';
+$lang['site_tools']            = 'Outils du Site';
+$lang['page_tools']            = 'Outils de la Page';
+$lang['skip_to_content']       = 'Aller au contenu';
 $lang['mail_newpage']          = 'page ajoutée :';
 $lang['mail_changed']          = 'page modifiée :';
 $lang['mail_subscribe_list']   = 'pages modifiées dans la catégorie :';
@@ -270,6 +278,7 @@ $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les m
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
 $lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'informer l\'administrateur du Wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'informer l\'administrateur du Wiki.';
+$lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
 $lang['i_installer']           = 'Installeur DokuWiki';
 $lang['i_wikiname']            = 'Nom du wiki';
@@ -324,4 +333,3 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas les droits pour lir
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas les droits pour télécharger des fichiers.';
 $lang['media_update']          = 'Télécharger une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
-$lang['plugin_install_err']    = 'Extension mal installée. Renommez le dossier de l\'extension \'%s\' en \'%s\'.';

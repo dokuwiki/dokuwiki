@@ -1,0 +1,12 @@
+=== Trợ giúp nhanh: ===
+
+Trang này giúp bạn thêm hoặc xóa quyền được cấp cho 1 thư mục hoặc trang wiki của bạn.
+
+Của sổ bên trái hiển thị tất cả các thư mục và trang văn bản.
+
+Khung trên đây cho phép bạn xem và sửa quyền của một nhóm hoặc thành viên đã chọn.
+
+Bảng bên dưới hiển thị tất cả các quyền được cấp. Bạn có thể sửa hoặc hóa các quyền đó một cách nhanh chóng.
+
+Đọc [[doku>acl|tài liệu chính thức về ACL]] sẽ giúp bạn hiểu hơn về cách phân quyền ở DokuWiki.
+

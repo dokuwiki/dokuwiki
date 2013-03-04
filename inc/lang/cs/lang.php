@@ -11,6 +11,7 @@
  * @author Lefty <lefty@multihost.cz>
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
+ * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -46,7 +47,7 @@ $lang['btn_backtomedia']       = 'Zpět do Výběru dokumentu';
 $lang['btn_subscribe']         = 'Odebírat emailem změny stránky';
 $lang['btn_profile']           = 'Upravit profil';
 $lang['btn_reset']             = 'Reset';
-$lang['btn_resendpwd']         = 'Zaslat nové heslo';
+$lang['btn_resendpwd']         = 'Nastavit nové heslo';
 $lang['btn_draft']             = 'Upravit koncept';
 $lang['btn_recover']           = 'Obnovit koncept';
 $lang['btn_draftdel']          = 'Vymazat koncept';
@@ -83,7 +84,7 @@ $lang['profnoempty']           = 'Nelze zadat prázdné jméno nebo mailová adr
 $lang['profchanged']           = 'Uživatelský profil změněn.';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
-$lang['resendpwd']             = 'Odeslat nové heslo pro uživatele';
+$lang['resendpwd']             = 'Nastavit nové heslo pro';
 $lang['resendpwdmissing']      = 'Musíte vyplnit všechny položky.';
 $lang['resendpwdnouser']       = 'Bohužel takový uživatel v systému není.';
 $lang['resendpwdbadauth']      = 'Autorizační kód není platný. Zadali jste opravdu celý odkaz na potvrzovací stránku?';
@@ -96,6 +97,7 @@ $lang['searchmedia_in']        = 'Hledat v %s';
 $lang['txt_upload']            = 'Vyberte soubor jako přílohu';
 $lang['txt_filename']          = 'Wiki jméno (volitelné)';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
+$lang['maxuploadsize']         = 'Max. velikost souboru %s';
 $lang['lockedby']              = 'Právě zamknuto:';
 $lang['lockexpire']            = 'Zámek vyprší:';
 $lang['js']['willexpire']      = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
@@ -190,6 +192,11 @@ $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
 $lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stáhnout snippet';
+$lang['tools']                 = 'Nástroje';
+$lang['user_tools']            = 'Uživatelské nástroje';
+$lang['site_tools']            = 'Nástroje pro tento web';
+$lang['page_tools']            = 'Nástroje pro stránku';
+$lang['skip_to_content']       = 'jít k obsahu';
 $lang['mail_newpage']          = 'nová stránka:';
 $lang['mail_changed']          = 'změna stránky:';
 $lang['mail_subscribe_list']   = 'stránky změněné ve jmenném prostoru:';
@@ -260,6 +267,7 @@ $lang['subscr_style_digest']   = 'souhrnný email změn pro každou stránku (ka
 $lang['subscr_style_list']     = 'seznam změněných stránek od posledního emailu (každé %.2f dny/dní)';
 $lang['authmodfailed']         = 'Autentizace uživatelů je špatně nastavena. Informujte prosím správce této wiki.';
 $lang['authtempfail']          = 'Autentizace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte prosím správce této wiki.';
+$lang['authpwdexpire']         = 'Platnost vašeho hesla vyprší za %d dní, měli byste ho změnit co nejdříve.';
 $lang['i_chooselang']          = 'Vyberte si jazyk';
 $lang['i_installer']           = 'Instalace DokuWiki';
 $lang['i_wikiname']            = 'Název wiki';
@@ -314,4 +322,3 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
-$lang['plugin_install_err']    = 'Plugin je špatně nainstalován. Přejmenujte adresář pluginu \'%s\' na \'%s\'.';

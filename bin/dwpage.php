@@ -241,7 +241,7 @@ switch ( $OPTS->arg(0) ) {
         $TARGET_FN = $OPTS->arg(2);
 
         if ( empty($TARGET_FN) ) {
-            $TARGET_FN = getcwd().'/'.basename($WIKI_FN);
+            $TARGET_FN = getcwd().'/'.utf8_basename($WIKI_FN);
         }
 
         if ( !file_exists(dirname($TARGET_FN)) ) {

@@ -17,10 +17,10 @@
 
   //get input
   $MEDIA  = stripctl(getID('media',false)); // no cleaning except control chars - maybe external
-  $CACHE  = calc_cache($_REQUEST['cache']);
-  $WIDTH  = (int) $_REQUEST['w'];
-  $HEIGHT = (int) $_REQUEST['h'];
-  $REV   = (int) @$_REQUEST['rev'];
+  $CACHE  = calc_cache($INPUT->str('cache'));
+  $WIDTH  = $INPUT->int('w');
+  $HEIGHT = $INPUT->int('h');
+  $REV    = &$INPUT->ref('rev');
   //sanitize revision
   $REV = preg_replace('/[^0-9]/','',$REV);
 
@@ -122,9 +122,9 @@ function sendFile($file,$mime,$dl,$cache){
 
   //download or display?
   if($dl){
-    header('Content-Disposition: attachment; filename="'.basename($file).'";');
+    header('Content-Disposition: attachment; filename="'.utf8_basename($file).'";');
   }else{
-    header('Content-Disposition: inline; filename="'.basename($file).'";');
+    header('Content-Disposition: inline; filename="'.utf8_basename($file).'";');
   }
 
   //use x-sendfile header to pass the delivery to compatible webservers
@@ -152,12 +152,12 @@ function sendFile($file,$mime,$dl,$cache){
  * @returns array(STATUS, STATUSMESSAGE)
  */
 function checkFileStatus(&$media, &$file, $rev='') {
-  global $MIME, $EXT, $CACHE;
+  global $MIME, $EXT, $CACHE, $INPUT;
 
   //media to local file
   if(preg_match('#^(https?)://#i',$media)){
     //check hash
-    if(substr(md5(auth_cookiesalt().$media),0,6) != $_REQUEST['hash']){
+    if(substr(md5(auth_cookiesalt().$media),0,6) != $INPUT->str('hash')){
       return array( 412, 'Precondition Failed');
     }
     //handle external images

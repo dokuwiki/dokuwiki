@@ -32,8 +32,8 @@ function js_out(){
     global $config_cascade;
 
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],
-                       '.js');
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
+    $cache->_event = 'JS_CACHE_USE';
 
     // load minified version for some files
     $min = $conf['compress'] ? '.min' : '';
@@ -65,7 +65,7 @@ function js_out(){
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_INC.'lib/scripts/behaviour.js',
                 DOKU_INC.'lib/scripts/page.js',
-                DOKU_TPLINC.'script.js',
+                tpl_incdir().'script.js',
             );
 
     // add possible plugin scripts and userscript
@@ -79,15 +79,15 @@ function js_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    http_cached($cache->cache,
-                $cache->useCache(array('files' => $cache_files)));
+    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    http_cached($cache->cache, $cache_ok);
 
     // start output buffering and build the script
     ob_start();
 
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
-    print "var DOKU_TPL    = '".DOKU_TPL."';";
+    print "var DOKU_TPL    = '".tpl_basedir()."';";
     // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
@@ -102,8 +102,12 @@ function js_out(){
 
     // load files
     foreach($files as $file){
+        $ismin = (substr($file,-7) == '.min.js');
+
         echo "\n\n/* XXXXXXXXXX begin of ".str_replace(DOKU_INC, '', $file) ." XXXXXXXXXX */\n\n";
+        if($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";
         js_load($file);
+        if($ismin) echo "\n/* END NOCOMPRESS */\n";
         echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
 
@@ -143,7 +147,7 @@ function js_load($file){
 
         // is it a include_once?
         if($match[1]){
-            $base = basename($ifile);
+            $base = utf8_basename($ifile);
             if($loaded[$base]) continue;
             $loaded[$base] = true;
         }
@@ -262,7 +266,18 @@ function js_compress($s){
         if($ch == '/' && $s{$i+1} == '*' && $s{$i+2} != '@'){
             $endC = strpos($s,'*/',$i+2);
             if($endC === false) trigger_error('Found invalid /*..*/ comment', E_USER_ERROR);
-            $i = $endC + 2;
+
+            // check if this is a NOCOMPRESS comment
+            if(substr($s, $i, $endC+2-$i) == '/* BEGIN NOCOMPRESS */'){
+                $endNC = strpos($s, '/* END NOCOMPRESS */', $endC+2);
+                if($endNC === false) trigger_error('Found invalid NOCOMPRESS comment', E_USER_ERROR);
+
+                // verbatim copy contents, trimming but putting it on its own line
+                $result .= "\n".trim(substr($s, $i + 22, $endNC - ($i + 22)))."\n"; // BEGIN comment = 22 chars
+                $i = $endNC + 20; // END comment = 20 chars
+            }else{
+                $i = $endC + 2;
+            }
             continue;
         }
 
@@ -286,10 +301,8 @@ function js_compress($s){
                 // now move forward and find the end of it
                 $j = 1;
                 while($s{$i+$j} != '/'){
-                    while( ($s{$i+$j} != '\\') && ($s{$i+$j} != '/')){
-                        $j = $j + 1;
-                    }
                     if($s{$i+$j} == '\\') $j = $j + 2;
+                    else $j++;
                 }
                 $result .= substr($s,$i,$j+1);
                 $i = $i + $j + 1;
@@ -307,7 +320,10 @@ function js_compress($s){
                     $j += 1;
                 }
             }
-            $result .= substr($s,$i,$j+1);
+            $string  = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
             $i = $i + $j + 1;
             continue;
         }
@@ -322,7 +338,10 @@ function js_compress($s){
                     $j += 1;
                 }
             }
-            $result .= substr($s,$i,$j+1);
+            $string = substr($s,$i,$j+1);
+            // remove multiline markers:
+            $string  = str_replace("\\\n",'',$string);
+            $result .= $string;
             $i = $i + $j + 1;
             continue;
         }

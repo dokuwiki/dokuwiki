@@ -8,6 +8,7 @@
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ * @author Taisuke Shimamoto <dentostar@gmail.com>
  */
 $lang['menu']                  = 'プラグイン管理';
 $lang['download']              = 'プラグインのダウンロードとインストール';

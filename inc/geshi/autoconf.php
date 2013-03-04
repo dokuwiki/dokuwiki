@@ -4,7 +4,7 @@
  * -----
  * Author: Mihai Vasilian (grayasm@gmail.com)
  * Copyright: (c) 2010 Mihai Vasilian
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2010/01/25
  *
  * autoconf language file for GeSHi.

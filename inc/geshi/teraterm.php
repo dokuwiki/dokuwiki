@@ -4,23 +4,29 @@
  * --------
  * Author: Boris Maisuradze (boris at logmett.com)
  * Copyright: (c) 2008 Boris Maisuradze (http://logmett.com)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2008/09/26
  *
  * Tera Term Macro language file for GeSHi.
  *
  *
- * This version of ttl.php was created for Tera Term 4.60 and LogMeTT 2.9.4.
+ * This version of teraterm.php was created for Tera Term 4.62 and LogMeTT 2.9.4.
  * Newer versions of these application can contain additional Macro commands
- * and/or keywords that are not listed here. The latest release of ttl.php
+ * and/or keywords that are not listed here. The latest release of teraterm.php
  * can be downloaded from Download section of LogMeTT.com
  *
  * CHANGES
  * -------
- * 2008/09/26 (1.0.8)
+ * 2008/09/26 (1.0.0)
  *   -  First Release for Tera Term 4.60 and below.
+ * 2009/03/22 (1.1.0)
+ *   -  First Release for Tera Term 4.62 and below.
+ * 2009/04/25 (1.1.1)
+ *   -  Second Release for Tera Term 4.62 and below.
+ * 2010/09/12 (1.1.2)
+ *   -  Second Release for Tera Term 4.67, LogMeTT 2.97, TTLEditor 1.2.1 and below.
  *
- * TODO (updated 2008/09/26)
+ * TODO (updated 2010/09/12)
  * -------------------------
  * *
  *
@@ -57,27 +63,29 @@ $language_data = array (
             'Beep',
             'BplusRecv',
             'BplusSend',
-            'Break',            // (version 4.53 or later)
+            'Break',
             'Call',
-            'CallMenu',         // (version 4.56 or later)
+            'CallMenu',
             'ChangeDir',
             'ClearScreen',
-            'Clipb2Var',        //(version 4.46 or later)
+            'Clipb2Var',
             'ClosesBox',
             'CloseTT',
             'Code2Str',
             'Connect',
-            'CRC32',            // (version 4.60 or later)
-            'CRC32File',        // (version 4.60 or later)
-            'CygConnect',       // (version 4.57 or later)
+            'CRC32',
+            'CRC32File',
+            'CygConnect',
             'DelPassword',
             'Disconnect',
-            'Do',               // (version 4.56 or later)
+            'DispStr',
+            'Do',
             'Else',
+            'ElseIf',
             'EnableKeyb',
             'End',
             'EndIf',
-            'EndUntil',         // (version 4.56 or later)
+            'EndUntil',
             'EndWhile',
             'Exec',
             'ExecCmnd',
@@ -88,32 +96,37 @@ $language_data = array (
             'FileCreate',
             'FileDelete',
             'FileMarkPtr',
-            'FilenameBox',      //(version 4.54 or later)
+            'FileNameBox',
             'FileOpen',
             'FileRead',
-            'FileReadln',       // (version 4.48 or later)
+            'FileReadln',
             'FileRename',
             'FileSearch',
             'FileSeek',
             'FileSeekBack',
+            'FileStat',
             'FileStrSeek',
             'FileStrSeek2',
+            'FileTruncate',
             'FileWrite',
-            'FileWriteln',
-            'FindOperations',
+            'FileWriteLn',
+            'FindClose',
+            'FindFirst',
+            'FindNext',
             'FlushRecv',
-            'ForNext',
+            'For',
             'GetDate',
-            'GetDir',           //(version 4.46 or later)
+            'GetDir',
             'GetEnv',
+            'GetHostname',
             'GetPassword',
             'GetTime',
             'GetTitle',
-            'GetVer',           //(version 4.58 or later)
+            'GetTTDir',
+            'Getver',
             'GoTo',
             'If',
-            'IfDefined',        // (version 4.46 or later)
-            'IfThenElseIf',
+            'IfDefined',
             'Include',
             'InputBox',
             'Int2Str',
@@ -121,73 +134,91 @@ $language_data = array (
             'KmtGet',
             'KmtRecv',
             'KmtSend',
-            'LoadKeyMap',
+            'LoadKeymap',
             'LogClose',
             'LogOpen',
             'LogPause',
             'LogStart',
             'LogWrite',
-            'Loop',             // (version 4.56 or later)
+            'Loop',
             'MakePath',
             'MessageBox',
-            'MPause',           // (version 4.27 or later)
+            'MPause',
+            'Next',
             'PasswordBox',
             'Pause',
-            'QuickvanRecv',
-            'QuickvanSend',
-            'Random',           //(version 4.27 or later)
-            'Recvln',
+            'QuickVANRecv',
+            'QuickVANSend',
+            'Random',
+            'RecvLn',
             'RestoreSetup',
             'Return',
-            'RotateLeft',       //(version 4.54 or later)
-            'RotateRight',      //(version 4.54 or later)
-            'ScpRecv',          // (version 4.57 or later)
-            'ScpSend',          // (version 4.57 or later)
+            'RotateLeft',
+            'RotateRight',
+            'ScpRecv',
+            'ScpSend',
             'Send',
             'SendBreak',
+            'SendBroadcast',
             'SendFile',
-            'SendKcode',
-            'Sendln',
-            'SetBaud',          // (version 4.58 or later)
+            'SendKCode',
+            'SendLn',
+            'SendLnBroadcast',
+            'SendMulticast',
+            'SetBaud',
             'SetDate',
+            'SetDebug',
             'SetDir',
             'SetDlgPos',
-            'SetDTR',           // (version 4.59 or later)
-            'SetRTS',           // (version 4.59 or later)
-            'SetEnv',           // (version 4.54 or later)
+            'SetDTR',
             'SetEcho',
+            'SetEnv',
             'SetExitCode',
+            'SetMulticastName',
+            'SetRTS',
             'SetSync',
             'SetTime',
             'SetTitle',
             'Show',
             'ShowTT',
-            'Sprintf',          // (version 4.52 or later)
+            'SPrintF',
+            'SPrintF2',
             'StatusBox',
             'Str2Code',
             'Str2Int',
             'StrCompare',
             'StrConcat',
             'StrCopy',
+            'StrInsert',
+            'StrJoin',
             'StrLen',
-            'StrMatch',         // (version 4.59 or later)
+            'StrMatch',
+            'StrRemove',
+            'StrReplace',
             'StrScan',
-            'Testlink',
+            'StrSpecial',
+            'StrSplit',
+            'StrTrim',
+            'TestLink',
             'Then',
-            'ToLower',          //(version 4.53 or later)
-            'ToUpper',          //(version 4.53 or later)
-            'Unlink',
-            'Until',            // (version 4.56 or later)
-            'Var2Clipb',        //(version 4.46 or later)
+            'ToLower',
+            'ToUpper',
+            'UnLink',
+            'Until',
+            'Var2Clipb',
             'Wait',
+            'Wait4All',
             'WaitEvent',
-            'Waitln',
+            'WaitLn',
+            'WaitN',
             'WaitRecv',
-            'WaitRegex',        // (version 4.21 or later)
+            'WaitRegEx',
             'While',
             'XmodemRecv',
             'XmodemSend',
             'YesNoBox',
+            'YmodemRecv',
+            'YmodemSend',
             'ZmodemRecv',
             'ZmodemSend'
             ),
@@ -204,6 +235,7 @@ $language_data = array (
             'groupmatchstr9',
             'inputstr',
             'matchstr',
+            'mtimeout',
             'param2',
             'param3',
             'param4',
@@ -225,11 +257,14 @@ $language_data = array (
             '$[6]',
             '$[7]',
             '$[8]',
+            '$[9]',
+            '$branch$',
+            '$computername$',
             '$connection$',
             '$email$',
             '$logdir$',
             '$logfilename$',
-            '$logit$',
+            '$lttfilename$',
             '$mobile$',
             '$name$',
             '$pager$',
@@ -239,7 +274,7 @@ $language_data = array (
             '$ttdir$',
             '$user$',
             '$windir$',
-            ),
+        ),
         /* Keyword Symbols */
         4 => array(
             'and',
@@ -249,9 +284,11 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']',
-        '~', '!', '+', '-', '*', '/', '%', '>>', '<<', '<<<', '>>>', '&', '^', '|',
-        '<>', '<=', '>=', '=', '==', '<>', '!=', '&&', '||'
+        '(', ')', '[', ']', '{', '}',
+        '+', '-', '*', '/', '%',
+        '!', '&', '|', '^',
+        '<', '>', '=',
+        '?', ':', ';',
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,

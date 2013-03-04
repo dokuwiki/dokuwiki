@@ -70,7 +70,6 @@ class Doku_Plugin_Controller {
 
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
-        global $lang;
 
         list($plugin,$component) = $this->_splitName($name);
 
@@ -97,7 +96,10 @@ class Doku_Plugin_Controller {
             $dir = $this->get_directory($plugin);
             $inf = confToHash(DOKU_PLUGIN."$dir/plugin.info.txt");
             if($inf['base'] && $inf['base'] != $plugin){
-                msg(sprintf($lang['plugin_install_err'],hsc($plugin),hsc($inf['base'])),-1);
+                msg(sprintf("Plugin installed incorrectly. Rename plugin directory '%s' to '%s'.", hsc($plugin), hsc($inf['base'])), -1);
+            } elseif (preg_match('/^'.DOKU_PLUGIN_NAME_REGEX.'$/', $plugin) !== 1) {
+                msg(sprintf("Plugin name '%s' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ".
+                                'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)), -1);
             }
             return null;
         }
@@ -137,6 +139,7 @@ class Doku_Plugin_Controller {
                     // the plugin was disabled by rc2009-01-26
                     // disabling mechanism was changed back very soon again
                     // to keep everything simple we just skip the plugin completely
+                    continue;
                 } elseif (@file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
                     // treat this as a default disabled plugin(over-rideable by the plugin manager)
                     // deprecated 2011-09-10 (usage of disabled files)
@@ -168,7 +171,7 @@ class Doku_Plugin_Controller {
         $plugins = array();
         foreach($files as $file) {
             if(file_exists($file)) {
-                @include_once($file);
+                include_once($file);
             }
         }
         return $plugins;

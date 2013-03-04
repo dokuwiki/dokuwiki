@@ -4,7 +4,7 @@
  * ----------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2004/29/07
  *
  * Apache language file for GeSHi.
@@ -343,6 +343,9 @@ $language_data = array (
             'SuexecUserGroup',
 
             //mod_unique_id.c
+
+            //mod_upload_progress
+            'ReportUploads', 'TrackUploads', 'UploadProgressSharedMemorySize',
 
             //mod_userdir.c
             'UserDir',

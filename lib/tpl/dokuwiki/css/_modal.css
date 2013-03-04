@@ -1,0 +1,94 @@
+/**
+ * This file provides styles for modal dialogues.
+ */
+
+.dokuwiki .ui-widget {
+    font-size: 100%;
+}
+
+
+/* link wizard (opens from the link button in the edit toolbar)
+********************************************************************/
+
+#link__wiz {
+}
+
+[dir=rtl] #link__wiz_close {
+    float: left;
+}
+
+#link__wiz_result {
+    background-color: __background__;
+    width:  293px;
+    height: 193px;
+    overflow: auto;
+    border: 1px solid __border__;
+    margin: 3px auto;
+    text-align: left;
+    line-height: 1;
+}
+[dir=rtl] #link__wiz_result {
+    text-align: right;
+}
+
+#link__wiz_result div {
+    padding: 3px 3px 3px 0;
+}
+
+#link__wiz_result div a {
+    display: block;
+    padding-left: 22px;
+    min-height: 16px;
+    background: transparent 3px center no-repeat;
+}
+[dir=rtl] #link__wiz_result div a {
+    padding: 3px 22px 3px 3px;
+    background-position: 257px 3px;
+}
+
+#link__wiz_result div.type_u a {
+    background-image: url(../../images/up.png);
+}
+#link__wiz_result div.type_f a {
+    background-image: url(../../images/page.png);
+}
+#link__wiz_result div.type_d a {
+    background-image: url(../../images/ns.png);
+}
+
+#link__wiz_result div.even {
+    background-color: __background_neu__;
+}
+
+#link__wiz_result div.selected {
+    background-color: __background_alt__;
+}
+
+#link__wiz_result span {
+    display: block;
+    color: __text_neu__;
+    margin-left: 22px;
+}
+
+
+/* media option wizard (opens when inserting media in the media popup)
+********************************************************************/
+
+#media__popup {
+    /* for backwards compatibility (not needed since Rincewind) */
+    display: none;
+}
+
+#media__popup_content p {
+    margin: 0 0 .5em;
+}
+
+#media__popup_content label {
+    margin-right: .5em;
+    cursor: default;
+}
+
+#media__popup_content .button {
+    margin-right: 1px;
+    cursor: pointer;
+}

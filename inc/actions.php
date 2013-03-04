@@ -20,6 +20,7 @@ function act_dispatch(){
     global $ID;
     global $INFO;
     global $QUERY;
+    global $INPUT;
     global $lang;
     global $conf;
 
@@ -30,7 +31,7 @@ function act_dispatch(){
     if ($evt->advise_before()) {
 
         //sanitize $ACT
-        $ACT = act_clean($ACT);
+        $ACT = act_validate($ACT);
 
         //check if searchword was given - else just show
         $s = cleanID($QUERY);
@@ -63,11 +64,11 @@ function act_dispatch(){
 
         //sitemap
         if ($ACT == 'sitemap'){
-            $ACT = act_sitemap($ACT);
+            act_sitemap($ACT);
         }
 
         //register
-        if($ACT == 'register' && $_POST['save'] && register()){
+        if($ACT == 'register' && $INPUT->post->bool('save') && register()){
             $ACT = 'login';
         }
 
@@ -131,14 +132,15 @@ function act_dispatch(){
         //handle admin tasks
         if($ACT == 'admin'){
             // retrieve admin plugin name from $_REQUEST['page']
-            if (!empty($_REQUEST['page'])) {
+            if (($page = $INPUT->str('page', '', true)) != '') {
                 $pluginlist = plugin_list('admin');
-                if (in_array($_REQUEST['page'], $pluginlist)) {
+                if (in_array($page, $pluginlist)) {
                     // attempt to load the plugin
-                    if ($plugin =& plugin_load('admin',$_REQUEST['page']) !== null){
+                    if ($plugin =& plugin_load('admin',$page) !== null){
+                        /** @var DokuWiki_Admin_Plugin $plugin */
                         if($plugin->forAdminOnly() && !$INFO['isadmin']){
                             // a manager tried to load a plugin that's for admins only
-                            unset($_REQUEST['page']);
+                            $INPUT->remove('page');
                             msg('For admins only',-1);
                         }else{
                             $plugin->handle();
@@ -176,6 +178,11 @@ function act_dispatch(){
     // in function tpl_content()
 }
 
+/**
+ * Send the given headers using header()
+ *
+ * @param array $headers The headers that shall be sent
+ */
 function act_sendheaders($headers) {
     foreach ($headers as $hdr) header($hdr);
 }
@@ -183,15 +190,9 @@ function act_sendheaders($headers) {
 /**
  * Sanitize the action command
  *
- * Add all allowed commands here.
- *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function act_clean($act){
-    global $lang;
-    global $conf;
-    global $INFO;
-
     // check if the action was given as array key
     if(is_array($act)){
         list($act) = array_keys($act);
@@ -205,6 +206,21 @@ function act_clean($act){
     if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
     if($act === '') $act = 'show';
+    return $act;
+}
+
+/**
+ * Sanitize and validate action commands.
+ *
+ * Add all allowed commands here.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function act_validate($act) {
+    global $conf;
+    global $INFO;
+
+    $act = act_clean($act);
 
     // check if action is disabled
     if(!actionOK($act)){
@@ -300,13 +316,14 @@ function act_draftdel($act){
 function act_draftsave($act){
     global $INFO;
     global $ID;
+    global $INPUT;
     global $conf;
-    if($conf['usedraft'] && $_POST['wikitext']){
+    if($conf['usedraft'] && $INPUT->post->has('wikitext')) {
         $draft = array('id'     => $ID,
-                'prefix' => substr($_POST['prefix'], 0, -1),
-                'text'   => $_POST['wikitext'],
-                'suffix' => $_POST['suffix'],
-                'date'   => (int) $_POST['date'],
+                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
+                'text'   => $INPUT->post->str('wikitext'),
+                'suffix' => $INPUT->post->str('suffix'),
+                'date'   => $INPUT->post->int('date'),
                 'client' => $INFO['client'],
                 );
         $cname = getCacheName($draft['client'].$ID,'.draft');
@@ -335,6 +352,7 @@ function act_save($act){
     global $SUM;
     global $lang;
     global $INFO;
+    global $INPUT;
 
     //spam check
     if(checkwordblock()) {
@@ -346,7 +364,7 @@ function act_save($act){
         return 'conflict';
 
     //save it
-    saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$_REQUEST['minor']); //use pretty mode for con
+    saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$INPUT->bool('minor')); //use pretty mode for con
     //unlock it
     unlock($ID);
 
@@ -380,7 +398,7 @@ function act_revert($act){
     if($REV){
         $text = rawWiki($ID,$REV);
         if(!$text) return 'show'; //something went wrong
-        $sum  = $lang['restored'];
+        $sum = sprintf($lang['restored'], dformat($REV));
     }
 
     // spam check
@@ -425,6 +443,11 @@ function act_redirect($id,$preact){
     trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
 }
 
+/**
+ * Execute the redirect
+ *
+ * @param array $opts id and fragment for the redirect
+ */
 function act_redirect_execute($opts){
     $go = wl($opts['id'],'',true);
     if(isset($opts['fragment'])) $go .= '#'.$opts['fragment'];
@@ -498,7 +521,7 @@ function act_edit($act){
     //set summary default
     if(!$SUM){
         if($REV){
-            $SUM = $lang['restored'];
+            $SUM = sprintf($lang['restored'], dformat($REV));
         }elseif(!$INFO['exists']){
             $SUM = $lang['created'];
         }
@@ -506,7 +529,7 @@ function act_edit($act){
 
     // Use the date of the newest revision, not of the revision we edit
     // This is used for conflict detection
-    if(!$DATE) $DATE = $INFO['meta']['date']['modified'];
+    if(!$DATE) $DATE = @filemtime(wikiFN($ID));
 
     //check if locked by anyone - if not lock for my self
     //do not lock when the user can't edit anyway
@@ -556,12 +579,10 @@ function act_export($act){
             $output = rawWiki($ID,$REV);
             break;
         case 'xhtml':
-            $pre .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"' . DOKU_LF;
-            $pre .= ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . DOKU_LF;
-            $pre .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$conf['lang'].'"' . DOKU_LF;
-            $pre .= ' lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">' . DOKU_LF;
+            $pre .= '<!DOCTYPE html>' . DOKU_LF;
+            $pre .= '<html lang="'.$conf['lang'].'" dir="'.$lang['direction'].'">' . DOKU_LF;
             $pre .= '<head>' . DOKU_LF;
-            $pre .= '  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . DOKU_LF;
+            $pre .= '  <meta charset="utf-8" />' . DOKU_LF;
             $pre .= '  <title>'.$ID.'</title>' . DOKU_LF;
 
             // get metaheaders
@@ -627,7 +648,7 @@ function act_sitemap($act) {
     }
 
     $sitemap = Sitemapper::getFilePath();
-    if(strrchr($sitemap, '.') === '.gz'){
+    if (Sitemapper::sitemapIsCompressed()) {
         $mime = 'application/x-gzip';
     }else{
         $mime = 'application/xml; charset=utf-8';
@@ -641,7 +662,7 @@ function act_sitemap($act) {
     if (is_readable($sitemap)) {
         // Send headers
         header('Content-Type: '.$mime);
-        header('Content-Disposition: attachment; filename='.basename($sitemap));
+        header('Content-Disposition: attachment; filename='.utf8_basename($sitemap));
 
         http_conditionalRequest(filemtime($sitemap));
 
@@ -669,6 +690,7 @@ function act_subscription($act){
     global $lang;
     global $INFO;
     global $ID;
+    global $INPUT;
 
     // subcriptions work for logged in users only
     if(!$_SERVER['REMOTE_USER']) return 'show';
@@ -676,8 +698,8 @@ function act_subscription($act){
     // get and preprocess data.
     $params = array();
     foreach(array('target', 'style', 'action') as $param) {
-        if (isset($_REQUEST["sub_$param"])) {
-            $params[$param] = $_REQUEST["sub_$param"];
+        if ($INPUT->has("sub_$param")) {
+            $params[$param] = $INPUT->str("sub_$param");
         }
     }
 

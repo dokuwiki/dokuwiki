@@ -6,9 +6,11 @@ class ap_enable extends ap_manage {
 
     function process() {
         global $plugin_protected;
+        global $INPUT;
+
         $count_enabled = $count_disabled = 0;
 
-        $this->enabled = isset($_REQUEST['enabled']) ? $_REQUEST['enabled'] : array();
+        $this->enabled = $INPUT->arr('enabled');
 
         foreach ($this->manager->plugin_list as $plugin) {
             if (in_array($plugin, $plugin_protected)) continue;

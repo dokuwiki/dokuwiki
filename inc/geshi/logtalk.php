@@ -4,14 +4,25 @@
  * -----------
  *
  * Author: Paulo Moura (pmoura@logtalk.org)
- * Copyright: (c) 2009 Paulo Moura (http://logtalk.org/)
- * Release Version: 1.0.8.8
+ * Copyright: (c) 2009-2011 Paulo Moura (http://logtalk.org/)
+ * Release Version: 1.0.8.11
  * Date Started: 2009/10/24
  *
  * Logtalk language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2011/01/18 (1.1.4)
+ *  -  Added syntax coloring of ignore/1
+ * 2010/11/28 (1.1.3)
+ *  -  Added syntax coloring of conforms_to_protocol/2-3
+ * 2010/09/14 (1.1.2)
+ *  -  Added syntax coloring of coinductive/1
+ * 2010/06/23 (1.1.1)
+ *  -  Added syntax coloring of e/0 and pi/0
+ *  -  Added syntax coloring of ground/1, numbervars/3, keysort/2, and sort/2
+ * 2010/05/15 (1.1.0)
+ *  -  Added syntax coloring of callable/1 and compare/3
  * 2009/10/28 (1.0.0)
  *  -  First Release
  *
@@ -76,7 +87,7 @@ $language_data = array(
             // entity directives
             'calls', 'initialization', 'op', 'uses',
             // predicate directives
-            'alias', 'discontiguous', 'dynamic', 'mode', 'info', 'meta_predicate', 'multifile', 'synchronized',
+            'alias', 'coinductive', 'discontiguous', 'dynamic', 'mode', 'info', 'meta_predicate', 'multifile', 'synchronized',
             // module directives
             'export', 'module', 'reexport', 'use_module'
             ),
@@ -111,7 +122,7 @@ $language_data = array(
             'current_category', 'current_object', 'current_protocol',
             'category_property', 'object_property', 'protocol_property',
             // entity relations
-            'complements_object',
+            'complements_object', 'conforms_to_protocol',
             'extends_category', 'extends_object', 'extends_protocol',
             'implements_protocol', 'imports_category',
             'instantiates_class', 'specializes_class',
@@ -125,7 +136,7 @@ $language_data = array(
             // database
             'abolish', 'asserta', 'assertz', 'clause', 'retract', 'retractall',
             // control
-            'call', 'catch', 'once', 'throw',
+            'call', 'catch', 'ignore', 'once', 'throw',
             // all solutions predicates
             'bagof', 'findall', 'forall', 'setof',
             // multi-threading meta-predicates
@@ -139,9 +150,11 @@ $language_data = array(
             'number_chars', 'number_codes',
             'char_code',
             // term creation and decomposition
-            'arg', 'copy_term', 'functor',
+            'arg', 'copy_term', 'functor', 'numbervars',
             // term testing
-            'atom', 'atomic', 'compound', 'float', 'integer', 'nonvar', 'number', 'sub_atom', 'var',
+            'atom', 'atomic', 'callable', 'compound', 'float', 'ground', 'integer', 'nonvar', 'number', 'sub_atom', 'var',
+            // term comparison
+            'compare',
             // stream selection and control
             'current_input', 'current_output', 'set_input', 'set_output',
             'open', 'close', 'flush_output', 'stream_property',
@@ -156,8 +169,10 @@ $language_data = array(
             'write', 'writeq', 'write_canonical', 'write_term',
             'read', 'read_term',
             'char_conversion', 'current_char_conversion',
-            //
-            'halt'
+            // hooks
+            'halt',
+            // sorting
+            'keysort', 'sort'
             ),
         // Built-in predicates (no arguments)
         5 => array(
@@ -180,7 +195,7 @@ $language_data = array(
             ),
         // Evaluable functors (no arguments)
         7 => array(
-            'mod', 'rem'
+            'e', 'pi', 'mod', 'rem'
             ),
         ),
     'SYMBOLS' => array(

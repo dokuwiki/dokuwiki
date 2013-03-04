@@ -4,7 +4,7 @@
  * ----------
  * Author: Tux (tux@inamil.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2004/07/26
  *
  * Pascal language file for GeSHi.
@@ -50,12 +50,13 @@
 $language_data = array (
     'LANG_NAME' => 'Pascal',
     'COMMENT_SINGLE' => array(1 => '//'),
-    'COMMENT_MULTI' => array('{' => '}','(*' => '*)'),
+    'COMMENT_MULTI' => array('(*' => '*)', '{' => '}'),
+    //Compiler directives
+    'COMMENT_REGEXP' => array(2 => '/\\{\\$.*?}|\\(\\*\\$.*?\\*\\)/U'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array('"'),
-    'HARDQUOTE' => array("'", "'"),
-    'HARDESCAPE' => array("''"),
-    'ESCAPE_CHAR' => '\\',
+    'QUOTEMARKS' => array("'"),
+    'ESCAPE_CHAR' => '',
+
     'KEYWORDS' => array(
         1 => array(
             'absolute','asm','assembler','begin','break','case','catch','cdecl',
@@ -67,7 +68,7 @@ $language_data = array (
             'or','overload','override','private','procedure','program',
             'property','protected','public','published','raise','repeat',
             'resourcestring','shl','shr','stdcall','stored','switch','then',
-            'to','try','type','unit','until','uses','var','while','xor'
+            'to','try','type','unit','until','uses','var','while','with','xor'
             ),
         2 => array(
             'nil', 'false', 'true',
@@ -83,15 +84,18 @@ $language_data = array (
             'record','set','shortint','smallint','string','union','word'
             ),
         ),
-    'SYMBOLS' => array(
-        ',', ':', '=', '+', '-', '*', '/'
-        ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => false,
         2 => false,
         3 => false,
         4 => false,
+        ),
+    'SYMBOLS' => array(
+        0 => array('(', ')', '[', ']'),
+        1 => array('.', ',', ':', ';'),
+        2 => array('@', '^'),
+        3 => array('=', '+', '-', '*', '/')
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
@@ -101,30 +105,35 @@ $language_data = array (
             4 => 'color: #000066; font-weight: bold;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #666666; font-style: italic;',
-            'MULTI' => 'color: #666666; font-style: italic;'
+            1 => 'color: #808080; font-style: italic;',
+            2 => 'color: #008000; font-style: italic;',
+            'MULTI' => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #000099; font-weight: bold;',
-            'HARD' => 'color: #000099; font-weight: bold;'
+            0 => 'color: #ff0000; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
             ),
         'STRINGS' => array(
             0 => 'color: #ff0000;',
-            'HARD' => 'color: #ff0000;'
+            //'HARD' => 'color: #ff0000;'
             ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
             ),
         'METHODS' => array(
-            1 => 'color: #0066ee;'
-            ),
-        'SYMBOLS' => array(
-            0 => 'color: #339933;'
+            1 => 'color: #006600;'
             ),
         'REGEXPS' => array(
+            0 => 'color: #0000cc;',
+            1 => 'color: #ff0000;'
+            ),
+        'SYMBOLS' => array(
+            0 => 'color: #000066;',
+            1 => 'color: #000066;',
+            2 => 'color: #000066;',
+            3 => 'color: #000066;'
             ),
         'SCRIPT' => array(
             )
@@ -140,6 +149,10 @@ $language_data = array (
         1 => '.'
         ),
     'REGEXPS' => array(
+        //Hex numbers
+        0 => '\$[0-9a-fA-F]+',
+        //Characters
+        1 => '\#(?:\$[0-9a-fA-F]{1,2}|\d{1,3})'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(

@@ -65,7 +65,6 @@ define('IDX_ASIAN', '(?:'.IDX_ASIAN1.'|'.IDX_ASIAN2.'|'.IDX_ASIAN3.')');
 function idx_get_version(){
     static $indexer_version = null;
     if ($indexer_version == null) {
-        global $conf;
         $version = INDEXER_VERSION;
 
         // DokuWiki version is included for the convenience of plugins
@@ -192,7 +191,6 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getPageWords($text) {
-        global $conf;
 
         $tokens = $this->tokenizer($text);
         $tokens = array_count_values($tokens);  // count the frequency of each token
@@ -291,7 +289,6 @@ class Doku_Indexer {
                 $val_idx = array();
             }
 
-
             foreach ($values as $val) {
                 $val = (string)$val;
                 if ($val !== "") {
@@ -351,7 +348,7 @@ class Doku_Indexer {
             return "locked";
 
         // load known documents
-        $pid = $this->getIndexKey('page', '', $page);
+        $pid = $this->addIndexKey('page', '', $page);
         if ($pid === false) {
             $this->unlock();
             return false;
@@ -389,6 +386,7 @@ class Doku_Indexer {
             $val_idx = explode(':', $this->getIndexKey($metaname.'_p', '', $pid));
             $meta_idx = $this->getIndex($metaname.'_i', '');
             foreach ($val_idx as $id) {
+                if ($id === '') continue;
                 $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
             }
             $this->saveIndex($metaname.'_i', '', $meta_idx);
@@ -415,8 +413,6 @@ class Doku_Indexer {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function tokenizer($text, $wc=false) {
-        global $conf;
-        $words = array();
         $wc = ($wc) ? '' : '\*';
         $stopwords =& idx_get_stopwords();
 
@@ -467,8 +463,8 @@ class Doku_Indexer {
      * in the returned list is an array with the page names as keys and the
      * number of times that token appears on the page as value.
      *
-     * @param arrayref  $tokens list of words to search for
-     * @return array            list of page names with usage counts
+     * @param array  $tokens list of words to search for
+     * @return array         list of page names with usage counts
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -619,9 +615,9 @@ class Doku_Indexer {
      * The $result parameter can be used to merge the index locations with
      * the appropriate query term.
      *
-     * @param arrayref  $words  The query terms.
-     * @param arrayref  $result Set to word => array("length*id" ...)
-     * @return array            Set to length => array(id ...)
+     * @param array  $words  The query terms.
+     * @param array  $result Set to word => array("length*id" ...)
+     * @return array         Set to length => array(id ...)
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function getIndexWords(&$words, &$result) {
@@ -732,7 +728,7 @@ class Doku_Indexer {
      *
      * @param int       $min    bottom frequency threshold
      * @param int       $max    upper frequency limit. No limit if $max<$min
-     * @param int       $length minimum length of words to count
+     * @param int       $minlen minimum length of words to count
      * @param string    $key    metadata key to list. Uses the fulltext index if not given
      * @return array            list of words as the keys and frequency as values
      * @author Tom N Harris <tnharris@whoopdedo.org>
@@ -759,13 +755,15 @@ class Doku_Indexer {
             $val_idx = array();
             foreach ($index as $wid => $line) {
                 $freq = $this->countTuples($line);
-                if ($freq >= $min && (!$max || $freq <= $max) && strlen($val) >= $minlen)
+                if ($freq >= $min && (!$max || $freq <= $max))
                     $val_idx[$wid] = $freq;
             }
             if (!empty($val_idx)) {
                 $words = $this->getIndex($metaname.'_w', '');
-                foreach ($val_idx as $wid => $freq)
-                    $result[$words[$wid]] = $freq;
+                foreach ($val_idx as $wid => $freq) {
+                    if (strlen($words[$wid]) >= $minlen)
+                        $result[$words[$wid]] = $freq;
+                }
             }
         }
         else {
@@ -854,7 +852,8 @@ class Doku_Indexer {
      *
      * @param string    $idx    name of the index
      * @param string    $suffix subpart identifier
-     * @param arrayref  $linex  list of lines without LF
+     * @param array     $lines  list of lines without LF
+     * @return bool             If saving succeeded
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndex($idx, $suffix, &$lines) {
@@ -904,6 +903,7 @@ class Doku_Indexer {
      * @param string    $suffix subpart identifier
      * @param int       $id     the line number
      * @param string    $line   line to write
+     * @return bool             If saving succeeded
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function saveIndexKey($idx, $suffix, $id, $line) {
@@ -963,6 +963,11 @@ class Doku_Indexer {
         return $id;
     }
 
+    /**
+     * @param string $idx    The index file which should be added to the key.
+     * @param string $suffix The suffix of the file
+     * @param bool   $delete Unused
+     */
     protected function cacheIndexDir($idx, $suffix, $delete=false) {
         global $conf;
         if ($idx == 'i')
@@ -1031,7 +1036,7 @@ class Doku_Indexer {
         $fh = @fopen($cachename.'.tmp', 'w');
         if (!$fh) {
             trigger_error("Failed to write index cache", E_USER_ERROR);
-            return;
+            return $lengths;
         }
         @fwrite($fh, implode("\n", $lengths));
         @fclose($fh);
@@ -1131,7 +1136,7 @@ class Doku_Indexer {
 /**
  * Create an instance of the indexer.
  *
- * @return object               a Doku_Indexer
+ * @return Doku_Indexer               a Doku_Indexer
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_get_indexer() {
@@ -1174,18 +1179,8 @@ function & idx_get_stopwords() {
  * @author Tom N Harris <tnharris@whoopdedo.org>
  */
 function idx_addPage($page, $verbose=false, $force=false) {
-    // check if indexing needed
     $idxtag = metaFN($page,'.indexed');
-    if(!$force && @file_exists($idxtag)){
-        if(trim(io_readFile($idxtag)) == idx_get_version()){
-            $last = @filemtime($idxtag);
-            if($last > @filemtime(wikiFN($page))){
-                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
-                return false;
-            }
-        }
-    }
-
+    // check if page was deleted but is still in the index
     if (!page_exists($page)) {
         if (!@file_exists($idxtag)) {
             if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
@@ -1200,6 +1195,18 @@ function idx_addPage($page, $verbose=false, $force=false) {
         @unlink($idxtag);
         return $result;
     }
+
+    // check if indexing needed
+    if(!$force && @file_exists($idxtag)){
+        if(trim(io_readFile($idxtag)) == idx_get_version()){
+            $last = @filemtime($idxtag);
+            if($last > @filemtime(wikiFN($page))){
+                if ($verbose) print("Indexer: index for $page up to date".DOKU_LF);
+                return false;
+            }
+        }
+    }
+
     $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
     if ($indexenabled === false) {
         $result = false;
@@ -1263,8 +1270,8 @@ function idx_addPage($page, $verbose=false, $force=false) {
  * Important: No ACL checking is done here! All results are
  *            returned, regardless of permissions
  *
- * @param arrayref      $words  list of words to search for
- * @return array                list of pages found, associated with the search terms
+ * @param array      $words  list of words to search for
+ * @return array             list of pages found, associated with the search terms
  */
 function idx_lookup(&$words) {
     $Indexer = idx_get_indexer();

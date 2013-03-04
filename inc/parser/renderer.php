@@ -20,6 +20,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
         'toc'   => true, // render the TOC?
     );
 
+    var $doc = '';
+
     // keep some config options
     var $acronyms = array();
     var $smileys = array();
@@ -75,7 +77,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
       foreach ( $instructions as $instruction ) {
         // execute the callback against ourself
         if (method_exists($this,$instruction[0])) {
-          call_user_func_array(array($this, $instruction[0]),$instruction[1]);
+          call_user_func_array(array($this, $instruction[0]), $instruction[1] ? $instruction[1] : array());
         }
       }
     }

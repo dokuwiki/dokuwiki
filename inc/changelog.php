@@ -157,7 +157,8 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
  * @param int    $first   number of first entry returned (for paginating
  * @param int    $num     return $num entries
  * @param string $ns      restrict to given namespace
- * @param bool   $flags   see above
+ * @param int    $flags   see above
+ * @return array recently changed files
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -177,6 +178,8 @@ function getRecents($first,$num,$ns='',$flags=0){
         $lines = @file($conf['changelog']);
     }
     $lines_position = count($lines)-1;
+    $media_lines_position = 0;
+    $media_lines = array();
 
     if ($flags & RECENTS_MEDIA_PAGES_MIXED) {
         $media_lines = @file($conf['media_changelog']);
@@ -188,7 +191,7 @@ function getRecents($first,$num,$ns='',$flags=0){
     // handle lines
     while ($lines_position >= 0 || (($flags & RECENTS_MEDIA_PAGES_MIXED) && $media_lines_position >=0)) {
         if (empty($rec) && $lines_position >= 0) {
-            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags & ~RECENTS_MEDIA_CHANGES, $seen);
+            $rec = _handleRecent(@$lines[$lines_position], $ns, $flags, $seen);
             if (!$rec) {
                 $lines_position --;
                 continue;
@@ -197,8 +200,8 @@ function getRecents($first,$num,$ns='',$flags=0){
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && empty($media_rec) && $media_lines_position >= 0) {
             $media_rec = _handleRecent(@$media_lines[$media_lines_position], $ns, $flags | RECENTS_MEDIA_CHANGES, $seen);
             if (!$media_rec) {
-            	$media_lines_position --;
-            	continue;
+                $media_lines_position --;
+                continue;
             }
         }
         if (($flags & RECENTS_MEDIA_PAGES_MIXED) && @$media_rec['date'] >= @$rec['date']) {
@@ -236,7 +239,8 @@ function getRecents($first,$num,$ns='',$flags=0){
  * @param int    $from    date of the oldest entry to return
  * @param int    $to      date of the newest entry to return (for pagination, optional)
  * @param string $ns      restrict to given namespace (optional)
- * @param bool   $flags   see above (optional)
+ * @param int    $flags   see above (optional)
+ * @return array of files
  *
  * @author Michael Hamann <michael@content-space.de>
  * @author Ben Coburn <btcoburn@silicodon.net>
@@ -320,8 +324,10 @@ function _handleRecent($line,$ns,$flags,&$seen){
     if ($recent['perms'] < AUTH_READ) return false;
 
     // check existance
-    $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
-    if((!@file_exists($fn)) && ($flags & RECENTS_SKIP_DELETED)) return false;
+    if($flags & RECENTS_SKIP_DELETED){
+        $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
+        if(!@file_exists($fn)) return false;
+    }
 
     return $recent;
 }

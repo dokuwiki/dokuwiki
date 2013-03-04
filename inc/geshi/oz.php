@@ -4,7 +4,7 @@
  * --------
  * Author: Wolfgang Meyer (Wolfgang.Meyer@gmx.net)
  * Copyright: (c) 2010 Wolfgang Meyer
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2010/01/03
  *
  * Oz language file for GeSHi.

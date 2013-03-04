@@ -119,7 +119,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
         'listfiles' => !$opts['nofiles'],
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.$file.'(/|$)#','/'.$opts['ns']) ? 0 : -1
+        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$opts['ns']) ? 0 : -1
     );
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);
@@ -171,7 +171,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
         return false;
     }
 
-    $info['file']     = basename($file);
+    $info['file']     = utf8_basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
     $info['writable'] = is_writable($base.'/'.$file);
@@ -589,7 +589,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['open']  = $return;
 
     if($opts['meta']){
-        $item['file']       = basename($file);
+        $item['file']       = utf8_basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];

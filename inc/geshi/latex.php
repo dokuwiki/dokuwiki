@@ -4,7 +4,7 @@
  * -----
  * Author: efi, Matthias Pospiech (matthias@pospiech.eu)
  * Copyright: (c) 2006 efi, Matthias Pospiech (matthias@pospiech.eu), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2006/09/23
  *
  * LaTeX language file for GeSHi.
@@ -67,7 +67,7 @@ $language_data = array (
             'colorbox','date','dedication','def','definecolor','documentclass',
             'edef','else','email','emph','eqref','extratitle','fbox','fi',
             'flushleft','flushright','footnote','frac','frontmatter',
-            'graphicspath','hfill','hline','hspace','huge','ifx','include',
+            'graphicspath','hfil','hfill','hfilll','hline','hspace','huge','ifx','include',
             'includegraphics','infty','input','int','item','itemsep',
             'KOMAoption','KOMAoptions','label','LaTeX','left','let','limits',
             'listfiles','listoffigures','listoftables','lowertitleback',
@@ -81,7 +81,7 @@ $language_data = array (
             'table','tableofcontents','textbf','textcolor','textit',
             'textnormal','textsuperscript','texttt','textwidth','thanks','title',
             'titlehead','today','ttfamily','uppertitleback','urlstyle',
-            'usepackage','vspace'
+            'usepackage','vfil','vfill','vfilll','vspace'
             )
         ),
     'SYMBOLS' => array(
@@ -185,7 +185,7 @@ $language_data = array (
         8 => "\\\\(?:end|begin)(?=[^a-zA-Z])",
         // {parameters}
         9 => array(
-            GESHI_SEARCH => "(?<=\\{)(?!<\|!REG3XP5!>).*(?=\\})",
+            GESHI_SEARCH => "(?<=\\{)(?!<\|!REG3XP5!>).*?(?=\\})",
             GESHI_REPLACE => '\0',
             GESHI_MODIFIERS => 'Us',
             GESHI_BEFORE => '',

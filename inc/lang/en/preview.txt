@@ -1,4 +1,4 @@
 ====== Preview ======
 
-This is a preview of how your text will look like. Remember: It is **not saved** yet!
+This is a preview of what your text will look like. Remember: It is **not saved** yet!
 

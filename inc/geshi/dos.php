@@ -4,7 +4,7 @@
  * -------
  * Author: Alessandro Staltari (staltari@geocities.com)
  * Copyright: (c) 2005 Alessandro Staltari (http://www.geocities.com/SiliconValley/Vista/8155/)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2005/07/05
  *
  * DOS language file for GeSHi.
@@ -66,7 +66,8 @@ $language_data = array (
     //DOS comment lines
     'COMMENT_REGEXP' => array(
         1 => "/^\s*@?REM\b.*$/mi",
-        2 => "/^\s*::.*$/m"
+        2 => "/^\s*::.*$/m",
+        3 => "/\^./"
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array(),
@@ -100,7 +101,7 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '@', '%'
+        '(', ')', '@', '%', '!', '|', '<', '>', '&'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -119,6 +120,7 @@ $language_data = array (
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;',
             2 => 'color: #b100b1; font-style: italic;',
+            3 => 'color: #33cc33;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #ff0000; font-weight: bold;'
@@ -143,7 +145,8 @@ $language_data = array (
         'REGEXPS' => array(
             0 => 'color: #b100b1; font-weight: bold;',
             1 => 'color: #448844;',
-            2 => 'color: #448888;'
+            2 => 'color: #448888;',
+            3 => 'color: #448888;'
             )
         ),
     'OOLANG' => false,
@@ -159,7 +162,7 @@ $language_data = array (
         /* Label */
         0 => array(
 /*            GESHI_SEARCH => '((?si:[@\s]+GOTO\s+|\s+:)[\s]*)((?<!\n)[^\s\n]*)',*/
-            GESHI_SEARCH => '((?si:[@\s]+GOTO\s+|\s+:)[\s]*)((?<!\n)[^\n]*)',
+            GESHI_SEARCH => '((?si:[@\s]+GOTO\s+|\s+:)[\s]*)((?<!\n)[^\s\n]*)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'si',
             GESHI_BEFORE => '\\1',
@@ -168,7 +171,7 @@ $language_data = array (
         /* Variable assignement */
         1 => array(
 /*            GESHI_SEARCH => '(SET[\s]+(?si:\/A[\s]+|\/P[\s]+|))([^=\s\n]+)([\s]*=)',*/
-            GESHI_SEARCH => '(SET[\s]+(?si:\/A[\s]+|\/P[\s]+|))([^=\n]+)([\s]*=)',
+            GESHI_SEARCH => '(SET\s+(?si:\\/A\s+|\\/P\s+)?)([^=\n]+)(\s*=)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'si',
             GESHI_BEFORE => '\\1',
@@ -176,6 +179,15 @@ $language_data = array (
             ),
         /* Arguments or variable evaluation */
         2 => array(
+/*            GESHI_SEARCH => '(%)([\d*]|[^%\s]*(?=%))((?<!%\d)%|)',*/
+            GESHI_SEARCH => '(!(?:!(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^!>\n]*(?=!))((?<!%\d)%|)(?!!>)',
+            GESHI_REPLACE => '\\2',
+            GESHI_MODIFIERS => 'si',
+            GESHI_BEFORE => '\\1',
+            GESHI_AFTER => '\\3'
+            ),
+        /* Arguments or variable evaluation */
+        3 => array(
 /*            GESHI_SEARCH => '(%)([\d*]|[^%\s]*(?=%))((?<!%\d)%|)',*/
             GESHI_SEARCH => '(%(?:%(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^%\n]*(?=%))((?<!%\d)%|)',
             GESHI_REPLACE => '\\2',
@@ -191,7 +203,20 @@ $language_data = array (
         ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
+        'ENABLE_FLAGS' => array(
+            'BRACKETS' => GESHI_NEVER,
+            'NUMBERS' => GESHI_NEVER
+            ),
         'KEYWORDS' => array(
+            1 => array(
+                'DISALLOWED_BEFORE' => '(?<![\w\-])'
+                ),
+            2 => array(
+                'DISALLOWED_BEFORE' => '(?<![\w\-])'
+                ),
+            3 => array(
+                'DISALLOWED_BEFORE' => '(?<![\w\-])'
+                ),
             4 => array(
                 'DISALLOWED_BEFORE' => '(?<!\w)'
                 )

@@ -78,6 +78,32 @@ if(!function_exists('utf8_check')){
     }
 }
 
+if(!function_exists('utf8_basename')){
+    /**
+     * A locale independent basename() implementation
+     *
+     * works around a bug in PHP's basename() implementation
+     *
+     * @see basename()
+     * @link   https://bugs.php.net/bug.php?id=37738
+     * @param string $path     A path
+     * @param string $suffix   If the name component ends in suffix this will also be cut off
+     * @return string
+     */
+    function utf8_basename($path, $suffix=''){
+        $path = trim($path,'\\/');
+        $rpos = max(strrpos($path, '/'), strrpos($path, '\\'));
+        if($rpos) $path = substr($path, $rpos+1);
+
+        $suflen = strlen($suffix);
+        if($suflen && (substr($path, -$suflen) == $suffix)){
+            $path = substr($path, 0, -$suflen);
+        }
+
+        return $path;
+    }
+}
+
 if(!function_exists('utf8_strlen')){
     /**
      * Unicode aware replacement for strlen()
@@ -103,9 +129,9 @@ if(!function_exists('utf8_substr')){
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      * @author Chris Smith <chris@jalakai.co.uk>
-     * @param string
-     * @param integer number of UTF-8 characters offset (from left)
-     * @param integer (optional) length in UTF-8 characters from offset
+     * @param string $str
+     * @param int $offset number of UTF-8 characters offset (from left)
+     * @param int $length (optional) length in UTF-8 characters from offset
      * @return mixed string or false if failure
      */
     function utf8_substr($str, $offset, $length = null) {
@@ -221,6 +247,8 @@ if(!function_exists('utf8_ltrim')){
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @see    ltrim()
+     * @param  string $str
+     * @param  string $charlist
      * @return string
      */
     function utf8_ltrim($str,$charlist=''){
@@ -239,6 +267,8 @@ if(!function_exists('utf8_rtrim')){
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @see    rtrim()
+     * @param  string $str
+     * @param  string $charlist
      * @return string
      */
     function  utf8_rtrim($str,$charlist=''){
@@ -257,6 +287,8 @@ if(!function_exists('utf8_trim')){
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @see    trim()
+     * @param  string $str
+     * @param  string $charlist
      * @return string
      */
     function  utf8_trim($str,$charlist='') {
@@ -348,7 +380,7 @@ if(!function_exists('utf8_ucwords')){
      * You don't need to call this yourself
      *
      * @author Harry Fuecks
-     * @param array of matches corresponding to a single word
+     * @param  array $matches matches corresponding to a single word
      * @return string with first char of the word in uppercase
      * @see utf8_ucwords
      * @see utf8_strtoupper
@@ -408,9 +440,9 @@ if(!function_exists('utf8_stripspecials')){
      * @param  string $string     The UTF8 string to strip of special chars
      * @param  string $repl       Replace special with this string
      * @param  string $additional Additional chars to strip (used in regexp char class)
+     * @return string
      */
     function utf8_stripspecials($string,$repl='',$additional=''){
-        global $UTF8_SPECIAL_CHARS;
         global $UTF8_SPECIAL_CHARS2;
 
         static $specials = null;
@@ -493,7 +525,7 @@ if(!function_exists('utf8_unhtml')){
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @param  string  $str      UTF-8 encoded string
      * @param  boolean $entities Flag controlling decoding of named entities.
-     * @return UTF-8 encoded string with numeric (and named) entities replaced.
+     * @return string  UTF-8 encoded string with numeric (and named) entities replaced.
      */
     function utf8_unhtml($str, $entities=null) {
         static $decoder = null;
@@ -509,6 +541,12 @@ if(!function_exists('utf8_unhtml')){
 }
 
 if(!function_exists('utf8_decode_numeric')){
+    /**
+     * Decodes numeric HTML entities to their correct UTF-8 characters
+     *
+     * @param $ent string A numeric entity
+     * @return string
+     */
     function utf8_decode_numeric($ent) {
         switch ($ent[2]) {
             case 'X':
@@ -524,16 +562,37 @@ if(!function_exists('utf8_decode_numeric')){
 }
 
 if(!class_exists('utf8_entity_decoder')){
+    /**
+     * Encapsulate HTML entity decoding tables
+     */
     class utf8_entity_decoder {
         var $table;
-        function utf8_entity_decoder() {
+
+        /**
+         * Initializes the decoding tables
+         */
+        function __construct() {
             $table = get_html_translation_table(HTML_ENTITIES);
             $table = array_flip($table);
             $this->table = array_map(array(&$this,'makeutf8'), $table);
         }
+
+        /**
+         * Wrapper aorund unicode_to_utf8()
+         *
+         * @param $c string
+         * @return mixed
+         */
         function makeutf8($c) {
             return unicode_to_utf8(array(ord($c)));
         }
+
+        /**
+         * Decodes any HTML entity to it's correct UTF-8 char equivalent
+         *
+         * @param $ent string An entity
+         * @return string
+         */
         function decode($ent) {
             if ($ent[1] == '#') {
                 return utf8_decode_numeric($ent);
@@ -562,8 +621,8 @@ if(!function_exists('utf8_to_unicode')){
      *
      * @author <hsivonen@iki.fi>
      * @author Harry Fuecks <hfuecks@gmail.com>
-     * @param  string  UTF-8 encoded string
-     * @param  boolean Check for invalid sequences?
+     * @param  string  $str UTF-8 encoded string
+     * @param  boolean $strict Check for invalid sequences?
      * @return mixed array of unicode code points or false if UTF-8 invalid
      * @see    unicode_to_utf8
      * @link   http://hsivonen.iki.fi/php-utf8/
@@ -735,8 +794,8 @@ if(!function_exists('unicode_to_utf8')){
      * output buffering to concatenate the UTF-8 string (faster) as well as
      * reference the array by it's keys
      *
-     * @param  array of unicode code points representing a string
-     * @param  boolean Check for invalid sequences?
+     * @param  array $arr of unicode code points representing a string
+     * @param  boolean $strict Check for invalid sequences?
      * @return mixed UTF-8 string or false if array contains invalid code points
      * @author <hsivonen@iki.fi>
      * @author Harry Fuecks <hfuecks@gmail.com>
@@ -855,8 +914,8 @@ if(!function_exists('utf8_bad_replace')){
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      * @see http://www.w3.org/International/questions/qa-forms-utf-8
-     * @param string to search
-     * @param string to replace bad bytes with (defaults to '?') - use ASCII
+     * @param string $str to search
+     * @param string $replace to replace bad bytes with (defaults to '?') - use ASCII
      * @return string
      */
     function utf8_bad_replace($str, $replace = '') {
@@ -1000,7 +1059,7 @@ if(!UTF8_MBSTRING){
     /**
      * UTF-8 Case lookup table
      *
-     * This lookuptable defines the lower case letters to their correspponding
+     * This lookuptable defines the lower case letters to their corresponding
      * upper case letter in UTF-8
      *
      * @author Andreas Gohr <andi@splitbrain.org>

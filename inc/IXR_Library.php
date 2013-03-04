@@ -302,11 +302,12 @@ class IXR_Server {
     }
     function serve($data = false) {
         if (!$data) {
-            global $HTTP_RAW_POST_DATA;
-            if (!$HTTP_RAW_POST_DATA) {
+
+            $postData = trim(http_get_raw_post_data());
+            if (!$postData) {
                 die('XML-RPC server accepts POST requests only.');
             }
-            $data = $HTTP_RAW_POST_DATA;
+            $data = $postData;
         }
         $this->message = new IXR_Message($data);
         if (!$this->message->parse()) {
@@ -439,7 +440,7 @@ EOD;
             $method = $call['methodName'];
             $params = $call['params'];
             if ($method == 'system.multicall') {
-                $result = new IXR_Error(-32600, 'Recursive calls to system.multicall are forbidden');
+                $result = new IXR_Error(-32800, 'Recursive calls to system.multicall are forbidden');
             } else {
                 $result = $this->call($method, $params);
             }
@@ -501,7 +502,7 @@ class IXR_Client extends DokuHTTPClient {
     var $xmlerror = false;
 
     function IXR_Client($server, $path = false, $port = 80) {
-        $this->DokuHTTPClient();
+        parent::__construct();
         if (!$path) {
             // Assume we have been given a URL instead
             $this->posturl = $server;

@@ -295,8 +295,9 @@ class Doku_Form {
      */
 
     function addRadioSet($name, $entries) {
-        $value = (isset($_POST[$name]) && isset($entries[$_POST[$name]])) ?
-                 $_POST[$name] : key($entries);
+        global $INPUT;
+        $value = (array_key_exists($INPUT->post->str($name), $entries)) ?
+                 $INPUT->str($name) : key($entries);
         foreach($entries as $val => $cap) {
             $data = ($value === $val) ? array('checked' => 'checked') : array();
             $this->addElement(form_makeRadioField($name, $val, $cap, '', '', $data));

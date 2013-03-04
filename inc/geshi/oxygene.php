@@ -4,7 +4,7 @@
  * ----------
  * Author: Carlo Kok (ck@remobjects.com), J�rja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2004 J�rja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2010/01/11
  *
  * Delphi Prism (Oxygene) language file for GeSHi.
@@ -12,6 +12,8 @@
  *
  * CHANGES
  * -------
+ * 2012/06/28 (1.0.8.11)
+ *   -  Added "write" keyword for properties
  * 2010/01/11 (1.0.0)
  *   -  First Release
  *
@@ -66,7 +68,7 @@ $language_data = array (
             'Implies', 'Select', 'Order', 'By', 'Desc', 'Asc', 'Group', 'Join', 'Take',
             'Skip', 'Concat', 'Union', 'Reverse', 'Distinct', 'Into', 'Equals', 'params',
             'sequence', 'index', 'notify', 'Parallel', 'create', 'array', 'Queryable', 'Aspect',
-            'volatile'
+            'volatile', 'write'
             ),
         3 => array(
             'chr', 'ord', 'inc', 'dec', 'assert', 'iff', 'assigned','futureAssigned', 'length', 'low', 'high', 'typeOf', 'sizeOf', 'disposeAndNil', 'Coalesce', 'unquote'

@@ -1,4 +1,4 @@
-Dosiero estis alŝutita al via DokuVikio. Jen detaloj:
+Dosiero alŝutiĝis al via DokuVikio. Jen detaloj:
 
 Dosiero: @MEDIA@
 Dato: @DATE@
@@ -10,5 +10,4 @@ Dosier-tipo: @MIME@
 Uzanto: @USER@
 
 -- 
-Tiu ĉi mesaĝo estis kreita de DokuWiki ĉe
-@DOKUWIKIURL@
+Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@

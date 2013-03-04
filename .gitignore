@@ -15,6 +15,7 @@
 *.old
 *~
 *.DS_Store
+*.iml
 /data/attic/*
 /data/cache/*
 /data/index/*
@@ -26,6 +27,9 @@
 /data/pages/*
 /data/tmp/*
 /lib/tpl/*
+!/lib/tpl/default
+!/lib/tpl/dokuwiki
+!/lib/tpl/index.php
 /lib/plugins/*
 !/lib/plugins/acl
 !/lib/plugins/config
@@ -34,6 +38,7 @@
 !/lib/plugins/popularity
 !/lib/plugins/revert
 !/lib/plugins/safefnrecode
+!/lib/plugins/testing
 !/lib/plugins/usermanager
 !/lib/plugins/action.php
 !/lib/plugins/admin.php

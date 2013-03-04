@@ -4,7 +4,7 @@
  * ----------
  * Author: mbishop (mbishop@esoteriq.org)
  * Copyright: (c) 2009 mbishop (mbishop@esoteriq.org)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2009/01/21
  *
  * Modula-3 language file for GeSHi.
@@ -50,7 +50,7 @@ $language_data = array (
             'CONST', 'DIV', 'DO', 'ELSE', 'ELSIF', 'END', 'EVAL', 'EXCEPT', 'EXCEPTION',
             'EXIT', 'EXPORTS', 'FINALLY', 'FOR', 'FROM', 'GENERIC', 'IF', 'IMPORT', 'IN',
             'INTERFACE', 'LOCK', 'LOOP', 'METHODS', 'MOD', 'MODULE', 'NOT', 'OBJECT', 'OF',
-            'OR', 'OVERRIDE', 'PROCEDURE', 'RAISE', 'RAISES', 'READONLY', 'RECORD', 'REF',
+            'OR', 'OVERRIDES', 'PROCEDURE', 'RAISE', 'RAISES', 'READONLY', 'RECORD', 'REF',
             'REPEAT', 'RETURN', 'REVEAL', 'ROOT', 'SET', 'THEN', 'TO', 'TRY', 'TYPE', 'TYPECASE',
             'UNSAFE', 'UNTIL', 'UNTRACED', 'VALUE', 'VAR', 'WHILE', 'WITH'
             ),

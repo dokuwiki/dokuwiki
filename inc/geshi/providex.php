@@ -4,7 +4,7 @@
  * ----------
  * Author: Jeff Wilder (jeff@coastallogix.com)
  * Copyright:  (c) 2008 Coastal Logix (http://www.coastallogix.com)
- * Release Version: 1.0.8.8
+ * Release Version: 1.0.8.11
  * Date Started: 2008/10/18
  *
  * ProvideX language file for GeSHi.

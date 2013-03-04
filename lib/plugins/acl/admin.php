@@ -56,22 +56,23 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $ID;
         global $auth;
         global $config_cascade;
+        global $INPUT;
 
         // fresh 1:1 copy without replacements
         $AUTH_ACL = file($config_cascade['acl']['default']);
 
 
         // namespace given?
-        if($_REQUEST['ns'] == '*'){
+        if($INPUT->str('ns') == '*'){
             $this->ns = '*';
         }else{
-            $this->ns = cleanID($_REQUEST['ns']);
+            $this->ns = cleanID($INPUT->str('ns'));
         }
 
-        if ($_REQUEST['current_ns']) {
-            $this->current_item = array('id' => cleanID($_REQUEST['current_ns']), 'type' => 'd');
-        } elseif ($_REQUEST['current_id']) {
-            $this->current_item = array('id' => cleanID($_REQUEST['current_id']), 'type' => 'f');
+        if ($INPUT->str('current_ns')) {
+            $this->current_item = array('id' => cleanID($INPUT->str('current_ns')), 'type' => 'd');
+        } elseif ($INPUT->str('current_id')) {
+            $this->current_item = array('id' => cleanID($INPUT->str('current_id')), 'type' => 'f');
         } elseif ($this->ns) {
             $this->current_item = array('id' => $this->ns, 'type' => 'd');
         } else {
@@ -79,24 +80,25 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // user or group choosen?
-        $who = trim($_REQUEST['acl_w']);
-        if($_REQUEST['acl_t'] == '__g__' && $who){
+        $who = trim($INPUT->str('acl_w'));
+        if($INPUT->str('acl_t') == '__g__' && $who){
             $this->who = '@'.ltrim($auth->cleanGroup($who),'@');
-        }elseif($_REQUEST['acl_t'] == '__u__' && $who){
+        }elseif($INPUT->str('acl_t') == '__u__' && $who){
             $this->who = ltrim($who,'@');
-            if($this->who != '%USER%'){ #keep wildcard as is
+            if($this->who != '%USER%' && $this->who != '%GROUP%'){ #keep wildcard as is
                 $this->who = $auth->cleanUser($this->who);
             }
-        }elseif($_REQUEST['acl_t'] &&
-                $_REQUEST['acl_t'] != '__u__' &&
-                $_REQUEST['acl_t'] != '__g__'){
-            $this->who = $_REQUEST['acl_t'];
+        }elseif($INPUT->str('acl_t') &&
+                $INPUT->str('acl_t') != '__u__' &&
+                $INPUT->str('acl_t') != '__g__'){
+            $this->who = $INPUT->str('acl_t');
         }elseif($who){
             $this->who = $who;
         }
 
         // handle modifications
-        if(isset($_REQUEST['cmd']) && checkSecurityToken()){
+        if($INPUT->has('cmd') && checkSecurityToken()){
+            $cmd = $INPUT->extract('cmd')->str('cmd');
 
             // scope for modifications
             if($this->ns){
@@ -109,19 +111,21 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 $scope = $ID;
             }
 
-            if(isset($_REQUEST['cmd']['save']) && $scope && $this->who && isset($_REQUEST['acl'])){
+            if($cmd == 'save' && $scope && $this->who && $INPUT->has('acl')){
                 // handle additions or single modifications
                 $this->_acl_del($scope, $this->who);
-                $this->_acl_add($scope, $this->who, (int) $_REQUEST['acl']);
-            }elseif(isset($_REQUEST['cmd']['del']) && $scope && $this->who){
+                $this->_acl_add($scope, $this->who, $INPUT->int('acl'));
+            }elseif($cmd == 'del' && $scope && $this->who){
                 // handle single deletions
                 $this->_acl_del($scope, $this->who);
-            }elseif(isset($_REQUEST['cmd']['update'])){
+            }elseif($cmd == 'update'){
+                $acl = $INPUT->arr('acl');
+
                 // handle update of the whole file
-                foreach((array) $_REQUEST['del'] as $where => $names){
+                foreach($INPUT->arr('del') as $where => $names){
                     // remove all rules marked for deletion
                     foreach($names as $who)
-                        unset($_REQUEST['acl'][$where][$who]);
+                        unset($acl[$where][$who]);
                 }
                 // prepare lines
                 $lines = array();
@@ -134,13 +138,13 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                     }
                 }
                 // re-add all rules
-                foreach((array) $_REQUEST['acl'] as $where => $opt){
+                foreach($acl as $where => $opt){
                     foreach($opt as $who => $perm){
                         if ($who[0]=='@') {
                             if ($who!='@ALL') {
                                 $who = '@'.ltrim($auth->cleanGroup($who),'@');
                             }
-                        } elseif ($who != '%USER%'){ #keep wildcard as is
+                        } elseif ($who != '%USER%' && $who != '%GROUP%'){ #keep wildcard as is
                             $who = $auth->cleanUser($who);
                         }
                         $who = auth_nameencode($who,true);
@@ -191,7 +195,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '</div>'.NL;
 
         echo '<div class="footnotes"><div class="fn">'.NL;
-        echo '<sup><a id="fn__1" class="fn_bot" name="fn__1" href="#fnt__1">1)</a></sup>'.NL;
+        echo '<sup><a id="fn__1" class="fn_bot" href="#fnt__1">1)</a></sup>'.NL;
         echo $this->getLang('p_include');
         echo '</div></div>';
 
@@ -507,7 +511,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         if($item['type']=='d'){
             if($item['open']){
                 $img   = DOKU_BASE.'lib/images/minus.gif';
-                $alt   = '&minus;';
+                $alt   = '−';
             }else{
                 $img   = DOKU_BASE.'lib/images/plus.gif';
                 $alt   = '+';
@@ -597,11 +601,12 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '<input type="hidden" name="do" value="admin" />'.NL;
         echo '<input type="hidden" name="page" value="acl" />'.NL;
         echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />'.NL;
+        echo '<div class="table">';
         echo '<table class="inline">';
         echo '<tr>';
         echo '<th>'.$this->getLang('where').'</th>';
         echo '<th>'.$this->getLang('who').'</th>';
-        echo '<th>'.$this->getLang('perm').'<sup><a id="fnt__1" class="fn_top" name="fnt__1" href="#fn__1">1)</a></sup></th>';
+        echo '<th>'.$this->getLang('perm').'<sup><a id="fnt__1" class="fn_top" href="#fn__1">1)</a></sup></th>';
         echo '<th>'.$lang['btn_delete'].'</th>';
         echo '</tr>';
         foreach($this->acl as $where => $set){
@@ -629,7 +634,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
                 echo $this->_html_checkboxes($perm,$ispage,'acl['.$where.']['.$who.']');
                 echo '</td>';
 
-                echo '<td align="center">';
+                echo '<td class="check">';
                 echo '<input type="checkbox" name="del['.hsc($where).'][]" value="'.hsc($who).'" />';
                 echo '</td>';
                 echo '</tr>';
@@ -637,11 +642,12 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         echo '<tr>';
-        echo '<th align="right" colspan="4">';
+        echo '<th class="action" colspan="4">';
         echo '<input type="submit" value="'.$lang['btn_update'].'" name="cmd[update]" class="button" />';
         echo '</th>';
         echo '</tr>';
         echo '</table>';
+        echo '</div>';
         echo '</div></form>'.NL;
     }
 
@@ -744,8 +750,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             }
 
             //build code
-            $ret .= '<label for="pbox'.$label.'" title="'.$this->getLang('acl_perm'.$perm).'"'.$class.'>';
-            $ret .= '<input '.buildAttributes($atts).' />&nbsp;';
+            $ret .= '<label for="pbox'.$label.'"'.$class.'>';
+            $ret .= '<input '.buildAttributes($atts).' />&#160;';
             $ret .= $this->getLang('acl_perm'.$perm);
             $ret .= '</label>'.NL;
         }
@@ -781,7 +787,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
         echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
         if (!empty($this->specials)) {
-            echo '  <optgroup label="&nbsp;">'.NL;
+            echo '  <optgroup label="&#160;">'.NL;
             foreach($this->specials as $ug){
                 if($ug == $this->who){
                     $sel    = ' selected="selected"';
@@ -799,7 +805,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             echo '  </optgroup>'.NL;
         }
         if (!empty($this->usersgroups)) {
-            echo '  <optgroup label="&nbsp;">'.NL;
+            echo '  <optgroup label="&#160;">'.NL;
             foreach($this->usersgroups as $ug){
                 if($ug == $this->who){
                     $sel    = ' selected="selected"';

@@ -597,8 +597,8 @@ class FeedCreator extends HtmlDescribable {
         // HTTP redirect, some feed readers' simple HTTP implementations don't follow it
         //Header("Location: ".$filename);
 
-        header("Content-Type: ".$this->contentType."; charset=".$this->encoding."; filename=".basename($filename));
-        header("Content-Disposition: inline; filename=".basename($filename));
+        header("Content-Type: ".$this->contentType."; charset=".$this->encoding."; filename=".utf8_basename($filename));
+        header("Content-Disposition: inline; filename=".utf8_basename($filename));
         readfile($filename, "r");
         die();
     }
