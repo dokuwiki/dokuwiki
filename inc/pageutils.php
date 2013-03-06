@@ -112,7 +112,9 @@ function cleanID($raw_id,$ascii=false,$media=false){
         $sepcharpat = '#\\'.$sepchar.'+#';
 
     $id = trim((string)$raw_id);
-    $id = utf8_strtolower($id);
+    if ($conf['pagecasesensitive'] == 0) {
+        $id = utf8_strtolower($id);
+    }
 
     //alternative namespace seperator
     if($conf['useslash']){

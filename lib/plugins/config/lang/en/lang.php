@@ -176,6 +176,7 @@ $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver s
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['pagecasesensitive'] = 'Page and media file name handling. Check this to get case sensitive names.';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
