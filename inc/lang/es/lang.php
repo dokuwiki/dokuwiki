@@ -27,6 +27,7 @@
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
+ * @author Mercè López mercelz@gmail.com
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -202,7 +203,7 @@ $lang['lastmod']               = 'Última modificación';
 $lang['by']                    = 'por';
 $lang['deleted']               = 'borrado';
 $lang['created']               = 'creado';
-$lang['restored']              = 'se ha restaurado la vieja versión';
+$lang['restored']              = 'se ha restaurado la vieja versión (%s)';
 $lang['external_edit']         = 'editor externo';
 $lang['summary']               = 'Resumen de la edición';
 $lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://www.adobe.com/products/flashplayer/">Plugin Adobe Flash</a>.';
@@ -279,8 +280,6 @@ $lang['subscr_m_unsubscribe']  = 'Darse de baja';
 $lang['subscr_m_subscribe']    = 'Suscribirse';
 $lang['subscr_m_receive']      = 'Recibir';
 $lang['subscr_style_every']    = 'enviar correo en cada cambio';
-$lang['subscr_style_digest']   = 'recopilar correo de cambios por cada página';
-$lang['subscr_style_list']     = 'lista de páginas con cambios desde el último correo';
 $lang['authmodfailed']         = 'Está mal configurada la autenticación de usuarios. Por favor, avisa al administrador del wiki.';
 $lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
 $lang['authpwdexpire']         = 'Su contraseña caducara en %d días, debería cambiarla lo antes posible';
@@ -298,8 +297,8 @@ $lang['i_confexists']          = '<code>%s</code> ya existe';
 $lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';
 $lang['i_badhash']             = 'dokuwiki.php no reconocido o modificado (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor ilegal o vacío';
-$lang['i_success']             = 'La configuración ha concluido correctamente. Ahora puede eliminar el archivo install.php. Visite <a href="doku.php">su nuevo DokuWiki</a>.';
-$lang['i_failure']             = 'Han ocurrido algunos errores durante la escritura de los ficheros de configuración. Puede ser que necesite corregirlos manualmente antes de poder usar <a href="doku.php">su nuevo DokuWiki</a>.';
+$lang['i_success']             = 'La configuración ha concluido correctamente. Ahora puede eliminar el archivo install.php. Visite <a href="doku.php?id=wiki:welcome">su nuevo DokuWiki</a>.';
+$lang['i_failure']             = 'Han ocurrido algunos errores durante la escritura de los ficheros de configuración. Puede ser que necesite corregirlos manualmente antes de poder usar <a href="doku.php?id=wiki:welcome">su nuevo DokuWiki</a>.';
 $lang['i_policy']              = 'Política de ACL inicial';
 $lang['i_pol0']                = 'Wiki abierto (leer, escribir y subir archivos para todos)';
 $lang['i_pol1']                = 'Wiki público (leer para todos, escribir y subir archivos para usuarios registrados únicamente)';

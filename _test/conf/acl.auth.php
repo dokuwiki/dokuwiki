@@ -19,6 +19,7 @@
 # delete 16
 
 *               @ALL        8
+private:*       @ALL        0
 
 # for testing wildcards:
 users:*            @ALL         1

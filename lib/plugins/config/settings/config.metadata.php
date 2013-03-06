@@ -20,9 +20,7 @@
  *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
- *   'email'        - text input, input must conform to email address format, setting output in quotes
- *   'richemail'    - text input, input must conform to email address format but accepts variables and
- *                    emails with a real name prepended (when email address is given in <>)
+ *   'email'        - text input, input must conform to email address format
  *   'password'     - password input, minimal input validation, setting output text in quotes, maybe encoded
  *                    according to the _code parameter
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
@@ -32,6 +30,9 @@
  *                    separated list of checked choices
  *   'fieldset'     - used to group configuration settings, but is not itself a setting. To make this clear in
  *                    the language files the keys for this type should start with '_'.
+ *   'array'        - a simple (one dimensional) array of string values, shown as comma separated list in the
+ *                    config manager but saved as PHP array(). Values may not contain commas themselves.
+ *                    _pattern matching on the array values supported.
  *
  *  Single Setting (source: settings/extra.class.php)
  *  -------------------------------------------------
@@ -68,14 +69,6 @@ $config['varname'] = 'conf';     // name of the config variable, sans $
 // !! do not include any comment indicators !!
 // this value can be overriden when calling save_settings() method
 $config['heading'] = 'Dokuwiki\'s Main Configuration File - Local Settings';
-
-/* DEPRECATED
-// ---------------[ setting files ]--------------------------------------
-// these values can be string expressions, they will be eval'd before use
-$file['local']     = "DOKU_CONF.'local.php'";            // mandatory (file doesn't have to exist)
-$file['default']   = "DOKU_CONF.'dokuwiki.php'";         // optional
-$file['protected'] = "DOKU_CONF.'local.protected.php'";  // optional
- */
 
 // test value (FIXME, remove before publishing)
 //$meta['test']     = array('multichoice','_choices' => array(''));
@@ -126,7 +119,7 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','bcrypt'));
+$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','djangomd5','djangosha1','sha512'));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string');
 $meta['manager']     = array('string');
@@ -174,8 +167,8 @@ $meta['_notifications'] = array('fieldset');
 $meta['subscribers']    = array('onoff');
 $meta['subscribe_time'] = array('numeric');
 $meta['notify']         = array('email', '_multiple' => true);
-$meta['registernotify'] = array('email');
-$meta['mailfrom']       = array('richemail');
+$meta['registernotify'] = array('email', '_multiple' => true);
+$meta['mailfrom']       = array('email', '_placeholders' => true);
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
 

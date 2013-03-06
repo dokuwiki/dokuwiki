@@ -2,13 +2,13 @@ Un nouvel utilisateur s'est enregistré. Voici les détails :
 
 Utilisateur         : @NEWUSER@
 Nom         : @NEWNAME@
-Adresse de courriel : @NEWEMAIL@
+Courriel : @NEWEMAIL@
 
 Date                : @DATE@
-Navigateur          : @BROWSER@
+Navigateur internet         : @BROWSER@
 Adresse IP          : @IPADDRESS@
 Nom d'hôte          : @HOSTNAME@
 
 -- 
-Ce courriel a été généré par DokuWiki
+Ce courriel a été généré par DokuWiki depuis
 @DOKUWIKIURL@

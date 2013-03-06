@@ -258,6 +258,7 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
     } else {
         $lines = @file($conf['changelog']);
     }
+    if(!$lines) return $recent;
 
     // we start searching at the end of the list
     $lines = array_reverse($lines);

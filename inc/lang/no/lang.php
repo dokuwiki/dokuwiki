@@ -190,7 +190,7 @@ $lang['lastmod']               = 'Sist endret';
 $lang['by']                    = 'av';
 $lang['deleted']               = 'fjernet';
 $lang['created']               = 'opprettet';
-$lang['restored']              = 'gjenopprettet til en tidligere versjon';
+$lang['restored']              = 'gjenopprettet til en tidligere versjon (%s)';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigeringskommentar';
 $lang['noflash']               = 'For at dette innholdet skal vises må du ha <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
@@ -282,9 +282,9 @@ $lang['i_writeerr']            = 'Kunne ikke opprette <code>%s</code>. Du må sj
 $lang['i_badhash']             = 'ikke gjenkjent eller modifisert dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - ugyldig eller tom verdi';
 $lang['i_success']             = 'Konfigurasjonen ble vellykket fullført. Du kan slette install.php filen nå. Fortsett til
-                        <a href="doku.php">din nye DokuWiki</a>.';
+                        <a href="doku.php?id=wiki:welcome">din nye DokuWiki</a>.';
 $lang['i_failure']             = 'En eller flere feil oppstod ved skriving til konfigurasjonsfilene. Du må kanskje fikse dem manuelt før
-                         du kan bruke <a href="doku.php">din nye DokuWiki</a>.';
+                         du kan bruke <a href="doku.php?id=wiki:welcome">din nye DokuWiki</a>.';
 $lang['i_policy']              = 'Innledende ACL-politikk';
 $lang['i_pol0']                = 'Åpen Wiki (les, skriv og opplasting for alle)';
 $lang['i_pol1']                = 'Offentlig Wiki (les for alle, skriving og opplasting bare for registrerte brukere)';
@@ -316,8 +316,7 @@ $lang['media_upload']          = 'Last opp til navnerommet <strong>%s</strong>.'
 $lang['media_search']          = 'Søk i navnerommet <strong>%s</strong>.';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s på %s';
-$lang['media_edit']            = 'Rediger';
-$lang['media_history']         = 'Dette er de tidligere versjonene av filen.';
+$lang['media_edit']            = 'Rediger %s';
 $lang['media_meta_edited']     = 'metadata er endra';
 $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese filer.';
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';

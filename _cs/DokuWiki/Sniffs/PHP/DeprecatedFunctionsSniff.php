@@ -49,6 +49,7 @@ class DokuWiki_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_Fo
         'search_fulltext'      => 'Fulltext Indexer',
         'search_regex'         => 'Fulltext Indexer',
         'tpl_getFavicon'       => 'tpl_getMediaFile',
+        'p_cached_xhtml'       => 'p_cached_output',
     );
 
     /**

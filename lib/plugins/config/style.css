@@ -104,6 +104,10 @@
     height: 4em;
 }
 
+#config__manager td textarea.edit:focus {
+    height: 10em;
+}
+
 #config__manager tr .input,
 #config__manager tr input,
 #config__manager tr textarea,
@@ -149,15 +153,6 @@
   font-size: 90%;
 }
 
-
-/* IE6 correction */
-* html #config__manager .selection label {
-  padding-top: 2px;
-}
-
-#config__manager .selection input.checkbox {
-  padding-left: 0.7em;
-}
 
 #config__manager .other {
   clear: both;

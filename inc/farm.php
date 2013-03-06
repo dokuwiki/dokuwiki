@@ -18,7 +18,7 @@
  * @author Michael Klier <chi@chimeric.de>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author virtual host part of farm_confpath() based on conf_path() from Drupal.org's /includes/bootstrap.inc
- *   (see http://cvs.drupal.org/viewvc/drupal/drupal/includes/bootstrap.inc?view=markup)
+ *   (see https://github.com/drupal/drupal/blob/7.x/includes/bootstrap.inc#L537)
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
 */
 

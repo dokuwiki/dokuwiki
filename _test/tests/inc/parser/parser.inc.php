@@ -8,7 +8,8 @@ abstract class TestOfDoku_Parser extends PHPUnit_Framework_TestCase {
     var $P;
     var $H;
 
-    function setup() {
+    function setUp() {
+        parent::setUp();
         $this->P = new Doku_Parser();
         $this->H = new Doku_Handler();
         $this->P->Handler = & $this->H;

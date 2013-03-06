@@ -23,6 +23,7 @@
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
+ * @author Mercè López mercelz@gmail.com
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';
@@ -66,6 +67,6 @@ $lang['error_copy']            = 'Hubo un error al copiar el fichero mientras se
 $lang['error_delete']          = 'Hubo un error al intentar eliminar el plugin <em>%s</em>. La causa más probable es que no se cuente con los permisos necesarios en el fichero o en el directorio';
 $lang['enabled']               = 'Plugin %s habilitado.';
 $lang['notenabled']            = 'Plugin %s no puede ser habilitado, verifica los permisos del archivo.';
-$lang['disabled']              = 'Plugin %s desabilitado.';
-$lang['notdisabled']           = 'Plugin %s no puede ser desabilitado, verifica los permisos de archivo.';
+$lang['disabled']              = 'Plugin %s deshabilitado.';
+$lang['notdisabled']           = 'Plugin %s no puede ser deshabilitado, verifica los permisos de archivo.';
 $lang['packageinstalled']      = 'Plugin (%d plugin(s): %s) instalado exitosamente.';

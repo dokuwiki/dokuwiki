@@ -1,0 +1,34 @@
+<?php
+
+$meta['server']           = array('string');
+$meta['user']             = array('string');
+$meta['password']         = array('password');
+$meta['database']         = array('string');
+$meta['charset']          = array('string');
+$meta['debug']            = array('multichoice','_choices' => array(0,1,2));
+$meta['forwardClearPass'] = array('onoff');
+$meta['TablesToLock']     = array('array');
+$meta['checkPass']        = array('');
+$meta['getUserInfo']      = array('');
+$meta['getGroups']        = array('');
+$meta['getUsers']         = array('');
+$meta['FilterLogin']      = array('string');
+$meta['FilterName']       = array('string');
+$meta['FilterEmail']      = array('string');
+$meta['FilterGroup']      = array('string');
+$meta['SortOrder']        = array('string');
+$meta['addUser']          = array('');
+$meta['addGroup']         = array('');
+$meta['addUserGroup']     = array('');
+$meta['delGroup']         = array('');
+$meta['getUserID']        = array('');
+$meta['delUser']          = array('');
+$meta['delUserRefs']      = array('');
+$meta['updateUser']       = array('string');
+$meta['UpdateLogin']      = array('string');
+$meta['UpdatePass']       = array('string');
+$meta['UpdateEmail']      = array('string');
+$meta['UpdateName']       = array('string');
+$meta['UpdateTarget']     = array('string');
+$meta['delUserGroup']     = array('');
+$meta['getGroupID']       = array('');

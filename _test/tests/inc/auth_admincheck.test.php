@@ -1,6 +1,6 @@
 <?php
 
-class auth_admin_test_AuthInSensitive extends auth_basic {
+class auth_admin_test_AuthInSensitive extends DokuWiki_Auth_Plugin {
     function isCaseSensitive(){
         return false;
     }
@@ -10,14 +10,15 @@ class auth_admin_test extends DokuWikiTest {
 
     private $oldauth;
 
-    function setup() {
+    function setUp() {
+        parent::setUp();
         global $auth;
         $this->oldauth = $auth;
     }
 
     function setSensitive() {
         global $auth;
-        $auth = new auth_basic();
+        $auth = new DokuWiki_Auth_Plugin();
     }
 
     function setInSensitive() {
@@ -27,9 +28,7 @@ class auth_admin_test extends DokuWikiTest {
 
     function teardown() {
         global $auth;
-        global $conf;
         global $AUTH_ACL;
-        unset($conf);
         unset($AUTH_ACL);
         $auth = $this->oldauth;
     }

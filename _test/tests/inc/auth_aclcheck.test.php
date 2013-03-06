@@ -2,22 +2,18 @@
 
 class auth_acl_test extends DokuWikiTest {
 
-    var $oldConf;
     var $oldAuthAcl;
 
-    function setup() {
-        global $conf;
+    function setUp() {
+        parent::setUp();
         global $AUTH_ACL;
         global $auth;
-        $this->oldConf = $conf;
         $this->oldAuthAcl = $AUTH_ACL;
-        $auth = new auth_basic();
+        $auth = new DokuWiki_Auth_Plugin();
     }
 
-    function teardown() {
-        global $conf;
+    function tearDown() {
         global $AUTH_ACL;
-        $conf = $this->oldConf;
         $AUTH_ACL = $this->oldAuthAcl;
 
     }

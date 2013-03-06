@@ -136,7 +136,7 @@ $lang['lastmod']               = 'Son dəyişiklər';
 $lang['by']                    = ' Kimdən';
 $lang['deleted']               = 'silinib';
 $lang['created']               = 'yaranıb';
-$lang['restored']              = 'köhnə versiya qaytarıldı';
+$lang['restored']              = 'köhnə versiya qaytarıldı (%s)';
 $lang['external_edit']         = 'bayırdan dəyişik';
 $lang['summary']               = 'Dəyişiklər xülasəsi';
 $lang['noflash']               = 'Bu məzmuna baxmaq üçün <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> tələb olunur.';
@@ -208,8 +208,8 @@ $lang['i_writeerr']            = '<code>%s</code> yaradıla bilmədi. Faylın/qo
 $lang['i_badhash']             = 'dokuwiki.php tanıla bilmir və ya dəyişdirilmişdir (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - səhv ya boş qiymətdir';
 $lang['i_success']             = 'Konfiqurasiya uğurla başa çatdı. İndi siz install.php faylını silə bilərsiniz.
-                        <a href="doku.php">Yeni DokuWiki-nizə</a> xoş gəlmişsiniz!';
-$lang['i_failure']             = 'Konfiqurasiya fayllarına məlumat yazan zaman səhvlər tapıldı. Yəgin ki, <a href="doku.php">yeni DokuWiki-nizi</a> istifadə etmədən öncə, Siz o xətaları əl ilə düzəltməli olacaqsınız.';
+                        <a href="doku.php?id=wiki:welcome">Yeni DokuWiki-nizə</a> xoş gəlmişsiniz!';
+$lang['i_failure']             = 'Konfiqurasiya fayllarına məlumat yazan zaman səhvlər tapıldı. Yəgin ki, <a href="doku.php?id=wiki:welcome">yeni DokuWiki-nizi</a> istifadə etmədən öncə, Siz o xətaları əl ilə düzəltməli olacaqsınız.';
 $lang['i_policy']              = 'İlkin giriş haqları siyasəti';
 $lang['i_pol0']                = 'Tam açıq wiki (oxumaq, yazmaq, fayl yükləmək hamıya olar)';
 $lang['i_pol1']                = 'Acıq wiki (oxumaq hamıya olar, yazmaq və fayl yükləmək ancaq üzv olan istifadəçilərə olar)';

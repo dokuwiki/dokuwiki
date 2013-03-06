@@ -51,7 +51,7 @@ class Mailer {
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
-        $this->setHeader('X-Mailer', 'DokuWiki '.getVersion());
+        $this->setHeader('X-Mailer', 'DokuWiki');
         $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
         $this->setHeader('X-DokuWiki-Server', $server);
@@ -555,6 +555,7 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
+            if ($val === '') continue;
             $headers .= "$key: $val".MAILHEADER_EOL;
         }
         return $headers;

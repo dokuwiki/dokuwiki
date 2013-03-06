@@ -176,7 +176,7 @@ $lang['lastmod']    = 'Thời điểm thay đổi';
 $lang['by']         = 'do';
 $lang['deleted']    = 'bị xoá';
 $lang['created']    = 'được tạo ra';
-$lang['restored']   = 'phiên bản cũ đã được khôi phục';
+$lang['restored']   = 'phiên bản cũ đã được khôi phục (%s)';
 $lang['external_edit']         = 'external edit';
 $lang['summary']    = 'Tóm tắt biên soạn';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> cần được cài để có thể xem nội dung này.';

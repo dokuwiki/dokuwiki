@@ -25,12 +25,12 @@ function checkUpdateMessages(){
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
+        @touch($cf);
         dbglog("checkUpdatesMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
-        $http->timeout = 8;
+        $http->timeout = 12;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
-        @touch($cf);
     }else{
         dbglog("checkUpdatesMessages(): messages.txt up to date");
         $data = io_readFile($cf);
@@ -77,7 +77,8 @@ function getVersionData(){
             if($date) $version['date'] = $date;
         }
     }else{
-        $version['date'] = 'unknown';
+        global $updateVersion;
+        $version['date'] = 'update version '.$updateVersion;
         $version['type'] = 'snapshot?';
     }
     return $version;
@@ -174,6 +175,13 @@ function check(){
         }
     }else{
         msg('mb_string extension not available - PHP only replacements will be used',0);
+    }
+
+    if (!UTF8_PREGSUPPORT) {
+        msg('PHP is missing UTF-8 support in Perl-Compatible Regular Expressions (PCRE)', -1);
+    }
+    if (!UTF8_PROPERTYSUPPORT) {
+        msg('PHP is missing Unicode properties support in Perl-Compatible Regular Expressions (PCRE)', -1);
     }
 
     $loc = setlocale(LC_ALL, 0);

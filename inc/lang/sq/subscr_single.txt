@@ -15,7 +15,7 @@ Rishikimi i ri: @NEWPAGE@
 
 Për të fshirë lajmërimet e faqes, hyni në wiki tek
 @DOKUWIKIURL@ dhe pastaj vizitoni
-@NEWPAGE@
+@SUBSCRIBE@
 dhe fshini ndryshimet e faqes dhe/ose hapësirës së emrit.
 
 --

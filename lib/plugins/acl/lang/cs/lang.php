@@ -11,6 +11,7 @@
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
+ * @author Jakub A. Těšínský (j@kub.cz)
  */
 $lang['admin_acl']             = 'Správa přístupových práv';
 $lang['acl_group']             = 'Skupina';

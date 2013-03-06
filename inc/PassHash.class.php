@@ -4,7 +4,7 @@
  *
  * This class implements various mechanisms used to hash passwords
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @author  Andreas Gohr <andi@splitbrain.org>
  * @license LGPL2
  */
 class PassHash {
@@ -58,6 +58,12 @@ class PassHash {
         } elseif(substr($hash, 0, 6) == '{SMD5}') {
             $method = 'lsmd5';
             $salt   = substr(base64_decode(substr($hash, 6)), 16);
+        } elseif(preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {
+            $method = 'mediawiki';
+            $salt   = $m[1];
+        } elseif(preg_match('/^\$6\$(.+?)\$/', $hash, $m)) {
+            $method = 'sha512';
+            $salt   = $m[1];
         } elseif($len == 32) {
             $method = 'md5';
         } elseif($len == 40) {
@@ -101,14 +107,18 @@ class PassHash {
      * Initialize the passed variable with a salt if needed.
      *
      * If $salt is not null, the value is kept, but the lenght restriction is
-     * applied.
+     * applied (unless, $cut is false).
      *
      * @param string &$salt The salt, pass null if you want one generated
-     * @param int    $len The length of the salt
+     * @param int    $len   The length of the salt
+     * @param bool   $cut   Apply length restriction to existing salt?
      */
-    public function init_salt(&$salt, $len = 32) {
-        if(is_null($salt)) $salt = $this->gen_salt($len);
-        if(strlen($salt) > $len) $salt = substr($salt, 0, $len);
+    public function init_salt(&$salt, $len = 32, $cut = true) {
+        if(is_null($salt)) {
+            $salt = $this->gen_salt($len);
+            $cut  = true; // for new hashes we alway apply length restriction
+        }
+        if(strlen($salt) > $len && $cut) $salt = substr($salt, 0, $len);
     }
 
     // Password hashing methods follow below
@@ -263,7 +273,7 @@ class PassHash {
      *
      * This method was used by old MySQL systems
      *
-     * @link http://www.php.net/mysql
+     * @link   http://www.php.net/mysql
      * @author <soren at byu dot edu>
      * @param string $clear The clear text to hash
      * @return string Hashed password
@@ -327,9 +337,9 @@ class PassHash {
      * an exception.
      *
      * @link  http://www.openwall.com/phpass/
-     * @param string $clear The clear text to hash
-     * @param string $salt  The salt to use, null for random
-     * @param string $magic The hash identifier (P or H)
+     * @param string $clear   The clear text to hash
+     * @param string $salt    The salt to use, null for random
+     * @param string $magic   The hash identifier (P or H)
      * @param int    $compute The iteration count for new passwords
      * @throws Exception
      * @return string Hashed password
@@ -430,8 +440,8 @@ class PassHash {
      * will break. When no salt is given, the iteration count can be set
      * through the $compute variable.
      *
-     * @param string $clear The clear text to hash
-     * @param string $salt  The salt to use, null for random
+     * @param string $clear   The clear text to hash
+     * @param string $salt    The salt to use, null for random
      * @param int    $compute The iteration count (between 4 and 31)
      * @throws Exception
      * @return string Hashed password
@@ -450,4 +460,38 @@ class PassHash {
         return crypt($clear, $salt);
     }
 
+    /**
+     * Password hashing method SHA512
+     *
+     * This is only supported on PHP 5.3.2 or higher and will throw an exception if
+     * the needed crypt support is not available
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @return string Hashed password
+     * @throws Exception
+     */
+    public function hash_sha512($clear, $salt = null) {
+        if(!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1) {
+            throw new Exception('This PHP installation has no SHA512 support');
+        }
+        $this->init_salt($salt, 8, false);
+        return crypt($clear, '$6$'.$salt.'$');
+    }
+
+    /**
+     * Password hashing method 'mediawiki'
+     *
+     * Uses salted MD5, this is referred to as Method B in MediaWiki docs. Unsalted md5
+     * method 'A' is not supported.
+     *
+     * @link  http://www.mediawiki.org/wiki/Manual_talk:User_table#user_password_column
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @return string Hashed password
+     */
+    public function hash_mediawiki($clear, $salt = null) {
+        $this->init_salt($salt, 8, false);
+        return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
+    }
 }

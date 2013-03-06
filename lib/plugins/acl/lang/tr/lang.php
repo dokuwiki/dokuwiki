@@ -8,6 +8,7 @@
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
+ * @author farukerdemoncel@gmail.com
  */
 $lang['admin_acl']             = 'Erişim Kontrol Listesi (ACL) Yönetimi';
 $lang['acl_group']             = 'Grup';

@@ -69,7 +69,6 @@ class ap_manage {
     }
 
     function html_pluginlist() {
-        global $ID;
         global $plugin_protected;
 
         foreach ($this->manager->plugin_list as $plugin) {
@@ -195,11 +194,8 @@ class ap_manage {
 
             closedir($dh);
             return @rmdir($path);
-        } else {
-            return @unlink($path);
         }
-
-        return false;
+        return @unlink($path);
     }
 
 

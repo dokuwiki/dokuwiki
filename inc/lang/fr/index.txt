@@ -1,4 +1,4 @@
-====== Index ======
+====== Plan du site ======
 
-Voici un index de toutes les pages disponibles, triées par [[doku>fr:namespaces|catégorie]].
+Voici un plan du site de toutes les pages disponibles, triées par [[doku>fr:namespaces|catégories]].
 

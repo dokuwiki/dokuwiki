@@ -1,0 +1,7 @@
+base   authldap
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2012-10-06
+name   ldap auth plugin
+desc   Provides authentication against am LDAP server
+url    http://www.dokuwiki.org/plugin:authldap

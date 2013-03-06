@@ -205,6 +205,7 @@
     background-position: 5px 0;
     margin-left: 0;
     margin-right: -20px;
+    position: relative;
 }
 
 #dokuwiki__sitetools ul {

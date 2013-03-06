@@ -16,20 +16,6 @@ if(!defined('DOKU_INC')) die();
 class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
-     * return some info
-     */
-    function getInfo(){
-        return array(
-            'author' => 'Andreas Gohr',
-            'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-09-12',
-            'name'   => 'Info Plugin',
-            'desc'   => 'Displays information about various DokuWiki internals',
-            'url'    => 'http://dokuwiki.org/plugin:info',
-        );
-    }
-
-    /**
      * What kind of syntax are we?
      */
     function getType(){
@@ -74,9 +60,6 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         if($format == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
-                case 'version':
-                    $renderer->doc .= getVersion();
-                    break;
                 case 'syntaxmodes':
                     $renderer->doc .= $this->_syntaxmodes_xhtml();
                     break;
@@ -114,7 +97,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * uses some of the original renderer methods
      */
-    function _plugins_xhtml($type, &$renderer){
+    function _plugins_xhtml($type, Doku_Renderer &$renderer){
         global $lang;
         $renderer->doc .= '<ul>';
 
@@ -152,7 +135,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * uses some of the original renderer methods
      */
-    function _helpermethods_xhtml(&$renderer){
+    function _helpermethods_xhtml(Doku_Renderer &$renderer){
         global $lang;
 
         $plugins = plugin_list('helper');
@@ -237,7 +220,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Adds a TOC item
      */
-    function _addToTOC($text, $level, &$renderer){
+    function _addToTOC($text, $level, Doku_Renderer_xhtml &$renderer){
         global $conf;
 
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){

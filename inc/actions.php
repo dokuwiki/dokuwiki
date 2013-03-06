@@ -67,6 +67,22 @@ function act_dispatch(){
             act_sitemap($ACT);
         }
 
+        //recent changes
+        if ($ACT == 'recent'){
+            $show_changes = $INPUT->str('show_changes');
+            if (!empty($show_changes)) {
+                set_doku_pref('show_changes', $show_changes);
+            }
+        }
+
+        //diff
+        if ($ACT == 'diff'){
+            $difftype = $INPUT->str('difftype');
+            if (!empty($difftype)) {
+                set_doku_pref('difftype', $difftype);
+            }
+        }
+
         //register
         if($ACT == 'register' && $INPUT->post->bool('save') && register()){
             $ACT = 'login';
@@ -156,7 +172,7 @@ function act_dispatch(){
     $evt->advise_after();
     // Make sure plugs can handle 'denied'
     if($conf['send404'] && $ACT == 'denied') {
-        header('HTTP/1.0 403 Forbidden');
+        http_status(403);
     }
     unset($evt);
 
@@ -642,7 +658,7 @@ function act_sitemap($act) {
     global $conf;
 
     if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
-        header("HTTP/1.0 404 Not Found");
+        http_status(404);
         print "Sitemap generation is disabled.";
         exit;
     }
@@ -674,7 +690,7 @@ function act_sitemap($act) {
         exit;
     }
 
-    header("HTTP/1.0 500 Internal Server Error");
+    http_status(500);
     print "Could not read the sitemap file - bad permissions?";
     exit;
 }
@@ -711,21 +727,28 @@ function act_subscription($act){
 
     $target = $params['target'];
     $style  = $params['style'];
-    $data   = $params['data'];
     $action = $params['action'];
 
     // Perform action.
-    if (!subscription_set($_SERVER['REMOTE_USER'], $target, $style, $data)) {
+    $sub = new Subscription();
+    if($action == 'unsubscribe'){
+        $ok = $sub->remove($target, $_SERVER['REMOTE_USER'], $style);
+    }else{
+        $ok = $sub->add($target, $_SERVER['REMOTE_USER'], $style);
+    }
+
+    if($ok) {
+        msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                    prettyprint_id($target)), 1);
+        act_redirect($ID, $act);
+    } else {
         throw new Exception(sprintf($lang["subscr_{$action}_error"],
                                     hsc($INFO['userinfo']['name']),
                                     prettyprint_id($target)));
     }
-    msg(sprintf($lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
-                prettyprint_id($target)), 1);
-    act_redirect($ID, $act);
 
     // Assure that we have valid data if act_redirect somehow fails.
-    $INFO['subscribed'] = get_info_subscribed();
+    $INFO['subscribed'] = $sub->user_subscription();
     return 'show';
 }
 
@@ -777,8 +800,7 @@ function subscription_handle_post(&$params) {
         $style = null;
     }
 
-    $data = in_array($style, array('list', 'digest')) ? time() : null;
-    $params = compact('target', 'style', 'data', 'action');
+    $params = compact('target', 'style', 'action');
 }
 
 //Setup VIM: ex: et ts=2 :

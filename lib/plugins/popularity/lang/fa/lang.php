@@ -8,6 +8,7 @@
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
+ * @author AmirH Hassaneini <mytechmix@gmail.com>
  */
 $lang['name']                  = 'بازخورد محبوبیت (ممکن است اندکی زمان ببرد)';
 $lang['submit']                = 'ارسال اطلاعات';

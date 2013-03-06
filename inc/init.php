@@ -196,7 +196,7 @@ init_paths();
 init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
-$plugin_types = array('admin','syntax','action','renderer', 'helper','remote');
+$plugin_types = array('auth', 'admin','syntax','action','renderer', 'helper','remote');
 global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
 
