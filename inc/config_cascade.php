@@ -32,6 +32,10 @@ $config_cascade = array_merge(
             'default'   => array(DOKU_CONF.'mediameta.php'),
             'local'     => array(DOKU_CONF.'mediameta.local.php'),
             ),
+        'mediawhitelist' => array(
+            'default'   => array(DOKU_CONF.'mediawhitelist.conf'),
+            'local'     => array(DOKU_CONF.'mediawhitelist.local.conf'),
+            ),
         'mime'      => array(
             'default'   => array(DOKU_CONF.'mime.conf'),
             'local'     => array(DOKU_CONF.'mime.local.conf'),
