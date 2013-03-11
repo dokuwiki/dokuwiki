@@ -8,6 +8,7 @@ $lang['server']                = '您的 MySQL 服务器';
 $lang['user']                  = 'MySQL 用户名';
 $lang['password']              = '上述用户的密码';
 $lang['database']              = '使用的数据库';
+$lang['charset']               = '数据库中使用的字符集';
 $lang['debug']                 = '显示额外调试信息';
 $lang['forwardClearPass']      = '将用户密码以明文形式传送给下面的 SQL 语句，而不使用 passcrypt 密码加密选项';
 $lang['TablesToLock']          = '在写操作时需要锁定的数据表列表，以逗号分隔';

@@ -17,4 +17,5 @@ $lang['binddn']                = '一个可选的绑定用户的 DN (如果匿�
 $lang['bindpw']                = '上述用户的密码';
 $lang['userscope']             = '限制用户搜索的范围';
 $lang['groupscope']            = '限制组搜索的范围';
+$lang['groupkey']              = '根据任何用户属性得来的组成员(而不是标准的 AD 组)，例如根据部门或者电话号码得到的组。';
 $lang['debug']                 = '有错误时显示额外的调试信息';
