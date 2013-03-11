@@ -26,6 +26,7 @@
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
+ * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -303,6 +304,9 @@ $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écri
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
 $lang['i_retry']               = 'Réessayer';
 $lang['i_license']             = 'Veuillez choisir la licence sous laquelle vous souhaitez placer votre contenu :';
+$lang['i_license_none']        = 'Ne pas afficher d\'information de licence.';
+$lang['i_pop_field']           = 'Merci de nous aider à améliorer l\'expérience DokuWiki:';
+$lang['i_pop_label']           = 'Une fois par mois, envoyer des données d\'utilisation anonymes aux développeurs DokuWiki';
 $lang['recent_global']         = 'Vous êtes actuellement en train de regarder les modifications au sein de la catégorie <strong>%s</strong>. Vous pouvez également <a href="%s">afficher les derniers changements sur l\'ensemble du wiki</a>.';
 $lang['years']                 = 'il y a %d ans';
 $lang['months']                = 'il y a %d mois';

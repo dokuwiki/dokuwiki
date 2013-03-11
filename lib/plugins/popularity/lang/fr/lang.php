@@ -17,6 +17,7 @@
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
+ * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargée)';
 $lang['submit']                = 'Envoyer les données';
