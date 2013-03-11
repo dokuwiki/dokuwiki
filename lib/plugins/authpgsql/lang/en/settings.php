@@ -2,7 +2,7 @@
 
 $lang['server']           = 'Your PostgreSQL server';
 $lang['port']             = 'Your PostgreSQL server\'s port';
-$lang['user']             = 'PostreSQL user name';
+$lang['user']             = 'PostgreSQL user name';
 $lang['password']         = 'Password for above user';
 $lang['database']         = 'Database to use';
 $lang['debug']            = 'Display additional debug information';
