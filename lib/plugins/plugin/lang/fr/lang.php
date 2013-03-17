@@ -20,6 +20,7 @@
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
+ * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['menu']                  = 'Gestion des extensions';
 $lang['download']              = 'Télécharger et installer une nouvelle extension';
