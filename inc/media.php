@@ -1836,23 +1836,23 @@ function media_crop_image($file, $ext, $w, $h=0){
     if($tr >= 1){
         if($tr > $fr){
             $cw = $info[0];
-            $ch = (int) $info[0]/$tr;
+            $ch = (int) ($info[0]/$tr);
         }else{
-            $cw = (int) $info[1]*$tr;
+            $cw = (int) ($info[1]*$tr);
             $ch = $info[1];
         }
     }else{
         if($tr < $fr){
-            $cw = (int) $info[1]*$tr;
+            $cw = (int) ($info[1]*$tr);
             $ch = $info[1];
         }else{
             $cw = $info[0];
-            $ch = (int) $info[0]/$tr;
+            $ch = (int) ($info[0]/$tr);
         }
     }
     // calculate crop offset
-    $cx = (int) ($info[0]-$cw)/2;
-    $cy = (int) ($info[1]-$ch)/3;
+    $cx = (int) (($info[0]-$cw)/2);
+    $cy = (int) (($info[1]-$ch)/3);
 
     //cache
     $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);

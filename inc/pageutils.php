@@ -21,6 +21,7 @@
 function getID($param='id',$clean=true){
     global $INPUT;
     global $conf;
+    global $ACT;
 
     $id = $INPUT->str($param);
 
@@ -75,7 +76,7 @@ function getID($param='id',$clean=true){
             // fall back to default
             $id = $id.$conf['start'];
         }
-        send_redirect(wl($id,'',true));
+        if (isset($ACT) && $ACT === 'show') send_redirect(wl($id,'',true));
     }
 
     if($clean) $id = cleanID($id);
