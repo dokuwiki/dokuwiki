@@ -166,7 +166,7 @@ $lang['js']['del_confirm']= 'លុប';
 $lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
 
 $lang['spell_start'] = 'ពិនិត្យអក្ខរាវិរុទ្ធ';//'Check Spelling';
-$lang['spell_stop']  = 'បណ្តកំរែ'; 'Resume Editing';
+$lang['spell_stop']  = 'បណ្តកំរែ';
 $lang['spell_wait']  = 'សូមចាំ';//'Please wait...';
 $lang['spell_noerr'] = 'ឥតមានខុះទេ';
 $lang['spell_nosug'] = 'ឥតមានយោបល់';
