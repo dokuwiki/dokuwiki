@@ -1799,6 +1799,11 @@ function media_resize_image($file, $ext, $w, $h=0){
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
+    if (!$mtime && !media_reserve_version($local)){
+        // unable to reserve a file for a new version, return the original image
+        return $file;
+    }
+
     if( $mtime > filemtime($file) ||
             media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
             media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
@@ -1860,6 +1865,11 @@ function media_crop_image($file, $ext, $w, $h=0){
     $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
+    if (!$mtime && !media_reserve_version($local)){
+        // unable to reserve a file for a new version, return the original image
+        return $file;
+    }
+
     if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
@@ -1869,6 +1879,47 @@ function media_crop_image($file, $ext, $w, $h=0){
 
     //still here? cropping failed
     return media_resize_image($file,$ext, $w, $h);
+}
+
+/**
+ * Reserve a cache file for a new version of an image
+ *
+ * its necessary to reserve, using touch(), a placeholder for the new
+ * resize/crop version before the resize/crop operation to ensure
+ * consistency with any other nearly simultaneous fetch requests for
+ * resizes/crops of the same source image.
+ *
+ * @param  string $cachefile  cache file to be reserved
+ * @return bool               true if the cachefile could be reserved
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ */
+function media_reserve_version($cachefile){
+    $version_limit = 20;
+    $versions = media_get_cacheversioncount($cachefile);
+
+    if ($version_limit > $versions) {
+        touch($cachefile);
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Count the number of versions of this image which are already in the cache
+ * (all versions will have the same basename but different extensions)
+ *
+ * @param  string $cachefile  proper/complete cache file name
+ * @return int                version count
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ */
+function media_get_cacheversioncount($cachefile){
+    $cache_hash = preg_replace('/\..*$/','', $cachefile);
+    $versions = glob($cache_hash.'.*');
+
+    return $versions ? count($versions) : 0;
 }
 
 /**
