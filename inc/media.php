@@ -1828,6 +1828,13 @@ function media_crop_image($file, $ext, $w, $h=0){
     // calculate crop size
     $fr = $info[0]/$info[1];
     $tr = $w/$h;
+
+    // check if the crop can be handled completely by resize,
+    // i.e. the specified width & height match the aspect ratio of the source image
+    if ($w == round($h*$fr)) {
+        return media_resize_image($file, $ext, $w);
+    }
+
     if($tr >= 1){
         if($tr > $fr){
             $cw = $info[0];
