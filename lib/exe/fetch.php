@@ -32,7 +32,7 @@ if(!defined('SIMPLE_TEST')) {
     }
 
     // check for permissions, preconditions and cache external files
-    list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE, $REV);
+    list($STATUS, $STATUSMESSAGE) = checkFileStatus($MEDIA, $FILE, $REV, $WIDTH, $HEIGHT);
 
     // prepare data for plugin events
     $data = array(
@@ -180,7 +180,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
  * @param $file  reference to the file variable
  * @returns array(STATUS, STATUSMESSAGE)
  */
-function checkFileStatus(&$media, &$file, $rev = '') {
+function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     global $MIME, $EXT, $CACHE, $INPUT;
 
     //media to local file
@@ -199,6 +199,10 @@ function checkFileStatus(&$media, &$file, $rev = '') {
         $media = cleanID($media);
         if(empty($media)) {
             return array(400, 'Bad request');
+        }
+        // check token for resized images
+        if (($width || $height) && media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
+            return array(412, 'Precondition Failed');
         }
 
         //check permissions (namespace only)
