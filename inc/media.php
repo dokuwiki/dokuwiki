@@ -1796,10 +1796,11 @@ function media_resize_image($file, $ext, $w, $h=0){
     if($w > 2000 || $h > 2000) return $file;
 
     //cache
-    $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
+    $basename = getCacheName($file);
+    $local = $basename.'.media.'.$w.'x'.$h.'.'.$ext;
     $mtime = @filemtime($local); // 0 if not exists
 
-    if (!$mtime && !media_reserve_version($local)){
+    if (!$mtime && !media_reserve_version($basename,$local)){
         // unable to reserve a file for a new version, return the original image
         return $file;
     }
@@ -1862,10 +1863,11 @@ function media_crop_image($file, $ext, $w, $h=0){
     $cy = (int) (($info[1]-$ch)/3);
 
     //cache
-    $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
+    $basename = getCacheName($file);
+    $local = $basename.'.media.'.$cw.'x'.$ch.'.crop.'.$ext;
     $mtime = @filemtime($local); // 0 if not exists
 
-    if (!$mtime && !media_reserve_version($local)){
+    if (!$mtime && !media_reserve_version($basename,$local)){
         // unable to reserve a file for a new version, return the original image
         return $file;
     }
@@ -1894,32 +1896,22 @@ function media_crop_image($file, $ext, $w, $h=0){
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
-function media_reserve_version($cachefile){
-    $version_limit = 20;
-    $versions = media_get_cacheversioncount($cachefile);
+define(MEDIA_VERSION_LIMIT, 20);
 
-    if ($version_limit > $versions) {
-        touch($cachefile);
+function media_reserve_version($basename,$version){
+    $version_list = $basename.'.versions';
+
+    $versions = @file($version_list);
+    $version_count = $versions ? count($versions) : 0;
+
+    if (MEDIA_VERSION_LIMIT > $version_count) {
+        $line = $version.' '.time()."\n";
+        file_put_contents($version_list, $line, FILE_APPEND|LOCK_EX);
+        touch($version);
         return true;
     }
 
     return false;
-}
-
-/**
- * Count the number of versions of this image which are already in the cache
- * (all versions will have the same basename but different extensions)
- *
- * @param  string $cachefile  proper/complete cache file name
- * @return int                version count
- *
- * @author Christopher Smith <chris@jalakai.co.uk>
- */
-function media_get_cacheversioncount($cachefile){
-    $cache_hash = preg_replace('/\..*$/','', $cachefile);
-    $versions = glob($cache_hash.'.*');
-
-    return $versions ? count($versions) : 0;
 }
 
 /**
