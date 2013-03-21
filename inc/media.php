@@ -1897,7 +1897,7 @@ function media_crop_image($file, $ext, $w, $h=0){
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
-define(MEDIA_VERSION_LIMIT, 4);
+define(MEDIA_VERSION_LIMIT, 20);
 define(MEDIA_VERSION_LIST_EXT, '.versions');
 
 function media_reserve_version($basename,$version){
