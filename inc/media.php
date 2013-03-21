@@ -1891,27 +1891,98 @@ function media_crop_image($file, $ext, $w, $h=0){
  * consistency with any other nearly simultaneous fetch requests for
  * resizes/crops of the same source image.
  *
- * @param  string $cachefile  cache file to be reserved
+ * @param  string $basename   base name of the cache file used for the image versions (a hash on the source image)
+ * @param  string $version    complete path to the cachefile to be used for this version
  * @return bool               true if the cachefile could be reserved
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
-define(MEDIA_VERSION_LIMIT, 20);
+define(MEDIA_VERSION_LIMIT, 4);
+define(MEDIA_VERSION_LIST_EXT, '.versions');
 
 function media_reserve_version($basename,$version){
-    $version_list = $basename.'.versions';
+    global $conf;
+
+    $version_list = $basename.MEDIA_VERSION_LIST_EXT;   // name of the file containing the current list of versions of the image
+    $this_version = $version.' '.time()."\n";           // version list line format: {versionfilepath} {timestamp}
+    $can_reserve = false;
+
+    io_lock($version_list);
+    $version_list_changed = false;
 
     $versions = @file($version_list);
-    $version_count = $versions ? count($versions) : 0;
+    if (!is_array($versions)) $versions = array();
+    $version_count = count($versions);
 
-    if (MEDIA_VERSION_LIMIT > $version_count) {
-        $line = $version.' '.time()."\n";
-        file_put_contents($version_list, $line, FILE_APPEND|LOCK_EX);
-        touch($version);
-        return true;
+    if ($version_count >= MEDIA_VERSION_LIMIT){
+        $stale = time() - max($conf['cachetime'],3600);
+
+        foreach ($versions as $i => $line){
+            list($cachefile, $timestamp) = preg_split('/ (?=[^ ]*$)/',trim($line),2);  // split at last space
+
+            // test stale - assume non-stale files exist to avoid lots of unnecessary file accesses
+            // (the version list is in the cache, so emptying the cache will remove it, and
+            // presumably anything more specific will only remove cachefiles older than cachetime)
+            if ($stale < $timestamp) continue;
+
+            // version file says "stale", re-check against the actual file
+            $mtime = @filemtime($cachefile);
+            if ($stale < $mtime) continue;
+
+            // remove the cachefile, if it exists (mtime not false)
+            if ($mtime === false || @media_unlink_version($cachefile)){
+                unset($versions[$i]);
+                $version_list_changed = true;
+                --$version_count;
+            }
+
+            // only do the minimum necessary, stale files could still be valid and useful
+            if ($version_count < MEDIA_VERSION_LIMIT) break;
+        }
     }
 
-    return false;
+    if ($version_count < MEDIA_VERSION_LIMIT) {
+        $can_reserve = true;
+        touch($version);
+
+        $versions[] = $this_version;
+        $version_list_changed = true;
+    }
+
+    if ($version_list_changed) {
+        file_put_contents($version_list, join('',$versions));
+    }
+
+    io_unlock($version_list);
+    return $can_reserve;
+}
+
+/**
+ * delete a resized/cropped image version
+ * and for crops, look for and delete any derived resize versions and their version list
+ *
+ * @param  string $version   path to version file to be deleted
+ * @return bool              success deleting $version
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ */
+function media_unlink_version($version){
+    if (strpos($version,'.crop.') !== false){
+        $basename = getCacheName($version);
+        $crop_version_list = $basename.MEDIA_VERSION_LIST_EXT;
+        $crop_versions = @file($crop_version_list);
+
+        // if $crop_version_list exists, $crop_versions will be an array
+        if (is_array($crop_versions)) {
+            foreach ($crop_versions as $line) {
+                list($cachefile, $timestamp) = preg_split('/ (?=[^ ]*$)/',trim($line),2);  // split at last space
+                @unlink($cachefile);
+            }
+            @unlink($crop_version_list);
+        }
+    }
+
+    return @unlink($version);
 }
 
 /**
