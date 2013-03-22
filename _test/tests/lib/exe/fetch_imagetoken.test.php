@@ -7,6 +7,19 @@ class fetch_imagetoken_test extends DokuWikiTest {
     private $height = 0;
 
     function setUp() {
+        // check we can carry out these tests
+        if (!file_exists(mediaFN($this->media))) {
+            $this->markTestSkipped('Source image required for test');
+        }
+
+        header('X-Test: check headers working');
+        $header_check = function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list();
+        if (empty($header_check)) {
+            $this->markTestSkipped('headers not returned, perhaps your sapi does not return headers, try xdebug');
+        } else {
+            header_remove('X-Test');
+        }
+
         parent::setUp();
 
         global $conf;
@@ -63,16 +76,19 @@ class fetch_imagetoken_test extends DokuWikiTest {
 
     /**
      *  native image request which doesn't require a token
+     *  try: with a token & without a token
+     *  expect: (for both) header with mime-type, content matching source image filesize & no error response
      */
     function test_no_token_required(){
         $this->width = $this->height = 0;   // no width & height, means image request at native dimensions
         $any_token = 'tok='.media_get_token('junk',200,100).'&';
         $no_token = '';
+        $bytes = filesize(mediaFN($this->media));
 
         foreach(array($any_token, $no_token) as $token) {
             $response = $this->fetchResponse($token);
             $this->assertTrue((bool)$response->getHeader('Content-Type'));
-            $this->assertTrue((bool)($response->getContent()));
+            $this->assertEquals(strlen($response->getContent()), $bytes);
 
             $status_code = $response->getStatusCode();
             $this->assertTrue(is_null($status_code) || (200 == $status_code));

@@ -139,6 +139,14 @@ class InttestsBasicTest extends DokuWikiTest {
     }
 
     function testHeaders(){
+        header('X-Test: check headers working');
+        $header_check = function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list();
+        if (empty($header_check)) {
+            $this->markTestSkipped('headers not returned, perhaps your sapi does not return headers, try xdebug');
+        } else {
+            header_remove('X-Test');
+        }
+
         $request = new TestRequest();
         $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:dokuwiki-128.png');
         $headers = $response->getHeaders();
@@ -157,7 +165,7 @@ class InttestsBasicTest extends DokuWikiTest {
        $response = new TestResponse('',$this->some_headers);
        $this->assertEquals(404, $response->getStatusCode());
 
-       $response = new TestResponse('',array_slice($this->some_headers,0,-2));  // slide off the last two headers to leave no status header
+       $response = new TestResponse('',array_slice($this->some_headers,0,-2));  // slice off the last two headers to leave no status header
        $this->assertNull($response->getStatusCode());
     }
 
