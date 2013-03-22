@@ -1795,6 +1795,9 @@ function media_resize_image($file, $ext, $w, $h=0){
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
 
+    // resize necessary? - (w,h) = native dimensions
+    if(($w == $info[0]) && ($h == $info[1])) return $file;
+
     //cache
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
