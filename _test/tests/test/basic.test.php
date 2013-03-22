@@ -101,5 +101,23 @@ class InttestsBasicTest extends DokuWikiTest {
         $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') >= 0);
     }
 
+    function testScripts() {
+        $request = new TestRequest();
+
+        // doku
+        $response = $request->get();
+        $this->assertEquals('doku.php',$request->getScript());
+
+        $response = $request->get(array(),'/doku.php?id=wiki:dokuwiki&test=foo');
+        $this->assertEquals('doku.php',$request->getScript());
+
+        // fetch
+        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:dokuwiki-128.png');
+        $this->assertEquals('lib/exe/fetch.php',$request->getScript());
+
+        // detail
+        $response = $request->get(array(),'/lib/exe/detail.php?id=start&media=wiki:dokuwiki-128.png');
+        $this->assertEquals('lib/exe/detail.php',$request->getScript());
+    }
 
 }
