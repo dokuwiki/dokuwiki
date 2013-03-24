@@ -1,13 +1,12 @@
 <?php
 /**
- * korean language file
+ * Korean language file
  *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
- * @author SONG Younghwan <purluno@gmail.com>
- * @author Seung-Chul Yoo  <dryoo@live.com>
+ * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  */
@@ -15,9 +14,9 @@ $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다. 수정한 값을 검토하고 확인을 누르세요.
 <br />잘못된 값은 빨간 선으로 둘러싸여 있습니다.';
 $lang['updated']               = '설정이 성공적으로 바뀌었습니다.';
-$lang['nochoice']              = '(다른 선택이 불가능합니다.)';
+$lang['nochoice']              = '(다른 선택이 불가능합니다)';
 $lang['locked']                = '환경 설정 파일을 수정할 수 없습니다. 의도한 행동이 아니라면,<br />
-파일 이름과 권한이 맞는지 확인하기 바랍니다. ';
+파일 이름과 권한이 맞는지 확인하세요.';
 $lang['danger']                = '위험: 이 옵션을 잘못 수정하면 환경설정 메뉴를 사용할 수 없을 수도 있습니다.';
 $lang['warning']               = '경고: 이 옵션을 잘못 수정하면 잘못 동작할 수 있습니다.';
 $lang['security']              = '보안 경고: 이 옵션은 보안에 위험이 있을 수 있습니다.';
@@ -47,7 +46,7 @@ $lang['start']                 = '각 이름공간에서 사용할 시작 문서
 $lang['lang']                  = '인터페이스 언어';
 $lang['template']              = '템플릿 (위키 디자인)';
 $lang['tagline']               = '태그 라인 (템플릿이 지원할 때에 한함)';
-$lang['sidebar']               = '사이드바 문서 이름 (템플릿이 지원할 때에 한함). 비워두면 사이드바를 비활성화';
+$lang['sidebar']               = '사이드바 문서 이름 (템플릿이 지원할 때에 한함), 비워두면 사이드바를 비활성화';
 $lang['license']               = '콘텐츠에 어떤 라이선스를 적용하겠습니까?';
 $lang['savedir']               = '데이타 저장 디렉토리';
 $lang['basedir']               = '서버 경로 (예를 들어 <code>/dokuwiki/</code>). 자동 감지를 하려면 비우세요.';
@@ -59,7 +58,7 @@ $lang['allowdebug']            = '디버그 허용 <b>필요하지 않으면 금
 $lang['recent']                = '최근 바뀐 문서당 항목 수';
 $lang['recent_days']           = '최근 바뀐 문서 기준 시간 (날짜)';
 $lang['breadcrumbs']           = '위치 "추적" 수. 0으로 설정하면 비활성화합니다.';
-$lang['youarehere']            = '계층형 위치 추적 (다음 위의 옵션을 비활성화하고 싶습니다)';
+$lang['youarehere']            = '계층형 위치 추적 (다음 위의 옵션을 비활성화하게 됩니다)';
 $lang['fullpath']              = '문서 하단에 전체 경로 보여주기';
 $lang['typography']            = '기호 대체';
 $lang['dformat']               = '날짜 형식 (PHP <a href="http://www.php.net/strftime">strftime</a> 기능 참고)';
@@ -108,7 +107,7 @@ $lang['target____interwiki']   = '인터위키 링크에 대한 타겟 창';
 $lang['target____extern']      = '바깥 링크에 대한 타겟 창';
 $lang['target____media']       = '미디어 링크에 대한 타겟 창';
 $lang['target____windows']     = '창 링크에 대한 타겟 창';
-$lang['mediarevisions']        = '미디어 버전 관리를 사용하겠습니까?';
+$lang['mediarevisions']        = '미디어 판 관리를 사용하겠습니까?';
 $lang['refcheck']              = '미디어 파일을 삭제하기 전에 사용하고 있는지 검사';
 $lang['refshow']               = '위의 설정이 활성화되었을 때 보여줄 미디어 참고 수';
 $lang['gdlib']                 = 'GD 라이브러리 버전';
@@ -121,7 +120,7 @@ $lang['notify']                = '항상 이 이메일 주소로 바뀜 알림�
 $lang['registernotify']        = '항상 새 사용자한테 이 이메일 주소로 정보를 보냄';
 $lang['mailfrom']              = '자동으로 보내지는 메일 발신자';
 $lang['mailprefix']            = '자동으로 보내지는 메일의 제목 말머리 내용. 비웠을 경우 위키 제목 사용';
-$lang['htmlmail']              = '용량은 조금 더 크지만 보기 좋은 HTML 태그가 포함된 메일을 발송합니다. 텍스트만의 메일을 보내고자하면 비활성화하세요.';
+$lang['htmlmail']              = '용량은 조금 더 크지만 보기 좋은 HTML 태그가 포함된 메일을 보냅니다. 텍스트만의 메일을 보내고자하면 비활성화하세요.';
 $lang['sitemap']               = '구글 사이트맵 생성 (날짜). 0일 경우 비활성화';
 $lang['rss_type']              = 'XML 피드 타입';
 $lang['rss_linkto']            = 'XML 피드 링크 정보';
@@ -141,12 +140,12 @@ $lang['gzip_output']           = 'xhml 내용 gzip 압축 사용';
 $lang['compress']              = '최적화된 CSS, 자바스크립트 출력';
 $lang['cssdatauri']            = '그림이 렌더링될 최대 용량 크기를 CSS에 규정해야 HTTP 요청 헤더 오버헤드 크기를 감소시킬 수 있습니다. 이 기술은 IE 7 이하에서는 작동하지 않습니다! <code>400</code>에서 <code>600</code> 정도면 좋은 효율을 가져옵니다. <code>0</code>로 지정할 경우 비활성화 됩니다.';
 $lang['send404']               = '존재하지 않는 페이지에 대해 "HTTP 404/Page Not Found" 응답';
-$lang['broken_iua']            = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있습니까? 문제가 있다면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참고하기 바랍니다.';
+$lang['broken_iua']            = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있습니까? 문제가 있다면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참고하시기 바랍니다.';
 $lang['xsendfile']             = '웹 서버가 정적 파일을 제공하도록 X-Sendfile 헤더를 사용하겠습니까? 웹 서버가 이 기능을 지원해야 합니다.';
 $lang['renderer_xhtml']        = '주 (xhtml) 위키 출력 처리기';
 $lang['renderer__core']        = '%s (DokuWiki 내부 기능)';
 $lang['renderer__plugin']      = '%s (플러그인)';
-$lang['dnslookups']            = '이 옵션을 활성화하면 도쿠위키가 문서를 수정하는 사용자의 호스트 네임과 원격 IP 주소를 확인합니다. 서버가 느리거나, DNS를 운영하지 않거나 이 기능을 원치 않으면 비활성화 시켜주세요.';
+$lang['dnslookups']            = '이 옵션을 활성화하면 DokuWiki가 문서를 수정하는 사용자의 호스트 네임과 원격 IP 주소를 확인합니다. 서버가 느리거나, DNS를 운영하지 않거나 이 기능을 원치 않으면 비활성화 시켜주세요.';
 $lang['proxy____host']         = '프록시 서버 이름';
 $lang['proxy____port']         = '프록시 서버 포트';
 $lang['proxy____user']         = '프록시 사용자 이름';
