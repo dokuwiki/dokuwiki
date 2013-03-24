@@ -16,6 +16,7 @@
  * @author Sergio Motta sergio@cisne.com.br
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
+ * @author Victor Westmann <victor.westmann@gmail.com>
  */
 $lang['menu']                  = 'Gerenciador de reversões';
 $lang['filter']                = 'Procura por páginas com spam';

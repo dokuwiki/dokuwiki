@@ -16,6 +16,7 @@
  * @author Sergio Motta sergio@cisne.com.br
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
+ * @author Victor Westmann <victor.westmann@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
