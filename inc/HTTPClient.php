@@ -570,11 +570,6 @@ class HTTPClient {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _sendData($socket, $data, $message) {
-        // select parameters
-        $sel_r = null;
-        $sel_w = array($socket);
-        $sel_e = null;
-
         // send request
         $towrite = strlen($data);
         $written = 0;
@@ -586,6 +581,10 @@ class HTTPClient {
             if(feof($socket))
                 throw new HTTPClientException("Socket disconnected while writing $message");
 
+            // select parameters
+            $sel_r = null;
+            $sel_w = array($socket);
+            $sel_e = null;
             // wait for stream ready or timeout (1sec)
             if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
                  usleep(1000);
@@ -615,11 +614,6 @@ class HTTPClient {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readData($socket, $nbytes, $message, $ignore_eof = false) {
-        // select parameters
-        $sel_r = array($socket);
-        $sel_w = null;
-        $sel_e = null;
-
         $r_data = '';
         // Does not return immediately so timeout and eof can be checked
         if ($nbytes < 0) $nbytes = 0;
@@ -637,6 +631,10 @@ class HTTPClient {
             }
 
             if ($to_read > 0) {
+                // select parameters
+                $sel_r = array($socket);
+                $sel_w = null;
+                $sel_e = null;
                 // wait for stream ready or timeout (1sec)
                 if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
                      usleep(1000);
@@ -665,21 +663,20 @@ class HTTPClient {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readLine($socket, $message) {
-        // select parameters
-        $sel_r = array($socket);
-        $sel_w = null;
-        $sel_e = null;
-
         $r_data = '';
         do {
             $time_used = $this->_time() - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
-                        sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
+                        sprintf('Timeout while reading %s (%.3fs) >%s<', $message, $time_used, $r_data),
                         -100);
             if(feof($socket))
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
 
+            // select parameters
+            $sel_r = array($socket);
+            $sel_w = null;
+            $sel_e = null;
             // wait for stream ready or timeout (1sec)
             if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
                  usleep(1000);
