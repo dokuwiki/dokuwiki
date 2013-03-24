@@ -796,7 +796,7 @@ class HTTPClient {
             $headers .= "$key=$val; ";
         }
         $headers = substr($headers, 0, -2);
-        if ($headers !== '') $headers = "Cookie: $headers".HTTP_NL;
+        if ($headers) $headers = "Cookie: $headers".HTTP_NL;
         return $headers;
     }
 
