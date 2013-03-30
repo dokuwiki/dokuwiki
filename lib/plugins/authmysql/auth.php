@@ -816,6 +816,10 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @return int|bool insert id or 0, false on error
      */
     protected function _modifyDB($query) {
+        if($this->getConf('debug') >= 2) {
+            msg('MySQL query: '.hsc($query), 0, __LINE__, __FILE__);
+        }
+
         if($this->dbcon) {
             $result = @mysql_query($query, $this->dbcon);
             if($result) {
@@ -848,11 +852,12 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _lockTables($mode) {
         if($this->dbcon) {
-            if(is_array($this->getConf('TablesToLock'))) {
+            $ttl = $this->getConf('TablesToLock');
+            if(is_array($ttl) && !empty($ttl)) {
                 if($mode == "READ" || $mode == "WRITE") {
                     $sql = "LOCK TABLES ";
                     $cnt = 0;
-                    foreach($this->getConf('TablesToLock') as $table) {
+                    foreach($ttl as $table) {
                         if($cnt++ != 0) $sql .= ", ";
                         $sql .= "$table $mode";
                     }
