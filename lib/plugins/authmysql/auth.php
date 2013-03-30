@@ -97,6 +97,15 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             ), false
         );
         $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'), false);
+
+        if($this->getConf('debug') >= 2) {
+            $candoDebug = '';
+            foreach($this->cando as $cd => $value) {
+                if($value) { $value = 'yes'; } else { $value = 'no'; }
+                $candoDebug .= $cd . ": " . $value . " | ";
+            }
+            $this->_debug("authmysql cando: " . $candoDebug, 0, __LINE__, __FILE__);
+        }
     }
 
     /**
