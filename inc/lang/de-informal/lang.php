@@ -298,8 +298,8 @@ $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochl
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wähle die Lizenz aus unter der die Wiki-Inhalte veröffentlicht werden sollen:';
 $lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen';
-$lang['i_pop_field']           = 'Bitte helfe uns, die DokuWiki-Erfahrung zu verbessern';
-$lang['i_pop_label']           = 'Sende einmal im Monat anonyme Nutzungsdaten an die DokuWiki Entwickler';
+$lang['i_pop_field']           = 'Bitte hilf uns DokuWiki zu verbessern:';
+$lang['i_pop_label']           = 'Einmal im Monat die anonymisierten Nutzungsdaten an die DokuWiki-Entwickler versenden.';
 $lang['recent_global']         = 'Im Moment siehst du die Änderungen im Namensraum <b>%s</b>. Du kannst auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';

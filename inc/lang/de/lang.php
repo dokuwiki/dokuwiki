@@ -18,7 +18,7 @@
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
- * @author Matthias Schulte <mailinglist@lupo49.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
  */
@@ -298,6 +298,9 @@ $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Nutzer)';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wählen Sie die Lizenz, unter die Sie Ihre Inhalte stellen möchten:';
+$lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen.';
+$lang['i_pop_field']           = 'Bitte helfen Sie uns, DokuWiki zu verbessern:';
+$lang['i_pop_label']           = 'Einmal im Monat die anonymisierten Nutzungsdaten an die DokuWiki-Entwickler versenden.';
 $lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';
@@ -318,7 +321,7 @@ $lang['media_list_rows']       = 'Reihen';
 $lang['media_sort_name']       = 'nach Name';
 $lang['media_sort_date']       = 'nach Datum';
 $lang['media_namespaces']      = 'Namensraum wählen';
-$lang['media_files']           = 'Dateien in %s';
+$lang['media_files']           = 'Medien im Namensraum <strong>%s</strong>.';
 $lang['media_upload']          = 'In den <strong>%s</strong> Namensraum hochladen.';
 $lang['media_search']          = 'Im Namensraum <strong>%s</strong> suchen.';
 $lang['media_view']            = '%s';
