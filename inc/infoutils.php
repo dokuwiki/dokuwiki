@@ -300,7 +300,7 @@ function info_msg_canshow($msg){
     global $INFO, $auth;
 
     // is the message public? - everyone and anyone can see it
-    if (empty($msg['show'])) return true;
+    if (empty($msg['show']) || ($msg['show'] == MSG_PUBLIC)) return true;
 
     // restricted msg, but no authentication
     if (empty($auth)) return false;
