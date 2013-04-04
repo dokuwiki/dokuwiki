@@ -17,7 +17,7 @@
  */
 $lang['menu']                  = 'Gebruikersmanager';
 $lang['noauth']                = '(gebruikersauthenticatie niet beschikbaar)';
-$lang['nosupport']             = '(gebruikersmanagement niet ondersteund)';
+$lang['nosupport']             = '(gebruikersbeheer niet ondersteund)';
 $lang['badauth']               = 'ongeldige authenticatiemethode';
 $lang['user_id']               = 'Gebruiker';
 $lang['user_pass']             = 'Wachtwoord';
