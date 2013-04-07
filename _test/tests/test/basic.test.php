@@ -4,6 +4,24 @@
  * @group integration
  */
 class InttestsBasicTest extends DokuWikiTest {
+
+    private $some_headers =  array(
+          'Content-Type: image/png',
+          'Date: Fri, 22 Mar 2013 16:10:01 GMT',
+          'X-Powered-By: PHP/5.3.15',
+          'Expires: Sat, 23 Mar 2013 17:03:46 GMT',
+          'Cache-Control: public, proxy-revalidate, no-transform, max-age=86400',
+          'Pragma: public',
+          'Last-Modified: Fri, 22 Mar 2013 01:48:28 GMT',
+          'ETag: "63daab733b38c30c337229b2e587f8fb"',
+          'Content-Disposition: inline; filename="fe389b0db8c1088c336abb502d2f9ae7.media.200x200.png',
+          'Accept-Ranges: bytes',
+          'Content-Type: image/png',
+          'Content-Length: 62315',
+          'Status: 200 OK',
+          'Status: 404 Not Found',
+     );
+
     /**
      * Execute the simplest possible request and expect
      * a dokuwiki page which obviously has the word "DokuWiki"
@@ -101,5 +119,54 @@ class InttestsBasicTest extends DokuWikiTest {
         $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') >= 0);
     }
 
+    function testScripts() {
+        $request = new TestRequest();
+
+        // doku
+        $response = $request->get();
+        $this->assertEquals('doku.php',$request->getScript());
+
+        $response = $request->get(array(),'/doku.php?id=wiki:dokuwiki&test=foo');
+        $this->assertEquals('doku.php',$request->getScript());
+
+        // fetch
+        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:dokuwiki-128.png');
+        $this->assertEquals('lib/exe/fetch.php',$request->getScript());
+
+        // detail
+        $response = $request->get(array(),'/lib/exe/detail.php?id=start&media=wiki:dokuwiki-128.png');
+        $this->assertEquals('lib/exe/detail.php',$request->getScript());
+    }
+
+    function testHeaders(){
+        header('X-Test: check headers working');
+        $header_check = function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list();
+        if (empty($header_check)) {
+            $this->markTestSkipped('headers not returned, perhaps your sapi does not return headers, try xdebug');
+        } else {
+            header_remove('X-Test');
+        }
+
+        $request = new TestRequest();
+        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:dokuwiki-128.png');
+        $headers = $response->getHeaders();
+        $this->assertTrue(!empty($headers));
+    }
+
+    function testGetHeader(){
+        $response = new TestResponse('',$this->some_headers);
+
+        $this->assertEquals('Pragma: public', $response->getHeader('Pragma'));
+        $this->assertEmpty($response->getHeader('Junk'));
+        $this->assertEquals(array('Content-Type: image/png','Content-Type: image/png'), $response->getHeader('Content-Type'));
+    }
+
+    function testGetStatus(){
+       $response = new TestResponse('',$this->some_headers);
+       $this->assertEquals(404, $response->getStatusCode());
+
+       $response = new TestResponse('',array_slice($this->some_headers,0,-2));  // slice off the last two headers to leave no status header
+       $this->assertNull($response->getStatusCode());
+    }
 
 }

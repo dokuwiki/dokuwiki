@@ -1875,6 +1875,30 @@ function media_crop_image($file, $ext, $w, $h=0){
 }
 
 /**
+ * Calculate a token to be used to verify fetch requests for resized or
+ * cropped images have been internally generated - and prevent external
+ * DDOS attacks via fetch
+ *
+ * @param string  $id    id of the image
+ * @param int     $w     resize/crop width
+ * @param int     $h     resize/crop height
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ */
+function media_get_token($id,$w,$h){
+    // token is only required for modified images
+    if ($w || $h) {
+        $token = auth_cookiesalt().$id;
+        if ($w) $token .= '.'.$w;
+        if ($h) $token .= '.'.$h;
+
+        return substr(md5($token),0,6);
+    }
+
+    return '';
+}
+
+/**
  * Download a remote file and return local filename
  *
  * returns false if download fails. Uses cached file if available and
