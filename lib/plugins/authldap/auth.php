@@ -36,8 +36,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return;
         }
 
-	if ($this->getConf('external')) {
+        if ($this->getConf('external')) {
             $this->cando['external'] = true;
+            $this->cando['logout'] = false;
         }
 
         // auth_ldap currently just handles authentication, so no
