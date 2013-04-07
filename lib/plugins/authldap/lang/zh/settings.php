@@ -13,7 +13,7 @@ $lang['groupfilter']           = '用于搜索组的 LDAP 筛选器。例如 <co
 $lang['version']               = '使用的协议版本。您或许需要设置为 <code>3</code>';
 $lang['starttls']              = '使用 TLS 连接？';
 $lang['referrals']             = '是否允许引用 (referrals)？';
-$lang['binddn']                = '一个可选的绑定用户的 DN (如果匿名绑定不满足要求)。例如 Eg. <code>cn=admin, dc=my, dc=home</code>';
+$lang['binddn']                = '一个可选的绑定用户的 DN (如果匿名绑定不满足要求)。例如 <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = '上述用户的密码';
 $lang['userscope']             = '限制用户搜索的范围';
 $lang['groupscope']            = '限制组搜索的范围';

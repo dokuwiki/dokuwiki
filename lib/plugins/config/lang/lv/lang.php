@@ -26,6 +26,7 @@ $lang['_anti_spam']            = 'Pretspama iestatījumi';
 $lang['_editing']              = 'Labošanas iestatījumi';
 $lang['_links']                = 'Saišu iestatījumi';
 $lang['_media']                = 'Mēdiju iestatījumi';
+$lang['_notifications']        = 'Brīdinājumu iestatījumi';
 $lang['_advanced']             = 'Smalkāka iestatīšana';
 $lang['_network']              = 'Tīkla iestatījumi';
 $lang['_plugin_sufix']         = 'moduļa iestatījumi';

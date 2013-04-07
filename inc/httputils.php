@@ -61,9 +61,9 @@ function http_conditionalRequest($timestamp){
 }
 
 /**
- * Let the webserver send the given file vi x-sendfile method
+ * Let the webserver send the given file via x-sendfile method
  *
- * @author Chris Smith <chris.eureka@jalakai.co.uk>
+ * @author Chris Smith <chris@jalakai.co.uk>
  * @returns  void or exits with previously header() commands executed
  */
 function http_sendfile($file) {
@@ -177,7 +177,8 @@ function http_rangeRequest($fh,$size,$mime){
         echo HTTP_HEADER_LF.'--'.HTTP_MULTIPART_BOUNDARY.'--'.HTTP_HEADER_LF;
     }
 
-    // everything should be done here, exit
+    // everything should be done here, exit (or return if testing)
+    if (defined('SIMPLE_TEST')) return;
     exit;
 }
 
@@ -320,7 +321,7 @@ function http_status($code = 200, $text = '') {
 
     $server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : false;
 
-    if(substr(php_sapi_name(), 0, 3) == 'cgi') {
+    if(substr(php_sapi_name(), 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
         header("Status: {$code} {$text}", true);
     } elseif($server_protocol == 'HTTP/1.1' OR $server_protocol == 'HTTP/1.0') {
         header($server_protocol." {$code} {$text}", true, $code);
