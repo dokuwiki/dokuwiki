@@ -1795,6 +1795,9 @@ function media_resize_image($file, $ext, $w, $h=0){
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
 
+    // resize necessary? - (w,h) = native dimensions
+    if(($w == $info[0]) && ($h == $info[1])) return $file;
+
     //cache
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
@@ -1828,6 +1831,13 @@ function media_crop_image($file, $ext, $w, $h=0){
     // calculate crop size
     $fr = $info[0]/$info[1];
     $tr = $w/$h;
+
+    // check if the crop can be handled completely by resize,
+    // i.e. the specified width & height match the aspect ratio of the source image
+    if ($w == round($h*$fr)) {
+        return media_resize_image($file, $ext, $w);
+    }
+
     if($tr >= 1){
         if($tr > $fr){
             $cw = $info[0];
