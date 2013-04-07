@@ -1297,7 +1297,7 @@ function html_msgarea(){
     foreach($MSG as $msg){
         $hash = md5($msg['msg']);
         if(isset($shown[$hash])) continue; // skip double messages
-        if(info_msg_canshow($msg)){
+        if(info_msg_allowed($msg)){
             print '<div class="'.$msg['lvl'].'">';
             print $msg['msg'];
             print '</div>';

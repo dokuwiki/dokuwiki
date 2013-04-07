@@ -275,7 +275,7 @@ define('MSG_USERS_ONLY', 1);
 define('MSG_MANAGERS_ONLY',2);
 define('MSG_ADMINS_ONLY',4);
 
-function msg($message,$lvl=0,$line='',$file='',$show=MSG_PUBLIC){
+function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
     $errors[-1] = 'error';
     $errors[0]  = 'info';
@@ -285,7 +285,7 @@ function msg($message,$lvl=0,$line='',$file='',$show=MSG_PUBLIC){
     if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
 
     if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'show' => $show);
+    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
     if(isset($MSG_shown) || headers_sent()){
         if(function_exists('html_msgarea')){
             html_msgarea();
@@ -295,17 +295,26 @@ function msg($message,$lvl=0,$line='',$file='',$show=MSG_PUBLIC){
         unset($GLOBALS['MSG']);
     }
 }
-
-function info_msg_canshow($msg){
+/**
+ * Determine whether the current user is allowed to view the message
+ * in the $msg data structure
+ *
+ * @param  $msg   array    dokuwiki msg structure
+ *                         msg   => string, the message
+ *                         lvl   => int, level of the message (see msg() function)
+ *                         allow => int, flag used to determine who is allowed to see the message
+ *                                       see MSG_* constants
+ */
+function info_msg_allowed($msg){
     global $INFO, $auth;
 
     // is the message public? - everyone and anyone can see it
-    if (empty($msg['show']) || ($msg['show'] == MSG_PUBLIC)) return true;
+    if (empty($msg['allow']) || ($msg['allow'] == MSG_PUBLIC)) return true;
 
     // restricted msg, but no authentication
     if (empty($auth)) return false;
 
-    switch ($msg['show']){
+    switch ($msg['allow']){
         case MSG_USERS_ONLY:
             return !empty($INFO['userinfo']);
 
@@ -316,7 +325,7 @@ function info_msg_canshow($msg){
             return $INFO['isadmin'];
 
         default:
-            trigger_error('invalid msg show restriction.  msg="'.$msg['msg'].'" show='.$msg['show'].'"', E_USER_WARNING);
+            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"', E_USER_WARNING);
             return $INFO['isadmin'];
     }
 
