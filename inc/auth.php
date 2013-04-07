@@ -48,10 +48,15 @@ function auth_setup() {
 
     // try to load auth backend from plugins
     foreach ($plugin_controller->getList('auth') as $plugin) {
-    	if ($conf['authtype'] === $plugin) {
-    		$auth = $plugin_controller->load('auth', $plugin);
-    		break;
-    	}
+      if ($conf['authtype'] === $plugin) {
+        $auth = $plugin_controller->load('auth', $plugin);
+        break;
+      } elseif ('auth' . $conf['authtype'] === $plugin) {
+        // matches old auth backends (pre-Weatherwax)
+        $auth = $plugin_controller->load('auth', $plugin);
+        msg('Your authtype setting is deprecated. You must set $conf[\'authconfig\'] = ' . "auth" . $conf['authtype']
+             . ' in your config (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
+      }
     }
 
 	if(!isset($auth) || !$auth){
