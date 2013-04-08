@@ -16,15 +16,16 @@ if(!defined('NL')) define('NL',"\n");
 
 // check if user abort worked, if yes send output early
 $defer = !@ignore_user_abort() || $conf['broken_iua'];
-if(!$defer){
+$output = $INPUT->has('debug') && $conf['allowdebug'];
+if(!$defer && !$output){
     sendGIF(); // send gif
 }
 
 $ID = cleanID($INPUT->str('id'));
 
 // Catch any possible output (e.g. errors)
-$output = $INPUT->has('debug') && $conf['allowdebug'];
 if(!$output) ob_start();
+else header('Content-Type: text/plain');
 
 // run one of the jobs
 $tmp = array(); // No event data
@@ -192,11 +193,6 @@ function sendDigest() {
  * @author Harry Fuecks <fuecks@gmail.com>
  */
 function sendGIF(){
-    global $INPUT;
-    if($INPUT->has('debug')){
-        header('Content-Type: text/plain');
-        return;
-    }
     $img = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7');
     header('Content-Type: image/gif');
     header('Content-Length: '.strlen($img));
