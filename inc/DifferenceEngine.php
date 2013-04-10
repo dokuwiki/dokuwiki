@@ -1004,6 +1004,8 @@ class InlineWordLevelDiff extends MappedDiff {
  * "Unified" diff formatter.
  *
  * This class formats the diff in classic "unified diff" format.
+ *
+ * NOTE: output is plain text and unsafe for use in HTML without escaping.
  */
 class UnifiedDiffFormatter extends DiffFormatter {
 
