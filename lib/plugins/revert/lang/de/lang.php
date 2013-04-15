@@ -16,6 +16,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Mateng Schimmerlos <mateng@firemail.de>)
  */
 $lang['menu']                  = 'Seiten wieder herstellen';
 $lang['filter']                = 'Nach betroffenen Seiten suchen';
