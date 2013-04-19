@@ -6,8 +6,8 @@
 $lang['account_suffix']        = 'Via konto-aldonaĵo, ekz. <code>@mia.domajno.lando</code>';
 $lang['base_dn']               = 'Via baza DN, ekz. <code>DC=mia,DC=domajno,DC=lando</code>';
 $lang['domain_controllers']    = 'Komodisigita listo de domajno-serviloj, ekz. <code>srv1.domajno.lando,srv2.domajno.lando</code>';
-$lang['ad_username']           = 'Privilegiita Aktiv-Dosieruja uzanto kun aliro al ĉiuj uzantaj datumoj. Libervole, sed necesa por iuj agadoj kiel sendi abonan retpoŝton.';
-$lang['ad_password']           = 'La pasvorto de tiu uzanto.';
+$lang['admin_username']        = 'Privilegiita Aktiv-Dosieruja uzanto kun aliro al ĉiuj uzantaj datumoj. Libervole, sed necesa por iuj agadoj kiel sendi abonan retpoŝton.';
+$lang['admin_password']        = 'La pasvorto de tiu uzanto.';
 $lang['sso']                   = 'Ĉu uzi Sola Aliro tra Kerberos aŭ NTLM?';
 $lang['real_primarygroup']     = 'Ĉu trovi la veran ĉefan grupon anstataŭ supozi "Domajnuzantoj" (pli malrapida)?';
 $lang['use_ssl']               = 'Ĉu uzi SSL-konekton? Se jes, ne aktivigu TLS sube.';

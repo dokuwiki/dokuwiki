@@ -21,8 +21,8 @@ require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
  *
  *   //optional:
  *   $conf['plugin']['authad']['sso']                = 1;
- *   $conf['plugin']['authad']['ad_username']        = 'root';
- *   $conf['plugin']['authad']['ad_password']        = 'pass';
+ *   $conf['plugin']['authad']['admin_username']     = 'root';
+ *   $conf['plugin']['authad']['admin_password']     = 'pass';
  *   $conf['plugin']['authad']['real_primarygroup']  = 1;
  *   $conf['plugin']['authad']['use_ssl']            = 1;
  *   $conf['plugin']['authad']['use_tls']            = 1;
