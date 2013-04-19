@@ -465,7 +465,13 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             if(defined('LDAP_OPT_NETWORK_TIMEOUT')) {
                 ldap_set_option($this->con, LDAP_OPT_NETWORK_TIMEOUT, 1);
             }
-            $bound = @ldap_bind($this->con);
+
+            if($this->getConf('binddn') && $this->getConf('bindpw')) {
+                $bound = @ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'));
+                $this->bound = 2;
+            } else {
+                $bound = @ldap_bind($this->con);
+            }
             if($bound) {
                 break;
             }

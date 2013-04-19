@@ -7,8 +7,8 @@
 $lang['account_suffix']        = '您的帳號後綴。如： <code>@my.domain.org</code>';
 $lang['base_dn']               = '您的基本識別名。如： <code>DC=my,DC=domain,DC=org</code>';
 $lang['domain_controllers']    = '以逗號分隔的域名控制器列表。如： <code>srv1.domain.org,srv2.domain.org</code>';
-$lang['ad_username']           = 'Active Directory 的特權使用者，可以查看所有使用者的數據。(非必要，但對發送訂閱郵件等活動來說，這是必須的。)';
-$lang['ad_password']           = '上述使用者的密碼。';
+$lang['admin_username']        = 'Active Directory 的特權使用者，可以查看所有使用者的數據。(非必要，但對發送訂閱郵件等活動來說，這是必須的。)';
+$lang['admin_password']        = '上述使用者的密碼。';
 $lang['sso']                   = '是否使用 Kerberos 或 NTLM 的單一登入系統 (Single-Sign-On)？';
 $lang['real_primarygroup']     = '是否視作真正的主要群組，而不是假設為網域使用者 (比較慢)';
 $lang['use_ssl']               = '使用 SSL 連接嗎？如果要使用，請不要啟用下方的 TLS。';
