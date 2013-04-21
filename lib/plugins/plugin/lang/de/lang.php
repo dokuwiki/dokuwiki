@@ -18,7 +18,6 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
- * @author Mateng Schimmerlos <mateng@firemail.de>)
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Neues Plugin herunterladen und installieren';

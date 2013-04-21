@@ -17,7 +17,6 @@
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
- * @author Mateng Schimmerlos <mateng@firemail.de>)
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';
