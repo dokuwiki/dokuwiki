@@ -29,23 +29,23 @@ $lang['_header_template'] = 'Template Settings';
 $lang['_header_undefined'] = 'Undefined Settings';
 
 /* --- Config Setting Groups --- */
-$lang['_basic'] = 'Basic Settings';
-$lang['_display'] = 'Display Settings';
-$lang['_authentication'] = 'Authentication Settings';
-$lang['_anti_spam'] = 'Anti-Spam Settings';
-$lang['_editing'] = 'Editing Settings';
-$lang['_links'] = 'Link Settings';
-$lang['_media'] = 'Media Settings';
-$lang['_notifications'] = 'Notification Settings';
-$lang['_syndication']   = 'Syndication Settings';
-$lang['_advanced'] = 'Advanced Settings';
-$lang['_network'] = 'Network Settings';
+$lang['_basic'] = 'Basic';
+$lang['_display'] = 'Display';
+$lang['_authentication'] = 'Authentication';
+$lang['_anti_spam'] = 'Anti-Spam';
+$lang['_editing'] = 'Editing';
+$lang['_links'] = 'Link';
+$lang['_media'] = 'Media';
+$lang['_notifications'] = 'Notification';
+$lang['_syndication']   = 'Syndication';
+$lang['_advanced'] = 'Advanced';
+$lang['_network'] = 'Network';
 // The settings group name for plugins and templates can be set with
 // plugin_settings_name and template_settings_name respectively. If one
 // of these lang properties is not set, the group name will be generated
 // from the plugin or template name and the localized suffix.
-$lang['_plugin_sufix'] = 'Plugin Settings';
-$lang['_template_sufix'] = 'Template Settings';
+$lang['_plugin_sufix'] = '';
+$lang['_template_sufix'] = '';
 
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'No setting metadata.';
