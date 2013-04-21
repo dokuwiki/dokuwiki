@@ -9,6 +9,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Mateng Schimmerlos <mateng@firemail.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -190,7 +191,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile-Header';
 $lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect-Header';
 $lang['showuseras_o_loginname'] = 'Login-Name';
 $lang['showuseras_o_username'] = 'Voller Name des Nutzers';
-$lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (Beachte "mailguard"-Einstellung)';
+$lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
 $lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
 $lang['useheading_o_0']        = 'Niemals';
 $lang['useheading_o_navigation'] = 'Nur Navigation';

@@ -21,6 +21,7 @@
  * @author Matthias Schulte <mailinglist@lupo49.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Mateng Schimmerlos <mateng@firemail.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -298,6 +299,9 @@ $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Nutzer)';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wählen Sie die Lizenz, unter die Sie Ihre Inhalte stellen möchten:';
+$lang['i_license_none']        = 'Lizensierungsinformation nicht anzeigen';
+$lang['i_pop_field']           = 'Bitte helfen Sie mit, DokuWiki zu verbessern:';
+$lang['i_pop_label']           = 'Einmal monatlich anonymisierte Nutzungsdaten an das DokuWiki-Entwicklerteam senden';
 $lang['recent_global']         = 'Im Moment sehen Sie die Änderungen im Namensraum <b>%s</b>. Sie können auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';
