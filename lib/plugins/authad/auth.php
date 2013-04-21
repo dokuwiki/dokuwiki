@@ -469,10 +469,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->cando['modPass'] = false;
         }
 
-        if(isset($opts['ad_username']) && isset($opts['ad_password'])) {
+        if(isset($opts['admin_username']) && isset($opts['admin_password'])) {
             $this->cando['getUsers'] = true;
         } else {
-            $this->cando['getUsers'] = true;
+            $this->cando['getUsers'] = false;
         }
 
         return $opts;
