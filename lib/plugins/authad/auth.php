@@ -218,22 +218,24 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
         // check expiry time
         if($info['expires'] && $this->conf['expirywarn']){
-            $timeleft = $adldap->user()->passwordExpiry($user); // returns unixtime
-            $timeleft = round($timeleft/(24*60*60));
-            $info['expiresin'] = $timeleft;
+            $expiry = $adldap->user()->passwordExpiry($user);
+            if(is_array($expiry)){
+                $info['expiresat'] = $expiry['expiryts'];
+                $info['expiresin'] = round(($info['expiresat'] - time())/(24*60*60));
 
-            // if this is the current user, warn him (once per request only)
-            if(($_SERVER['REMOTE_USER'] == $user) &&
-                ($timeleft <= $this->conf['expirywarn']) &&
-                !$this->msgshown
-            ) {
-                $msg = sprintf($lang['authpwdexpire'], $timeleft);
-                if($this->canDo('modPass')) {
-                    $url = wl($ID, array('do'=> 'profile'));
-                    $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                // if this is the current user, warn him (once per request only)
+                if(($_SERVER['REMOTE_USER'] == $user) &&
+                    ($info['expiresin'] <= $this->conf['expirywarn']) &&
+                    !$this->msgshown
+                ) {
+                    $msg = sprintf($lang['authpwdexpire'], $info['expiresin']);
+                    if($this->canDo('modPass')) {
+                        $url = wl($ID, array('do'=> 'profile'));
+                        $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                    }
+                    msg($msg);
+                    $this->msgshown = true;
                 }
-                msg($msg);
-                $this->msgshown = true;
             }
         }
 
