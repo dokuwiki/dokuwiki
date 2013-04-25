@@ -465,6 +465,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
+        // compatibility with old option name
+        if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
+        if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
+
         // we can change the password if SSL is set
         if($opts['use_ssl'] || $opts['use_tls']) {
             $this->cando['modPass'] = true;
@@ -472,7 +476,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->cando['modPass'] = false;
         }
 
-        if(isset($opts['admin_username']) && isset($opts['admin_password'])) {
+        if(!empty($opts['admin_username']) && !empty($opts['admin_password'])) {
             $this->cando['getUsers'] = true;
         } else {
             $this->cando['getUsers'] = false;
