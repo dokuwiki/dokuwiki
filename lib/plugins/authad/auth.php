@@ -172,6 +172,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // add additional fields to read
         $fields = array_merge($fields, $this->conf['additional']);
         $fields = array_unique($fields);
+        $fields = array_filter($fields);
 
         //get info for given user
         $result = $adldap->user()->info($this->_userName($user), $fields);
