@@ -111,6 +111,19 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Load domain config on capability check
+     *
+     * @param string $cap
+     * @return bool
+     */
+    public function canDo($cap) {
+        //capabilities depend on config, which may change depending on domain
+        $domain = $this->_userDomain($_SERVER['REMOTE_USER']);
+        $this->_loadServerConfig($domain);
+        return parent::canDo($cap);
+    }
+
+    /**
      * Check user+password [required auth function]
      *
      * Checks if the given user exists and the given
