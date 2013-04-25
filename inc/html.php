@@ -1352,8 +1352,6 @@ function html_updateprofile(){
     /** @var auth_basic $auth */
     global $auth;
 
-    var_dump($auth);
-
     print p_locale_xhtml('updateprofile');
 
     $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
