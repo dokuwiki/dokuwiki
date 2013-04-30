@@ -111,6 +111,19 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Load domain config on capability check
+     *
+     * @param string $cap
+     * @return bool
+     */
+    public function canDo($cap) {
+        //capabilities depend on config, which may change depending on domain
+        $domain = $this->_userDomain($_SERVER['REMOTE_USER']);
+        $this->_loadServerConfig($domain);
+        return parent::canDo($cap);
+    }
+
+    /**
      * Check user+password [required auth function]
      *
      * Checks if the given user exists and the given
@@ -172,6 +185,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // add additional fields to read
         $fields = array_merge($fields, $this->conf['additional']);
         $fields = array_unique($fields);
+        $fields = array_filter($fields);
 
         //get info for given user
         $result = $adldap->user()->info($this->_userName($user), $fields);
@@ -218,22 +232,24 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
         // check expiry time
         if($info['expires'] && $this->conf['expirywarn']){
-            $timeleft = $adldap->user()->passwordExpiry($user); // returns unixtime
-            $timeleft = round($timeleft/(24*60*60));
-            $info['expiresin'] = $timeleft;
+            $expiry = $adldap->user()->passwordExpiry($user);
+            if(is_array($expiry)){
+                $info['expiresat'] = $expiry['expiryts'];
+                $info['expiresin'] = round(($info['expiresat'] - time())/(24*60*60));
 
-            // if this is the current user, warn him (once per request only)
-            if(($_SERVER['REMOTE_USER'] == $user) &&
-                ($timeleft <= $this->conf['expirywarn']) &&
-                !$this->msgshown
-            ) {
-                $msg = sprintf($lang['authpwdexpire'], $timeleft);
-                if($this->canDo('modPass')) {
-                    $url = wl($ID, array('do'=> 'profile'));
-                    $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                // if this is the current user, warn him (once per request only)
+                if(($_SERVER['REMOTE_USER'] == $user) &&
+                    ($info['expiresin'] <= $this->conf['expirywarn']) &&
+                    !$this->msgshown
+                ) {
+                    $msg = sprintf($lang['authpwdexpire'], $info['expiresin']);
+                    if($this->canDo('modPass')) {
+                        $url = wl($ID, array('do'=> 'profile'));
+                        $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                    }
+                    msg($msg);
+                    $this->msgshown = true;
                 }
-                msg($msg);
-                $this->msgshown = true;
             }
         }
 
@@ -462,6 +478,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
+        // compatibility with old option name
+        if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
+        if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
+
         // we can change the password if SSL is set
         if($opts['use_ssl'] || $opts['use_tls']) {
             $this->cando['modPass'] = true;
@@ -469,10 +489,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->cando['modPass'] = false;
         }
 
-        if(isset($opts['ad_username']) && isset($opts['ad_password'])) {
+        if(!empty($opts['admin_username']) && !empty($opts['admin_password'])) {
             $this->cando['getUsers'] = true;
         } else {
-            $this->cando['getUsers'] = true;
+            $this->cando['getUsers'] = false;
         }
 
         return $opts;

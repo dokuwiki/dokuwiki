@@ -17,6 +17,7 @@
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
+ * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  */
 $lang['menu']                  = 'Управление плагинами';
 $lang['download']              = 'Скачать и установить новый плагин';

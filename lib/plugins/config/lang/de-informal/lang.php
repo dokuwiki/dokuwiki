@@ -9,6 +9,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Mateng Schimmerlos <mateng@firemail.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -21,21 +22,21 @@ $lang['security']              = 'Sicherheitswarnung: Eine Änderungen dieser Op
 $lang['_configuration_manager'] = 'Konfiguration';
 $lang['_header_dokuwiki']      = 'DokuWiki-Konfiguration';
 $lang['_header_plugin']        = 'Plugin-Konfiguration';
-$lang['_header_template']      = 'Vorlagen';
+$lang['_header_template']      = 'Template-Konfiguration';
 $lang['_header_undefined']     = 'Unbekannte Werte';
-$lang['_basic']                = 'Grundkonfiguration';
-$lang['_display']              = 'Darstellung';
-$lang['_authentication']       = 'Authentifizierung';
-$lang['_anti_spam']            = 'Anti-Spam';
-$lang['_editing']              = 'Bearbeitung';
-$lang['_links']                = 'Links';
-$lang['_media']                = 'Medien';
-$lang['_notifications']        = 'Benachrichtigungen';
-$lang['_syndication']          = 'Syndication (RSS)';
+$lang['_basic']                = 'Grund-Konfiguration';
+$lang['_display']              = 'Darstellungs-Konfiguration';
+$lang['_authentication']       = 'Authentifizierung-Konfiguration';
+$lang['_anti_spam']            = 'Anti-Spam-Konfiguration';
+$lang['_editing']              = 'Bearbeitungs-Konfiguration';
+$lang['_links']                = 'Links-Konfiguration';
+$lang['_media']                = 'Medien-Konfiguration';
+$lang['_notifications']        = 'Benachrichtigungs-Konfiguration';
+$lang['_syndication']          = 'Syndication-Konfiguration (RSS)';
 $lang['_advanced']             = 'Erweiterte Konfiguration';
-$lang['_network']              = 'Netzwerk';
-$lang['_plugin_sufix']         = '';
-$lang['_template_sufix']       = 'Vorlageneinstellungen';
+$lang['_network']              = 'Netzwerk-Konfiguration';
+$lang['_plugin_sufix']         = 'Plugin-Konfiguration';
+$lang['_template_sufix']       = 'Template-Konfiguration';
 $lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
 $lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
@@ -190,7 +191,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile-Header';
 $lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect-Header';
 $lang['showuseras_o_loginname'] = 'Login-Name';
 $lang['showuseras_o_username'] = 'Voller Name des Nutzers';
-$lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (Beachte "mailguard"-Einstellung)';
+$lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
 $lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
 $lang['useheading_o_0']        = 'Niemals';
 $lang['useheading_o_navigation'] = 'Nur Navigation';
