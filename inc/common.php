@@ -1376,6 +1376,7 @@ function editorinfo($username) {
         case 'username':
         case 'email':
         case 'email_link':
+        case 'email_username':
             if($auth) $info = $auth->getUserData($username);
             break;
         default:
@@ -1391,6 +1392,9 @@ function editorinfo($username) {
             case 'email_link':
                 $mail = obfuscate($info['mail']);
                 return '<a href="mailto:'.$mail.'">'.$mail.'</a>';
+            case 'email_username':
+                $mail = obfuscate($info['mail']);
+                return '<a href="mailto:'.$mail.'">'.hsc($info['name']).'</a>';
             default:
                 return hsc($username);
         }
