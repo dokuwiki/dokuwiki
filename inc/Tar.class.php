@@ -295,7 +295,7 @@ class Tar {
             filemtime($file)
         );
 
-        while(!feof($fp)) {
+        if(filesize($file)) while(!feof($fp)) {
             $packed = pack("a512", fread($fp, 512));
             $this->writebytes($packed);
         }
