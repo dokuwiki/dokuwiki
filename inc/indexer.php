@@ -405,10 +405,10 @@ class Doku_Indexer {
                 unset ($metavalues);
 
                 // okay, now we have two entries for the same value. we need to merge them.
-                $indexline = $this->getIndexKey($key, '_i', $oldid);
+                $indexline = $this->getIndexKey($key.'_i', '', $oldid);
                 if ($indexline != '') {
-                    $newindexline = $this->getIndexKey($key, '_i', $newid);
-                    $pagekeys     = $this->getIndex($key, '_p');
+                    $newindexline = $this->getIndexKey($key.'_i', '', $newid);
+                    $pagekeys     = $this->getIndex($key.'_p', '');
                     $parts = explode(':', $indexline);
                     foreach ($parts as $part) {
                         list($id, $count) = explode('*', $part);
@@ -423,14 +423,14 @@ class Doku_Indexer {
                         }
                         $pagekeys[$id] = implode(':', $keyline);
                     }
-                    $this->saveIndex($key, '_p', $pagekeys);
+                    $this->saveIndex($key.'_p', '', $pagekeys);
                     unset($pagekeys);
-                    $this->saveIndexKey($key, '_i', $oldid, '');
-                    $this->saveIndexKey($key, '_i', $newid, $newindexline);
+                    $this->saveIndexKey($key.'_i', '', $oldid, '');
+                    $this->saveIndexKey($key.'_i', '', $newid, $newindexline);
                 }
             } else {
                 $metavalues[$oldid] = $newvalue;
-                if (!$this->saveIndex($key, '_w', $metavalues)) {
+                if (!$this->saveIndex($key.'_w', '', $metavalues)) {
                     $this->unlock();
                     return false;
                 }
