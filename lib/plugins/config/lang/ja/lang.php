@@ -9,6 +9,7 @@
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  * @author Taisuke Shimamoto <dentostar@gmail.com>
+ * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
@@ -72,7 +73,7 @@ $lang['camelcase']             = 'キャメルケースリンク';
 $lang['deaccent']              = 'ページ名アクセント';
 $lang['useheading']            = '最初の見出しをページ名とする';
 $lang['sneaky_index']          = 'デフォルトでは索引にすべての名前空間を表示しますが、この機能はユーザーに閲覧権限のない名前空間を非表示にします。ただし、閲覧が可能な副名前空間まで表示されなくなるため、ACLの設定が適正でない場合は索引機能が使えなくなる場合があります。';
-$lang['hidepages']             = '非公開ページ（Regex）';
+$lang['hidepages']             = '検索、サイトマップ、その他の自動インデックスの結果に表示しないページ（Regex）';
 $lang['useacl']                = 'アクセス管理を行う（ACL）';
 $lang['autopasswd']            = 'パスワードの自動生成（ACL）';
 $lang['authtype']              = '認証方法（ACL）';
@@ -119,6 +120,7 @@ $lang['notify']                = '変更を通知するメールアドレス';
 $lang['registernotify']        = '新規ユーザー登録を通知するメールアドレス';
 $lang['mailfrom']              = 'メール送信時の送信元アドレス';
 $lang['mailprefix']            = '自動メールの題名に使用する接頭語';
+$lang['htmlmail']              = 'メールをテキスト形式ではなく、HTML形式で送信する。';
 $lang['sitemap']               = 'Googleサイトマップ作成頻度（日数）';
 $lang['rss_type']              = 'RSSフィード形式';
 $lang['rss_linkto']            = 'RSS内リンク先';
@@ -143,6 +145,7 @@ $lang['xsendfile']             = 'ウェブサーバーが静的ファイルを�
 $lang['renderer_xhtml']        = 'Wikiの出力（xhtml）にレンダラーを使用する';
 $lang['renderer__core']        = '%s （Dokuwikiコア）';
 $lang['renderer__plugin']      = '%s （プラグイン）';
+$lang['dnslookups']            = 'ページを編集しているユーザーのIPアドレスからホスト名を逆引きする。利用できるDNSサーバーがない、あるいはこの機能が不要な場合にはオフにします。';
 $lang['proxy____host']         = 'プロキシ - サーバー名';
 $lang['proxy____port']         = 'プロキシ - ポート';
 $lang['proxy____user']         = 'プロキシ - ユーザー名';
@@ -156,7 +159,7 @@ $lang['ftp____user']           = 'FTP ユーザー名（セーフモード対策
 $lang['ftp____pass']           = 'FTP パスワード（セーフモード対策）';
 $lang['ftp____root']           = 'FTP ルートディレクトリ（セーフモード対策）';
 $lang['license_o_']            = '選択されていません';
-$lang['typography_o_0']        = '無し';
+$lang['typography_o_0']        = '変換しない';
 $lang['typography_o_1']        = '二重引用符（ダブルクオート）のみ';
 $lang['typography_o_2']        = 'すべての引用符（動作しない場合があります）';
 $lang['userewrite_o_0']        = '使用しない';
