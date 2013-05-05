@@ -242,7 +242,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             ), '&', true
                         );
                     } else {
-                        $item->link = wl($id, 'rev='.$date, true, '&', true);
+                        $item->link = wl($id, 'rev='.$date, true, '&');
                     }
                     break;
                 case 'rev':
