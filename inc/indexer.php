@@ -1073,8 +1073,6 @@ class Doku_Indexer {
         if (isset($conf['fperm']))
             chmod($fn.'.tmp', $conf['fperm']);
         io_rename($fn.'.tmp', $fn.'.idx');
-        if ($suffix !== '')
-            $this->cacheIndexDir($idx, $suffix, empty($lines));
         return true;
     }
 
@@ -1140,8 +1138,6 @@ class Doku_Indexer {
         if (isset($conf['fperm']))
             chmod($fn.'.tmp', $conf['fperm']);
         io_rename($fn.'.tmp', $fn.'.idx');
-        if ($suffix !== '')
-            $this->cacheIndexDir($idx, $suffix);
         return true;
     }
 
@@ -1169,40 +1165,6 @@ class Doku_Indexer {
     }
 
     /**
-     * @param string $idx    The index file which should be added to the key.
-     * @param string $suffix The suffix of the file
-     * @param bool   $delete Unused
-     */
-    protected function cacheIndexDir($idx, $suffix, $delete=false) {
-        global $conf;
-        if ($idx == 'i')
-            $cachename = $conf['indexdir'].'/lengths';
-        else
-            $cachename = $conf['indexdir'].'/'.$idx.'lengths';
-        $lengths = @file($cachename.'.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        if ($lengths === false) $lengths = array();
-        $old = array_search((string)$suffix, $lengths);
-        if (empty($lines)) {
-            if ($old === false) return;
-            unset($lengths[$old]);
-        } else {
-            if ($old !== false) return;
-            $lengths[] = $suffix;
-            sort($lengths);
-        }
-        $fh = @fopen($cachename.'.tmp', 'w');
-        if (!$fh) {
-            trigger_error("Failed to write index cache", E_USER_ERROR);
-            return;
-        }
-        @fwrite($fh, implode("\n", $lengths));
-        @fclose($fh);
-        if (isset($conf['fperm']))
-            chmod($cachename.'.tmp', $conf['fperm']);
-        io_rename($cachename.'.tmp', $cachename.'.idx');
-    }
-
-    /**
      * Get the list of lengths indexed in the wiki.
      *
      * Read the index directory or a cache file and returns
@@ -1211,45 +1173,7 @@ class Doku_Indexer {
      * @author YoBoY <yoboy.leguesh@gmail.com>
      */
     protected function listIndexLengths() {
-        global $conf;
-        $cachename = $conf['indexdir'].'/lengths';
-        clearstatcache();
-        if (@file_exists($cachename.'.idx')) {
-            $lengths = @file($cachename.'.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            if ($lengths !== false) {
-                $idx = array();
-                foreach ($lengths as $length)
-                    $idx[] = (int)$length;
-                return $idx;
-            }
-        }
-
-        $dir = @opendir($conf['indexdir']);
-        if ($dir === false)
-            return array();
-        $lengths[] = array();
-        while (($f = readdir($dir)) !== false) {
-            if (substr($f, 0, 1) == 'i' && substr($f, -4) == '.idx') {
-                $i = substr($f, 1, -4);
-                if (is_numeric($i))
-                    $lengths[] = (int)$i;
-            }
-        }
-        closedir($dir);
-        sort($lengths);
-        // save this in a file
-        $fh = @fopen($cachename.'.tmp', 'w');
-        if (!$fh) {
-            trigger_error("Failed to write index cache", E_USER_ERROR);
-            return $lengths;
-        }
-        @fwrite($fh, implode("\n", $lengths));
-        @fclose($fh);
-        if (isset($conf['fperm']))
-            chmod($cachename.'.tmp', $conf['fperm']);
-        io_rename($cachename.'.tmp', $cachename.'.idx');
-
-        return $lengths;
+        return idx_listIndexLengths();
     }
 
     /**
