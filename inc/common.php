@@ -781,11 +781,19 @@ function unlock($id) {
 /**
  * convert line ending to unix format
  *
+ * also makes sure the given text is valid UTF-8
+ *
  * @see    formText() for 2crlf conversion
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanText($text) {
     $text = preg_replace("/(\015\012)|(\015)/", "\012", $text);
+
+    // if the text is not valid UTF-8 we simply assume latin1
+    // this won't break any worse than it breaks with the wrong encoding
+    // but might actually fix the problem in many cases
+    if(!utf8_check($text)) $text = utf8_encode($text);
+
     return $text;
 }
 
