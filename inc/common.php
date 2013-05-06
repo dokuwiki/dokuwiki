@@ -447,6 +447,14 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         if(isset($more['id']) && $direct) unset($more['id']);
         $more = buildURLparams($more, $sep);
     } else {
+        $matches = array();
+        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER)){
+            $resize = array('w'=>0, 'h'=>0);
+            foreach ($matches as $match){
+                $resize[$match[1]] = $match[2];
+            }
+            $more .= $sep.'tok='.media_get_token($id,$resize['w'],$resize['h']);
+        }
         $more = str_replace('cache=cache', '', $more); //skip default
         $more = str_replace(',,', ',', $more);
         $more = str_replace(',', $sep, $more);
