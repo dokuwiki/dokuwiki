@@ -1,6 +1,6 @@
 <?php
 
-class common_wl_test extends DokuWikiTest {
+class common_ml_test extends DokuWikiTest {
 
     private $script = 'lib/exe/fetch.php';
 
