@@ -12,7 +12,7 @@
  * @author syaoranhinata@gmail.com
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
  */
-$lang['name']                  = '人氣回饋（可能需要一些時間載入）';
+$lang['name']                  = '人氣回饋 (可能需要一些時間載入) ';
 $lang['submit']                = '發送資料';
 $lang['autosubmit']            = '每月自動發送';
 $lang['submissionFailed']      = '由於以下原因，資料無法發送：';

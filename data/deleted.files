@@ -4,6 +4,9 @@
 # A copy of this list is maintained at
 # http://www.dokuwiki.org/install:upgrade#files_to_remove
 
+# removed in 2013-05-10
+lib/plugins/info/lang/sl/lang.php
+
 # removed in 2013-04-06
 inc/adLDAP.php
 inc/auth/ad.class.php

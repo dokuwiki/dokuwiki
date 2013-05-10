@@ -8,6 +8,7 @@
  * @author Matthias Schulte <post@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Frank Loizzi <contact@software.bacal.de>
  */
 $lang['menu']                  = 'Zurückstellungsmanager';
 $lang['filter']                = 'Durchsuche als Spam markierte Seiten';

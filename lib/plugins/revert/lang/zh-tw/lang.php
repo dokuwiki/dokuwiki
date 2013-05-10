@@ -15,7 +15,7 @@
 $lang['menu']                  = '還原管理';
 $lang['filter']                = '搜索包含垃圾訊息的頁面';
 $lang['revert']                = '還原選取的頁面';
-$lang['reverted']              = '%s 已還原為版本 %s';
+$lang['reverted']              = '%s 已還原成版本 %s';
 $lang['removed']               = '%s 已移除';
 $lang['revstart']              = '已開始還原操作。有可能需要很長時間。如果程式執行逾時，請嘗試分次還原少量內容。';
 $lang['revstop']               = '還原程序已完成。';

@@ -7,6 +7,7 @@
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  * @author Taisuke Shimamoto <dentostar@gmail.com>
+ * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  */
 $lang['menu']                  = 'ユーザー管理';
 $lang['noauth']                = '（ユーザー認証が無効です）';
@@ -41,10 +42,10 @@ $lang['prev']                  = '前へ';
 $lang['next']                  = '次へ';
 $lang['last']                  = '最後';
 $lang['edit_usermissing']      = '選択したユーザーは見つかりません。削除もしくは変更された可能性があります。';
-$lang['user_notify']           = '通知するユーザー';
-$lang['note_notify']           = 'ユーザーが新しいパスワードを設定した場合のみ、通知メールが送信されます。';
-$lang['note_group']            = 'グループを指定しない場合は、既定のグループ（%s）に登録されいます。';
-$lang['note_pass']             = 'パスワードを空欄とした場合は、パスワードを自動的に生成します。この場合、ユーザーへの通知が有効となります。';
+$lang['user_notify']           = 'ユーザーに通知する';
+$lang['note_notify']           = '通知メールは、ユーザーに新たなパスワードが設定された場合のみ送信されます。';
+$lang['note_group']            = 'グループを指定しない場合は、既定のグループ（%s）に配属されます。';
+$lang['note_pass']             = 'パスワードを空欄とした場合は、（”ユーザーに通知する”がチェックされていなくとも）自動生成したパスワードの通知がユーザー宛てに送信されます。';
 $lang['add_ok']                = 'ユーザーを登録しました';
 $lang['add_fail']              = 'ユーザーの登録に失敗しました';
 $lang['notify_ok']             = '通知メールを送信しました';

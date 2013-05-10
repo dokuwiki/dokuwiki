@@ -289,6 +289,9 @@ $lang['i_pol1']                = 'Publika Vikio (legi povas ĉiuj, skribi kaj al
 $lang['i_pol2']                = 'Ferma Vikio (legi, skribi, alŝuti nur povas registritaj uzantoj)';
 $lang['i_retry']               = 'Reprovi';
 $lang['i_license']             = 'Bonvolu elekti la permesilon, sub kiun vi volas meti vian enhavon:';
+$lang['i_license_none']        = 'Ne montri licencinformojn';
+$lang['i_pop_field']           = 'Bonvolu helpi nin plibonigi la DokuWiki-sperton:';
+$lang['i_pop_label']           = 'Sendi unufoje monate anonimajn datumojn pri la uzo al la DokuWiki-evoluigantoj';
 $lang['recent_global']         = 'Vi nun rigardas la ŝanĝojn ene de la nomspaco <b>%s</b>. Vi povas ankaŭ <a href="%s">vidi la freŝajn ŝanĝojn de la tuta vikio</a>.';
 $lang['years']                 = 'antaŭ %d jaroj';
 $lang['months']                = 'antaŭ %d monatoj';
@@ -321,4 +324,3 @@ $lang['media_perm_read']       = 'Bedaûrinde viaj rajtoj ne sufiĉas por legi d
 $lang['media_perm_upload']     = 'Bedaûrinde viaj rajtoj ne sufiĉas por alŝuti dosierojn.';
 $lang['media_update']          = 'Alŝuti novan version';
 $lang['media_restore']         = 'Restarigi ĉi tiun version';
-$lang['plugin_install_err']    = 'Kromaĵo instalita malĝuste. Renomu la kromaĵan dosierujon \'%s\' al \'%s\'.';

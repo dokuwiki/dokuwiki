@@ -13,6 +13,7 @@
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
+ * @author mkucera66@seznam.cz
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

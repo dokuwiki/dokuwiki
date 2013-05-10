@@ -46,7 +46,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     function html() {
         global $INPUT;
 
-        echo $this->plugin_locale_xhtml('intro');
+        echo $this->locale_xhtml('intro');
 
         $this->_searchform();
 

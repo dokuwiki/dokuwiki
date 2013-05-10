@@ -17,14 +17,13 @@
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Mateng Schimmerlos <mateng@firemail.de>
  */
 $lang['menu']                  = 'Konfiguration';
-$lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
-<br />Bitte überprüfen sie die rot umrandeten Eingaben und speichern Sie erneut.';
+$lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.<br /> Bitte überprüfen sie die rot umrandeten Eingaben und speichern Sie erneut.';
 $lang['updated']               = 'Einstellungen erfolgreich gespeichert.';
 $lang['nochoice']              = '(keine Auswahlmöglichkeiten vorhanden)';
-$lang['locked']                = 'Die Konfigurationsdatei kann nicht geändert werden, wenn dies unbeabsichtigt ist
- <br />überprüfen Sie, dass die Dateiberechtigungen korrekt gesetzt sind.';
+$lang['locked']                = 'Die Konfigurationsdatei kann nicht geändert werden. Wenn dies unbeabsichtigt ist, <br />überprüfen Sie, ob die Dateiberechtigungen korrekt gesetzt sind.';
 $lang['danger']                = 'Vorsicht: Die Änderung dieser Option könnte Ihr Wiki und das Konfigurationsmenü unzugänglich machen.';
 $lang['warning']               = 'Hinweis: Die Änderung dieser Option könnte unbeabsichtigtes Verhalten hervorrufen.';
 $lang['security']              = 'Sicherheitswarnung: Die Änderung dieser Option könnte ein Sicherheitsrisiko darstellen.';
@@ -32,13 +31,13 @@ $lang['_configuration_manager'] = 'Konfiguration';
 $lang['_header_dokuwiki']      = 'DokuWiki-Konfiguration';
 $lang['_header_plugin']        = 'Plugin-Konfiguration';
 $lang['_header_template']      = 'Template-Konfiguration';
-$lang['_header_undefined']     = 'Unbekannte Einstellungen';
+$lang['_header_undefined']     = 'Unbekannte Werte';
 $lang['_basic']                = 'Grund-Konfiguration';
-$lang['_display']              = 'Anzeige-Konfiguration';
+$lang['_display']              = 'Darstellungs-Konfiguration';
 $lang['_authentication']       = 'Authentifizierungs-Konfiguration';
 $lang['_anti_spam']            = 'Anti-Spam-Konfiguration';
 $lang['_editing']              = 'Bearbeitungs-Konfiguration';
-$lang['_links']                = 'Link-Konfiguration';
+$lang['_links']                = 'Links-Konfiguration';
 $lang['_media']                = 'Medien-Konfiguration';
 $lang['_notifications']        = 'Benachrichtigungs-Konfiguration';
 $lang['_syndication']          = 'Syndication-Konfiguration (RSS)';
@@ -49,8 +48,8 @@ $lang['_template_sufix']       = 'Template-Konfiguration';
 $lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
 $lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
-$lang['fmode']                 = 'Rechte für neue Dateien';
-$lang['dmode']                 = 'Rechte für neue Verzeichnisse';
+$lang['fmode']                 = 'Berechtigungen für neue Dateien';
+$lang['dmode']                 = 'Berechtigungen für neue Verzeichnisse';
 $lang['lang']                  = 'Sprache';
 $lang['basedir']               = 'Installationsverzeichnis';
 $lang['baseurl']               = 'Installationspfad (URL)';
@@ -198,7 +197,7 @@ $lang['xsendfile_o_0']         = 'nicht benutzen';
 $lang['xsendfile_o_1']         = 'Proprietärer lighttpd-Header (vor Release 1.5)';
 $lang['xsendfile_o_2']         = 'Standard X-Sendfile-Header';
 $lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect-Header';
-$lang['showuseras_o_loginname'] = 'Loginname';
+$lang['showuseras_o_loginname'] = 'Login-Name';
 $lang['showuseras_o_username'] = 'Vollständiger Name des Benutzers';
 $lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
 $lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';

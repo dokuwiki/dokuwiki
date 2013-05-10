@@ -316,4 +316,48 @@ class Tar_TestCase extends DokuWikiTest {
 
         TestUtils::rdelete($out);
     }
+
+    /**
+     * A single zero file should be just a header block + the footer
+     */
+    public function test_zerofile(){
+        $dir = dirname(__FILE__).'/tar';
+        $tar = new Tar();
+        $tar->create();
+        $tar->addFile("$dir/zero.txt", 'zero.txt');
+        $file = $tar->getArchive(Tar::COMPRESS_NONE);
+
+        $this->assertEquals(512*3, strlen($file)); // 1 header block + 2 footer blocks
+    }
+
+    public function test_zerodata(){
+        $tar = new Tar();
+        $tar->create();
+        $tar->addData('zero.txt','');
+        $file = $tar->getArchive(Tar::COMPRESS_NONE);
+
+        $this->assertEquals(512*3, strlen($file)); // 1 header block + 2 footer blocks
+    }
+
+    /**
+     * A file of exactly one block should be just a header block + data block + the footer
+     */
+    public function test_blockfile(){
+        $dir = dirname(__FILE__).'/tar';
+        $tar = new Tar();
+        $tar->create();
+        $tar->addFile("$dir/block.txt", 'block.txt');
+        $file = $tar->getArchive(Tar::COMPRESS_NONE);
+
+        $this->assertEquals(512*4, strlen($file)); // 1 header block + data block + 2 footer blocks
+    }
+
+    public function test_blockdata(){
+        $tar = new Tar();
+        $tar->create();
+        $tar->addData('block.txt', str_pad('', 512, 'x'));
+        $file = $tar->getArchive(Tar::COMPRESS_NONE);
+
+        $this->assertEquals(512*4, strlen($file)); // 1 header block + data block + 2 footer blocks
+    }
 }
