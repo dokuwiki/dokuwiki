@@ -111,7 +111,7 @@ div {
 
 ul,
 ol {
-    padding: 0 0 0 1.5em;
+    padding: 0 0 0 0.5em;
 }
 [dir=rtl] ul,
 [dir=rtl] ol {
@@ -146,8 +146,8 @@ li li {
     font-size: 100%;
 }
 
-ul             { list-style: square outside; }
-ol             { list-style: decimal outside; }
+ul             { list-style: square inside; }
+ol             { list-style: decimal inside; }
 ol ol          { list-style-type: lower-alpha; }
 ol ol ol       { list-style-type: upper-roman; }
 ol ol ol ol    { list-style-type: upper-alpha; }
