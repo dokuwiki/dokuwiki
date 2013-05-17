@@ -505,9 +505,17 @@ class Mailer {
      */
     protected function cleanHeaders() {
         global $conf;
+        global $USERINFO;
 
         // clean up addresses
-        if(empty($this->headers['From'])) $this->from($conf['mailfrom']);
+        if(empty($this->headers['From'])) {
+            $this->from($conf['mailfrom']);
+            // replace variables @NAME@, @USER@, @MAIL@ from mailfrom with user information
+            $placeholder = array('@NAME@', '@USER@', '@MAIL@');
+            $values = array($USERINFO['name'], $_SERVER['REMOTE_USER'], $USERINFO['mail']);
+            str_replace($this->headers['from'], $placeholder, $values);
+        }
+
         $addrs = array('To', 'From', 'Cc', 'Bcc');
         foreach($addrs as $addr) {
             if(isset($this->headers[$addr])) {
