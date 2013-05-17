@@ -36,6 +36,11 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return;
         }
 
+        if ($this->getConf('external')) {
+            $this->cando['external'] = true;
+            $this->cando['logout'] = false;
+        }
+
         // auth_ldap currently just handles authentication, so no
         // capabilities are set
     }
@@ -252,6 +257,36 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $info['grps'][] = $conf['defaultgroup'];
         }
         return $info;
+    }
+
+    /**
+     * Authentification using external informations
+     *
+     * If external configuration parameter is set to True and,
+     * external information is provided, retrieve user informations
+     * from LDAP.
+     *
+     * @see     auth_login()
+     * @author  Benjamin Renard <brenard@zionetrix.net>
+     *
+     * @param   string  $user    Username
+     * @param   string  $pass    Cleartext Passwour (Not used)
+     * @param   bool    $sticky  Cookie should not expire
+     * @return  bool             true on successful auth
+     */
+    public function trustExternal($user, $pass, $sticky = false) {
+        if(!$this->_openLDAP()) return false;
+        if ($this->getConf('external') && !empty($user)) {
+            $info=$this->getUserData($user);
+            if ($info) {
+                global $USERINFO;
+                $USERINFO=$info;
+                $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
+                $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
+                $_SESSION[DOKU_COOKIE]['auth']['info'] = $info;
+                return true;
+            }
+        }
     }
 
     /**

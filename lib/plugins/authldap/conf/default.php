@@ -16,4 +16,5 @@ $conf['bindpw']      = '';
 $conf['userscope']  = 'sub';
 $conf['groupscope'] = 'sub';
 $conf['groupkey']   = 'cn';
+$conf['external']   = false;
 $conf['debug']      = array('onoff');

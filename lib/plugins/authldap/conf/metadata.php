@@ -15,4 +15,5 @@ $meta['bindpw']      = array('password');
 $meta['userscope']   = array('multichoice','_choices' => array('sub','one','base'));
 $meta['groupscope']  = array('multichoice','_choices' => array('sub','one','base'));
 $meta['groupkey']    = array('string');
+$meta['external']    = array('onoff');
 $meta['debug']       = array('onoff');
