@@ -818,6 +818,8 @@ class DiffFormatter {
     }
 
     function _escape($str){
+        // Override this method in other formatters if escaping required
+        // Base class requires $str returned without escaping
         return $str;
     }
 }
