@@ -435,6 +435,11 @@ function exportlink($id = '', $format = 'raw', $more = '', $abs = false, $sep = 
  */
 function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) {
     global $conf;
+    $isexternalimage = preg_match('#^(https?|ftp)://#i', $id);
+    if(!$isexternalimage) {
+        $id = cleanID($id);
+    }
+
     if(is_array($more)) {
         // add token for resized images
         if($more['w'] || $more['h']){
@@ -467,7 +472,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
     }
 
     // external URLs are always direct without rewriting
-    if(preg_match('#^(https?|ftp)://#i', $id)) {
+    if($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
         // add hash:
         $xlink .= '?hash='.substr(md5(auth_cookiesalt().$id), 0, 6);
