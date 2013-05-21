@@ -100,7 +100,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     global $MIME, $EXT, $CACHE, $INPUT;
 
     //media to local file
-    if(preg_match('#^(https?|ftp)://#i', $media)) {
+    if(media_isexternal($media)) {
         //check hash
         if(substr(md5(auth_cookiesalt().$media), 0, 6) !== $INPUT->str('hash')) {
             return array(412, 'Precondition Failed');
