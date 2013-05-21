@@ -60,6 +60,7 @@ if (defined('SIMPLE_TEST')) {
     if($evt->advise_before()) {
         // redirects
         if($data['status'] > 300 && $data['status'] <= 304) {
+            if (defined('SIMPLE_TEST')) return; //TestResponse doesn't recognize redirects
             send_redirect($data['statusmessage']);
         }
         // send any non 200 status
