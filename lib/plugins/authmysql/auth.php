@@ -843,7 +843,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     /**
      * Locked a list of tables for exclusive access so that modifications
      * to the database can't be disturbed by other threads. The list
-     * could be set with $conf['auth']['mysql']['TablesToLock'] = array()
+     * could be set with $conf['plugin']['authmysql']['TablesToLock'] = array()
      *
      * If aliases for tables are used in SQL statements, also this aliases
      * must be locked. For eg. you use a table 'user' and the alias 'u' in
