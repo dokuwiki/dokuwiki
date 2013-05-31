@@ -993,7 +993,7 @@ function act_resendpwd() {
         }
 
         // generate auth token
-        $token = md5(auth_cookiesalt().$user); //secret but user based
+        $token = PassHash::hmac('md5', $user, auth_cookiesalt()); //secret but user based
         $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 
