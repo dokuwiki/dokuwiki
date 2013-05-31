@@ -470,7 +470,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
     if(preg_match('#^(https?|ftp)://#i', $id)) {
         $xlink .= 'lib/exe/fetch.php';
         // add hash:
-        $xlink .= '?hash='.substr(md5(auth_cookiesalt().$id), 0, 6);
+        $xlink .= '?hash='.substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
         if($more) {
             $xlink .= $sep.$more;
             $xlink .= $sep.'media='.rawurlencode($id);
