@@ -1,7 +1,7 @@
 base   usermanager
 author Chris Smith
 email  chris@jalakai.co.uk
-date   2012-09-08
+date   2013-02-20
 name   User Manager
 desc   Manage users
 url    http://dokuwiki.org/plugin:usermanager

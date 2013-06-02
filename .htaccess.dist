@@ -8,7 +8,6 @@
 <Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
     Order allow,deny
     Deny from all
-    Satisfy All
 </Files>
 
 ## Uncomment these rules if you want to have nice URLs using

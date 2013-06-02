@@ -19,6 +19,7 @@
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Frank Loizzi <contact@software.bacal.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -296,6 +297,9 @@ $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Nutzer)';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wähle die Lizenz aus unter der die Wiki-Inhalte veröffentlicht werden sollen:';
+$lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen';
+$lang['i_pop_field']           = 'Bitte helfe uns, die DokuWiki-Erfahrung zu verbessern';
+$lang['i_pop_label']           = 'Sende einmal im Monat anonyme Nutzungsdaten an die DokuWiki Entwickler';
 $lang['recent_global']         = 'Im Moment siehst du die Änderungen im Namensraum <b>%s</b>. Du kannst auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';

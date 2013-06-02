@@ -19,6 +19,7 @@
  * @author Sergio Motta sergio@cisne.com.br
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
+ * @author Victor Westmann <victor.westmann@gmail.com>
  */
 $lang['admin_acl']             = 'Administração da Lista de Controles de Acesso';
 $lang['acl_group']             = 'Grupo';

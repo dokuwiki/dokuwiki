@@ -48,10 +48,15 @@ function auth_setup() {
 
     // try to load auth backend from plugins
     foreach ($plugin_controller->getList('auth') as $plugin) {
-    	if ($conf['authtype'] === $plugin) {
-    		$auth = $plugin_controller->load('auth', $plugin);
-    		break;
-    	}
+      if ($conf['authtype'] === $plugin) {
+        $auth = $plugin_controller->load('auth', $plugin);
+        break;
+      } elseif ('auth' . $conf['authtype'] === $plugin) {
+        // matches old auth backends (pre-Weatherwax)
+        $auth = $plugin_controller->load('auth', $plugin);
+        msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
+             . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
+      }
     }
 
 	if(!isset($auth) || !$auth){
@@ -988,7 +993,7 @@ function act_resendpwd() {
         }
 
         // generate auth token
-        $token = md5(auth_cookiesalt().$user); //secret but user based
+        $token = md5(uniqid(mt_rand(), true)); // random secret
         $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 

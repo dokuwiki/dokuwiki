@@ -32,7 +32,7 @@
     background: __background__;
     color: inherit;
     border: 1px solid #eee;
-    box-shadow: 0 0 .5em #999;
+    box-shadow: 0 0 .5em __text_alt__;
     border-radius: 2px;
     padding: 1em;
     margin-bottom: .5em;

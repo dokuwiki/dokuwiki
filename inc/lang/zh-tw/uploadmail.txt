@@ -10,5 +10,5 @@ MIME類型 : @MIME@
 使用者   : @USER@
 
 --
-本信件由以下 DokuWiki 站台產生：
+本信件由以下 DokuWiki 網站產生：
 @DOKUWIKIURL@

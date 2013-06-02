@@ -296,6 +296,9 @@ $lang['i_pol1']                = 'Publieke wiki (lezen voor iedereen, schrijven 
 $lang['i_pol2']                = 'Besloten wiki (lezen, schrijven en uploaden alleen voor geregistreerde gebruikers)';
 $lang['i_retry']               = 'Opnieuw';
 $lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
+$lang['i_license_none']        = 'Toon geen licentie informatie';
+$lang['i_pop_field']           = 'Help ons om je DokuWiki ervaring te verbeteren';
+$lang['i_pop_label']           = 'Stuur eens per maand geanonimiseerde gebruiksstatistieken naar de Dokuwiki ontwikkelaars';
 $lang['recent_global']         = 'Je bekijkt momenteel de wijzigingen binnen de <b>%s</b> namespace. Je kunt ook de <a href="%s">recente wijzigingen van de hele wiki</a> bekijken.';
 $lang['years']                 = '%d jaar geleden';
 $lang['months']                = '%d maand geleden';

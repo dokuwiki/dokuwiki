@@ -19,7 +19,7 @@ wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js     -O jq
 # load the smoothness theme
 mkdir -p jquery-ui-theme/images
 wget -nv -qO- https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css | sed "s/font-family:[^;]*;//" > jquery-ui-theme/smoothness.css
-images=`gawk 'match($0, /url\((images\/[^\)]+)\)/, m) { print m[1] }' jquery-ui-theme/smoothness.css`
+images=`gawk 'match($0, /url\("?(images\/[^\)"]+)"?\)/, m) { print m[1] }' jquery-ui-theme/smoothness.css`
 for img in $images
 do
     wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/$img -O jquery-ui-theme/$img

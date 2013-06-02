@@ -242,7 +242,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             ), '&', true
                         );
                     } else {
-                        $item->link = wl($id, 'rev='.$date, true, '&', true);
+                        $item->link = wl($id, 'rev='.$date, true, '&');
                     }
                     break;
                 case 'rev':
@@ -322,14 +322,15 @@ function rss_buildItems(&$rss, &$data, $opt) {
                         $rev  = $revs[0];
 
                         if($rev) {
-                            $df = new Diff(explode("\n", htmlspecialchars(rawWiki($id, $rev))),
-                                           explode("\n", htmlspecialchars(rawWiki($id, ''))));
+                            $df = new Diff(explode("\n", rawWiki($id, $rev)),
+                                           explode("\n", rawWiki($id, '')));
                         } else {
                             $df = new Diff(array(''),
-                                           explode("\n", htmlspecialchars(rawWiki($id, ''))));
+                                           explode("\n", rawWiki($id, '')));
                         }
 
                         if($opt['item_content'] == 'htmldiff') {
+                            // note: no need to escape diff output, TableDiffFormatter provides 'safe' html
                             $tdf     = new TableDiffFormatter();
                             $content = '<table>';
                             $content .= '<tr><th colspan="2" width="50%">'.$rev.'</th>';
@@ -337,8 +338,9 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             $content .= $tdf->format($df);
                             $content .= '</table>';
                         } else {
+                            // note: diff output must be escaped, UnifiedDiffFormatter provides plain text
                             $udf     = new UnifiedDiffFormatter();
-                            $content = "<pre>\n".$udf->format($df)."\n</pre>";
+                            $content = "<pre>\n".hsc($udf->format($df))."\n</pre>";
                         }
                     }
                     break;

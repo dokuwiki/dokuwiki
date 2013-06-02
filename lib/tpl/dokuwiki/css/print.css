@@ -106,7 +106,7 @@ blockquote {
     border: solid #ccc;
     border-width: 0 0 0 2pt;
 }
-[dir=rtl] .dokuwiki blockquote {
+[dir=rtl] blockquote {
     border-width: 0 2pt 0 0;
 }
 
