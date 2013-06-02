@@ -99,7 +99,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     //media to local file
     if(preg_match('#^(https?)://#i', $media)) {
         //check hash
-        if(substr(md5(auth_cookiesalt().$media), 0, 6) !== $INPUT->str('hash')) {
+        if(substr(PassHash::hmac('md5', $media, auth_cookiesalt()), 0, 6) !== $INPUT->str('hash')) {
             return array(412, 'Precondition Failed');
         }
         //handle external images
