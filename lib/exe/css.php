@@ -50,7 +50,7 @@ function css_out(){
     }
 
     // used style.ini file
-    $styleini = css_styleini($tplinc);
+    $styleini = css_styleini($tplinc, $tpl);
 
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
@@ -152,7 +152,7 @@ function css_out(){
     ob_end_clean();
 
     // apply style replacements
-    $css = css_applystyle($css,$tplinc);
+    $css = css_applystyle($css,$tplinc,$tpl);
 
     // place all @import statements at the top of the file
     $css = css_moveimports($css);
@@ -177,8 +177,8 @@ function css_out(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_applystyle($css,$tplinc){
-    $styleini = css_styleini($tplinc);
+function css_applystyle($css,$tplinc,$tpl){
+    $styleini = css_styleini($tplinc,$tpl);
 
     if($styleini){
         $css = strtr($css,$styleini['replacements']);
@@ -191,10 +191,15 @@ function css_applystyle($css,$tplinc){
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function css_styleini($tplinc) {
+function css_styleini($tplinc, $tpl) {
     $styleini = array();
+    $allStyleInis = array(
+        $tplinc.'style.ini',
+        $tplinc.'style.local.ini',
+        DOKU_CONF.'tpl/'.$tpl.'/style.local.ini'
+    );
 
-    foreach (array($tplinc.'style.ini', $tplinc.'style.local.ini') as $ini) {
+    foreach ($allStyleInis as $ini) {
         $tmp = (@file_exists($ini)) ? parse_ini_file($ini, true) : array();
 
         foreach($tmp as $key => $value) {
