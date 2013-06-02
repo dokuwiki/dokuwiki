@@ -518,8 +518,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.1.2','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.1.2');
+    if(version_compare(phpversion(),'5.2.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
         $ok = false;
     }
 
