@@ -16,6 +16,17 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function mimetype($file, $knownonly=true){
+    // check for explicitly whitelisted files first, if not found check file extension
+    $files = getMediaWhiteList();
+    if (isset($files[$file])) {
+        $ext = strrpos($file, '.');
+        if ($ext === false) {
+            return array('unknown', $files[$file], true);
+        } else {
+            return array($ext, $files[$file], true);
+        }
+    }
+
     $mtypes = getMimeTypes();     // known mimetypes
     $ext    = strrpos($file, '.');
     if ($ext === false) {
@@ -60,6 +71,19 @@ function getAcronyms() {
         $acronyms = retrieveConfig('acronyms','confToHash');
     }
     return $acronyms;
+}
+
+/**
+ * returns a hash of media files as a whitelist
+ *
+ * @author Mario Konrad <mario.konrad@gmx.net>
+ */
+function getMediaWhiteList() {
+    static $whitelist = null;
+    if (!$whitelist) {
+        $whitelist = retrieveConfig('mediawhitelist', 'confToHash');
+    }
+    return $whitelist;
 }
 
 /**

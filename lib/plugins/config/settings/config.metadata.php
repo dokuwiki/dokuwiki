@@ -198,6 +198,7 @@ $meta['broken_iua']  = array('onoff');
 $meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
 $meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
 $meta['readdircache'] = array('numeric');
+$meta['pagecasesensitive'] = array('onoff');
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');

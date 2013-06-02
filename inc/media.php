@@ -369,13 +369,18 @@ function media_save($file, $id, $ow, $auth, $move) {
     $id   = cleanID($id);
     $fn   = mediaFN($id);
 
+    // get filenames from whitelist
+    $files = array_keys(getMediaWhiteList());
+    $whitelist = join('|',$files);
+
     // get filetype regexp
     $types = array_keys(getMimeTypes());
     $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
     $regex = join('|',$types);
 
     // because a temp file was created already
-    if(!preg_match('/\.('.$regex.')$/i',$fn)) {
+    $pattern = '/('.$whitelist.')$|\.('.$regex.')$/i';
+    if(!preg_match($pattern,$fn)) {
         return array($lang['uploadwrong'],-1);
     }
 

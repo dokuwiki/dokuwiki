@@ -156,6 +156,7 @@ $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abor
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
 $conf['readdircache'] = 0;               //time cache in second for the readdir operation, 0 to deactivate.
+$conf['pagecasesensitive'] = 0;          //Enable/disable of case sentitivness of pages/media files
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups
