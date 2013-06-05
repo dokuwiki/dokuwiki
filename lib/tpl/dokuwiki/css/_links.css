@@ -41,6 +41,9 @@
 .dokuwiki a.urlextern {
     background-image: url(../../images/external-link.png);
 }
+.dokuwiki a.urlextern:visited {
+    color: __link_extern_visited__;
+}
 /* windows share */
 .dokuwiki a.windows {
     background-image: url(../../images/unc.png);
