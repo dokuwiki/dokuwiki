@@ -8,6 +8,7 @@ $meta['groupfilter'] = array('string');
 $meta['version']     = array('numeric');
 $meta['starttls']    = array('onoff');
 $meta['referrals']   = array('onoff');
+$meta['deref']       = array('multichoice','_choices' => array(0,1,2,3));
 $meta['binddn']      = array('string');
 $meta['bindpw']      = array('password');
 //$meta['mapping']['name']  unsupported in config manager

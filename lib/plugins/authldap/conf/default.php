@@ -9,6 +9,7 @@ $conf['groupfilter'] = '';
 $conf['version']     = 2;
 $conf['starttls']    = 0;
 $conf['referrals']   = 0;
+$conf['deref']       = 0;
 $conf['binddn']      = '';
 $conf['bindpw']      = '';
 //$conf['mapping']['name']  unsupported in config manager
