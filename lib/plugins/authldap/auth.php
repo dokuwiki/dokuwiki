@@ -248,7 +248,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         // always add the default group to the list of groups
-        if(!in_array($conf['defaultgroup'], $info['grps'])) {
+        if(!$info['grps'] or !in_array($conf['defaultgroup'], $info['grps'])) {
             $info['grps'][] = $conf['defaultgroup'];
         }
         return $info;
