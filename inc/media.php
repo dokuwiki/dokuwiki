@@ -1891,20 +1891,21 @@ function media_crop_image($file, $ext, $w, $h=0){
  * cropped images have been internally generated - and prevent external
  * DDOS attacks via fetch
  *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ *
  * @param string  $id    id of the image
  * @param int     $w     resize/crop width
  * @param int     $h     resize/crop height
- *
- * @author Christopher Smith <chris@jalakai.co.uk>
+ * @return string
  */
 function media_get_token($id,$w,$h){
     // token is only required for modified images
     if ($w || $h) {
-        $token = auth_cookiesalt().$id;
+        $token = $id;
         if ($w) $token .= '.'.$w;
         if ($h) $token .= '.'.$h;
 
-        return substr(md5($token),0,6);
+        return substr(PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
     }
 
     return '';

@@ -20,8 +20,8 @@ class common_ml_test extends DokuWikiTest {
 
         $args = array('a' => 'b', 'c' => 'd', 'q' => '&ä');
 
-        $expect = DOKU_BASE . $this->script . '?a=b&amp;c=d&amp;q=%26%C3%A4&amp;media=some:';
-        $this->assertEquals($expect, ml('some:', $args));
+        $expect = DOKU_BASE . $this->script . '?a=b&amp;c=d&amp;q=%26%C3%A4&amp;media=some:img.jpg';
+        $this->assertEquals($expect, ml('some:img.jpg', $args));
     }
 
     function test_ml_args_string() {
@@ -31,8 +31,8 @@ class common_ml_test extends DokuWikiTest {
 
         $args = 'a=b&c=d';
 
-        $expect = DOKU_BASE . $this->script . '?a=b&c=d&amp;media=some:';
-        $this->assertEquals($expect, ml('some:', $args));
+        $expect = DOKU_BASE . $this->script . '?a=b&c=d&amp;media=some:img.png';
+        $this->assertEquals($expect, ml('some:img.png', $args));
     }
 
     function test_ml_args_comma_string() {
@@ -42,8 +42,8 @@ class common_ml_test extends DokuWikiTest {
 
         $args = 'a=b,c=d';
 
-        $expect = DOKU_BASE . $this->script . '?a=b&amp;c=d&amp;media=some:';
-        $this->assertEquals($expect, ml('some:', $args));
+        $expect = DOKU_BASE . $this->script . '?a=b&amp;c=d&amp;media=some:img.gif';
+        $this->assertEquals($expect, ml('some:img.gif', $args));
     }
 
 
@@ -52,7 +52,7 @@ class common_ml_test extends DokuWikiTest {
         $conf['useslash'] = 0;
         $conf['userewrite'] = 0;
 
-        $id = 'some:';
+        $id = 'some:img.png';
         $w = 80;
         $args = array('w' => $w);
         $tok = media_get_token($id,$w,0);
@@ -66,12 +66,49 @@ class common_ml_test extends DokuWikiTest {
         $conf['useslash'] = 0;
         $conf['userewrite'] = 0;
 
-        $id = 'some:';
+        $id = 'some:img.png';
         $w = 80;
         $args = 'w='.$w;
         $tok = media_get_token($id,$w,0);
 
         $expect = DOKU_BASE . $this->script . '?w='.$w.'&amp;tok='.$tok.'&amp;media='.$id;
         $this->assertEquals($expect, ml($id, $args));
+    }
+
+    function test_ml_imgresize_array_rootid() {
+        global $conf;
+        $conf['useslash']   = 0;
+        $conf['userewrite'] = 0;
+
+        $id      = ':wiki:dokuwiki-128.png';
+        $cleanid = 'wiki:dokuwiki-128.png';
+        $w       = 80;
+        $args    = array('w' => $w);
+        $tok     = media_get_token($cleanid, $w, 0);
+
+        $expect = DOKU_BASE.$this->script.'?w='.$w.'&amp;tok='.$tok.'&amp;media='.$cleanid;
+        $this->assertEquals($expect, ml($id, $args));
+    }
+
+    function test_ml_imgresize_array_external() {
+        global $conf;
+        $conf['useslash']   = 0;
+        $conf['userewrite'] = 0;
+
+        $ids  = array(
+            'https://example.com/lib/tpl/dokuwiki/images/logo.png',
+            'http://example.com/lib/tpl/dokuwiki/images/logo.png',
+            'ftp://example.com/lib/tpl/dokuwiki/images/logo.png'
+        );
+        $w    = 80;
+        $args = array('w' => $w);
+
+        foreach($ids as $id) {
+            $tok = media_get_token($id, $w, 0);
+            $hash = substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
+
+            $expect = DOKU_BASE.$this->script.'?hash='.$hash.'&amp;w='.$w.'&amp;tok='.$tok.'&amp;media='.rawurlencode($id);
+            $this->assertEquals($expect, ml($id, $args));
+        }
     }
 }
