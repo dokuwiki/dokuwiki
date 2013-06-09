@@ -32,9 +32,8 @@ class fetch_statuscodes_external_test extends DokuWikiTest {
         $w = $this->width ? 'w='.$this->width.'&' : '';
         $h = $this->height ? 'h='.$this->height.'&' : '';
         if($hash === null) {
-            $hash = 'hash='.substr(md5(auth_cookiesalt().$this->media), 0, 6).'&';
+            $hash = 'hash='.substr(PassHash::hmac('md5', $this->media, auth_cookiesalt()), 0, 6).'&';
         }
-
         return '/lib/exe/fetch.php?'.$hash.$w.$h.'{%token%}media='.rawurlencode($this->media);
     }
 
@@ -48,7 +47,7 @@ class fetch_statuscodes_external_test extends DokuWikiTest {
      * expect: 412 status code
      */
     function test_invalid_hash() {
-        $invalid_hash = 'hash='.substr(md5(auth_cookiesalt().'junk'), 0, 6).'&';
+        $invalid_hash = 'hash='.substr(PassHash::hmac('md5', 'junk', auth_cookiesalt()), 0, 6).'&';
         $token = 'tok='.media_get_token($this->media, $this->width, $this->height).'&';
 
         $this->assertEquals(412,$this->fetchResponse($token, $invalid_hash)->getStatusCode());
