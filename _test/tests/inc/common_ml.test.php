@@ -105,8 +105,9 @@ class common_ml_test extends DokuWikiTest {
 
         foreach($ids as $id) {
             $tok = media_get_token($id, $w, 0);
+            $hash = substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
 
-            $expect = DOKU_BASE.$this->script.'?hash='.substr(md5(auth_cookiesalt().$id), 0, 6).'&amp;w='.$w.'&amp;tok='.$tok.'&amp;media='.rawurlencode($id);
+            $expect = DOKU_BASE.$this->script.'?hash='.$hash.'&amp;w='.$w.'&amp;tok='.$tok.'&amp;media='.rawurlencode($id);
             $this->assertEquals($expect, ml($id, $args));
         }
     }
