@@ -56,7 +56,7 @@ function stripctl($string) {
  * @return  string
  */
 function getSecurityToken() {
-    return md5(auth_cookiesalt().session_id().$_SERVER['REMOTE_USER']);
+    return PassHash::hmac('md5', session_id().$_SERVER['REMOTE_USER'], auth_cookiesalt());
 }
 
 /**
@@ -435,6 +435,11 @@ function exportlink($id = '', $format = 'raw', $more = '', $abs = false, $sep = 
  */
 function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) {
     global $conf;
+    $isexternalimage = preg_match('#^(https?|ftp)://#i', $id);
+    if(!$isexternalimage) {
+        $id = cleanID($id);
+    }
+
     if(is_array($more)) {
         // add token for resized images
         if($more['w'] || $more['h']){
@@ -467,10 +472,10 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
     }
 
     // external URLs are always direct without rewriting
-    if(preg_match('#^(https?|ftp)://#i', $id)) {
+    if($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
         // add hash:
-        $xlink .= '?hash='.substr(md5(auth_cookiesalt().$id), 0, 6);
+        $xlink .= '?hash='.substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
         if($more) {
             $xlink .= $sep.$more;
             $xlink .= $sep.'media='.rawurlencode($id);
