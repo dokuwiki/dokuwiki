@@ -690,8 +690,8 @@ function auth_nameencode($name, $skip_group = false) {
  */
 function auth_pwgen($foruser='') {
     $data = array(
-        'password' = '',
-        'foruser'  = $foruser
+        'password' => '',
+        'foruser'  => $foruser
     );
 
     $evt = new Doku_Event('AUTH_PASSWORD_GENERATE', $data);
