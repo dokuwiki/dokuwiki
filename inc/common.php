@@ -557,12 +557,13 @@ function checkwordblock($text = '') {
     global $TEXT;
     global $PRE;
     global $SUF;
+    global $SUM;
     global $conf;
     global $INFO;
 
     if(!$conf['usewordblock']) return false;
 
-    if(!$text) $text = "$PRE $TEXT $SUF";
+    if(!$text) $text = "$PRE $TEXT $SUF $SUM";
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
     $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i', '\1http://\2 \2\3', $text);
