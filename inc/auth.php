@@ -681,14 +681,14 @@ function auth_nameencode($name, $skip_group = false) {
  * The $foruser variable might be used by plugins to run additional password
  * policy checks, but is not used by the default implementation
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @link    http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @link     http://www.phpbuilder.com/annotate/message.php3?id=1014451
  * @triggers AUTH_PASSWORD_GENERATE
  *
  * @param  string $foruser username for which the password is generated
  * @return string  pronouncable password
  */
-function auth_pwgen($foruser='') {
+function auth_pwgen($foruser = '') {
     $data = array(
         'password' => '',
         'foruser'  => $foruser
@@ -696,18 +696,19 @@ function auth_pwgen($foruser='') {
 
     $evt = new Doku_Event('AUTH_PASSWORD_GENERATE', $data);
     if($evt->advise_before(true)) {
-        $c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
-        $v  = 'aeiou'; //vowels
-        $a  = $c.$v; //both
+        $c = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
+        $v = 'aeiou'; //vowels
+        $a = $c.$v; //both
+        $s = '!$%&?+*~#-_:.;,'; // specials
 
-        //use two syllables...
-        for($i = 0; $i < 2; $i++) {
-            $data['password'] .= $c[rand(0, strlen($c) - 1)];
-            $data['password'] .= $v[rand(0, strlen($v) - 1)];
-            $data['password'] .= $a[rand(0, strlen($a) - 1)];
+        //use thre syllables...
+        for($i = 0; $i < 3; $i++) {
+            $data['password'] .= $c[mt_rand(0, strlen($c) - 1)];
+            $data['password'] .= $v[mt_rand(0, strlen($v) - 1)];
+            $data['password'] .= $a[mt_rand(0, strlen($a) - 1)];
         }
-        //... and add a nice number
-        $data['password'] .= rand(10, 99);
+        //... and add a nice number and special
+        $data['password'] .= mt_rand(10, 99).$s[mt_rand(0, strlen($s) - 1)];
     }
     $evt->advise_after();
 
