@@ -817,7 +817,16 @@ class DiffFormatter {
         $this->_added($closing);
     }
 
-    function _escape($str){
+    /**
+     * Escape string
+     * 
+     * Override this method within other formatters if escaping required.
+     * Base class requires $str to be returned WITHOUT escaping.
+     * 
+     * @param $str string Text string to escape
+     * @return string The escaped string.
+     */
+     function _escape($str){
         return $str;
     }
 }
