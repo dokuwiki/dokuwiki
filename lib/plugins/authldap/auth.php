@@ -248,7 +248,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         // always add the default group to the list of groups
-        if(!in_array($conf['defaultgroup'], $info['grps'])) {
+        if(!$info['grps'] or !in_array($conf['defaultgroup'], $info['grps'])) {
             $info['grps'][] = $conf['defaultgroup'];
         }
         return $info;
@@ -502,23 +502,23 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return resource
      */
     protected function _ldapsearch($link_identifier, $base_dn, $filter, $scope = 'sub', $attributes = null,
-                         $attrsonly = 0, $sizelimit = 0, $timelimit = 0, $deref = LDAP_DEREF_NEVER) {
+                         $attrsonly = 0, $sizelimit = 0) {
         if(is_null($attributes)) $attributes = array();
 
         if($scope == 'base') {
             return @ldap_read(
                 $link_identifier, $base_dn, $filter, $attributes,
-                $attrsonly, $sizelimit, $timelimit, $deref
+                $attrsonly, $sizelimit
             );
         } elseif($scope == 'one') {
             return @ldap_list(
                 $link_identifier, $base_dn, $filter, $attributes,
-                $attrsonly, $sizelimit, $timelimit, $deref
+                $attrsonly, $sizelimit
             );
         } else {
             return @ldap_search(
                 $link_identifier, $base_dn, $filter, $attributes,
-                $attrsonly, $sizelimit, $timelimit, $deref
+                $attrsonly, $sizelimit
             );
         }
     }

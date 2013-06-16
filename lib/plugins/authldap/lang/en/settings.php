@@ -8,9 +8,16 @@ $lang['groupfilter'] = 'LDAP filter to search for groups. Eg. <code>(&amp;(objec
 $lang['version']     = 'The protocol version to use. You may need to set this to <code>3</code>';
 $lang['starttls']    = 'Use TLS connections?';
 $lang['referrals']   = 'Shall referrals be followed?';
+$lang['deref']       = 'How to dereference aliases?';
 $lang['binddn']      = 'DN of an optional bind user if anonymous bind is not sufficient. Eg. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']      = 'Password of above user';
 $lang['userscope']   = 'Limit search scope for user search';
 $lang['groupscope']  = 'Limit search scope for group search';
-$lang['groupkey']    = 'Group member ship from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
+$lang['groupkey']    = 'Group membership from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
 $lang['debug']       = 'Display additional debug information on errors';
+
+
+$lang['deref_o_0']   = 'LDAP_DEREF_NEVER';
+$lang['deref_o_1']   = 'LDAP_DEREF_SEARCHING';
+$lang['deref_o_2']   = 'LDAP_DEREF_FINDING';
+$lang['deref_o_3']   = 'LDAP_DEREF_ALWAYS';
