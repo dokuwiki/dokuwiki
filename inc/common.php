@@ -467,7 +467,7 @@ function exportlink($id = '', $format = 'raw', $more = '', $abs = false, $sep = 
  */
 function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) {
     global $conf;
-    $isexternalimage = preg_match('#^(https?|ftp)://#i', $id);
+    $isexternalimage = media_isexternal($id);
     if(!$isexternalimage) {
         $id = cleanID($id);
     }
