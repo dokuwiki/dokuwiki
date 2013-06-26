@@ -148,7 +148,11 @@ if (!headers_sent() && !defined('NOSESSION')){
     }else{
         session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()));
     }
-	session_start();
+    
+    // Don't initialize session if it has already been started
+    if(session_id() == '') {
+    	session_start();
+    }
 
     // load left over messages
     if(isset($_SESSION[DOKU_COOKIE]['msg'])){
