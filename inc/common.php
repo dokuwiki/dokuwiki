@@ -56,7 +56,8 @@ function stripctl($string) {
  * @return  string
  */
 function getSecurityToken() {
-    return PassHash::hmac('md5', session_id().$_SERVER['REMOTE_USER'], auth_cookiesalt());
+    $user = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : NULL;
+    return PassHash::hmac('md5', session_id().$user, auth_cookiesalt());
 }
 
 /**
@@ -190,7 +191,7 @@ function pageinfo() {
     if($REV) {
         $revinfo = getRevisionInfo($ID, $REV, 1024);
     } else {
-        if(is_array($info['meta']['last_change'])) {
+        if(isset($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
             $revinfo = $info['meta']['last_change'];
         } else {
             $revinfo = getRevisionInfo($ID, $info['lastmod'], 1024);
