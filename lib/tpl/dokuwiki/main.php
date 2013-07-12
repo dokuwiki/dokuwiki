@@ -75,12 +75,23 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <div class="tools">
                     <ul>
                         <?php
-                            tpl_action('edit',      1, 'li', 0, '<span>', '</span>');
-                            tpl_action('revert',    1, 'li', 0, '<span>', '</span>');
-                            tpl_action('revisions', 1, 'li', 0, '<span>', '</span>');
-                            tpl_action('backlink',  1, 'li', 0, '<span>', '</span>');
-                            tpl_action('subscribe', 1, 'li', 0, '<span>', '</span>');
-                            tpl_action('top',       1, 'li', 0, '<span>', '</span>');
+                            $data = array(
+                                'edit'      => tpl_action('edit',      1, 'li', 1, '<span>', '</span>'),
+                                'revert'    => tpl_action('revert',    1, 'li', 1, '<span>', '</span>'),
+                                'revisions' => tpl_action('revisions', 1, 'li', 1, '<span>', '</span>'),
+                                'backlink'  => tpl_action('backlink',  1, 'li', 1, '<span>', '</span>'),
+                                'subscribe' => tpl_action('subscribe', 1, 'li', 1, '<span>', '</span>'),
+                                'top'       => tpl_action('top',       1, 'li', 1, '<span>', '</span>')
+                            );
+
+                            // the page tools can be ammended through a custom plugin hook
+                            $evt = new Doku_Event('TEMPLATE_DOKUWIKI_PAGETOOLFLOAT_DISPLAY', $data);
+                            if($evt->advise_before()){
+                                foreach($evt->data as $k => $html) echo $html;
+                            }
+                            $evt->advise_after();
+                            unset($data);
+                            unset($evt);
                         ?>
                     </ul>
                 </div>
