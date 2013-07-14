@@ -6,6 +6,7 @@
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  * @author Taisuke Shimamoto <dentostar@gmail.com>
+ * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  */
 $lang['menu']                  = '復元管理';
 $lang['filter']                = 'スパムを受けたページを検索';

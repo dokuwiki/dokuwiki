@@ -51,7 +51,6 @@ function load_autoload($name){
         'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
         'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
         'JSON'                  => DOKU_INC.'inc/JSON.php',
-        'adLDAP'                => DOKU_INC.'inc/adLDAP.php',
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
         'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
         'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
@@ -88,6 +87,7 @@ function load_autoload($name){
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
         'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
+    	'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
 
     );
 
@@ -97,7 +97,7 @@ function load_autoload($name){
     }
 
     // Plugin loading
-    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
+    if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
                   $name, $m)) {
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');

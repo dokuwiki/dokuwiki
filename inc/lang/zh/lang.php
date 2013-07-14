@@ -298,6 +298,9 @@ $lang['i_pol1']                = '公共的维基（任何人都有读的权限�
 $lang['i_pol2']                = '关闭的维基（只有注册用户才有读、写、上传的权限）';
 $lang['i_retry']               = '重试';
 $lang['i_license']             = '请选择您希望的内容发布许可协议：';
+$lang['i_license_none']        = '不要显示任何许可协议信息';
+$lang['i_pop_field']           = '请帮助我们改进 Dokuwiki 的体验：';
+$lang['i_pop_label']           = '每个月向 Dokuwiki 开发者发送匿名的使用数据';
 $lang['recent_global']         = '您当前看到的是<b>%s</b> 名称空间的变动。你还可以在<a href="%s">查看整个维基的近期变动</a>。';
 $lang['years']                 = '%d年前';
 $lang['months']                = '%d月前';

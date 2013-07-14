@@ -599,7 +599,7 @@ class FeedCreator extends HtmlDescribable {
 
         header("Content-Type: ".$this->contentType."; charset=".$this->encoding."; filename=".utf8_basename($filename));
         header("Content-Disposition: inline; filename=".utf8_basename($filename));
-        readfile($filename, "r");
+        readfile($filename);
         die();
     }
 

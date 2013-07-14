@@ -178,7 +178,7 @@ $lang['lastmod']               = 'Azken aldaketa';
 $lang['by']                    = 'egilea:';
 $lang['deleted']               = 'ezabatua';
 $lang['created']               = 'sortua';
-$lang['restored']              = 'bertsio zaharra berrezarria';
+$lang['restored']              = 'bertsio zaharra berrezarria (%s)';
 $lang['external_edit']         = 'kanpoko aldaketa';
 $lang['summary']               = 'Aldatu laburpena';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> beharrezkoa da eduki hau bistaratzeko.';

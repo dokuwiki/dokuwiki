@@ -176,7 +176,7 @@ $lang['lastmod']               = 'Son değiştirilme';
 $lang['by']                    = 'Değiştiren:';
 $lang['deleted']               = 'silindi';
 $lang['created']               = 'oluşturuldu';
-$lang['restored']              = 'eski sürüme dönüldü';
+$lang['restored']              = 'eski sürüme dönüldü (%s)';
 $lang['external_edit']         = 'Dışarıdan düzenle';
 $lang['summary']               = 'Özeti düzenle';
 $lang['noflash']               = 'Bu içeriği göstermek için <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Eklentisi</a> gerekmektedir.';

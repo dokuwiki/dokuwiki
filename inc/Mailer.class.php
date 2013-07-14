@@ -51,7 +51,7 @@ class Mailer {
         $this->allowhtml = (bool)$conf['htmlmail'];
 
         // add some default headers for mailfiltering FS#2247
-        $this->setHeader('X-Mailer', 'DokuWiki '.getVersion());
+        $this->setHeader('X-Mailer', 'DokuWiki');
         $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
         $this->setHeader('X-DokuWiki-Server', $server);
@@ -192,7 +192,7 @@ class Mailer {
         // copy over all replacements missing for HTML (autolink URLs)
         foreach($textrep as $key => $value) {
             if(isset($htmlrep[$key])) continue;
-            if(preg_match('/^https?:\/\//i', $value)) {
+            if(media_isexternal($value)) {
                 $htmlrep[$key] = '<a href="'.hsc($value).'">'.hsc($value).'</a>';
             } else {
                 $htmlrep[$key] = hsc($value);

@@ -183,7 +183,7 @@ $lang['lastmod']               = 'Viimeksi muutettu';
 $lang['by']                    = '/';
 $lang['deleted']               = 'poistettu';
 $lang['created']               = 'luotu';
-$lang['restored']              = 'vanha versio palautettu';
+$lang['restored']              = 'vanha versio palautettu (%s)';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
 $lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
@@ -287,6 +287,9 @@ $lang['i_pol1']                = 'Julkinen Wiki (luku kaikilla, kirjoitus ja tie
 $lang['i_pol2']                = 'Suljettu Wiki (luku, kirjoitus ja tiedostojen lähetys vain rekisteröityneillä käyttäjillä)';
 $lang['i_retry']               = 'Yritä uudelleen';
 $lang['i_license']             = 'Valitse lisenssi, jonka alle haluat sisältösi laittaa:';
+$lang['i_license_none']        = 'Älä näytä mitään lisenssitietoja';
+$lang['i_pop_field']           = 'Auta parantamaan DokuWikiä';
+$lang['i_pop_label']           = 'Lähetä kerran kuussa nimetöntä käyttäjätietoa DokuWikin kehittäjille';
 $lang['recent_global']         = 'Seuraat tällä hetkellä muutoksia nimiavaruuden <b>%s</b> sisällä. Voit myös <a href="%s">katsoa muutoksia koko wikissä</a>';
 $lang['years']                 = '%d vuotta sitten';
 $lang['months']                = '%d kuukautta sitten';

@@ -18,6 +18,9 @@ function ob_start_callback($buffer) {
  */
 class TestRequest {
 
+    private $valid_scripts = array('/doku.php', '/lib/exe/fetch.php', '/lib/exe/detail.php');
+    private $script;
+
     private $server = array();
     private $session = array();
     private $get = array();
@@ -27,6 +30,7 @@ class TestRequest {
     public function getSession($key) { return $this->session[$key]; }
     public function getGet($key) { return $this->get[$key]; }
     public function getPost($key) { return $this->post[$key]; }
+    public function getScript() { return $this->script; }
 
     public function setServer($key, $value) { $this->server[$key] = $value; }
     public function setSession($key, $value) { $this->session[$key] = $value; }
@@ -70,13 +74,13 @@ class TestRequest {
         // now execute dokuwiki and grep the output
         header_remove();
         ob_start('ob_start_callback');
-        include(DOKU_INC.'doku.php');
+        include(DOKU_INC.$this->script);
         ob_end_flush();
 
         // create the response object
         $response = new TestResponse(
             $output_buffer,
-            headers_list()
+            (function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list())   // cli sapi doesn't do headers, prefer xdebug_get_headers() which works under cli
         );
 
         // reset environment
@@ -102,14 +106,15 @@ class TestRequest {
      * @todo make this work with other end points
      */
     protected function setUri($uri){
-        if(substr($uri,0,9) != '/doku.php'){
-            throw new Exception("only '/doku.php' is supported currently");
+        if(!preg_match('#^('.join('|',$this->valid_scripts).')#',$uri)){
+            throw new Exception("$uri \n--- only ".join(', ',$this->valid_scripts)." are supported currently");
         }
 
         $params = array();
         list($uri, $query) = explode('?',$uri,2);
         if($query) parse_str($query, $params);
 
+        $this->script = substr($uri,1);
         $this->get  = array_merge($params, $this->get);
         if(count($this->get)){
             $query = '?'.http_build_query($this->get, '', '&');
@@ -129,7 +134,7 @@ class TestRequest {
      * Simulate a POST request with the given variables
      *
      * @param array $post  all the POST parameters to use
-     * @param string $url  end URL to simulate, needs to start with /doku.php currently
+     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
      * @param return TestResponse
      */
     public function post($post=array(), $uri='/doku.php') {
@@ -141,8 +146,8 @@ class TestRequest {
     /**
      * Simulate a GET request with the given variables
      *
-     * @param array $GET  all the POST parameters to use
-     * @param string $url  end URL to simulate, needs to start with /doku.php currently
+     * @param array $GET   all the GET parameters to use
+     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
      * @param return TestResponse
      */
     public function get($get=array(), $uri='/doku.php') {

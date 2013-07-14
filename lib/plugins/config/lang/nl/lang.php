@@ -63,7 +63,7 @@ $lang['allowdebug']            = 'Debug toestaan <b>uitzetten indien niet noodza
 $lang['recent']                = 'Het aantal regels in Recente wijzigingen';
 $lang['recent_days']           = 'Hoeveel recente wijzigingen bewaren (dagen)';
 $lang['breadcrumbs']           = 'Aantal broodkruimels. Zet dit op 0 om uit te schakelen.';
-$lang['youarehere']            = 'Gebruik hierarchische broodkruimels (waarschijnlijk wil je dan de optie hierboven uitschakelen)';
+$lang['youarehere']            = 'Gebruik hiërarchische broodkruimels (waarschijnlijk wil je dan de optie hierboven uitschakelen)';
 $lang['fullpath']              = 'Volledig pad van pagina\'s in de footer weergeven';
 $lang['typography']            = 'Breng typografische wijzigingen aan';
 $lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';

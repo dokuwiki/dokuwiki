@@ -150,6 +150,7 @@ class HTTPClient {
      *
      * @param  string $url       The URL to fetch
      * @param  bool   $sloppy304 Return body on 304 not modified
+     * @return bool|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function get($url,$sloppy304=false){
@@ -170,6 +171,7 @@ class HTTPClient {
      * @param  string $url       The URL to fetch
      * @param  array  $data      Associative array of parameters
      * @param  bool   $sloppy304 Return body on 304 not modified
+     * @return bool|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function dget($url,$data,$sloppy304=false){
@@ -187,6 +189,9 @@ class HTTPClient {
      *
      * Returns the resulting page or false on an error;
      *
+     * @param  string $url       The URL to fetch
+     * @param  array  $data      Associative array of parameters
+     * @return bool|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function post($url,$data){
@@ -215,6 +220,9 @@ class HTTPClient {
         $this->start  = $this->_time();
         $this->error  = '';
         $this->status = 0;
+        $this->status = 0;
+        $this->resp_body = '';
+        $this->resp_headers = array();
 
         // don't accept gzip if truncated bodies might occur
         if($this->max_bodysize &&
@@ -440,25 +448,37 @@ class HTTPClient {
                         $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
-            }elseif($this->max_bodysize){
-                // read just over the max_bodysize
-                $r_body = $this->_readData($socket, $this->max_bodysize+1, 'response', true);
+            }elseif(isset($this->resp_headers['content-length']) && !isset($this->resp_headers['transfer-encoding'])){
+                /* RFC 2616
+                 * If a message is received with both a Transfer-Encoding header field and a Content-Length
+                 * header field, the latter MUST be ignored.
+                 */
+
+                // read up to the content-length or max_bodysize
+                // for keep alive we need to read the whole message to clean up the socket for the next read
+                if(!$this->keep_alive && $this->max_bodysize && $this->max_bodysize < $this->resp_headers['content-length']){
+                    $length = $this->max_bodysize;
+                }else{
+                    $length = $this->resp_headers['content-length'];
+                }
+
+                $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
+            }else{
+                // read entire socket
+                $r_size = 0;
+                while (!feof($socket)) {
+                    $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
+                }
+            }
+
+            // recheck body size, we might had to read the whole body, so we abort late or trim here
+            if($this->max_bodysize){
                 if(strlen($r_body) > $this->max_bodysize){
                     if ($this->max_bodysize_abort) {
                         throw new HTTPClientException('Allowed response size exceeded');
                     } else {
                         $this->error = 'Allowed response size exceeded';
                     }
-                }
-            }elseif(isset($this->resp_headers['content-length']) &&
-                    !isset($this->resp_headers['transfer-encoding'])){
-                // read up to the content-length
-                $r_body = $this->_readData($socket, $this->resp_headers['content-length'], 'response', true);
-            }else{
-                // read entire socket
-                $r_size = 0;
-                while (!feof($socket)) {
-                    $r_body .= $this->_readData($socket, 4096, 'response', true);
                 }
             }
 
@@ -502,8 +522,8 @@ class HTTPClient {
      *
      * Protocol, Servername and Port will be stripped from the request URL when a successful CONNECT happened
      *
-     * @param ressource &$socket
-     * @param string &$requesturl
+     * @param resource &$socket
+     * @param string   &$requesturl
      * @return bool true if a tunnel was established
      */
     function _ssltunnel(&$socket, &$requesturl){
@@ -543,17 +563,13 @@ class HTTPClient {
     /**
      * Safely write data to a socket
      *
-     * @param  handle $socket     An open socket handle
-     * @param  string $data       The data to write
-     * @param  string $message    Description of what is being read
+     * @param  resource $socket     An open socket handle
+     * @param  string   $data       The data to write
+     * @param  string   $message    Description of what is being read
+     * @throws HTTPClientException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _sendData($socket, $data, $message) {
-        // select parameters
-        $sel_r = null;
-        $sel_w = array($socket);
-        $sel_e = null;
-
         // send request
         $towrite = strlen($data);
         $written = 0;
@@ -565,6 +581,10 @@ class HTTPClient {
             if(feof($socket))
                 throw new HTTPClientException("Socket disconnected while writing $message");
 
+            // select parameters
+            $sel_r = null;
+            $sel_w = array($socket);
+            $sel_e = null;
             // wait for stream ready or timeout (1sec)
             if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
                  usleep(1000);
@@ -585,18 +605,15 @@ class HTTPClient {
      * Reads up to a given number of bytes or throws an exception if the
      * response times out or ends prematurely.
      *
-     * @param  handle $socket     An open socket handle in non-blocking mode
-     * @param  int    $nbytes     Number of bytes to read
-     * @param  string $message    Description of what is being read
-     * @param  bool   $ignore_eof End-of-file is not an error if this is set
+     * @param  resource $socket     An open socket handle in non-blocking mode
+     * @param  int      $nbytes     Number of bytes to read
+     * @param  string   $message    Description of what is being read
+     * @param  bool     $ignore_eof End-of-file is not an error if this is set
+     * @throws HTTPClientException
+     * @return string
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readData($socket, $nbytes, $message, $ignore_eof = false) {
-        // select parameters
-        $sel_r = array($socket);
-        $sel_w = null;
-        $sel_e = null;
-
         $r_data = '';
         // Does not return immediately so timeout and eof can be checked
         if ($nbytes < 0) $nbytes = 0;
@@ -605,8 +622,8 @@ class HTTPClient {
             $time_used = $this->_time() - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
-                        sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
-                        -100);
+                        sprintf('Timeout while reading %s after %d bytes (%.3fs)', $message,
+                                strlen($r_data), $time_used), -100);
             if(feof($socket)) {
                 if(!$ignore_eof)
                     throw new HTTPClientException("Premature End of File (socket) while reading $message");
@@ -614,6 +631,10 @@ class HTTPClient {
             }
 
             if ($to_read > 0) {
+                // select parameters
+                $sel_r = array($socket);
+                $sel_w = null;
+                $sel_e = null;
                 // wait for stream ready or timeout (1sec)
                 if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
                      usleep(1000);
@@ -635,26 +656,27 @@ class HTTPClient {
      *
      * Always returns a complete line, including the terminating \n.
      *
-     * @param  handle $socket     An open socket handle in non-blocking mode
-     * @param  string $message    Description of what is being read
+     * @param  resource $socket     An open socket handle in non-blocking mode
+     * @param  string   $message    Description of what is being read
+     * @throws HTTPClientException
+     * @return string
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readLine($socket, $message) {
-        // select parameters
-        $sel_r = array($socket);
-        $sel_w = null;
-        $sel_e = null;
-
         $r_data = '';
         do {
             $time_used = $this->_time() - $this->start;
             if ($time_used > $this->timeout)
                 throw new HTTPClientException(
-                        sprintf('Timeout while reading %s (%.3fs)', $message, $time_used),
+                        sprintf('Timeout while reading %s (%.3fs) >%s<', $message, $time_used, $r_data),
                         -100);
             if(feof($socket))
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
 
+            // select parameters
+            $sel_r = array($socket);
+            $sel_w = null;
+            $sel_e = null;
             // wait for stream ready or timeout (1sec)
             if(@stream_select($sel_r,$sel_w,$sel_e,1) === false){
                  usleep(1000);
@@ -669,10 +691,26 @@ class HTTPClient {
     /**
      * print debug info
      *
+     * Uses _debug_text or _debug_html depending on the SAPI name
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _debug($info,$var=null){
         if(!$this->debug) return;
+        if(php_sapi_name() == 'cli'){
+            $this->_debug_text($info, $var);
+        }else{
+            $this->_debug_html($info, $var);
+        }
+    }
+
+    /**
+     * print debug info as HTML
+     *
+     * @param      $info
+     * @param null $var
+     */
+    function _debug_html($info, $var=null){
         print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
         if(!is_null($var)){
             ob_start();
@@ -681,6 +719,18 @@ class HTTPClient {
             ob_end_clean();
             print '<pre>'.$content.'</pre>';
         }
+    }
+
+    /**
+     * prints debug info as plain text
+     *
+     * @param      $info
+     * @param null $var
+     */
+    function _debug_text($info, $var=null){
+        print '*'.$info.'* '.($this->_time() - $this->start)."s\n";
+        if(!is_null($var)) print_r($var);
+        print "\n-----------------------------------------------\n";
     }
 
     /**
@@ -746,7 +796,7 @@ class HTTPClient {
             $headers .= "$key=$val; ";
         }
         $headers = substr($headers, 0, -2);
-        if ($headers !== '') $headers = "Cookie: $headers".HTTP_NL;
+        if ($headers) $headers = "Cookie: $headers".HTTP_NL;
         return $headers;
     }
 
@@ -797,6 +847,8 @@ class HTTPClient {
     /**
      * Generates a unique identifier for a connection.
      *
+     * @param  string $server
+     * @param  string $port
      * @return string unique identifier
      */
     function _uniqueConnectionId($server, $port) {

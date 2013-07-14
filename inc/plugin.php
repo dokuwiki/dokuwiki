@@ -22,6 +22,7 @@ class DokuWiki_Plugin {
      *
      * Needs to return a associative array with the following values:
      *
+     * base   - the plugin's base name (eg. the directory it needs to be installed in)
      * author - Author of the plugin
      * email  - Email address to contact the author
      * date   - Last modified date of the plugin in YYYY-MM-DD format
@@ -133,12 +134,20 @@ class DokuWiki_Plugin {
      * getConf($setting)
      *
      * use this function to access plugin configuration variables
+     *
+     * @param string $setting the setting to access
+     * @param mixed  $notset  what to return if the setting is not available
+     * @return mixed
      */
-    function getConf($setting){
+    function getConf($setting, $notset=false){
 
         if (!$this->configloaded){ $this->loadConfig(); }
 
-        return $this->conf[$setting];
+        if(isset($this->conf[$setting])){
+            return $this->conf[$setting];
+        }else{
+            return $notset;
+        }
     }
 
     /**
@@ -189,7 +198,7 @@ class DokuWiki_Plugin {
      *
      * @return  object  helper plugin object
      */
-    function loadHelper($name, $msg){
+    function loadHelper($name, $msg = true){
         if (!plugin_isdisabled($name)){
             $obj = plugin_load('helper',$name);
         }else{
@@ -249,11 +258,4 @@ class DokuWiki_Plugin {
     function isSingleton() {
         return true;
     }
-
-    // deprecated functions
-    function plugin_localFN($id) { return $this->localFN($id); }
-    function plugin_locale_xhtml($id) { return $this->locale_xhtml($id); }
-    function plugin_email($e, $n='', $c='', $m='') { return $this->email($e, $n, $c, $m); }
-    function plugin_link($l, $t='', $c='', $to='', $m='') { return $this->external_link($l, $t, $c, $to, $m); }
-    function plugin_render($t, $f='xhtml') { return $this->render($t, $f); }
 }

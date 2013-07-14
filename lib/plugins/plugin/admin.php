@@ -61,11 +61,12 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
+        global $INPUT;
         // enable direct access to language strings
         $this->setupLocale();
 
 
-        $fn = $_REQUEST['fn'];
+        $fn = $INPUT->param('fn');
         if (is_array($fn)) {
             $this->cmd = key($fn);
             $this->plugin = is_array($fn[$this->cmd]) ? key($fn[$this->cmd]) : null;

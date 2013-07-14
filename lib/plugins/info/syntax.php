@@ -60,9 +60,6 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         if($format == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
-                case 'version':
-                    $renderer->doc .= getVersion();
-                    break;
                 case 'syntaxmodes':
                     $renderer->doc .= $this->_syntaxmodes_xhtml();
                     break;
@@ -83,6 +80,12 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                     break;
                 case 'helperplugins':
                     $this->_plugins_xhtml('helper', $renderer);
+                    break;
+                case 'authplugins':
+                    $this->_plugins_xhtml('auth', $renderer);
+                    break;
+                case 'remoteplugins':
+                    $this->_plugins_xhtml('remote', $renderer);
                     break;
                 case 'helpermethods':
                     $this->_helpermethods_xhtml($renderer);

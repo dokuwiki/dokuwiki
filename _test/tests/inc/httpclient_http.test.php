@@ -134,6 +134,19 @@ class httpclient_http_test extends DokuWikiTest {
     /**
      * @group internet
      */
+    function test_maxbodyok(){
+        $http = new HTTPClient();
+        $http->max_bodysize = 500*1024;
+        $data = $http->get($this->server.'/stream/5');
+        $this->assertTrue($data !== false, 'HTTP response');
+        $http->max_bodysize_abort = false;
+        $data = $http->get($this->server.'/stream/5');
+        $this->assertTrue($data !== false, 'HTTP response');
+    }
+
+    /**
+     * @group internet
+     */
     function test_basicauth(){
         $http = new HTTPClient();
         $http->user = 'user';
@@ -190,6 +203,17 @@ class httpclient_http_test extends DokuWikiTest {
         $data = $http->get('http://whoopdedo.org/cgi-bin/chunked/2550');
         $this->assertFalse($data === false, 'HTTP response');
         $this->assertEquals(2550,strlen($data));
+    }
+
+    /**
+     * This address caused trouble with stream_select()
+     *
+     * @group internet
+     */
+    function test_wikimatrix(){
+        $http = new HTTPClient();
+        $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
+        $this->assertTrue($data !== false, $http->error);
     }
 }
 //Setup VIM: ex: et ts=4 :

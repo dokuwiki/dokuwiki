@@ -56,7 +56,7 @@ $lang['lockedby']     = 'Mbola voahidin\'i';
 $lang['lockexpire']   = 'Afaka ny hidy amin\'ny';
 $lang['js']['willexpire']   = 'Efa ho lany fotoana afaka iray minitra ny hidy ahafahanao manova ny pejy.\nMba hialana amin\'ny conflit dia ampiasao ny bokotra topi-maso hamerenana ny timer-n\'ny hidy.';
 
-$lang['js']['notsavedyet'] = "Misy fiovana tsy voarakitra, ho very izany ireo.\nAzo antoka fa hotohizana?";
+$lang['js']['notsavedyet'] = 'Misy fiovana tsy voarakitra, ho very izany ireo.\nAzo antoka fa hotohizana?';
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Tsy nahitana n\'inon\'inona.';
 
@@ -88,7 +88,7 @@ $lang['lastmod']    = 'Novaina farany:';
 $lang['by']         = '/';
 $lang['deleted']    = 'voafafa';
 $lang['created']    = 'Voamboatra';
-$lang['restored']   = 'Naverina tamin\'ny kinova taloha';
+$lang['restored']   = 'Naverina tamin\'ny kinova taloha (%s)';
 $lang['summary']    = 'Fanovana teo';
 
 $lang['mail_newpage'] = 'pejy niampy:';

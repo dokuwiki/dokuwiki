@@ -8,23 +8,11 @@
 <Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
     Order allow,deny
     Deny from all
-    Satisfy All
 </Files>
 
 ## Uncomment these rules if you want to have nice URLs using
 ## $conf['userewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
-#
-## Not all installations will require the following line.  If you do, 
-## change "/dokuwiki" to the path to your dokuwiki directory relative
-## to your document root.
-#RewriteBase /dokuwiki
-#
-## If you enable DokuWikis XML-RPC interface, you should consider to
-## restrict access to it over HTTPS only! Uncomment the following two
-## rules if your server setup allows HTTPS.
-#RewriteCond %{HTTPS} !=on
-#RewriteRule ^lib/exe/xmlrpc.php$      https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
 #
 #RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
 #RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
@@ -34,3 +22,14 @@
 #RewriteCond %{REQUEST_FILENAME}       !-d
 #RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
 #RewriteRule ^index.php$               doku.php
+#
+## Not all installations will require the following line.  If you do,
+## change "/dokuwiki" to the path to your dokuwiki directory relative
+## to your document root.
+#RewriteBase /dokuwiki
+#
+## If you enable DokuWikis XML-RPC interface, you should consider to
+## restrict access to it over HTTPS only! Uncomment the following two
+## rules if your server setup allows HTTPS.
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^lib/exe/xmlrpc.php$      https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]

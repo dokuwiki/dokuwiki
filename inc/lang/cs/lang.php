@@ -13,6 +13,7 @@
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
+ * @author mkucera66@seznam.cz
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -188,7 +189,7 @@ $lang['lastmod']               = 'Poslední úprava';
 $lang['by']                    = 'autor:';
 $lang['deleted']               = 'odstraněno';
 $lang['created']               = 'vytvořeno';
-$lang['restored']              = 'stará verze byla obnovena';
+$lang['restored']              = 'stará verze byla obnovena (%s)';
 $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
 $lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';

@@ -408,8 +408,8 @@ class Subscription {
             $tdiff = $dformat->format($df);
 
             $DIFF_INLINESTYLES = true;
-            $df = new Diff(explode("\n", hsc($old_content)),
-                           explode("\n", hsc($new_content)));
+            $df = new Diff(explode("\n", $old_content),
+                           explode("\n", $new_content));
             $dformat = new InlineDiffFormatter();
             $hdiff = $dformat->format($df);
             $hdiff = '<table>'.$hdiff.'</table>';

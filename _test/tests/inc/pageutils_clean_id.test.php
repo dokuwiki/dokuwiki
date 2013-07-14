@@ -43,6 +43,10 @@ class init_clean_id_test extends DokuWikiTest {
         $tests[] = array('ns._#!ns:page','false','ns._ns:page');
         $tests[] = array('ns_:page',false,'ns:page');
         $tests[] = array('page...page','false','page...page');
+        $tests[] = array(':page',false,'page');
+        $tests[] = array(':ns:page',false,'ns:page');
+        $tests[] = array('page:',false,'page');
+        $tests[] = array('ns:page:',false,'ns:page');
 
         $conf['useslash'] = 0;
         $tests[] = array('page/page',false,'page_page');

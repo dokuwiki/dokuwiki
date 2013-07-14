@@ -1,6 +1,6 @@
 <?php
 
-class MockAuth extends auth_basic {
+class MockAuth extends DokuWiki_Auth_Plugin {
     function isCaseSensitive() { return true; }
 }
 

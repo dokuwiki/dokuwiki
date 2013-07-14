@@ -134,7 +134,7 @@ $lang['lastmod']               = 'Síðast breytt';
 $lang['by']                    = 'af';
 $lang['deleted']               = 'eytt';
 $lang['created']               = 'myndað';
-$lang['restored']              = 'Breytt aftur til fyrri útgáfu';
+$lang['restored']              = 'Breytt aftur til fyrri útgáfu (%s)';
 $lang['external_edit']         = 'utanaðkomandi breyta';
 $lang['summary']               = 'Forskoða';
 $lang['noflash']               = 'Það þarf <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash viðbót</a> til að sýna sumt efnið á þessari síðu';

@@ -67,6 +67,19 @@
 .dokuwiki button.button {
     vertical-align: middle;
 }
+/**
+ * Styles for auth forms
+ */
+#dw__login label[for="remember__me"] {
+    margin-left: 50%;
+    margin-bottom: 1.4em;
+}
+#dw__login fieldset,
+#dw__resendpwd fieldset,
+#dw__register fieldset {
+    padding-bottom: 0.7em;
+}
+
 
 /**
  * Styles for the subscription page

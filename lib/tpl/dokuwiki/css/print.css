@@ -5,18 +5,19 @@
  */
 
 body {
-    /*
-    font: normal 12pt/1.2 serif;
-    color: #000;
+    font: normal 87.5%/1.3 Garamond, Baskerville, "Hoefler Text", "Nimbus Roman No9 L", serif;
     background-color: #fff;
-    */
+    color: #000;
 }
 
 /* hide certain sections */
 .a11y,
+audio,
+video,
 #dokuwiki__header .tools,
 #dokuwiki__aside,
 .dokuwiki .breadcrumbs,
+.dokuwiki .pageId,
 #dw__toc,
 h3.toggle,
 #dokuwiki__pagetools,
@@ -24,37 +25,38 @@ h3.toggle,
     display: none;
 }
 
-.dokuwiki h1,
-.dokuwiki h2,
-.dokuwiki h3,
-.dokuwiki h4,
-.dokuwiki h5,
-.dokuwiki caption,
-.dokuwiki legend {
+h1,
+h2,
+h3,
+h4,
+h5,
+caption,
+legend {
     clear: both;
 }
-.dokuwiki ul {
+ul {
     list-style: disc outside;
 }
-.dokuwiki ol {
+ol {
     list-style: decimal outside;
 }
-.dokuwiki ol ol {
+ol ol {
     list-style-type: lower-alpha;
 }
-.dokuwiki ol ol ol {
+ol ol ol {
     list-style-type: upper-roman;
 }
-.dokuwiki ol ol ol ol {
+ol ol ol ol {
     list-style-type: upper-alpha;
 }
-.dokuwiki ol ol ol ol ol {
+ol ol ol ol ol {
     list-style-type: lower-roman;
 }
 
-.dokuwiki a:link,
-.dokuwiki a:visited {
-    text-decoration: underline;
+a:link,
+a:visited {
+    text-decoration: none;
+    border-bottom: 1pt dotted;
     color: #333;
     background-color: inherit;
 }
@@ -68,63 +70,66 @@ a.mail:after {
 }
 
 /* code blocks */
-.dokuwiki pre {
+pre {
     font-family: monospace;
 }
-.dokuwiki dl.code dt,
-.dokuwiki dl.file dt {
+dl.code dt,
+dl.file dt {
+    font-weight: bold;
+}
+
+mark {
     font-weight: bold;
 }
 
 /* images */
-.dokuwiki img {
+img {
     border-width: 0;
     vertical-align: middle;
 }
-.dokuwiki img.media {
+img.media {
     margin: .2em 0;
 }
-.dokuwiki img.medialeft {
+img.medialeft {
     margin: .2em 1em .2em 0;
 }
-.dokuwiki img.mediaright {
+img.mediaright {
     margin: .2em 0 .2em 1em;
 }
-.dokuwiki img.mediacenter {
+img.mediacenter {
     margin: .2em auto;
 }
 
-.dokuwiki blockquote {
+blockquote {
     padding: 0 10pt;
     margin: 0;
     border: solid #ccc;
     border-width: 0 0 0 2pt;
 }
-[dir=rtl] .dokuwiki blockquote {
+[dir=rtl] blockquote {
     border-width: 0 2pt 0 0;
 }
 
 /* tables */
-.dokuwiki table {
+table {
     border-collapse: collapse;
     empty-cells: show;
     border-spacing: 0;
     border: 1pt solid #ccc;
 }
-.dokuwiki th,
-.dokuwiki td {
+th,
+td {
     padding: 3pt 5pt;
     margin: 0;
     vertical-align: top;
     border: 1pt solid #666;
+}
+th {
+    font-weight: bold;
     text-align: left;
 }
-[dir=rtl] .dokuwiki th,
-[dir=rtl] .dokuwiki td {
+[dir=rtl] th {
     text-align: right;
-}
-.dokuwiki th {
-    font-weight: bold;
 }
 
 
@@ -138,6 +143,7 @@ a.mail:after {
 }
 #dokuwiki__header h1 a {
     text-decoration: none;
+    border-width: 0;
 }
 #dokuwiki__header h1 img {
     float: left;
@@ -148,8 +154,21 @@ a.mail:after {
     margin-right: 0;
     margin-left: .5em;
 }
+
 .dokuwiki div.footnotes {
     clear: both;
-    border-top: 1pt solid #000;
+    border-top: 1pt dotted #999;
     margin-top: 10pt;
+}
+
+.dokuwiki div.docInfo {
+    font-size: 90%;
+    text-align: right;
+    clear: both;
+    padding-top: 2pt;
+    border-top: 1pt solid #999;
+    margin-top: 10pt;
+}
+[dir=rtl] .dokuwiki div.docInfo {
+    text-align: left;
 }
