@@ -16,6 +16,7 @@
  * @author Peter Åström <eaustreum@gmail.com>
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author mikael@mallander.net
+ * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['menu']                  = 'Hantera insticksmoduler';
 $lang['download']              = 'Ladda ned och installera en ny insticksmodul';
@@ -61,3 +62,4 @@ $lang['enabled']               = 'Tilläggsmodulen %s är aktiverad.';
 $lang['notenabled']            = 'Tilläggsmodulen %s kunde inte aktiveras, kontrollera filrättigheterna.';
 $lang['disabled']              = 'Tiläggsmodulen %s är avaktiverad.';
 $lang['notdisabled']           = 'Tilläggsmodulen %s kunde inte avaktiveras, kontrollera filrättigheterna.';
+$lang['packageinstalled']      = 'Tilläggs paket (%d tillägg: %s) har installerats.';
