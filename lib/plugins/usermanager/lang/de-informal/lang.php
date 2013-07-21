@@ -9,6 +9,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';

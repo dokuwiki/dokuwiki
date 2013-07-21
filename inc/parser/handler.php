@@ -680,7 +680,7 @@ function Doku_Handler_Parse_Media($match) {
     }
 
     // Check whether this is a local or remote image
-    if ( preg_match('#^(https?|ftp)#i',$src) ) {
+    if ( media_isexternal($src) ) {
         $call = 'externalmedia';
     } else {
         $call = 'internalmedia';

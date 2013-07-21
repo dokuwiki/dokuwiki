@@ -192,7 +192,7 @@ class Mailer {
         // copy over all replacements missing for HTML (autolink URLs)
         foreach($textrep as $key => $value) {
             if(isset($htmlrep[$key])) continue;
-            if(preg_match('/^https?:\/\//i', $value)) {
+            if(media_isexternal($value)) {
                 $htmlrep[$key] = '<a href="'.hsc($value).'">'.hsc($value).'</a>';
             } else {
                 $htmlrep[$key] = hsc($value);
