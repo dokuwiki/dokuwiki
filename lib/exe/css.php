@@ -75,6 +75,7 @@ function css_out(){
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
     $cache_files[] = $tplinc.'style.local.ini';
+    $cache_files[] = DOKU_CONF.'tpl/'.$tpl.'/style.local.ini';
     $cache_files[] = __FILE__;
 
     foreach($mediatypes as $mediatype) {
