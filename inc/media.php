@@ -83,6 +83,18 @@ function media_metasave($id,$auth,$data){
 }
 
 /**
+ * check if a media is external source
+ *
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @param string $id the media ID or URL
+ * @return bool
+ */
+function media_isexternal($id){
+    if (preg_match('#^(https?|ftp)://#i', $id)) return true;
+    return false;
+}
+
+/**
  * Check if a media item is public (eg, external URL or readable by @ALL)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -90,7 +102,7 @@ function media_metasave($id,$auth,$data){
  * @return bool
  */
 function media_ispublic($id){
-    if(preg_match('/^https?:\/\//i',$id)) return true;
+    if(media_isexternal($id)) return true;
     $id = cleanID($id);
     if(auth_aclcheck(getNS($id).':*', '', array()) >= AUTH_READ) return true;
     return false;

@@ -489,6 +489,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->cando['modPass'] = false;
         }
 
+        // adLDAP expects empty user/pass as NULL, we're less strict FS#2781
+        if(empty($opts['admin_username'])) $opts['admin_username'] = null;
+        if(empty($opts['admin_password'])) $opts['admin_password'] = null;
+
+        // user listing needs admin priviledges
         if(!empty($opts['admin_username']) && !empty($opts['admin_password'])) {
             $this->cando['getUsers'] = true;
         } else {

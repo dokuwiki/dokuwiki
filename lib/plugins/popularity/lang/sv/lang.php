@@ -13,6 +13,7 @@
  * @author Peter Åström <eaustreum@gmail.com>
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author mikael@mallander.net
+ * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['name']                  = 'Popularitets-feedback (det kan ta en stund att ladda sidan)';
 $lang['submit']                = 'Sänd data';

@@ -10,6 +10,7 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';

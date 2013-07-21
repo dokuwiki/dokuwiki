@@ -227,7 +227,8 @@ audio {
     max-width: 100%;
 }
 #IE7 img,
-#IE8 img {
+#IE8 img,
+button img {
     max-width: none;
 }
 

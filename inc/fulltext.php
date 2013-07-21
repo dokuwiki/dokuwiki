@@ -172,7 +172,7 @@ function ft_mediause($id,$max){
         preg_match_all('/\{\{([^|}]*'.$pcre.'[^|}]*)(|[^}]+)?\}\}/i',rawWiki($doc),$matches);
         foreach($matches[1] as $img){
             $img = trim($img);
-            if(preg_match('/^https?:\/\//i',$img)) continue; // skip external images
+            if(media_isexternal($img)) continue; // skip external images
                 list($img) = explode('?',$img);                  // remove any parameters
             resolve_mediaid($ns,$img,$exists);               // resolve the possibly relative img
 

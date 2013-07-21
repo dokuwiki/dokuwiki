@@ -20,6 +20,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

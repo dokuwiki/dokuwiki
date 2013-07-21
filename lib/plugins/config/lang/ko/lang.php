@@ -11,14 +11,14 @@
  * @author Myeongjin <aranet100@gmail.com>
  */
 $lang['menu']                  = '환경 설정';
-$lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다. 수정한 값을 검토하고 확인을 누르세요.
+$lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다. 바뀜을 검토하고 확인을 누르세요.
 <br />잘못된 값은 빨간 선으로 둘러싸여 있습니다.';
 $lang['updated']               = '설정이 성공적으로 바뀌었습니다.';
 $lang['nochoice']              = '(다른 선택이 불가능합니다)';
-$lang['locked']                = '환경 설정 파일을 수정할 수 없습니다. 의도한 행동이 아니라면,<br />
+$lang['locked']                = '환경 설정 파일을 바꿀 수 없습니다. 의도한 행동이 아니라면,<br />
 파일 이름과 권한이 맞는지 확인하세요.';
-$lang['danger']                = '위험: 이 옵션을 잘못 수정하면 환경설정 메뉴를 사용할 수 없을 수도 있습니다.';
-$lang['warning']               = '경고: 이 옵션을 잘못 수정하면 잘못 동작할 수 있습니다.';
+$lang['danger']                = '위험: 이 옵션을 잘못 바꾸면 환경 설정 메뉴를 사용할 수 없을 수도 있습니다.';
+$lang['warning']               = '경고: 이 옵션을 잘못 바꾸면 잘못 동작할 수 있습니다.';
 $lang['security']              = '보안 경고: 이 옵션은 보안에 위험이 있을 수 있습니다.';
 $lang['_configuration_manager'] = '환경 설정 관리자';
 $lang['_header_dokuwiki']      = 'DokuWiki 설정';
@@ -48,13 +48,13 @@ $lang['template']              = '템플릿 (위키 디자인)';
 $lang['tagline']               = '태그 라인 (템플릿이 지원할 때에 한함)';
 $lang['sidebar']               = '사이드바 문서 이름 (템플릿이 지원할 때에 한함), 비워두면 사이드바를 비활성화';
 $lang['license']               = '콘텐츠에 어떤 라이선스를 적용하겠습니까?';
-$lang['savedir']               = '데이타 저장 디렉토리';
+$lang['savedir']               = '데이터 저장 디렉토리';
 $lang['basedir']               = '서버 경로 (예를 들어 <code>/dokuwiki/</code>). 자동 감지를 하려면 비우세요.';
 $lang['baseurl']               = '서버 URL (예를 들어 <code>http://www.yourserver.com</code>). 자동 감지를 하려면 비우세요.';
 $lang['cookiedir']             = '쿠키 위치. 비워두면 기본 URL 위치로 지정됩니다.';
 $lang['dmode']                 = '디렉토리 만들기 모드';
 $lang['fmode']                 = '파일 만들기 모드';
-$lang['allowdebug']            = '디버그 허용 <b>필요하지 않으면 비활성화할 것!</b>';
+$lang['allowdebug']            = '디버그 허용 <b>필요하지 않으면 비활성화하세요!</b>';
 $lang['recent']                = '최근 바뀐 문서당 항목 수';
 $lang['recent_days']           = '최근 바뀐 문서 기준 시간 (일)';
 $lang['breadcrumbs']           = '위치 "추적" 수. 0으로 설정하면 비활성화합니다.';
@@ -63,7 +63,7 @@ $lang['fullpath']              = '문서 하단에 전체 경로 보여주기';
 $lang['typography']            = '기호 대체';
 $lang['dformat']               = '날짜 형식 (PHP <a href="http://www.php.net/strftime">strftime</a> 기능 참고)';
 $lang['signature']             = '편집기에서 서명 버튼을 누를 때 삽입할 내용';
-$lang['showuseras']            = '마지막에 문서를 수정한 사용자를 보여줄지 여부';
+$lang['showuseras']            = '마지막에 문서를 편집한 사용자를 보여줄지 여부';
 $lang['toptoclevel']           = '목차 최상위 항목';
 $lang['tocminheads']           = '목차 표시 여부를 결정할 최소한의 문단 제목 항목의 수';
 $lang['maxtoclevel']           = '목차 최대 단계';
@@ -102,7 +102,7 @@ $lang['htmlok']                = 'HTML 내장 허용';
 $lang['phpok']                 = 'PHP 내장 허용';
 $lang['locktime']              = '최대 파일 잠금 시간(초)';
 $lang['cachetime']             = '최대 캐시 생존 시간 (초)';
-$lang['target____wiki']        = '내부 링크에 대한 타겟 창';
+$lang['target____wiki']        = '안쪽 링크에 대한 타겟 창';
 $lang['target____interwiki']   = '인터위키 링크에 대한 타겟 창';
 $lang['target____extern']      = '바깥 링크에 대한 타겟 창';
 $lang['target____media']       = '미디어 링크에 대한 타겟 창';
@@ -133,7 +133,7 @@ $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름 구분자로 슬래시 문자 사용';
 $lang['sepchar']               = '문서 이름 단어 구분자';
 $lang['canonical']             = '완전한 canonical URL 사용';
-$lang['fnencode']              = '아스키가 아닌 파일 이름을 인코딩 하는 방법.';
+$lang['fnencode']              = 'ASCII가 아닌 파일 이름을 인코딩 하는 방법.';
 $lang['autoplural']            = '링크 연결시 복수 양식 검사';
 $lang['compression']           = '첨부 파일 압축 방법 선택';
 $lang['gzip_output']           = 'xhml 내용 gzip 압축 사용';
@@ -143,9 +143,9 @@ $lang['send404']               = '존재하지 않는 페이지에 대해 "HTTP 
 $lang['broken_iua']            = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있습니까? 문제가 있다면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참고하시기 바랍니다.';
 $lang['xsendfile']             = '웹 서버가 정적 파일을 제공하도록 X-Sendfile 헤더를 사용하겠습니까? 웹 서버가 이 기능을 지원해야 합니다.';
 $lang['renderer_xhtml']        = '주 (xhtml) 위키 출력 처리기';
-$lang['renderer__core']        = '%s (DokuWiki 내부 기능)';
+$lang['renderer__core']        = '%s (DokuWiki 내부)';
 $lang['renderer__plugin']      = '%s (플러그인)';
-$lang['dnslookups']            = '이 옵션을 활성화하면 DokuWiki가 문서를 수정하는 사용자의 호스트 네임과 원격 IP 주소를 확인합니다. 서버가 느리거나, DNS를 운영하지 않거나 이 기능을 원치 않으면 비활성화하세요';
+$lang['dnslookups']            = '이 옵션을 활성화하면 DokuWiki가 문서를 편집하는 사용자의 호스트 네임과 원격 IP 주소를 확인합니다. 서버가 느리거나, DNS를 운영하지 않거나 이 기능을 원치 않으면 비활성화하세요';
 $lang['proxy____host']         = '프록시 서버 이름';
 $lang['proxy____port']         = '프록시 서버 포트';
 $lang['proxy____user']         = '프록시 사용자 이름';

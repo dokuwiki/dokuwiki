@@ -16,6 +16,7 @@
  * @author Peter Åström <eaustreum@gmail.com>
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author mikael@mallander.net
+ * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
 $lang['acl_group']             = 'Grupp';

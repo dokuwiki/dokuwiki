@@ -9,6 +9,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['name']                  = 'Popularitätsrückmeldung (kann eine Weile dauern, bis es fertig geladen wurde)';
 $lang['submit']                = 'Sende Daten';
