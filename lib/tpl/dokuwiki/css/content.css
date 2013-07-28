@@ -8,16 +8,16 @@
 
 /*____________ section indenting ____________
 
-.dokuwiki.page  h1 {margin-left: 0;}
-.dokuwiki.page  h2 {margin-left: .666em;}
-.dokuwiki.page  h3 {margin-left: 1.776em;}
-.dokuwiki.page  h4 {margin-left: 3em;}
-.dokuwiki.page  h5 {margin-left: 4.5712em;}
-.dokuwiki.page  div.level1 {margin-left: 0;}
-.dokuwiki.page  div.level2 {margin-left: 1em;}
-.dokuwiki.page  div.level3 {margin-left: 2em;}
-.dokuwiki.page  div.level4 {margin-left: 3em;}
-.dokuwiki.page  div.level5 {margin-left: 4em;}
+.dokuwiki .page  h1 {margin-left: 0;}
+.dokuwiki .page  h2 {margin-left: .666em;}
+.dokuwiki .page  h3 {margin-left: 1.776em;}
+.dokuwiki .page  h4 {margin-left: 3em;}
+.dokuwiki .page  h5 {margin-left: 4.5712em;}
+.dokuwiki .page  div.level1 {margin-left: 0;}
+.dokuwiki .page  div.level2 {margin-left: 1em;}
+.dokuwiki .page  div.level3 {margin-left: 2em;}
+.dokuwiki .page  div.level4 {margin-left: 3em;}
+.dokuwiki .page  div.level5 {margin-left: 4em;}
 
 [dir=rtl] .dokuwiki .page h1 {margin-left: 0; margin-right: 0;}
 [dir=rtl] .dokuwiki .page h2 {margin-left: 0; margin-right: .666em;}
