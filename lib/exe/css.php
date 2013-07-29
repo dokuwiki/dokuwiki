@@ -154,7 +154,11 @@ function css_out(){
     // apply style replacements
     $css = css_applystyle($css,$tplinc);
 
-    // place all @import statements at the top of the file
+    // parse LESS
+    $less = new lessc();
+    $css = $less->compile($css);
+
+    // place all remaining @import statements at the top of the file
     $css = css_moveimports($css);
 
     // compress whitespace and comments
@@ -175,6 +179,9 @@ function css_out(){
  * Does placeholder replacements in the style according to
  * the ones defined in a templates style.ini file
  *
+ * This also adds the ini defined placeholders as less variables
+ * (sans the surrounding __ and with a ini_ prefix)
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function css_applystyle($css,$tplinc){
@@ -182,6 +189,13 @@ function css_applystyle($css,$tplinc){
 
     if($styleini){
         $css = strtr($css,$styleini['replacements']);
+
+        $less = '';
+        foreach($styleini as $key => $value){
+            $key = trim($key, '_');
+            $key = '@ini_'.$key;
+            $less .= "$key: $value\n";
+        }
     }
     return $css;
 }
@@ -333,14 +347,17 @@ function css_pluginstyles($mediatype='screen'){
     $plugins = plugin_list();
     foreach ($plugins as $p){
         $list[DOKU_PLUGIN."$p/$mediatype.css"]  = DOKU_BASE."lib/plugins/$p/";
+        $list[DOKU_PLUGIN."$p/$mediatype.less"]  = DOKU_BASE."lib/plugins/$p/";
         // alternative for screen.css
         if ($mediatype=='screen') {
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
+            $list[DOKU_PLUGIN."$p/style.less"]  = DOKU_BASE."lib/plugins/$p/";
         }
         // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
         //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
         if($lang['direction'] == 'rtl'){
             $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
+            $list[DOKU_PLUGIN."$p/rtl.less"] = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;
