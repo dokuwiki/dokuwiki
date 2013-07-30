@@ -154,6 +154,9 @@ function css_out(){
     // apply style replacements
     $css = css_applystyle($css,$tplinc);
 
+    print $css;
+
+
     // parse LESS
     $less = new lessc();
     $css = $less->compile($css);
@@ -188,15 +191,21 @@ function css_applystyle($css,$tplinc){
     $styleini = css_styleini($tplinc);
 
     if($styleini){
-        $css = strtr($css,$styleini['replacements']);
-
+        // we convert ini replacements to LESS variable names
+        // and build a list of variable: value; pairs
         $less = '';
         foreach($styleini['replacements'] as $key => $value){
-            $key = trim($key, '_');
-            $key = '@ini_'.$key;
-            $less .= "$key: $value;\n";
+            $lkey = trim($key, '_');
+            $lkey = '@ini_'.$lkey;
+            $less .= "$lkey: $value;\n";
+
+            $styleini['replacements'][$key] = $lkey;
         }
 
+        // we now replace all old ini replacements with LESS variables
+        $css = strtr($css, $styleini['replacements']);
+
+        // now prepend the list of LESS variables as the very first thing
         $css = $less.$css;
     }
     return $css;
