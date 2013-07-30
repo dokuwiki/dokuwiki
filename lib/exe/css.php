@@ -191,11 +191,13 @@ function css_applystyle($css,$tplinc){
         $css = strtr($css,$styleini['replacements']);
 
         $less = '';
-        foreach($styleini as $key => $value){
+        foreach($styleini['replacements'] as $key => $value){
             $key = trim($key, '_');
             $key = '@ini_'.$key;
-            $less .= "$key: $value\n";
+            $less .= "$key: $value;\n";
         }
+
+        $css = $less.$css;
     }
     return $css;
 }
