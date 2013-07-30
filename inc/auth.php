@@ -40,7 +40,7 @@ function auth_setup() {
     global $INPUT;
     global $AUTH_ACL;
     global $lang;
-    global $config_cascade;
+    /* @var Doku_Plugin_Controller $plugin_controller */
     global $plugin_controller;
     $AUTH_ACL = array();
 
@@ -207,7 +207,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
     global $USERINFO;
     global $conf;
     global $lang;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     $sticky ? $sticky = true : $sticky = false; //sanity check
@@ -457,7 +457,7 @@ function auth_random($min, $max) {
 function auth_logoff($keepbc = false) {
     global $conf;
     global $USERINFO;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     // make sure the session is writable (it usually is)
@@ -503,7 +503,7 @@ function auth_logoff($keepbc = false) {
 function auth_ismanager($user = null, $groups = null, $adminonly = false) {
     global $conf;
     global $USERINFO;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     if(!$auth) return false;
@@ -556,7 +556,7 @@ function auth_isadmin($user = null, $groups = null) {
  * @return bool       true for membership acknowledged
  */
 function auth_isMember($memberlist, $user, array $groups) {
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     if(!$auth) return false;
 
@@ -622,7 +622,7 @@ function auth_quickaclcheck($id) {
 function auth_aclcheck($id, $user, $groups) {
     global $conf;
     global $AUTH_ACL;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     // if no ACL is used always return upload rights
@@ -821,7 +821,7 @@ function auth_pwgen($foruser = '') {
  */
 function auth_sendPassword($user, $password) {
     global $lang;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     if(!$auth) return false;
 
@@ -855,7 +855,7 @@ function auth_sendPassword($user, $password) {
 function register() {
     global $lang;
     global $conf;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     global $INPUT;
 
@@ -924,7 +924,7 @@ function register() {
 function updateprofile() {
     global $conf;
     global $lang;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1014,7 +1014,7 @@ function updateprofile() {
 function act_resendpwd() {
     global $lang;
     global $conf;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -1180,7 +1180,7 @@ function auth_verifyPassword($clear, $crypt) {
  */
 function auth_setCookie($user, $pass, $sticky) {
     global $conf;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     global $USERINFO;
 
