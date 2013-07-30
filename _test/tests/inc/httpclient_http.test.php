@@ -204,5 +204,16 @@ class httpclient_http_test extends DokuWikiTest {
         $this->assertFalse($data === false, 'HTTP response');
         $this->assertEquals(2550,strlen($data));
     }
+
+    /**
+     * This address caused trouble with stream_select()
+     *
+     * @group internet
+     */
+    function test_wikimatrix(){
+        $http = new HTTPClient();
+        $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
+        $this->assertTrue($data !== false, $http->error);
+    }
 }
 //Setup VIM: ex: et ts=4 :

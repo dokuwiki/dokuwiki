@@ -55,7 +55,7 @@ $dokuwiki_hash = array(
     '2011-11-10'   => 'b46ff19a7587966ac4df61cbab1b8b31',
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
     '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3',
-    'devel'        => '7b62b75245f57f122d3e0f8ed7989623',
+    '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
 );
 
 
@@ -97,8 +97,8 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body style="">
     <h1 style="float:left">
-        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png&amp;w=64"
-             style="vertical-align: middle;" alt="" />
+        <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png"
+             style="vertical-align: middle;" alt="" height="64" width="64" />
         <?php echo $lang['i_installer']?>
     </h1>
     <div style="float:right; margin: 1em;">
@@ -148,8 +148,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 <div style="clear: both">
-  <a href="http://dokuwiki.org/"><img src="lib/tpl/default/images/button-dw.png" alt="driven by DokuWiki" /></a>
-  <a href="http://www.php.net"><img src="lib/tpl/default/images/button-php.gif" alt="powered by PHP" /></a>
+  <a href="http://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki" /></a>
+  <a href="http://www.php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP" /></a>
 </div>
 </body>
 </html>
@@ -518,8 +518,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.1.2','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.1.2');
+    if(version_compare(phpversion(),'5.2.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
         $ok = false;
     }
 
@@ -529,7 +529,7 @@ function check_functions(){
                          'ob_start opendir parse_ini_file readfile realpath '.
                          'rename rmdir serialize session_start unlink usleep '.
                          'preg_replace file_get_contents htmlspecialchars_decode '.
-                         'spl_autoload_register stream_select fsockopen');
+                         'spl_autoload_register stream_select fsockopen pack');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';

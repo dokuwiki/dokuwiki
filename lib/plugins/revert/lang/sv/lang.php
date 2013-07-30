@@ -15,6 +15,7 @@
  * @author Peter Åström <eaustreum@gmail.com>
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author mikael@mallander.net
+ * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['menu']                  = 'Hantera återställningar';
 $lang['filter']                = 'Sök efter spamsidor';

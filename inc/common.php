@@ -56,7 +56,7 @@ function stripctl($string) {
  * @return  string
  */
 function getSecurityToken() {
-    return md5(auth_cookiesalt().session_id().$_SERVER['REMOTE_USER']);
+    return PassHash::hmac('md5', session_id().$_SERVER['REMOTE_USER'], auth_cookiesalt());
 }
 
 /**
@@ -86,32 +86,20 @@ function formSecurityToken($print = true) {
 }
 
 /**
- * Return info about the current document as associative
- * array.
+ * Determine basic information for a request of $id
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Chris Smith <chris@jalakai.co.uk>
  */
-function pageinfo() {
-    global $ID;
-    global $REV;
-    global $RANGE;
+function basicinfo($id, $htmlClient=true){
     global $USERINFO;
-    global $lang;
-
-    // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
-    // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
-    $info['id']  = $ID;
-    $info['rev'] = $REV;
 
     // set info about manager/admin status.
     $info['isadmin']   = false;
     $info['ismanager'] = false;
     if(isset($_SERVER['REMOTE_USER'])) {
-        $sub = new Subscription();
-
         $info['userinfo']   = $USERINFO;
-        $info['perm']       = auth_quickaclcheck($ID);
-        $info['subscribed'] = $sub->user_subscription();
+        $info['perm']       = auth_quickaclcheck($id);
         $info['client']     = $_SERVER['REMOTE_USER'];
 
         if($info['perm'] == AUTH_ADMIN) {
@@ -127,12 +115,46 @@ function pageinfo() {
         }
 
     } else {
-        $info['perm']       = auth_aclcheck($ID, '', null);
-        $info['subscribed'] = false;
+        $info['perm']       = auth_aclcheck($id, '', null);
         $info['client']     = clientIP(true);
     }
 
-    $info['namespace'] = getNS($ID);
+    $info['namespace'] = getNS($id);
+
+    // mobile detection
+    if ($htmlClient) {
+        $info['ismobile'] = clientismobile();
+    }
+
+    return $info;
+ }
+
+/**
+ * Return info about the current document as associative
+ * array.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ */
+function pageinfo() {
+    global $ID;
+    global $REV;
+    global $RANGE;
+    global $lang;
+
+    $info = basicinfo($ID);
+
+    // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
+    // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
+    $info['id']  = $ID;
+    $info['rev'] = $REV;
+
+    if(isset($_SERVER['REMOTE_USER'])) {
+        $sub = new Subscription();
+        $info['subscribed'] = $sub->user_subscription();
+    } else {
+        $info['subscribed'] = false;
+    }
+
     $info['locked']    = checklock($ID);
     $info['filepath']  = fullpath(wikiFN($ID));
     $info['exists']    = @file_exists($info['filepath']);
@@ -210,8 +232,18 @@ function pageinfo() {
         }
     }
 
-    // mobile detection
-    $info['ismobile'] = clientismobile();
+    return $info;
+}
+
+/**
+ * Return information about the current media item as an associative array.
+ */
+function mediainfo(){
+    global $NS;
+    global $IMG;
+
+    $info = basicinfo("$NS:*");
+    $info['image'] = $IMG;
 
     return $info;
 }
@@ -435,7 +467,16 @@ function exportlink($id = '', $format = 'raw', $more = '', $abs = false, $sep = 
  */
 function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) {
     global $conf;
+    $isexternalimage = media_isexternal($id);
+    if(!$isexternalimage) {
+        $id = cleanID($id);
+    }
+
     if(is_array($more)) {
+        // add token for resized images
+        if($more['w'] || $more['h']){
+            $more['tok'] = media_get_token($id,$more['w'],$more['h']);
+        }
         // strip defaults for shorter URLs
         if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
         if(!$more['w']) unset($more['w']);
@@ -443,6 +484,14 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         if(isset($more['id']) && $direct) unset($more['id']);
         $more = buildURLparams($more, $sep);
     } else {
+        $matches = array();
+        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER)){
+            $resize = array('w'=>0, 'h'=>0);
+            foreach ($matches as $match){
+                $resize[$match[1]] = $match[2];
+            }
+            $more .= $sep.'tok='.media_get_token($id,$resize['w'],$resize['h']);
+        }
         $more = str_replace('cache=cache', '', $more); //skip default
         $more = str_replace(',,', ',', $more);
         $more = str_replace(',', $sep, $more);
@@ -455,10 +504,10 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
     }
 
     // external URLs are always direct without rewriting
-    if(preg_match('#^(https?|ftp)://#i', $id)) {
+    if($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
         // add hash:
-        $xlink .= '?hash='.substr(md5(auth_cookiesalt().$id), 0, 6);
+        $xlink .= '?hash='.substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
         if($more) {
             $xlink .= $sep.$more;
             $xlink .= $sep.'media='.rawurlencode($id);
@@ -540,12 +589,13 @@ function checkwordblock($text = '') {
     global $TEXT;
     global $PRE;
     global $SUF;
+    global $SUM;
     global $conf;
     global $INFO;
 
     if(!$conf['usewordblock']) return false;
 
-    if(!$text) $text = "$PRE $TEXT $SUF";
+    if(!$text) $text = "$PRE $TEXT $SUF $SUM";
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
     $text = preg_replace('!(\b)(www\.[\w.:?\-;,]+?\.[\w.:?\-;,]+?[\w/\#~:.?+=&%@\!\-.:?\-;,]+?)([.:?\-;,]*[^\w/\#~:.?+=&%@\!\-.:?\-;,])!i', '\1http://\2 \2\3', $text);
@@ -777,11 +827,19 @@ function unlock($id) {
 /**
  * convert line ending to unix format
  *
+ * also makes sure the given text is valid UTF-8
+ *
  * @see    formText() for 2crlf conversion
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanText($text) {
     $text = preg_replace("/(\015\012)|(\015)/", "\012", $text);
+
+    // if the text is not valid UTF-8 we simply assume latin1
+    // this won't break any worse than it breaks with the wrong encoding
+    // but might actually fix the problem in many cases
+    if(!utf8_check($text)) $text = utf8_encode($text);
+
     return $text;
 }
 

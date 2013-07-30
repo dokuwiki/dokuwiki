@@ -9,7 +9,7 @@
  */
 
 // update message version
-$updateVersion = 38;
+$updateVersion = 40.1;
 
 //  xdebug_start_profiling();
 
@@ -80,8 +80,8 @@ trigger_event('DOKUWIKI_STARTED', $tmp);
 //close session
 session_write_close();
 
-//do the work
-act_dispatch($ACT);
+//do the work (picks up what to do from global env)
+act_dispatch();
 
 $tmp = array(); // No event data
 trigger_event('DOKUWIKI_DONE', $tmp);

@@ -262,7 +262,7 @@ class Tar {
 
             if(!$this->fh) throw new TarIOException('Could not open file for writing: '.$this->file);
         }
-        $this->writeaccess = false;
+        $this->writeaccess = true;
         $this->closed      = false;
     }
 
@@ -296,7 +296,10 @@ class Tar {
         );
 
         while(!feof($fp)) {
-            $packed = pack("a512", fread($fp, 512));
+            $data = fread($fp, 512);
+            if($data === false) break;
+            if($data === '') break;
+            $packed = pack("a512", $data);
             $this->writebytes($packed);
         }
         fclose($fp);

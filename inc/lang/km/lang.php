@@ -88,7 +88,7 @@ $lang['lockedby']     = 'ឥឡូវនេះចកជាប់​';
 $lang['lockexpire']   = 'សោជាប់ផុត​កំណត់ម៉ោង';
 $lang['js']['willexpire']   = 'សោអ្នកចំពោះកែតម្រូវទំព័រនេះ ហួសពែលក្នុងមួយនាទី។\nកុំឲ្យមានជម្លោះ ប្រើ «បង្ហាញ»​ ទៅកំណត់​ឡើង​វិញ។';
 
-$lang['js']['notsavedyet'] = "កម្រែមិនទានរុក្សាទកត្រូវបោះបង់។\nបន្តទៅទាឬទេ?";
+$lang['js']['notsavedyet'] = 'កម្រែមិនទានរុក្សាទកត្រូវបោះបង់។\nបន្តទៅទាឬទេ?';
 $lang['rssfailed']   = 'មានកំហុសពេលទៅ​ប្រមូល​យកមតិ​ព័ត៌មាន៖ ';
 $lang['nothingfound']= 'រកមិនឃើញអ្វីទេ។';
 
@@ -166,7 +166,7 @@ $lang['js']['del_confirm']= 'លុប';
 $lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
 
 $lang['spell_start'] = 'ពិនិត្យអក្ខរាវិរុទ្ធ';//'Check Spelling';
-$lang['spell_stop']  = 'បណ្តកំរែ'; 'Resume Editing';
+$lang['spell_stop']  = 'បណ្តកំរែ';
 $lang['spell_wait']  = 'សូមចាំ';//'Please wait...';
 $lang['spell_noerr'] = 'ឥតមានខុះទេ';
 $lang['spell_nosug'] = 'ឥតមានយោបល់';

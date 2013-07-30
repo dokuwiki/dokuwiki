@@ -12,6 +12,7 @@
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
+ * @author mkucera66@seznam.cz
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,

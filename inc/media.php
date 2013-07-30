@@ -83,6 +83,32 @@ function media_metasave($id,$auth,$data){
 }
 
 /**
+ * check if a media is external source
+ *
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @param string $id the media ID or URL
+ * @return bool
+ */
+function media_isexternal($id){
+    if (preg_match('#^(https?|ftp)://#i', $id)) return true;
+    return false;
+}
+
+/**
+ * Check if a media item is public (eg, external URL or readable by @ALL)
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $id  the media ID or URL
+ * @return bool
+ */
+function media_ispublic($id){
+    if(media_isexternal($id)) return true;
+    $id = cleanID($id);
+    if(auth_aclcheck(getNS($id).':*', '', array()) >= AUTH_READ) return true;
+    return false;
+}
+
+/**
  * Display the form to edit image meta data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -1781,6 +1807,9 @@ function media_resize_image($file, $ext, $w, $h=0){
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
 
+    // resize necessary? - (w,h) = native dimensions
+    if(($w == $info[0]) && ($h == $info[1])) return $file;
+
     //cache
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
@@ -1814,26 +1843,33 @@ function media_crop_image($file, $ext, $w, $h=0){
     // calculate crop size
     $fr = $info[0]/$info[1];
     $tr = $w/$h;
+
+    // check if the crop can be handled completely by resize,
+    // i.e. the specified width & height match the aspect ratio of the source image
+    if ($w == round($h*$fr)) {
+        return media_resize_image($file, $ext, $w);
+    }
+
     if($tr >= 1){
         if($tr > $fr){
             $cw = $info[0];
-            $ch = (int) $info[0]/$tr;
+            $ch = (int) ($info[0]/$tr);
         }else{
-            $cw = (int) $info[1]*$tr;
+            $cw = (int) ($info[1]*$tr);
             $ch = $info[1];
         }
     }else{
         if($tr < $fr){
-            $cw = (int) $info[1]*$tr;
+            $cw = (int) ($info[1]*$tr);
             $ch = $info[1];
         }else{
             $cw = $info[0];
-            $ch = (int) $info[0]/$tr;
+            $ch = (int) ($info[0]/$tr);
         }
     }
     // calculate crop offset
-    $cx = (int) ($info[0]-$cw)/2;
-    $cy = (int) ($info[1]-$ch)/3;
+    $cx = (int) (($info[0]-$cw)/2);
+    $cy = (int) (($info[1]-$ch)/3);
 
     //cache
     $local = getCacheName($file,'.media.'.$cw.'x'.$ch.'.crop.'.$ext);
@@ -1848,6 +1884,31 @@ function media_crop_image($file, $ext, $w, $h=0){
 
     //still here? cropping failed
     return media_resize_image($file,$ext, $w, $h);
+}
+
+/**
+ * Calculate a token to be used to verify fetch requests for resized or
+ * cropped images have been internally generated - and prevent external
+ * DDOS attacks via fetch
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ *
+ * @param string  $id    id of the image
+ * @param int     $w     resize/crop width
+ * @param int     $h     resize/crop height
+ * @return string
+ */
+function media_get_token($id,$w,$h){
+    // token is only required for modified images
+    if ($w || $h) {
+        $token = $id;
+        if ($w) $token .= '.'.$w;
+        if ($h) $token .= '.'.$h;
+
+        return substr(PassHash::hmac('md5', $token, auth_cookiesalt()),0,6);
+    }
+
+    return '';
 }
 
 /**

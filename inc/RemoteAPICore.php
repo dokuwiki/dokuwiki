@@ -372,7 +372,7 @@ class RemoteAPICore {
         $file = wikiFN($id,$rev);
         $time = @filemtime($file);
         if(!$time){
-            throw new RemoteException(10, 'The requested page does not exist', 121);
+            throw new RemoteException('The requested page does not exist', 121);
         }
 
         $info = getRevisionInfo($id, $time, 1024);

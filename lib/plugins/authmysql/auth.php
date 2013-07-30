@@ -97,6 +97,15 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             ), false
         );
         $this->cando['getUserCount'] = $this->_chkcnf(array('getUsers'), false);
+
+        if($this->getConf('debug') >= 2) {
+            $candoDebug = '';
+            foreach($this->cando as $cd => $value) {
+                if($value) { $value = 'yes'; } else { $value = 'no'; }
+                $candoDebug .= $cd . ": " . $value . " | ";
+            }
+            $this->_debug("authmysql cando: " . $candoDebug, 0, __LINE__, __FILE__);
+        }
     }
 
     /**
@@ -816,6 +825,10 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @return int|bool insert id or 0, false on error
      */
     protected function _modifyDB($query) {
+        if($this->getConf('debug') >= 2) {
+            msg('MySQL query: '.hsc($query), 0, __LINE__, __FILE__);
+        }
+
         if($this->dbcon) {
             $result = @mysql_query($query, $this->dbcon);
             if($result) {
@@ -830,7 +843,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     /**
      * Locked a list of tables for exclusive access so that modifications
      * to the database can't be disturbed by other threads. The list
-     * could be set with $conf['auth']['mysql']['TablesToLock'] = array()
+     * could be set with $conf['plugin']['authmysql']['TablesToLock'] = array()
      *
      * If aliases for tables are used in SQL statements, also this aliases
      * must be locked. For eg. you use a table 'user' and the alias 'u' in
@@ -848,11 +861,12 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _lockTables($mode) {
         if($this->dbcon) {
-            if(is_array($this->getConf('TablesToLock'))) {
+            $ttl = $this->getConf('TablesToLock');
+            if(is_array($ttl) && !empty($ttl)) {
                 if($mode == "READ" || $mode == "WRITE") {
                     $sql = "LOCK TABLES ";
                     $cnt = 0;
-                    foreach($this->getConf('TablesToLock') as $table) {
+                    foreach($ttl as $table) {
                         if($cnt++ != 0) $sql .= ", ";
                         $sql .= "$table $mode";
                     }

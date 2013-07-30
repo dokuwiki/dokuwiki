@@ -17,6 +17,7 @@
  * @author Ladyko Andrey <fylh@succexy.spb.ru>
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
+ * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  */
 $lang['menu']                  = 'Настройки вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте свои изменения и попробуйте ещё раз.<br />Неправильные значения будут обведены красной рамкой.';

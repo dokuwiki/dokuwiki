@@ -1,7 +1,7 @@
 base   plugin
 author Christopher Smith
 email  chris@jalakai.co.uk
-date   2012-09-08
+date   2013-02-20
 name   Plugin Manager plugin
 desc   Manage and install plugins
 url    http://www.dokuwiki.org/plugin:plugin

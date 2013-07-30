@@ -128,6 +128,7 @@ $lang['js']['restore_confirm'] = 'Tiešām atjaunot šo versiju';
 $lang['js']['media_diff']      = 'Skatīt atšķirību';
 $lang['js']['media_diff_both'] = 'Blakus';
 $lang['js']['media_diff_opacity'] = 'Pārklāti';
+$lang['js']['media_diff_portions'] = 'Pa daļām';
 $lang['js']['media_select']    = 'Norādīt failus...';
 $lang['js']['media_upload_btn'] = 'Augšuplādēt';
 $lang['js']['media_done_btn']  = 'Gatavs';
@@ -283,6 +284,9 @@ $lang['i_pol1']                = 'Publisks Wiki (lasa ikviens, raksta un augšup
 $lang['i_pol2']                = 'Slēgts Wiki (raksta, lasa un augšupielādē tikai reģistrēti lietotāji)';
 $lang['i_retry']               = 'Atkārtot';
 $lang['i_license']             = 'Ar kādu licenci saturs tiks publicēts:';
+$lang['i_license_none']        = 'Nerādīt nekādu licences informāciju';
+$lang['i_pop_field']           = 'Lūdzu palīdziet uzlabot DokuWiki';
+$lang['i_pop_label']           = 'Rezi mēnesī nosūtīt DokuWiki izstrādātājiem anonīmus lietošanas datus.';
 $lang['recent_global']         = 'Tu skati izmaiņas nodaļā <b>%s</b>. Ir iespējams <a href="%s">skatīt jaunākos grozījums visā viki</a>. ';
 $lang['years']                 = 'pirms %d gadiem';
 $lang['months']                = 'pirms %d mēnešiem';

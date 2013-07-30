@@ -48,24 +48,29 @@ function auth_setup() {
 
     // try to load auth backend from plugins
     foreach ($plugin_controller->getList('auth') as $plugin) {
-    	if ($conf['authtype'] === $plugin) {
-    		$auth = $plugin_controller->load('auth', $plugin);
-    		break;
-    	}
+      if ($conf['authtype'] === $plugin) {
+        $auth = $plugin_controller->load('auth', $plugin);
+        break;
+      } elseif ('auth' . $conf['authtype'] === $plugin) {
+        // matches old auth backends (pre-Weatherwax)
+        $auth = $plugin_controller->load('auth', $plugin);
+        msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
+             . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
+      }
     }
 
-	if(!isset($auth) || !$auth){
+    if(!isset($auth) || !$auth){
         msg($lang['authtempfail'], -1);
         return false;
     }
 
     if ($auth->success == false) {
-		// degrade to unauthenticated user
-	    unset($auth);
-	    auth_logoff();
-	    msg($lang['authtempfail'], -1);
+    // degrade to unauthenticated user
+      unset($auth);
+      auth_logoff();
+      msg($lang['authtempfail'], -1);
         return false;
-	}
+    }
 
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
@@ -673,27 +678,41 @@ function auth_nameencode($name, $skip_group = false) {
 /**
  * Create a pronouncable password
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @link    http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * The $foruser variable might be used by plugins to run additional password
+ * policy checks, but is not used by the default implementation
  *
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @link     http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * @triggers AUTH_PASSWORD_GENERATE
+ *
+ * @param  string $foruser username for which the password is generated
  * @return string  pronouncable password
  */
-function auth_pwgen() {
-    $pw = '';
-    $c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
-    $v  = 'aeiou'; //vowels
-    $a  = $c.$v; //both
+function auth_pwgen($foruser = '') {
+    $data = array(
+        'password' => '',
+        'foruser'  => $foruser
+    );
 
-    //use two syllables...
-    for($i = 0; $i < 2; $i++) {
-        $pw .= $c[rand(0, strlen($c) - 1)];
-        $pw .= $v[rand(0, strlen($v) - 1)];
-        $pw .= $a[rand(0, strlen($a) - 1)];
+    $evt = new Doku_Event('AUTH_PASSWORD_GENERATE', $data);
+    if($evt->advise_before(true)) {
+        $c = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
+        $v = 'aeiou'; //vowels
+        $a = $c.$v; //both
+        $s = '!$%&?+*~#-_:.;,'; // specials
+
+        //use thre syllables...
+        for($i = 0; $i < 3; $i++) {
+            $data['password'] .= $c[mt_rand(0, strlen($c) - 1)];
+            $data['password'] .= $v[mt_rand(0, strlen($v) - 1)];
+            $data['password'] .= $a[mt_rand(0, strlen($a) - 1)];
+        }
+        //... and add a nice number and special
+        $data['password'] .= mt_rand(10, 99).$s[mt_rand(0, strlen($s) - 1)];
     }
-    //... and add a nice number
-    $pw .= rand(10, 99);
+    $evt->advise_after();
 
-    return $pw;
+    return $data['password'];
 }
 
 /**
@@ -760,7 +779,7 @@ function register() {
     }
 
     if($conf['autopasswd']) {
-        $pass = auth_pwgen(); // automatically generate password
+        $pass = auth_pwgen($login); // automatically generate password
     } elseif(empty($pass) || empty($passchk)) {
         msg($lang['regmissing'], -1); // complain about missing passwords
         return false;
@@ -953,7 +972,7 @@ function act_resendpwd() {
 
         } else { // autogenerate the password and send by mail
 
-            $pass = auth_pwgen();
+            $pass = auth_pwgen($user);
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
                 msg('error modifying user data', -1);
                 return false;
@@ -988,7 +1007,7 @@ function act_resendpwd() {
         }
 
         // generate auth token
-        $token = md5(auth_cookiesalt().$user); //secret but user based
+        $token = md5(uniqid(mt_rand(), true)); // random secret
         $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 
