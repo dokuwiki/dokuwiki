@@ -120,7 +120,6 @@
 /* filenames for downloadable file and code blocks */
 .dokuwiki dl.code,
 .dokuwiki dl.file {
-    dt,
     dt {
         background-color: @ini_background_site;
         .linear-gradient(~"top, @{ini_background_alt} 0%, @{ini_background_site} 100%");
@@ -132,24 +131,22 @@
         padding: .3em .6em .1em;
         margin-bottom: -1px;
         float: left;
-    }
-    dt a,
-    dt a {
-        background-color: transparent;
-        font-size: 0.875em;
-        font-weight: normal;
-        display: block;
-        min-height: 16px;
+
+        a {
+            background-color: transparent;
+            font-size: 0.875em;
+            font-weight: normal;
+            display: block;
+            min-height: 16px;
+        }
     }
 
-    dd,
     dd {
         margin: 0;
         clear: left;
         min-height: 1px; /* for IE7 */
     }
 
-    pre,
     pre {
         box-shadow: inset -4px -4px .5em -.3em @ini_border;
     }
@@ -157,12 +154,10 @@
 
 [dir=rtl] .dokuwiki dl.code,
 [dir=rtl] .dokuwiki dl.file {
-    dt,
     dt {
         float: right;
     }
 
-    dd,
     dd {
         clear: right;
     }
@@ -329,10 +324,10 @@
 
     ul {
         padding: 0 0 0 1.2em;
-    }
 
-    ul li {
-        list-style-image: url(images/toc-bullet.png);
+        li {
+            list-style-image: url(images/toc-bullet.png);
+        }
     }
 
     ul li.clear {

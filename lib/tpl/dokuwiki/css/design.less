@@ -100,11 +100,9 @@
     margin-left: 0;
 }
 
-#dokuwiki__usertools {
-    a.action {
-        padding-left: 20px;
-        background: transparent url(images/usertools.png) no-repeat 0 0;
-    }
+#dokuwiki__usertools a.action {
+    padding-left: 20px;
+    background: transparent url(images/usertools.png) no-repeat 0 0;
 }
 
 [dir=rtl] #dokuwiki__usertools a.action {
@@ -350,17 +348,14 @@
 /* content
 ********************************************************************/
 
-.dokuwiki {
+.dokuwiki .pageId {
+    position: absolute;
+    top: -2.3em;
+    right: -1em;
+    overflow: hidden;
+    padding: 1em 1em 0;
 
-    .pageId {
-        position: absolute;
-        top: -2.3em;
-        right: -1em;
-        overflow: hidden;
-        padding: 1em 1em 0;
-    }
-
-    .pageId span {
+    span {
         font-size: 0.875em;
         border: solid @ini_background_alt;
         border-width: 1px 1px 0;
@@ -372,39 +367,37 @@
         box-shadow: 0 0 .5em @ini_text_alt;
         display: block;
     }
-
-    div.page {
-        background: @ini_background;
-        color: inherit;
-        border: 1px solid @ini_background_alt;
-        box-shadow: 0 0 .5em @ini_text_alt;
-        border-radius: 2px;
-        padding: 1.556em 2em 2em;
-        margin-bottom: .5em;
-        overflow: hidden;
-        word-wrap: break-word;
-    }
-
-    .docInfo {
-        font-size: 0.875em;
-        text-align: right;
-    }
-
-    /* license note under edit window */
-    div.license {
-        font-size: 93.75%;
-    }
 }
 
-[dir=rtl] .dokuwiki {
-    .docInfo {
-        text-align: left;
-    }
+.dokuwiki div.page {
+    background: @ini_background;
+    color: inherit;
+    border: 1px solid @ini_background_alt;
+    box-shadow: 0 0 .5em @ini_text_alt;
+    border-radius: 2px;
+    padding: 1.556em 2em 2em;
+    margin-bottom: .5em;
+    overflow: hidden;
+    word-wrap: break-word;
+}
 
-    .pageId {
-        right: auto;
-        left: -1em;
-    }
+.dokuwiki .docInfo {
+    font-size: 0.875em;
+    text-align: right;
+}
+
+/* license note under edit window */
+.dokuwiki div.license {
+    font-size: 93.75%;
+}
+
+[dir=rtl] .dokuwiki .docInfo {
+    text-align: left;
+}
+
+[dir=rtl] .dokuwiki .pageId {
+    right: auto;
+    left: -1em;
 }
 
 /* footer
@@ -427,15 +420,18 @@
         font-size: 100%;
     }
 
-    div.buttons a img {
-        opacity: 0.5;
+    div.buttons a {
+        img {
+            opacity: 0.5;
+        }
+
+        &:hover img,
+        &:active img,
+        &:focus img {
+            opacity: 1;
+        }
     }
 
-    div.buttons a:hover img,
-    div.buttons a:active img,
-    div.buttons a:focus img {
-        opacity: 1;
-    }
 }
 
 [dir=rtl] #dokuwiki__footer .license img {
