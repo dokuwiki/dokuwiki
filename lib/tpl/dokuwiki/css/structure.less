@@ -67,14 +67,14 @@ body {
 
 .showSidebar #dokuwiki__content {
     float: right;
-    margin-left: -@ini_sidebar_width;
+    margin-left: (-1 * @ini_sidebar_width);
     width: 100%;
 }
 
 [dir=rtl] .showSidebar #dokuwiki__content {
     float: left;
     margin-left: 0;
-    margin-right: -@ini_sidebar_width;
+    margin-right: (-1 * @ini_sidebar_width);
 }
 
 .showSidebar #dokuwiki__content > .pad {
