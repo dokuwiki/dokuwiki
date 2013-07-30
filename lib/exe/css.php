@@ -154,9 +154,6 @@ function css_out(){
     // apply style replacements
     $css = css_applystyle($css,$tplinc);
 
-    print $css;
-
-
     // parse LESS
     $less = new lessc();
     $css = $less->compile($css);
