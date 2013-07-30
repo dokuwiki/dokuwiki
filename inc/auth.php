@@ -220,7 +220,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
             // make logininfo globally available
             $_SERVER['REMOTE_USER'] = $user;
             $secret                 = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
-            auth_setCookie($user, PMA_blowfish_encrypt($pass, $secret), $sticky);
+            auth_setCookie($user, auth_encrypt($pass, $secret), $sticky);
             return true;
         } else {
             //invalid credentials - log off
@@ -251,7 +251,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
             }
             // no we don't trust it yet - recheck pass but silent
             $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
-            $pass   = PMA_blowfish_decrypt($pass, $secret);
+            $pass   = auth_decrypt($pass, $secret);
             return auth_login($user, $pass, $sticky, true);
         }
     }
@@ -447,6 +447,40 @@ function auth_random($min, $max) {
     } while ($integer > $abs_max);
 
     return $min + $integer;
+}
+
+/**
+ * Encrypt data using the given secret using AES
+ *
+ * The mode is CBC with a random initialization vector, the key is derived
+ * using pbkdf2.
+ *
+ * @param string $data   The data that shall be encrypted
+ * @param string $secret The secret/password that shall be used
+ * @return string The ciphertext
+ */
+function auth_encrypt($data, $secret) {
+    $iv = auth_randombytes(16);
+    $cipher = new Crypt_AES();
+    $cipher->setPassword($secret);
+
+    return $cipher->encrypt($iv.$data);
+}
+
+/**
+ * Decrypt the given AES ciphertext
+ *
+ * The mode is CBC, the key is derived using pbkdf2
+ *
+ * @param string $ciphertext The encrypted data
+ * @param string $secret     The secret/password that shall be used
+ * @return string The decrypted data
+ */
+function auth_decrypt($ciphertext, $secret) {
+    $cipher = new Crypt_AES();
+    $cipher->setPassword($secret);
+
+    return substr($cipher->decrypt($ciphertext), 16);
 }
 
 /**
@@ -992,7 +1026,7 @@ function updateprofile() {
         // update cookie and session with the changed data
         if($changes['pass']) {
             list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
-            $pass = PMA_blowfish_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
+            $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
             auth_setCookie($_SERVER['REMOTE_USER'], $pass, (bool) $sticky);
         }
         return true;
