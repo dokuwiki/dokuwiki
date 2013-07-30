@@ -149,8 +149,17 @@ class RemoteAPICore {
                 'return' => 'int',
                 'doc' => 'Returns 2 with the supported RPC API version.',
                 'public' => '1'
-            ),
-
+            ), 'dokuwiki.addAcl' => array(
+                'args' => array('string','string','int'),
+                'return' => 'int',
+                'name' => 'addAcl',
+                'doc' => 'Adds a new ACL rule.'
+			), 'dokuwiki.delAcl' => array(
+                'args' => array('string','string'),
+                'return' => 'int',
+                'name' => 'delAcl',
+                'doc' => 'Delete an existing ACL rule.'
+			),
         );
     }
 
@@ -767,6 +776,17 @@ class RemoteAPICore {
 
         return $ok;
     }
+		
+	
+	function addAcl($scope, $user, $level){
+		$apa = new admin_plugin_acl(); 
+		return $apa->_acl_add($scope, $user, $level);
+	}
+	
+	function delAcl($scope, $user){
+		$apa = new admin_plugin_acl(); 
+		return $apa->_acl_del($scope, $user);
+	}
 
     private function resolvePageId($id) {
         $id = cleanID($id);
@@ -778,4 +798,5 @@ class RemoteAPICore {
     }
 
 }
+
 
