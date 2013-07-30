@@ -122,7 +122,8 @@
 .dokuwiki dl.file {
     dt,
     dt {
-        .linear-gradient(@ini_background_site, @ini_background_alt, @ini_background_site);
+        background-color: @ini_background_site;
+        .linear-gradient(~"top, @{ini_background_alt} 0%, @{ini_background_site} 100%");
         color: inherit;
         border: 1px solid @ini_border;
         border-bottom-color: @ini_background_site;

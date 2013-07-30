@@ -1,15 +1,10 @@
 /**
  * linear gradient x-browser support
- *
- * @param color fallback background color
- * @param start start color
- * @param stop  end color
  */
-.linear-gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
-    background: @color;
-    background: -moz-linear-gradient(   top, @start 0%, @stop 100%);
-    background: -webkit-linear-gradient(top, @start 0%, @stop 100%);
-    background: -o-linear-gradient(     top, @start 0%, @stop 100%);
-    background: -ms-linear-gradient(    top, @start 0%, @stop 100%);
-    background: linear-gradient(        top, @start 0%, @stop 100%);
+.linear-gradient(@declaration: 0) {
+    background: -moz-linear-gradient(   @declaration);
+    background: -webkit-linear-gradient(@declaration);
+    background: -o-linear-gradient(     @declaration);
+    background: -ms-linear-gradient(    @declaration);
+    background: linear-gradient(        @declaration);
 }

@@ -13,7 +13,7 @@
 
 /* for screen widths in the tablet range
 ********************************************************************/
-@media only screen and (max-width: __tablet_width__) {
+@media only screen and (max-width: @ini_tablet_width) {
 
 #screen__mode {
     z-index: 1; /* for detecting media queries in JavaScript (see script.js) */
@@ -29,10 +29,10 @@
 [dir=rtl] #dokuwiki__aside > .pad {
     margin: 0 0 .5em;
     /* style like .page */
-    background: __background__;
+    background: @ini_background;
     color: inherit;
     border: 1px solid #eee;
-    box-shadow: 0 0 .5em __text_alt__;
+    box-shadow: 0 0 .5em @ini_text_alt;
     border-radius: 2px;
     padding: 1em;
     margin-bottom: .5em;
@@ -46,7 +46,7 @@
     padding-bottom: 0;
 }
 #dokuwiki__aside h3.toggle.open {
-    border-bottom: 1px solid __border__;
+    border-bottom: 1px solid @ini_border;
 }
 
 .showSidebar #dokuwiki__content {
@@ -69,7 +69,7 @@
     margin: 0 0 1em 0;
     width: auto;
     border-left-width: 0;
-    border-bottom: 1px solid __border__;
+    border-bottom: 1px solid @ini_border;
 }
 [dir=rtl] #dw__toc {
     float: none;
@@ -119,7 +119,7 @@
 
 /* for screen widths in the smartphone range
 ********************************************************************/
-@media only screen and (max-width: __phone_width__) {
+@media only screen and (max-width: @ini_phone_width) {
 
 #screen__mode {
     z-index: 2; /* for detecting media queries in JavaScript (see script.js) */
