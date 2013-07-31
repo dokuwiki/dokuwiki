@@ -105,7 +105,6 @@ $lang['target____media']       = 'Kohdeikkuna media-linkeissä';
 $lang['target____windows']     = 'Kohdeikkuna Windows-linkeissä';
 $lang['mediarevisions']        = 'Otetaan käyttään Media-versiointi';
 $lang['refcheck']              = 'Mediaviitteen tarkistus';
-$lang['refshow']               = 'Montako mediaviitettä näytetään';
 $lang['gdlib']                 = 'GD Lib versio';
 $lang['im_convert']            = 'ImageMagick-muunnostyökalun polku';
 $lang['jpg_quality']           = 'JPG pakkauslaatu (0-100)';

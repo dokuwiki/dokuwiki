@@ -79,7 +79,6 @@ $lang['iexssprotect']          = 'Yüklenmiş dosyaları muhtemel kötu niyetli 
 $lang['htmlok']                = 'Gömülü HTML koduna izin ver';
 $lang['phpok']                 = 'Gömülü PHP koduna izin ver';
 $lang['refcheck']              = 'Araç kaynak denetimi';
-$lang['refshow']               = 'Gösterilecek araç kaynağı sayısı';
 $lang['gdlib']                 = 'GD Lib sürümü';
 $lang['jpg_quality']           = 'JPG sıkıştırma kalitesi [0-100]';
 $lang['mailfrom']              = 'Otomatik e-postalar için kullanılacak e-posta adresi';

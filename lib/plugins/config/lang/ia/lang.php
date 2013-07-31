@@ -59,7 +59,6 @@ $lang['camelcase']             = 'Usar CamelCase pro ligamines';
 $lang['deaccent']              = 'Nomines nette de paginas';
 $lang['useheading']            = 'Usar le prime titulo como nomine de pagina';
 $lang['refcheck']              = 'Verification de referentias multimedia';
-$lang['refshow']               = 'Numero de referentias multimedia a monstrar';
 $lang['allowdebug']            = 'Permitter debugging <b>disactiva si non necessari!</b>';
 $lang['usewordblock']          = 'Blocar spam a base de lista de parolas';
 $lang['indexdelay']            = 'Retardo ante generation de indice (secundas)';

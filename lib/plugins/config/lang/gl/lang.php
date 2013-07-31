@@ -104,7 +104,6 @@ $lang['target____media']       = 'Fiestra de destino para as ligazóns de media'
 $lang['target____windows']     = 'Fiestra de destino para as ligazóns de fiestras';
 $lang['mediarevisions']        = 'Habilitar revisións dos arquivos-media?';
 $lang['refcheck']              = 'Comprobar a referencia media';
-$lang['refshow']               = 'Número de referencias media a amosar';
 $lang['gdlib']                 = 'Versión da Libraría GD';
 $lang['im_convert']            = 'Ruta deica a ferramenta de conversión ImageMagick';
 $lang['jpg_quality']           = 'Calidade de compresión dos JPG (0-100)';
