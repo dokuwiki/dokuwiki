@@ -241,7 +241,7 @@ function getConfigFiles($type) {
  */
 function actionOK($action){
     static $disabled = null;
-    if(is_null($disabled)){
+    if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
         /** @var auth_basic $auth */
         global $auth;
