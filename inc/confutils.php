@@ -261,6 +261,9 @@ function actionOK($action){
         if (is_null($auth) || !$auth->canDo('Profile')) {
             $disabled[] = 'profile';
         }
+        if (is_null($auth) || !$auth->canDo('delUser')) {
+            $disabled[] = 'profile_delete';
+        }
         if (is_null($auth)) {
             $disabled[] = 'login';
         }

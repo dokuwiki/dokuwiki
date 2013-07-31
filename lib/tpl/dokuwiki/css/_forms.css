@@ -79,7 +79,10 @@
 #dw__register fieldset {
     padding-bottom: 0.7em;
 }
-
+#dw__profiledelete {
+    display: block;
+    margin-top: 2.8em;
+}
 
 /**
  * Styles for the subscription page

@@ -901,6 +901,45 @@ function updateprofile() {
     return false;
 }
 
+function auth_deleteprofile(){
+    global $conf;
+    global $lang;
+    /* @var auth_basic $auth */
+    global $auth;
+    /* @var Input $INPUT */
+    global $INPUT;
+
+    if(!$INPUT->post->bool('delete')) return false;
+    if(!checkSecurityToken()) return false;
+
+    // action prevented or auth module disallows 
+    if(!actionOK('profile_delete') || !$auth->canDo('delUser')) {
+        msg($lang['profnodelete'], -1);
+        return false;
+    }
+
+    if(!$INPUT->post->bool('confirm_delete')){
+        msg($lang['profconfdeletemissing'], -1);
+        return false;
+    }
+
+    if($conf['profileconfirm']) {
+        if(!$auth->checkPass($_SERVER['REMOTE_USER'], $INPUT->post->str('oldpass'))) {
+            msg($lang['badpassconfirm'], -1);
+            return false;
+        }
+    }
+
+    $deleted[] = $_SERVER['REMOTE_USER'];
+    if($result = $auth->triggerUserMod('delete', array($deleted))) {
+        // force and immediate logout including removing the sticky cookie
+        auth_logoff();
+        return true;
+    }
+
+    return false;
+}
+
 /**
  * Send a  new password
  *
