@@ -883,7 +883,7 @@ function updateprofile() {
 
     if($conf['profileconfirm']) {
         if(!$auth->checkPass($_SERVER['REMOTE_USER'], $INPUT->post->str('oldpass'))) {
-            msg($lang['badlogin'], -1);
+            msg($lang['badpassconfirm'], -1);
             return false;
         }
     }
