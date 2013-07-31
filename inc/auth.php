@@ -459,10 +459,16 @@ function auth_random($min, $max) {
  * @return string The ciphertext
  */
 function auth_encrypt($data, $secret) {
-    $iv = auth_randombytes(16);
+    $iv     = auth_randombytes(16);
     $cipher = new Crypt_AES();
     $cipher->setPassword($secret);
 
+    /*
+    this uses the encrypted IV as IV as suggested in
+    http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf, Appendix C
+    for unique but necessarily random IVs. The resulting ciphertext is
+    compatible to ciphertext that was created using a "normal" IV.
+    */
     return $cipher->encrypt($iv.$data);
 }
 
@@ -476,10 +482,12 @@ function auth_encrypt($data, $secret) {
  * @return string The decrypted data
  */
 function auth_decrypt($ciphertext, $secret) {
+    $iv     = substr($ciphertext, 0, 16);
     $cipher = new Crypt_AES();
     $cipher->setPassword($secret);
+    $cipher->setIV($iv);
 
-    return substr($cipher->decrypt($ciphertext), 16);
+    return $cipher->decrypt(substr($ciphertext, 16));
 }
 
 /**
