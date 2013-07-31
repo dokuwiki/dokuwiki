@@ -360,7 +360,6 @@ function auth_cookiesalt($addsession = false, $secure = false) {
  * @author Michael Hamann <michael@content-space.de>
  * @link   http://www.php.net/manual/de/function.mt-rand.php#83655
  * @param int $length number of bytes to get
- * @throws Exception when no usable random generator is found
  * @return string binary random strings
  */
 function auth_randombytes($length) {
