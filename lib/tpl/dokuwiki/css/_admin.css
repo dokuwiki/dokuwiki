@@ -50,7 +50,7 @@
 .dokuwiki #admin__version {
     clear: left;
     float: right;
-    color: __text_neu__;
+    color: @ini_text_neu;
     background-color: inherit;
 }
 [dir=rtl] .dokuwiki #admin__version {

@@ -11,7 +11,7 @@
     float: right;
     margin: 0 0 1.4em 1.4em;
     width: 12em;
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
     color: inherit;
 }
 [dir=rtl] #dw__toc {
