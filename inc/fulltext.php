@@ -125,17 +125,21 @@ function _ft_pageSearch(&$data) {
  * Returns the backlinks for a given page
  *
  * Uses the metadata index.
+ *
+ * @param string $id           The id for which links shall be returned
+ * @param bool   $ignore_perms Ignore the fact that pages are hidden or read-protected
+ * @return array The pages that contain links to the given page
  */
-function ft_backlinks($id){
-    $result = array();
-
+function ft_backlinks($id, $ignore_perms = false){
     $result = idx_get_indexer()->lookupKey('relation_references', $id);
 
     if(!count($result)) return $result;
 
     // check ACL permissions
     foreach(array_keys($result) as $idx){
-        if(isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ || !page_exists($result[$idx], '', false)){
+        if(($ignore_perms !== true && (
+                isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
+            )) || !page_exists($result[$idx], '', false)){
             unset($result[$idx]);
         }
     }

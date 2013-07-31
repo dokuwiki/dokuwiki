@@ -1130,7 +1130,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // if useheading is enabled, purge the cache of all linking pages
     if(useHeading('content')) {
-        $pages = ft_backlinks($id);
+        $pages = ft_backlinks($id, true);
         foreach($pages as $page) {
             $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
