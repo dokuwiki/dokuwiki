@@ -624,35 +624,46 @@ function & p_get_renderer($mode) {
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
     $rclass = "Doku_Renderer_$rname";
 
-    if( class_exists($rclass) ) {
-        return new $rclass();
-    }
+    if(! class_exists($rclass) ) {
 
-    // try default renderer first:
-    $file = DOKU_INC."inc/parser/$rname.php";
-    if(@file_exists($file)){
-        require_once $file;
+        // try default renderer first:
+        $file = DOKU_INC."inc/parser/$rname.php";
+        if(@file_exists($file)){
+            require_once $file;
 
-        if ( !class_exists($rclass) ) {
-            trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
-            msg("Renderer '$rname' for $mode not valid",-1);
-            return null;
-        }
-        $Renderer = new $rclass();
-    }else{
-        // Maybe a plugin/component is available?
-        list($plugin, $component) = $plugin_controller->_splitName($rname);
-        if (!$plugin_controller->isdisabled($plugin)){
-            $Renderer =& $plugin_controller->load('renderer',$rname);
-        }
+            if ( !class_exists($rclass) ) {
+                trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
+                msg("Renderer '$rname' for $mode not valid",-1);
+                return null;
+            }
+        }else{
+            // Maybe a plugin/component is available?
+            list($plugin, $component) = $plugin_controller->_splitName($rname);
+            if (!$plugin_controller->isdisabled($plugin)){
+                $Renderer =& $plugin_controller->load('renderer',$rname);
+            }
 
-        if(!isset($Renderer) || is_null($Renderer)){
-            msg("No renderer '$rname' found for mode '$mode'",-1);
-            return null;
+            if(!isset($Renderer) || is_null($Renderer)){
+                msg("No renderer '$rname' found for mode '$mode'",-1);
+                return null;
+            }
         }
     }
 
-    return $Renderer;
+    // wrap the renderer in an EventDispatching renderer
+    $wrapped_rclass = $rclass . '_EventDispatcher';
+    if (!class_exists($wrapped_rclass)) {
+        $wrapped_rclass_file = getCacheName($rclass.'v1', '.php');
+        if (file_exists($wrapped_rclass_file)) {
+            require_once($wrapped_rclass_file);
+        } else {
+            $data = io_readFile(DOKU_INC . '/inc/parser/event_renderer_template.php', false);
+            $data = str_replace('ORIGINAL_RENDERER', $rclass, $data);
+            io_saveFile($wrapped_rclass_file, $data);
+            require_once($wrapped_rclass_file);
+        }
+    }
+    return new $wrapped_rclass();
 }
 
 /**
