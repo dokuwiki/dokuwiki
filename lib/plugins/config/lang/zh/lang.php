@@ -114,7 +114,6 @@ $lang['target____media']       = '媒体文件链接的目标窗口';
 $lang['target____windows']     = 'Windows 链接的目标窗口';
 $lang['mediarevisions']        = '激活媒体修订历史？';
 $lang['refcheck']              = '检查媒体与页面的挂钩情况';
-$lang['refshow']               = '显示媒体与页面挂钩情况的数量';
 $lang['gdlib']                 = 'GD 库版本';
 $lang['im_convert']            = 'ImageMagick 转换工具的路径';
 $lang['jpg_quality']           = 'JPG 压缩质量（0-100）';

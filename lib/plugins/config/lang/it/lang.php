@@ -114,7 +114,6 @@ $lang['target____media']       = 'Finestra di destinazione per i collegamenti ai
 $lang['target____windows']     = 'Finestra di destinazione per i collegamenti alle risorse condivise';
 $lang['mediarevisions']        = 'Abilita Mediarevisions?';
 $lang['refcheck']              = 'Controlla i riferimenti ai file';
-$lang['refshow']               = 'Numero di riferimenti da visualizzare';
 $lang['gdlib']                 = 'Versione GD Lib ';
 $lang['im_convert']            = 'Percorso per il convertitore di ImageMagick';
 $lang['jpg_quality']           = 'Qualità di compressione JPG (0-100)';

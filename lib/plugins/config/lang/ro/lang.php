@@ -69,7 +69,6 @@ $lang['camelcase']             = 'Foloseşte CamelCase pentru legături';
 $lang['deaccent']              = 'numedepagină curate';
 $lang['useheading']            = 'Foloseşte primul titlu pentru numele paginii';
 $lang['refcheck']              = 'Verificare referinţă media';
-$lang['refshow']               = 'Numărul de referinţe media de arătat';
 $lang['allowdebug']            = 'Permite depanarea <b>dezactivaţi dacă cu e necesar!</b>';
 $lang['mediarevisions']        = 'Activare Revizii Media?';
 $lang['usewordblock']          = 'Blochează spam-ul pe baza listei de cuvinte';

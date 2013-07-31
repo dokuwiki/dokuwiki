@@ -109,7 +109,6 @@ $lang['target____media']       = 'メディアリンクの表示先';
 $lang['target____windows']     = 'Windowsリンクの表示先';
 $lang['mediarevisions']        = 'メディアファイルの履歴を有効にしますか?';
 $lang['refcheck']              = 'メディア参照元チェック';
-$lang['refshow']               = 'メディア参照元表示数';
 $lang['gdlib']                 = 'GDlibバージョン';
 $lang['im_convert']            = 'ImageMagick変換ツールへのパス';
 $lang['jpg_quality']           = 'JPG圧縮品質（0-100）';

@@ -273,45 +273,6 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
     return true;
 }
 
-/**
- * Reference search
- * This fuction searches for existing references to a given media file
- * and returns an array with the found pages. It doesn't pay any
- * attention to ACL permissions to find every reference. The caller
- * must check if the user has the appropriate rights to see the found
- * page and eventually have to prevent the result from displaying.
- *
- * @param array  $data Reference to the result data structure
- * @param string $base Base usually $conf['datadir']
- * @param string $file current file or directory relative to $base
- * @param char   $type Type either 'd' for directory or 'f' for file
- * @param int    $lvl  Current recursion depht
- * @param mixed  $opts option array as given to search()
- *
- * $opts['query'] is the demanded media file name
- *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
- */
-function search_reference(&$data,$base,$file,$type,$lvl,$opts){
-    global $conf;
-
-    //we do nothing with directories
-    if($type == 'd') return true;
-
-    //only search txt files
-    if(substr($file,-4) != '.txt') return true;
-
-    //we finish after 'cnt' references found. The return value
-    //'false' will skip subdirectories to speed search up.
-    $cnt = $conf['refshow'] > 0 ? $conf['refshow'] : 1;
-    if(count($data) >= $cnt) return false;
-
-    $reg = '\{\{ *\:?'.$opts['query'].' *(\|.*)?\}\}';
-    search_regex($data,$base,$file,$reg,array($opts['query']));
-    return true;
-}
-
 /* ------------- helper functions below -------------- */
 
 /**

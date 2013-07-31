@@ -95,7 +95,6 @@ $lang['target____extern']      = 'Kur atvērt ārējās saites';
 $lang['target____media']       = 'Kur atvērt mēdiju saites';
 $lang['target____windows']     = 'Kur atvērt saites uz tīkla mapēm';
 $lang['refcheck']              = 'Pārbaudīt saites uz mēdiju failiem';
-$lang['refshow']               = 'Cik saites uz mēdiju failiem rādīt';
 $lang['gdlib']                 = 'GD Lib versija';
 $lang['im_convert']            = 'Ceļš uz ImageMagick convert rīku';
 $lang['jpg_quality']           = 'JPG saspiešanas kvalitāte';

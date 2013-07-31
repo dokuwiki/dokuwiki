@@ -119,7 +119,6 @@ $lang['target____media']       = 'Cílové okno pro odkazy na média';
 $lang['target____windows']     = 'Cílové okno pro odkazy na windows sdílení';
 $lang['mediarevisions']        = 'Aktivovat revize souborů';
 $lang['refcheck']              = 'Kontrolovat odkazy na média (před vymazáním)';
-$lang['refshow']               = 'Počet zobrazených odkazů na média';
 $lang['gdlib']                 = 'Verze GD knihovny';
 $lang['im_convert']            = 'Cesta k nástroji convert z balíku ImageMagick';
 $lang['jpg_quality']           = 'Kvalita komprese JPEG (0-100)';

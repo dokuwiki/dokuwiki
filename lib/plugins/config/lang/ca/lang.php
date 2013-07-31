@@ -102,7 +102,6 @@ $lang['target____extern']      = 'Finestra de destinació en enllaços externs';
 $lang['target____media']       = 'Finestra de destinació en enllaços de mitjans';
 $lang['target____windows']     = 'Finestra de destinació en enllaços de Windows';
 $lang['refcheck']              = 'Comprova la referència en els fitxers de mitjans';
-$lang['refshow']               = 'Nombre de referències de mitjans per mostrar';
 $lang['gdlib']                 = 'Versió GD Lib';
 $lang['im_convert']            = 'Camí de la utilitat convert d\'ImageMagick';
 $lang['jpg_quality']           = 'Qualitat de compressió JPEG (0-100)';
