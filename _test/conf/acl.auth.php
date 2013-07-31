@@ -20,6 +20,7 @@
 
 *               @ALL        8
 private:*       @ALL        0
+full:*          @ALL        16
 
 # for testing wildcards:
 users:*            @ALL         1

@@ -45,9 +45,10 @@ class MediaFile {
             $this->file = getCacheName($this->id,'.'.$this->extension);
             $this->auth = AUTH_READ;
         } else {
-            $this->id = cleanID($id);
-            $this->file = mediaFN($this->$id);
-            $this->auth = auth_quickaclcheck(getNS($id).':*');
+            $this->id = cleanID($this->id);
+            $this->isexternal = false;
+            $this->file = mediaFN($this->id);
+            $this->auth = auth_quickaclcheck(getNS($this->id).':*');
         }
     }
 
@@ -69,7 +70,7 @@ class MediaFile {
         fclose($target);
         if ($maxlen && ($realSize != $maxlen)){
             unlink($tmpfile);
-            throw new MediaException('Failed to read from stream', 64);
+            throw new MediaUploadException('Failed to read from stream', 1);
         }
         // pass on
         $this->uploadFile($tmpfile);
@@ -99,15 +100,15 @@ class MediaFile {
     public function uploadFormFile($formfield){
         $this->uploadGuard(); // fail early
 
-        if(!isset($_FILES[$formfield])) throw new MediaException('No upload found', 128);
+        if(!isset($_FILES[$formfield])) throw new MediaUploadException('No upload found', 3);
         $file = $_FILES[$formfield];
 
-        if($file['error']) throw new MediaException('Upload Error '.$file['error'], 256);
+        if($file['error']) throw new MediaUploadException('Upload Error', 2, $file['error']);
 
         // move to local temporary file
         $tmpfile = $this->getTempName();
         if(!move_uploaded_file($file, $tmpfile)){
-            throw new MediaException('Couldn\'t move upload', 512);
+            throw new MediaUploadException('Couldn\'t move upload', 3);
         }
 
         // pass on
@@ -122,12 +123,59 @@ class MediaFile {
      *
      * @param string $file
      * @param bool $unlink delete local file after copy?
+     * @param int  $rev given file is an old revision of that file from $rev
+     * @triggers MEDIA_UPLOAD_FINISH FIXME
      */
-    public function uploadFile($file, $unlink=true){
+    public function uploadFile($file, $unlink=true, $rev=0){
+        global $conf;
+
         $this->uploadGuard();
-        $this->contentCheck();
+        $this->contentCheck($file);
 
+        $this->saveOldRevision();
+        $overwrite = $this->exists();
 
+        // copy it to the right place
+        io_createNamespace($this->id, 'media');
+        if(!copy($file, $this->file))
+            throw new MediaUploadException('uploadfail', 1);
+
+        @clearstatcache(true,$this->file);
+        $time = @filemtime($this->file);
+
+        // Set the correct permission here.
+        // Always chmod media because they may be saved with different permissions than expected from the php umask.
+        // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
+        chmod($this->file, $conf['fmode']);
+
+        $this->uploadNotify($this->id,$this->file,$this->mimetype,$old);
+
+        // add a log entry to the media changelog
+        if ($re){
+            addMediaLogEntry($time, $this->id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($rev)), $rev);
+        } elseif ($overwrite) {
+            addMediaLogEntry($time, $this->id, DOKU_CHANGE_TYPE_EDIT);
+        } else {
+            addMediaLogEntry($time, $this->id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
+        }
+
+        return true;
+    }
+
+    /**
+     * Revert media file to the given revision
+     *
+     * @param $rev revision number
+     * @return bool
+     */
+    public function revertTo($rev){
+        $rev = (int) $rev;
+        if(!$rev) throw new MediaInputException('No revision given', 1);
+
+        $revfile = mediaFN($this->id, $rev);
+        if(!file_exists($revfile)) throw new MediaInputException('No such revision found', 1);
+
+        return $this->uploadFile($revfile, false, $rev);
     }
 
     /**
@@ -141,10 +189,11 @@ class MediaFile {
      * @link   http://www.splitbrain.org/blog/2007-02/12-internet_explorer_facilitates_cross_site_scripting
      * @fixme  check all 26 magic IE filetypes here?
      */
-    function contentCheck(){
+    function contentCheck($file){
         global $conf;
+
         if($conf['iexssprotect']){
-            $fh = @fopen($this->file, 'rb');
+            $fh = @fopen($file, 'rb');
             if($fh){
                 $bytes = fread($fh, 256);
                 fclose($fh);
@@ -154,7 +203,7 @@ class MediaFile {
             }
         }
         if(substr($this->mimetype,0,6) == 'image/'){
-            $info = @getimagesize($this->file);
+            $info = @getimagesize($file);
             if($this->mimetype == 'image/gif' && $info[2] != 1){
                 throw new MediaContentException('uploadbadcontent', 2, 'gif');
             }elseif($this->mimetype == 'image/jpeg' && $info[2] != 2){
@@ -164,7 +213,7 @@ class MediaFile {
             }
             # fixme maybe check other images types as well
         }elseif(substr($this->mimetype,0,5) == 'text/'){
-            if(checkwordblock(io_readFile($this->file))){
+            if(checkwordblock(io_readFile($file))){
                 throw new MediaContentException('uploadspam', 3);
             }
         }
@@ -181,9 +230,13 @@ class MediaFile {
     protected function uploadGuard(){
         global $conf;
 
+        // sanity
+        if($this->isExternal())
+            throw new MediaInputException('You can\'t upload to an external file', 2);
+
         // upload ACL check
         if($this->auth < AUTH_UPLOAD)
-            throw new MediaException('ACL: no permission to upload media', 2);
+            throw new MediaPermissionException('ACL: no permission to upload media', 1);
 
         // build mimetype regexp
         if(!$this->mimetyperegex){
@@ -193,13 +246,13 @@ class MediaFile {
         }
         // check if this is an allowed extension
         if(!preg_match('/^('.$this->mimetyperegex.')$/i',$this->extension)) {
-            throw new MediaException('This extension is not allowed', 1024);
+            throw new MediaContentException('This extension is not allowed', 4);
         }
 
         //check for overwrite
         if($this->exists()){
-            if(!$this->getAllowOverwrite()) throw new MediaException('uploadexists', 777);
-            if(!$conf['mediarevisions'] && $this->auth < AUTH_DELETE) throw new MediaException('ACL not enough permissions to overwrite', 2);
+            if(!$this->getAllowOverwrite()) throw new MediaPermissionException('uploadexists', 3);
+            if(!$conf['mediarevisions'] && $this->auth < AUTH_DELETE) throw new MediaPermissionException('ACL not enough permissions to overwrite', 1);
         }
     }
 
@@ -215,9 +268,9 @@ class MediaFile {
         global $lang;
         global $conf;
 
-        if($this->isExternal()) throw new MediaException('Cannot delete external media', 16);
-        if($this->auth < AUTH_DELETE) throw new MediaException('ACL: no permission to delete media', 2);
-        if($conf['refshow'] && $this->usedBy(1)) throw new MediaException('Media is still in use', 4);
+        if($this->isExternal()) throw new MediaInputException('Cannot delete external media', 2);
+        if($this->auth < AUTH_DELETE) throw new MediaPermissionException('ACL: no permission to delete media', 1);
+        if($conf['refshow'] && $this->usedBy(1)) throw new MediaPermissionException('Media is still in use', 4);
         if(!$this->exists()) return true; // we treat deleting non-existant files as success
         
         // FIXME trigger an event - MEDIA_DELETE_FILE
@@ -272,6 +325,20 @@ class MediaFile {
         }
         return $rev;
     }
+
+    /**
+     * Send a notify mail on uploads
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    protected function uploadNotify($old_rev=false){
+        global $conf;
+        if(empty($conf['notify'])) return; //notify enabled?
+
+        $subscription = new Subscription();
+        return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev, '');
+    }
+
 
     /**
      * Check if a media item is public (eg, external URL or readable by @ALL)
@@ -358,11 +425,28 @@ class MediaFile {
      * @returns
      */
     protected function getTempName(){
-        if (!($tmp = io_mktmpdir())) throw new MediaException('Failed to create temp dir', 32);
+        if (!($tmp = io_mktmpdir())) throw new MediaUploadException('Failed to create temp dir', 1);
         return $tmp.'/'.md5($this->id);
+    }
+
+    /**
+     * Return the local location of the media file
+     *
+     * This will return false for uncached external ressources
+     *
+     * @return bool|string path to file or false if it doesn't exist
+     */
+    public function getFile(){
+        if($this->exists()) return $this->file;
+        if(!$this->isExternal()) return false;
     }
 }
 
+/**
+ * Class MediaException
+ *
+ * General exception, shouldn't be used directly
+ */
 class MediaException extends Exception {
     /**
      * @param string $message a message or language key
@@ -372,11 +456,55 @@ class MediaException extends Exception {
      */
     public function __construct($message = "", $code = 0, $params = array(), Exception $previous = null) {
         global $lang;
-        if(isset($lang[$message])) $message = sprintf($lang[$message], (array) $params);
+        if(isset($lang[$message])){
+            $message = sprintf($lang[$message], (array) $params);
+        }else if ($params){
+            $message .= ' ('.join(', ', (array) $params).')';
+        }
         parent::__construct($message, $code, $previous);
     }
 }
 
-class MediaContentException extends MediaException {
+/**
+ * Class MediaContentException
+ *
+ * Upload contained bad content
+ *
+ * Code 1 - probable XSS attack
+ * Code 2 - not a valid image
+ * Code 3 - spam detected
+ * Code 4 - disallowed extension
+ */
+class MediaContentException extends MediaException {}
 
-}
+/**
+ * Class MediaUploadException
+ *
+ * Errors on uploading
+ *
+ * Code 1 - IO Error
+ * Code 2 - PHP handled form upload error
+ * Code 3 - Not an uploaded file at all
+ */
+class MediaUploadException extends MediaException {}
+
+/**
+ * Class MediaInputException
+ *
+ * Bad input provided
+ *
+ * Code 1 - missing or wrong parameter
+ * Code 2 - no uploads to external
+ */
+class MediaInputException extends MediaException {}
+
+/**
+ * Class MediaPermissionException
+ *
+ * Operation not permitted
+ *
+ * Code 1 - missing ACL permission
+ * Code 3 - file exists, no overwrite
+ * Code 4 - media still in use
+ */
+class MediaPermissionException extends MediaException {}
