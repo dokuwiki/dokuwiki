@@ -291,12 +291,10 @@ function tpl_metaheaders($alt = true) {
     $head = array();
 
     // prepare seed for js and css
-    $tseed   = 0;
+    $tseed   = $updateVersion;
     $depends = getConfigFiles('main');
-    foreach($depends as $f) {
-        $time = @filemtime($f);
-        if($time > $tseed) $tseed = $time;
-    }
+    foreach($depends as $f) $tseed .= @filemtime($f);
+    $tseed   = md5($tseed);
 
     // the usual stuff
     $head['meta'][] = array('name'=> 'generator', 'content'=> 'DokuWiki');
