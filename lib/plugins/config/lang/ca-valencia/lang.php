@@ -62,7 +62,6 @@ $lang['camelcase']             = 'Utilisar CamelCase per als vínculs';
 $lang['deaccent']              = 'Depurar els noms de pàgines';
 $lang['useheading']            = 'Utilisar el primer titular per al nom de pàgina';
 $lang['refcheck']              = 'Comprovar referències a mijos';
-$lang['refshow']               = 'Número de referències a mijos a mostrar';
 $lang['allowdebug']            = 'Permetre depurar (<b>¡desactivar quan no es necessite!</b>)';
 $lang['usewordblock']          = 'Bloquejar spam basant-se en una llista de paraules';
 $lang['indexdelay']            = 'Retart abans d\'indexar (seg.)';

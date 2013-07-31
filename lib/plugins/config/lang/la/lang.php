@@ -58,7 +58,6 @@ $lang['camelcase']             = 'SignaContinua nexis apta facere';
 $lang['deaccent']              = 'Titulus paginarum abrogare';
 $lang['useheading']            = 'Capite primo ut titulo paginae uti';
 $lang['refcheck']              = 'Documenta uisiua inspicere';
-$lang['refshow']               = 'Numerus documentorum ostendorum';
 $lang['allowdebug']            = '<b>ineptum facias si non necessarium!</b> aptum facere';
 $lang['usewordblock']          = 'Malum interretiale ob uerba delere';
 $lang['indexdelay']            = 'Tempus transitum in ordinando (sec)';

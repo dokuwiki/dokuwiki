@@ -108,7 +108,6 @@ $lang['target____media']       = 'Cél-ablak média-fájl hivatkozásokhoz';
 $lang['target____windows']     = 'Cél-ablak Windows hivatkozásokhoz';
 $lang['mediarevisions']        = 'Médiafájlok verziókövetésének engedélyezése';
 $lang['refcheck']              = 'Médiafájlok hivatkozásainak ellenőrzése';
-$lang['refshow']               = 'Médiafájlok hivatkozásainak maximálisan mutatott szintje';
 $lang['gdlib']                 = 'GD Lib verzió';
 $lang['im_convert']            = 'Útvonal az ImageMagick csomag convert parancsához';
 $lang['jpg_quality']           = 'JPG tömörítés minősége (0-100)';

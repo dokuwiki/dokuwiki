@@ -121,7 +121,6 @@ $lang['target____media']       = 'Ventana para enlaces a medios';
 $lang['target____windows']     = 'Ventana para enlaces a ventanas';
 $lang['mediarevisions']        = '¿Habilitar Mediarevisions?';
 $lang['refcheck']              = 'Control de referencia a medios';
-$lang['refshow']               = 'Número de referencias a medios a mostrar';
 $lang['gdlib']                 = 'Versión de GD Lib';
 $lang['im_convert']            = 'Ruta a la herramienta de conversión de ImageMagick';
 $lang['jpg_quality']           = 'Calidad de compresión de JPG (0-100)';

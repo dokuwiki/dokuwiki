@@ -97,7 +97,6 @@ $lang['target____media']       = 'Multimedia estekentzat helburu leihoa';
 $lang['target____windows']     = 'Leihoen estekentzat helburu leihoa';
 $lang['mediarevisions']        = 'Media rebisioak gaitu?';
 $lang['refcheck']              = 'Multimedia erreferentzia kontrolatu';
-$lang['refshow']               = 'Erakusteko multimedia erreferentzia kopurua';
 $lang['gdlib']                 = 'GD Lib bertsioa';
 $lang['im_convert']            = 'ImageMagick-en aldaketa tresnara bidea';
 $lang['jpg_quality']           = 'JPG konprimitze kalitatea (0-100)';

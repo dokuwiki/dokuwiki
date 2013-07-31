@@ -109,7 +109,6 @@ $lang['target____media']       = '미디어 링크에 대한 타겟 창';
 $lang['target____windows']     = '창 링크에 대한 타겟 창';
 $lang['mediarevisions']        = '미디어 판 관리를 사용하겠습니까?';
 $lang['refcheck']              = '미디어 파일을 삭제하기 전에 사용하고 있는지 검사';
-$lang['refshow']               = '위의 설정이 활성화되었을 때 보여줄 미디어 참고 수';
 $lang['gdlib']                 = 'GD 라이브러리 버전';
 $lang['im_convert']            = 'ImageMagick 변환 도구 위치';
 $lang['jpg_quality']           = 'JPG 압축 품질 (0-100)';

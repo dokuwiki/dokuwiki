@@ -59,7 +59,6 @@ $lang['camelcase']             = 'Përdor CamelCase (shkronja e parë e çdo fja
 $lang['deaccent']              = 'Emra faqesh të pastër';
 $lang['useheading']            = 'Përdor titra të nivelit të parë për faqet e emrave';
 $lang['refcheck']              = 'Kontroll për referim mediash';
-$lang['refshow']               = 'Numri i referimeve të medias që duhet të tregohet';
 $lang['allowdebug']            = 'Lejo debug <b>çaktivizoje nëse nuk nevojitet!</b>';
 $lang['usewordblock']          = 'Blloko spam-in duke u bazuar mbi listë fjalësh';
 $lang['indexdelay']            = 'Vonesa në kohë para index-imit (sekonda)';

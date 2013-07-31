@@ -113,7 +113,6 @@ $lang['target____media']       = 'Doelvenster voor medialinks';
 $lang['target____windows']     = 'Doelvenster voor windows links';
 $lang['mediarevisions']        = 'Mediarevisies activeren?';
 $lang['refcheck']              = 'Controleer of er verwijzingen bestaan naar een mediabestand voor het wijderen';
-$lang['refshow']               = 'Aantal te tonen mediaverwijzingen';
 $lang['gdlib']                 = 'Versie GD Lib ';
 $lang['im_convert']            = 'Path naar ImageMagick\'s convert tool';
 $lang['jpg_quality']           = 'JPG compressiekwaliteit (0-100)';

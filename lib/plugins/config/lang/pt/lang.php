@@ -63,7 +63,6 @@ $lang['camelcase']             = 'Usar CamelCase';
 $lang['deaccent']              = 'Nomes das páginas sem acentos';
 $lang['useheading']            = 'Usar o primeiro cabeçalho para o nome da página';
 $lang['refcheck']              = 'Verificação de referência da media';
-$lang['refshow']               = 'Número de referências de media a exibir';
 $lang['allowdebug']            = 'Permitir depuração <b>desabilite se não for necessário!</b>';
 $lang['usewordblock']          = 'Bloquear spam baseado em lista de palavras (wordlist)';
 $lang['indexdelay']            = 'Tempo de espera antes da indexação (seg)';

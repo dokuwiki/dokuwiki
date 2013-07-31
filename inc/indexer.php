@@ -10,7 +10,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 5);
+define('INDEXER_VERSION', 6);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -1365,6 +1365,12 @@ function idx_addPage($page, $verbose=false, $force=false) {
         $metadata['relation_references'] = array_keys($references);
     else
         $metadata['relation_references'] = array();
+
+    if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null)
+        $metadata['relation_media'] = array_keys($media);
+    else
+        $metadata['relation_media'] = array();
+
     $data = compact('page', 'body', 'metadata', 'pid');
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
     if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);

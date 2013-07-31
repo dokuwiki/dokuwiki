@@ -134,7 +134,6 @@ $lang['target____windows']   = 'Target window for windows links';
 /* Media Settings */
 $lang['mediarevisions'] = 'Enable Mediarevisions?';
 $lang['refcheck']    = 'Check if a media file is still in use before deleting it';
-$lang['refshow']     = 'Number of media references to show when the above setting is enabled';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
 $lang['jpg_quality'] = 'JPG compression quality (0-100)';
