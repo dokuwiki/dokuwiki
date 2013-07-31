@@ -365,7 +365,6 @@ function css_pluginstyles($mediatype='screen'){
         //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
         if($lang['direction'] == 'rtl'){
             $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
-            $list[DOKU_PLUGIN."$p/rtl.less"] = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;
