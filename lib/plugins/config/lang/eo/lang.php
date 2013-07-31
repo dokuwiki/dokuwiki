@@ -108,7 +108,6 @@ $lang['target____media']       = 'Parametro "target" (celo) por aŭdvidaĵaj lig
 $lang['target____windows']     = 'Parametro "target" (celo) por Vindozaj ligiloj';
 $lang['mediarevisions']        = 'Ĉu ebligi reviziadon de aŭdvidaĵoj?';
 $lang['refcheck']              = 'Kontrolo por referencoj al aŭdvidaĵoj';
-$lang['refshow']               = 'Nombro da referencoj al aŭdvidaĵoj por montri';
 $lang['gdlib']                 = 'Versio de GD-Lib';
 $lang['im_convert']            = 'Pado al la konvertilo de ImageMagick';
 $lang['jpg_quality']           = 'Kompaktiga kvalito de JPG (0-100)';

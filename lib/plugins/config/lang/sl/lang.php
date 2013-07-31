@@ -64,7 +64,6 @@ $lang['camelcase']             = 'Uporabi EnoBesedni zapisa za povezave';
 $lang['deaccent']              = 'Počisti imena strani';
 $lang['useheading']            = 'Uporabi prvi naslov za ime strani';
 $lang['refcheck']              = 'Preverjanje sklica predstavnih datotek';
-$lang['refshow']               = 'Število predstavih sklicev za prikaz';
 $lang['allowdebug']            = 'Dovoli razhroščevanje (po potrebi!)';
 $lang['mediarevisions']        = 'Ali naj se omogočijo objave predstavnih vsebin?';
 $lang['usewordblock']          = 'Zaustavi neželeno besedilo glede na seznam besed';

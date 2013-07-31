@@ -178,7 +178,7 @@ function media_inuse($id) {
     global $conf;
     $mediareferences = array();
     if($conf['refcheck']){
-        $mediareferences = ft_mediause($id,$conf['refshow']);
+        $mediareferences = ft_mediause($id,true);
         if(!count($mediareferences)) {
             return false;
         } else {

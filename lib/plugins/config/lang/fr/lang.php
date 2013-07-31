@@ -118,7 +118,6 @@ $lang['target____media']       = 'Cible pour liens média';
 $lang['target____windows']     = 'Cible pour liens vers partages Windows';
 $lang['mediarevisions']        = 'Activer les révisions (gestion de versions) des médias';
 $lang['refcheck']              = 'Vérifier si un média est toujours utilisé avant de le supprimer';
-$lang['refshow']               = 'Nombre de références de média à montrer lorsque le paramètre précédent est actif';
 $lang['gdlib']                 = 'Version de la librairie GD';
 $lang['im_convert']            = 'Chemin vers l\'outil de conversion ImageMagick';
 $lang['jpg_quality']           = 'Qualité de la compression JPEG (0-100)';

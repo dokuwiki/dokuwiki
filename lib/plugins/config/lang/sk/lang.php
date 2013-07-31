@@ -103,7 +103,6 @@ $lang['target____media']       = 'Cieľové okno (target) pre media odkazy';
 $lang['target____windows']     = 'Cieľové okno (target) pre windows odkazy';
 $lang['mediarevisions']        = 'Povoliť verzie súborov?';
 $lang['refcheck']              = 'Kontrolovať odkazy na médiá (pred vymazaním)';
-$lang['refshow']               = 'Počet zobrazených odkazov na médiá';
 $lang['gdlib']                 = 'Verzia GD Lib';
 $lang['im_convert']            = 'Cesta k ImageMagick convert tool';
 $lang['jpg_quality']           = 'Kvalita JPG kompresie (0-100)';

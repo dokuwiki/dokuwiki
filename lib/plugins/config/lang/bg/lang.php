@@ -136,7 +136,6 @@ $lang['target____windows']   = 'Прозорец за препратки към 
 /* Media Settings */
 $lang['mediarevisions'] = 'Да се пазят ли стари версии на качените файлове (Mediarevisions)?';
 $lang['refcheck']    = 'Проверка за препратка към медия, преди да бъде изтрита';
-$lang['refshow']     = 'Брой на показваните медийни препратки';
 $lang['gdlib']       = 'Версия на GD Lib';
 $lang['im_convert']  = 'Път до инструмента за трансформация на ImageMagick';
 $lang['jpg_quality'] = 'Качество на JPG компресията (0-100)';

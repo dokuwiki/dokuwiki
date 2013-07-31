@@ -108,7 +108,6 @@ $lang['target____media']       = 'Zielfenstername für Medienlinks';
 $lang['target____windows']     = 'Zielfenstername für Windows-Freigaben-Links';
 $lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
 $lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
-$lang['refshow']               = 'Wie viele Verwendungsorte der Media-Datei zeigen';
 $lang['gdlib']                 = 'GD Lib Version';
 $lang['im_convert']            = 'Pfad zu ImageMagicks-Konvertierwerkzeug';
 $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
