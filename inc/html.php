@@ -1356,10 +1356,10 @@ function html_updateprofile(){
     global $auth;
 
     print p_locale_xhtml('updateprofile');
+    print '<div class="centeralign">'.NL;
 
     $fullname = $INPUT->post->str('fullname', $INFO['userinfo']['name'], true);
     $email = $INPUT->post->str('email', $INFO['userinfo']['mail'], true);
-    print '<div class="centeralign">'.NL;
     $form = new Doku_Form(array('id' => 'dw__register'));
     $form->startFieldset($lang['profile']);
     $form->addHidden('do', 'profile');
@@ -1368,9 +1368,9 @@ function html_updateprofile(){
     $attr = array('size'=>'50');
     if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
     $form->addElement(form_makeTextField('fullname', $fullname, $lang['fullname'], '', 'block', $attr));
-    $attr = array('size'=>'50');
+    $attr = array('size'=>'50', 'class'=>'edit');
     if (!$auth->canDo('modMail')) $attr['disabled'] = 'disabled';
-    $form->addElement(form_makeTextField('email', $email, $lang['email'], '', 'block', $attr));
+    $form->addElement(form_makeField('email','email', $email, $lang['email'], '', 'block', $attr));
     $form->addElement(form_makeTag('br'));
     if ($auth->canDo('modPass')) {
         $form->addElement(form_makePasswordField('newpass', $lang['newpass'], '', 'block', array('size'=>'50')));
@@ -1378,10 +1378,11 @@ function html_updateprofile(){
     }
     if ($conf['profileconfirm']) {
         $form->addElement(form_makeTag('br'));
-        $form->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50')));
+        $form->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50', 'required' => 'required')));
     }
     $form->addElement(form_makeButton('submit', '', $lang['btn_save']));
     $form->addElement(form_makeButton('reset', '', $lang['btn_reset']));
+
     $form->endFieldset();
     html_form('updateprofile', $form);
     print '</div>'.NL;
