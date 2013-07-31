@@ -1,0 +1,439 @@
+/**
+ * This file provides the main design styles for the
+ * bits that surround the content.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Clarence Lee <clarencedglee@gmail.com>
+ */
+
+/* header
+********************************************************************/
+
+#dokuwiki__header {
+    padding: 2em 0 1.5em;
+
+    .headings,
+    .tools {
+        margin-bottom: 1.5em;
+        width: 49%;
+    }
+    .tools {
+        margin-top: .2em;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: normal;
+
+        img {
+            float: left;
+            margin-right: .5em;
+        }
+
+        span {
+            display: block;
+            padding-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: @ini_text;
+            background-color: inherit;
+        }
+    }
+
+    p.claim {
+        margin-bottom: 0;
+        font-size: 0.875em;
+    }
+}
+
+[dir=rtl] #dokuwiki__header h1 img {
+    float: right;
+    margin-left: .5em;
+    margin-right: 0;
+}
+
+/* tools
+********************************************************************/
+
+/* highlight selected tool */
+.mode_admin a.action.admin,
+.mode_login a.action.login,
+.mode_register a.action.register,
+.mode_profile a.action.profile,
+.mode_recent a.action.recent,
+.mode_index a.action.index,
+.mode_media a.action.media,
+.mode_revisions a.action.revs,
+.mode_backlink a.action.backlink,
+.mode_subscribe a.action.subscribe {
+    font-weight: bold;
+}
+
+#dokuwiki__header .tools {
+    ul {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    li {
+        font-size: 0.875em;
+        margin-left: 1em;
+        list-style: none;
+        display: inline;
+    }
+
+    form.search div.ajax_qsearch li {
+        font-size: 1em;
+        margin-left: 0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+[dir=rtl] #dokuwiki__header .tools li {
+    margin-right: 1em;
+    margin-left: 0;
+}
+
+#dokuwiki__usertools a.action {
+    padding-left: 20px;
+    background: transparent url(images/usertools.png) no-repeat 0 0;
+}
+
+[dir=rtl] #dokuwiki__usertools a.action {
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+[dir=rtl] #IE7 #dokuwiki__usertools a.action {
+    display: inline-block;
+}
+
+#dokuwiki__header .mobileTools {
+    display: none; /* hide mobile tools dropdown to only show in mobile view */
+}
+
+/*____________ user tools ____________*/
+
+#dokuwiki__usertools {
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    text-align: right;
+    width: 100%;
+
+    ul {
+        margin: 0 auto;
+        padding: 0;
+        max-width: @ini_site_width;
+    }
+
+    a.action.admin {
+        background-position: left 0;
+    }
+
+    a.action.profile {
+        background-position: left -32px;
+    }
+
+    a.action.register {
+        background-position: left -64px;
+    }
+
+    a.action.login {
+        background-position: left -96px;
+    }
+
+    a.action.logout {
+        background-position: left -128px;
+    }
+}
+
+[dir=rtl] #dokuwiki__usertools {
+    text-align: left;
+    left: 40px;
+    right: auto;
+
+    a.action.admin {
+        background-position: right 0;
+    }
+
+    a.action.profile {
+        background-position: right -32px;
+    }
+
+    a.action.register {
+        background-position: right -64px;
+    }
+
+    a.action.login {
+        background-position: right -96px;
+    }
+
+    a.action.logout {
+        background-position: right -128px;
+    }
+}
+
+/*____________ site tools ____________*/
+
+#dokuwiki__sitetools {
+    text-align: right;
+
+    form.search {
+        display: block;
+        font-size: 0.875em;
+        position: relative;
+
+        input.edit {
+            width: 18em;
+            padding: .35em 22px .35em .1em;
+        }
+
+        input.button {
+            background: transparent url(images/search.png) no-repeat 0 0;
+            border-width: 0;
+            width: 19px;
+            height: 14px;
+            text-indent: -99999px;
+            margin-left: -20px;
+            box-shadow: none;
+            padding: 0;
+        }
+    }
+
+    ul {
+        margin-top: 0.5em;
+    }
+}
+
+[dir=rtl] #dokuwiki__sitetools {
+    text-align: left;
+
+    form.search {
+        input.edit {
+            padding: .35em .1em .35em 22px;
+        }
+
+        input.button {
+            background-position: 5px 0;
+            margin-left: 0;
+            margin-right: -20px;
+            position: relative;
+        }
+    }
+}
+
+#IE7 #dokuwiki__sitetools form.search {
+    min-height: 1px;
+    z-index: 21;
+}
+
+/*____________ breadcrumbs ____________*/
+
+.dokuwiki div.breadcrumbs {
+    border-top: 1px solid @ini_border;
+    border-bottom: 1px solid @ini_background;
+    margin-bottom: .5em;
+    font-size: 0.875em;
+    clear: both;
+
+    div {
+        padding: .1em .35em;
+    }
+
+    div:only-child {
+        border-top: 1px solid @ini_background;
+        border-bottom: 1px solid @ini_border;
+    }
+
+    div:first-child {
+        border-top: 1px solid @ini_background;
+    }
+
+    div:last-child {
+        border-bottom: 1px solid @ini_border;
+    }
+
+    a {
+        color: @ini_link;
+        background-color: inherit;
+    }
+
+    .bcsep {
+        font-size: 0.75em;
+    }
+}
+
+#IE7 .dokuwiki div.breadcrumbs div,
+#IE8 .dokuwiki div.breadcrumbs div {
+    border-bottom: 1px solid @ini_border;
+}
+
+/* sidebar
+********************************************************************/
+
+#dokuwiki__aside {
+
+    > .pad {
+        font-size: 0.875em;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+
+    /* make sidebar more condensed */
+
+    h1 {
+        font-size: 1.714em;
+        margin-bottom: .292em;
+    }
+
+    h2 {
+        margin-bottom: .333em;
+    }
+
+    h3 {
+        margin-bottom: .444em;
+    }
+
+    h4 {
+        margin-bottom: .5em;
+    }
+
+    h5 {
+        margin-bottom: .5714em;
+    }
+
+    p,
+    ul,
+    ol,
+    dl,
+    pre,
+    table,
+    fieldset,
+    hr,
+    blockquote,
+    address {
+        margin-bottom: .7em;
+    }
+
+    ul,
+    ol {
+        padding-left: .5em;
+    }
+
+    li ul,
+    li ol {
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    a:link,
+    a:visited {
+        color: @ini_link;
+        background-color: inherit;
+    }
+}
+
+[dir=rtl] #dokuwiki__aside ul,
+[dir=rtl] #dokuwiki__aside ol {
+    padding-right: .5em;
+}
+
+/* content
+********************************************************************/
+
+.dokuwiki .pageId {
+    position: absolute;
+    top: -2.3em;
+    right: -1em;
+    overflow: hidden;
+    padding: 1em 1em 0;
+
+    span {
+        font-size: 0.875em;
+        border: solid @ini_background_alt;
+        border-width: 1px 1px 0;
+        background-color: @ini_background;
+        color: @ini_text_alt;
+        padding: .1em .35em;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        box-shadow: 0 0 .5em @ini_text_alt;
+        display: block;
+    }
+}
+
+.dokuwiki div.page {
+    background: @ini_background;
+    color: inherit;
+    border: 1px solid @ini_background_alt;
+    box-shadow: 0 0 .5em @ini_text_alt;
+    border-radius: 2px;
+    padding: 1.556em 2em 2em;
+    margin-bottom: .5em;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.dokuwiki .docInfo {
+    font-size: 0.875em;
+    text-align: right;
+}
+
+/* license note under edit window */
+.dokuwiki div.license {
+    font-size: 93.75%;
+}
+
+[dir=rtl] .dokuwiki .docInfo {
+    text-align: left;
+}
+
+[dir=rtl] .dokuwiki .pageId {
+    right: auto;
+    left: -1em;
+}
+
+/* footer
+********************************************************************/
+
+.dokuwiki .wrapper {
+    margin-bottom: 1.4em;
+}
+
+#dokuwiki__footer {
+    margin-bottom: 1em;
+    text-align: center;
+
+    > .pad {
+        font-size: 0.875em;
+    }
+
+    div.license {
+        margin-bottom: 0.5em;
+        font-size: 100%;
+    }
+
+    div.buttons a {
+        img {
+            opacity: 0.5;
+        }
+
+        &:hover img,
+        &:active img,
+        &:focus img {
+            opacity: 1;
+        }
+    }
+
+}
+
+[dir=rtl] #dokuwiki__footer .license img {
+    margin: 0 0 0 .5em;
+}

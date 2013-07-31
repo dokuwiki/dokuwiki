@@ -44,14 +44,14 @@
 }
 /* search snippet */
 .dokuwiki dl.search_results dd {
-    color: __text_alt__;
+    color: @ini_text_alt;
     background-color: inherit;
     margin: 0 0 1.2em 0;
 }
 
 /* search hit in normal text */
 .dokuwiki .search_hit {
-    color: __text__;
+    color: @ini_text;
     background-color: __highlight__;
 }
 /* search hit in search results */
@@ -60,7 +60,7 @@
 }
 /* ellipsis separating snippets */
 .dokuwiki .search_results .search_sep {
-    color: __text__;
+    color: @ini_text;
     background-color: inherit;
 }
 
