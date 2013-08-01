@@ -104,10 +104,13 @@ function js_out(){
     // load files
     foreach($files as $file){
         $ismin = (substr($file,-7) == '.min.js');
+        $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC.'lib/scripts/') !== 0);
 
         echo "\n\n/* XXXXXXXXXX begin of ".str_replace(DOKU_INC, '', $file) ." XXXXXXXXXX */\n\n";
         if($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";
+        if ($debugjs) echo "\ntry {\n";
         js_load($file);
+        if ($debugjs) echo "\n} catch (e) {\n   logError(e, '".str_replace(DOKU_INC, '', $file)."');\n}\n";
         if($ismin) echo "\n/* END NOCOMPRESS */\n";
         echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
