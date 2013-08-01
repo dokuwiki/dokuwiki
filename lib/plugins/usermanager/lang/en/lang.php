@@ -31,6 +31,8 @@ $lang['search']      = 'Search';
 $lang['search_prompt'] = 'Perform search';
 $lang['clear']       = 'Reset Search Filter';
 $lang['filter']      = 'Filter';
+$lang['export_all']  = 'Export All Users (CSV)';
+$lang['export_filtered'] = 'Export Filtered User list (CSV)';
 
 $lang['summary']     = 'Displaying users %1$d-%2$d of %3$d found. %4$d users total.';
 $lang['nonefound']   = 'No users found. %d users total.';

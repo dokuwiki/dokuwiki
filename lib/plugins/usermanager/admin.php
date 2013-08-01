@@ -101,6 +101,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           case "search" : $this->_setFilter($param);
                           $this->_start = 0;
                           break;
+          case "export" : $this->_export(); break;
         }
 
         $this->_user_total = $this->_auth->canDo('getUserCount') ? $this->_auth->getUserCount($this->_filter) : -1;
@@ -133,6 +134,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
 
         $editable = $this->_auth->canDo('UserMod');
+        $export_label = empty($this->_filter) ? $this->lang['export_all'] : $this->lang[export_filtered];
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -196,7 +198,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("          <input type=\"submit\" name=\"fn[next]\" ".$page_buttons['next']." class=\"button\" value=\"".$this->lang['next']."\" />");
         ptln("          <input type=\"submit\" name=\"fn[last]\" ".$page_buttons['last']." class=\"button\" value=\"".$this->lang['last']."\" />");
         ptln("        </span>");
-        ptln("        <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
+        if (!empty($this->_filter)) {
+            ptln("    <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
+        }
+        ptln("        <input type=\"submit\" name=\"fn[export]\" class=\"button\" value=\"".$export_label."\" />");
         ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
 
@@ -628,5 +633,37 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         return $buttons;
+    }
+
+    /*
+     *  export a list of users in csv format using the current filter criteria
+     */
+    function _export() {
+        // list of users for export - based on current filter criteria
+        $user_list = $this->_auth->retrieveUsers(0, 0, $this->_filter);
+        $column_headings = array(
+            $this->lang["user_id"],
+            $this->lang["user_name"],
+            $this->lang["user_mail"],
+            $this->lang["user_groups"]
+        );
+
+        // ==============================================================================================
+        // GENERATE OUTPUT
+        // normal headers for downloading...
+        header('Content-type: text/csv;charset=utf-8');
+        header('Content-Disposition: attachment; filename="wikiusers.csv"');
+#       // for debugging assistance, send as text plain to the browser
+#       header('Content-type: text/plain;charset=utf-8');
+
+        // output the csv
+        $fd = fopen('php://output','w');
+        fputcsv($fd, $column_headings);
+        foreach ($user_list as $user => $info) {
+            $line = array($user, $info['name'], $info['mail'], join(',',$info['grps']));
+            fputcsv($fd, $line);
+        }
+        fclose($fd);
+        die;
     }
 }
