@@ -1759,8 +1759,8 @@ function tpl_classes() {
         'dokuwiki',
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
-        ($_SERVER['REMOTE_USER']) ? 'loggedIn' : '',
-        ($INFO['exists']) ? '' : 'notFound',
+        $_SERVER['REMOTE_USER'] ? 'loggedIn' : '',
+        $INFO['exists'] ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );
     return join(' ', $classes);
