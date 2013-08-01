@@ -541,6 +541,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
          * @var string $accesskey
          * @var string $id
          * @var string $method
+         * @var bool   $nofollow
          * @var array  $params
          */
         extract($data);
@@ -555,10 +556,11 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
             $akey     = 'accesskey="'.$accesskey.'" ';
             $addTitle = ' ['.strtoupper($accesskey).']';
         }
+        $rel = $nofollow ? 'rel="nofollow" ' : '';
         $out = tpl_link(
             $linktarget, $pre.(($inner) ? $inner : $caption).$suf,
             'class="action '.$type.'" '.
-                $akey.'rel="nofollow" '.
+                $akey.$rel.
                 'title="'.hsc($caption).$addTitle.'"', 1
         );
     }
@@ -595,6 +597,7 @@ function tpl_get_action($type) {
     global $INFO;
     global $REV;
     global $ACT;
+    global $conf;
 
     // check disabled actions and fix the badly named ones
     if($type == 'history') $type = 'revisions';
@@ -604,6 +607,7 @@ function tpl_get_action($type) {
     $id        = $ID;
     $method    = 'get';
     $params    = array('do' => $type);
+    $nofollow  = true;
     switch($type) {
         case 'edit':
             // most complicated type - we need to decide on current action
@@ -641,6 +645,10 @@ function tpl_get_action($type) {
             break;
         case 'index':
             $accesskey = 'x';
+            // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
+            if ($conf['start'] == $ID && !$conf['sitemap']) {
+                $nofollow = false;
+            }
             break;
         case 'top':
             $accesskey = 't';
@@ -711,7 +719,7 @@ function tpl_get_action($type) {
             return '[unknown %s type]';
             break;
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params');
+    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
 }
 
 /**
