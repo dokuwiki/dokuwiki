@@ -40,6 +40,22 @@ class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    function testCodeDownload() {
+        $this->P->parse('Foo <code bash script.sh>Test</code> Bar');
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('p_close',array()),
+            array('code',array('Test','bash','script.sh')),
+            array('p_open',array()),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
     function testCodeToken() {
         $this->P->parse('Foo <code2>Bar</code2><code>Test</code>');
         $calls = array (
