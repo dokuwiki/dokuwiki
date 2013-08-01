@@ -764,7 +764,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     // don't print the search form if search action has been disabled
     if(!actionOK('search')) return false;
 
-    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
+    print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
     if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
@@ -1744,6 +1744,24 @@ function tpl_media() {
     echo '</div>'.NL;
 
     echo '</div>'.NL;
+}
+
+/**
+ * Return useful layout classes
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_classes() {
+    global $ACT, $conf, $ID, $INFO;
+    $classes = array(
+        'dokuwiki',
+        'mode_'.$ACT,
+        'tpl_'.$conf['template'],
+        $_SERVER['REMOTE_USER'] ? 'loggedIn' : '',
+        $INFO['exists'] ? '' : 'notFound',
+        ($ID == $conf['start']) ? 'home' : '',
+    );
+    return join(' ', $classes);
 }
 
 //Setup VIM: ex: et ts=4 :

@@ -20,7 +20,8 @@
  *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
- *   'email'        - text input, input must conform to email address format
+ *   'email'        - text input, input must conform to email address format, supports optional '_multiple'
+ *                    parameter for multiple comma separated email addresses
  *   'password'     - password input, minimal input validation, setting output text in quotes, maybe encoded
  *                    according to the _code parameter
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
@@ -58,6 +59,7 @@
  *   '_code'       - encoding method to use, accepted values: 'base64','uuencode','plain'.  defaults to plain.
  *   '_min'        - minimum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
+ *   '_multiple'   - bool, allow multiple comma separated email values; optional for 'email', ignored by others
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
