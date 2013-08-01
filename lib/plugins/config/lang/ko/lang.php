@@ -62,7 +62,7 @@ $lang['youarehere']            = '계층형 위치 추적 (다음 위의 옵션�
 $lang['fullpath']              = '문서 하단에 전체 경로 보여주기';
 $lang['typography']            = '기호 대체';
 $lang['dformat']               = '날짜 형식 (PHP <a href="http://www.php.net/strftime">strftime</a> 기능 참고)';
-$lang['signature']             = '편집기에서 서명 버튼을 누를 때 삽입할 내용';
+$lang['signature']             = '편집기에서 서명 버튼을 누를 때 넣을 내용';
 $lang['showuseras']            = '마지막에 문서를 편집한 사용자를 보여줄지 여부';
 $lang['toptoclevel']           = '목차 최상위 항목';
 $lang['tocminheads']           = '목차 표시 여부를 결정할 최소한의 문단 제목 항목의 수';
@@ -86,7 +86,7 @@ $lang['rememberme']            = '항상 로그인 정보 저장 허용 (기억�
 $lang['disableactions']        = 'DokuWiki 활동 비활성화';
 $lang['disableactions_check']  = '검사';
 $lang['disableactions_subscription'] = '구독 신청/구독 취소';
-$lang['disableactions_wikicode'] = '내용 보기/원본 내보내기';
+$lang['disableactions_wikicode'] = '원본 보기/원본 내보내기';
 $lang['disableactions_other']  = '다른 활동 (쉼표로 구분)';
 $lang['auth_security_timeout'] = '인증 보안 초과 시간 (초)';
 $lang['securecookie']          = 'HTTPS로 보내진 쿠키는 HTTPS에만 적용 할까요? 위키의 로그인 페이지만 SSL로 암호화하고 위키 문서는 그렇지 않은 경우 비활성화 합니다.';

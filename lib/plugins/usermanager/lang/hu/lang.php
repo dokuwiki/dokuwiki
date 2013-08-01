@@ -8,12 +8,13 @@
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
+ * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['menu']                  = 'Felhasználók kezelése';
 $lang['noauth']                = '(A felhasználói azonosítás nem működik.)';
 $lang['nosupport']             = '(A felhasználók kezelése nem támogatott.)';
 $lang['badauth']               = 'nem érvényes autentikációs technika';
-$lang['user_id']               = 'Felhasználó azonosító';
+$lang['user_id']               = 'Felhasználói azonosító';
 $lang['user_pass']             = 'Jelszó';
 $lang['user_name']             = 'Név';
 $lang['user_mail']             = 'E-mail';
@@ -30,8 +31,8 @@ $lang['search']                = 'Keresés';
 $lang['search_prompt']         = 'Keresés';
 $lang['clear']                 = 'Keresési szűrés törlése';
 $lang['filter']                = 'Szűrés';
-$lang['summary']               = '%1$d-%2$d. felhasználókat mutatom a(z) %3$d megtalált felhasználóból. %4$d felhasználó van összesen.';
-$lang['nonefound']             = 'Nem találtam ilyen felhasználót. %d felhasználó van összesen.';
+$lang['summary']               = '%1$d-%2$d. felhasználók megjelenítése a(z) %3$d megtalált felhasználóból. %4$d felhasználó van összesen.';
+$lang['nonefound']             = 'Nincs ilyen felhasználó. %d felhasználó van összesen.';
 $lang['delete_ok']             = '%d felhasználó törölve.';
 $lang['delete_fail']           = '%d felhasználót nem sikerült törölni.';
 $lang['update_ok']             = 'A felhasználó adatait sikeresen elmentettem.';
@@ -45,7 +46,7 @@ $lang['edit_usermissing']      = 'A kiválasztott felhasználót nem találom, a
 $lang['user_notify']           = 'Felhasználó értesítése';
 $lang['note_notify']           = 'Csak akkor küld értesítő e-mailt, ha a felhasználó új jelszót kapott.';
 $lang['note_group']            = 'Ha nincs csoport meghatározva, az új felhasználó az alapértelmezett csoportba (%s) kerül.';
-$lang['note_pass']             = 'Ha a baloldali mező üres, és a felhasználó értesítés aktív, akkor generált jelszó lesz.';
+$lang['note_pass']             = 'Ha a baloldali mező üres és a felhasználó értesítés aktív, akkor a jelszót a rendszer generálja.';
 $lang['add_ok']                = 'A felhasználó sikeresen hozzáadva.';
 $lang['add_fail']              = 'A felhasználó hozzáadása nem sikerült.';
 $lang['notify_ok']             = 'Értesítő levél elküldve.';

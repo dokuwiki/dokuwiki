@@ -1,7 +1,7 @@
 Szia,
 
 A @PAGE@ névtérhez tartozó oldalak megváltoztak a @TITLE wikiben.
-Itt vannak a módosított oldalak:
+A módosított oldalak a következők:
 
 --------------------------------------------------------
 @DIFF@
@@ -10,5 +10,4 @@ Itt vannak a módosított oldalak:
 Ha nem szeretnél értesítéseket kapni, jelentkezz be a wiki-be itt: @DOKUWIKIURL@, majd ezen az oldalon tudsz leiratkozni: @SUBSCRIBE@.
 
 --
-Ezt a levelet a DokuWiki generálta
-@DOKUWIKIURL@
+Ezt a levelet a @DOKUWIKIURL@ DokuWiki generálta.
