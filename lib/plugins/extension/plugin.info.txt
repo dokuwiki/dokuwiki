@@ -1,0 +1,7 @@
+base   extension
+author Michael Hamann
+email  michael@content-space.de
+date   2013-08-01
+name   extension plugin
+desc   Extension manager
+url    https://www.dokuwiki.org/plugin:extension
