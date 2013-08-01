@@ -856,7 +856,7 @@ function html_index($ns){
 function html_list_index($item){
     global $ID, $conf;
 
-    // prevent searchbots needlessly following links - only necessary when accessed from the homepage and no sitemap.xml is being generated
+    // prevent searchbots needlessly following links
     $nofollow = ($ID != $conf['start'] || $conf['sitemap']) ? ' rel="nofollow"' : '';
 
     $ret = '';
