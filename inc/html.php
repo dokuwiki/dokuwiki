@@ -1385,6 +1385,23 @@ function html_updateprofile(){
 
     $form->endFieldset();
     html_form('updateprofile', $form);
+
+    if ($auth->canDo('delUser') && actionOK('profile_delete')) {
+        $form_profiledelete = new Doku_Form(array('id' => 'dw__profiledelete'));
+        $form_profiledelete->startFieldset($lang['profdeleteuser']);
+        $form_profiledelete->addHidden('do', 'profile_delete');
+        $form_profiledelete->addHidden('delete', '1');
+        $form_profiledelete->addElement(form_makeCheckboxField('confirm_delete', '1', $lang['profconfdelete'],'dw__confirmdelete','', array('required' => 'required')));
+        if ($conf['profileconfirm']) {
+            $form_profiledelete->addElement(form_makeTag('br'));
+            $form_profiledelete->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50', 'required' => 'required')));
+        }
+        $form_profiledelete->addElement(form_makeButton('submit', '', $lang['btn_deleteuser']));
+        $form_profiledelete->endFieldset();
+
+        html_form('profiledelete', $form_profiledelete);
+    }
+
     print '</div>'.NL;
 }
 

@@ -98,6 +98,7 @@ $lang['disableactions']        = 'DokuWiki-Aktionen deaktivieren';
 $lang['disableactions_check']  = 'Check';
 $lang['disableactions_subscription'] = 'Seiten-Abonnements';
 $lang['disableactions_wikicode'] = 'Quelltext betrachten/exportieren';
+$lang['disableactions_profile_delete'] = 'Eigenes Benutzerprofil löschen';
 $lang['disableactions_other']  = 'Andere Aktionen (durch Komma getrennt)';
 $lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Übersicht. Wenn diese Option aktiviert wird, werden alle Namensräume, für die der Benutzer keine Lese-Rechte hat, nicht angezeigt. Dies kann unter Umständen dazu führen, das lesbare Unter-Namensräume nicht angezeigt werden und macht die Übersicht evtl. unbrauchbar in Kombination mit bestimmten ACL Einstellungen.';
 $lang['auth_security_timeout'] = 'Authentifikations-Timeout (Sekunden)';

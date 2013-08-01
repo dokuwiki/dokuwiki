@@ -104,6 +104,7 @@ $lang['disableactions'] = 'Disable DokuWiki actions';
 $lang['disableactions_check'] = 'Check';
 $lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
 $lang['disableactions_wikicode'] = 'View source/Export Raw';
+$lang['disableactions_profile_delete'] = 'Delete Own Account';
 $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
