@@ -101,8 +101,8 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
 
     //media to local file
     if(media_isexternal($media)) {
-        //check hash
-        if(substr(PassHash::hmac('md5', $media, auth_cookiesalt()), 0, 6) !== $INPUT->str('hash')) {
+        //check token for external image and additional for resized and cached images
+        if(media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
             return array(412, 'Precondition Failed');
         }
         //handle external images
@@ -110,10 +110,6 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
         if(!$file) {
             //download failed - redirect to original URL
             return array(302, $media);
-        }
-        // check token for resized and cached images
-        if (($width || $height) && media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
-            return array(412, 'Precondition Failed');
         }
     } else {
         $media = cleanID($media);
