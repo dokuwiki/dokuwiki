@@ -11,7 +11,8 @@ class Tar_TestCase extends DokuWikiTest {
     public function test_createdynamic() {
         $tar = new Tar();
 
-        $dir = dirname(__FILE__).'/tar';
+        $dir  = dirname(__FILE__).'/tar';
+        $tdir = ltrim($dir,'/');
 
         $tar->create();
         $tar->AddFile("$dir/testdata1.txt");
@@ -24,11 +25,11 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "$tdir/testdata1.txt") !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "$tdir/foobar/testdata2.txt") === false, 'Path not in TAR');
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
     }
 
@@ -42,6 +43,7 @@ class Tar_TestCase extends DokuWikiTest {
         $tar = new Tar();
 
         $dir = dirname(__FILE__).'/tar';
+        $tdir = ltrim($dir,'/');
         $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
 
         $tar->create($tmp, Tar::COMPRESS_NONE);
@@ -57,11 +59,11 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "$tdir/testdata1.txt") !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "$tdir/foobar/testdata2.txt") === false, 'Path not in TAR');
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
 
         @unlink($tmp);
