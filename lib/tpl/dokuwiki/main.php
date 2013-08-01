@@ -85,7 +85,11 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                             );
 
                             // the page tools can be ammended through a custom plugin hook
-                            $evt = new Doku_Event('TEMPLATE_DOKUWIKI_PAGETOOLFLOAT_DISPLAY', $data);
+                            // if you're deriving from this template and your design is close enough to
+                            // the dokuwiki template you might want to trigger a DOKUWIKI event instead
+                            // of using $conf['tpl'] here
+                            $hook = 'TEMPLATE_'.strtoupper($conf['tpl']).'_PAGETOOLS_DISPLAY';
+                            $evt = new Doku_Event($hook, $data);
                             if($evt->advise_before()){
                                 foreach($evt->data as $k => $html) echo $html;
                             }
