@@ -357,6 +357,9 @@ progress {
     box-sizing: border-box;
 }
 
+select {
+    max-width: 100%;
+}
 optgroup {
     font-style: italic;
     font-weight: bold;
