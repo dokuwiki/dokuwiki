@@ -215,5 +215,55 @@ class httpclient_http_test extends DokuWikiTest {
         $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
         $this->assertTrue($data !== false, $http->error);
     }
+
+    function test_postencode(){
+        $http = new HTTPClient();
+
+
+        // check simple data
+        $data = array(
+            'öä?' => 'öä?',
+            'foo' => 'bang'
+        );
+        $this->assertEquals(
+            '%C3%B6%C3%A4%3F=%C3%B6%C3%A4%3F&foo=bang',
+            $http->_postEncode($data),
+            'simple'
+        );
+
+        // check first level numeric array
+        $data = array(
+            'foo' => 'bang',
+            'ärr' => array('ö', 'b', 'c')
+        );
+        $this->assertEquals(
+            'foo=bang&%C3%A4rr%5B0%5D=%C3%B6&%C3%A4rr%5B1%5D=b&%C3%A4rr%5B2%5D=c',
+            $http->_postEncode($data),
+            'onelevelnum'
+        );
+
+        // check first level associative array
+        $data = array(
+            'foo' => 'bang',
+            'ärr' => array('ö'=>'ä', 'b' => 'c')
+        );
+        $this->assertEquals(
+            'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5Bb%5D=c',
+            $http->_postEncode($data),
+            'onelevelassoc'
+        );
+
+
+        // check first level associative array
+        $data = array(
+            'foo' => 'bang',
+            'ärr' => array('ö'=>'ä', 'ä' => array('ö'=>'ä'))
+        );
+        $this->assertEquals(
+            'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5B%C3%A4%5D%5B%C3%B6%5D=%C3%A4',
+            $http->_postEncode($data),
+            'twolevelassoc'
+        );
+    }
 }
 //Setup VIM: ex: et ts=4 :
