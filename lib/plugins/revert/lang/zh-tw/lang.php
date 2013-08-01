@@ -1,11 +1,11 @@
 <?php
+
 /**
- * Chinese Traditional language file
- *
- * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
+ * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
- * @author Li-Jiun Huang <ljhuang.tw@gmai.com>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
  * @author Danny Lin <danny0838@pchome.com.tw>
  * @author Shuo-Ting Jian <shoting@gmail.com>
