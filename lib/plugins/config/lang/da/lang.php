@@ -110,7 +110,6 @@ $lang['target____media']       = 'Målvindue for mediehenvisninger';
 $lang['target____windows']     = 'Målvindue til Windows-henvisninger';
 $lang['mediarevisions']        = 'Akvtivér media udgaver?';
 $lang['refcheck']              = 'Mediehenvisningerkontrol';
-$lang['refshow']               = 'Antal viste mediehenvisninger';
 $lang['gdlib']                 = 'Udgave af GD Lib';
 $lang['im_convert']            = 'Sti til ImageMagick\'s omdannerværktøj';
 $lang['jpg_quality']           = 'JPG komprimeringskvalitet (0-100)';

@@ -248,6 +248,28 @@ class Tar_TestCase extends DokuWikiTest {
         }
     }
 
+    // FS#1442
+    public function test_createlongfile() {
+        $tar = new Tar();
+        $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
+
+        $path = '0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789.txt';
+
+        $tar->create($tmp, Tar::COMPRESS_NONE);
+        $tar->addData($path, 'testcontent1');
+        $tar->close();
+
+        $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
+        $data = file_get_contents($tmp);
+
+        // We should find the complete path and a longlink entry
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'content in TAR');
+        $this->assertTrue(strpos($data, $path) !== false, 'path in TAR');
+        $this->assertTrue(strpos($data, '@LongLink') !== false, '@LongLink in TAR');
+
+        @unlink($tmp);
+    }
+
     public function test_createlongpathustar() {
         $tar = new Tar();
         $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');

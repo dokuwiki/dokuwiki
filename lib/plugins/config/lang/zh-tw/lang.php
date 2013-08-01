@@ -109,7 +109,6 @@ $lang['target____media']       = '媒體連結的目標視窗';
 $lang['target____windows']     = 'Windows 連結的目標視窗';
 $lang['mediarevisions']        = '啟用媒體修訂歷史嗎？';
 $lang['refcheck']              = '媒體連結檢查';
-$lang['refshow']               = '媒體連結的顯示數量';
 $lang['gdlib']                 = 'GD Lib 版本';
 $lang['im_convert']            = 'ImageMagick 的轉換工具路徑';
 $lang['jpg_quality']           = 'JPG 壓縮品質(0-100)';

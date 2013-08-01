@@ -806,12 +806,7 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _postEncode($data){
-        $url = '';
-        foreach($data as $key => $val){
-            if($url) $url .= '&';
-            $url .= urlencode($key).'='.urlencode($val);
-        }
-        return $url;
+        return http_build_query($data,'','&');
     }
 
     /**

@@ -112,7 +112,6 @@ $lang['target____media']       = 'Okno docelowe odnośników do plików';
 $lang['target____windows']     = 'Okno docelowe odnośników zasobów Windows';
 $lang['mediarevisions']        = 'Włączyć wersjonowanie multimediów?';
 $lang['refcheck']              = 'Sprawdzanie odwołań przed usunięciem pliku';
-$lang['refshow']               = 'Ilość pokazywanych odwołań do pliku';
 $lang['gdlib']                 = 'Wersja biblioteki GDLib';
 $lang['im_convert']            = 'Ścieżka do programu imagemagick';
 $lang['jpg_quality']           = 'Jakość kompresji JPG (0-100)';

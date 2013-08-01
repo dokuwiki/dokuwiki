@@ -311,6 +311,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if($name == 'userpass'){
             $fieldtype = 'password';
             $autocomp  = 'autocomplete="off"';
+        }elseif($name == 'usermail'){
+            $fieldtype = 'email';
+            $autocomp  = '';
         }else{
             $fieldtype = 'text';
             $autocomp  = '';

@@ -111,7 +111,6 @@ $lang['target____extern']      = 'Målfönster för externa länkar';
 $lang['target____media']       = 'Målfönster för medialänkar';
 $lang['target____windows']     = 'Målfönster för windowslänkar';
 $lang['refcheck']              = 'Kontrollera referenser till mediafiler';
-$lang['refshow']               = 'Antal mediareferenser som ska visas';
 $lang['gdlib']                 = 'Version av GD-biblioteket';
 $lang['im_convert']            = 'Sökväg till ImageMagicks konverteringsverktyg';
 $lang['jpg_quality']           = 'Kvalitet för JPG-komprimering (0-100)';

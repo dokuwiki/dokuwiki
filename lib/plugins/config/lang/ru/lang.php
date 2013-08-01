@@ -115,7 +115,6 @@ $lang['target____media']       = 'target для ссылок на медиафа
 $lang['target____windows']     = 'target для ссылок на сетевые каталоги';
 $lang['mediarevisions']        = 'Включение версий медиафайлов';
 $lang['refcheck']              = 'Проверять ссылки на медиафайлы';
-$lang['refshow']               = 'Показывать ссылок на медиафайлы';
 $lang['gdlib']                 = 'Версия LibGD';
 $lang['im_convert']            = 'Путь к ImageMagick';
 $lang['jpg_quality']           = 'Качество сжатия JPG (0–100). Значение по умолчанию — 70.';

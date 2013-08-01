@@ -96,7 +96,6 @@ $conf['target']['windows']   = '';
 /* Media Settings */
 $conf['mediarevisions'] = 1;             //enable/disable media revisions
 $conf['refcheck']    = 1;                //check for references before deleting media files
-$conf['refshow']     = 0;                //how many references should be shown, 5 is a good value
 $conf['gdlib']       = 2;                //the GDlib version (0, 1 or 2) 2 tries to autodetect
 $conf['im_convert']  = '';               //path to ImageMagicks convert (will be used instead of GD)
 $conf['jpg_quality'] = '70';             //quality of compression when scaling jpg images (0-100)

@@ -76,7 +76,6 @@ $lang['camelcase']             = 'Gjør KamelKasse til lenke automatisk';
 $lang['deaccent']              = 'Rensk sidenavn';
 $lang['useheading']            = 'Bruk første overskrift som tittel';
 $lang['refcheck']              = 'Sjekk referanser før mediafiler slettes';
-$lang['refshow']               = 'Antall viste referanser til mediafiler';
 $lang['allowdebug']            = 'Tillat feilsøking <b>skru av om det ikke behøves!</b>';
 $lang['mediarevisions']        = 'Slå på mediaversjonering?';
 $lang['usewordblock']          = 'Blokker søppel basert på ordliste';
