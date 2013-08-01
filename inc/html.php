@@ -1492,7 +1492,7 @@ function html_edit(){
         echo 'textChanged = ' . ($mod ? 'true' : 'false');
         echo '/*!]]>*/</script>' . NL;
     } ?>
-    <div class="editBox">
+    <div class="editBox" role="application">
 
     <div class="toolbar group">
         <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
