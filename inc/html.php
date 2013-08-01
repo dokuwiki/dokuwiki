@@ -854,13 +854,17 @@ function html_index($ns){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_list_index($item){
-    global $ID;
+    global $ID, $conf;
+
+    // prevent searchbots needlessly following links - only necessary when accessed from the homepage and no sitemap.xml is being generated
+    $nofollow = ($ID != $conf['start'] || $conf['sitemap']) ? ' rel="nofollow"' : '';
+
     $ret = '';
     $base = ':'.$item['id'];
     $base = substr($base,strrpos($base,':')+1);
     if($item['type']=='d'){
         // FS#2766, no need for search bots to follow namespace links in the index
-        $ret .= '<a href="'.wl($ID,'idx='.rawurlencode($item['id'])).'" title="' . $item['id'] . '" class="idx_dir" rel="nofollow"><strong>';
+        $ret .= '<a href="'.wl($ID,'idx='.rawurlencode($item['id'])).'" title="' . $item['id'] . '" class="idx_dir"' . $nofollow . '><strong>';
         $ret .= $base;
         $ret .= '</strong></a>';
     }else{
