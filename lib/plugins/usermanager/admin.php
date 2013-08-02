@@ -270,7 +270,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"),$indent+6);
 
         if ($this->_auth->canDo("modPass")) {
-          $notes[] = $this->lang['note_pass'];
+          if ($cmd == 'add') {
+            $notes[] = $this->lang['note_pass'];
+          }
           if ($user) {
             $notes[] = $this->lang['note_notify'];
           }
