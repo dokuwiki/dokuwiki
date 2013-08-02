@@ -365,6 +365,18 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool|string True or one of "nourl", "noparentperms" (template/plugin install path not writable), "noperms" (extension itself not writable)
      */
     public function canModify() {
+        if ($this->isInstalled()) {
+            if (!is_writable($this->getInstallDir())) {
+                return 'noperms';
+            }
+        }
+        $parent_path = ($this->isTemplate() ? DOKU_TPLLIB : DOKU_PLUGIN);
+        if (!is_writable($parent_path)) {
+            return 'noparentperms';
+        }
+
+        if (!$this->getDownloadURL()) return 'nourl';
+        return true;
     }
 
     /**
@@ -373,14 +385,26 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool|string True or an error message
      */
     public function installOrUpdate() {
+        if (($status = $this->download($this->getDownloadURL(), $path)) === true) {
+            if (($status = $this->installArchive($path, $installed_extensions, $this->isInstalled(), $this->getBase())) == true) {
+                // refresh extension information
+                if (!isset($installed_extensions[$this->getBase()])) {
+                    $status = 'Error, the requested extension hasn\'t been installed or updated';
+                }
+                $this->setExtension($this->name, $this->isTemplate());
+            }
+            $this->dir_delete(dirname($path));
+        }
+        return $status;
     }
 
     /**
      * Uninstall the extension
      *
-     * @return bool|string True or an error message
+     * @return bool If the plugin was sucessfully installed
      */
     public function uninstall() {
+        return $this->dir_delete($this->getInstallDir());
     }
 
     /**
@@ -492,6 +516,341 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $data .= $k.'='.$v.DOKU_LF;
         }
         io_saveFile($managerpath, $data);
+    }
+
+    /**
+     * delete, with recursive sub-directory support
+     *
+     * @param string $path The path that shall be deleted
+     * @return bool If the directory has been successfully deleted
+     */
+    protected function dir_delete($path) {
+        if(!is_string($path) || $path == "") return false;
+
+        if(is_dir($path) && !is_link($path)) {
+            if(!$dh = @opendir($path)) return false;
+
+            while ($f = readdir($dh)) {
+                if($f == '..' || $f == '.') continue;
+                $this->dir_delete("$path/$f");
+            }
+
+            closedir($dh);
+            return @rmdir($path);
+        } else {
+            return @unlink($path);
+        }
+    }
+
+    /**
+     * Download an archive to a protected path
+     * @param string $url  The url to get the archive from
+     * @param string $path The path where the archive was saved (output parameter)
+     * @return bool|string True on success, an error message on failure
+     */
+    public function download($url, &$path) {
+        // check the url
+        $matches = array();
+        if(!preg_match("/[^/]*$/", $url, $matches) || !$matches[0]) {
+            return $this->getLang('baddownloadurl');
+        }
+        $file = $matches[0];
+
+        // create tmp directory for download
+        if(!($tmp = io_mktmpdir())) {
+            return $this->getLang('error_dircreate');
+        }
+
+        // download
+        if(!$file = io_download($url, $tmp.'/', true, $file)) {
+            $this->dir_delete($tmp);
+            return sprintf($this->getLang('error_download'), $url);
+        }
+
+        $path = $tmp.'/'.$file;
+
+        return true;
+    }
+
+    /**
+     * @param string $file      The path to the archive that shall be installed
+     * @param bool   $overwrite If an already installed plugin should be overwritten
+     * @param array  $installed_extensions Array of all installed extensions in the form $base => ('type' => $type, 'action' => 'update'|'install')
+     * @param string $base      The basename of the plugin if it's known
+     * @return bool|string True on success, an error message on failure
+     */
+    public function installArchive($file, &$installed_extensions, $overwrite=false, $base = '') {
+        $error = false;
+
+        // create tmp directory for decompression
+        if(!($tmp = io_mktmpdir())) {
+            return $this->getLang('error_dircreate');
+        }
+
+        // add default base folder if specified to handle case where zip doesn't contain this
+        if($base && !@mkdir($tmp.'/'.$base)) {
+            $error = $this->getLang('error_dircreate');
+        }
+
+        if(!$error && !$this->decompress("$tmp/$file", "$tmp/".$base)) {
+            $error = sprintf($this->getLang('error_decompress'), $file);
+        }
+
+        // search $tmp/$base for the folder(s) that has been created
+        // move the folder(s) to lib/..
+        if(!$error) {
+            $result = array('old'=>array(), 'new'=>array());
+
+            if(!$this->find_folders($result, $tmp.'/'.$base, ($this->isTemplate() ? 'template' : 'plugin'))) {
+                $error = $this->getLang('error_findfolder');
+
+            } else {
+                // choose correct result array
+                if(count($result['new'])) {
+                    $install = $result['new'];
+                }else{
+                    $install = $result['old'];
+                }
+
+                // now install all found items
+                foreach($install as $item) {
+                    // where to install?
+                    if($item['type'] == 'template') {
+                        $target_base_dir = DOKU_TPLLIB;
+                    }else{
+                        $target_base_dir = DOKU_PLUGIN;
+                    }
+
+                    if(!empty($item['base'])) {
+                        // use base set in info.txt
+                    } elseif($base && count($install) == 1) {
+                        $item['base'] = $base;
+                    } else {
+                        // default - use directory as found in zip
+                        // plugins from github/master without *.info.txt will install in wrong folder
+                        // but using $info->id will make 'code3' fail (which should install in lib/code/..)
+                        $item['base'] = basename($item['tmp']);
+                    }
+
+                    // check to make sure we aren't overwriting anything
+                    $target = $target_base_dir.$item['base'];
+                    if(!$overwrite && @file_exists($target)) {
+                        // TODO remember our settings, ask the user to confirm overwrite
+                        continue;
+                    }
+
+                    $action = @file_exists($target) ? 'update' : 'install';
+
+                    // copy action
+                    if($this->dircopy($item['tmp'], $target)) {
+                        // TODO: write manager.dat!
+                        $installed_extensions[$item['base']] = array('type' => $item['type'], 'action' => $action);
+                    } else {
+                        $error = sprintf($this->getLang('error_copy').DOKU_LF, $item['base']);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // cleanup
+        if($tmp) $this->dir_delete($tmp);
+
+        if($error) {
+            return $error;
+        }
+
+        return true;
+    }
+
+    /**
+     * Find out what was in the extracted directory
+     *
+     * Correct folders are searched recursively using the "*.info.txt" configs
+     * as indicator for a root folder. When such a file is found, it's base
+     * setting is used (when set). All folders found by this method are stored
+     * in the 'new' key of the $result array.
+     *
+     * For backwards compatibility all found top level folders are stored as
+     * in the 'old' key of the $result array.
+     *
+     * When no items are found in 'new' the copy mechanism should fall back
+     * the 'old' list.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param array $result - results are stored here
+     * @param string $base - the temp directory where the package was unpacked to
+     * @param string $default_type - type used if no info.txt available
+     * @param string $dir - a subdirectory. do not set. used by recursion
+     * @return bool - false on error
+     */
+    private function find_folders(&$result, $base, $default_type, $dir='') {
+        $this_dir = "$base$dir";
+        $dh       = @opendir($this_dir);
+        if(!$dh) return false;
+
+        $found_dirs           = array();
+        $found_files          = 0;
+        $found_template_parts = 0;
+        $found_info_txt       = false;
+        while (false !== ($f = readdir($dh))) {
+            if($f == '.' || $f == '..') continue;
+
+            if(is_dir("$this_dir/$f")) {
+                $found_dirs[] = "$dir/$f";
+
+            } else {
+                // it's a file -> check for config
+                $found_files++;
+                switch ($f) {
+                    case 'plugin.info.txt':
+                    case 'template.info.txt':
+                        $found_info_txt = true;
+                        $info = array();
+                        $type = explode('.', $f, 2);
+                        $info['type'] = $type[0];
+                        $info['tmp']  = $this_dir;
+                        $conf = confToHash("$this_dir/$f");
+                        $info['base'] = basename($conf['base']);
+                        $result['new'][] = $info;
+                        break;
+
+                    case 'main.php':
+                    case 'details.php':
+                    case 'mediamanager.php':
+                    case 'style.ini':
+                        $found_template_parts++;
+                        break;
+                }
+            }
+        }
+        closedir($dh);
+
+        // URL downloads default to 'plugin', try extra hard to indentify templates
+        if(!$default_type && $found_template_parts > 2 && !$found_info_txt) {
+            $info            = array();
+            $info['type']    = 'template';
+            $info['tmp']     = $this_dir;
+            $result['new'][] = $info;
+        }
+
+        // files in top level but no info.txt, assume this is zip missing a base directory
+        // works for all downloads unless direct URL where $base will be the tmp directory ($info->id was empty)
+        if(!$dir && $found_files > 0 && !$found_info_txt && $default_type) {
+            $info            = array();
+            $info['type']    = $default_type;
+            $info['tmp']     = $base;
+            $result['old'][] = $info;
+            return true;
+        }
+
+        foreach ($found_dirs as $found_dir) {
+            // if top level add to dir list for old method, then recurse
+            if(!$dir) {
+                $info            = array();
+                $info['type']    = ($default_type ? $default_type : 'plugin');
+                $info['tmp']     = "$base$found_dir";
+                $result['old'][] = $info;
+            }
+            $this->find_folders($result, $base, $default_type, "$found_dir");
+        }
+        return true;
+    }
+
+
+    /**
+     * Decompress a given file to the given target directory
+     *
+     * Determines the compression type from the file extension
+     */
+    private function decompress($file, $target) {
+        // decompression library doesn't like target folders ending in "/"
+        if(substr($target, -1) == "/") $target = substr($target, 0, -1);
+
+        $ext = $this->guess_archive($file);
+        if(in_array($ext, array('tar', 'bz', 'gz'))) {
+            switch($ext) {
+                case 'bz':
+                    $compress_type = Tar::COMPRESS_BZIP;
+                    break;
+                case 'gz':
+                    $compress_type = Tar::COMPRESS_GZIP;
+                    break;
+                default:
+                    $compress_type = Tar::COMPRESS_NONE;
+            }
+
+            $tar = new Tar();
+            try {
+                $tar->open($file, $compress_type);
+                $tar->extract($target);
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
+
+            return true;
+        } elseif($ext == 'zip') {
+
+            $zip = new ZipLib();
+            $ok  = $zip->Extract($file, $target);
+
+            return ($ok==-1 ? 'Error extracting the zip archive' : true);
+        }
+
+        // the only case when we don't get one of the recognized archive types is when the archive file can't be read
+        return 'Couldn\'t read archive file';
+    }
+
+    /**
+     * Determine the archive type of the given file
+     *
+     * Reads the first magic bytes of the given file for content type guessing,
+     * if neither bz, gz or zip are recognized, tar is assumed.
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @param string $file The file to analyze
+     * @return string|bool false if the file can't be read, otherwise an "extension"
+     */
+    private function guess_archive($file) {
+        $fh = fopen($file, 'rb');
+        if(!$fh) return false;
+        $magic = fread($fh, 5);
+        fclose($fh);
+
+        if(strpos($magic, "\x42\x5a") === 0) return 'bz';
+        if(strpos($magic, "\x1f\x8b") === 0) return 'gz';
+        if(strpos($magic, "\x50\x4b\x03\x04") === 0) return 'zip';
+        return 'tar';
+    }
+
+    /**
+     * Copy with recursive sub-directory support
+     */
+    private function dircopy($src, $dst) {
+        global $conf;
+
+        if(is_dir($src)) {
+            if(!$dh = @opendir($src)) return false;
+
+            if($ok = io_mkdir_p($dst)) {
+                while ($ok && (false !== ($f = readdir($dh)))) {
+                    if($f == '..' || $f == '.') continue;
+                    $ok = $this->dircopy("$src/$f", "$dst/$f");
+                }
+            }
+
+            closedir($dh);
+            return $ok;
+
+        } else {
+            $exists = @file_exists($dst);
+
+            if(!@copy($src, $dst)) return false;
+            if(!$exists && !empty($conf['fperm'])) chmod($dst, $conf['fperm']);
+            @touch($dst, filemtime($src));
+        }
+
+        return true;
     }
 }
 
