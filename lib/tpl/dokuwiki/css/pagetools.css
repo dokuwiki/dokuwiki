@@ -175,7 +175,7 @@
     background-position: right -135px;
 }
 [dir=rtl] #dokuwiki__pagetools ul li a.edit {
-    background-position: left 0;
+    background-position: left -90px;
 }
 [dir=rtl] #dokuwiki__pagetools ul li a.edit:hover,
 [dir=rtl] #dokuwiki__pagetools ul li a.edit:active,
