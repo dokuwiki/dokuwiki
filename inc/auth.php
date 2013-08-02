@@ -904,7 +904,7 @@ function updateprofile() {
 function auth_deleteprofile(){
     global $conf;
     global $lang;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
@@ -931,7 +931,7 @@ function auth_deleteprofile(){
     }
 
     $deleted[] = $_SERVER['REMOTE_USER'];
-    if($result = $auth->triggerUserMod('delete', array($deleted))) {
+    if($auth->triggerUserMod('delete', array($deleted))) {
         // force and immediate logout including removing the sticky cookie
         auth_logoff();
         return true;
