@@ -1278,9 +1278,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // mp4 would be 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"', but Android doesn't like it
         $types['mp4'] = '';
         $alternatives = media_alternativefiles($src, $extensions);
+        $poster = media_alternativefiles($src, array('jpg', 'png'), true);
+        $posterUrl = '';
+        if (!empty($poster)) {
+            $posterUrl = ml(reset($poster),array('cache'=>$cache),true,'&');
+        }
 
-        // @todo: add poster
-        $this->doc .= '<video '.buildAttributes($atts).' controls="controls">'.NL;
+        $this->doc .= '<video '.buildAttributes($atts).' controls="controls"';
+        if ($posterUrl) $this->doc .= ' poster="'.$posterUrl.'"';
+        $this->doc .= '>'.NL;
         foreach($alternatives as $ext => $file) {
             $url = ml($file,array('cache'=>$cache),true,'&');
             $type = $types[$ext];
