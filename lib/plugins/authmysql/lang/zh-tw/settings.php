@@ -1,8 +1,7 @@
 <?php
-
 /**
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ * Chinese Traditional language file
+ *
  * @author syaoranhinata@gmail.com
  */
 $lang['server']                = '您的 MySQL 伺服器';

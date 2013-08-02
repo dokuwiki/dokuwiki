@@ -1,8 +1,7 @@
 <?php
-
 /**
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ * Chinese Traditional language file
+ *
  * @author syaoranhinata@gmail.com
  */
 $lang['account_suffix']        = '您的帳號後綴。如： <code>@my.domain.org</code>';
