@@ -131,6 +131,8 @@ function css_out(){
         // load files
         $css_content = '';
         foreach($files[$mediatype] as $file => $location){
+            $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
+            $css_content .= "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             $css_content .= css_loadfile($file, $location);
         }
         switch ($mediatype) {
@@ -154,9 +156,8 @@ function css_out(){
     // apply style replacements
     $css = css_applystyle($css,$tplinc);
 
-    // parse LESS
-    $less = new lessc();
-    $css = $less->compile($css);
+    // parse less
+    $css = css_parseless($css);
 
     // place all remaining @import statements at the top of the file
     $css = css_moveimports($css);
@@ -173,6 +174,59 @@ function css_out(){
     }
 
     http_cached_finish($cache->cache, $css);
+}
+
+/**
+ * Uses phpless to parse LESS in our CSS
+ *
+ * most of this function is error handling to show a nice useful error when
+ * LESS compilation fails
+ *
+ * @param $css
+ * @return string
+ */
+function css_parseless($css) {
+    $less = new lessc();
+    try {
+        return $less->compile($css);
+    } catch(Exception $e) {
+        // get exception message
+        $msg = str_replace(array("\n", "\r", "'"), array(), $e->getMessage());
+
+        // try to use line number to find affected file
+        if(preg_match('/line: (\d+)$/', $msg, $m)){
+            $msg = substr($msg, 0, -1* strlen($m[0])); //remove useless linenumber
+            $lno = $m[1];
+
+            // walk upwards to last include
+            $lines = explode("\n", $css);
+            $count = count($lines);
+            for($i=$lno-1; $i>=0; $i--){
+                if(preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)){
+                    // we found it, add info to message
+                    $msg .= ' in '.$m[2].' at line '.($lno-$i);
+                    break;
+                }
+            }
+        }
+
+        // something went wrong
+        $error = 'A fatal error occured during compilation of the CSS files. '.
+            'If you recently installed a new plugin or template it '.
+            'might be broken and you should try disabling it again. ['.$msg.']';
+
+        echo ".dokuwiki:before {
+            content: '$error';
+            background-color: red;
+            display: block;
+            background-color: #fcc;
+            border-color: #ebb;
+            color: #000;
+            padding: 0.5em;
+        }";
+
+        exit;
+    }
 }
 
 /**
