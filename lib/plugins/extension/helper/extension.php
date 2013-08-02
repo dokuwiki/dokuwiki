@@ -44,15 +44,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         $this->remoteInfo = array();
 
         if ($this->isInstalled()) {
-            if ($this->isTemplate()) {
-                $infopath = $this->getInstallDir().'/template.info.txt';
-            } else {
-                $infopath = $this->getInstallDir().'/plugin.info.txt';
-            }
-            if (is_readable($infopath)) {
-                $this->localInfo = confToHash($infopath);
-            }
-
+            $this->readLocalData();
             $this->readManagerData();
         }
 
@@ -423,6 +415,48 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             return true;
         } else {
             return $this->getLang('pluginlistsaveerror');
+        }
+    }
+
+    /**
+     * Read local extension data either from info.txt or getInfo()
+     */
+    protected function readLocalData() {
+        if ($this->isTemplate()) {
+            $infopath = $this->getInstallDir().'/template.info.txt';
+        } else {
+            $infopath = $this->getInstallDir().'/plugin.info.txt';
+        }
+
+        if (is_readable($infopath)) {
+            $this->localInfo = confToHash($infopath);
+        } elseif (!$this->isTemplate() && $this->isEnabled()) {
+            global $plugin_types;
+            $path       = $this->getInstallDir().'/';
+            $plugin     = null;
+
+            foreach($plugin_types as $type) {
+                if(@file_exists($path.$type.'.php')) {
+                    $plugin = plugin_load($type, $this->getBase());
+                    if ($plugin) break;
+                }
+
+                if($dh = @opendir($path.$type.'/')) {
+                    while(false !== ($cp = readdir($dh))) {
+                        if($cp == '.' || $cp == '..' || strtolower(substr($cp, -4)) != '.php') continue;
+
+                        $plugin = plugin_load($type, $this->getBase().'_'.substr($cp, 0, -4));
+                        if ($plugin) break;
+                    }
+                    if ($plugin) break;
+                    closedir($dh);
+                }
+            }
+
+            if ($plugin) {
+                /* @var DokuWiki_Plugin $plugin */
+                $this->localInfo = $plugin->getInfo();
+            }
         }
     }
 
