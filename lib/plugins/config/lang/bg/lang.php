@@ -42,12 +42,6 @@ $lang['_notifications'] = 'Настройки за известяване';
 $lang['_syndication']   = 'Настройки на RSS емисиите';
 $lang['_advanced'] = 'Допълнителни настройки';
 $lang['_network'] = 'Мрежови настройки';
-// The settings group name for plugins and templates can be set with
-// plugin_settings_name and template_settings_name respectively. If one
-// of these lang properties is not set, the group name will be generated
-// from the plugin or template name and the localized suffix.
-$lang['_plugin_sufix'] = ' (приставка)';
-$lang['_template_sufix'] = ' (шаблон)';
 
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'Няма метаданни за настройките.';

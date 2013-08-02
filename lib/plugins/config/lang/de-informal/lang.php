@@ -11,6 +11,7 @@
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Volker Bödker <volker@boedker.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -20,24 +21,22 @@ $lang['locked']                = 'Die Konfigurationsdatei kann nicht aktualisier
 $lang['danger']                = '**Achtung**: Eine Änderung dieser Einstellung kann dein Wiki und das Einstellungsmenü unerreichbar machen.';
 $lang['warning']               = 'Achtung: Eine Änderungen dieser Option kann zu unbeabsichtigtem Verhalten führen.';
 $lang['security']              = 'Sicherheitswarnung: Eine Änderungen dieser Option können ein Sicherheitsrisiko bedeuten.';
-$lang['_configuration_manager'] = 'Konfiguration';
-$lang['_header_dokuwiki']      = 'DokuWiki-Konfiguration';
-$lang['_header_plugin']        = 'Plugin-Konfiguration';
-$lang['_header_template']      = 'Template-Konfiguration';
+$lang['_configuration_manager'] = 'Konfigurations-Manager';
+$lang['_header_dokuwiki']      = 'DokuWiki';
+$lang['_header_plugin']        = 'Plugin';
+$lang['_header_template']      = 'Template';
 $lang['_header_undefined']     = 'Unbekannte Werte';
-$lang['_basic']                = 'Grund-Konfiguration';
-$lang['_display']              = 'Darstellungs-Konfiguration';
-$lang['_authentication']       = 'Authentifizierungs-Konfiguration';
-$lang['_anti_spam']            = 'Anti-Spam-Konfiguration';
-$lang['_editing']              = 'Bearbeitungs-Konfiguration';
-$lang['_links']                = 'Links-Konfiguration';
-$lang['_media']                = 'Medien-Konfiguration';
-$lang['_notifications']        = 'Benachrichtigungs-Konfiguration';
-$lang['_syndication']          = 'Syndication-Konfiguration (RSS)';
-$lang['_advanced']             = 'Erweiterte Konfiguration';
-$lang['_network']              = 'Netzwerk-Konfiguration';
-$lang['_plugin_sufix']         = 'Plugin-Konfiguration';
-$lang['_template_sufix']       = 'Template-Konfiguration';
+$lang['_basic']                = 'Basis';
+$lang['_display']              = 'Darstellung';
+$lang['_authentication']       = 'Authentifizierung';
+$lang['_anti_spam']            = 'Anti-Spam';
+$lang['_editing']              = 'Bearbeitung';
+$lang['_links']                = 'Links';
+$lang['_media']                = 'Medien';
+$lang['_notifications']        = 'Benachrichtigung';
+$lang['_syndication']          = 'Syndication (RSS)';
+$lang['_advanced']             = 'Erweitert';
+$lang['_network']              = 'Netzwerk';
 $lang['_msg_setting_undefined'] = 'Keine Konfigurationsmetadaten.';
 $lang['_msg_setting_no_class'] = 'Keine Konfigurationsklasse.';
 $lang['_msg_setting_no_default'] = 'Kein Standardwert.';
@@ -46,7 +45,7 @@ $lang['start']                 = 'Name der Startseite';
 $lang['lang']                  = 'Sprache';
 $lang['template']              = 'Vorlage';
 $lang['tagline']               = 'Tag-Linie (nur, wenn vom Template unterstützt)';
-$lang['sidebar']               = 'Name der Sidebar-Seite (nur, wenn vom Template unterstützt)), ein leeres Feld deaktiviert die Sidebar';
+$lang['sidebar']               = 'Name der Sidebar-Seite (nur, wenn vom Template unterstützt), ein leeres Feld deaktiviert die Sidebar';
 $lang['license']               = 'Unter welcher Lizenz sollte Ihr Inhalt veröffentlicht werden?';
 $lang['savedir']               = 'Ordner zum Speichern von Daten';
 $lang['basedir']               = 'Installationsverzeichnis';
