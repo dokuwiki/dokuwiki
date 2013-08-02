@@ -795,8 +795,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || substr($mime,0,5) == 'video') && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -831,8 +831,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(substr($mime,0,5) == 'image' && $render){
             // link only jpeg images
             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || substr($mime,0,5) == 'video') && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -1093,6 +1093,28 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $ret .= ' />';
 
+        }elseif(substr($mime,0,5) == 'video'){
+
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }
+            if (!$title) {
+                // just show the sourcename
+                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+            if (!$render) {
+                // if the video is not supposed to be rendered
+                // return the title of the video
+                return $title;
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+
+            //add video(s)
+            $ret .= $this->_video($src, $title, $mime, $width, $height, $att);
+
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
                 // if the flash is not supposed to be rendered
@@ -1225,6 +1247,42 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         return $link;
     }
 
+
+    /**
+     * Embed video(s) in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of video to embed
+     * @param string $title    - title of the video
+     * @param string $mime     - mimetype of the video
+     * @param int $width       - width of the video in pixels
+     * @param int $height      - height of the video in pixels
+     * @param array $atts      - additional attributes for the <video> tag
+     */
+    function _video($src,$title,$mime,$width,$height,$atts=null){
+
+        // prepare width and height
+        if(is_null($atts)) $atts = array();
+        $atts['width']  = (int) $width;
+        $atts['height'] = (int) $height;
+        if(!$atts['width'])  $atts['width']  = 320;
+        if(!$atts['height']) $atts['height'] = 240;
+
+        $url = ml($src,array('cache'=>$cache),true,'&');
+
+        // @todo: add poster
+        $this->doc .= '<video '.buildAttributes($atts).' controls="controls">'.NL;
+        // @todo: foreach all extensions
+        $this->doc .= '<source src="'.hsc($url).'" />'.NL;
+
+        // alternative content
+        // @todo: foreach all extensions
+        $this->internalmedia($src, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly');
+
+        // finish
+        $this->doc .= '</video>'.NL;
+    }
 
 }
 
