@@ -25,11 +25,17 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$tdir/testdata1.txt") !== false, 'Path in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
+
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$tdir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir/foobar") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar.txt") === false, 'File not in TAR');
+
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
     }
 
@@ -59,11 +65,17 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$tdir/testdata1.txt") !== false, 'Path in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
+
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$tdir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir/foobar") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar.txt") === false, 'File not in TAR');
+
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
 
         @unlink($tmp);
