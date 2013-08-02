@@ -1193,25 +1193,20 @@ function tpl_getLang($id) {
 }
 
 /**
- * locale_xhtml($id)
- *
- * retrieve a language dependent file and pass to xhtml renderer for display
+ * Retrieve a language dependent file and pass to xhtml renderer for display
  * template equivalent of p_locale_xhtml()
  *
  * @param   string $id id of language dependent wiki page
  * @return  string     parsed contents of the wiki page in xhtml format
  */
 function tpl_locale_xhtml($id) {
-    return p_cached_output(tpl_localFN($id));
+    return p_cached_output(tpl_localeFN($id));
 }
 
 /**
- * localFN($id)
- *
- * prepends appropriate path for a language dependent filename
- * template equivalent of localFN()
+ * Prepends appropriate path for a language dependent filename
  */
-function tpl_localFN($id) {
+function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
     global $conf;
     $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
