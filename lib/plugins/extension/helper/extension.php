@@ -8,6 +8,7 @@
 
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
+if(!defined('DOKU_TPLLIB')) define('DOKU_TPLLIB', DOKU_INC.'lib/tpl/');
 
 /**
  * Class helper_plugin_extension_extension represents a single extension (plugin or template)
@@ -346,7 +347,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function getInstallDir() {
         if ($this->isTemplate()) {
-            return basename(tpl_incdir()).$this->name;
+            return DOKU_TPLLIB.$this->name;
         } else {
             return DOKU_PLUGIN.$this->name;
         }
