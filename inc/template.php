@@ -1189,6 +1189,34 @@ function tpl_getLang($id) {
 }
 
 /**
+ * Retrieve a language dependent file and pass to xhtml renderer for display
+ * template equivalent of p_locale_xhtml()
+ *
+ * @param   string $id id of language dependent wiki page
+ * @return  string     parsed contents of the wiki page in xhtml format
+ */
+function tpl_locale_xhtml($id) {
+    return p_cached_output(tpl_localeFN($id));
+}
+
+/**
+ * Prepends appropriate path for a language dependent filename
+ */
+function tpl_localeFN($id) {
+    $path = tpl_incdir().'lang/';
+    global $conf;
+    $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
+    if (!@file_exists($file)){
+        $file = $path.$conf['lang'].'/'.$id.'.txt';
+        if(!@file_exists($file)){
+            //fall back to english
+            $file = $path.'en/'.$id.'.txt';
+        }
+    }
+    return $file;
+}
+
+/**
  * prints the "main content" in the mediamanger popup
  *
  * Depending on the user's actions this may be a list of
