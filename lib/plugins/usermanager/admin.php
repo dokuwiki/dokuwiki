@@ -298,11 +298,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      </tr>",$indent);
         ptln("    </tbody>",$indent);
         ptln("  </table>",$indent);
+
+        if ($notes) {
+          ptln("    <ul class=\"notes\">");
+          foreach ($notes as $note) {
+            ptln("      <li><span class=\"li\">".$note."</span></li>",$indent);
+          }
+          ptln("    </ul>");
+        }
         ptln("  </div>",$indent);
-
-        foreach ($notes as $note)
-          ptln("<div class=\"fn\">".$note."</div>",$indent);
-
         ptln("</form>",$indent);
     }
 
