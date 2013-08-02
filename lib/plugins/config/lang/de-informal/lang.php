@@ -86,6 +86,7 @@ $lang['disableactions']        = 'Deaktiviere DokuWiki\'s Zugriffe';
 $lang['disableactions_check']  = 'Check';
 $lang['disableactions_subscription'] = 'Bestellen/Abbestellen';
 $lang['disableactions_wikicode'] = 'Zeige Quelle/Exportiere Rohdaten';
+$lang['disableactions_profile_delete'] = 'Eigenes Benutzerprofil löschen';
 $lang['disableactions_other']  = 'Weitere Aktionen (durch Komma getrennt)';
 $lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
