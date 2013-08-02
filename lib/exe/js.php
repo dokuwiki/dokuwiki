@@ -96,6 +96,10 @@ function js_out(){
     // load JS specific translations
     $json = new JSON();
     $lang['js']['plugins'] = js_pluginstrings();
+    $templatestrings = js_templatestrings();
+    if(!empty($templatestrings)) {
+        $lang['js']['template'] = $templatestrings;
+    }
     echo 'LANG = '.$json->encode($lang['js']).";\n";
 
     // load toolbar
@@ -208,6 +212,21 @@ function js_pluginstrings()
         }
     }
     return $pluginstrings;
+}
+
+function js_templatestrings() {
+    global $conf;
+    $templatestrings = array();
+    if (@file_exists(tpl_incdir()."lang/en/lang.php")) {
+        include tpl_incdir()."lang/en/lang.php";
+    }
+    if (isset($conf['lang']) && $conf['lang']!='en' && @file_exists(tpl_incdir()."lang/".$conf['lang']."/lang.php")) {
+        include tpl_incdir()."lang/".$conf['lang']."/lang.php";
+    }
+    if (isset($lang['js'])) {
+        $templatestrings[$conf['template']] = $lang['js'];
+    }
+    return $templatestrings;
 }
 
 /**
