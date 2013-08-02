@@ -1,6 +1,6 @@
 ===== Rückmeldung zur Zufriedenheit =====
 
-Dieses Werkzeug sammelt anonym Daten über dein Wiki und erlaubt es dir diese an die Entwickler von DokuWiki zu senden. Dies hilft ihnen zu verstehen, wie DokuWiki von den Nutzern verwendet wird und stellt somit sicher, dass Entscheidungen für zukünftige Entwicklungen mit reellen Nutzungsstatistiken belegbar sind.
+Dieses Werkzeug sammelt anonym Daten über dein Wiki und erlaubt es dir diese an die Entwickler von DokuWiki zu senden. Dies hilft ihnen zu verstehen, wie DokuWiki von den Benutzern verwendet wird und stellt somit sicher, dass Entscheidungen für zukünftige Entwicklungen mit reellen Nutzungsstatistiken belegbar sind.
 
 Bitte wiederhole diesen Schritt von Zeit zu Zeit, um die Entwickler zu informieren wenn dein Wiki wächst. Deine aktuelleren Datensätze werden anhand einer anonymen Identifikationsnummer zugeordnet.
 
