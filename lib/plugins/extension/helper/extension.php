@@ -83,6 +83,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function updateAvailable() {
         $lastupdate = $this->getLastUpdate();
         if ($lastupdate === false) return false;
+        $installed  = $this->getInstalledVersion();
+        if ($installed === false || $installed === $this->getLang('unknownversion')) return true;
         return $this->getInstalledVersion() < $this->getLastUpdate();
     }
 
