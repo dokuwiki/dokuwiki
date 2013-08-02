@@ -17,4 +17,7 @@
   color: #ccc!important;
   border-color: #ccc!important;
 }
+#user__manager .import_failures {
+	margin-top: 1em;
+}
 /* IE won't understand but doesn't require it */
