@@ -241,7 +241,7 @@ function getConfigFiles($type) {
  */
 function actionOK($action){
     static $disabled = null;
-    if(is_null($disabled)){
+    if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
         /** @var auth_basic $auth */
         global $auth;
@@ -260,6 +260,9 @@ function actionOK($action){
         }
         if (is_null($auth) || !$auth->canDo('Profile')) {
             $disabled[] = 'profile';
+        }
+        if (is_null($auth) || !$auth->canDo('delUser')) {
+            $disabled[] = 'profile_delete';
         }
         if (is_null($auth)) {
             $disabled[] = 'login';
