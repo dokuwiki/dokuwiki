@@ -1095,9 +1095,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         }elseif(substr($mime,0,5) == 'video'){
 
+            $origTitle = '';
             // first get the $title
             if (!is_null($title)) {
                 $title  = $this->_xmlEntities($title);
+                $origTitle = $title;
             }
             if (!$title) {
                 // just show the sourcename
@@ -1113,7 +1115,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $att['class'] = "media$align";
 
             //add video(s)
-            $ret .= $this->_video($src, $title, $mime, $width, $height, $att);
+            $ret .= $this->_video($src, $origTitle, $mime, $width, $height, $att);
 
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
@@ -1269,16 +1271,30 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(!$atts['width'])  $atts['width']  = 320;
         if(!$atts['height']) $atts['height'] = 240;
 
-        $url = ml($src,array('cache'=>$cache),true,'&');
+        // prepare alternative formats
+        $extensions = array('webm', 'ogv', 'mp4');
+        $types['webm'] = 'video/webm; codecs="vp8, vorbis"';
+        $types['ogv'] = 'video/ogg; codecs="theora, vorbis"';
+        // mp4 would be 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"', but Android doesn't like it
+        $types['mp4'] = '';
+        $alternatives = media_alternativefiles($src, $extensions);
 
         // @todo: add poster
         $this->doc .= '<video '.buildAttributes($atts).' controls="controls">'.NL;
-        // @todo: foreach all extensions
-        $this->doc .= '<source src="'.hsc($url).'" />'.NL;
+        foreach($alternatives as $ext => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $type = $types[$ext];
+            if (!$title) {
+                $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+            }
 
-        // alternative content
-        // @todo: foreach all extensions
-        $this->internalmedia($src, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly');
+            $this->doc .= '<source src="'.hsc($url).'"';
+            if (!empty($type)) $this->doc .= ' type=\''.$type.'\'';
+            $this->doc .= ' />'.NL;
+
+            // alternative content
+            $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly');
+        }
 
         // finish
         $this->doc .= '</video>'.NL;

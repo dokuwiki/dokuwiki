@@ -2132,4 +2132,33 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     return $okay;
 }
 
+/**
+ * Return other media files with the same base name
+ * but a different extension.
+ *
+ * @param string $src  - ID of media file
+ * @param array $exts  - alternative extensions to find other files for
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function media_alternativefiles($src, $exts){
+
+    $files = array();
+    list($srcExt, $srcMime) = mimetype($src);
+    $filebase = substr($src, 0, -1 * (strlen($srcExt)+1));
+
+    foreach($exts as $ext) {
+        $fileid = $filebase.'.'.$ext;
+        $file = mediaFN($fileid);
+        if(file_exists($file)) {
+            $files[$ext] = $fileid;
+        }
+    }
+    // if original wasn't any of $exts, return only original
+    if (empty($files)) {
+        $files[$srcExt] = $src;
+    }
+    return $files;
+}
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
