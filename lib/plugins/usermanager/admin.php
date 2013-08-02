@@ -606,12 +606,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * send password change notification email
      */
-    function _notifyUser($user, $password) {
+    function _notifyUser($user, $password, $status_alert=true) {
 
         if ($sent = auth_sendPassword($user,$password)) {
-          msg($this->lang['notify_ok'], 1);
+          if ($status_alert) {
+            msg($this->lang['notify_ok'], 1);
+          }
         } else {
-          msg($this->lang['notify_fail'], -1);
+          if ($status_alert) {
+            msg($this->lang['notify_fail'], -1);
+          }
         }
 
         return $sent;
@@ -770,7 +774,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 array_splice($raw,1,0,auth_pwgen());                          // splice in a generated password
                 $clean = $this->_cleanImportUser($raw, $error);
                 if ($clean && $this->_addImportUser($clean, $error)) {
-#                    $this->_notifyUser($clean[0],$clean[1]);
+                    $sent = $this->_notifyUser($clean[0],$clean[1],false);
+                    if (!$sent){
+                        msg(sprintf($this->lang['import_notify_fail'],$clean[0],$clean[3]),-1);
+                    }
                     $import_success_count++;
                 } else {
                     $import_fail_count++;
@@ -817,9 +824,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             return false;
         }
 
-        if (!($this->_auth->canDo('modMail') xor empty($mail))){
-            $error = $this->lang['import_error_badmail'];
-            return false;
+        if ($this->_auth->canDo('modMail')) {
+            if (empty($mail) || !mail_isvalid($mail)) {
+                $error = $this->lang['import_error_badmail'];
+                return false;
+            }
+        } else {
+            if (!empty($mail)) {
+                $error = $this->lang['import_error_badmail'];
+                return false;
+            }
         }
 
         return $cleaned;
