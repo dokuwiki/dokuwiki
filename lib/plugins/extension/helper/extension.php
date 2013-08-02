@@ -65,6 +65,35 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
+     * If the extension is bundled
+     *
+     * @return bool If the extension is bundled
+     */
+    public function isBundled() {
+        if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
+        return in_array($this->name,
+                        array('acl', 'info', 'extension', 'test', 'revert', 'popularity', 'config', 'plugin', 'safefnrecode', 'authplain'));
+    }
+
+    /**
+     * If the extension is protected
+     *
+     * @return bool if the extension is protected
+     */
+    public function isProtected() {
+        return in_array($this->name, array('acl', 'config', 'info', 'plugin', 'revert', 'usermanager'));
+    }
+
+    /**
+     * If the extension is installed in the correct directory
+     *
+     * @return bool If the extension is installed in the correct directory
+     */
+    public function isInWrongFolder() {
+        return $this->name != $this->getBase();
+    }
+
+    /**
      * If the extension is enabled
      *
      * @return bool If the extension is enabled
@@ -97,6 +126,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         return $this->is_template;
     }
 
+    /**
+     * Get the name of the installation directory
+     *
+     * @return string The name of the installation directory
+     */
+    public function getInstallName() {
+        return $this->name;
+    }
+
     // Data from plugin.info.txt/template.info.txt or the repo when not available locally
     /**
      * Get the basename of the extension
@@ -104,6 +142,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string The basename
      */
     public function getBase() {
+        if (!empty($this->localInfo['base'])) return $this->localInfo['base'];
         return $this->name;
     }
 
@@ -113,20 +152,20 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string The display name
      */
     public function getName() {
-        if (isset($this->localInfo['name'])) return $this->localInfo['name'];
-        if (isset($this->remoteInfo['name'])) return $this->remoteInfo['name'];
+        if (!empty($this->localInfo['name'])) return $this->localInfo['name'];
+        if (!empty($this->remoteInfo['name'])) return $this->remoteInfo['name'];
         return $this->name;
     }
 
     /**
      * Get the author name of the extension
      *
-     * @return string The name of the author
+     * @return string|bool The name of the author or false if there is none
      */
     public function getAuthor() {
-        if (isset($this->localInfo['author'])) return $this->localInfo['author'];
-        if (isset($this->remoteInfo['author'])) return $this->remoteInfo['author'];
-        return $this->getLang('unknownauthor');
+        if (!empty($this->localInfo['author'])) return $this->localInfo['author'];
+        if (!empty($this->remoteInfo['author'])) return $this->remoteInfo['author'];
+        return false;
     }
 
     /**
@@ -136,7 +175,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function getEmail() {
         // email is only in the local data
-        if (isset($this->localInfo['email'])) return $this->localInfo['email'];
+        if (!empty($this->localInfo['email'])) return $this->localInfo['email'];
         return false;
     }
 
@@ -146,8 +185,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The md5sum of the email if there is any, false otherwise
      */
     public function getEmailID() {
-        if (isset($this->remoteInfo['emailid'])) return $this->remoteInfo['emailid'];
-        if (isset($this->localInfo['email'])) return md5($this->localInfo['email']);
+        if (!empty($this->remoteInfo['emailid'])) return $this->remoteInfo['emailid'];
+        if (!empty($this->localInfo['email'])) return md5($this->localInfo['email']);
         return false;
     }
 
@@ -157,8 +196,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string The description
      */
     public function getDescription() {
-        if (isset($this->localInfo['desc'])) return $this->localInfo['desc'];
-        if (isset($this->remoteInfo['description'])) return $this->remoteInfo['description'];
+        if (!empty($this->localInfo['desc'])) return $this->localInfo['desc'];
+        if (!empty($this->remoteInfo['description'])) return $this->remoteInfo['description'];
         return '';
     }
 
@@ -168,8 +207,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string The URL
      */
     public function getURL() {
-        if (isset($this->localInfo['url'])) return $this->localInfo['url'];
-        return 'https://www.dokuwiki.org/plugin:'.$this->name;
+        if (!empty($this->localInfo['url'])) return $this->localInfo['url'];
+        return 'https://www.dokuwiki.org/'.($this->isTemplate() ? 'template' : 'plugin').':'.$this->getBase();
     }
 
     /**
@@ -178,8 +217,28 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The version, usually in the form yyyy-mm-dd if there is any
      */
     public function getInstalledVersion() {
-        if (isset($this->localInfo['date'])) return $this->localInfo['date'];
+        if (!empty($this->localInfo['date'])) return $this->localInfo['date'];
         if ($this->isInstalled()) return $this->getLang('unknownversion');
+        return false;
+    }
+
+    /**
+     * Get the install date of the current version
+     *
+     * @return string|bool The date of the last update or false if not available
+     */
+    public function getUpdateDate() {
+        if (!empty($this->managerData['updated'])) return $this->managerData['updated'];
+        return false;
+    }
+
+    /**
+     * Get the date of the installation of the plugin
+     *
+     * @return string|bool The date of the installation or false if not available
+     */
+    public function getInstallDate() {
+        if (!empty($this->managerData['installed'])) return $this->managerData['installed'];
         return false;
     }
 
@@ -189,8 +248,26 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The base names of the dependencies
      */
     public function getDependencies() {
-        if (isset($this->remoteInfo['dependencies'])) return $this->remoteInfo['dependencies'];
+        if (!empty($this->remoteInfo['dependencies'])) return $this->remoteInfo['dependencies'];
         return array();
+    }
+
+    /**
+     * Get the names of the missing dependencies
+     *
+     * @return array The base names of the missing dependencies
+     */
+    public function getMissingDependencies() {
+        /* @var Doku_Plugin_Controller $plugin_controller */
+        global $plugin_controller;
+        $dependencies = $this->getDependencies();
+        $missing_dependencies = array();
+        foreach ($dependencies as $dependency) {
+            if ($plugin_controller->isdisabled($dependency)) {
+                $missing_dependencies[] = $dependency;
+            }
+        }
+        return $missing_dependencies;
     }
 
     /**
@@ -199,7 +276,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The names of the conflicting extensions
      */
     public function getConflicts() {
-        if (isset($this->remoteInfo['conflicts'])) return $this->remoteInfo['dependencies'];
+        if (!empty($this->remoteInfo['conflicts'])) return $this->remoteInfo['dependencies'];
         return array();
     }
 
@@ -209,7 +286,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The names of similar extensions
      */
     public function getSimilarExtensions() {
-        if (isset($this->remoteInfo['similar'])) return $this->remoteInfo['similar'];
+        if (!empty($this->remoteInfo['similar'])) return $this->remoteInfo['similar'];
         return array();
     }
 
@@ -219,9 +296,20 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The names of the tags of the extension
      */
     public function getTags() {
-        if (isset($this->remoteInfo['tags'])) return $this->remoteInfo['tags'];
+        if (!empty($this->remoteInfo['tags'])) return $this->remoteInfo['tags'];
         return array();
     }
+
+    /**
+     * Get the popularity information as floating point number [0,1]
+     *
+     * @return float|bool The popularity information or false if it isn't available
+     */
+    public function getPopularity() {
+        if (!empty($this->remoteInfo['popularity'])) return $this->remoteInfo['popularity']/200.0;
+        return false;
+    }
+
 
     /**
      * Get the text of the security warning if there is any
@@ -229,7 +317,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The security warning if there is any, false otherwise
      */
     public function getSecurityWarning() {
-        if (isset($this->remoteInfo['securitywarning'])) return $this->remoteInfo['securitywarning'];
+        if (!empty($this->remoteInfo['securitywarning'])) return $this->remoteInfo['securitywarning'];
         return false;
     }
 
@@ -239,7 +327,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The security issue if there is any, false otherwise
      */
     public function getSecurityIssue() {
-        if (isset($this->remoteInfo['securityissue'])) return $this->remoteInfo['securityissue'];
+        if (!empty($this->remoteInfo['securityissue'])) return $this->remoteInfo['securityissue'];
         return false;
     }
 
@@ -249,17 +337,26 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The screenshot URL if there is any, false otherwise
      */
     public function getScreenshotURL() {
-        if (isset($this->remoteInfo['screenshoturl'])) return $this->remoteInfo['screenshoturl'];
+        if (!empty($this->remoteInfo['screenshoturl'])) return $this->remoteInfo['screenshoturl'];
         return false;
     }
 
+    /**
+     * Get the URL of the thumbnail of the extension if there is any
+     *
+     * @return string|bool The thumbnail URL if there is any, false otherwise
+     */
+    public function getThumbnailURL() {
+        if (!empty($this->remoteInfo['thumbnailurl'])) return $this->remoteInfo['thumbnailurl'];
+        return false;
+    }
     /**
      * Get the last used download URL of the extension if there is any
      *
      * @return string|bool The previously used download URL, false if the extension has been installed manually
      */
     public function getLastDownloadURL() {
-        if (isset($this->managerData['downloadurl'])) return $this->managerData['downloadurl'];
+        if (!empty($this->managerData['downloadurl'])) return $this->managerData['downloadurl'];
         return false;
     }
 
@@ -269,8 +366,19 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The download URL if there is any, false otherwise
      */
     public function getDownloadURL() {
-        if (isset($this->remoteInfo['downloadurl'])) return $this->remoteInfo['downloadurl'];
+        if (!empty($this->remoteInfo['downloadurl'])) return $this->remoteInfo['downloadurl'];
         return false;
+    }
+
+    /**
+     * If the download URL has changed since the last download
+     *
+     * @return bool If the download URL has changed
+     */
+    public function hasDownloadURLChanged() {
+        $lasturl = $this->getLastDownloadURL();
+        $currenturl = $this->getDownloadURL();
+        return ($lasturl && $currenturl && $lasturl != $currenturl);
     }
 
     /**
@@ -279,7 +387,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The bug tracker URL if there is any, false otherwise
      */
     public function getBugtrackerURL() {
-        if (isset($this->remoteInfo['bugtracker'])) return $this->remoteInfo['bugtracker'];
+        if (!empty($this->remoteInfo['bugtracker'])) return $this->remoteInfo['bugtracker'];
         return false;
     }
 
@@ -289,7 +397,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The URL of the source repository if there is any, false otherwise
      */
     public function getSourcerepoURL() {
-        if (isset($this->remoteInfo['sourcerepo'])) return $this->remoteInfo['sourcerepo'];
+        if (!empty($this->remoteInfo['sourcerepo'])) return $this->remoteInfo['sourcerepo'];
         return false;
     }
 
@@ -299,7 +407,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The donation URL if there is any, false otherwise
      */
     public function getDonationURL() {
-        if (isset($this->remoteInfo['donationurl'])) return $this->remoteInfo['donationurl'];
+        if (!empty($this->remoteInfo['donationurl'])) return $this->remoteInfo['donationurl'];
         return false;
     }
 
@@ -309,7 +417,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The type(s) as array of strings
      */
     public function getTypes() {
-        if (isset($this->remoteInfo['types'])) return explode(', ', $this->remoteInfo['types']);
+        if (!empty($this->remoteInfo['types'])) return $this->remoteInfo['types'];
         if ($this->isTemplate()) return array(32 => 'template');
         return array();
     }
@@ -320,7 +428,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The versions in the form yyyy-mm-dd => ('label' => label, 'implicit' => implicit)
      */
     public function getCompatibleVersions() {
-        if (isset($this->remoteInfo['compatible'])) return $this->remoteInfo['compatible'];
+        if (!empty($this->remoteInfo['compatible'])) return $this->remoteInfo['compatible'];
         return array();
     }
 
@@ -330,7 +438,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string|bool The last available update in the form yyyy-mm-dd if there is any, false otherwise
      */
     public function getLastUpdate() {
-        if (isset($this->remoteInfo['lastupdate'])) return $this->remoteInfo['lastupdate'];
+        if (!empty($this->remoteInfo['lastupdate'])) return $this->remoteInfo['lastupdate'];
         return false;
     }
 
@@ -392,6 +500,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                     $status = 'Error, the requested extension hasn\'t been installed or updated';
                 }
                 $this->setExtension($this->name, $this->isTemplate());
+                $this->purgeCache();
             }
             $this->dir_delete(dirname($path));
         }
@@ -404,6 +513,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool If the plugin was sucessfully installed
      */
     public function uninstall() {
+        $this->purgeCache();
         return $this->dir_delete($this->getInstallDir());
     }
 
@@ -417,8 +527,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
-        if (!$this->isEnabled()) return $this->getLang('alreadyenabled');
+        if ($this->isEnabled()) return $this->getLang('alreadyenabled');
         if ($plugin_controller->enable($this->name)) {
+            $this->purgeCache();
             return true;
         } else {
             return $this->getLang('pluginlistsaveerror');
@@ -438,10 +549,22 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
         if ($plugin_controller->disable($this->name)) {
+            $this->purgeCache();
             return true;
         } else {
             return $this->getLang('pluginlistsaveerror');
         }
+    }
+
+    /**
+     * Purge the cache by touching the main configuration file
+     */
+    protected function purgeCache() {
+        global $config_cascade;
+
+        // expire dokuwiki caches
+        // touching local.php expires wiki page, JS and CSS caches
+        @touch(reset($config_cascade['main']['local']));
     }
 
     /**
@@ -463,7 +586,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
             foreach($plugin_types as $type) {
                 if(@file_exists($path.$type.'.php')) {
-                    $plugin = plugin_load($type, $this->getBase());
+                    $plugin = plugin_load($type, $this->name);
                     if ($plugin) break;
                 }
 
@@ -471,7 +594,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                     while(false !== ($cp = readdir($dh))) {
                         if($cp == '.' || $cp == '..' || strtolower(substr($cp, -4)) != '.php') continue;
 
-                        $plugin = plugin_load($type, $this->getBase().'_'.substr($cp, 0, -4));
+                        $plugin = plugin_load($type, $this->name.'_'.substr($cp, 0, -4));
                         if ($plugin) break;
                     }
                     if ($plugin) break;
@@ -551,7 +674,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function download($url, &$path) {
         // check the url
         $matches = array();
-        if(!preg_match("/[^/]*$/", $url, $matches) || !$matches[0]) {
+        if(!preg_match("/[^\/]*$/", $url, $matches) || !$matches[0]) {
             return $this->getLang('baddownloadurl');
         }
         $file = $matches[0];

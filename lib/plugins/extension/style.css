@@ -1,0 +1,368 @@
+/*
+ * Extension plugin styles
+ *
+ * @author  Christopher Smith <chris@jalakai.co.uk>
+ * @author  Piyush Mishra <me@piyushmishra.com>
+ * @author  Håkan Sandell <sandell.hakan@gmail.com>
+ * @author  Anika Henke <anika@selfthinker.org>
+ */
+
+/*
+ * tab support not included in "Angua", copied from _mediamanager.css
+ */
+#extension__manager .panelHeader {
+    background-color: __background_alt__;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: left;
+    /* to counter partly missing border of ul.tabs: */
+    border-top: 1px solid __border__;
+    margin-top: -1px;
+}
+
+#extension__manager .panelHeader p {
+    float: left;
+    font-weight: normal;
+    font-size: 1em;
+    padding: 0;
+    margin: 0 0 3px;
+}
+[dir=rtl] #extension__manager .panelHeader p {
+    float: right;
+}
+
+#extension__manager ul.tabs div.message {
+    display: inline;
+    margin: 0 .5em;
+}
+
+/*
+ * general layout
+ */
+#extension__manager h2 {
+    margin-left: 0;
+}
+
+#extension__manager a.taglink {
+    padding: 1px 4px;
+    background-color: __background_neu__;
+    border-radius: 3px;
+}
+[dir=rtl] #extension__manager a.taglink {
+    display: inline-block;
+    line-height: 1.2;
+}
+
+#extension__manager .panelHeader div.error {
+    margin-top: 0;
+    float: left;
+}
+[dir=rtl] #extension__manager .panelHeader div.error {
+    float: right;
+}
+
+/*
+ * search & url download forms
+ */
+#extension__manager form.search,
+#extension__manager form.btn_reload {
+    float: right;
+}
+[dir=rtl] #extension__manager form.search,
+[dir=rtl] #extension__manager form.btn_reload {
+    float: left;
+}
+
+#extension__manager div.search form.search {
+    float: none;
+}
+
+#extension__manager .tagcloud {
+    width: 55%;
+    float: left;
+    margin: 0 0.5em 1em 0;
+}
+[dir=rtl] #extension__manager .tagcloud {
+    float: right;
+    margin: 0 0 1em .5em;
+}
+
+#extension__manager .tagcloud a.taglink {
+    background-color: inherit;
+}
+
+#extension__manager div.search {
+    width: 44%;
+    float: left;
+}
+[dir=rtl] #extension__manager div.search {
+    float: right;
+}
+
+#extension__manager fieldset {
+    margin-top: 0.5em;
+    width: auto;
+}
+
+#extension__manager fieldset p {
+    margin: 0.5em;
+    text-align: justify;
+    font-size: 85%;
+}
+
+/* tag cloud */
+#extension__manager a.cl0 { font-size: 0.7em; }
+#extension__manager a.cl1 { font-size: 0.9em; }
+#extension__manager a.cl2 { font-size: 1em; }
+#extension__manager a.cl3 { font-size: 1.3em; }
+#extension__manager a.cl4 { font-size: 1.6em; }
+#extension__manager a.cl5 { font-size: 1.9em; }
+
+
+#extension__manager .extensionList input.button {
+    margin: 0 .3em .3em 0;
+}
+[dir=rtl] #extension__manager .extensionList input.button {
+    margin: 0 0 .3em .3em;
+}
+
+/*
+ * extensions table
+ */
+#extension__manager .extensionList {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#extension__manager .extensionList li {
+    margin: 0 0 .5em;
+    padding: 0 0 .5em;
+    color: __text__;
+    border-bottom: 1px solid __border__;
+    overflow: hidden;
+}
+
+#extension__manager .legend {
+    position: relative;
+    width: 75%;
+    float: left;
+}
+[dir=rtl] #extension__manager .legend {
+    float: right;
+}
+
+#extension__manager .legend > div {
+    padding: 0 .5em 0 132px;
+    border-right: 1px solid __background_alt__;
+    overflow: hidden;
+}
+[dir=rtl] #extension__manager .legend > div {
+    padding: 0 132px 0 .5em;
+    border-left: 1px solid __background_alt__;
+    border-right-width: 0;
+}
+
+#extension__manager .enabled div.screenshot span {
+    background: transparent url(images/enabled.png) no-repeat 2px 2px;
+}
+
+#extension__manager .disabled div.screenshot span {
+    background: transparent url(images/disabled.png) no-repeat 2px 2px;
+}
+
+#extension__manager .legend div.screenshot {
+    margin-top: 4px;
+    margin-left: -132px;
+    max-width: 120px;
+    float: left;
+}
+[dir=rtl] #extension__manager .legend div.screenshot {
+    margin-left: 0;
+    margin-right: -132px;
+    float: right;
+}
+
+#extension__manager .legend div.screenshot span {
+    min-height: 24px;
+    min-width: 24px;
+    position: absolute;
+    left: 0;
+}
+[dir=rtl] #extension__manager .legend div.screenshot span {
+    left: auto;
+    right: 0;
+}
+
+#extension__manager .legend h2 {
+    width: 100%;
+    float: right;
+    margin: 0.2em 0 0.5em;
+    font-size: 100%;
+    font-weight: normal;
+    border: none;
+}
+[dir=rtl] #extension__manager .legend h2 {
+    float: left;
+}
+
+#extension__manager .legend h2 strong {
+    font-size: 120%;
+    font-weight: bold;
+    vertical-align: baseline;
+}
+
+#extension__manager .legend p {
+    margin: 0 0 0.6em 0;
+}
+
+#extension__manager .legend span.linkbar {
+    font-size: 85%;
+}
+
+#extension__manager .legend span.linkbar a.urlextern + a.taglink,
+#extension__manager .legend span.linkbar a.interwiki + a.taglink {
+    margin-left: 0.4em;
+}
+[dir=rtl] #extension__manager .legend span.linkbar a.urlextern + a.taglink,
+[dir=rtl] #extension__manager .legend span.linkbar a.interwiki + a.taglink {
+    margin-left: 0;
+}
+[dir=rtl] #extension__manager .legend span.linkbar a.urlextern,
+[dir=rtl] #extension__manager .legend span.linkbar a.interwiki {
+    margin-left: .4em;
+}
+
+#extension__manager .legend input.button {
+    background: transparent url(images/up.png) no-repeat 0 0;
+    box-shadow: none;
+    border-width: 0;
+    height: 14px;
+    text-indent: -99999px;
+    float: right;
+    margin: .5em 0 0;
+}
+[dir=rtl] #extension__manager .legend input.button {
+    float: left;
+    margin: .5em 0 0;
+}
+
+#extension__manager .legend  input.button.close {
+    background: transparent url(images/down.png) no-repeat 0 0;
+}
+
+#extension__manager .legend div.popularity {
+    background-color: __background__;
+    border: 1px solid silver;
+    height: .4em;
+    margin: 0 auto;
+    padding: 1px;
+    width: 5.5em;
+    position: absolute;
+    right: .5em;
+    top: 0.2em;
+}
+[dir=rtl] #extension__manager .legend div.popularity {
+    right: auto;
+    left: .5em;
+}
+
+#extension__manager .legend div.popularity div {
+    background-color: __border__;
+    height: 100%;
+}
+
+#extension__manager .legend div.popularity div span {
+    display: none;/* @todo: hide accessibly */
+}
+
+#extension__manager .actions {
+    padding: 0;
+    font-size: 95%;
+    width: 25%;
+    float: right;
+    text-align: right;
+}
+[dir=rtl] #extension__manager .actions {
+    float: left;
+    text-align: left;
+}
+
+#extension__manager .actions .version {
+    display: block;
+}
+
+#extension__manager .actions p {
+    margin: 0.2em 0;
+    text-align: center;
+}
+
+/*
+ * extensions table, detailed info box
+ */
+#extension__manager dl.details {
+    margin: 0.4em 0 0 0;
+    font-size: 85%;
+    border-top: 1px solid __background_alt__;
+    clear: both;
+}
+
+#extension__manager dl.details dt {
+    clear: left;
+    float: left;
+    width: 25%;
+    margin: 0;
+    text-align: right;
+    font-weight: normal;
+    padding: 0.2em 5px 0 0;
+}
+[dir=rtl] #extension__manager dl.details dt {
+    clear: right;
+    float: right;
+    text-align: left;
+    padding: 0.2em 0 0 5px;
+}
+
+#extension__manager dl.details dd {
+    margin-left: 25%;
+    font-weight: bold;
+    padding: 0.2em 0 0 5px;
+}
+[dir=rtl] #extension__manager dl.details dd {
+    margin-left: 0;
+    margin-right: 25%;
+    padding: 0.2em 5px 0 0 ;
+}
+
+#extension__manager dl.details dd a {
+    font-weight: normal;
+}
+
+#extension__manager #info__popup {
+    z-index: 20;
+    overflow: hidden;
+    opacity: 0.9;
+    border: 1px solid __border__;
+    background-color: __border__; /*background_other__;*/
+    text-align: left;
+    padding: 0.2em;
+}
+[dir=rtl] #extension__manager #info__popup {
+    text-align: right;
+}
+
+#extension__manager div.msg {
+    margin: 0.4em 0 0 0;
+}
+
+#extension__manager ul.tabs div.msg {
+    display: inline;
+    margin-left: 0.4em;
+}
+[dir=rtl] #extension__manager ul.tabs div.msg {
+    margin-left: 0;
+    margin-right: 0.4em;
+}
+
+/* end admin plugin styles */
