@@ -3,6 +3,7 @@
  * Brazilian Portuguese language file
  *
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Frederico Guimarães <frederico@teia.bio.br>
  */
 $lang['server']                = 'Seu servidor MySQL';
 $lang['user']                  = 'usuário MySQL';

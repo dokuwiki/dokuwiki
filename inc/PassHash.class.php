@@ -98,7 +98,7 @@ class PassHash {
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         for($i = 0; $i < $len; $i++) {
-            $salt .= $chars[mt_rand(0, 61)];
+            $salt .= $chars[auth_random(0, 61)];
         }
         return $salt;
     }

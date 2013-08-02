@@ -20,7 +20,8 @@
  *   'numericopt'   - like above, but accepts empty values
  *   'onoff'        - checkbox input, setting output  0|1
  *   'multichoice'  - select input (single choice), setting output with quotes, required _choices parameter
- *   'email'        - text input, input must conform to email address format
+ *   'email'        - text input, input must conform to email address format, supports optional '_multiple'
+ *                    parameter for multiple comma separated email addresses
  *   'password'     - password input, minimal input validation, setting output text in quotes, maybe encoded
  *                    according to the _code parameter
  *   'dirchoice'    - as multichoice, selection choices based on folders found at location specified in _dir
@@ -67,6 +68,7 @@
  *   '_delimiter'  - string, default '/', a single character used as a delimiter for testing regex input values
  *   '_pregflags'  - string, default 'ui', valid preg pattern modifiers used when testing regex input values, for more
  *                   information see http://uk1.php.net/manual/en/reference.pcre.pattern.modifiers.php
+ *   '_multiple'   - bool, allow multiple comma separated email values; optional for 'email', ignored by others
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
@@ -135,7 +137,7 @@ $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
 $meta['disableactions'] = array('disableactions',
-                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
+                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','profile_delete','edit','wikicode','check'),
                                 '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
@@ -170,7 +172,6 @@ $meta['im_convert']  = array('im_convert');
 $meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
 $meta['fetchsize']   = array('numeric');
 $meta['refcheck']    = array('onoff');
-$meta['refshow']     = array('numeric');
 
 $meta['_notifications'] = array('fieldset');
 $meta['subscribers']    = array('onoff');

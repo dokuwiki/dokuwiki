@@ -1,6 +1,6 @@
 ====== DokuWiki ======
 
-[[doku>wiki:dokuwiki|{{wiki:dokuwiki-128.png }}]] DokuWiki is a standards compliant, simple to use [[wp>Wiki]], mainly aimed at creating documentation of any kind. It is targeted at developer teams, workgroups and small companies. It has a simple but powerful [[wiki:syntax]] which makes sure the datafiles remain readable outside the Wiki and eases the creation of structured texts. All data is stored in plain text files -- no database is required.
+[[doku>wiki:dokuwiki|{{wiki:dokuwiki-128.png }}]] DokuWiki is a simple to use and highly versatile Open Source [[wp>wiki]] software that doesn't require a database. It is loved by users for its clean and readable [[wiki:syntax]]. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [[doku>acl|access controls]] and [[doku>auth|authentication connectors]] make DokuWiki especially useful in the enterprise context and the large number of [[doku>plugins]] contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
 
 Read the [[doku>manual|DokuWiki Manual]] to unleash the full power of DokuWiki.
 
