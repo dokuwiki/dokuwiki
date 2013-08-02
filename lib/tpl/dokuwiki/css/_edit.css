@@ -16,7 +16,7 @@
 }
 #draft__status {
     float: right;
-    color: __text_alt__;
+    color: @ini_text_alt;
     background-color: inherit;
 }
 [dir=rtl] #draft__status {
@@ -35,8 +35,8 @@
 /* picker popups (outside of .dokuwiki) */
 div.picker {
     width: 300px;
-    border: 1px solid __border__;
-    background-color: __background_alt__;
+    border: 1px solid @ini_border;
+    background-color: @ini_background_alt;
     color: inherit;
 }
 /* picker for headlines */
@@ -106,7 +106,7 @@ div.picker button.toolbutton {
 }
 /* change background colour if summary is missing */
 .dokuwiki .editBar .summary input.missing {
-    color: __text__;
+    color: @ini_text;
     background-color: #ffcccc;
 }
 
@@ -114,7 +114,7 @@ div.picker button.toolbutton {
 ********************************************************************/
 
 .dokuwiki div.preview {
-    border: dotted __border__;
+    border: dotted @ini_border;
     border-width: .2em 0;
     padding: 1.4em 0;
     margin-bottom: 1.4em;
@@ -138,6 +138,6 @@ div.picker button.toolbutton {
 .dokuwiki div.section_highlight {
     margin: 0 -1em; /* negative side margin = side padding + side border */
     padding: 0 .5em;
-    border: solid __background_alt__;
+    border: solid @ini_background_alt;
     border-width: 0 .5em;
 }

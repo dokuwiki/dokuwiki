@@ -101,10 +101,10 @@
 #dokuwiki__pagetools:hover ul,
 #dokuwiki__pagetools ul li a:focus,
 #dokuwiki__pagetools ul li a:active {
-    background-color: __background__;
-    border-color: __border__;
+    background-color: @ini_background;
+    border-color: @ini_border;
     border-radius: 2px;
-    box-shadow: 2px 2px 2px __text_alt__;
+    box-shadow: 2px 2px 2px @ini_text_alt;
 }
 
 #dokuwiki__pagetools:hover ul li a,
@@ -124,7 +124,7 @@
 
 [dir=rtl] #dokuwiki__pagetools:hover ul,
 [dir=rtl] #dokuwiki__pagetools ul li a:focus {
-    box-shadow: -2px 2px 2px __text_alt__;
+    box-shadow: -2px 2px 2px @ini_text_alt;
 }
 
 [dir=rtl] #dokuwiki__pagetools:hover li a,
@@ -158,7 +158,7 @@
     text-decoration: none;
 }
 #dokuwiki__pagetools ul li a:hover {
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
 }
 
 /*____________ all available icons in sprite ____________*/
