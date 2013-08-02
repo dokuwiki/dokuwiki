@@ -13,7 +13,6 @@ $lang['nochoice']              = '(engir aðrir valmöguleikar fyrir hendi)';
 $lang['_display']              = 'Skjástillingar';
 $lang['_anti_spam']            = 'Stillingar gegn ruslpósti';
 $lang['_editing']              = 'Útgáfastillingar';
-$lang['_plugin_sufix']         = 'Viðbótstillingar';
 $lang['lang']                  = 'Tungumál';
 $lang['title']                 = 'Heiti wikis';
 $lang['template']              = 'Mát';
