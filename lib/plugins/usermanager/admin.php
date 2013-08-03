@@ -759,6 +759,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $fd = fopen($_FILES['import']['tmp_name'],'r');
         if ($fd) {
             while($csv = fgets($fd)){
+                if (!utf8_check($csv)) {
+                    $csv = utf8_encode($csv);
+                }
                 $raw = str_getcsv($csv);
                 $error = '';                        // clean out any errors from the previous line
                 // data checks...
