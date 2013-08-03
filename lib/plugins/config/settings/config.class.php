@@ -366,12 +366,11 @@ if (!class_exists('setting')) {
     var $_pattern = '';
     var $_error = false;            // only used by those classes which error check
     var $_input = null;             // only used by those classes which error check
+    var $_caution = null;           // used by any setting to provide an alert along with the setting
+                                    // valid alerts, 'warning', 'danger', 'security'
+                                    // images matching the alerts are in the plugin's images directory
 
-    var $_cautionList = array(
-        'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'cookiedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
-        'start' => 'warning', 'camelcase' => 'warning', 'deaccent' => 'warning', 'sepchar' => 'warning', 'compression' => 'warning', 'xsendfile' => 'warning', 'renderer_xhtml' => 'warning', 'fnencode' => 'warning',
-        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'remote' => 'security', 'fullpath' => 'security'
-    );
+    static protected $_validCautions = array('warning','danger','security');
 
     function setting($key, $params=null) {
         $this->_key = $key;
@@ -473,8 +472,22 @@ if (!class_exists('setting')) {
     function error() { return $this->_error; }
 
     function caution() {
-        if (!array_key_exists($this->_key, $this->_cautionList)) return false;
-        return $this->_cautionList[$this->_key];
+        if (!empty($this->_caution)) {
+            if (!in_array($this->_caution, setting::$_validCautions)) {
+                trigger_error('Invalid caution string ('.$this->_caution.') in metadata for setting "'.$this->_key.'"', E_USER_WARNING);
+                return false;
+            }
+            return $this->_caution;
+        }
+        // compatibility with previous cautionList
+        // TODO: check if any plugins use; remove
+        if (!empty($this->_cautionList[$this->_key])) {
+            $this->_caution = $this->_cautionList[$this->_key];
+            unset($this->_cautionList);
+
+            return $this->caution();
+        }
+        return false;
     }
 
     function _out_key($pretty=false,$url=false) {
@@ -659,10 +672,8 @@ if (!class_exists('setting_password')) {
 }
 
 if (!class_exists('setting_email')) {
-  if (!defined('SETTING_EMAIL_PATTERN')) define('SETTING_EMAIL_PATTERN','<^'.PREG_PATTERN_VALID_EMAIL.'$>');
 
   class setting_email extends setting_string {
-    var $_pattern = SETTING_EMAIL_PATTERN;       // no longer required, retained for backward compatibility - FIXME, may not be necessary
     var $_multiple = false;
     var $_placeholders = false;
 
@@ -1107,96 +1118,39 @@ if (!class_exists('setting_multicheckbox')) {
   }
 }
 
-/**
- *  Provide php_strip_whitespace (php5 function) functionality
- *
- *  @author   Chris Smith <chris@jalakai.co.uk>
- */
-if (!function_exists('php_strip_whitespace'))  {
+if (!class_exists('setting_regex')){
+   class setting_regex extends setting_string {
 
-  if (function_exists('token_get_all')) {
+        var $_delimiter = '/';    // regex delimiter to be used in testing input
+        var $_pregflags = 'ui';   // regex pattern modifiers to be used in testing input
 
-    if (!defined('T_ML_COMMENT')) {
-      define('T_ML_COMMENT', T_COMMENT);
-    } else {
-      define('T_DOC_COMMENT', T_ML_COMMENT);
-    }
+        /**
+         *  update changed setting with user provided value $input
+         *  - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         *  - if changed value passes error check, set $this->_local to the new value
+         *
+         *  @param  mixed   $input   the new value
+         *  @return boolean          true if changed, false otherwise (incl. on error)
+         */
+        function update($input) {
 
-    /**
-     * modified from original
-     * source Google Groups, php.general, by David Otton
-     */
-    function php_strip_whitespace($file) {
-        if (!@is_readable($file)) return '';
+            // let parent do basic checks, value, not changed, etc.
+            $local = $this->_local;
+            if (!parent::update($input)) return false;
+            $this->_local = $local;
 
-        $in = join('',@file($file));
-        $out = '';
-
-        $tokens = token_get_all($in);
-
-        foreach ($tokens as $token) {
-          if (is_string ($token)) {
-            $out .= $token;
-          } else {
-            list ($id, $text) = $token;
-            switch ($id) {
-              case T_COMMENT : // fall thru
-              case T_ML_COMMENT : // fall thru
-              case T_DOC_COMMENT : // fall thru
-              case T_WHITESPACE :
-                break;
-              default : $out .= $text; break;
+            // see if the regex compiles and runs (we don't check for effectiveness)
+            $regex = $this->_delimiter . $input . $this->_delimiter . $this->_pregflags;
+            $lastError = error_get_last();
+            $ok = @preg_match($regex,'testdata');
+            if (preg_last_error() != PREG_NO_ERROR || error_get_last() != $lastError) {
+                $this->_input = $input;
+                $this->_error = true;
+                return false;
             }
-          }
+
+            $this->_local = $input;
+            return true;
         }
-        return ($out);
     }
-
-  } else {
-
-    function is_whitespace($c) { return (strpos("\t\n\r ",$c) !== false); }
-    function is_quote($c) { return (strpos("\"'",$c) !== false); }
-    function is_escaped($s,$i) {
-        $idx = $i-1;
-        while(($idx>=0) && ($s{$idx} == '\\')) $idx--;
-        return (($i - $idx + 1) % 2);
-    }
-
-    function is_commentopen($str, $i) {
-        if ($str{$i} == '#') return "\n";
-        if ($str{$i} == '/') {
-          if ($str{$i+1} == '/') return "\n";
-          if ($str{$i+1} == '*') return "*/";
-        }
-
-        return false;
-    }
-
-    function php_strip_whitespace($file) {
-
-        if (!@is_readable($file)) return '';
-
-        $contents = join('',@file($file));
-        $out = '';
-
-        $state = 0;
-        for ($i=0; $i<strlen($contents); $i++) {
-          if (!$state && is_whitespace($contents{$i})) continue;
-
-          if (!$state && ($c_close = is_commentopen($contents, $i))) {
-            $c_open_len = ($contents{$i} == '/') ? 2 : 1;
-            $i = strpos($contents, $c_close, $i+$c_open_len)+strlen($c_close)-1;
-            continue;
-          }
-
-          $out .= $contents{$i};
-          if (is_quote($contents{$i})) {
-              if (($state == $contents{$i}) && !is_escaped($contents, $i)) { $state = 0; continue; }
-            if (!$state) {$state = $contents{$i}; continue; }
-          }
-        }
-
-        return $out;
-    }
-  }
 }
