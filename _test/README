@@ -1,6 +1,6 @@
 ====== DokuWiki Test Suite ======
 
-This is the test suit to automatically test various parts of DokuWiki.
+This is the test suite to automatically test various parts of DokuWiki.
 
 ===== Requirements =====
 
@@ -9,22 +9,33 @@ This is the test suit to automatically test various parts of DokuWiki.
 
 ===== PHPUnit Installation ======
 
-via PEAR:
+==== via PEAR installer ====
 
   pear config-set auto_discover 1
-  pear upgrade
   pear install pear.phpunit.de/PHPUnit
 
-on Windows:
+==== via Composer ====
 
-  FIXME
+Include a composer.json file in your project, which can be as minimal as:
+
+<code>
+{
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}
+</code>
+
+==== via PHP archive (PHAR) ====
+
+Download http://pear.phpunit.de/get/phpunit.phar and make it executable on your system.
 
 
-===== Running all Tests =====
+===== Running all tests =====
 
 Just change to the ''_test'' directory and run phpunit:
 
-  cd _testing/
+  cd _test/
   phpunit
 
 PHPUnit will fail on some systems with a //headers already sent// error.

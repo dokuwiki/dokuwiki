@@ -282,8 +282,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   function internallink($id, $name = NULL){
     global $ID;
 
-    if(is_array($name))
+    if(is_array($name)) {
         $this->_firstimage($name['src']);
+        if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+    }
 
     $default = $this->_simpleTitle($id);
 
@@ -304,8 +306,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function externallink($url, $name = NULL){
-    if(is_array($name))
+    if(is_array($name)) {
         $this->_firstimage($name['src']);
+        if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+    }
 
     if ($this->capture){
       $this->doc .= $this->_getLinkTitle($name, '<' . $url . '>');
@@ -313,8 +317,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function interwikilink($match, $name = NULL, $wikiName, $wikiUri){
-    if(is_array($name))
+    if(is_array($name)) {
         $this->_firstimage($name['src']);
+        if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+    }
 
     if ($this->capture){
       list($wikiUri, $hash) = explode('#', $wikiUri, 2);
@@ -324,8 +330,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function windowssharelink($url, $name = NULL){
-    if(is_array($name))
+    if(is_array($name)) {
         $this->_firstimage($name['src']);
+        if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+    }
 
     if ($this->capture){
       if ($name) $this->doc .= $name;
@@ -334,8 +342,10 @@ class Doku_Renderer_metadata extends Doku_Renderer {
   }
 
   function emaillink($address, $name = NULL){
-    if(is_array($name))
+    if(is_array($name)) {
         $this->_firstimage($name['src']);
+        if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+    }
 
     if ($this->capture){
       if ($name) $this->doc .= $name;
@@ -347,6 +357,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
                          $height=NULL, $cache=NULL, $linking=NULL){
     if ($this->capture && $title) $this->doc .= '['.$title.']';
     $this->_firstimage($src);
+    $this->_recordMediaUsage($src);
   }
 
   function externalmedia($src, $title=NULL, $align=NULL, $width=NULL,
@@ -438,6 +449,15 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     if(preg_match('/.(jpe?g|gif|png)$/i',$src)){
         $this->firstimage = $src;
     }
+  }
+
+  function _recordMediaUsage($src) {
+      global $ID;
+
+      list ($src, $hash) = explode('#', $src, 2);
+      if (media_isexternal($src)) return;
+      resolve_mediaid(getNS($ID), $src, $exists);
+      $this->meta['relation']['media'][$src] = $exists;
   }
 }
 

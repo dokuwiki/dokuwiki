@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Swedish language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['account_suffix']        = 'Ditt konto suffix. T.ex. <code>min.domän.org</code>';

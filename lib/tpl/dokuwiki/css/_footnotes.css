@@ -16,7 +16,7 @@ div.insitu-footnote {
 /*____________ footnotes at the bottom of the page ____________*/
 
 .dokuwiki div.footnotes {
-    border-top: 1px solid __border__;
+    border-top: 1px solid @ini_border;
     padding: .5em 0 0 0;
     margin: 1em 0 0 0;
     clear: both;

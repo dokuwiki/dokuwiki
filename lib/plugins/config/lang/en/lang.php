@@ -4,6 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
+ * @author     Matthias Schulte <dokuwiki@lupo49.de>
  */
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
@@ -23,29 +24,23 @@ $lang['security']   = 'Security Warning: Changing this option could present a se
 
 /* --- Config Setting Headers --- */
 $lang['_configuration_manager'] = 'Configuration Manager'; //same as heading in intro.txt
-$lang['_header_dokuwiki'] = 'DokuWiki Settings';
-$lang['_header_plugin'] = 'Plugin Settings';
-$lang['_header_template'] = 'Template Settings';
+$lang['_header_dokuwiki'] = 'DokuWiki';
+$lang['_header_plugin'] = 'Plugin';
+$lang['_header_template'] = 'Template';
 $lang['_header_undefined'] = 'Undefined Settings';
 
 /* --- Config Setting Groups --- */
-$lang['_basic'] = 'Basic Settings';
-$lang['_display'] = 'Display Settings';
-$lang['_authentication'] = 'Authentication Settings';
-$lang['_anti_spam'] = 'Anti-Spam Settings';
-$lang['_editing'] = 'Editing Settings';
-$lang['_links'] = 'Link Settings';
-$lang['_media'] = 'Media Settings';
-$lang['_notifications'] = 'Notification Settings';
-$lang['_syndication']   = 'Syndication Settings';
-$lang['_advanced'] = 'Advanced Settings';
-$lang['_network'] = 'Network Settings';
-// The settings group name for plugins and templates can be set with
-// plugin_settings_name and template_settings_name respectively. If one
-// of these lang properties is not set, the group name will be generated
-// from the plugin or template name and the localized suffix.
-$lang['_plugin_sufix'] = 'Plugin Settings';
-$lang['_template_sufix'] = 'Template Settings';
+$lang['_basic'] = 'Basic';
+$lang['_display'] = 'Display';
+$lang['_authentication'] = 'Authentication';
+$lang['_anti_spam'] = 'Anti-Spam';
+$lang['_editing'] = 'Editing';
+$lang['_links'] = 'Links';
+$lang['_media'] = 'Media';
+$lang['_notifications'] = 'Notification';
+$lang['_syndication']   = 'Syndication (RSS)';
+$lang['_advanced'] = 'Advanced';
+$lang['_network'] = 'Network';
 
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'No setting metadata.';
@@ -104,6 +99,7 @@ $lang['disableactions'] = 'Disable DokuWiki actions';
 $lang['disableactions_check'] = 'Check';
 $lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
 $lang['disableactions_wikicode'] = 'View source/Export Raw';
+$lang['disableactions_profile_delete'] = 'Delete Own Account';
 $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
@@ -134,7 +130,6 @@ $lang['target____windows']   = 'Target window for windows links';
 /* Media Settings */
 $lang['mediarevisions'] = 'Enable Mediarevisions?';
 $lang['refcheck']    = 'Check if a media file is still in use before deleting it';
-$lang['refshow']     = 'Number of media references to show when the above setting is enabled';
 $lang['gdlib']       = 'GD Lib version';
 $lang['im_convert']  = 'Path to ImageMagick\'s convert tool';
 $lang['jpg_quality'] = 'JPG compression quality (0-100)';
