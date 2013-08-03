@@ -150,8 +150,10 @@ function auth_loadACL() {
                 $out[] = "$nid\t$nrest";
             }
         } else {
-            $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
-            $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
+    		if(isset($_SERVER['REMOTE_USER'])) {
+    			$id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
+    			$rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
+    		}
             $out[] = "$id\t$rest";
         }
     }
@@ -648,9 +650,10 @@ function auth_isMember($memberlist, $user, array $groups) {
 function auth_quickaclcheck($id) {
     global $conf;
     global $USERINFO;
+    $user = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : NULL;
     # if no ACL is used always return upload rights
     if(!$conf['useacl']) return AUTH_UPLOAD;
-    return auth_aclcheck($id, $_SERVER['REMOTE_USER'], $USERINFO['grps']);
+    return auth_aclcheck($id, $user, $USERINFO['grps']);
 }
 
 /**
