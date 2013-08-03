@@ -40,43 +40,33 @@ function css_out(){
         $type = '';
     }
 
+    // decide from where to get the template
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
-    if($tpl){
-        $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
-        $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
-    }else{
-        $tplinc = tpl_incdir();
-        $tpldir = tpl_basedir();
-    }
-
-    // used style.ini file
-    $styleini = css_styleini($tplinc);
+    if(!$tpl) $tpl = $conf['template'];
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
 
-    // load template styles
-    $tplstyles = array();
-    if ($styleini) {
-        foreach($styleini['stylesheets'] as $file => $mode) {
-            $tplstyles[$mode][$tplinc.$file] = $tpldir;
-        }
-    }
+    // load styl.ini
+    $styleini = css_styleini($tpl);
+
+    print_r($styleini);
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
         $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
     }
 
+    // cache influencers
+    $tplinc = tpl_basedir($tpl);
+    $cache_files = getConfigFiles('main');
+    $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
+    $cache_files[] = __FILE__;
+
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
     $files = array();
-
-    $cache_files = getConfigFiles('main');
-    $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = $tplinc.'style.local.ini';
-    $cache_files[] = __FILE__;
-
     foreach($mediatypes as $mediatype) {
         $files[$mediatype] = array();
         // load core styles
@@ -88,8 +78,8 @@ function css_out(){
         // load plugin styles
         $files[$mediatype] = array_merge($files[$mediatype], css_pluginstyles($mediatype));
         // load template styles
-        if (isset($tplstyles[$mediatype])) {
-            $files[$mediatype] = array_merge($files[$mediatype], $tplstyles[$mediatype]);
+        if (isset($styleini['stylesheets'][$mediatype])) {
+            $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
         if(isset($config_cascade['userstyle'][$mediatype])){
@@ -101,7 +91,7 @@ function css_out(){
         //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
         if ($mediatype=='screen') {
             if($lang['direction'] == 'rtl'){
-                if (isset($tplstyles['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $tplstyles['rtl']);
+                if (isset($styleini['stylesheets']['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets']['rtl']);
                 if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
             }
         }
@@ -154,7 +144,7 @@ function css_out(){
     ob_end_clean();
 
     // apply style replacements
-    $css = css_applystyle($css,$tplinc);
+    $css = css_applystyle($css, $styleini['replacements']);
 
     // parse less
     $css = css_parseless($css);
@@ -200,7 +190,6 @@ function css_parseless($css) {
 
             // walk upwards to last include
             $lines = explode("\n", $css);
-            $count = count($lines);
             for($i=$lno-1; $i>=0; $i--){
                 if(preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)){
                     // we found it, add info to message
@@ -238,50 +227,80 @@ function css_parseless($css) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_applystyle($css,$tplinc){
-    $styleini = css_styleini($tplinc);
+function css_applystyle($css, $replacements) {
+    // we convert ini replacements to LESS variable names
+    // and build a list of variable: value; pairs
+    $less = '';
+    foreach((array) $replacements as $key => $value) {
+        $lkey = trim($key, '_');
+        $lkey = '@ini_'.$lkey;
+        $less .= "$lkey: $value;\n";
 
-    if($styleini){
-        // we convert ini replacements to LESS variable names
-        // and build a list of variable: value; pairs
-        $less = '';
-        foreach($styleini['replacements'] as $key => $value){
-            $lkey = trim($key, '_');
-            $lkey = '@ini_'.$lkey;
-            $less .= "$lkey: $value;\n";
-
-            $styleini['replacements'][$key] = $lkey;
-        }
-
-        // we now replace all old ini replacements with LESS variables
-        $css = strtr($css, $styleini['replacements']);
-
-        // now prepend the list of LESS variables as the very first thing
-        $css = $less.$css;
+        $replacements[$key] = $lkey;
     }
+
+    // we now replace all old ini replacements with LESS variables
+    $css = strtr($css, $replacements);
+
+    // now prepend the list of LESS variables as the very first thing
+    $css = $less.$css;
     return $css;
 }
 
 /**
- * Get contents of merged style.ini and style.local.ini as an array.
+ * Load style ini contents
  *
- * @author Anika Henke <anika@selfthinker.org>
+ * Loads and merges style.ini files from template and config and prepares
+ * the stylesheet modes
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $tpl the used template
+ * @return array with keys 'stylesheets' and 'replacements'
  */
-function css_styleini($tplinc) {
-    $styleini = array();
+function css_styleini($tpl) {
+    $stylesheets = array(); // mode, file => base
+    $replacements = array(); // placeholder => value
 
-    foreach (array($tplinc.'style.ini', $tplinc.'style.local.ini') as $ini) {
-        $tmp = (@file_exists($ini)) ? parse_ini_file($ini, true) : array();
+    // load template's style.ini
+    $incbase = tpl_incdir($tpl);
+    $webbase = tpl_basedir($tpl);
+    $ini = $incbase.'style.ini';
+    if(file_exists($ini)){
+        $data = parse_ini_file($ini, true);
 
-        foreach($tmp as $key => $value) {
-            if(array_key_exists($key, $styleini) && is_array($value)) {
-                $styleini[$key] = array_merge($styleini[$key], $tmp[$key]);
-            } else {
-                $styleini[$key] = $value;
-            }
+        // stylesheets
+        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+            $stylesheets[$mode][$incbase.$file] = $webbase;
+        }
+
+        // replacements
+        if(is_array($data['replacements'])){
+            $replacements = array_merge($replacements, $data['replacements']);
         }
     }
-    return $styleini;
+
+    // load configs's style.ini
+    $incbase = dirname($ini).'/';
+    $webbase = DOKU_BASE;
+    $ini = DOKU_CONF."/tpl/$tpl/style.ini";
+    if(file_exists($ini)){
+        $data = parse_ini_file($ini, true);
+
+        // stylesheets
+        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+            $stylesheets[$mode][$incbase.$file] = $webbase;
+        }
+
+        // replacements
+        if(is_array($data['replacements'])){
+            $replacements = array_merge($replacements, $data['replacements']);
+        }
+    }
+
+    return array(
+        'stylesheets' => $stylesheets,
+        'replacements' => $replacements
+    );
 }
 
 /**
