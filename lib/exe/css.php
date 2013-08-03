@@ -59,6 +59,7 @@ function css_out(){
     $tplinc = tpl_basedir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
     $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
     $cache_files[] = __FILE__;
 
