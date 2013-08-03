@@ -1900,7 +1900,7 @@ function media_crop_image($file, $ext, $w, $h=0){
  */
 function media_get_token($id,$w,$h){
     // token is only required for modified images
-    if ($w || $h) {
+    if ($w || $h || media_isexternal($id)) {
         $token = $id;
         if ($w) $token .= '.'.$w;
         if ($h) $token .= '.'.$h;
