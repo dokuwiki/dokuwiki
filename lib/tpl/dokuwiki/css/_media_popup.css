@@ -189,7 +189,9 @@ html.popup {
 #media__content div.detail p {
     margin-bottom: 0;
 }
-
+#media__content .uploader {
+    display: none;
+}
 
 /*____________ media search ____________*/
 

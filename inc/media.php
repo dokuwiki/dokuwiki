@@ -1382,9 +1382,17 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
         $info .= (int) $item['meta']->getField('File.Height');
         $info .= ' ';
     }
-    $info .= '<i>'.dformat($item['mtime']).'</i>';
+    $filetime = @filemtime(fullpath(mediaFN($item['id'])));
+    $info .= '<i data-timestamp="'.$filetime.'">'.dformat($item['mtime']).'</i>';
     $info .= ' ';
     $info .= filesize_h($item['size']);
+
+    $revinfo = getRevisionInfo($item['id'], $filetime, 1024, true);
+    if($revinfo['user']){
+        $editor = $revinfo['user'];
+    } else {
+        $editor = $revinfo['ip'];
+    }
 
     // output
     echo '<div class="'.$zebra.'"'.$jump.' title="'.hsc($item['id']).'">'.NL;
@@ -1394,6 +1402,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
         echo '<a id="h_:'.$item['id'].'" class="'.$class.'">'.hsc($item['id']).'</a><br/>';
     }
     echo '<span class="info">('.$info.')</span>'.NL;
+    echo '<span class="uploader">'.$editor.'</span>';
 
     // view button
     $link = ml($item['id'],'',true);

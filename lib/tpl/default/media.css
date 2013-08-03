@@ -222,3 +222,7 @@ it's dirty, so any "real" fixes are welcome */
     margin-left: 20%;
     padding-left: 1em;
 }
+
+#media__content .uploader {
+    display: none;
+}
