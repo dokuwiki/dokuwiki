@@ -724,7 +724,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         static $label = 0; //number labels
         $ret = '';
 
-        if($ispage && $setperm > AUTH_EDIT) $perm = AUTH_EDIT;
+        if($ispage && $setperm > AUTH_EDIT) $setperm = AUTH_EDIT;
 
         foreach(array(AUTH_NONE,AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD,AUTH_DELETE) as $perm){
             $label += 1;
