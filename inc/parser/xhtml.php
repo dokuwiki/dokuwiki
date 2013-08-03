@@ -1114,6 +1114,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             //add video(s)
             $ret .= $this->_video($src, $width, $height, $att);
 
+        }elseif($mime == 'audio/ogg' || $mime == 'audio/mpeg' || $mime == 'audio/wav' ){
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }
+            if (!$title) {
+                // just show the sourcename
+                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+            if (!$render) {
+                // if the video is not supposed to be rendered
+                // return the title of the video
+                return $title;
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+
+            //add audio
+            $ret .= $this->_audio($src, $att);
+
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
                 // if the flash is not supposed to be rendered
@@ -1253,8 +1274,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Anika Henke <anika@selfthinker.org>
      *
      * @param string $src      - ID of video to embed
-     * @param string $title    - title of the video
-     * @param string $mime     - mimetype of the video
      * @param int $width       - width of the video in pixels
      * @param int $height      - height of the video in pixels
      * @param array $atts      - additional attributes for the <video> tag
@@ -1294,6 +1313,37 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // finish
         $this->doc .= '</video>'.NL;
+    }
+
+    /**
+     * Embed audio in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of audio to embed
+     * @param array $atts      - additional attributes for the <video> tag
+     */
+    function _audio($src,$atts=null){
+
+        // prepare alternative formats
+        $extensions = array('ogg', 'mp3', 'wav');
+        $alternatives = media_alternativefiles($src, $extensions);
+
+        // open audio tag
+        $this->doc .= '<audio '.buildAttributes($atts).' controls="controls">'.NL;
+
+        // output source for each alternative audio format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $this->doc .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly');
+        }
+
+        // finish
+        $this->doc .= '</audio>'.NL;
     }
 
 }
