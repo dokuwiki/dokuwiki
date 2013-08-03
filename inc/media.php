@@ -586,7 +586,10 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
         // FIXME: print permission warning here instead?
         echo '<div class="nothing">'.$lang['nothingfound'].'</div>'.NL;
     }else{
-        if (!$fullscreenview) media_uploadform($ns, $auth);
+        if (!$fullscreenview) {
+            media_uploadform($ns, $auth);
+            media_searchform($ns);
+        }
 
         $dir = utf8_encodeFN(str_replace(':','/',$ns));
         $data = array();
@@ -609,7 +612,6 @@ function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=fals
             if ($fullscreenview) echo '</ul>'.NL;
         }
     }
-    if (!$fullscreenview) media_searchform($ns);
 }
 
 /**
