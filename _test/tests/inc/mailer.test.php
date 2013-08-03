@@ -15,6 +15,11 @@ class TestMailer extends Mailer {
     public function prepareHeaders() {
         return parent::prepareHeaders();
     }
+
+    public function cleanHeaders() {
+        parent::cleanHeaders();
+    }
+
 }
 
 class mailer_test extends DokuWikiTest {
@@ -65,6 +70,47 @@ class mailer_test extends DokuWikiTest {
         $mail->setHeader('test-header','');
         $headers = $mail->prop('headers');
         $this->assertArrayNotHasKey('Test-Header',$headers);
+    }
+
+    function test_addresses(){
+        $mail = new TestMailer();
+
+        $mail->to('andi@splitbrain.org');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org', $headers['To']);
+
+        $mail->to('<andi@splitbrain.org>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('andi@splitbrain.org', $headers['To']);
+
+        $mail->to('Andreas Gohr <andi@splitbrain.org>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('Andreas Gohr <andi@splitbrain.org>', $headers['To']);
+
+        $mail->to('Andreas Gohr <andi@splitbrain.org> , foo <foo@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('Andreas Gohr <andi@splitbrain.org>, foo <foo@example.com>', $headers['To']);
+
+        $mail->to('Möp <moep@example.com> , foo <foo@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('=?UTF-8?B?TcO2cA==?= <moep@example.com>, foo <foo@example.com>', $headers['To']);
+
+        $mail->to(array('Möp <moep@example.com> ',' foo <foo@example.com>'));
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('=?UTF-8?B?TcO2cA==?= <moep@example.com>, foo <foo@example.com>', $headers['To']);
+
+        $mail->to(array('Beet, L van <lvb@example.com>',' foo <foo@example.com>'));
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+        $this->assertEquals('=?UTF-8?B?QmVldCwgTCB2YW4=?= <lvb@example.com>, foo <foo@example.com>', $headers['To']);
+
+
     }
 
     function test_simplemail(){
