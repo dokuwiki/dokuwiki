@@ -33,11 +33,13 @@ function template($file) {
  * This replaces the deprecated DOKU_TPLINC constant
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_incdir() {
+function tpl_incdir($tpl='') {
     global $conf;
-    return DOKU_INC.'lib/tpl/'.$conf['template'].'/';
+    if(!$tpl) $tpl = $conf['template'];
+    return DOKU_INC.'lib/tpl/'.$tpl.'/';
 }
 
 /**
@@ -46,10 +48,12 @@ function tpl_incdir() {
  * This replaces the deprecated DOKU_TPL constant
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_basedir() {
+function tpl_basedir($tpl) {
     global $conf;
+    if(!$tpl) $tpl = $conf['template'];
     return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
 }
 
