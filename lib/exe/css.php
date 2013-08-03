@@ -297,9 +297,9 @@ function css_styleini($tpl) {
     }
 
     // load configs's style.ini
-    $incbase = dirname($ini).'/';
     $webbase = DOKU_BASE;
-    $ini = DOKU_CONF."/tpl/$tpl/style.ini";
+    $ini = DOKU_CONF."tpl/$tpl/style.ini";
+    $incbase = dirname($ini).'/';
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
