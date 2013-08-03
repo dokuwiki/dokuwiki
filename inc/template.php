@@ -1229,7 +1229,7 @@ function tpl_localeFN($id) {
  * @param bool $fromajax - set true when calling this function via ajax
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function tpl_mediaContent($fromajax = false) {
+function tpl_mediaContent($fromajax = false, $sort='natural') {
     global $IMG;
     global $AUTH;
     global $INUSE;
@@ -1259,7 +1259,7 @@ function tpl_mediaContent($fromajax = false) {
         if($do == 'filesinuse') {
             media_filesinuse($INUSE, $IMG);
         } elseif($do == 'filelist') {
-            media_filelist($NS, $AUTH, $JUMPTO);
+            media_filelist($NS, $AUTH, $JUMPTO,false,$sort);
         } elseif($do == 'searchlist') {
             media_searchlist($INPUT->str('q'), $NS, $AUTH);
         } else {

@@ -1296,7 +1296,7 @@ function media_restore($image, $rev, $auth){
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @triggers MEDIA_SEARCH
  */
-function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
+function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural'){
     global $conf;
     global $lang;
 
@@ -1316,15 +1316,10 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort=''){
                     $conf['mediadir'],
                     'search_media',
                     array('showmsg'=>false,'pattern'=>$pattern),
-                    $dir);
+                    $dir,
+                    1,
+                    $sort);
         }
-
-        $data = array();
-        foreach ($evdata['data'] as $k => $v) {
-            $data[$k] = ($sort == 'date') ? $v['mtime'] : $v['id'];
-        }
-        array_multisort($data, SORT_DESC, SORT_NUMERIC, $evdata['data']);
-
         $evt->advise_after();
         unset($evt);
     }
