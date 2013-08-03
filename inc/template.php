@@ -51,7 +51,7 @@ function tpl_incdir($tpl='') {
  * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_basedir($tpl) {
+function tpl_basedir($tpl='') {
     global $conf;
     if(!$tpl) $tpl = $conf['template'];
     return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
