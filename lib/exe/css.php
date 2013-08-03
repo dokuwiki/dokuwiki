@@ -279,6 +279,23 @@ function css_styleini($tpl) {
         }
     }
 
+    // load template's style.local.ini
+    // @deprecated 2013-08-03
+    $ini = $incbase.'style.local.ini';
+    if(file_exists($ini)){
+        $data = parse_ini_file($ini, true);
+
+        // stylesheets
+        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+            $stylesheets[$mode][$incbase.$file] = $webbase;
+        }
+
+        // replacements
+        if(is_array($data['replacements'])){
+            $replacements = array_merge($replacements, $data['replacements']);
+        }
+    }
+
     // load configs's style.ini
     $incbase = dirname($ini).'/';
     $webbase = DOKU_BASE;
