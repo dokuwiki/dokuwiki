@@ -1093,13 +1093,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $ret .= ' />';
 
-        }elseif(substr($mime,0,5) == 'video'){
-
-            $origTitle = '';
+        }elseif($mime == 'video/webm' || $mime == 'video/ogg' || $mime == 'video/mp4' ){
             // first get the $title
             if (!is_null($title)) {
                 $title  = $this->_xmlEntities($title);
-                $origTitle = $title;
             }
             if (!$title) {
                 // just show the sourcename
@@ -1115,7 +1112,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $att['class'] = "media$align";
 
             //add video(s)
-            $ret .= $this->_video($src, $origTitle, $mime, $width, $height, $att);
+            $ret .= $this->_video($src, $width, $height, $att);
 
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
@@ -1262,7 +1259,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int $height      - height of the video in pixels
      * @param array $atts      - additional attributes for the <video> tag
      */
-    function _video($src,$title,$mime,$width,$height,$atts=null){
+    function _video($src,$width,$height,$atts=null){
 
         // prepare width and height
         if(is_null($atts)) $atts = array();
@@ -1273,10 +1270,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // prepare alternative formats
         $extensions = array('webm', 'ogv', 'mp4');
-        $types['webm'] = 'video/webm; codecs="vp8, vorbis"';
-        $types['ogv'] = 'video/ogg; codecs="theora, vorbis"';
-        // mp4 would be 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"', but Android doesn't like it
-        $types['mp4'] = '';
         $alternatives = media_alternativefiles($src, $extensions);
         $poster = media_alternativefiles($src, array('jpg', 'png'), true);
         $posterUrl = '';
@@ -1284,21 +1277,18 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $posterUrl = ml(reset($poster),array('cache'=>$cache),true,'&');
         }
 
+        // open video tag
         $this->doc .= '<video '.buildAttributes($atts).' controls="controls"';
         if ($posterUrl) $this->doc .= ' poster="'.$posterUrl.'"';
         $this->doc .= '>'.NL;
-        foreach($alternatives as $ext => $file) {
+
+        // output source for each alternative video format
+        foreach($alternatives as $mime => $file) {
             $url = ml($file,array('cache'=>$cache),true,'&');
-            $type = $types[$ext];
-            if (!$title) {
-                $title = $this->_xmlEntities(utf8_basename(noNS($file)));
-            }
+            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
 
-            $this->doc .= '<source src="'.hsc($url).'"';
-            if (!empty($type)) $this->doc .= ' type=\''.$type.'\'';
-            $this->doc .= ' />'.NL;
-
-            // alternative content
+            $this->doc .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
             $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly');
         }
 

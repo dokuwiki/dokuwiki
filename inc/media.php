@@ -2134,15 +2134,14 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
 
 /**
  * Return other media files with the same base name
- * but a different extension.
+ * but different extensions.
  *
  * @param string $src       - ID of media file
  * @param array $exts       - alternative extensions to find other files for
- * @param boolean $onlyone  - set if only one result should be returned (and not the original)
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
-function media_alternativefiles($src, $exts, $onlyone=false){
+function media_alternativefiles($src, $exts){
 
     $files = array();
     list($srcExt, $srcMime) = mimetype($src);
@@ -2152,15 +2151,9 @@ function media_alternativefiles($src, $exts, $onlyone=false){
         $fileid = $filebase.'.'.$ext;
         $file = mediaFN($fileid);
         if(file_exists($file)) {
-            $files[$ext] = $fileid;
-            if ($onlyone) {
-                return $files;
-            }
+            list($fileExt, $fileMime) = mimetype($file);
+            $files[$fileMime] = $fileid;
         }
-    }
-    // if original wasn't any of $exts, return only original
-    if (empty($files) && !$onlyone) {
-        $files[$srcExt] = $src;
     }
     return $files;
 }
