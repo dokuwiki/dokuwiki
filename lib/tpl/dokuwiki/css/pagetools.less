@@ -165,6 +165,12 @@
 
 @pagetools_icon_space: -90px;
 
+/**
+ * page tools without highlighting
+ *
+ * @param string @action The action class
+ * @param int @position Position in the page tools
+ */
 .pagetools-item(@action, @position) {
     @position-active: (@position+0.5);
 
@@ -190,19 +196,27 @@
         }
     }
 }
-.pagetools-item-highlight(@action, @position, @mode) {
-    .pagetools-item(@action, @position);
-    @position-active: (@position+0.5);
 
-    .mode_@{mode} #dokuwiki__pagetools ul li a.@{action} {
-        background-position: right @pagetools_icon_space * @position-active;
-        &:before {
-            margin-top: @pagetools_icon_space * @position-active;
-        }
+/**
+ * page tools with highlighting
+ *
+ * @param string @action The action class
+ * @param int @position Position in the page tools
+ * @param string @mode The mode in which this tool should be highlighted
+ */
+.pagetools-item(@action, @position, @mode) {
+  .pagetools-item(@action, @position);
+  @position-active: (@position+0.5);
+
+  .mode_@{mode} #dokuwiki__pagetools ul li a.@{action} {
+    background-position: right @pagetools_icon_space * @position-active;
+    &:before {
+      margin-top: @pagetools_icon_space * @position-active;
     }
-    [dir=rtl] .mode_@{mode} #dokuwiki__pagetools ul li a.@{action} {
-        background-position: left @pagetools_icon_space * @position-active;
-    }
+  }
+  [dir=rtl] .mode_@{mode} #dokuwiki__pagetools ul li a.@{action} {
+    background-position: left @pagetools_icon_space * @position-active;
+  }
 }
 
 .pagetools-item(edit, 1);
@@ -210,10 +224,10 @@
 .pagetools-item(show, 4);
 .pagetools-item(source, 5);
 .pagetools-item(draft, 3);
-.pagetools-item-highlight(revs, 7, revisions);
-.pagetools-item-highlight(backlink, 8, backlink);
+.pagetools-item(revs, 7, revisions);
+.pagetools-item(backlink, 8, backlink);
 .pagetools-item(top, 10);
-.pagetools-item-highlight(revert, 6, revert);
-.pagetools-item-highlight(subscribe, 9);
+.pagetools-item(revert, 6, revert);
+.pagetools-item(subscribe, 9, subscribe);
 .pagetools-item(mediaManager, 11);
 .pagetools-item(back, 12);
