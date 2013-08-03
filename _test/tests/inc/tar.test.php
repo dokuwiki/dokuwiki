@@ -11,7 +11,8 @@ class Tar_TestCase extends DokuWikiTest {
     public function test_createdynamic() {
         $tar = new Tar();
 
-        $dir = dirname(__FILE__).'/tar';
+        $dir  = dirname(__FILE__).'/tar';
+        $tdir = ltrim($dir,'/');
 
         $tar->create();
         $tar->AddFile("$dir/testdata1.txt");
@@ -24,11 +25,17 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
+
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir/foobar") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar.txt") === false, 'File not in TAR');
+
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
     }
 
@@ -42,6 +49,7 @@ class Tar_TestCase extends DokuWikiTest {
         $tar = new Tar();
 
         $dir = dirname(__FILE__).'/tar';
+        $tdir = ltrim($dir,'/');
         $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
 
         $tar->create($tmp, Tar::COMPRESS_NONE);
@@ -57,11 +65,17 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
+
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir/foobar") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar.txt") === false, 'File not in TAR');
+
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
 
         @unlink($tmp);
@@ -246,6 +260,28 @@ class Tar_TestCase extends DokuWikiTest {
 
             TestUtils::rdelete($out);
         }
+    }
+
+    // FS#1442
+    public function test_createlongfile() {
+        $tar = new Tar();
+        $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
+
+        $path = '0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789.txt';
+
+        $tar->create($tmp, Tar::COMPRESS_NONE);
+        $tar->addData($path, 'testcontent1');
+        $tar->close();
+
+        $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
+        $data = file_get_contents($tmp);
+
+        // We should find the complete path and a longlink entry
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'content in TAR');
+        $this->assertTrue(strpos($data, $path) !== false, 'path in TAR');
+        $this->assertTrue(strpos($data, '@LongLink') !== false, '@LongLink in TAR');
+
+        @unlink($tmp);
     }
 
     public function test_createlongpathustar() {

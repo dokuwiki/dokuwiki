@@ -474,7 +474,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 
     if(is_array($more)) {
         // add token for resized images
-        if($more['w'] || $more['h']){
+        if($more['w'] || $more['h'] || $isexternalimage){
             $more['tok'] = media_get_token($id,$more['w'],$more['h']);
         }
         // strip defaults for shorter URLs
@@ -485,12 +485,13 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         $more = buildURLparams($more, $sep);
     } else {
         $matches = array();
-        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER)){
+        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER) || $isexternalimage){
             $resize = array('w'=>0, 'h'=>0);
             foreach ($matches as $match){
                 $resize[$match[1]] = $match[2];
             }
-            $more .= $sep.'tok='.media_get_token($id,$resize['w'],$resize['h']);
+            $more .= $more === '' ? '' : $sep;
+            $more .= 'tok='.media_get_token($id,$resize['w'],$resize['h']);
         }
         $more = str_replace('cache=cache', '', $more); //skip default
         $more = str_replace(',,', ',', $more);
@@ -506,14 +507,8 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
     // external URLs are always direct without rewriting
     if($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
-        // add hash:
-        $xlink .= '?hash='.substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
-        if($more) {
-            $xlink .= $sep.$more;
-            $xlink .= $sep.'media='.rawurlencode($id);
-        } else {
-            $xlink .= $sep.'media='.rawurlencode($id);
-        }
+        $xlink .= '?'.$more;
+        $xlink .= $sep.'media='.rawurlencode($id);
         return $xlink;
     }
 
@@ -1130,7 +1125,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // if useheading is enabled, purge the cache of all linking pages
     if(useHeading('content')) {
-        $pages = ft_backlinks($id);
+        $pages = ft_backlinks($id, true);
         foreach($pages as $page) {
             $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();

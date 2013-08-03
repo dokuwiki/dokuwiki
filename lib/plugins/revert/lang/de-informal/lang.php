@@ -10,13 +10,14 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
-$lang['menu']                  = 'Zurückstellungsmanager';
+$lang['menu']                  = 'Seiten wiederherstellen';
 $lang['filter']                = 'Durchsuche als Spam markierte Seiten';
 $lang['revert']                = 'Setze ausgewählte Seiten zurück.';
-$lang['reverted']              = '%s zu Revision %s zurückgesetzt';
+$lang['reverted']              = '%s zu Revision %s wiederhergestellt';
 $lang['removed']               = '%s entfernt';
-$lang['revstart']              = 'Zurückstellungsprozess gestartet. Dies kann eine längere Zeit dauern. Wenn das Skript vor Fertigstellung stoppt, solltest du es in kleineren Stücken versuchen.';
-$lang['revstop']               = 'Zurückstellungsprozess erfolgreich beendet.';
-$lang['note1']                 = 'Beachte: Diese Suche berücksichtigt Gross- und Kleinschreibung';
-$lang['note2']                 = 'Beachte: Diese Seite wid zurückgestellt auf die letzte Version, die nicht den Spam-Ausdruck <i>%s</i> enthält.';
+$lang['revstart']              = 'Wiederherstellung gestartet. Dies kann eine längere Zeit dauern. Wenn das Skript vor Fertigstellung stoppt, solltest du es in kleineren Stücken versuchen.';
+$lang['revstop']               = 'Wiederherstellung erfolgreich beendet.';
+$lang['note1']                 = 'Beachte: Diese Suche berücksichtigt Groß- und Kleinschreibung';
+$lang['note2']                 = 'Beachte: Diese Seite wird wiederhergestellt auf die letzte Version, die nicht den Spam-Begriff <i>%s</i> enthält.';
