@@ -1,12 +1,11 @@
 <?php
+
 /**
- * Swedish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
- * @author Håkan Sandell <hakan.sandell[at]mydata.se>
  * @author Håkan Sandell <hakan.sandell@home.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
@@ -18,6 +17,7 @@
  * @author Peter Åström <eaustreum@gmail.com>
  * @author mikael@mallander.net
  * @author Smorkster Andersson smorkster@gmail.com
+ * @author Henrik <henrik@idealis.se>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,6 +61,7 @@ $lang['btn_revert']            = 'Återställ';
 $lang['btn_register']          = 'Registrera';
 $lang['btn_apply']             = 'Verkställ';
 $lang['btn_media']             = 'Media Hanteraren';
+$lang['btn_deleteuser']        = 'Ta bort Mitt Konto';
 $lang['loggedinas']            = 'Inloggad som';
 $lang['user']                  = 'Användarnamn';
 $lang['pass']                  = 'Lösenord';
@@ -72,6 +73,7 @@ $lang['fullname']              = 'Namn';
 $lang['email']                 = 'E-post';
 $lang['profile']               = 'Användarprofil';
 $lang['badlogin']              = 'Felaktigt användarnamn eller lösenord.';
+$lang['badpassconfirm']        = 'Ledsen, lösenordet var felaktigt';
 $lang['minoredit']             = 'Små ändringar';
 $lang['draftdate']             = 'Utkast automatiskt sparat';
 $lang['nosecedit']             = 'Sidan ändrades medan du skrev, sektionsinformationen var inte uppdaterad. Laddar hela sidan istället.';
@@ -88,6 +90,11 @@ $lang['profna']                = 'Denna wiki stödjer inte ändringar av profile
 $lang['profnochange']          = 'Ingenting ändrades, inget att göra.';
 $lang['profnoempty']           = 'Namn och e-postadress måste fyllas i.';
 $lang['profchanged']           = 'Användarprofilen uppdaterad.';
+$lang['profnodelete']          = 'Den här wiki:n stödjer ej borttagning av användare';
+$lang['profdeleteuser']        = 'Radera kontot';
+$lang['profdeleted']           = 'Ditt användarkonto har raderats från den här wiki:n';
+$lang['profconfdelete']        = 'Jag vill ta bort mitt konto/inlogg på den här wiki:n <br/> Denna åtgärd går ej att ångra.';
+$lang['profconfdeletemissing'] = 'Bekräftelse-kryssrutan är ej markerad';
 $lang['pwdforget']             = 'Glömt ditt lösenord? Ordna ett nytt';
 $lang['resendna']              = 'Den här wikin stödjer inte utskick av lösenord.';
 $lang['resendpwd']             = 'Sätt lösenord för';
@@ -310,6 +317,7 @@ $lang['media_searchtab']       = 'Sök';
 $lang['media_file']            = 'Fil';
 $lang['media_viewtab']         = 'Visa';
 $lang['media_edittab']         = 'Redigera';
+$lang['media_historytab']      = 'Historik';
 $lang['media_list_thumbs']     = 'Miniatyrbild';
 $lang['media_list_rows']       = 'Rader';
 $lang['media_sort_name']       = 'Namn';
@@ -321,6 +329,7 @@ $lang['media_search']          = 'Sök i %s';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s vid %s';
 $lang['media_edit']            = 'Redigera %s';
+$lang['media_history']         = '%s-historik';
 $lang['media_meta_edited']     = 'metadata redigerat';
 $lang['media_perm_read']       = 'Du har tyvärr inte tillräckliga behörigheter för att läsa filer.';
 $lang['media_perm_upload']     = 'Du har tyvärr inte tillräckliga behörigheter för att ladda upp filer.';
