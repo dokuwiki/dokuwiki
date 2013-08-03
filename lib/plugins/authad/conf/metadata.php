@@ -9,6 +9,6 @@ $meta['admin_password']     = array('password','_caution' => 'danger');
 $meta['real_primarygroup']  = array('onoff','_caution' => 'danger');
 $meta['use_ssl']            = array('onoff','_caution' => 'danger');
 $meta['use_tls']            = array('onoff','_caution' => 'danger');
-$meta['debug']              = array('onoff','_caution' => 'danger');
+$meta['debug']              = array('onoff','_caution' => 'security');
 $meta['expirywarn']         = array('numeric', '_min'=>0,'_caution' => 'danger');
 $meta['additional']         = array('string','_caution' => 'danger');

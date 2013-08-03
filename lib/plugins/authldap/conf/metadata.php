@@ -16,4 +16,4 @@ $meta['bindpw']      = array('password','_caution' => 'danger');
 $meta['userscope']   = array('multichoice','_choices' => array('sub','one','base'),'_caution' => 'danger');
 $meta['groupscope']  = array('multichoice','_choices' => array('sub','one','base'),'_caution' => 'danger');
 $meta['groupkey']    = array('string','_caution' => 'danger');
-$meta['debug']       = array('onoff','_caution' => 'danger');
+$meta['debug']       = array('onoff','_caution' => 'security');

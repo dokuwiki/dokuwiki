@@ -5,7 +5,7 @@ $meta['user']             = array('string','_caution' => 'danger');
 $meta['password']         = array('password','_caution' => 'danger');
 $meta['database']         = array('string','_caution' => 'danger');
 $meta['charset']          = array('string','_caution' => 'danger');
-$meta['debug']            = array('multichoice','_choices' => array(0,1,2),'_caution' => 'danger');
+$meta['debug']            = array('multichoice','_choices' => array(0,1,2),'_caution' => 'security');
 $meta['forwardClearPass'] = array('onoff','_caution' => 'danger');
 $meta['TablesToLock']     = array('array','_caution' => 'danger');
 $meta['checkPass']        = array('','_caution' => 'danger');

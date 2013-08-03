@@ -5,7 +5,7 @@ $meta['port']             = array('numeric','_caution' => 'danger');
 $meta['user']             = array('string','_caution' => 'danger');
 $meta['password']         = array('password','_caution' => 'danger');
 $meta['database']         = array('string','_caution' => 'danger');
-$meta['debug']            = array('onoff','_caution' => 'danger');
+$meta['debug']            = array('onoff','_caution' => 'security');
 $meta['forwardClearPass'] = array('onoff','_caution' => 'danger');
 $meta['checkPass']        = array('','_caution' => 'danger');
 $meta['getUserInfo']      = array('','_caution' => 'danger');
