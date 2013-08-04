@@ -1321,7 +1321,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Anika Henke <anika@selfthinker.org>
      *
      * @param string $src      - ID of audio to embed
-     * @param array $atts      - additional attributes for the <video> tag
+     * @param array $atts      - additional attributes for the <audio> tag
      */
     function _audio($src,$atts=null){
 
