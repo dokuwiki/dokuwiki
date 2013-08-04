@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Russian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
