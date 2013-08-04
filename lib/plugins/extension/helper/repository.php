@@ -65,7 +65,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
         if ($this->has_access === null) {
             $cache = new cache('##extension_manager###hasAccess', 'repo');
             $result = null;
-            if (!$cache->useCache(array('age' => 3600 * 24))) {
+            if (!$cache->useCache(array('age' => 3600 * 24, 'purge'=>1))) {
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
                 $data = $httpclient->get(EXTENSION_REPOSITORY_API.'?cmd=ping');
