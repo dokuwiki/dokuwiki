@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Dutch language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
  * @author Niels Schoot <niels.schoot@quintiq.com>

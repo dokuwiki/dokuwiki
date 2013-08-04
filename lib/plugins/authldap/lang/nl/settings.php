@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Dutch language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  */
 $lang['server']                = 'Je LDAP server. Ofwel servernaam (<code>localhost</code>) of volledige URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'LDAP server poort als hiervoor geen volledige URL is opgegeven';
