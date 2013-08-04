@@ -1629,7 +1629,9 @@ function html_debug(){
 
     if($auth){
         print '<b>Auth backend capabilities:</b><pre>';
-        print_r($auth->cando);
+        foreach ($auth->getCapabilities() as $cando){
+            print '   '.str_pad($cando,16) . ' => ' . (int)$auth->canDo($cando) . NL;
+        }
         print '</pre>';
     }
 
