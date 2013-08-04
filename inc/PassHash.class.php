@@ -98,7 +98,7 @@ class PassHash {
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         for($i = 0; $i < $len; $i++) {
-            $salt .= $chars[auth_random(0, 61)];
+            $salt .= $chars[$this->random(0, 61)];
         }
         return $salt;
     }
@@ -540,5 +540,21 @@ class PassHash {
         $output = $algo($opad . pack($pack, $algo($ipad . $data)));
 
         return ($raw_output) ? pack($pack, $output) : $output;
+    }
+
+    /**
+     * Use DokuWiki's secure random generator if available
+     *
+     * @param $min
+     * @param $max
+     *
+     * @return int
+     */
+    protected function random($min, $max){
+        if(function_exists('auth_random')){
+            return auth_random($min, $max);
+        }else{
+            return mt_rand($min, $max);
+        }
     }
 }
