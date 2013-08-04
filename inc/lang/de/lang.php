@@ -1,8 +1,8 @@
 <?php
+
 /**
- * german language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -95,10 +95,10 @@ $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muss ein Name und eine E-Mail-Adresse angegeben werden.';
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
 $lang['profnodelete']          = 'Dieses Wiki unterstützt nicht das Löschen von Benutzern.';
-$lang['profdeleteuser']        = 'Benutzerprofil löschen'; 
+$lang['profdeleteuser']        = 'Benutzerprofil löschen';
 $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
 $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
-$lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.'; 
+$lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
