@@ -10,7 +10,7 @@
 if(!defined('DOKU_INC')) die();
 
 /**
- * Class helper_plugin_extension_extension represents a single extension (plugin or template)
+ * Class helper_plugin_extension_list takes care of creating a HTML list of extensions
  */
 class helper_plugin_extension_list extends DokuWiki_Plugin {
     protected $form = '';
@@ -150,16 +150,15 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
         if($extension->getAuthor()) {
 
-            $params = array(
-                'do'=>'admin',
-                'page'=>'extension',
-                'tab'=>'search',
-                'q'=>'author:'.$extension->getAuthor()
-            );
-            $url = wl($ID, $params);
-            return '<a href="'.$url.'" title="'.$this->getLang('author_hint').'" >'.hsc($extension->getAuthor()).'</a>';
+            $mailid = $extension->getEmailID();
+            if($mailid){
+                $url = $this->tabURL('search', array('q' => 'mailid:'.$mailid));
+                return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.hsc($extension->getAuthor()).'</a>';
+            }else{
+                return '<span class="author">'.hsc($extension->getAuthor()).'</span>';
+            }
         }
-        return "<em>".$this->getLang('unknown_author')."</em>";
+        return "<em class=\"author\">".$this->getLang('unknown_author')."</em>";
     }
 
     /**
@@ -231,8 +230,19 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if ($extension->getBugtrackerURL()) {
             $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="interwiki iw_dokubug">'.$this->getLang('bugs_features').'</a> ';
         }
-        foreach ($extension->getTags() as $tag) {
-            $return .= hsc($tag).' '; //$this->manager->handler->html_taglink($tag);
+        if($extension->getTags()){
+            $first = true;
+            echo '<span class="tags">';
+            foreach ($extension->getTags() as $tag) {
+                if(!$first){
+                    $return .= ', ';
+                }else{
+                    $first = false;
+                }
+                $url = $this->tabURL('search', array('q' => 'tag:'.$tag));
+                $return .= '<a href="'.$url.'">'.hsc($tag).'</a>';
+            }
+            echo '</span>';
         }
         $return .= '</span>';
         return $return;

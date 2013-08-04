@@ -53,6 +53,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         $this->remoteInfo = $this->repository->getData(($this->isTemplate() ? 'template:' : '').$this->getBase());
+
+        return ($this->localInfo || $this->remoteInfo);
     }
 
     /**
