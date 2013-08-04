@@ -30,6 +30,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     var $_edit_user = '';     // set to user selected for editing
     var $_edit_userdata = array();
     var $_disabled = '';      // if disabled set to explanatory string
+    var $_import_failures = array();
 
     /**
      * Constructor
@@ -48,6 +49,11 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           // we're good to go
           $this->_auth = & $auth;
 
+        }
+
+        // attempt to retrieve any import failures from the session
+        if ($_SESSION['import_failures']){
+            $this->_import_failures = $_SESSION['import_failures'];
         }
     }
 
@@ -101,6 +107,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
           case "search" : $this->_setFilter($param);
                           $this->_start = 0;
                           break;
+          case "export" : $this->_export(); break;
+          case "import" : $this->_import(); break;
+          case "importfails" : $this->_downloadImportFailures(); break;
         }
 
         $this->_user_total = $this->_auth->canDo('getUserCount') ? $this->_auth->getUserCount($this->_filter) : -1;
@@ -133,6 +142,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
 
         $editable = $this->_auth->canDo('UserMod');
+        $export_label = empty($this->_filter) ? $this->lang['export_all'] : $this->lang[export_filtered];
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -196,7 +206,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("          <input type=\"submit\" name=\"fn[next]\" ".$page_buttons['next']." class=\"button\" value=\"".$this->lang['next']."\" />");
         ptln("          <input type=\"submit\" name=\"fn[last]\" ".$page_buttons['last']." class=\"button\" value=\"".$this->lang['last']."\" />");
         ptln("        </span>");
-        ptln("        <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
+        if (!empty($this->_filter)) {
+            ptln("    <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
+        }
+        ptln("        <input type=\"submit\" name=\"fn[export]\" class=\"button\" value=\"".$export_label."\" />");
         ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
 
@@ -232,6 +245,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
           ptln("  </div>");
           ptln("</div>");
+        }
+
+        if ($this->_auth->canDo('addUser')) {
+          $this->_htmlImportForm();
         }
         ptln("</div>");
     }
@@ -351,6 +368,59 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         foreach ($this->_filter as $key => $filter) {
           ptln("<input type=\"hidden\" name=\"filter[".$key."]\" value=\"".hsc($filter)."\" />",$indent);
         }
+    }
+
+    function _htmlImportForm($indent=0) {
+        global $ID;
+
+        $failure_download_link = wl($ID,array('do'=>'admin','page'=>'usermanager','fn[importfails]'=>1));
+
+        ptln('<div class="level2 import_users">',$indent);
+        print $this->locale_xhtml('import');
+        ptln('  <form action="'.wl($ID).'" method="post" enctype="multipart/form-data">',$indent);
+        formSecurityToken();
+        ptln('    <label>User list file (csv):  <input type="file" name="import" /></label>',$indent);
+        ptln('    <input type="submit" name="fn[import]" value="'.$this->lang['import'].'" />',$indent);
+        ptln('    <input type="hidden" name="do"    value="admin" />',$indent);
+        ptln('    <input type="hidden" name="page"  value="usermanager" />',$indent);
+
+        $this->_htmlFilterSettings($indent+4);
+        ptln('  </form>',$indent);
+        ptln('</div>');
+
+        // list failures from the previous import
+        if ($this->_import_failures) {
+            $digits = strlen(count($this->_import_failures));
+            ptln('<div class="level3 import_failures">',$indent);
+            ptln('  <h3>Most Recent Import - Failures</h3>');
+            ptln('  <table class="import_failures">',$indent);
+            ptln('    <thead>',$indent);
+            ptln('      <tr>',$indent);
+            ptln('        <th class="line">'.$this->lang['line'].'</th>',$indent);
+            ptln('        <th class="error">'.$this->lang['error'].'</th>',$indent);
+            ptln('        <th class="userid">'.$this->lang['user_id'].'</th>',$indent);
+            ptln('        <th class="username">'.$this->lang['user_name'].'</th>',$indent);
+            ptln('        <th class="usermail">'.$this->lang['user_mail'].'</th>',$indent);
+            ptln('        <th class="usergroups">'.$this->lang['user_groups'].'</th>',$indent);
+            ptln('      </tr>',$indent);
+            ptln('    </thead>',$indent);
+            ptln('    <tbody>',$indent);
+            foreach ($this->_import_failures as $line => $failure) {
+                ptln('      <tr>',$indent);
+                ptln('        <td class="lineno"> '.sprintf('%0'.$digits.'d',$line).' </td>',$indent);
+                ptln('        <td class="error">' .$failure['error'].' </td>', $indent);
+                ptln('        <td class="field userid"> '.hsc($failure['user'][0]).' </td>',$indent);
+                ptln('        <td class="field username"> '.hsc($failure['user'][2]).' </td>',$indent);
+                ptln('        <td class="field usermail"> '.hsc($failure['user'][3]).' </td>',$indent);
+                ptln('        <td class="field usergroups"> '.hsc($failure['user'][4]).' </td>',$indent);
+                ptln('      </tr>',$indent);
+            }
+            ptln('    </tbody>',$indent);
+            ptln('  </table>',$indent);
+            ptln('  <p><a href="'.$failure_download_link.'">Download Failures as CSV for correction</a></p>');
+            ptln('</div>');
+        }
+
     }
 
     function _addUser(){
@@ -542,12 +612,16 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * send password change notification email
      */
-    function _notifyUser($user, $password) {
+    function _notifyUser($user, $password, $status_alert=true) {
 
         if ($sent = auth_sendPassword($user,$password)) {
-          msg($this->lang['notify_ok'], 1);
+          if ($status_alert) {
+            msg($this->lang['notify_ok'], 1);
+          }
         } else {
-          msg($this->lang['notify_fail'], -1);
+          if ($status_alert) {
+            msg($this->lang['notify_fail'], -1);
+          }
         }
 
         return $sent;
@@ -635,4 +709,171 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         return $buttons;
     }
+
+    /*
+     *  export a list of users in csv format using the current filter criteria
+     */
+    function _export() {
+        // list of users for export - based on current filter criteria
+        $user_list = $this->_auth->retrieveUsers(0, 0, $this->_filter);
+        $column_headings = array(
+            $this->lang["user_id"],
+            $this->lang["user_name"],
+            $this->lang["user_mail"],
+            $this->lang["user_groups"]
+        );
+
+        // ==============================================================================================
+        // GENERATE OUTPUT
+        // normal headers for downloading...
+        header('Content-type: text/csv;charset=utf-8');
+        header('Content-Disposition: attachment; filename="wikiusers.csv"');
+#       // for debugging assistance, send as text plain to the browser
+#       header('Content-type: text/plain;charset=utf-8');
+
+        // output the csv
+        $fd = fopen('php://output','w');
+        fputcsv($fd, $column_headings);
+        foreach ($user_list as $user => $info) {
+            $line = array($user, $info['name'], $info['mail'], join(',',$info['grps']));
+            fputcsv($fd, $line);
+        }
+        fclose($fd);
+        die;
+    }
+
+    /*
+     * import a file of users in csv format
+     *
+     * csv file should have 4 columns, user_id, full name, email, groups (comma separated)
+     */
+    function _import() {
+        // check we are allowed to add users
+        if (!checkSecurityToken()) return false;
+        if (!$this->_auth->canDo('addUser')) return false;
+
+        // check file uploaded ok.
+        if (empty($_FILES['import']['size']) || !empty($FILES['import']['error']) && is_uploaded_file($FILES['import']['tmp_name'])) {
+            msg($this->lang['import_error_upload'],-1);
+            return false;
+        }
+        // retrieve users from the file
+        $this->_import_failures = array();
+        $import_success_count = 0;
+        $import_fail_count = 0;
+        $line = 0;
+        $fd = fopen($_FILES['import']['tmp_name'],'r');
+        if ($fd) {
+            while($csv = fgets($fd)){
+                if (!utf8_check($csv)) {
+                    $csv = utf8_encode($csv);
+                }
+                $raw = str_getcsv($csv);
+                $error = '';                        // clean out any errors from the previous line
+                // data checks...
+                if (1 == ++$line) {
+                    if ($raw[0] == 'user_id' || $raw[0] == $this->lang['user_id']) continue;    // skip headers
+                }
+                if (count($raw) < 4) {                                        // need at least four fields
+                    $import_fail_count++;
+                    $error = sprintf($this->lang['import_error_fields'], count($raw));
+                    $this->_import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
+                    continue;
+                }
+                array_splice($raw,1,0,auth_pwgen());                          // splice in a generated password
+                $clean = $this->_cleanImportUser($raw, $error);
+                if ($clean && $this->_addImportUser($clean, $error)) {
+                    $sent = $this->_notifyUser($clean[0],$clean[1],false);
+                    if (!$sent){
+                        msg(sprintf($this->lang['import_notify_fail'],$clean[0],$clean[3]),-1);
+                    }
+                    $import_success_count++;
+                } else {
+                    $import_fail_count++;
+                    $this->_import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
+                }
+            }
+            msg(sprintf($this->lang['import_success_count'], ($import_success_count+$import_fail_count), $import_success_count),($import_success_count ? 1 : -1));
+            if ($import_fail_count) {
+                msg(sprintf($this->lang['import_failure_count'], $import_fail_count),-1);
+            }
+        } else {
+            msg($this->lang['import_error_readfail'],-1);
+        }
+
+        // save import failures into the session
+        if (!headers_sent()) {
+          session_start();
+          $_SESSION['import_failures'] = $this->_import_failures;
+          session_write_close();
+        }
+    }
+
+    function _cleanImportUser($candidate, & $error){
+        global $INPUT;
+
+        // kludgy ....
+        $INPUT->set('userid', $candidate[0]);
+        $INPUT->set('userpass', $candidate[1]);
+        $INPUT->set('username', $candidate[2]);
+        $INPUT->set('usermail', $candidate[3]);
+        $INPUT->set('usergroups', $candidate[4]);
+
+        $cleaned = $this->_retrieveUser();
+        list($user,$pass,$name,$mail,$grps) = $cleaned;
+        if (empty($user)) {
+            $error = $this->lang['import_error_baduserid'];
+            return false;
+        }
+
+        // no need to check password, handled elsewhere
+
+        if (!($this->_auth->canDo('modName') xor empty($name))){
+            $error = $this->lang['import_error_badname'];
+            return false;
+        }
+
+        if ($this->_auth->canDo('modMail')) {
+            if (empty($mail) || !mail_isvalid($mail)) {
+                $error = $this->lang['import_error_badmail'];
+                return false;
+            }
+        } else {
+            if (!empty($mail)) {
+                $error = $this->lang['import_error_badmail'];
+                return false;
+            }
+        }
+
+        return $cleaned;
+    }
+
+    function _addImportUser($user, & $error){
+        if (!$this->_auth->triggerUserMod('create', $user)) {
+            $error = $this->lang['import_error_create'];
+            return false;
+        }
+
+        return true;
+    }
+
+    function _downloadImportFailures(){
+
+        // ==============================================================================================
+        // GENERATE OUTPUT
+        // normal headers for downloading...
+        header('Content-type: text/csv;charset=utf-8');
+        header('Content-Disposition: attachment; filename="importfails.csv"');
+#       // for debugging assistance, send as text plain to the browser
+#       header('Content-type: text/plain;charset=utf-8');
+
+        // output the csv
+        $fd = fopen('php://output','w');
+        foreach ($this->_import_failures as $line => $fail) {
+            fputs($fd, $fail['orig']);
+        }
+        fclose($fd);
+        die;
+    }
+
 }
