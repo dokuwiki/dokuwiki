@@ -52,9 +52,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
 
         if(!$repository->hasAccess()){
             $url = $this->gui->tabURL('', array('purge'=>1));
-
-            msg('The DokuWiki extension repository can not be reached currently.
-                 Online Features are not available. [<a href="'.$url.'">retry</a>]', -1);
+            msg($this->getLang('repo_error').' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1);
         }
 
         /* @var helper_plugin_extension_extension $extension */

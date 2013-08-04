@@ -56,6 +56,9 @@ $lang['donate']                 = 'Donate';
 $lang['bundled']                = 'bundled';
 $lang['manual_install']         = 'manual install';
 
+$lang['repo_error'] = 'The DokuWiki extension repository can not be reached currently. Online Features are not available.';
+$lang['repo_retry'] = 'Retry';
+
 $lang['msg_tpl_uninstalled']        = 'Template %s uninstalled';
 $lang['msg_tpl_uninstalled']     = 'Template %s could not be uninstalled';
 $lang['msg_uninstalled']            = 'Plugin %s uninstalled';
