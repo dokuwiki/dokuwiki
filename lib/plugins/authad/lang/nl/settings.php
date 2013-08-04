@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Dutch language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  */
 $lang['account_suffix']        = 'Je account domeinnaam. Bijv <code>@mijn.domein.org</code>';
 $lang['base_dn']               = 'Je basis DN. Bijv. <code>DC=mijn,DC=domein,DC=org</code>';
