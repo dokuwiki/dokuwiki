@@ -1,7 +1,8 @@
 <?php
+
 /**
- * German language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
  * @author Florian Anderiasch <fa@art-core.org>
