@@ -14,6 +14,17 @@ if(!defined('DOKU_INC')) die();
  */
 class admin_plugin_extension extends DokuWiki_Admin_Plugin {
     protected $infoFor = null;
+    /** @var  helper_plugin_extension_gui */
+    protected $gui;
+
+    /**
+     * Constructor
+     *
+     * loads additional helpers
+     */
+    public function __construct(){
+        $this->gui = plugin_load('helper', 'extension_gui');
+    }
 
     /**
      * @return int sort number in admin menu
@@ -40,7 +51,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
         $repository->init();
 
         if(!$repository->hasAccess()){
-            $url = helper_plugin_extension_list::tabURL('', array('purge'=>1));
+            $url = $this->gui->tabURL('', array('purge'=>1));
 
             msg('The DokuWiki extension repository can not be reached currently.
                  Online Features are not available. [<a href="'.$url.'">retry</a>]', -1);
@@ -109,21 +120,35 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
     public function html() {
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
+        global $INPUT;
         ptln('<h1>'.$this->getLang('menu').'</h1>');
         ptln('<div id="extension__manager">');
 
-        $pluginlist = $plugin_controller->getList('', true);
-        /* @var helper_plugin_extension_extension $extension */
-        $extension = $this->loadHelper('extension_extension');
-        /* @var helper_plugin_extension_list $list */
-        $list = $this->loadHelper('extension_list');
-        $list->start_form();
-        foreach ($pluginlist as $name) {
-            $extension->setExtension($name, false);
-            $list->add_row($extension, $name == $this->infoFor);
+        $this->gui->tabNavigation();
+
+        switch($INPUT->str('tab','plugins')){
+            case 'search':
+                echo 'search interface';
+                break;
+            case 'plugins':
+            default:
+                // FIXME move to function?
+
+                $pluginlist = $plugin_controller->getList('', true);
+                /* @var helper_plugin_extension_extension $extension */
+                $extension = $this->loadHelper('extension_extension');
+                /* @var helper_plugin_extension_list $list */
+                $list = $this->loadHelper('extension_list');
+                $list->start_form();
+                foreach ($pluginlist as $name) {
+                    $extension->setExtension($name, false);
+                    $list->add_row($extension, $name == $this->infoFor);
+                }
+                $list->end_form();
+                $list->render();
         }
-        $list->end_form();
-        $list->render();
+
+
         ptln('</div>');
     }
 }

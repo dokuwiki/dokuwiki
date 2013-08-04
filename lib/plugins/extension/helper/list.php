@@ -14,6 +14,17 @@ if(!defined('DOKU_INC')) die();
  */
 class helper_plugin_extension_list extends DokuWiki_Plugin {
     protected $form = '';
+    /** @var  helper_plugin_extension_gui */
+    protected $gui;
+
+    /**
+     * Constructor
+     *
+     * loads additional helpers
+     */
+    public function __construct(){
+        $this->gui = plugin_load('helper', 'extension_gui');
+    }
 
     function start_form() {
         $this->form .= '<form id="extension__list" accept-charset="utf-8" method="post" action="">';
@@ -152,7 +163,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
             $mailid = $extension->getEmailID();
             if($mailid){
-                $url = $this->tabURL('search', array('q' => 'mailid:'.$mailid));
+                $url = $this->gui->tabURL('search', array('q' => 'mailid:'.$mailid));
                 return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.hsc($extension->getAuthor()).'</a>';
             }else{
                 return '<span class="author">'.hsc($extension->getAuthor()).'</span>';
@@ -239,7 +250,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 }else{
                     $first = false;
                 }
-                $url = $this->tabURL('search', array('q' => 'tag:'.$tag));
+                $url = $this->gui->tabURL('search', array('q' => 'tag:'.$tag));
                 $return .= '<a href="'.$url.'">'.hsc($tag).'</a>';
             }
             echo '</span>';
@@ -483,25 +494,5 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $name    = 'fn['.$action.']['.$revertAction.hsc($extension->getInstallName()).']';
 
         return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
-    }
-
-    /**
-     * Create an URL inside the extension manager
-     *
-     * @param string tab tb to load, empty for current tab
-     * @param array $params associative array of parameter to set
-     * @return string
-     */
-    static public function tabURL($tab='', $params=array()){
-        global $ID;
-        global $INPUT;
-
-        if(!$tab) $tab = $INPUT->str('tab', 'installed', true);
-        $defaults = array(
-            'do'   => 'admin',
-            'page' => 'extension',
-            'tab'  => $tab,
-        );
-        return wl($ID, array_merge($defaults, $params));
     }
 }
