@@ -16,6 +16,43 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
     protected $tabs = array('plugins', 'templates', 'search');
 
+
+    public function pluginList(){
+        /* @var Doku_Plugin_Controller $plugin_controller */
+        global $plugin_controller;
+
+        $pluginlist = $plugin_controller->getList('', true);
+        /* @var helper_plugin_extension_extension $extension */
+        $extension = $this->loadHelper('extension_extension');
+        /* @var helper_plugin_extension_list $list */
+        $list = $this->loadHelper('extension_list');
+        $list->start_form();
+        foreach ($pluginlist as $name) {
+            $extension->setExtension($name, false);
+            $list->add_row($extension, $name == $this->infoFor);
+        }
+        $list->end_form();
+        $list->render();
+    }
+
+    public function templateList(){
+        // FIXME do we have a real way?
+        $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
+        $tpllist = array_map('basename', $tpllist);
+
+        /* @var helper_plugin_extension_extension $extension */
+        $extension = $this->loadHelper('extension_extension');
+        /* @var helper_plugin_extension_list $list */
+        $list = $this->loadHelper('extension_list');
+        $list->start_form();
+        foreach ($tpllist as $name) {
+            $extension->setExtension($name, true);
+            $list->add_row($extension, $name == $this->infoFor);
+        }
+        $list->end_form();
+        $list->render();
+    }
+
     /**
      * Print the tab navigation
      *

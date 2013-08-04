@@ -118,34 +118,21 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
      * Render HTML output
      */
     public function html() {
-        /* @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
-        global $INPUT;
         ptln('<h1>'.$this->getLang('menu').'</h1>');
         ptln('<div id="extension__manager">');
 
         $this->gui->tabNavigation();
 
-        switch($INPUT->str('tab','plugins')){
+        switch($this->gui->currentTab()){
             case 'search':
                 echo 'search interface';
                 break;
+            case 'templates':
+                $this->gui->templateList();
+                break;
             case 'plugins':
             default:
-                // FIXME move to function?
-
-                $pluginlist = $plugin_controller->getList('', true);
-                /* @var helper_plugin_extension_extension $extension */
-                $extension = $this->loadHelper('extension_extension');
-                /* @var helper_plugin_extension_list $list */
-                $list = $this->loadHelper('extension_list');
-                $list->start_form();
-                foreach ($pluginlist as $name) {
-                    $extension->setExtension($name, false);
-                    $list->add_row($extension, $name == $this->infoFor);
-                }
-                $list->end_form();
-                $list->render();
+                $this->gui->pluginList();
         }
 
 
