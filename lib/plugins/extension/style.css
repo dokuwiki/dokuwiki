@@ -172,6 +172,11 @@
     background: transparent url(images/disabled.png) no-repeat 2px 2px;
 }
 
+#extension__manager div.screenshot img {
+    width: 120px;
+    height: 70px;
+}
+
 #extension__manager .legend div.screenshot {
     margin-top: 4px;
     margin-left: -132px;
