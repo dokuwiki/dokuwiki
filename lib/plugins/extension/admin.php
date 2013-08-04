@@ -125,14 +125,14 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
 
         switch($this->gui->currentTab()){
             case 'search':
-                echo 'search interface';
+                $this->gui->tabSearch();
                 break;
             case 'templates':
-                $this->gui->templateList();
+                $this->gui->tabTemplates();
                 break;
             case 'plugins':
             default:
-                $this->gui->pluginList();
+                $this->gui->tabPlugins();
         }
 
 

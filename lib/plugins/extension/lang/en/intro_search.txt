@@ -1,0 +1,1 @@
+Here you can search for available plugins and templates for DokuWiki. Be sure to read more about Plugin Security before installing FIXME add link

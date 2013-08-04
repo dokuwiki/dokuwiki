@@ -1,0 +1,1 @@
+Here you can view, enable and disable installed templates. Note that only one template can be activated at a time.

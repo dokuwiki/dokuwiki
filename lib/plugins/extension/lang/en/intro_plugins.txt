@@ -1,0 +1,1 @@
+Here you can view, enable and disable installed plugins.

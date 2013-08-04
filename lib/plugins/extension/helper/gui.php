@@ -16,10 +16,14 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
     protected $tabs = array('plugins', 'templates', 'search');
 
-
-    public function pluginList(){
+    /**
+     * display the plugin tab
+     */
+    public function tabPlugins(){
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
+
+        echo $this->locale_xhtml('intro_plugins');
 
         $pluginlist = $plugin_controller->getList('', true);
         /* @var helper_plugin_extension_extension $extension */
@@ -35,7 +39,12 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         $list->render();
     }
 
-    public function templateList(){
+    /**
+     * Display the template tab
+     */
+    public function tabTemplates(){
+        echo $this->locale_xhtml('intro_templates');
+
         // FIXME do we have a real way?
         $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
         $tpllist = array_map('basename', $tpllist);
@@ -51,6 +60,13 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         }
         $list->end_form();
         $list->render();
+    }
+
+    /**
+     * Display the search tab
+     */
+    public function tabSearch(){
+        echo $this->locale_xhtml('intro_search');
     }
 
     /**
