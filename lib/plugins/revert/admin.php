@@ -128,7 +128,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             }
 
             $cnt++;
-            $date = strftime($conf['dformat'],$recent['date']);
+            $date = dformat($recent['date']);
 
             echo ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
             echo '<div class="li">';

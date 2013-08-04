@@ -58,6 +58,8 @@ class Tar_TestCase extends DokuWikiTest {
         $tar->addData('another/testdata3.txt', 'testcontent3');
         $tar->close();
 
+copy ($tmp, '/tmp/test.tar');
+
         $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
         $data = file_get_contents($tmp);
 
@@ -66,7 +68,7 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
         // fullpath might be too long to be stored as full path FS#2802
-        $this->assertTrue(strpos($data, "$tdir") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "$tdir") !== false, "Path in TAR '$tdir'");
         $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
 
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
@@ -395,5 +397,24 @@ class Tar_TestCase extends DokuWikiTest {
         $file = $tar->getArchive(Tar::COMPRESS_NONE);
 
         $this->assertEquals(512*4, strlen($file)); // 1 header block + data block + 2 footer blocks
+    }
+
+
+    public function test_cleanPath(){
+        $tar = new Tar();
+        $tests = array (
+            '/foo/bar' => 'foo/bar',
+            '/foo/bar/' => 'foo/bar',
+            'foo//bar' => 'foo/bar',
+            'foo/0/bar' => 'foo/0/bar',
+            'foo/../bar' => 'bar',
+            'foo/bang/bang/../../bar' => 'foo/bar',
+            'foo/../../bar' => 'bar',
+            'foo/.././../bar' => 'bar',
+        );
+
+        foreach($tests as $in => $out){
+            $this->assertEquals($out, $tar->cleanPath($in), "Input: $in");
+        }
     }
 }

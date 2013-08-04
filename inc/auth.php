@@ -136,22 +136,30 @@ function auth_loadACL() {
 
     $acl = file($config_cascade['acl']['default']);
 
-    //support user wildcard
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
         if($line{0} == '#') continue;
         list($id,$rest) = preg_split('/\s+/',$line,2);
 
+        // substitue user wildcard first (its 1:1)
+        if(strstr($line, '%USER%')){
+            // if user is not logged in, this ACL line is meaningless - skip it
+            if (!isset($_SERVER['REMOTE_USER'])) continue;
+
+            $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
+            $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
+        }
+
+        // substitute group wildcard (its 1:m)
         if(strstr($line, '%GROUP%')){
+            // if user is not logged in, grps is empty, no output will be added (i.e. skipped)
             foreach((array) $USERINFO['grps'] as $grp){
                 $nid   = str_replace('%GROUP%',cleanID($grp),$id);
                 $nrest = str_replace('%GROUP%','@'.auth_nameencode($grp),$rest);
                 $out[] = "$nid\t$nrest";
             }
         } else {
-            $id   = str_replace('%USER%',cleanID($_SERVER['REMOTE_USER']),$id);
-            $rest = str_replace('%USER%',auth_nameencode($_SERVER['REMOTE_USER']),$rest);
             $out[] = "$id\t$rest";
         }
     }
@@ -1036,6 +1044,45 @@ function updateprofile() {
             $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
             auth_setCookie($_SERVER['REMOTE_USER'], $pass, (bool) $sticky);
         }
+        return true;
+    }
+
+    return false;
+}
+
+function auth_deleteprofile(){
+    global $conf;
+    global $lang;
+    /* @var DokuWiki_Auth_Plugin $auth */
+    global $auth;
+    /* @var Input $INPUT */
+    global $INPUT;
+
+    if(!$INPUT->post->bool('delete')) return false;
+    if(!checkSecurityToken()) return false;
+
+    // action prevented or auth module disallows 
+    if(!actionOK('profile_delete') || !$auth->canDo('delUser')) {
+        msg($lang['profnodelete'], -1);
+        return false;
+    }
+
+    if(!$INPUT->post->bool('confirm_delete')){
+        msg($lang['profconfdeletemissing'], -1);
+        return false;
+    }
+
+    if($conf['profileconfirm']) {
+        if(!$auth->checkPass($_SERVER['REMOTE_USER'], $INPUT->post->str('oldpass'))) {
+            msg($lang['badpassconfirm'], -1);
+            return false;
+        }
+    }
+
+    $deleted[] = $_SERVER['REMOTE_USER'];
+    if($auth->triggerUserMod('delete', array($deleted))) {
+        // force and immediate logout including removing the sticky cookie
+        auth_logoff();
         return true;
     }
 

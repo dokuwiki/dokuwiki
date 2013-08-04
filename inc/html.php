@@ -575,18 +575,18 @@ function html_revisions($first=0, $media_id = false){
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
             if (!$media_id) $form->addElement(' – ');
-            $form->addElement(htmlspecialchars($info['sum']));
+            $form->addElement('<bdi>'.htmlspecialchars($info['sum']).'</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
         if($info['user']){
-            $form->addElement(editorinfo($info['user']));
+            $form->addElement('<bdi>'.editorinfo($info['user']).'</bdi>');
             if(auth_ismanager()){
-                $form->addElement(' ('.$info['ip'].')');
+                $form->addElement(' <bdo dir="ltr">('.$info['ip'].')</bdo>');
             }
         }else{
-            $form->addElement($info['ip']);
+            $form->addElement('<bdo dir="ltr">'.$info['ip'].'</bdo>');
         }
         $form->addElement(form_makeCloseTag('span'));
 
@@ -774,12 +774,12 @@ function html_recent($first=0, $show_changes='both'){
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
         if($recent['user']){
-            $form->addElement(editorinfo($recent['user']));
+            $form->addElement('<bdi>'.editorinfo($recent['user']).'</bdi>');
             if(auth_ismanager()){
-                $form->addElement(' ('.$recent['ip'].')');
+                $form->addElement(' <bdo dir="ltr">('.$recent['ip'].')</bdo>');
             }
         }else{
-            $form->addElement($recent['ip']);
+            $form->addElement('<bdo dir="ltr">'.$recent['ip'].'</bdo>');
         }
         $form->addElement(form_makeCloseTag('span'));
 
@@ -1027,52 +1027,52 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     }else{
         $l_info   = getRevisionInfo($id,$l_rev,true, $media);
         if($l_info['user']){
-            $l_user = editorinfo($l_info['user']);
-            if(auth_ismanager()) $l_user .= ' ('.$l_info['ip'].')';
+            $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
+            if(auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
         } else {
-            $l_user = $l_info['ip'];
+            $l_user = '<bdo dir="ltr">'.$l_info['ip'].'</bdo>';
         }
         $l_user  = '<span class="user">'.$l_user.'</span>';
-        $l_sum   = ($l_info['sum']) ? '<span class="sum">'.hsc($l_info['sum']).'</span>' : '';
+        $l_sum   = ($l_info['sum']) ? '<span class="sum"><bdi>'.hsc($l_info['sum']).'</bdi></span>' : '';
         if ($l_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $l_minor = 'class="minor"';
 
         $l_head_title = ($media) ? dformat($l_rev) : $id.' ['.dformat($l_rev).']';
-        $l_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
-        $l_head_title.'</a>'.
+        $l_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
+        $l_head_title.'</a></bdi>'.
         $head_separator.$l_user.' '.$l_sum;
     }
 
     if($r_rev){
         $r_info   = getRevisionInfo($id,$r_rev,true, $media);
         if($r_info['user']){
-            $r_user = editorinfo($r_info['user']);
-            if(auth_ismanager()) $r_user .= ' ('.$r_info['ip'].')';
+            $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
+            if(auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
         } else {
-            $r_user = $r_info['ip'];
+            $r_user = '<bdo dir="ltr">'.$r_info['ip'].'</bdo>';
         }
         $r_user = '<span class="user">'.$r_user.'</span>';
-        $r_sum  = ($r_info['sum']) ? '<span class="sum">'.hsc($r_info['sum']).'</span>' : '';
+        $r_sum  = ($r_info['sum']) ? '<span class="sum"><bdi>'.hsc($r_info['sum']).'</bdi></span>' : '';
         if ($r_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
         $r_head_title = ($media) ? dformat($r_rev) : $id.' ['.dformat($r_rev).']';
-        $r_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
-        $r_head_title.'</a>'.
+        $r_head = '<bdi><a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
+        $r_head_title.'</a></bdi>'.
         $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
         $_info   = getRevisionInfo($id,$_rev,true, $media);
         if($_info['user']){
-            $_user = editorinfo($_info['user']);
-            if(auth_ismanager()) $_user .= ' ('.$_info['ip'].')';
+            $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
+            if(auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';
         } else {
-            $_user = $_info['ip'];
+            $_user = '<bdo dir="ltr">'.$_info['ip'].'</bdo>';
         }
         $_user = '<span class="user">'.$_user.'</span>';
-        $_sum  = ($_info['sum']) ? '<span class="sum">'.hsc($_info['sum']).'</span>' : '';
+        $_sum  = ($_info['sum']) ? '<span class="sum"><bdi>'.hsc($_info['sum']).'</span></bdi>' : '';
         if ($_info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) $r_minor = 'class="minor"';
 
         $r_head_title = ($media) ? dformat($_rev) : $id.' ['.dformat($_rev).']';
-        $r_head  = '<a class="wikilink1" href="'.$ml_or_wl($id).'">'.
-        $r_head_title.'</a> '.
+        $r_head  = '<bdi><a class="wikilink1" href="'.$ml_or_wl($id).'">'.
+        $r_head_title.'</a></bdi> '.
         '('.$lang['current'].')'.
         $head_separator.$_user.' '.$_sum;
     }else{
@@ -1390,6 +1390,23 @@ function html_updateprofile(){
 
     $form->endFieldset();
     html_form('updateprofile', $form);
+
+    if ($auth->canDo('delUser') && actionOK('profile_delete')) {
+        $form_profiledelete = new Doku_Form(array('id' => 'dw__profiledelete'));
+        $form_profiledelete->startFieldset($lang['profdeleteuser']);
+        $form_profiledelete->addHidden('do', 'profile_delete');
+        $form_profiledelete->addHidden('delete', '1');
+        $form_profiledelete->addElement(form_makeCheckboxField('confirm_delete', '1', $lang['profconfdelete'],'dw__confirmdelete','', array('required' => 'required')));
+        if ($conf['profileconfirm']) {
+            $form_profiledelete->addElement(form_makeTag('br'));
+            $form_profiledelete->addElement(form_makePasswordField('oldpass', $lang['oldpass'], '', 'block', array('size'=>'50', 'required' => 'required')));
+        }
+        $form_profiledelete->addElement(form_makeButton('submit', '', $lang['btn_deleteuser']));
+        $form_profiledelete->endFieldset();
+
+        html_form('profiledelete', $form_profiledelete);
+    }
+
     print '</div>'.NL;
 }
 
@@ -1612,7 +1629,9 @@ function html_debug(){
 
     if($auth){
         print '<b>Auth backend capabilities:</b><pre>';
-        print_r($auth->cando);
+        foreach ($auth->getCapabilities() as $cando){
+            print '   '.str_pad($cando,16) . ' => ' . (int)$auth->canDo($cando) . NL;
+        }
         print '</pre>';
     }
 

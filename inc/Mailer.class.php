@@ -137,7 +137,13 @@ class Mailer {
         }
 
         // empty value deletes
-        $value = trim($value);
+        if(is_array($value)){
+            $value = array_map('trim', $value);
+            $value = array_filter($value);
+            if(!$value) $value = '';
+        }else{
+            $value = trim($value);
+        }
         if($value === '') {
             if(isset($this->headers[$header])) unset($this->headers[$header]);
         } else {
@@ -270,7 +276,7 @@ class Mailer {
      * Add the To: recipients
      *
      * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
         $this->setHeader('To', $address, false);
@@ -280,7 +286,7 @@ class Mailer {
      * Add the Cc: recipients
      *
      * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
         $this->setHeader('Cc', $address, false);
@@ -290,7 +296,7 @@ class Mailer {
      * Add the Bcc: recipients
      *
      * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
         $this->setHeader('Bcc', $address, false);
@@ -327,18 +333,20 @@ class Mailer {
      * Example:
      *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      * @return bool|string  the prepared header (can contain multiple lines)
      */
-    public function cleanAddress($address) {
+    public function cleanAddress($addresses) {
         // No named recipients for To: in Windows (see FS#652)
         $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
 
-        $address = preg_replace('/[\r\n\0]+/', ' ', $address); // remove attack vectors
-
         $headers = '';
-        $parts   = explode(',', $address);
-        foreach($parts as $part) {
+        if(!is_array($addresses)){
+            $addresses = explode(',', $addresses);
+        }
+
+        foreach($addresses as $part) {
+            $part = preg_replace('/[\r\n\0]+/', ' ', $part); // remove attack vectors
             $part = trim($part);
 
             // parse address
@@ -378,7 +386,7 @@ class Mailer {
                     $text = utf8_strip($text);
                 }
 
-                if(!utf8_isASCII($text)) {
+                if(strpos($text, ',') !== false || !utf8_isASCII($text)) {
                     $text = '=?UTF-8?B?'.base64_encode($text).'?=';
                 }
             } else {
@@ -392,6 +400,7 @@ class Mailer {
             $headers .= $text.' '.$addr;
         }
 
+        $headers = trim($headers);
         if(empty($headers)) return false;
 
         return $headers;

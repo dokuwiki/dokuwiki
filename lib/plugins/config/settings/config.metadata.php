@@ -34,6 +34,9 @@
  *   'array'        - a simple (one dimensional) array of string values, shown as comma separated list in the
  *                    config manager but saved as PHP array(). Values may not contain commas themselves.
  *                    _pattern matching on the array values supported.
+ *   'regex'        - regular expression string, normally without delimiters; as for string, in addition tested
+ *                    to see if will compile & run as a regex.  in addition to _pattern, also accepts _delimiter
+ *                    (default '/') and _pregflags (default 'ui')
  *
  *  Single Setting (source: settings/extra.class.php)
  *  -------------------------------------------------
@@ -43,10 +46,13 @@
  *   'im_convert'  - as 'setting', input must exist and be an im_convert module
  *   'disableactions' - as 'setting'
  *   'compression' - no additional parameters. checks php installation supports possible compression alternatives
+ *   'licence'     - as multichoice, selection constructed from licence strings in language files
+ *   'renderer'    - as multichoice, selection constructed from enabled renderer plugins which canRender()
  *
  *  Any setting commented or missing will use 'setting' class - text input, minimal validation, quoted output
  *
  * Defined parameters:
+ *   '_caution'    - no value (default) or 'warning', 'danger', 'security'. display an alert along with the setting
  *   '_pattern'    - string, a preg pattern. input is tested against this pattern before being accepted
  *                   optional all classes, except onoff & multichoice which ignore it
  *   '_choices'    - array of choices. used to populate a selection box. choice will be replaced by a localised
@@ -59,6 +65,9 @@
  *   '_code'       - encoding method to use, accepted values: 'base64','uuencode','plain'.  defaults to plain.
  *   '_min'        - minimum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
+ *   '_delimiter'  - string, default '/', a single character used as a delimiter for testing regex input values
+ *   '_pregflags'  - string, default 'ui', valid preg pattern modifiers used when testing regex input values, for more
+ *                   information see http://uk1.php.net/manual/en/reference.pcre.pattern.modifiers.php
  *   '_multiple'   - bool, allow multiple comma separated email values; optional for 'email', ignored by others
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
@@ -83,26 +92,26 @@ $config['heading'] = 'Dokuwiki\'s Main Configuration File - Local Settings';
 
 $meta['_basic']   = array('fieldset');
 $meta['title']    = array('string');
-$meta['start']    = array('string','_pattern' => '!^[^:;/]+$!'); // don't accept namespaces
+$meta['start']    = array('string','_caution' => 'warning','_pattern' => '!^[^:;/]+$!'); // don't accept namespaces
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
 $meta['tagline']  = array('string');
 $meta['sidebar']  = array('string');
 $meta['license']  = array('license');
-$meta['savedir']  = array('savedir');
-$meta['basedir']  = array('string');
-$meta['baseurl']  = array('string');
-$meta['cookiedir'] = array('string');
+$meta['savedir']  = array('savedir','_caution' => 'danger');
+$meta['basedir']  = array('string','_caution' => 'danger');
+$meta['baseurl']  = array('string','_caution' => 'danger');
+$meta['cookiedir'] = array('string','_caution' => 'danger');
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
-$meta['allowdebug']  = array('onoff');
+$meta['allowdebug']  = array('onoff','_caution' => 'security');
 
 $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
 $meta['recent_days'] = array('numeric');
 $meta['breadcrumbs'] = array('numeric','_min' => 0);
 $meta['youarehere']  = array('onoff');
-$meta['fullpath']    = array('onoff');
+$meta['fullpath']    = array('onoff','_caution' => 'security');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));
 $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
@@ -111,28 +120,28 @@ $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   //
 $meta['tocminheads'] = array('multichoice','_choices' => array(0,1,2,3,4,5,10,15,20));
 $meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
 $meta['maxseclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5)); // 0 for no sec edit buttons
-$meta['camelcase']   = array('onoff');
-$meta['deaccent']    = array('multichoice','_choices' => array(0,1,2));
+$meta['camelcase']   = array('onoff','_caution' => 'warning');
+$meta['deaccent']    = array('multichoice','_choices' => array(0,1,2),'_caution' => 'warning');
 $meta['useheading']  = array('multichoice','_choices' => array(0,'navigation','content',1));
 $meta['sneaky_index'] = array('onoff');
-$meta['hidepages']   = array('string');
+$meta['hidepages']   = array('regex');
 
 $meta['_authentication'] = array('fieldset');
-$meta['useacl']      = array('onoff');
+$meta['useacl']      = array('onoff','_caution' => 'danger');
 $meta['autopasswd']  = array('onoff');
-$meta['authtype']    = array('authtype');
+$meta['authtype']    = array('authtype','_caution' => 'danger');
 $meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','djangomd5','djangosha1','sha512'));
 $meta['defaultgroup']= array('string');
-$meta['superuser']   = array('string');
+$meta['superuser']   = array('string','_caution' => 'danger');
 $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
 $meta['disableactions'] = array('disableactions',
-                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','edit','wikicode','check'),
+                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','profile_delete','edit','wikicode','check'),
                                 '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
-$meta['remote']       = array('onoff');
+$meta['remote']       = array('onoff','_caution' => 'security');
 $meta['remoteuser']   = array('string');
 
 $meta['_anti_spam']  = array('fieldset');
@@ -140,12 +149,12 @@ $meta['usewordblock']= array('onoff');
 $meta['relnofollow'] = array('onoff');
 $meta['indexdelay']  = array('numeric');
 $meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','none'));
-$meta['iexssprotect']= array('onoff');
+$meta['iexssprotect']= array('onoff','_caution' => 'security');
 
 $meta['_editing']    = array('fieldset');
 $meta['usedraft']    = array('onoff');
-$meta['htmlok']      = array('onoff');
-$meta['phpok']       = array('onoff');
+$meta['htmlok']      = array('onoff','_caution' => 'security');
+$meta['phpok']       = array('onoff','_caution' => 'security');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
 
@@ -184,20 +193,20 @@ $meta['rss_show_summary'] = array('onoff');
 
 $meta['_advanced']   = array('fieldset');
 $meta['updatecheck'] = array('onoff');
-$meta['userewrite']  = array('multichoice','_choices' => array(0,1,2));
+$meta['userewrite']  = array('multichoice','_choices' => array(0,1,2),'_caution' => 'danger');
 $meta['useslash']    = array('onoff');
-$meta['sepchar']     = array('sepchar');
+$meta['sepchar']     = array('sepchar','_caution' => 'warning');
 $meta['canonical']   = array('onoff');
-$meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'));
+$meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'),'_caution' => 'warning');
 $meta['autoplural']  = array('onoff');
 $meta['compress']    = array('onoff');
 $meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');
 $meta['send404']     = array('onoff');
-$meta['compression'] = array('compression');
+$meta['compression'] = array('compression','_caution' => 'warning');
 $meta['broken_iua']  = array('onoff');
-$meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3));
-$meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'));
+$meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3),'_caution' => 'warning');
+$meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'),'_caution' => 'warning');
 $meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');

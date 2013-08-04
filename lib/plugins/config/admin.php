@@ -268,7 +268,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
           // fill in the plugin name if missing (should exist for plugins with settings)
           if (!isset($this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'])) {
             $this->lang['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.'plugin_settings_name'] =
-              ucwords(str_replace('_', ' ', $plugin)).' '.$this->getLang('_plugin_sufix');
+              ucwords(str_replace('_', ' ', $plugin));
           }
         }
         closedir($dh);
@@ -289,7 +289,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       // fill in the template name if missing (should exist for templates with settings)
       if (!isset($this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'])) {
         $this->lang['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.'template_settings_name'] =
-          ucwords(str_replace('_', ' ', $tpl)).' '.$this->getLang('_template_sufix');
+          ucwords(str_replace('_', ' ', $tpl));
       }
 
       return true;

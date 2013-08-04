@@ -14,8 +14,8 @@ html {
 }
 html,
 body {
-    color: __text__;
-    background: __background_site__ url(images/page-gradient.png) top left repeat-x;
+    color: @ini_text;
+    background: @ini_background_site url(images/page-gradient.png) top left repeat-x;
     margin: 0;
     padding: 0;
 }
@@ -162,7 +162,7 @@ table {
     border-collapse: collapse;
     empty-cells: show;
     border-spacing: 0;
-    border: 1px solid __border__;
+    border: 1px solid @ini_border;
 }
 
 caption {
@@ -178,11 +178,11 @@ td {
     padding: .3em .5em;
     margin: 0;
     vertical-align: top;
-    border: 1px solid __border__;
+    border: 1px solid @ini_border;
 }
 th {
     font-weight: bold;
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
     text-align: left;
 }
 [dir=rtl] th {
@@ -198,7 +198,7 @@ a {
 a:link,
 a:visited {
     text-decoration: none;
-    color: __link__;
+    color: @ini_link;
 }
 a:link:hover,
 a:visited:hover,
@@ -235,8 +235,8 @@ button img {
 }
 
 hr {
-    border-top: solid __border__;
-    border-bottom: solid __background__;
+    border-top: solid @ini_border;
+    border-bottom: solid @ini_background;
     border-width: 1px 0;
     height: 0;
     text-align: center;
@@ -255,7 +255,7 @@ em abbr {
 }
 
 mark {
-    background-color: __highlight__;
+    background-color: @ini_highlight;
     color: inherit;
 }
 
@@ -268,23 +268,23 @@ kbd {
     font-size: 1em;
     direction: ltr;
     text-align: left;
-    background-color: __background_site__;
-    color: __text__;
-    box-shadow: inset 0 0 .3em __border__;
+    background-color: @ini_background_site;
+    color: @ini_text;
+    box-shadow: inset 0 0 .3em @ini_border;
     border-radius: 2px;
 }
 pre {
     overflow: auto;
     word-wrap: normal;
-    border: 1px solid __border__;
+    border: 1px solid @ini_border;
     border-radius: 2px;
-    box-shadow: inset 0 0 .5em __border__;
+    box-shadow: inset 0 0 .5em @ini_border;
     padding: .7em 1em;
 }
 
 blockquote {
     padding: 0 .5em;
-    border: solid __border__;
+    border: solid @ini_border;
     border-width: 0 0 0 .25em;
 }
 [dir=rtl] blockquote {
@@ -323,7 +323,7 @@ form {
 fieldset {
     padding: .7em 1em 0;
     padding: .7rem 1rem; /* for those browsers understanding :last-child */
-    border: 1px solid __text_alt__;
+    border: 1px solid @ini_text_alt;
 }
 fieldset > :last-child {
     margin-bottom: 0;
@@ -407,12 +407,8 @@ button,
 .qq-upload-button {
     color: #333;
     background-color: #eee;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc4MjQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0VFRUVFRSIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0NDQ0NDQyIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnODI0KSIgLz4KPC9zdmc+');
-    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-    background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-    background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-    background: linear-gradient(        top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc4MjQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0VFRUVFRSIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0NDQ0NDQyIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnODI0KSIgLz4KPC9zdmc+);
+    .linear-gradient("top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%");
     border: 1px solid #ccc;
     border-radius: 2px;
     padding: .1em .5em;
@@ -445,12 +441,8 @@ button:focus,
 .qq-upload-button:hover {
     border-color: #999;
     background-color: #ddd;
-    background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc2NzAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0RERERERCIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0JCQkJCQiIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnNjcwKSIgLz4KPC9zdmc+');
-    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
-    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
-    background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
-    background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
-    background: linear-gradient(        top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+    background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc2NzAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0RERERERCIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0JCQkJCQiIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnNjcwKSIgLz4KPC9zdmc+);
+    .linear-gradient("top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%");
 }
 
 input::-moz-focus-inner,

@@ -33,11 +33,13 @@ function template($file) {
  * This replaces the deprecated DOKU_TPLINC constant
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_incdir() {
+function tpl_incdir($tpl='') {
     global $conf;
-    return DOKU_INC.'lib/tpl/'.$conf['template'].'/';
+    if(!$tpl) $tpl = $conf['template'];
+    return DOKU_INC.'lib/tpl/'.$tpl.'/';
 }
 
 /**
@@ -46,10 +48,12 @@ function tpl_incdir() {
  * This replaces the deprecated DOKU_TPL constant
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $tpl The template to use, default to current one
  * @return string
  */
-function tpl_basedir() {
+function tpl_basedir($tpl='') {
     global $conf;
+    if(!$tpl) $tpl = $conf['template'];
     return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
 }
 
@@ -468,7 +472,7 @@ function tpl_link($url, $name, $more = '', $return = false) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_pagelink($id, $name = null) {
-    print html_wikilink($id, $name);
+    print '<bdi>'.html_wikilink($id, $name).'</bdi>';
     return true;
 }
 
@@ -800,13 +804,7 @@ function tpl_breadcrumbs($sep = '•') {
 
     $crumbs = breadcrumbs(); //setup crumb trace
 
-    //reverse crumborder in right-to-left mode, add RLM character to fix heb/eng display mixups
-    if($lang['direction'] == 'rtl') {
-        $crumbs     = array_reverse($crumbs, true);
-        $crumbs_sep = ' &#8207;<span class="bcsep">'.$sep.'</span>&#8207; ';
-    } else {
-        $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
-    }
+    $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
 
     //render crumbs, highlight the last one
     print '<span class="bchead">'.$lang['breadcrumb'].':</span>';
@@ -816,7 +814,9 @@ function tpl_breadcrumbs($sep = '•') {
         $i++;
         echo $crumbs_sep;
         if($i == $last) print '<span class="curid">';
+        print '<bdi>';
         tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="'.$id.'"');
+        print '</bdi>';
         if($i == $last) print '</span>';
     }
     return true;
@@ -889,7 +889,7 @@ function tpl_userinfo() {
     global $lang;
     global $INFO;
     if(isset($_SERVER['REMOTE_USER'])) {
-        print $lang['loggedinas'].': '.hsc($INFO['userinfo']['name']).' ('.hsc($_SERVER['REMOTE_USER']).')';
+        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
         return true;
     }
     return false;
@@ -928,14 +928,14 @@ function tpl_pageinfo($ret = false) {
     // print it
     if($INFO['exists']) {
         $out = '';
-        $out .= $fn;
+        $out .= '<bdi>'.$fn.'</bdi>';
         $out .= ' · ';
         $out .= $lang['lastmod'];
         $out .= ': ';
         $out .= $date;
         if($INFO['editor']) {
             $out .= ' '.$lang['by'].' ';
-            $out .= editorinfo($INFO['editor']);
+            $out .= '<bdi>'.editorinfo($INFO['editor']).'</bdi>';
         } else {
             $out .= ' ('.$lang['external_edit'].')';
         }
@@ -943,7 +943,7 @@ function tpl_pageinfo($ret = false) {
             $out .= ' · ';
             $out .= $lang['lockedby'];
             $out .= ': ';
-            $out .= editorinfo($INFO['locked']);
+            $out .= '<bdi>'.editorinfo($INFO['locked']).'</bdi>';
         }
         if($ret) {
             return $out;
@@ -1190,6 +1190,34 @@ function tpl_getLang($id) {
     }
 
     return $lang[$id];
+}
+
+/**
+ * Retrieve a language dependent file and pass to xhtml renderer for display
+ * template equivalent of p_locale_xhtml()
+ *
+ * @param   string $id id of language dependent wiki page
+ * @return  string     parsed contents of the wiki page in xhtml format
+ */
+function tpl_locale_xhtml($id) {
+    return p_cached_output(tpl_localeFN($id));
+}
+
+/**
+ * Prepends appropriate path for a language dependent filename
+ */
+function tpl_localeFN($id) {
+    $path = tpl_incdir().'lang/';
+    global $conf;
+    $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
+    if (!@file_exists($file)){
+        $file = $path.$conf['lang'].'/'.$id.'.txt';
+        if(!@file_exists($file)){
+            //fall back to english
+            $file = $path.'en/'.$id.'.txt';
+        }
+    }
+    return $file;
 }
 
 /**
@@ -1469,8 +1497,8 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
     }
     if(!$imgonly) {
         $out .= $lang['license'].' ';
-        $out .= '<a href="'.$lic['url'].'" rel="license" class="urlextern"'.$target;
-        $out .= '>'.$lic['name'].'</a>';
+        $out .= '<bdi><a href="'.$lic['url'].'" rel="license" class="urlextern"'.$target;
+        $out .= '>'.$lic['name'].'</a></bdi>';
     }
     if($wrap) $out .= '</div>';
 

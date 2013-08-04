@@ -86,12 +86,13 @@ function load_autoload($name){
         'Crypt_Rijndael'        => DOKU_INC.'inc/phpseclib/Crypt_Rijndael.php',
         'Crypt_AES'             => DOKU_INC.'inc/phpseclib/Crypt_AES.php',
         'Crypt_Hash'            => DOKU_INC.'inc/phpseclib/Crypt_Hash.php',
+        'lessc'                 => DOKU_INC.'inc/lessc.inc.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
         'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
-    	'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
+        'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
 
     );
 

@@ -55,6 +55,18 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     }
 
     /**
+     * Available Capabilities. [ DO NOT OVERRIDE ]
+     *
+     * For introspection/debugging
+     *
+     * @author  Christopher Smith <chris@jalakai.co.uk>
+     * @return  array
+     */
+    public function getCapabilities(){
+        return array_keys($this->cando);
+    }
+
+    /**
      * Capability check. [ DO NOT OVERRIDE ]
      *
      * Checks the capabilities set in the $this->cando array and

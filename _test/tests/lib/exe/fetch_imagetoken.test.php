@@ -23,7 +23,7 @@ class fetch_imagetoken_test extends DokuWikiTest {
         parent::setUp();
 
         global $conf;
-        $conf['sendfile'] = 0;
+        $conf['xsendfile'] = 0;
 
         global $MIME, $EXT, $CACHE, $INPUT;    // variables fetch creates in global scope -- should this be in fetch?
     }
@@ -71,7 +71,7 @@ class fetch_imagetoken_test extends DokuWikiTest {
      */
     function test_missing_token(){
         $no_token = '';
-        $this->assertEquals(412,$this->fetchResponse($notoken)->getStatusCode());
+        $this->assertEquals(412,$this->fetchResponse($no_token)->getStatusCode());
     }
 
     /**

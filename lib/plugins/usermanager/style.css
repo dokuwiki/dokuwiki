@@ -13,6 +13,10 @@
 #user__manager table {
   margin-bottom: 1em;
 }
+#user__manager ul.notes {
+  padding-left: 0;
+  padding-right: 1.4em;
+}
 #user__manager input.button[disabled] {
   color: #ccc!important;
   border-color: #ccc!important;
