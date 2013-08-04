@@ -6,8 +6,10 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
+define('EXTENSION_REPOSITORY_API', 'http://localhost/dokuwiki/lib/plugins/pluginrepo/api.php');
+
 if (!defined('EXTENSION_REPOSITORY_API_ENDPOINT'))
-    define('EXTENSION_REPSITORY_API', 'http://www.dokuwiki.org/lib/plugins/pluginrepo/api.php');
+    define('EXTENSION_REPOSITORY_API', 'http://www.dokuwiki.org/lib/plugins/pluginrepo/api.php');
 
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
@@ -40,7 +42,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
 
             if ($request_needed) {
                 $httpclient = new DokuHTTPClient();
-                $data = $httpclient->post(EXTENSION_REPSITORY_API, $request_data);
+                $data = $httpclient->post(EXTENSION_REPOSITORY_API, $request_data);
                 if ($data !== false) {
                     $extensions = unserialize($data);
                     foreach ($extensions as $extension) {
@@ -66,7 +68,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
             if (!$cache->useCache(array('age' => 3600 * 24))) {
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
-                $data = $httpclient->get(EXTENSION_REPSITORY_API.'?cmd=ping');
+                $data = $httpclient->get(EXTENSION_REPOSITORY_API.'?cmd=ping');
                 if ($data !== false) {
                     $this->has_access = true;
                     $cache->storeCache(1);
@@ -93,7 +95,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
         if (!isset($this->loaded_extensions[$name]) && $this->hasAccess() && !$cache->useCache(array('age' => 3600 * 24))) {
             $this->loaded_extensions[$name] = true;
             $httpclient = new DokuHTTPClient();
-            $data = $httpclient->get(EXTENSION_REPSITORY_API.'?fmt=php&ext[]='.urlencode($name));
+            $data = $httpclient->get(EXTENSION_REPOSITORY_API.'?fmt=php&ext[]='.urlencode($name));
             if ($data !== false) {
                 $result = unserialize($data);
                 $cache->storeCache(serialize($result[0]));
