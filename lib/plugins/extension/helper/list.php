@@ -474,4 +474,24 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
         return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
     }
+
+    /**
+     * Create an URL inside the extension manager
+     *
+     * @param string tab tb to load, empty for current tab
+     * @param array $params associative array of parameter to set
+     * @return string
+     */
+    static public function tabURL($tab='', $params=array()){
+        global $ID;
+        global $INPUT;
+
+        if(!$tab) $tab = $INPUT->str('tab', 'installed', true);
+        $defaults = array(
+            'do'   => 'admin',
+            'page' => 'extension',
+            'tab'  => $tab,
+        );
+        return wl($ID, array_merge($defaults, $params));
+    }
 }
