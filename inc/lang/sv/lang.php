@@ -18,6 +18,7 @@
  * @author mikael@mallander.net
  * @author Smorkster Andersson smorkster@gmail.com
  * @author Henrik <henrik@idealis.se>
+ * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
