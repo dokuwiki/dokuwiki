@@ -6,7 +6,7 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
-define('EXTENSION_REPOSITORY_API', 'http://localhost/dokuwiki/lib/plugins/pluginrepo/api.php');
+#define('EXTENSION_REPOSITORY_API', 'http://localhost/dokuwiki/lib/plugins/pluginrepo/api.php');
 
 if (!defined('EXTENSION_REPOSITORY_API_ENDPOINT'))
     define('EXTENSION_REPOSITORY_API', 'http://www.dokuwiki.org/lib/plugins/pluginrepo/api.php');
