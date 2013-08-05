@@ -1,14 +1,15 @@
 <?php
+
 /**
- * Greek language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
  * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Constantinos Xanthopoulos <conx@xanthopoulos.info>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -52,6 +53,7 @@ $lang['btn_revert']            = 'Αποκατάσταση';
 $lang['btn_register']          = 'Εγγραφή';
 $lang['btn_apply']             = 'Εφαρμογή';
 $lang['btn_media']             = 'Διαχειριστής πολυμέσων';
+$lang['btn_deleteuser']        = 'Αφαίρεσε τον λογαριασμό μου';
 $lang['loggedinas']            = 'Συνδεδεμένος ως';
 $lang['user']                  = 'Όνομα χρήστη';
 $lang['pass']                  = 'Κωδικός';
@@ -63,6 +65,7 @@ $lang['fullname']              = 'Ονοματεπώνυμο';
 $lang['email']                 = 'e-mail';
 $lang['profile']               = 'Προφίλ χρήστη';
 $lang['badlogin']              = 'Συγνώμη, το όνομα χρήστη ή ο κωδικός ήταν λανθασμένο.';
+$lang['badpassconfirm']        = 'Ο κωδικός που εισάγατε είναι λανθασμένος';
 $lang['minoredit']             = 'Ασήμαντες αλλαγές';
 $lang['draftdate']             = 'Αυτόματη αποθήκευση πρόχειρης σελίδας στις';
 $lang['nosecedit']             = 'Η σελίδα τροποποιήθηκε στο μεταξύ και τα στοιχεία της ενότητας δεν ήταν συγχρονισμένα, οπότε φορτώθηκε η πλήρης σελίδα.  ';
@@ -79,6 +82,9 @@ $lang['profna']                = 'Αυτό το wiki δεν υποστηρίζε
 $lang['profnochange']          = 'Καμία αλλαγή.';
 $lang['profnoempty']           = 'Δεν επιτρέπεται κενό όνομα χρήστη η κενή διεύθυνση email.';
 $lang['profchanged']           = 'Το προφίλ χρήστη τροποποιήθηκε επιτυχώς.';
+$lang['profnodelete']          = 'Το wiki δεν υποστηρίζει την διαγραφή χρηστών';
+$lang['profdeleteuser']        = 'Διαγραφή λογαριασμού';
+$lang['profdeleted']           = 'Ο λογαριασμός διαγράφηκε από αυτό το wiki';
 $lang['pwdforget']             = 'Ξεχάσατε το κωδικό σας; Αποκτήστε νέο.';
 $lang['resendna']              = 'Αυτό το wiki δεν υποστηρίζει την εκ\' νέου αποστολή κωδικών.';
 $lang['resendpwd']             = 'Εισαγωγή νέου ωδικού για';
