@@ -1,7 +1,8 @@
 <?php
+
 /**
- * English language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author chinsan <chinsan.tw@gmail.com>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -12,6 +13,7 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author syaoranhinata@gmail.com
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
+ * @author tsangho <ou4222@gmail.com>
  */
 $lang['menu']                  = '帳號管理器';
 $lang['noauth']                = '(帳號認證尚未開放)';
@@ -34,6 +36,8 @@ $lang['search']                = '搜尋';
 $lang['search_prompt']         = '開始搜尋';
 $lang['clear']                 = '重設篩選條件';
 $lang['filter']                = '篩選條件 (Filter)';
+$lang['import']                = '匯入新的用戶';
+$lang['error']                 = '錯誤訊息';
 $lang['summary']               = '顯示帳號 %1$d-%2$d，共 %3$d 筆符合。共有 %4$d 個帳號。';
 $lang['nonefound']             = '找不到帳號。共有 %d 個帳號。';
 $lang['delete_ok']             = '已刪除 %d 個帳號';
@@ -54,3 +58,4 @@ $lang['add_ok']                = '已新增使用者';
 $lang['add_fail']              = '無法新增使用者';
 $lang['notify_ok']             = '通知信已寄出';
 $lang['notify_fail']           = '通知信無法寄出';
+$lang['import_error_readfail'] = '會入錯誤，無法讀取已經上傳的檔案';
