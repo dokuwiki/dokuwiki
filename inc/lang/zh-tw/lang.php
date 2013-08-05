@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Chinese(Traditional) language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -12,6 +12,7 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author syaoranhinata@gmail.com
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
+ * @author tsangho <ou4222@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,6 +56,7 @@ $lang['btn_revert']            = '復原';
 $lang['btn_register']          = '註冊';
 $lang['btn_apply']             = '套用';
 $lang['btn_media']             = '多媒體管理器';
+$lang['btn_deleteuser']        = '移除我的帳號';
 $lang['loggedinas']            = '登入成';
 $lang['user']                  = '帳號';
 $lang['pass']                  = '密碼';
@@ -66,6 +68,7 @@ $lang['fullname']              = '姓名';
 $lang['email']                 = '電郵';
 $lang['profile']               = '使用者個人資料';
 $lang['badlogin']              = '很抱歉，您的使用者名稱或密碼可能有錯誤。';
+$lang['badpassconfirm']        = '抱歉，這密碼是錯的';
 $lang['minoredit']             = '小修改';
 $lang['draftdate']             = '草稿已自動存檔於';
 $lang['nosecedit']             = '在您編輯期間，其他使用者修改過本頁面。區段資料已逾時，因此系統載入了全頁，以取代之。';
@@ -82,6 +85,9 @@ $lang['profna']                = '在本 wiki 上，不能修改個人資料。'
 $lang['profnochange']          = '並未作任何變更。';
 $lang['profnoempty']           = '帳號或電郵地址不可空白！';
 $lang['profchanged']           = '個人資料已更新。';
+$lang['profnodelete']          = '這一wiki不支援刪除用戶';
+$lang['profdeleteuser']        = '刪除帳號';
+$lang['profdeleted']           = '您在這wiki中的用戶帳號已經被刪除';
 $lang['pwdforget']             = '忘記密碼了？索取新密碼！';
 $lang['resendna']              = '本 wiki 並不支援重寄密碼。';
 $lang['resendpwd']             = '設定新密碼供';
