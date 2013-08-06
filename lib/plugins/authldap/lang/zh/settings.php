@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Chinese language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author lainme <lainme993@gmail.com>
  */
 $lang['server']                = '您的 LDAP 服务器。填写主机名 (<code>localhost</code>) 或者完整的 URL (<code>ldap://server.tld:389</code>)';
