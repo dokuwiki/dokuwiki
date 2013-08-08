@@ -92,6 +92,7 @@ $lang['profnodelete']          = 'Questa wiki non supporta la cancellazione degl
 $lang['profdeleteuser']        = 'Elimina account';
 $lang['profdeleted']           = 'Il tuo account utente è stato rimosso da questa wiki';
 $lang['profconfdelete']        = 'Voglio rimuovere il mio account da questa wiki. <br/> Questa operazione non può essere annullata.';
+$lang['profconfdeletemissing'] = 'La check box di conferma non è selezionata';
 $lang['pwdforget']             = 'Hai dimenticato la password? Richiedine una nuova';
 $lang['resendna']              = 'Questo wiki non supporta l\'invio di nuove password.';
 $lang['resendpwd']             = 'Imposta nuova password per';
