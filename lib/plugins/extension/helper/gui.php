@@ -14,7 +14,7 @@ if(!defined('DOKU_INC')) die();
  */
 class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
-    protected $tabs = array('plugins', 'templates', 'search');
+    protected $tabs = array('plugins', 'templates', 'search', 'install');
 
     /** @var string the extension that should have an open info window FIXME currently broken*/
     protected $infofor = '';
@@ -99,13 +99,20 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
     }
 
     /**
+     * Display the template tab
+     */
+    public function tabInstall() {
+        echo $this->locale_xhtml('intro_install');
+    }
+
+    /**
      * Print the tab navigation
      *
      * @fixme style active one
      */
     public function tabNavigation() {
         echo '<ul class="tabs">';
-        foreach(array('plugins', 'templates', 'search') as $tab) {
+        foreach($this->tabs as $tab) {
             $url = $this->tabURL($tab);
             if($this->currentTab() == $tab) {
                 $class = 'class="active"';

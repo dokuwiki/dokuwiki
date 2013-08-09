@@ -12,6 +12,7 @@ $lang['menu'] = 'Extension Manager';
 $lang['tab_plugins']   = 'Installed Plugins';
 $lang['tab_templates'] = 'Installed Templates';
 $lang['tab_search']    = 'Search and Install';
+$lang['tab_install']   = 'Manual Install';
 
 // custom language strings for the plugin
 $lang['notimplemented'] = 'This feature hasn\'t been implemented yet';

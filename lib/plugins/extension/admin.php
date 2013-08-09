@@ -128,6 +128,9 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
             case 'templates':
                 $this->gui->tabTemplates();
                 break;
+            case 'install':
+                $this->gui->tabInstall();
+                break;
             case 'plugins':
             default:
                 $this->gui->tabPlugins();

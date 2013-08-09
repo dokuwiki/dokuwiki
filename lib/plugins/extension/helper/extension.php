@@ -702,7 +702,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function download($url, &$path) {
         // check the url
         $matches = array();
-        if(!preg_match("/[^\/]*$/", $url, $matches) || !$matches[0]) {
+        if(!preg_match('/[^\/]*$/', $url, $matches) || !$matches[0]) {
             return $this->getLang('baddownloadurl');
         }
         $file = $matches[0];
