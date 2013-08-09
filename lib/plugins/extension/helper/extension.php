@@ -80,7 +80,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function isBundled() {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
         return in_array($this->base,
-                        array('acl', 'info', 'extension', 'test', 'revert', 'popularity', 'config', 'plugin', 'safefnrecode', 'authplain'));
+                        array('acl', 'info', 'extension', 'test', 'revert', 'popularity',
+                              'config', 'plugin', 'safefnrecode', 'authplain', 'testing',
+                              'template:dokuwiki', 'template:default'
+                              )
+        );
     }
 
     /**
@@ -107,6 +111,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool If the extension is enabled
      */
     public function isEnabled() {
+        global $conf;
+        if($this->isTemplate()){
+            return ($conf['template'] == $this->getBase());
+        }
+
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
         return !$plugin_controller->isdisabled($this->base);
