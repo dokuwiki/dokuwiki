@@ -224,11 +224,12 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
         if($showinfo){
             $url = $this->gui->tabURL('');
-            $return .= '<a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info close">'.$this->getLang('btn_info').'</a>';
+            $class = 'close';
         }else{
             $url = $this->gui->tabURL('', array('info' => $extension->getID()));
-            $return .= '<a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info">'.$this->getLang('btn_info').'</a>';
+            $class = '';
         }
+        $return .= '<a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info '.$class.'" data-extid="'.$extension->getID().'">'.$this->getLang('btn_info').'</a>';
 
         if ($showinfo) {
             $return .= $this->make_info($extension);
