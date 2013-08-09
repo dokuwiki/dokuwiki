@@ -528,7 +528,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $installed = $this->installArchive($path, $this->isInstalled(), $this->getBase());
 
             // refresh extension information
-            if (!isset($installed[$this->getBase()])) {
+            if (!isset($installed[$this->getID()])) {
                 throw new Exception('Error, the requested extension hasn\'t been installed or updated');
             }
             $this->setExtension($this->getID());
@@ -734,7 +734,6 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool|string True on success, an error message on failure
      */
     public function installArchive($file, $overwrite=false, $base = '') {
-        $error = false;
 
         // create tmp directory for decompression
         if(!($tmp = io_mktmpdir())) {
@@ -747,14 +746,21 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         // decompress
-        if(!$this->decompress("$tmp/$file", "$tmp/".$base)) {
+        if(!$this->decompress($file, "$tmp/".$base)) {
             throw new Exception(sprintf($this->getLang('error_decompress'), $file));
         }
 
         // search $tmp/$base for the folder(s) that has been created
         // move the folder(s) to lib/..
         $result = array('old'=>array(), 'new'=>array());
-        if(!$this->find_folders($result, $tmp.'/'.$base, ($this->isTemplate() ? 'template' : 'plugin'))) {
+        if($base){
+            // when a base was set it came from the current extension setup #fixme this is a bit hacky
+            $default = ($this->isTemplate() ? 'template' : 'plugin');
+        }else{
+            // assume a default of plugin, find_folders will autodetect templates
+            $default = 'plugin';
+        }
+        if(!$this->find_folders($result, $tmp.'/'.$base, $default)) {
             throw new Exception($this->getLang('error_findfolder'));
         }
 
@@ -796,22 +802,23 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
             // copy action
             if($this->dircopy($item['tmp'], $target)) {
-                // TODO: write manager.dat!
-                $installed_extensions[$item['base']] = array('type' => $item['type'], 'action' => $action);
+                // return info
+                $id = $item['base'];
+                if($item['type'] == 'template') $id = 'template:'.$id;
+                $installed_extensions[$id] = array(
+                    'base' => $item['base'],
+                    'type' => $item['type'],
+                    'action' => $action
+                );
             } else {
-                $error = sprintf($this->getLang('error_copy').DOKU_LF, $item['base']);
-                break;
+                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, $item['base']));
             }
         }
 
         // cleanup
         if($tmp) $this->dir_delete($tmp);
 
-        if($error) {
-            return $error;
-        }
-
-        return true;
+        return $installed_extensions;
     }
 
     /**

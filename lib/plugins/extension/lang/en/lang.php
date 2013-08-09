@@ -73,11 +73,18 @@ $lang['msg_notenabled']         = 'Plugin %s could not be enabled, check file pe
 $lang['msg_disabled']           = 'Plugin %s disabled';
 $lang['msg_notdisabled']        = 'Plugin %s could not be disabled, check file permissions';
 
+
+$lang['msg_template_install_success'] = 'Template %s installed successfully';
+$lang['msg_template_update_success'] = 'Template %s updated successfully';
+$lang['msg_plugin_install_success'] = 'Plugin %s installed successfully';
+$lang['msg_plugin_update_success'] = 'Plugin %s updated successfully';
+
+
 $lang['msg_url_failed']         = 'URL [%s] could not be downloaded.<br /> %s';
 $lang['msg_download_failed']    = 'Plugin %s could not be downloaded.<br /> %s';
 $lang['msg_download_success']   = 'Plugin %s installed successfully';
 $lang['msg_tpl_download_failed']  = 'Template %s could not be downloaded.<br /> %s';
-$lang['msg_tpl_download_success'] = 'Template %s installed successfully';
+
 $lang['msg_download_pkg_success']     = '%s extension package successfully installed (%s)';
 $lang['msg_tpl_download_pkg_success'] = '%s extension package successfully installed (%s)';
 

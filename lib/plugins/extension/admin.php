@@ -69,12 +69,14 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                         case 'install':
                         case 'reinstall':
                         case 'update':
-                            $extension->setExtension($extname);
-                            $status = $extension->installOrUpdate();
-                            if ($status !== true) {
-                                msg($status, -1);
-                            } else {
-                                msg(sprintf($this->getLang('msg_update_success'), hsc($extension->getDisplayName())), 1);
+                            try {
+                                $extension->setExtension($extname);
+                                $installed = $extension->installOrUpdate();
+                                foreach($installed as $extension => $info){
+                                    msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
+                                }
+                            }catch (Exception $e){
+                                msg($e->getMessage(), -1);
                             }
                             break;
                         case 'uninstall':
