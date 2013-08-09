@@ -349,7 +349,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return float|bool The popularity information or false if it isn't available
      */
     public function getPopularity() {
-        if (!empty($this->remoteInfo['popularity'])) return $this->remoteInfo['popularity']/200.0;
+        if (!empty($this->remoteInfo['popularity'])) return $this->remoteInfo['popularity'];
         return false;
     }
 
