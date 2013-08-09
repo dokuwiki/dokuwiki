@@ -244,7 +244,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         }
         if($extension->getTags()){
             $first = true;
-            echo '<span class="tags">';
+            $return .= '<span class="tags">';
             foreach ($extension->getTags() as $tag) {
                 if(!$first){
                     $return .= ', ';
@@ -254,7 +254,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $url = $this->gui->tabURL('search', array('q' => 'tag:'.$tag));
                 $return .= '<a href="'.$url.'">'.hsc($tag).'</a>';
             }
-            echo '</span>';
+            $return .= '</span>';
         }
         $return .= '</span>';
         return $return;
@@ -451,7 +451,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             }
             if (!$extension->isProtected()) {
                 if ($extension->isEnabled()) {
-                    $return .= $this->make_action('disable', $extension);
+                    if(!$extension->isTemplate()){ // templates can't be disabled, only anothe can be enabled
+                        $return .= $this->make_action('disable', $extension);
+                    }
                 } else {
                     $return .= $this->make_action('enable', $extension);
                 }

@@ -20,6 +20,7 @@
     background: url(images/overlay.png) repeat;
     text-align: center;
     cursor: pointer;
+    z-index: 9999;
 
     p {
         text-align: right;
@@ -42,16 +43,6 @@
  */
 #extension__manager h2 {
     margin-left: 0;
-}
-
-#extension__manager a.taglink {
-    padding: 1px 4px;
-    background-color: @ini_background_neu;
-    border-radius: 3px;
-}
-[dir=rtl] #extension__manager a.taglink {
-    display: inline-block;
-    line-height: 1.2;
 }
 
 #extension__manager .panelHeader div.error {
@@ -173,6 +164,10 @@
     background: transparent url(images/disabled.png) no-repeat 2px 2px;
 }
 
+#extension__manager .disabled .legend {
+    opacity: 0.7;
+}
+
 #extension__manager div.screenshot img {
     width: 120px;
     height: 70px;
@@ -227,18 +222,11 @@
     font-size: 85%;
 }
 
-#extension__manager .legend span.linkbar a.urlextern + a.taglink,
-#extension__manager .legend span.linkbar a.interwiki + a.taglink {
-    margin-left: 0.4em;
+#extension__manager .legend span.linkbar span.tags {
+    padding-left: 18px;
+    background: transparent url(images/tag.png) no-repeat 0 0;
 }
-[dir=rtl] #extension__manager .legend span.linkbar a.urlextern + a.taglink,
-[dir=rtl] #extension__manager .legend span.linkbar a.interwiki + a.taglink {
-    margin-left: 0;
-}
-[dir=rtl] #extension__manager .legend span.linkbar a.urlextern,
-[dir=rtl] #extension__manager .legend span.linkbar a.interwiki {
-    margin-left: .4em;
-}
+
 
 #extension__manager .legend input.button {
     background: transparent url(images/up.png) no-repeat 0 0;
