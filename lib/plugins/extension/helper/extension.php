@@ -127,6 +127,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool If an update is available
      */
     public function updateAvailable() {
+        if(!$this->isInstalled()) return false;
         $lastupdate = $this->getLastUpdate();
         if ($lastupdate === false) return false;
         $installed  = $this->getInstalledVersion();
@@ -518,21 +519,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     /**
      * Install or update the extension
      *
-     * @return bool|string True or an error message
+     * @throws \Exception when something goes wrong
+     * @return array The list of installed extensions
      */
     public function installOrUpdate() {
-        if (($status = $this->download($this->getDownloadURL(), $path)) === true) {
-            if (($status = $this->installArchive($path, $installed_extensions, $this->isInstalled(), $this->getBase())) == true) {
-                // refresh extension information
-                if (!isset($installed_extensions[$this->getBase()])) {
-                    $status = 'Error, the requested extension hasn\'t been installed or updated';
-                }
-                $this->setExtension($this->getID());
-                $this->purgeCache();
+        try {
+            $path      = $this->download($this->getDownloadURL());
+            $installed = $this->installArchive($path, $this->isInstalled(), $this->getBase());
+
+            // refresh extension information
+            if (!isset($installed[$this->getBase()])) {
+                throw new Exception('Error, the requested extension hasn\'t been installed or updated');
             }
-            $this->dir_delete(dirname($path));
+            $this->setExtension($this->getID());
+            $this->purgeCache();
+        }catch (Exception $e){
+            throw $e;
         }
-        return $status;
+        return $installed;
     }
 
     /**
@@ -695,112 +699,108 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
     /**
      * Download an archive to a protected path
+     *
      * @param string $url  The url to get the archive from
-     * @param string $path The path where the archive was saved (output parameter)
-     * @return bool|string True on success, an error message on failure
+     * @throws Exception   when something goes wrong
+     * @return string The path where the archive was saved
      */
-    public function download($url, &$path) {
+    public function download($url) {
         // check the url
         $matches = array();
         if(!preg_match('/[^\/]*$/', $url, $matches) || !$matches[0]) {
-            return $this->getLang('baddownloadurl');
+            throw new Exception($this->getLang('baddownloadurl'));
         }
         $file = $matches[0];
 
         // create tmp directory for download
         if(!($tmp = io_mktmpdir())) {
-            return $this->getLang('error_dircreate');
+            throw new Exception($this->getLang('error_dircreate'));
         }
 
         // download
-        if(!$file = io_download($url, $tmp.'/', true, $file)) {
+        if(!$file = io_download($url, $tmp.'/', true, $file, 0)) {
             $this->dir_delete($tmp);
-            return sprintf($this->getLang('error_download'), $url);
+            throw new Exception(sprintf($this->getLang('error_download'), hsc($url)));
         }
 
-        $path = $tmp.'/'.$file;
-
-        return true;
+        return $tmp.'/'.$file;
     }
 
     /**
      * @param string $file      The path to the archive that shall be installed
      * @param bool   $overwrite If an already installed plugin should be overwritten
-     * @param array  $installed_extensions Array of all installed extensions in the form $base => ('type' => $type, 'action' => 'update'|'install')
      * @param string $base      The basename of the plugin if it's known
+     * @throws Exception        when something went wrong
      * @return bool|string True on success, an error message on failure
      */
-    public function installArchive($file, &$installed_extensions, $overwrite=false, $base = '') {
+    public function installArchive($file, $overwrite=false, $base = '') {
         $error = false;
 
         // create tmp directory for decompression
         if(!($tmp = io_mktmpdir())) {
-            return $this->getLang('error_dircreate');
+            throw new Exception($this->getLang('error_dircreate'));
         }
 
         // add default base folder if specified to handle case where zip doesn't contain this
         if($base && !@mkdir($tmp.'/'.$base)) {
-            $error = $this->getLang('error_dircreate');
+            throw new Exception($this->getLang('error_dircreate'));
         }
 
-        if(!$error && !$this->decompress("$tmp/$file", "$tmp/".$base)) {
-            $error = sprintf($this->getLang('error_decompress'), $file);
+        // decompress
+        if(!$this->decompress("$tmp/$file", "$tmp/".$base)) {
+            throw new Exception(sprintf($this->getLang('error_decompress'), $file));
         }
 
         // search $tmp/$base for the folder(s) that has been created
         // move the folder(s) to lib/..
-        if(!$error) {
-            $result = array('old'=>array(), 'new'=>array());
+        $result = array('old'=>array(), 'new'=>array());
+        if(!$this->find_folders($result, $tmp.'/'.$base, ($this->isTemplate() ? 'template' : 'plugin'))) {
+            throw new Exception($this->getLang('error_findfolder'));
+        }
 
-            if(!$this->find_folders($result, $tmp.'/'.$base, ($this->isTemplate() ? 'template' : 'plugin'))) {
-                $error = $this->getLang('error_findfolder');
+        // choose correct result array
+        if(count($result['new'])) {
+            $install = $result['new'];
+        }else{
+            $install = $result['old'];
+        }
 
+        // now install all found items
+        foreach($install as $item) {
+            // where to install?
+            if($item['type'] == 'template') {
+                $target_base_dir = DOKU_TPLLIB;
+            }else{
+                $target_base_dir = DOKU_PLUGIN;
+            }
+
+            if(!empty($item['base'])) {
+                // use base set in info.txt
+            } elseif($base && count($install) == 1) {
+                $item['base'] = $base;
             } else {
-                // choose correct result array
-                if(count($result['new'])) {
-                    $install = $result['new'];
-                }else{
-                    $install = $result['old'];
-                }
+                // default - use directory as found in zip
+                // plugins from github/master without *.info.txt will install in wrong folder
+                // but using $info->id will make 'code3' fail (which should install in lib/code/..)
+                $item['base'] = basename($item['tmp']);
+            }
 
-                // now install all found items
-                foreach($install as $item) {
-                    // where to install?
-                    if($item['type'] == 'template') {
-                        $target_base_dir = DOKU_TPLLIB;
-                    }else{
-                        $target_base_dir = DOKU_PLUGIN;
-                    }
+            // check to make sure we aren't overwriting anything
+            $target = $target_base_dir.$item['base'];
+            if(!$overwrite && @file_exists($target)) {
+                // TODO remember our settings, ask the user to confirm overwrite
+                continue;
+            }
 
-                    if(!empty($item['base'])) {
-                        // use base set in info.txt
-                    } elseif($base && count($install) == 1) {
-                        $item['base'] = $base;
-                    } else {
-                        // default - use directory as found in zip
-                        // plugins from github/master without *.info.txt will install in wrong folder
-                        // but using $info->id will make 'code3' fail (which should install in lib/code/..)
-                        $item['base'] = basename($item['tmp']);
-                    }
+            $action = @file_exists($target) ? 'update' : 'install';
 
-                    // check to make sure we aren't overwriting anything
-                    $target = $target_base_dir.$item['base'];
-                    if(!$overwrite && @file_exists($target)) {
-                        // TODO remember our settings, ask the user to confirm overwrite
-                        continue;
-                    }
-
-                    $action = @file_exists($target) ? 'update' : 'install';
-
-                    // copy action
-                    if($this->dircopy($item['tmp'], $target)) {
-                        // TODO: write manager.dat!
-                        $installed_extensions[$item['base']] = array('type' => $item['type'], 'action' => $action);
-                    } else {
-                        $error = sprintf($this->getLang('error_copy').DOKU_LF, $item['base']);
-                        break;
-                    }
-                }
+            // copy action
+            if($this->dircopy($item['tmp'], $target)) {
+                // TODO: write manager.dat!
+                $installed_extensions[$item['base']] = array('type' => $item['type'], 'action' => $action);
+            } else {
+                $error = sprintf($this->getLang('error_copy').DOKU_LF, $item['base']);
+                break;
             }
         }
 
@@ -830,25 +830,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @param array $result - results are stored here
-     * @param string $base - the temp directory where the package was unpacked to
+     * @param string $directory - the temp directory where the package was unpacked to
      * @param string $default_type - type used if no info.txt available
-     * @param string $dir - a subdirectory. do not set. used by recursion
+     * @param string $subdir - a subdirectory. do not set. used by recursion
      * @return bool - false on error
      */
-    private function find_folders(&$result, $base, $default_type, $dir='') {
-        $this_dir = "$base$dir";
+    protected function find_folders(&$result, $directory, $default_type='plugin', $subdir='') {
+        $this_dir = "$directory$subdir";
         $dh       = @opendir($this_dir);
         if(!$dh) return false;
 
         $found_dirs           = array();
         $found_files          = 0;
         $found_template_parts = 0;
-        $found_info_txt       = false;
         while (false !== ($f = readdir($dh))) {
             if($f == '.' || $f == '..') continue;
 
             if(is_dir("$this_dir/$f")) {
-                $found_dirs[] = "$dir/$f";
+                $found_dirs[] = "$subdir/$f";
 
             } else {
                 // it's a file -> check for config
@@ -856,7 +855,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 switch ($f) {
                     case 'plugin.info.txt':
                     case 'template.info.txt':
-                        $found_info_txt = true;
+                        // we have  found a clear marker, save and return
                         $info = array();
                         $type = explode('.', $f, 2);
                         $info['type'] = $type[0];
@@ -864,7 +863,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                         $conf = confToHash("$this_dir/$f");
                         $info['base'] = basename($conf['base']);
                         $result['new'][] = $info;
-                        break;
+                        return true;
 
                     case 'main.php':
                     case 'details.php':
@@ -877,33 +876,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
         closedir($dh);
 
-        // URL downloads default to 'plugin', try extra hard to indentify templates
-        if(!$default_type && $found_template_parts > 2 && !$found_info_txt) {
+        // files where found but no info.txt - use old method
+        if($found_files){
             $info            = array();
-            $info['type']    = 'template';
             $info['tmp']     = $this_dir;
-            $result['new'][] = $info;
-        }
+            // does this look like a template or should we use the default type?
+            if($found_template_parts >= 2) {
+                $info['type']    = 'template';
+            } else {
+                $info['type']    = $default_type;
+            }
 
-        // files in top level but no info.txt, assume this is zip missing a base directory
-        // works for all downloads unless direct URL where $base will be the tmp directory ($info->id was empty)
-        if(!$dir && $found_files > 0 && !$found_info_txt && $default_type) {
-            $info            = array();
-            $info['type']    = $default_type;
-            $info['tmp']     = $base;
             $result['old'][] = $info;
             return true;
         }
 
+        // we have no files yet -> recurse
         foreach ($found_dirs as $found_dir) {
-            // if top level add to dir list for old method, then recurse
-            if(!$dir) {
-                $info            = array();
-                $info['type']    = ($default_type ? $default_type : 'plugin');
-                $info['tmp']     = "$base$found_dir";
-                $result['old'][] = $info;
-            }
-            $this->find_folders($result, $base, $default_type, "$found_dir");
+            $this->find_folders($result, $directory, $default_type, "$found_dir");
         }
         return true;
     }

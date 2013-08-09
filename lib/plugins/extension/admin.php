@@ -67,11 +67,9 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             $this->infoFor = $extname;
                             break;
                         case 'install':
-                            msg('Not implemented');
-                            break;
                         case 'reinstall':
                         case 'update':
-                            $extension->setExtension($extname, false);
+                            $extension->setExtension($extname);
                             $status = $extension->installOrUpdate();
                             if ($status !== true) {
                                 msg($status, -1);
@@ -80,7 +78,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             }
                             break;
                         case 'uninstall':
-                            $extension->setExtension($extname, false);
+                            $extension->setExtension($extname);
                             $status = $extension->uninstall();
                             if ($status !== true) {
                                 msg($status, -1);
@@ -89,7 +87,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             }
                             break;
                         case 'enable';
-                            $extension->setExtension($extname, false);
+                            $extension->setExtension($extname);
                             $status = $extension->enable();
                             if ($status !== true) {
                                 msg($status, -1);
@@ -98,7 +96,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             }
                             break;
                         case 'disable';
-                            $extension->setExtension($extname, false);
+                            $extension->setExtension($extname);
                             $status = $extension->disable();
                             if ($status !== true) {
                                 msg($status, -1);
