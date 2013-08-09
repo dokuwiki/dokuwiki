@@ -1,8 +1,8 @@
 <?php
+
 /**
- * french language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -27,6 +27,7 @@
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
+ * @author Emmanuel <seedfloyd@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -70,6 +71,7 @@ $lang['btn_revert']            = 'Restaurer';
 $lang['btn_register']          = 'S\'enregistrer';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
+$lang['btn_deleteuser']        = 'Supprimer mon compte';
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
 $lang['pass']                  = 'Mot de passe';
@@ -81,6 +83,7 @@ $lang['fullname']              = 'Nom';
 $lang['email']                 = 'Adresse de courriel';
 $lang['profile']               = 'Profil utilisateur';
 $lang['badlogin']              = 'L\'utilisateur ou le mot de passe est incorrect.';
+$lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
 $lang['draftdate']             = 'Brouillon enregistré de manière automatique le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
@@ -97,6 +100,10 @@ $lang['profna']                = 'Ce wiki ne permet pas de modifier les profils'
 $lang['profnochange']          = 'Pas de modification, rien à faire.';
 $lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
 $lang['profchanged']           = 'Mise à jour du profil réussie.';
+$lang['profnodelete']          = 'Ce wiki ne permet pas la suppression des utilisateurs';
+$lang['profdeleteuser']        = 'Supprimer le compte';
+$lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
+$lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
 $lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
