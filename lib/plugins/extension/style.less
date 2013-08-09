@@ -7,34 +7,6 @@
  * @author  Anika Henke <anika@selfthinker.org>
  */
 
-/*
- * tab support not included in "Angua", copied from _mediamanager.css
- */
-#extension__manager .panelHeader {
-    background-color: __background_alt__;
-    margin-bottom: 10px;
-    padding: 10px;
-    text-align: left;
-    /* to counter partly missing border of ul.tabs: */
-    border-top: 1px solid __border__;
-    margin-top: -1px;
-}
-
-#extension__manager .panelHeader p {
-    float: left;
-    font-weight: normal;
-    font-size: 1em;
-    padding: 0;
-    margin: 0 0 3px;
-}
-[dir=rtl] #extension__manager .panelHeader p {
-    float: right;
-}
-
-#extension__manager ul.tabs div.message {
-    display: inline;
-    margin: 0 .5em;
-}
 
 /*
  * general layout
@@ -45,7 +17,7 @@
 
 #extension__manager a.taglink {
     padding: 1px 4px;
-    background-color: __background_neu__;
+    background-color: @ini_background_neu;
     border-radius: 3px;
 }
 [dir=rtl] #extension__manager a.taglink {
@@ -139,8 +111,8 @@
 #extension__manager .extensionList li {
     margin: 0 0 .5em;
     padding: 0 0 .5em;
-    color: __text__;
-    border-bottom: 1px solid __border__;
+    color: @ini_text;
+    border-bottom: 1px solid @ini_border;
     overflow: hidden;
 }
 
@@ -155,12 +127,12 @@
 
 #extension__manager .legend > div {
     padding: 0 .5em 0 132px;
-    border-right: 1px solid __background_alt__;
+    border-right: 1px solid @ini_background_alt;
     overflow: hidden;
 }
 [dir=rtl] #extension__manager .legend > div {
     padding: 0 132px 0 .5em;
-    border-left: 1px solid __background_alt__;
+    border-left: 1px solid @ini_background_alt;
     border-right-width: 0;
 }
 
@@ -258,7 +230,7 @@
 }
 
 #extension__manager .legend div.popularity {
-    background-color: __background__;
+    background-color: @ini_background;
     border: 1px solid silver;
     height: .4em;
     margin: 0 auto;
@@ -274,7 +246,7 @@
 }
 
 #extension__manager .legend div.popularity div {
-    background-color: __border__;
+    background-color: @ini_border;
     height: 100%;
 }
 
@@ -309,7 +281,7 @@
 #extension__manager dl.details {
     margin: 0.4em 0 0 0;
     font-size: 85%;
-    border-top: 1px solid __background_alt__;
+    border-top: 1px solid @ini_background_alt;
     clear: both;
 }
 
@@ -348,8 +320,8 @@
     z-index: 20;
     overflow: hidden;
     opacity: 0.9;
-    border: 1px solid __border__;
-    background-color: __border__; /*background_other__;*/
+    border: 1px solid @ini_border;
+    background-color: @ini_border; /*background_other__;*/
     text-align: left;
     padding: 0.2em;
 }
