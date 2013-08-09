@@ -164,7 +164,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $mailid = $extension->getEmailID();
             if($mailid){
                 $url = $this->gui->tabURL('search', array('q' => 'mailid:'.$mailid));
-                return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" >'.hsc($extension->getAuthor()).'</a>';
+                return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&d=mm" width="20" height="20"> '.hsc($extension->getAuthor()).'</a>';
+
             }else{
                 return '<span class="author">'.hsc($extension->getAuthor()).'</span>';
             }
