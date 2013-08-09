@@ -16,10 +16,13 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
     protected $tabs = array('plugins', 'templates', 'search');
 
+    /** @var string the extension that should have an open info window FIXME currently broken*/
+    protected $infofor = '';
+
     /**
      * display the plugin tab
      */
-    public function tabPlugins(){
+    public function tabPlugins() {
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
 
@@ -31,8 +34,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
         $list->start_form();
-        foreach ($pluginlist as $name) {
-            $extension->setExtension($name, false);
+        foreach($pluginlist as $name) {
+            $extension->setExtension($name);
             $list->add_row($extension, $name == $this->infoFor);
         }
         $list->end_form();
@@ -42,7 +45,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
     /**
      * Display the template tab
      */
-    public function tabTemplates(){
+    public function tabTemplates() {
         echo $this->locale_xhtml('intro_templates');
 
         // FIXME do we have a real way?
@@ -54,8 +57,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
         $list->start_form();
-        foreach ($tpllist as $name) {
-            $extension->setExtension($name, true);
+        foreach($tpllist as $name) {
+            $extension->setExtension("template:$name");
             $list->add_row($extension, $name == $this->infoFor);
         }
         $list->end_form();
@@ -65,8 +68,34 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
     /**
      * Display the search tab
      */
-    public function tabSearch(){
+    public function tabSearch() {
+        global $INPUT;
         echo $this->locale_xhtml('intro_search');
+
+        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&')));
+        $form->addElement(form_makeTextField('q', $INPUT->str('q'), 'Search'));
+        $form->addElement(form_makeButton('submit', '', 'Search'));
+        $form->printForm();
+
+        if(!$INPUT->bool('q')) return;
+
+
+        /* @var helper_plugin_extension_repository $repository FIXME should we use some gloabl instance? */
+        $repository = $this->loadHelper('extension_repository');
+        $result = $repository->search($INPUT->str('q'));
+
+        /* @var helper_plugin_extension_extension $extension */
+        $extension = $this->loadHelper('extension_extension');
+        /* @var helper_plugin_extension_list $list */
+        $list = $this->loadHelper('extension_list');
+        $list->start_form();
+        foreach($result as $name) {
+            $extension->setExtension($name);
+            $list->add_row($extension, $name == $this->infoFor);
+        }
+        $list->end_form();
+        $list->render();
+
     }
 
     /**
@@ -106,10 +135,10 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      *
      * @param string $tab    tab to load, empty for current tab
      * @param array  $params associative array of parameter to set
-     *
+     * @param string $sep    seperator to build the URL
      * @return string
      */
-    public function tabURL($tab = '', $params = array()) {
+    public function tabURL($tab = '', $params = array(), $sep = '&amp;') {
         global $ID;
 
         if(!$tab) $tab = $this->currentTab();
@@ -118,7 +147,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
             'page' => 'extension',
             'tab'  => $tab,
         );
-        return wl($ID, array_merge($defaults, $params));
+        return wl($ID, array_merge($defaults, $params), false, $sep);
     }
 
 }

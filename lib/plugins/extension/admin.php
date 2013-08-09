@@ -48,7 +48,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
         // initialize the remote repository
         /* @var helper_plugin_extension_repository $repository */
         $repository = $this->loadHelper('extension_repository');
-        $repository->init();
+
 
         if(!$repository->hasAccess()){
             $url = $this->gui->tabURL('', array('purge'=>1));

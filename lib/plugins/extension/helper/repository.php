@@ -109,6 +109,79 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
         }
         return array();
     }
+
+    protected function cacheData($name, $data){
+
+    }
+
+    /**
+     * Search for plugins or templates using the given query string
+     *
+     * @param string $q the query string
+     * @return array a list of matching extensions
+     */
+    public function search($q){
+        $query = $this->parse_query($q);
+        $query['fmt'] = 'php';
+
+        $httpclient = new DokuHTTPClient();
+        $data = $httpclient->post(EXTENSION_REPOSITORY_API, $query);
+        if ($data === false) return array();
+        $result = unserialize($data);
+
+        $ids = array();
+
+        // store cache info for each extension
+        foreach($result as $ext){
+            $name = $ext['name'];
+            $cache = new cache('##extension_manager##'.$name, 'repo');
+            $cache->storeCache(serialize($ext));
+            $ids[] = $name;
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Parses special queries from the query string
+     *
+     * @param string $q
+     * @return array
+     */
+    protected function parse_query($q){
+        $parameters = array(
+            'tag' => array(),
+            'mail' => array(),
+            'type' => array()
+        );
+
+        // extract tags
+        if(preg_match_all('/(^|\s)(tag:([\S]+))/', $q, $matches, PREG_SET_ORDER)){
+            foreach($matches as $m){
+                $q = str_replace($m[2], '', $q);
+                $parameters['tag'][] = $m[3];
+            }
+        }
+        // extract author ids
+        if(preg_match_all('/(^|\s)(authorid:([\S]+))/', $q, $matches, PREG_SET_ORDER)){
+            foreach($matches as $m){
+                $q = str_replace($m[2], '', $q);
+                $parameters['mail'][] = $m[3];
+            }
+        }
+        // extract types
+        if(preg_match_all('/(^|\s)(type:([\S]+))/', $q, $matches, PREG_SET_ORDER)){
+            foreach($matches as $m){
+                $q = str_replace($m[2], '', $q);
+                $parameters['type'][] = $m[3];
+            }
+        }
+
+        // FIXME make integer from type value
+
+        $parameters['q'] = trim($q);
+        return $parameters;
+    }
 }
 
 // vim:ts=4:sw=4:et:

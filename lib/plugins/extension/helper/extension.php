@@ -14,8 +14,9 @@ if(!defined('DOKU_TPLLIB')) define('DOKU_TPLLIB', DOKU_INC.'lib/tpl/');
  * Class helper_plugin_extension_extension represents a single extension (plugin or template)
  */
 class helper_plugin_extension_extension extends DokuWiki_Plugin {
+    private $id;
     private $name;
-    private $is_template;
+    private $is_template = false;
     private $localInfo;
     private $remoteInfo;
     private $managerData;
@@ -32,13 +33,18 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     /**
      * Set the name of the extension this instance shall represents, triggers loading the local and remote data
      *
-     * @param string $name        The base name of the extension
-     * @param bool   $is_template If the extension is a template
+     * @param string $id  The id of the extension (prefixed with template: for templates)
      * @return bool If some (local or remote) data was found
      */
-    public function setExtension($name, $is_template) {
-        $this->name = $name;
-        $this->is_template = $is_template;
+    public function setExtension($id) {
+        $this->id   = $id;
+        $this->name = $id;
+
+        if(substr($id, 0 , 9) == 'template'){
+            $this->name = substr($id, 10);
+            $this->is_template = true;
+        }
+
         $this->localInfo = array();
         $this->managerData = array();
         $this->remoteInfo = array();
@@ -126,6 +132,17 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function isTemplate() {
         return $this->is_template;
+    }
+
+    /**
+     * Get the ID of the extension
+     *
+     * This is the same as getName() for plugins, for templates it's getName() prefixed with 'template:'
+     *
+     * @return string
+     */
+    public function getID() {
+        return $this->id;
     }
 
     /**
