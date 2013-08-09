@@ -17,7 +17,18 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
     protected $tabs = array('plugins', 'templates', 'search', 'install');
 
     /** @var string the extension that should have an open info window FIXME currently broken*/
-    protected $infofor = '';
+    protected $infoFor = '';
+
+    /**
+     * Constructor
+     *
+     * initializes requested info window
+     */
+    public function __construct(){
+        global $INPUT;
+        $this->infoFor = $INPUT->str('info');
+    }
+
 
     /**
      * display the plugin tab
@@ -37,7 +48,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         $list->start_form();
         foreach($pluginlist as $name) {
             $extension->setExtension($name);
-            $list->add_row($extension, $name == $this->infoFor);
+            $list->add_row($extension, $extension->getID() == $this->infoFor);
         }
         $list->end_form();
         $list->render();
@@ -61,7 +72,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         $list->start_form();
         foreach($tpllist as $name) {
             $extension->setExtension("template:$name");
-            $list->add_row($extension, $name == $this->infoFor);
+            $list->add_row($extension, $extension->getID() == $this->infoFor);
         }
         $list->end_form();
         $list->render();
@@ -93,7 +104,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         $list->start_form();
         foreach($result as $name) {
             $extension->setExtension($name);
-            $list->add_row($extension, $name == $this->infoFor);
+            $list->add_row($extension, $extension->getID() == $this->infoFor);
         }
         $list->end_form();
         $list->render();
@@ -149,12 +160,14 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      */
     public function tabURL($tab = '', $params = array(), $sep = '&amp;') {
         global $ID;
+        global $INPUT;
 
         if(!$tab) $tab = $this->currentTab();
         $defaults = array(
             'do'   => 'admin',
             'page' => 'extension',
             'tab'  => $tab,
+            'q'    => $INPUT->str('q')
         );
         return wl($ID, array_merge($defaults, $params), false, $sep);
     }

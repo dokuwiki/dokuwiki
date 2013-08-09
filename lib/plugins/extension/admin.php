@@ -63,9 +63,6 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
             foreach ($actions as $action => $extensions) {
                 foreach ($extensions as $extname => $label) {
                     switch ($action) {
-                        case 'info':
-                            $this->infoFor = $extname;
-                            break;
                         case 'install':
                         case 'reinstall':
                         case 'update':

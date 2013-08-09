@@ -228,21 +228,22 @@
 }
 
 
-#extension__manager .legend input.button {
+#extension__manager .legend a.info {
     background: transparent url(images/up.png) no-repeat 0 0;
-    box-shadow: none;
     border-width: 0;
-    height: 14px;
+    height: 13px;
+    width: 13px;
     text-indent: -99999px;
     float: right;
     margin: .5em 0 0;
+    overflow: hidden;
 }
-[dir=rtl] #extension__manager .legend input.button {
+[dir=rtl] #extension__manager .legend a.info {
     float: left;
     margin: .5em 0 0;
 }
 
-#extension__manager .legend  input.button.close {
+#extension__manager .legend  a.info.close {
     background: transparent url(images/down.png) no-repeat 0 0;
 }
 

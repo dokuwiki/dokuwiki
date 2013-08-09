@@ -146,9 +146,10 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
      */
     protected function parse_query($q){
         $parameters = array(
-            'tag' => array(),
+            'tag'  => array(),
             'mail' => array(),
-            'type' => array()
+            'type' => array(),
+            'ext'  => array()
         );
 
         // extract tags
@@ -163,6 +164,13 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
             foreach($matches as $m){
                 $q = str_replace($m[2], '', $q);
                 $parameters['mail'][] = $m[3];
+            }
+        }
+        // extract extensions
+        if(preg_match_all('/(^|\s)(ext:([\S]+))/', $q, $matches, PREG_SET_ORDER)){
+            foreach($matches as $m){
+                $q = str_replace($m[2], '', $q);
+                $parameters['ext'][] = $m[3];
             }
         }
         // extract types

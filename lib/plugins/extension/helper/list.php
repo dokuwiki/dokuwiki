@@ -101,7 +101,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param helper_plugin_extension_extension $extension The extension
      */
     private function start_row(helper_plugin_extension_extension $extension) {
-        $this->form .= '<li id="extensionplugin__'.hsc($extension->getInstallName()).'" class="'.$this->make_class($extension).'">';
+        $this->form .= '<li id="extensionplugin__'.hsc($extension->getID()).'" class="'.$this->make_class($extension).'">';
     }
 
     /**
@@ -221,7 +221,15 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return .= '</p>';
 
         $return .= $this->make_linkbar($extension);
-        $return .= $this->make_action('info', $extension, $showinfo);
+
+        if($showinfo){
+            $url = $this->gui->tabURL('');
+            $return .= '<a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info close">'.$this->getLang('btn_info').'</a>';
+        }else{
+            $url = $this->gui->tabURL('', array('info' => $extension->getID()));
+            $return .= '<a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info">'.$this->getLang('btn_info').'</a>';
+        }
+
         if ($showinfo) {
             $return .= $this->make_info($extension);
         }
@@ -415,15 +423,14 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
     /**
      * Generate a list of links for extensions
-     * @param array $links The links
+     *
+     * @param array $ext The extensions
      * @return string The HTML code
      */
-    function make_linklist($links) {
+    function make_linklist($ext) {
         $return = '';
-        foreach ($links as $link) {
-            $dokulink = hsc($link);
-            if (strpos($link, 'template:') !== 0) $dokulink = 'plugin:'.$dokulink;
-            $return .= '<a href="http://www.dokuwiki.org/'.$dokulink.'" title="'.$dokulink.'" class="interwiki iw_doku">'.$link.'</a> ';
+        foreach ($ext as $link) {
+            $return .= '<a href="'.$this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a> ';
         }
         return $return;
     }
@@ -438,7 +445,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return = '';
         if (!$extension->isInstalled() && $extension->canModify() === true) {
             $return .= $this->make_action('install', $extension);
-        } elseif ($extension->canModify()) {
+        } elseif ($extension->canModify() === true) {
             if (!$extension->isBundled()) {
                 $return .= $this->make_action('uninstall', $extension);
                 if ($extension->getDownloadURL()) {
@@ -451,7 +458,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             }
             if (!$extension->isProtected()) {
                 if ($extension->isEnabled()) {
-                    if(!$extension->isTemplate()){ // templates can't be disabled, only anothe can be enabled
+                    if(!$extension->isTemplate()){ // templates can't be disabled, only another can be enabled
                         $return .= $this->make_action('disable', $extension);
                     }
                 } else {
@@ -473,28 +480,20 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      *
      * @param string                            $action    The action
      * @param helper_plugin_extension_extension $extension The extension
-     * @param bool                              $showinfo  If the info block is shown
      * @return string The HTML code
      */
-    function make_action($action, $extension, $showinfo = false) {
-        $title = $revertAction = $extraClass = '';
+    function make_action($action, $extension) {
+        $title = '';
 
         switch ($action) {
-            case 'info':
-                $title = 'title="'.$this->getLang('btn_info').'"';
-                if ($showinfo) {
-                    $revertAction = '-';
-                    $extraClass   = 'close';
-                }
-                break;
             case 'install':
             case 'reinstall':
                 $title = 'title="'.$extension->getDownloadURL().'"';
                 break;
         }
 
-        $classes = 'button '.$action.' '.$extraClass;
-        $name    = 'fn['.$action.']['.$revertAction.hsc($extension->getInstallName()).']';
+        $classes = 'button '.$action;
+        $name    = 'fn['.$action.']['.hsc($extension->getID()).']';
 
         return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
     }
