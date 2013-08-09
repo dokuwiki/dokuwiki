@@ -1,6 +1,8 @@
 <?php
+
 /**
- * french language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
  * @author Guy Brand <gb@unistra.fr>
