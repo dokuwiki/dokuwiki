@@ -29,6 +29,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         echo $this->locale_xhtml('intro_plugins');
 
         $pluginlist = $plugin_controller->getList('', true);
+        sort($pluginlist);
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
@@ -51,6 +52,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         // FIXME do we have a real way?
         $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
         $tpllist = array_map('basename', $tpllist);
+        sort($tpllist);
 
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
