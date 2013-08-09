@@ -23,6 +23,20 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     /** @var helper_plugin_extension_repository $repository */
     private $repository = null;
 
+    /** @var array list of temporary directories */
+    private $temporary = array();
+
+    /**
+     * Destructor
+     *
+     * deletes any dangling temporary directories
+     */
+    public function __destruct() {
+        foreach($this->temporary as $dir){
+            $this->dir_delete($dir);
+        }
+    }
+
     /**
      * @return bool false, this component is not a singleton
      */
@@ -698,6 +712,20 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
+     * Returns a temporary directory
+     *
+     * The directory is registered for cleanup when the class is destroyed
+     *
+     * @return bool|string
+     */
+    protected function mkTmpDir(){
+        $dir = io_mktmpdir();
+        if(!$dir) return false;
+        $this->temporary[] = $dir;
+        return $dir;
+    }
+
+    /**
      * Download an archive to a protected path
      *
      * @param string $url  The url to get the archive from
@@ -713,7 +741,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         $file = $matches[0];
 
         // create tmp directory for download
-        if(!($tmp = io_mktmpdir())) {
+        if(!($tmp = $this->mkTmpDir())) {
             throw new Exception($this->getLang('error_dircreate'));
         }
 
@@ -736,7 +764,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function installArchive($file, $overwrite=false, $base = '') {
 
         // create tmp directory for decompression
-        if(!($tmp = io_mktmpdir())) {
+        if(!($tmp = $this->mkTmpDir())) {
             throw new Exception($this->getLang('error_dircreate'));
         }
 
