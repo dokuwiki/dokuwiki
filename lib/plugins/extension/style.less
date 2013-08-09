@@ -7,6 +7,35 @@
  * @author  Anika Henke <anika@selfthinker.org>
  */
 
+/**
+ * very simple lightbox
+ * @link http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/super-simple-lightbox-with-css-and-jquery/
+ */
+#plugin__extensionlightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(images/overlay.png) repeat;
+    text-align: center;
+    cursor: pointer;
+
+    p {
+        text-align: right;
+        color: #fff;
+        margin-right: 20px;
+        font-size: 12px;
+    }
+
+    img {
+        box-shadow: 0 0 25px #111;
+        -webkit-box-shadow: 0 0 25px #111;
+        -moz-box-shadow: 0 0 25px #111;
+        max-width: 90%;
+        max-height: 90%;
+    }
+}
 
 /*
  * general layout

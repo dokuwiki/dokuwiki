@@ -181,7 +181,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      */
     function make_screenshot(helper_plugin_extension_extension $extension) {
         if($extension->getScreenshotURL()) {
-            $img = '<a title="'.hsc($extension->getDisplayName()).'" href="'.hsc($extension->getScreenshotURL()).'" target="_blank">'.
+            $img = '<a title="'.hsc($extension->getDisplayName()).'" href="'.hsc($extension->getScreenshotURL()).'" target="_blank" class="extension_screenshot">'.
                 '<img alt="'.hsc($extension->getDisplayName()).'" width="120" height="70" src="'.hsc($extension->getThumbnailURL()).'" />'.
                 '</a>';
         } elseif($extension->isTemplate()) {
