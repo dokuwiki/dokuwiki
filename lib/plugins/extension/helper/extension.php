@@ -15,7 +15,7 @@ if(!defined('DOKU_TPLLIB')) define('DOKU_TPLLIB', DOKU_INC.'lib/tpl/');
  */
 class helper_plugin_extension_extension extends DokuWiki_Plugin {
     private $id;
-    private $name;
+    private $base;
     private $is_template = false;
     private $localInfo;
     private $remoteInfo;
@@ -38,10 +38,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function setExtension($id) {
         $this->id   = $id;
-        $this->name = $id;
+        $this->base = $id;
 
-        if(substr($id, 0 , 9) == 'template'){
-            $this->name = substr($id, 10);
+        if(substr($id, 0 , 9) == 'template:'){
+            $this->base = substr($id, 9);
             $this->is_template = true;
         }
 
@@ -58,7 +58,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $this->repository = $this->loadHelper('extension_repository');
         }
 
-        $this->remoteInfo = $this->repository->getData(($this->isTemplate() ? 'template:' : '').$this->getBase());
+        $this->remoteInfo = $this->repository->getData($this->getID());
 
         return ($this->localInfo || $this->remoteInfo);
     }
@@ -79,7 +79,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function isBundled() {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
-        return in_array($this->name,
+        return in_array($this->base,
                         array('acl', 'info', 'extension', 'test', 'revert', 'popularity', 'config', 'plugin', 'safefnrecode', 'authplain'));
     }
 
@@ -89,7 +89,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool if the extension is protected
      */
     public function isProtected() {
-        return in_array($this->name, array('acl', 'config', 'info', 'plugin', 'revert', 'usermanager'));
+        return in_array($this->base, array('acl', 'config', 'info', 'plugin', 'revert', 'usermanager'));
     }
 
     /**
@@ -98,7 +98,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool If the extension is installed in the correct directory
      */
     public function isInWrongFolder() {
-        return $this->name != $this->getBase();
+        return $this->base != $this->getBase();
     }
 
     /**
@@ -109,7 +109,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function isEnabled() {
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
-        return !$plugin_controller->isdisabled($this->name);
+        return !$plugin_controller->isdisabled($this->base);
     }
 
     /**
@@ -151,7 +151,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return string The name of the installation directory
      */
     public function getInstallName() {
-        return $this->name;
+        return $this->base;
     }
 
     // Data from plugin.info.txt/template.info.txt or the repo when not available locally
@@ -162,7 +162,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function getBase() {
         if (!empty($this->localInfo['base'])) return $this->localInfo['base'];
-        return $this->name;
+        return $this->base;
     }
 
     /**
@@ -170,10 +170,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      *
      * @return string The display name
      */
-    public function getName() {
+    public function getDisplayName() {
         if (!empty($this->localInfo['name'])) return $this->localInfo['name'];
         if (!empty($this->remoteInfo['name'])) return $this->remoteInfo['name'];
-        return $this->name;
+        return $this->base;
     }
 
     /**
@@ -468,9 +468,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function getInstallDir() {
         if ($this->isTemplate()) {
-            return DOKU_TPLLIB.$this->name;
+            return DOKU_TPLLIB.$this->base;
         } else {
-            return DOKU_PLUGIN.$this->name;
+            return DOKU_PLUGIN.$this->base;
         }
     }
 
@@ -518,7 +518,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 if (!isset($installed_extensions[$this->getBase()])) {
                     $status = 'Error, the requested extension hasn\'t been installed or updated';
                 }
-                $this->setExtension($this->name, $this->isTemplate());
+                $this->setExtension($this->getID());
                 $this->purgeCache();
             }
             $this->dir_delete(dirname($path));
@@ -547,7 +547,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if ($this->isEnabled()) return $this->getLang('alreadyenabled');
-        if ($plugin_controller->enable($this->name)) {
+        if ($plugin_controller->enable($this->base)) {
             $this->purgeCache();
             return true;
         } else {
@@ -567,7 +567,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
-        if ($plugin_controller->disable($this->name)) {
+        if ($plugin_controller->disable($this->base)) {
             $this->purgeCache();
             return true;
         } else {
@@ -605,7 +605,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
             foreach($plugin_types as $type) {
                 if(@file_exists($path.$type.'.php')) {
-                    $plugin = plugin_load($type, $this->name);
+                    $plugin = plugin_load($type, $this->base);
                     if ($plugin) break;
                 }
 
@@ -613,7 +613,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                     while(false !== ($cp = readdir($dh))) {
                         if($cp == '.' || $cp == '..' || strtolower(substr($cp, -4)) != '.php') continue;
 
-                        $plugin = plugin_load($type, $this->name.'_'.substr($cp, 0, -4));
+                        $plugin = plugin_load($type, $this->base.'_'.substr($cp, 0, -4));
                         if ($plugin) break;
                     }
                     if ($plugin) break;

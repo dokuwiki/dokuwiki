@@ -110,10 +110,6 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
         return array();
     }
 
-    protected function cacheData($name, $data){
-
-    }
-
     /**
      * Search for plugins or templates using the given query string
      *
@@ -133,7 +129,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
 
         // store cache info for each extension
         foreach($result as $ext){
-            $name = $ext['name'];
+            $name = $ext['plugin'];
             $cache = new cache('##extension_manager##'.$name, 'repo');
             $cache->storeCache(serialize($ext));
             $ids[] = $name;

@@ -76,7 +76,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             if ($status !== true) {
                                 msg($status, -1);
                             } else {
-                                msg(sprintf($this->getLang('msg_update_success'), hsc($extension->getName())), 1);
+                                msg(sprintf($this->getLang('msg_update_success'), hsc($extension->getDisplayName())), 1);
                             }
                             break;
                         case 'uninstall':
@@ -85,7 +85,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             if ($status !== true) {
                                 msg($status, -1);
                             } else {
-                                msg(sprintf($this->getLang('msg_delete_success'), hsc($extension->getName())), 1);
+                                msg(sprintf($this->getLang('msg_delete_success'), hsc($extension->getDisplayName())), 1);
                             }
                             break;
                         case 'enable';
@@ -94,7 +94,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             if ($status !== true) {
                                 msg($status, -1);
                             } else {
-                                msg(sprintf($this->getLang('msg_enabled'), hsc($extension->getName())), 1);
+                                msg(sprintf($this->getLang('msg_enabled'), hsc($extension->getDisplayName())), 1);
                             }
                             break;
                         case 'disable';
@@ -103,7 +103,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             if ($status !== true) {
                                 msg($status, -1);
                             } else {
-                                msg(sprintf($this->getLang('msg_disabled'), hsc($extension->getName())), 1);
+                                msg(sprintf($this->getLang('msg_disabled'), hsc($extension->getDisplayName())), 1);
                             }
                             break;
                     }

@@ -163,7 +163,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
             $mailid = $extension->getEmailID();
             if($mailid){
-                $url = $this->gui->tabURL('search', array('q' => 'mailid:'.$mailid));
+                $url = $this->gui->tabURL('search', array('q' => 'authorid:'.$mailid));
                 return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&d=mm" width="20" height="20"> '.hsc($extension->getAuthor()).'</a>';
 
             }else{
@@ -181,8 +181,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      */
     function make_screenshot(helper_plugin_extension_extension $extension) {
         if($extension->getScreenshotURL()) {
-            $img = '<a title="'.hsc($extension->getName()).'" href="'.hsc($extension->getScreenshotURL()).'" target="_blank">'.
-                '<img alt="'.hsc($extension->getName()).'" width="120" height="70" src="'.hsc($extension->getThumbnailURL()).'" />'.
+            $img = '<a title="'.hsc($extension->getDisplayName()).'" href="'.hsc($extension->getScreenshotURL()).'" target="_blank">'.
+                '<img alt="'.hsc($extension->getDisplayName()).'" width="120" height="70" src="'.hsc($extension->getThumbnailURL()).'" />'.
                 '</a>';
         } elseif($extension->isTemplate()) {
             $img = '<img alt="template" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/template.png" />';
@@ -203,7 +203,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     function make_legend(helper_plugin_extension_extension $extension, $showinfo = false) {
         $return  = '<div>';
         $return .= '<h2>';
-        $return .= sprintf($this->getLang('extensionby'), hsc($extension->getName()), $this->make_author($extension));
+        $return .= sprintf($this->getLang('extensionby'), hsc($extension->getDisplayName()), $this->make_author($extension));
         $return .= '</h2>';
 
         $return .= $this->make_screenshot($extension);
