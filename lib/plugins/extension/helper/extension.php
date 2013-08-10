@@ -797,7 +797,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         // check the url
         $matches = array();
         if(!preg_match('/[^\/]*$/', $url, $matches) || !$matches[0]) {
-            throw new Exception($this->getLang('baddownloadurl'));
+            throw new Exception($this->getLang('error_badurl'));
         }
         $file = $matches[0];
 

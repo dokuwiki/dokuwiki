@@ -191,6 +191,8 @@
 #extension__manager div.screenshot img {
     width: 120px;
     height: 70px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 2px #ccc;
 }
 
 #extension__manager .legend div.screenshot {
@@ -198,6 +200,7 @@
     margin-left: -132px;
     max-width: 120px;
     float: left;
+    position: relative;
 }
 [dir=rtl] #extension__manager .legend div.screenshot {
     margin-left: 0;
@@ -209,7 +212,8 @@
     min-height: 24px;
     min-width: 24px;
     position: absolute;
-    left: 0;
+    left: 0px;
+    top: 0px;
 }
 [dir=rtl] #extension__manager .legend div.screenshot span {
     left: auto;
