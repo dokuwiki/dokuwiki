@@ -36,7 +36,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
 
+        echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_plugins');
+        echo '</div>';
 
         $pluginlist = $plugin_controller->getList('', true);
         sort($pluginlist);
@@ -57,7 +59,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      * Display the template tab
      */
     public function tabTemplates() {
+        echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_templates');
+        echo '</div>';
 
         // FIXME do we have a real way?
         $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
@@ -82,7 +86,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      */
     public function tabSearch() {
         global $INPUT;
+        echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_search');
+        echo '</div>';
 
         $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&')));
         $form->addElement(form_makeTextField('q', $INPUT->str('q'), 'Search'));
@@ -113,7 +119,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      * Display the template tab
      */
     public function tabInstall() {
+        echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_install');
+        echo '</div>';
 
         $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'enctype' => 'multipart/form-data'));
         $form->addElement(form_makeTextField('installurl', '', 'Install from URL:', '', 'block'));

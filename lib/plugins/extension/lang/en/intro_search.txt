@@ -1,1 +1,1 @@
-Here you can search for available plugins and templates for DokuWiki. Be sure to read more about Plugin Security before installing FIXME add link
+This tab gives you access to all available 3rd party plugins and templates for DokuWiki. Please be aware that installing 3rd party code may pose a **security risk**, you may want to read about [[doku>security#plugin_security|plugin security]] first.
