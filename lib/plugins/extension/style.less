@@ -38,8 +38,11 @@
     }
 }
 
+/**
+ * general styles
+ */
 #extension__manager {
-    /* tab layout - most of it is in the main template */
+    // tab layout - most of it is in the main template
     ul.tabs li.active a {
         background-color: @ini_background_alt;
         border-bottom: solid 1px @ini_background_alt;
@@ -52,336 +55,232 @@
         text-align: left;
         overflow: hidden;
     }
-}
 
-/* ------- FIXME everything below needs to be checked for usage ---------- */
-
-
-
-/*
- * general layout
- */
-#extension__manager h2 {
-    margin-left: 0;
-}
-
-#extension__manager .panelHeader div.error {
-    margin-top: 0;
-    float: left;
-}
-[dir=rtl] #extension__manager .panelHeader div.error {
-    float: right;
-}
-
-/*
- * search & url download forms
- */
-#extension__manager form.search,
-#extension__manager form.btn_reload {
-    float: right;
-}
-[dir=rtl] #extension__manager form.search,
-[dir=rtl] #extension__manager form.btn_reload {
-    float: left;
-}
-
-#extension__manager div.search form.search {
-    float: none;
-}
-
-#extension__manager .tagcloud {
-    width: 55%;
-    float: left;
-    margin: 0 0.5em 1em 0;
-}
-[dir=rtl] #extension__manager .tagcloud {
-    float: right;
-    margin: 0 0 1em .5em;
-}
-
-#extension__manager .tagcloud a.taglink {
-    background-color: inherit;
-}
-
-#extension__manager div.search {
-    width: 44%;
-    float: left;
-}
-[dir=rtl] #extension__manager div.search {
-    float: right;
-}
-
-#extension__manager fieldset {
-    margin-top: 0.5em;
-    width: auto;
-}
-
-#extension__manager fieldset p {
-    margin: 0.5em;
-    text-align: justify;
-    font-size: 85%;
-}
-
-/* tag cloud */
-#extension__manager a.cl0 { font-size: 0.7em; }
-#extension__manager a.cl1 { font-size: 0.9em; }
-#extension__manager a.cl2 { font-size: 1em; }
-#extension__manager a.cl3 { font-size: 1.3em; }
-#extension__manager a.cl4 { font-size: 1.6em; }
-#extension__manager a.cl5 { font-size: 1.9em; }
-
-
-#extension__manager .extensionList input.button {
-    margin: 0 .3em .3em 0;
-}
-[dir=rtl] #extension__manager .extensionList input.button {
-    margin: 0 0 .3em .3em;
+    // message spacing
+    div.msg {
+        margin: 0.4em 0 0 0;
+    }
 }
 
 /*
  * extensions table
  */
-#extension__manager .extensionList {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 0;
-    list-style: none;
+#extension__list {
+    ul.extensionList {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    ul.extensionList li {
+        margin: 0 0 .5em;
+        padding: 0 0 .5em;
+        color: @ini_text;
+        border-bottom: 1px solid @ini_border;
+        overflow: hidden;
+    }
+
+    input.button {
+        margin: 0 .3em .3em 0;
+    }
 }
 
-#extension__manager .extensionList li {
-    margin: 0 0 .5em;
-    padding: 0 0 .5em;
-    color: @ini_text;
-    border-bottom: 1px solid @ini_border;
-    overflow: hidden;
-}
-
-#extension__manager .legend {
+/**
+ * extension table left column
+ */
+#extension__list .legend {
     position: relative;
     width: 75%;
     float: left;
-}
-[dir=rtl] #extension__manager .legend {
-    float: right;
+
+    // padding
+    > div {
+        padding: 0 .5em 0 132px;
+        border-right: 1px solid @ini_background_alt;
+        overflow: hidden;
+    }
+
+    // screenshot
+    div.screenshot {
+        margin-top: 4px;
+        margin-left: -132px;
+        max-width: 120px;
+        float: left;
+        position: relative;
+
+        img {
+            width: 120px;
+            height: 70px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px #666;
+        }
+
+        span {
+            min-height: 24px;
+            min-width: 24px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+    }
+
+    // plugin headline
+    h2 {
+        width: 100%;
+        float: right;
+        margin: 0.2em 0 0.5em;
+        font-size: 100%;
+        font-weight: normal;
+        border: none;
+
+        strong {
+            font-size: 120%;
+            font-weight: bold;
+            vertical-align: baseline;
+        }
+    }
+
+    // description
+    p {
+        margin: 0 0 0.6em 0;
+    }
+
+    // popularity bar
+    div.popularity {
+        background-color: @ini_background;
+        border: 1px solid silver;
+        height: .4em;
+        margin: 0 auto;
+        padding: 1px;
+        width: 5.5em;
+        position: absolute;
+        right: .5em;
+        top: 0.2em;
+
+        div {
+            background-color: @ini_border;
+            height: 100%;
+
+            span {
+                display: none;// @todo: hide accessibly
+            }
+        }
+    }
+
+    // Docs, Bugs, Tags
+    span.linkbar {
+        font-size: 85%;
+
+        span.tags {
+            padding-left: 18px;
+            background: transparent url(images/tag.png) no-repeat 0 0;
+        }
+    }
+
+    // more info button
+    a.info {
+        background: transparent url(images/up.png) no-repeat 0 0;
+        border-width: 0;
+        height: 13px;
+        width: 13px;
+        text-indent: -9999px;
+        float: right;
+        margin: .5em 0 0;
+        overflow: hidden;
+
+        &.close {
+            background: transparent url(images/down.png) no-repeat 0 0;
+        }
+    }
+
+    // detailed info box
+    dl.details {
+        margin: 0.4em 0 0 0;
+        font-size: 85%;
+        border-top: 1px solid @ini_background_alt;
+        clear: both;
+
+        dt {
+            clear: left;
+            float: left;
+            width: 25%;
+            margin: 0;
+            text-align: right;
+            font-weight: normal;
+            padding: 0.2em 5px 0 0;
+        }
+
+        dd {
+            margin-left: 25%;
+            font-weight: bold;
+            padding: 0.2em 0 0 5px;
+
+            a {
+                font-weight: normal;
+            }
+        }
+    }
 }
 
-#extension__manager .legend > div {
-    padding: 0 .5em 0 132px;
-    border-right: 1px solid @ini_background_alt;
-    overflow: hidden;
-}
-[dir=rtl] #extension__manager .legend > div {
-    padding: 0 132px 0 .5em;
-    border-left: 1px solid @ini_background_alt;
-    border-right-width: 0;
+/*
+ * Enabled/Disabled overrides
+ */
+#extension__list {
+    .enabled div.screenshot span {
+        background: transparent url(images/enabled.png) no-repeat 2px 2px;
+    }
+
+    .disabled div.screenshot span {
+        background: transparent url(images/disabled.png) no-repeat 2px 2px;
+    }
+
+    .disabled .legend {
+        opacity: 0.7;
+    }
 }
 
-#extension__manager .enabled div.screenshot span {
-    background: transparent url(images/enabled.png) no-repeat 2px 2px;
-}
-
-#extension__manager .disabled div.screenshot span {
-    background: transparent url(images/disabled.png) no-repeat 2px 2px;
-}
-
-#extension__manager .disabled .legend {
-    opacity: 0.7;
-}
-
-#extension__manager div.screenshot img {
-    width: 120px;
-    height: 70px;
-    border-radius: 12px;
-    box-shadow: 2px 2px 2px #ccc;
-}
-
-#extension__manager .legend div.screenshot {
-    margin-top: 4px;
-    margin-left: -132px;
-    max-width: 120px;
-    float: left;
-    position: relative;
-}
-[dir=rtl] #extension__manager .legend div.screenshot {
-    margin-left: 0;
-    margin-right: -132px;
-    float: right;
-}
-
-#extension__manager .legend div.screenshot span {
-    min-height: 24px;
-    min-width: 24px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-}
-[dir=rtl] #extension__manager .legend div.screenshot span {
-    left: auto;
-    right: 0;
-}
-
-#extension__manager .legend h2 {
-    width: 100%;
-    float: right;
-    margin: 0.2em 0 0.5em;
-    font-size: 100%;
-    font-weight: normal;
-    border: none;
-}
-[dir=rtl] #extension__manager .legend h2 {
-    float: left;
-}
-
-#extension__manager .legend h2 strong {
-    font-size: 120%;
-    font-weight: bold;
-    vertical-align: baseline;
-}
-
-#extension__manager .legend p {
-    margin: 0 0 0.6em 0;
-}
-
-#extension__manager .legend span.linkbar {
-    font-size: 85%;
-}
-
-#extension__manager .legend span.linkbar span.tags {
-    padding-left: 18px;
-    background: transparent url(images/tag.png) no-repeat 0 0;
-}
-
-
-#extension__manager .legend a.info {
-    background: transparent url(images/up.png) no-repeat 0 0;
-    border-width: 0;
-    height: 13px;
-    width: 13px;
-    text-indent: -99999px;
-    float: right;
-    margin: .5em 0 0;
-    overflow: hidden;
-}
-[dir=rtl] #extension__manager .legend a.info {
-    float: left;
-    margin: .5em 0 0;
-}
-
-#extension__manager .legend  a.info.close {
-    background: transparent url(images/down.png) no-repeat 0 0;
-}
-
-#extension__manager .legend div.popularity {
-    background-color: @ini_background;
-    border: 1px solid silver;
-    height: .4em;
-    margin: 0 auto;
-    padding: 1px;
-    width: 5.5em;
-    position: absolute;
-    right: .5em;
-    top: 0.2em;
-}
-[dir=rtl] #extension__manager .legend div.popularity {
-    right: auto;
-    left: .5em;
-}
-
-#extension__manager .legend div.popularity div {
-    background-color: @ini_border;
-    height: 100%;
-}
-
-#extension__manager .legend div.popularity div span {
-    display: none;/* @todo: hide accessibly */
-}
-
+/**
+ * extension table right column
+ */
 #extension__manager .actions {
     padding: 0;
     font-size: 95%;
     width: 25%;
     float: right;
     text-align: right;
-}
-[dir=rtl] #extension__manager .actions {
-    float: left;
-    text-align: left;
+
+    .version {
+        display: block;
+    }
+
+    p {
+        margin: 0.2em 0;
+        text-align: center;
+    }
 }
 
-#extension__manager .actions .version {
-    display: block;
-}
-
-#extension__manager .actions p {
-    margin: 0.2em 0;
-    text-align: center;
-}
-
-/*
- * extensions table, detailed info box
+/**
+ * Search form
  */
-#extension__manager dl.details {
-    margin: 0.4em 0 0 0;
-    font-size: 85%;
-    border-top: 1px solid @ini_background_alt;
-    clear: both;
+#extension__manager form.search {
+    display: block;
+    margin-bottom: 2em;
+
+    span {
+        font-weight: bold;
+    }
+
+    input.edit {
+        width: 25em;
+    }
 }
 
-#extension__manager dl.details dt {
-    clear: left;
-    float: left;
-    width: 25%;
-    margin: 0;
-    text-align: right;
-    font-weight: normal;
-    padding: 0.2em 5px 0 0;
+/**
+ * Install form
+ */
+#extension__manager form.install {
+    text-align: center;
+    display: block;
+    width: 60%;
 }
-[dir=rtl] #extension__manager dl.details dt {
-    clear: right;
-    float: right;
-    text-align: left;
-    padding: 0.2em 0 0 5px;
-}
-
-#extension__manager dl.details dd {
-    margin-left: 25%;
-    font-weight: bold;
-    padding: 0.2em 0 0 5px;
-}
-[dir=rtl] #extension__manager dl.details dd {
-    margin-left: 0;
-    margin-right: 25%;
-    padding: 0.2em 5px 0 0 ;
-}
-
-#extension__manager dl.details dd a {
-    font-weight: normal;
-}
-
-#extension__manager #info__popup {
-    z-index: 20;
-    overflow: hidden;
-    opacity: 0.9;
-    border: 1px solid @ini_border;
-    background-color: @ini_border; /*background_other__;*/
-    text-align: left;
-    padding: 0.2em;
-}
-[dir=rtl] #extension__manager #info__popup {
-    text-align: right;
-}
-
-#extension__manager div.msg {
-    margin: 0.4em 0 0 0;
-}
-
-#extension__manager ul.tabs div.msg {
-    display: inline;
-    margin-left: 0.4em;
-}
-[dir=rtl] #extension__manager ul.tabs div.msg {
-    margin-left: 0;
-    margin-right: 0.4em;
-}
-
-/* end admin plugin styles */

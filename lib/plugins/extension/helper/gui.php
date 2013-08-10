@@ -90,9 +90,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         echo $this->locale_xhtml('intro_search');
         echo '</div>';
 
-        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&')));
-        $form->addElement(form_makeTextField('q', $INPUT->str('q'), 'Search'));
-        $form->addElement(form_makeButton('submit', '', 'Search'));
+        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'class' => 'search'));
+        $form->addElement(form_makeTextField('q', $INPUT->str('q'), $this->getLang('search_for')));
+        $form->addElement(form_makeButton('submit', '', $this->getLang('search')));
         $form->printForm();
 
         if(!$INPUT->bool('q')) return;
@@ -123,7 +123,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         echo $this->locale_xhtml('intro_install');
         echo '</div>';
 
-        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'enctype' => 'multipart/form-data'));
+        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'enctype' => 'multipart/form-data', 'class' => 'install'));
         $form->addElement(form_makeTextField('installurl', '', 'Install from URL:', '', 'block'));
         $form->addElement(form_makeFileField('installfile', 'Upload Extension:', '', 'block'));
         $form->addElement(form_makeButton('submit', '', 'Install'));
@@ -165,13 +165,13 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
     /**
      * Create an URL inside the extension manager
      *
-     * @param string $tab    tab to load, empty for current tab
-     * @param array  $params associative array of parameter to set
-     * @param string $sep    seperator to build the URL
+     * @param string $tab      tab to load, empty for current tab
+     * @param array  $params   associative array of parameter to set
+     * @param string $sep      seperator to build the URL
      * @param bool   $absolute create absolute URLs?
      * @return string
      */
-    public function tabURL($tab = '', $params = array(), $sep = '&amp;', $absolute=false) {
+    public function tabURL($tab = '', $params = array(), $sep = '&amp;', $absolute = false) {
         global $ID;
         global $INPUT;
 

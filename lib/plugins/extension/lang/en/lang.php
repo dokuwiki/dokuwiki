@@ -29,6 +29,9 @@ $lang['btn_disable']                  = 'Disable';
 $lang['btn_install']                  = 'Install';
 $lang['btn_reinstall']                = 'Re-install';
 
+$lang['search_for']                   = 'Search Extension:';
+$lang['search']                       = 'Search';
+
 $lang['extensionby']                  = '<strong>%s</strong> by %s';
 $lang['popularity']                   = 'Popularity: %s';
 $lang['homepage_link']                = 'Docs';
