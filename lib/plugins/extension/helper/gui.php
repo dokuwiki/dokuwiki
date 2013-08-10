@@ -16,7 +16,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
     protected $tabs = array('plugins', 'templates', 'search', 'install');
 
-    /** @var string the extension that should have an open info window FIXME currently broken*/
+    /** @var string the extension that should have an open info window FIXME currently broken */
     protected $infoFor = '';
 
     /**
@@ -24,11 +24,10 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      *
      * initializes requested info window
      */
-    public function __construct(){
+    public function __construct() {
         global $INPUT;
         $this->infoFor = $INPUT->str('info');
     }
-
 
     /**
      * display the plugin tab
@@ -92,10 +91,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
         if(!$INPUT->bool('q')) return;
 
-
         /* @var helper_plugin_extension_repository $repository FIXME should we use some gloabl instance? */
         $repository = $this->loadHelper('extension_repository');
-        $result = $repository->search($INPUT->str('q'));
+        $result     = $repository->search($INPUT->str('q'));
 
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
@@ -116,6 +114,12 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      */
     public function tabInstall() {
         echo $this->locale_xhtml('intro_install');
+
+        $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'enctype' => 'multipart/form-data'));
+        $form->addElement(form_makeTextField('installurl', '', 'Install from URL:', '', 'block'));
+        $form->addElement(form_makeFileField('installfile', 'Upload Extension:', '', 'block'));
+        $form->addElement(form_makeButton('submit', '', 'Install'));
+        $form->printForm();
     }
 
     /**

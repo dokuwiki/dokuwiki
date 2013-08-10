@@ -531,6 +531,67 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
+     * Install an extension from a user upload
+     *
+     * @param string $field name of the upload file
+     * @throws Exception when something goes wrong
+     * @return array The list of installed extensions
+     */
+    public function installFromUpload($field){
+        if($_FILES[$field]['error']){
+            throw new Exception($this->getLang('msg_upload_failed').' ('.$_FILES[$field]['error'].')');
+        }
+
+        $tmp = $this->mkTmpDir();
+        if(!$tmp) throw new Exception($this->getLang('error_dircreate'));
+
+        // filename may contain the plugin name for old style plugins...
+        $basename = basename($_FILES[$field]['name']);
+        $basename = preg_replace('/\.(tar\.gz|tar\.bz|tar\.bz2|tar|tgz|tbz|zip)$/', '', $basename);
+        $basename = preg_replace('/[\W]+/', '', $basename);
+
+        if(!move_uploaded_file($_FILES[$field]['tmp_name'], "$tmp/upload.archive")){
+            throw new Exception($this->getLang('msg_upload_failed'));
+        }
+
+        try {
+            $installed = $this->installArchive("$tmp/upload.archive", true, $basename);
+
+            // purge caches
+            foreach($installed as $ext => $info){
+                $this->setExtension($ext);
+                $this->purgeCache();
+            }
+        }catch (Exception $e){
+            throw $e;
+        }
+        return $installed;
+    }
+
+    /**
+     * Install an extension from a remote URL
+     *
+     * @param string $url
+     * @throws Exception when something goes wrong
+     * @return array The list of installed extensions
+     */
+    public function installFromURL($url){
+        try {
+            $path      = $this->download($url);
+            $installed = $this->installArchive($path, true);
+
+            // purge caches
+            foreach($installed as $ext => $info){
+                $this->setExtension($ext);
+                $this->purgeCache();
+            }
+        }catch (Exception $e){
+            throw $e;
+        }
+        return $installed;
+    }
+
+    /**
      * Install or update the extension
      *
      * @throws \Exception when something goes wrong
@@ -759,9 +820,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @param bool   $overwrite If an already installed plugin should be overwritten
      * @param string $base      The basename of the plugin if it's known
      * @throws Exception        when something went wrong
-     * @return bool|string True on success, an error message on failure
+     * @return array            list of installed extensions
      */
     public function installArchive($file, $overwrite=false, $base = '') {
+        $installed_extensions = array();
 
         // create tmp directory for decompression
         if(!($tmp = $this->mkTmpDir())) {
@@ -774,20 +836,16 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         // decompress
-        if(!$this->decompress($file, "$tmp/".$base)) {
-            throw new Exception(sprintf($this->getLang('error_decompress'), $file));
+        try{
+            $this->decompress($file, "$tmp/".$base);
+        } catch (Exception $e) {
+            throw $e;
         }
 
         // search $tmp/$base for the folder(s) that has been created
         // move the folder(s) to lib/..
         $result = array('old'=>array(), 'new'=>array());
-        if($base){
-            // when a base was set it came from the current extension setup #fixme this is a bit hacky
-            $default = ($this->isTemplate() ? 'template' : 'plugin');
-        }else{
-            // assume a default of plugin, find_folders will autodetect templates
-            $default = 'plugin';
-        }
+        $default = ($this->isTemplate() ? 'template' : 'plugin');
         if(!$this->find_folders($result, $tmp.'/'.$base, $default)) {
             throw new Exception($this->getLang('error_findfolder'));
         }
@@ -797,6 +855,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $install = $result['new'];
         }else{
             $install = $result['old'];
+        }
+
+        if(!count($install)){
+            throw new Exception($this->getLang('error_findfolder'));
         }
 
         // now install all found items
@@ -933,11 +995,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         return true;
     }
 
-
     /**
      * Decompress a given file to the given target directory
      *
      * Determines the compression type from the file extension
+     *
+     * @param string $file   archive to extract
+     * @param string $target directory to extract to
+     * @throws Exception
+     * @return bool
      */
     private function decompress($file, $target) {
         // decompression library doesn't like target folders ending in "/"
@@ -961,7 +1027,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 $tar->open($file, $compress_type);
                 $tar->extract($target);
             } catch (Exception $e) {
-                return $e->getMessage();
+                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;
@@ -970,11 +1036,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $zip = new ZipLib();
             $ok  = $zip->Extract($file, $target);
 
-            return ($ok==-1 ? 'Error extracting the zip archive' : true);
+            if($ok == -1){
+                throw new Exception($this->getLang('error_decompress').' Error extracting the zip archive');
+            }
+
+            return true;
         }
 
         // the only case when we don't get one of the recognized archive types is when the archive file can't be read
-        return 'Couldn\'t read archive file';
+        throw new Exception($this->getLang('error_decompress').' Couldn\'t read archive file');
     }
 
     /**
