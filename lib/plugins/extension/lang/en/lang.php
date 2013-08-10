@@ -74,6 +74,8 @@ $lang['msg_disabled']           = 'Plugin %s disabled';
 $lang['msg_notdisabled']        = 'Plugin %s could not be disabled, check file permissions';
 
 
+$lang['msg_delete_success']     = 'Extension uninstalled';
+
 $lang['msg_template_install_success'] = 'Template %s installed successfully';
 $lang['msg_template_update_success'] = 'Template %s updated successfully';
 $lang['msg_plugin_install_success'] = 'Plugin %s installed successfully';

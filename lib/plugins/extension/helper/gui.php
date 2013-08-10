@@ -168,9 +168,10 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
      * @param string $tab    tab to load, empty for current tab
      * @param array  $params associative array of parameter to set
      * @param string $sep    seperator to build the URL
+     * @param bool   $absolute create absolute URLs?
      * @return string
      */
-    public function tabURL($tab = '', $params = array(), $sep = '&amp;') {
+    public function tabURL($tab = '', $params = array(), $sep = '&amp;', $absolute=false) {
         global $ID;
         global $INPUT;
 
@@ -181,7 +182,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
             'tab'  => $tab,
             'q'    => $INPUT->str('q')
         );
-        return wl($ID, array_merge($defaults, $params), false, $sep);
+        return wl($ID, array_merge($defaults, $params), $absolute, $sep);
     }
 
 }

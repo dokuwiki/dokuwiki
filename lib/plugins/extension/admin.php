@@ -57,73 +57,71 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
 
-        if($INPUT->post->has('fn') && checkSecurityToken()) {
-            $actions = $INPUT->post->arr('fn');
-            foreach($actions as $action => $extensions) {
-                foreach($extensions as $extname => $label) {
-                    switch($action) {
-                        case 'install':
-                        case 'reinstall':
-                        case 'update':
-                            try {
+        try {
+            if($INPUT->post->has('fn') && checkSecurityToken()) {
+                $actions = $INPUT->post->arr('fn');
+                foreach($actions as $action => $extensions) {
+                    foreach($extensions as $extname => $label) {
+                        switch($action) {
+                            case 'install':
+                            case 'reinstall':
+                            case 'update':
                                 $extension->setExtension($extname);
                                 $installed = $extension->installOrUpdate();
                                 foreach($installed as $ext => $info) {
                                     msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
                                 }
-                            } catch(Exception $e) {
-                                msg($e->getMessage(), -1);
-                            }
-                            break;
-                        case 'uninstall':
-                            $extension->setExtension($extname);
-                            $status = $extension->uninstall();
-                            if($status !== true) {
-                                msg($status, -1);
-                            } else {
-                                msg(sprintf($this->getLang('msg_delete_success'), hsc($extension->getDisplayName())), 1);
-                            }
-                            break;
-                        case 'enable';
-                            $extension->setExtension($extname);
-                            $status = $extension->enable();
-                            if($status !== true) {
-                                msg($status, -1);
-                            } else {
-                                msg(sprintf($this->getLang('msg_enabled'), hsc($extension->getDisplayName())), 1);
-                            }
-                            break;
-                        case 'disable';
-                            $extension->setExtension($extname);
-                            $status = $extension->disable();
-                            if($status !== true) {
-                                msg($status, -1);
-                            } else {
-                                msg(sprintf($this->getLang('msg_disabled'), hsc($extension->getDisplayName())), 1);
-                            }
-                            break;
+                                break;
+                            case 'uninstall':
+                                $extension->setExtension($extname);
+                                $status = $extension->uninstall();
+                                if($status !== true) {
+                                    msg($status, -1);
+                                } else {
+                                    msg(sprintf($this->getLang('msg_delete_success'), hsc($extension->getDisplayName())), 1);
+                                }
+                                break;
+                            case 'enable';
+                                $extension->setExtension($extname);
+                                $status = $extension->enable();
+                                if($status !== true) {
+                                    msg($status, -1);
+                                } else {
+                                    msg(sprintf($this->getLang('msg_enabled'), hsc($extension->getDisplayName())), 1);
+                                }
+                                break;
+                            case 'disable';
+                                $extension->setExtension($extname);
+                                $status = $extension->disable();
+                                if($status !== true) {
+                                    msg($status, -1);
+                                } else {
+                                    msg(sprintf($this->getLang('msg_disabled'), hsc($extension->getDisplayName())), 1);
+                                }
+                                break;
+                        }
                     }
                 }
-            }
-        } elseif($INPUT->post->str('installurl') && checkSecurityToken()) {
-            try {
+                send_redirect($this->gui->tabURL('', array(), '&', true));
+            } elseif($INPUT->post->str('installurl') && checkSecurityToken()) {
                 $installed = $extension->installFromURL($INPUT->post->str('installurl'));
                 foreach($installed as $ext => $info) {
                     msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
                 }
-            } catch(Exception $e) {
-                msg($e->getMessage(), -1);
-            }
-        } elseif(isset($_FILES['installfile']) && checkSecurityToken()) {
-            try {
+                send_redirect($this->gui->tabURL('', array(), '&', true));
+            } elseif(isset($_FILES['installfile']) && checkSecurityToken()) {
                 $installed = $extension->installFromUpload('installfile');
                 foreach($installed as $ext => $info) {
                     msg(sprintf($this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'), $info['base']), 1);
                 }
-            } catch(Exception $e) {
-                msg($e->getMessage(), -1);
+                send_redirect($this->gui->tabURL('', array(), '&', true));
             }
+
+        } catch(Exception $e) {
+            msg($e->getMessage(), -1);
+            send_redirect($this->gui->tabURL('', array(), '&', true));
         }
+
     }
 
     /**
