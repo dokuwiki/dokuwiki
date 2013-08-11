@@ -1,1 +1,1 @@
-These are the templates currently installed in your DokuWiki. Note that only one template can be activated at a time.
+These are the templates currently installed in your DokuWiki. You can select template to be used in the [[?do=admin&page=config|Configuration Manager]].

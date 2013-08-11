@@ -468,11 +468,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $errors .= '<p class="permerror">'.$this->getLang($canmod).'</p>';
             }
 
-            if (!$extension->isProtected()) {
+            if (!$extension->isProtected() && !$extension->isTemplate()) { // no enable/disable for templates
                 if ($extension->isEnabled()) {
-                    if(!$extension->isTemplate()){ // templates can't be disabled, only another can be enabled
-                        $return .= $this->make_action('disable', $extension);
-                    }
+                    $return .= $this->make_action('disable', $extension);
                 } else {
                     $return .= $this->make_action('enable', $extension);
                 }

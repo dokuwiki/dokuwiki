@@ -632,10 +632,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function enable() {
         if ($this->isTemplate()) return $this->getLang('notimplemented');
-        /* @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if ($this->isEnabled()) return $this->getLang('alreadyenabled');
+
+        /* @var Doku_Plugin_Controller $plugin_controller */
+        global $plugin_controller;
         if ($plugin_controller->enable($this->base)) {
             $this->purgeCache();
             return true;
