@@ -48,7 +48,8 @@ $lang['compatible']                   = 'Compatible with:';
 $lang['depends']                      = 'Depends on:';
 $lang['similar']                      = 'Similar to:';
 $lang['conflicts']                    = 'Conflicts with:';
-$lang['donate']                       = 'Donate';
+$lang['donate']                       = 'Like this?';
+$lang['donate_action']                = 'Buy the author a coffee!';
 $lang['repo_retry']                   = 'Retry';
 
 $lang['msg_enabled']                  = 'Plugin %s enabled';

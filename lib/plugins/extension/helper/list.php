@@ -343,6 +343,14 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $default = $this->getLang('unknown');
         $return = '<dl class="details">';
 
+        if ($extension->getDonationURL()) {
+            $return .= '<dt>'.$this->getLang('donate').'</dt>';
+            $return .= '<dd>';
+            $return .= '<a href="'.$extension->getDonationURL().'" class="donate">'.$this->getLang('donate_action').'</a>';
+            $return .= '</dd>';
+        }
+
+
         if (!$extension->isBundled()) {
             $return .= '<dt>'.$this->getLang('downloadurl').'</dt>';
             $return .= '<dd>';
@@ -393,6 +401,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             foreach ($extension->getCompatibleVersions() as $date => $version) {
                 $return .= $version['label'].' ('.$date.'), ';
             }
+            $return = rtrim($return, ', ');
             $return .= '</dd>';
         }
         if($extension->getDependencies()) {
@@ -415,9 +424,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= $this->make_linklist($extension->getConflicts());
             $return .= '</dd>';
         }
-        if ($extension->getDonationURL()) {
-            $return .= '<a href="'.hsc($extension->getDonationURL()).'" class="donate" title="'.$this->getLang('donate').'"></a>';
-        }
         $return .= '</dl>';
         return $return;
     }
@@ -431,9 +437,9 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     function make_linklist($ext) {
         $return = '';
         foreach ($ext as $link) {
-            $return .= '<a href="'.$this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a> ';
+            $return .= '<a href="'.$this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a>, ';
         }
-        return $return;
+        return rtrim($return, ', ');
     }
 
     /**
@@ -482,7 +488,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             }
         }
 
-        if (!$extension->isInstalled()) {
+        if (!$extension->isInstalled() && $extension->getDownloadURL()) {
             $return .= ' <span class="version">'.$this->getLang('available_version').' ';
             $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown')).'</span>';
         }
