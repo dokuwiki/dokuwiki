@@ -1,8 +1,8 @@
 <?php
+
 /**
- * spanish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author Gabiel Molina <gabriel191@gmail.com>
@@ -28,6 +28,7 @@
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López mercelz@gmail.com
+ * @author r0sk <r0sk10@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -71,6 +72,7 @@ $lang['btn_revert']            = 'Restaurar';
 $lang['btn_register']          = 'Registrarse';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gestor de ficheros';
+$lang['btn_deleteuser']        = 'Elimina Mi Cuenta';
 $lang['loggedinas']            = 'Conectado como ';
 $lang['user']                  = 'Usuario';
 $lang['pass']                  = 'Contraseña';
@@ -82,6 +84,7 @@ $lang['fullname']              = 'Nombre real';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Perfil del usuario';
 $lang['badlogin']              = 'Lo siento, el usuario o la contraseña es incorrecto.';
+$lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
@@ -98,6 +101,10 @@ $lang['profna']                = 'Este wiki no permite la modificación del perf
 $lang['profnochange']          = 'Sin cambios, nada que hacer.';
 $lang['profnoempty']           = 'No se permite que el nombre o la dirección de correo electrónico estén vacíos.';
 $lang['profchanged']           = 'Se actualizó correctamente el perfil del usuario.';
+$lang['profnodelete']          = 'Este wiki no soporta el borrado de usuarios';
+$lang['profdeleteuser']        = 'Eliminar Cuenta';
+$lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
+$lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
 $lang['resendpwd']             = 'Establecer nueva contraseña para';
@@ -305,6 +312,9 @@ $lang['i_pol1']                = 'Wiki público (leer para todos, escribir y sub
 $lang['i_pol2']                = 'Wiki cerrado (leer, escribir y subir archivos para usuarios registrados únicamente)';
 $lang['i_retry']               = 'Reintentar';
 $lang['i_license']             = 'Por favor escoja una licencia bajo la que publicar su contenido:';
+$lang['i_license_none']        = 'No mostrar ninguna información sobre licencias';
+$lang['i_pop_field']           = 'Por favor, ayúdanos a mejorar la experiencia de DokuWiki:';
+$lang['i_pop_label']           = 'Una vez al mes, enviar información anónima de uso de datos a los desarrolladores de DokuWiki';
 $lang['recent_global']         = 'Actualmente estás viendo los cambios dentro del namespace <b>%s</b>. También puedes <a href="%s">ver los cambios recientes en el wiki completo</a>.';
 $lang['years']                 = '%d años atrás';
 $lang['months']                = '%d meses atrás';
