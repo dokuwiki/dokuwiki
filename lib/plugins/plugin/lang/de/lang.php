@@ -1,8 +1,8 @@
 <?php
+
 /**
- * german language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>

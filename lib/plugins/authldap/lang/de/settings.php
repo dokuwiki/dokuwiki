@@ -1,8 +1,8 @@
 <?php
+
 /**
- * German language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
 $lang['server']                = 'Adresse zum LDAP-Server. Entweder als Hostname (<code>localhost</code>) oder als FQDN (<code>ldap://server.tld:389</code>).';
