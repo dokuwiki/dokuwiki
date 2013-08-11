@@ -3,5 +3,5 @@ author Andreas Gohr
 email  andi@splitbrain.org
 date   2013-03-09
 name   Revert Manager
-desc   Allows you to mass revert recent edits
+desc   Allows you to mass revert recent edits to remove Spam or vandalism
 url    http://dokuwiki.org/plugin:revert
