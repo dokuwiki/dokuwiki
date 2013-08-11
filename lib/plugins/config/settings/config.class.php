@@ -728,29 +728,6 @@ if (!class_exists('setting_email')) {
         $this->_local = $input;
         return true;
     }
-    function html(&$plugin, $echo=false) {
-        $value = '';
-        $disable = '';
-
-        if ($this->is_protected()) {
-          $value = $this->_protected;
-          $disable = 'disabled="disabled"';
-        } else {
-          if ($echo && $this->_error) {
-            $value = $this->_input;
-          } else {
-            $value = is_null($this->_local) ? $this->_default : $this->_local;
-          }
-        }
-
-        $multiple = $this->_multiple ? 'multiple="multiple"' : '';
-        $key = htmlspecialchars($this->_key);
-        $value = htmlspecialchars($value);
-
-        $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
-        $input = '<input id="config___'.$key.'" name="config['.$key.']" type="email" class="edit" value="'.$value.'" '.$multiple.' '.$disable.'/>';
-        return array($label,$input);
-    }
   }
 }
 
