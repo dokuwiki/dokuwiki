@@ -180,8 +180,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
             'do'   => 'admin',
             'page' => 'extension',
             'tab'  => $tab,
-            'q'    => $INPUT->str('q')
         );
+        if($tab == 'search') $defaults['q'] = $INPUT->str('q');
+
         return wl($ID, array_merge($defaults, $params), $absolute, $sep);
     }
 
