@@ -107,7 +107,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool if the extension is protected
      */
     public function isProtected() {
-        return in_array($this->base, array('acl', 'config', 'info', 'plugin', 'revert', 'usermanager'));
+        return in_array($this->id, array('acl', 'config', 'info', 'plugin', 'revert', 'usermanager', 'template:dokuwiki'));
     }
 
     /**
@@ -513,20 +513,21 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     /**
      * If the extension can probably be installed/updated or uninstalled
      *
-     * @return bool|string True or one of "nourl", "noparentperms" (template/plugin install path not writable), "noperms" (extension itself not writable)
+     * @return bool|string True or error string
      */
     public function canModify() {
-        if ($this->isInstalled()) {
-            if (!is_writable($this->getInstallDir())) {
+        if($this->isInstalled()) {
+            if(!is_writable($this->getInstallDir())) {
                 return 'noperms';
             }
         }
-        $parent_path = ($this->isTemplate() ? DOKU_TPLLIB : DOKU_PLUGIN);
-        if (!is_writable($parent_path)) {
-            return 'noparentperms';
-        }
 
-        if (!$this->getDownloadURL()) return 'nourl';
+        if($this->isTemplate() && !is_writable(DOKU_TPLLIB)) {
+            return 'notplperms';
+
+        } elseif(!is_writable(DOKU_PLUGIN)) {
+            return 'nopluginperms';
+        }
         return true;
     }
 

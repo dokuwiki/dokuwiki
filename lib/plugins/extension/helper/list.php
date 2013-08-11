@@ -444,11 +444,13 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      */
     function make_actions(helper_plugin_extension_extension $extension) {
         $return = '';
-        if (!$extension->isInstalled() && $extension->canModify() === true) {
-            $return .= $this->make_action('install', $extension);
-        } elseif ($extension->canModify() === true) {
-            if (!$extension->isBundled()) {
-                $return .= $this->make_action('uninstall', $extension);
+        $errors = '';
+
+        if ($extension->isInstalled()) {
+            if (($canmod = $extension->canModify()) === true) {
+                if (!$extension->isProtected()) {
+                    $return .= $this->make_action('uninstall', $extension);
+                }
                 if ($extension->getDownloadURL()) {
                     if ($extension->updateAvailable()) {
                         $return .= $this->make_action('update', $extension);
@@ -456,7 +458,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                         $return .= $this->make_action('reinstall', $extension);
                     }
                 }
+            }else{
+                $errors .= '<p class="permerror">'.$this->getLang($canmod).'</p>';
             }
+
             if (!$extension->isProtected()) {
                 if ($extension->isEnabled()) {
                     if(!$extension->isTemplate()){ // templates can't be disabled, only another can be enabled
@@ -466,6 +471,15 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                     $return .= $this->make_action('enable', $extension);
                 }
             }
+
+        }else{
+            if (($canmod = $extension->canModify()) === true) {
+                if ($extension->getDownloadURL()) {
+                    $return .= $this->make_action('install', $extension);
+                }
+            }else{
+                $errors .= '<div class="permerror">'.$this->getLang($canmod).'</div>';
+            }
         }
 
         if (!$extension->isInstalled()) {
@@ -473,7 +487,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown')).'</span>';
         }
 
-        return $return;
+        return $return.' '.$errors;
     }
 
     /**
