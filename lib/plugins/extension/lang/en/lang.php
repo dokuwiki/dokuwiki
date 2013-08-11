@@ -29,6 +29,8 @@ $lang['btn_disable']                  = 'Disable';
 $lang['btn_install']                  = 'Install';
 $lang['btn_reinstall']                = 'Re-install';
 
+$lang['js']['reallydel']              = 'Really uninstall this extension?';
+
 $lang['search_for']                   = 'Search Extension:';
 $lang['search']                       = 'Search';
 
