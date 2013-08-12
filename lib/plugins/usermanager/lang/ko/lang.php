@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Korean language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
@@ -30,6 +31,11 @@ $lang['search']                = '찾기';
 $lang['search_prompt']         = '찾기 실행';
 $lang['clear']                 = '찾기 필터 초기화';
 $lang['filter']                = '필터';
+$lang['export_all']            = '모든 사용자 목록 내보내기 (CSV)';
+$lang['export_filtered']       = '필터된 사용자 목록 내보내기 (CSV)';
+$lang['import']                = '새 사용자 목록 가져오기';
+$lang['line']                  = '줄 번호';
+$lang['error']                 = '오류 메시지';
 $lang['summary']               = '찾은 사용자 %3$d 중 %1$d-%2$d을(를) 봅니다. 전체 사용자는 %4$d명입니다.';
 $lang['nonefound']             = '찾은 사용자가 없습니다. 전체 사용자는 %d명입니다.';
 $lang['delete_ok']             = '사용자 %d명이 삭제되었습니다';
@@ -50,3 +56,13 @@ $lang['add_ok']                = '사용자를 성공적으로 추가했습니�
 $lang['add_fail']              = '사용자 추가를 실패했습니다';
 $lang['notify_ok']             = '알림 이메일을 성공적으로 보냈습니다';
 $lang['notify_fail']           = '알림 이메일을 보낼 수 없습니다';
+$lang['import_success_count']  = '사용자 가져오기: 사용자 %d명을 찾았고, %d명을 성공적으로 가져왔습니다.';
+$lang['import_failure_count']  = '사용자 가져오기: %d명을 가져오지 못했습니다. 실패는 아래에 나타나 있습니다.';
+$lang['import_error_fields']   = '충분하지 않은 필드, %d개 찾았고, 4개가 필요합니다.';
+$lang['import_error_baduserid'] = '사용자 id 없음';
+$lang['import_error_badname']  = '잘못된 이름';
+$lang['import_error_badmail']  = '잘못된 이메일 주소';
+$lang['import_error_upload']   = '가져오기를 실패했습니다. csv 파일을 올릴 수 없거나 비어 있습니다.';
+$lang['import_error_readfail'] = '가져오기를 실패했습니다. 올린 파일을 읽을 수 없습니다.';
+$lang['import_error_create']   = '사용자를 만들 수 없습니다.';
+$lang['import_notify_fail']    = '알림 메시지를 가져온 %s (이메일: %s ) 사용자에게 보낼 수 없습니다.';

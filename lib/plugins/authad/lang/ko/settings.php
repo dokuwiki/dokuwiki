@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Korean language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Myeongjin <aranet100@gmail.com>
  */
 $lang['account_suffix']        = '계정 접미어. 예를 들어 <code>@my.domain.org</code>';
