@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Korean language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Myeongjin <aranet100@gmail.com>
  */
 $lang['server']                = 'LDAP 서버. 호스트 이름(<code>localhost</code>)이나 전체 자격 URL(<code>ldap://server.tld:389</code>) 중 하나';
@@ -20,7 +21,7 @@ $lang['userscope']             = '사용자 찾기에 대한 찾기 범위 제�
 $lang['groupscope']            = '그룹 찾기에 대한 찾기 범위 제한';
 $lang['groupkey']              = '(표준 AD 그룹 대신) 사용자 속성에서 그룹 구성원. 예를 들어 부서나 전화에서 그룹';
 $lang['debug']                 = '오류에 대한 추가적인 디버그 정보를 보이기';
-$lang['deref_o_0']             = 'LDAP_DEREF_NEVER (없음)';
-$lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING (검색)';
-$lang['deref_o_2']             = 'LDAP_DEREF_FINDING (발견)';
-$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS (항상)';
+$lang['deref_o_0']             = 'LDAP_DEREF_없음(NEVER)';
+$lang['deref_o_1']             = 'LDAP_DEREF_검색(SEARCHING)';
+$lang['deref_o_2']             = 'LDAP_DEREF_발견(FINDING)';
+$lang['deref_o_3']             = 'LDAP_DEREF_항상(ALWAYS)';

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Korean language file
- *
- * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
  * @author dongnak@gmail.com
@@ -19,7 +19,7 @@ $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = '문서 편집';
-$lang['btn_source']            = '내용 보기';
+$lang['btn_source']            = '원본 보기';
 $lang['btn_show']              = '문서 보기';
 $lang['btn_create']            = '문서 만들기';
 $lang['btn_search']            = '찾기';
@@ -53,6 +53,7 @@ $lang['btn_revert']            = '되돌리기';
 $lang['btn_register']          = '등록';
 $lang['btn_apply']             = '적용';
 $lang['btn_media']             = '미디어 관리';
+$lang['btn_deleteuser']        = '내 계정 제거';
 $lang['loggedinas']            = '다음 사용자로 로그인';
 $lang['user']                  = '사용자 이름';
 $lang['pass']                  = '비밀번호';
@@ -63,11 +64,12 @@ $lang['remember']              = '기억하기';
 $lang['fullname']              = '실제 이름';
 $lang['email']                 = '이메일';
 $lang['profile']               = '개인 정보';
-$lang['badlogin']              = '사용자 이름이거나 비밀번호가 잘못되었습니다.';
+$lang['badlogin']              = '죄송하지만 사용자 이름이나 비밀번호가 잘못되었습니다.';
+$lang['badpassconfirm']        = '죄송하지만 비밀번호가 잘못되었습니다';
 $lang['minoredit']             = '사소한 바뀜';
 $lang['draftdate']             = '문서 초안 자동 저장 시간';
-$lang['nosecedit']             = '한동안 문서가 바뀌어 세션 정보의 유효 시간이 지나 문서 전부를 다시 읽습니다.';
-$lang['regmissing']            = '모든 항목을 입력해야 합니다.';
+$lang['nosecedit']             = '한동안 문서가 바뀌었으며, 문단 정보가 오래되어 문서 전체를 대신 열었습니다.';
+$lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합니다.';
 $lang['reguexists']            = '같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자를 만들었으며 비밀번호는 이메일로 보냈습니다.';
 $lang['regsuccess2']           = '사용자를 만들었습니다.';
@@ -80,6 +82,11 @@ $lang['profna']                = '이 위키는 개인 정보 수정을 할 수 
 $lang['profnochange']          = '바뀜이 없습니다.';
 $lang['profnoempty']           = '이름이나 이메일 주소가 비었습니다.';
 $lang['profchanged']           = '개인 정보가 성공적으로 바뀌었습니다.';
+$lang['profnodelete']          = '이 위키는 사용자 삭제를 지원하지 않습니다';
+$lang['profdeleteuser']        = '계정 삭제';
+$lang['profdeleted']           = '내 사용자 계정이 이 위키에서 삭제되었습니다';
+$lang['profconfdelete']        = '이 위키에서 내 계정을 제거하고 싶습니다. <br/> 이 행동은 되돌릴 수 없습니다.';
+$lang['profconfdeletemissing'] = '선택하지 않은 확인 상자를 확인';
 $lang['pwdforget']             = '비밀번호를 잊으셨나요? 비밀번호를 재설정할 수 있습니다';
 $lang['resendna']              = '이 위키는 비밀번호 재설정을 지원하지 않습니다.';
 $lang['resendpwd']             = '다음으로 새 비밀번호 보내기';
