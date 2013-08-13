@@ -21,6 +21,7 @@
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
+ * @author Antoine Turmel <geekshadow@gmail.com>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
@@ -43,6 +44,9 @@ $lang['search']                = 'Rechercher';
 $lang['search_prompt']         = 'Effectuer la recherche';
 $lang['clear']                 = 'Réinitialiser la recherche';
 $lang['filter']                = 'Filtre';
+$lang['import']                = 'Importer les nouveaux utilisateurs';
+$lang['line']                  = 'Ligne n°';
+$lang['error']                 = 'Message d\'erreur';
 $lang['summary']               = 'Affichage des utilisateurs %1$d-%2$d parmi %3$d trouvés. %4$d utilisateurs au total.';
 $lang['nonefound']             = 'Aucun utilisateur trouvé. %d utilisateurs au total.';
 $lang['delete_ok']             = '%d utilisateurs effacés';
@@ -63,3 +67,7 @@ $lang['add_ok']                = 'Utilisateur ajouté avec succès';
 $lang['add_fail']              = 'Échec de l\'ajout de l\'utilisateur';
 $lang['notify_ok']             = 'Courriel de notification expédié';
 $lang['notify_fail']           = 'Échec de l\'expédition du courriel de notification';
+$lang['import_error_baduserid'] = 'Identifiant de l\'utilisateur manquant';
+$lang['import_error_badname']  = 'Mauvais nom';
+$lang['import_error_badmail']  = 'Mauvaise adresse e-mail';
+$lang['import_error_create']   = 'Impossible de créer l\'utilisateur';
