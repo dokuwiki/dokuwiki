@@ -154,6 +154,7 @@ html.popup {
 #media__content a.mediafile {
     margin-right: 1.5em;
     font-weight: bold;
+    cursor: pointer;
 }
 [dir=rtl] #media__content a.mediafile {
     margin-right: 0;
