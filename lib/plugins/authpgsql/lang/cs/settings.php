@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author mkucera66@seznam.cz
  */
 $lang['server']                = 'Váš server PostgreSQL';

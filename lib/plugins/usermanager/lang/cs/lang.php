@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
@@ -13,6 +14,7 @@
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
+ * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';
@@ -35,6 +37,11 @@ $lang['search']                = 'Hledání';
 $lang['search_prompt']         = 'Prohledat';
 $lang['clear']                 = 'Zrušit vyhledávací filtr';
 $lang['filter']                = 'Filtr';
+$lang['export_all']            = 'Exportovat všechny uživatele (CSV)';
+$lang['export_filtered']       = 'Exportovat filtrovaný seznam uživatelů (CSV)';
+$lang['import']                = 'Importovat nové uživatele';
+$lang['line']                  = 'Řádek č.';
+$lang['error']                 = 'Chybová zpráva';
 $lang['summary']               = 'Zobrazuji uživatele %1$d-%2$d z %3$d nalezených. Celkem %4$d uživatelů.';
 $lang['nonefound']             = 'Žadný uživatel nenalezen. Celkem %d uživatelů.';
 $lang['delete_ok']             = '%d uživatelů smazáno';
@@ -50,8 +57,18 @@ $lang['edit_usermissing']      = 'Vybraný uživatel nebyl nalezen, zadané uži
 $lang['user_notify']           = 'Upozornit uživatele';
 $lang['note_notify']           = 'Maily s upozorněním se budou posílat pouze, když uživatel dostává nové heslo.';
 $lang['note_group']            = 'Noví uživatelé budou přidáváni do této výchozí skupiny (%s), pokud pro ně není uvedena žádná skupina.';
-$lang['note_pass']             = 'Heslo bude automaticky vygenerováno pokud je pole ponecháno prázdné a je zapnutá notifikace uživatele.';
+$lang['note_pass']             = 'Heslo bude automaticky vygenerováno, pokud je pole ponecháno prázdné a je zapnuto upozornění uživatele.';
 $lang['add_ok']                = 'Uživatel úspěšně vytvořen';
 $lang['add_fail']              = 'Vytvoření uživatele selhalo';
 $lang['notify_ok']             = 'Odeslán mail s upozorněním';
 $lang['notify_fail']           = 'Mail s upozorněním nebylo možno odeslat';
+$lang['import_success_count']  = 'Import uživatelů: nalezeno %s uživatelů, %d úspěšně importováno.';
+$lang['import_failure_count']  = 'Import uživatelů: %d selhalo. Seznam chybných je níže.';
+$lang['import_error_fields']   = 'Nedostatek položek, nalezena/y %d, požadovány 4.';
+$lang['import_error_baduserid'] = 'Chybí User-id';
+$lang['import_error_badname']  = 'Špatné jméno';
+$lang['import_error_badmail']  = 'Špatná emailová adresa';
+$lang['import_error_upload']   = 'Import selhal. CSV soubor nemohl být nahrán nebo je prázdný.';
+$lang['import_error_readfail'] = 'Import selhal. Nelze číst nahraný soubor.';
+$lang['import_error_create']   = 'Nelze vytvořit uživatele';
+$lang['import_notify_fail']    = 'Importovanému uživateli %s s emailem %s nemohlo být zasláno upozornění.';
