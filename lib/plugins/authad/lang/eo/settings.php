@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Esperanto language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  */
 $lang['account_suffix']        = 'Via konto-aldonaĵo, ekz. <code>@mia.domajno.lando</code>';
 $lang['base_dn']               = 'Via baza DN, ekz. <code>DC=mia,DC=domajno,DC=lando</code>';
