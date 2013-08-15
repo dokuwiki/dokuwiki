@@ -19,6 +19,7 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Sven <Svenluecke48@gmx.d>
+ * @author christian studer <cstuder@existenz.ch>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';
@@ -75,3 +76,4 @@ $lang['import_error_badmail']  = 'Ungültige E-Mail';
 $lang['import_error_upload']   = 'Import fehlgeschlagen. Die CSV-Datei konnte nicht hochgeladen werden, oder ist leer.';
 $lang['import_error_readfail'] = 'Import fehlgeschlagen. Die hochgeladene Datei konnte nicht gelesen werden.';
 $lang['import_error_create']   = 'User konnte nicht angelegt werden';
+$lang['import_notify_fail']    = 'Notifikation konnte nicht an den importierten Benutzer %s (E-Mail: %s) gesendet werden.';
