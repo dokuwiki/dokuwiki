@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Esperanto language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  */
 $lang['server']                = 'Via PostgreSQL-servilo';
 $lang['port']                  = 'Via PostgreSQL-servila pordego';
