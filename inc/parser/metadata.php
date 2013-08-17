@@ -287,6 +287,12 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
     }
 
+    $parts = explode('?', $id, 2);
+    if (count($parts) === 2) {
+        $id = $parts[0];
+    }
+
+
     $default = $this->_simpleTitle($id);
 
     // first resolve and clean up the $id
