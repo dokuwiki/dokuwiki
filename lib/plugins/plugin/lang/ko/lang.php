@@ -11,8 +11,8 @@
  * @author Myeongjin <aranet100@gmail.com>
  */
 $lang['menu']                  = '플러그인 관리';
-$lang['download']              = '새 플러그인 다운로드 및 설치';
-$lang['manage']                = '이미 설치한 플러그인';
+$lang['download']              = '새 플러그인을 다운로드하고 설치';
+$lang['manage']                = '설치된 플러그인';
 $lang['btn_info']              = '정보';
 $lang['btn_update']            = '업데이트';
 $lang['btn_delete']            = '삭제';
@@ -21,7 +21,7 @@ $lang['btn_download']          = '다운로드';
 $lang['btn_enable']            = '저장';
 $lang['url']                   = 'URL';
 $lang['installed']             = '설치됨:';
-$lang['lastupdate']            = '가장 나중에 업데이트됨:';
+$lang['lastupdate']            = '마지막 업데이트:';
 $lang['source']                = '원본:';
 $lang['unknown']               = '알 수 없음';
 $lang['updating']              = '업데이트 중 ...';
