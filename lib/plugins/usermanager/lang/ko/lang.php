@@ -13,10 +13,10 @@
 $lang['menu']                  = '사용자 관리자';
 $lang['noauth']                = '(사용자 인증이 불가능합니다)';
 $lang['nosupport']             = '(사용자 관리가 지원되지 않습니다)';
-$lang['badauth']               = '인증 메카니즘이 잘못되었습니다';
+$lang['badauth']               = '인증 메커니즘이 잘못되었습니다';
 $lang['user_id']               = '사용자';
 $lang['user_pass']             = '비밀번호';
-$lang['user_name']             = '실제 이름';
+$lang['user_name']             = '실명';
 $lang['user_mail']             = '이메일 ';
 $lang['user_groups']           = '그룹';
 $lang['field']                 = '항목';
