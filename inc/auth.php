@@ -1061,7 +1061,7 @@ function auth_deleteprofile(){
     if(!$INPUT->post->bool('delete')) return false;
     if(!checkSecurityToken()) return false;
 
-    // action prevented or auth module disallows 
+    // action prevented or auth module disallows
     if(!actionOK('profile_delete') || !$auth->canDo('delUser')) {
         msg($lang['profnodelete'], -1);
         return false;
