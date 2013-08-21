@@ -772,7 +772,7 @@ class RemoteAPICore {
         $id = cleanID($id);
         if(empty($id)) {
             global $conf;
-            $id = cleanID($conf['start']);	
+            $id = cleanID($conf['start']);
         }
         return $id;
     }
