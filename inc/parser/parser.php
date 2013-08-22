@@ -621,7 +621,7 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
     var $pattern = '';
 
     function Doku_Parser_Mode_acronym($acronyms) {
-    	usort($acronyms,array($this,'_compare'));
+        usort($acronyms,array($this,'_compare'));
         $this->acronyms = $acronyms;
     }
 
@@ -652,12 +652,12 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
         $a_len = strlen($a);
         $b_len = strlen($b);
         if ($a_len > $b_len) {
-          return -1;
+            return -1;
         } else if ($a_len < $b_len) {
-          return 1;
+            return 1;
         }
 
-    	return 0;
+        return 0;
     }
 }
 

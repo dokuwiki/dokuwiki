@@ -116,11 +116,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     $alt = array_keys($this->footnotes, "@@FNT$id");
 
                     if (count($alt)) {
-                      foreach ($alt as $ref) {
-                        // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" class="fn_bot">';
-                        $this->doc .= ($ref+1).')</a></sup> '.DOKU_LF;
-                      }
+                        foreach ($alt as $ref) {
+                            // set anchor and backlink for the other footnotes
+                            $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" class="fn_bot">';
+                            $this->doc .= ($ref+1).')</a></sup> '.DOKU_LF;
+                        }
                     }
 
                     // add footnote markup and close this footnote
@@ -367,12 +367,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         if($conf['phpok']){
-          ob_start();
-          eval($text);
-          $this->doc .= ob_get_contents();
-          ob_end_clean();
+            ob_start();
+            eval($text);
+            $this->doc .= ob_get_contents();
+            ob_end_clean();
         } else {
-          $this->doc .= p_xhtml_cached_geshi($text, 'php', $wrapper);
+            $this->doc .= p_xhtml_cached_geshi($text, 'php', $wrapper);
         }
     }
 
@@ -392,9 +392,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         if($conf['htmlok']){
-          $this->doc .= $text;
+            $this->doc .= $text;
         } else {
-          $this->doc .= p_xhtml_cached_geshi($text, 'html4strict', $wrapper);
+            $this->doc .= p_xhtml_cached_geshi($text, 'html4strict', $wrapper);
         }
     }
 
@@ -543,7 +543,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
     */
     function camelcaselink($link) {
-      $this->internallink($link,$link);
+        $this->internallink($link,$link);
     }
 
 
