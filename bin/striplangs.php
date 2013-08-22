@@ -127,7 +127,7 @@ if ( $OPTS->has('k') or $OPTS->has('keep') ) {
 
     // ! always enforce 'en' lang when using '--keep' (DW relies on it)
     if ( !isset($langs['en']) ) {
-      $langs[]='en';
+        $langs[]='en';
     }
 } elseif ( $OPTS->has('e') or $OPTS->has('english') ) {
     // '--english' was specified strip everything besides 'en'
