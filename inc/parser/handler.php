@@ -35,8 +35,8 @@ class Doku_Handler {
         $this->CallWriter->finalise();
 
         if ( $this->status['section'] ) {
-           $last_call = end($this->calls);
-           array_push($this->calls,array('section_close',array(), $last_call[2]));
+            $last_call = end($this->calls);
+            array_push($this->calls,array('section_close',array(), $last_call[2]));
         }
 
         if ( $this->rewriteBlocks ) {
@@ -75,7 +75,7 @@ class Doku_Handler {
             $data = $plugin->handle($match, $state, $pos, $this);
         }
         if ($data !== false) {
-          $this->addPluginCall($pluginname,$data,$state,$pos,$match);
+            $this->addPluginCall($pluginname,$data,$state,$pos,$match);
         }
         return true;
     }
@@ -190,8 +190,8 @@ class Doku_Handler {
                 // footnotes can not be nested - however due to limitations in lexer it can't be prevented
                 // we will still enter a new footnote mode, we just do nothing
                 if ($this->_footnote) {
-                  $this->_addCall('cdata',array($match), $pos);
-                  break;
+                    $this->_addCall('cdata',array($match), $pos);
+                    break;
                 }
 
                 $this->_footnote = true;
@@ -203,8 +203,8 @@ class Doku_Handler {
             case DOKU_LEXER_EXIT:
                 // check whether we have already exitted the footnote mode, can happen if the modes were nested
                 if (!$this->_footnote) {
-                  $this->_addCall('cdata',array($match), $pos);
-                  break;
+                    $this->_addCall('cdata',array($match), $pos);
+                    break;
                 }
 
                 $this->_footnote = false;
@@ -433,7 +433,7 @@ class Doku_Handler {
         //decide which kind of link it is
 
         if ( preg_match('/^[a-zA-Z0-9\.]+>{1}.*$/u',$link[0]) ) {
-        // Interwiki
+            // Interwiki
             $interwiki = explode('>',$link[0],2);
             $this->_addCall(
                 'interwikilink',
@@ -441,35 +441,35 @@ class Doku_Handler {
                 $pos
                 );
         }elseif ( preg_match('/^\\\\\\\\[^\\\\]+?\\\\/u',$link[0]) ) {
-        // Windows Share
+            // Windows Share
             $this->_addCall(
                 'windowssharelink',
                 array($link[0],$link[1]),
                 $pos
                 );
         }elseif ( preg_match('#^([a-z0-9\-\.+]+?)://#i',$link[0]) ) {
-        // external link (accepts all protocols)
+            // external link (accepts all protocols)
             $this->_addCall(
                     'externallink',
                     array($link[0],$link[1]),
                     $pos
                     );
         }elseif ( preg_match('<'.PREG_PATTERN_VALID_EMAIL.'>',$link[0]) ) {
-        // E-Mail (pattern above is defined in inc/mail.php)
+            // E-Mail (pattern above is defined in inc/mail.php)
             $this->_addCall(
                 'emaillink',
                 array($link[0],$link[1]),
                 $pos
                 );
         }elseif ( preg_match('!^#.+!',$link[0]) ){
-        // local link
+            // local link
             $this->_addCall(
                 'locallink',
                 array(substr($link[0],1),$link[1]),
                 $pos
                 );
         }else{
-        // internal link
+            // internal link
             $this->_addCall(
                 'internallink',
                 array($link[0],$link[1]),
@@ -520,10 +520,10 @@ class Doku_Handler {
         $p['details'] = (preg_match('/\b(desc|detail)/',$params));
 
         if (preg_match('/\b(\d+)([dhm])\b/',$params,$match)) {
-          $period = array('d' => 86400, 'h' => 3600, 'm' => 60);
-          $p['refresh'] = max(600,$match[1]*$period[$match[2]]);  // n * period in seconds, minimum 10 minutes
+            $period = array('d' => 86400, 'h' => 3600, 'm' => 60);
+            $p['refresh'] = max(600,$match[1]*$period[$match[2]]);  // n * period in seconds, minimum 10 minutes
         } else {
-          $p['refresh'] = 14400;   // default to 4 hours
+            $p['refresh'] = 14400;   // default to 4 hours
         }
 
         $this->_addCall('rss',array($link,$p),$pos);
@@ -1034,7 +1034,7 @@ class Doku_Handler_Preformatted {
                 break;
                 case 'preformatted_end':
                     if (trim($this->text)) {
-                      $this->CallWriter->writeCall(array('preformatted',array($this->text),$this->pos));
+                        $this->CallWriter->writeCall(array('preformatted',array($this->text),$this->pos));
                     }
                     // see FS#1699 & FS#1652, add 'eol' instructions to ensure proper triggering of following p_open
                     $this->CallWriter->writeCall(array('eol',array(),$this->pos));
@@ -1289,116 +1289,116 @@ class Doku_Handler_Table {
             $call = $this->tableCalls[$key];
 
             switch ($call[0]) {
-            case 'tablerow_open':
+                case 'tablerow_open':
 
-                $lastRow++;
-                $lastCell = 0;
-                break;
+                    $lastRow++;
+                    $lastCell = 0;
+                    break;
 
-            case 'tablecell_open':
-            case 'tableheader_open':
+                case 'tablecell_open':
+                case 'tableheader_open':
 
-                $lastCell++;
-                $cellKey[$lastRow][$lastCell] = $key;
-                break;
+                    $lastCell++;
+                    $cellKey[$lastRow][$lastCell] = $key;
+                    break;
 
-            case 'table_align':
+                case 'table_align':
 
-                $prev = in_array($this->tableCalls[$key-1][0], array('tablecell_open', 'tableheader_open'));
-                $next = in_array($this->tableCalls[$key+1][0], array('tablecell_close', 'tableheader_close'));
-                // If the cell is empty, align left
-                if ($prev && $next) {
-                    $this->tableCalls[$key-1][1][1] = 'left';
+                    $prev = in_array($this->tableCalls[$key-1][0], array('tablecell_open', 'tableheader_open'));
+                    $next = in_array($this->tableCalls[$key+1][0], array('tablecell_close', 'tableheader_close'));
+                    // If the cell is empty, align left
+                    if ($prev && $next) {
+                        $this->tableCalls[$key-1][1][1] = 'left';
 
-                // If the previous element was a cell open, align right
-                } elseif ($prev) {
-                    $this->tableCalls[$key-1][1][1] = 'right';
+                    // If the previous element was a cell open, align right
+                    } elseif ($prev) {
+                        $this->tableCalls[$key-1][1][1] = 'right';
 
-                // If the next element is the close of an element, align either center or left
-                } elseif ( $next) {
-                    if ( $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] == 'right' ) {
-                        $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'center';
-                    } else {
-                        $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'left';
-                    }
-
-                }
-
-                // Now convert the whitespace back to cdata
-                $this->tableCalls[$key][0] = 'cdata';
-                break;
-
-            case 'colspan':
-
-                $this->tableCalls[$key-1][1][0] = false;
-
-                for($i = $key-2; $i >= $cellKey[$lastRow][1]; $i--) {
-
-                    if ( $this->tableCalls[$i][0] == 'tablecell_open' || $this->tableCalls[$i][0] == 'tableheader_open' ) {
-
-                        if ( false !== $this->tableCalls[$i][1][0] ) {
-                            $this->tableCalls[$i][1][0]++;
-                            break;
+                    // If the next element is the close of an element, align either center or left
+                    } elseif ( $next) {
+                        if ( $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] == 'right' ) {
+                            $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'center';
+                        } else {
+                            $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'left';
                         }
 
-
                     }
-                }
 
-                $toDelete[] = $key-1;
-                $toDelete[] = $key;
-                $toDelete[] = $key+1;
-                break;
-
-            case 'rowspan':
-
-                if ( $this->tableCalls[$key-1][0] == 'cdata' ) {
-                    // ignore rowspan if previous call was cdata (text mixed with :::) we don't have to check next call as that wont match regex
+                    // Now convert the whitespace back to cdata
                     $this->tableCalls[$key][0] = 'cdata';
+                    break;
 
-                } else {
+                case 'colspan':
 
-                    $spanning_cell = null;
-                    for($i = $lastRow-1; $i > 0; $i--) {
+                    $this->tableCalls[$key-1][1][0] = false;
 
-                        if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+                    for($i = $key-2; $i >= $cellKey[$lastRow][1]; $i--) {
 
-                            if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
-                                $spanning_cell = $i;
+                        if ( $this->tableCalls[$i][0] == 'tablecell_open' || $this->tableCalls[$i][0] == 'tableheader_open' ) {
+
+                            if ( false !== $this->tableCalls[$i][1][0] ) {
+                                $this->tableCalls[$i][1][0]++;
                                 break;
                             }
 
 
                         }
                     }
-                    if (is_null($spanning_cell)) {
-                        // No spanning cell found, so convert this cell to
-                        // an empty one to avoid broken tables
-                        $this->tableCells[$key][1][1] = '';
-                        continue;
-                    }
-                    $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
-
-                    $this->tableCalls[$key-1][1][2] = false;
 
                     $toDelete[] = $key-1;
                     $toDelete[] = $key;
                     $toDelete[] = $key+1;
-                }
-                break;
+                    break;
 
-            case 'tablerow_close':
+                case 'rowspan':
 
-                // Fix broken tables by adding missing cells
-                while (++$lastCell < $this->maxCols) {
-                    array_splice($this->tableCalls, $key, 0, array(
-                           array('tablecell_open', array(1, null, 1), $call[2]),
-                           array('cdata', array(''), $call[2]),
-                           array('tablecell_close', array(), $call[2])));
-                    $key += 3;
-                }
+                    if ( $this->tableCalls[$key-1][0] == 'cdata' ) {
+                        // ignore rowspan if previous call was cdata (text mixed with :::) we don't have to check next call as that wont match regex
+                        $this->tableCalls[$key][0] = 'cdata';
 
-                break;
+                    } else {
+
+                        $spanning_cell = null;
+                        for($i = $lastRow-1; $i > 0; $i--) {
+
+                            if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+
+                                if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
+                                    $spanning_cell = $i;
+                                    break;
+                                }
+
+
+                            }
+                        }
+                        if (is_null($spanning_cell)) {
+                            // No spanning cell found, so convert this cell to
+                            // an empty one to avoid broken tables
+                            $this->tableCells[$key][1][1] = '';
+                            continue;
+                        }
+                        $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
+
+                        $this->tableCalls[$key-1][1][2] = false;
+
+                        $toDelete[] = $key-1;
+                        $toDelete[] = $key;
+                        $toDelete[] = $key+1;
+                    }
+                    break;
+
+                case 'tablerow_close':
+
+                    // Fix broken tables by adding missing cells
+                    while (++$lastCell < $this->maxCols) {
+                        array_splice($this->tableCalls, $key, 0, array(
+                               array('tablecell_open', array(1, null, 1), $call[2]),
+                               array('cdata', array(''), $call[2]),
+                               array('tablecell_close', array(), $call[2])));
+                        $key += 3;
+                    }
+
+                    break;
 
             }
         }
