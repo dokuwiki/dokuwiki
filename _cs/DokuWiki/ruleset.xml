@@ -4,6 +4,7 @@
 
     <!-- ignore 3rd party libraries (that we haven't adopted) -->
     <exclude-pattern>*/lib/plugins/authad/adLDAP/*</exclude-pattern>
+    <exclude-pattern>*/lib/scripts/jquery/*</exclude-pattern>
     <exclude-pattern>*/EmailAddressValidator.php</exclude-pattern>
     <exclude-pattern>*/feedcreator.class.php</exclude-pattern>
     <exclude-pattern>*/SimplePie.php</exclude-pattern>
