@@ -3,6 +3,7 @@
     <description>DokuWiki Coding Standard</description>
 
     <!-- ignore 3rd party libraries (that we haven't adopted) -->
+    <exclude-pattern>*/inc/lessc.inc.php</exclude-pattern>
     <exclude-pattern>*/lib/plugins/authad/adLDAP/*</exclude-pattern>
     <exclude-pattern>*/lib/scripts/jquery/*</exclude-pattern>
     <exclude-pattern>*/EmailAddressValidator.php</exclude-pattern>
