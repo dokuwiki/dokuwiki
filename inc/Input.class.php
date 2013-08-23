@@ -238,7 +238,6 @@ class PostInput extends Input {
 
 /**
  * Internal class used for $_GET access in Input class
-
  */
 class GetInput extends Input {
     protected $access;

@@ -45,9 +45,9 @@ $PARSER_MODES = array(
 //-------------------------------------------------------------------
 
 /**
-* Sets up the Lexer with modes and points it to the Handler
-* For an intro to the Lexer see: wiki:parser
-*/
+ * Sets up the Lexer with modes and points it to the Handler
+ * For an intro to the Lexer see: wiki:parser
+ */
 class Doku_Parser {
 
     var $Handler;
@@ -70,9 +70,9 @@ class Doku_Parser {
     }
 
     /**
-    * PHP preserves order of associative elements
-    * Mode sequence is important
-    */
+     * PHP preserves order of associative elements
+     * Mode sequence is important
+     */
     function addMode($name, & $Mode) {
         if ( !isset($this->modes['base']) ) {
             $this->addBaseMode(new Doku_Parser_Mode_base());
@@ -134,7 +134,7 @@ class Doku_Parser {
  * all modes are registered
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
-*/
+ */
 class Doku_Parser_Mode {
 
     /**

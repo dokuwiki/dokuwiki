@@ -58,8 +58,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
      /**
-     * return prompt for admin menu
-     */
+      * return prompt for admin menu
+      */
     function getMenuText($language) {
 
         if (!is_null($this->_auth))

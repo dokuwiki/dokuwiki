@@ -59,7 +59,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Finish an edit section range
      *
      * @param $end int The byte position for the edit end; null for the rest of
-                       the page
+     *                 the page
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function finishSectionEdit($end = null) {
@@ -541,7 +541,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-    */
+     */
     function camelcaselink($link) {
         $this->internallink($link,$link);
     }
