@@ -65,8 +65,8 @@ a:visited {
 a.urlextern:after,
 a.interwiki:after,
 a.mail:after {
-   content: " [" attr(href) "]";
-   font-size: 90%;
+    content: " [" attr(href) "]";
+    font-size: 90%;
 }
 
 /* code blocks */

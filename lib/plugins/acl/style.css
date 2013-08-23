@@ -116,7 +116,7 @@
 }
 
 #acl_manager label.disabled {
-    opacity: .5;
+    opacity: 0.5;
     cursor: auto;
 }
 

@@ -1,9 +1,9 @@
 rss channel, feed, RDF {
-  font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-  background-color: __background__;
-  color: __text__;
-  margin: 0;
-  padding: 0;
+    font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    background-color: __background__;
+    color: __text__;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -11,53 +11,53 @@ link, description, language, managingEditor, copyright, lastBuildDate, date,
 pubDate, generator, webMaster, ttl, docs, tagline, author, copyright,
 generator, content, created, issued, modified, subject, id, format, creator,
 category, image {
-  display: none;
+    display: none;
 }
 
 item link, entry id {
-  display: block;
-  color: __extern__;
-  text-decoration: underline;
+    display: block;
+    color: __extern__;
+    text-decoration: underline;
 }
 
 channel title, feed title {
-  display: block;
-  font-size: 200%;
-  font-weight: bolder;
-  color: __extern__;
-  text-decoration: none;
-  border-bottom: 20px solid __background_alt__;
+    display: block;
+    font-size: 200%;
+    font-weight: bolder;
+    color: __extern__;
+    text-decoration: none;
+    border-bottom: 20px solid __background_alt__;
 }
 
 :root:before {
-  content: "This data file is meant to be read in a XML feed reader. See document source."
+    content: "This data file is meant to be read in a XML feed reader. See document source."
 }
 
 item, entry {
-  display: block;
-  margin: 1em 180px 1em 1em;
-  border-bottom: 1px solid __border__;
-  padding-bottom: 1em;
+    display: block;
+    margin: 1em 180px 1em 1em;
+    border-bottom: 1px solid __border__;
+    padding-bottom: 1em;
 }
 
 item title, entry title {
-  display: block;
-  background: transparent none;
-  border: 0px solid __background_other__;
-  padding: 0;
-  color: __text_alt__;
-  font-size: 1.4em;
-  font-weight: bold;
+    display: block;
+    background: transparent none;
+    border: 0px solid __background_other__;
+    padding: 0;
+    color: __text_alt__;
+    font-size: 1.4em;
+    font-weight: bold;
 }
 
 item pubDate, entry modified, item date {
-  display: inline;
-  color: __text_neu__;
-  font: 1em trebuchet ms, arial, helvetica, sans-serif;
+    display: inline;
+    color: __text_neu__;
+    font: 1em trebuchet ms, arial, helvetica, sans-serif;
 }
 
 item description, entry summary {
-  display: block;
-  clear: both;
-  padding-top: 0.5em;
+    display: block;
+    clear: both;
+    padding-top: 0.5em;
 }

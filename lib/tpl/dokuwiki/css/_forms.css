@@ -14,23 +14,23 @@
 /* ---------------- forms ------------------------ */
 
 .dokuwiki form {
-  border: none;
-  display: inline;
+    border: none;
+    display: inline;
 }
 
 .dokuwiki label.block {
-  display: block;
-  text-align: right;
-  font-weight: bold;
+    display: block;
+    text-align: right;
+    font-weight: bold;
 }
 [dir=rtl] .dokuwiki label.block {
     text-align: left;
 }
 
 .dokuwiki label.simple {
-  display: block;
-  text-align: left;
-  font-weight: normal;
+    display: block;
+    text-align: left;
+    font-weight: normal;
 }
 [dir=rtl] .dokuwiki label.simple {
     text-align: right;
@@ -38,7 +38,7 @@
 
 .dokuwiki label.block select,
 .dokuwiki label.block input.edit {
-  width: 50%;
+    width: 50%;
 }
 
 .dokuwiki label span {
@@ -46,20 +46,20 @@
 }
 
 .dokuwiki fieldset {
-  width: 400px;
-  text-align: center;
-  border: 1px solid @ini_border;
-  padding: 0.5em;
-  margin: auto;
+    width: 400px;
+    text-align: center;
+    border: 1px solid @ini_border;
+    padding: 0.5em;
+    margin: auto;
 }
 
 
 .dokuwiki input.edit,
 .dokuwiki select.edit {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 .dokuwiki select.edit {
-  padding: 0.1em 0;
+    padding: 0.1em 0;
 }
 
 

@@ -6,50 +6,50 @@
  */
 
 .bar-left {
-  float: right;
-  text-align: right;
+    float: right;
+    text-align: right;
 }
 
 .bar-right {
-  float: left;
-  text-align: left;
+    float: left;
+    text-align: left;
 }
 
 .pagename {
-  float: right;
-  text-align: right;
+    float: right;
+    text-align: right;
 }
 
 .logo {
-  float: left;
-  text-align: left;
+    float: left;
+    text-align: left;
 }
 
 label {
-  text-align: left;
+    text-align: left;
 }
 
 label.simple {
-  text-align: right;
+    text-align: right;
 }
 
 div.meta div.user {
-  float: right;
+    float: right;
 }
 
 div.meta div.doc {
-  text-align: left;
+    text-align: left;
 }
 
 /* ------------------  Design corrections  --------------------------------- */
 
 div.dokuwiki ul,
 div.dokuwiki ol {
-  margin: 0.5em 3.5em 0.5em 0;
+    margin: 0.5em 3.5em 0.5em 0;
 }
 div.dokuwiki li ul,
 div.dokuwiki li ol {
-  margin: 0.5em 1.5em 0.5em 0;
+    margin: 0.5em 1.5em 0.5em 0;
 }
 
 div.dokuwiki a.urlextern,
@@ -57,23 +57,23 @@ div.dokuwiki a.interwiki,
 div.dokuwiki a.mediafile,
 div.dokuwiki a.windows,
 div.dokuwiki a.mail {
-  background-position: right 1px;
-  padding-right: 16px;
-  padding-left: 0;
-  display: inline-block; /* needed for IE7 */
+    background-position: right 1px;
+    padding-right: 16px;
+    padding-left: 0;
+    display: inline-block; /* needed for IE7 */
 }
 
 div.dokuwiki a.mediafile {
-  padding-right: 18px;
+    padding-right: 18px;
 }
 
 div.dokuwiki div.secedit input.button {
-  float: left;
+    float: left;
 }
 
 /* headlines */
 div.dokuwiki h1, div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki h5 {
-  clear: right;
+    clear: right;
 }
 
 /* special headlines */
@@ -92,12 +92,12 @@ div.dokuwiki div.level5 { margin-left: 0px; margin-right: 83px; }
 
 /* TOC control */
 div.dokuwiki #dw__toc {
-  float: left;
-  margin: 1.2em 2em 0 0;
+    float: left;
+    margin: 1.2em 2em 0 0;
 }
 
 div.dokuwiki #dw__toc h3 {
-  text-align: right;
+    text-align: right;
 }
 
 div.dokuwiki .toggle strong {
@@ -106,33 +106,33 @@ div.dokuwiki .toggle strong {
 }
 
 div.dokuwiki #dw__toc > div {
-  text-align: right;
+    text-align: right;
 }
 
 div.dokuwiki #dw__toc ul {
-  padding: 0;
-  padding-right: 1em;
+    padding: 0;
+    padding-right: 1em;
 }
 
 div.dokuwiki #dw__toc ul li {
-  background-position: right 0.6em;
-  padding-right: 0.4em;
-  direction: rtl;
+    background-position: right 0.6em;
+    padding-right: 0.4em;
+    direction: rtl;
 }
 
 div.dokuwiki #dw__toc ul li.clear {
-  padding-right: 0.4em;
+    padding-right: 0.4em;
 }
 
 div.dokuwiki .code {
-  direction: ltr;
-  text-align: left;
+    direction: ltr;
+    text-align: left;
 }
 div.dokuwiki blockquote {
-  border-left: 0;
-  padding-left: 0;
-  border-right: 2px solid  __border__;
-  padding-right: 3px;
+    border-left: 0;
+    padding-left: 0;
+    border-right: 2px solid  __border__;
+    padding-right: 3px;
 }
 
 /* Admin corrections */

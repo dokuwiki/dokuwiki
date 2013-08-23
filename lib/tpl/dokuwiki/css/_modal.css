@@ -19,7 +19,7 @@
 
 #link__wiz_result {
     background-color: @ini_background;
-    width:  293px;
+    width: 293px;
     height: 193px;
     overflow: auto;
     border: 1px solid @ini_border;

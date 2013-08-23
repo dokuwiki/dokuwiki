@@ -25,7 +25,7 @@
     vertical-align: bottom;
 }
 .dokuwiki form.changes ul li.minor {
-    opacity: .7;
+    opacity: 0.7;
 }
 
 .dokuwiki form.changes li span.date {

@@ -15,7 +15,7 @@
     display: inline-block;
     border: 1px solid __border__;
     color: __text__;
-    background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
+    background: __background__ url(images/buttonshadow.png) repeat-x bottom;
     text-decoration: none;
     font-size: 100%;
     cursor: pointer;
