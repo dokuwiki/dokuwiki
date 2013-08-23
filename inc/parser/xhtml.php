@@ -547,7 +547,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
 
-    function locallink($hash, $name = NULL){
+    function locallink($hash, $name = null){
         global $ID;
         $name  = $this->_getLinkTitle($name, $hash, $isImage);
         $hash  = $this->_headerToLink($hash);
@@ -565,7 +565,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function internallink($id, $name = NULL, $search=NULL,$returnonly=false,$linktype='content') {
+    function internallink($id, $name = null, $search=null,$returnonly=false,$linktype='content') {
         global $conf;
         global $ID;
         global $INFO;
@@ -644,7 +644,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
     }
 
-    function externallink($url, $name = NULL) {
+    function externallink($url, $name = null) {
         global $conf;
 
         $name = $this->_getLinkTitle($name, $url, $isImage);
@@ -687,7 +687,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     /**
     */
-    function interwikilink($match, $name = NULL, $wikiName, $wikiUri) {
+    function interwikilink($match, $name = null, $wikiName, $wikiUri) {
         global $conf;
 
         $link = array();
@@ -721,7 +721,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     /**
      */
-    function windowssharelink($url, $name = NULL) {
+    function windowssharelink($url, $name = null) {
         global $conf;
         global $lang;
         //simple setup
@@ -747,7 +747,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= $this->_formatLink($link);
     }
 
-    function emaillink($address, $name = NULL) {
+    function emaillink($address, $name = null) {
         global $conf;
         //simple setup
         $link = array();
@@ -782,8 +782,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= $this->_formatLink($link);
     }
 
-    function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
-                            $height=NULL, $cache=NULL, $linking=NULL) {
+    function internalmedia ($src, $title=null, $align=null, $width=null,
+                            $height=null, $cache=null, $linking=null) {
         global $ID;
         list($src,$hash) = explode('#',$src,2);
         resolve_mediaid(getNS($ID),$src, $exists);
@@ -818,8 +818,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         else $this->doc .= $this->_formatLink($link);
     }
 
-    function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
-                            $height=NULL, $cache=NULL, $linking=NULL) {
+    function externalmedia ($src, $title=null, $align=null, $width=null,
+                            $height=null, $cache=null, $linking=null) {
         list($src,$hash) = explode('#',$src,2);
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -959,7 +959,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= DOKU_LF . DOKU_TAB . '</tr>' . DOKU_LF;
     }
 
-    function tableheader_open($colspan = 1, $align = NULL, $rowspan = 1){
+    function tableheader_open($colspan = 1, $align = null, $rowspan = 1){
         $class = 'class="col' . $this->_counter['cell_counter']++;
         if ( !is_null($align) ) {
             $class .= ' '.$align.'align';
@@ -980,7 +980,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</th>';
     }
 
-    function tablecell_open($colspan = 1, $align = NULL, $rowspan = 1){
+    function tablecell_open($colspan = 1, $align = null, $rowspan = 1){
         $class = 'class="col' . $this->_counter['cell_counter']++;
         if ( !is_null($align) ) {
             $class .= ' '.$align.'align';
@@ -1046,8 +1046,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _media ($src, $title=NULL, $align=NULL, $width=NULL,
-                      $height=NULL, $cache=NULL, $render = true) {
+    function _media ($src, $title=null, $align=null, $width=null,
+                      $height=null, $cache=null, $render = true) {
 
         $ret = '';
 
@@ -1149,7 +1149,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      */
-    function _getLinkTitle($title, $default, & $isImage, $id=NULL, $linktype='content') {
+    function _getLinkTitle($title, $default, & $isImage, $id=null, $linktype='content') {
         global $conf;
 
         $isImage = false;

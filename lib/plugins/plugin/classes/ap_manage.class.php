@@ -2,7 +2,7 @@
 
 class ap_manage {
 
-    var $manager = NULL;
+    var $manager = null;
     var $lang = array();
     var $plugin = '';
     var $downloaded = array();

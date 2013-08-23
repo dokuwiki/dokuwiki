@@ -52,7 +52,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $this->_input = $INPUT->arr('config');
 
         while (list($key) = each($this->_config->setting)) {
-            $input = isset($this->_input[$key]) ? $this->_input[$key] : NULL;
+            $input = isset($this->_input[$key]) ? $this->_input[$key] : null;
             if ($this->_config->setting[$key]->update($input)) {
                 $this->_changed = true;
             }

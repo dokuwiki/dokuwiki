@@ -37,7 +37,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     /**
      * @var ap_manage
      */
-    var $handler = NULL;
+    var $handler = null;
 
     var $functions = array('delete','update',/*'settings',*/'info');  // require a plugin name
     var $commands = array('manage','download','enable');              // don't require a plugin name
@@ -109,7 +109,7 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
         $this->setupLocale();
         $this->_get_plugin_list();
 
-        if ($this->handler === NULL) $this->handler = new ap_manage($this, $this->plugin);
+        if ($this->handler === null) $this->handler = new ap_manage($this, $this->plugin);
 
         ptln('<div id="plugin__manager">');
         $this->handler->html();
