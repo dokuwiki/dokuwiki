@@ -77,18 +77,22 @@ div.dokuwiki h1, div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki
 }
 
 /* special headlines */
+/* @codingStandardsIgnoreStart */
 div.dokuwiki h1 { margin-left: 0px; margin-right: 0px; }
 div.dokuwiki h2 { margin-left: 0px; margin-right: 20px; }
 div.dokuwiki h3 { margin-left: 0px; margin-right: 40px; }
 div.dokuwiki h4 { margin-left: 0px; margin-right: 60px; }
 div.dokuwiki h5 { margin-left: 0px; margin-right: 80px; }
+/* @codingStandardsIgnoreEnd */
 
 /* indent different sections */
+/* @codingStandardsIgnoreStart */
 div.dokuwiki div.level1 { margin-left: 0px; margin-right: 3px; }
 div.dokuwiki div.level2 { margin-left: 0px; margin-right: 23px; }
 div.dokuwiki div.level3 { margin-left: 0px; margin-right: 43px; }
 div.dokuwiki div.level4 { margin-left: 0px; margin-right: 63px; }
 div.dokuwiki div.level5 { margin-left: 0px; margin-right: 83px; }
+/* @codingStandardsIgnoreEnd */
 
 /* TOC control */
 div.dokuwiki #dw__toc {

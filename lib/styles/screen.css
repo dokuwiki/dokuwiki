@@ -94,6 +94,7 @@ div.notify {
 }
 
 /* syntax highlighting code */
+/* @codingStandardsIgnoreStart */
 .code .br0  { color: #66cc66; }
 .code .co0  { color: #808080; font-style: italic; }
 .code .co1  { color: #808080; font-style: italic; }
@@ -116,3 +117,4 @@ div.notify {
 .code .re4  { color: #009999; }
 .code .st0  { color: #ff0000; }
 .code .sy0  { color: #66cc66; }
+/* @codingStandardsIgnoreEnd */

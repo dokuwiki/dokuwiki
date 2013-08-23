@@ -154,7 +154,7 @@
     background: url('../../images/icon-sort.png') 3px 1px no-repeat;
 }
 
-#mediamanager__page .panelHeader form.options .ui-buttonset label{
+#mediamanager__page .panelHeader form.options .ui-buttonset label {
     font-size: 90%;
     margin-right: -0.4em;
 }
@@ -426,7 +426,7 @@
     font-size: 90%;
 }
 
-#mediamanager__diff dl dd strong{
+#mediamanager__diff dl dd strong {
     background-color: __highlight__;
     color: __text__;
     font-weight: normal;

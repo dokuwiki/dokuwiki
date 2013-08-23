@@ -51,9 +51,15 @@ div.no {
 }
 
 /* table cell alignment */
-.leftalign   { text-align: left;   }
-.centeralign { text-align: center; }
-.rightalign  { text-align: right;  }
+.leftalign {
+    text-align: left;
+}
+.centeralign {
+    text-align: center;
+}
+.rightalign {
+    text-align: right;
+}
 
 /* underline */
 em.u {

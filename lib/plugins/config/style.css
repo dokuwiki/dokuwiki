@@ -134,7 +134,10 @@
     color: #000 !important;
 }
 
-#config__manager td.error  { background-color: red; color: #000; }
+#config__manager td.error {
+    background-color: red;
+    color: #000;
+}
 
 #config__manager .selection {
     width: 14.8em;

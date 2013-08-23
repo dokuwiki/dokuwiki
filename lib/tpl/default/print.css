@@ -11,9 +11,14 @@ table {
     margin: 0;
 }
 
-tr,td,th { padding: 0; margin: 0; }
+tr,td,th {
+    padding: 0;
+    margin: 0;
+}
 
-img { border: 0; }
+img {
+    border: 0;
+}
 
 a {
     color: #000000;
@@ -59,7 +64,9 @@ a.mail:after {
 }
 
 /* existing wikilink */
-a.wikilink1    { text-decoration: underline; }
+a.wikilink1 {
+    text-decoration: underline;
+}
 
 /* the document */
 div.page {
@@ -86,11 +93,13 @@ h1, h2, h3, h4, h5 {
 }
 
 /* special headlines */
+/* @codingStandardsIgnoreStart */
 h1 { font-size: 160%; font-weight: bold; }
 h2 { font-size: 150%; }
 h3 { font-size: 140%; border-bottom: none; }
 h4 { font-size: 120%; border-bottom: none; }
 h5 { font-size: 100%; border-bottom: none; }
+/* @codingStandardsIgnoreEnd */
 
 /* embedded images */
 img.media {
@@ -131,10 +140,12 @@ div.dokuwiki li ol {
     margin-bottom: 0;
 }
 
+/* @codingStandardsIgnoreStart */
 div.dokuwiki ol { list-style-type: decimal; }
 div.dokuwiki ol ol { list-style-type: upper-roman; }
 div.dokuwiki ol ol ol { list-style-type: lower-alpha; }
 div.dokuwiki ol ol ol ol { list-style-type: lower-greek; }
+/* @codingStandardsIgnoreEnd */
 
 /* the list items overriding the ol definition */
 span.li {
@@ -224,5 +235,7 @@ table.inline td {
     border: 1px solid #000000;
 }
 
-#dw__toc, .footerinc, .header, .bar, .user { display: none; }
+#dw__toc, .footerinc, .header, .bar, .user {
+    display: none;
+}
 

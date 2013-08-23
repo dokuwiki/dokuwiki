@@ -7,7 +7,10 @@
 
 /* -------------- general elements --------------- */
 
-* { padding: 0; margin: 0; }
+* {
+    padding: 0;
+    margin: 0;
+}
 
 body {
     font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
@@ -404,18 +407,22 @@ div.dokuwiki h5 {
 }
 
 /* special headlines */
+/* @codingStandardsIgnoreStart */
 div.dokuwiki h1 {font-size: 160%; margin-left: 0px; font-weight: bold;}
 div.dokuwiki h2 {font-size: 150%; margin-left: 20px;}
 div.dokuwiki h3 {font-size: 140%; margin-left: 40px; border-bottom: none; font-weight: bold;}
 div.dokuwiki h4 {font-size: 120%; margin-left: 60px; border-bottom: none; font-weight: bold;}
 div.dokuwiki h5 {font-size: 100%; margin-left: 80px; border-bottom: none; font-weight: bold;}
+/* @codingStandardsIgnoreEnd */
 
 /* indent different sections */
+/* @codingStandardsIgnoreStart */
 div.dokuwiki div.level1 { margin-left: 3px; }
 div.dokuwiki div.level2 { margin-left: 23px; }
 div.dokuwiki div.level3 { margin-left: 43px; }
 div.dokuwiki div.level4 { margin-left: 63px; }
 div.dokuwiki div.level5 { margin-left: 83px; }
+/* @codingStandardsIgnoreEnd */
 
 /* unordered lists */
 div.dokuwiki ul {
@@ -447,10 +454,12 @@ div.dokuwiki .li {
     font-weight: normal;
 }
 
+/* @codingStandardsIgnoreStart */
 div.dokuwiki ol { list-style-type: decimal; }
 div.dokuwiki ol ol { list-style-type: upper-roman; }
 div.dokuwiki ol ol ol { list-style-type: lower-alpha; }
 div.dokuwiki ol ol ol ol { list-style-type: lower-greek; }
+/* @codingStandardsIgnoreEnd */
 
 div.dokuwiki li.open {
     list-style-image: url(images/open.gif);
