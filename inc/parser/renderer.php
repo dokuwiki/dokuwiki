@@ -203,42 +203,42 @@ class Doku_Renderer extends DokuWiki_Plugin {
     // $link like 'SomePage'
     function camelcaselink($link) {}
 
-    function locallink($hash, $name = NULL) {}
+    function locallink($hash, $name = null) {}
 
     // $link like 'wiki:syntax', $title could be an array (media)
-    function internallink($link, $title = NULL) {}
+    function internallink($link, $title = null) {}
 
     // $link is full URL with scheme, $title could be an array (media)
-    function externallink($link, $title = NULL) {}
+    function externallink($link, $title = null) {}
 
     function rss ($url,$params) {}
 
     // $link is the original link - probably not much use
     // $wikiName is an indentifier for the wiki
     // $wikiUri is the URL fragment to append to some known URL
-    function interwikilink($link, $title = NULL, $wikiName, $wikiUri) {}
+    function interwikilink($link, $title = null, $wikiName, $wikiUri) {}
 
     // Link to file on users OS, $title could be an array (media)
-    function filelink($link, $title = NULL) {}
+    function filelink($link, $title = null) {}
 
     // Link to a Windows share, , $title could be an array (media)
-    function windowssharelink($link, $title = NULL) {}
+    function windowssharelink($link, $title = null) {}
 
-//  function email($address, $title = NULL) {}
-    function emaillink($address, $name = NULL) {}
+//  function email($address, $title = null) {}
+    function emaillink($address, $name = null) {}
 
-    function internalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
-                            $height=NULL, $cache=NULL, $linking=NULL) {}
+    function internalmedia ($src, $title=null, $align=null, $width=null,
+                            $height=null, $cache=null, $linking=null) {}
 
-    function externalmedia ($src, $title=NULL, $align=NULL, $width=NULL,
-                            $height=NULL, $cache=NULL, $linking=NULL) {}
+    function externalmedia ($src, $title=null, $align=null, $width=null,
+                            $height=null, $cache=null, $linking=null) {}
 
     function internalmedialink (
-        $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
+        $src,$title=null,$align=null,$width=null,$height=null,$cache=null
         ) {}
 
     function externalmedialink(
-        $src,$title=NULL,$align=NULL,$width=NULL,$height=NULL,$cache=NULL
+        $src,$title=null,$align=null,$width=null,$height=null,$cache=null
         ) {}
 
     function table_open($maxcols = null, $numrows = null, $pos = null){}
@@ -249,11 +249,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function tablerow_close(){}
 
-    function tableheader_open($colspan = 1, $align = NULL, $rowspan = 1){}
+    function tableheader_open($colspan = 1, $align = null, $rowspan = 1){}
 
     function tableheader_close(){}
 
-    function tablecell_open($colspan = 1, $align = NULL, $rowspan = 1){}
+    function tablecell_open($colspan = 1, $align = null, $rowspan = 1){}
 
     function tablecell_close(){}
 
