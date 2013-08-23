@@ -1,7 +1,7 @@
 /* User Manager specific styles */
 #user__manager tr.disabled {
-    color: #6f6f6f;
-    background: #e4e4e4;
+    color: #6F6F6F;
+    background: #E4E4E4;
 }
 #user__manager tr.user_info {
     vertical-align: top;
@@ -18,8 +18,8 @@
     padding-right: 1.4em;
 }
 #user__manager input.button[disabled] {
-    color: #ccc!important;
-    border-color: #ccc!important;
+    color: #CCC!important;
+    border-color: #CCC!important;
 }
 #user__manager .import_users {
     margin-top: 1.4em;

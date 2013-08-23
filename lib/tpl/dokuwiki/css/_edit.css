@@ -107,7 +107,7 @@ div.picker button.toolbutton {
 /* change background colour if summary is missing */
 .dokuwiki .editBar .summary input.missing {
     color: @ini_text;
-    background-color: #ffcccc;
+    background-color: #FCC;
 }
 
 /* preview

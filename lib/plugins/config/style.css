@@ -112,7 +112,7 @@
 #config__manager tr input,
 #config__manager tr textarea,
 #config__manager tr select {
-    background-color: #fff;
+    background-color: #FFF;
     color: #000;
 }
 
@@ -121,7 +121,7 @@
 #config__manager tr.default textarea,
 #config__manager tr.default select,
 #config__manager .selectiondefault {
-    background-color: #ccddff;
+    background-color: #CDF;
     color: #000;
 }
 
@@ -130,7 +130,7 @@
 #config__manager tr.protected textarea,
 #config__manager tr.protected select,
 #config__manager tr.protected .selection {
-    background-color: #ffcccc!important;
+    background-color: #FCC!important;
     color: #000 !important;
 }
 

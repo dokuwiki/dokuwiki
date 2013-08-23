@@ -37,13 +37,13 @@
 }
 
 #plugin__manager .new {
-    background: #dee7ec;
+    background: #DEE7EC;
 }
 
 /* IE won't understand but doesn't require it */
 #plugin__manager input[disabled] {
-    color: #ccc;
-    border-color: #ccc;
+    color: #CCC;
+    border-color: #CCC;
 }
 
 #plugin__manager .pm_menu,
@@ -96,7 +96,7 @@
 
 #plugin__manager .plugins fieldset {
     color: #000;
-    background: #fff;
+    background: #FFF;
     text-align: right;
     border-top: none;
     border-right: none;
@@ -104,13 +104,13 @@
 }
 
 #plugin__manager .plugins fieldset.protected {
-    background: #fdd;
+    background: #FDD;
     color: #000;
 }
 
 #plugin__manager .plugins fieldset.disabled {
-    background: #e0e0e0;
-    color: #a8a8a8;
+    background: #E0E0E0;
+    color: #A8A8A8;
 }
 
 #plugin__manager .plugins .legend {

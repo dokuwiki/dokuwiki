@@ -13,7 +13,7 @@
     padding: 0;
     border-width: 0;
     /* no style.ini colours because deleted and added lines have a fixed background colour */
-    background-color: #fff;
+    background-color: #FFF;
     color: #333;
 }
 
@@ -56,20 +56,20 @@
     font-weight: bold;
 }
 .dokuwiki table.diff .diff-addedline {
-    background-color: #cfc;
+    background-color: #CFC;
     color: inherit;
 }
 .dokuwiki table.diff .diff-deletedline {
-    background-color: #fdd;
+    background-color: #FDD;
     color: inherit;
 }
 .dokuwiki table.diff td.diff-context {
-    background-color: #eee;
+    background-color: #EEE;
     color: inherit;
 }
 .dokuwiki table.diff td.diff-addedline strong,
 .dokuwiki table.diff td.diff-deletedline strong {
-    color: #f00;
+    color: #F00;
     background-color: inherit;
     font-weight: bold;
 }

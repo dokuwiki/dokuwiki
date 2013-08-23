@@ -21,7 +21,7 @@ img {
 }
 
 a {
-    color: #000000;
+    color: #000;
     text-decoration: none;
     background: none !important;
 }
@@ -88,7 +88,7 @@ h1, h2, h3, h4, h5 {
     padding-right: 0;
     padding-top: 0.5em;
     padding-bottom: 0;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #000;
     clear: left;
 }
 
@@ -160,7 +160,7 @@ pre {
 pre.pre {
     font-size: 8pt;
     padding: 0.5em;
-    border: 1px dashed #000000;
+    border: 1px dashed #000;
     color: Black;
     overflow: visible;
 }
@@ -169,7 +169,7 @@ pre.pre {
 pre.code {
     font-size: 8pt;
     padding: 0.5em;
-    border: 1px dashed #000000;
+    border: 1px dashed #000;
     color: Black;
     overflow: visible;
 }
@@ -183,7 +183,7 @@ code {
 pre.file {
     font-size: 8pt;
     padding: 0.5em;
-    border: 1px dotted #000000;
+    border: 1px dotted #000;
     color: Black;
     overflow: visible;
 }
@@ -191,7 +191,7 @@ pre.file {
 /* footnotes */
 div.footnotes {
     clear: both;
-    border-top: 1px solid #000000;
+    border-top: 1px solid #000;
     padding-left: 1em;
     margin-top: 1em;
 }
@@ -219,20 +219,20 @@ abbr {
 
 table.inline {
     font-size: 80%;
-    background-color: #ffffff;
+    background-color: #FFF;
     border-spacing: 0px;
     border-collapse: collapse;
 }
 
 table.inline th {
     padding: 3px;
-    border: 1px solid #000000;
-    border-bottom: 2px solid #000000;
+    border: 1px solid #000;
+    border-bottom: 2px solid #000;
 }
 
 table.inline td {
     padding: 3px;
-    border: 1px solid #000000;
+    border: 1px solid #000;
 }
 
 #dw__toc, .footerinc, .header, .bar, .user {
