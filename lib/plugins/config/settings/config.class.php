@@ -1,9 +1,9 @@
 <?php
 /**
- *  Configuration Class and generic setting classes
+ * Configuration Class and generic setting classes
  *
- *  @author  Chris Smith <chris@jalakai.co.uk>
- *  @author  Ben Coburn <btcoburn@silicodon.net>
+ * @author  Chris Smith <chris@jalakai.co.uk>
+ * @author  Ben Coburn <btcoburn@silicodon.net>
  */
 
 
@@ -30,7 +30,7 @@ if (!class_exists('configuration')) {
         var $_plugin_list = null;
 
         /**
-         *  constructor
+         * constructor
          */
         function configuration($datafile) {
             global $conf, $config_cascade;
@@ -246,8 +246,8 @@ if (!class_exists('configuration')) {
         }
 
         /**
-         *  not used ... conf's contents are an array!
-         *  reduce any multidimensional settings to one dimension using CM_KEYMARKER
+         * not used ... conf's contents are an array!
+         * reduce any multidimensional settings to one dimension using CM_KEYMARKER
          */
         function _flatten($conf,$prefix='') {
 
@@ -383,7 +383,7 @@ if (!class_exists('setting')) {
         }
 
         /**
-         *  receives current values for the setting $key
+         * receives current values for the setting $key
          */
         function initialize($default, $local, $protected) {
             if (isset($default)) $this->_default = $default;
@@ -392,12 +392,12 @@ if (!class_exists('setting')) {
         }
 
         /**
-         *  update changed setting with user provided value $input
-         *  - if changed value fails error check, save it to $this->_input (to allow echoing later)
-         *  - if changed value passes error check, set $this->_local to the new value
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
          *
-         *  @param  mixed   $input   the new value
-         *  @return boolean          true if changed, false otherwise (incl. on error)
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (incl. on error)
          */
         function update($input) {
             if (is_null($input)) return false;
@@ -417,7 +417,7 @@ if (!class_exists('setting')) {
         }
 
         /**
-         *  @return   array(string $label_html, string $input_html)
+         * @return   array(string $label_html, string $input_html)
          */
         function html(&$plugin, $echo=false) {
             $value = '';
@@ -443,7 +443,7 @@ if (!class_exists('setting')) {
         }
 
         /**
-         *  generate string to save setting value to file according to $fmt
+         * generate string to save setting value to file according to $fmt
          */
         function out($var, $fmt='php') {
 
@@ -678,10 +678,10 @@ if (!class_exists('setting_email')) {
         var $_placeholders = false;
 
         /**
-         *  update setting with user provided value $input
-         *  if value fails error check, save it
+         * update setting with user provided value $input
+         * if value fails error check, save it
          *
-         *  @return boolean true if changed, false otherwise (incl. on error)
+         * @return boolean true if changed, false otherwise (incl. on error)
          */
         function update($input) {
             if (is_null($input)) return false;
@@ -1102,12 +1102,12 @@ if (!class_exists('setting_regex')){
         var $_pregflags = 'ui';   // regex pattern modifiers to be used in testing input
 
         /**
-         *  update changed setting with user provided value $input
-         *  - if changed value fails error check, save it to $this->_input (to allow echoing later)
-         *  - if changed value passes error check, set $this->_local to the new value
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
          *
-         *  @param  mixed   $input   the new value
-         *  @return boolean          true if changed, false otherwise (incl. on error)
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (incl. on error)
          */
         function update($input) {
 
