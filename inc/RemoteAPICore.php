@@ -506,8 +506,8 @@ class RemoteAPICore {
     }
 
     /**
-    * Returns the permissions of a given wiki page
-    */
+     * Returns the permissions of a given wiki page
+     */
     function aclCheck($id) {
         $id = $this->resolvePageId($id);
         return auth_quickaclcheck($id);
