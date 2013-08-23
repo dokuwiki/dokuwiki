@@ -4,9 +4,9 @@ if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL',"\n");   // add this t
 
 class Doku_Handler {
 
-    var $Renderer = NULL;
+    var $Renderer = null;
 
-    var $CallWriter = NULL;
+    var $CallWriter = null;
 
     var $calls = array();
 
@@ -423,7 +423,7 @@ class Doku_Handler {
         // Split title from URL
         $link = explode('|',$link,2);
         if ( !isset($link[1]) ) {
-            $link[1] = NULL;
+            $link[1] = null;
         } else if ( preg_match('/^\{\{[^\}]+\}\}$/',$link[1]) ) {
             // If the title is an image, convert it to an array containing the image details
             $link[1] = Doku_Handler_Parse_Media($link[1]);
@@ -481,12 +481,12 @@ class Doku_Handler {
     }
 
     function filelink($match, $state, $pos) {
-        $this->_addCall('filelink',array($match, NULL), $pos);
+        $this->_addCall('filelink',array($match, null), $pos);
         return true;
     }
 
     function windowssharelink($match, $state, $pos) {
-        $this->_addCall('windowssharelink',array($match, NULL), $pos);
+        $this->_addCall('windowssharelink',array($match, null), $pos);
         return true;
     }
 
@@ -550,7 +550,7 @@ class Doku_Handler {
 
     function emaillink($match, $state, $pos) {
         $email = preg_replace(array('/^</','/>$/'),'',$match);
-        $this->_addCall('emaillink',array($email, NULL), $pos);
+        $this->_addCall('emaillink',array($email, null), $pos);
         return true;
     }
 
@@ -631,12 +631,12 @@ function Doku_Handler_Parse_Media($match) {
     } else if ( $lalign ) {
         $align = 'left';
     } else {
-        $align = NULL;
+        $align = null;
     }
 
     // The title...
     if ( !isset($link[1]) ) {
-        $link[1] = NULL;
+        $link[1] = null;
     }
 
     //remove aligning spaces
@@ -654,11 +654,11 @@ function Doku_Handler_Parse_Media($match) {
 
     //parse width and height
     if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
-        ($size[1]) ? $w = $size[1] : $w = NULL;
-        ($size[3]) ? $h = $size[3] : $h = NULL;
+        ($size[1]) ? $w = $size[1] : $w = null;
+        ($size[3]) ? $h = $size[3] : $h = null;
     } else {
-        $w = NULL;
-        $h = NULL;
+        $w = null;
+        $h = null;
     }
 
     //get linking command
@@ -1247,12 +1247,12 @@ class Doku_Handler_Table {
             }
 
             $this->tableCalls[] = array($this->lastCellType.'_close',array(),$call[2]);
-            $this->tableCalls[] = array($call[0].'_open',array(1,NULL,1),$call[2]);
+            $this->tableCalls[] = array($call[0].'_open',array(1,null,1),$call[2]);
             $this->lastCellType = $call[0];
 
         } else {
 
-            $this->tableCalls[] = array($call[0].'_open',array(1,NULL,1),$call[2]);
+            $this->tableCalls[] = array($call[0].'_open',array(1,null,1),$call[2]);
             $this->lastCellType = $call[0];
             $this->firstCell = false;
 

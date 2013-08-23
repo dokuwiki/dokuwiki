@@ -221,7 +221,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         }
     }
 
-    function code($text, $language = NULL, $file = null){
+    function code($text, $language = null, $file = null){
         if ($this->capture){
             $this->doc .= DOKU_LF.$text;
             if (strlen($this->doc) > 250) $this->capture = false;
@@ -274,12 +274,12 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $this->internallink($link, $link);
     }
 
-    function locallink($hash, $name = NULL){}
+    function locallink($hash, $name = null){}
 
     /**
      * keep track of internal links in $this->meta['relation']['references']
      */
-    function internallink($id, $name = NULL){
+    function internallink($id, $name = null){
         global $ID;
 
         if(is_array($name)) {
@@ -311,7 +311,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         }
     }
 
-    function externallink($url, $name = NULL){
+    function externallink($url, $name = null){
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -322,7 +322,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         }
     }
 
-    function interwikilink($match, $name = NULL, $wikiName, $wikiUri){
+    function interwikilink($match, $name = null, $wikiName, $wikiUri){
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -335,7 +335,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         }
     }
 
-    function windowssharelink($url, $name = NULL){
+    function windowssharelink($url, $name = null){
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -347,7 +347,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         }
     }
 
-    function emaillink($address, $name = NULL){
+    function emaillink($address, $name = null){
         if(is_array($name)) {
             $this->_firstimage($name['src']);
             if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
@@ -359,15 +359,15 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         }
     }
 
-    function internalmedia($src, $title=NULL, $align=NULL, $width=NULL,
-                           $height=NULL, $cache=NULL, $linking=NULL){
+    function internalmedia($src, $title=null, $align=null, $width=null,
+                           $height=null, $cache=null, $linking=null){
         if ($this->capture && $title) $this->doc .= '['.$title.']';
         $this->_firstimage($src);
         $this->_recordMediaUsage($src);
     }
 
-    function externalmedia($src, $title=NULL, $align=NULL, $width=NULL,
-                           $height=NULL, $cache=NULL, $linking=NULL){
+    function externalmedia($src, $title=null, $align=null, $width=null,
+                           $height=null, $cache=null, $linking=null){
         if ($this->capture && $title) $this->doc .= '['.$title.']';
         $this->_firstimage($src);
     }
@@ -427,7 +427,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      */
-    function _getLinkTitle($title, $default, $id=NULL) {
+    function _getLinkTitle($title, $default, $id=null) {
         global $conf;
 
         $isImage = false;

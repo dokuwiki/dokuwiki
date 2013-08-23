@@ -8,7 +8,7 @@
 if (!class_exists('setting_sepchar')) {
     class setting_sepchar extends setting_multichoice {
 
-        function setting_sepchar($key,$param=NULL) {
+        function setting_sepchar($key,$param=null) {
             $str = '_-.';
             for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};
 

@@ -49,7 +49,7 @@ function dw_dir_filter($entry, $basepath) {
 
 #------------------------------------------------------------------------------
 function dw_get_pages($dir) {
-    static $trunclen = NULL;
+    static $trunclen = null;
     if ( !$trunclen ) {
         global $conf;
         $trunclen = strlen($conf['datadir'].':');
