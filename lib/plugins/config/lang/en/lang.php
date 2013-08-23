@@ -63,7 +63,7 @@ $lang['baseurl']     = 'Server URL (eg. <code>http://www.yourserver.com</code>).
 $lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
 $lang['dmode']       = 'Directory creation mode';
 $lang['fmode']       = 'File creation mode';
-$lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
+$lang['allowdebug']  = 'Allow debug. <b>Disable if not needed!</b>';
 
 /* Display Settings */
 $lang['recent']      = 'Number of entries per page in the recent changes';
@@ -83,7 +83,7 @@ $lang['camelcase']   = 'Use CamelCase for links';
 $lang['deaccent']    = 'How to clean pagenames';
 $lang['useheading']  = 'Use first heading for pagenames';
 $lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the sitemap. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces which may make the index unusable with certain ACL setups.';
-$lang['hidepages']   = 'Hide pages matching this regular expressions from search, the sitemap and other automatic indexes';
+$lang['hidepages']   = 'Hide pages matching this regular expression from search, the sitemap and other automatic indexes';
 
 /* Authentication Settings */
 $lang['useacl']      = 'Use access control lists';
@@ -181,7 +181,7 @@ $lang['proxy____port']    = 'Proxy port';
 $lang['proxy____user']    = 'Proxy user name';
 $lang['proxy____pass']    = 'Proxy password';
 $lang['proxy____ssl']     = 'Use SSL to connect to proxy';
-$lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped for.';
+$lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped.';
 
 /* Safemode Hack */
 $lang['safemodehack'] = 'Enable safemode hack';
