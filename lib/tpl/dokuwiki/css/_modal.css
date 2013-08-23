@@ -6,7 +6,6 @@
     font-size: 100%;
 }
 
-
 /* link wizard (opens from the link button in the edit toolbar)
 ********************************************************************/
 
@@ -27,6 +26,7 @@
     text-align: left;
     line-height: 1;
 }
+
 [dir=rtl] #link__wiz_result {
     text-align: right;
 }
@@ -41,6 +41,7 @@
     min-height: 16px;
     background: transparent 3px center no-repeat;
 }
+
 [dir=rtl] #link__wiz_result div a {
     padding: 3px 22px 3px 3px;
     background-position: 257px 3px;
@@ -49,9 +50,11 @@
 #link__wiz_result div.type_u a {
     background-image: url(../../images/up.png);
 }
+
 #link__wiz_result div.type_f a {
     background-image: url(../../images/page.png);
 }
+
 #link__wiz_result div.type_d a {
     background-image: url(../../images/ns.png);
 }
@@ -69,7 +72,6 @@
     color: @ini_text_neu;
     margin-left: 22px;
 }
-
 
 /* media option wizard (opens when inserting media in the media popup)
 ********************************************************************/

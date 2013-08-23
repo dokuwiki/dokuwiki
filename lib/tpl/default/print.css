@@ -30,7 +30,6 @@ a.interwiki {
     padding-left: 0px !important;
 }
 
-
 div.meta {
     clear: both;
     margin-top: 1em;
@@ -41,7 +40,6 @@ div.meta {
 div.breadcrumbs {
     display: none;
 }
-
 
 /* --------------------- Text formating -------------------------------- */
 
@@ -111,9 +109,11 @@ img.media {
 img.medialeft {
     margin: 0 1.5em 0 0;
 }
+
 img.mediaright {
     margin: 0 0 0 1.5em;
 }
+
 img.mediacenter {
 }
 
@@ -136,6 +136,7 @@ ol {
 div.dokuwiki li ul {
     margin-bottom: 0;
 }
+
 div.dokuwiki li ol {
     margin-bottom: 0;
 }

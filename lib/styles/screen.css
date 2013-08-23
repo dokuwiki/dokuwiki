@@ -88,6 +88,7 @@ div.notify {
     height: 1px !important;
     overflow: hidden !important;
 }
+
 [dir=rtl] .a11y {
     left: auto !important;
     right: -99999em !important;

@@ -99,6 +99,7 @@ div.qq-uploader ul {
 .qq-upload-failed-text {
     display: none;
 }
+
 .qq-upload-fail .qq-upload-failed-text {
     display: inline;
 }
@@ -106,6 +107,7 @@ div.qq-uploader ul {
 .qq-action-container * {
     vertical-align: middle;
 }
+
 .qq-overwrite-check input {
     margin-left: 10px;
 }

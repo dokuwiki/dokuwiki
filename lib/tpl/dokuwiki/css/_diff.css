@@ -7,6 +7,7 @@
     width: 100%;
     border-width: 0;
 }
+
 .dokuwiki table.diff th,
 .dokuwiki table.diff td {
     vertical-align: top;
@@ -23,19 +24,24 @@
     font-size: 110%;
     font-weight: normal;
 }
+
 .dokuwiki table.diff th a {
     font-weight: bold;
 }
+
 .dokuwiki table.diff th span.user {
     font-size: .9em;
 }
+
 .dokuwiki table.diff th span.sum {
     font-size: .9em;
     font-weight: bold;
 }
+
 .dokuwiki table.diff th.minor {
     color: #999;
 }
+
 .dokuwiki table.diff_sidebyside th {
     width: 50%;
 }
@@ -45,28 +51,35 @@
     width: .7em;
     text-align: right;
 }
+
 [dir=rtl] .dokuwiki table.diff .diff-lineheader {
     text-align: left;
 }
+
 .dokuwiki table.diff .diff-lineheader,
 .dokuwiki table.diff td {
     font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
 }
+
 .dokuwiki table.diff td.diff-blockheader {
     font-weight: bold;
 }
+
 .dokuwiki table.diff .diff-addedline {
     background-color: #CFC;
     color: inherit;
 }
+
 .dokuwiki table.diff .diff-deletedline {
     background-color: #FDD;
     color: inherit;
 }
+
 .dokuwiki table.diff td.diff-context {
     background-color: #EEE;
     color: inherit;
 }
+
 .dokuwiki table.diff td.diff-addedline strong,
 .dokuwiki table.diff td.diff-deletedline strong {
     color: #F00;

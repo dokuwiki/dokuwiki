@@ -157,24 +157,30 @@ div.dokuwiki div#wiki__editbar {
     margin: 2px 0;
     text-align: left;
 }
+
 div.dokuwiki div#size__ctl {
     float: right;
     width: 60px;
     height: 2.7em;
 }
+
 div.dokuwiki #size__ctl img {
     cursor: pointer;
 }
+
 div.dokuwiki div#wiki__editbar div.editButtons {
     float: left;
     padding: 0 1.0em 0.7em 0;
 }
+
 div.dokuwiki div#wiki__editbar div.summary {
     float: left;
 }
+
 div.dokuwiki .nowrap {
     white-space: nowrap;
 }
+
 div.dokuwiki div#draft__status {
     float: right;
     color: __text_alt__;
@@ -262,6 +268,7 @@ div.dokuwiki a:visited {
     color: __extern__;
     text-decoration: none;
 }
+
 div.dokuwiki a:hover,
 div.dokuwiki a:active {
     color: __text__;
@@ -304,6 +311,7 @@ div.dokuwiki a.windows:visited,
 div.dokuwiki a.interwiki:visited {
     color: purple;
 }
+
 div.dokuwiki a.urlextern:hover,
 div.dokuwiki a.urlextern:active,
 div.dokuwiki a.windows:hover,
@@ -483,6 +491,7 @@ div.dokuwiki code {
        http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
     font-size: 100%;
 }
+
 div.dokuwiki pre {
     padding: 0.5em;
     border: 1px dashed __border__;
@@ -534,7 +543,6 @@ div.dokuwiki dl.file dt {
     background-color: __background_alt__;
     border-bottom: 1px solid __background_alt__;
 }
-
 
 /* inline tables */
 div.dokuwiki table.inline {
@@ -635,55 +643,69 @@ div.dokuwiki table.diff {
     background-color: __background__;
     width: 100%;
 }
+
 div.dokuwiki td.diff-blockheader {
     font-weight: bold;
 }
+
 div.dokuwiki table.diff th {
     border-bottom: 1px solid __border__;
     font-size: 110%;
     font-weight: normal;
     text-align: left;
 }
+
 div.dokuwiki table.diff th a {
     font-weight: bold;
 }
+
 div.dokuwiki table.diff th span.user {
     color: __text__;
     font-size: 80%;
 }
+
 div.dokuwiki table.diff th span.sum {
     font-size: 80%;
     font-weight: bold;
 }
+
 div.dokuwiki table.diff th.minor {
     font-style: italic;
 }
+
 .dokuwiki table.diff_sidebyside th {
     width: 50%;
 }
+
 .dokuwiki table.diff .diff-lineheader {
     width: .7em;
     text-align: right;
 }
+
 [dir=rtl] .dokuwiki table.diff .diff-lineheader {
     text-align: left;
 }
+
 .dokuwiki table.diff .diff-lineheader,
 div.dokuwiki table.diff td {
     font-family: monospace;
     font-size: 100%;
 }
+
 div.dokuwiki td.diff-addedline,
 div.dokuwiki span.diff-addedline {
     background-color: #DFD;
 }
+
 div.dokuwiki td.diff-deletedline,
 div.dokuwiki span.diff-deletedline {
     background-color: #FFB;
 }
+
 div.dokuwiki td.diff-context {
     background-color: __background_neu__;
 }
+
 div.dokuwiki table.diff td.diff-addedline strong,
 div.dokuwiki table.diff td.diff-deletedline strong {
     color: red;
@@ -737,6 +759,7 @@ div.dokuwiki .search_results {
 div.dokuwiki .search_results dt {
     margin-bottom: 3px;
 }
+
 div.dokuwiki .search_results dd {
     margin-bottom: 6px;
     color: __text_other__;
@@ -752,6 +775,7 @@ div.dokuwiki .search_hit {
     color: __text__;
     background-color: __highlight__;
 }
+
 div.dokuwiki strong.search_hit {
     font-weight: normal;
 }
@@ -761,6 +785,7 @@ div.dokuwiki div.search_quickresult {
     padding: 0 10px 10px 0;
     border-bottom: 1px dashed __border__;
 }
+
 div.dokuwiki div.search_quickresult h3 {
     margin: 0 0 1.0em 0;
     font-size: 1em;
@@ -786,6 +811,7 @@ div.dokuwiki .section_highlight {
 div.footerinc {
     text-align: center;
 }
+
 .footerinc a img {
     opacity: 0.5;
     border: 0;
@@ -855,6 +881,7 @@ div.dokuwiki dl.img_tags dt {
     font-weight: bold;
     background-color: __background_alt__;
 }
+
 div.dokuwiki dl.img_tags dd {
     background-color: __background_neu__;
 }

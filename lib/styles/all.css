@@ -15,14 +15,17 @@ div.clearer {
 .group {
     display: inline-block;
 }
+
 .group {
     display: block;
 }
+
 .group:before,
 .group:after {
     content: "";
     display: table;
 }
+
 .group:after {
     clear: both;
 }
@@ -41,9 +44,11 @@ div.no {
 .medialeft {
     float: left;
 }
+
 .mediaright {
     float: right;
 }
+
 .mediacenter {
     display: block;
     margin-left: auto;
@@ -54,9 +59,11 @@ div.no {
 .leftalign {
     text-align: left;
 }
+
 .centeralign {
     text-align: center;
 }
+
 .rightalign {
     text-align: right;
 }
@@ -66,6 +73,7 @@ em.u {
     font-style: normal;
     text-decoration: underline;
 }
+
 em em.u {
     font-style: italic;
 }
