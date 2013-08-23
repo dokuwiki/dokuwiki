@@ -63,7 +63,7 @@ $lang['baseurl']     = 'Server URL (eg. <code>http://www.yourserver.com</code>).
 $lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
 $lang['dmode']       = 'Directory creation mode';
 $lang['fmode']       = 'File creation mode';
-$lang['allowdebug']  = 'Allow debug <b>disable if not needed!</b>';
+$lang['allowdebug']  = 'Allow debug. <b>Disable if not needed!</b>';
 
 /* Display Settings */
 $lang['recent']      = 'Number of entries per page in the recent changes';
