@@ -1,5 +1,5 @@
 rss channel, feed, RDF {
-    font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font: 80% "Lucida Grande", verdana, lucida, helvetica, arial, sans-serif;
     background-color: __background__;
     color: __text__;
     margin: 0;
@@ -29,7 +29,7 @@ channel title, feed title {
 }
 
 :root:before {
-    content: "This data file is meant to be read in a XML feed reader. See document source."
+    content: "This data file is meant to be read in a XML feed reader. See document source.";
 }
 
 item, entry {

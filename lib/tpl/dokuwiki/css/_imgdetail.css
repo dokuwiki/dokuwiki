@@ -25,7 +25,7 @@
 }
 
 [dir=rtl] #dokuwiki__detail div.content div.img_detail {
-    float: right
+    float: right;
 }
 
 #dokuwiki__detail div.img_detail h2 {

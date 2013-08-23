@@ -1,8 +1,8 @@
 
 body {
-    font: 10pt "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-    background-color: White;
-    color: Black;
+    font: 10pt "Lucida Grande", verdana, lucida, helvetica, arial, sans-serif;
+    background-color: white;
+    color: black;
 }
 
 table {
@@ -73,9 +73,9 @@ div.page {
 
 /* general headline setup */
 h1, h2, h3, h4, h5 {
-    color: Black;
+    color: black;
     background-color: transparent;
-    font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font-family: "Lucida Grande", verdana, lucida, helvetica, arial, sans-serif;
     font-size: 100%;
     font-weight: normal;
     margin-left: 0;
@@ -162,7 +162,7 @@ pre.pre {
     font-size: 8pt;
     padding: 0.5em;
     border: 1px dashed #000;
-    color: Black;
+    color: black;
     overflow: visible;
 }
 
@@ -171,7 +171,7 @@ pre.code {
     font-size: 8pt;
     padding: 0.5em;
     border: 1px dashed #000;
-    color: Black;
+    color: black;
     overflow: visible;
 }
 
@@ -185,7 +185,7 @@ pre.file {
     font-size: 8pt;
     padding: 0.5em;
     border: 1px dotted #000;
-    color: Black;
+    color: black;
     overflow: visible;
 }
 

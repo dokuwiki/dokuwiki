@@ -13,7 +13,7 @@
 }
 
 body {
-    font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font: 80% "Lucida Grande", verdana, lucida, helvetica, arial, sans-serif;
     background-color: __background__;
     color: __text__;
 }
@@ -246,13 +246,13 @@ div.dokuwiki div.pagenav {
 div.dokuwiki div.pagenav-prev {
     text-align: right;
     float: left;
-    width: 49%
+    width: 49%;
 }
 
 div.dokuwiki div.pagenav-next {
     text-align: left;
     float: right;
-    width: 49%
+    width: 49%;
 }
 
 /* ----------- type of recent changes select -------- */

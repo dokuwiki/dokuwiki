@@ -208,7 +208,7 @@ it's dirty, so any "real" fixes are welcome */
 }
 
 #media__content form.meta .edit {
-    font: 100% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font: 100% "Lucida Grande", verdana, lucida, helvetica, arial, sans-serif;
     float: left;
     width: 70%;
     padding-right: 0;
