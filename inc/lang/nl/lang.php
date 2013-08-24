@@ -19,6 +19,7 @@
  * @author Gerrit <klapinklapin@gmail.com>
  * @author mprins <mprins@users.sf.net>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author John Tukker <jcptukker@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
