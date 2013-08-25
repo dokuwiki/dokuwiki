@@ -129,6 +129,8 @@ class Doku_Plugin_Controller {
     }
 
     protected function _populateMasterList() {
+        global $conf;
+
         if ($dh = @opendir(DOKU_PLUGIN)) {
             $all_plugins = array();
             while (false !== ($plugin = readdir($dh))) {
