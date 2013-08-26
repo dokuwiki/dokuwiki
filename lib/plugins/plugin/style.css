@@ -37,13 +37,13 @@
 }
 
 #plugin__manager .new {
-    background: #dee7ec;
+    background: #DEE7EC;
 }
 
 /* IE won't understand but doesn't require it */
 #plugin__manager input[disabled] {
-    color: #ccc;
-    border-color: #ccc;
+    color: #CCC;
+    border-color: #CCC;
 }
 
 #plugin__manager .pm_menu,
@@ -63,6 +63,7 @@
     float: left;
     width: 48%;
 }
+
 [dir=rtl] #plugin__manager .pm_menu {
     float: right;
 }
@@ -71,6 +72,7 @@
     float: right;
     width: 50%;
 }
+
 [dir=rtl] #plugin__manager .pm_info {
     float: left;
 }
@@ -81,6 +83,7 @@
     text-align: left;
     border: none;
 }
+
 [dir=rtl] #plugin__manager .common fieldset {
     text-align: right;
 }
@@ -96,7 +99,7 @@
 
 #plugin__manager .plugins fieldset {
     color: #000;
-    background: #fff;
+    background: #FFF;
     text-align: right;
     border-top: none;
     border-right: none;
@@ -104,13 +107,13 @@
 }
 
 #plugin__manager .plugins fieldset.protected {
-    background: #fdd;
+    background: #FDD;
     color: #000;
 }
 
 #plugin__manager .plugins fieldset.disabled {
-    background: #e0e0e0;
-    color: #a8a8a8;
+    background: #E0E0E0;
+    color: #A8A8A8;
 }
 
 #plugin__manager .plugins .legend {
@@ -127,6 +130,7 @@
     padding: 0;
     clear: none;
 }
+
 [dir=rtl] #plugin__manager .plugins .legend {
     text-align: right;
     float: right;
@@ -143,10 +147,12 @@
 #plugin__manager .plugins fieldset.buttons .button {
     float: left;
 }
+
 [dir=rtl] #plugin__manager .plugins .button {
     float: left;
     margin-right: 0.5em;
 }
+
 [dir=rtl] #plugin__manager .plugins fieldset.buttons .button {
     float: right;
 }
@@ -167,6 +173,7 @@
     margin: 0;
     padding: 0;
 }
+
 [dir=rtl] #plugin__manager .pm_info dt {
     float: right;
     clear: right;
@@ -177,6 +184,7 @@
     padding: 0;
     background: none;
 }
+
 [dir=rtl] #plugin__manager .pm_info dd {
     margin: 0 7em 0 0;
 }
@@ -186,6 +194,7 @@
     width: auto;
     margin-right: 0.5em;
 }
+
 [dir=rtl] #plugin__manager .plugins .enable {
     float: right;
     margin-right: 0;

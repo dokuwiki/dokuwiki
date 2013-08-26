@@ -7,6 +7,7 @@
 /* link to footnote inside the text */
 .dokuwiki sup a.fn_top {
 }
+
 /* JSpopup */
 div.insitu-footnote {
     max-width: 40%;
@@ -21,8 +22,10 @@ div.insitu-footnote {
     margin: 1em 0 0 0;
     clear: both;
 }
+
 .dokuwiki div.footnotes div.fn {
 }
+
 .dokuwiki div.footnotes div.fn sup a.fn_bot {
     font-weight: bold;
 }

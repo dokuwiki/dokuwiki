@@ -8,6 +8,7 @@
     border: 1px solid __border__;
     text-align: left;
 }
+
 [dir=rtl] #acl__tree {
     float: right;
     text-align: right;
@@ -28,6 +29,7 @@
     padding-left: 1em;
     list-style-image: none;
 }
+
 [dir=rtl] #acl__tree li {
     padding-left: 0em;
     padding-right: 1em;
@@ -37,6 +39,7 @@
     margin-right: 0.25em;
     cursor: pointer;
 }
+
 [dir=rtl] #acl__tree ul img {
     margin-left: 0.25em;
     margin-right: 0em;
@@ -48,6 +51,7 @@
     float: right;
     overflow: auto;
 }
+
 [dir=rtl] #acl__detail {
     float: left;
 }
@@ -79,6 +83,7 @@
     background: transparent url(pix/group.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
+
 [dir=rtl] #acl_manager .aclgroup {
     background: transparent url(pix/group.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
@@ -89,6 +94,7 @@
     background: transparent url(pix/user.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
+
 [dir=rtl] #acl_manager .acluser {
     background: transparent url(pix/user.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
@@ -99,6 +105,7 @@
     background: transparent url(pix/page.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
+
 [dir=rtl] #acl_manager .aclpage {
     background: transparent url(pix/page.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
@@ -109,6 +116,7 @@
     background: transparent url(pix/ns.png) 0px 1px no-repeat;
     padding: 1px 0px 1px 18px;
 }
+
 [dir=rtl] #acl_manager .aclns {
     background: transparent url(pix/ns.png) right 1px no-repeat;
     padding: 1px 18px 1px 0px;
@@ -116,7 +124,7 @@
 }
 
 #acl_manager label.disabled {
-    opacity: .5;
+    opacity: 0.5;
     cursor: auto;
 }
 

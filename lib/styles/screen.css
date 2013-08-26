@@ -30,34 +30,34 @@ div.notify {
 }
 
 div.error {
-    background-color: #fcc;
+    background-color: #FCC;
     background-image: url(../images/error.png);
-    border-color: #ebb;
+    border-color: #EBB;
 }
 
 div.info {
-    background-color: #ccf;
+    background-color: #CCF;
     background-image: url(../images/info.png);
-    border-color: #bbe;
+    border-color: #BBE;
 }
 
 div.success {
-    background-color: #cfc;
+    background-color: #CFC;
     background-image: url(../images/success.png);
-    border-color: #beb;
+    border-color: #BEB;
 }
 
 div.notify {
-    background-color: #ffc;
+    background-color: #FFC;
     background-image: url(../images/notify.png);
-    border-color: #eeb;
+    border-color: #EEB;
 }
 
 /* modal windows */
 .JSpopup,
 #link__wiz {
     position: absolute;
-    background-color: #fff;
+    background-color: #FFF;
     color: #000;
     z-index: 20;
     overflow: hidden;
@@ -88,12 +88,14 @@ div.notify {
     height: 1px !important;
     overflow: hidden !important;
 }
+
 [dir=rtl] .a11y {
     left: auto !important;
     right: -99999em !important;
 }
 
 /* syntax highlighting code */
+/* @codingStandardsIgnoreStart */
 .code .br0  { color: #66cc66; }
 .code .co0  { color: #808080; font-style: italic; }
 .code .co1  { color: #808080; font-style: italic; }
@@ -112,7 +114,8 @@ div.notify {
 .code .re0  { color: #0000ff; }
 .code .re1  { color: #0000ff; }
 .code .re2  { color: #0000ff; }
-.code .re3  { color: #ff3333; font-weight:bold; }
+.code .re3  { color: #ff3333; font-weight: bold; }
 .code .re4  { color: #009999; }
 .code .st0  { color: #ff0000; }
 .code .sy0  { color: #66cc66; }
+/* @codingStandardsIgnoreEnd */

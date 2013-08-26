@@ -14,17 +14,21 @@
 .dokuwiki div.toolbar {
     margin-bottom: .5em;
 }
+
 #draft__status {
     float: right;
     color: @ini_text_alt;
     background-color: inherit;
 }
+
 [dir=rtl] #draft__status {
     float: left;
 }
+
 #tool__bar {
     float: left;
 }
+
 [dir=rtl] #tool__bar {
     float: right;
 }
@@ -32,6 +36,7 @@
 /* buttons inside of toolbar */
 .dokuwiki div.toolbar button.toolbutton {
 }
+
 /* picker popups (outside of .dokuwiki) */
 div.picker {
     width: 300px;
@@ -39,6 +44,7 @@ div.picker {
     background-color: @ini_background_alt;
     color: inherit;
 }
+
 /* picker for headlines */
 div.picker.pk_hl {
     width: auto;
@@ -72,9 +78,11 @@ div.picker button.toolbutton {
 #size__ctl {
     float: right;
 }
+
 [dir=rtl] #size__ctl {
     float: left;
 }
+
 #size__ctl img {
     cursor: pointer;
 }
@@ -84,10 +92,12 @@ div.picker button.toolbutton {
     display: inline;
     margin-right: 1em;
 }
+
 [dir=rtl] .dokuwiki .editBar .editButtons {
     margin-right: 0;
     margin-left: 1em;
 }
+
 .dokuwiki .editBar .editButtons input {
 }
 
@@ -95,19 +105,23 @@ div.picker button.toolbutton {
 .dokuwiki .editBar .summary {
     display: inline;
 }
+
 .dokuwiki .editBar .summary label {
     vertical-align: middle;
     white-space: nowrap;
 }
+
 .dokuwiki .editBar .summary label span {
     vertical-align: middle;
 }
+
 .dokuwiki .editBar .summary input {
 }
+
 /* change background colour if summary is missing */
 .dokuwiki .editBar .summary input.missing {
     color: @ini_text;
-    background-color: #ffcccc;
+    background-color: #FCC;
 }
 
 /* preview
@@ -127,9 +141,11 @@ div.picker button.toolbutton {
     float: right;
     margin-top: -1.4em;
 }
+
 [dir=rtl] .dokuwiki .secedit {
     float: left;
 }
+
 .dokuwiki .secedit input.button {
     font-size: 75%;
 }

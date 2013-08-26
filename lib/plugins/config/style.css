@@ -2,27 +2,31 @@
 #config__manager div.success,
 #config__manager div.error,
 #config__manager div.info {
-  background-position: 0.5em;
-  padding: 0.5em;
-  text-align: center;
+    background-position: 0.5em;
+    padding: 0.5em;
+    text-align: center;
 }
 
 #config__manager fieldset {
-  margin: 1em;
-  width: auto;
-  margin-bottom: 2em;
-  background-color: __background_alt__;
-  color: __text__;
-  padding: 0 1em;
+    margin: 1em;
+    width: auto;
+    margin-bottom: 2em;
+    background-color: __background_alt__;
+    color: __text__;
+    padding: 0 1em;
 }
+
 [dir=rtl] #config__manager fieldset {
     clear: both;
 }
+
 #config__manager legend {
     font-size: 1.25em;
 }
 
-#config__manager form { }
+#config__manager form {
+}
+
 #config__manager table {
     margin: 1em 0;
     width: 100%;
@@ -31,9 +35,11 @@
 #config__manager fieldset td {
     text-align: left;
 }
+
 [dir=rtl] #config__manager fieldset td {
     text-align: right;
 }
+
 #config__manager fieldset td.value {
     /* fixed data column width */
     width: 31em;
@@ -42,11 +48,13 @@
 [dir=rtl] #config__manager label {
     text-align: right;
 }
+
 [dir=rtl] #config__manager td.value input.checkbox {
     float: right;
     padding-left: 0;
     padding-right: 0.7em;
 }
+
 [dir=rtl] #config__manager td.value label {
     float: left;
 }
@@ -55,6 +63,7 @@
     padding: 0.8em 0 0.6em 1em;
     vertical-align: top;
 }
+
 [dir=rtl] #config__manager td.label {
     padding: 0.8em 1em 0.6em 0;
 }
@@ -63,14 +72,17 @@
     clear: left;
     display: block;
 }
+
 [dir=rtl] #config__manager td.label label {
     clear: right;
 }
+
 #config__manager td.label img {
     padding: 0 10px;
     vertical-align: middle;
     float: right;
 }
+
 [dir=rtl] #config__manager td.label img {
     float: left;
 }
@@ -87,6 +99,7 @@
     position: relative;
     z-index: 1;
 }
+
 [dir=rtl] #config__manager td.label span.outkey {
     float: right;
     margin-right: 1em;
@@ -95,10 +108,14 @@
 #config__manager td input.edit {
     width: 30em;
 }
+
 #config__manager td .input {
     width: 30.8em;
 }
-#config__manager td select.edit { }
+
+#config__manager td select.edit {
+}
+
 #config__manager td textarea.edit {
     width: 27.5em;
     height: 4em;
@@ -112,8 +129,8 @@
 #config__manager tr input,
 #config__manager tr textarea,
 #config__manager tr select {
-  background-color: #fff;
-  color: #000;
+    background-color: #FFF;
+    color: #000;
 }
 
 #config__manager tr.default .input,
@@ -121,8 +138,8 @@
 #config__manager tr.default textarea,
 #config__manager tr.default select,
 #config__manager .selectiondefault {
-  background-color: #ccddff;
-  color: #000;
+    background-color: #CDF;
+    color: #000;
 }
 
 #config__manager tr.protected .input,
@@ -130,38 +147,41 @@
 #config__manager tr.protected textarea,
 #config__manager tr.protected select,
 #config__manager tr.protected .selection {
-  background-color: #ffcccc!important;
-  color: #000 !important;
+    background-color: #FCC!important;
+    color: #000 !important;
 }
 
-#config__manager td.error  { background-color: red; color: #000; }
+#config__manager td.error {
+    background-color: red;
+    color: #000;
+}
 
 #config__manager .selection {
-  width: 14.8em;
-  float: left;
-  margin: 0 0.3em 2px 0;
+    width: 14.8em;
+    float: left;
+    margin: 0 0.3em 2px 0;
 }
+
 [dir=rtl] #config__manager .selection {
-  width: 14.8em;
-  float: right;
-  margin: 0 0 2px 0.3em;
+    width: 14.8em;
+    float: right;
+    margin: 0 0 2px 0.3em;
 }
 
 #config__manager .selection label {
-  float: right;
-  width: 14em;
-  font-size: 90%;
+    float: right;
+    width: 14em;
+    font-size: 90%;
 }
 
-
 #config__manager .other {
-  clear: both;
-  padding-top: 0.5em;
+    clear: both;
+    padding-top: 0.5em;
 }
 
 #config__manager .other label {
-  padding-left: 2px;
-  font-size: 90%;
+    padding-left: 2px;
+    font-size: 90%;
 }
 
 /* end plugin:configmanager */

@@ -10,7 +10,6 @@
 #media__left {
     width: 30%;
     border-right: solid 1px __border__;
-
     height: 100%;
     overflow: auto;
     position: absolute;
@@ -19,7 +18,6 @@
 
 #media__right {
     width: 69.7%;
-
     height: 100%;
     overflow: auto;
     position: absolute;
@@ -42,6 +40,7 @@
     float: left;
     padding: 0.5em 0.3em 0 0;
 }
+
 [dir=rtl] #media__tree img {
     float: right;
     padding: 0.5em 0 0 0.3em;
@@ -52,6 +51,7 @@
     list-style-image: none;
     margin-left: 1.5em;
 }
+
 [dir=rtl] #media__tree ul {
     margin-left: 0;
     margin-right: 1.5em;
@@ -62,13 +62,17 @@
     list-style-type: none;
     list-style-image: none;
 }
+
 [dir=rtl] #media__tree li {
     clear: right;
 }
+
 *+html #media__tree li,
 * html #media__tree li {
     border: 1px solid __background__;
-}/* I don't understand this, but this fixes a style bug in IE;
+}
+
+/* I don't understand this, but this fixes a style bug in IE;
 it's dirty, so any "real" fixes are welcome */
 
 /* --- options --- */
@@ -84,6 +88,7 @@ it's dirty, so any "real" fixes are welcome */
     margin-top: 4px;
     position: absolute;
 }
+
 *+html #media__opts input,
 * html #media__opts input {
     position: static;
@@ -95,6 +100,7 @@ it's dirty, so any "real" fixes are welcome */
     margin-left: 20px;
     margin-bottom: 4px;
 }
+
 *+html #media__opts label,
 * html #media__opts label {
     margin-left: 10px;
@@ -139,7 +145,6 @@ it's dirty, so any "real" fixes are welcome */
     margin-right: 0.4em;
 }
 
-
 #media__content img.btn {
     vertical-align: text-bottom;
 }
@@ -172,12 +177,14 @@ it's dirty, so any "real" fixes are welcome */
     border: none;
     width: auto;
 }
+
 #media__content form#dw__upload p {
     text-align: left;
     padding: 0.25em 0;
     margin: 0;
     line-height: 1.0em;
 }
+
 #media__content form#dw__upload label.check {
     float: none;
     width: auto;
@@ -201,7 +208,7 @@ it's dirty, so any "real" fixes are welcome */
 }
 
 #media__content form.meta .edit {
-    font: 100% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
+    font: 100% "Lucida Grande", verdana, lucida, helvetica, arial, sans-serif;
     float: left;
     width: 70%;
     padding-right: 0;

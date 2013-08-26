@@ -17,16 +17,20 @@
 .dokuwiki div.search_quickresult {
     margin-bottom: 1.4em;
 }
+
 .dokuwiki div.search_quickresult h3 {
 }
+
 .dokuwiki div.search_quickresult ul {
     padding: 0;
 }
+
 .dokuwiki div.search_quickresult ul li {
     float: left;
     width: 12em;
     margin: 0 1.5em;
 }
+
 [dir=rtl] .dokuwiki div.search_quickresult ul li {
     float: right;
 }
@@ -42,6 +46,7 @@
     font-weight: normal;
     margin-bottom: .2em;
 }
+
 /* search snippet */
 .dokuwiki dl.search_results dd {
     color: @ini_text_alt;
@@ -54,10 +59,12 @@
     color: @ini_text;
     background-color: __highlight__;
 }
+
 /* search hit in search results */
 .dokuwiki .search_results strong.search_hit {
     font-weight: normal;
 }
+
 /* ellipsis separating snippets */
 .dokuwiki .search_results .search_sep {
     color: @ini_text;
@@ -68,7 +75,6 @@
 .dokuwiki div.nothing {
     margin-bottom: 1.4em;
 }
-
 
 /* AJAX quicksearch popup
 ********************************************************************/
@@ -89,19 +95,23 @@
     text-align: left;
     display: none;
 }
+
 [dir=rtl] .dokuwiki form.search div.ajax_qsearch {
     left: auto;
     right: -13.5em;
     text-align: right;
 }
+
 .dokuwiki form.search div.ajax_qsearch strong {
     display: block;
     margin-bottom: .3em;
 }
+
 .dokuwiki form.search div.ajax_qsearch ul {
     margin: 0 !important;
     padding: 0 !important;
 }
+
 .dokuwiki form.search div.ajax_qsearch ul li {
     margin: 0;
     padding: 0;

@@ -14,37 +14,45 @@
     list-style: none;
     margin-left: 0;
 }
+
 [dir=rtl] .dokuwiki form.changes ul li {
     margin-right: 0;
 }
+
 .dokuwiki form.changes ul li span,
 .dokuwiki form.changes ul li a {
     vertical-align: middle;
 }
+
 .dokuwiki form.changes ul li span.user a {
     vertical-align: bottom;
 }
+
 .dokuwiki form.changes ul li.minor {
-    opacity: .7;
+    opacity: 0.7;
 }
 
 .dokuwiki form.changes li span.date {
 }
+
 .dokuwiki form.changes li a.diff_link {
     vertical-align: baseline;
 }
+
 .dokuwiki form.changes li a.revisions_link {
     vertical-align: baseline;
 }
+
 .dokuwiki form.changes li a.wikilink1,
 .dokuwiki form.changes li a.wikilink2 {
 }
+
 .dokuwiki form.changes li span.sum {
     font-weight: bold;
 }
+
 .dokuwiki form.changes li span.user {
 }
-
 
 /*____________ page navigator ____________*/
 
@@ -52,6 +60,7 @@
     text-align: center;
     margin: 1.4em 0;
 }
+
 .dokuwiki div.pagenav-prev,
 .dokuwiki div.pagenav-next {
     display: inline;
