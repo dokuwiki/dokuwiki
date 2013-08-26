@@ -86,6 +86,14 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                                     }
                                 ?>
                             </dl>
+							<dl>
+							<?php 
+							echo '<dt>'.$lang['reference'].':</dt>';
+							foreach(media_inuse($IMG) as $path){
+								echo '<dd><a href="'.wl($path).'" class="wikilink1">'.noNSorNS($path).'</a></dd>';
+							}
+							?>
+							</dl>
                         </div>
                         <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
                     <?php endif; ?>
