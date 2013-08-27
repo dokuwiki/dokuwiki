@@ -1,15 +1,15 @@
 <?php
+
 /**
- * Hebrew language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @link       http://sourceforge.net/projects/hebdokuwiki/
+ * 
  * @author גיא שפר <guysoft@ort.org.il>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
  * @author Yaron Yogev <yaronyogev@gmail.com>
  * @author Yaron Shahrabani <sh.yaron@gmail.com>
+ * @author yohan atlan <atlan.yohan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -93,7 +93,7 @@ $lang['txt_filename']          = 'העלאה בשם (נתון לבחירה)';
 $lang['txt_overwrt']           = 'שכתוב על קובץ קיים';
 $lang['lockedby']              = 'נעול על ידי';
 $lang['lockexpire']            = 'הנעילה פגה';
-$lang['js']['willexpire']            = 'הנעילה תחלוף עוד זמן קצר. \nלמניעת התנגשויות יש להשתמש בכפתור הרענון מטה כדי לאפס את מד משך הנעילה.';
+$lang['js']['willexpire']      = 'הנעילה תחלוף עוד זמן קצר. \nלמניעת התנגשויות יש להשתמש בכפתור הרענון מטה כדי לאפס את מד משך הנעילה.';
 $lang['js']['notsavedyet']     = 'שינויים שלא נשמרו ילכו לאיבוד.';
 $lang['js']['searchmedia']     = 'חיפוש אחר קבצים';
 $lang['js']['keepopen']        = 'השארת חלון פתוח על הבחירה';
