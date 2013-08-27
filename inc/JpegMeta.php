@@ -376,7 +376,7 @@ class JpegMeta {
         // make sure datetimes are in correct format
         if(strlen($field) >= 8 && strtolower(substr($field, 0, 8)) == 'datetime') {
             if(strlen($value) < 8 || $value{4} != ':' || $value{7} != ':') {
-                $value = date('Y:m:d H:i:s', strtotime($value));
+                $value = dformat(strtotime($value), 'Y:m:d H:i:s');
             }
         }
 
@@ -563,13 +563,13 @@ class JpegMeta {
                 $dates['FileModified'] = $this->_info['file']['UnixTime'];
                 $dates['Time'] = $this->_info['file']['UnixTime'];
                 $dates['TimeSource'] = 'FileModified';
-                $dates['TimeStr'] = date("Y-m-d H:i:s", $this->_info['file']['UnixTime']);
+                $dates['TimeStr'] = dformat($this->_info['file']['UnixTime'], "Y-m-d H:i:s");
                 $dates['EarliestTime'] = $this->_info['file']['UnixTime'];
                 $dates['EarliestTimeSource'] = 'FileModified';
-                $dates['EarliestTimeStr'] = date("Y-m-d H:i:s", $this->_info['file']['UnixTime']);
+                $dates['EarliestTimeStr'] = dformat($this->_info['file']['UnixTime'], "Y-m-d H:i:s");
                 $dates['LatestTime'] = $this->_info['file']['UnixTime'];
                 $dates['LatestTimeSource'] = 'FileModified';
-                $dates['LatestTimeStr'] = date("Y-m-d H:i:s", $this->_info['file']['UnixTime']);
+                $dates['LatestTimeStr'] = dformat($this->_info['file']['UnixTime'], "Y-m-d H:i:s");
                 return $dates;
             }
             return false;
@@ -675,13 +675,13 @@ class JpegMeta {
 
         $dates['Time'] = $earliestTime;
         $dates['TimeSource'] = $earliestTimeSource;
-        $dates['TimeStr'] = date("Y-m-d H:i:s", $earliestTime);
+        $dates['TimeStr'] = dformat($earliestTime, "Y-m-d H:i:s");
         $dates['EarliestTime'] = $earliestTime;
         $dates['EarliestTimeSource'] = $earliestTimeSource;
-        $dates['EarliestTimeStr'] = date("Y-m-d H:i:s", $earliestTime);
+        $dates['EarliestTimeStr'] = dformat($earliestTime, "Y-m-d H:i:s");
         $dates['LatestTime'] = $latestTime;
         $dates['LatestTimeSource'] = $latestTimeSource;
-        $dates['LatestTimeStr'] = date("Y-m-d H:i:s", $latestTime);
+        $dates['LatestTimeStr'] = dformat($latestTime, "Y-m-d H:i:s");
 
         return $dates;
     }

@@ -133,7 +133,7 @@ class ap_manage {
         switch ($cmd) {
             case 'install' :
                 $url = $data[0];
-                $date = date('r');
+                $date = dformat(null, 'r');
                 if (!$fp = @fopen($file, 'w')) return;
                 fwrite($fp, "installed=$date\nurl=$url\n");
                 fclose($fp);
@@ -141,7 +141,7 @@ class ap_manage {
 
             case 'update' :
                 $url = $data[0];
-                $date = date('r');
+                $date = dformat(null, 'r');
                 if (!$fp = @fopen($file, 'r+')) return;
                 $buffer = "";
                 while (($line = fgets($fp)) !== false) {

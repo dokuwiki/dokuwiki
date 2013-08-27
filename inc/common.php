@@ -1296,7 +1296,9 @@ function dformat($dt = null, $format = '') {
     if(!$format) $format = $conf['dformat'];
 
     $format = str_replace('%f', datetime_h($dt), $format);
+    // @codingStandardsIgnoreStart
     return strftime($format, $dt);
+    // @codingStandardsIgnoreEnd
 }
 
 /**
@@ -1308,8 +1310,8 @@ function dformat($dt = null, $format = '') {
  * @return string
  */
 function date_iso8601($int_date) {
-    $date_mod     = date('Y-m-d\TH:i:s', $int_date);
-    $pre_timezone = date('O', $int_date);
+    $date_mod     = dformat($int_date, 'Y-m-d\TH:i:s');
+    $pre_timezone = dformat($int_date, 'O');
     $time_zone    = substr($pre_timezone, 0, 3).":".substr($pre_timezone, 3, 2);
     $date_mod .= $time_zone;
     return $date_mod;

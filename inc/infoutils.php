@@ -73,7 +73,7 @@ function getVersionData(){
             $chunk = @array_shift(explode("\t",$chunk)); //strip commit msg
             $chunk = explode(" ",$chunk);
             array_pop($chunk); //strip timezone
-            $date = date('Y-m-d',array_pop($chunk));
+            $date = dformat(array_pop($chunk), 'Y-m-d');
             if($date) $version['date'] = $date;
         }
     }else{
@@ -192,7 +192,6 @@ function check(){
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
-
 
     if($conf['allowdebug']){
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
@@ -370,7 +369,7 @@ function dbglog($msg,$header=''){
     $file = $conf['cachedir'].'/debug.log';
     $fh = fopen($file,'a');
     if($fh){
-        fwrite($fh,date('H:i:s ').$_SERVER['REMOTE_ADDR'].': '.$msg."\n");
+        fwrite($fh,dformat(null, 'H:i:s ').$_SERVER['REMOTE_ADDR'].': '.$msg."\n");
         fclose($fh);
     }
 }

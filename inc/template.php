@@ -378,9 +378,9 @@ function tpl_metaheaders($alt = true) {
     if($ACT == 'show' || $ACT == 'export_xhtml') {
         // date of modification
         if($REV) {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
+            $head['meta'][] = array('name'=> 'date', 'content'=> dformat($REV, 'Y-m-d\TH:i:sO'));
         } else {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
+            $head['meta'][] = array('name'=> 'date', 'content'=> dformat($INFO['lastmod'], 'Y-m-d\TH:i:sO'));
         }
 
         // keywords (explicit or implicit)
