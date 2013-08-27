@@ -465,8 +465,7 @@ function css_pluginstyles($mediatype='screen'){
  *
  * @author Gabriel Birke <birke@d-scribe.de>
  */
-function css_moveimports($css)
-{
+function css_moveimports($css) {
     if(!preg_match_all('/@import\s+(?:url\([^)]+\)|"[^"]+")\s*[^;]*;\s*/', $css, $matches, PREG_OFFSET_CAPTURE)) {
         return $css;
     }
