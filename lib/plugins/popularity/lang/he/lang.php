@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Hebrew language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Dotan Kamber <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
  * @author Yaron Yogev <yaronyogev@gmail.com>
