@@ -194,8 +194,7 @@ function js_pluginscripts(){
  *
  * @author Gabriel Birke <birke@d-scribe.de>
  */
-function js_pluginstrings()
-{
+function js_pluginstrings() {
     global $conf;
     $pluginstrings = array();
     $plugins = plugin_list();
