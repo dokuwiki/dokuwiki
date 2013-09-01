@@ -218,7 +218,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
             } else {
                 $date = 0;
             }
-            if($date) $item->date = date('r', $date);
+            if($date) $item->date = dformat($date, 'r');
 
             // add title
             if($conf['useheading'] && $meta['title']) {
