@@ -31,7 +31,7 @@
 
     global $INFO, $JSINFO;
     $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
-    $JSINFO = array('id' => '', 'namespace' => '');
+    $JSINFO = array('id' => '', 'namespace' => '', 'user' => $_SERVER['REMOTE_USER']);
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
