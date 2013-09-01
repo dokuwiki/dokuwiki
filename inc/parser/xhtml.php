@@ -875,7 +875,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $mod   = 1;
             $start = 0;
             $end   = $feed->get_item_quantity();
-            $end   = ($end > $params['max']) ? $params['max'] : $end;;
+            $end   = ($end > $params['max']) ? $params['max'] : $end;
         }
 
         $this->doc .= '<ul class="rss">';
@@ -1208,8 +1208,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @access protected
      * @return array
      */
-    function _getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render)
-    {
+    function _getMediaLinkConf($src, $title, $align, $width, $height, $cache, $render) {
         global $conf;
 
         $link = array();
