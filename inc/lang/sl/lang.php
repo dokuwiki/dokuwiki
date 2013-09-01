@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Slovenian language file
- *
- * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
+ * @author Matej Urbančič <mateju@svn.gnome.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -43,6 +44,7 @@ $lang['btn_backtomedia']       = 'Nazaj na izbiro predstavnih datotek';
 $lang['btn_subscribe']         = 'Urejanje naročnin';
 $lang['btn_profile']           = 'Posodobi profil';
 $lang['btn_reset']             = 'Ponastavi';
+$lang['btn_resendpwd']         = 'Nastavi novo geslo';
 $lang['btn_draft']             = 'Uredi osnutek';
 $lang['btn_recover']           = 'Obnovi osnutek';
 $lang['btn_draftdel']          = 'Izbriši osnutek';
@@ -50,6 +52,7 @@ $lang['btn_revert']            = 'Povrni';
 $lang['btn_register']          = 'Prijava';
 $lang['btn_apply']             = 'Uveljavi';
 $lang['btn_media']             = 'Urejevalnik predstavnih vsebin';
+$lang['btn_deleteuser']        = 'Odstrani račun';
 $lang['loggedinas']            = 'Prijava kot';
 $lang['user']                  = 'Uporabniško ime';
 $lang['pass']                  = 'Geslo';
@@ -61,6 +64,7 @@ $lang['fullname']              = 'Pravo ime';
 $lang['email']                 = 'Elektronski naslov';
 $lang['profile']               = 'Uporabniški profil';
 $lang['badlogin']              = 'Uporabniško ime ali geslo je napačno.';
+$lang['badpassconfirm']        = 'Napaka! Geslo ni pravo.';
 $lang['minoredit']             = 'Manjše spremembe';
 $lang['draftdate']             = 'Samodejno shranjevanje osnutka je omogočeno';
 $lang['nosecedit']             = 'Stran je bila v vmesnem času spremenjena. Podatki strani so bili zastareli, zato se je celotna vsebina naložila znova.';
@@ -77,8 +81,12 @@ $lang['profna']                = 'DokuWiki ne podpira spreminjanja profila.';
 $lang['profnochange']          = 'Brez sprememb.';
 $lang['profnoempty']           = 'Prazno polje elektronskega naslova ali imena ni dovoljeno.';
 $lang['profchanged']           = 'Uporabniški profil je uspešno posodobljen.';
+$lang['profnodelete']          = 'Ni omogočena podpora za brisanje uporabnikov.';
+$lang['profdeleteuser']        = 'Izbriši račun';
+$lang['profdeleted']           = 'Uporabniški račun je izbrisan.';
 $lang['pwdforget']             = 'Ali ste pozabili geslo? Pridobite si novo geslo.';
 $lang['resendna']              = 'DokuWiki ne podpira možnosti ponovnega pošiljanja gesel.';
+$lang['resendpwd']             = 'Nastavi novo geslo za';
 $lang['resendpwdmissing']      = 'Izpolniti je treba vsa polja.';
 $lang['resendpwdnouser']       = 'Podanega uporabniškega imena v podatkovni zbirki ni mogoče najti.';
 $lang['resendpwdbadauth']      = 'Koda za overitev ni prava. Prepričajte se, da ste uporabili celotno povezavo za potrditev.';
@@ -279,6 +287,7 @@ $lang['i_pol1']                = 'Javni Wiki (branje za vse, zapis in nalaganje 
 $lang['i_pol2']                = 'Zaprt Wiki (berejo in urejajo lahko le prijavljeni uporabniki)';
 $lang['i_retry']               = 'Ponovni poskus';
 $lang['i_license']             = 'Izbor dovoljenja objave vsebine:';
+$lang['i_license_none']        = 'Ne pokaži podrobnosti dovoljenja.';
 $lang['recent_global']         = 'Trenutno so prikazane spremembe znotraj imenskega prostora <b>%s</b>. Mogoče si je ogledati tudi spremembe <a href="%s">celotnega sistema Wiki</a>.';
 $lang['years']                 = '%d let nazaj';
 $lang['months']                = '%d mesecev nazaj';
