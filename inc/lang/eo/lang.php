@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
@@ -270,7 +270,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'retpoŝtaĵo pro ĉiu ŝanĝo';
 $lang['subscr_style_digest']   = 'resuma retpoŝtaĵo de ŝanĝoj por ĉiu paĝo (je %.2f tagoj)';
 $lang['subscr_style_list']     = 'listo de ŝanĝitaj paĝoj ekde la lasta retpoŝtaĵo (je %.2f tagoj)';
-$lang['authmodfailed']         = 'Malbona agordo por identigi la uzanton. Bonvolu informi la administranton de la vikio.';
 $lang['authtempfail']          = 'La identigo de via uzantonomo estas intertempe maldisponebla. Se tiu ĉi situacio daŭros, bonvolu informi la adminstranton de la vikio.';
 $lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';
 $lang['i_chooselang']          = 'Elektu vian lingvon';

@@ -173,7 +173,6 @@ $lang['subscribe_error']       = 'Gagal menambahkan %s ke data subsripsi untuk %
 $lang['subscribe_noaddress']   = 'Tidak ditemukan alamat yang berhubungan dengan login Anda, Anda tidak dapat menambahkan daftar subscription';
 $lang['unsubscribe_success']   = 'Menghapus %s dari daftar subscription untuk %s';
 $lang['unsubscribe_error']     = 'Gagal menghapus %s dari daftar subscription untuk %s';
-$lang['authmodfailed']         = 'Konfigurasi autentikasi user tidak valid. Harap informasikan admin Wiki Anda.';
 $lang['authtempfail']          = 'Autentikasi user saat ini sedang tidak dapat digunakan. Jika kejadian ini berlanjut, Harap informasikan admin Wiki Anda.';
 $lang['i_chooselang']          = 'Pilih bahasa';
 $lang['i_installer']           = 'Instalasi DokuWiki';

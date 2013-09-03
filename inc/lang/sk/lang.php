@@ -261,7 +261,6 @@ $lang['subscr_m_receive']      = 'Dostávať';
 $lang['subscr_style_every']    = 'email pri každej zmene';
 $lang['subscr_style_digest']   = 'email so zhrnutím zmien pre každú stránku (perióda %.2f dňa)';
 $lang['subscr_style_list']     = 'zoznam zmenených stránok od posledného emailu (perióda %.2f dňa)';
-$lang['authmodfailed']         = 'Užívateľská autentifikácia nie je možná. Prosím informujte správcu systému.';
 $lang['authtempfail']          = 'Užívateľská autentifikácia je dočasne nedostupná. Ak táto situácia pretrváva, prosím informujte správcu systému.';
 $lang['authpwdexpire']         = 'Platnosť hesla vyprší za %d dní, mali by ste ho zmeniť čo najskôr.';
 $lang['i_chooselang']          = 'Zvoľte váš jazyk';

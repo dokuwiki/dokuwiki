@@ -258,7 +258,6 @@ $lang['subscr_m_unsubscribe']  = 'ألغ الاشتراك';
 $lang['subscr_m_subscribe']    = 'اشترك';
 $lang['subscr_m_receive']      = 'استقبال';
 $lang['subscr_style_every']    = 'بريدا على كل تغيير';
-$lang['authmodfailed']         = 'إعدادات تصريح فاسدة، يرجى مراسلة المدير.';
 $lang['authtempfail']          = 'تصريح المشترك غير متوفر مؤقتاً، إن استمرت هذه الحالة يرجى مراسلة المدير';
 $lang['authpwdexpire']         = 'ستنتهي صلاحية كلمة السر في %d . عليك بتغييرها سريعا.';
 $lang['i_chooselang']          = 'اختر لغتك';

@@ -190,7 +190,6 @@ $lang['subscribe_error']       = '%s adlı istifadəçini %s səhifənin paylanm
 $lang['subscribe_noaddress']   = 'Sizin profilinizdə e-mail göstərilməyib.Ona görə siz paylnma siyahılarına əlavə edilə bilməzsiniz.';
 $lang['unsubscribe_success']   = '%s adlı istifadəçi %s səhifənin paylanma siyahısından silinmişdir';
 $lang['unsubscribe_error']     = '%s adlı istifadəçini %s səhifənin paylanma siyahısından silən zaman xəta baş verdi.';
-$lang['authmodfailed']         = 'İstifadəçinin autentifikasiyasının konfiqurasiyası səhfdir. Xaiş olunur ki wiki-nin administratoru ilə əlaqə saxlayasınız.';
 $lang['authtempfail']          = 'İstifadəçilərin autentifikasiyası müvəqqəti dayandırılıb. Əgər bu problem uzun müddət davam edir sə, administrator ilə əlaqə saxlayın.';
 $lang['i_chooselang']          = 'Dili seçin/Language';
 $lang['i_installer']           = 'DokuWiki quraşdırılır';

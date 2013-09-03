@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Tomas Valenta <tomas@valenta.cz>
@@ -276,7 +276,6 @@ $lang['subscr_m_receive']      = 'Přejete si dostávat';
 $lang['subscr_style_every']    = 'email pro každou změnu';
 $lang['subscr_style_digest']   = 'souhrnný email změn pro každou stránku (každé %.2f dny/dní)';
 $lang['subscr_style_list']     = 'seznam změněných stránek od posledního emailu (každé %.2f dny/dní)';
-$lang['authmodfailed']         = 'Autentizace uživatelů je špatně nastavena. Informujte prosím správce této wiki.';
 $lang['authtempfail']          = 'Autentizace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte prosím správce této wiki.';
 $lang['authpwdexpire']         = 'Platnost vašeho hesla vyprší za %d dní, měli byste ho změnit co nejdříve.';
 $lang['i_chooselang']          = 'Vyberte si jazyk';

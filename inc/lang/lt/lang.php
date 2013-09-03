@@ -180,7 +180,6 @@ $lang['subscribe_error']       = '%s užsakant "%s" prenumeratą įvyko klaida';
 $lang['subscribe_noaddress']   = 'Jūs nesatė nurodęs el. pašto adreso, todėl negalima Jums užsakyti prenumeratos';
 $lang['unsubscribe_success']   = '%s ištrintas iš "%s" prenumeratos';
 $lang['unsubscribe_error']     = '%s trinant iš "%s" prenumeratos įvyko klaida';
-$lang['authmodfailed']         = 'Bloga vartotojo tapatumo nustatymo konfigūracija. Praneškite apie tai savo administratoriui.';
 $lang['authtempfail']          = 'Vartotojo tapatumo nustatymas laikinai nepasiekiamas. Jei ši situacija kartojasi, tai praneškite savo administratoriui.';
 $lang['i_chooselang']          = 'Pasirinkite kalbą';
 $lang['i_installer']           = 'DokuWiki Instaliatorius';

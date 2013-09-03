@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
@@ -274,7 +274,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'email per ogni modifica';
 $lang['subscr_style_digest']   = 'email di riassunto dei cambiamenti per ogni pagina (ogni %.2f giorni)';
 $lang['subscr_style_list']     = 'lista delle pagine cambiate dall\'ultima email (ogni %.2f giorni)';
-$lang['authmodfailed']         = 'La configurazione dell\'autenticazione non è corretta. Informa l\'amministratore di questo wiki.';
 $lang['authtempfail']          = 'L\'autenticazione è temporaneamente non disponibile. Se questa situazione persiste, informa l\'amministratore di questo wiki.';
 $lang['authpwdexpire']         = 'La tua password scadrà in %d giorni, dovresti cambiarla quanto prima.';
 $lang['i_chooselang']          = 'Scegli la lingua';

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Yuri Pimenov <up@ftpsearch.lv>
  * @author Igor Tarasov <tigr@mail15.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -281,7 +281,6 @@ $lang['subscr_m_receive']      = 'Получить';
 $lang['subscr_style_every']    = 'уведомлять о каждом изменении';
 $lang['subscr_style_digest']   = 'информационное электронное письмо со списком изменений для каждой страницы (каждые %.2f дней)';
 $lang['subscr_style_list']     = 'список изменённых страниц со времени последнего отправленного электронного письма (каждые %.2f дней)';
-$lang['authmodfailed']         = 'Неправильная конфигурация аутентификации пользователя. Пожалуйста, сообщите об этом своему администратору вики.';
 $lang['authtempfail']          = 'Аутентификация пользователей временно недоступна. Если проблема продолжается какое-то время, пожалуйста, сообщите об этом своему администратору вики.';
 $lang['authpwdexpire']         = 'Действие вашего пароля истекает через %d дней. Вы должны изменить его как можно скорее';
 $lang['i_chooselang']          = 'Выберите свой язык/Choose your language';

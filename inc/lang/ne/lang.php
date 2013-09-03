@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author Saroj Kumar Dhakal <lotusnagarkot@yahoo.com>
  */
@@ -169,7 +169,6 @@ $lang['img_copyr']             = 'सर्वाधिकार';
 $lang['img_format']            = 'ढाचा';
 $lang['img_camera']            = 'क्यामेरा';
 $lang['img_keywords']          = 'खोज शब्द';
-$lang['authmodfailed']         = 'खराब प्रयोगकर्ता प्रामाणिकरण विधि ।तपाईको विकी एड्मिनलाई खवर गर्नुहोस् ।';
 $lang['authtempfail']          = 'प्रयोगकर्ता प्रामाणिकरण अस्थाइरुपमा अनुपलब्ध छ। यदि यो समस्या रहि रहेमा तपाईको  विकि एड्मिनलाई खवर गर्नुहोला ।';
 $lang['i_chooselang']          = 'भाषा छान्नुहोस् ';
 $lang['i_installer']           = 'DokuWiki  स्थापक';

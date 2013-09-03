@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton <guxd@163.com>
@@ -270,7 +270,6 @@ $lang['subscr_m_receive']      = '接收';
 $lang['subscr_style_every']    = '对每次更改发送邮件';
 $lang['subscr_style_digest']   = '对每个页面发送更改的摘要邮件（每 %.2f 天）';
 $lang['subscr_style_list']     = '自上封邮件以来更改的页面的列表（每 %.2f 天）';
-$lang['authmodfailed']         = '错误的用户认证设置。请通知维基管理员。';
 $lang['authtempfail']          = '用户认证暂时无法使用。如果该状态一直存在，请通知维基管理员。';
 $lang['authpwdexpire']         = '您的密码将在 %d 天内过期，请尽快更改';
 $lang['i_chooselang']          = '选择您的语言';

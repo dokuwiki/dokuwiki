@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -281,7 +281,6 @@ $lang['subscr_m_receive']      = 'Benachrichtigung';
 $lang['subscr_style_every']    = 'E-Mail bei jeder Bearbeitung';
 $lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
-$lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Admin.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Admin.';
 $lang['authpwdexpire']         = 'Ihr Passwort läuft in %d Tag(en) ab. Sie sollten es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';

@@ -231,7 +231,6 @@ $lang['subscr_m_receive']      = 'קבלת';
 $lang['subscr_style_every']    = 'דוא״ל עם כל שינוי';
 $lang['subscr_style_digest']   = 'הודעת דוא״ל המציגה את כל השינויים בכל עמוד (בכל %.2f ימים)';
 $lang['subscr_style_list']     = 'רשימת השינויים בדפים מאז הודעת הדוא״ל האחרונה (בכל %.2f ימים)';
-$lang['authmodfailed']         = 'תצורת אימות המשתמשים אינה תקינה. נא ליידע את מנהל הוויקי.';
 $lang['authtempfail']          = 'אימות משתמשים אינו זמין כרגע. אם מצב זה נמשך נא ליידע את מנהל הוויקי.';
 $lang['i_chooselang']          = 'נא לבחור שפה';
 $lang['i_installer']           = 'תכנית ההתקנה של DokuWiki';

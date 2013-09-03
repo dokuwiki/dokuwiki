@@ -266,7 +266,6 @@ $lang['subscr_m_unsubscribe']  = 'لغو آبونه';
 $lang['subscr_m_subscribe']    = 'آبونه شدن';
 $lang['subscr_m_receive']      = 'دریافت کردن';
 $lang['subscr_style_every']    = 'ارسال رای‌نامه در تمامی تغییرات';
-$lang['authmodfailed']         = 'اشکال در نوع معتبرسازی کاربران، مدیر ویکی را باخبر سازید.';
 $lang['authtempfail']          = 'معتبرسازی کابران موقتن مسدود می‌باشد. اگر این حالت پایدار بود، مدیر ویکی را باخبر سازید.';
 $lang['authpwdexpire']         = 'کلمه عبور شما در %d روز منقضی خواهد شد ، شما باید آن را زود تغییر دهید';
 $lang['i_chooselang']          = 'انتخاب زبان';

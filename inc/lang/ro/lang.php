@@ -262,7 +262,6 @@ $lang['subscr_m_receive']      = 'Primiți';
 $lang['subscr_style_every']    = 'email la ficare schimbare';
 $lang['subscr_style_digest']   = 'digerează email la schimbări pentru fiecare pagină (la fiecare %.2f zile)';
 $lang['subscr_style_list']     = 'lista paginilor schimbate de la ultimul email (la fiecare %.2f zile)';
-$lang['authmodfailed']         = 'Configurația autentificării utilizatorului este eronată. Anunțați Wiki Admin-ul.';
 $lang['authtempfail']          = 'Autentificarea utilizatorului este temporar indisponibilă. Anunțați Wiki Admin-ul.';
 $lang['authpwdexpire']         = 'Parola vă va expira în %d zile, ar trebui să o schimbați curând.';
 $lang['i_chooselang']          = 'Alegeți limba';

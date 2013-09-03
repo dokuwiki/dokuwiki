@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -286,7 +286,6 @@ $lang['subscr_m_receive']      = 'Recevoir';
 $lang['subscr_style_every']    = 'Recevoir un courriel à chaque modification';
 $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
-$lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'en informer l\'administrateur du wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'en informer l\'administrateur du wiki.';
 $lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';

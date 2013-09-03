@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author Gabiel Molina <gabriel191@gmail.com>
@@ -287,7 +287,6 @@ $lang['subscr_m_unsubscribe']  = 'Darse de baja';
 $lang['subscr_m_subscribe']    = 'Suscribirse';
 $lang['subscr_m_receive']      = 'Recibir';
 $lang['subscr_style_every']    = 'enviar correo en cada cambio';
-$lang['authmodfailed']         = 'Está mal configurada la autenticación de usuarios. Por favor, avisa al administrador del wiki.';
 $lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
 $lang['authpwdexpire']         = 'Su contraseña caducara en %d días, debería cambiarla lo antes posible';
 $lang['i_chooselang']          = 'Elija su idioma';

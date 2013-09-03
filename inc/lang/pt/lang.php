@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
@@ -263,7 +263,6 @@ $lang['subscr_m_receive']      = 'Receber';
 $lang['subscr_style_every']    = 'email em qualquer alteração';
 $lang['subscr_style_digest']   = '"digest email" de alterações em cada página (cada %.2f dias)';
 $lang['subscr_style_list']     = 'lista de páginas alteradas desde o último email (cada %.2f dias)';
-$lang['authmodfailed']         = 'Configuração de autenticação errada. Por favor, informe o Wiki Admin.';
 $lang['authtempfail']          = 'Autenticação temporariamente indisponível. Se a situação persistir, por favor informe o Wiki Admin.';
 $lang['authpwdexpire']         = 'A sua senha expirará dentro de %d dias, deve mudá-la em breve.';
 $lang['i_chooselang']          = 'Escolha a linguagem';

@@ -191,7 +191,6 @@ $lang['subscribe_error']       = 'Erro afegint a %s a la llista de subscripció 
 $lang['subscribe_noaddress']   = 'No hi ha cap direcció associada a la sessió, no es pot subscriure';
 $lang['unsubscribe_success']   = '%s borrat de la llista de subscripció per a %s';
 $lang['unsubscribe_error']     = 'Erro borrant a %s de la llista de subscripció per a %s';
-$lang['authmodfailed']         = 'Mala configuració de l\'autenticació d\'usuari. Per favor, informe a l\'administrador del Wiki.';
 $lang['authtempfail']          = 'L\'autenticació d\'usuaris està desactivada temporalment. Si la situació persistix, per favor, informe a l\'administrador del Wiki.';
 $lang['i_chooselang']          = 'Trie l\'idioma';
 $lang['i_installer']           = 'Instalador de DokuWiki';

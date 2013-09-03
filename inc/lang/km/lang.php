@@ -194,7 +194,6 @@ $lang['unsubscribe_success']= 'ដក %s ចេញពីបញ្ជីបរិ
 $lang['unsubscribe_error']  = 'មានកំហុសពេលដក %s​  ចេញពីបញ្ជីបរិវិសកមចំពោះ %s';
 
 /* auth.class language support */
-$lang['authmodfailed']   = 'និនផ្ទៀងផ្ទាត់​ភាព​​ត្រឹមត្រូវបានទេ។ សុំទាកទងអ្នកក្របគ្រោង។';
 $lang['authtempfail']    = 'ការផ្ទៀងផ្ទាត់​ភាព​​ត្រឹមត្រូវឥតដំនេ។ ប្រើ ....';
 
 /* installer strings */

@@ -266,7 +266,6 @@ $lang['subscr_m_receive']      = 'Modtag';
 $lang['subscr_style_every']    = 'email på hver ændring';
 $lang['subscr_style_digest']   = 'opsummeringsmail med ændringer for hver side (hver %.2f dage)';
 $lang['subscr_style_list']     = 'list af ændrede sider siden sidste email (hver %.2f dage)';
-$lang['authmodfailed']         = 'Fejl i brugervalideringens konfiguration. Kontakt venligst wikiens administrator.';
 $lang['authtempfail']          = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
 $lang['authpwdexpire']         = 'Din adgangskode vil udløbe om %d dage, du bør ændre det snart.';
 $lang['i_chooselang']          = 'Vælg dit sprog';

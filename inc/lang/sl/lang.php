@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
@@ -263,7 +263,6 @@ $lang['subscr_m_receive']      = 'Prejmi';
 $lang['subscr_style_every']    = 'elektronsko sporočilo ob vsaki spremembi';
 $lang['subscr_style_digest']   = 'strnjeno elektronsko sporočilo sprememb za vsako stran (vsakih %.2f dni)';
 $lang['subscr_style_list']     = 'seznam spremenjenih strani od zadnjega elektronskega sporočila (vsakih %.2f dni)';
-$lang['authmodfailed']         = 'Slaba nastavitev overitve uporabniškega računa. Stopite v stik s skrbnikom sistema wiki.';
 $lang['authtempfail']          = 'Potrditev uporabnika je trenutno nedostopna. Stopite v stik s skrbnikom sistema wiki.';
 $lang['i_chooselang']          = 'Izberite jezik';
 $lang['i_installer']           = 'DokuWiki namestitev';

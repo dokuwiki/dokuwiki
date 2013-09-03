@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
@@ -268,7 +268,6 @@ $lang['subscr_m_receive']      = 'Λήψη';
 $lang['subscr_style_every']    = 'email σε κάθε αλλαγή';
 $lang['subscr_style_digest']   = 'συνοπτικό email αλλαγών της σελίδας (κάθε %.2f μέρες)';
 $lang['subscr_style_list']     = 'λίστα σελίδων με αλλαγές μετά από το τελευταίο email (κάθε %.2f μέρες)';
-$lang['authmodfailed']         = 'Κακή ρύθμιση λίστας χρηστών. Παρακαλούμε ενημερώστε τον διαχειριστή του wiki.';
 $lang['authtempfail']          = 'Η συνδεση χρηστών είναι απενεργοποιημένη αυτή την στιγμή. Αν αυτό διαρκέσει για πολύ, παρακαλούμε ενημερώστε τον διαχειριστή του wiki.';
 $lang['authpwdexpire']         = 'Ο κωδικός πρόσβασης θα λήξει σε %s ημέρες. Προτείνουμε να τον αλλάξετε σύντομα.';
 $lang['i_chooselang']          = 'Επιλογή γλώσσας';
