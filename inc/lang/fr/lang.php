@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -104,6 +104,7 @@ $lang['profnodelete']          = 'Ce wiki ne permet pas la suppression des utili
 $lang['profdeleteuser']        = 'Supprimer le compte';
 $lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
 $lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
+$lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
 $lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
