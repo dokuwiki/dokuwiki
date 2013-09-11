@@ -395,7 +395,6 @@ function ft_snippet_re_preprocess($term) {
         $BR = '\b';
     }
 
-
     if(substr($term,0,2) == '\\*'){
         $term = substr($term,2);
     }else{

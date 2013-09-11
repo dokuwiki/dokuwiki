@@ -120,7 +120,6 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         $recents = getRecents(0,$this->max_lines);
         echo '<ul>';
 
-
         $cnt = 0;
         foreach($recents as $recent){
             if($filter){
