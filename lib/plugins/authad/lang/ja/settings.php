@@ -1,6 +1,16 @@
 <?php
+
 /**
- * Japanese language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+ * @author Hideaki SAWADA <chuno@live.jp>
  */
+$lang['account_suffix']        = 'アカウントの接尾語。例：<code>@my.domain.org</code>';
+$lang['base_dn']               = 'ベースDN。例：<code>DC=my,DC=domain,DC=org</code>';
+$lang['domain_controllers']    = 'ドメインコントローラのカンマ区切り一覧。例：<code>srv1.domain.org,srv2.domain.org</code>';
+$lang['admin_username']        = '全ユーザーデータへのアクセス権のある特権Active Directoryユーザー。任意ですが、メール通知の登録等の特定の動作に必要。';
+$lang['admin_password']        = '上記ユーザーのパスワード';
+$lang['debug']                 = 'エラー時に追加のデバッグ出力を表示する？';
+$lang['expirywarn']            = '何日前からパスワードの有効期限をユーザーに警告する。0 の場合は無効';
+$lang['additional']            = 'ユーザデータから取得する追加AD属性のカンマ区切り一覧。いくつかのプラグインが使用する。';
