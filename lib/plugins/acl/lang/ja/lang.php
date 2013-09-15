@@ -1,8 +1,8 @@
 <?php
+
 /**
- * japanese language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Davilin(Yuji Takenaka) <webmaster@davilin.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>

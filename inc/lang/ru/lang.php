@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Yuri Pimenov <up@ftpsearch.lv>
  * @author Igor Tarasov <tigr@mail15.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -264,7 +264,7 @@ $lang['img_camera']            = 'Модель';
 $lang['img_keywords']          = 'Ключевые слова';
 $lang['img_width']             = 'Ширина';
 $lang['img_height']            = 'Высота';
-$lang['img_manager']           = 'Просмотр в media manager';
+$lang['img_manager']           = 'Просмотр в «управлении медиафайлами»';
 $lang['subscr_subscribe_success'] = 'Добавлен %s в подписку на %s';
 $lang['subscr_subscribe_error'] = 'Невозможно добавить %s в подписку на %s';
 $lang['subscr_subscribe_noaddress'] = 'Нет адреса электронной почты, сопоставленного с вашей учётной записью. Вы не можете подписаться на рассылку';
