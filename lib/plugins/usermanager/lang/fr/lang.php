@@ -22,6 +22,7 @@
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Antoine Turmel <geekshadow@gmail.com>
+ * @author schplurtz <Schplurtz@laposte.net>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
@@ -45,8 +46,8 @@ $lang['search_prompt']         = 'Effectuer la recherche';
 $lang['clear']                 = 'Réinitialiser la recherche';
 $lang['filter']                = 'Filtre';
 $lang['export_all']            = 'Exporter tous les utilisateurs (CSV)';
-$lang['export_filtered']       = 'Exporter la liste d\'utilisateurs filtrée (CSV)';
-$lang['import']                = 'Importer les nouveaux utilisateurs';
+$lang['export_filtered']       = 'Exporter la liste d\'utilisateurs filtrés (CSV)';
+$lang['import']                = 'Importer de nouveaux utilisateurs';
 $lang['line']                  = 'Ligne n°';
 $lang['error']                 = 'Message d\'erreur';
 $lang['summary']               = 'Affichage des utilisateurs %1$d-%2$d parmi %3$d trouvés. %4$d utilisateurs au total.';
@@ -78,3 +79,4 @@ $lang['import_error_badmail']  = 'Mauvaise adresse e-mail';
 $lang['import_error_upload']   = 'L\'import a échoué. Le fichier csv n\'a pas pu être téléchargé ou bien il est vide.';
 $lang['import_error_readfail'] = 'L\'import a échoué. Impossible de lire le fichier téléchargé.';
 $lang['import_error_create']   = 'Impossible de créer l\'utilisateur';
+$lang['import_notify_fail']    = 'Impossible d\'expédier une notification à l\'utilisateur importé %s, adresse %s.';
