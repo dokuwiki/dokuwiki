@@ -19,6 +19,7 @@
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['admin_acl']             = 'Toegangsrechten';
 $lang['acl_group']             = 'Groep';
@@ -30,7 +31,7 @@ $lang['btn_select']            = 'Selecteer';
 $lang['p_user_id']             = 'Gebruiker <b class="acluser">%s</b> heeft momenteel de volgende bevoegdheden op pagina <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Gebruiker <b class="acluser">%s</b> heeft momenteel de volgende bevoegdheden op namespace <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Leden van groep <b class="aclgroup">%s</b> hebben momenteel de volgende bevoegdheden op pagina <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_group_ns']            = 'Leden van groep <b class="aclgroup">%s</b>hebben momenteel de volgende bevoegdheden op namespace <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Leden van groep <b class="aclgroup">%s</b> hebben momenteel de volgende bevoegdheden in namespace <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_choose_id']           = 'Vul een <b>gebruiker of groep</b> in in het bovenstaande formulier om de bevoegdheden te bekijken of te bewerken voor de pagina <b class="aclpage">%s</b>.';
 $lang['p_choose_ns']           = 'Vul een <b>gebruiker of groep</b> in in het bovenstaande formulier om de bevoegdheden te bekijken of te bewerken voor de namespace <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Let op: Deze permissies zijn niet expliciet ingesteld maar overerfd van andere groepen of hogere namespaces.';
