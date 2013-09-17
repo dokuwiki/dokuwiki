@@ -54,7 +54,7 @@ function tpl_incdir($tpl='') {
 function tpl_basedir($tpl='') {
     global $conf;
     if(!$tpl) $tpl = $conf['template'];
-    return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
+    return DOKU_BASE.'lib/tpl/'.$tpl.'/';
 }
 
 /**
