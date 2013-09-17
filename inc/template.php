@@ -290,6 +290,7 @@ function tpl_metaheaders($alt = true) {
     global $QUERY;
     global $lang;
     global $conf;
+    global $updateVersion;
 
     // prepare the head array
     $head = array();
