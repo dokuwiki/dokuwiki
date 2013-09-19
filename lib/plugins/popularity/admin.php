@@ -13,7 +13,6 @@ if(!defined('DOKU_INC')) die();
  * need to inherit from this class
  */
 class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
-    var $version;
 
     /**
      * @var helper_plugin_popularity
@@ -25,7 +24,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
         $this->helper = $this->loadHelper('popularity', false);
 
         $pluginInfo = $this->getInfo();
-        $this->version = $pluginInfo['date'];
+        $this->helper->setVersion($pluginInfo['date']);
     }
 
     /**

@@ -70,6 +70,15 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     }
 
     /**
+     * Sets plugin version
+     *
+     * @param string $pluginversion
+     */
+    public function setVersion($pluginversion) {
+        $this->version = $pluginversion;
+    }
+
+    /**
      * Check if autosubmit is enabled
      * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
