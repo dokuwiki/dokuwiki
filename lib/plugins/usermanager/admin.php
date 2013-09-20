@@ -153,7 +153,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_user_total > 0) {
             ptln("<p>".sprintf($this->lang['summary'],$this->_start+1,$this->_last,$this->_user_total,$this->_auth->getUserCount())."</p>");
         } else {
-            ptln("<p>".sprintf($this->lang['nonefound'],$this->_auth->getUserCount())."</p>");
+            if($this->_user_total < 0) {
+                $allUserTotal = 0;
+            } else {
+                $allUserTotal = $this->_auth->getUserCount();
+            }
+            ptln("<p>".sprintf($this->lang['nonefound'], $allUserTotal)."</p>");
         }
         ptln("<form action=\"".wl($ID)."\" method=\"post\">");
         formSecurityToken();
