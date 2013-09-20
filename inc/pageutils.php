@@ -366,7 +366,7 @@ function mediaFN($id, $rev=''){
  */
 function localeFN($id,$ext='txt'){
     global $conf;
-    $file = DOKU_CONF.'/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
+    $file = DOKU_CONF.'lang/'.$conf['lang'].'/'.$id.'.'.$ext;
     if(!@file_exists($file)){
         $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
         if(!@file_exists($file)){
