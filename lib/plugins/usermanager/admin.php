@@ -143,7 +143,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $delete_disable = $this->_auth->canDo('delUser') ? '' : 'disabled="disabled"';
 
         $editable = $this->_auth->canDo('UserMod');
-        $export_label = empty($this->_filter) ? $this->lang['export_all'] : $this->lang[export_filtered];
+        $export_label = empty($this->_filter) ? $this->lang['export_all'] : $this->lang['export_filtered'];
 
         print $this->locale_xhtml('intro');
         print $this->locale_xhtml('list');
@@ -422,7 +422,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         print $this->locale_xhtml('import');
         ptln('  <form action="'.wl($ID).'" method="post" enctype="multipart/form-data">',$indent);
         formSecurityToken();
-        ptln('    <label>User list file (csv):  <input type="file" name="import" /></label>',$indent);
+        ptln('    <label>'.$this->lang['import_userlistcsv'].'<input type="file" name="import" /></label>',$indent);
         ptln('    <input type="submit" name="fn[import]" value="'.$this->lang['import'].'" />',$indent);
         ptln('    <input type="hidden" name="do"    value="admin" />',$indent);
         ptln('    <input type="hidden" name="page"  value="usermanager" />',$indent);
@@ -435,7 +435,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_import_failures) {
             $digits = strlen(count($this->_import_failures));
             ptln('<div class="level3 import_failures">',$indent);
-            ptln('  <h3>Most Recent Import - Failures</h3>');
+            ptln('  <h3>'.$this->lang['import_header'].'</h3>');
             ptln('  <table class="import_failures">',$indent);
             ptln('    <thead>',$indent);
             ptln('      <tr>',$indent);
@@ -460,7 +460,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             }
             ptln('    </tbody>',$indent);
             ptln('  </table>',$indent);
-            ptln('  <p><a href="'.$failure_download_link.'">Download Failures as CSV for correction</a></p>');
+            ptln('  <p><a href="'.$failure_download_link.'">'.$this->lang['import_downloadfailures'].'</a></p>');
             ptln('</div>');
         }
 
