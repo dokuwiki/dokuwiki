@@ -576,8 +576,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     private function _editUser($param) {
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('UserMod')) return false;
-
-        $user = cleanID(preg_replace('/.*:/','',$param));
+        $user = $this->_auth->cleanUser(preg_replace('/.*[:\/]/','',$param));
         $userdata = $this->_auth->getUserData($user);
 
         // no user found?
@@ -604,7 +603,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!$this->_auth->canDo('UserMod')) return false;
 
         // get currently valid  user data
-        $olduser = cleanID(preg_replace('/.*:/','',$INPUT->str('userid_old')));
+        $olduser = $this->_auth->cleanUser(preg_replace('/.*[:\/]/','',$INPUT->str('userid_old')));
         $oldinfo = $this->_auth->getUserData($olduser);
 
         // get new user data subject to change
@@ -890,7 +889,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Returns cleaned row data
+     * Returns cleaned user data
      *
      * @param array $candidate raw values of line from input file
      * @param $error
