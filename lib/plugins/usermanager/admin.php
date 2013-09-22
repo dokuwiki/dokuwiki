@@ -21,16 +21,16 @@ if(!defined('DOKU_PLUGIN_IMAGES')) define('DOKU_PLUGIN_IMAGES',DOKU_BASE.'lib/pl
  */
 class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
-    private $_auth = null;        // auth object
-    private $_user_total = 0;     // number of registered users
-    private $_filter = array();   // user selection filter(s)
-    private $_start = 0;          // index of first user to be displayed
-    private $_last = 0;           // index of the last user to be displayed
-    private $_pagesize = 20;      // number of users to list on one page
-    private $_edit_user = '';     // set to user selected for editing
-    private $_edit_userdata = array();
-    private $_disabled = '';      // if disabled set to explanatory string
-    private $_import_failures = array();
+    protected $_auth = null;        // auth object
+    protected $_user_total = 0;     // number of registered users
+    protected $_filter = array();   // user selection filter(s)
+    protected $_start = 0;          // index of first user to be displayed
+    protected $_last = 0;           // index of the last user to be displayed
+    protected $_pagesize = 20;      // number of users to list on one page
+    protected $_edit_user = '';     // set to user selected for editing
+    protected $_edit_userdata = array();
+    protected $_disabled = '';      // if disabled set to explanatory string
+    protected $_import_failures = array();
 
     /**
      * Constructor
@@ -274,7 +274,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param array  $userdata array with name, mail, pass and grps
      * @param int    $indent
      */
-    private function _htmlUserForm($cmd,$user='',$userdata=array(),$indent=0) {
+    protected function _htmlUserForm($cmd,$user='',$userdata=array(),$indent=0) {
         global $conf;
         global $ID;
 
@@ -354,7 +354,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param bool   $cando whether auth backend is capable to do this action
      * @param int $indent
      */
-    private function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
+    protected function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
         $class = $cando ? '' : ' class="disabled"';
         echo str_pad('',$indent);
 
@@ -389,7 +389,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param string $key name of search field
      * @return string html escaped value
      */
-    private function _htmlFilter($key) {
+    protected function _htmlFilter($key) {
         if (empty($this->_filter)) return '';
         return (isset($this->_filter[$key]) ? hsc($this->_filter[$key]) : '');
     }
@@ -399,7 +399,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @param int $indent
      */
-    private function _htmlFilterSettings($indent=0) {
+    protected function _htmlFilterSettings($indent=0) {
 
         ptln("<input type=\"hidden\" name=\"start\" value=\"".$this->_start."\" />",$indent);
 
@@ -413,7 +413,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @param int $indent
      */
-    private function _htmlImportForm($indent=0) {
+    protected function _htmlImportForm($indent=0) {
         global $ID;
 
         $failure_download_link = wl($ID,array('do'=>'admin','page'=>'usermanager','fn[importfails]'=>1));
@@ -471,7 +471,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @return bool whether succesful
      */
-    private function _addUser(){
+    protected function _addUser(){
         global $INPUT;
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('addUser')) return false;
@@ -536,7 +536,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @return bool whether succesful
      */
-    private function _deleteUser(){
+    protected function _deleteUser(){
         global $conf, $INPUT;
 
         if (!checkSecurityToken()) return false;
@@ -573,7 +573,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param string $param id of the user
      * @return bool whether succesful
      */
-    private function _editUser($param) {
+    protected function _editUser($param) {
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('UserMod')) return false;
         $user = $this->_auth->cleanUser(preg_replace('/.*[:\/]/','',$param));
@@ -596,7 +596,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @return bool whether succesful
      */
-    private function _modifyUser(){
+    protected function _modifyUser(){
         global $conf, $INPUT;
 
         if (!checkSecurityToken()) return false;
@@ -671,7 +671,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param bool   $status_alert whether status alert should be shown
      * @return bool whether succesful
      */
-    private function _notifyUser($user, $password, $status_alert=true) {
+    protected function _notifyUser($user, $password, $status_alert=true) {
 
         if ($sent = auth_sendPassword($user,$password)) {
             if ($status_alert) {
@@ -692,7 +692,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param bool $clean whether the cleanUser method of the authentication backend is applied
      * @return array (user, password, full name, email, array(groups))
      */
-    private function _retrieveUser($clean=true) {
+    protected function _retrieveUser($clean=true) {
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $INPUT;
@@ -717,7 +717,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @param string $op 'new' or 'clear'
      */
-    private function _setFilter($op) {
+    protected function _setFilter($op) {
 
         $this->_filter = array();
 
@@ -736,7 +736,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @return array
      */
-    private function _retrieveFilter() {
+    protected function _retrieveFilter() {
         global $INPUT;
 
         $t_filter = $INPUT->arr('filter');
@@ -755,7 +755,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * Validate and improve the pagination values
      */
-    private function _validatePagination() {
+    protected function _validatePagination() {
 
         if ($this->_start >= $this->_user_total) {
             $this->_start = $this->_user_total - $this->_pagesize;
@@ -770,7 +770,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @return array with enable/disable attributes
      */
-    private function _pagination() {
+    protected function _pagination() {
 
         $disabled = 'disabled="disabled"';
 
@@ -789,7 +789,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * Export a list of users in csv format using the current filter criteria
      */
-    private function _export() {
+    protected function _export() {
         // list of users for export - based on current filter criteria
         $user_list = $this->_auth->retrieveUsers(0, 0, $this->_filter);
         $column_headings = array(
@@ -825,7 +825,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @return bool whether succesful
      */
-    private function _import() {
+    protected function _import() {
         // check we are allowed to add users
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('addUser')) return false;
@@ -895,7 +895,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param $error
      * @return array|bool cleaned data or false
      */
-    private function _cleanImportUser($candidate, & $error){
+    protected function _cleanImportUser($candidate, & $error){
         global $INPUT;
 
         // kludgy ....
@@ -943,7 +943,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param string &$error reference catched error message
      * @return bool whether succesful
      */
-    private function _addImportUser($user, & $error){
+    protected function _addImportUser($user, & $error){
         if (!$this->_auth->triggerUserMod('create', $user)) {
             $error = $this->lang['import_error_create'];
             return false;
@@ -955,7 +955,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * Downloads failures as csv file
      */
-    private function _downloadImportFailures(){
+    protected function _downloadImportFailures(){
 
         // ==============================================================================================
         // GENERATE OUTPUT
