@@ -333,7 +333,6 @@ class RemoteAPICore {
         if (!is_array($options)) $options = array();
         $options['skipacl'] = 0; // no ACL skipping for XMLRPC
 
-
         if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
 

@@ -61,7 +61,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // fresh 1:1 copy without replacements
         $AUTH_ACL = file($config_cascade['acl']['default']);
 
-
         // namespace given?
         if($INPUT->str('ns') == '*'){
             $this->ns = '*';
@@ -386,7 +385,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             echo '<legend>'.$this->getLang('acl_mod').'</legend>';
         }
 
-
         echo $this->_html_checkboxes($current,empty($this->ns),'acl');
 
         if(is_null($current)){
@@ -686,7 +684,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             if($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
         }
 
-
         $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
 
         $new_config = $acl_config.$new_acl;
@@ -774,7 +771,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $gsel = '';
             $inlist = true;
         }
-
 
         echo '<select name="acl_t" class="edit">'.NL;
         echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
