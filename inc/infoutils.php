@@ -193,7 +193,6 @@ function check(){
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
 
-
     if($conf['allowdebug']){
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
     }else{

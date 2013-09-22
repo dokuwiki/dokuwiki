@@ -342,7 +342,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $autocomp  = '';
         }
 
-
         echo "<tr $class>";
         echo "<td><label for=\"$id\" >$label: </label></td>";
         echo "<td>";

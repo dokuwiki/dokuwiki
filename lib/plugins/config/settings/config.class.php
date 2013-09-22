@@ -176,11 +176,9 @@ if (!class_exists('configuration')) {
                 for ($i=0; $i<count($matches); $i++) {
                     $value = $matches[$i][2];
 
-
                     // correct issues with the incoming data
                     // FIXME ... for now merge multi-dimensional array indices using ____
                     $key = preg_replace('/.\]\[./',CM_KEYMARKER,$matches[$i][1]);
-
 
                     // handle arrays
                     if(preg_match('/^array ?\((.*)\)/', $value, $match)){

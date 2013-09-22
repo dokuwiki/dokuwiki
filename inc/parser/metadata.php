@@ -292,7 +292,6 @@ class Doku_Renderer_metadata extends Doku_Renderer {
             $id = $parts[0];
         }
 
-
         $default = $this->_simpleTitle($id);
 
         // first resolve and clean up the $id
