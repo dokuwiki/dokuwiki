@@ -577,3 +577,4 @@ function fullpath($path,$exists=false){
     return $finalpath;
 }
 
+include_once(DOKU_INC.'inc/component.php');
