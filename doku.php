@@ -27,7 +27,6 @@ if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
 
 // load and initialize the core system
 require_once(DOKU_INC.'inc/init.php');
-
 //import variables
 $INPUT->set('id', str_replace("\xC2\xAD", '', $INPUT->str('id'))); //soft-hyphen
 $QUERY          = trim($INPUT->str('id'));
@@ -81,7 +80,7 @@ trigger_event('DOKUWIKI_STARTED', $tmp);
 session_write_close();
 
 //do the work (picks up what to do from global env)
-act_dispatch();
+Doku_Action::act($ACT);
 
 $tmp = array(); // No event data
 trigger_event('DOKUWIKI_DONE', $tmp);
