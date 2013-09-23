@@ -12,12 +12,12 @@ function act_subscription($act){
     global $INFO;
     global $ID;
     global $INPUT;
-	global $conf;
-	//disable all acl related commands if ACL is disabled
-	if (!$conf['useacl']) {
-		msg('Command unavailable: '.htmlspecialchars($act),-1);
-		return 'show';
-	}
+    global $conf;
+    //disable all acl related commands if ACL is disabled
+    if (!$conf['useacl']) {
+        msg('Command unavailable: '.htmlspecialchars($act),-1);
+        return 'show';
+    }
 
     // subcriptions work for logged in users only
     if(!$_SERVER['REMOTE_USER']) return 'show';
@@ -116,32 +116,32 @@ function subscription_handle_post(&$params) {
 
 class Doku_Action_Subscribe extends Doku_Action
 {
-	public function action() { return "subscribe"; }
+    public function action() { return "subscribe"; }
 
-	public function permission_required() { return AUTH_READ; }
+    public function permission_required() { return AUTH_READ; }
 
-	public function handle() {
-		//check if user is asking to (un)subscribe a page
-		try {
-			return act_subscription($this->action());
-		} catch (Exception $e) {
-			msg($e->getMessage(), -1);
-		}
-	}
+    public function handle() {
+        //check if user is asking to (un)subscribe a page
+        try {
+            return act_subscription($this->action());
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1);
+        }
+    }
 }
 
 class Doku_Action_Unsubscribe extends Doku_Action
 {
-	public function action() { return "unsubscribe"; }
+    public function action() { return "unsubscribe"; }
 
-	public function permission_required() { return AUTH_READ; }
+    public function permission_required() { return AUTH_READ; }
 
-	public function handle() {
-		//check if user is asking to (un)subscribe a page
-		try {
-			return act_subscription($this->action());
-		} catch (Exception $e) {
-			msg($e->getMessage(), -1);
-		}
-	}
+    public function handle() {
+        //check if user is asking to (un)subscribe a page
+        try {
+            return act_subscription($this->action());
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1);
+        }
+    }
 }

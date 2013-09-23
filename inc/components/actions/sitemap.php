@@ -5,7 +5,7 @@
  *
  * @author Michael Hamann <michael@content-space.de>
  */
-function act_sitemap($act) {
+function act_sitemap() {
     global $conf;
 
     if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
@@ -48,11 +48,11 @@ function act_sitemap($act) {
 
 class Doku_Action_Sitemap extends Doku_Action
 {
-	public function action() { return "sitemap"; }
+    public function action() { return "sitemap"; }
 
-	public function permission_required() { return AUTH_NONE; }
+    public function permission_required() { return AUTH_NONE; }
 
-	public function handle() {
-		act_sitemap();
-	}
+    public function handle() {
+        act_sitemap();
+    }
 }

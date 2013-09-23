@@ -5,7 +5,7 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function act_revert($act){
+function act_revert(){
     global $ID;
     global $REV;
     global $lang;
@@ -45,13 +45,13 @@ function act_revert($act){
 
 class Doku_Action_Revert extends Doku_Action
 {
-	public function action() { return "revert"; }
+    public function action() { return "revert"; }
 
-	public function permission_required() { return AUTH_EDIT; }
-	
-	public function handle() { 
-		if (checkSecurityToken()) 
-			return act_revert($this->action()); 
-		return "show";
-	}
+    public function permission_required() { return AUTH_EDIT; }
+
+    public function handle() {
+        if (checkSecurityToken())
+            return act_revert();
+        return "show";
+    }
 }

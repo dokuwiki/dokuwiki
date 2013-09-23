@@ -33,7 +33,7 @@ function act_auth($act){
         // rebuild info array
         $INFO = pageinfo();
 
-		return "login";
+        return "login";
     }
 
     return $act;
@@ -41,18 +41,18 @@ function act_auth($act){
 
 class Doku_Action_Login extends Doku_Action
 {
-	public function action() { return "login"; }
+    public function action() { return "login"; }
 
-	public function permission_required() { return AUTH_NONE; }
-	
-	public function handle() { return act_auth($this->action()); }
+    public function permission_required() { return AUTH_NONE; }
+
+    public function handle() { return act_auth($this->action()); }
 }
 
 class Doku_Action_Logout extends Doku_Action
 {
-	public function action() { return "logout"; }
+    public function action() { return "logout"; }
 
-	public function permission_required() { return AUTH_NONE; }
-	
-	public function handle() { return act_auth($this->action()); }
+    public function permission_required() { return AUTH_NONE; }
+
+    public function handle() { return act_auth($this->action()); }
 }

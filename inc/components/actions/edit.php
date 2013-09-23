@@ -81,41 +81,40 @@ function act_edit($act){
     return $act;
 }
 
-function act_edit_perm() 
-{
-	global $INFO;
-	if ($INFO['exists']) return AUTH_EDIT;
-	return AUTH_CREATE;
+function act_edit_perm() {
+    global $INFO;
+    if ($INFO['exists']) return AUTH_EDIT;
+    return AUTH_CREATE;
 }
 
 class Doku_Action_Edit extends Doku_Action
 {
-	public function action() { return "edit"; }
+    public function action() { return "edit"; }
 
-	// auth_edit will check again, and if without AUTH_EDIT previlidge, 
-	// will do a source show.
-	public function permission_required() { return AUTH_READ; }
-	
-	public function handle() { return act_edit($this->action()); }
+    // auth_edit will check again, and if without AUTH_EDIT previlidge,
+    // will do a source show.
+    public function permission_required() { return AUTH_READ; }
+
+    public function handle() { return act_edit($this->action()); }
 }
 
 class Doku_Action_Preview extends Doku_Action
 {
-	public function action() { return "preview"; }
+    public function action() { return "preview"; }
 
-	public function permission_required() { return act_edit_perm(); }
-	
-	public function handle() { 
-		act_draftsave($this->action());
-		return act_edit($this->action()); 
-	}
+    public function permission_required() { return act_edit_perm(); }
+
+    public function handle() {
+        act_draftsave($this->action());
+        return act_edit($this->action());
+    }
 }
 
 class Doku_Action_Recover extends Doku_Action
 {
-	public function action() { return "recover"; }
+    public function action() { return "recover"; }
 
-	public function permission_required() { return act_edit_perm(); }
-	
-	public function handle() { return act_edit($this->action()); }
+    public function permission_required() { return act_edit_perm(); }
+
+    public function handle() { return act_edit($this->action()); }
 }

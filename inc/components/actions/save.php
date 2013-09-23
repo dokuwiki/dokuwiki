@@ -9,7 +9,7 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function act_save($act){
+function act_save(){
     global $ID;
     global $DATE;
     global $PRE;
@@ -42,12 +42,12 @@ function act_save($act){
 
 class Doku_Action_Save extends Doku_Action
 {
-	public function action() { return "save"; }
+    public function action() { return "save"; }
 
-	public function permission_required() { return AUTH_EDIT; }
-	
-	public function handle() { 
-		if (checkSecurityToken()) return act_save($ACT);
-		return "preview";
-	}
+    public function permission_required() { return AUTH_EDIT; }
+
+    public function handle() {
+        if (checkSecurityToken()) return act_save();
+        return "preview";
+    }
 }

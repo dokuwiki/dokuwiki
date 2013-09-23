@@ -92,13 +92,13 @@ function act_export($act){
 
 class Doku_Action_Export extends Doku_Action
 {
-	public function action() { return "export"; }
+    public function action() { return "export"; }
 
-	public function permission_required() { return AUTH_READ; }
-	
-	public function handle() {
-		global $ACT;
-		return act_export($ACT);
-	}
+    public function permission_required() { return AUTH_READ; }
+
+    public function handle() {
+        global $ACT;
+        return act_export($ACT);
+    }
 }
 
