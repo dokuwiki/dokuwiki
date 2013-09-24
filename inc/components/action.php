@@ -1,50 +1,6 @@
 <?php
 
 /**
- * Sanitize the action command
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function act_clean($act){
-    // check if the action was given as array key
-    if(is_array($act)){
-        list($act) = array_keys($act);
-    }
-
-    //remove all bad chars
-    $act = strtolower($act);
-    $act = preg_replace('/[^1-9a-z_]+/','',$act);
-
-    if($act == 'export_html') $act = 'export_xhtml';
-    if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
-
-    if($act === '') $act = 'show';
-    return $act;
-}
-
-/**
- * Do a redirect after receiving post data
- *
- * Tries to add the section id as hash mark after section editing
- */
-function act_redirect($id,$preact){
-    global $PRE;
-    global $TEXT;
-
-    $opts = array(
-            'id'       => $id,
-            'preact'   => $preact
-            );
-    //get section name when coming from section edit
-    if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
-        $check = false; //Byref
-        $opts['fragment'] = sectionID($match[0], $check);
-    }
-
-    trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
-}
-
-/**
  * Execute the redirect
  *
  * @param array $opts id and fragment for the redirect
@@ -56,16 +12,71 @@ function act_redirect_execute($opts){
     send_redirect($go);
 }
 
+/**
+ * Doku_Action class is the parent class of all actions. 
+ * It has two interfaces: 
+ *   - a static one that acts as action handler managers
+ *   - an interface that specifies what actions should define
+ * 
+ * @author Junling Ma <junglingm@gmail.com> 
+ */
 abstract class Doku_Action extends Doku_Component
 {
+    // _actions maps action names to their handlers
     private static $_actions = array();
+
+    /**
+     * Sanitize the action command
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    private static function act_clean($act){
+        // check if the action was given as array key
+        if(is_array($act)){
+            list($act) = array_keys($act);
+        }
+
+        //remove all bad chars
+        $act = strtolower($act);
+        $act = preg_replace('/[^1-9a-z_]+/','',$act);
+
+        if($act == 'export_html') $act = 'export_xhtml';
+        if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
+
+        if($act === '') $act = 'show';
+        return $act;
+    }
+
+    /**
+     * Do a redirect after receiving post data
+     *
+     * Tries to add the section id as hash mark after section editing
+     */
+    private static function redirect($id, $act){
+        global $PRE;
+        global $TEXT;
+
+        $opts = array(
+                'id'       => $id,
+                'preact'   => $act
+                );
+        //get section name when coming from section edit
+        if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+            $check = false; //Byref
+            $opts['fragment'] = sectionID($match[0], $check);
+        }
+
+        trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
+    }
 
     public static function act($action) {
         global $INFO;
         // clean the action to make it sane
-        $action = act_clean($action);
+        $action = self::act_clean($action);
         $evt = new Doku_Event('ACTION_ACT_PREPROCESS',$action);
+        // broadcast ACTION_ACT_PREPROCESS
         if ($evt->advise_before()) {
+            // event ACTION_ACT_PREPROCESS default action
             $action = $evt->data;
             // check if the action is disabled
             if (!actionOK($action)) {
@@ -88,7 +99,7 @@ abstract class Doku_Action extends Doku_Component
             // perform the action
             $new_action = $handler->handle();
             if ($new_action !== null && $new_action !== $action) {
-                act_redirect($ID, $new_action);
+                self::redirect($ID, $new_action);
                 return true;
             }
         }  // end event ACTION_ACT_PREPROCESS default action
