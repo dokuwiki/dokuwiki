@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
@@ -20,6 +20,7 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Leone Lisboa Magevski <leone1983@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

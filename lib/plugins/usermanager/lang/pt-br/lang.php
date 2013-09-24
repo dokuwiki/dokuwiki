@@ -18,6 +18,7 @@
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Leone Lisboa Magevski <leone1983@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
@@ -40,6 +41,8 @@ $lang['search']                = 'Pesquisar';
 $lang['search_prompt']         = 'Executar a pesquisa';
 $lang['clear']                 = 'Limpar o filtro de pesquisa';
 $lang['filter']                = 'Filtro';
+$lang['export_all']            = 'Exportar Todos Usuários (CSV)';
+$lang['import']                = 'Importar Novos Usuários';
 $lang['summary']               = 'Exibindo usuários %1$d-%2$d de %3$d encontrados. %4$d usuários no total.';
 $lang['nonefound']             = 'Nenhum usuário encontrado. %d usuários no total.';
 $lang['delete_ok']             = '%d usuários excluídos';
