@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
  * @author dongnak@gmail.com
@@ -10,6 +10,7 @@
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -321,7 +322,7 @@ $lang['media_files']           = '%s에 있는 파일';
 $lang['media_upload']          = '%s에 올리기';
 $lang['media_search']          = '%s에서 찾기';
 $lang['media_view']            = '%s';
-$lang['media_viewold']         = '%s (%s에 있음)';
+$lang['media_viewold']         = '%2$s (%1$s에 있음)';
 $lang['media_edit']            = '%s 편집';
 $lang['media_history']         = '%s의 내역';
 $lang['media_meta_edited']     = '메타데이터 편집됨';
