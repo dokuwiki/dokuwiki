@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author Gabiel Molina <gabriel191@gmail.com>
@@ -29,6 +29,7 @@
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López mercelz@gmail.com
  * @author r0sk <r0sk10@gmail.com>
+ * @author monica <may.dorado@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -105,6 +106,7 @@ $lang['profnodelete']          = 'Este wiki no soporta el borrado de usuarios';
 $lang['profdeleteuser']        = 'Eliminar Cuenta';
 $lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
 $lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
+$lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
 $lang['resendpwd']             = 'Establecer nueva contraseña para';
@@ -287,6 +289,8 @@ $lang['subscr_m_unsubscribe']  = 'Darse de baja';
 $lang['subscr_m_subscribe']    = 'Suscribirse';
 $lang['subscr_m_receive']      = 'Recibir';
 $lang['subscr_style_every']    = 'enviar correo en cada cambio';
+$lang['subscr_style_digest']   = 'Resumen de correo electrónico de cambios por cada página (cada %.2f días)';
+$lang['subscr_style_list']     = 'lista de páginas modificadas desde el último correo electrónico (cada %.2f días)';
 $lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
 $lang['authpwdexpire']         = 'Su contraseña caducara en %d días, debería cambiarla lo antes posible';
 $lang['i_chooselang']          = 'Elija su idioma';
