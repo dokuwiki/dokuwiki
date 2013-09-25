@@ -1,18 +1,6 @@
 <?php
 
 /**
- * Execute the redirect
- *
- * @param array $opts id and fragment for the redirect
- */
-function act_redirect_execute($opts){
-    $go = wl($opts['id'],'',true);
-    if(isset($opts['fragment'])) $go .= '#'.$opts['fragment'];
-    //show it
-    send_redirect($go);
-}
-
-/**
  * Doku_Action class is the parent class of all actions. 
  * It has two interfaces: 
  *   - a static one that acts as action handler managers
@@ -37,8 +25,7 @@ abstract class Doku_Action extends Doku_Component
         }
 
         //remove all bad chars
-        $act = strtolower($act);
-        $act = preg_replace('/[^1-9a-z_]+/','',$act);
+        $act = preg_replace('/[^1-9a-z_]+/','',strtolower($act));
 
         if($act == 'export_html') $act = 'export_xhtml';
         if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
@@ -66,9 +53,27 @@ abstract class Doku_Action extends Doku_Component
             $opts['fragment'] = sectionID($match[0], $check);
         }
 
-        trigger_event('ACTION_SHOW_REDIRECT',$opts,'act_redirect_execute');
+        $evt = new Doku_Event('ACTION_SHOW_REDIRECT',$opts);
+        // broadcast ACTION_ACT_PREPROCESS
+        if ($evt->advise_before()) {
+            $go = wl($evt->data['id'],'',true);
+            if(isset($opts['fragment'])) $go .= '#'.$opts['fragment'];
+            //show it
+            send_redirect($go);
+        } // end of the default handler for ACTION_ACT_PREPROCESS
+        $evt->advise_after();
+        unset($evt);
     }
 
+    /**
+     * The Doku_Action public interface to perform an action
+     * 
+     * @global array $INFO
+     * @global string $ID
+     * @global string $ACT
+     * @param type $action the action to perform
+     * @return boolean whether the action was suscessful
+     */
     public static function act($action) {
         global $INFO;
         // clean the action to make it sane
@@ -106,6 +111,8 @@ abstract class Doku_Action extends Doku_Component
         $evt->advise_after();
         unset($evt);
 
+        // we need $INFO, $conf, $license in main.php!!!
+        global $INFO;
         global $conf;
         global $license;
         global $ACT;
@@ -116,10 +123,39 @@ abstract class Doku_Action extends Doku_Component
         trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 
         include(template('main.php'));
-        // output for the actions is now handled in inc/templates.php
-        // in function tpl_content()
 
         return true;
+    }
+
+    /**
+     * Doku_Action public interface to display the result of an action
+     * 
+     * @param type $action the action to display
+     * @return boolean whether the results has been successfully displayed
+     */
+    public static function display_html($action) {
+        ob_start();
+        $evt = new Doku_Event('TPL_ACT_RENDER', $action);
+        // broadcast TPL_ACT_RENDER
+        if ($evt->advise_before()) {
+            $action = $evt->data;
+            // check if we can handle it
+            if (!array_key_exists($action, self::$_actions)) {
+                $evt = new Doku_Event('TPL_ACT_UNKNOWN', $action);
+                if($evt->advise_before())
+                    msg("Failed to handle command: ".hsc($action), -1);
+                $evt->advise_after();
+                unset($evt);
+                return false;
+            }
+            $handler = self::$_actions[$action];
+            return $handler->html();
+        }  // end event TPL_ACT_RENDER default action
+        $evt->advise_after();
+        unset($evt);
+        $html_output = ob_get_clean();
+        trigger_event('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
+        return !empty($html_output);
     }
 
     // register($handler) is a private method that registers an handler to
@@ -131,7 +167,7 @@ abstract class Doku_Action extends Doku_Component
         if (array_key_exists($action, self::$_actions)) {
             $old_handler_class = get_class(self::$_action[$action]);
             $handler_class = get_class($handler);
-            msg("action $c has conflict handers, previously registered handler was 
+            msg("action $action has conflict handers, previously registered handler was 
                 $old_handler_class, now is handled by $handler_class", -1);
         }
         self::$_actions[$action] = $handler;
@@ -155,6 +191,10 @@ abstract class Doku_Action extends Doku_Component
      */
     public function handle() { }
 
+    /** html() should return the html for the actiontp be displayed.
+     */
+    public function html() { }
+
     /** Doku_Action() is the initializer, by default it registers 
      *  the action handler 
      */
@@ -162,4 +202,38 @@ abstract class Doku_Action extends Doku_Component
         self::register($this);
     }
 
+    /**
+     * A debug function
+     */
+    public static function print_actions() {
+        echo "<H1>Action Handlers</H1>\n<ul>\n";
+        foreach (self::$_actions as $action => $handler) {
+            echo "<li>$action is handled by " . get_class($handler) . "</li>\n";
+        }
+        echo "</ul>\n";
+    }
+}
+
+/**
+ * Print the content
+ *
+ * This function is used for printing all the usual content
+ * (defined by the global $ACT var) by calling the appropriate
+ * outputfunction(s) from html.php
+ *
+ * Everything that doesn't use the main template file isn't
+ * handled by this function. ACL stuff is not done here either.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * trvised by Junling Ma <junlingm@gmail.com>
+ * @triggers TPL_ACT_RENDER
+ * @triggers TPL_CONTENT_DISPLAY
+ * @param bool $prependTOC should the TOC be displayed here?
+ * @return bool true if any output
+ */
+function tpl_content($prependTOC = true) {
+    global $ACT;
+    global $INFO;
+    $INFO['prependTOC'] = $prependTOC;
+    Doku_Action::display_html($ACT);
 }

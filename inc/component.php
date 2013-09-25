@@ -51,7 +51,7 @@ class Doku_Component {
     private static function register_extension($class) {
         $parent = get_parent_class($class);
         if ($parent) {
-            if (!array_key_exists("$parent", self::$_extensions))
+            if (!array_key_exists($parent, self::$_extensions))
                 self::register_extension($parent);
             array_push(self::$_extensions[$parent], $class);
         }
@@ -112,7 +112,9 @@ class Doku_Component {
             }
     }
 
-    // this is a debug function.
+    /**
+     *  This is a debug function.
+     */
     public static function print_components() {
         echo "<H1>Dependencies</H1>\n";
         print_r(self::$_extensions);
@@ -125,3 +127,4 @@ class Doku_Component {
 
 Doku_Component::init();
 #Doku_Component::print_components();
+#Doku_Action::print_actions();
