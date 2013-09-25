@@ -19,6 +19,7 @@
  * @author Gerrit <klapinklapin@gmail.com>
  * @author mprins <mprins@users.sf.net>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Klap-in <klapinklapin@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -94,7 +95,7 @@ $lang['profchanged']           = 'Gebruikersprofiel succesvol aangepast';
 $lang['profnodelete']          = 'Deze wiki heeft biedt geen ondersteuning voor verwijdering van gebruikers';
 $lang['profdeleteuser']        = 'Verwijder gebruiker';
 $lang['profdeleted']           = 'Uw gebruikersaccount is verwijderd van deze wiki';
-$lang['profconfdelete']        = 'Ik wik mijn gebruikersaccount verwijderen van deze wiki. <br/> Deze actie kan niet ongedaan gemaakt worden.';
+$lang['profconfdelete']        = 'Ik wil mijn gebruikersaccount verwijderen van deze wiki. <br/> Deze actie kan niet ongedaan gemaakt worden.';
 $lang['profconfdeletemissing'] = 'Bevestigingsvinkje niet gezet';
 $lang['pwdforget']             = 'Je wachtwoord vergeten? Vraag een nieuw wachtwoord aan';
 $lang['resendna']              = 'Deze wiki ondersteunt het verzenden van wachtwoorden niet';
