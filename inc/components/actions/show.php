@@ -1,5 +1,7 @@
 <?php
 
+include_once(DOKU_COMPONENTS_ROOT . DIRECTORY_SEPARATOR . "action.php");
+
 /**
  * The show action handler.
  * 
