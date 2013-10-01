@@ -86,6 +86,9 @@ class Doku_Component {
     public static function load($dir, $files=array(), $recursive = true) {
         // use DOKU_COMPONENTS_ROOT by default
         if (!$dir) $dir = DOKU_COMPONENTS_ROOT;
+        // check if $dir is readable
+        if (!file_exists($dir) || !is_dir($dir))
+            return;
         // if no files are given, read all files, recursively
         if (!$files) {
             $d = dir($dir);
@@ -98,6 +101,7 @@ class Doku_Component {
         // if $files is a string specifying a single file,
         // put it in an array
         else if (is_string($files)) $files = array($files);
+
         // collect all the subdirs to load after the php scripts,
         // if specified recursively
         $subdirs = array();
@@ -110,6 +114,7 @@ class Doku_Component {
             else if (self::is_php_script($fname))
                 include_once($fname);
         }
+
         // if recursive, load scripts and subsubdirs in $subdirs
         if ($recursive)
             foreach ($subdirs as $subdir) {
