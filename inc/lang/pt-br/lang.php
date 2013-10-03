@@ -21,6 +21,7 @@
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Leone Lisboa Magevski <leone1983@gmail.com>
+ * @author Dário Estevão <darioems@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
