@@ -83,11 +83,11 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                                 'top'       => tpl_action('top',       1, 'li', 1, '<span>', '</span>')
                             );
 
-                            // the page tools can be ammended through a custom plugin hook
+                            // the page tools can be amended through a custom plugin hook
                             // if you're deriving from this template and your design is close enough to
                             // the dokuwiki template you might want to trigger a DOKUWIKI event instead
-                            // of using $conf['tpl'] here
-                            $hook = 'TEMPLATE_'.strtoupper($conf['tpl']).'_PAGETOOLS_DISPLAY';
+                            // of using $conf['template'] here
+                            $hook = 'TEMPLATE_'.strtoupper($conf['template']).'_PAGETOOLS_DISPLAY';
                             $evt = new Doku_Event($hook, $data);
                             if($evt->advise_before()){
                                 foreach($evt->data as $k => $html) echo $html;
