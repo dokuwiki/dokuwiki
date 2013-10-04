@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Tomas Valenta <tomas@valenta.cz>
@@ -15,6 +15,7 @@
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
