@@ -10,6 +10,7 @@
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  * @author Taisuke Shimamoto <dentostar@gmail.com>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+ * @author Hideaki SAWADA <sawadakun@live.jp>
  */
 $lang['menu']                  = 'ユーザー管理';
 $lang['noauth']                = '（ユーザー認証が無効です）';
@@ -32,6 +33,11 @@ $lang['search']                = '検索';
 $lang['search_prompt']         = '検索を実行';
 $lang['clear']                 = '検索フィルターをリセット';
 $lang['filter']                = 'フィルター';
+$lang['export_all']            = '全ユーザーのエクスポート（CSV）';
+$lang['export_filtered']       = '抽出したユーザー一覧のエクスポート（CSV）';
+$lang['import']                = '新規ユーザーのインポート';
+$lang['line']                  = '行番号';
+$lang['error']                 = 'エラーメッセージ';
 $lang['summary']               = 'ユーザー %1$d-%2$d / %3$d, 総ユーザー数 %4$d';
 $lang['nonefound']             = 'ユーザーが見つかりません, 総ユーザー数 %d';
 $lang['delete_ok']             = '%d ユーザーが削除されました';
