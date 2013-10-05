@@ -1,5 +1,7 @@
 <?php
 
+include_once(DOKU_INC . "/inc/components/action.php");
+
 /**
  * Handler for action backlink
  * 
