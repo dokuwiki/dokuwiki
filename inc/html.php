@@ -720,32 +720,6 @@ function html_recent($first=0, $show_changes='both'){
 }
 
 /**
- * Display page index
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_index($ns){
-    global $conf;
-    global $ID;
-    $ns  = cleanID($ns);
-    #fixme use appropriate function
-    if(empty($ns)){
-        $ns = dirname(str_replace(':','/',$ID));
-        if($ns == '.') $ns ='';
-    }
-    $ns  = utf8_encodeFN(str_replace(':','/',$ns));
-
-    echo p_locale_xhtml('index');
-    echo '<div id="index__tree">';
-
-    $data = array();
-    search($data,$conf['datadir'],'search_index',array('ns' => $ns));
-    echo html_buildlist($data,'idx','html_list_index','html_li_index');
-
-    echo '</div>';
-}
-
-/**
  * Index item formatter
  *
  * User function for html_buildlist()
