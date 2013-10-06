@@ -618,7 +618,6 @@ function Doku_Handler_Parse_Media($match) {
     // Split title from URL
     $link = explode('|',$link,2);
 
-
     // Check alignment
     $ralign = (bool)preg_match('/^ /',$link[0]);
     $lalign = (bool)preg_match('/ $/',$link[0]);
@@ -1341,7 +1340,6 @@ class Doku_Handler_Table {
                                 break;
                             }
 
-
                         }
                     }
 
@@ -1367,7 +1365,6 @@ class Doku_Handler_Table {
                                     $spanning_cell = $i;
                                     break;
                                 }
-
 
                             }
                         }
@@ -1402,7 +1399,6 @@ class Doku_Handler_Table {
 
             }
         }
-
 
         // condense cdata
         $cnt = count($this->tableCalls);

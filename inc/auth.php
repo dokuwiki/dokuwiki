@@ -391,7 +391,6 @@ function auth_randombytes($length) {
         }
     }
 
-
     // If no strong randoms available, try OS the specific ways
     if(!$strong) {
         // Unix/Linux platform

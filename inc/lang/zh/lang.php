@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton <guxd@163.com>
@@ -16,6 +16,7 @@
  * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Rachel <rzhang0802@gmail.com>
+ * @author Donald <donaldtcong@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -70,6 +71,7 @@ $lang['fullname']              = '全名';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = '用户信息';
 $lang['badlogin']              = '对不起，用户名或密码错误。';
+$lang['badpassconfirm']        = '对不起，密码错误';
 $lang['minoredit']             = '细微修改';
 $lang['draftdate']             = '草稿自动保存于';
 $lang['nosecedit']             = '在您编辑期间本页刚被他人修改过，局部信息已过期，故载入全页。';
@@ -86,6 +88,7 @@ $lang['profna']                = '本维基不支持修改个人信息';
 $lang['profnochange']          = '没有改动，不进行操作。';
 $lang['profnoempty']           = '不允许使用空的用户名或邮件地址。';
 $lang['profchanged']           = '用户信息更新成功。';
+$lang['profdeleteuser']        = '删除账号';
 $lang['pwdforget']             = '忘记密码？立即获取新密码';
 $lang['resendna']              = '本维基不支持二次发送密码。';
 $lang['resendpwd']             = '设置新密码用于';

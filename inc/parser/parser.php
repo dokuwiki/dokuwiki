@@ -807,7 +807,6 @@ class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
                     "\"",$mode,'doublequoteclosing'
                 );
 
-
     }
 
     function getSort() {
