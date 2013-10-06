@@ -122,11 +122,11 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                                 // Back to [ID]; @todo: transfer logic to backend
                                 $data['img_backto'] = '<li><a href="'.wl($ID).'" class="back"><span>'.$lang['img_backto'].' '.$ID.'</span></a></li>';
 
-                                // the page tools can be ammended through a custom plugin hook
+                                // the page tools can be amended through a custom plugin hook
                                 // if you're deriving from this template and your design is close enough to
                                 // the dokuwiki template you might want to trigger a DOKUWIKI event instead
-                                // of using $conf['tpl'] here
-                                $hook = 'TEMPLATE_'.strtoupper($conf['tpl']).'_PAGETOOLS_DISPLAY';
+                                // of using $conf['template'] here
+                                $hook = 'TEMPLATE_'.strtoupper($conf['template']).'_PAGETOOLS_DISPLAY';
                                 $evt = new Doku_Event($hook, $data);
                                 if($evt->advise_before()){
                                     foreach($evt->data as $k => $html) echo $html;
