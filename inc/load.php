@@ -12,7 +12,6 @@ spl_autoload_register('load_autoload');
 // for a few of these order does matter
 require_once(DOKU_INC.'inc/component.php');
 require_once(DOKU_INC.'inc/blowfish.php');
-require_once(DOKU_INC.'inc/actions.php');
 require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
 require_once(DOKU_INC.'inc/confutils.php');

@@ -102,23 +102,21 @@ abstract class Doku_Action extends Doku_Component
             if (substr($action, 0, 7) === "export_") $action = "export";
 
             // check if we can handle it
-            if (!array_key_exists($action, self::$_actions)) {
-                // not implemented yet, use the old handler
-                return act_dispatch($action);
-            }
-            $handler = self::$_actions[$action];
+            if (array_key_exists($action, self::$_actions)) {
+                $handler = self::$_actions[$action];
 
-            // check permission
-            if ($handler->permission_required() > $INFO['perm'])
-                return self::act('denied');
-            //try to unlock
-            global $ID;
-            unlock($ID);
-            // perform the action
-            $new_action = $handler->handle();
-            if ($new_action !== null && $new_action !== $action) {
-                self::redirect($ID, $new_action);
-                return true;
+                // check permission
+                if ($handler->permission_required() > $INFO['perm'])
+                    return self::act('denied');
+                //try to unlock
+                global $ID;
+                unlock($ID);
+                // perform the action
+                $new_action = $handler->handle();
+                if ($new_action !== null && $new_action !== $action) {
+                    self::redirect($ID, $new_action);
+                    return true;
+                }
             }
         }  // end event ACTION_ACT_PREPROCESS default action
         $evt->advise_after();
@@ -156,7 +154,12 @@ abstract class Doku_Action extends Doku_Component
 
             // check if we can handle it
             if (!array_key_exists($action, self::$_actions)) {
-                tpl_content_core();
+                $evt = new Doku_Event('TPL_ACT_UNKNOWN', $action);
+                if($evt->advise_before())
+                    msg("Failed to handle command: ".hsc($action), -1);
+                $evt->advise_after();
+                unset($evt);
+                return false;
             } else {
                 // dispatch the rending action to the handler
                 $handler = self::$_actions[$action];
