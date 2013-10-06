@@ -10,6 +10,7 @@
  * @author Taisuke Shimamoto <dentostar@gmail.com>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <chuno@live.jp>
+ * @author Hideaki SAWADA <sawadakun@live.jp>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
