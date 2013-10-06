@@ -7,3 +7,7 @@
  */
 $lang['password']              = 'Heslo pre vyššie uvedeného používateľa';
 $lang['debug']                 = 'Zobraziť doplňujúce ladiace informácie';
+$lang['server']                = 'MySQL server';
+$lang['user']                  = 'MySQL meno používateľa';
+$lang['database']              = 'Použiť databázu';
+$lang['charset']               = 'Znaková sada databázy';
