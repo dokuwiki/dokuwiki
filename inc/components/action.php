@@ -17,10 +17,15 @@ abstract class Doku_Action extends Doku_Component
 
     /**
      * Sanitize the action command
-     *
+     * adapted from act_clean() by
      * @author Andreas Gohr <andi@splitbrain.org>
+     * 
+     * @global string $ACT
+     * @param string $act the action name to clean
+     * @return string the cleaned action name
      */
     private static function act_clean($act){
+        global $ACT;
         // check if the action was given as array key
         if(is_array($act)){
             list($act) = array_keys($act);
@@ -33,6 +38,7 @@ abstract class Doku_Action extends Doku_Component
         if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
         if($act === '') $act = 'show';
+        $ACT = $act;
         return $act;
     }
 
