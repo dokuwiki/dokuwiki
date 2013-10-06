@@ -7,3 +7,7 @@
  */
 $lang['password']              = 'Heslo pre vyššie uvedeného používateľa';
 $lang['debug']                 = 'Zobraziť doplňujúce ladiace informácie';
+$lang['server']                = 'PostgreSQL server';
+$lang['port']                  = 'Port PostgreSQL servera';
+$lang['user']                  = 'Meno používateľa PostgreSQL';
+$lang['database']              = 'Použiť databázu';
