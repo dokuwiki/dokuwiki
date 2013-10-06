@@ -42,43 +42,6 @@ function html_attbuild($attributes){
 }
 
 /**
- * The loginform
- *
- * @author   Andreas Gohr <andi@splitbrain.org>
- */
-function html_login(){
-    global $lang;
-    global $conf;
-    global $ID;
-    global $INPUT;
-
-    print p_locale_xhtml('login');
-    print '<div class="centeralign">'.NL;
-    $form = new Doku_Form(array('id' => 'dw__login'));
-    $form->startFieldset($lang['btn_login']);
-    $form->addHidden('id', $ID);
-    $form->addHidden('do', 'login');
-    $form->addElement(form_makeTextField('u', ((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : ''), $lang['user'], 'focus__this', 'block'));
-    $form->addElement(form_makePasswordField('p', $lang['pass'], '', 'block'));
-    if($conf['rememberme']) {
-        $form->addElement(form_makeCheckboxField('r', '1', $lang['remember'], 'remember__me', 'simple'));
-    }
-    $form->addElement(form_makeButton('submit', '', $lang['btn_login']));
-    $form->endFieldset();
-
-    if(actionOK('register')){
-        $form->addElement('<p>'.$lang['reghere'].': '.tpl_actionlink('register','','','',true).'</p>');
-    }
-
-    if (actionOK('resendpwd')) {
-        $form->addElement('<p>'.$lang['pwdforget'].': '.tpl_actionlink('resendpwd','','','',true).'</p>');
-    }
-
-    html_form('login', $form);
-    print '</div>'.NL;
-}
-
-/**
  * inserts section edit buttons if wanted or removes the markers
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -209,44 +172,6 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
     $ret .= '</div></form>';
 
     return $ret;
-}
-
-/**
- * show a wiki page
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_show($txt=null){
-    global $ID;
-    global $REV;
-    global $HIGH;
-    global $INFO;
-    //disable section editing for old revisions or in preview
-    if($txt || $REV){
-        $secedit = false;
-    }else{
-        $secedit = true;
-    }
-
-    if (!is_null($txt)){
-        //PreviewHeader
-        echo '<br id="scroll__here" />';
-        echo p_locale_xhtml('preview');
-        echo '<div class="preview"><div class="pad">';
-        $html = html_secedit(p_render('xhtml',p_get_instructions($txt),$info),$secedit);
-        if($INFO['prependTOC']) $html = tpl_toc(true).$html;
-        echo $html;
-        echo '<div class="clearer"></div>';
-        echo '</div></div>';
-
-    }else{
-        if ($REV) print p_locale_xhtml('showrev');
-        $html = p_wiki_xhtml($ID,$REV,true);
-        $html = html_secedit($html,$secedit);
-        if($INFO['prependTOC']) $html = tpl_toc(true).$html;
-        $html = html_hilight($html,$HIGH);
-        echo $html;
-    }
 }
 
 /**
@@ -976,33 +901,6 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapp
 }
 
 /**
- * display backlinks
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Michael Klier <chi@chimeric.de>
- */
-function html_backlinks(){
-    global $ID;
-    global $lang;
-
-    print p_locale_xhtml('backlinks');
-
-    $data = ft_backlinks($ID);
-
-    if(!empty($data)) {
-        print '<ul class="idx">';
-        foreach($data as $blink){
-            print '<li><div class="li">';
-            print html_wikilink(':'.$blink,useHeading('navigation')?null:$blink);
-            print '</div></li>';
-        }
-        print '</ul>';
-    } else {
-        print '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
-    }
-}
-
-/**
  * Get header of diff HTML
  * @param string $l_rev   Left revisions
  * @param string $r_rev   Right revision
@@ -1649,121 +1547,6 @@ function html_debug(){
     print '</pre>';
 
     print '</body></html>';
-}
-
-/**
- * List available Administration Tasks
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Håkan Sandell <hakan.sandell@home.se>
- */
-function html_admin(){
-    global $ID;
-    global $INFO;
-    global $conf;
-    /** @var auth_basic $auth */
-    global $auth;
-
-    // build menu of admin functions from the plugins that handle them
-    $pluginlist = plugin_list('admin');
-    $menu = array();
-    foreach ($pluginlist as $p) {
-        /** @var DokuWiki_Admin_Plugin $obj */
-        if($obj =& plugin_load('admin',$p) === null) continue;
-
-        // check permissions
-        if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
-
-        $menu[$p] = array('plugin' => $p,
-                'prompt' => $obj->getMenuText($conf['lang']),
-                'sort' => $obj->getMenuSort()
-                );
-    }
-
-    // data security check
-    // simple check if the 'savedir' is relative and accessible when appended to DOKU_URL
-    // it verifies either:
-    //   'savedir' has been moved elsewhere, or
-    //   has protection to prevent the webserver serving files from it
-    if (substr($conf['savedir'],0,2) == './'){
-        echo '<a style="border:none; float:right;"
-                href="http://www.dokuwiki.org/security#web_access_security">
-                <img src="'.DOKU_URL.$conf['savedir'].'/security.png" alt="Your data directory seems to be protected properly."
-                onerror="this.parentNode.style.display=\'none\'" /></a>';
-    }
-
-    print p_locale_xhtml('admin');
-
-    // Admin Tasks
-    if($INFO['isadmin']){
-        ptln('<ul class="admin_tasks">');
-
-        if($menu['usermanager'] && $auth && $auth->canDo('getUsers')){
-            ptln('  <li class="admin_usermanager"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'usermanager')).'">'.
-                    $menu['usermanager']['prompt'].'</a></div></li>');
-        }
-        unset($menu['usermanager']);
-
-        if($menu['acl']){
-            ptln('  <li class="admin_acl"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'acl')).'">'.
-                    $menu['acl']['prompt'].'</a></div></li>');
-        }
-        unset($menu['acl']);
-
-        if($menu['plugin']){
-            ptln('  <li class="admin_plugin"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'plugin')).'">'.
-                    $menu['plugin']['prompt'].'</a></div></li>');
-        }
-        unset($menu['plugin']);
-
-        if($menu['config']){
-            ptln('  <li class="admin_config"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'config')).'">'.
-                    $menu['config']['prompt'].'</a></div></li>');
-        }
-        unset($menu['config']);
-    }
-    ptln('</ul>');
-
-    // Manager Tasks
-    ptln('<ul class="admin_tasks">');
-
-    if($menu['revert']){
-        ptln('  <li class="admin_revert"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'revert')).'">'.
-                $menu['revert']['prompt'].'</a></div></li>');
-    }
-    unset($menu['revert']);
-
-    if($menu['popularity']){
-        ptln('  <li class="admin_popularity"><div class="li">'.
-                '<a href="'.wl($ID, array('do' => 'admin','page' => 'popularity')).'">'.
-                $menu['popularity']['prompt'].'</a></div></li>');
-    }
-    unset($menu['popularity']);
-
-    // print DokuWiki version:
-    ptln('</ul>');
-    echo '<div id="admin__version">';
-    echo getVersion();
-    echo '</div>';
-
-    // print the rest as sorted list
-    if(count($menu)){
-        usort($menu, 'p_sort_modes');
-        // output the menu
-        ptln('<div class="clearer"></div>');
-        print p_locale_xhtml('adminplugins');
-        ptln('<ul>');
-        foreach ($menu as $item) {
-            if (!$item['prompt']) continue;
-            ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
-        }
-        ptln('</ul>');
-    }
 }
 
 /**
