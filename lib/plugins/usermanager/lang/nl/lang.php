@@ -14,7 +14,6 @@
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
- * @author Gerrit <klapinklapin@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['menu']                  = 'Gebruikersmanager';
@@ -39,7 +38,7 @@ $lang['search_prompt']         = 'Voer zoekopdracht uit';
 $lang['clear']                 = 'Verwijder zoekfilter';
 $lang['filter']                = 'Filter';
 $lang['export_all']            = 'Exporteer Alle Gebruikers (CSV)';
-$lang['export_filtered']       = 'Exporteer de lijst van Gefilterde Gebruikers (CSV)';
+$lang['export_filtered']       = 'Exporteer Gefilterde Gebruikers (CSV)';
 $lang['import']                = 'Importeer Nieuwe Gebruikers';
 $lang['line']                  = 'Regelnummer';
 $lang['error']                 = 'Foutmelding';
