@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Slovak language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
