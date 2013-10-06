@@ -62,13 +62,13 @@ abstract class Doku_Action extends Doku_Component
         }
 
         $evt = new Doku_Event('ACTION_SHOW_REDIRECT',$opts);
-        // broadcast ACTION_ACT_PREPROCESS
+        // broadcast ACTION_SHOW_REDIRECT
         if ($evt->advise_before()) {
             $go = wl($evt->data['id'],'',true);
             if(isset($opts['fragment'])) $go .= '#'.$opts['fragment'];
             //show it
             send_redirect($go);
-        } // end of the default handler for ACTION_ACT_PREPROCESS
+        } // end of the default handler for ACTION_SHOW_REDIRECT
         $evt->advise_after();
         unset($evt);
     }
