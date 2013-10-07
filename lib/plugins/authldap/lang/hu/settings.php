@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Hungarian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['server']                = 'LDAP-szerver. Hosztnév (<code>localhost</code>) vagy abszolút URL portszámmal (<code>ldap://server.tld:389</code>)';
