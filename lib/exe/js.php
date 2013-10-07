@@ -89,6 +89,7 @@ function js_out(){
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".tpl_basedir()."';";
+    print "var DOKU_COOKIEPATH = '" . (empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir']) . "';";
     // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
