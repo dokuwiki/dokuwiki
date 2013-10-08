@@ -6,7 +6,7 @@
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['server']                = 'MySQL server';
-$lang['user']                  = 'MySQL meno používateľa';
+$lang['user']                  = 'Meno používateľa MySQL';
 $lang['password']              = 'Heslo pre vyššie uvedeného používateľa';
 $lang['database']              = 'Použiť databázu';
 $lang['charset']               = 'Znaková sada databázy';
