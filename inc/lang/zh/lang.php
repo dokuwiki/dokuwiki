@@ -17,6 +17,7 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Rachel <rzhang0802@gmail.com>
  * @author Donald <donaldtcong@gmail.com>
+ * @author 陈雄飞 <nihaoxiongfei@qq.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
