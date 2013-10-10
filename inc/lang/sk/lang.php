@@ -83,7 +83,7 @@ $lang['profnodelete']          = 'Táto wiki neumožňuje zrušenie používate�
 $lang['profdeleteuser']        = 'Zrušiť účet';
 $lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
 $lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
-$lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko ';
+$lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
 $lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
 $lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
 $lang['resendpwd']             = 'Nastaviť nové heslo pre';
@@ -293,6 +293,8 @@ $lang['i_pol2']                = 'Uzatvorená Wiki (čítanie, zápis a nahráva
 $lang['i_retry']               = 'Skúsiť znovu';
 $lang['i_license']             = 'Vyberte licenciu, pod ktorou chcete uložiť váš obsah:';
 $lang['i_license_none']        = 'Nezobrazovať žiadne licenčné informácie';
+$lang['i_pop_field']           = 'Prosím pomôžte nám zlepšiť prácu s DokuWiki:';
+$lang['i_pop_label']           = 'Raz mesačne zaslať anonymné údaje vývojárom DokuWiki';
 $lang['recent_global']         = 'Práve prehliadate zmeny v mennom priestore <b>%s</b>. Môžete si tiež pozrieť <a href="%s">aktuálne zmeny celej wiki</a>.';
 $lang['years']                 = 'pred %d rokmi';
 $lang['months']                = 'pred %d mesiacmi';
