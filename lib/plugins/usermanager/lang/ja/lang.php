@@ -11,6 +11,7 @@
  * @author Taisuke Shimamoto <dentostar@gmail.com>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <sawadakun@live.jp>
+ * @author Hideaki SAWADA <chuno@live.jp>
  */
 $lang['menu']                  = 'ユーザー管理';
 $lang['noauth']                = '（ユーザー認証が無効です）';
@@ -58,3 +59,16 @@ $lang['add_ok']                = 'ユーザーを登録しました';
 $lang['add_fail']              = 'ユーザーの登録に失敗しました';
 $lang['notify_ok']             = '通知メールを送信しました';
 $lang['notify_fail']           = '通知メールを送信できませんでした';
+$lang['import_userlistcsv']    = 'ユーザー一覧ファイル（CSV）：';
+$lang['import_header']         = '最新インポート - 失敗';
+$lang['import_success_count']  = 'ユーザーインポート：ユーザーが%d件あり、%d件正常にインポートされました。';
+$lang['import_failure_count']  = 'ユーザーインポート：%d件が失敗しました。失敗は次のとおりです。';
+$lang['import_error_fields']   = '列の不足（４列必要）が%d件ありました。';
+$lang['import_error_baduserid'] = '欠落したユーザーID';
+$lang['import_error_badname']  = '不正な氏名';
+$lang['import_error_badmail']  = '不正な電子メールアドレス';
+$lang['import_error_upload']   = 'インポートが失敗しました。CSVファイルをアップロードできなかったか、ファイルが空です。';
+$lang['import_error_readfail'] = 'インポートが失敗しました。アップロードされたファイルが読込できません。';
+$lang['import_error_create']   = 'ユーザーが作成できません。';
+$lang['import_notify_fail']    = '通知メッセージがインポートされたユーザー（%s）・電子メールアドレス（%s）に送信できませんでした。';
+$lang['import_downloadfailures'] = '修正用に失敗を CSVファイルとしてダウンロードする。';
