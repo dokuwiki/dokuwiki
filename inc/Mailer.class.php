@@ -419,6 +419,8 @@ class Mailer {
         $part = 1;
         // embedded attachments
         foreach($this->attach as $media) {
+            $media['name'] = str_replace(':', '_', cleanID($media['name'], true));
+
             // create content id
             $cid = 'part'.$part.'.'.$this->partid;
 
