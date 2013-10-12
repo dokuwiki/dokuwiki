@@ -156,5 +156,61 @@ class mailer_test extends DokuWikiTest {
         $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
         $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Bcc found in headers.');
     }
+
+    /**
+     * @group internet
+     */
+    function test_lint(){
+        // prepare a simple multipart message
+        $mail = new TestMailer();
+        $mail->to(array('Möp <moep@example.com> ',' foo <foo@example.com>'));
+        $mail->subject('This is a töst');
+        $mail->setBody('Hello Wörld,
+
+        please don\'t burn, okay?
+        ');
+        $mail->attachContent('some test data', 'text/plain', 'text.txt');
+        $msg = $mail->dump();
+        $msglines = explode("\n", $msg);
+
+        // ask message lint if it is okay
+        $html = new HTTPClient();
+        $results = $html->post('http://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
+        $this->assertTrue($results !== false);
+
+        // parse the result lines
+        $lines = explode("\n", $results);
+        $rows  = count($lines);
+        $i=0;
+        while(trim($lines[$i]) != '-----------' && $i<$rows) $i++; //skip preamble
+        for($i=$i+1; $i<$rows; $i++){
+            $line = trim($lines[$i]);
+            if($line == '-----------') break; //skip appendix
+
+            // get possible continuation of the line
+            while($lines[$i+1][0] == ' '){
+                $line .= ' '.trim($lines[$i+1]);
+                $i++;
+            }
+
+            // check the line for errors
+            if(substr($line,0,5) == 'ERROR'){
+                // get the context in which the error occured
+                $errorin = '';
+                if(preg_match('/line (\d+)$/', $line, $m)){
+                    $errorin .= "\n".$msglines[$m[1] - 1];
+                }
+                if(preg_match('/lines (\d+)-(\d+)$/', $line, $m)){
+                    for($x=$m[1]-1; $x<$m[2]; $x++){
+                        $errorin .= "\n".$msglines[$x];
+                    }
+                }
+
+                // raise the error
+                throw new Exception($line.$errorin);
+            }
+        }
+
+    }
 }
 //Setup VIM: ex: et ts=4 :
