@@ -170,7 +170,7 @@ class mailer_test extends DokuWikiTest {
 
         please don\'t burn, okay?
         ');
-        $mail->attachContent('some test data', 'text/plain', 'text.txt');
+        $mail->attachContent('some test data', 'text/plain', 'a text.txt');
         $msg = $mail->dump();
         $msglines = explode("\n", $msg);
 
@@ -197,7 +197,7 @@ class mailer_test extends DokuWikiTest {
             }
 
             // check the line for errors
-            if(substr($line,0,5) == 'ERROR'){
+            if(substr($line,0,5) == 'ERROR' || substr($line,0,7) == 'WARNING'){
                 // ignore some errors
                 if(strpos($line, "missing mandatory header 'return-path'")) continue; #set by MDA
                 if(strpos($line, "bare newline in text body decoded")) continue; #seems to be false positive
