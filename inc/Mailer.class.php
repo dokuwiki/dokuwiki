@@ -44,7 +44,7 @@ class Mailer {
         if(strpos($server,'.') === false) $server = $server.'.localhost';
 
         $this->partid   = md5(uniqid(rand(), true)).'@'.$server;
-        $this->boundary = '----------'.md5(uniqid(rand(), true));
+        $this->boundary = '__________'.md5(uniqid(rand(), true));
 
         $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
         $listid = strtolower(trim($listid, '.'));
