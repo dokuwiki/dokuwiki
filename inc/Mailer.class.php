@@ -41,6 +41,7 @@ class Mailer {
         global $conf;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
+        if(strpos($server,'.') === false) $server = $server.'.localhost';
 
         $this->partid   = md5(uniqid(rand(), true)).'@'.$server;
         $this->boundary = '----------'.md5(uniqid(rand(), true));
@@ -57,6 +58,7 @@ class Mailer {
         $this->setHeader('X-DokuWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
         $this->setHeader('List-Id', $conf['title'].' <'.$listid.'>');
+        $this->setHeader('Date', date('r'), false);
     }
 
     /**
@@ -426,7 +428,8 @@ class Mailer {
             }
 
             $mime .= '--'.$this->boundary.MAILHEADER_EOL;
-            $mime .= 'Content-Type: '.$media['mime'].';'.MAILHEADER_EOL;
+            $mime .= 'Content-Type: '.$media['mime'].';'.MAILHEADER_EOL.
+                     ' id="'.$cid.'"'.MAILHEADER_EOL;
             $mime .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
             $mime .= "Content-ID: <$cid>".MAILHEADER_EOL;
             if($media['embed']) {
@@ -487,7 +490,8 @@ class Mailer {
                 $body .= chunk_split(base64_encode($this->text), 74, MAILHEADER_EOL);
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
                 $body .= 'Content-Type: multipart/related;'.MAILHEADER_EOL.
-                    '  boundary="'.$this->boundary.'"'.MAILHEADER_EOL;
+                    '  boundary="'.$this->boundary.'";'.MAILHEADER_EOL.
+                    '  type="text/html"'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
             }
 
