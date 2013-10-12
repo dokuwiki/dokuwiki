@@ -435,9 +435,9 @@ class Mailer {
             $mime .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
             $mime .= "Content-ID: <$cid>".MAILHEADER_EOL;
             if($media['embed']) {
-                $mime .= 'Content-Disposition: inline; filename="'.$media['name'].'"'.MAILHEADER_EOL;
+                $mime .= 'Content-Disposition: inline; filename='.$media['name'].''.MAILHEADER_EOL;
             } else {
-                $mime .= 'Content-Disposition: attachment; filename="'.$media['name'].'"'.MAILHEADER_EOL;
+                $mime .= 'Content-Disposition: attachment; filename='.$media['name'].''.MAILHEADER_EOL;
             }
             $mime .= MAILHEADER_EOL; //end of headers
             $mime .= chunk_split(base64_encode($media['data']), 74, MAILHEADER_EOL);
@@ -474,7 +474,7 @@ class Mailer {
         if(!$this->html && !count($this->attach)) { // we can send a simple single part message
             $this->headers['Content-Type']              = 'text/plain; charset=UTF-8';
             $this->headers['Content-Transfer-Encoding'] = 'base64';
-            $body .= chunk_split(base64_encode($this->text), 74, MAILHEADER_EOL);
+            $body .= chunk_split(base64_encode($this->text), 72, MAILHEADER_EOL);
         } else { // multi part it is
             $body .= "This is a multi-part message in MIME format.".MAILHEADER_EOL;
 
@@ -489,7 +489,7 @@ class Mailer {
                 $body .= 'Content-Type: text/plain; charset=UTF-8'.MAILHEADER_EOL;
                 $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
-                $body .= chunk_split(base64_encode($this->text), 74, MAILHEADER_EOL);
+                $body .= chunk_split(base64_encode($this->text), 72, MAILHEADER_EOL);
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
                 $body .= 'Content-Type: multipart/related;'.MAILHEADER_EOL.
                     '  boundary="'.$this->boundary.'";'.MAILHEADER_EOL.
@@ -501,7 +501,7 @@ class Mailer {
             $body .= 'Content-Type: text/html; charset=UTF-8'.MAILHEADER_EOL;
             $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
             $body .= MAILHEADER_EOL;
-            $body .= chunk_split(base64_encode($this->html), 74, MAILHEADER_EOL);
+            $body .= chunk_split(base64_encode($this->html), 72, MAILHEADER_EOL);
             $body .= MAILHEADER_EOL;
             $body .= $attachments;
             $body .= '--'.$this->boundary.'--'.MAILHEADER_EOL;
