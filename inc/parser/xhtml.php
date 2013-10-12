@@ -33,6 +33,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     private $lastsecid = 0; // last section edit id, used by startSectionEdit
 
     var $headers = array();
+    /** @var array a list of footnotes, list starts at 1! */
     var $footnotes = array();
     var $lastlevel = 0;
     var $node = array(0,0,0,0,0);
@@ -100,10 +101,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ( count ($this->footnotes) > 0 ) {
             $this->doc .= '<div class="footnotes">'.DOKU_LF;
 
-            $id = 0;
-            foreach ( $this->footnotes as $footnote ) {
-                $id++;   // the number of the current footnote
-
+            foreach ( $this->footnotes as $id => $footnote ) {
                 // check its not a placeholder that indicates actual footnote text is elsewhere
                 if (substr($footnote, 0, 5) != "@@FNT") {
 
@@ -118,8 +116,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if (count($alt)) {
                         foreach ($alt as $ref) {
                             // set anchor and backlink for the other footnotes
-                            $this->doc .= ', <sup><a href="#fnt__'.($ref+1).'" id="fn__'.($ref+1).'" class="fn_bot">';
-                            $this->doc .= ($ref+1).')</a></sup> '.DOKU_LF;
+                            $this->doc .= ', <sup><a href="#fnt__'.($ref).'" id="fn__'.($ref).'" class="fn_bot">';
+                            $this->doc .= ($ref).')</a></sup> '.DOKU_LF;
                         }
                     }
 
@@ -295,6 +293,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Andreas Gohr
      */
     function footnote_close() {
+        /** @var $fnid int takes track of seen footnotes, assures they are unique even across multiple docs FS#2841 */
+        static $fnid = 0;
+        // assign new footnote id (we start at 1)
+        $fnid++;
 
         // recover footnote into the stack and restore old content
         $footnote = $this->doc;
@@ -306,17 +308,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if ($i === false) {
             // its a new footnote, add it to the $footnotes array
-            $id = count($this->footnotes)+1;
-            $this->footnotes[count($this->footnotes)] = $footnote;
+            $this->footnotes[$fnid] = $footnote;
         } else {
-            // seen this one before, translate the index to an id and save a placeholder
-            $i++;
-            $id = count($this->footnotes)+1;
-            $this->footnotes[count($this->footnotes)] = "@@FNT".($i);
+            // seen this one before, save a placeholder
+            $this->footnotes[$fnid] = "@@FNT".($i);
         }
 
         // output the footnote reference and link
-        $this->doc .= '<sup><a href="#fn__'.$id.'" id="fnt__'.$id.'" class="fn_top">'.$id.')</a></sup>';
+        $this->doc .= '<sup><a href="#fn__'.$fnid.'" id="fnt__'.$fnid.'" class="fn_top">'.$fnid.')</a></sup>';
     }
 
     function listu_open() {
