@@ -1625,7 +1625,8 @@ function set_doku_pref($pref, $val) {
     }
 
     if (!empty($cookieVal)) {
-        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
     }
 }
 
