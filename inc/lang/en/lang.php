@@ -1,21 +1,21 @@
 <?php
+
 /**
- * english language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author     Andreas Gohr <andi@splitbrain.org>
  * @author     Anika Henke <anika@selfthinker.org>
  * @author     Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author     Matthias Schulte <mailinglist@lupo49.de>
+ * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“'; //&ldquo;
-$lang['doublequoteclosing']    = '”'; //&rdquo;
-$lang['singlequoteopening']    = '‘'; //&lsquo;
-$lang['singlequoteclosing']    = '’'; //&rsquo;
-$lang['apostrophe']            = '’'; //&rsquo;
-
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Edit this page';
 $lang['btn_source']            = 'Show pagesource';
 $lang['btn_show']              = 'Show page';
@@ -52,7 +52,6 @@ $lang['btn_register']          = 'Register';
 $lang['btn_apply']             = 'Apply';
 $lang['btn_media']             = 'Media Manager';
 $lang['btn_deleteuser']        = 'Remove My Account';
-
 $lang['loggedinas']            = 'Logged in as';
 $lang['user']                  = 'Username';
 $lang['pass']                  = 'Password';
@@ -66,9 +65,8 @@ $lang['profile']               = 'User Profile';
 $lang['badlogin']              = 'Sorry, username or password was wrong.';
 $lang['badpassconfirm']        = 'Sorry, the password was wrong';
 $lang['minoredit']             = 'Minor Changes';
-$lang['draftdate']             = 'Draft autosaved on'; // full dformat date will be added
+$lang['draftdate']             = 'Draft autosaved on';
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
-
 $lang['regmissing']            = 'Sorry, you must fill in all fields.';
 $lang['reguexists']            = 'Sorry, a user with this login already exists.';
 $lang['regsuccess']            = 'The user has been created and the password was sent by email.';
@@ -78,7 +76,6 @@ $lang['regbadmail']            = 'The given email address looks invalid - if you
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
 $lang['regpwmail']             = 'Your DokuWiki password';
 $lang['reghere']               = 'You don\'t have an account yet? Just get one';
-
 $lang['profna']                = 'This wiki does not support profile modification';
 $lang['profnochange']          = 'No changes, nothing to do.';
 $lang['profnoempty']           = 'An empty name or email address is not allowed.';
@@ -88,7 +85,6 @@ $lang['profdeleteuser']        = 'Delete Account';
 $lang['profdeleted']           = 'Your user account has been deleted from this wiki';
 $lang['profconfdelete']        = 'I wish to remove my account from this wiki. <br/> This action can not be undone.';
 $lang['profconfdeletemissing'] = 'Confirmation check box not ticked';
-
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
 $lang['resendpwd']             = 'Set new password for';
@@ -97,10 +93,8 @@ $lang['resendpwdnouser']       = 'Sorry, we can\'t find this user in our databas
 $lang['resendpwdbadauth']      = 'Sorry, this auth code is not valid. Make sure you used the complete confirmation link.';
 $lang['resendpwdconfirm']      = 'A confirmation link has been sent by email.';
 $lang['resendpwdsuccess']      = 'Your new password has been sent by email.';
-
 $lang['license']               = 'Except where otherwise noted, content on this wiki is licensed under the following license:';
 $lang['licenseok']             = 'Note: By editing this page you agree to license your content under the following license:';
-
 $lang['searchmedia']           = 'Search file name:';
 $lang['searchmedia_in']        = 'Search in %s';
 $lang['txt_upload']            = 'Select file to upload';
@@ -109,7 +103,6 @@ $lang['txt_overwrt']           = 'Overwrite existing file';
 $lang['maxuploadsize']         = 'Upload max. %s per file.';
 $lang['lockedby']              = 'Currently locked by';
 $lang['lockexpire']            = 'Lock expires at';
-
 $lang['js']['willexpire']      = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
 $lang['js']['notsavedyet']     = 'Unsaved changes will be lost.';
 $lang['js']['searchmedia']     = 'Search for files';
@@ -141,20 +134,18 @@ $lang['js']['linkwiz']         = 'Link Wizard';
 $lang['js']['linkto']          = 'Link to:';
 $lang['js']['del_confirm']     = 'Really delete selected item(s)?';
 $lang['js']['restore_confirm'] = 'Really restore this version?';
-$lang['js']['media_diff']          = 'View differences:';
-$lang['js']['media_diff_both']     = 'Side by Side';
-$lang['js']['media_diff_opacity']  = 'Shine-through';
+$lang['js']['media_diff']      = 'View differences:';
+$lang['js']['media_diff_both'] = 'Side by Side';
+$lang['js']['media_diff_opacity'] = 'Shine-through';
 $lang['js']['media_diff_portions'] = 'Swipe';
-$lang['js']['media_select']        = 'Select files…';
-$lang['js']['media_upload_btn']    = 'Upload';
-$lang['js']['media_done_btn']      = 'Done';
-$lang['js']['media_drop']          = 'Drop files here to upload';
-$lang['js']['media_cancel']        = 'remove';
-$lang['js']['media_overwrt']       = 'Overwrite existing files';
-
+$lang['js']['media_select']    = 'Select files…';
+$lang['js']['media_upload_btn'] = 'Upload';
+$lang['js']['media_done_btn']  = 'Done';
+$lang['js']['media_drop']      = 'Drop files here to upload';
+$lang['js']['media_cancel']    = 'remove';
+$lang['js']['media_overwrt']   = 'Overwrite existing files';
 $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
-
 $lang['mediaselect']           = 'Media Files';
 $lang['fileupload']            = 'Media File Upload';
 $lang['uploadsucc']            = 'Upload successful';
@@ -179,7 +170,6 @@ $lang['mediaextchange']        = 'Filextension changed from .%s to .%s!';
 $lang['reference']             = 'References for';
 $lang['ref_inuse']             = 'The file can\'t be deleted, because it\'s still used by the following pages:';
 $lang['ref_hidden']            = 'Some references  are on pages you don\'t have permission to read';
-
 $lang['hits']                  = 'Hits';
 $lang['quickhits']             = 'Matching pagenames';
 $lang['toc']                   = 'Table of Contents';
@@ -209,18 +199,15 @@ $lang['site_tools']            = 'Site Tools';
 $lang['page_tools']            = 'Page Tools';
 $lang['skip_to_content']       = 'skip to content';
 $lang['sidebar']               = 'Sidebar';
-
 $lang['mail_newpage']          = 'page added:';
 $lang['mail_changed']          = 'page changed:';
 $lang['mail_subscribe_list']   = 'pages changed in namespace:';
 $lang['mail_new_user']         = 'new user:';
 $lang['mail_upload']           = 'file uploaded:';
-
 $lang['changes_type']          = 'View changes of';
 $lang['pages_changes']         = 'Pages';
 $lang['media_changes']         = 'Media files';
 $lang['both_changes']          = 'Both pages and media files';
-
 $lang['qb_bold']               = 'Bold Text';
 $lang['qb_italic']             = 'Italic Text';
 $lang['qb_underl']             = 'Underlined Text';
@@ -245,11 +232,8 @@ $lang['qb_media']              = 'Add Images and other files (opens in a new win
 $lang['qb_sig']                = 'Insert Signature';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Special Chars';
-
 $lang['upperns']               = 'jump to parent namespace';
-
 $lang['admin_register']        = 'Add new user';
-
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Writing metadata failed';
 $lang['metasaveok']            = 'Metadata saved';
@@ -267,30 +251,24 @@ $lang['img_keywords']          = 'Keywords';
 $lang['img_width']             = 'Width';
 $lang['img_height']            = 'Height';
 $lang['img_manager']           = 'View in media manager';
-
-$lang['subscr_subscribe_success']   = 'Added %s to subscription list for %s';
-$lang['subscr_subscribe_error']     = 'Error adding %s to subscription list for %s';
+$lang['subscr_subscribe_success'] = 'Added %s to subscription list for %s';
+$lang['subscr_subscribe_error'] = 'Error adding %s to subscription list for %s';
 $lang['subscr_subscribe_noaddress'] = 'There is no address associated with your login, you cannot be added to the subscription list';
 $lang['subscr_unsubscribe_success'] = 'Removed %s from subscription list for %s';
-$lang['subscr_unsubscribe_error']   = 'Error removing %s from subscription list for %s';
-$lang['subscr_already_subscribed']  = '%s is already subscribed to %s';
-$lang['subscr_not_subscribed']      = '%s is not subscribed to %s';
-// Manage page for subscriptions
-$lang['subscr_m_not_subscribed']    = 'You are currently not subscribed to the current page or namespace.';
-$lang['subscr_m_new_header']        = 'Add subscription';
-$lang['subscr_m_current_header']    = 'Current subscriptions';
-$lang['subscr_m_unsubscribe']       = 'Unsubscribe';
-$lang['subscr_m_subscribe']         = 'Subscribe';
-$lang['subscr_m_receive']           = 'Receive';
-$lang['subscr_style_every']         = 'email on every change';
-$lang['subscr_style_digest']        = 'digest email of changes for each page (every %.2f days)';
-$lang['subscr_style_list']          = 'list of changed pages since last email (every %.2f days)';
-
-/* auth.class language support */
+$lang['subscr_unsubscribe_error'] = 'Error removing %s from subscription list for %s';
+$lang['subscr_already_subscribed'] = '%s is already subscribed to %s';
+$lang['subscr_not_subscribed'] = '%s is not subscribed to %s';
+$lang['subscr_m_not_subscribed'] = 'You are currently not subscribed to the current page or namespace.';
+$lang['subscr_m_new_header']   = 'Add subscription';
+$lang['subscr_m_current_header'] = 'Current subscriptions';
+$lang['subscr_m_unsubscribe']  = 'Unsubscribe';
+$lang['subscr_m_subscribe']    = 'Subscribe';
+$lang['subscr_m_receive']      = 'Receive';
+$lang['subscr_style_every']    = 'email on every change';
+$lang['subscr_style_digest']   = 'digest email of changes for each page (every %.2f days)';
+$lang['subscr_style_list']     = 'list of changed pages since last email (every %.2f days)';
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
 $lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
-
-/* installer strings */
 $lang['i_chooselang']          = 'Choose your language';
 $lang['i_installer']           = 'DokuWiki Installer';
 $lang['i_wikiname']            = 'Wiki Name';
@@ -320,7 +298,6 @@ $lang['i_license']             = 'Please choose the license you want to put your
 $lang['i_license_none']        = 'Do not show any license information';
 $lang['i_pop_field']           = 'Please, help us to improve the DokuWiki experience:';
 $lang['i_pop_label']           = 'Once a month, send anonymous usage data to the DokuWiki developers';
-
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';
 $lang['months']                = '%d months ago';
@@ -329,9 +306,7 @@ $lang['days']                  = '%d days ago';
 $lang['hours']                 = '%d hours ago';
 $lang['minutes']               = '%d minutes ago';
 $lang['seconds']               = '%d seconds ago';
-
 $lang['wordblock']             = 'Your change was not saved because it contains blocked text (spam).';
-
 $lang['media_uploadtab']       = 'Upload';
 $lang['media_searchtab']       = 'Search';
 $lang['media_file']            = 'File';
@@ -355,5 +330,3 @@ $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read f
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
-
-//Setup VIM: ex: et ts=2 :
