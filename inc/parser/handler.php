@@ -1371,7 +1371,8 @@ class Doku_Handler_Table {
                         if (is_null($spanning_cell)) {
                             // No spanning cell found, so convert this cell to
                             // an empty one to avoid broken tables
-                            $this->tableCells[$key][1][1] = '';
+                            $this->tableCalls[$key][0] = 'cdata';
+                            $this->tableCalls[$key][1][0] = '';
                             continue;
                         }
                         $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
