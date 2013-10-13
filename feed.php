@@ -429,7 +429,9 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $cat = getNS($id);
                 if($cat) $item->category = $cat;
             }
-
+           
+           // Add only visible items
+           if (isVisiblePage($id)) {
             // finally add the item to the feed object, after handing it to registered plugins
             $evdata = array(
                 'item'  => &$item,
@@ -442,6 +444,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $rss->addItem($item);
             }
             $evt->advise_after(); // for completeness
+           }
         }
     }
     $event->advise_after();
