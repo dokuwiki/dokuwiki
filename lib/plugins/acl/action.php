@@ -53,8 +53,8 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
             parse_str($postData, $_POST);
         }
 
-        if(!auth_isadmin()) die('for admins only');
-        if(!checkSecurityToken()) die('CRSF Attack');
+        if(!auth_isadmin()) return;
+        if(!checkSecurityToken()) return;
 
         $ID = getID();
 
