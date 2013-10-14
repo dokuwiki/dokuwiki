@@ -30,62 +30,62 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
      * AJAX call handler for ACL plugin
      *
      * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  empty
+     * @param mixed $param  empty
      * @return void
      */
 
     public function handle_ajax_call_acl(Doku_Event &$event, $param) {
-        if ($event->data !== 'plugin_acl') {
+        if($event->data !== 'plugin_acl') {
             return;
         }
         $event->stopPropagation();
         $event->preventDefault();
 
-
         //close session
         session_write_close();
 
-        global $conf;
         global $ID;
         global $INPUT;
 
         //fix for Opera XMLHttpRequests
         $postData = http_get_raw_post_data();
-        if(!count($_POST) && !empty($postData)){
+        if(!count($_POST) && !empty($postData)) {
             parse_str($postData, $_POST);
         }
 
         if(!auth_isadmin()) die('for admins only');
         if(!checkSecurityToken()) die('CRSF Attack');
 
-        $ID    = getID();
+        $ID = getID();
 
         /** @var $acl admin_plugin_acl */
-        $acl = plugin_load('admin','acl');
+        $acl = plugin_load('admin', 'acl');
         $acl->handle();
 
         $ajax = $INPUT->str('ajax');
         header('Content-Type: text/html; charset=utf-8');
 
-        if($ajax == 'info'){
+        if($ajax == 'info') {
             $acl->_html_info();
-        }elseif($ajax == 'tree'){
+        } elseif($ajax == 'tree') {
 
-            $ns  = $INPUT->str('ns');
-            if($ns == '*'){
-                $ns ='';
+            $ns = $INPUT->str('ns');
+            if($ns == '*') {
+                $ns = '';
             }
-            $ns  = cleanID($ns);
-            $lvl = count(explode(':',$ns));
-            $ns  = utf8_encodeFN(str_replace(':','/',$ns));
+            $ns = cleanID($ns);
+            $lvl = count(explode(':', $ns));
+            $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
-            $data = $acl->_get_tree($ns,$ns);
+            $data = $acl->_get_tree($ns, $ns);
 
-            foreach(array_keys($data) as $item){
-                $data[$item]['level'] = $lvl+1;
+            foreach(array_keys($data) as $item) {
+                $data[$item]['level'] = $lvl + 1;
             }
-            echo html_buildlist($data, 'acl', array($acl, '_html_list_acl'),
-                                array($acl, '_html_li_acl'));
+            echo html_buildlist(
+                $data, 'acl', array($acl, '_html_list_acl'),
+                array($acl, '_html_li_acl')
+            );
         }
     }
 }
