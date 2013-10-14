@@ -71,7 +71,6 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
             $acl->_html_info();
         }elseif($ajax == 'tree'){
 
-            $dir = $conf['datadir'];
             $ns  = $INPUT->str('ns');
             if($ns == '*'){
                 $ns ='';
