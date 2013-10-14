@@ -37,6 +37,11 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $this->popularityLastSubmitFile = $conf['cachedir'].'/lastSubmitTime.txt';
     }
 
+    /**
+     * Return methods of this helper
+     *
+     * @return array with methods description
+     */
     function getMethods(){
         $result = array();
         $result[] = array(
@@ -123,6 +128,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      */
     function _gather(){
         global $conf;
+        /** @var $auth DokuWiki_Auth_Plugin */
         global $auth;
         $data = array();
         $phptime = ini_get('max_execution_time');
@@ -244,6 +250,17 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         return $data;
     }
 
+    /**
+     * Callback to search and count the content of directories in DokuWiki
+     *
+     * @param array &$data  Reference to the result data structure
+     * @param string $base  Base usually $conf['datadir']
+     * @param string $file  current file or directory relative to $base
+     * @param string $type  Type either 'd' for directory or 'f' for file
+     * @param int    $lvl   Current recursion depht
+     * @param array  $opts  option array as given to search()
+     * @return bool
+     */
     function _search_count(&$data,$base,$file,$type,$lvl,$opts){
         // traverse
         if($type == 'd'){
