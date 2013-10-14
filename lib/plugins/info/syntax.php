@@ -215,11 +215,36 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      */
     function _syntaxmodes_xhtml(){
         $modes = p_get_parsermodes();
-        $doc  = '';
 
-        foreach ($modes as $mode){
-            $doc .= $mode['mode'].' ('.$mode['sort'].'), ';
+        $compactmodes = array();
+        foreach($modes as $mode){
+            $compactmodes[$mode['sort']][] = $mode['mode'];
         }
+        $doc  = '';
+        $doc .= '<div class="table"><table class="inline"><tbody>';
+
+        foreach($compactmodes as $sort => $modes){
+            $rowspan = '';
+            if(count($modes) > 1) {
+                $rowspan = ' rowspan="'.count($modes).'"';
+            }
+
+            foreach($modes as $index => $mode) {
+                $doc .= '<tr>';
+                $doc .= '<td class="leftalign">';
+                $doc .= $mode;
+                $doc .= '</td>';
+
+                if($index === 0) {
+                    $doc .= '<td class="rightalign" '.$rowspan.'>';
+                    $doc .= $sort;
+                    $doc .= '</td>';
+                }
+                $doc .= '</tr>';
+            }
+        }
+
+        $doc .= '</tbody></table></div>';
         return $doc;
     }
 
