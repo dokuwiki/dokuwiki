@@ -29,8 +29,6 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      */
     var $popularityLastSubmitFile;
 
-    var $version;
-
 
     function helper_plugin_popularity(){
         global $conf;
@@ -67,15 +65,6 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
                 );
         return $result;
 
-    }
-
-    /**
-     * Sets plugin version
-     *
-     * @param string $pluginversion
-     */
-    public function setVersion($pluginversion) {
-        $this->version = $pluginversion;
     }
 
     /**
@@ -138,11 +127,12 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data = array();
         $phptime = ini_get('max_execution_time');
         @set_time_limit(0);
+        $pluginInfo = $this->getInfo();
 
         // version
         $data['anon_id'] = md5(auth_cookiesalt());
         $data['version'] = getVersion();
-        $data['popversion'] = $this->version;
+        $data['popversion'] = $pluginInfo['date'];
         $data['language'] = $conf['lang'];
         $data['now']      = time();
         $data['popauto']  = (int) $this->isAutoSubmitEnabled();

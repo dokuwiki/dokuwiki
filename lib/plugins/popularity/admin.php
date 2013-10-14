@@ -22,9 +22,6 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
 
     function admin_plugin_popularity(){
         $this->helper = $this->loadHelper('popularity', false);
-
-        $pluginInfo = $this->getInfo();
-        $this->helper->setVersion($pluginInfo['date']);
     }
 
     /**
