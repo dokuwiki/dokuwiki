@@ -6,9 +6,9 @@
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['server']                = 'LDAP server. Adresa (<code>localhost</code>) alebo úplné URL (<code>ldap://server.tld:389</code>)';
-$lang['port']                  = 'Port LDAP servera, ak nebola vyššie zadané úplné URL';
-$lang['usertree']              = 'Kde je možné nájsť účty používateľov. Napr. <code>ou=People, dc=server, dc=tld</code>';
-$lang['grouptree']             = 'Kde je možné nájsť skupiny používateľov. Napr. <code>ou=Group, dc=server, dc=tld</code>';
+$lang['port']                  = 'Port LDAP servera, ak nebolo vyššie zadané úplné URL';
+$lang['usertree']              = 'Umiestnenie účtov používateľov. Napr. <code>ou=People, dc=server, dc=tld</code>';
+$lang['grouptree']             = 'Umiestnenie skupín používateľov. Napr. <code>ou=Group, dc=server, dc=tld</code>';
 $lang['userfilter']            = 'LDAP filter pre vyhľadávanie používateľských účtov. Napr. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
 $lang['groupfilter']           = 'LDAP filter pre vyhľadávanie skupín. Napr. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
 $lang['version']               = 'Použitá verzia protokolu. Možno bude potrebné nastaviť na hodnotu <code>3</code>';
