@@ -223,7 +223,7 @@ function tpl_toc($return = false) {
             if(in_array($class, $pluginlist)) {
                 // attempt to load the plugin
                 /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin =& plugin_load('admin', $class);
+                $plugin = plugin_load('admin', $class);
             }
         }
         if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
@@ -257,7 +257,7 @@ function tpl_admin() {
         if(in_array($class, $pluginlist)) {
             // attempt to load the plugin
             /** @var $plugin DokuWiki_Admin_Plugin */
-            $plugin =& plugin_load('admin', $class);
+            $plugin = plugin_load('admin', $class);
         }
     }
 
