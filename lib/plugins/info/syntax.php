@@ -48,7 +48,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Handle the match
      */
-    function handle($match, $state, $pos, &$handler){
+    function handle($match, $state, $pos, Doku_Handler &$handler){
         $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
         return array(strtolower($match));
     }
@@ -56,7 +56,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Create output
      */
-    function render($format, &$renderer, $data) {
+    function render($format, Doku_Renderer &$renderer, $data) {
         if($format == 'xhtml'){
             //handle various info stuff
             switch ($data[0]){
@@ -112,7 +112,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         // remove subparts
         foreach($plugins as $p){
-            if (!$po =& plugin_load($type,$p)) continue;
+            if (!$po = plugin_load($type,$p)) continue;
             list($name,$part) = explode('_',$p,2);
             $plginfo[$name] = $po->getInfo();
         }
@@ -146,7 +146,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
-            if (!$po =& plugin_load('helper',$p)) continue;
+            if (!$po = plugin_load('helper',$p)) continue;
 
             if (!method_exists($po, 'getMethods')) continue;
             $methods = $po->getMethods();
@@ -156,7 +156,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $doc = '<h2><a name="'.$hid.'" id="'.$hid.'">'.hsc($info['name']).'</a></h2>';
             $doc .= '<div class="level2">';
             $doc .= '<p>'.strtr(hsc($info['desc']), array("\n"=>"<br />")).'</p>';
-            $doc .= '<pre class="code">$'.$p." =& plugin_load('helper', '".$p."');</pre>";
+            $doc .= '<pre class="code">$'.$p." = plugin_load('helper', '".$p."');</pre>";
             $doc .= '</div>';
             foreach ($methods as $method){
                 $title = '$'.$p.'->'.$method['name'].'()';
