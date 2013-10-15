@@ -9,7 +9,9 @@ $ID   = cleanID($INPUT->str('id'));
 // this makes some general infos available as well as the info about the
 // "parent" page
 $INFO = array_merge(pageinfo(),mediainfo());
-trigger_event('DETAIL_STARTED', $tmp=array());
+
+$tmp = array();
+trigger_event('DETAIL_STARTED', $tmp);
 
 //close session
 session_write_close();
