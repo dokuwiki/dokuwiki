@@ -641,10 +641,7 @@ function & p_get_renderer($mode) {
         $Renderer = new $rclass();
     }else{
         // Maybe a plugin/component is available?
-        list($plugin, $component) = $plugin_controller->_splitName($rname);
-        if (!$plugin_controller->isdisabled($plugin)){
-            $Renderer =& $plugin_controller->load('renderer',$rname);
-        }
+        $Renderer = $plugin_controller->load('renderer',$rname);
 
         if(!isset($Renderer) || is_null($Renderer)){
             msg("No renderer '$rname' found for mode '$mode'",-1);
