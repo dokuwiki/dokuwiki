@@ -9,7 +9,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 /**
- * recurse direcory
+ * Recurse directory
  *
  * This function recurses into a given base directory
  * and calls the supplied function for each file and directory
@@ -69,12 +69,12 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
  * decide if this directory should be traversed (true) or not (false)
  * The function has to accept the following parameters:
  *
- * &$data - Reference to the result data structure
- * $base  - Base usually $conf['datadir']
- * $file  - current file or directory relative to $base
- * $type  - Type either 'd' for directory or 'f' for file
- * $lvl   - Current recursion depht
- * $opts  - option array as given to search()
+ * array &$data  - Reference to the result data structure
+ * string $base  - Base usually $conf['datadir']
+ * string $file  - current file or directory relative to $base
+ * string $type  - Type either 'd' for directory or 'f' for file
+ * int    $lvl   - Current recursion depht
+ * array  $opts  - option array as given to search()
  *
  * return values for files are ignored
  *
@@ -334,6 +334,15 @@ function pathID($path,$keeptxt=false){
  * showmsg    bool    warn about non-ID files
  * showhidden bool    show hidden files too
  * firsthead  bool    return first heading for pages
+ *
+ * @param array &$data - Reference to the result data structure
+ * @param string $base  - Base usually $conf['datadir']
+ * @param string $file  - current file or directory relative to $base
+ * @param string $type  - Type either 'd' for directory or 'f' for file
+ * @param int    $lvl   - Current recursion depht
+ * @param array  $opts  - option array as given to search()
+ * @return bool if this directory should be traversed (true) or not (false)
+ *              return value is ignored for files
  *
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
