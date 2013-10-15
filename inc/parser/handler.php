@@ -70,7 +70,7 @@ class Doku_Handler {
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
-        $plugin =& plugin_load('syntax',$pluginname);
+        $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
         }
