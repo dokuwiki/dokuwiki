@@ -14,9 +14,10 @@ if(!defined('DOKU_INC')) die('meh.');
  * This function recurses into a given base directory
  * and calls the supplied function for each file and directory
  *
- * @param   array ref $data The results of the search are stored here
+ * @param   array    &$data The results of the search are stored here
  * @param   string    $base Where to start the search
  * @param   callback  $func Callback (function name or array with object,method)
+ * @param   array     $opts option array will be given to the Callback
  * @param   string    $dir  Current directory beyond $base
  * @param   int       $lvl  Recursion Level
  * @param   mixed     $sort 'natural' to use natural order sorting (default); 'date' to sort by filemtime; leave empty to skip sorting.
