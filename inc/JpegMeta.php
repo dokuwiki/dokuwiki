@@ -1452,7 +1452,7 @@ class JpegMeta {
             if ($this->_markers[$i]['marker'] == 0xE1) {
                 $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 29);
                 if ($signature == "http://ns.adobe.com/xap/1.0/\0") {
-                    $data =& substr($this->_markers[$i]['data'], 29);
+                    $data = substr($this->_markers[$i]['data'], 29);
                     break;
                 }
             }
@@ -2337,7 +2337,7 @@ class JpegMeta {
     function _readIPTC(&$data, $pos = 0) {
         $totalLength = strlen($data);
 
-        $IPTCTags =& $this->_iptcTagNames();
+        $IPTCTags = $this->_iptcTagNames();
 
         while ($pos < ($totalLength - 5)) {
             $signature = $this->_getShort($data, $pos);
