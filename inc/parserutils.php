@@ -625,7 +625,8 @@ function & p_get_renderer($mode) {
     $rclass = "Doku_Renderer_$rname";
 
     if( class_exists($rclass) ) {
-        return new $rclass();
+        $Renderer = new $rclass();
+        return $Renderer;
     }
 
     // try default renderer first:
