@@ -50,8 +50,8 @@ class mailer_test extends DokuWikiTest {
         // set a bunch of test headers
         $mail->setHeader('test-header','bla');
         $mail->setHeader('to','A valid ASCII name <test@example.com>');
-        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning$§%.");
-        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning$§%.",false);
+        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning\$§%.");
+        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning\$§%.",false);
         $mail->setHeader("weird\n*+\x00foo.-_@bar?",'now clean');
 
         // are they set?
