@@ -206,7 +206,7 @@ class Doku_Plugin_Controller {
                 $backup = $file.'.bak';
                 if (@file_exists($backup)) @unlink($backup);
                 if (!@copy($file,$backup)) return false;
-                if ($conf['fperm']) chmod($backup, $conf['fperm']);
+                if (!empty($conf['fperm'])) chmod($backup, $conf['fperm']);
             }
             //check if can open for writing, else restore
             return io_saveFile($file,$out);

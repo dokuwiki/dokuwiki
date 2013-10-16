@@ -139,10 +139,10 @@ function auth_loadACL() {
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
-        if($line{0} == '#') continue;
+        if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
         list($id,$rest) = preg_split('/\s+/',$line,2);
 
-        // substitue user wildcard first (its 1:1)
+        // substitute user wildcard first (its 1:1)
         if(strstr($line, '%USER%')){
             // if user is not logged in, this ACL line is meaningless - skip it
             if (!isset($_SERVER['REMOTE_USER'])) continue;

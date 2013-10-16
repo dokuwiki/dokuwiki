@@ -393,7 +393,7 @@ function io_mkdir_p($target){
             return io_mkdir_ftp($dir);
         }else{
             $ret = @mkdir($target,$conf['dmode']); // crawl back up & create dir tree
-            if($ret && $conf['dperm']) chmod($target, $conf['dperm']);
+            if($ret && !empty($conf['dperm'])) chmod($target, $conf['dperm']);
             return $ret;
         }
     }
