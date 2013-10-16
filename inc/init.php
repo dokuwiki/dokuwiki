@@ -267,10 +267,10 @@ function init_lang($langCode) {
     $lang = array();
 
     //load the language files
-    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    require(DOKU_INC.'inc/lang/en/lang.php');
     if ($langCode && $langCode != 'en') {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
-            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+            require(DOKU_INC."inc/lang/$langCode/lang.php");
         }
     }
 }
