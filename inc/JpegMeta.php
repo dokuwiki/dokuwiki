@@ -161,7 +161,7 @@ class JpegMeta {
             if($info != false) break;
         }
 
-        if($info === false)  $info = $alt;
+        if($info === false)  $info = '';
         if(is_array($info)){
             if(isset($info['val'])){
                 $info = $info['val'];
@@ -874,7 +874,7 @@ class JpegMeta {
     /*************************************************************/
 
     /*************************************************************/
-    function _dispose() {
+    function _dispose($fileName = "") {
         $this->_fileName = $fileName;
 
         $this->_fp = null;
@@ -2183,7 +2183,8 @@ class JpegMeta {
                         }
 
                         while ($j < $count) {
-                            $this->_putString($value, $j * 4, "\0\0\0\0");
+                            $v = "\0\0\0\0";
+                            $this->_putString($value, $j * 4, $v);
                             $j++;
                         }
                         break;
@@ -2206,7 +2207,8 @@ class JpegMeta {
                         }
 
                         while ($j < $count) {
-                            $this->_putString($value, $j * 8, "\0\0\0\0\0\0\0\0");
+                            $v = "\0\0\0\0\0\0\0\0";
+                            $this->_putString($value, $j * 8, $v);
                             $j++;
                         }
                         break;
