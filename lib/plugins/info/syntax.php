@@ -58,6 +58,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      */
     function render($format, Doku_Renderer &$renderer, $data) {
         if($format == 'xhtml'){
+            /** @var Doku_Renderer_xhtml $renderer */
             //handle various info stuff
             switch ($data[0]){
                 case 'syntaxmodes':
@@ -103,7 +104,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * uses some of the original renderer methods
      */
-    function _plugins_xhtml($type, Doku_Renderer &$renderer){
+    function _plugins_xhtml($type, Doku_Renderer_xhtml &$renderer){
         global $lang;
         $renderer->doc .= '<ul>';
 
@@ -141,9 +142,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * uses some of the original renderer methods
      */
-    function _helpermethods_xhtml(Doku_Renderer &$renderer){
-        global $lang;
-
+    function _helpermethods_xhtml(Doku_Renderer_xhtml &$renderer){
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
             if (!$po = plugin_load('helper',$p)) continue;
