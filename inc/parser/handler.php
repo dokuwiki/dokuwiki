@@ -1432,6 +1432,7 @@ class Doku_Handler_Table {
 class Doku_Handler_Block {
     var $calls = array();
     var $skipEol = false;
+    var $inParagraph = false;
 
     // Blocks these should not be inside paragraphs
     var $blockOpen = array(
