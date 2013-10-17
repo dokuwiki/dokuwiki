@@ -1,8 +1,8 @@
 <?php
+
 /**
- * danish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -14,6 +14,7 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
+ * @author Soren Birk <soer9648@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -198,6 +199,7 @@ $lang['user_tools']            = 'Brugerværktøjer';
 $lang['site_tools']            = 'Webstedsværktøjer';
 $lang['page_tools']            = 'Sideværktøjer';
 $lang['skip_to_content']       = 'hop til indhold';
+$lang['sidebar']               = 'Sidebjælke';
 $lang['mail_newpage']          = 'dokument tilføjet:';
 $lang['mail_changed']          = 'dokument ændret:';
 $lang['mail_subscribe_list']   = 'sider ændret i navnerum';
@@ -292,6 +294,8 @@ $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrere
 $lang['i_pol2']                = 'Lukket Wiki (kun for registerede brugere kan læse, skrive og overføre)';
 $lang['i_retry']               = 'Forsøg igen';
 $lang['i_license']             = 'Vælg venligst licensen du vil tilføje dit indhold under:';
+$lang['i_license_none']        = 'Vis ikke licensinformationer';
+$lang['i_pop_field']           = 'Hjælp os venligst med at forbedre oplevelsen af DokuWiki:';
 $lang['recent_global']         = 'Du ser lige nu ændringerne i <b>%s</b> navnerummet. Du kan også <a href="%s">se de sidste ændringer for hele wiki siden </a>';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måned siden';
