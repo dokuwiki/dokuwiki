@@ -1,8 +1,8 @@
 <?php
+
 /**
- * danish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -14,6 +14,7 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
+ * @author Soren Birk <soer9648@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +58,7 @@ $lang['btn_revert']            = 'Reetablér';
 $lang['btn_register']          = 'Registrér';
 $lang['btn_apply']             = 'Anvend';
 $lang['btn_media']             = 'Media Manager';
+$lang['btn_deleteuser']        = 'Fjern Min Konto';
 $lang['loggedinas']            = 'Logget ind som';
 $lang['user']                  = 'Brugernavn';
 $lang['pass']                  = 'Adgangskode';
@@ -68,6 +70,7 @@ $lang['fullname']              = 'Fulde navn';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Brugerprofil';
 $lang['badlogin']              = 'Brugernavn eller adgangskode var forkert.';
+$lang['badpassconfirm']        = 'Kodeordet var desværre forkert';
 $lang['minoredit']             = 'Mindre ændringer';
 $lang['draftdate']             = 'Kladde automatisk gemt d.';
 $lang['nosecedit']             = 'Siden blev ændret i mellemtiden, sektions information var for gammel, hentede hele siden i stedet.';
@@ -84,6 +87,9 @@ $lang['profna']                = 'Denne wiki understøtter ikke ændring af prof
 $lang['profnochange']          = 'Ingen ændringer, intet modificeret.';
 $lang['profnoempty']           = 'Tomt navn eller e-mail adresse er ikke tilladt.';
 $lang['profchanged']           = 'Brugerprofil opdateret korrekt.';
+$lang['profnodelete']          = 'Denne wiki supporterer ikke sletning af brugere';
+$lang['profdeleteuser']        = 'Slet Konto';
+$lang['profdeleted']           = 'Din brugerkonto er blevet slettet fra denne wiki';
 $lang['pwdforget']             = 'Har du glemt dit adgangskode? Få et nyt';
 $lang['resendna']              = 'Denne wiki understøtter ikke udsendelse af nyt adgangskode.';
 $lang['resendpwd']             = 'Vælg ny adgangskode for';
