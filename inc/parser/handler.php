@@ -1278,6 +1278,7 @@ class Doku_Handler_Table {
 
         $lastRow = 0;
         $lastCell = 0;
+        $isThead = false;
         $cellKey = array();
         $toDelete = array();
 
@@ -1292,6 +1293,14 @@ class Doku_Handler_Table {
 
                     $lastRow++;
                     $lastCell = 0;
+
+                    if($lastRow === 1 && $this->tableCalls[$key+1][0] == 'tableheader_open') {
+                        $isThead = true;
+
+                        array_splice($this->tableCalls, $key, 0, array(
+                              array('tablethead_open', array(), $call[2])));
+                        $key += 1;
+                    }
                     break;
 
                 case 'tablecell_open':
@@ -1396,6 +1405,12 @@ class Doku_Handler_Table {
                         $key += 3;
                     }
 
+                    if($isThead) {
+                        array_splice($this->tableCalls, $key+1, 0, array(
+                              array('tablethead_close', array(), $call[2])));
+
+                        $isThead = false;
+                    }
                     break;
 
             }
@@ -1437,7 +1452,7 @@ class Doku_Handler_Block {
     var $blockOpen = array(
             'header',
             'listu_open','listo_open','listitem_open','listcontent_open',
-            'table_open','tablerow_open','tablecell_open','tableheader_open',
+            'table_open','tablerow_open','tablecell_open','tableheader_open','tablethead_open',
             'quote_open',
             'code','file','hr','preformatted','rss',
             'htmlblock','phpblock',
@@ -1447,7 +1462,7 @@ class Doku_Handler_Block {
     var $blockClose = array(
             'header',
             'listu_close','listo_close','listitem_close','listcontent_close',
-            'table_close','tablerow_close','tablecell_close','tableheader_close',
+            'table_close','tablerow_close','tablecell_close','tableheader_close','tablethead_close',
             'quote_close',
             'code','file','hr','preformatted','rss',
             'htmlblock','phpblock',

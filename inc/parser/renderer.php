@@ -245,6 +245,10 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function table_close($pos = null){}
 
+    function tablethead_open(){}
+
+    function tablethead_close(){}
+
     function tablerow_open(){}
 
     function tablerow_close(){}
