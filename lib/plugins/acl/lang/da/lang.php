@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Danish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
