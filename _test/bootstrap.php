@@ -15,6 +15,7 @@ require_once DOKU_UNITTEST.'core/TestUtils.php';
 define('SIMPLE_TEST', true);
 
 // basic behaviours
+define('DOKU_E_LEVEL',E_ALL);
 error_reporting(E_ALL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
