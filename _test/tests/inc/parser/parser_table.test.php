@@ -44,7 +44,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
 
     function testTableWinEOL() {
@@ -84,7 +84,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
 
     function testEmptyTable() {
@@ -109,7 +109,7 @@ def');
             array('document_end',array()),
         );
 
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     function testTableHeaders() {
@@ -276,7 +276,7 @@ def');
             array('document_end',array()),
         );
 
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     function testCellSpan() {
@@ -318,7 +318,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     function testCellRowSpan() {
@@ -366,7 +366,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
 
     function testCellRowSpanFirstRow() {
@@ -424,7 +424,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     function testRowSpanTableHead() {
@@ -588,7 +588,7 @@ def');
             array('document_end',array()),
         );
  
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
         
     }
     
@@ -634,7 +634,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     // This is really a failing test - formatting able to spread across cols
@@ -689,7 +689,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     // This is really a failing test - unformatted able to spread across cols
@@ -740,7 +740,7 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     function testTableLinebreak() {
@@ -788,7 +788,7 @@ def');
             array('document_end',array()),
         );
 
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
     
     // This is really a failing test - footnote able to spread across cols
@@ -847,6 +847,6 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
 }
