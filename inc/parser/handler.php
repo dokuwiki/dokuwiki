@@ -1149,6 +1149,8 @@ class Doku_Handler_Table {
     var $currentCols = 0;
     var $firstCell = false;
     var $lastCellType = 'tablecell';
+    var $inTableHead = true;
+    var $countTableHeadRows = 0;
 
     function Doku_Handler_Table(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
@@ -1219,6 +1221,9 @@ class Doku_Handler_Table {
     }
 
     function tableRowClose($call) {
+        if ($this->inTableHead) {
+            $this->countTableHeadRows++;
+        }
         // Strip off final cell opening and anything after it
         while ( $discard = array_pop($this->tableCalls ) ) {
 
@@ -1234,6 +1239,9 @@ class Doku_Handler_Table {
     }
 
     function tableCell($call) {
+        if ($call[0] != 'tableheader') {
+            $this->inTableHead = false;
+        }
         if ( !$this->firstCell ) {
 
             // Increase the span
@@ -1278,7 +1286,6 @@ class Doku_Handler_Table {
 
         $lastRow = 0;
         $lastCell = 0;
-        $isThead = false;
         $cellKey = array();
         $toDelete = array();
 
@@ -1289,18 +1296,18 @@ class Doku_Handler_Table {
             $call = $this->tableCalls[$key];
 
             switch ($call[0]) {
+                case 'table_open' :
+                    if($this->countTableHeadRows) {
+                        array_splice($this->tableCalls, $key+1, 0, array(
+                              array('tablethead_open', array(), $call[2]))
+                        );
+                    }
+                    break;
+
                 case 'tablerow_open':
 
                     $lastRow++;
                     $lastCell = 0;
-
-                    if($lastRow === 1 && $this->tableCalls[$key+1][0] == 'tableheader_open') {
-                        $isThead = true;
-
-                        array_splice($this->tableCalls, $key, 0, array(
-                              array('tablethead_open', array(), $call[2])));
-                        $key += 1;
-                    }
                     break;
 
                 case 'tablecell_open':
@@ -1366,15 +1373,19 @@ class Doku_Handler_Table {
                     } else {
 
                         $spanning_cell = null;
-                        for($i = $lastRow-1; $i > 0; $i--) {
 
-                            if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+                        // can't cross thead/tbody boundary
+                        if (!$this->countTableHeadRows || ($lastRow-1 != $this->countTableHeadRows)) {
+                            for($i = $lastRow-1; $i > 0; $i--) {
 
-                                if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
-                                    $spanning_cell = $i;
-                                    break;
+                                if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+
+                                    if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
+                                        $spanning_cell = $i;
+                                        break;
+                                    }
+
                                 }
-
                             }
                         }
                         if (is_null($spanning_cell)) {
@@ -1405,11 +1416,9 @@ class Doku_Handler_Table {
                         $key += 3;
                     }
 
-                    if($isThead) {
+                    if($this->countTableHeadRows == $lastRow) {
                         array_splice($this->tableCalls, $key+1, 0, array(
                               array('tablethead_close', array(), $call[2])));
-
-                        $isThead = false;
                     }
                     break;
 
