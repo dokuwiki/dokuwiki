@@ -17,6 +17,7 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Rachel <rzhang0802@gmail.com>
  * @author Donald <donaldtcong@gmail.com>
+ * @author Yangyu Huang <yangyu.huang@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -60,6 +61,7 @@ $lang['btn_revert']            = '恢复';
 $lang['btn_register']          = '注册';
 $lang['btn_apply']             = '应用';
 $lang['btn_media']             = '媒体管理器';
+$lang['btn_deleteuser']        = '移除我的账户';
 $lang['loggedinas']            = '登录为';
 $lang['user']                  = '用户名';
 $lang['pass']                  = '密码';
@@ -88,7 +90,11 @@ $lang['profna']                = '本维基不支持修改个人信息';
 $lang['profnochange']          = '没有改动，不进行操作。';
 $lang['profnoempty']           = '不允许使用空的用户名或邮件地址。';
 $lang['profchanged']           = '用户信息更新成功。';
+$lang['profnodelete']          = '这个 wiki 不支持删除用户';
 $lang['profdeleteuser']        = '删除账号';
+$lang['profdeleted']           = '你的用户已经从这个 wiki 中删除';
+$lang['profconfdelete']        = '我希望删除我的账户。<br/>这项操作无法撤销。';
+$lang['profconfdeletemissing'] = '确认框未勾选';
 $lang['pwdforget']             = '忘记密码？立即获取新密码';
 $lang['resendna']              = '本维基不支持二次发送密码。';
 $lang['resendpwd']             = '设置新密码用于';
