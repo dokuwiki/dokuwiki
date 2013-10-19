@@ -19,6 +19,18 @@ class auth_nameencode_test extends DokuWikiTest {
         $this->assertEquals(auth_nameencode($in),$out);
     }
 
+    function test_apostrophe(){
+        $in  = 'hey\'you';
+        $out = 'hey%27you';
+        $this->assertEquals(auth_nameencode($in),$out);
+    }
+
+    function test_backslash(){
+        $in  = 'hey\\you';
+        $out = 'hey%5cyou';
+        $this->assertEquals(auth_nameencode($in),$out);
+    }
+
     function test_complex(){
         $in  = 'hey $ you !$%! foo ';
         $out = 'hey%20%24%20you%20%21%24%25%21%20foo%20';
