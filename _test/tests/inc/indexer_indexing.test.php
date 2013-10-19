@@ -24,7 +24,7 @@ class indexer_indexing_test extends DokuWikiTest {
         $indexer->addPageWords('testpage', '0x1 002');
         $indexer->addPageWords('notfound', '0x2');
         $query = array('001', '002');
-        $this->assertEquals(array('001' => array('notfound' => 1), '002' => array('testpage' => 1)), $indexer->lookup($query));
+        $this->assertEquals(array('001' => array(), '002' => array('testpage' => 1)), $indexer->lookup($query));
     }
 
     public function test_meta() {
