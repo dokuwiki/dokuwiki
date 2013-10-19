@@ -68,6 +68,13 @@ $default_server_vars = array(
     'REQUEST_TIME' => time(),
 );
 
+// fixup for $_SERVER when run from CLI,
+// some values should be mocked for use by inc/init.php which is called here
+// [ $_SERVER is also mocked in TestRequest::execute() ]
+if (php_sapi_name() == 'cli') {
+  $_SERVER = array_merge($default_server_vars, $_SERVER);
+}
+
 // create temp directories
 mkdir(TMP_DIR);
 
