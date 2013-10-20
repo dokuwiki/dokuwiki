@@ -794,7 +794,7 @@ if (!class_exists('setting_numericopt')) {
 if (!class_exists('setting_onoff')) {
     class setting_onoff extends setting_numeric {
 
-        function html(&$plugin) {
+        function html(&$plugin, $echo = false) {
             $value = '';
             $disable = '';
 
@@ -830,7 +830,7 @@ if (!class_exists('setting_multichoice')) {
     class setting_multichoice extends setting_string {
         var $_choices = array();
 
-        function html(&$plugin) {
+        function html(&$plugin, $echo = false) {
             $value = '';
             $disable = '';
             $nochoice = '';

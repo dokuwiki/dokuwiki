@@ -111,7 +111,7 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
     $opts = array(
         'pagesonly' => true,
         'listdirs' => true,
-        'listfiles' => !$opts['nofiles'],
+        'listfiles' => empty($opts['nofiles']),
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
         'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$opts['ns']) ? 0 : -1
@@ -377,7 +377,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     }
 
     // check ACL
-    if(!$opts['skipacl']){
+    if(empty($opts['skipacl'])){
         if($type == 'd'){
             $item['perm'] = auth_quickaclcheck($item['id'].':*');
         }else{
@@ -389,17 +389,17 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
 
     // are we done here maybe?
     if($type == 'd'){
-        if(!$opts['listdirs']) return $return;
-        if(!$opts['skipacl'] && $opts['sneakyacl'] && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
-        if($opts['dirmatch'] && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
-        if($opts['nsmatch'] && !preg_match('/'.$opts['nsmatch'].'/',$item['ns'])) return $return;
+        if(empty($opts['listdirs'])) return $return;
+        if(empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false; //neither list nor recurse
+        if(!empty($opts['dirmatch']) && !preg_match('/'.$opts['dirmatch'].'/',$file)) return $return;
+        if(!empty($opts['nsmatch']) && !preg_match('/'.$opts['nsmatch'].'/',$item['ns'])) return $return;
     }else{
-        if(!$opts['listfiles']) return $return;
-        if(!$opts['skipacl'] && $item['perm'] < AUTH_READ) return $return;
-        if($opts['pagesonly'] && (substr($file,-4) != '.txt')) return $return;
-        if(!$opts['showhidden'] && isHiddenPage($item['id'])) return $return;
-        if($opts['filematch'] && !preg_match('/'.$opts['filematch'].'/',$file)) return $return;
-        if($opts['idmatch'] && !preg_match('/'.$opts['idmatch'].'/',$item['id'])) return $return;
+        if(empty($opts['listfiles'])) return $return;
+        if(empty($opts['skipacl']) && $item['perm'] < AUTH_READ) return $return;
+        if(!empty($opts['pagesonly']) && (substr($file,-4) != '.txt')) return $return;
+        if(empty($opts['showhidden']) && isHiddenPage($item['id'])) return $return;
+        if(!empty($opts['filematch']) && !preg_match('/'.$opts['filematch'].'/',$file)) return $return;
+        if(!empty($opts['idmatch']) && !preg_match('/'.$opts['idmatch'].'/',$item['id'])) return $return;
     }
 
     // still here? prepare the item

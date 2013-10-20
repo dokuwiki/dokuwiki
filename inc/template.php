@@ -223,7 +223,7 @@ function tpl_toc($return = false) {
             if(in_array($class, $pluginlist)) {
                 // attempt to load the plugin
                 /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin =& plugin_load('admin', $class);
+                $plugin = plugin_load('admin', $class);
             }
         }
         if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
@@ -257,7 +257,7 @@ function tpl_admin() {
         if(in_array($class, $pluginlist)) {
             // attempt to load the plugin
             /** @var $plugin DokuWiki_Admin_Plugin */
-            $plugin =& plugin_load('admin', $class);
+            $plugin = plugin_load('admin', $class);
         }
     }
 
@@ -401,7 +401,7 @@ function tpl_metaheaders($alt = true) {
     // make $INFO and other vars available to JavaScripts
     $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
-    if($conf['useacl'] && $_SERVER['REMOTE_USER']) {
+    if($conf['useacl'] && !empty($_SERVER['REMOTE_USER'])) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
@@ -680,12 +680,12 @@ function tpl_get_action($type) {
             }
             break;
         case 'register':
-            if($_SERVER['REMOTE_USER']) {
+            if(!empty($_SERVER['REMOTE_USER'])) {
                 return false;
             }
             break;
         case 'resendpwd':
-            if($_SERVER['REMOTE_USER']) {
+            if(!empty($_SERVER['REMOTE_USER'])) {
                 return false;
             }
             break;
@@ -1412,7 +1412,7 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if ($_SERVER['REMOTE_USER']) {
+    if (!empty($_SERVER['REMOTE_USER'])) {
         echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
     }
 
@@ -1794,7 +1794,7 @@ function tpl_classes() {
         'dokuwiki',
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
-        $_SERVER['REMOTE_USER'] ? 'loggedIn' : '',
+        !empty($_SERVER['REMOTE_USER']) ? 'loggedIn' : '',
         $INFO['exists'] ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );

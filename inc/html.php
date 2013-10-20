@@ -1661,7 +1661,7 @@ function html_admin(){
     global $ID;
     global $INFO;
     global $conf;
-    /** @var auth_basic $auth */
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     // build menu of admin functions from the plugins that handle them
@@ -1669,7 +1669,7 @@ function html_admin(){
     $menu = array();
     foreach ($pluginlist as $p) {
         /** @var DokuWiki_Admin_Plugin $obj */
-        if($obj =& plugin_load('admin',$p) === null) continue;
+        if(($obj = plugin_load('admin',$p)) === null) continue;
 
         // check permissions
         if($obj->forAdminOnly() && !$INFO['isadmin']) continue;

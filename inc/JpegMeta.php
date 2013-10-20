@@ -975,7 +975,7 @@ class JpegMeta {
 
             if ($capture) {
                 if ($length)
-                    $this->_markers[$count]['data'] =& fread($this->_fp, $length);
+                    $this->_markers[$count]['data'] = fread($this->_fp, $length);
                 else
                     $this->_markers[$count]['data'] = "";
             }

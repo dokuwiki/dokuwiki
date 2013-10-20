@@ -62,7 +62,7 @@ class Subscription {
             return false;
         }
 
-        if($conf['dperm']) chmod($lock, $conf['dperm']);
+        if(!empty($conf['dperm'])) chmod($lock, $conf['dperm']);
         return true;
     }
 

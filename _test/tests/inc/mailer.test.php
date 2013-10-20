@@ -50,8 +50,8 @@ class mailer_test extends DokuWikiTest {
         // set a bunch of test headers
         $mail->setHeader('test-header','bla');
         $mail->setHeader('to','A valid ASCII name <test@example.com>');
-        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning$§%.");
-        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning$§%.",false);
+        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning\$§%.");
+        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning\$§%.",false);
         $mail->setHeader("weird\n*+\x00foo.-_@bar?",'now clean');
 
         // are they set?
@@ -63,7 +63,7 @@ class mailer_test extends DokuWikiTest {
         $this->assertArrayHasKey('From',$headers);
         $this->assertEquals('Ths neeedsserious cleaning.',$headers['From']);
         $this->assertArrayHasKey('Bad',$headers);
-        $this->assertEquals("Thös ne\needs\x00serious cleaning$§%.",$headers['Bad']);
+        $this->assertEquals("Thös ne\needs\x00serious cleaning\$§%.",$headers['Bad']);
         $this->assertArrayHasKey('Weird+foo.-_@bar',$headers);
 
         // unset a header again

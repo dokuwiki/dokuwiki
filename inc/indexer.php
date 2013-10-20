@@ -1017,8 +1017,9 @@ class Doku_Indexer {
                 return false;
             }
         }
-        if ($conf['dperm'])
+        if (!empty($conf['dperm'])) {
             chmod($lock, $conf['dperm']);
+        }
         return $status;
     }
 
