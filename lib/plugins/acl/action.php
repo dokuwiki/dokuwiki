@@ -41,17 +41,8 @@ class action_plugin_acl extends DokuWiki_Action_Plugin {
         $event->stopPropagation();
         $event->preventDefault();
 
-        //close session
-        session_write_close();
-
         global $ID;
         global $INPUT;
-
-        //fix for Opera XMLHttpRequests
-        $postData = http_get_raw_post_data();
-        if(!count($_POST) && !empty($postData)) {
-            parse_str($postData, $_POST);
-        }
 
         if(!auth_isadmin()) {
             echo 'for admins only';
