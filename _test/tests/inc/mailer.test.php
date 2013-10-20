@@ -63,7 +63,7 @@ class mailer_test extends DokuWikiTest {
         $this->assertArrayHasKey('From',$headers);
         $this->assertEquals('Ths neeedsserious cleaning.',$headers['From']);
         $this->assertArrayHasKey('Bad',$headers);
-        $this->assertEquals("Thös ne\needs\x00serious cleaning$§%.",$headers['Bad']);
+        $this->assertEquals("Thös ne\needs\x00serious cleaning\$§%.",$headers['Bad']);
         $this->assertArrayHasKey('Weird+foo.-_@bar',$headers);
 
         // unset a header again
