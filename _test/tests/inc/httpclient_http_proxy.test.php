@@ -1,7 +1,7 @@
 <?php
 
 class httpclient_http_proxy_test extends DokuWikiTest {
-    protected $url = 'http://www.dokuwiki.org/README';
+    protected $url = 'http://test.dokuwiki.org/README';
 
     /**
      * @group internet
