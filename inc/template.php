@@ -606,6 +606,7 @@ function tpl_get_action($type) {
 
     // check disabled actions and fix the badly named ones
     if($type == 'history') $type = 'revisions';
+    if ($type == 'subscription') $type = 'subscribe';
     if(!actionOK($type)) return false;
 
     $accesskey = null;
@@ -701,10 +702,6 @@ function tpl_get_action($type) {
             $params['rev']    = $REV;
             $params['sectok'] = getSecurityToken();
             break;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'subscription':
-            $type         = 'subscribe';
-            $params['do'] = 'subscribe';
         case 'subscribe':
             if(!$_SERVER['REMOTE_USER']) {
                 return false;
