@@ -104,7 +104,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * uses some of the original renderer methods
      */
-    function _plugins_xhtml($type, Doku_Renderer_xhtml &$renderer){
+    function _plugins_xhtml($type, Doku_Renderer &$renderer){
         global $lang;
         $renderer->doc .= '<ul>';
 
@@ -142,7 +142,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      *
      * uses some of the original renderer methods
      */
-    function _helpermethods_xhtml(Doku_Renderer_xhtml &$renderer){
+    function _helpermethods_xhtml(Doku_Renderer &$renderer){
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
             if (!$po = plugin_load('helper',$p)) continue;
@@ -250,10 +250,11 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Adds a TOC item
      */
-    function _addToTOC($text, $level, Doku_Renderer_xhtml &$renderer){
+    function _addToTOC($text, $level, Doku_Renderer &$renderer){
         global $conf;
 
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){
+            /** @var $renderer Doku_Renderer_xhtml */
             $hid  = $renderer->_headerToLink($text, 'true');
             $renderer->toc[] = array(
                 'hid'   => $hid,
