@@ -12,6 +12,7 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
+ * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
  */
 $lang['menu']                  = 'Håndter udvidelser';
 $lang['download']              = 'Hent og tilføj ny udvidelse';
@@ -23,7 +24,7 @@ $lang['btn_settings']          = 'indstillinger';
 $lang['btn_download']          = 'Hent';
 $lang['btn_enable']            = 'Gem';
 $lang['url']                   = 'URL-adresse';
-$lang['installed']             = 'Tliføjet:';
+$lang['installed']             = 'Tilføjet:';
 $lang['lastupdate']            = 'Sidst opdateret:';
 $lang['source']                = 'Kilde:';
 $lang['unknown']               = 'ukendt';
