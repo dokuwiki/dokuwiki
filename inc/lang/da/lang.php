@@ -15,6 +15,7 @@
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author Soren Birk <soer9648@hotmail.com>
+ * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
