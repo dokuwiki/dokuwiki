@@ -288,7 +288,7 @@ function init_files(){
             $fh = @fopen($file,'a');
             if($fh){
                 fclose($fh);
-                if($conf['fperm']) chmod($file, $conf['fperm']);
+                if(!empty($conf['fperm'])) chmod($file, $conf['fperm']);
             }else{
                 nice_die("$file is not writable. Check your permissions settings!");
             }

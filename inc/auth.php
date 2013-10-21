@@ -139,10 +139,10 @@ function auth_loadACL() {
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
-        if($line{0} == '#') continue;
+        if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
         list($id,$rest) = preg_split('/\s+/',$line,2);
 
-        // substitue user wildcard first (its 1:1)
+        // substitute user wildcard first (its 1:1)
         if(strstr($line, '%USER%')){
             // if user is not logged in, this ACL line is meaningless - skip it
             if (!isset($_SERVER['REMOTE_USER'])) continue;
@@ -808,19 +808,23 @@ function auth_nameencode($name, $skip_group = false) {
 
     if(!isset($cache[$name][$skip_group])) {
         if($skip_group && $name{0} == '@') {
-            $cache[$name][$skip_group] = '@'.preg_replace(
-                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
-                "'%'.dechex(ord(substr('\\1',-1)))", substr($name, 1)
+            $cache[$name][$skip_group] = '@'.preg_replace_callback(
+                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
+                'auth_nameencode_callback', substr($name, 1)
             );
         } else {
-            $cache[$name][$skip_group] = preg_replace(
-                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
-                "'%'.dechex(ord(substr('\\1',-1)))", $name
+            $cache[$name][$skip_group] = preg_replace_callback(
+                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
+                'auth_nameencode_callback', $name
             );
         }
     }
 
     return $cache[$name][$skip_group];
+}
+
+function auth_nameencode_callback($matches) {
+    return '%'.dechex(ord(substr($matches[1],-1)));
 }
 
 /**
