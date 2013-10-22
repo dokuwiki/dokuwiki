@@ -19,7 +19,7 @@ function html_edit_form($param) {
 }
 
 /**
- * The root class for editing actions, including edit, preview, and revert
+ * The root class for editing actions, including edit, preview, and recover
  * 
  * @author Junling Ma <junlingm@gmail.com>
  */
