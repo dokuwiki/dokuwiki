@@ -140,7 +140,7 @@ abstract class Doku_Action
         $dh->close();
 
         // load scripts in subdirs recursively
-        foreach ($subdirs as $subdir) load_dir($subdir);
+        foreach ($subdirs as $subdir) self::load_dir($subdir, $action);
     }
 
     // this function registers $class as an extension of its parent class.
@@ -314,7 +314,7 @@ abstract class Doku_Action
                 self::$_preprocessor->process();
 
             if (self::$_handler === null)
-                return act_dispatch($action);
+                msg("Old handler for $action", 0);
 
             global $ID;
             // check permission
