@@ -3,9 +3,6 @@
 define(DOKU_ACTIONS_FOLDER, 'commands');
 define(DOKU_ACTIONS_ROOT, DOKU_INC . 'inc/' . DOKU_ACTIONS_FOLDER);
 
-// include the old action handlers before we implement them all
-include_once(DOKU_INC . 'inc/actions.php');
-
 /**
  * These handlers are called right before an action is handled, so that
  * plugins have a change to change the data that is used by an action handler
@@ -313,8 +310,11 @@ abstract class Doku_Action
             foreach (self::$_preprocessors as $preprocessor)
                 self::$_preprocessor->process();
 
-            if (self::$_handler === null)
-                msg("Old handler for $action", 0);
+            // check if we can handle the action
+            if (self::$_handler === null) {
+                msg('Unknown command: ' . htmlspecialchars($action), -1);
+                return self::act("show");
+            }
 
             global $ID;
             // check permission
@@ -368,7 +368,12 @@ abstract class Doku_Action
 
             // check if we can handle it
             if (self::$_renderer === null) {
-                tpl_content_core();
+                $evt = new Doku_Event('TPL_ACT_UNKNOWN', $action);
+                if($evt->advise_before())
+                    msg("Failed to handle command: ".hsc($action), -1);
+                $evt->advise_after();
+                unset($evt);
+                return false;
             } else {
                 self::$_renderer->xhtml();
             }
