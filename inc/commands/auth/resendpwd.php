@@ -42,6 +42,11 @@ class Doku_Action_Resendpwd extends Doku_Action
     }
 }
 
+/**
+ * Renderer for action resendpwd
+ * 
+ * @author Junling Ma <junlingm@gmail.com>
+ */
 class Doku_Action_Renderer_Resendpwd extends Doku_Action_Renderer
 {
     /**

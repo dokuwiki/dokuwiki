@@ -28,6 +28,8 @@ class Doku_Action_Show extends Doku_Action
 
 /**
  * show action renderer
+ *
+ * @author Junling Ma <junlingm@gmail.com>
  */
 class Doku_Action_Renderer_Show extends Doku_Action_Renderer
 {

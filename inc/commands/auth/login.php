@@ -53,6 +53,11 @@ class Doku_Action_Login extends Doku_Action
     }
 }
 
+/**
+ * Renderer for action resendpwd
+ * 
+ * @author Junling Ma <junlingm@gmail.com>
+ */
 class Doku_Action_Renderer_Login extends Doku_Action_Renderer
 {
     /**
