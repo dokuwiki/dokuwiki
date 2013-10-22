@@ -1,14 +1,15 @@
 <?php
+
 /**
- * turkish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
  * @author farukerdemoncel@gmail.com
+ * @author Mustafa Aslan <maslan@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -52,6 +53,7 @@ $lang['btn_revert']            = 'Geri Yükle';
 $lang['btn_register']          = 'Kayıt ol';
 $lang['btn_apply']             = 'Uygula';
 $lang['btn_media']             = 'Çokluortam Yöneticisi';
+$lang['btn_deleteuser']        = 'Hesabımı Sil';
 $lang['loggedinas']            = 'Giriş ismi';
 $lang['user']                  = 'Kullanıcı ismi';
 $lang['pass']                  = 'Parola';
@@ -63,6 +65,7 @@ $lang['fullname']              = 'Tam isim';
 $lang['email']                 = 'E-posta';
 $lang['profile']               = 'Kullanıcı Bilgileri';
 $lang['badlogin']              = 'Üzgünüz, Kullanıcı adı veya şifre yanlış oldu.';
+$lang['badpassconfirm']        = 'Üzgünüz, parolanız yanlış';
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
@@ -79,6 +82,11 @@ $lang['profna']                = 'Bu wiki kullanıcı bilgilerini değiştirmeyi
 $lang['profnochange']          = 'Değişiklik yok, birşey yapılmadı.';
 $lang['profnoempty']           = 'Boş isim veya e-posta adresine izin verilmiyor.';
 $lang['profchanged']           = 'Kullanıcı bilgileri başarıyla değiştirildi.';
+$lang['profnodelete']          = 'Bu wiki kullanıcı silmeyi desteklemiyor';
+$lang['profdeleteuser']        = 'Hesabı Sil';
+$lang['profdeleted']           = 'Bu wiki\'den hesabınız silindi';
+$lang['profconfdelete']        = 'Bu wiki\'den hesabımı silmek istiyorum. <br/>Bu işlem geri alınamaz';
+$lang['profconfdeletemissing'] = 'Onay kutusu işaretlenmedi';
 $lang['pwdforget']             = 'Parolanızı mı unuttunuz? Yeni bir parola alın';
 $lang['resendna']              = 'Bu wiki parolayı tekrar göndermeyi desteklememektedir.';
 $lang['resendpwd']             = 'İçin yeni şifre belirle';
@@ -94,6 +102,7 @@ $lang['searchmedia_in']        = '%s içinde ara';
 $lang['txt_upload']            = 'Yüklenecek dosyayı seç';
 $lang['txt_filename']          = 'Dosya adı (zorunlu değil)';
 $lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
+$lang['maxuploadsize']         = 'Yükleme dosya başına en fazla %s';
 $lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
 $lang['lockexpire']            = 'Kilitin açılma tarihi:';
 $lang['js']['willexpire']      = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
@@ -129,6 +138,7 @@ $lang['js']['linkto']          = 'Bağlantı:';
 $lang['js']['del_confirm']     = 'Bu girişi sil?';
 $lang['js']['restore_confirm'] = 'Bu sürüme geri dönmek istediğinizden emin misiniz?';
 $lang['js']['media_diff']      = 'Farkları gör:';
+$lang['js']['media_diff_both'] = 'Yan yana';
 $lang['js']['media_select']    = 'Dosyalar seç...';
 $lang['js']['media_upload_btn'] = 'Yükle';
 $lang['js']['media_done_btn']  = 'Bitti';
