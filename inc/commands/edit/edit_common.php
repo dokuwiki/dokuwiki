@@ -100,7 +100,7 @@ abstract class Doku_Action_Edit_Common extends Doku_Action
 }
 
 /**
- * The root renderer class for editing actions, including edit, preview, and revert
+ * The root renderer class for editing actions, including edit, preview, and recover
  * 
  * @author Junling Ma <junlingm@gmail.com>
  */
