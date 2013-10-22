@@ -368,7 +368,7 @@ abstract class Doku_Action
 
             // check if we can handle it
             if (self::$_renderer === null) {
-                 tpl_content_core();
+                tpl_content_core();
             } else {
                 self::$_renderer->xhtml();
             }
@@ -397,4 +397,28 @@ abstract class Doku_Action
      *  the return value can be omitted.
      */
     public function handle() { }
+}
+
+/**
+ * Print the content
+ *
+ * This function is used for printing all the usual content
+ * (defined by the global $ACT var) by calling the appropriate
+ * outputfunction(s) from html.php
+ *
+ * Everything that doesn't use the main template file isn't
+ * handled by this function. ACL stuff is not done here either.
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * trvised by Junling Ma <junlingm@gmail.com>
+ * @triggers TPL_ACT_RENDER
+ * @triggers TPL_CONTENT_DISPLAY
+ * @param bool $prependTOC should the TOC be displayed here?
+ * @return bool true if any output
+ */
+function tpl_content($prependTOC = true) {
+    global $ACT;
+    global $INFO;
+    $INFO['prependTOC'] = $prependTOC;
+    Doku_Action::render($ACT);
 }

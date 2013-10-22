@@ -58,35 +58,6 @@ function tpl_basedir($tpl='') {
 }
 
 /**
- * Print the content
- *
- * This function is used for printing all the usual content
- * (defined by the global $ACT var) by calling the appropriate
- * outputfunction(s) from html.php
- *
- * Everything that doesn't use the main template file isn't
- * handled by this function. ACL stuff is not done here either.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @triggers TPL_ACT_RENDER
- * @triggers TPL_CONTENT_DISPLAY
- * @param bool $prependTOC should the TOC be displayed here?
- * @return bool true if any output
- */
-function tpl_content($prependTOC = true) {
-    global $ACT;
-    global $INFO;
-    $INFO['prependTOC'] = $prependTOC;
-
-    ob_start();
-    trigger_event('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
-    $html_output = ob_get_clean();
-    trigger_event('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
-
-    return !empty($html_output);
-}
-
-/**
  * Default Action of TPL_ACT_RENDER
  *
  * @return bool
