@@ -2,6 +2,7 @@
 /**
  *  auth_loadACL carries out the user & group substitutions
  *
+ * @author     Chris Smith <chris@jalakai.co.uk>
  */
 
 class auth_loadacl_test extends DokuWikiTest {
@@ -98,6 +99,11 @@ ACL;
 
         setlocale(LC_ALL, "English_United States.1252");  // should only succeed on windows systems
         setlocale(LC_ALL, "en_US.UTF-8");                 // should succeed on other systems
+
+        // no point continuing with this test if \s doesn't match A0
+        if (!preg_match('/\s/',"\xa0")) {
+            $this->markTestSkipped('Unable to change locale.');
+        }
 
         $_SERVER['REMOTE_USER'] = 'utfठ8';
         $USERINFO['grps'] = array('utfठ16','utfठa');
