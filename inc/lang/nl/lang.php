@@ -20,6 +20,7 @@
  * @author mprins <mprins@users.sf.net>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Klap-in <klapinklapin@gmail.com>
+ * @author Remon <no@email.local>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -222,7 +223,7 @@ $lang['changes_type']          = 'Bekijk wijzigingen van';
 $lang['pages_changes']         = 'Pagina\'s';
 $lang['media_changes']         = 'Mediabestanden';
 $lang['both_changes']          = 'Zowel pagina\'s als mediabestanden';
-$lang['qb_bold']               = 'Vette tekst';
+$lang['qb_bold']               = 'Vetgedrukte tekst';
 $lang['qb_italic']             = 'Cursieve tekst';
 $lang['qb_underl']             = 'Onderstreepte tekst';
 $lang['qb_code']               = 'Code tekst';
@@ -267,7 +268,7 @@ $lang['img_height']            = 'Hoogte';
 $lang['img_manager']           = 'In mediabeheerder bekijken';
 $lang['subscr_subscribe_success'] = '%s is ingeschreven voor %s';
 $lang['subscr_subscribe_error'] = 'Fout bij inschrijven van %s voor %s';
-$lang['subscr_subscribe_noaddress'] = 'Er is geen emailadres geassocieerd met uw account, u kunt daardoor niet worden ingeschreven.';
+$lang['subscr_subscribe_noaddress'] = 'Er is geen e-mailadres gekoppeld aan uw account, u kunt daardoor niet worden ingeschreven.';
 $lang['subscr_unsubscribe_success'] = '%s is nu uitgeschreven bij %s.';
 $lang['subscr_unsubscribe_error'] = 'Fout bij uitschrijven van %s bij %s.';
 $lang['subscr_already_subscribed'] = '%s is reeds ingeschreven bij %s.';
