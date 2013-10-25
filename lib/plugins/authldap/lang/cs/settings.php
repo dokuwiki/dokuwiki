@@ -4,19 +4,25 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author mkucera66@seznam.cz
+ * @author Remon <no@email.local>
  */
-$lang['server']                = 'Váš server LDAP. Buď jméno hosta (<code>localhost</code>) nebo plně kvalifikovaný popis URL (<code>ldap://server.tld:389</code>)';
-$lang['port']                  = 'Port serveru LDAP. Pokud není, bude využito URL výše';
-$lang['usertree']              = 'Kde najít uživatelské účty, tj. <code>ou=Lide, dc=server, dc=tld</code>';
-$lang['grouptree']             = 'Kde najít uživatelské skupiny, tj. <code>ou=Skupina, dc=server, dc=tld</code>';
-$lang['userfilter']            = 'Filter LDAPu pro vyhledávání uživatelských účtů, tj. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
-$lang['groupfilter']           = 'Filter LDAPu pro vyhledávání uživatelských skupin, tj. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
-$lang['version']               = 'Verze použitého protokolu. Můžete potřebovat jej nastavit na <code>3</code>';
-$lang['starttls']              = 'Využít spojení TLS?';
-$lang['referrals']             = 'Přeposílat odkazy?';
-$lang['binddn']                = 'Doménový název DN volitelně připojeného uživatele, pokus anonymní připojení není vyhovující, tj.  <code>cn=admin, dc=muj, dc=domov</code>';
-$lang['bindpw']                = 'Heslo uživatele výše';
-$lang['userscope']             = 'Omezení rozsahu vyhledávání uživatele';
-$lang['groupscope']            = 'Omezení rozsahu vyhledávání skupiny';
-$lang['groupkey']              = 'Atribut šlenství uživatele ve skupinách (namísto standardních AD skupin), tj. skupina z oddělení nebo telefonní číslo';
-$lang['debug']                 = 'Zobrazit dodatečné debugovací informace';
+$lang['server']                = 'Je LDAP server. Ofwel servernaam (<code>localhost</code>) of volledige URL (<code>ldap://server.tld:389</code>)';
+$lang['port']                  = 'LDAP server poort als hiervoor geen volledige URL is opgegeven';
+$lang['usertree']              = 'Locatie van de gebruikersaccounts. Bijv. <code>ou=Personen,dc=server,dc=tld</code>';
+$lang['grouptree']             = 'Locatie van de gebruikersgroepen. Bijv. <code>ou=Group,dc=server,dc=tld</code>';
+$lang['userfilter']            = 'LDAP gebruikersfilter. Bijv. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
+$lang['groupfilter']           = 'LDAP groepsfilter. Bijv. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
+$lang['version']               = 'Te gebruiken protocolversie. Je zou het moeten kunnen instellen op <code>3</code>';
+$lang['starttls']              = 'Gebruiken TLS verbindingen';
+$lang['referrals']             = 'Moeten verwijzingen worden gevolg';
+$lang['deref']                 = 'Hoe moeten de verwijzing van aliases worden bepaald?';
+$lang['binddn']                = 'DN van een optionele bind gebruiker als anonieme bind niet genoeg is. Bijv. <code>cn=beheer, dc=mijn, dc=thuis</code>';
+$lang['bindpw']                = 'Wachtwoord van bovenstaande gebruiker';
+$lang['userscope']             = 'Beperken scope van zoekfuncties voor gebruikers';
+$lang['groupscope']            = 'Beperken scope van zoekfuncties voor groepen';
+$lang['groupkey']              = 'Groepslidmaatschap van enig gebruikersattribuut (in plaats van standaard AD groepen), bijv. groep van afdeling of telefoonnummer';
+$lang['debug']                 = 'Tonen van aanvullende debuginformatie bij fouten';
+$lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
+$lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
+$lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
+$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';

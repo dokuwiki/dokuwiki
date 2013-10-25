@@ -4,16 +4,18 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author mkucera66@seznam.cz
+ * @author Remon <no@email.local>
  */
-$lang['account_suffix']        = 'Přípona vašeho účtu, tj. <code>@moje.domena.org</code>';
-$lang['base_dn']               = 'Vaše doménové jméno DN. tj. <code>DC=moje,DC=domena,DC=org</code>';
-$lang['domain_controllers']    = 'Čárkou oddělenových kontrol=rů, tj. <code>srv1.domena.org,srv2.domena.org</code>';
-$lang['admin_username']        = 'Privilegovaný uživatel Active Directory s přístupem ke všem datům. Volitelně, ale nutné pro určité akce typu zasílání mailů.';
-$lang['admin_password']        = 'Heslo uživatele výše';
-$lang['sso']                   = 'Chcete přihlašování Single-Sign-On pomocí jádra Kerberos nebo NTLM ( autentizační protokol obvyklý ve Windows)?';
-$lang['real_primarygroup']     = 'Má být zjištěna primární skupina namísto vyhodnocení hodnoty "doménoví uživatelé" (pomalejší)';
-$lang['use_ssl']               = 'Použít spojení SSL? Pokud ano, nevyužívejte TLS níže.';
-$lang['use_tls']               = 'Použít spojení TLS? Pokud ano, nevyužívejte SSL výše.';
-$lang['debug']                 = 'Zobrazit dodatečné debugovací výstupy při chybách?';
-$lang['expirywarn']            = 'Dny mezi varováním o vyprčšení hesla uživatele a jeho vypršením. 0 znaší vypnuto.';
-$lang['additional']            = 'Čárkou oddělený seznam dodatečných atributů získávaných z uživatelských dat. Využito některými pluginy.';
+$lang['account_suffix']        = 'Je account domeinnaam. Bijv <code>@mijn.domein.org</code>';
+$lang['base_dn']               = 'Je basis DN. Bijv. <code>DC=mijn,DC=domein,DC=org</code>';
+$lang['domain_controllers']    = 'Eeen commagesepareerde lijst van domeinservers. Bijv. <code>srv1.domein.org,srv2.domein.org</code>';
+$lang['admin_username']        = 'Een geprivilegeerde Active Directory gebruiker die bij alle gebruikersgegevens kan komen. Optioneel, maar kan nodig zijn voor bepaalde acties, zoals het versturen van abonnementsmailtjes.';
+$lang['admin_password']        = 'Het wachtwoord van bovernvermelde gebruiker.';
+$lang['sso']                   = 'Wordt voor Single-Sign-on Kerberos of NTLM gebruikt?';
+$lang['sso_charset']           = 'De karakterset die door je webbrowser gebruikt wordt voor de gebruikersnaam voor Kerberos of NTLM. Is leeg voor UTF-8 of latin-1.  De iconv extentie is hiervoor nodig.';
+$lang['real_primarygroup']     = 'Moet de echte primaire groep worden opgezocht in plaats van het aannemen van "Domeingebruikers" (langzamer)';
+$lang['use_ssl']               = 'SSL verbinding gebruiken? Zo ja, gebruik dan TLS hieronder niet.';
+$lang['use_tls']               = 'TLS verbinding gebruiken? Zo ja, activeer dan niet de SSL verbinding hierboven.';
+$lang['debug']                 = 'Aanvullende debug informatie tonen bij fouten?';
+$lang['expirywarn']            = 'Waarschuwingstermijn voor vervallen wachtwoord. 0 om te deactiveren.';
+$lang['additional']            = 'Commagesepareerde lijst van aanvullend uit AD op te halen attributen. Gebruikt door sommige plugins.';

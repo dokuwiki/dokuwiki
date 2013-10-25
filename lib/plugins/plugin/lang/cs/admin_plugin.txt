@@ -1,3 +1,3 @@
-====== Správa pluginů ======
+===== Pluginmanager =====
 
-Na této stránce lze spravovat pluginy DokuWiki [[doku>plugins|plugins]]. Aby bylo možné stahovat a instalovat pluginy, musí mít webový server přístup pro zápis do adresáře //plugin//.
+Op deze pagina kunt u alle DokuWiki [[doku>plugins|plugins]] beheren. Om plugins te kunnen downloaden en installeren, moet de plugin-directory schrijfbaar zijn voor de webserver.

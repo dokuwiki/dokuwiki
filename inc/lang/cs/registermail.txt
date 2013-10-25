@@ -1,14 +1,14 @@
-Zaregistroval se nový uživatel. Zde jsou detaily:
+Een nieuwe gebruiker heeft zich geregistreerd. Dit zijn de details:
 
-Uživatelské jméno : @NEWUSER@
-Celé jméno : @NEWNAME@
-E-mail : @NEWEMAIL@
+Gebruikersnaam: @NEWUSER@
+Volledige naam: @NEWNAME@
+E-mail        : @NEWEMAIL@
 
-Datum : @DATE@
-Prohlížeč : @BROWSER@
-IP adresa : @IPADDRESS@
-Hostitel : @HOSTNAME@
+Datum         : @DATE@
+Browser       : @BROWSER@
+IP-adres      : @IPADDRESS@
+Hostname      : @HOSTNAME@
 
 -- 
-Tento email byl automaticky vygenerován systémem DokuWiki
+Dit bericht is gegenereerd door DokuWiki op
 @DOKUWIKIURL@

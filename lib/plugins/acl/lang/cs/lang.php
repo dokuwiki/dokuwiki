@@ -13,32 +13,33 @@
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
+ * @author Remon <no@email.local>
  */
-$lang['admin_acl']             = 'Správa přístupových práv';
-$lang['acl_group']             = 'Skupina';
-$lang['acl_user']              = 'Uživatel';
-$lang['acl_perms']             = 'Práva pro';
-$lang['page']                  = 'Stránka';
-$lang['namespace']             = 'Jmenný prostor';
-$lang['btn_select']            = 'Vybrat';
-$lang['p_user_id']             = 'Uživatel <b class="acluser">%s</b> má nyní na stránku <b class="aclpage">%s</b> následující oprávnění: <i>%s</i>.';
-$lang['p_user_ns']             = 'Uživatel <b class="acluser">%s</b> má nyní na jmenný prostor <b class="aclns">%s</b> následující oprávnění: <i>%s</i>.';
-$lang['p_group_id']            = 'Členové skupiny <b class="aclgroup">%s</b> mají nyní na stránku <b class="aclpage">%s</b> následující oprávnění: <i>%s</i>.';
-$lang['p_group_ns']            = 'Členové skupiny <b class="aclgroup">%s</b> mají nyní na jmenný prostor <b class="aclns">%s</b> následující oprávnění: <i>%s</i>.';
-$lang['p_choose_id']           = 'Prosím, <b>vložte uživatele nebo skupinu</b> ve formě uvedené výše, abyste mohli prohlížet a editovat množinu oprávnění pro stránku <b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Prosím, <b>vložte uživatele nebo skupinu</b> ve formě uvedené výše, abyste mohli prohlížet a editovat množinu oprávnění pro jmenný prostor <b class="aclns">%s</b>.';
-$lang['p_inherited']           = 'Poznámka: Tato oprávnění nebyla nastavena explicitně, ale jsou zděděna z jiné skupiny nebo z nadřazeného jmenného prostoru.';
-$lang['p_isadmin']             = 'Poznámka: Vybraná skupina nebo uživatel má vždy plná oprávnění, protože je nastaven jako správce (superuser).';
-$lang['p_include']             = 'Vyšší oprávnění zahrnují nižší oprávnění. Vytvořit, Nahrát a Smazat se vztahují jen k jmenným prostorů, nikoliv ke stránkám.';
-$lang['current']               = 'Aktuální ACL pravidla';
-$lang['where']                 = 'Stránka/Jmenný prostor';
-$lang['who']                   = 'Uživatel/Skupina';
-$lang['perm']                  = 'Oprávnění';
-$lang['acl_perm0']             = 'Žádné';
-$lang['acl_perm1']             = 'Čtení';
-$lang['acl_perm2']             = 'Úpravy';
-$lang['acl_perm4']             = 'Vytvoření';
-$lang['acl_perm8']             = 'Upload';
-$lang['acl_perm16']            = 'Mazání';
-$lang['acl_new']               = 'Přidat novou položku';
-$lang['acl_mod']               = 'Editovat položku';
+$lang['admin_acl']             = 'Toegangsrechten';
+$lang['acl_group']             = 'Groep';
+$lang['acl_user']              = 'Gebruiker';
+$lang['acl_perms']             = 'Permissies voor';
+$lang['page']                  = 'Pagina';
+$lang['namespace']             = 'Namespace';
+$lang['btn_select']            = 'Selecteer';
+$lang['p_user_id']             = 'Gebruiker <b class="acluser">%s</b> heeft momenteel de volgende bevoegdheden op pagina <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_user_ns']             = 'Gebruiker <b class="acluser">%s</b> heeft momenteel de volgende bevoegdheden op namespace <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_id']            = 'Leden van groep <b class="aclgroup">%s</b> hebben momenteel de volgende bevoegdheden op pagina <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Leden van groep <b class="aclgroup">%s</b> hebben momenteel de volgende bevoegdheden in namespace <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_choose_id']           = 'Vul een <b>gebruiker of groep</b> in in het bovenstaande formulier om de bevoegdheden te bekijken of te bewerken voor de pagina <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Vul een <b>gebruiker of groep</b> in in het bovenstaande formulier om de bevoegdheden te bekijken of te bewerken voor de namespace <b class="aclns">%s</b>.';
+$lang['p_inherited']           = 'Let op: Deze permissies zijn niet expliciet ingesteld maar overerfd van andere groepen of hogere namespaces.';
+$lang['p_isadmin']             = 'Let op: De geselecteerde groep of gebruiker heeft altijd volledige toegangsrechten omdat hij als superuser geconfigureerd is.';
+$lang['p_include']             = 'Hogere permissies bevatten ook de lagere. Aanmaken, uploaden en verwijderen gelden alleen voor namespaces, niet voor pagina\'s.';
+$lang['current']               = 'Huidige ACL regels';
+$lang['where']                 = 'Pagina/namespace';
+$lang['who']                   = 'Gebruiker/Groep';
+$lang['perm']                  = 'Bevoegdheden';
+$lang['acl_perm0']             = 'Geen';
+$lang['acl_perm1']             = 'Lezen';
+$lang['acl_perm2']             = 'Bewerken';
+$lang['acl_perm4']             = 'Aanmaken';
+$lang['acl_perm8']             = 'Uploaden';
+$lang['acl_perm16']            = 'Verwijderen';
+$lang['acl_new']               = 'Nieuwe regel toevoegen';
+$lang['acl_mod']               = 'Regel aanpassen';

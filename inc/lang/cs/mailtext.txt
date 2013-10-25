@@ -1,17 +1,17 @@
-Stránka ve vaší DokuWiki byla změněna. Zde jsou podrobnosti:
+Er is een pagina in je DokuWiki toegevoegd of gewijzigd. Hier zijn de details
 
-Datum       : @DATE@
-Prohlížeč   : @BROWSER@
-IP adresa   : @IPADDRESS@
-Hostitel    : @HOSTNAME@
-Stará verze : @OLDPAGE@
-Nová verze  : @NEWPAGE@
-Komentář    : @SUMMARY@
-Uživatel    : @USER@
+Datum         : @DATE@
+Browser       : @BROWSER@
+IP-Adres      : @IPADDRESS@
+Hostname      : @HOSTNAME@
+Oude revisie  : @OLDPAGE@
+Nieuwe revisie: @NEWPAGE@
+Samenvatting  : @SUMMARY@
+User          : @USER@
 
 @DIFF@
 
 
 -- 
-Tento email byl automaticky vygenerován systémem DokuWiki
+Deze mail werd gegenereerd door DokuWiki op
 @DOKUWIKIURL@

@@ -1,1 +1,1 @@
-Upravte stránku a stiskněte ''Uložit''. Na stránce [[wiki:syntax]] se můžete dozvědět více o wiki syntaxi. Prosím upravujte stránky pouze, pokud je můžete **vylepšit**. V případě, že si chcete něco pouze vyzkoušet, použijte raději [[playground:playground|pískoviště]].
+Pas de pagina aan en klik op ''Opslaan''. Zie [[wiki:syntax]] voor de Wiki-syntax. Pas de pagina alleen aan als hij **verbeterd** kan worden. Als je iets wilt uitproberen kun je spelen in de  [[playground:playground|zandbak]].

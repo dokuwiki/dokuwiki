@@ -1,3 +1,4 @@
-====== Zaregistrujte se jako nový uživatel ======
+====== Registreer als nieuwe gebruiker ======
 
-Abyste získali uživatelský účet, vyplňte prosím všechny informace v následujícím formuláři. Zadejte **platnou** mailovou adresu, na níž bude zasláno heslo. Uživatelské jméno musí být v platném [[doku>pagename|formátu]] (který je stejný jako formát názvu stránky).
+Vul alle informatie hieronder in om een nieuw account voor deze wiki aan te maken. Zorg dat je een **geldig e-mailadres** opgeeft - als je je wachtwoord hier niet in kunt vullen wordt het naar dit adres verzonden. De gebruikersnaam moet een geldige [[doku>pagename|paginanaam]] zijn.
+
