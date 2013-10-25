@@ -97,11 +97,13 @@ ACL;
     function test_FS2867() {
         global $USERINFO;
 
+        $old_locale = setlocale(LC_ALL, '0');
         setlocale(LC_ALL, "English_United States.1252");  // should only succeed on windows systems
         setlocale(LC_ALL, "en_US.UTF-8");                 // should succeed on other systems
 
         // no point continuing with this test if \s doesn't match A0
         if (!preg_match('/\s/',"\xa0")) {
+            setlocale(LC_ALL, $old_locale);
             $this->markTestSkipped('Unable to change locale.');
         }
 
@@ -121,6 +123,7 @@ ACL;
             "devangariठttha\t@ALL 2",
         );
         $this->assertEquals($expect, $this->auth_loadACL_testwrapper($acls));
+        setlocale(LC_ALL, $old_locale);
     }
 }
 
