@@ -20,6 +20,7 @@
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Remon <no@email.local>
  */
 $lang['admin_acl']             = 'Toegangsrechten';
 $lang['acl_group']             = 'Groep';
@@ -38,7 +39,7 @@ $lang['p_inherited']           = 'Let op: Deze permissies zijn niet expliciet in
 $lang['p_isadmin']             = 'Let op: De geselecteerde groep of gebruiker heeft altijd volledige toegangsrechten omdat hij als superuser geconfigureerd is.';
 $lang['p_include']             = 'Hogere permissies bevatten ook de lagere. Aanmaken, uploaden en verwijderen gelden alleen voor namespaces, niet voor pagina\'s.';
 $lang['current']               = 'Huidige ACL regels';
-$lang['where']                 = 'Pagina/namespace';
+$lang['where']                 = 'Pagina/Namespace';
 $lang['who']                   = 'Gebruiker/Groep';
 $lang['perm']                  = 'Bevoegdheden';
 $lang['acl_perm0']             = 'Geen';
