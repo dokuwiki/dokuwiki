@@ -15,16 +15,14 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Remon <no@email.local>
  */
-$lang['menu']                  = 'Obnova zaspamovaných stránek';
-$lang['filter']                = 'Hledat zaspamované stránky';
-$lang['revert']                = 'Obnovit vybrané stránky';
-$lang['reverted']              = '%s vrácena do verze %s';
-$lang['removed']               = '%s odstraněna';
-$lang['revstart']              = 'Obnova stránek začala. Tento proces může trvat dlouho. Pokud
-skriptu vyprší čas, budete muset obnovovat po menších blocích
-stránek.';
-$lang['revstop']               = 'Proces obnovy stránek byl úspěšně dokončen.';
-$lang['note1']                 = 'Poznámka: toto vyhledávání je citlivé na velikost písmen';
-$lang['note2']                 = 'Poznámka: tato stránka bude obnovena na poslední verzi, která
-neobsahovala dané spamové slovo <i>%s</i>.';
+$lang['menu']                  = 'Herstelmanager';
+$lang['filter']                = 'Zoek naar bekladde pagina\'s';
+$lang['revert']                = 'Herstel geselecteerde pagina\'s';
+$lang['reverted']              = '%s hersteld naar revisie %s';
+$lang['removed']               = '%s verwijderd';
+$lang['revstart']              = 'Herstelproces begonnen. Dit kan een lange tijd duren. Als het script een timeout genereerd voor het klaar is, moet je in kleinere selecties herstellen.';
+$lang['revstop']               = 'Herstelproces succesvol afgerond.';
+$lang['note1']                 = 'NB: deze zoekopdracht is hoofdlettergevoelig';
+$lang['note2']                 = 'NB: de pagina zal hersteld worden naar de laatste versie waar de opgegeven spam-term <i>%s</i> niet op voorkomt.';

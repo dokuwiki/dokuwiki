@@ -1,19 +1,12 @@
-Dobrý den!
+Halllo!
 
-Byly změněny stránky ve jmenném prostoru @PAGE@ wiki @TITLE@.
-Zde jsou:
+Pagina's in de namespace @PAGE@ van de @TITLE@ wiki zijn veranderd. Hier zijn de veranderde pagina's:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Pro odhlášení z odebírání změn
-se prosím příhlašte do wiki na adrese 
-@DOKUWIKIURL@, pak navštivte 
-@SUBSCRIBE@ 
-a odhlaště se z odebírání změn na stránce či 
-ve jmenném prostoru.
+Om het verzenden van deze wijzigingsberichtente te stoppen, logt u in op het wiki op @DOKUWIKIURL@ en navigeert u naar @SUBSCRIBE@. Vervolgens kunt u zich voor elke gewenste pagina of namespace uitschrijven.
 
--- 
-Tento email byl automaticky vygenerován systémem DokuWiki
-@DOKUWIKIURL@
+--
+Deze email is gegenereerd door DokuWiki op @DOKUWIKIURL@

@@ -1,25 +1,19 @@
-Dobrý den!
+Halllo!
 
-Byla změněna stránka @PAGE@ ve wiki @TITLE@.
-Zde jsou změny:
+De pagina @PAGE@ in de @TITLE@ wiki is veranderd. 
+Hier zijn de wijzigingen:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
 Datum: @DATE@
-Uživatel: @USER@
-Souhrn editace: @SUMMARY@
-Stará revize: @OLDPAGE@
-Nová revize: @NEWPAGE@
+Gebruiker: @USER@
+Wijzigingssamenvatting: @SUMMARY@
+Vorige revisie: @OLDPAGE@
+Nieuwe revisie: @NEWPAGE@
 
-Pro odhlášení z odebírání změn na této webové stránce
-se prosím příhlašte do wiki na adrese 
-@DOKUWIKIURL@, pak navštivte 
-@SUBSCRIBE@ 
-a odhlaště se z odebírání změn na stránce či 
-ve jmenném prostoru.
+Om het verzenden van deze wijzigingsberichten te stoppen, logt u in op het wiki op @DOKUWIKIURL@ en navigeert u naar @NEWPAGE@. Vervolgens kunt u "Inschrijvingen wijzigen" gebruiken om inschrijvingen te stoppen.
 
--- 
-Tento email byl automaticky vygenerován systémem DokuWiki
-@DOKUWIKIURL@
+--
+Deze email is gegenereerd door DokuWiki op @DOKUWIKIURL@

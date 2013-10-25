@@ -1,5 +1,5 @@
-====== Vyhledávání ======
+====== Zoeken ======
 
-Výsledky hledání můžete vidět níže. Pokud jste nenašli, co hledáte, zkuste požadovanou stránku sami vytvořit stisknutím tlačítka ''Vytvořit stránku''.
+Hieronder zijn de resultaten van de zoekopdracht. Niks gevonden? Maak een nieuwe pagina met als naam je zoekopdracht. Klik hiervoor op ''Pagina aanpassen''.
 
-===== Výsledky =====
+===== Resultaten =====

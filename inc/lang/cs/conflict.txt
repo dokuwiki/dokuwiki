@@ -1,5 +1,5 @@
-====== Existuje novější verze ======
+====== Er bestaat een nieuwere versie ======
 
-Existuje novější verze právě upravovaného dokumentu. To se stává, pokud někdo jiný změnil dokument, který právě upravujete.
+Er bestaat een nieuwere versie van het document dat aangepast wordt. Dit komt voor als een andere gebruiker dit document tegelijk met jou wijzigt.
 
-Prohlédněte si níže uvedené rozdíly, případně rozdíly z obou verzí ručně spojte dohromady a rozhodněte se, kterou verzi uchovat. Pokud zvolíte ''Uložit'', bude uložena vaše verze. Jinak stiskněte ''Storno'' pro uchování původní verze.
+Bekijk de verschillen die beneden weergegeven worden uitvoerig, beslis dan welke versie de beste is en dus bewaard moet worden. Klik op ''opslaan'' om de eigen versie te bewaren. Klik op ''annuleren'' om de huidige versie te bewaren.

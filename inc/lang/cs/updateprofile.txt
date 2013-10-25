@@ -1,5 +1,3 @@
-====== Upravit profil vašeho učtu ======
+===== Wijzig uw gebruikersprofiel =====
 
-Vyplňte pouze pole, která chcete změnit. Nemůžete ale změnit své uživatelské jméno.
-
-
+Je hoeft alleen de velden aan te passen die je wilt wijzigen. Je gebruikersnaam is niet aan te passen.

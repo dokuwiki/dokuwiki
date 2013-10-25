@@ -12,11 +12,12 @@
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
+ * @author Remon <no@email.local>
  */
-$lang['name']                  = 'Průzkum používání (může chviličku trvat, než se natáhne)';
-$lang['submit']                = 'Odeslat data';
-$lang['autosubmit']            = 'Automaticky odesílat data jednou měsíčně';
-$lang['submissionFailed']      = 'Data nemohla být odeslána kvůli následující chybě:';
-$lang['submitDirectly']        = 'Data můžete odeslat ručně zasláním následujícího formuláře.';
-$lang['autosubmitError']       = 'Poslední automatické odeslání selhalo kvůli následující chybě:';
-$lang['lastSent']              = 'Data byla odeslána.';
+$lang['name']                  = 'Populariteitsfeedback (kan even duren om in te laden)';
+$lang['submit']                = 'Verstuur';
+$lang['autosubmit']            = 'Gegevens automatisch maandelijks verzenden';
+$lang['submissionFailed']      = 'De gegevens konden niet verstuurd worden vanwege de volgende fouten:';
+$lang['submitDirectly']        = 'Je kan de gegevens handmatig sturen door het onderstaande formulier te verzenden.';
+$lang['autosubmitError']       = 'De laatste automatische verzending is mislukt vanwege de volgende fout:';
+$lang['lastSent']              = 'De gegevens zijn verstuurd.';

@@ -1,9 +1,9 @@
-===== Průzkum používání =====
+====== Populariteitsfeedback ======
 
-Tento nástroj jednorázově shromáždí anonymní data o vaší wiki a umožní vám odeslat je vývojářům DokuWiki. To jim pomůže lépe porozumět, jak uživatelé DokuWiki používají, a jejich rozhodnutí při dalším vývoji budou založena na statistikách z reálného používání DokuWiki.
+Dit onderdeel verzamelt anonieme gegevens over uw wiki en stelt u in staat deze te versturen naar de ontwikkelaars van DokuWiki.  Dit helpt hen te begrijpen hoe DokuWiki wordt gebruikt door de gebruikers en zorgt er ook voor dat toekomstige ontwikkelkeuzes kunnen worden gestaafd door echte gebruikersstatistieken.
 
-Chcete-li pomoci vývojářům, čas od času, jak vaše wiki poroste, použijte tento nástroj. Vaše data budou pokaždé označena stejným anonymním identifikátorem.
+U wordt verzocht deze stap van tijd tot tijd te herhalen om ontwikkelaars op de hoogte te houden terwijl uw wiki groeit. De herhaalde data zal worden geïdentificeerd door een uniek, anoniem ID.
 
-Shromážděná data budou obsahovat informace, jako je instalovaná verze DokuWiki, počet a velikosti stránek a souborů, instalované pluginy a informace o nainstalovaném PHP.
+De verzamelde gegevens bevat onder andere gegevens over uw versie van DokuWiki, het aantal- en de grootte van de pagina's en bestanden, geïnstalleerde plugins en informatie over PHP.
 
-Čistá data, která se odešlou, budou vidět níže. K odeslání informací použijte prosím tlačítko "Odeslat data".
+De ruwe data die verzonden worden staan hieronder. Gebruik de knop "Verstuur" om de informatie te verzenden.

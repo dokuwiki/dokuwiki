@@ -1,3 +1,4 @@
-====== Taková verze neexistuje ======
+====== Revisie bestaat niet ======
 
-Zadaná verze neexistuje. Stiskněte tlačítko ''Starší verze'' pro seznam starších verzí tohoto dokumentu.
+De opgegeven revisie bestaat niet. Klik op ''Oude revisies'' voor een lijst van oude revisies van dit document.
+

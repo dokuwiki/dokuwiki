@@ -1,3 +1,4 @@
-====== Náhled ======
+====== Preview ======
 
-Zde je náhled, jak bude dokument vypadat. Pozor: Soubor zatím **není uložen**!
+Dit is een preview van de tekst zoals hij er uit komt te zien. Let op: het is nog **niet opgeslagen!**
+
