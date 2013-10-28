@@ -554,7 +554,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $line = trim(preg_replace('/#.*$/','',$line)); //ignore comments
             if(!$line) continue;
 
-            $acl = preg_split('/\s+/',$line);
+            $acl = preg_split('/[ \t]+/',$line);
             //0 is pagename, 1 is user, 2 is acl
 
             $acl[1] = rawurldecode($acl[1]);
@@ -701,7 +701,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $acl_config = file($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
-        $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
+        $acl_pattern = '^'.preg_quote($acl_scope,'/').'[ \t]+'.$acl_user.'[ \t]+[0-8].*$';
 
         // save all non!-matching
         $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);

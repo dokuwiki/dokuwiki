@@ -140,7 +140,7 @@ function auth_loadACL() {
     foreach($acl as $line) {
         $line = trim($line);
         if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
-        list($id,$rest) = preg_split('/\s+/',$line,2);
+        list($id,$rest) = preg_split('/[ \t]+/',$line,2);
 
         // substitute user wildcard first (its 1:1)
         if(strstr($line, '%USER%')){
@@ -716,11 +716,11 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
+    $matches = preg_grep('/^'.preg_quote($id, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
     if(count($matches)) {
         foreach($matches as $match) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
-            $acl   = preg_split('/\s+/', $match);
+            $acl   = preg_split('/[ \t]+/', $match);
             if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                 $acl[1] = utf8_strtolower($acl[1]);
             }
@@ -746,11 +746,11 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     do {
-        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
         if(count($matches)) {
             foreach($matches as $match) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
-                $acl   = preg_split('/\s+/', $match);
+                $acl   = preg_split('/[ \t]+/', $match);
                 if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                     $acl[1] = utf8_strtolower($acl[1]);
                 }

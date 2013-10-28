@@ -54,6 +54,22 @@ class auth_nameencode_test extends DokuWikiTest {
         $out = '%40hey%24you';
         $this->assertEquals(auth_nameencode($in),$out);
     }
+
+    // include a two byte utf8 character which shouldn't be encoded
+    function test_hebrew(){
+        $in = 'nun-נ8';
+        $expect = 'nun%2dנ8';
+
+        $this->assertEquals($expect, auth_nameencode($in));
+    }
+
+    // include a three byte utf8 character which shouldn't be encoded
+    function test_devanagiri(){
+        $in = 'ut-fठ8';
+        $expect = 'ut%2dfठ8';
+
+        $this->assertEquals($expect, auth_nameencode($in));
+    }
 }
 
 //Setup VIM: ex: et ts=4 :
