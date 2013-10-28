@@ -114,7 +114,6 @@ $lang['target____media']       = 'Parâmetro "target" para links de mídia';
 $lang['target____windows']     = 'Parâmetro "target" para links do Windows';
 $lang['mediarevisions']        = 'Habilitar revisões de mídias?';
 $lang['refcheck']              = 'Verificação de referência da mídia';
-$lang['refshow']               = 'Número de referências de mídia a exibir';
 $lang['gdlib']                 = 'Versão da biblioteca "GD Lib"';
 $lang['im_convert']            = 'Caminho para a ferramenta de conversão ImageMagick';
 $lang['jpg_quality']           = 'Qualidade de compressão do JPG (0-100)';

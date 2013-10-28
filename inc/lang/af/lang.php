@@ -24,7 +24,6 @@ $lang['btn_logout']            = 'Teken uit';
 $lang['btn_back']              = 'Terug';
 $lang['btn_backlink']          = 'Wat skakel hierheen';
 $lang['btn_subscribe']         = 'Hou bladsy dop';
-$lang['btn_unsubscribe']       = 'Verwyder van bladsy  dophoulys';
 $lang['btn_register']          = 'Skep gerus \'n rekening';
 $lang['loggedinas']            = 'Ingeteken as';
 $lang['user']                  = 'Gebruikernaam';
