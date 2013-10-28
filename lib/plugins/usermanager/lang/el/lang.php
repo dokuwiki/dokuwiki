@@ -11,6 +11,7 @@
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
+ * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
  */
 $lang['menu']                  = 'Διαχείριση Χρηστών';
 $lang['noauth']                = '(η είσοδος χρηστών δεν είναι δυνατή)';

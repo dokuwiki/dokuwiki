@@ -28,15 +28,20 @@ body {
 
 /*____________ headers ____________*/
 
+caption,
+figcaption,
+summary,
+legend {
+    padding: 0;
+    margin: 0 0 .35em;
+    line-height: 1.2;
+}
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-caption,
-legend {
-    font-family: Arial, sans-serif;
+h6 {
     font-weight: bold;
     padding: 0;
     line-height: 1.2;
@@ -47,9 +52,7 @@ legend {
 [dir=rtl] h3,
 [dir=rtl] h4,
 [dir=rtl] h5,
-[dir=rtl] h6,
-[dir=rtl] caption,
-[dir=rtl] legend {
+[dir=rtl] h6 {
     clear: right;
 }
 
@@ -90,6 +93,8 @@ pre,
 table,
 hr,
 blockquote,
+figure,
+details,
 fieldset,
 address {
     margin: 0 0 1.4em 0; /* bottom margin = line-height */
@@ -161,7 +166,6 @@ table {
 caption {
     caption-side: top;
     text-align: left;
-    margin: 0 0 .3em;
 }
 [dir=rtl] caption {
     text-align: right;
@@ -173,13 +177,12 @@ td {
     margin: 0;
     vertical-align: top;
     border: 1px solid __border__;
-    text-align: left;
 }
 th {
     font-weight: bold;
     background-color: __background_alt__;
+    text-align: left;
 }
-[dir=rtl] td,
 [dir=rtl] th {
     text-align: right;
 }
@@ -216,11 +219,15 @@ img {
     height: auto;
 }
 img,
-object {
+object,
+embed,
+iframe,
+video,
+audio {
     max-width: 100%;
 }
-/* IE8 and below won't display the images otherwise */
-button img {
+#IE7 img,
+#IE8 img {
     max-width: none;
 }
 
@@ -229,7 +236,6 @@ hr {
     border-bottom: solid __background__;
     border-width: 1px 0;
     height: 0;
-    width: 100%;
     text-align: center;
     clear: both;
 }
@@ -239,6 +245,15 @@ abbr {
     cursor: help;
     border-bottom: 1px dotted;
     font-style: normal;
+}
+em acronym,
+em abbr {
+    font-style: italic;
+}
+
+mark {
+    background-color: __highlight__;
+    color: inherit;
 }
 
 pre,
@@ -289,6 +304,10 @@ sup {
     vertical-align: super;
 }
 
+small {
+    font-size: .8em;
+}
+
 /*____________ forms ____________*/
 
 /* for all of the form styles, style.ini colours are not used on purpose (except for fieldset border) */
@@ -299,8 +318,12 @@ form {
     padding: 0;
 }
 fieldset {
-    padding: 1em 1em 0;
+    padding: .7em 1em 0;
+    padding: .7rem 1rem; /* for those browsers understanding :last-child */
     border: 1px solid __text_alt__;
+}
+fieldset > :last-child {
+    margin-bottom: 0;
 }
 legend {
     margin: 0;
@@ -316,12 +339,16 @@ textarea,
 button,
 select,
 optgroup,
-option {
+option,
+keygen,
+output,
+meter,
+progress {
     font: inherit;
     font-weight: normal;
     color: #333;
     background-color: #fff;
-    line-height: 1;
+    line-height: normal;
     margin: 0;
     vertical-align: middle;
     -moz-box-sizing: border-box;
@@ -340,7 +367,8 @@ option {
 
 input,
 textarea,
-select {
+select,
+keygen {
     border: 1px solid #ccc;
     box-shadow: inset 0 0 1px #eee;
     border-radius: 2px;
@@ -350,11 +378,14 @@ input:focus,
 textarea:active,
 textarea:focus,
 select:active,
-select:focus {
+select:focus,
+keygen:active,
+keygen:focus {
     border-color: #999;
 }
 input[type=radio],
-input[type=checkbox] {
+input[type=checkbox],
+input[type=image] {
     padding: 0;
     border-style: none;
     box-shadow: none;
@@ -362,6 +393,8 @@ input[type=checkbox] {
 
 /* all types of buttons */
 input[type=submit],
+input[type=button],
+input[type=reset],
 input.button,
 a.button,
 button,
@@ -369,7 +402,7 @@ button,
     color: #333;
     background-color: #eee;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc4MjQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0VFRUVFRSIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0NDQ0NDQyIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnODI0KSIgLz4KPC9zdmc+);
-    /*background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%); see FS#2447*/
+    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
     background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
     background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
     background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
@@ -382,11 +415,18 @@ button,
 #IE7 input.button,
 #IE7 button {
     line-height: 1.4;
+    overflow: visible;
 }
 
 input[type=submit]:hover,
 input[type=submit]:active,
 input[type=submit]:focus,
+input[type=button]:hover,
+input[type=button]:active,
+input[type=button]:hover,
+input[type=reset]:hover,
+input[type=reset]:active,
+input[type=reset]:hover,
 input.button:hover,
 input.button:active,
 input.button:focus,
@@ -400,7 +440,7 @@ button:focus,
     border-color: #999;
     background-color: #ddd;
     background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc2NzAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0RERERERCIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0JCQkJCQiIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnNjcwKSIgLz4KPC9zdmc+);
-    /*background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%); see FS#2447*/
+    background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
     background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
     background: -o-linear-gradient(     top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
     background: -ms-linear-gradient(    top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
@@ -415,7 +455,13 @@ button::-moz-focus-inner {
 
 input[disabled],
 button[disabled],
+select[disabled],
+textarea[disabled],
 input[readonly],
-button[readonly] {
+button[readonly],
+select[readonly],
+textarea[readonly] {
     cursor: auto;
+    opacity: .5;
+    background-color: #eee;
 }

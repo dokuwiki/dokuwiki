@@ -86,67 +86,6 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
 }
 
 /**
- * Returns starting summary for a page (e.g. the first few
- * paragraphs), marked up in XHTML.
- *
- * If $excuse is true an explanation is returned if the file
- * wasn't found
- *
- * @param string $id wiki page id
- * @param string $title populated with page title from heading or page id
- * @param string $rev revision string
- * @param bool   $excuse if an excuse shall be renderer when no content is found
- * @return string xhtml code
- * @deprecated
- * @author Harry Fuecks <hfuecks@gmail.com>
- */
-function p_wiki_xhtml_summary($id, &$title, $rev='', $excuse=true){
-    $file = wikiFN($id,$rev);
-    $ret  = '';
-    $ins  = null;
-
-    //ensure $id is in global $ID (needed for parsing)
-    global $ID;
-    $keep = $ID;
-    $ID   = $id;
-
-    if($rev){
-        if(@file_exists($file)){
-            //no caching on old revisions
-            $ins = p_get_instructions(io_readWikiPage($file,$id,$rev));
-        }elseif($excuse){
-            $ret = p_locale_xhtml('norev');
-            //restore ID (just in case)
-            $ID = $keep;
-            return $ret;
-        }
-
-    }else{
-
-        if(@file_exists($file)){
-            // The XHTML for a summary is not cached so use the instruction cache
-            $ins = p_cached_instructions($file);
-        }elseif($excuse){
-            $ret = p_locale_xhtml('newpage');
-            //restore ID (just in case)
-            $ID = $keep;
-            return $ret;
-        }
-    }
-
-    $ret = p_render('xhtmlsummary',$ins,$info);
-
-    if ( $info['sum_pagetitle'] ) {
-        $title = $info['sum_pagetitle'];
-    } else {
-        $title = $id;
-    }
-
-    $ID = $keep;
-    return $ret;
-}
-
-/**
  * Returns the specified local text in parsed format
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -155,23 +94,6 @@ function p_locale_xhtml($id){
     //fetch parsed locale
     $html = p_cached_output(localeFN($id));
     return $html;
-}
-
-/**
- *     *** DEPRECATED ***
- *
- * use p_cached_output()
- *
- * Returns the given file parsed to XHTML
- *
- * Uses and creates a cachefile
- *
- * @deprecated
- * @author Andreas Gohr <andi@splitbrain.org>
- * @todo   rewrite to use mode instead of hardcoded XHTML
- */
-function p_cached_xhtml($file){
-    return p_cached_output($file);
 }
 
 /**
@@ -579,7 +501,7 @@ function p_get_parsermodes(){
         $obj = null;
         foreach($pluginlist as $p){
             /** @var DokuWiki_Syntax_Plugin $obj */
-            if(!$obj =& plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
+            if(!$obj = plugin_load('syntax',$p)) continue; //attempt to load plugin into $obj
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
             $modes[] = array(

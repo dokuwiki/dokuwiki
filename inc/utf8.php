@@ -17,6 +17,25 @@ if(!defined('UTF8_MBSTRING')){
     }
 }
 
+/**
+ * Check if PREG was compiled with UTF-8 support
+ *
+ * Without this many of the functions below will not work, so this is a minimal requirement
+ */
+if(!defined('UTF8_PREGSUPPORT')){
+    define('UTF8_PREGSUPPORT', (bool) @preg_match('/^.$/u', 'ñ'));
+}
+
+/**
+ * Check if PREG was compiled with Unicode Property support
+ *
+ * This is not required for the functions below, but might be needed in a UTF-8 aware application
+ */
+if(!defined('UTF8_PROPERTYSUPPORT')){
+    define('UTF8_PROPERTYSUPPORT', (bool) @preg_match('/^\pL$/u', 'ñ'));
+}
+
+
 if(UTF8_MBSTRING){ mb_internal_encoding('UTF-8'); }
 
 if(!function_exists('utf8_isASCII')){

@@ -38,7 +38,7 @@ $lang['btn_admin']             = 'Admin';
 $lang['btn_update']            = 'Update';
 $lang['btn_delete']            = 'Delete';
 $lang['btn_back']              = 'Back';
-$lang['btn_backlink']          = "Backlinks";
+$lang['btn_backlink']          = 'Backlinks';
 $lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
@@ -302,15 +302,18 @@ $lang['i_writeerr']            = 'Unable to create <code>%s</code>. You will nee
 $lang['i_badhash']             = 'unrecognised or modified dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - illegal or empty value';
 $lang['i_success']             = 'The configuration was finished successfully. You may delete the install.php file now. Continue to
-                                 <a href="doku.php">your new DokuWiki</a>.';
+                                 <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
 $lang['i_failure']             = 'Some errors occurred while writing the configuration files. You may need to fix them manually before
-                                  you can use <a href="doku.php">your new DokuWiki</a>.';
+                                  you can use <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
 $lang['i_policy']              = 'Initial ACL policy';
 $lang['i_pol0']                = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']                = 'Public Wiki (read for everyone, write and upload for registered users)';
 $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registered users only)';
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
+$lang['i_license_none']        = 'Do not show any license information';
+$lang['i_pop_field']           = 'Please, help us to improve the DokuWiki experience:';
+$lang['i_pop_label']           = 'Once a month, send anonymous usage data to the DokuWiki developers';
 
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';

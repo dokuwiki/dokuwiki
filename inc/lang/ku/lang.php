@@ -30,7 +30,7 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Rojanekirin';
 $lang['btn_delete'] = 'Jê bibe';
 $lang['btn_back']   = 'Paş';
-$lang['btn_backlink']    = "Girêdanên paş";
+$lang['btn_backlink']    = 'Girêdanên paş';
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
 $lang['btn_unsubscribe'] = 'Unsubscribe Changes';
@@ -62,7 +62,7 @@ $lang['lockedby']     = 'Currently locked by';
 $lang['lockexpire']   = 'Lock expires at';
 $lang['js']['willexpire']   = 'Your lock for editing this page is about to expire in a minute.\nTo avoid conflicts use the preview button to reset the locktimer.';
 
-$lang['js']['notsavedyet'] = "Unsaved changes will be lost.\nReally continue?";
+$lang['js']['notsavedyet'] = 'Unsaved changes will be lost.\nReally continue?';
 
 $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Tiştek nehat dîtin.';
@@ -95,13 +95,13 @@ $lang['lastmod']    = 'Guherandina dawî';
 $lang['by']         = 'by';
 $lang['deleted']    = 'hat jê birin';
 $lang['created']    = 'hat afirandin';
-$lang['restored']   = 'old revision restored';
+$lang['restored']   = 'old revision restored (%s)';
 $lang['summary']    = 'Kurteya guhartinê';
 
 $lang['mail_newpage'] = 'page added:';
 $lang['mail_changed'] = 'page changed:';
 
-$lang['js']['nosmblinks'] = "Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.";
+$lang['js']['nosmblinks'] = 'Linking to Windows shares only works in Microsoft Internet Explorer.\nYou still can copy and paste the link.';
 
 $lang['qb_bold']    = 'Bold Text';
 $lang['qb_italic']  = 'Italic Text';

@@ -14,5 +14,5 @@ Utilisateur       : @USER@
 
 
 -- 
-Ce courriel a été généré par DokuWiki
+Ce courriel a été généré par DokuWiki depuis
 @DOKUWIKIURL@

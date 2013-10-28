@@ -6,6 +6,9 @@
  *  @author  Ben Coburn <btcoburn@silicodon.net>
  */
 
+
+if(!defined('CM_KEYMARKER')) define('CM_KEYMARKER','____');
+
 if (!class_exists('configuration')) {
 
   class configuration {
@@ -17,6 +20,7 @@ if (!class_exists('configuration')) {
     var $_metadata = array();      // holds metadata describing the settings
     var $setting = array();        // array of setting objects
     var $locked = false;           // configuration is considered locked if it can't be updated
+    var $show_disabled_plugins = false;
 
     // configuration filenames
     var $_default_files  = array();
@@ -35,6 +39,7 @@ if (!class_exists('configuration')) {
           msg('No configuration metadata found at - '.htmlspecialchars($datafile),-1);
           return;
         }
+        $meta = array();
         include($datafile);
 
         if (isset($config['varname'])) $this->_name = $config['varname'];
@@ -45,14 +50,8 @@ if (!class_exists('configuration')) {
         $this->_local_files = $config_cascade['main']['local'];
         $this->_protected_files = $config_cascade['main']['protected'];
 
-#        if (isset($file['default'])) $this->_default_file = $file['default'];
-#        if (isset($file['local'])) $this->_local_file = $file['local'];
-#        if (isset($file['protected'])) $this->_protected_file = $file['protected'];
-
         $this->locked = $this->_is_locked();
-
         $this->_metadata = array_merge($meta, $this->get_plugintpl_metadata($conf['template']));
-
         $this->retrieve_settings();
     }
 
@@ -68,19 +67,25 @@ if (!class_exists('configuration')) {
           $keys = array_merge(array_keys($this->_metadata),array_keys($default), array_keys($local), array_keys($protected));
           $keys = array_unique($keys);
 
+          $param = null;
           foreach ($keys as $key) {
             if (isset($this->_metadata[$key])) {
               $class = $this->_metadata[$key][0];
-              $class = ($class && class_exists('setting_'.$class)) ? 'setting_'.$class : 'setting';
-              if ($class=='setting') {
-                $this->setting[] = new setting_no_class($key,$param);
+
+              if($class && class_exists('setting_'.$class)){
+                $class = 'setting_'.$class;
+              } else {
+                if($class != '') {
+                  $this->setting[] = new setting_no_class($key,$param);
+                }
+                $class = 'setting';
               }
 
               $param = $this->_metadata[$key];
               array_shift($param);
             } else {
               $class = 'setting_undefined';
-              $param = NULL;
+              $param = null;
             }
 
             if (!in_array($class, $no_default_check) && !isset($default[$key])) {
@@ -130,6 +135,15 @@ if (!class_exists('configuration')) {
       return true;
     }
 
+    /**
+     * Update last modified time stamp of the config file
+     */
+    function touch_settings(){
+        if ($this->locked) return false;
+        $file = end($this->_local_files);
+        return @touch($file);
+    }
+
     function _read_config_group($files) {
       $config = array();
       foreach ($files as $file) {
@@ -147,7 +161,6 @@ if (!class_exists('configuration')) {
       if (!$file) return array();
 
       $config = array();
-#      $file = eval('return '.$file.';');
 
       if ($this->_format == 'php') {
 
@@ -161,14 +174,32 @@ if (!class_exists('configuration')) {
         preg_match_all($pattern,$contents,$matches,PREG_SET_ORDER);
 
         for ($i=0; $i<count($matches); $i++) {
+          $value = $matches[$i][2];
+
 
           // correct issues with the incoming data
           // FIXME ... for now merge multi-dimensional array indices using ____
           $key = preg_replace('/.\]\[./',CM_KEYMARKER,$matches[$i][1]);
 
-          // remove quotes from quoted strings & unescape escaped data
-          $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$matches[$i][2]);
-          $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+
+          // handle arrays
+          if(preg_match('/^array ?\((.*)\)/', $value, $match)){
+            $arr = explode(',', $match[1]);
+
+            // remove quotes from quoted strings & unescape escaped data
+            $len = count($arr);
+            for($j=0; $j<$len; $j++){
+                $arr[$j] = trim($arr[$j]);
+                $arr[$j] = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$arr[$j]);
+                $arr[$j] = strtr($arr[$j], array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+            }
+
+            $value = $arr;
+          }else{
+            // remove quotes from quoted strings & unescape escaped data
+            $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$value);
+            $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+          }
 
           $config[$key] = $value;
         }
@@ -195,9 +226,6 @@ if (!class_exists('configuration')) {
     function _out_footer() {
       $out = '';
       if ($this->_format == 'php') {
- #         if ($this->_protected_file) {
- #           $out .= "\n@include(".$this->_protected_file.");\n";
- #         }
           $out .= "\n// end auto-generated content\n";
       }
 
@@ -209,7 +237,6 @@ if (!class_exists('configuration')) {
     function _is_locked() {
       if (!$this->_local_files) return true;
 
-#      $local = eval('return '.$this->_local_file.';');
       $local = $this->_local_files[0];
 
       if (!is_writable(dirname($local))) return true;
@@ -241,7 +268,7 @@ if (!class_exists('configuration')) {
 
     function get_plugin_list() {
       if (is_null($this->_plugin_list)) {
-        $list = plugin_list('',true);     // all plugins, including disabled ones
+        $list = plugin_list('',$this->show_disabled_plugins);
 
         // remove this plugin from the list
         $idx = array_search('config',$list);
@@ -332,21 +359,21 @@ if (!class_exists('setting')) {
   class setting {
 
     var $_key = '';
-    var $_default = NULL;
-    var $_local = NULL;
-    var $_protected = NULL;
+    var $_default = null;
+    var $_local = null;
+    var $_protected = null;
 
     var $_pattern = '';
     var $_error = false;            // only used by those classes which error check
-    var $_input = NULL;             // only used by those classes which error check
+    var $_input = null;             // only used by those classes which error check
 
     var $_cautionList = array(
         'basedir' => 'danger', 'baseurl' => 'danger', 'savedir' => 'danger', 'cookiedir' => 'danger', 'useacl' => 'danger', 'authtype' => 'danger', 'superuser' => 'danger', 'userewrite' => 'danger',
         'start' => 'warning', 'camelcase' => 'warning', 'deaccent' => 'warning', 'sepchar' => 'warning', 'compression' => 'warning', 'xsendfile' => 'warning', 'renderer_xhtml' => 'warning', 'fnencode' => 'warning',
-        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'xmlrpc' => 'security', 'fullpath' => 'security'
+        'allowdebug' => 'security', 'htmlok' => 'security', 'phpok' => 'security', 'iexssprotect' => 'security', 'remote' => 'security', 'fullpath' => 'security'
     );
 
-    function setting($key, $params=NULL) {
+    function setting($key, $params=null) {
         $this->_key = $key;
 
         if (is_array($params)) {
@@ -366,10 +393,12 @@ if (!class_exists('setting')) {
     }
 
     /**
-     *  update setting with user provided value $input
-     *  if value fails error check, save it
+     *  update changed setting with user provided value $input
+     *  - if changed value fails error check, save it to $this->_input (to allow echoing later)
+     *  - if changed value passes error check, set $this->_local to the new value
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @param  mixed   $input   the new value
+     *  @return boolean          true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
@@ -407,7 +436,7 @@ if (!class_exists('setting')) {
         }
 
         $key = htmlspecialchars($this->_key);
-        $value = htmlspecialchars($value);
+        $value = formText($value);
 
         $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
         $input = '<textarea rows="3" cols="40" id="config___'.$key.'" name="config['.$key.']" class="edit" '.$disable.'>'.$value.'</textarea>';
@@ -425,11 +454,9 @@ if (!class_exists('setting')) {
       $out = '';
 
       if ($fmt=='php') {
-        // translation string needs to be improved FIXME
-        $tr = array("\n"=>'\n', "\r"=>'\r', "\t"=>'\t', "\\" => '\\\\', "'" => '\\\'');
         $tr = array("\\" => '\\\\', "'" => '\\\'');
 
-        $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr($this->_local, $tr)."';\n";
+        $out =  '$'.$var."['".$this->_out_key()."'] = '".strtr( cleanText($this->_local), $tr)."';\n";
       }
 
       return $out;
@@ -465,6 +492,110 @@ if (!class_exists('setting')) {
         }
     }
   }
+}
+
+
+if (!class_exists('setting_array')) {
+    class setting_array extends setting {
+
+        /**
+         * Create an array from a string
+         *
+         * @param $string
+         * @return array
+         */
+        protected function _from_string($string){
+            $array = explode(',', $string);
+            $array = array_map('trim', $array);
+            $array = array_filter($array);
+            $array = array_unique($array);
+            return $array;
+        }
+
+        /**
+         * Create a string from an array
+         *
+         * @param $array
+         * @return string
+         */
+        protected function _from_array($array){
+            return join(', ', (array) $array);
+        }
+
+        /**
+         * update setting with user provided value $input
+         * if value fails error check, save it
+         *
+         * @param string $input
+         * @return bool true if changed, false otherwise (incl. on error)
+         */
+        function update($input) {
+            if (is_null($input)) return false;
+            if ($this->is_protected()) return false;
+
+            $input = $this->_from_string($input);
+
+            $value = is_null($this->_local) ? $this->_default : $this->_local;
+            if ($value == $input) return false;
+
+            foreach($input as $item){
+                if ($this->_pattern && !preg_match($this->_pattern,$item)) {
+                    $this->_error = true;
+                    $this->_input = $input;
+                    return false;
+                }
+            }
+
+            $this->_local = $input;
+            return true;
+        }
+
+        protected function _escape($string) {
+            $tr = array("\\" => '\\\\', "'" => '\\\'');
+            return "'".strtr( cleanText($string), $tr)."'";
+        }
+
+        /**
+         * generate string to save setting value to file according to $fmt
+         */
+        function out($var, $fmt='php') {
+
+            if ($this->is_protected()) return '';
+            if (is_null($this->_local) || ($this->_default == $this->_local)) return '';
+
+            $out = '';
+
+            if ($fmt=='php') {
+                $vals = array_map(array($this, '_escape'), $this->_local);
+                $out =  '$'.$var."['".$this->_out_key()."'] = array(".join(', ',$vals).");\n";
+            }
+
+            return $out;
+        }
+
+        function html(&$plugin, $echo=false) {
+            $value = '';
+            $disable = '';
+
+            if ($this->is_protected()) {
+                $value = $this->_protected;
+                $disable = 'disabled="disabled"';
+            } else {
+                if ($echo && $this->_error) {
+                    $value = $this->_input;
+                } else {
+                    $value = is_null($this->_local) ? $this->_default : $this->_local;
+                }
+            }
+
+            $key = htmlspecialchars($this->_key);
+            $value = htmlspecialchars($this->_from_array($value));
+
+            $label = '<label for="config___'.$key.'">'.$this->prompt($plugin).'</label>';
+            $input = '<input id="config___'.$key.'" name="config['.$key.']" type="text" class="edit" value="'.$value.'" '.$disable.'/>';
+            return array($label,$input);
+        }
+    }
 }
 
 if (!class_exists('setting_string')) {
@@ -533,12 +664,13 @@ if (!class_exists('setting_email')) {
   class setting_email extends setting_string {
     var $_pattern = SETTING_EMAIL_PATTERN;       // no longer required, retained for backward compatibility - FIXME, may not be necessary
     var $_multiple = false;
+    var $_placeholders = false;
 
     /**
      *  update setting with user provided value $input
      *  if value fails error check, save it
      *
-     *  @return true if changed, false otherwise (incl. on error)
+     *  @return boolean true if changed, false otherwise (incl. on error)
      */
     function update($input) {
         if (is_null($input)) return false;
@@ -546,15 +678,36 @@ if (!class_exists('setting_email')) {
 
         $value = is_null($this->_local) ? $this->_default : $this->_local;
         if ($value == $input) return false;
+        if($input === ''){
+            $this->_local = $input;
+            return true;
+        }
+        $mail = $input;
 
-        if ($this->_multiple) {
-            $mails = array_filter(array_map('trim', explode(',', $input)));
-        } else {
-            $mails = array($input);
+        if($this->_placeholders){
+            // replace variables with pseudo values
+            $mail = str_replace('@USER@','joe',$mail);
+            $mail = str_replace('@NAME@','Joe Schmoe',$mail);
+            $mail = str_replace('@MAIL@','joe@example.com',$mail);
         }
 
+        // multiple mail addresses?
+        if ($this->_multiple) {
+            $mails = array_filter(array_map('trim', explode(',', $mail)));
+        } else {
+            $mails = array($mail);
+        }
+
+        // check them all
         foreach ($mails as $mail) {
-            if (!mail_isvalid($mail)) {
+            // only check the address part
+            if(preg_match('#(.*?)<(.*?)>#', $mail, $matches)){
+                $addr = $matches[2];
+            }else{
+                $addr = $mail;
+            }
+
+            if (!mail_isvalid($addr)) {
               $this->_error = true;
               $this->_input = $input;
               return false;
@@ -567,46 +720,15 @@ if (!class_exists('setting_email')) {
   }
 }
 
+/**
+ * @deprecated 2013-02-16
+ */
 if (!class_exists('setting_richemail')) {
   class setting_richemail extends setting_email {
-
-    /**
-     *  update setting with user provided value $input
-     *  if value fails error check, save it
-     *
-     *  @return true if changed, false otherwise (incl. on error)
-     */
-    function update($input) {
-        if (is_null($input)) return false;
-        if ($this->is_protected()) return false;
-
-        $value = is_null($this->_local) ? $this->_default : $this->_local;
-        if ($value == $input) return false;
-
-        // replace variables with pseudo values
-        $test = $input;
-        $test = str_replace('@USER@','joe',$test);
-        $test = str_replace('@NAME@','Joe Schmoe',$test);
-        $test = str_replace('@MAIL@','joe@example.com',$test);
-
-        // now only check the address part
-        if(preg_match('#(.*?)<(.*?)>#',$test,$matches)){
-          $text = trim($matches[1]);
-          $addr = $matches[2];
-        }else{
-          $addr = $test;
-        }
-
-        if ($test !== '' && !mail_isvalid($addr)) {
-          $this->_error = true;
-          $this->_input = $input;
-          return false;
-        }
-
-        $this->_local = $input;
-        return true;
-    }
-
+      function update($input) {
+          $this->_placeholders = true;
+          return parent::update($input);
+      }
   }
 }
 

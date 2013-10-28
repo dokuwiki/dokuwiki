@@ -17,13 +17,15 @@
  * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
+ * @author Anael Mobilia <contrib@anael.eu>
+ * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
-$lang['menu']                  = 'Gestionnaire de réversions';
+$lang['menu']                  = 'Gestionnaire des réversions';
 $lang['filter']                = 'Trouver les pages spammées ';
 $lang['revert']                = 'Annuler les modifications sélectionnées';
 $lang['reverted']              = '%s restauré à la révision %s';
 $lang['removed']               = '%s supprimé';
-$lang['revstart']              = 'Processus de réversion démarré. Ceci peut prendre longtemps. Si le script dépasse le délai avant de terminer, vous devrez restaurer de plus petits groupes de pages.';
+$lang['revstart']              = 'Processus de réversion démarré. Ceci peut durer longtemps. Si le script dépasse le délai d\'exécution avant de finir, vous devrez restaurer de plus petits groupes de pages.';
 $lang['revstop']               = 'Processus de réversion terminé avec succès.';
-$lang['note1']                 = 'Note : cette recherche est insensible à la casse';
-$lang['note2']                 = 'Note : cette page sera révisée à la version précédente ne contenant pas le terme spammeur <em>%s</em>.';
+$lang['note1']                 = 'Note : cette recherche est sensible à la casse';
+$lang['note2']                 = 'Note : cette page sera restaurée à la dernière version ne contenant pas le terme « spam » <em>%s</em>.';

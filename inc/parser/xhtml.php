@@ -30,6 +30,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     var $toc = array();   // will contain the Table of Contents
 
     var $sectionedits = array(); // A stack of section edit data
+    private $lastsecid = 0; // last section edit id, used by startSectionEdit
 
     var $headers = array();
     var $footnotes = array();
@@ -50,9 +51,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function startSectionEdit($start, $type, $title = null) {
-        static $lastsecid = 0;
-        $this->sectionedits[] = array(++$lastsecid, $start, $type, $title);
-        return 'sectionedit' . $lastsecid;
+        $this->sectionedits[] = array(++$this->lastsecid, $start, $type, $title);
+        return 'sectionedit' . $this->lastsecid;
     }
 
     /**
@@ -803,6 +803,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
             $link['class'] .= ' mediafile mf_'.$class;
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+            if ($exists) $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))).')';
         }
 
         if($hash) $link['url'] .= '#'.$hash;
@@ -888,7 +889,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     // title is escaped by SimplePie, we unescape here because it
                     // is escaped again in externallink() FS#1705
                     $this->externallink($item->get_permalink(),
-                                        htmlspecialchars_decode($item->get_title()));
+                                        html_entity_decode($item->get_title(), ENT_QUOTES, 'UTF-8'));
                 }else{
                     $this->doc .= ' '.$item->get_title();
                 }

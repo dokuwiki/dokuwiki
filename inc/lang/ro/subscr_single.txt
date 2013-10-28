@@ -13,10 +13,10 @@ Sumarul editării: @SUMMARY@
 Vechea revizie: @OLDPAGE@
 Noua revizie: @NEWPAGE@
 
-Pentru a anula notificarea paginii, logaţi-vă pe wiki la
-@DOKUWIKIURL@ apoi navigaţi la
+Pentru a anula notificarea paginii, logați-vă pe wiki la
+@DOKUWIKIURL@ apoi navigați la
 @SUBSCRIBE@
-şi dezabonaţi-vă de la pagină şi/sau modificările numelui de spaţiu.
+și dezabonați-vă de la pagină și/sau modificările numelui de spațiu.
 
 --
 Acest mail a fost generat de DokuWiki la

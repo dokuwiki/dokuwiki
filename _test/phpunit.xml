@@ -10,6 +10,9 @@
         <testsuite name="Plugin Tests">
             <directory suffix=".test.php">../lib/plugins/*/_test</directory>
         </testsuite>
+        <testsuite name="Template Tests">
+            <directory suffix=".test.php">../lib/tpl/*/_test</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
@@ -19,6 +22,7 @@
                 <directory suffix=".php">../_cs/</directory>
                 <directory suffix=".php">../_test/</directory>
                 <directory suffix=".php">../lib/plugins/*/_test/</directory>
+                <directory suffix=".php">../lib/tpl/*/_test/</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -4,6 +4,7 @@
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
+ * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
 $lang['menu']                  = 'Xestor de Reversión';
 $lang['filter']                = 'Procurar páxinas con correo-lixo';

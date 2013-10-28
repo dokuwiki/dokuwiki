@@ -1,6 +1,6 @@
 Bonjour,
 
-Des pages dans la catégorie « @PAGE@ » du wiki « @TITLE@ » ont été modifiées. Voici ces modifications :
+Des pages de la catégorie « @PAGE@ » du wiki « @TITLE@ » ont été modifiées. Voici les modifications :
 
 --------------------------------------------------------
 @DIFF@

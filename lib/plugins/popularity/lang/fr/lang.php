@@ -16,11 +16,13 @@
  * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
+ * @author Anael Mobilia <contrib@anael.eu>
+ * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['name']                  = 'Enquête de popularité (peut nécessiter un certain temps pour être chargée)';
 $lang['submit']                = 'Envoyer les données';
-$lang['autosubmit']            = 'Envoyer les données automatiquement chaque mois';
-$lang['submissionFailed']      = 'Les données ne peuvent pas être envoyées à cause des erreurs suivantes :';
-$lang['submitDirectly']        = 'Vous pouvez envoyer le données manuellement en soumettant ce formulaire.';
+$lang['autosubmit']            = 'Envoyer les données automatiquement une fois par mois';
+$lang['submissionFailed']      = 'Les données ne peuvent pas être expédiées à cause des erreurs suivantes :';
+$lang['submitDirectly']        = 'Vous pouvez envoyer les données manuellement en soumettant ce formulaire.';
 $lang['autosubmitError']       = 'La dernière soumission automatique a échoué pour les raisons suivantes :';
-$lang['lastSent']              = 'Les données ont été envoyées ';
+$lang['lastSent']              = 'Les données ont été expédiées';

@@ -165,7 +165,7 @@ $lang['lastmod']               = 'מועד השינוי האחרון';
 $lang['by']                    = 'על ידי';
 $lang['deleted']               = 'נמחק';
 $lang['created']               = 'נוצר';
-$lang['restored']              = 'שוחזר';
+$lang['restored']              = 'שוחזר (%s)';
 $lang['external_edit']         = 'עריכה חיצונית';
 $lang['summary']               = 'תקציר העריכה';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
@@ -243,14 +243,13 @@ $lang['i_modified']            = 'משיקולי אבטחה סקריפט זה י
                          עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להיעזר בדף
                          <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקציית ה-PHP&rlm; <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
-$lang['i_phpver']              = 'גרסת ה־PHP שלך <code>%s</code> נמוכה מהדרוש. עליך לשדרג את התקנת ה־PHP שלך.';
 $lang['i_permfail']            = '<code>%s</code> אינה ניתנת לכתיבה על ידי DokuWiki. עליך לשנות הרשאות תיקייה זו!';
 $lang['i_confexists']          = '<code>%s</code> כבר קיים';
 $lang['i_writeerr']            = 'אין אפשרות ליצור את <code>%s</code>. נא לבדוק את הרשאות הקובץ/תיקייה וליצור את הקובץ ידנית.';
 $lang['i_badhash']             = 'הקובץ Dokuwiki.php אינו מזוהה או שעבר שינויים (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - הערך אינו חוקי או ריק';
-$lang['i_success']             = 'תהליך ההגדרה הסתיים בהצלחה. כעת ניתן למחוק את הקובץ install.php ולהמשיך אל ה־<a href="doku.php">DokuWiki החדש שלך</a>.';
-$lang['i_failure']             = 'מספר שגיאות אירעו בעת כתיבת קובצי התצורה. יתכן כי יהיה צורך לתקנם ידנית לפני שניתן יהיה להשתמש ב־<a href="doku.php">DokuWiki החדש שלך</a>.';
+$lang['i_success']             = 'תהליך ההגדרה הסתיים בהצלחה. כעת ניתן למחוק את הקובץ install.php ולהמשיך אל ה־<a href="doku.php?id=wiki:welcome">DokuWiki החדש שלך</a>.';
+$lang['i_failure']             = 'מספר שגיאות אירעו בעת כתיבת קובצי התצורה. יתכן כי יהיה צורך לתקנם ידנית לפני שניתן יהיה להשתמש ב־<a href="doku.php?id=wiki:welcome">DokuWiki החדש שלך</a>.';
 $lang['i_policy']              = 'מדיניות ACL התחלתית';
 $lang['i_pol0']                = 'ויקי פתוח (קריאה, כתיבה והעלאה לכולם)';
 $lang['i_pol1']                = ' ויקי ציבורי (קריאה לכולם, כתיבה והעלאה למשתמשים רשומים)';

@@ -209,12 +209,14 @@ function rss_buildItems(&$rss, &$data, $opt) {
             // add date
             if($ditem['date']) {
                 $date = $ditem['date'];
+            } elseif ($ditem['media']) {
+                $date = @filemtime(mediaFN($id));
+            } elseif (@file_exists(wikiFN($id))) {
+                $date = @filemtime(wikiFN($id));
             } elseif($meta['date']['modified']) {
                 $date = $meta['date']['modified'];
-            } else if ($ditem['media']) {
-                $date = @filemtime(mediaFN($id));
             } else {
-                $date = @filemtime(wikiFN($id));
+                $date = 0;
             }
             if($date) $item->date = date('r', $date);
 
@@ -240,7 +242,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             ), '&', true
                         );
                     } else {
-                        $item->link = wl($id, 'rev='.$date, true, '&', true);
+                        $item->link = wl($id, 'rev='.$date, true, '&');
                     }
                     break;
                 case 'rev':
@@ -320,14 +322,15 @@ function rss_buildItems(&$rss, &$data, $opt) {
                         $rev  = $revs[0];
 
                         if($rev) {
-                            $df = new Diff(explode("\n", htmlspecialchars(rawWiki($id, $rev))),
-                                           explode("\n", htmlspecialchars(rawWiki($id, ''))));
+                            $df = new Diff(explode("\n", rawWiki($id, $rev)),
+                                           explode("\n", rawWiki($id, '')));
                         } else {
                             $df = new Diff(array(''),
-                                           explode("\n", htmlspecialchars(rawWiki($id, ''))));
+                                           explode("\n", rawWiki($id, '')));
                         }
 
                         if($opt['item_content'] == 'htmldiff') {
+                            // note: no need to escape diff output, TableDiffFormatter provides 'safe' html
                             $tdf     = new TableDiffFormatter();
                             $content = '<table>';
                             $content .= '<tr><th colspan="2" width="50%">'.$rev.'</th>';
@@ -335,8 +338,9 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             $content .= $tdf->format($df);
                             $content .= '</table>';
                         } else {
+                            // note: diff output must be escaped, UnifiedDiffFormatter provides plain text
                             $udf     = new UnifiedDiffFormatter();
-                            $content = "<pre>\n".$udf->format($df)."\n</pre>";
+                            $content = "<pre>\n".hsc($udf->format($df))."\n</pre>";
                         }
                     }
                     break;
@@ -350,7 +354,11 @@ function rss_buildItems(&$rss, &$data, $opt) {
                             $content = '';
                         }
                     } else {
-                        $content = p_wiki_xhtml($id, $date, false);
+                        if (@filemtime(wikiFN($id)) === $date) {
+                            $content = p_wiki_xhtml($id, '', false);
+                        } else {
+                            $content = p_wiki_xhtml($id, $date, false);
+                        }
                         // no TOC in feeds
                         $content = preg_replace('/(<!-- TOC START -->).*(<!-- TOC END -->)/s', '', $content);
 

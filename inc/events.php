@@ -132,7 +132,7 @@ class Doku_Event_Handler {
         $pluginlist = plugin_list('action');
 
         foreach ($pluginlist as $plugin_name) {
-            $plugin =& plugin_load('action',$plugin_name);
+            $plugin = plugin_load('action',$plugin_name);
 
             if ($plugin !== null) $plugin->register($this);
         }

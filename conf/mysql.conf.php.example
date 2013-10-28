@@ -1,6 +1,6 @@
 <?php
 /*
- * This is an example configuration for the mysql auth module.
+ * This is an example configuration for the mysql auth plugin.
  *
  * This SQL statements are optimized for following table structure.
  * If you use a different one you have to change them accordingly.
@@ -23,29 +23,29 @@
  * options carefully, otherwise you won't be able to access you
  * database.
  */
-$conf['auth']['mysql']['server']   = '';
-$conf['auth']['mysql']['user']     = '';
-$conf['auth']['mysql']['password'] = '';
-$conf['auth']['mysql']['database'] = '';
+$conf['plugin']['authmysql']['server']   = '';
+$conf['plugin']['authmysql']['user']     = '';
+$conf['plugin']['authmysql']['password'] = '';
+$conf['plugin']['authmysql']['database'] = '';
 
-/* This option enables debug messages in the mysql module. It is
- * mostly usefull for system admins.
+/* This option enables debug messages in the mysql plugin. It is
+ * mostly useful for system admins.
  */
-$conf['auth']['mysql']['debug'] = 0;
+$conf['plugin']['authmysql']['debug'] = 0;
 
 /* Normally password encryption is done by DokuWiki (recommended) but for
  * some reasons it might be usefull to let the database do the encryption.
  * Set 'forwardClearPass' to '1' and the cleartext password is forwarded to
  * the database, otherwise the encrypted one.
  */
-$conf['auth']['mysql']['forwardClearPass'] = 0;
+$conf['plugin']['authmysql']['forwardClearPass'] = 0;
 
 /* Multiple table operations will be protected by locks. This array tolds
- * the module which tables to lock. If you use any aliases for table names
+ * the plugin which tables to lock. If you use any aliases for table names
  * these array must also contain these aliases. Any unamed alias will cause
  * a warning during operation. See the example below.
  */
-$conf['auth']['mysql']['TablesToLock']= array("users", "users AS u","groups", "groups AS g", "usergroup", "usergroup AS ug");
+$conf['plugin']['authmysql']['TablesToLock']= array("users", "users AS u","groups", "groups AS g", "usergroup", "usergroup AS ug");
 
 /***********************************************************************/
 /*       Basic SQL statements for user authentication (required)       */
@@ -56,19 +56,19 @@ $conf['auth']['mysql']['TablesToLock']= array("users", "users AS u","groups", "g
  * of the user. If the result table is empty or contains more than one
  * row, access will be denied.
  *
- * The module access the password as 'pass' so a alias might be necessary.
+ * The plugin accesses the password as 'pass' so a alias might be necessary.
  *
  * Following patters will be replaced:
  *   %{user}    user name
  *   %{pass}    encrypted or clear text password (depends on 'encryptPass')
  *   %{dgroup}  default group name
  */
-$conf['auth']['mysql']['checkPass']   = "SELECT pass
-                                         FROM usergroup AS ug
-                                         JOIN users AS u ON u.uid=ug.uid
-                                         JOIN groups AS g ON g.gid=ug.gid
-                                         WHERE login='%{user}'
-                                         AND name='%{dgroup}'";
+$conf['plugin']['authmysql']['checkPass']   = "SELECT pass
+                                               FROM usergroup AS ug
+                                               JOIN users AS u ON u.uid=ug.uid
+                                               JOIN groups AS g ON g.gid=ug.gid
+                                               WHERE login='%{user}'
+                                               AND name='%{dgroup}'";
 
 /* This statement should return a table with exact one row containing
  * information about one user. The field needed are:
@@ -82,23 +82,23 @@ $conf['auth']['mysql']['checkPass']   = "SELECT pass
  * Following patters will be replaced:
  *   %{user}    user name
  */
-$conf['auth']['mysql']['getUserInfo'] = "SELECT pass, CONCAT(firstname,' ',lastname) AS name, email AS mail
-                                         FROM users
-                                         WHERE login='%{user}'";
+$conf['plugin']['authmysql']['getUserInfo'] = "SELECT pass, CONCAT(firstname,' ',lastname) AS name, email AS mail
+                                               FROM users
+                                               WHERE login='%{user}'";
 
 /* This statement is used to get all groups a user is member of. The
  * result should be a table containing all groups the given user is
- * member of. The module access the group name as 'group' so a alias
+ * member of. The plugin accesses the group name as 'group' so an alias
  * might be nessecary.
  *
  * Following patters will be replaced:
  *   %{user}    user name
  */
-$conf['auth']['mysql']['getGroups']   = "SELECT name as `group`
-                                         FROM groups g, users u, usergroup ug
-                                         WHERE u.uid = ug.uid
-                                         AND g.gid = ug.gid
-                                         AND u.login='%{user}'";
+$conf['plugin']['authmysql']['getGroups']   = "SELECT name as `group`
+                                               FROM groups g, users u, usergroup ug
+                                               WHERE u.uid = ug.uid
+                                               AND g.gid = ug.gid
+                                               AND u.login='%{user}'";
 
 /***********************************************************************/
 /*      Additional minimum SQL statements to use the user manager      */
@@ -106,7 +106,7 @@ $conf['auth']['mysql']['getGroups']   = "SELECT name as `group`
 
 /* This statement should return a table containing all user login names
  * that meet certain filter criteria. The filter expressions will be added
- * case dependend by the module. At the end a sort expression will be added.
+ * case dependend by the plugin. At the end a sort expression will be added.
  * Important is that this list contains no double entries fo a user. Each
  * user name is only allowed once in the table.
  *
@@ -118,15 +118,15 @@ $conf['auth']['mysql']['getGroups']   = "SELECT name as `group`
  *   %{email}   in FilterEmail  user's email address
  *   %{group}   in FilterGroup  group name
  */
-$conf['auth']['mysql']['getUsers']    = "SELECT DISTINCT login AS user
-                                         FROM users AS u
-                                         LEFT JOIN usergroup AS ug ON u.uid=ug.uid
-                                         LEFT JOIN groups AS g ON ug.gid=g.gid";
-$conf['auth']['mysql']['FilterLogin'] = "login LIKE '%{user}'";
-$conf['auth']['mysql']['FilterName']  = "CONCAT(firstname,' ',lastname) LIKE '%{name}'";
-$conf['auth']['mysql']['FilterEmail'] = "email LIKE '%{email}'";
-$conf['auth']['mysql']['FilterGroup'] = "name LIKE '%{group}'";
-$conf['auth']['mysql']['SortOrder']   = "ORDER BY login";
+$conf['plugin']['authmysql']['getUsers']    = "SELECT DISTINCT login AS user
+                                               FROM users AS u
+                                               LEFT JOIN usergroup AS ug ON u.uid=ug.uid
+                                               LEFT JOIN groups AS g ON ug.gid=g.gid";
+$conf['plugin']['authmysql']['FilterLogin'] = "login LIKE '%{user}'";
+$conf['plugin']['authmysql']['FilterName']  = "CONCAT(firstname,' ',lastname) LIKE '%{name}'";
+$conf['plugin']['authmysql']['FilterEmail'] = "email LIKE '%{email}'";
+$conf['plugin']['authmysql']['FilterGroup'] = "name LIKE '%{group}'";
+$conf['plugin']['authmysql']['SortOrder']   = "ORDER BY login";
 
 /***********************************************************************/
 /*   Additional SQL statements to add new users with the user manager  */
@@ -141,18 +141,18 @@ $conf['auth']['mysql']['SortOrder']   = "ORDER BY login";
  *   %{email}   email address
  *   %{name}    user's full name
  */
-$conf['auth']['mysql']['addUser']     = "INSERT INTO users
-                                         (login, pass, email, firstname, lastname)
-                                         VALUES ('%{user}', '%{pass}', '%{email}',
-                                         SUBSTRING_INDEX('%{name}',' ', 1),
-                                         SUBSTRING_INDEX('%{name}',' ', -1))";
+$conf['plugin']['authmysql']['addUser']     = "INSERT INTO users
+                                               (login, pass, email, firstname, lastname)
+                                               VALUES ('%{user}', '%{pass}', '%{email}',
+                                               SUBSTRING_INDEX('%{name}',' ', 1),
+                                               SUBSTRING_INDEX('%{name}',' ', -1))";
 
 /* This statement should add a group to the database.
  * Following patterns will be replaced:
  *   %{group}   group name
  */
-$conf['auth']['mysql']['addGroup']    = "INSERT INTO groups (name)
-                                         VALUES ('%{group}')";
+$conf['plugin']['authmysql']['addGroup']    = "INSERT INTO groups (name)
+                                               VALUES ('%{group}')";
 
 /* This statement should connect a user to a group (a user become member
  * of that group).
@@ -162,26 +162,26 @@ $conf['auth']['mysql']['addGroup']    = "INSERT INTO groups (name)
  *   %{group}   group name
  *   %{gid}     id of a group dataset
  */
-$conf['auth']['mysql']['addUserGroup']= "INSERT INTO usergroup (uid, gid)
-                                         VALUES ('%{uid}', '%{gid}')";
+$conf['plugin']['authmysql']['addUserGroup']= "INSERT INTO usergroup (uid, gid)
+                                               VALUES ('%{uid}', '%{gid}')";
 
 /* This statement should remove a group fom the database.
  * Following patterns will be replaced:
  *   %{group}   group name
  *   %{gid}     id of a group dataset
  */
-$conf['auth']['mysql']['delGroup']    = "DELETE FROM groups
-                                         WHERE gid='%{gid}'";
+$conf['plugin']['authmysql']['delGroup']    = "DELETE FROM groups
+                                               WHERE gid='%{gid}'";
 
 /* This statement should return the database index of a given user name.
- * The module will access the index with the name 'id' so a alias might be
+ * The plugin will access the index with the name 'id' so a alias might be
  * necessary.
  * following patters will be replaced:
  *   %{user}    user name
  */
-$conf['auth']['mysql']['getUserID']   = "SELECT uid AS id
-                                         FROM users
-                                         WHERE login='%{user}'";
+$conf['plugin']['authmysql']['getUserID']   = "SELECT uid AS id
+                                               FROM users
+                                               WHERE login='%{user}'";
 
 /***********************************************************************/
 /*   Additional SQL statements to delete users with the user manager   */
@@ -192,16 +192,16 @@ $conf['auth']['mysql']['getUserID']   = "SELECT uid AS id
  *   %{user}    user's login name
  *   %{uid}     id of a user dataset
  */
-$conf['auth']['mysql']['delUser']     = "DELETE FROM users
-                                         WHERE uid='%{uid}'";
+$conf['plugin']['authmysql']['delUser']     = "DELETE FROM users
+                                               WHERE uid='%{uid}'";
 
 /* This statement should remove all connections from a user to any group
  * (a user quits membership of all groups).
  * Following patterns will be replaced:
  *   %{uid}     id of a user dataset
  */
-$conf['auth']['mysql']['delUserRefs'] = "DELETE FROM usergroup
-                                         WHERE uid='%{uid}'";
+$conf['plugin']['authmysql']['delUserRefs'] = "DELETE FROM usergroup
+                                               WHERE uid='%{uid}'";
 
 /***********************************************************************/
 /*   Additional SQL statements to modify users with the user manager   */
@@ -218,13 +218,13 @@ $conf['auth']['mysql']['delUserRefs'] = "DELETE FROM usergroup
  *   %{name}    user's full name
  *   %{uid}     user id that should be updated
  */
-$conf['auth']['mysql']['updateUser']  = "UPDATE users SET";
-$conf['auth']['mysql']['UpdateLogin'] = "login='%{user}'";
-$conf['auth']['mysql']['UpdatePass']  = "pass='%{pass}'";
-$conf['auth']['mysql']['UpdateEmail'] = "email='%{email}'";
-$conf['auth']['mysql']['UpdateName']  = "firstname=SUBSTRING_INDEX('%{name}',' ', 1),
-                                         lastname=SUBSTRING_INDEX('%{name}',' ', -1)";
-$conf['auth']['mysql']['UpdateTarget']= "WHERE uid=%{uid}";
+$conf['plugin']['authmysql']['updateUser']  = "UPDATE users SET";
+$conf['plugin']['authmysql']['UpdateLogin'] = "login='%{user}'";
+$conf['plugin']['authmysql']['UpdatePass']  = "pass='%{pass}'";
+$conf['plugin']['authmysql']['UpdateEmail'] = "email='%{email}'";
+$conf['plugin']['authmysql']['UpdateName']  = "firstname=SUBSTRING_INDEX('%{name}',' ', 1),
+                                               lastname=SUBSTRING_INDEX('%{name}',' ', -1)";
+$conf['plugin']['authmysql']['UpdateTarget']= "WHERE uid=%{uid}";
 
 /* This statement should remove a single connection from a user to a
  * group (a user quits membership of that group).
@@ -235,19 +235,19 @@ $conf['auth']['mysql']['UpdateTarget']= "WHERE uid=%{uid}";
  *   %{group}   group name
  *   %{gid}     id of a group dataset
  */
-$conf['auth']['mysql']['delUserGroup']= "DELETE FROM usergroup
-                                         WHERE uid='%{uid}'
-                                         AND gid='%{gid}'";
+$conf['plugin']['authmysql']['delUserGroup']= "DELETE FROM usergroup
+                                               WHERE uid='%{uid}'
+                                               AND gid='%{gid}'";
 
 /* This statement should return the database index of a given group name.
- * The module will access the index with the name 'id' so a alias might
+ * The plugin will access the index with the name 'id' so a alias might
  * be necessary.
  *
  * Following patters will be replaced:
  *   %{group}   group name
  */
-$conf['auth']['mysql']['getGroupID']  = "SELECT gid AS id
-                                         FROM groups
-                                         WHERE name='%{group}'";
+$conf['plugin']['authmysql']['getGroupID']  = "SELECT gid AS id
+                                               FROM groups
+                                               WHERE name='%{group}'";
 
 

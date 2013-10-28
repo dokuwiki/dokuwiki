@@ -8,6 +8,7 @@
  * @author Daniel Dupriest <kououken@gmail.com>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  * @author Taisuke Shimamoto <dentostar@gmail.com>
+ * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -93,7 +94,8 @@ $lang['searchmedia_in']        = '%s 内を検索';
 $lang['txt_upload']            = 'アップロードするファイルを選んでください。';
 $lang['txt_filename']          = '名前を変更してアップロード（オプション）';
 $lang['txt_overwrt']           = '既存のファイルを上書き';
-$lang['lockedby']              = 'この文書は次のユーザによってロックされています';
+$lang['maxuploadsize']         = 'アップロード上限サイズ %s /ファイル';
+$lang['lockedby']              = 'この文書は次のユーザーによってロックされています';
 $lang['lockexpire']            = 'ロック期限：';
 $lang['js']['willexpire']      = '編集中の文書はロック期限を過ぎようとしています。このままロックする場合は、一度文書の確認を行って期限をリセットしてください。';
 $lang['js']['notsavedyet']     = '変更は保存されません。このまま処理を続けてよろしいですか？';
@@ -121,8 +123,7 @@ $lang['js']['medialeft']       = 'イメージを左に寄せる';
 $lang['js']['mediaright']      = 'イメージを右に寄せる';
 $lang['js']['mediacenter']     = 'イメージを中央に寄せる';
 $lang['js']['medianoalign']    = '位置を設定しない';
-$lang['js']['nosmblinks']      = 'ウィンドウズの共有フォルダへリンクは Microsoft Internet Explorer でのみ可能となります。
-当然、カットアンドペーストが使用できます。';
+$lang['js']['nosmblinks']      = 'ウィンドウズの共有フォルダへリンクは Microsoft Internet Explorer でしか機能しませんが、リンクをコピーして貼り付けることは可能です。';
 $lang['js']['linkwiz']         = 'リンクウィザード';
 $lang['js']['linkto']          = 'リンク先：';
 $lang['js']['del_confirm']     = '選択した項目を本当に削除しますか？';
@@ -181,7 +182,7 @@ $lang['lastmod']               = '最終更新';
 $lang['by']                    = 'by';
 $lang['deleted']               = '削除';
 $lang['created']               = '作成';
-$lang['restored']              = '以前のバージョンを復元';
+$lang['restored']              = '以前のリビジョンを復元 (%s)';
 $lang['external_edit']         = '外部編集';
 $lang['summary']               = '編集の概要';
 $lang['noflash']               = 'この内容を表示するためには <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> が必要です。';
@@ -191,6 +192,7 @@ $lang['user_tools']            = 'ユーザ用ツール';
 $lang['site_tools']            = 'サイト用ツール';
 $lang['page_tools']            = 'ページ用ツール';
 $lang['skip_to_content']       = '内容へ移動';
+$lang['sidebar']               = 'サイドバー';
 $lang['mail_newpage']          = '文書の追加：';
 $lang['mail_changed']          = '文書の変更：';
 $lang['mail_subscribe_list']   = '名前空間内でページが変更：';
@@ -271,22 +273,22 @@ $lang['i_problems']            = '問題が発見されました。以下に示�
 $lang['i_modified']            = 'セキュリティの理由から、新規もしくはカスタマイズしていない DokuWiki に対してのみ、このスクリプトは有効です。
                          ダウンロードしたパッケージを再解凍して使用するか、
                          <a href="http://dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
-$lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている恐れがあります。';
+$lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_permfail']            = '<code>%s</code> に書き込みできません。このディレクトリの権限を確認して下さい。';
 $lang['i_confexists']          = '<code>%s</code> は既に存在します';
 $lang['i_writeerr']            = '<code>%s</code> を作成できません。ディレクトリとファイルの権限を確認し、それらを手動で作成する必要があります。';
 $lang['i_badhash']             = 'dokuwiki.php が認識できないか、編集されています（hash=<code>%s</code>）';
 $lang['i_badval']              = '<code>%s</code> - 正しくない、もしくは値が空です';
-$lang['i_success']             = '設定ファイルは正しく作成されました。<a href="doku.php">作成した DokuWiki</a>を使用するには install.php を削除してください。';
-$lang['i_failure']             = '設定ファイルの作成中にエラーが発生しました。<a href="doku.php">作成した DokuWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
+$lang['i_success']             = '設定ファイルは正しく作成されました。<a href="doku.php?id=wiki:welcome">作成した DokuWiki</a>を使用するには install.php を削除してください。';
+$lang['i_failure']             = '設定ファイルの作成中にエラーが発生しました。<a href="doku.php?id=wiki:welcome">作成した DokuWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
 $lang['i_policy']              = 'ACL初期設定';
 $lang['i_pol0']                = 'オープン Wiki（全ての人に、閲覧・書き込み・アップロードを許可）';
 $lang['i_pol1']                = 'パブリック Wiki（閲覧は全ての人が可能、書き込み・アップロードは登録ユーザーのみ）';
 $lang['i_pol2']                = 'クローズド Wiki (登録ユーザーにのみ使用を許可)';
 $lang['i_retry']               = '再試行';
 $lang['i_license']             = 'あなたが作成したコンテンツが属するライセンスを選択してください：';
-$lang['recent_global']         = '現在、<b>%s</b> 名前空間内の変更点を閲覧中です。<a href="%s">Wiki全体の最近の変更点を確認する</a>ことも可能です。';
+$lang['recent_global']         = '現在、<b>%s</b> 名前空間内の変更点を閲覧中です。<a href="%s">Wiki全体の最近の変更点の確認</a>もできます。';
 $lang['years']                 = '%d年前';
 $lang['months']                = '%dカ月前';
 $lang['weeks']                 = '%d週間前';

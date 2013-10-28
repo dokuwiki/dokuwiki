@@ -21,6 +21,7 @@
 function getID($param='id',$clean=true){
     global $INPUT;
     global $conf;
+    global $ACT;
 
     $id = $INPUT->str($param);
 
@@ -75,7 +76,7 @@ function getID($param='id',$clean=true){
             // fall back to default
             $id = $id.$conf['start'];
         }
-        send_redirect(wl($id,'',true));
+        if (isset($ACT) && $ACT === 'show') send_redirect(wl($id,'',true));
     }
 
     if($clean) $id = cleanID($id);
@@ -115,11 +116,10 @@ function cleanID($raw_id,$ascii=false,$media=false){
     $id = utf8_strtolower($id);
 
     //alternative namespace seperator
-    $id = strtr($id,';',':');
     if($conf['useslash']){
-        $id = strtr($id,'/',':');
+        $id = strtr($id,';/','::');
     }else{
-        $id = strtr($id,'/',$sepchar);
+        $id = strtr($id,';/',':'.$sepchar);
     }
 
     if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id);
@@ -536,15 +536,25 @@ function getCacheName($data,$ext=''){
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function isHiddenPage($id){
+    $data = array(
+        'id' => $id,
+        'hidden' => false
+    );
+    trigger_event('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
+    return $data['hidden'];
+}
+
+function _isHiddenPage(&$data) {
     global $conf;
     global $ACT;
-    if(empty($conf['hidepages'])) return false;
-    if($ACT == 'admin') return false;
 
-    if(preg_match('/'.$conf['hidepages'].'/ui',':'.$id)){
-        return true;
+    if ($data['hidden']) return;
+    if(empty($conf['hidepages'])) return;
+    if($ACT == 'admin') return;
+
+    if(preg_match('/'.$conf['hidepages'].'/ui',':'.$data['id'])){
+        $data['hidden'] = true;
     }
-    return false;
 }
 
 /**
@@ -635,6 +645,7 @@ function utf8_decodeFN($file){
  * @return string|false the full page id of the found page, false if any
  */
 function page_findnearest($page){
+    if (!$page) return false;
     global $ID;
 
     $ns = $ID;

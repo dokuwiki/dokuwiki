@@ -205,6 +205,7 @@
     background-position: 5px 0;
     margin-left: 0;
     margin-right: -20px;
+    position: relative;
 }
 
 #dokuwiki__sitetools ul {
@@ -340,15 +341,15 @@
     padding: .1em .35em;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    box-shadow: 0 0 .5em #999;
+    box-shadow: 0 0 .5em __text_alt__;
     display: block;
 }
 
 .dokuwiki div.page {
     background: __background__;
     color: inherit;
-    border: 1px solid #eee;
-    box-shadow: 0 0 .5em #999;
+    border: 1px solid __background_alt__;
+    box-shadow: 0 0 .5em __text_alt__;
     border-radius: 2px;
     padding: 1.556em 2em 2em;
     margin-bottom: .5em;

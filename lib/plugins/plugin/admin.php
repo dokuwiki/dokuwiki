@@ -33,6 +33,10 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     var $disabled = 0;
     var $plugin = '';
     var $cmd = '';
+
+    /**
+     * @var ap_manage
+     */
     var $handler = NULL;
 
     var $functions = array('delete','update',/*'settings',*/'info');  // require a plugin name
@@ -43,26 +47,8 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
     var $error = '';
 
     function admin_plugin_plugin() {
-        global $conf;
         $this->disabled = plugin_isdisabled('plugin');
     }
-
-    /**
-     * return some info
-     */
-    function getInfo(){
-        $disabled = ($this->disabled) ? '(disabled)' : '';
-
-        return array(
-                'author' => 'Christopher Smith',
-                'email'  => 'chris@jalakai.co.uk',
-                'date'   => '2009-11-11',
-                'name'   => 'Plugin Manager',
-                'desc'   => "Manage Plugins, including automated plugin installer $disabled",
-                'url'    => 'http://www.dokuwiki.org/plugin:plugin',
-                );
-    }
-
 
     /**
      * return sort order for position in admin menu
@@ -75,11 +61,12 @@ class admin_plugin_plugin extends DokuWiki_Admin_Plugin {
      * handle user request
      */
     function handle() {
+        global $INPUT;
         // enable direct access to language strings
         $this->setupLocale();
 
 
-        $fn = $_REQUEST['fn'];
+        $fn = $INPUT->param('fn');
         if (is_array($fn)) {
             $this->cmd = key($fn);
             $this->plugin = is_array($fn[$this->cmd]) ? key($fn[$this->cmd]) : null;

@@ -22,6 +22,7 @@ class DokuWiki_Plugin {
      *
      * Needs to return a associative array with the following values:
      *
+     * base   - the plugin's base name (eg. the directory it needs to be installed in)
      * author - Author of the plugin
      * email  - Email address to contact the author
      * date   - Last modified date of the plugin in YYYY-MM-DD format
@@ -81,8 +82,8 @@ class DokuWiki_Plugin {
      * retrieve a language dependent file and pass to xhtml renderer for display
      * plugin equivalent of p_locale_xhtml()
      *
-     * @param   $id     id of language dependent wiki page
-     * @return  string  parsed contents of the wiki page in xhtml format
+     * @param   string $id id of language dependent wiki page
+     * @return  string     parsed contents of the wiki page in xhtml format
      */
     function locale_xhtml($id) {
         return p_cached_output($this->localFN($id));
@@ -133,12 +134,20 @@ class DokuWiki_Plugin {
      * getConf($setting)
      *
      * use this function to access plugin configuration variables
+     *
+     * @param string $setting the setting to access
+     * @param mixed  $notset  what to return if the setting is not available
+     * @return mixed
      */
-    function getConf($setting){
+    function getConf($setting, $notset=false){
 
         if (!$this->configloaded){ $this->loadConfig(); }
 
-        return $this->conf[$setting];
+        if(isset($this->conf[$setting])){
+            return $this->conf[$setting];
+        }else{
+            return $notset;
+        }
     }
 
     /**
@@ -184,14 +193,14 @@ class DokuWiki_Plugin {
      *
      * @author  Esther Brunner <wikidesign@gmail.com>
      *
-     * @param   $name   name of plugin to load
-     * @param   $msg    message to display in case the plugin is not available
+     * @param   string $name   name of plugin to load
+     * @param   bool   $msg    if a message should be displayed in case the plugin is not available
      *
      * @return  object  helper plugin object
      */
-    function loadHelper($name, $msg){
+    function loadHelper($name, $msg = true){
         if (!plugin_isdisabled($name)){
-            $obj =& plugin_load('helper',$name);
+            $obj = plugin_load('helper',$name);
         }else{
             $obj = null;
         }
@@ -249,11 +258,4 @@ class DokuWiki_Plugin {
     function isSingleton() {
         return true;
     }
-
-    // deprecated functions
-    function plugin_localFN($id) { return $this->localFN($id); }
-    function plugin_locale_xhtml($id) { return $this->locale_xhtml($id); }
-    function plugin_email($e, $n='', $c='', $m='') { return $this->email($e, $n, $c, $m); }
-    function plugin_link($l, $t='', $c='', $to='', $m='') { return $this->external_link($l, $t, $c, $to, $m); }
-    function plugin_render($t, $f='xhtml') { return $this->render($t, $f); }
 }

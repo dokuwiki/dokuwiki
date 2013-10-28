@@ -27,6 +27,7 @@ define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
 // default plugins
 $default_plugins = array(
+    'authplain',
     'acl',
     'config',
     'info',

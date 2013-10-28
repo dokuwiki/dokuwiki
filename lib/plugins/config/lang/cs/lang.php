@@ -11,6 +11,8 @@
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
+ * @author Jakub A. Těšínský (j@kub.cz)
+ * @author mkucera66@seznam.cz
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -36,6 +38,8 @@ $lang['_anti_spam']            = 'Protispamová nastavení';
 $lang['_editing']              = 'Nastavení editace';
 $lang['_links']                = 'Nastavení odkazů';
 $lang['_media']                = 'Nastavení médií';
+$lang['_notifications']        = 'Nastavení upozornění';
+$lang['_syndication']          = 'Nastavení syndikace';
 $lang['_advanced']             = 'Pokročilá nastavení';
 $lang['_network']              = 'Nastavení sítě';
 $lang['_plugin_sufix']         = 'Nastavení pluginů ';
@@ -47,6 +51,8 @@ $lang['title']                 = 'Název celé wiki';
 $lang['start']                 = 'Název úvodní stránky';
 $lang['lang']                  = 'Jazyk';
 $lang['template']              = 'Šablona';
+$lang['tagline']               = 'Slogan (pokud ho šablona podporuje)';
+$lang['sidebar']               = 'Jméno stránky s obsahem postranní lišty (pokud ho šablona podporuje). Prázdné pole postranní lištu deaktivuje.';
 $lang['license']               = 'Pod jakou licencí má být tento obsah publikován?';
 $lang['savedir']               = 'Adresář pro ukládání dat';
 $lang['basedir']               = 'Kořenový adresář (např. <code>/dokuwiki/</code>). Pro autodetekci nechte prázdné.';
@@ -55,8 +61,8 @@ $lang['cookiedir']             = 'Cesta pro cookie. Není-li vyplněno, použije
 $lang['dmode']                 = 'Přístupová práva pro vytváření adresářů';
 $lang['fmode']                 = 'Přístupová práva pro vytváření souborů';
 $lang['allowdebug']            = 'Povolit debugování. <b>Vypněte, pokud to nepotřebujete!</b>';
-$lang['recent']                = 'Nedávné změny';
-$lang['recent_days']           = 'Jak staré nedávných změny uchovávat (ve dnech)';
+$lang['recent']                = 'Počet položek v nedávných změnách';
+$lang['recent_days']           = 'Jak staré nedávné změny zobrazovat (ve dnech)';
 $lang['breadcrumbs']           = 'Počet odkazů na navštívené stránky';
 $lang['youarehere']            = 'Hierarchická "drobečková" navigace';
 $lang['fullpath']              = 'Ukazovat plnou cestu ke stránkám v patičce';
@@ -94,6 +100,8 @@ $lang['disableactions_wikicode'] = 'Prohlížet zdrojové kódy/Export wiki text
 $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
 $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)';
 $lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
+$lang['remote']                = 'Zapne API systému, umožňující jiným aplikacím vzdálený přístup k wiki pomoci XML-RPC nebo jiných mechanizmů.';
+$lang['remoteuser']            = 'Omezit přístup k API na tyto uživatelské skupiny či uživatele (seznam oddělený čárkami). Prázdné pole povolí přístup všem.';
 $lang['usewordblock']          = 'Blokovat spam za použití seznamu známých spamových slov';
 $lang['relnofollow']           = 'Používat rel="nofollow" na externí odkazy';
 $lang['indexdelay']            = 'Časová prodleva před indexací (v sekundách)';
@@ -109,6 +117,7 @@ $lang['target____interwiki']   = 'Cílové okno pro interwiki odkazy';
 $lang['target____extern']      = 'Cílové okno pro externí odkazy';
 $lang['target____media']       = 'Cílové okno pro odkazy na média';
 $lang['target____windows']     = 'Cílové okno pro odkazy na windows sdílení';
+$lang['mediarevisions']        = 'Aktivovat revize souborů';
 $lang['refcheck']              = 'Kontrolovat odkazy na média (před vymazáním)';
 $lang['refshow']               = 'Počet zobrazených odkazů na média';
 $lang['gdlib']                 = 'Verze GD knihovny';
@@ -121,12 +130,14 @@ $lang['notify']                = 'Posílat oznámení o změnách na následují
 $lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
 $lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
 $lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
+$lang['htmlmail']              = 'Posílat emaily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové emaily.';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';
 $lang['rss_type']              = 'Typ XML kanálu';
 $lang['rss_linkto']            = 'XML kanál odkazuje na';
 $lang['rss_content']           = 'Co zobrazovat v položkách XML kanálu?';
 $lang['rss_update']            = 'Interval aktualizace XML kanálu (v sekundách)';
 $lang['rss_show_summary']      = 'XML kanál ukazuje souhrn v titulku';
+$lang['rss_media']             = 'Jaký typ změn má být uveden v kanálu XML';
 $lang['updatecheck']           = 'Kontrolovat aktualizace a bezpečnostní varování? DokuWiki potřebuje pro tuto funkci přístup k update.dokuwiki.org';
 $lang['userewrite']            = 'Používat "pěkná" URL';
 $lang['useslash']              = 'Používat lomítko jako oddělovač jmenných prostorů v URL';

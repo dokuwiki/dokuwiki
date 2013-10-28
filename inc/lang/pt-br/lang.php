@@ -19,6 +19,7 @@
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Balaco Baco <balacobaco@imap.cc>
+ * @author Victor Westmann <victor.westmann@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -291,14 +292,17 @@ $lang['i_confexists']          = '<code>%s</code> já existe';
 $lang['i_writeerr']            = 'Não foi possível criar <code>%s</code>. É necessário checar as permissões de arquivos/diretórios e criar o arquivo manualmente.';
 $lang['i_badhash']             = 'dokuwiki.php não reconhecido ou modificado (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor ilegal ou em branco';
-$lang['i_success']             = 'A configuração terminou com sucesso. Agora você deve excluir o arquivo install.php. Conheça o seu <a href="doku.php">novo DokuWiki</a>!';
-$lang['i_failure']             = 'Ocorreram alguns erros durante a escrita dos arquivos de configuração. É necessário corrigi-los manualmente antes de usar seu <a href="doku.php">novo DokuWiki</a>';
+$lang['i_success']             = 'A configuração terminou com sucesso. Agora você deve excluir o arquivo install.php. Conheça o seu <a href="doku.php?id=wiki:welcome">novo DokuWiki</a>!';
+$lang['i_failure']             = 'Ocorreram alguns erros durante a escrita dos arquivos de configuração. É necessário corrigi-los manualmente antes de usar seu <a href="doku.php?id=wiki:welcome">novo DokuWiki</a>';
 $lang['i_policy']              = 'Política inicial de permissões';
 $lang['i_pol0']                = 'Wiki aberto (leitura, escrita e envio de arquivos por todos)';
 $lang['i_pol1']                = 'Wiki público (leitura por todos, escrita e envio de arquivos por usuários registrados)';
 $lang['i_pol2']                = 'Wiki fechado (leitura, escrita e envio de arquivos somente por usuários registrados)';
 $lang['i_retry']               = 'Tentar novamente';
 $lang['i_license']             = 'Por favor escolha a licença que voce deseja utilizar para seu conteúdo:';
+$lang['i_license_none']        = 'Não mostrar nenhuma informação da licença';
+$lang['i_pop_field']           = 'Por favor, nos ajude a melhorar sua experiência com DokuWiki:';
+$lang['i_pop_label']           = 'Uma vez por mês, enviar anonimamente informações de uso de dados para os desenvolvedores DokuWiki';
 $lang['recent_global']         = 'Você está observando as alterações dentro do espaço de nomes <b>%s</b>. Também é possível ver as <a href="%s">modificações recentes no wiki inteiro</a>.';
 $lang['years']                 = '%d anos atrás';
 $lang['months']                = '%d meses atrás';

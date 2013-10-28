@@ -20,6 +20,7 @@
  * @author Oscar Ciudad <oscar@jacho.net>
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
+ * @author Mercè López mercelz@gmail.com
  */
 $lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
 $lang['submit']                = 'Enviar datos';

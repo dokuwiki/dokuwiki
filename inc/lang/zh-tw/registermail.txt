@@ -2,13 +2,13 @@
 
 帳號     : @NEWUSER@
 姓名     : @NEWNAME@
-E-mail   : @NEWEMAIL@
+電郵   : @NEWEMAIL@
 
 日期     : @DATE@
 瀏覽器   : @BROWSER@
-IP位址   : @IPADDRESS@
+IP 位址   : @IPADDRESS@
 主機名稱 : @HOSTNAME@
 
 --
-本信件由以下 DokuWiki 站台產生：
+本信件由以下 DokuWiki 網站產生：
 @DOKUWIKIURL@

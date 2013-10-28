@@ -797,7 +797,7 @@ class DiffFormatter {
 
     function _lines($lines, $prefix = ' ') {
         foreach ($lines as $line)
-            echo "$prefix $line\n";
+            echo "$prefix ".$this->_escape($line)."\n";
     }
 
     function _context($lines) {
@@ -815,6 +815,10 @@ class DiffFormatter {
         $this->_deleted($orig);
         echo "---\n";
         $this->_added($closing);
+    }
+
+    function _escape($str){
+        return $str;
     }
 }
 
@@ -871,13 +875,13 @@ class _HWLDF_WordAccumulator {
     function _flushGroup($new_tag) {
         if ($this->_group !== '') {
             if ($this->_tag == 'mark')
-                $this->_line .= '<strong '.HTMLDiff::css('diff-mark').'>'.$this->_group.'</strong>';
+                $this->_line .= '<strong '.HTMLDiff::css('diff-mark').'>'.$this->_escape($this->_group).'</strong>';
             elseif ($this->_tag == 'add')
-                $this->_line .= '<span '.HTMLDiff::css('diff-addedline').'>'.$this->_group.'</span>';
+                $this->_line .= '<span '.HTMLDiff::css('diff-addedline').'>'.$this->_escape($this->_group).'</span>';
             elseif ($this->_tag == 'del')
-                $this->_line .= '<span '.HTMLDiff::css('diff-deletedline').'><del>'.$this->_group.'</del></span>';
+                $this->_line .= '<span '.HTMLDiff::css('diff-deletedline').'><del>'.$this->_escape($this->_group).'</del></span>';
             else
-                $this->_line .= $this->_group;
+                $this->_line .= $this->_escape($this->_group);
         }
         $this->_group = '';
         $this->_tag = $new_tag;
@@ -911,6 +915,10 @@ class _HWLDF_WordAccumulator {
     function getLines() {
         $this->_flushLine('~done');
         return $this->_lines;
+    }
+
+    function _escape($str){
+        return hsc($str);
     }
 }
 
@@ -996,6 +1004,8 @@ class InlineWordLevelDiff extends MappedDiff {
  * "Unified" diff formatter.
  *
  * This class formats the diff in classic "unified diff" format.
+ *
+ * NOTE: output is plain text and unsafe for use in HTML without escaping.
  */
 class UnifiedDiffFormatter extends DiffFormatter {
 
@@ -1029,6 +1039,7 @@ class UnifiedDiffFormatter extends DiffFormatter {
  *
  */
 class TableDiffFormatter extends DiffFormatter {
+    var $colspan = 2;
 
     function __construct() {
         $this->leading_context_lines = 2;
@@ -1053,8 +1064,8 @@ class TableDiffFormatter extends DiffFormatter {
         global $lang;
         $l1 = $lang['line'].' '.$xbeg;
         $l2 = $lang['line'].' '.$ybeg;
-        $r = '<tr><td '.HTMLDiff::css('diff-blockheader').' colspan="2">'.$l1.":</td>\n".
-             '<td '.HTMLDiff::css('diff-blockheader').' colspan="2">'.$l2.":</td>\n".
+        $r = '<tr><td '.HTMLDiff::css('diff-blockheader').' colspan="'.$this->colspan.'">'.$l1.":</td>\n".
+             '<td '.HTMLDiff::css('diff-blockheader').' colspan="'.$this->colspan.'">'.$l2.":</td>\n".
              "</tr>\n";
         return $r;
     }
@@ -1069,25 +1080,38 @@ class TableDiffFormatter extends DiffFormatter {
     function _lines($lines, $prefix=' ', $color="white") {
     }
 
-    function addedLine($line) {
-        return '<td>+</td><td '.HTMLDiff::css('diff-addedline').'>' .  $line.'</td>';
+    function addedLine($line,$escaped=false) {
+        if (!$escaped){
+            $line = $this->_escape($line);
+        }
+        return '<td '.HTMLDiff::css('diff-lineheader').'>+</td>'.
+               '<td '.HTMLDiff::css('diff-addedline').'>' .  $line.'</td>';
     }
 
-    function deletedLine($line) {
-        return '<td>-</td><td '.HTMLDiff::css('diff-deletedline').'>' .  $line.'</td>';
+    function deletedLine($line,$escaped=false) {
+        if (!$escaped){
+            $line = $this->_escape($line);
+        }
+        return '<td '.HTMLDiff::css('diff-lineheader').'>-</td>'.
+               '<td '.HTMLDiff::css('diff-deletedline').'>' .  $line.'</td>';
     }
 
     function emptyLine() {
-        return '<td colspan="2">&#160;</td>';
+        return '<td colspan="'.$this->colspan.'">&#160;</td>';
     }
 
     function contextLine($line) {
-        return '<td> </td><td '.HTMLDiff::css('diff-context').'>'.$line.'</td>';
+        return '<td '.HTMLDiff::css('diff-lineheader').'>&#160;</td>'.
+               '<td '.HTMLDiff::css('diff-context').'>'.$this->_escape($line).'</td>';
     }
 
     function _added($lines) {
+        $this->_addedLines($lines,false);
+    }
+
+    function _addedLines($lines,$escaped=false){
         foreach ($lines as $line) {
-            print('<tr>' . $this->emptyLine() . $this->addedLine($line) . "</tr>\n");
+            print('<tr>' . $this->emptyLine() . $this->addedLine($line,$escaped) . "</tr>\n");
         }
     }
 
@@ -1104,15 +1128,19 @@ class TableDiffFormatter extends DiffFormatter {
     }
 
     function _changed($orig, $closing) {
-        $diff = new WordLevelDiff($orig, $closing);
+        $diff = new WordLevelDiff($orig, $closing);  // this escapes the diff data
         $del = $diff->orig();
         $add = $diff->closing();
 
         while ($line = array_shift($del)) {
             $aline = array_shift($add);
-            print('<tr>' . $this->deletedLine($line) . $this->addedLine($aline) . "</tr>\n");
+            print('<tr>' . $this->deletedLine($line,true) . $this->addedLine($aline,true) . "</tr>\n");
         }
-        $this->_added($add); # If any leftovers
+        $this->_addedLines($add,true); # If any leftovers
+    }
+
+    function _escape($str) {
+        return hsc($str);
     }
 }
 
@@ -1121,7 +1149,7 @@ class TableDiffFormatter extends DiffFormatter {
  *
  */
 class InlineDiffFormatter extends DiffFormatter {
-    var $colspan = 4;
+    var $colspan = 2;
 
     function __construct() {
         $this->leading_context_lines = 2;
@@ -1167,28 +1195,32 @@ class InlineDiffFormatter extends DiffFormatter {
 
     function _added($lines) {
         foreach ($lines as $line) {
-            print('<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-addedline').'>'. $line . "</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-addedline').'>'. $this->_escape($line) . "</td></tr>\n");
         }
     }
 
     function _deleted($lines) {
         foreach ($lines as $line) {
-            print('<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-deletedline').'><del>' . $line . "</del></td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-deletedline').'><del>' . $this->_escape($line) . "</del></td></tr>\n");
         }
     }
 
     function _context($lines) {
         foreach ($lines as $line) {
-            print('<tr><td colspan="'.$this->colspan.'" '.HTMLDiff::css('diff-context').'>'.$line."</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td '.HTMLDiff::css('diff-context').'>'. $this->_escape($line) ."</td></tr>\n");
         }
     }
 
     function _changed($orig, $closing) {
-        $diff = new InlineWordLevelDiff($orig, $closing);
+        $diff = new InlineWordLevelDiff($orig, $closing);  // this escapes the diff data
         $add = $diff->inline();
 
         foreach ($add as $line)
-            print('<tr><td colspan="'.$this->colspan.'">'.$line."</td></tr>\n");
+            print('<tr><td '.HTMLDiff::css('diff-lineheader').'>&#160;</td><td>'.$line."</td></tr>\n");
+    }
+
+    function _escape($str) {
+        return hsc($str);
     }
 }
 

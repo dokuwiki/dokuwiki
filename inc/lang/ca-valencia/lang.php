@@ -90,7 +90,7 @@ $lang['txt_overwrt']           = 'Sobreescriure archius existents';
 $lang['lockedby']              = 'Actualment bloquejat per';
 $lang['lockexpire']            = 'El bloqueig venç a les';
 $lang['js']['willexpire']            = 'El seu bloqueig per a editar esta pàgina vencerà en un minut.\nPer a evitar conflictes utilise el botó de vista prèvia i reiniciarà el contador.';
-$lang['js']['notsavedyet']     = "Els canvis no guardats es perdran.\n¿Segur que vol continuar?";
+$lang['js']['notsavedyet']     = 'Els canvis no guardats es perdran.\n¿Segur que vol continuar?';
 $lang['rssfailed']             = 'Ha ocorregut un erro al solicitar este canal: ';
 $lang['nothingfound']          = 'No s\'ha trobat res.';
 $lang['mediaselect']           = 'Archius de mijos';
@@ -137,7 +137,7 @@ $lang['lastmod']               = 'Última modificació el';
 $lang['by']                    = 'per';
 $lang['deleted']               = 'borrat';
 $lang['created']               = 'creat';
-$lang['restored']              = 'restaurada l\'última versió';
+$lang['restored']              = 'restaurada l\'última versió (%s)';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Editar sumari';
 $lang['noflash']               = 'Necessita el <a href="http://www.adobe.com/products/flashplayer/">plúgin d\'Adobe Flash</a> per a vore este contingut.';
@@ -211,9 +211,9 @@ $lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Haurà de com
 $lang['i_badhash']             = 'dokuwiki.php substituït o modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor illegal o buit';
 $lang['i_success']             = 'La configuració ha finalisat correctament. Ya pot borrar l\'archiu install.php. Passe al
-<a href="doku.php">nou DokuWiki</a>.';
+<a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
 $lang['i_failure']             = 'Han aparegut alguns erros escrivint els archius de configuració. Deurà arreglar-los manualment abans de que
-puga utilisar el <a href="doku.php">nou DokuWiki</a>.';
+puga utilisar el <a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
 $lang['i_policy']              = 'Política inicial ACL';
 $lang['i_pol0']                = 'Wiki obert (llegir, escriure i enviar tots)';
 $lang['i_pol1']                = 'Wiki públic (llegir tots, escriure i enviar només usuaris registrats)';

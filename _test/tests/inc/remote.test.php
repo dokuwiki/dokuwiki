@@ -1,6 +1,6 @@
 <?php
 
-class MockAuth extends auth_basic {
+class MockAuth extends DokuWiki_Auth_Plugin {
     function isCaseSensitive() { return true; }
 }
 
@@ -112,12 +112,12 @@ class remote_plugin_testplugin extends DokuWiki_Remote_Plugin {
 
 class remote_test extends DokuWikiTest {
 
-    var $originalConf;
     var $userinfo;
 
     var $remote;
 
     function setUp() {
+        parent::setUp();
         global $plugin_controller;
         global $conf;
         global $USERINFO;
@@ -131,7 +131,6 @@ class remote_test extends DokuWikiTest {
 
         $plugin_controller = $pluginManager;
 
-        $this->originalConf = $conf;
         $conf['remote'] = 1;
         $conf['remoteuser'] = '!!not set!!';
         $conf['useacl'] = 0;
@@ -143,9 +142,7 @@ class remote_test extends DokuWikiTest {
     }
 
     function tearDown() {
-        global $conf;
         global $USERINFO;
-        $conf = $this->originalConf;
         $USERINFO = $this->userinfo;
 
     }

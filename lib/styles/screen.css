@@ -20,6 +20,15 @@ div.notify {
     border-radius: 5px;
 }
 
+[dir=rtl] div.error,
+[dir=rtl] div.info,
+[dir=rtl] div.success,
+[dir=rtl] div.notify {
+    background-position: 99% 50%;
+    padding-left: .4em;
+    padding-right: 32px;
+}
+
 div.error {
     background-color: #fcc;
     background-image: url(../images/error.png);

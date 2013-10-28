@@ -12,6 +12,8 @@
  * @author Vojta Beran <xmamut@email.cz>
  * @author zbynek.krivka@seznam.cz
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
+ * @author Jakub A. Těšínský (j@kub.cz)
+ * @author mkucera66@seznam.cz
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -187,7 +189,7 @@ $lang['lastmod']               = 'Poslední úprava';
 $lang['by']                    = 'autor:';
 $lang['deleted']               = 'odstraněno';
 $lang['created']               = 'vytvořeno';
-$lang['restored']              = 'stará verze byla obnovena';
+$lang['restored']              = 'stará verze byla obnovena (%s)';
 $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
 $lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
@@ -197,6 +199,7 @@ $lang['user_tools']            = 'Uživatelské nástroje';
 $lang['site_tools']            = 'Nástroje pro tento web';
 $lang['page_tools']            = 'Nástroje pro stránku';
 $lang['skip_to_content']       = 'jít k obsahu';
+$lang['sidebar']               = 'Postranní lišta';
 $lang['mail_newpage']          = 'nová stránka:';
 $lang['mail_changed']          = 'změna stránky:';
 $lang['mail_subscribe_list']   = 'stránky změněné ve jmenném prostoru:';
@@ -282,8 +285,8 @@ $lang['i_confexists']          = '<code>%s</code> již existuje';
 $lang['i_writeerr']            = 'Nelze vytvořit <code>%s</code>. Budete muset zkontrolovat práva k souborům či adresářům a vytvořit tento soubor ručně.';
 $lang['i_badhash']             = 'soubor dokuwiki.php (hash=<code>%s</code>) nebyl rozpoznán nebo byl upraven';
 $lang['i_badval']              = '<code>%s</code> - neplatná nebo prázdná hodnota';
-$lang['i_success']             = 'Konfigurace byla úspěšně dokončena. Nyní můžete smazat soubor install.php. Pokračujte do <a href="doku.php">své nové DokuWiki</a>.';
-$lang['i_failure']             = 'Vyskytly se nějaké chyby při zápisu do konfiguračních souborů. Budete je nejspíš muset upravit ručně před použitím <a href="doku.php">své nové DokuWiki</a>.';
+$lang['i_success']             = 'Konfigurace byla úspěšně dokončena. Nyní můžete smazat soubor install.php. Pokračujte do <a href="doku.php?id=wiki:welcome">své nové DokuWiki</a>.';
+$lang['i_failure']             = 'Vyskytly se nějaké chyby při zápisu do konfiguračních souborů. Budete je nejspíš muset upravit ručně před použitím <a href="doku.php?id=wiki:welcome">své nové DokuWiki</a>.';
 $lang['i_policy']              = 'Úvodní politika ACL';
 $lang['i_pol0']                = 'Otevřená wiki (čtení, zápis a upload pro všechny)';
 $lang['i_pol1']                = 'Veřejná wiki (čtení pro všechny, zápis a upload pro registrované uživatele)';

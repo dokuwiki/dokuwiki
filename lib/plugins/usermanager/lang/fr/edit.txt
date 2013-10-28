@@ -1,1 +1,1 @@
-===== Modifier les informations d'un utilisateur =====
+===== Modifier l'utilisateur =====

@@ -94,7 +94,7 @@ $lang['txt_overwrt']           = 'Reimplaciar le file existente';
 $lang['lockedby']              = 'Actualmente serrate per';
 $lang['lockexpire']            = 'Serratura expira le';
 $lang['js']['willexpire']            = 'Tu serratura super le modification de iste pagina expirara post un minuta.\nPro evitar conflictos, usa le button Previsualisar pro reinitialisar le timer del serratura.';
-$lang['js']['notsavedyet']     = "Le modificationes non salveguardate essera perdite.\nRealmente continuar?";
+$lang['js']['notsavedyet']     = 'Le modificationes non salveguardate essera perdite.\nRealmente continuar?';
 $lang['rssfailed']             = 'Un error occurreva durante le obtention de iste syndication:';
 $lang['nothingfound']          = 'Nihil ha essite trovate.';
 $lang['mediaselect']           = 'Files multimedia';
@@ -163,7 +163,7 @@ $lang['lastmod']               = 'Ultime modification';
 $lang['by']                    = 'per';
 $lang['deleted']               = 'removite';
 $lang['created']               = 'create';
-$lang['restored']              = 'ancian version restaurate';
+$lang['restored']              = 'ancian version restaurate (%s)';
 $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Modificar summario';
 $lang['noflash']               = 'Le <a href="http://www.adobe.com/products/flashplayer/">plug-in Flash de Adobe</a> es necessari pro monstrar iste contento.';
@@ -227,8 +227,6 @@ $lang['subscr_m_unsubscribe']  = 'Cancellar subscription';
 $lang['subscr_m_subscribe']    = 'Subscriber';
 $lang['subscr_m_receive']      = 'Reciper';
 $lang['subscr_style_every']    = 'un message pro cata modification';
-$lang['subscr_style_digest']   = 'un digesto de modificationes pro cata pagina';
-$lang['subscr_style_list']     = 'lista de paginas modificate depost le ultime e-mail';
 $lang['authmodfailed']         = 'Configuration incorrecte de authentication de usator. Per favor informa le administrator de tu wiki.';
 $lang['authtempfail']          = 'Le authentication de usator temporarimente non es disponibile. Si iste situation persiste, per favor informa le administrator de tu wiki.';
 $lang['i_chooselang']          = 'Selige tu lingua';
@@ -247,9 +245,9 @@ $lang['i_writeerr']            = 'Impossibile crear <code>%s</code>. Tu debe ver
 $lang['i_badhash']             = 'dokuwiki.php non recognoscite o modificate (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor vacue o invalide';
 $lang['i_success']             = 'Le configuration ha succedite. Tu pote ora deler le file install.php. Continua a
-<a href="doku.php">tu nove DokuWiki</a>.';
+<a href="doku.php?id=wiki:welcome">tu nove DokuWiki</a>.';
 $lang['i_failure']             = 'Alcun errores occurreva durante le scriptura del files de configuration. Es possibile que tu debe remediar iste errores manualmente ante que
-tu pote usar <a href="doku.php">tu nove DokuWiki</a>.';
+tu pote usar <a href="doku.php?id=wiki:welcome">tu nove DokuWiki</a>.';
 $lang['i_policy']              = 'Politica de ACL interne';
 $lang['i_pol0']                = 'Wiki aperte (lectura, scriptura, incargamento pro omnes)';
 $lang['i_pol1']                = 'Wiki public (lectura pro omnes, scriptura e incargamento pro usatores registrate)';

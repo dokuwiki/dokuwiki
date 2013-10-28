@@ -36,19 +36,16 @@
 
     // do not display the manager if user does not have read access
     if($AUTH < AUTH_READ && !$fullscreen) {
-        header('HTTP/1.0 403 Forbidden');
+        http_status(403);
         die($lang['accessdenied']);
     }
-
-    // create the given namespace (just for beautification)
-    if($AUTH >= AUTH_UPLOAD) { io_createNamespace("$NS:xxx", 'media'); }
 
     // handle flash upload
     if(isset($_FILES['Filedata'])){
         $_FILES['upload'] =& $_FILES['Filedata'];
         $JUMPTO = media_upload($NS,$AUTH);
         if($JUMPTO == false){
-            header("HTTP/1.0 400 Bad Request");
+            http_status(400);
             echo 'Upload failed';
         }
         echo 'ok';

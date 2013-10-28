@@ -7,7 +7,6 @@ class ap_download extends ap_manage {
      * Initiate the plugin download
      */
     function process() {
-        global $lang;
         global $INPUT;
 
         $plugin_url = $INPUT->str('url');
@@ -45,7 +44,6 @@ class ap_download extends ap_manage {
      * Process the downloaded file
      */
     function download($url, $overwrite=false) {
-        global $lang;
         // check the url
         $matches = array();
         if (!preg_match("/[^\/]*$/", $url, $matches) || !$matches[0]) {
@@ -200,31 +198,26 @@ class ap_download extends ap_manage {
         if (in_array($ext, array('tar','bz','gz'))) {
             switch($ext){
                 case 'bz':
-                    $compress_type = TarLib::COMPRESS_BZIP;
+                    $compress_type = Tar::COMPRESS_BZIP;
                     break;
                 case 'gz':
-                    $compress_type = TarLib::COMPRESS_GZIP;
+                    $compress_type = Tar::COMPRESS_GZIP;
                     break;
                 default:
-                    $compress_type = TarLib::COMPRESS_NONE;
+                    $compress_type = Tar::COMPRESS_NONE;
             }
 
-            $tar = new TarLib($file, $compress_type);
-            if($tar->_initerror < 0){
+            $tar = new Tar();
+            try {
+                $tar->open($file, $compress_type);
+                $tar->extract($target);
+                return true;
+            }catch(Exception $e){
                 if($conf['allowdebug']){
-                    msg('TarLib Error: '.$tar->TarErrorStr($tar->_initerror),-1);
+                    msg('Tar Error: '.$e->getMessage().' ['.$e->getFile().':'.$e->getLine().']',-1);
                 }
                 return false;
             }
-            $ok = $tar->Extract(TarLib::FULL_ARCHIVE, $target, '', 0777);
-
-            if($ok<1){
-                if($conf['allowdebug']){
-                    msg('TarLib Error: '.$tar->TarErrorStr($ok),-1);
-                }
-                return false;
-            }
-            return true;
         } else if ($ext == 'zip') {
 
             $zip = new ZipLib();
@@ -246,7 +239,7 @@ class ap_download extends ap_manage {
      * if neither bz, gz or zip are recognized, tar is assumed.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @returns false if the file can't be read, otherwise an "extension"
+     * @returns boolean|string false if the file can't be read, otherwise an "extension"
      */
     function guess_archive($file){
         $fh = fopen($file,'rb');

@@ -31,7 +31,7 @@ if($AUTH >= AUTH_READ){
     $SRC = mediaFN($IMG);
     if(!@file_exists($SRC)){
         //doesn't exist!
-        header("HTTP/1.0 404 File not Found");
+        http_status(404);
         $ERROR = 'File not found';
     }
 }else{

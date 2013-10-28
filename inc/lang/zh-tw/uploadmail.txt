@@ -3,12 +3,12 @@
 檔名     : @MEDIA@
 日期     : @DATE@
 瀏覽器   : @BROWSER@
-IP位址   : @IPADDRESS@
+IP 位址   : @IPADDRESS@
 主機名稱 : @HOSTNAME@
 大小     : @SIZE@
 MIME類型 : @MIME@
 使用者   : @USER@
 
 --
-本信件由以下 DokuWiki 站台產生：
+本信件由以下 DokuWiki 網站產生：
 @DOKUWIKIURL@

@@ -61,9 +61,9 @@ function http_conditionalRequest($timestamp){
 }
 
 /**
- * Let the webserver send the given file vi x-sendfile method
+ * Let the webserver send the given file via x-sendfile method
  *
- * @author Chris Smith <chris.eureka@jalakai.co.uk>
+ * @author Chris Smith <chris@jalakai.co.uk>
  * @returns  void or exits with previously header() commands executed
  */
 function http_sendfile($file) {
@@ -177,7 +177,8 @@ function http_rangeRequest($fh,$size,$mime){
         echo HTTP_HEADER_LF.'--'.HTTP_MULTIPART_BOUNDARY.'--'.HTTP_HEADER_LF;
     }
 
-    // everything should be done here, exit
+    // everything should be done here, exit (or return if testing)
+    if (defined('SIMPLE_TEST')) return;
     exit;
 }
 
@@ -250,10 +251,81 @@ function http_cached_finish($file, $content) {
     }
 }
 
+/**
+ * Fetches raw, unparsed POST data
+ *
+ * @return string
+ */
 function http_get_raw_post_data() {
     static $postData = null;
     if ($postData === null) {
         $postData = file_get_contents('php://input');
     }
     return $postData;
+}
+
+/**
+ * Set the HTTP response status and takes care of the used PHP SAPI
+ *
+ * Inspired by CodeIgniter's set_status_header function
+ *
+ * @param int    $code
+ * @param string $text
+ */
+function http_status($code = 200, $text = '') {
+    static $stati = array(
+        200 => 'OK',
+        201 => 'Created',
+        202 => 'Accepted',
+        203 => 'Non-Authoritative Information',
+        204 => 'No Content',
+        205 => 'Reset Content',
+        206 => 'Partial Content',
+
+        300 => 'Multiple Choices',
+        301 => 'Moved Permanently',
+        302 => 'Found',
+        304 => 'Not Modified',
+        305 => 'Use Proxy',
+        307 => 'Temporary Redirect',
+
+        400 => 'Bad Request',
+        401 => 'Unauthorized',
+        403 => 'Forbidden',
+        404 => 'Not Found',
+        405 => 'Method Not Allowed',
+        406 => 'Not Acceptable',
+        407 => 'Proxy Authentication Required',
+        408 => 'Request Timeout',
+        409 => 'Conflict',
+        410 => 'Gone',
+        411 => 'Length Required',
+        412 => 'Precondition Failed',
+        413 => 'Request Entity Too Large',
+        414 => 'Request-URI Too Long',
+        415 => 'Unsupported Media Type',
+        416 => 'Requested Range Not Satisfiable',
+        417 => 'Expectation Failed',
+
+        500 => 'Internal Server Error',
+        501 => 'Not Implemented',
+        502 => 'Bad Gateway',
+        503 => 'Service Unavailable',
+        504 => 'Gateway Timeout',
+        505 => 'HTTP Version Not Supported'
+    );
+
+    if($text == '' && isset($stati[$code])) {
+        $text = $stati[$code];
+    }
+
+    $server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : false;
+
+    if(substr(php_sapi_name(), 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
+        header("Status: {$code} {$text}", true);
+    } elseif($server_protocol == 'HTTP/1.1' OR $server_protocol == 'HTTP/1.0') {
+        header($server_protocol." {$code} {$text}", true, $code);
+    } else {
+        header("HTTP/1.1 {$code} {$text}", true, $code);
+    }
 }

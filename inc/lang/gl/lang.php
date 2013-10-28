@@ -5,6 +5,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
+ * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -40,6 +41,7 @@ $lang['btn_backtomedia']       = 'Volver á Selección de Arquivos-Media';
 $lang['btn_subscribe']         = 'Avísame dos trocos na páxina';
 $lang['btn_profile']           = 'Actualizar Perfil';
 $lang['btn_reset']             = 'Reiniciar';
+$lang['btn_resendpwd']         = 'Establecer novo contrasinal';
 $lang['btn_draft']             = 'Editar borrador';
 $lang['btn_recover']           = 'Recuperar borrador';
 $lang['btn_draftdel']          = 'Eliminar borrador';
@@ -76,6 +78,7 @@ $lang['profnoempty']           = 'Non se permite un nome ou un enderezo de corre
 $lang['profchanged']           = 'Perfil de usuario actualizado correctamente.';
 $lang['pwdforget']             = 'Esqueceches o teu contrasinal? Consegue un novo';
 $lang['resendna']              = 'Este wiki non permite o reenvío de contrasinais.';
+$lang['resendpwd']             = 'Establecer novo contrasinal para';
 $lang['resendpwdmissing']      = 'Sentímolo, tes que cubrir todos os campos.';
 $lang['resendpwdnouser']       = 'Sentímolo, non atopamos este usuario no noso banco de datos.';
 $lang['resendpwdbadauth']      = 'Sentímolo, mais este código de autorización non é válido. Asegúrate de que usaches a ligazón completa de confirmación.';
@@ -88,6 +91,7 @@ $lang['searchmedia_in']        = 'Procurar en %s';
 $lang['txt_upload']            = 'Escolle o arquivo para subir';
 $lang['txt_filename']          = 'Subir como (opcional)';
 $lang['txt_overwrt']           = 'Sobrescribir arquivo existente';
+$lang['maxuploadsize']         = 'Subida máxima %s por arquivo.';
 $lang['lockedby']              = 'Bloqueado actualmente por';
 $lang['lockexpire']            = 'O bloqueo remata o';
 $lang['js']['willexpire']      = 'O teu bloqueo para editares esta páxina vai caducar nun minuto.\nPara de evitar conflitos, emprega o botón de previsualización para reiniciares o contador do tempo de bloqueo.';
@@ -177,11 +181,17 @@ $lang['lastmod']               = 'Última modificación';
 $lang['by']                    = 'por';
 $lang['deleted']               = 'eliminado';
 $lang['created']               = 'creado';
-$lang['restored']              = 'revisión antiga restaurada';
+$lang['restored']              = 'revisión antiga restaurada (%s)';
 $lang['external_edit']         = 'edición externa';
 $lang['summary']               = 'Resumo da edición';
 $lang['noflash']               = 'Precísase o <a href="http://www.adobe.com/products/flashplayer/">Extensión Adobe Flash</a> para amosar este contido.';
 $lang['download']              = 'Descargar Retallo (Snippet)';
+$lang['tools']                 = 'Ferramentas';
+$lang['user_tools']            = 'Ferramentas de usuario';
+$lang['site_tools']            = 'Ferramentas do sitio';
+$lang['page_tools']            = 'Ferramentas de páxina';
+$lang['skip_to_content']       = 'Pasar ao contido';
+$lang['sidebar']               = 'Barra lateral';
 $lang['mail_newpage']          = 'páxina engadida:';
 $lang['mail_changed']          = 'páxina mudada:';
 $lang['mail_subscribe_list']   = 'páxinas mudadas en nome de espazo:';
@@ -248,10 +258,9 @@ $lang['subscr_m_unsubscribe']  = 'Desubscribir';
 $lang['subscr_m_subscribe']    = 'Subscribir';
 $lang['subscr_m_receive']      = 'Recibir';
 $lang['subscr_style_every']    = 'correo-e en cada troco';
-$lang['subscr_style_digest']   = 'correo-e con resumo de trocos para cada páxina';
-$lang['subscr_style_list']     = 'lista de páxinas mudadas dende o último correo-e';
 $lang['authmodfailed']         = 'Configuración de autenticación de usuario incorrecta. Por favor, informa ao Administrador do teu Wiki.';
 $lang['authtempfail']          = 'A autenticación de usuario non está dispoñible de xeito temporal. De persistir esta situación, por favor, informa ao Administrador do teu Wiki.';
+$lang['authpwdexpire']         = 'A túa contrasinal expirará en %d días, deberías cambiala pronto.';
 $lang['i_chooselang']          = 'Escolle o teu idioma';
 $lang['i_installer']           = 'Instalador do DokuWiki';
 $lang['i_wikiname']            = 'Nome do Wiki';

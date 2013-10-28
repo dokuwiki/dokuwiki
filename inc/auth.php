@@ -34,38 +34,43 @@ define('AUTH_ADMIN', 255);
  */
 function auth_setup() {
     global $conf;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     /* @var Input $INPUT */
     global $INPUT;
     global $AUTH_ACL;
     global $lang;
+    global $config_cascade;
+    global $plugin_controller;
     $AUTH_ACL = array();
 
     if(!$conf['useacl']) return false;
 
-    // load the the backend auth functions and instantiate the auth object XXX
-    if(@file_exists(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php')) {
-        require_once(DOKU_INC.'inc/auth/basic.class.php');
-        require_once(DOKU_INC.'inc/auth/'.$conf['authtype'].'.class.php');
-
-        $auth_class = "auth_".$conf['authtype'];
-        if(class_exists($auth_class)) {
-            $auth = new $auth_class();
-            if($auth->success == false) {
-                // degrade to unauthenticated user
-                unset($auth);
-                auth_logoff();
-                msg($lang['authtempfail'], -1);
-            }
-        } else {
-            nice_die($lang['authmodfailed']);
-        }
-    } else {
-        nice_die($lang['authmodfailed']);
+    // try to load auth backend from plugins
+    foreach ($plugin_controller->getList('auth') as $plugin) {
+      if ($conf['authtype'] === $plugin) {
+        $auth = $plugin_controller->load('auth', $plugin);
+        break;
+      } elseif ('auth' . $conf['authtype'] === $plugin) {
+        // matches old auth backends (pre-Weatherwax)
+        $auth = $plugin_controller->load('auth', $plugin);
+        msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
+             . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
+      }
     }
 
-    if(!isset($auth) || !$auth) return false;
+	if(!isset($auth) || !$auth){
+        msg($lang['authtempfail'], -1);
+        return false;
+    }
+
+    if ($auth->success == false) {
+		// degrade to unauthenticated user
+	    unset($auth);
+	    auth_logoff();
+	    msg($lang['authtempfail'], -1);
+        return false;
+	}
 
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
@@ -91,7 +96,9 @@ function auth_setup() {
     }
 
     // apply cleaning
-    $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
+    if (true === $auth->success) {
+        $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
+    }
 
     if($INPUT->str('authtok')) {
         // when an authentication token is given, trust the session
@@ -266,7 +273,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
 function auth_validateToken($token) {
     if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {
         // bad token
-        header("HTTP/1.0 401 Unauthorized");
+        http_status(401);
         print 'Invalid auth token - maybe the session timed out';
         unset($_SESSION[DOKU_COOKIE]['auth']['token']); // no second chance
         exit;
@@ -299,7 +306,7 @@ function auth_createToken() {
  *
  * This is neither unique nor unfakable - still it adds some
  * security. Using the first part of the IP makes sure
- * proxy farms like AOLs are stil okay.
+ * proxy farms like AOLs are still okay.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
@@ -310,9 +317,9 @@ function auth_browseruid() {
     $uid = '';
     $uid .= $_SERVER['HTTP_USER_AGENT'];
     $uid .= $_SERVER['HTTP_ACCEPT_ENCODING'];
-    $uid .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
     $uid .= substr($ip, 0, strpos($ip, '.'));
+    $uid = strtolower($uid);
     return md5($uid);
 }
 
@@ -534,9 +541,10 @@ function auth_aclcheck($id, $user, $groups) {
         return AUTH_ADMIN;
     }
 
-    $ci = '';
-    if(!$auth->isCaseSensitive()) $ci = 'ui';
-
+    if(!$auth->isCaseSensitive()) {
+        $user   = utf8_strtolower($user);
+        $groups = array_map('utf8_strtolower', $groups);
+    }
     $user   = $auth->cleanUser($user);
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
     $user   = auth_nameencode($user);
@@ -560,11 +568,14 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/'.$ci, $AUTH_ACL);
+    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
     if(count($matches)) {
         foreach($matches as $match) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
             $acl   = preg_split('/\s+/', $match);
+            if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
+                $acl[1] = utf8_strtolower($acl[1]);
+            }
             if(!in_array($acl[1], $groups)) {
                 continue;
             }
@@ -575,7 +586,7 @@ function auth_aclcheck($id, $user, $groups) {
         }
         if($perm > -1) {
             //we had a match - return it
-            return $perm;
+            return (int) $perm;
         }
     }
 
@@ -587,11 +598,14 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     do {
-        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/'.$ci, $AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
         if(count($matches)) {
             foreach($matches as $match) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
                 $acl   = preg_split('/\s+/', $match);
+                if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
+                    $acl[1] = utf8_strtolower($acl[1]);
+                }
                 if(!in_array($acl[1], $groups)) {
                     continue;
                 }
@@ -602,7 +616,7 @@ function auth_aclcheck($id, $user, $groups) {
             }
             //we had a match - return it
             if($perm != -1) {
-                return $perm;
+                return (int) $perm;
             }
         }
         //get next higher namespace
@@ -664,27 +678,41 @@ function auth_nameencode($name, $skip_group = false) {
 /**
  * Create a pronouncable password
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
- * @link    http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * The $foruser variable might be used by plugins to run additional password
+ * policy checks, but is not used by the default implementation
  *
+ * @author   Andreas Gohr <andi@splitbrain.org>
+ * @link     http://www.phpbuilder.com/annotate/message.php3?id=1014451
+ * @triggers AUTH_PASSWORD_GENERATE
+ *
+ * @param  string $foruser username for which the password is generated
  * @return string  pronouncable password
  */
-function auth_pwgen() {
-    $pw = '';
-    $c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
-    $v  = 'aeiou'; //vowels
-    $a  = $c.$v; //both
+function auth_pwgen($foruser = '') {
+    $data = array(
+        'password' => '',
+        'foruser'  => $foruser
+    );
 
-    //use two syllables...
-    for($i = 0; $i < 2; $i++) {
-        $pw .= $c[rand(0, strlen($c) - 1)];
-        $pw .= $v[rand(0, strlen($v) - 1)];
-        $pw .= $a[rand(0, strlen($a) - 1)];
+    $evt = new Doku_Event('AUTH_PASSWORD_GENERATE', $data);
+    if($evt->advise_before(true)) {
+        $c = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
+        $v = 'aeiou'; //vowels
+        $a = $c.$v; //both
+        $s = '!$%&?+*~#-_:.;,'; // specials
+
+        //use thre syllables...
+        for($i = 0; $i < 3; $i++) {
+            $data['password'] .= $c[mt_rand(0, strlen($c) - 1)];
+            $data['password'] .= $v[mt_rand(0, strlen($v) - 1)];
+            $data['password'] .= $a[mt_rand(0, strlen($a) - 1)];
+        }
+        //... and add a nice number and special
+        $data['password'] .= mt_rand(10, 99).$s[mt_rand(0, strlen($s) - 1)];
     }
-    //... and add a nice number
-    $pw .= rand(10, 99);
+    $evt->advise_after();
 
-    return $pw;
+    return $data['password'];
 }
 
 /**
@@ -751,7 +779,7 @@ function register() {
     }
 
     if($conf['autopasswd']) {
-        $pass = auth_pwgen(); // automatically generate password
+        $pass = auth_pwgen($login); // automatically generate password
     } elseif(empty($pass) || empty($passchk)) {
         msg($lang['regmissing'], -1); // complain about missing passwords
         return false;
@@ -772,23 +800,19 @@ function register() {
         return false;
     }
 
-    // create substitutions for use in notification email
-    $substitutions = array(
-        'NEWUSER'  => $login,
-        'NEWNAME'  => $fullname,
-        'NEWEMAIL' => $email,
-    );
+    // send notification about the new user
+    $subscription = new Subscription();
+    $subscription->send_register($login, $fullname, $email);
 
+    // are we done?
     if(!$conf['autopasswd']) {
         msg($lang['regsuccess2'], 1);
-        notify('', 'register', '', $login, false, $substitutions);
         return true;
     }
 
-    // autogenerated password? then send him the password
+    // autogenerated password? then send password to user
     if(auth_sendPassword($login, $pass)) {
         msg($lang['regsuccess'], 1);
-        notify('', 'register', '', $login, false, $substitutions);
         return true;
     } else {
         msg($lang['regmailfail'], -1);
@@ -948,7 +972,7 @@ function act_resendpwd() {
 
         } else { // autogenerate the password and send by mail
 
-            $pass = auth_pwgen();
+            $pass = auth_pwgen($user);
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
                 msg('error modifying user data', -1);
                 return false;
@@ -983,7 +1007,7 @@ function act_resendpwd() {
         }
 
         // generate auth token
-        $token = md5(auth_cookiesalt().$user); //secret but user based
+        $token = md5(uniqid(mt_rand(), true)); // random secret
         $tfile = $conf['cachedir'].'/'.$token{0}.'/'.$token.'.pwauth';
         $url   = wl('', array('do'=> 'resendpwd', 'pwauth'=> $token), true, '&');
 

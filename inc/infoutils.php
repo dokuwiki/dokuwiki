@@ -25,12 +25,12 @@ function checkUpdateMessages(){
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
+        @touch($cf);
         dbglog("checkUpdatesMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
-        $http->timeout = 8;
+        $http->timeout = 12;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
-        @touch($cf);
     }else{
         dbglog("checkUpdatesMessages(): messages.txt up to date");
         $data = io_readFile($cf);
@@ -77,7 +77,8 @@ function getVersionData(){
             if($date) $version['date'] = $date;
         }
     }else{
-        $version['date'] = 'unknown';
+        global $updateVersion;
+        $version['date'] = 'update version '.$updateVersion;
         $version['type'] = 'snapshot?';
     }
     return $version;
@@ -106,8 +107,8 @@ function check(){
         msg('DokuWiki version: '.getVersion(),1);
     }
 
-    if(version_compare(phpversion(),'5.1.2','<')){
-        msg('Your PHP version is too old ('.phpversion().' vs. 5.1.2+ needed)',-1);
+    if(version_compare(phpversion(),'5.2.0','<')){
+        msg('Your PHP version is too old ('.phpversion().' vs. 5.2.0+ needed)',-1);
     }else{
         msg('PHP version '.phpversion(),1);
     }
@@ -174,6 +175,13 @@ function check(){
         }
     }else{
         msg('mb_string extension not available - PHP only replacements will be used',0);
+    }
+
+    if (!UTF8_PREGSUPPORT) {
+        msg('PHP is missing UTF-8 support in Perl-Compatible Regular Expressions (PCRE)', -1);
+    }
+    if (!UTF8_PROPERTYSUPPORT) {
+        msg('PHP is missing Unicode properties support in Perl-Compatible Regular Expressions (PCRE)', -1);
     }
 
     $loc = setlocale(LC_ALL, 0);
@@ -261,7 +269,13 @@ function check(){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    html_msgarea
  */
-function msg($message,$lvl=0,$line='',$file=''){
+
+define('MSG_PUBLIC', 0);
+define('MSG_USERS_ONLY', 1);
+define('MSG_MANAGERS_ONLY',2);
+define('MSG_ADMINS_ONLY',4);
+
+function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
     $errors[-1] = 'error';
     $errors[0]  = 'info';
@@ -271,7 +285,7 @@ function msg($message,$lvl=0,$line='',$file=''){
     if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
 
     if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
     if(isset($MSG_shown) || headers_sent()){
         if(function_exists('html_msgarea')){
             html_msgarea();
@@ -280,6 +294,42 @@ function msg($message,$lvl=0,$line='',$file=''){
         }
         unset($GLOBALS['MSG']);
     }
+}
+/**
+ * Determine whether the current user is allowed to view the message
+ * in the $msg data structure
+ *
+ * @param  $msg   array    dokuwiki msg structure
+ *                         msg   => string, the message
+ *                         lvl   => int, level of the message (see msg() function)
+ *                         allow => int, flag used to determine who is allowed to see the message
+ *                                       see MSG_* constants
+ */
+function info_msg_allowed($msg){
+    global $INFO, $auth;
+
+    // is the message public? - everyone and anyone can see it
+    if (empty($msg['allow']) || ($msg['allow'] == MSG_PUBLIC)) return true;
+
+    // restricted msg, but no authentication
+    if (empty($auth)) return false;
+
+    switch ($msg['allow']){
+        case MSG_USERS_ONLY:
+            return !empty($INFO['userinfo']);
+
+        case MSG_MANAGERS_ONLY:
+            return $INFO['ismanager'];
+
+        case MSG_ADMINS_ONLY:
+            return $INFO['isadmin'];
+
+        default:
+            trigger_error('invalid msg allow restriction.  msg="'.$msg['msg'].'" allow='.$msg['allow'].'"', E_USER_WARNING);
+            return $INFO['isadmin'];
+    }
+
+    return false;
 }
 
 /**

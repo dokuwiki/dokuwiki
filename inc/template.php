@@ -124,7 +124,11 @@ function tpl_content_core() {
             html_diff();
             break;
         case 'recent':
-            html_recent($INPUT->extract('first')->int('first'), $INPUT->str('show_changes'));
+            $show_changes = $INPUT->str('show_changes');
+            if (empty($show_changes)) {
+                $show_changes = get_doku_pref('show_changes', $show_changes);
+            }
+            html_recent($INPUT->extract('first')->int('first'), $show_changes);
             break;
         case 'index':
             html_index($IDX); #FIXME can this be pulled from globals? is it sanitized correctly?
@@ -703,6 +707,7 @@ function tpl_get_action($type) {
             }
             break;
         case 'media':
+            $params['ns'] = getNS($ID);
             break;
         default:
             return '[unknown %s type]';
@@ -759,7 +764,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     global $QUERY;
 
     // don't print the search form if search action has been disabled
-    if(!actionOk('search')) return false;
+    if(!actionOK('search')) return false;
 
     print '<form action="'.wl().'" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no">';
     print '<input type="hidden" name="do" value="search" />';
@@ -839,7 +844,9 @@ function tpl_youarehere($sep = ' » ') {
     echo '<span class="bchead">'.$lang['youarehere'].': </span>';
 
     // always print the startpage
+    echo '<span class="home">';
     tpl_pagelink(':'.$conf['start']);
+    echo '</span>';
 
     // print intermediate namespace links
     $part = '';
@@ -1366,11 +1373,13 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $REV;
     global $lang;
 
-    echo '<form action="'.DOKU_SCRIPT.'" method="post" accept-charset="utf-8">';
+    echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+    if ($_SERVER['REMOTE_USER']) {
+        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+    }
 
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
@@ -1471,15 +1480,12 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  * template
  */
 function tpl_include_page($pageid, $print = true, $propagate = false) {
-    global $ID;
-    global $TOC;
-
+    if (!$pageid) return false;
     if ($propagate) $pageid = page_findnearest($pageid);
 
-    $oldid  = $ID;
+    global $TOC;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
-    $ID     = $oldid;
     $TOC    = $oldtoc;
 
     if(!$print) return $html;

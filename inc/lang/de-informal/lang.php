@@ -1,6 +1,6 @@
 <?php
 /**
- * german language file
+ * german informal language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -19,6 +19,7 @@
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Frank Loizzi <contact@software.bacal.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,7 +68,7 @@ $lang['user']                  = 'Benutzername';
 $lang['pass']                  = 'Passwort';
 $lang['newpass']               = 'Neues Passwort';
 $lang['oldpass']               = 'Bestätigen (Altes Passwort)';
-$lang['passchk']               = 'und nochmal';
+$lang['passchk']               = 'Passwort erneut eingeben';
 $lang['remember']              = 'Angemeldet bleiben';
 $lang['fullname']              = 'Voller Name';
 $lang['email']                 = 'E-Mail';
@@ -83,7 +84,7 @@ $lang['regsuccess2']           = 'Der neue Nutzer wurde angelegt.';
 $lang['regmailfail']           = 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wende dich an den Wiki-Admin.';
 $lang['regbadmail']            = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wende dich bitte an den Wiki-Admin.';
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuche es noch einmal.';
-$lang['regpwmail']             = 'Ihr DokuWiki Passwort';
+$lang['regpwmail']             = 'Ihr DokuWiki-Passwort';
 $lang['reghere']               = 'Du hast noch keinen Zugang? Hier registrieren';
 $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki nicht möglich.';
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
@@ -92,9 +93,9 @@ $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
-$lang['resendpwdmissing']      = 'Es tut mir Leid, aber du musst alle Felder ausfüllen.';
-$lang['resendpwdnouser']       = 'Es tut mir Leid, aber der Benutzer existiert nicht in unserer Datenbank.';
-$lang['resendpwdbadauth']      = 'Es tut mir Leid, aber dieser Authentifizierungscode ist ungültig. Stelle sicher, dass du den kompletten Bestätigungslink verwendet haben.';
+$lang['resendpwdmissing']      = 'Es tut mir leid, aber du musst alle Felder ausfüllen.';
+$lang['resendpwdnouser']       = 'Es tut mir leid, aber der Benutzer existiert nicht in unserer Datenbank.';
+$lang['resendpwdbadauth']      = 'Es tut mir leid, aber dieser Authentifizierungscode ist ungültig. Stelle sicher, dass du den kompletten Bestätigungslink verwendet haben.';
 $lang['resendpwdconfirm']      = 'Ein Bestätigungslink wurde per E-Mail versandt.';
 $lang['resendpwdsuccess']      = 'Dein neues Passwort wurde per E-Mail versandt.';
 $lang['license']               = 'Falls nicht anders bezeichnet, ist der Inhalt dieses Wikis unter der folgenden Lizenz veröffentlicht:';
@@ -137,7 +138,7 @@ $lang['js']['nosmblinks']      = 'Das Verlinken von Windows-Freigaben funktionie
 $lang['js']['linkwiz']         = 'Link-Assistent';
 $lang['js']['linkto']          = 'Link zu:';
 $lang['js']['del_confirm']     = 'Die ausgewählten Dateien wirklich löschen?';
-$lang['js']['restore_confirm'] = 'Wirkliich diese Version wieder herstellen?';
+$lang['js']['restore_confirm'] = 'Wirklich diese Version wiederherstellen?';
 $lang['js']['media_diff']      = 'Unterschiede anzeigen:';
 $lang['js']['media_diff_both'] = 'Seite für Seite';
 $lang['js']['media_diff_opacity'] = 'Überblenden';
@@ -161,7 +162,7 @@ $lang['uploadspam']            = 'Hochladen verweigert: Treffer auf der Spamlist
 $lang['uploadxss']             = 'Hochladen verweigert: Daten scheinen Schadcode zu enthalten.';
 $lang['uploadsize']            = 'Die hochgeladene Datei war zu groß. (max. %s)';
 $lang['deletesucc']            = 'Die Datei "%s" wurde gelöscht.';
-$lang['deletefail']            = '"%s" konnte nicht gelöscht werden. Keine  Berechtigung?.';
+$lang['deletefail']            = '"%s" konnte nicht gelöscht werden. Keine Berechtigung?.';
 $lang['mediainuse']            = 'Die Datei "%s" wurde nicht gelöscht. Sie wird noch verwendet.';
 $lang['namespaces']            = 'Namensräume';
 $lang['mediafiles']            = 'Vorhandene Dateien in';
@@ -181,7 +182,7 @@ $lang['current']               = 'aktuell';
 $lang['yours']                 = 'Deine Version';
 $lang['diff']                  = 'Zeige Unterschiede zu aktueller Version';
 $lang['diff2']                 = 'Zeige Unterschiede der ausgewählten Versionen';
-$lang['difflink']              = 'Link zu der Versionshistorie';
+$lang['difflink']              = 'Link zu der Vergleichsansicht';
 $lang['diff_type']             = 'Unterschiede anzeigen:';
 $lang['diff_inline']           = 'Inline';
 $lang['diff_side']             = 'Side by Side';
@@ -196,15 +197,16 @@ $lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
-$lang['download']              = 'Download-Teil';
+$lang['download']              = 'Schnipsel herunterladen';
 $lang['tools']                 = 'Werkzeuge';
 $lang['user_tools']            = 'Benutzer-Werkzeuge';
 $lang['site_tools']            = 'Webseiten-Werkzeuge';
 $lang['page_tools']            = 'Seiten-Werkzeuge';
 $lang['skip_to_content']       = 'zum Inhalt springen';
+$lang['sidebar']               = 'Seitenleiste';
 $lang['mail_newpage']          = 'Neue Seite:';
 $lang['mail_changed']          = 'Seite geändert:';
-$lang['mail_subscribe_list']   = 'Seite hat sich im Namespace geändert:';
+$lang['mail_subscribe_list']   = 'Geänderte Seiten im Namensraum:';
 $lang['mail_new_user']         = 'Neuer Benutzer:';
 $lang['mail_upload']           = 'Datei hochgeladen:';
 $lang['changes_type']          = 'Änderungen anzeigen von';
@@ -272,14 +274,14 @@ $lang['subscr_style_digest']   = 'E-Mail mit zusammengefasster Übersicht der Se
 $lang['subscr_style_list']     = 'Auflistung aller geänderten Seiten seit der letzten E-Mail (alle %.2f Tage)';
 $lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wende dich an den Admin.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wende dich an den Admin.';
-$lang['authpwdexpire']         = 'Dein Passwort läuft in %d Tag(en) ab, du solltest es es bald ändern.';
+$lang['authpwdexpire']         = 'Dein Passwort läuft in %d Tag(en) ab. Du solltest es es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wähle deine Sprache';
 $lang['i_installer']           = 'DokuWiki-Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
 $lang['i_enableacl']           = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen, bevor du mit der Installation fortfahren kannst.';
-$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Script nur mit einer neuen, unmodifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von deinem Hoster deaktiviert?';
 $lang['i_phpver']              = 'Deine PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisiere deine PHP-Installation.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Du musst die Berechtigungen dieses Ordners ändern!';
@@ -287,14 +289,17 @@ $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Du solltest die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
 $lang['i_badhash']             = 'Unbekannte oder modifizierte dokuwiki.php (Hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - unerlaubter oder leerer Wert';
-$lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="doku.php">neues DokuWiki</a> ist jetzt für dich bereit.';
-$lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese vermutlich von Hand beheben, bevor du dein <a href="doku.php">neues DokuWiki</a> nutzen kannst.';
-$lang['i_policy']              = 'Anfangseinstellung für Zugangskontrolle (ACL)';
-$lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben, hochladen für alle)';
-$lang['i_pol1']                = 'Öffentliches Wiki (lesen für alle, schreiben und hochladen für registrierte Nutzer)';
-$lang['i_pol2']                = 'Geschlossenes Wiki (lesen, schreiben, hochladen nur für registrierte Nutzer)';
+$lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> ist jetzt für dich bereit.';
+$lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese von Hand beheben, bevor du dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> nutzen kannst.';
+$lang['i_policy']              = 'Anfangseinstellungen der Zugangskontrolle (ACL)';
+$lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Nutzer)';
+$lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Nutzer)';
+$lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Nutzer)';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wähle die Lizenz aus unter der die Wiki-Inhalte veröffentlicht werden sollen:';
+$lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen';
+$lang['i_pop_field']           = 'Bitte helfe uns, die DokuWiki-Erfahrung zu verbessern';
+$lang['i_pop_label']           = 'Sende einmal im Monat anonyme Nutzungsdaten an die DokuWiki Entwickler';
 $lang['recent_global']         = 'Im Moment siehst du die Änderungen im Namensraum <b>%s</b>. Du kannst auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';

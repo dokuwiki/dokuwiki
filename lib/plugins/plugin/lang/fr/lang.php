@@ -19,10 +19,12 @@
  * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
+ * @author Anael Mobilia <contrib@anael.eu>
+ * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
-$lang['menu']                  = 'Gestion des modules externes';
-$lang['download']              = 'Télécharger et installer un nouveau module';
-$lang['manage']                = 'Modules installés';
+$lang['menu']                  = 'Gestion des extensions';
+$lang['download']              = 'Télécharger et installer une nouvelle extension';
+$lang['manage']                = 'Extensions installées';
 $lang['btn_info']              = 'Info';
 $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Supprimer';
@@ -35,18 +37,18 @@ $lang['lastupdate']            = 'Dernière mise à jour :';
 $lang['source']                = 'Source :';
 $lang['unknown']               = 'inconnu';
 $lang['updating']              = 'Mise à jour…';
-$lang['updated']               = 'Modules %s mis à jour avec succès';
-$lang['updates']               = 'Les modules suivants ont été mis à jour avec succès';
+$lang['updated']               = 'Extension %s mise à jour avec succès';
+$lang['updates']               = 'Les extensions suivantes ont été mises à jour avec succès';
 $lang['update_none']           = 'Aucune mise à jour n\'a été trouvée.';
 $lang['deleting']              = 'Suppression…';
-$lang['deleted']               = 'Module %s supprimé.';
+$lang['deleted']               = 'Extension %s supprimée.';
 $lang['downloading']           = 'Téléchargement…';
-$lang['downloaded']            = 'Module %s installé avec succès';
-$lang['downloads']             = 'Les modules suivants ont été installés avec succès :';
-$lang['download_none']         = 'Aucun module n\'était trouvé, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
-$lang['plugin']                = 'Module :';
+$lang['downloaded']            = 'Extension %s installée avec succès';
+$lang['downloads']             = 'Les extensions suivantes ont été installées avec succès :';
+$lang['download_none']         = 'Aucune extension n\'a été trouvée, ou un problème inconnu est survenu durant le téléchargement et l\'installation.';
+$lang['plugin']                = 'Extension :';
 $lang['components']            = 'Composants';
-$lang['noinfo']                = 'Ce module externe n\'a transmis aucune information, il pourrait être invalide.';
+$lang['noinfo']                = 'Cette extension n\'a transmis aucune information, elle pourrait être invalide.';
 $lang['name']                  = 'Nom :';
 $lang['date']                  = 'Date :';
 $lang['type']                  = 'Type :';
@@ -54,14 +56,14 @@ $lang['desc']                  = 'Description :';
 $lang['author']                = 'Auteur :';
 $lang['www']                   = 'Site web :';
 $lang['error']                 = 'Une erreur inconnue est survenue.';
-$lang['error_download']        = 'Impossible de télécharger le fichier du module : %s';
-$lang['error_badurl']          = 'URL suspecte. Impossible de déterminer le nom du fichier à partir de l\'URL';
-$lang['error_dircreate']       = 'Impossible de créer le répertoire temporaire pour réceptionner le téléchargement';
-$lang['error_decompress']      = 'Le gestionnaire de modules externes a été incapable de décompresser le fichier téléchargé. Ceci peut être le résultat d\'un mauvais téléchargement, auquel cas vous devriez réessayer ; ou bien le format de compression est inconnu, auquel cas vous devez télécharger et installer le module manuellement.';
-$lang['error_copy']            = 'Une erreur de copie est survenue lors de l\'installation des fichiers du module <em>%s</em> : votre disque est peut-être plein ou les droits d\'accès au fichier sont incorrects. Il a pu en résulter une installation partielle du module rendant votre installation du wiki instable.';
-$lang['error_delete']          = 'Une erreur est survenue à la suppression du module <em>%s</em>.  La raison la plus probable est l\'insuffisance des droits sur les fichiers ou le répertoire.';
-$lang['enabled']               = 'Module %s activé.';
-$lang['notenabled']            = 'Le module %s n\'a pas pu être activé, vérifiez le fichier des permissions.';
-$lang['disabled']              = 'Module %s désactivé.';
-$lang['notdisabled']           = 'Le module %s n\'a pas pu être désactivé, vérifiez le fichier des permissions.';
-$lang['packageinstalled']      = 'Ensemble de modules (%d module(s): %s) installé avec succès.';
+$lang['error_download']        = 'Impossible de télécharger le fichier de l\'extension : %s';
+$lang['error_badurl']          = 'URL suspecte : impossible de déterminer le nom du fichier à partir de l\'URL';
+$lang['error_dircreate']       = 'Impossible de créer le répertoire temporaire pour effectuer le téléchargement';
+$lang['error_decompress']      = 'Le gestionnaire d\'extensions a été incapable de décompresser le fichier téléchargé. Ceci peut être le résultat d\'un mauvais téléchargement, auquel cas vous devriez réessayer ; ou bien le format de compression est inconnu, auquel cas vous devez télécharger et installer l\'extension manuellement.';
+$lang['error_copy']            = 'Une erreur de copie est survenue lors de l\'installation des fichiers de l\'extension <em>%s</em> : le disque est peut-être plein ou les autorisations d\'accès sont incorrects. Il a pu en résulter une installation partielle de l\'extension et laisser votre installation du wiki instable.';
+$lang['error_delete']          = 'Une erreur est survenue lors de la suppression de l\'extension <em>%s</em>. La raison la plus probable est l\'insuffisance des autorisations sur les fichiers ou les répertoires.';
+$lang['enabled']               = 'Extension %s activée.';
+$lang['notenabled']            = 'L\'extension %s n\'a pas pu être activée, vérifiez les autorisations des fichiers.';
+$lang['disabled']              = 'Extension %s désactivée.';
+$lang['notdisabled']           = 'L\'extension %s n\'a pas pu être désactivée, vérifiez les autorisations des fichiers.';
+$lang['packageinstalled']      = 'Ensemble d\'extensions (%d extension(s): %s) installé avec succès.';

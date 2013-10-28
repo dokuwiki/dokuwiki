@@ -859,7 +859,7 @@ function html_list_index($item){
     $base = ':'.$item['id'];
     $base = substr($base,strrpos($base,':')+1);
     if($item['type']=='d'){
-        $ret .= '<a href="'.wl($ID,'idx='.rawurlencode($item['id'])).'" class="idx_dir"><strong>';
+        $ret .= '<a href="'.wl($ID,'idx='.rawurlencode($item['id'])).'" title="' . $item['id'] . '" class="idx_dir"><strong>';
         $ret .= $base;
         $ret .= '</strong></a>';
     }else{
@@ -1003,14 +1003,16 @@ function html_backlinks(){
  * @param string $r_rev   Right revision
  * @param string $id      Page id, if null $ID is used
  * @param bool   $media   If it is for media files
+ * @param bool   $inline  Return the header on a single line
  * @return array HTML snippets for diff header
  */
-function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
     global $lang;
     if ($id === null) {
         global $ID;
         $id = $ID;
     }
+    $head_separator = $inline ? ' ' : '<br />';
     $media_or_wikiFN = $media ? 'mediaFN' : 'wikiFN';
     $ml_or_wl = $media ? 'ml' : 'wl';
     $l_minor = $r_minor = '';
@@ -1032,7 +1034,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $l_head_title = ($media) ? dformat($l_rev) : $id.' ['.dformat($l_rev).']';
         $l_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$l_rev").'">'.
         $l_head_title.'</a>'.
-        '<br />'.$l_user.' '.$l_sum;
+        $head_separator.$l_user.' '.$l_sum;
     }
 
     if($r_rev){
@@ -1050,7 +1052,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $r_head_title = ($media) ? dformat($r_rev) : $id.' ['.dformat($r_rev).']';
         $r_head = '<a class="wikilink1" href="'.$ml_or_wl($id,"rev=$r_rev").'">'.
         $r_head_title.'</a>'.
-        '<br />'.$r_user.' '.$r_sum;
+        $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
         $_info   = getRevisionInfo($id,$_rev,true, $media);
         if($_info['user']){
@@ -1067,7 +1069,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false) {
         $r_head  = '<a class="wikilink1" href="'.$ml_or_wl($id).'">'.
         $r_head_title.'</a> '.
         '('.$lang['current'].')'.
-        '<br />'.$_user.' '.$_sum;
+        $head_separator.$_user.' '.$_sum;
     }else{
         $r_head = '&mdash; ('.$lang['current'].')';
     }
@@ -1088,8 +1090,17 @@ function html_diff($text='',$intro=true,$type=null){
     global $REV;
     global $lang;
     global $INPUT;
+    global $INFO;
 
-    if(!$type) $type = $INPUT->str('difftype');
+    if(!$type) {
+        $type = $INPUT->str('difftype');
+        if (empty($type)) {
+            $type = get_doku_pref('difftype', $type);
+            if (empty($type) && $INFO['ismobile']) {
+                $type = 'inline';
+            }
+        }
+    }
     if($type != 'inline') $type = 'sidebyside';
 
     // we're trying to be clever here, revisions to compare can be either
@@ -1151,11 +1162,10 @@ function html_diff($text='',$intro=true,$type=null){
         }
         $r_text = rawWiki($ID,$r_rev);
 
-        list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev);
+        list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev, null, false, $type == 'inline');
     }
 
-    $df = new Diff(explode("\n",htmlspecialchars($l_text)),
-        explode("\n",htmlspecialchars($r_text)));
+    $df = new Diff(explode("\n",$l_text),explode("\n",$r_text));
 
     if($type == 'inline'){
         $tdf = new InlineDiffFormatter();
@@ -1197,6 +1207,18 @@ function html_diff($text='',$intro=true,$type=null){
     ?>
     <div class="table">
     <table class="diff diff_<?php echo $type?>">
+    <?php if ($type == 'inline') { ?>
+    <tr>
+    <th class="diff-lineheader">-</th><th <?php echo $l_minor?>>
+    <?php echo $l_head?>
+    </th>
+    </tr>
+    <tr>
+    <th class="diff-lineheader">+</th><th <?php echo $r_minor?>>
+    <?php echo $r_head?>
+    </th>
+    </tr>
+    <?php } else { ?>
     <tr>
     <th colspan="2" <?php echo $l_minor?>>
     <?php echo $l_head?>
@@ -1205,10 +1227,37 @@ function html_diff($text='',$intro=true,$type=null){
     <?php echo $r_head?>
     </th>
     </tr>
-    <?php echo $tdf->format($df)?>
+    <?php }
+    echo html_insert_softbreaks($tdf->format($df)); ?>
     </table>
     </div>
     <?php
+}
+
+function html_insert_softbreaks($diffhtml) {
+  // search the diff html string for both:
+  // - html tags, so these can be ignored
+  // - long strings of characters without breaking characters
+  return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/','html_softbreak_callback',$diffhtml);
+}
+
+function html_softbreak_callback($match){
+  // if match is an html tag, return it intact
+  if ($match[0]{0} == '<') return $match[0];
+
+  // its a long string without a breaking character,
+  // make certain characters into breaking characters by inserting a
+  // breaking character (zero length space, U+200B / #8203) in front them.
+  $regex = <<< REGEX
+(?(?=                                 # start a conditional expression with a positive look ahead ...
+&\#?\\w{1,6};)                        # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
+&\#?\\w{1,6};                         # yes pattern - a quicker match for the html entity, since we know we have one
+|
+[?/,&\#;:]                            # no pattern - any other group of 'special' characters to insert a breaking character after
+)+                                    # end conditional expression
+REGEX;
+
+  return preg_replace('<'.$regex.'>xu','\0&#8203;',$match[0]);
 }
 
 /**
@@ -1248,9 +1297,11 @@ function html_msgarea(){
     foreach($MSG as $msg){
         $hash = md5($msg['msg']);
         if(isset($shown[$hash])) continue; // skip double messages
-        print '<div class="'.$msg['lvl'].'">';
-        print $msg['msg'];
-        print '</div>';
+        if(info_msg_allowed($msg)){
+            print '<div class="'.$msg['lvl'].'">';
+            print $msg['msg'];
+            print '</div>';
+        }
         $shown[$hash] = 1;
     }
 
@@ -1390,8 +1441,7 @@ function html_edit(){
     $data = array('form' => $form,
                   'wr'   => $wr,
                   'media_manager' => true,
-                  'target' => ($INPUT->has('target') && $wr &&
-                               $RANGE !== '') ? $INPUT->str('target') : 'section',
+                  'target' => ($INPUT->has('target') && $wr) ? $INPUT->str('target') : 'section',
                   'intro_locale' => $include);
 
     if ($data['target'] !== 'section') {
@@ -1440,7 +1490,7 @@ function html_edit(){
     } ?>
     <div class="editBox">
 
-    <div class="toolbar">
+    <div class="toolbar group">
         <div id="draft__status"><?php if(!empty($INFO['draft'])) echo $lang['draftdate'].' '.dformat();?></div>
         <div id="tool__bar"><?php if ($wr && $data['media_manager']){?><a href="<?php echo DOKU_BASE?>lib/exe/mediamanager.php?ns=<?php echo $INFO['namespace']?>"
             target="_blank"><?php echo $lang['mediaselect'] ?></a><?php }?></div>
@@ -1603,11 +1653,16 @@ function html_admin(){
     }
 
     // data security check
-    // @todo: could be checked and only displayed if $conf['savedir'] is under the web root
-    echo '<a style="border:none; float:right;"
-            href="http://www.dokuwiki.org/security#web_access_security">
-            <img src="data/security.png" alt="Your data directory seems to be protected properly."
-             onerror="this.parentNode.style.display=\'none\'" /></a>';
+    // simple check if the 'savedir' is relative and accessible when appended to DOKU_URL
+    // it verifies either:
+    //   'savedir' has been moved elsewhere, or
+    //   has protection to prevent the webserver serving files from it
+    if (substr($conf['savedir'],0,2) == './'){
+        echo '<a style="border:none; float:right;"
+                href="http://www.dokuwiki.org/security#web_access_security">
+                <img src="'.DOKU_URL.$conf['savedir'].'/security.png" alt="Your data directory seems to be protected properly."
+                onerror="this.parentNode.style.display=\'none\'" /></a>';
+    }
 
     print p_locale_xhtml('admin');
 

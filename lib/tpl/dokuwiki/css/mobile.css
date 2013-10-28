@@ -11,9 +11,9 @@
     z-index: 0;
 }
 
-/* up to 979px screen widths
+/* for screen widths in the tablet range
 ********************************************************************/
-@media only screen and (max-width: 979px) {
+@media only screen and (max-width: __tablet_width__) {
 
 #screen__mode {
     z-index: 1; /* for detecting media queries in JavaScript (see script.js) */
@@ -32,7 +32,7 @@
     background: __background__;
     color: inherit;
     border: 1px solid #eee;
-    box-shadow: 0 0 .5em #999;
+    box-shadow: 0 0 .5em __text_alt__;
     border-radius: 2px;
     padding: 1em;
     margin-bottom: .5em;
@@ -89,6 +89,10 @@
 .dokuwiki div.page {
     padding: 1em;
 }
+/* enable horizontal scrolling in media manager */
+.mode_media div.page {
+    overflow: auto;
+}
 
 /* _edit */
 .dokuwiki div.section_highlight {
@@ -113,9 +117,9 @@
 } /* /@media */
 
 
-/* up to 480px screen widths
+/* for screen widths in the smartphone range
 ********************************************************************/
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: __phone_width__) {
 
 #screen__mode {
     z-index: 2; /* for detecting media queries in JavaScript (see script.js) */

@@ -62,7 +62,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     //handle plugin rendering
     function plugin($name,$data){
-        $plugin =& plugin_load('syntax',$name);
+        $plugin = plugin_load('syntax',$name);
         if($plugin != null){
             $plugin->render($this->getFormat(),$this,$data);
         }
@@ -274,9 +274,10 @@ class Doku_Renderer extends DokuWiki_Plugin {
         list($name,$hash) = explode('#',$name,2);
         if($hash) return $hash;
 
-        $name = strtr($name,';',':');
         if($conf['useslash']){
-            $name = strtr($name,'/',':');
+            $name = strtr($name,';/',';:');
+        }else{
+            $name = strtr($name,';',':');
         }
 
         return noNSorNS($name);

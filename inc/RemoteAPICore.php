@@ -3,7 +3,7 @@
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_API_VERSION', 7);
+define('DOKU_API_VERSION', 8);
 
 class RemoteAPICore {
 
@@ -48,7 +48,7 @@ class RemoteAPICore {
                 'public' => '1'
             ), 'dokuwiki.appendPage' => array(
                 'args' => array('string', 'string', 'array'),
-                'return' => 'int',
+                'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
             ),  'wiki.getPage' => array(
                 'args' => array('string'),
@@ -102,7 +102,7 @@ class RemoteAPICore {
                 'name' => 'pageVersions'
             ), 'wiki.putPage' => array(
                 'args' => array('string', 'string', 'array'),
-                'return' => 'int',
+                'return' => 'bool',
                 'doc' => 'Saves a wiki page.'
             ), 'wiki.listLinks' => array(
                 'args' => array('string'),
@@ -344,6 +344,8 @@ class RemoteAPICore {
 
             for($i=0; $i<$len; $i++) {
                 unset($data[$i]['meta']);
+                $data[$i]['perms'] = $data[$i]['perm'];
+                unset($data[$i]['perm']);
                 $data[$i]['lastModified'] = $this->api->toDate($data[$i]['mtime']);
             }
             return $data;
@@ -370,7 +372,7 @@ class RemoteAPICore {
         $file = wikiFN($id,$rev);
         $time = @filemtime($file);
         if(!$time){
-            throw new RemoteException(10, 'The requested page does not exist', 121);
+            throw new RemoteException('The requested page does not exist', 121);
         }
 
         $info = getRevisionInfo($id, $time, 1024);
@@ -440,7 +442,7 @@ class RemoteAPICore {
         // run the indexer if page wasn't indexed yet
         idx_addPage($id);
 
-        return 0;
+        return true;
     }
 
     /**
@@ -654,7 +656,9 @@ class RemoteAPICore {
 
         if(count($revisions)>0 && $first==0) {
             array_unshift($revisions, '');  // include current revision
-            array_pop($revisions);          // remove extra log entry
+            if ( count($revisions) > $conf['recent'] ){
+                array_pop($revisions);          // remove extra log entry
+            }
         }
 
         if(count($revisions) > $conf['recent']) {
