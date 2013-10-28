@@ -13,8 +13,21 @@
 #user__manager table {
   margin-bottom: 1em;
 }
+#user__manager ul.notes {
+  padding-left: 0;
+  padding-right: 1.4em;
+}
 #user__manager input.button[disabled] {
   color: #ccc!important;
   border-color: #ccc!important;
+}
+#user__manager .import_users {
+  margin-top: 1.4em;
+}
+#user__manager .import_failures {
+  margin-top: 1.4em;
+}
+#user__manager .import_failures td.lineno {
+  text-align: center;
 }
 /* IE won't understand but doesn't require it */

@@ -231,7 +231,6 @@ $lang['subscr_m_receive']      = 'Primaj';
 $lang['subscr_style_every']    = 'email za svaku promjenu';
 $lang['subscr_style_digest']   = 'email s kratakim prikazom promjena za svaku stranicu (svaka %.2f dana)';
 $lang['subscr_style_list']     = 'listu promijenjenih stranica od zadnjeg primljenog email-a (svaka %.2f dana)';
-$lang['authmodfailed']         = 'Greška u konfiguraciji korisničke autentifikacije. Molimo Vas da kontaktirate administratora.';
 $lang['authtempfail']          = 'Autentifikacija korisnika je privremeno nedostupna. Molimo Vas da kontaktirate administratora.';
 $lang['i_chooselang']          = 'Izaberite vaš jezik';
 $lang['i_installer']           = 'DokuWiki instalacija';

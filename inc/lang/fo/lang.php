@@ -168,5 +168,4 @@ $lang['img_copyr']             = 'Upphavsrættur';
 $lang['img_format']            = 'Snið';
 $lang['img_camera']            = 'Fototól';
 $lang['img_keywords']          = 'Evnisorð';
-$lang['authmodfailed']         = 'Brek við validering av brúkarasamansetingv. Fá samband við umboðsstjóran á hesi wiki.';
 $lang['authtempfail']          = 'Validering av brúkara virkar fyribils ikki. Um hetta er varandi, fá so samband við umboðsstjóran á hesi wiki.';

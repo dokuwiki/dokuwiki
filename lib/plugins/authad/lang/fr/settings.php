@@ -1,7 +1,8 @@
 <?php
+
 /**
- * French language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['account_suffix']        = 'Le suffixe de votre compte. Ex.: <code>@mon.domaine.org</code>';

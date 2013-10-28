@@ -1,7 +1,8 @@
 <?php
+
 /**
- * German (informal) language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -9,6 +10,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['menu']                  = 'Plugins verwalten';
 $lang['download']              = 'Herunterladen und installieren einer neuen Erweiterung';

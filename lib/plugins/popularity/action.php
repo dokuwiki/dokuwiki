@@ -35,7 +35,6 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
         //Actually send it
         $status = $this->helper->sendData( $this->helper->gatherAsString() );
 
-
         if ( $status !== '' ){
             //If an error occured, log it
             io_saveFile( $this->helper->autosubmitErrorFile, $status );

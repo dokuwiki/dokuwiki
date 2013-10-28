@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Korean language file
- *
- * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Anika Henke <anika@selfthinker.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -40,4 +40,4 @@ $lang['acl_perm4']             = '만들기';
 $lang['acl_perm8']             = '올리기';
 $lang['acl_perm16']            = '삭제';
 $lang['acl_new']               = '새 항목 추가';
-$lang['acl_mod']               = '선택 항목 수정';
+$lang['acl_mod']               = '항목 수정';

@@ -265,7 +265,6 @@ $lang['subscr_m_unsubscribe']  = 'Zrezygnuj z subskrypcji';
 $lang['subscr_m_subscribe']    = 'Subskrybuj';
 $lang['subscr_m_receive']      = 'Otrzymuj';
 $lang['subscr_style_every']    = 'email przy każdej zmianie';
-$lang['authmodfailed']         = 'Błąd uwierzytelnienia. Powiadom administratora tego wiki.';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
 $lang['authpwdexpire']         = 'Twoje hasło wygaśnie za %d dni. Należy je zmienić w krótkim czasie.';
 $lang['i_chooselang']          = 'Wybierz język';

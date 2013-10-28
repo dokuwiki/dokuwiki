@@ -1,8 +1,10 @@
 <?php
+
 /**
- * Brazilian Portuguese language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Frederico Guimarães <frederico@teia.bio.br>
  */
 $lang['server']                = 'Seu servidor PostgreSQL';
 $lang['port']                  = 'Sua porta do servidor PostgreSQL';

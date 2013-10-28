@@ -20,7 +20,7 @@
  * @author virtual host part of farm_confpath() based on conf_path() from Drupal.org's /includes/bootstrap.inc
  *   (see https://github.com/drupal/drupal/blob/7.x/includes/bootstrap.inc#L537)
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
-*/
+ */
 
 // DOKU_FARMDIR needs to be set in preload.php, here the fallback is the same as DOKU_INC would be (if it was set already)
 if(!defined('DOKU_FARMDIR')) define('DOKU_FARMDIR', fullpath(dirname(__FILE__).'/../').'/');

@@ -18,11 +18,11 @@
 }
 
 #link__wiz_result {
-    background-color: __background__;
+    background-color: @ini_background;
     width:  293px;
     height: 193px;
     overflow: auto;
-    border: 1px solid __border__;
+    border: 1px solid @ini_border;
     margin: 3px auto;
     text-align: left;
     line-height: 1;
@@ -57,16 +57,16 @@
 }
 
 #link__wiz_result div.even {
-    background-color: __background_neu__;
+    background-color: @ini_background_neu;
 }
 
 #link__wiz_result div.selected {
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
 }
 
 #link__wiz_result span {
     display: block;
-    color: __text_neu__;
+    color: @ini_text_neu;
     margin-left: 22px;
 }
 

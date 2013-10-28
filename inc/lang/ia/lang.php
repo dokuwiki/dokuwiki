@@ -227,7 +227,6 @@ $lang['subscr_m_unsubscribe']  = 'Cancellar subscription';
 $lang['subscr_m_subscribe']    = 'Subscriber';
 $lang['subscr_m_receive']      = 'Reciper';
 $lang['subscr_style_every']    = 'un message pro cata modification';
-$lang['authmodfailed']         = 'Configuration incorrecte de authentication de usator. Per favor informa le administrator de tu wiki.';
 $lang['authtempfail']          = 'Le authentication de usator temporarimente non es disponibile. Si iste situation persiste, per favor informa le administrator de tu wiki.';
 $lang['i_chooselang']          = 'Selige tu lingua';
 $lang['i_installer']           = 'Installator de DokuWiki';

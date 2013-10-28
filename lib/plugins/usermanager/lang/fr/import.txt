@@ -1,0 +1,11 @@
+===== Importation d'utilisateurs par lot =====
+
+Requière un fichier [[wpfr>CSV]] d'utilisateurs avec un minimum de quatre colonnes.
+Les colonnes doivent comporter, dans l'ordre : identifiant, nom complet, adresse de courriel et groupes.
+
+Les champs doivent être séparés par une virgule (,), les chaînes sont délimitées par des guillemets (""). On peut utiliser la balance inverse (\) comme caractère d'échappement.
+Pour obtenir un exemple de fichier acceptable, essayer la fonction "Exporter les utilisateurs" ci dessus.
+
+Les identifiants dupliqués seront ignorés.
+
+L'importation générera un mot de passe et l'enverra à chaque utilisateur correctement importé.

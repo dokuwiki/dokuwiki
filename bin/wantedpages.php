@@ -49,7 +49,7 @@ function dw_dir_filter($entry, $basepath) {
 
 #------------------------------------------------------------------------------
 function dw_get_pages($dir) {
-    static $trunclen = NULL;
+    static $trunclen = null;
     if ( !$trunclen ) {
         global $conf;
         $trunclen = strlen($conf['datadir'].':');
@@ -92,7 +92,7 @@ function dw_internal_links($page) {
             $mid = $ins[1][0];
             resolve_pageid($cns,$mid,$exists);
             if ( !$exists ) {
-								list($mid) = explode('#',$mid); //record pages without hashs
+                list($mid) = explode('#',$mid); //record pages without hashs
                 $links[] = $mid;
             }
         }

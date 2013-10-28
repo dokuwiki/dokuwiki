@@ -28,8 +28,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
 <body>
     <!--[if lte IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
-    <div id="dokuwiki__site"><div id="dokuwiki__top"
-        class="dokuwiki site mode_<?php echo $ACT ?>">
+    <div id="dokuwiki__site"><div id="dokuwiki__top" class="site <?php echo tpl_classes(); ?>">
 
         <?php include('tpl_header.php') ?>
 
@@ -109,16 +108,32 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                     <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
                     <div class="tools">
                         <ul>
-                            <?php // View in media manager; @todo: transfer logic to backend
+                            <?php
+                                $data = array();
+
+                                // View in media manager; @todo: transfer logic to backend
                                 $imgNS = getNS($IMG);
                                 $authNS = auth_quickaclcheck("$imgNS:*");
                                 if (($authNS >= AUTH_UPLOAD) && function_exists('media_managerURL')) {
                                     $mmURL = media_managerURL(array('ns' => $imgNS, 'image' => $IMG));
-                                    echo '<li><a href="'.$mmURL.'" class="mediaManager"><span>'.$lang['img_manager'].'</span></a></li>';
+                                    $data['mediaManager'] = '<li><a href="'.$mmURL.'" class="mediaManager"><span>'.$lang['img_manager'].'</span></a></li>';
                                 }
-                            ?>
-                            <?php // Back to [ID]; @todo: transfer logic to backend
-                                echo '<li><a href="'.wl($ID).'" class="back"><span>'.$lang['img_backto'].' '.$ID.'</span></a></li>';
+
+                                // Back to [ID]; @todo: transfer logic to backend
+                                $data['img_backto'] = '<li><a href="'.wl($ID).'" class="back"><span>'.$lang['img_backto'].' '.$ID.'</span></a></li>';
+
+                                // the page tools can be amended through a custom plugin hook
+                                // if you're deriving from this template and your design is close enough to
+                                // the dokuwiki template you might want to trigger a DOKUWIKI event instead
+                                // of using $conf['template'] here
+                                $hook = 'TEMPLATE_'.strtoupper($conf['template']).'_PAGETOOLS_DISPLAY';
+                                $evt = new Doku_Event($hook, $data);
+                                if($evt->advise_before()){
+                                    foreach($evt->data as $k => $html) echo $html;
+                                }
+                                $evt->advise_after();
+                                unset($data);
+                                unset($evt);
                             ?>
                         </ul>
                     </div>

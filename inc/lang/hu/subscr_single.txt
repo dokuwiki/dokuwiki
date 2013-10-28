@@ -1,7 +1,7 @@
 Szia,
 
 A @PAGE@ oldal a @TITLE wikiben megváltozott.
-Itt vannak az eltérések:
+Az eltérések a következők:
 
 --------------------------------------------------------
 @DIFF@

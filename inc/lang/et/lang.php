@@ -208,7 +208,6 @@ $lang['img_copyr']             = 'Autoriõigused';
 $lang['img_format']            = 'Formaat';
 $lang['img_camera']            = 'Kaamera';
 $lang['img_keywords']          = 'Võtmesõnad';
-$lang['authmodfailed']         = 'Vigane kasutajate autentimise konfiguratsioon. Palun teavita sellest serveri haldajat.';
 $lang['authtempfail']          = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
 $lang['i_chooselang']          = 'Vali keel';
 $lang['i_installer']           = 'DokuWiki paigaldaja';

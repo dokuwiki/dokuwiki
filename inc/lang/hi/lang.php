@@ -1,15 +1,11 @@
 <?php
+
 /**
- * hi language file
- *
- * This file was initially built by fetching translations from other
- * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
- * lines starting with @author
- *
- * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesHi.php?view=co
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Abhinav Tyagi <abhinavtyagi11@gmail.com>
  * @author yndesai@gmail.com
+ * @author Santosh Joshi <sanjujoshhi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -44,6 +40,12 @@ $lang['btn_backlink']          = 'पिछली कड़ियाँ';
 $lang['btn_backtomedia']       = 'मीडिया फाइल चयन पर पीछे जायें';
 $lang['btn_subscribe']         = 'सदस्यता प्रबंधन';
 $lang['btn_profile']           = 'परिचय संपादित करें';
+$lang['btn_resendpwd']         = 'नया पासवर्ड सेट करें';
+$lang['btn_draft']             = 'प्रारूप सम्पादित करें';
+$lang['btn_draftdel']          = 'प्रारूप मिटायें';
+$lang['btn_revert']            = 'वापस लौटाएं';
+$lang['btn_apply']             = 'लागू करें';
+$lang['btn_deleteuser']        = 'खाता मिटायें';
 $lang['user']                  = 'उपयोगकर्ता का नाम';
 $lang['pass']                  = 'गुप्त शब्द';
 $lang['newpass']               = 'नव गुप्त शब्द';

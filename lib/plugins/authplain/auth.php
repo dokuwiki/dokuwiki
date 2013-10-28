@@ -198,13 +198,9 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         if(empty($deleted)) return 0;
 
         $pattern = '/^('.join('|', $deleted).'):/';
+        io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true);
 
-        if(io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true)) {
-            foreach($deleted as $user) unset($this->users[$user]);
-            return count($deleted);
-        }
-
-        // problem deleting, reload the user list and count the difference
+        // reload the user list and count the difference
         $count = count($this->users);
         $this->_loadUserData();
         $count -= count($this->users);

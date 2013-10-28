@@ -1,7 +1,7 @@
 <?php
 
 class httpclient_http_proxy_test extends DokuWikiTest {
-    protected $url = 'http://www.dokuwiki.org/README';
+    protected $url = 'http://test.dokuwiki.org/README';
 
     /**
      * @group internet
@@ -13,7 +13,7 @@ class httpclient_http_proxy_test extends DokuWikiTest {
         $http->proxy_port = 8080;
 
         $data = $http->get($this->url);
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $this->assertTrue(strpos($data,'DokuWiki') !== false, 'response content');
     }
 

@@ -1,0 +1,9 @@
+===== Importação de Utilizadores em Massa =====
+
+Requer um ficheiro CSV de utilizadores com pelo menos quatro colunas.
+As colunas têm de conter, em ordem: id de utilizador, nome completo, endereço de email e grupos.
+Os campos CSV devem ser separados por vírgulas (,) e as strings delimitadas por aspas (""). A contra-barra (\) pode ser usada para escapar.
+Para um exemplo de um ficheiro adequado, tente a função "Exportar Utilizadores" acima.
+Ids de utilizador duplicados serão ignorados.
+
+Uma senha será gerada e enviada por email a cada utilizador importado com sucesso.

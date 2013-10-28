@@ -333,7 +333,6 @@ class RemoteAPICore {
         if (!is_array($options)) $options = array();
         $options['skipacl'] = 0; // no ACL skipping for XMLRPC
 
-
         if(auth_quickaclcheck($ns.':*') >= AUTH_READ) {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
@@ -506,8 +505,8 @@ class RemoteAPICore {
     }
 
     /**
-    * Returns the permissions of a given wiki page
-    */
+     * Returns the permissions of a given wiki page
+     */
     function aclCheck($id) {
         $id = $this->resolvePageId($id);
         return auth_quickaclcheck($id);
@@ -772,7 +771,7 @@ class RemoteAPICore {
         $id = cleanID($id);
         if(empty($id)) {
             global $conf;
-            $id = cleanID($conf['start']);	
+            $id = cleanID($conf['start']);
         }
         return $id;
     }

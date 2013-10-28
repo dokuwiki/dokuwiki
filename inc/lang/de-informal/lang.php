@@ -1,8 +1,8 @@
 <?php
+
 /**
- * german informal language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -20,6 +20,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,6 +64,7 @@ $lang['btn_revert']            = 'Wiederherstellen';
 $lang['btn_register']          = 'Registrieren';
 $lang['btn_apply']             = 'Übernehmen';
 $lang['btn_media']             = 'Medien-Manager';
+$lang['btn_deleteuser']        = 'Benutzerprofil löschen';
 $lang['loggedinas']            = 'Angemeldet als';
 $lang['user']                  = 'Benutzername';
 $lang['pass']                  = 'Passwort';
@@ -73,14 +75,15 @@ $lang['remember']              = 'Angemeldet bleiben';
 $lang['fullname']              = 'Voller Name';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Benutzerprofil';
-$lang['badlogin']              = 'Nutzername oder Passwort sind falsch.';
+$lang['badlogin']              = 'Benutzername oder Passwort sind falsch.';
+$lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'Kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, da das Sektionsinfo veraltet ist. Die ganze Seite wird stattdessen geladen.';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden';
-$lang['reguexists']            = 'Der Nutzername existiert leider schon.';
-$lang['regsuccess']            = 'Der neue Nutzer wurde angelegt und das Passwort per E-Mail versandt.';
-$lang['regsuccess2']           = 'Der neue Nutzer wurde angelegt.';
+$lang['reguexists']            = 'Der Benutzername existiert leider schon.';
+$lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
+$lang['regsuccess2']           = 'Der neue Benutzer wurde angelegt.';
 $lang['regmailfail']           = 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wende dich an den Wiki-Admin.';
 $lang['regbadmail']            = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wende dich bitte an den Wiki-Admin.';
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuche es noch einmal.';
@@ -90,6 +93,11 @@ $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki n
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muss ein Name oder eine E-Mail Adresse angegeben werden.';
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
+$lang['profnodelete']          = 'Dieses Wiki unterstützt nicht das Löschen von Benutzern.';
+$lang['profdeleteuser']        = 'Benutzerprofil löschen';
+$lang['profdeleted']           = 'Dein Benutzerprofil wurde im Wiki gelöscht.';
+$lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
+$lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
@@ -146,7 +154,7 @@ $lang['js']['media_diff_portions'] = 'Übergang';
 $lang['js']['media_select']    = 'Dateien auswählen…';
 $lang['js']['media_upload_btn'] = 'Hochladen';
 $lang['js']['media_done_btn']  = 'Fertig';
-$lang['js']['media_drop']      = 'Dateien hier draufziehen um sie hochzuladen';
+$lang['js']['media_drop']      = 'Dateien hier hinziehen um sie hochzuladen';
 $lang['js']['media_cancel']    = 'Entfernen';
 $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
@@ -272,7 +280,6 @@ $lang['subscr_m_receive']      = 'Erhalten';
 $lang['subscr_style_every']    = 'E-Mail bei jeder Änderung';
 $lang['subscr_style_digest']   = 'E-Mail mit zusammengefasster Übersicht der Seitenänderungen (alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Auflistung aller geänderten Seiten seit der letzten E-Mail (alle %.2f Tage)';
-$lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wende dich an den Admin.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wende dich an den Admin.';
 $lang['authpwdexpire']         = 'Dein Passwort läuft in %d Tag(en) ab. Du solltest es es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wähle deine Sprache';
@@ -292,9 +299,9 @@ $lang['i_badval']              = '<code>%s</code> - unerlaubter oder leerer Wert
 $lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> ist jetzt für dich bereit.';
 $lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese von Hand beheben, bevor du dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> nutzen kannst.';
 $lang['i_policy']              = 'Anfangseinstellungen der Zugangskontrolle (ACL)';
-$lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Nutzer)';
-$lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Nutzer)';
-$lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Nutzer)';
+$lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Benutzer)';
+$lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Benutzer)';
+$lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Benutzer)';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wähle die Lizenz aus unter der die Wiki-Inhalte veröffentlicht werden sollen:';
 $lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen';

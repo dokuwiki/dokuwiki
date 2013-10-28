@@ -51,6 +51,7 @@ $lang['btn_revert']            = 'Restore';
 $lang['btn_register']          = 'Register';
 $lang['btn_apply']             = 'Apply';
 $lang['btn_media']             = 'Media Manager';
+$lang['btn_deleteuser']        = 'Remove My Account';
 
 $lang['loggedinas']            = 'Logged in as';
 $lang['user']                  = 'Username';
@@ -63,6 +64,7 @@ $lang['fullname']              = 'Real name';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'User Profile';
 $lang['badlogin']              = 'Sorry, username or password was wrong.';
+$lang['badpassconfirm']        = 'Sorry, the password was wrong';
 $lang['minoredit']             = 'Minor Changes';
 $lang['draftdate']             = 'Draft autosaved on'; // full dformat date will be added
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
@@ -81,6 +83,11 @@ $lang['profna']                = 'This wiki does not support profile modificatio
 $lang['profnochange']          = 'No changes, nothing to do.';
 $lang['profnoempty']           = 'An empty name or email address is not allowed.';
 $lang['profchanged']           = 'User profile successfully updated.';
+$lang['profnodelete']          = 'This wiki does not support deleting users';
+$lang['profdeleteuser']        = 'Delete Account';
+$lang['profdeleted']           = 'Your user account has been deleted from this wiki';
+$lang['profconfdelete']        = 'I wish to remove my account from this wiki. <br/> This action can not be undone.';
+$lang['profconfdeletemissing'] = 'Confirmation check box not ticked';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
@@ -234,7 +241,7 @@ $lang['qb_extlink']            = 'External Link';
 $lang['qb_hr']                 = 'Horizontal Rule';
 $lang['qb_ol']                 = 'Ordered List Item';
 $lang['qb_ul']                 = 'Unordered List Item';
-$lang['qb_media']              = 'Add Images and other files';
+$lang['qb_media']              = 'Add Images and other files (opens in a new window)';
 $lang['qb_sig']                = 'Insert Signature';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Special Chars';
@@ -280,7 +287,6 @@ $lang['subscr_style_digest']        = 'digest email of changes for each page (ev
 $lang['subscr_style_list']          = 'list of changed pages since last email (every %.2f days)';
 
 /* auth.class language support */
-$lang['authmodfailed']         = 'Bad user authentication configuration. Please inform your Wiki Admin.';
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
 $lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 

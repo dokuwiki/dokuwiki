@@ -1,9 +1,10 @@
 <?php
+
 /**
- * German language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['server']                = 'PostgreSQL-Server';
 $lang['port']                  = 'Port des PostgreSQL-Servers.';
