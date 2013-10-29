@@ -274,7 +274,12 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $this->internallink($link, $link);
     }
 
-    function locallink($hash, $name = null){}
+    function locallink($hash, $name = null){
+        if(is_array($name)) {
+            $this->_firstimage($name['src']);
+            if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+        }
+    }
 
     /**
      * keep track of internal links in $this->meta['relation']['references']
