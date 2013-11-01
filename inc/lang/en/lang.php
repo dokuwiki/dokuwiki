@@ -356,4 +356,8 @@ $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
 
+$lang['currentns']             = 'Current namespace';
+$lang['searchresult']          = 'Search Result';
+$lang['plainhtml']             = 'Plain HTML';
+$lang['wikimarkup']            = 'Wiki Markup';
 //Setup VIM: ex: et ts=2 :
