@@ -8,7 +8,7 @@ if (!defined('DOKU_INC')) die();
  *
  * @author Michael Hamann <michael@content-space.de>
  */
-class fultext_backlinks_test extends DokuWikiTest {
+class fulltext_backlinks_test extends DokuWikiTest {
 
     public function test_internallink() {
         saveWikiText('test:internallinks', '[[internälLink]] [[..:internal link]]', 'Test initialization');
@@ -73,5 +73,13 @@ class fultext_backlinks_test extends DokuWikiTest {
 
         $this->assertEquals(array(), ft_backlinks('test:internallink'));
         $this->assertEquals(array(), ft_backlinks('internal_link'));
+    }
+
+    function test_parameters() {
+        saveWikiText('test:links', '[[wiki:syntax?do=export_raw]] [[:web:scripts:add_vhost.sh?do=export_raw]]', 'Init tests');
+        idx_addPage('test:links');
+
+        $this->assertEquals(array('test:links'), ft_backlinks('wiki:syntax'));
+        $this->assertEquals(array('test:links'), ft_backlinks('web:scripts:add_vhost.sh'));
     }
 }

@@ -29,4 +29,5 @@ if (!defined('DOKU_INC')) die();
     </div>
 </div></div><!-- /footer -->
 
-<?php tpl_includeFile('footer.html') ?>
+<?php
+tpl_includeFile('footer.html');

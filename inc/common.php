@@ -64,7 +64,7 @@ function getSecurityToken() {
  */
 function checkSecurityToken($token = null) {
     global $INPUT;
-    if(!$_SERVER['REMOTE_USER']) return true; // no logged in user, no need for a check
+    if(empty($_SERVER['REMOTE_USER'])) return true; // no logged in user, no need for a check
 
     if(is_null($token)) $token = $INPUT->str('sectok');
     if(getSecurityToken() != $token) {
@@ -474,13 +474,13 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 
     if(is_array($more)) {
         // add token for resized images
-        if($more['w'] || $more['h'] || $isexternalimage){
+        if(!empty($more['w']) || !empty($more['h']) || $isexternalimage){
             $more['tok'] = media_get_token($id,$more['w'],$more['h']);
         }
         // strip defaults for shorter URLs
         if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
-        if(!$more['w']) unset($more['w']);
-        if(!$more['h']) unset($more['h']);
+        if(empty($more['w'])) unset($more['w']);
+        if(empty($more['h'])) unset($more['h']);
         if(isset($more['id']) && $direct) unset($more['id']);
         $more = buildURLparams($more, $sep);
     } else {
@@ -1625,7 +1625,8 @@ function set_doku_pref($pref, $val) {
     }
 
     if (!empty($cookieVal)) {
-        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
     }
 }
 

@@ -48,6 +48,7 @@
  *   'compression' - no additional parameters. checks php installation supports possible compression alternatives
  *   'licence'     - as multichoice, selection constructed from licence strings in language files
  *   'renderer'    - as multichoice, selection constructed from enabled renderer plugins which canRender()
+ *   'authtype'    - as multichoice, selection constructed from the enabled auth plugins
  *
  *  Any setting commented or missing will use 'setting' class - text input, minimal validation, quoted output
  *

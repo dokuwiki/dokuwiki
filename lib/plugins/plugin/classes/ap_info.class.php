@@ -13,9 +13,8 @@ class ap_info extends ap_manage {
         $component_list = $this->get_plugin_components($this->manager->plugin);
         usort($component_list, array($this,'component_sort'));
 
-
         foreach ($component_list as $component) {
-            if (($obj = &plugin_load($component['type'],$component['name'],false,true)) === NULL) continue;
+            if (($obj = plugin_load($component['type'],$component['name'],false,true)) === null) continue;
 
             $compname = explode('_',$component['name']);
             if($compname[1]){

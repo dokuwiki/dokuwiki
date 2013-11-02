@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Brazilian Portuguese language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
@@ -20,6 +20,8 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Leone Lisboa Magevski <leone1983@gmail.com>
+ * @author Dário Estevão <darioems@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,6 +65,7 @@ $lang['btn_revert']            = 'Restaurar';
 $lang['btn_register']          = 'Cadastre-se';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gerenciador de mídias';
+$lang['btn_deleteuser']        = 'Remover minha conta';
 $lang['loggedinas']            = 'Identificado(a) como';
 $lang['user']                  = 'Nome de usuário';
 $lang['pass']                  = 'Senha';
@@ -74,6 +77,7 @@ $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Perfil do usuário';
 $lang['badlogin']              = 'Desculpe, mas o nome de usuário ou a senha estão incorretos.';
+$lang['badpassconfirm']        = 'Desculpe, mas a senha está errada ';
 $lang['minoredit']             = 'Alterações mínimas';
 $lang['draftdate']             = 'O rascunho foi salvo automaticamente em';
 $lang['nosecedit']             = 'A página foi modificada nesse intervalo de tempo. Como a informação da seção estava desatualizada, foi carregada a página inteira.';
@@ -90,6 +94,9 @@ $lang['profna']                = 'Esse wiki não suporta modificações do perfi
 $lang['profnochange']          = 'Sem alterações, nada para fazer.';
 $lang['profnoempty']           = 'Não são permitidos nomes ou endereços de e-mail em branco.';
 $lang['profchanged']           = 'O perfil do usuário foi atualizado com sucesso.';
+$lang['profnodelete']          = 'Esse wiki não suporta a exclusão de usuários ';
+$lang['profdeleteuser']        = 'Excluir a conta';
+$lang['profdeleted']           = 'Sua conta de usuário foi excluída desse wiki';
 $lang['pwdforget']             = 'Esqueceu sua senha? Solicite outra';
 $lang['resendna']              = 'Esse wiki não tem suporte para o reenvio de senhas.';
 $lang['resendpwd']             = 'Definir a nova senha para';
@@ -274,7 +281,6 @@ $lang['subscr_m_receive']      = 'Receber';
 $lang['subscr_style_every']    = 'um e-mail a cada modificação';
 $lang['subscr_style_digest']   = 'um agrupamento de e-mails com as mudanças para cada página (a cada %.2f dias)';
 $lang['subscr_style_list']     = 'uma lista de páginas modificadas desde o último e-mail (a cada %.2f dias)';
-$lang['authmodfailed']         = 'A configuração da autenticação de usuário está com problemas. Por favor, informe ao administrador do wiki.';
 $lang['authtempfail']          = 'A autenticação de usuários está temporariamente desabilitada. Se essa situação persistir, por favor, informe ao administrador do Wiki.';
 $lang['authpwdexpire']         = 'Sua senha vai expirar em %d dias. Você deve mudá-la assim que for possível.';
 $lang['i_chooselang']          = 'Selecione o seu idioma';

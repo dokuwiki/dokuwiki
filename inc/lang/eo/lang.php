@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Esperanta dosiero
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
@@ -53,6 +53,7 @@ $lang['btn_revert']            = 'Restarigi';
 $lang['btn_register']          = 'Registriĝi';
 $lang['btn_apply']             = 'Apliki';
 $lang['btn_media']             = 'Medio-administrilo';
+$lang['btn_deleteuser']        = 'Forigi mian aliĝon';
 $lang['loggedinas']            = 'Ensalutinta kiel';
 $lang['user']                  = 'Uzant-nomo';
 $lang['pass']                  = 'Pasvorto';
@@ -64,6 +65,7 @@ $lang['fullname']              = 'Kompleta nomo';
 $lang['email']                 = 'Retpoŝto';
 $lang['profile']               = 'Uzanto-profilo';
 $lang['badlogin']              = 'Pardonu, uzant-nomo aŭ pasvorto estis erara.';
+$lang['badpassconfirm']        = 'Pardonu, la pasvorto malĝustis';
 $lang['minoredit']             = 'Etaj modifoj';
 $lang['draftdate']             = 'Lasta konservo de la skizo:';
 $lang['nosecedit']             = 'La paĝo ŝanĝiĝis intertempe, sekcio-informo estis malĝisdata, tial la tuta paĝo estas reŝargita.';
@@ -80,6 +82,11 @@ $lang['profna']                = 'Tiu ĉi vikio ne ebligas modifon en la profilo
 $lang['profnochange']          = 'Neniu ŝanĝo, nenio farinda.';
 $lang['profnoempty']           = 'Malplena nomo aŭ retadreso ne estas permesata.';
 $lang['profchanged']           = 'La profilo de la uzanto sukcese ĝisdatiĝis.';
+$lang['profnodelete']          = 'Tiu ĉi vikio ne subtenas forigo de uzantoj';
+$lang['profdeleteuser']        = 'Forigi aliĝon';
+$lang['profdeleted']           = 'Via uzant-aliĝo estis forigata de tiu ĉi vikio';
+$lang['profconfdelete']        = 'Mi deziras forigi mian aliĝon de tiu ĉi vikio. <br/> Tiu ĉi ago ne povos esti malfarata.';
+$lang['profconfdeletemissing'] = 'Konfirmilo ne estas markita';
 $lang['pwdforget']             = 'Ĉu vi forgesis vian pasvorton? Prenu novan';
 $lang['resendna']              = 'Tiu ĉi vikio ne ebligas resendon de la pasvortoj.';
 $lang['resendpwd']             = 'Sendi novan pasvorton al';
@@ -263,7 +270,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'retpoŝtaĵo pro ĉiu ŝanĝo';
 $lang['subscr_style_digest']   = 'resuma retpoŝtaĵo de ŝanĝoj por ĉiu paĝo (je %.2f tagoj)';
 $lang['subscr_style_list']     = 'listo de ŝanĝitaj paĝoj ekde la lasta retpoŝtaĵo (je %.2f tagoj)';
-$lang['authmodfailed']         = 'Malbona agordo por identigi la uzanton. Bonvolu informi la administranton de la vikio.';
 $lang['authtempfail']          = 'La identigo de via uzantonomo estas intertempe maldisponebla. Se tiu ĉi situacio daŭros, bonvolu informi la adminstranton de la vikio.';
 $lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';
 $lang['i_chooselang']          = 'Elektu vian lingvon';

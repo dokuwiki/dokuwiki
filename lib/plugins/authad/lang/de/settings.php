@@ -1,7 +1,8 @@
 <?php
+
 /**
- * German (informal) language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  */

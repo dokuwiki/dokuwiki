@@ -208,8 +208,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 if(is_array($key)) {
                     // use regexp to clean up user_result
                     list($key, $regexp) = each($key);
-                    if($user_result[$key]) foreach($user_result[$key] as $grp) {
-                        if(preg_match($regexp, $grp, $match)) {
+                    if($user_result[$key]) foreach($user_result[$key] as $grpkey => $grp) {
+                        if($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
                             if($localkey == 'grps') {
                                 $info[$localkey][] = $match[1];
                             } else {

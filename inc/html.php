@@ -428,7 +428,7 @@ function html_revisions($first=0, $media_id = false){
     global $conf;
     global $lang;
     $id = $ID;
-    /* we need to get one additionally log entry to be able to
+    /* we need to get one additional log entry to be able to
      * decide if this is the last page or is there another one.
      * see html_recent()
      */
@@ -1240,20 +1240,20 @@ function html_diff($text='',$intro=true,$type=null){
 }
 
 function html_insert_softbreaks($diffhtml) {
-  // search the diff html string for both:
-  // - html tags, so these can be ignored
-  // - long strings of characters without breaking characters
-  return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/','html_softbreak_callback',$diffhtml);
+    // search the diff html string for both:
+    // - html tags, so these can be ignored
+    // - long strings of characters without breaking characters
+    return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/','html_softbreak_callback',$diffhtml);
 }
 
 function html_softbreak_callback($match){
-  // if match is an html tag, return it intact
-  if ($match[0]{0} == '<') return $match[0];
+    // if match is an html tag, return it intact
+    if ($match[0]{0} == '<') return $match[0];
 
-  // its a long string without a breaking character,
-  // make certain characters into breaking characters by inserting a
-  // breaking character (zero length space, U+200B / #8203) in front them.
-  $regex = <<< REGEX
+    // its a long string without a breaking character,
+    // make certain characters into breaking characters by inserting a
+    // breaking character (zero length space, U+200B / #8203) in front them.
+    $regex = <<< REGEX
 (?(?=                                 # start a conditional expression with a positive look ahead ...
 &\#?\\w{1,6};)                        # ... for html entities - we don't want to split them (ok to catch some invalid combinations)
 &\#?\\w{1,6};                         # yes pattern - a quicker match for the html entity, since we know we have one
@@ -1262,7 +1262,7 @@ function html_softbreak_callback($match){
 )+                                    # end conditional expression
 REGEX;
 
-  return preg_replace('<'.$regex.'>xu','\0&#8203;',$match[0]);
+    return preg_replace('<'.$regex.'>xu','\0&#8203;',$match[0]);
 }
 
 /**
@@ -1661,7 +1661,7 @@ function html_admin(){
     global $ID;
     global $INFO;
     global $conf;
-    /** @var auth_basic $auth */
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     // build menu of admin functions from the plugins that handle them
@@ -1669,7 +1669,7 @@ function html_admin(){
     $menu = array();
     foreach ($pluginlist as $p) {
         /** @var DokuWiki_Admin_Plugin $obj */
-        if($obj =& plugin_load('admin',$p) === null) continue;
+        if(($obj = plugin_load('admin',$p)) === null) continue;
 
         // check permissions
         if($obj->forAdminOnly() && !$INFO['isadmin']) continue;

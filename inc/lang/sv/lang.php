@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -18,6 +18,7 @@
  * @author mikael@mallander.net
  * @author Smorkster Andersson smorkster@gmail.com
  * @author Henrik <henrik@idealis.se>
+ * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -259,7 +260,7 @@ $lang['img_height']            = 'Höjd';
 $lang['img_manager']           = 'Se mediahanteraren';
 $lang['subscr_subscribe_success'] = 'La till %s till prenumerationslista %s';
 $lang['subscr_subscribe_noaddress'] = 'Det finns ingen adress associerad med din inloggning, du kan inte bli tillagd i prenumerationslistan';
-$lang['subscr_unsubscribe_success'] = '% borttagen från prenumerationslistan för %';
+$lang['subscr_unsubscribe_success'] = '%s borttagen från prenumerationslistan för %s';
 $lang['subscr_unsubscribe_error'] = 'Fel vid borttagning av %s från prenumerationslista %s';
 $lang['subscr_already_subscribed'] = '%s prenumererar redan på %s';
 $lang['subscr_not_subscribed'] = '%s prenumererar inte på %s';
@@ -271,7 +272,6 @@ $lang['subscr_m_subscribe']    = 'Prenumerera';
 $lang['subscr_m_receive']      = 'Ta emot';
 $lang['subscr_style_every']    = 'skicka epost vid varje ändring';
 $lang['subscr_style_list']     = 'lista över ändrade sidor sedan senaste e-post (varje %.2f dag)';
-$lang['authmodfailed']         = 'Felaktiga inställningar för användarautentisering. Var vänlig meddela wikiadministratören.';
 $lang['authtempfail']          = 'Tillfälligt fel på användarautentisering. Om felet kvarstår, var vänlig meddela wikiadministratören.';
 $lang['authpwdexpire']         = 'Ditt lösenord kommer att bli ogiltigt om %d dagar, du bör ändra det snart.';
 $lang['i_chooselang']          = 'Välj språk';

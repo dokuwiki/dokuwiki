@@ -86,15 +86,20 @@ function js_out(){
     // start output buffering and build the script
     ob_start();
 
+    $json = new JSON();
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".tpl_basedir()."';";
+    print "var DOKU_COOKIE_PARAM = " . $json->encode(
+            array(
+                 'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
+                 'secure' => $conf['securecookie'] && is_ssl()
+            )).";";
     // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
 
     // load JS specific translations
-    $json = new JSON();
     $lang['js']['plugins'] = js_pluginstrings();
     $templatestrings = js_templatestrings();
     if(!empty($templatestrings)) {
@@ -194,8 +199,7 @@ function js_pluginscripts(){
  *
  * @author Gabriel Birke <birke@d-scribe.de>
  */
-function js_pluginstrings()
-{
+function js_pluginstrings() {
     global $conf;
     $pluginstrings = array();
     $plugins = plugin_list();

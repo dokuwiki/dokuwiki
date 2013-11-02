@@ -366,7 +366,7 @@ function mediaFN($id, $rev=''){
  */
 function localeFN($id,$ext='txt'){
     global $conf;
-    $file = DOKU_CONF.'/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
+    $file = DOKU_CONF.'lang/'.$conf['lang'].'/'.$id.'.'.$ext;
     if(!@file_exists($file)){
         $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
         if(!@file_exists($file)){
@@ -396,7 +396,7 @@ function resolve_id($ns,$id,$clean=true){
 
     // if the id starts with a dot we need to handle the
     // relative stuff
-    if($id{0} == '.'){
+    if($id && $id{0} == '.'){
         // normalize initial dots without a colon
         $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
         // prepend the current namespace

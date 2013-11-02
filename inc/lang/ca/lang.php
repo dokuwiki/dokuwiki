@@ -257,7 +257,6 @@ $lang['subscr_m_receive']      = 'Rebre';
 $lang['subscr_style_every']    = 'Envia\'m un correu electrònic per a cada canvi';
 $lang['subscr_style_digest']   = 'Envia\'m un correu electrònic amb un resum dels canvis per a cada pàgina (cada %.2f dies)';
 $lang['subscr_style_list']     = 'llistat de pàgines canviades des de l\'últim correu electrònic  (cada %.2f dies)';
-$lang['authmodfailed']         = 'La configuració de l\'autenticació d\'usuaris és errònia. Informeu els administradors del wiki.';
 $lang['authtempfail']          = 'L\'autenticació d\'usuaris no està disponible temporalment. Si aquesta situació persisteix, si us plau informeu els administradors del wiki.';
 $lang['authpwdexpire']         = 'La vostra contrasenya caducarà en %d dies, l\'hauríeu de canviar aviat.';
 $lang['i_chooselang']          = 'Trieu l\'idioma';

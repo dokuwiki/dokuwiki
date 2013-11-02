@@ -148,9 +148,6 @@ function css_out(){
     // parse less
     $css = css_parseless($css);
 
-    // place all remaining @import statements at the top of the file
-    $css = css_moveimports($css);
-
     // compress whitespace and comments
     if($conf['compress']){
         $css = css_compress($css);
@@ -460,29 +457,6 @@ function css_pluginstyles($mediatype='screen'){
 }
 
 /**
- * Move all @import statements in a combined stylesheet to the top so they
- * aren't ignored by the browser.
- *
- * @author Gabriel Birke <birke@d-scribe.de>
- */
-function css_moveimports($css)
-{
-    if(!preg_match_all('/@import\s+(?:url\([^)]+\)|"[^"]+")\s*[^;]*;\s*/', $css, $matches, PREG_OFFSET_CAPTURE)) {
-        return $css;
-    }
-    $newCss  = "";
-    $imports = "";
-    $offset  = 0;
-    foreach($matches[0] as $match) {
-        $newCss  .= substr($css, $offset, $match[1] - $offset);
-        $imports .= $match[0];
-        $offset   = $match[1] + strlen($match[0]);
-    }
-    $newCss .= substr($css, $offset);
-    return $imports.$newCss;
-}
-
-/**
  * Very simple CSS optimizer
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -499,8 +473,19 @@ function css_compress($css){
     $css = preg_replace('/ ?([;,{}\/]) ?/','\\1',$css);
     $css = preg_replace('/ ?: /',':',$css);
 
+    // number compression
+    $css = preg_replace('/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2$3', $css); // "0.1em" to ".1em", "1.10em" to "1.1em"
+    $css = preg_replace('/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2', $css); // ".0em" to "0"
+    $css = preg_replace('/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1', $css); // "0.0em" to "0"
+    $css = preg_replace('/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$3', $css); // "1.0em" to "1em"
+    $css = preg_replace('/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$2$3', $css); // "001em" to "1em"
+
+    // shorten attributes (1em 1em 1em 1em -> 1em)
+    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/', '$1$2', $css); // "1em 1em 1em 1em" to "1em"
+    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/', '$1$2 $3', $css); // "1em 2em 1em 2em" to "1em 2em"
+
     // shorten colors
-    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3/", "#\\1\\2\\3",$css);
+    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/", "#\\1\\2\\3", $css);
 
     return $css;
 }
