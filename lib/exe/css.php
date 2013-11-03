@@ -422,7 +422,7 @@ function css_datauri($match){
         $data = base64_encode(file_get_contents($local));
     }
     if($data){
-        $url = '\'data:image/'.$ext.';base64,'.$data.'\'';
+        $url = 'data:image/'.$ext.';base64,'.$data;
     }else{
         $url = $base.$url;
     }
