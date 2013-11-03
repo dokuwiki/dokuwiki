@@ -196,8 +196,8 @@ abstract class Doku_Action
         // inspect each new class
         foreach ($new_classes as $class) {
             if (is_subclass_of($class, 'Doku_Action') ||
-                is_subclass_of($class, 'Doku_Action_Preprocess') ||
-                is_subclass_of($class, 'Doku_Action_Postprocess') ||
+                is_subclass_of($class, 'Doku_Action_Preprocessor') ||
+                is_subclass_of($class, 'Doku_Action_Postprocessor') ||
                 is_subclass_of($class, 'Doku_Action_Renderer')) {
                 // register the class as an extension of its parent
                 self::register_extension($class);
@@ -215,12 +215,12 @@ abstract class Doku_Action
         foreach(self::$_extensions as $component => $extensions)
             if (!$extensions && !self::is_abstract_class($component)) {
                 if (is_subclass_of($component, 'Doku_Action_Preprocessor')) {
-                    $handler = $this->create($component, $action);
+                    $handler = self::create($component, $action);
                     if ($handler) array_push(self::$_preprocessors, $handler);
                 }
                 elseif (is_subclass_of($component,
                     'Doku_Action_Postprocessor')) {
-                    $handler = $this->create($component, $action);
+                    $handler = self::create($component, $action);
                     if ($handler) array_push(self::$_postprocessors, $handler);
                 }
                 elseif (is_subclass_of($component, 'Doku_Action_Renderer')) {
@@ -308,7 +308,7 @@ abstract class Doku_Action
 
             self::load($action);
             foreach (self::$_preprocessors as $preprocessor)
-                self::$_preprocessor->process();
+                $preprocessor->process();
 
             // check if we can handle the action
             if (self::$_handler === null) {
@@ -327,7 +327,7 @@ abstract class Doku_Action
 
             // postprocess
             foreach (self::$_postprocessors as $preprocessor)
-                self::$_postprocessor->process();
+                $postprocessor->process();
 
             // handle the next action
             if ($new_action !== null && $new_action !== $action)
