@@ -84,16 +84,6 @@ function css_out(){
         if(isset($config_cascade['userstyle'][$mediatype])){
             $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
         }
-        // load rtl styles
-        // note: this adds the rtl styles only to the 'screen' media type
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if ($mediatype=='screen') {
-            if($lang['direction'] == 'rtl'){
-                if (isset($styleini['stylesheets']['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets']['rtl']);
-                if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
-            }
-        }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
     }
@@ -446,11 +436,6 @@ function css_pluginstyles($mediatype='screen'){
         if ($mediatype=='screen') {
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
             $list[DOKU_PLUGIN."$p/style.less"]  = DOKU_BASE."lib/plugins/$p/";
-        }
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if($lang['direction'] == 'rtl'){
-            $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;
