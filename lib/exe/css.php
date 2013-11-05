@@ -403,10 +403,36 @@ function css_loadfile($file,$location=''){
     $css = io_readFile($file);
     if(!$location) return $css;
 
-    $css = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
-    $css = preg_replace('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
+    global $css_location;
+    global $css_current_dir;
+    $css_current_dir = preg_replace('#^('.DOKU_INC.(defined('DOKU_UNITTEST')?'|'.realpath(TMP_DIR) : '').')#','',dirname($file)).'/';
+    $css_location = $location;
+
+    $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#','css_loadfile_callback',$css);
+    $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#','css_loadfile_callback',$css);
+#    $css = preg_replace_callback('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
+#    $css = preg_replace_callback('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
 
     return $css;
+}
+
+function css_loadfile_callback($match){
+    global $css_location;
+    global $css_current_dir;
+
+    if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+        return $match[0];
+    }
+    else if (substr($match[3],-5) == '.less') {
+        if ($match[3]{0} != '/') {
+            $match[3] = $css_current_dir . $match[3];
+        }
+    }
+    else {
+        $match[3] = $css_location . $match[3];
+    }
+
+    return join('',array_slice($match,1));
 }
 
 /**
