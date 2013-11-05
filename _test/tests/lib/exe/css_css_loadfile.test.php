@@ -58,6 +58,7 @@ class css_css_loadfile_test extends DokuWikiTest {
     public function test_less_basic() {
         $this->csstest('@import "test.less"', '@import "/test.less"');
         $this->csstest('@import "/test.less"', '@import "/test.less"');
+        $this->csstest('@import "foo/test.less"', '@import "/foo/test.less"');
         $this->csstest('@import url(http://test.less)');
     }
 
@@ -73,6 +74,8 @@ class css_css_loadfile_test extends DokuWikiTest {
         $this->csstest('@import "test.less"', '@import "/foo/bar/test.less"');
         $this->csstest('@import \'test.less\'', '@import \'/foo/bar/test.less\'');
         $this->csstest('@import url(test.less)', '@import url(/foo/bar/test.less)');
+
+        $this->csstest('@import "abc/test.less"', '@import "/foo/bar/abc/test.less"');
     }
 
     public function tearDown() {
