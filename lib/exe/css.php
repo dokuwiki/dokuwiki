@@ -173,6 +173,12 @@ function css_out(){
  */
 function css_parseless($css) {
     $less = new lessc();
+    $less->importDir[] = DOKU_INC;
+
+    if (defined('DOKU_UNITTEST')){
+        $less->importDir[] = TMP_DIR;
+    }
+
     try {
         return $less->compile($css);
     } catch(Exception $e) {
