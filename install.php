@@ -357,6 +357,9 @@ EOT;
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";
     }
+    if($d['approve']){
+        $output .= '$conf[\'defaultgroup\'] = \'guest\''.";\n";
+    }
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
     if ($d['acl']) {
@@ -366,7 +369,7 @@ EOT;
 
         // create users.auth.php
         // --- user:SMD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,'.$usergroup));
+        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
@@ -384,10 +387,10 @@ EOT;
 EOT;
         if($d['policy'] == 2){
             $output .=  "*               @ALL          0\n";
-            $output .=  "*               @".$usergroup."         8\n";
+            $output .=  "*               @user         8\n";
         }elseif($d['policy'] == 1){
             $output .=  "*               @ALL          1\n";
-            $output .=  "*               @".$usergroup."         8\n";
+            $output .=  "*               @user         8\n";
         }else{
             $output .=  "*               @ALL          8\n";
         }
