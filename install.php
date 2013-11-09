@@ -207,6 +207,10 @@ function print_form($d){
                     <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
                 </select>
 
+                <label for="approve">
+                    <input type="checkbox" name="d[approve]" id="approve" <?php echo(($d['approve'] ? ' checked="checked"' : ''));?> />
+                    <?php echo $lang['i_policyapprove']?>
+                </label>
             </fieldset>
         </fieldset>
 
@@ -270,6 +274,7 @@ function check_data(&$d){
         'password'  => '',
         'confirm'   => '',
         'policy'    => '0',
+        'approve'   => '0',
         'license'   => 'cc-by-sa'
     );
     global $lang;
@@ -332,6 +337,7 @@ function store_data($d){
     global $LC;
     $ok = true;
     $d['policy'] = (int) $d['policy'];
+    $usergroup = $d['approve'] ? 'member' : 'user';
 
     // create local.php
     $now    = gmdate('r');
@@ -360,7 +366,7 @@ EOT;
 
         // create users.auth.php
         // --- user:SMD5password:Real Name:email:groups,comma,seperated
-        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,user'));
+        $output = join(":",array($d['superuser'], $pass, $d['fullname'], $d['email'], 'admin,'.$usergroup));
         $output = @file_get_contents(DOKU_CONF.'users.auth.php.dist')."\n$output\n";
         $ok = $ok && fileWrite(DOKU_LOCAL.'users.auth.php', $output);
 
@@ -378,10 +384,10 @@ EOT;
 EOT;
         if($d['policy'] == 2){
             $output .=  "*               @ALL          0\n";
-            $output .=  "*               @user         8\n";
+            $output .=  "*               @".$usergroup."         8\n";
         }elseif($d['policy'] == 1){
             $output .=  "*               @ALL          1\n";
-            $output .=  "*               @user         8\n";
+            $output .=  "*               @".$usergroup."         8\n";
         }else{
             $output .=  "*               @ALL          8\n";
         }
