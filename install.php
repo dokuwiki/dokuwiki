@@ -337,7 +337,6 @@ function store_data($d){
     global $LC;
     $ok = true;
     $d['policy'] = (int) $d['policy'];
-    $usergroup = $d['approve'] ? 'member' : 'user';
 
     // create local.php
     $now    = gmdate('r');
