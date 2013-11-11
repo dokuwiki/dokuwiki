@@ -436,7 +436,7 @@ function css_loadfile_callback($match){
 }
 
 /**
- * Converte local image URLs to data URLs if the filesize is small
+ * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
  */
