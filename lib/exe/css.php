@@ -399,40 +399,65 @@ function css_filetypes(){
  * given location prefix
  */
 function css_loadfile($file,$location=''){
-    if(!@file_exists($file)) return '';
-    $css = io_readFile($file);
-    if(!$location) return $css;
-
-    global $css_location;
-    global $css_current_dir;
-    $css_current_dir = preg_replace('#^('.DOKU_INC.(defined('DOKU_UNITTEST')?'|'.realpath(TMP_DIR) : '').')#','',dirname($file)).'/';
-    $css_location = $location;
-
-    $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#','css_loadfile_callback',$css);
-    $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#','css_loadfile_callback',$css);
-#    $css = preg_replace_callback('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
-#    $css = preg_replace_callback('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
-
-    return $css;
+    $css_file = new DokuCssFile($file);
+    return $css_file->load($location);
 }
 
-function css_loadfile_callback($match){
-    global $css_location;
-    global $css_current_dir;
+class DokuCssFile {
 
-    if (preg_match('#^(/|data:|https?://)#',$match[3])) {
-        return $match[0];
+    protected $filepath;
+    protected $location;
+    private   $relative_path = null;
+
+    public function __construct($file) {
+        $this->filepath = $file;
     }
-    else if (substr($match[3],-5) == '.less') {
-        if ($match[3]{0} != '/') {
-            $match[3] = $css_current_dir . $match[3];
+
+    public function load($location='') {
+        if (!@file_exists($this->filepath)) return '';
+
+        $css = io_readFile($this->filepath);
+        if (!$location) return $css;
+
+        $this->location = $location;
+
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',array($this,'replacements'),$css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',array($this,'replacements'),$css);
+
+        return $css;
+    }
+
+    private function getRelativePath(){
+
+        if (is_null($this->relative_path)) {
+            $basedir = array(DOKU_INC);
+            if (defined('DOKU_UNITTEST')) {
+                $basedir[] = realpath(TMP_DIR);
+            }
+            $regex = '#^('.join('|',$basedir).')#';
+
+            $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
-    }
-    else {
-        $match[3] = $css_location . $match[3];
+
+        return $this->relative_path;
     }
 
-    return join('',array_slice($match,1));
+    public function replacements($match) {
+
+        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+            return $match[0];
+        }
+        else if (substr($match[3],-5) == '.less') {
+            if ($match[3]{0} != '/') {
+                $match[3] = $this->getRelativePath() . '/' . $match[3];
+            }
+        }
+        else {
+            $match[3] = $this->location . $match[3];
+        }
+
+        return join('',array_slice($match,1));
+    }
 }
 
 /**
