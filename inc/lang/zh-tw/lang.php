@@ -8,11 +8,11 @@
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
- * @author Danny Lin
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author syaoranhinata@gmail.com
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
  * @author tsangho <ou4222@gmail.com>
+ * @author Danny Lin <danny0838@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -81,15 +81,17 @@ $lang['regbadmail']            = '您輸入的電郵地址似乎不正確。若�
 $lang['regbadpass']            = '兩次輸入的密碼不一致，請再試一次。';
 $lang['regpwmail']             = '您的 DokuWiki 帳號密碼';
 $lang['reghere']               = '您還沒有帳號嗎？註冊一個吧。';
-$lang['profna']                = '在本 wiki 上，不能修改個人資料。';
+$lang['profna']                = '本 wiki 不支援修改個人資料。';
 $lang['profnochange']          = '並未作任何變更。';
 $lang['profnoempty']           = '帳號或電郵地址不可空白！';
 $lang['profchanged']           = '個人資料已更新。';
-$lang['profnodelete']          = '這一wiki不支援刪除用戶';
+$lang['profnodelete']          = '本 wiki 不支援刪除使用者';
 $lang['profdeleteuser']        = '刪除帳號';
-$lang['profdeleted']           = '您在這wiki中的用戶帳號已經被刪除';
+$lang['profdeleted']           = '您的使用者帳號已從本 wiki 刪除';
+$lang['profconfdelete']        = '我想把帳號從本 wiki 刪除（不能復原）';
+$lang['profconfdeletemissing'] = '未勾選確認方塊';
 $lang['pwdforget']             = '忘記密碼了？索取新密碼！';
-$lang['resendna']              = '本 wiki 並不支援重寄密碼。';
+$lang['resendna']              = '本 wiki 不支援重寄密碼。';
 $lang['resendpwd']             = '設定新密碼供';
 $lang['resendpwdmissing']      = '抱歉，您必須填寫所有欄位。';
 $lang['resendpwdnouser']       = '抱歉，資料庫內找不到這個使用者。';
@@ -97,7 +99,7 @@ $lang['resendpwdbadauth']      = '抱歉，認證碼無效。請確認您使用�
 $lang['resendpwdconfirm']      = '確認連結已通過郵件發送給您了。';
 $lang['resendpwdsuccess']      = '您的新密碼已寄出。';
 $lang['license']               = '若無特別註明，本 wiki 上的內容都是採用以下授權方式：';
-$lang['licenseok']             = '注意：編輯此頁面表示您已同意以下的授權方式：';
+$lang['licenseok']             = '注意：編輯此頁面表示您同意用以下授權方式發布您撰寫的內容：';
 $lang['searchmedia']           = '搜尋檔名：';
 $lang['searchmedia_in']        = '在 %s 裏搜尋';
 $lang['txt_upload']            = '請選擇要上傳的檔案';
@@ -232,7 +234,7 @@ $lang['qb_extlink']            = '外部連結';
 $lang['qb_hr']                 = '水平線';
 $lang['qb_ol']                 = '有序列表項目';
 $lang['qb_ul']                 = '無序列表項目';
-$lang['qb_media']              = '加入圖片或檔案';
+$lang['qb_media']              = '加入圖片或檔案 (開新視窗)';
 $lang['qb_sig']                = '插入簽名';
 $lang['qb_smileys']            = '表情符號';
 $lang['qb_chars']              = '特殊字元';
@@ -271,6 +273,8 @@ $lang['subscr_m_receive']      = '接收';
 $lang['subscr_style_every']    = '每次更改都發送信件';
 $lang['subscr_style_digest']   = '對每個頁面發送更改的摘要信件 (每 %.2f 天)';
 $lang['subscr_style_list']     = '自上次發信以來更改的頁面的列表 (每 %.2f 天)';
+
+/* auth.class language support */
 $lang['authtempfail']          = '暫不提供帳號認證。若本狀況持續，請通知本 wiki 管理員。';
 $lang['authpwdexpire']         = '您的密碼將在 %d 天內到期，請馬上更換新密碼。';
 $lang['i_chooselang']          = '選擇您的語系';
@@ -332,3 +336,8 @@ $lang['media_perm_read']       = '抱歉，您沒有足夠權限讀取檔案。'
 $lang['media_perm_upload']     = '抱歉，您沒有足夠權限上傳檔案。';
 $lang['media_update']          = '上傳新的版本';
 $lang['media_restore']         = '還原這個版本';
+
+$lang['currentns']             = '目前的命名空間';
+$lang['searchresult']          = '搜尋結果';
+$lang['plainhtml']             = '純 HTML';
+$lang['wikimarkup']            = 'Wiki 語法標記';
