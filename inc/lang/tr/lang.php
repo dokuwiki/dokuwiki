@@ -10,6 +10,7 @@
  * @author Caleb Maclennan <caleb@alerque.com>
  * @author farukerdemoncel@gmail.com
  * @author Mustafa Aslan <maslan@hotmail.com>
+ * @author Mustafa Apaydın <mapaydin1961@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
