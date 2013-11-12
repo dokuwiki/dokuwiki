@@ -271,7 +271,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -288,7 +288,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -306,7 +306,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -314,6 +314,13 @@ function css_styleini($tpl) {
         'stylesheets' => $stylesheets,
         'replacements' => $replacements
     );
+}
+
+function css_fixreplacementurls($replacements, $location) {
+    foreach($replacements as $key => $value) {
+        $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
+    }
+    return $replacements;
 }
 
 /**
