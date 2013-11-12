@@ -16,6 +16,7 @@
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author Soren Birk <soer9648@hotmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
+ * @author soer9648 <soer9648@eucl.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
