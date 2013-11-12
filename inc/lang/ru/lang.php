@@ -22,6 +22,7 @@
  * @author Johnny Utah <pcpa@cyberpunk.su>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Pavel <ivanovtsk@mail.ru>
+ * @author viper <nadirmirzaliev1@gmail.com>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
