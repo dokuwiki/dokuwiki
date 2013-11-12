@@ -36,3 +36,6 @@ $lang['UpdateEmail']           = 'SQL podmienka pre aktualizáciu emailovej adre
 $lang['UpdateName']            = 'SQL podmienka pre aktualizáciu mena a priezviska používateľa';
 $lang['delUserGroup']          = 'SQL príkaz pre vyradenie používateľa z danej skupiny';
 $lang['getGroupID']            = 'SQL príkaz pre získanie primárneho kľúča skupiny';
+$lang['debug_o_0']             = 'žiadne';
+$lang['debug_o_1']             = 'iba pri chybách';
+$lang['debug_o_2']             = 'všetky SQL dopyty';
