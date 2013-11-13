@@ -53,7 +53,7 @@ function act_dispatch(){
             }
         }
 
-        //display some infos
+        //display some info
         if($ACT == 'check'){
             check();
             $ACT = 'show';

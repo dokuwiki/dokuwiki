@@ -88,12 +88,12 @@ class RemoteAPICore {
             ), 'wiki.getPageInfo' => array(
                 'args' => array('string'),
                 'return' => 'array',
-                'doc' => 'Returns a struct with infos about the page.',
+                'doc' => 'Returns a struct with info about the page.',
                 'name' => 'pageInfo'
             ), 'wiki.getPageInfoVersion' => array(
                 'args' => array('string', 'int'),
                 'return' => 'array',
-                'doc' => 'Returns a struct with infos about the page.',
+                'doc' => 'Returns a struct with info about the page.',
                 'name' => 'pageInfo'
             ), 'wiki.getPageVersions' => array(
                 'args' => array('string', 'int'),
@@ -136,7 +136,7 @@ class RemoteAPICore {
             ), 'wiki.getAttachmentInfo' => array(
                 'args' => array('string'),
                 'return' => 'array',
-                'doc' => 'Returns a struct with infos about the attachment.'
+                'doc' => 'Returns a struct with info about the attachment.'
             ), 'dokuwiki.getXMLRPCAPIVersion' => array(
                 'args' => array(),
                 'name' => 'getAPIVersion',
