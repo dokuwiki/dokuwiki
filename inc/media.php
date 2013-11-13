@@ -90,7 +90,7 @@ function media_metasave($id,$auth,$data){
  * @return bool
  */
 function media_isexternal($id){
-    if (preg_match('#^(https?|ftp)://#i', $id)) return true;
+    if (preg_match('#^(?:https?|ftp)://#i', $id)) return true;
     return false;
 }
 
