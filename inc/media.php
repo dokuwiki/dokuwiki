@@ -1484,7 +1484,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
 }
 
 /**
- * Prints a thumbnail and metainfos
+ * Prints a thumbnail and metainfo
  */
 function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
