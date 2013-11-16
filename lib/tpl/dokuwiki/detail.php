@@ -110,26 +110,24 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                         <ul>
                             <?php
                                 $data = array();
+                                $data['tpl']  = $conf['template'];
+                                $data['view'] = 'detail';
 
                                 // View in media manager; @todo: transfer logic to backend
                                 $imgNS = getNS($IMG);
                                 $authNS = auth_quickaclcheck("$imgNS:*");
                                 if (($authNS >= AUTH_UPLOAD) && function_exists('media_managerURL')) {
                                     $mmURL = media_managerURL(array('ns' => $imgNS, 'image' => $IMG));
-                                    $data['mediaManager'] = '<li><a href="'.$mmURL.'" class="mediaManager"><span>'.$lang['img_manager'].'</span></a></li>';
+                                    $data['items']['mediaManager'] = '<li><a href="'.$mmURL.'" class="mediaManager"><span>'.$lang['img_manager'].'</span></a></li>';
                                 }
 
                                 // Back to [ID]; @todo: transfer logic to backend
-                                $data['img_backto'] = '<li><a href="'.wl($ID).'" class="back"><span>'.$lang['img_backto'].' '.$ID.'</span></a></li>';
+                                $data['items']['img_backto'] = '<li><a href="'.wl($ID).'" class="back"><span>'.$lang['img_backto'].' '.$ID.'</span></a></li>';
 
                                 // the page tools can be amended through a custom plugin hook
-                                // if you're deriving from this template and your design is close enough to
-                                // the dokuwiki template you might want to trigger a DOKUWIKI event instead
-                                // of using $conf['template'] here
-                                $hook = 'TEMPLATE_'.strtoupper($conf['template']).'_PAGETOOLS_DISPLAY';
-                                $evt = new Doku_Event($hook, $data);
+                                $evt = new Doku_Event('TEMPLATE_PAGETOOLS_DISPLAY', $data);
                                 if($evt->advise_before()){
-                                    foreach($evt->data as $k => $html) echo $html;
+                                    foreach($evt->data['items'] as $k => $html) echo $html;
                                 }
                                 $evt->advise_after();
                                 unset($data);
