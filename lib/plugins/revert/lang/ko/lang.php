@@ -11,7 +11,7 @@
  * @author Myeongjin <aranet100@gmail.com>
  */
 $lang['menu']                  = '되돌리기 관리자';
-$lang['filter']                = '스팸 문서 찾기';
+$lang['filter']                = '스팸 문서 검색';
 $lang['revert']                = '선택한 문서 되돌리기';
 $lang['reverted']              = '%s 판을 %s 판으로 되돌림';
 $lang['removed']               = '%s 제거됨';
