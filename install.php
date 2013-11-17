@@ -207,9 +207,9 @@ function print_form($d){
                     <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
                 </select>
 
-                <label for="approve">
-                    <input type="checkbox" name="d[approve]" id="approve" <?php echo(($d['approve'] ? ' checked="checked"' : ''));?> />
-                    <?php echo $lang['i_policyapprove']?>
+                <label for="disablereg">
+                    <input type="checkbox" name="d[disablereg]" id="disablereg" <?php echo(($d['disablereg'] ? ' checked="checked"' : ''));?> />
+                    <?php echo $lang['i_disablereg']?>
                 </label>
             </fieldset>
         </fieldset>
@@ -274,7 +274,7 @@ function check_data(&$d){
         'password'  => '',
         'confirm'   => '',
         'policy'    => '0',
-        'approve'   => '0',
+        'disablereg'=> '0',
         'license'   => 'cc-by-sa'
     );
     global $lang;
@@ -356,8 +356,8 @@ EOT;
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";
     }
-    if($d['approve']){
-        $output .= '$conf[\'defaultgroup\'] = \'guest\''.";\n";
+    if($d['disablereg']){
+        $output .= '$conf[\'disableactions\'] = \'register\''.";\n";
     }
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
