@@ -110,7 +110,6 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                         <ul>
                             <?php
                                 $data = array();
-                                $data['tpl']  = $conf['template'];
                                 $data['view'] = 'detail';
 
                                 // View in media manager; @todo: transfer logic to backend

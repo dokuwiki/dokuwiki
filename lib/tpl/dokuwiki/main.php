@@ -75,7 +75,6 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                     <ul>
                         <?php
                             $data = array(
-                                'tpl'   => $conf['template'],
                                 'view'  => 'main',
                                 'items' => array(
                                     'edit'      => tpl_action('edit',      1, 'li', 1, '<span>', '</span>'),
