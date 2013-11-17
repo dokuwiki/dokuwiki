@@ -135,9 +135,7 @@ $config_cascade = array(
         ),
     ),
     'userstyle' => array(
-        'default' => DOKU_CONF.'userstyle.css', // 'default' was renamed to 'screen' on 2011-02-26, so will be deprecated in the next version
         'screen'  => DOKU_CONF.'userstyle.css',
-        'rtl'     => DOKU_CONF.'userrtl.css', // deprecated since version after 2012-04-09
         'print'   => DOKU_CONF.'userprint.css',
         'feed'    => DOKU_CONF.'userfeed.css',
         'all'     => DOKU_CONF.'userall.css',

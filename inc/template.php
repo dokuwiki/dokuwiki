@@ -1694,18 +1694,6 @@ function tpl_includeFile($file) {
 }
 
 /**
- * Returns icon from data/media root directory if it exists, otherwise
- * the one in the template's image directory.
- *
- * @deprecated Use tpl_getMediaFile() instead
- * @author Anika Henke <anika@selfthinker.org>
- */
-function tpl_getFavicon($abs = false, $fileName = 'favicon.ico') {
-    $look = array(":wiki:$fileName", ":$fileName", "images/$fileName");
-    return tpl_getMediaFile($look, $abs);
-}
-
-/**
  * Returns <link> tag for various icon types (favicon|mobile|generic)
  *
  * @author Anika Henke <anika@selfthinker.org>
