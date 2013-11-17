@@ -68,7 +68,13 @@ class css_css_loadfile_test extends DokuWikiTest {
         unlink($this->file);
 
         $dir = TMP_DIR.'/foo/bar';
-        mkdir($dir,0777,true);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        if (!is_dir($dir)) {
+            $this->markTestSkipped('Could not create directory.');
+        }
+
         $this->file = tempnam($dir, 'css');
 
         $this->csstest('@import "test.less"', '@import "/foo/bar/test.less"');
