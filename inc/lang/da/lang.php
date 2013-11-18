@@ -16,6 +16,7 @@
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author Soren Birk <soer9648@hotmail.com>
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
+ * @author soer9648 <soer9648@eucl.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -91,6 +92,7 @@ $lang['profchanged']           = 'Brugerprofil opdateret korrekt.';
 $lang['profnodelete']          = 'Denne wiki supporterer ikke sletning af brugere';
 $lang['profdeleteuser']        = 'Slet Konto';
 $lang['profdeleted']           = 'Din brugerkonto er blevet slettet fra denne wiki';
+$lang['profconfdelete']        = 'Jeg ønsker at slette min konto fra denne wiki. <br/> Denne handling kan ikke fortrydes.';
 $lang['pwdforget']             = 'Har du glemt dit adgangskode? Få et nyt';
 $lang['resendna']              = 'Denne wiki understøtter ikke udsendelse af nyt adgangskode.';
 $lang['resendpwd']             = 'Vælg ny adgangskode for';

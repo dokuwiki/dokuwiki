@@ -26,6 +26,13 @@ class fultext_mediause_test extends DokuWikiTest {
         $this->assertEquals(array('test:medialinks'), ft_mediause('test:example.png'));
     }
 
+    public function test_media_in_local_links() {
+        saveWikiText('test:locallinks', '[[#test|{{wiki:logolocal.png}}]]', 'Test init');
+        idx_addPage('test:locallinks');
+
+        $this->assertEquals(array('test:locallinks'), ft_mediause('wiki:logolocal.png'));
+    }
+
     public function test_media_in_footnotes() {
         saveWikiText('test:media_footnotes', '(({{footnote.png?20x50}} [[foonote|{{:footlink.png}}]]))', 'Test initialization');
         idx_addPage('test:media_footnotes');

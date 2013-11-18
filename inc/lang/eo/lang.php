@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
@@ -330,3 +330,7 @@ $lang['media_perm_read']       = 'Bedaûrinde viaj rajtoj ne sufiĉas por legi d
 $lang['media_perm_upload']     = 'Bedaûrinde viaj rajtoj ne sufiĉas por alŝuti dosierojn.';
 $lang['media_update']          = 'Alŝuti novan version';
 $lang['media_restore']         = 'Restarigi ĉi tiun version';
+$lang['currentns']             = 'Aktuala nomspaco';
+$lang['searchresult']          = 'Serĉrezulto';
+$lang['plainhtml']             = 'Plena HTML';
+$lang['wikimarkup']            = 'Vikiteksto';

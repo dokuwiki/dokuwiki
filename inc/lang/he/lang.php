@@ -10,6 +10,7 @@
  * @author Yaron Yogev <yaronyogev@gmail.com>
  * @author Yaron Shahrabani <sh.yaron@gmail.com>
  * @author Roy Zahor <roy.zahor@gmail.com>
+ * @author alex <ralexay@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -80,6 +81,7 @@ $lang['profna']                = 'בוויקי הזה לא ניתן לשנות �
 $lang['profnochange']          = 'אין שינויים, הפרופיל לא עודכן';
 $lang['profnoempty']           = 'השם וכתובת הדוא״ל לא יכולים להיות ריקים';
 $lang['profchanged']           = 'הפרופיל עודכן בהצלחה';
+$lang['profdeleteuser']        = 'הסר חשבון';
 $lang['pwdforget']             = 'שכחת את הססמה שלך? ניתן לקבל חדשה';
 $lang['resendna']              = 'הוויקי הזה אינו תומך בחידוש ססמה';
 $lang['resendpwd']             = 'הגדר סיסמא חדשה בעבור';
@@ -128,11 +130,15 @@ $lang['js']['nosmblinks']      = 'קישור לכונני שיתוף של Window
 $lang['js']['linkwiz']         = 'אשף הקישורים';
 $lang['js']['linkto']          = 'קישור אל:';
 $lang['js']['del_confirm']     = 'באמת למחוק?';
+$lang['js']['restore_confirm'] = 'באמת לשחזר את הגירסא הזאת?';
 $lang['js']['media_diff']      = 'הצגת הבדלים:';
 $lang['js']['media_diff_both'] = 'זה לצד זה';
 $lang['js']['media_select']    = 'בחר קבצים...';
 $lang['js']['media_upload_btn'] = 'העלאה';
+$lang['js']['media_done_btn']  = 'בוצע';
 $lang['js']['media_drop']      = 'גרור לכאן קבצים בכדי להעלותם';
+$lang['js']['media_cancel']    = 'הסר';
+$lang['js']['media_overwrt']   = 'שכתב קבצים קיימים';
 $lang['rssfailed']             = 'אירע כשל בעת קבלת הזנה זו:';
 $lang['nothingfound']          = 'לא נמצאו תוצאות.';
 $lang['mediaselect']           = 'קובצי מדיה';
@@ -183,6 +189,10 @@ $lang['summary']               = 'תקציר העריכה';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">תוסף פלאש לדפדפן</a> נדרש כדי להציג תוכן זה.';
 $lang['download']              = 'הורדת מקטע';
 $lang['tools']                 = 'כלים';
+$lang['user_tools']            = 'כלים של משתמש';
+$lang['site_tools']            = 'כלים של אתר';
+$lang['page_tools']            = 'כלים של דף';
+$lang['skip_to_content']       = 'עבור לתוכן';
 $lang['mail_newpage']          = 'דף נוסף:';
 $lang['mail_changed']          = 'דף שונה:';
 $lang['mail_subscribe_list']   = 'דפים שהשתנו במרחב השם:';

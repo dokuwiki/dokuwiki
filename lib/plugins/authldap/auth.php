@@ -166,7 +166,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             // be accessible anonymously, so we try to rebind the current user here
             list($loginuser, $loginsticky, $loginpass) = auth_getCookie();
             if($loginuser && $loginpass) {
-                $loginpass = PMA_blowfish_decrypt($loginpass, auth_cookiesalt(!$loginsticky));
+                $loginpass = auth_decrypt($loginpass, auth_cookiesalt(!$loginsticky, true));
                 $this->checkPass($loginuser, $loginpass);
             }
         }

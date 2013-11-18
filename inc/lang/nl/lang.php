@@ -341,3 +341,7 @@ $lang['media_perm_read']       = 'Sorry, u heeft niet voldoende rechten om besta
 $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om bestanden te uploaden.';
 $lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
+$lang['currentns']             = 'Huidige namespace';
+$lang['searchresult']          = 'Zoekresultaat';
+$lang['plainhtml']             = 'Alleen HTML';
+$lang['wikimarkup']            = 'Wiki Opmaak';

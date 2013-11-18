@@ -84,16 +84,6 @@ function css_out(){
         if(isset($config_cascade['userstyle'][$mediatype])){
             $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
         }
-        // load rtl styles
-        // note: this adds the rtl styles only to the 'screen' media type
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if ($mediatype=='screen') {
-            if($lang['direction'] == 'rtl'){
-                if (isset($styleini['stylesheets']['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets']['rtl']);
-                if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
-            }
-        }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
     }
@@ -173,6 +163,12 @@ function css_out(){
  */
 function css_parseless($css) {
     $less = new lessc();
+    $less->importDir[] = DOKU_INC;
+
+    if (defined('DOKU_UNITTEST')){
+        $less->importDir[] = TMP_DIR;
+    }
+
     try {
         return $less->compile($css);
     } catch(Exception $e) {
@@ -271,7 +267,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -288,7 +284,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -306,7 +302,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -314,6 +310,13 @@ function css_styleini($tpl) {
         'stylesheets' => $stylesheets,
         'replacements' => $replacements
     );
+}
+
+function css_fixreplacementurls($replacements, $location) {
+    foreach($replacements as $key => $value) {
+        $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
+    }
+    return $replacements;
 }
 
 /**
@@ -393,18 +396,69 @@ function css_filetypes(){
  * given location prefix
  */
 function css_loadfile($file,$location=''){
-    if(!@file_exists($file)) return '';
-    $css = io_readFile($file);
-    if(!$location) return $css;
+    $css_file = new DokuCssFile($file);
+    return $css_file->load($location);
+}
 
-    $css = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
-    $css = preg_replace('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
+class DokuCssFile {
 
-    return $css;
+    protected $filepath;
+    protected $location;
+    private   $relative_path = null;
+
+    public function __construct($file) {
+        $this->filepath = $file;
+    }
+
+    public function load($location='') {
+        if (!@file_exists($this->filepath)) return '';
+
+        $css = io_readFile($this->filepath);
+        if (!$location) return $css;
+
+        $this->location = $location;
+
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',array($this,'replacements'),$css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',array($this,'replacements'),$css);
+
+        return $css;
+    }
+
+    private function getRelativePath(){
+
+        if (is_null($this->relative_path)) {
+            $basedir = array(DOKU_INC);
+            if (defined('DOKU_UNITTEST')) {
+                $basedir[] = realpath(TMP_DIR);
+            }
+            $regex = '#^('.join('|',$basedir).')#';
+
+            $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
+        }
+
+        return $this->relative_path;
+    }
+
+    public function replacements($match) {
+
+        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+            return $match[0];
+        }
+        else if (substr($match[3],-5) == '.less') {
+            if ($match[3]{0} != '/') {
+                $match[3] = $this->getRelativePath() . '/' . $match[3];
+            }
+        }
+        else {
+            $match[3] = $this->location . $match[3];
+        }
+
+        return join('',array_slice($match,1));
+    }
 }
 
 /**
- * Converte local image URLs to data URLs if the filesize is small
+ * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
  */
@@ -422,7 +476,7 @@ function css_datauri($match){
         $data = base64_encode(file_get_contents($local));
     }
     if($data){
-        $url = '\'data:image/'.$ext.';base64,'.$data.'\'';
+        $url = 'data:image/'.$ext.';base64,'.$data;
     }else{
         $url = $base.$url;
     }
@@ -446,11 +500,6 @@ function css_pluginstyles($mediatype='screen'){
         if ($mediatype=='screen') {
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
             $list[DOKU_PLUGIN."$p/style.less"]  = DOKU_BASE."lib/plugins/$p/";
-        }
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if($lang['direction'] == 'rtl'){
-            $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;

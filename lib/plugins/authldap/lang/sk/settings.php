@@ -13,7 +13,13 @@ $lang['userfilter']            = 'LDAP filter pre vyhľadávanie používateľsk
 $lang['groupfilter']           = 'LDAP filter pre vyhľadávanie skupín. Napr. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
 $lang['version']               = 'Použitá verzia protokolu. Možno bude potrebné nastaviť na hodnotu <code>3</code>';
 $lang['starttls']              = 'Použiť TLS pripojenie?';
+$lang['referrals']             = 'Majú byť nasledované odkazy na používateľov (referrals)?';
+$lang['deref']                 = 'Ako previesť aliasy?';
+$lang['binddn']                = 'DN prípadného priradenia používateľa, ak anonymné priradenie nie je dostatočné. Napr. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Heslo vyššie uvedeného používateľa';
+$lang['userscope']             = 'Obmedzenie oblasti pri vyhľadávaní používateľa';
+$lang['groupscope']            = 'Obmedzenie oblasti pri vyhľadávaní skupiny';
+$lang['groupkey']              = 'Príslušnost k skupine určená z daného atribútu používateľa (namiesto štandardnej AD skupiny) napr. skupiny podľa oddelenia alebo telefónneho čísla';
 $lang['debug']                 = 'Zobraziť doplňujúce ladiace informácie pri chybe';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

@@ -315,6 +315,7 @@ $lang['i_policy']              = 'Initial ACL policy';
 $lang['i_pol0']                = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']                = 'Public Wiki (read for everyone, write and upload for registered users)';
 $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registered users only)';
+$lang['i_allowreg']            = 'Allow users to register themselves';
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
 $lang['i_license_none']        = 'Do not show any license information';
@@ -356,4 +357,8 @@ $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
 
+$lang['currentns']             = 'Current namespace';
+$lang['searchresult']          = 'Search Result';
+$lang['plainhtml']             = 'Plain HTML';
+$lang['wikimarkup']            = 'Wiki Markup';
 //Setup VIM: ex: et ts=2 :
