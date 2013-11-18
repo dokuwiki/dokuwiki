@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
