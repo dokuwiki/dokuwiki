@@ -23,7 +23,6 @@ $lang['_links']                = 'การตั้งค่าลิงก์'
 $lang['_media']                = 'การตั้งค่าภาพ-เสียง';
 $lang['_advanced']             = 'การตั้งค่าขั้นสูง';
 $lang['_network']              = 'การตั้งค่าเครือข่าย';
-$lang['_plugin_sufix']         = 'การตั้งค่าโปรแกรมเสริม (plugin)';
 $lang['lang']                  = 'ภาษา';
 $lang['basedir']               = 'ไดเรคทอรีพื้นฐาน';
 $lang['baseurl']               = 'URL พื้นฐาน';

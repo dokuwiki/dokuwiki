@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Italian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
@@ -15,6 +15,7 @@
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
+ * @author Edmondo Di Tucci <snarchio@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -58,6 +59,7 @@ $lang['btn_revert']            = 'Ripristina';
 $lang['btn_register']          = 'Registrazione';
 $lang['btn_apply']             = 'Applica';
 $lang['btn_media']             = 'Gestore Media';
+$lang['btn_deleteuser']        = 'Rimuovi il mio account';
 $lang['loggedinas']            = 'Collegato come';
 $lang['user']                  = 'Nome utente';
 $lang['pass']                  = 'Password';
@@ -69,6 +71,7 @@ $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'Email';
 $lang['profile']               = 'Profilo utente';
 $lang['badlogin']              = 'Il nome utente o la password non sono validi.';
+$lang['badpassconfirm']        = 'La password è errata';
 $lang['minoredit']             = 'Modifiche minori';
 $lang['draftdate']             = 'Bozza salvata in automatico il';
 $lang['nosecedit']             = 'La pagina è stata modificata nel frattempo; è impossibile modificare solo la sezione scelta, quindi è stata caricata la pagina intera.';
@@ -85,6 +88,11 @@ $lang['profna']                = 'Questo wiki non supporta modifiche al profilo'
 $lang['profnochange']          = 'Nessuna modifica, niente da aggiornare.';
 $lang['profnoempty']           = 'Nome o indirizzo email vuoti non sono consentiti.';
 $lang['profchanged']           = 'Aggiornamento del profilo utente riuscito.';
+$lang['profnodelete']          = 'Questa wiki non supporta la cancellazione degli utenti';
+$lang['profdeleteuser']        = 'Elimina account';
+$lang['profdeleted']           = 'Il tuo account utente è stato rimosso da questa wiki';
+$lang['profconfdelete']        = 'Voglio rimuovere il mio account da questa wiki. <br/> Questa operazione non può essere annullata.';
+$lang['profconfdeletemissing'] = 'La check box di conferma non è selezionata';
 $lang['pwdforget']             = 'Hai dimenticato la password? Richiedine una nuova';
 $lang['resendna']              = 'Questo wiki non supporta l\'invio di nuove password.';
 $lang['resendpwd']             = 'Imposta nuova password per';
@@ -266,7 +274,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'email per ogni modifica';
 $lang['subscr_style_digest']   = 'email di riassunto dei cambiamenti per ogni pagina (ogni %.2f giorni)';
 $lang['subscr_style_list']     = 'lista delle pagine cambiate dall\'ultima email (ogni %.2f giorni)';
-$lang['authmodfailed']         = 'La configurazione dell\'autenticazione non è corretta. Informa l\'amministratore di questo wiki.';
 $lang['authtempfail']          = 'L\'autenticazione è temporaneamente non disponibile. Se questa situazione persiste, informa l\'amministratore di questo wiki.';
 $lang['authpwdexpire']         = 'La tua password scadrà in %d giorni, dovresti cambiarla quanto prima.';
 $lang['i_chooselang']          = 'Scegli la lingua';

@@ -2,6 +2,6 @@ base   authad
 author Andreas Gohr
 email  andi@splitbrain.org
 date   2013-04-25
-name   Active Directory auth plugin
-desc   Provides authentication against a Microsoft Active Directory
+name   Active Directory Auth Plugin
+desc   Provides user authentication against a Microsoft Active Directory
 url    http://www.dokuwiki.org/plugin:authad

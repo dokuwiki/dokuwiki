@@ -97,7 +97,7 @@ class DokuWiki_Plugin {
     function localFN($id) {
         global $conf;
         $plugin = $this->getPluginName();
-        $file = DOKU_CONF.'/plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
+        $file = DOKU_CONF.'plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
         if (!@file_exists($file)){
             $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
             if(!@file_exists($file)){
@@ -199,11 +199,7 @@ class DokuWiki_Plugin {
      * @return  object  helper plugin object
      */
     function loadHelper($name, $msg = true){
-        if (!plugin_isdisabled($name)){
-            $obj = plugin_load('helper',$name);
-        }else{
-            $obj = null;
-        }
+        $obj = plugin_load('helper',$name);
         if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.",-1);
         return $obj;
     }

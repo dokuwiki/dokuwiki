@@ -29,11 +29,13 @@
         $IMG = null;
     }
 
-    global $INFO;
+    global $INFO, $JSINFO;
     $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
+    $JSINFO = array('id' => '', 'namespace' => '');
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
-    trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
+    $tmp = array();
+    trigger_event('MEDIAMANAGER_STARTED', $tmp);
     session_write_close();  //close session
 
     // do not display the manager if user does not have read access

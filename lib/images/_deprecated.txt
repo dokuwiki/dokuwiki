@@ -1,12 +1,2 @@
 
-== @deprecated 2012-10-06 ==
-
-arrow_down.gif
-arrow_up.gif
-at.gif
-close.png
-del.png
-edit.gif
-list-minus.gif
-list-plus.gif
-pencil.png
+(none)

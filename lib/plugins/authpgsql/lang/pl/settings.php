@@ -1,0 +1,5 @@
+<?php
+/**
+ * Polish language file
+ *
+ */

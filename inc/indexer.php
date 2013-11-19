@@ -10,7 +10,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 5);
+define('INDEXER_VERSION', 7);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -215,7 +215,7 @@ class Doku_Indexer {
         foreach (array_keys($words) as $wlen) {
             $word_idx = $this->getIndex('w', $wlen);
             foreach ($words[$wlen] as $word => $freq) {
-                $wid = array_search($word, $word_idx);
+                $wid = array_search($word, $word_idx, true);
                 if ($wid === false) {
                     $wid = count($word_idx);
                     $word_idx[] = $word;
@@ -296,7 +296,7 @@ class Doku_Indexer {
             foreach ($values as $val) {
                 $val = (string)$val;
                 if ($val !== "") {
-                    $id = array_search($val, $metawords);
+                    $id = array_search($val, $metawords, true);
                     if ($id === false) {
                         $id = count($metawords);
                         $metawords[$id] = $val;
@@ -352,13 +352,13 @@ class Doku_Indexer {
 
         $pages = $this->getPages();
 
-        $id = array_search($oldpage, $pages);
+        $id = array_search($oldpage, $pages, true);
         if ($id === false) {
             $this->unlock();
             return 'page is not in index';
         }
 
-        $new_id = array_search($newpage, $pages);
+        $new_id = array_search($newpage, $pages, true);
         if ($new_id !== false) {
             // make sure the page is not in the index anymore
             if ($this->deletePageNoLock($newpage) !== true) {
@@ -397,9 +397,9 @@ class Doku_Indexer {
 
         // change the relation references index
         $metavalues = $this->getIndex($key, '_w');
-        $oldid = array_search($oldvalue, $metavalues);
+        $oldid = array_search($oldvalue, $metavalues, true);
         if ($oldid !== false) {
-            $newid = array_search($newvalue, $metavalues);
+            $newid = array_search($newvalue, $metavalues, true);
             if ($newid !== false) {
                 // free memory
                 unset ($metavalues);
@@ -600,7 +600,7 @@ class Doku_Indexer {
 
         foreach ($wordlist as $i => $word) {
             if ((!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
-              || array_search($word, $stopwords) !== false)
+              || array_search($word, $stopwords, true) !== false)
                 unset($wordlist[$i]);
         }
         return array_values($wordlist);
@@ -771,7 +771,7 @@ class Doku_Indexer {
                     foreach(array_keys(preg_grep('/'.$re.'/', $words)) as $i)
                         $value_ids[$i][] = $val;
                 } else {
-                    if (($i = array_search($val, $words)) !== false)
+                    if (($i = array_search($val, $words, true)) !== false)
                         $value_ids[$i][] = $val;
                 }
             }
@@ -874,7 +874,7 @@ class Doku_Indexer {
             // handle exact search
             if (isset($tokenlength[$ixlen])) {
                 foreach ($tokenlength[$ixlen] as $xword) {
-                    $wid = array_search($xword, $word_idx);
+                    $wid = array_search($xword, $word_idx, true);
                     if ($wid !== false) {
                         $wids[$ixlen][] = $wid;
                         foreach ($tokens[$xword] as $w)
@@ -1017,8 +1017,9 @@ class Doku_Indexer {
                 return false;
             }
         }
-        if ($conf['dperm'])
+        if (!empty($conf['dperm'])) {
             chmod($lock, $conf['dperm']);
+        }
         return $status;
     }
 
@@ -1152,7 +1153,7 @@ class Doku_Indexer {
      */
     protected function addIndexKey($idx, $suffix, $value) {
         $index = $this->getIndex($idx, $suffix);
-        $id = array_search($value, $index);
+        $id = array_search($value, $index, true);
         if ($id === false) {
             $id = count($index);
             $index[$id] = $value;
@@ -1365,6 +1366,12 @@ function idx_addPage($page, $verbose=false, $force=false) {
         $metadata['relation_references'] = array_keys($references);
     else
         $metadata['relation_references'] = array();
+
+    if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null)
+        $metadata['relation_media'] = array_keys($media);
+    else
+        $metadata['relation_media'] = array();
+
     $data = compact('page', 'body', 'metadata', 'pid');
     $evt = new Doku_Event('INDEXER_PAGE_ADD', $data);
     if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);

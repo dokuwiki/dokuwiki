@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Esperantolanguage file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>
@@ -10,6 +11,7 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <bogi@uea.org>
+ * @author Felipe Castro <fefcas@yahoo.com.br>
  */
 $lang['menu']                  = 'Administrado de uzantoj';
 $lang['noauth']                = '(identiĝo de uzantoj ne disponeblas)';
@@ -32,6 +34,11 @@ $lang['search']                = 'Serĉi';
 $lang['search_prompt']         = 'Fari serĉon';
 $lang['clear']                 = 'Refari serĉan filtron';
 $lang['filter']                = 'Filtro';
+$lang['export_all']            = 'Eksporti ĉiujn uzantojn (CSV)';
+$lang['export_filtered']       = 'Eksporti filtritan uzant-liston (CSV)';
+$lang['import']                = 'Importi novajn uzantojn';
+$lang['line']                  = 'Lini-num.';
+$lang['error']                 = 'Erar-mesaĝo';
 $lang['summary']               = 'Montriĝas uzantoj %1$d-%2$d el %3$d trovitaj. %4$d uzantoj entute.';
 $lang['nonefound']             = 'Neniuj uzantoj troviĝas. %d uzantoj entute.';
 $lang['delete_ok']             = '%d uzantoj forigiĝis';
@@ -52,3 +59,16 @@ $lang['add_ok']                = 'La uzanto sukcese aldoniĝis';
 $lang['add_fail']              = 'Ne eblis aldoni uzanton';
 $lang['notify_ok']             = 'Avizanta mesaĝo sendiĝis';
 $lang['notify_fail']           = 'La avizanta mesaĝo ne povis esti sendita';
+$lang['import_userlistcsv']    = 'Dosiero kun listo de uzantoj (CSV):';
+$lang['import_header']         = 'Plej lastaj Import-eraroj';
+$lang['import_success_count']  = 'Uzant-importo: %d uzantoj trovataj, %d sukcese importitaj.';
+$lang['import_failure_count']  = 'Uzant-importo: %d fiaskis. Fiaskoj estas sube listitaj.';
+$lang['import_error_fields']   = 'Nesufiĉe da kampoj, ni trovis %d, necesas 4.';
+$lang['import_error_baduserid'] = 'Mankas uzant-id';
+$lang['import_error_badname']  = 'Malĝusta nomo';
+$lang['import_error_badmail']  = 'Malĝusta retadreso';
+$lang['import_error_upload']   = 'Importo fiaskis. La csv-dosiero ne povis esti alŝutata aŭ ĝi estas malplena.';
+$lang['import_error_readfail'] = 'Importo fiaskis. Ne eblas legi alŝutitan dosieron.';
+$lang['import_error_create']   = 'Ne eblas krei la uzanton';
+$lang['import_notify_fail']    = 'Averta mesaĝo ne povis esti sendata al la importita uzanto %s, kun retdreso %s.';
+$lang['import_downloadfailures'] = 'Elŝut-eraroj por korektado (CSV)';

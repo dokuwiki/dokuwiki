@@ -1,7 +1,8 @@
 <?php
+
 /**
- * German (informal) language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -22,8 +23,8 @@ $lang['p_user_id']             = 'Benutzer <b class="acluser">%s</b> hat im Mome
 $lang['p_user_ns']             = 'Benutzer <b class="acluser">%s</b> hat momentan die folgenden Rechte im Namensraum <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Die Gruppenmitglieder <b class="aclgroup">%s</b> haben momentan die folgenden Rechte auf der Seite <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Die Mitglieder der Gruppe <b class="aclgroup">%s</b> haben gerade Zugriff in folgenden Namensräumen <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Bitte <b>gib einen Nutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen der Seite <b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
-$lang['p_choose_ns']           = 'Bitte <b>gib einen Nutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen des Namenraumes <b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
+$lang['p_choose_id']           = 'Bitte <b>gib einen Benutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen der Seite <b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
+$lang['p_choose_ns']           = 'Bitte <b>gib einen Benutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen des Namenraumes <b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
 $lang['p_inherited']           = 'Hinweis: Diese Rechte wurden nicht explizit gesetzt, sondern von anderen Gruppen oder übergeordneten Namensräumen geerbt.';
 $lang['p_isadmin']             = 'Hinweis: Die gewählte Gruppe oder der Benutzer haben immer die vollen Rechte, weil sie als Superuser konfiguriert sind.';
 $lang['p_include']             = 'Höhere Rechte schließen kleinere mit ein. Hochlade- und Löschrechte sind nur für Namensräume, nicht für Seiten.';

@@ -166,7 +166,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             // be accessible anonymously, so we try to rebind the current user here
             list($loginuser, $loginsticky, $loginpass) = auth_getCookie();
             if($loginuser && $loginpass) {
-                $loginpass = PMA_blowfish_decrypt($loginpass, auth_cookiesalt(!$loginsticky));
+                $loginpass = auth_decrypt($loginpass, auth_cookiesalt(!$loginsticky, true));
                 $this->checkPass($loginuser, $loginpass);
             }
         }
@@ -208,8 +208,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 if(is_array($key)) {
                     // use regexp to clean up user_result
                     list($key, $regexp) = each($key);
-                    if($user_result[$key]) foreach($user_result[$key] as $grp) {
-                        if(preg_match($regexp, $grp, $match)) {
+                    if($user_result[$key]) foreach($user_result[$key] as $grpkey => $grp) {
+                        if($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
                             if($localkey == 'grps') {
                                 $info[$localkey][] = $match[1];
                             } else {

@@ -229,7 +229,6 @@ $lang['subscr_m_receive']      = 'Accipere';
 $lang['subscr_style_every']    = 'Cursus mutationibus omnibus';
 $lang['subscr_style_digest']   = 'Accipere litteras in mutando paginam (%.2f dies)';
 $lang['subscr_style_list']     = 'Index mutatarum paginarum ab extremis litteris (%.2f dies)';
-$lang['authmodfailed']         = 'Confirmatio infeliciter facta est. Rectorem conuenis.';
 $lang['authtempfail']          = 'Confirmare non potes. Rectorem conuenis.';
 $lang['i_chooselang']          = 'Linguam eligere';
 $lang['i_installer']           = 'Docuuicis creator';

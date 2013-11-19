@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Danish language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
@@ -11,6 +12,7 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
+ * @author soer9648 <soer9648@eucl.dk>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(Brugervalidering er ikke tilgængelig)';
@@ -33,6 +35,11 @@ $lang['search']                = 'Søg';
 $lang['search_prompt']         = 'Udfør søgning';
 $lang['clear']                 = 'Nulstil søgefilter';
 $lang['filter']                = 'Filter';
+$lang['export_all']            = 'Eksportér Alle Brugere (CSV)';
+$lang['export_filtered']       = 'Eksportér Filtrerede Brugerliste (CSV)';
+$lang['import']                = 'Importér Nye Brugere';
+$lang['line']                  = 'Linje nr.';
+$lang['error']                 = 'Fejlmeddelelse';
 $lang['summary']               = 'Viser brugerne %1$d-%2$d ud af %3$d fundne. %4$d brugere totalt.';
 $lang['nonefound']             = 'Ingen brugere fundet. %d brugere totalt.';
 $lang['delete_ok']             = '%d brugere slettet';
@@ -53,3 +60,15 @@ $lang['add_ok']                = 'Bruger tilføjet uden fejl.';
 $lang['add_fail']              = 'Tilføjelse af bruger mislykkedes';
 $lang['notify_ok']             = 'Meddelelse sendt';
 $lang['notify_fail']           = 'Meddelelse kunne ikke sendes';
+$lang['import_userlistcsv']    = 'Brugerlistefil (CSV):';
+$lang['import_header']         = 'Nyeste Import - Fejl';
+$lang['import_success_count']  = 'Bruger-Import: %d brugere fundet, %d importeret med succes.';
+$lang['import_failure_count']  = 'Bruger-Import: %d fejlet. Fejl er listet nedenfor.';
+$lang['import_error_fields']   = 'Utilstrækkelige felter, fandt %d, påkrævet 4.';
+$lang['import_error_baduserid'] = 'Bruger-id mangler';
+$lang['import_error_badname']  = 'Ugyldigt navn';
+$lang['import_error_badmail']  = 'Ugyldig email-adresse';
+$lang['import_error_upload']   = 'Import Fejlet. CSV-filen kunne ikke uploades eller er tom.';
+$lang['import_error_readfail'] = 'Import Fejlet. Ikke muligt at læse uploadede fil.';
+$lang['import_error_create']   = 'Ikke muligt at oprette brugeren';
+$lang['import_notify_fail']    = 'Notifikationsmeddelelse kunne ikke sendes for importerede bruger %s, med emailen %s.';

@@ -463,6 +463,8 @@ class HTTPClient {
                 }
 
                 $r_body = $this->_readData($socket, $length, 'response (content-length limited)', true);
+            }elseif( !isset($this->resp_headers['transfer-encoding']) && $this->max_bodysize && !$this->keep_alive){
+                $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
             }else{
                 // read entire socket
                 $r_size = 0;
@@ -551,7 +553,7 @@ class HTTPClient {
         }while($r_line != "\r\n" && $r_line != "\n");
 
         $this->_debug('SSL Tunnel Response',$r_headers);
-        if(preg_match('/^HTTP\/1\.0 200/i',$r_headers)){
+        if(preg_match('/^HTTP\/1\.[01] 200/i',$r_headers)){
             if (stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
                 $requesturl = $requestinfo['path'];
                 return true;
@@ -806,12 +808,7 @@ class HTTPClient {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function _postEncode($data){
-        $url = '';
-        foreach($data as $key => $val){
-            if($url) $url .= '&';
-            $url .= urlencode($key).'='.urlencode($val);
-        }
-        return $url;
+        return http_build_query($data,'','&');
     }
 
     /**

@@ -1,13 +1,15 @@
 <?php
+
 /**
- * Hungarian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
+ * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['name']                  = 'Visszajelzés a DokuWiki használatáról (sok időt vehet igénybe a betöltése)';
 $lang['submit']                = 'Adatok elküldése';

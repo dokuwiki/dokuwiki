@@ -26,13 +26,13 @@ function checkUpdateMessages(){
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdatesMessages(): downloading messages.txt");
+        dbglog("checkUpdateMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
     }else{
-        dbglog("checkUpdatesMessages(): messages.txt up to date");
+        dbglog("checkUpdateMessages(): messages.txt up to date");
         $data = io_readFile($cf);
     }
 
@@ -192,7 +192,6 @@ function check(){
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
-
 
     if($conf['allowdebug']){
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);
