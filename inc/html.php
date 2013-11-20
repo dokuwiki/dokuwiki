@@ -414,20 +414,18 @@ function html_revisions($first=0, $media_id = false){
     global $conf;
     global $lang;
     $id = $ID;
+    if ($media_id) $id = $media_id;
+
     /* we need to get one additional log entry to be able to
      * decide if this is the last page or is there another one.
      * see html_recent()
      */
-    if (!$media_id) $revisions = getRevisions($ID, $first, $conf['recent']+1);
-    else {
-        $revisions = getRevisions($media_id, $first, $conf['recent']+1, 8192, true);
-        $id = $media_id;
-    }
+    $pagelog = new PageRevisionLog($id);
+    $revisions = $pagelog->getRevisions($first, $conf['recent']+1, (boolean)$media_id);
 
     if(count($revisions)==0 && $first!=0){
         $first=0;
-        if (!$media_id) $revisions = getRevisions($ID, $first, $conf['recent']+1);
-        else $revisions = getRevisions($media_id, $first, $conf['recent']+1, 8192, true);
+        $revisions = $pagelog->getRevisions($first, $conf['recent']+1, (boolean)$media_id);
     }
     $hasNext = false;
     if (count($revisions)>$conf['recent']) {
@@ -486,10 +484,12 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement(form_makeCloseTag('span'));
         }
 
+        $pagelog->setChunkSize(1024);
+
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
         if (!$media_id) $editor = $INFO['editor'];
         else {
-            $revinfo = getRevisionInfo($id, @filemtime(fullpath(mediaFN($id))), 1024, true);
+            $revinfo = $pagelog->getRevisionInfo(@filemtime(fullpath(mediaFN($id))), true);
             if($revinfo['user']){
                 $editor = $revinfo['user'];
             }else{
@@ -510,10 +510,10 @@ function html_revisions($first=0, $media_id = false){
     foreach($revisions as $rev){
         $date = dformat($rev);
         if (!$media_id) {
-            $info = getRevisionInfo($id,$rev,true);
+            $info = $pagelog->getRevisionInfo($rev);
             $exists = page_exists($id,$rev);
         }  else {
-            $info = getRevisionInfo($id,$rev,true,true);
+            $info = $pagelog->getRevisionInfo($rev,true);
             $exists = @file_exists(mediaFN($id,$rev));
         }
 
@@ -706,7 +706,8 @@ function html_recent($first=0, $show_changes='both'){
         $href = '';
 
         if ($recent['media']) {
-            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
+            $pagelog = new PageRevisionLog($recent['id']);
+            $diff = (count($pagelog->getRevisions(0, 1, true)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
                 $href = media_managerURL(array('tab_details' => 'history',
                     'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
@@ -1008,10 +1009,11 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     $ml_or_wl = $media ? 'ml' : 'wl';
     $l_minor = $r_minor = '';
 
+    $pagelog = new PageRevisionLog($id);
     if(!$l_rev){
         $l_head = '&mdash;';
     }else{
-        $l_info   = getRevisionInfo($id,$l_rev,true, $media);
+        $l_info   = $pagelog->getRevisionInfo($l_rev, $media);
         if($l_info['user']){
             $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
             if(auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
@@ -1029,7 +1031,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     }
 
     if($r_rev){
-        $r_info   = getRevisionInfo($id,$r_rev,true, $media);
+        $r_info   = $pagelog->getRevisionInfo($r_rev, $media);
         if($r_info['user']){
             $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
             if(auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
@@ -1045,7 +1047,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
         $r_head_title.'</a></bdi>'.
         $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
-        $_info   = getRevisionInfo($id,$_rev,true, $media);
+        $_info   = $pagelog->getRevisionInfo($_rev, $media);
         if($_info['user']){
             $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
             if(auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';
@@ -1082,6 +1084,7 @@ function html_diff($text='',$intro=true,$type=null){
     global $lang;
     global $INPUT;
     global $INFO;
+    $pagelog = new PageRevisionLog($ID);
 
     if(!$type) {
         $type = $INPUT->str('difftype');
@@ -1140,7 +1143,7 @@ function html_diff($text='',$intro=true,$type=null){
             $l_rev = $rev1;
         }else{                        // no revision was given, compare previous to current
             $r_rev = '';
-            $revs = getRevisions($ID, 0, 1);
+            $revs = $pagelog->getRevisions(0, 1);
             $l_rev = $revs[0];
             $REV = $l_rev; // store revision back in $REV
         }
@@ -1155,12 +1158,12 @@ function html_diff($text='',$intro=true,$type=null){
 
         //look for previous/next revision
         if($r_rev) {
-            $next_rev = getRelativeRevision($ID, $r_rev, 1);
+            $next_rev = $pagelog->getRelativeRevision($r_rev, 1);
         } else {
             $next_rev = false;
         }
         if($l_rev) {
-            $prev_rev = getRelativeRevision($ID, $l_rev, -1);
+            $prev_rev = $pagelog->getRelativeRevision($l_rev, -1);
         } else {
             $prev_rev = false;
         }
@@ -1219,7 +1222,7 @@ function html_diff($text='',$intro=true,$type=null){
                       ));
         ptln('<a class="wikilink1" href="'.$recenturl.'">'.$lang['overviewrevs'].'</a>');
         if($next_rev){
-            if($next_rev=='current') {
+            if(PageRevisionLog::isCurrentRevision($next_rev)) {
                 $diffurlnextparam = array(
                                 'do'       => 'diff',
                                 'rev'      => $r_rev,

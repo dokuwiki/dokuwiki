@@ -374,7 +374,8 @@ class RemoteAPICore {
             throw new RemoteException('The requested page does not exist', 121);
         }
 
-        $info = getRevisionInfo($id, $time, 1024);
+        $pagelog = new PageRevisionLog($id, 1024);
+        $info = $pagelog->getRevisionInfo($time);
 
         $data = array(
             'name'         => $id,
@@ -646,11 +647,12 @@ class RemoteAPICore {
             throw new RemoteException('Empty page ID', 131);
         }
 
-        $revisions = getRevisions($id, $first, $conf['recent']+1);
+        $pagelog = new PageRevisionLog($id);
+        $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
 
         if(count($revisions)==0 && $first!=0) {
             $first=0;
-            $revisions = getRevisions($id, $first, $conf['recent']+1);
+            $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
         }
 
         if(count($revisions)>0 && $first==0) {
@@ -672,7 +674,8 @@ class RemoteAPICore {
                 // case this can lead to less pages being returned than
                 // specified via $conf['recent']
                 if($time){
-                    $info = getRevisionInfo($id, $time, 1024);
+                    $pagelog->setChunkSize(1024);
+                    $info = $pagelog->getRevisionInfo($time);
                     if(!empty($info)) {
                         $data['user'] = $info['user'];
                         $data['ip']   = $info['ip'];
