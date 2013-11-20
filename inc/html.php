@@ -1222,7 +1222,7 @@ function html_diff($text='',$intro=true,$type=null){
                       ));
         ptln('<a class="wikilink1" href="'.$recenturl.'">'.$lang['overviewrevs'].'</a>');
         if($next_rev){
-            if(PageRevisionLog::isCurrentRevision($next_rev)) {
+            if($pagelog->isCurrentRevision($next_rev)) {
                 $diffurlnextparam = array(
                                 'do'       => 'diff',
                                 'rev'      => $r_rev,

@@ -560,16 +560,11 @@ class PageRevisionLog {
      *      otherwise false
      */
     public function getRelativeRevision($rev, $direction, $media = false) {
-        global $INFO;
-
         $rev = max($rev, 0);
         $direction = (int) $direction;
 
         //no direction given or last rev, so no follow-up
-        if(!$direction ||
-            ($direction > 0
-                && isset($INFO['meta']['last_change']['date'])
-                && $rev == $INFO['meta']['last_change']['date'])) {
+        if(!$direction || ($direction > 0 && $this->isCurrentRevision($rev)) ) {
             return false;
         }
 
@@ -768,7 +763,7 @@ class PageRevisionLog {
      * @param int $rev timestamp of current page
      * @return bool true if $rev is current revision, otherwise false
      */
-    static public function isCurrentRevision($rev){
+    public function isCurrentRevision($rev){
         return isset($INFO['meta']['last_change']) && $rev == $INFO['meta']['last_change']['date'];
     }
 }
