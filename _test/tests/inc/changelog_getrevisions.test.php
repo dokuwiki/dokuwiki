@@ -164,7 +164,7 @@ class changelog_getrevisions_test extends DokuWikiTest {
         $revsexpected = array();
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
-        $revs = $pagelog->getRevisions($this->pageid, $first, $num, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);

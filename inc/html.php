@@ -1015,14 +1015,14 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     $l_minor = $r_minor = '';
 
     if($media) {
-        $log = new MediaChangeLog($id);
+        $changelog = new MediaChangeLog($id);
     } else {
-        $log = new PageChangeLog($id);
+        $changelog = new PageChangeLog($id);
     }
     if(!$l_rev){
         $l_head = '&mdash;';
     }else{
-        $l_info   = $log->getRevisionInfo($l_rev);
+        $l_info   = $changelog->getRevisionInfo($l_rev);
         if($l_info['user']){
             $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
             if(auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
@@ -1040,7 +1040,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     }
 
     if($r_rev){
-        $r_info   = $log->getRevisionInfo($r_rev);
+        $r_info   = $changelog->getRevisionInfo($r_rev);
         if($r_info['user']){
             $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
             if(auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
@@ -1056,7 +1056,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
         $r_head_title.'</a></bdi>'.
         $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
-        $_info   = $log->getRevisionInfo($_rev);
+        $_info   = $changelog->getRevisionInfo($_rev);
         if($_info['user']){
             $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
             if(auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';
