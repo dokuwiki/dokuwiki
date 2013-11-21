@@ -34,6 +34,7 @@ $QUERY          = trim($INPUT->str('id'));
 $ID             = getID();
 
 $REV   = $INPUT->int('rev');
+$DATE_AT= $INPUT->int('at');
 $IDX   = $INPUT->str('idx');
 $DATE  = $INPUT->int('date');
 $RANGE = $INPUT->str('range');
@@ -47,7 +48,19 @@ $PRE = cleanText(substr($INPUT->post->str('prefix'), 0, -1));
 $SUF = cleanText($INPUT->post->str('suffix'));
 $SUM = $INPUT->post->str('summary');
 
-//make info about the selected page available
+if($DATE_AT) {
+    $rev_t = getProperRevision($ID,$DATE_AT);
+    if($rev_t === '') {
+        $REV = '';
+    } else if ($rev_t === false) {
+        msg('Seite gab es zu diesem Zeitpunkt noch nicht');
+        $REV = $DATE_AT;
+    } else {
+        $REV = $rev_t;
+    }
+}
+
+//make infos about the selected page available
 $INFO = pageinfo();
 
 //export minimal info to JS, plugins can add more

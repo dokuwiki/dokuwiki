@@ -28,6 +28,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     // @access public
     var $doc = '';        // will contain the whole document
     var $toc = array();   // will contain the Table of Contents
+    var $rev = '';
+    var $date_at = '';
 
     var $sectionedits = array(); // A stack of section edit data
     private $lastsecid = 0; // last section edit id, used by startSectionEdit
@@ -618,6 +620,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $link['more']   = '';
         $link['class']  = $class;
+        if($this->date_at) {
+            $params['at'] = $this->date_at;
+        } else if($this->rev) {
+            //$params['at'] = $this->rev;
+        }
         $link['url']    = wl($id, $params);
         $link['name']   = $name;
         $link['title']  = $id;
@@ -792,7 +799,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
-            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
+            if(($this->rev||$this->date_at)) {
+                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getProperMediaRevision($src)),($linking=='direct'));
+            } else {
+                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
+            }
         }elseif($mime == 'application/x-shockwave-flash' && $render){
             // don't link flash movies
             $noLink = true;
@@ -800,7 +811,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // add file icons
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
             $link['class'] .= ' mediafile mf_'.$class;
-            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+            if(($this->rev||$this->date_at)) {
+                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getProperMediaRevision($src)),true);
+            } else {
+                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+            }
             if ($exists) $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))).')';
         }
 
@@ -1048,7 +1063,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                       $height=null, $cache=null, $render = true) {
 
         $ret = '';
-
+        $intern = !is_externalmedia($src);
         list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             // first get the $title
@@ -1073,7 +1088,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 return $title;
             }
             //add image tag
-            $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
+            if($intern && ($this->rev||$this->date_at)) {
+                $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache,'rev'=>$this->_getProperMediaRevision($src))).'"';
+            } else { 
+                $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
+            }
             $ret .= ' class="media'.$align.'"';
 
             if ($title) {
@@ -1220,6 +1239,23 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_media($src, $title, $align, $width, $height, $cache, $render);
 
         return $link;
+    }
+    
+    /**
+     * _getProperMediaRevision is a helperfunction to internalmedia() and _media()
+     * which returns an existing media revision less or equal to rev or date_at
+     *
+     * @author lisps
+     * @param string $media_id
+     * @access protected
+     * @return string revision ('' for current) 
+     */
+    function _getProperMediaRevision($media_id){
+        $rev = $this->rev;
+        if($this->date_at){
+            $rev = $this->date_at;
+        }
+        return getProperRevision($media_id,$rev,true);
     }
 
 

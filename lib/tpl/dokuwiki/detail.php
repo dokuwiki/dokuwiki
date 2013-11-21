@@ -49,7 +49,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                     if($ERROR):
                         echo '<h1>'.$ERROR.'</h1>';
                     else: ?>
-
+                        <?php if($REV) echo p_locale_xhtml('showrev');?>
                         <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
 
                         <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>

@@ -207,6 +207,7 @@ function html_show($txt=null){
     global $REV;
     global $HIGH;
     global $INFO;
+    global $DATE_AT;
     //disable section editing for old revisions or in preview
     if($txt || $REV){
         $secedit = false;
@@ -226,8 +227,8 @@ function html_show($txt=null){
         echo '</div></div>';
 
     }else{
-        if ($REV) print p_locale_xhtml('showrev');
-        $html = p_wiki_xhtml($ID,$REV,true);
+        if ($REV||$DATE_AT) print p_locale_xhtml('showrev');
+        $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         $html = html_hilight($html,$HIGH);
