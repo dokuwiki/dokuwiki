@@ -29,8 +29,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * no nonexist.changes meta file available
      */
     function test_changemetadatanotexists() {
-        $rev          = 1362525899;
-        $id           = 'nonexist';
+        $rev = 1362525899;
+        $id = 'nonexist';
         $revsexpected = false;
 
         $pagelog = new PageChangeLog($id, $chunk_size = 8192);
@@ -42,7 +42,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request existing rev
      */
     function test_requestrev() {
-        $rev          = 1362525899;
+        $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -57,7 +57,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request existing rev with chucked reading
      */
     function test_requestrev_chuncked() {
-        $rev          = 1362525899;
+        $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
@@ -69,7 +69,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request current version
      */
     function test_requestrecentestlogline() {
-        $rev          = 1374261194;
+        $rev = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -84,7 +84,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request current version, with chuncked reading
      */
     function test_requestrecentestlogline_chuncked() {
-        $rev          = 1374261194;
+        $rev = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
@@ -118,7 +118,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * sometimes chuncksize is set to true
      */
     function test_chuncksizetrue() {
-        $rev          = 1362525899;
+        $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
         $pagelog = new PageChangeLog($this->pageid, true);
