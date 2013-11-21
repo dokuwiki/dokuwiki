@@ -292,9 +292,9 @@ function rss_buildItems(&$rss, &$data, $opt) {
             switch($opt['item_content']) {
                 case 'diff':
                 case 'htmldiff':
-                    $pagelog = new PageRevisionLog($id);
                     if($ditem['media']) {
-                        $revs  = $pagelog->getRevisions(0, 1, true);
+                        $medialog = new MediaChangeLog($id);
+                        $revs  = $medialog->getRevisions(0, 1);
                         $rev   = $revs[0];
                         $src_r = '';
                         $src_l = '';
@@ -319,6 +319,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
 
                     } else {
                         require_once(DOKU_INC.'inc/DifferenceEngine.php');
+                        $pagelog = new PageChangeLog($id);
                         $revs = $pagelog->getRevisions(0, 1);
                         $rev  = $revs[0];
 

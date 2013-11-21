@@ -83,7 +83,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
 
             // find the last non-spammy revision
             $data = '';
-            $pagelog = new PageRevisionLog($id);
+            $pagelog = new PageChangeLog($id);
             $old  = $pagelog->getRevisions(0, $this->max_revs);
             if(count($old)){
                 foreach($old as $REV){

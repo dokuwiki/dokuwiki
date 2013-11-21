@@ -334,16 +334,17 @@ function _handleRecent($line,$ns,$flags,&$seen){
 }
 
 /**
- * Class PageRevisionLog
+ * Class ChangeLog
+ * methods for handling of changelog of pages or media files
  */
-class PageRevisionLog {
+abstract class ChangeLog {
 
     /** @var string */
-    private $id;
+    protected $id;
     /** @var int */
-    private $chunk_size;
+    protected $chunk_size;
     /** @var array */
-    private $cache;
+    protected $cache;
 
     /**
      * Constructor
@@ -366,6 +367,7 @@ class PageRevisionLog {
 
     /**
      * Set chunk size for file reading
+     * Chunk size zero let read whole file at once
      *
      * @param int $chunk_size maximum block size read from file
      */
@@ -376,6 +378,20 @@ class PageRevisionLog {
     }
 
     /**
+     * Returns path to changelog
+     *
+     * @return string path to file
+     */
+    abstract protected function getChangelogFilename();
+
+    /**
+     * Returns path to current page/media
+     *
+     * @return string path to file
+     */
+    abstract protected function getFilename();
+
+    /**
      * Get the changelog information for a specific page id and revision (timestamp)
      *
      * Adjacent changelog lines are optimistically parsed and cached to speed up
@@ -383,7 +399,6 @@ class PageRevisionLog {
      * containing the requested changelog line is read.
      *
      * @param int  $rev        revision timestamp
-     * @param bool $media      look into media log?
      * @return bool|array false or array with entries:
      *      - date:  unix timestamp
      *      - ip:    IPv4 address (127.0.0.1)
@@ -396,7 +411,7 @@ class PageRevisionLog {
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    public function getRevisionInfo($rev, $media = false) {
+    public function getRevisionInfo($rev) {
         $rev = max($rev, 0);
 
         // check if it's already in the memory cache
@@ -405,7 +420,7 @@ class PageRevisionLog {
         }
 
         //read lines from changelog
-        list($fp, $lines) = $this->readloglines($media, $rev);
+        list($fp, $lines) = $this->readloglines($rev);
         if($fp) {
             fclose($fp);
         }
@@ -442,31 +457,27 @@ class PageRevisionLog {
      *
      * @param int  $first      skip the first n changelog lines
      * @param int  $num        number of revisions to return
-     * @param bool $media      look into media log?
      * @return array with the revision timestamps
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
      */
-    public function getRevisions($first, $num, $media = false) {
+    public function getRevisions($first, $num) {
         $revs = array();
         $lines = array();
         $count  = 0;
-        if ($media) {
-            $file = mediaMetaFN($this->id, '.changes');
-        } else {
-            $file = metaFN($this->id, '.changes');
-        }
+
         $num = max($num, 0);
         if ($num == 0) { return $revs; }
 
-        $this->chunk_size = max($this->chunk_size, 0);
         if ($first<0) {
             $first = 0;
-        } else if (!$media && @file_exists(wikiFN($this->id)) || $media && @file_exists(mediaFN($this->id))) {
+        } else if (@file_exists($this->getFilename())) {
             // skip current revision if the page exists
             $first = max($first+1, 0);
         }
+
+        $file = $this->getChangelogFilename();
 
         if (!@file_exists($file)) { return $revs; }
         if (filesize($file)<$this->chunk_size || $this->chunk_size==0) {
@@ -554,12 +565,11 @@ class PageRevisionLog {
      *
      * @param int  $rev        revision timestamp used as startdate (doesn't need to be revisionnumber)
      * @param int  $direction  give position of returned revision with respect to $rev; positive=next, negative=prev
-     * @param bool $media      look into media log?
      * @return bool|int
      *      timestamp of the requested revision
      *      otherwise false
      */
-    public function getRelativeRevision($rev, $direction, $media = false) {
+    public function getRelativeRevision($rev, $direction) {
         $rev = max($rev, 0);
         $direction = (int) $direction;
 
@@ -569,7 +579,7 @@ class PageRevisionLog {
         }
 
         //get lines from changelog
-        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($media, $rev);
+        list($fp, $lines, $head, $tail, $eof) = $this->readloglines($rev);
         if(empty($lines)) return false;
 
         // look for revisions later/earlier then $rev, when founded count till the wanted revision is reached
@@ -645,17 +655,12 @@ class PageRevisionLog {
      * Returns lines from changelog.
      * If file larger than $chuncksize, only chunck is read that could contain $rev.
      *
-     * @param bool $media look into media log?
      * @param int  $rev   revision timestamp
      * @return array(fp, array(changeloglines), $head, $tail, $eof)|bool
      *     returns false when not succeed. fp only defined for chuck reading, needs closing.
      */
-    protected function readloglines($media, $rev) {
-        if($media) {
-            $file = mediaMetaFN($this->id, '.changes');
-        } else {
-            $file = metaFN($this->id, '.changes');
-        }
+    protected function readloglines($rev) {
+        $file = $this->getChangelogFilename();
 
         if(!@file_exists($file)) {
             return false;
@@ -761,13 +766,55 @@ class PageRevisionLog {
      * Check whether given revision is the current page
      *
      * @param int  $rev   timestamp of current page
-     * @param bool $media look for media?
      * @return bool true if $rev is current revision, otherwise false
      */
-    public function isCurrentRevision($rev, $media = false) {
-        return $rev == @filemtime($media ? mediaFN($this->id) : wikiFN($this->id));
+    public function isCurrentRevision($rev) {
+        return $rev == @filemtime($this->getFilename());
     }
 }
+
+class PageChangelog extends ChangeLog {
+
+    /**
+     * Returns path to changelog
+     *
+     * @return string path to file
+     */
+    protected function getChangelogFilename() {
+        return metaFN($this->id, '.changes');
+    }
+
+    /**
+     * Returns path to current page/media
+     *
+     * @return string path to file
+     */
+    protected function getFilename() {
+        return wikiFN($this->id);
+    }
+}
+
+class MediaChangelog extends ChangeLog {
+
+    /**
+     * Returns path to changelog
+     *
+     * @return string path to file
+     */
+    protected function getChangelogFilename() {
+        return mediaMetaFN($this->id, '.changes');
+    }
+
+    /**
+     * Returns path to current page/media
+     *
+     * @return string path to file
+     */
+    protected function getFilename() {
+        return mediaFN($this->id);
+    }
+}
+
 
 /**
  * Get the changelog information for a specific page id
@@ -783,9 +830,12 @@ class PageRevisionLog {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
-
-    $log = new PageRevisionLog($id, $chunk_size);
-    return $log->getRevisionInfo($rev, $media);
+    if($media) {
+        $changelog = new MediaChangeLog($id, $chunk_size);
+    } else {
+        $changelog = new PageChangeLog($id, $chunk_size);
+    }
+    return $changelog->getRevisionInfo($rev);
 }
 
 /**
@@ -812,6 +862,10 @@ function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
-    $log = new PageRevisionLog($id, $chunk_size);
-    return $log->getRevisions($first, $num, $media);
+    if($media) {
+        $changelog = new MediaChangeLog($id, $chunk_size);
+    } else {
+        $changelog = new PageChangeLog($id, $chunk_size);
+    }
+    return $changelog->getRevisions($first, $num);
 }

@@ -33,8 +33,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
         $id           = 'nonexist';
         $revsexpected = false;
 
-        $pagelog = new PageRevisionLog($id, $chunk_size = 8192);
-        $revs = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($id, $chunk_size = 8192);
+        $revs = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -45,11 +45,11 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
         $rev          = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
-        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 8192);
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
         //returns cached value
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -60,8 +60,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
         $rev          = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
-        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 512);
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -72,11 +72,11 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
         $rev          = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
-        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 8192);
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
         //returns cached value
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -87,8 +87,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
         $rev          = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
-        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 512);
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -98,8 +98,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
     function test_negativerev() {
         $rev = -10;
 
-        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 8192);
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals(false, $info);
     }
 
@@ -109,8 +109,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
     function test_notexistingrev() {
         $rev = 1362525890;
 
-        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 8192);
-        $info = $pagelog->getRevisionInfo($rev, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals(false, $info);
     }
 
@@ -121,7 +121,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
         $rev          = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
-        $pagelog = new PageRevisionLog($this->pageid, true);
+        $pagelog = new PageChangeLog($this->pageid, true);
         $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
