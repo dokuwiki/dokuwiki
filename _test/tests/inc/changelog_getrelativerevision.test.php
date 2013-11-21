@@ -270,4 +270,39 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $revfound = $pagelog->getRelativeRevision($rev, $dir, $media = false);
         $this->assertEquals($revexpected, $revfound);
     }
+
+    function test_iscurrentpagerevision() {
+        $rev = 1385051947;
+        $currentexpected = true;
+
+        //set a known timestamp
+        touch(wikiFN($this->pageid), $rev);
+
+        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 8192);
+
+        $current = $pagelog->isCurrentRevision($rev, $media = false);
+        $this->assertEquals($currentexpected, $current);
+    }
+
+    function test_isnotcurrentpagerevision() {
+        $rev = 1385051947;
+        $not_current_rev = $rev - 1;
+        $currentexpected = false;
+
+        //set a known timestamp
+        touch(wikiFN($this->pageid), $rev);
+
+        $pagelog = new PageRevisionLog($this->pageid, $chunk_size = 8192);
+        $current = $pagelog->isCurrentRevision($not_current_rev, $media = false);
+        $this->assertEquals($currentexpected, $current);
+    }
+
+    function test_notexistingcurrentpage() {
+        $rev = 1385051947;
+        $currentexpected = false;
+
+        $pagelog = new PageRevisionLog('nonexistingpage', $chunk_size = 8192);
+        $current = $pagelog->isCurrentRevision($rev, $media = false);
+        $this->assertEquals($currentexpected, $current);
+    }
 }

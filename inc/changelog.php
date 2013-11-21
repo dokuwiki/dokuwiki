@@ -760,11 +760,12 @@ class PageRevisionLog {
     /**
      * Check whether given revision is the current page
      *
-     * @param int $rev timestamp of current page
+     * @param int  $rev   timestamp of current page
+     * @param bool $media look for media?
      * @return bool true if $rev is current revision, otherwise false
      */
-    public function isCurrentRevision($rev){
-        return isset($INFO['meta']['last_change']) && $rev == $INFO['meta']['last_change']['date'];
+    public function isCurrentRevision($rev, $media = false) {
+        return $rev == @filemtime($media ? mediaFN($this->id) : wikiFN($this->id));
     }
 }
 
