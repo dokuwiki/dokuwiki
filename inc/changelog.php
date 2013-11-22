@@ -771,6 +771,25 @@ abstract class ChangeLog {
     public function isCurrentRevision($rev) {
         return $rev == @filemtime($this->getFilename());
     }
+    
+    /**
+    * Return an existing revision for a specific date which is 
+    * the current one or younger or equal then the date
+    *
+    * @param string $id 
+    * @param number $date_at timestamp
+    * @return string revision ('' for current)
+    */
+    function getLastRevisionAt($date_at){
+        //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
+        if($date_at >= @filemtime($this->getFilename())) { 
+            return '';
+        } else if ($rev = $this->getRelativeRevision($date_at+1, -1)) { //+1 to get also the requested date revision
+            return $rev;
+        } else {
+            return false;
+        }
+    }
 }
 
 class PageChangelog extends ChangeLog {
@@ -870,25 +889,3 @@ function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
     return $changelog->getRevisions($first, $num);
 }
 
-/**
-* Return an existing revision for a specific date which is 
-* the current one or less or equal then the date
-*
-* @param string $id 
-* @param number $date_at
-* @param boolean $media
-* @return string revision ('' for current)
-*/
-function getProperRevision($id,$date_at,$media = false){
-    $modified_time = @filemtime($media?mediaFN($id):wikiFN($id));
-    if(((int)$date_at) >= $modified_time) { //requestet REV younger or equal then time($id) => load current
-        return '';
-    } else {
-        $log = new PageRevisionLog($id);
-        if($rev = $log->getRelativeRevision($date_at+1, -1,$media)) {
-            return $rev;
-        } else {
-            return false;
-        }
-    }
-}

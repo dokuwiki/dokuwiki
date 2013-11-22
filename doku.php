@@ -49,7 +49,8 @@ $SUF = cleanText($INPUT->post->str('suffix'));
 $SUM = $INPUT->post->str('summary');
 
 if($DATE_AT) {
-    $rev_t = getProperRevision($ID,$DATE_AT);
+    $pagelog = new PageChangeLog($ID);
+    $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
     if($rev_t === '') {
         $REV = '';
     } else if ($rev_t === false) {

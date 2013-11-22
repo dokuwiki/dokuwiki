@@ -1060,7 +1060,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                       $height=null, $cache=null, $render = true) {
 
         $ret = '';
-        $intern = !is_externalmedia($src);
+        $intern = !media_isexternal($src);
         list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             // first get the $title
@@ -1248,7 +1248,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string revision ('' for current) 
      */
     function _getProperMediaRevision($media_id){
-        return getProperRevision($media_id,$this->date_at,true);
+        $pagelog = new MediaChangeLog($media_id);
+        return $pagelog->getLastRevisionAt($this->date_at);
     }
 
 

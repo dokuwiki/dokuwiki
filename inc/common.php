@@ -484,6 +484,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         if(empty($more['w'])) unset($more['w']);
         if(empty($more['h'])) unset($more['h']);
         if(isset($more['id']) && $direct) unset($more['id']);
+        if(isset($more['rev']) && !$more['rev']) unset($more['rev']);
         $more = buildURLparams($more, $sep);
     } else {
         $matches = array();
