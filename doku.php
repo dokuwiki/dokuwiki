@@ -54,7 +54,8 @@ if($DATE_AT) {
     if($rev_t === '') {
         $REV = '';
     } else if ($rev_t === false) {
-        msg('Seite gab es zu diesem Zeitpunkt noch nicht');
+        $rev_n = $pagelog->getRelativeRevision($DATE_AT,+1);
+        msg(sprintf($lang['page_nonexist_rev'], $DATE_AT,$rev_n));
         $REV = $DATE_AT;
     } else {
         $REV = $rev_t;

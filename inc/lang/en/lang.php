@@ -365,4 +365,5 @@ $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
+$lang['page_nonexist_rev']     = "Page has not existed with revision %d, try %d";
 //Setup VIM: ex: et ts=2 :
