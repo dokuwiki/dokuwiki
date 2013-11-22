@@ -187,7 +187,7 @@ function pageinfo() {
     $info['meta'] = p_get_metadata($ID);
 
     //who's the editor
-    $pagelog = new PageRevisionLog($ID, 1024);
+    $pagelog = new PageChangeLog($ID, 1024);
     if($REV) {
         $revinfo = $pagelog->getRevisionInfo($REV);
     } else {
@@ -1061,7 +1061,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $wasRemoved  = (trim($text) == ''); // check for empty or whitespace only
     $wasCreated  = !@file_exists($file);
     $wasReverted = ($REV == true);
-    $pagelog     = new PageRevisionLog($id, 1024);
+    $pagelog     = new PageChangeLog($id, 1024);
     $newRev      = false;
     $oldRev      = $pagelog->getRevisions(-1, 1); // from changelog
     $oldRev      = (int) (empty($oldRev) ? 0 : $oldRev[0]);

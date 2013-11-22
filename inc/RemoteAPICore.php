@@ -374,7 +374,7 @@ class RemoteAPICore {
             throw new RemoteException('The requested page does not exist', 121);
         }
 
-        $pagelog = new PageRevisionLog($id, 1024);
+        $pagelog = new PageChangeLog($id, 1024);
         $info = $pagelog->getRevisionInfo($time);
 
         $data = array(
@@ -647,7 +647,7 @@ class RemoteAPICore {
             throw new RemoteException('Empty page ID', 131);
         }
 
-        $pagelog = new PageRevisionLog($id);
+        $pagelog = new PageChangeLog($id);
         $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
 
         if(count($revisions)==0 && $first!=0) {

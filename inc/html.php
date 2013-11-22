@@ -415,18 +415,23 @@ function html_revisions($first=0, $media_id = false){
     global $conf;
     global $lang;
     $id = $ID;
-    if ($media_id) $id = $media_id;
+    if ($media_id) {
+        $id = $media_id;
+        $changelog = new MediaChangeLog($id);
+    } else {
+        $changelog = new PageChangeLog($id);
+    }
 
     /* we need to get one additional log entry to be able to
      * decide if this is the last page or is there another one.
      * see html_recent()
      */
-    $pagelog = new PageRevisionLog($id);
-    $revisions = $pagelog->getRevisions($first, $conf['recent']+1, (boolean)$media_id);
+
+    $revisions = $changelog->getRevisions($first, $conf['recent']+1);
 
     if(count($revisions)==0 && $first!=0){
         $first=0;
-        $revisions = $pagelog->getRevisions($first, $conf['recent']+1, (boolean)$media_id);
+        $revisions = $changelog->getRevisions($first, $conf['recent']+1);
     }
     $hasNext = false;
     if (count($revisions)>$conf['recent']) {
@@ -485,17 +490,18 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement(form_makeCloseTag('span'));
         }
 
-        $pagelog->setChunkSize(1024);
+        $changelog->setChunkSize(1024);
 
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
-        if (!$media_id) $editor = $INFO['editor'];
-        else {
-            $revinfo = $pagelog->getRevisionInfo(@filemtime(fullpath(mediaFN($id))), true);
-            if($revinfo['user']){
+        if($media_id) {
+            $revinfo = $changelog->getRevisionInfo(@filemtime(fullpath(mediaFN($id))));
+            if($revinfo['user']) {
                 $editor = $revinfo['user'];
-            }else{
+            } else {
                 $editor = $revinfo['ip'];
             }
+        } else {
+            $editor = $INFO['editor'];
         }
         $form->addElement((empty($editor))?('('.$lang['external_edit'].')'):editorinfo($editor));
         $form->addElement(form_makeCloseTag('span'));
@@ -510,12 +516,11 @@ function html_revisions($first=0, $media_id = false){
 
     foreach($revisions as $rev){
         $date = dformat($rev);
-        if (!$media_id) {
-            $info = $pagelog->getRevisionInfo($rev);
-            $exists = page_exists($id,$rev);
-        }  else {
-            $info = $pagelog->getRevisionInfo($rev,true);
-            $exists = @file_exists(mediaFN($id,$rev));
+        $info = $changelog->getRevisionInfo($rev);
+        if($media_id) {
+            $exists = @file_exists(mediaFN($id, $rev));
+        } else {
+            $exists = page_exists($id, $rev);
         }
 
         if ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
@@ -707,8 +712,8 @@ function html_recent($first=0, $show_changes='both'){
         $href = '';
 
         if ($recent['media']) {
-            $pagelog = new PageRevisionLog($recent['id']);
-            $diff = (count($pagelog->getRevisions(0, 1, true)) && @file_exists(mediaFN($recent['id'])));
+            $medialog = new MediaChangeLog($recent['id']);
+            $diff = (count($medialog->getRevisions(0, 1)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
                 $href = media_managerURL(array('tab_details' => 'history',
                     'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
@@ -1010,11 +1015,15 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     $ml_or_wl = $media ? 'ml' : 'wl';
     $l_minor = $r_minor = '';
 
-    $pagelog = new PageRevisionLog($id);
+    if($media) {
+        $changelog = new MediaChangeLog($id);
+    } else {
+        $changelog = new PageChangeLog($id);
+    }
     if(!$l_rev){
         $l_head = '&mdash;';
     }else{
-        $l_info   = $pagelog->getRevisionInfo($l_rev, $media);
+        $l_info   = $changelog->getRevisionInfo($l_rev);
         if($l_info['user']){
             $l_user = '<bdi>'.editorinfo($l_info['user']).'</bdi>';
             if(auth_ismanager()) $l_user .= ' <bdo dir="ltr">('.$l_info['ip'].')</bdo>';
@@ -1032,7 +1041,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
     }
 
     if($r_rev){
-        $r_info   = $pagelog->getRevisionInfo($r_rev, $media);
+        $r_info   = $changelog->getRevisionInfo($r_rev);
         if($r_info['user']){
             $r_user = '<bdi>'.editorinfo($r_info['user']).'</bdi>';
             if(auth_ismanager()) $r_user .= ' <bdo dir="ltr">('.$r_info['ip'].')</bdo>';
@@ -1048,7 +1057,7 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
         $r_head_title.'</a></bdi>'.
         $head_separator.$r_user.' '.$r_sum;
     }elseif($_rev = @filemtime($media_or_wikiFN($id))){
-        $_info   = $pagelog->getRevisionInfo($_rev, $media);
+        $_info   = $changelog->getRevisionInfo($_rev);
         if($_info['user']){
             $_user = '<bdi>'.editorinfo($_info['user']).'</bdi>';
             if(auth_ismanager()) $_user .= ' <bdo dir="ltr">('.$_info['ip'].')</bdo>';
@@ -1085,7 +1094,7 @@ function html_diff($text='',$intro=true,$type=null){
     global $lang;
     global $INPUT;
     global $INFO;
-    $pagelog = new PageRevisionLog($ID);
+    $pagelog = new PageChangeLog($ID);
 
     if(!$type) {
         $type = $INPUT->str('difftype');

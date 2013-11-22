@@ -492,8 +492,8 @@ function media_saveOldRevision($id){
     $date = filemtime($oldf);
     if (!$conf['mediarevisions']) return $date;
 
-    $pagelog = new PageRevisionLog($id);
-    if (!$pagelog->getRevisionInfo($date, true)) {
+    $medialog = new MediaChangeLog($id);
+    if (!$medialog->getRevisionInfo($date)) {
         // there was an external edit,
         // there is no log entry for current version of file
         if (!@file_exists(mediaMetaFN($id,'.changes'))) {
@@ -1072,8 +1072,8 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
         $l_rev = $rev1;
     }else{                        // no revision was given, compare previous to current
         $r_rev = '';
-        $pagelog = new PageRevisionLog($image);
-        $revs = $pagelog->getRevisions(0, 1, true);
+        $medialog = new MediaChangeLog($image);
+        $revs = $medialog->getRevisions(0, 1);
         if (file_exists(mediaFN($image, $revs[0]))) {
             $l_rev = $revs[0];
         } else {

@@ -288,7 +288,7 @@ class Subscription {
     public function send_bulk($page) {
         if(!$this->isenabled()) return 0;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
@@ -336,7 +336,7 @@ class Subscription {
                     while(!is_null($rev) && $rev['date'] >= $lastupdate &&
                         ($_SERVER['REMOTE_USER'] === $rev['user'] ||
                             $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)) {
-                        $pagelog = new PageRevisionLog($rev['id']);
+                        $pagelog = new PageChangeLog($rev['id']);
                         $rev = $pagelog->getRevisions($n++, 1);
                         $rev = (count($rev) > 0) ? $rev[0] : null;
                     }
@@ -516,7 +516,7 @@ class Subscription {
      * @return bool
      */
     protected function send_digest($subscriber_mail, $id, $lastupdate) {
-        $pagelog = new PageRevisionLog($id);
+        $pagelog = new PageChangeLog($id);
         $n = 0;
         do {
             $rev = $pagelog->getRevisions($n++, 1);
