@@ -161,7 +161,7 @@ function pageinfo() {
     if($REV) {
         //check if current revision was meant
         if($info['exists'] && (@filemtime($info['filepath']) == $REV)) {
-            //$REV = ''; //if we enter a rev we want to see that revision (inc media files)
+            $REV = '';
         } elseif($RANGE) {
             //section editing does not work with old revisions!
             $REV   = '';
