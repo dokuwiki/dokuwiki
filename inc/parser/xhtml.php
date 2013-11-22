@@ -796,11 +796,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
-            if($this->date_at) {
-                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getProperMediaRevision($src)),($linking=='direct'));
-            } else {
-                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
-            }
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src)),($linking=='direct'));
         }elseif($mime == 'application/x-shockwave-flash' && $render){
             // don't link flash movies
             $noLink = true;
@@ -808,11 +804,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // add file icons
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
             $link['class'] .= ' mediafile mf_'.$class;
-            if($this->date_at) {
-                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getProperMediaRevision($src)),true);
-            } else {
-                $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
-            }
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src)),true);
             if ($exists) $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))).')';
         }
 
@@ -1060,7 +1052,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                       $height=null, $cache=null, $render = true) {
 
         $ret = '';
-        $intern = !media_isexternal($src);
         list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             // first get the $title
@@ -1085,11 +1076,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 return $title;
             }
             //add image tag
-            if($intern && $this->date_at) {
-                $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache,'rev'=>$this->_getProperMediaRevision($src))).'"';
-            } else { 
-                $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
-            }
+            $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src))).'"';
             $ret .= ' class="media'.$align.'"';
 
             if ($title) {
@@ -1239,7 +1226,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
     
     /**
-     * _getProperMediaRevision is a helperfunction to internalmedia() and _media()
+     * _getLastMediaRevisionAt is a helperfunction to internalmedia() and _media()
      * which returns an existing media revision less or equal to rev or date_at
      *
      * @author lisps
@@ -1247,7 +1234,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @access protected
      * @return string revision ('' for current) 
      */
-    function _getProperMediaRevision($media_id){
+    function _getLastMediaRevisionAt($media_id){
+        if(!$this->date_at || media_isexternal($media_id)) return '';
         $pagelog = new MediaChangeLog($media_id);
         return $pagelog->getLastRevisionAt($this->date_at);
     }
