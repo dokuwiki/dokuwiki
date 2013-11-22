@@ -109,9 +109,9 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     }
 
     /**
-     * request existing rev
+     * request existing rev and check cache
      */
-    function test_requestrev() {
+    function test_requestrev_checkcache() {
         $rev = 1362525359;
         $dir = 1;
         $revexpected = 1362525899;
@@ -120,9 +120,39 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revfound = $pagelog->getRelativeRevision($rev, $dir);
         $this->assertEquals($revexpected, $revfound);
+
         //checked info returned from cache
         $info = $pagelog->getRevisionInfo($revfound);
         $this->assertEquals($infoexpected, $info);
+    }
+
+    /**
+     * request existing rev
+     */
+    function test_requestnextrev() {
+        $rev = 1362525899;
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+
+        $dir = 1;
+        $revexpected = 1362525926;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = 2;
+        $revexpected = 1362526039;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = -1;
+        $revexpected = 1362525359;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = -2;
+        $revexpected = 1362525145;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
     }
 
     /**
@@ -130,10 +160,56 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
      */
     function test_requestnextrev_chuncked() {
         $rev = 1362525899;
-        $dir = 1;
-        $revexpected = 1362525926;
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+
+        $dir = 1;
+        $revexpected = 1362525926;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = 2;
+        $revexpected = 1362526039;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = -1;
+        $revexpected = 1362525359;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = -2;
+        $revexpected = 1362525145;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+    }
+
+
+    /**
+     * request existing rev with chucked reading, chunk size smaller than line length
+     */
+    function test_requestnextrev_chunkshorterthanlines() {
+        $rev = 1362525899;
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+
+        $dir = 1;
+        $revexpected = 1362525926;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = 2;
+        $revexpected = 1362526039;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = -1;
+        $revexpected = 1362525359;
+        $revfound = $pagelog->getRelativeRevision($rev, $dir);
+        $this->assertEquals($revexpected, $revfound);
+
+        $dir = -2;
+        $revexpected = 1362525145;
         $revfound = $pagelog->getRelativeRevision($rev, $dir);
         $this->assertEquals($revexpected, $revfound);
     }

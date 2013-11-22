@@ -66,6 +66,18 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
     }
 
     /**
+     * request existing rev with chucked reading
+     */
+    function test_requestrev_chunckedsmallerthanlinelength() {
+        $rev = 1362525899;
+        $infoexpected = parseChangelogLine($this->logline);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $info = $pagelog->getRevisionInfo($rev);
+        $this->assertEquals($infoexpected, $info);
+    }
+
+    /**
      * request current version
      */
     function test_requestrecentestlogline() {

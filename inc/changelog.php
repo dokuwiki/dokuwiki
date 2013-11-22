@@ -494,12 +494,7 @@ abstract class ChangeLog {
             // chunk backwards
             $finger = max($tail-$this->chunk_size, 0);
             while ($count<$num+$first) {
-                fseek($fp, $finger);
-                $nl = $finger;
-                if ($finger>0) {
-                    fgets($fp); // slip the finger forward to a new line
-                    $nl = ftell($fp);
-                }
+                $nl = getNewlinepointer($fp, $finger);
 
                 // was the chunk big enough? if not, take another bite
                 if($nl > 0 && $tail <= $nl){
@@ -514,7 +509,7 @@ abstract class ChangeLog {
                 $read_size = max($tail-$finger, 0); // found chunk size
                 $got = 0;
                 while ($got<$read_size && !feof($fp)) {
-                    $tmp = @fread($fp, max($read_size-$got, 0));
+                    $tmp = @fread($fp, max($read_size-$got, 0)); //todo why not use chunk_size?
                     if ($tmp===false) { break; } //error state
                     $got += strlen($tmp);
                     $chunk .= $tmp;
@@ -620,22 +615,22 @@ abstract class ChangeLog {
             if($checkotherchunck) {
                 //search bounds of chunck, rounded on new line, but smaller than $chunck_size
                 if($direction > 0) {
-                    $head        = $tail;
-                    $lookpointer = true;
-                    $tail        = $head + floor($this->chunk_size * (2 / 3));
-                    while($lookpointer) {
-                        $tail        = min($tail, $eof);
-                        $tail        = $this->getNewlinepointer($fp, $tail);
-                        $lookpointer = $tail - $head > $this->chunk_size;
-                        if($lookpointer) {
-                            $tail = $head + floor(($tail - $head) / 2);
-                        }
-                        if($tail == $head) break;
-                    }
+                    $head = $tail;
+                    $tail = $head + floor($this->chunk_size * (2 / 3));
+                    $tail = $this->getNewlinepointer($fp, $tail);
                 } else {
                     $tail = $head;
                     $head = max($tail - $this->chunk_size, 0);
-                    $head = $this->getNewlinepointer($fp, $head);
+                    while(true) {
+                        $nl = $this->getNewlinepointer($fp, $head);
+                        // was the chunk big enough? if not, take another bite
+                        if($nl > 0 && $tail <= $nl) {
+                            $head = max($head - $this->chunk_size, 0);
+                        } else {
+                            $head = $nl;
+                            break;
+                        }
+                    }
                 }
 
                 //load next chunck
@@ -693,11 +688,12 @@ abstract class ChangeLog {
                 $finger     = $head + floor(($tail - $head) / 2.0);
                 $finger     = $this->getNewlinepointer($fp, $finger);
                 $tmp        = fgets($fp);
-                $tmp        = parseChangelogLine($tmp);
-                $finger_rev = $tmp['date'];
                 if($finger == $head || $finger == $tail) {
                     break;
                 }
+                $tmp        = parseChangelogLine($tmp);
+                $finger_rev = $tmp['date'];
+
                 if($finger_rev > $rev) {
                     $tail = $finger;
                 } else {
@@ -737,7 +733,7 @@ abstract class ChangeLog {
         $got        = 0;
         fseek($fp, $head);
         while($got < $chunk_size && !feof($fp)) {
-            $tmp = @fread($fp, max($chunk_size - $got, 0));
+            $tmp = @fread($fp, max(min($this->chunk_size, $chunk_size - $got), 0));
             if($tmp === false) { //error state
                 break;
             }
@@ -758,8 +754,12 @@ abstract class ChangeLog {
      */
     protected function getNewlinepointer($fp, $finger) {
         fseek($fp, $finger);
-        fgets($fp); // slip the finger forward to a new line
-        return ftell($fp);
+        $nl = $finger;
+        if($finger > 0) {
+            fgets($fp); // slip the finger forward to a new line
+            $nl = ftell($fp);
+        }
+        return $nl;
     }
 
     /**
