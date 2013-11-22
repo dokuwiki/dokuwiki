@@ -825,8 +825,8 @@ function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
 * @return string revision ('' for current)
 */
 function getProperRevision($id,$date_at,$media = false){
-    $create_time = @filemtime($media?mediaFN($id):wikiFN($id));
-    if(((int)$date_at) >= $create_time) { //requestet REV older then time($id) => load current
+    $modified_time = @filemtime($media?mediaFN($id):wikiFN($id));
+    if(((int)$date_at) >= $modified_time) { //requestet REV younger or equal then time($id) => load current
         return '';
     } else {
         $log = new PageRevisionLog($id);

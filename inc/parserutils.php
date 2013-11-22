@@ -67,7 +67,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
 
     if($rev || $date_at){
         if(@file_exists($file)){
-            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$rev,$date_at); //no caching on old revisions
+            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,max($rev,$date_at)); //no caching on old revisions
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
@@ -583,7 +583,7 @@ function p_sort_modes($a, $b){
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_render($mode,$instructions,&$info,$rev='',$date_at=''){
+function p_render($mode,$instructions,&$info,$date_at=''){
     if(is_null($instructions)) return '';
 
     $Renderer =& p_get_renderer($mode);
@@ -591,9 +591,6 @@ function p_render($mode,$instructions,&$info,$rev='',$date_at=''){
 
     $Renderer->reset();
 
-    if($rev) {
-        $Renderer->rev = $rev;
-    }
     if($date_at) {
         $Renderer->date_at = $date_at;
     }

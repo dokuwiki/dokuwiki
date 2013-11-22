@@ -383,6 +383,7 @@ function idfilter($id, $ue = true) {
 function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;') {
     global $conf;
     if(is_array($urlParameters)) {
+        if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);

@@ -5,9 +5,7 @@ require_once(DOKU_INC.'inc/init.php');
 
 $IMG  = getID('media');
 $ID   = cleanID($INPUT->str('id'));
-$REV    = & $INPUT->ref('rev');
-//sanitize revision
-$REV = preg_replace('/[^0-9]/', '', $REV);
+$REV  = $INPUT->int('rev');
 
 // this makes some general info available as well as the info about the
 // "parent" page

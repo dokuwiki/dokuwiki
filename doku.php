@@ -34,7 +34,7 @@ $QUERY          = trim($INPUT->str('id'));
 $ID             = getID();
 
 $REV   = $INPUT->int('rev');
-$DATE_AT= $INPUT->int('at');
+$DATE_AT = $INPUT->int('at');
 $IDX   = $INPUT->str('idx');
 $DATE  = $INPUT->int('date');
 $RANGE = $INPUT->str('range');
