@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Finnish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Rami Lehti <rammer@ipi.fi>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -51,6 +52,7 @@ $lang['btn_revert']            = 'palauta';
 $lang['btn_register']          = 'Rekisteröidy';
 $lang['btn_apply']             = 'Toteuta';
 $lang['btn_media']             = 'Media manager';
+$lang['btn_deleteuser']        = 'Poista tilini';
 $lang['loggedinas']            = 'Kirjautunut nimellä';
 $lang['user']                  = 'Käyttäjänimi';
 $lang['pass']                  = 'Salasana';
@@ -78,6 +80,10 @@ $lang['profna']                = 'Tässä wikissä profiilien muokkaaminen ei ol
 $lang['profnochange']          = 'Ei muutoksia.';
 $lang['profnoempty']           = 'Tyhjä nimi tai sähköpostiosoite ei ole sallittu.';
 $lang['profchanged']           = 'Käyttäjän profiilin päivitys onnistui.';
+$lang['profnodelete']          = 'Tämä wiki ei tue käyttäjien poistamista';
+$lang['profdeleteuser']        = 'Poista tili';
+$lang['profdeleted']           = 'Tilisi on poistettu tästä wikistä';
+$lang['profconfdelete']        = 'Haluan poistaa tilini tästä wikistä.<br/> Tätä toimintoa ei voi peruuttaa.';
 $lang['pwdforget']             = 'Unohtuiko salasana? Hanki uusi';
 $lang['resendna']              = 'Tämä wiki ei tue salasanan uudelleenlähettämistä.';
 $lang['resendpwd']             = 'Aseta uusisalasana';
