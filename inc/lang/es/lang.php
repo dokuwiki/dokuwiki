@@ -30,6 +30,7 @@
  * @author Mercè López mercelz@gmail.com
  * @author r0sk <r0sk10@gmail.com>
  * @author monica <may.dorado@gmail.com>
+ * @author chema <jmtornerosanz@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
