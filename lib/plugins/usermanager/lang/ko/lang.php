@@ -68,5 +68,5 @@ $lang['import_error_badmail']  = '잘못된 이메일 주소';
 $lang['import_error_upload']   = '가져오기를 실패했습니다. csv 파일을 올릴 수 없거나 비어 있습니다.';
 $lang['import_error_readfail'] = '가져오기를 실패했습니다. 올린 파일을 읽을 수 없습니다.';
 $lang['import_error_create']   = '사용자를 만들 수 없습니다.';
-$lang['import_notify_fail']    = '알림 메시지를 가져온 %2$s (이메일: %1$s ) 사용자에게 보낼 수 없습니다.';
+$lang['import_notify_fail']    = '알림 메시지를 가져온 %s (이메일: %s ) 사용자에게 보낼 수 없습니다.';
 $lang['import_downloadfailures'] = '교정을 위한 CSV로 다운로드 실패';
