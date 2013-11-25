@@ -350,7 +350,7 @@ abstract class ChangeLog {
      * Constructor
      *
      * @param string $id         page id
-     * @param int    $chunk_size maximum block size read from file
+     * @param int $chunk_size maximum block size read from file
      */
     public function __construct($id, $chunk_size = 8192) {
         global $cache_revinfo;
@@ -398,7 +398,7 @@ abstract class ChangeLog {
      * consecutive calls to getRevisionInfo. For large changelog files, only the chunk
      * containing the requested changelog line is read.
      *
-     * @param int  $rev        revision timestamp
+     * @param int $rev        revision timestamp
      * @return bool|array false or array with entries:
      *      - date:  unix timestamp
      *      - ip:    IPv4 address (127.0.0.1)
@@ -455,8 +455,8 @@ abstract class ChangeLog {
      * backwards in chunks until the requested number of changelog
      * lines are recieved.
      *
-     * @param int  $first      skip the first n changelog lines
-     * @param int  $num        number of revisions to return
+     * @param int $first      skip the first n changelog lines
+     * @param int $num        number of revisions to return
      * @return array with the revision timestamps
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
@@ -465,57 +465,62 @@ abstract class ChangeLog {
     public function getRevisions($first, $num) {
         $revs = array();
         $lines = array();
-        $count  = 0;
+        $count = 0;
 
         $num = max($num, 0);
-        if ($num == 0) { return $revs; }
+        if($num == 0) {
+            return $revs;
+        }
 
-        if ($first<0) {
+        if($first < 0) {
             $first = 0;
-        } else if (@file_exists($this->getFilename())) {
+        } else if(@file_exists($this->getFilename())) {
             // skip current revision if the page exists
-            $first = max($first+1, 0);
+            $first = max($first + 1, 0);
         }
 
         $file = $this->getChangelogFilename();
 
-        if (!@file_exists($file)) { return $revs; }
-        if (filesize($file)<$this->chunk_size || $this->chunk_size==0) {
+        if(!@file_exists($file)) {
+            return $revs;
+        }
+        if(filesize($file) < $this->chunk_size || $this->chunk_size == 0) {
             // read whole file
             $lines = file($file);
-            if ($lines===false) { return $revs; }
+            if($lines === false) {
+                return $revs;
+            }
         } else {
             // read chunks backwards
             $fp = fopen($file, 'rb'); // "file pointer"
-            if ($fp===false) { return $revs; }
+            if($fp === false) {
+                return $revs;
+            }
             fseek($fp, 0, SEEK_END);
             $tail = ftell($fp);
 
             // chunk backwards
-            $finger = max($tail-$this->chunk_size, 0);
-            while ($count<$num+$first) {
-                fseek($fp, $finger);
-                $nl = $finger;
-                if ($finger>0) {
-                    fgets($fp); // slip the finger forward to a new line
-                    $nl = ftell($fp);
-                }
+            $finger = max($tail - $this->chunk_size, 0);
+            while($count < $num + $first) {
+                $nl = $this->getNewlinepointer($fp, $finger);
 
                 // was the chunk big enough? if not, take another bite
-                if($nl > 0 && $tail <= $nl){
-                    $finger = max($finger-$this->chunk_size, 0);
+                if($nl > 0 && $tail <= $nl) {
+                    $finger = max($finger - $this->chunk_size, 0);
                     continue;
-                }else{
+                } else {
                     $finger = $nl;
                 }
 
                 // read chunk
                 $chunk = '';
-                $read_size = max($tail-$finger, 0); // found chunk size
+                $read_size = max($tail - $finger, 0); // found chunk size
                 $got = 0;
-                while ($got<$read_size && !feof($fp)) {
-                    $tmp = @fread($fp, max($read_size-$got, 0));
-                    if ($tmp===false) { break; } //error state
+                while($got < $read_size && !feof($fp)) {
+                    $tmp = @fread($fp, max($read_size - $got, 0)); //todo why not use chunk_size?
+                    if($tmp === false) {
+                        break;
+                    } //error state
                     $got += strlen($tmp);
                     $chunk .= $tmp;
                 }
@@ -527,25 +532,27 @@ abstract class ChangeLog {
                 $lines = array_merge($tmp, $lines);
 
                 // next chunk
-                if ($finger==0) { break; } // already read all the lines
+                if($finger == 0) {
+                    break;
+                } // already read all the lines
                 else {
                     $tail = $finger;
-                    $finger = max($tail-$this->chunk_size, 0);
+                    $finger = max($tail - $this->chunk_size, 0);
                 }
             }
             fclose($fp);
         }
 
         // skip parsing extra lines
-        $num = max(min(count($lines)-$first, $num), 0);
-        if      ($first>0 && $num>0)  { $lines = array_slice($lines, max(count($lines)-$first-$num, 0), $num); }
-        else if ($first>0 && $num==0) { $lines = array_slice($lines, 0, max(count($lines)-$first, 0)); }
-        else if ($first==0 && $num>0) { $lines = array_slice($lines, max(count($lines)-$num, 0)); }
+        $num = max(min(count($lines) - $first, $num), 0);
+        if     ($first > 0 && $num > 0)  { $lines = array_slice($lines, max(count($lines) - $first - $num, 0), $num); }
+        else if($first > 0 && $num == 0) { $lines = array_slice($lines, 0, max(count($lines) - $first, 0)); }
+        else if($first == 0 && $num > 0) { $lines = array_slice($lines, max(count($lines) - $num, 0)); }
 
         // handle lines in reverse order
-        for ($i = count($lines)-1; $i >= 0; $i--) {
+        for($i = count($lines) - 1; $i >= 0; $i--) {
             $tmp = parseChangelogLine($lines[$i]);
-            if ($tmp!==false) {
+            if($tmp !== false) {
                 $this->cache[$this->id][$tmp['date']] = $tmp;
                 $revs[] = $tmp['date'];
             }
@@ -563,8 +570,8 @@ abstract class ChangeLog {
      * Adjacent changelog lines are optimistically parsed and cached to speed up
      * consecutive calls to getRevisionInfo.
      *
-     * @param int  $rev        revision timestamp used as startdate (doesn't need to be revisionnumber)
-     * @param int  $direction  give position of returned revision with respect to $rev; positive=next, negative=prev
+     * @param int $rev        revision timestamp used as startdate (doesn't need to be revisionnumber)
+     * @param int $direction  give position of returned revision with respect to $rev; positive=next, negative=prev
      * @return bool|int
      *      timestamp of the requested revision
      *      otherwise false
@@ -574,7 +581,7 @@ abstract class ChangeLog {
         $direction = (int) $direction;
 
         //no direction given or last rev, so no follow-up
-        if(!$direction || ($direction > 0 && $this->isCurrentRevision($rev)) ) {
+        if(!$direction || ($direction > 0 && $this->isCurrentRevision($rev))) {
             return false;
         }
 
@@ -584,8 +591,8 @@ abstract class ChangeLog {
 
         // look for revisions later/earlier then $rev, when founded count till the wanted revision is reached
         // also parse and cache changelog lines for getRevisionInfo().
-        $revcounter       = 0;
-        $relativerev      = false;
+        $revcounter = 0;
+        $relativerev = false;
         $checkotherchunck = true; //always runs once
         while(!$relativerev && $checkotherchunck) {
             $tmp = array();
@@ -593,10 +600,10 @@ abstract class ChangeLog {
             $count = count($lines);
             if($direction > 0) {
                 $start = 0;
-                $step  = 1;
+                $step = 1;
             } else {
                 $start = $count - 1;
-                $step  = -1;
+                $step = -1;
             }
             for($i = $start; $i >= 0 && $i < $count; $i = $i + $step) {
                 $tmp = parseChangelogLine($lines[$i]);
@@ -620,22 +627,22 @@ abstract class ChangeLog {
             if($checkotherchunck) {
                 //search bounds of chunck, rounded on new line, but smaller than $chunck_size
                 if($direction > 0) {
-                    $head        = $tail;
-                    $lookpointer = true;
-                    $tail        = $head + floor($this->chunk_size * (2 / 3));
-                    while($lookpointer) {
-                        $tail        = min($tail, $eof);
-                        $tail        = $this->getNewlinepointer($fp, $tail);
-                        $lookpointer = $tail - $head > $this->chunk_size;
-                        if($lookpointer) {
-                            $tail = $head + floor(($tail - $head) / 2);
-                        }
-                        if($tail == $head) break;
-                    }
+                    $head = $tail;
+                    $tail = $head + floor($this->chunk_size * (2 / 3));
+                    $tail = $this->getNewlinepointer($fp, $tail);
                 } else {
                     $tail = $head;
                     $head = max($tail - $this->chunk_size, 0);
-                    $head = $this->getNewlinepointer($fp, $head);
+                    while(true) {
+                        $nl = $this->getNewlinepointer($fp, $head);
+                        // was the chunk big enough? if not, take another bite
+                        if($nl > 0 && $tail <= $nl) {
+                            $head = max($head - $this->chunk_size, 0);
+                        } else {
+                            $head = $nl;
+                            break;
+                        }
+                    }
                 }
 
                 //load next chunck
@@ -650,12 +657,11 @@ abstract class ChangeLog {
         return $relativerev;
     }
 
-
     /**
      * Returns lines from changelog.
      * If file larger than $chuncksize, only chunck is read that could contain $rev.
      *
-     * @param int  $rev   revision timestamp
+     * @param int $rev   revision timestamp
      * @return array(fp, array(changeloglines), $head, $tail, $eof)|bool
      *     returns false when not succeed. fp only defined for chuck reading, needs closing.
      */
@@ -666,10 +672,10 @@ abstract class ChangeLog {
             return false;
         }
 
-        $fp    = null;
-        $head  = 0;
-        $tail  = 0;
-        $eof   = 0;
+        $fp = null;
+        $head = 0;
+        $tail = 0;
+        $eof = 0;
 
         if(filesize($file) < $this->chunk_size || $this->chunk_size == 0) {
             // read whole file
@@ -685,19 +691,20 @@ abstract class ChangeLog {
             }
             $head = 0;
             fseek($fp, 0, SEEK_END);
-            $eof        = ftell($fp);
-            $tail       = $eof;
+            $eof = ftell($fp);
+            $tail = $eof;
 
             // find chunk
             while($tail - $head > $this->chunk_size) {
-                $finger     = $head + floor(($tail - $head) / 2.0);
-                $finger     = $this->getNewlinepointer($fp, $finger);
-                $tmp        = fgets($fp);
-                $tmp        = parseChangelogLine($tmp);
-                $finger_rev = $tmp['date'];
+                $finger = $head + floor(($tail - $head) / 2.0);
+                $finger = $this->getNewlinepointer($fp, $finger);
+                $tmp = fgets($fp);
                 if($finger == $head || $finger == $tail) {
                     break;
                 }
+                $tmp = parseChangelogLine($tmp);
+                $finger_rev = $tmp['date'];
+
                 if($finger_rev > $rev) {
                     $tail = $finger;
                 } else {
@@ -732,12 +739,12 @@ abstract class ChangeLog {
      * @return array lines read from chunck
      */
     protected function readChunk($fp, $head, $tail) {
-        $chunk      = '';
+        $chunk = '';
         $chunk_size = max($tail - $head, 0); // found chunk size
-        $got        = 0;
+        $got = 0;
         fseek($fp, $head);
         while($got < $chunk_size && !feof($fp)) {
-            $tmp = @fread($fp, max($chunk_size - $got, 0));
+            $tmp = @fread($fp, max(min($this->chunk_size, $chunk_size - $got), 0));
             if($tmp === false) { //error state
                 break;
             }
@@ -758,14 +765,18 @@ abstract class ChangeLog {
      */
     protected function getNewlinepointer($fp, $finger) {
         fseek($fp, $finger);
-        fgets($fp); // slip the finger forward to a new line
-        return ftell($fp);
+        $nl = $finger;
+        if($finger > 0) {
+            fgets($fp); // slip the finger forward to a new line
+            $nl = ftell($fp);
+        }
+        return $nl;
     }
 
     /**
      * Check whether given revision is the current page
      *
-     * @param int  $rev   timestamp of current page
+     * @param int $rev   timestamp of current page
      * @return bool true if $rev is current revision, otherwise false
      */
     public function isCurrentRevision($rev) {
@@ -834,7 +845,6 @@ class MediaChangelog extends ChangeLog {
     }
 }
 
-
 /**
  * Get the changelog information for a specific page id
  * and revision (timestamp). Adjacent changelog lines
@@ -848,7 +858,7 @@ class MediaChangelog extends ChangeLog {
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
+function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
     if($media) {
         $changelog = new MediaChangeLog($id, $chunk_size);
     } else {
@@ -880,7 +890,7 @@ function getRevisionInfo($id, $rev, $chunk_size=8192, $media=false) {
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function getRevisions($id, $first, $num, $chunk_size=8192, $media=false) {
+function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
     if($media) {
         $changelog = new MediaChangeLog($id, $chunk_size);
     } else {
