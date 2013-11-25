@@ -10,6 +10,7 @@
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['menu']                  = '사용자 관리자';
 $lang['noauth']                = '(사용자 인증이 불가능합니다)';
@@ -33,7 +34,7 @@ $lang['search_prompt']         = '검색 수행';
 $lang['clear']                 = '검색 필터 재설정';
 $lang['filter']                = '필터';
 $lang['export_all']            = '모든 사용자 목록 내보내기 (CSV)';
-$lang['export_filtered']       = '필터된 사용자 목록 내보내기 (CSV)';
+$lang['export_filtered']       = '필터된 사용자 목록 내보내기(CSV)';
 $lang['import']                = '새 사용자 목록 가져오기';
 $lang['line']                  = '줄 번호';
 $lang['error']                 = '오류 메시지';
