@@ -28,6 +28,7 @@
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Emmanuel <seedfloyd@gmail.com>
+ * @author Jérôme Brandt <jeromebrandt@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -309,6 +310,7 @@ $lang['i_policy']              = 'Politique de contrôle d\'accès initiale';
 $lang['i_pol0']                = 'Wiki ouvert (lecture, écriture, envoi de fichiers pour tout le monde)';
 $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
+$lang['i_allowreg']            = 'Permettre aux utilisateurs de s\'enregistrer eux-mêmes.';
 $lang['i_retry']               = 'Réessayer';
 $lang['i_license']             = 'Veuillez choisir la licence sous laquelle vous souhaitez placer votre contenu :';
 $lang['i_license_none']        = 'Ne pas afficher d\'information de licence.';
@@ -346,3 +348,7 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas l\'autorisation de 
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas l\'autorisation d\'envoyer des fichiers.';
 $lang['media_update']          = 'Envoyer une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
+$lang['currentns']             = 'Namespace actuel';
+$lang['searchresult']          = 'Résultat de la recherche';
+$lang['plainhtml']             = 'HTML brut';
+$lang['wikimarkup']            = 'Wiki balise';
