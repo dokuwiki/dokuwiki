@@ -67,7 +67,7 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
 
     if($rev || $date_at){
         if(@file_exists($file)){
-            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,max($rev,$date_at)); //no caching on old revisions
+            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
