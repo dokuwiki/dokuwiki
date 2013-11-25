@@ -17,6 +17,7 @@
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
+ * @author Boris <boris@newton-media.no>
  */
 $lang['menu']                  = 'Tilbakestillingsbehandler';
 $lang['filter']                = 'Søk etter søppelmeldinger';

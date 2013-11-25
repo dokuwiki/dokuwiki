@@ -19,6 +19,7 @@
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
+ * @author Boris <boris@newton-media.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -95,6 +96,7 @@ $lang['profnodelete']          = 'Denne wikien støtter ikke sletting av brukere
 $lang['profdeleteuser']        = 'Slett konto';
 $lang['profdeleted']           = 'Din brukerkonto har blitt slettet fra denne wikien';
 $lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke omgjøres.';
+$lang['profconfdeletemissing'] = 'Boks for bekreftelse ikke avkrysset';
 $lang['pwdforget']             = 'Glemt passordet ditt? Få deg et nytt';
 $lang['resendna']              = 'Denne wikien støtter ikke nyutsending av passord.';
 $lang['resendpwd']             = 'Sett nytt passord for';
@@ -110,6 +112,7 @@ $lang['searchmedia_in']        = 'Søk i %s';
 $lang['txt_upload']            = 'Velg fil som skal lastes opp';
 $lang['txt_filename']          = 'Skriv inn wikinavn (alternativt)';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
+$lang['maxuploadsize']         = 'Opplast maks % per fil.';
 $lang['lockedby']              = 'Låst av';
 $lang['lockexpire']            = 'Låsingen utløper';
 $lang['js']['willexpire']      = 'Din redigeringslås for dette dokumentet kommer snart til å utløpe.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
@@ -209,6 +212,7 @@ $lang['user_tools']            = 'Brukerverktøy';
 $lang['site_tools']            = 'Nettstedverktøy';
 $lang['page_tools']            = 'Sideverktøy';
 $lang['skip_to_content']       = 'Hopp til innhold';
+$lang['sidebar']               = 'Sidefelt';
 $lang['mail_newpage']          = 'side lagt til:';
 $lang['mail_changed']          = 'side endret:';
 $lang['mail_subscribe_list']   = 'side endret i \'namespace\':';
@@ -307,6 +311,8 @@ $lang['i_allowreg']            = 'Tillat at brukere registrerer seg selv';
 $lang['i_retry']               = 'Prøv igjen';
 $lang['i_license']             = 'Velg lisens som du vil legge ut innholdet under:';
 $lang['i_license_none']        = 'Ikke vis noen lisensinformasjon';
+$lang['i_pop_field']           = 'Venligst hejlp oss å forbedre Dokuwiki-opplevelsen:';
+$lang['i_pop_label']           = 'Sand annonyme bruksdata til Dokuwiki-utviklerene, en gang i måneden';
 $lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måneder siden';
@@ -333,8 +339,12 @@ $lang['media_search']          = 'Søk i navnerommet <strong>%s</strong>.';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s på %s';
 $lang['media_edit']            = 'Rediger %s';
+$lang['media_history']         = '%vis historikk';
 $lang['media_meta_edited']     = 'metadata er endra';
 $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese filer.';
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';
 $lang['media_update']          = 'Last opp ny versjon';
 $lang['media_restore']         = 'Gjenopprett denne versjonen';
+$lang['currentns']             = 'gjeldende navnemellomrom';
+$lang['searchresult']          = 'Søk i resultat';
+$lang['plainhtml']             = 'Enkel HTML';
