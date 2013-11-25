@@ -9,6 +9,7 @@
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['menu']                  = '플러그인 관리';
 $lang['download']              = '새 플러그인을 다운로드하고 설치';
@@ -33,16 +34,16 @@ $lang['deleted']               = '%s 플러그인이 삭제되었습니다.';
 $lang['downloading']           = '다운로드 중 ...';
 $lang['downloaded']            = '%s 플러그인이 성공적으로 설치되었습니다';
 $lang['downloads']             = '다음 플러그인이 성공적으로 설치되었습니다:';
-$lang['download_none']         = '플러그인이 없거나 다운로드 또는 설치 중에 알 수 없는 문제가 발생했습니다.';
+$lang['download_none']         = '플러그인이 없거나 다운로드 또는 설치 중에 알 수 없는 문제가 발생하였습니다.';
 $lang['plugin']                = '플러그인:';
 $lang['components']            = '구성 요소';
 $lang['noinfo']                = '이 플러그인은 어떤 정보도 없습니다. 잘못된 플러그인일 수 있습니다.';
-$lang['name']                  = '이름:';
-$lang['date']                  = '날짜:';
-$lang['type']                  = '종류:';
-$lang['desc']                  = '설명:';
-$lang['author']                = '저자:';
-$lang['www']                   = '웹:';
+$lang['name']                  = '이름: ';
+$lang['date']                  = '날짜: ';
+$lang['type']                  = '종류: ';
+$lang['desc']                  = '설명: ';
+$lang['author']                = '저자: ';
+$lang['www']                   = '웹: ';
 $lang['error']                 = '알 수 없는 문제가 발생했습니다.';
 $lang['error_download']        = '플러그인 파일을 다운로드 할 수 없습니다: %s';
 $lang['error_badurl']          = '잘못된 URL 같습니다 - URL에서 파일 이름을 알 수 없습니다';
