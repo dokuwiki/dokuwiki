@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['server']                = 'PostgreSQL 서버';
 $lang['port']                  = 'PostgreSQL 서버의 포트';
@@ -16,10 +17,10 @@ $lang['checkPass']             = '비밀번호를 확인하기 위한 SQL 문';
 $lang['getUserInfo']           = '사용자 정보를 가져오기 위한 SQL 문';
 $lang['getGroups']             = '사용자의 그룹 구성원을 가져오기 위한 SQL 문';
 $lang['getUsers']              = '모든 사용자를 나타낼 SQL 문';
-$lang['FilterLogin']           = '로그인 이름 별로 사용자를 필터하기 위한 SQL 조항';
-$lang['FilterName']            = '전체 이름 별로 사용자를 필터하기 위한 SQL 조항';
-$lang['FilterEmail']           = '이메일 주소 별로 사용자를 필터하기 위한 SQL 조항';
-$lang['FilterGroup']           = '그룹 구성원 별로 사용자를 필터하기 위한 SQL 조항';
+$lang['FilterLogin']           = '로그인 이름별로 사용자를 필터하기 위한 SQL 조항';
+$lang['FilterName']            = '전체 이름별로 사용자를 필터하기 위한 SQL 조항';
+$lang['FilterEmail']           = '이메일 주소별로 사용자를 필터하기 위한 SQL 조항';
+$lang['FilterGroup']           = '그룹 구성원별로 사용자를 필터하기 위한 SQL 조항';
 $lang['SortOrder']             = '사용자를 정렬할 SQL 조항';
 $lang['addUser']               = '새 사용자를 추가할 SQL 문';
 $lang['addGroup']              = '새 그룹을 추가할 SQL 문';

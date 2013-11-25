@@ -11,6 +11,7 @@
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
