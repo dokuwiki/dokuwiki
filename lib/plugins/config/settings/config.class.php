@@ -339,8 +339,7 @@ if (!class_exists('configuration')) {
 
             // the same for the active template
             if (@file_exists(tpl_incdir().$file)){
-                $conf = array();
-                @include(tpl_incdir().$file);
+                $conf = $this->_read_config(tpl_incdir().$file);
                 foreach ($conf as $key => $value){
                     $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
                 }
