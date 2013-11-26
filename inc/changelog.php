@@ -517,7 +517,7 @@ abstract class ChangeLog {
                 $read_size = max($tail - $finger, 0); // found chunk size
                 $got = 0;
                 while($got < $read_size && !feof($fp)) {
-                    $tmp = @fread($fp, max($read_size - $got, 0)); //todo why not use chunk_size?
+                    $tmp = @fread($fp, max(min($this->chunk_size, $read_size - $got), 0));
                     if($tmp === false) {
                         break;
                     } //error state
