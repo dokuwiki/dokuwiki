@@ -1800,7 +1800,7 @@ function media_resize_image($file, $ext, $w, $h=0){
     if($info == false) return $file; // that's no image - it's a spaceship!
 
     if(!$h) $h = round(($w * $info[1]) / $info[0]);
-	if(!$w) $w = round(($h * $info[0]) / $info[1]);
+    if(!$w) $w = round(($h * $info[0]) / $info[1]);
 
     // we wont scale up to infinity
     if($w > 2000 || $h > 2000) return $file;
