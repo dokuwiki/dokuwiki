@@ -517,7 +517,7 @@ abstract class ChangeLog {
                 $read_size = max($tail - $finger, 0); // found chunk size
                 $got = 0;
                 while($got < $read_size && !feof($fp)) {
-                    $tmp = @fread($fp, max($read_size - $got, 0)); //todo why not use chunk_size?
+                    $tmp = @fread($fp, max(min($this->chunk_size, $read_size - $got), 0));
                     if($tmp === false) {
                         break;
                     } //error state
@@ -625,28 +625,8 @@ abstract class ChangeLog {
                 && !(($tail == $eof && $direction > 0) || ($head == 0 && $direction < 0));
 
             if($checkotherchunck) {
-                //search bounds of chunck, rounded on new line, but smaller than $chunck_size
-                if($direction > 0) {
-                    $head = $tail;
-                    $tail = $head + floor($this->chunk_size * (2 / 3));
-                    $tail = $this->getNewlinepointer($fp, $tail);
-                } else {
-                    $tail = $head;
-                    $head = max($tail - $this->chunk_size, 0);
-                    while(true) {
-                        $nl = $this->getNewlinepointer($fp, $head);
-                        // was the chunk big enough? if not, take another bite
-                        if($nl > 0 && $tail <= $nl) {
-                            $head = max($head - $this->chunk_size, 0);
-                        } else {
-                            $head = $nl;
-                            break;
-                        }
-                    }
-                }
+                list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, $direction);
 
-                //load next chunck
-                $lines = $this->readChunk($fp, $head, $tail);
                 if(empty($lines)) break;
             }
         }
@@ -655,6 +635,61 @@ abstract class ChangeLog {
         }
 
         return $relativerev;
+    }
+
+    /**
+     * Returns revisions around rev1 and rev2
+     * When available it returns $max entries for each revision
+     *
+     * @param int $rev1 oldest revision timestamp
+     * @param int $rev2 newest revision timestamp
+     * @param int $max maximum number of revisions returned
+     * @return array with two arrays with revisions surrounding rev1 respectively rev2
+     */
+    public function getRevisionsAround($rev1, $rev2, $max = 50) {
+        $max = floor(abs($max) / 2)*2 + 1;
+        $rev1 = max($rev1, 0);
+        $rev2 = max($rev2, 0);
+
+        if($rev2 < $rev1) {
+            $rev = $rev2;
+            $rev2 = $rev1;
+            $rev1 = $rev;
+        }
+        //collect revisions around rev2
+        list($revs2, $allrevs, $fp, $lines, $head, $tail) = $this->retrieveRevisionsAround($rev2, $max);
+
+        if(empty($revs2)) return array(array(), array());
+
+        //collect revisions around rev1
+        $index = array_search($rev1, $allrevs);
+        if($index === false) {
+            //no overlapping revisions
+            list($revs1,,,,,) = $this->retrieveRevisionsAround($rev1, $max);
+            if(empty($revs1)) $revs1 = array();
+        } else {
+            //revisions overlaps, reuse revisions around rev2
+            $revs1 = $allrevs;
+            while($head > 0) {
+                for($i = count($lines) - 1; $i >= 0; $i--) {
+                    $tmp = parseChangelogLine($lines[$i]);
+                    if($tmp !== false) {
+                        $this->cache[$this->id][$tmp['date']] = $tmp;
+                        $revs1[] = $tmp['date'];
+                        $index++;
+
+                        if($index > floor($max / 2)) break 2;
+                    }
+                }
+
+                list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
+            }
+            sort($revs1);
+            //return wanted selection
+            $revs1 = array_slice($revs1, max($index - floor($max/2), 0), $max);
+        }
+
+        return array($revs1, $revs2);
     }
 
     /**
@@ -759,7 +794,7 @@ abstract class ChangeLog {
     /**
      * Set pointer to first new line after $finger and return its position
      *
-     * @param $fp resource filepointer
+     * @param resource $fp filepointer
      * @param $finger int a pointer
      * @return int pointer
      */
@@ -801,8 +836,130 @@ abstract class ChangeLog {
             return false;
         }
     }
+
+    /**
+     * Returns the next lines of the changelog  of the chunck before head or after tail
+     *
+     * @param resource $fp filepointer
+     * @param int $head position head of last chunk
+     * @param int $tail position tail of last chunk
+     * @param int $direction positive forward, negative backward
+     * @return array with entries:
+     *    - $lines: changelog lines of readed chunk
+     *    - $head: head of chunk
+     *    - $tail: tail of chunk
+     */
+    protected function readAdjacentChunk($fp, $head, $tail, $direction) {
+        if(!$fp) return array(array(), $head, $tail);
+
+        if($direction > 0) {
+            //read forward
+            $head = $tail;
+            $tail = $head + floor($this->chunk_size * (2 / 3));
+            $tail = $this->getNewlinepointer($fp, $tail);
+        } else {
+            //read backward
+            $tail = $head;
+            $head = max($tail - $this->chunk_size, 0);
+            while(true) {
+                $nl = $this->getNewlinepointer($fp, $head);
+                // was the chunk big enough? if not, take another bite
+                if($nl > 0 && $tail <= $nl) {
+                    $head = max($head - $this->chunk_size, 0);
+                } else {
+                    $head = $nl;
+                    break;
+                }
+            }
+        }
+
+        //load next chunck
+        $lines = $this->readChunk($fp, $head, $tail);
+        return array($lines, $head, $tail);
+    }
+
+    /**
+     * Collect the $max revisions near to the timestamp $rev
+     *
+     * @param int $rev revision timestamp
+     * @param int $max maximum number of revisions to be returned
+     * @return bool|array
+     *     return array with entries:
+     *       - $requestedrevs: array of with $max revision timestamps
+     *       - $revs: all parsed revision timestamps
+     *       - $fp: filepointer only defined for chuck reading, needs closing.
+     *       - $lines: non-parsed changelog lines before the parsed revisions
+     *       - $head: position of first readed changelogline
+     *       - $lasttail: position of end of last readed changelogline
+     *     otherwise false
+     */
+    protected function retrieveRevisionsAround($rev, $max) {
+        //get lines from changelog
+        list($fp, $lines, $starthead, $starttail, $eof) = $this->readloglines($rev);
+        if(empty($lines)) return false;
+
+        //parse chunk containing $rev, and read forward more chunks until $max/2 is reached
+        $head = $starthead;
+        $tail = $starttail;
+        $revs = array();
+        $aftercount = $beforecount = 0;
+        while(count($lines) > 0) {
+            foreach($lines as $line) {
+                $tmp = parseChangelogLine($line);
+                if($tmp !== false) {
+                    $this->cache[$this->id][$tmp['date']] = $tmp;
+                    $revs[] = $tmp['date'];
+                    if($tmp['date'] >= $rev) {
+                        //count revs after reference $rev
+                        $aftercount++;
+                        if($aftercount == 1) $beforecount = count($revs);
+                    }
+                    //enough revs after reference $rev?
+                    if($aftercount > floor($max / 2)) break 2;
+                }
+            }
+            //retrieve next chunk
+            list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, 1);
+        }
+        if($aftercount == 0) return false;
+
+        $lasttail = $tail;
+
+        //read additional chuncks backward until $max/2 is reached and total number of revs is equal to $max
+        $lines = array();
+        $i = 0;
+        if($aftercount > 0) {
+            $head = $starthead;
+            $tail = $starttail;
+            while($head > 0) {
+                list($lines, $head, $tail) = $this->readAdjacentChunk($fp, $head, $tail, -1);
+
+                for($i = count($lines) - 1; $i >= 0; $i--) {
+                    $tmp = parseChangelogLine($lines[$i]);
+                    if($tmp !== false) {
+                        $this->cache[$this->id][$tmp['date']] = $tmp;
+                        $revs[] = $tmp['date'];
+                        $beforecount++;
+                        //enough revs before reference $rev?
+                        if($beforecount > max(floor($max / 2), $max - $aftercount)) break 2;
+                    }
+                }
+            }
+        }
+        sort($revs);
+
+        //keep only non-parsed lines
+        $lines = array_slice($lines, 0, $i);
+        //trunk desired selection
+        $requestedrevs = array_slice($revs, -$max, $max);
+
+        return array($requestedrevs, $revs, $fp, $lines, $head, $lasttail);
+    }
 }
 
+/**
+ * Class PageChangelog handles changelog of a wiki page
+ */
 class PageChangelog extends ChangeLog {
 
     /**
@@ -824,6 +981,9 @@ class PageChangelog extends ChangeLog {
     }
 }
 
+/**
+ * Class MediaChangelog handles changelog of a media file
+ */
 class MediaChangelog extends ChangeLog {
 
     /**
