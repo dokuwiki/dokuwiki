@@ -41,3 +41,10 @@ class admin_mock_usermanager extends admin_plugin_usermanager {
     }
 }
 
+class auth_mock_authplain extends auth_plugin_authplain {
+
+    public function setCanDo($op, $canDo) {
+        $this->cando[$op] = $canDo;
+    }
+
+}

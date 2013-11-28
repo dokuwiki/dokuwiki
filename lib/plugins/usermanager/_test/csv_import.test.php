@@ -47,7 +47,7 @@ class plugin_usermanager_csv_import_test extends DokuWikiTest {
         global $auth;
         $before_users = $auth->retrieveUsers();
 
-         io_savefile($this->importfile, $importCsv);
+        io_savefile($this->importfile, $importCsv);
         $result = $this->usermanager->tryImport();
 
         $after_users = $auth->retrieveUsers();
@@ -64,6 +64,22 @@ class plugin_usermanager_csv_import_test extends DokuWikiTest {
         $this->assertEquals($expectedCount, $this->usermanager->mock_email_notifications_sent);   // new users notified of their passwords
         $this->assertEquals($new_users, $diff_users);                                        // no other users were harmed in the testing of this import
         $this->assertEquals($expectedFailures, $this->usermanager->getImportFailures());     // failures as expected
+    }
+
+    function test_cantImport(){
+        global $auth;
+        $oldauth = $auth;
+
+        $auth = new auth_mock_authplain();
+        $auth->setCanDo('addUser', false);
+
+        $csv = 'User,"Real Name",Email,Groups
+importuser,"Ford Prefect",ford@example.com,user
+';
+
+        $this->doImportTest($csv, false, array(), array());
+
+        $auth = $oldauth;
     }
 
     function test_import() {
