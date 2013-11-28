@@ -867,6 +867,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                     $import_success_count++;
                 } else {
                     $import_fail_count++;
+                    array_splice($raw, 1, 1);                                  // remove the spliced in password
                     $this->_import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
                 }
             }
