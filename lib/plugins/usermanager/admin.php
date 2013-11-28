@@ -814,6 +814,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             fputcsv($fd, $line);
         }
         fclose($fd);
+        if (defined('DOKU_UNITTEST')){ return; }
+
         die;
     }
 
@@ -830,7 +832,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!$this->_auth->canDo('addUser')) return false;
 
         // check file uploaded ok.
-        if (empty($_FILES['import']['size']) || !empty($_FILES['import']['error']) && is_uploaded_file($_FILES['import']['tmp_name'])) {
+        if (empty($_FILES['import']['size']) || !empty($_FILES['import']['error']) && $this->_isUploadedFile($_FILES['import']['tmp_name'])) {
             msg($this->lang['import_error_upload'],-1);
             return false;
         }
@@ -972,6 +974,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
         fclose($fd);
         die;
+    }
+
+    /**
+     * wrapper for is_uploaded_file to facilitate overriding by test suite
+     */
+    protected function _isUploadedFile($file) {
+        return is_uploaded_file($file);
     }
 
 }
