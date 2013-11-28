@@ -822,7 +822,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * csv file should have 4 columns, user_id, full name, email, groups (comma separated)
      *
-     * @return bool whether succesful
+     * @return bool whether successful
      */
     protected function _import() {
         // check we are allowed to add users
@@ -941,7 +941,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @param array  $user   data of user
      * @param string &$error reference catched error message
-     * @return bool whether succesful
+     * @return bool whether successful
      */
     protected function _addImportUser($user, & $error){
         if (!$this->_auth->triggerUserMod('create', $user)) {
