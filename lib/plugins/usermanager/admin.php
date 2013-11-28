@@ -830,7 +830,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!$this->_auth->canDo('addUser')) return false;
 
         // check file uploaded ok.
-        if (empty($_FILES['import']['size']) || !empty($FILES['import']['error']) && is_uploaded_file($FILES['import']['tmp_name'])) {
+        if (empty($_FILES['import']['size']) || !empty($_FILES['import']['error']) && is_uploaded_file($_FILES['import']['tmp_name'])) {
             msg($this->lang['import_error_upload'],-1);
             return false;
         }
