@@ -8,6 +8,8 @@
  */
 class Subscription {
 
+    protected $Mailer = null;
+
     /**
      * Check if subscription system is enabled
      *
@@ -15,6 +17,14 @@ class Subscription {
      */
     public function isenabled() {
         return actionOK('subscribe');
+    }
+
+    protected function getMailer(){
+        if (is_null($this->Mailer)) {
+            $this->Mailer = new Mailer();
+        }
+
+        return $this->Mailer;
     }
 
     /**
@@ -593,7 +603,7 @@ class Subscription {
 
         $text = rawLocale($template);
         $subject = $lang['mail_'.$subject].' '.$context;
-        $mail = new Mailer();
+        $mail = $this->getMailer();
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
         $mail->setBody($text, $trep, $hrep);

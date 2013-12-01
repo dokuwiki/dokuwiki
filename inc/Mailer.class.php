@@ -667,14 +667,23 @@ class Mailer {
             }
 
             // send the thing
-            if(is_null($this->sendparam)) {
-                $success = @mail($to, $subject, $body, $headers);
-            } else {
-                $success = @mail($to, $subject, $body, $headers, $this->sendparam);
-            }
+            $success = $this->_mail($to, $subject, $body, $headers, $this->sendparam);
         }
         // any AFTER actions?
         $evt->advise_after();
+        return $success;
+    }
+
+    /**
+     * wrapper for php mail() to support overriding in test suite
+     */
+    protected function _mail($to, $subject, $body, $headers, $sendparam=null){
+        if (is_null($sendparam)){
+            $success = @mail($to, $subject, $body, $headers);
+        } else {
+            $success = @mail($to, $subject, $body, $headers, $this->sendparam);
+        }
+
         return $success;
     }
 }
