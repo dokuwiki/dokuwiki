@@ -49,11 +49,11 @@ testuser,"Arthur Dent",arthur@example.com,
 ';
         $this->assertEquals($expected, $this->usermanager->tryExport());
     }
-
+/*
     function test_export_withfilter(){
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
     }
-
+*/
 }
