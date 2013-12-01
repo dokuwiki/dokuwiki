@@ -576,7 +576,7 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
-            if ($val === '') continue;
+            if ($val === '' || is_null($val)) continue;
             $headers .= $this->wrappedHeaderLine($key, $val);
         }
         return $headers;
@@ -640,16 +640,16 @@ class Mailer {
             ) return false;
 
             // The To: header is special
-            if(isset($this->headers['To'])) {
-                $to = $this->headers['To'];
+            if(array_key_exists('To', $this->headers)) {
+                $to = (string)$this->headers['To'];
                 unset($this->headers['To']);
             } else {
                 $to = '';
             }
 
             // so is the subject
-            if(isset($this->headers['Subject'])) {
-                $subject = $this->headers['Subject'];
+            if(array_key_exists('Subject', $this->headers)) {
+                $subject = (string)$this->headers['Subject'];
                 unset($this->headers['Subject']);
             } else {
                 $subject = '';
