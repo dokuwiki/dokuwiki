@@ -430,21 +430,21 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 if($cat) $item->category = $cat;
             }
            
-            // Add only visible items
-            if(isVisiblePage($id)) {
-                // finally add the item to the feed object, after handing it to registered plugins
-                $evdata = array(
-                    'item'  => &$item,
-                    'opt'   => &$opt,
-                    'ditem' => &$ditem,
-                    'rss'   => &$rss
-                );
-                $evt    = new Doku_Event('FEED_ITEM_ADD', $evdata);
-                if($evt->advise_before()) {
-                    $rss->addItem($item);
-                }
-                $evt->advise_after(); // for completeness
+           // Add only visible items
+           if (isVisiblePage($id)) {
+            // finally add the item to the feed object, after handing it to registered plugins
+            $evdata = array(
+                'item'  => &$item,
+                'opt'   => &$opt,
+                'ditem' => &$ditem,
+                'rss'   => &$rss
+            );
+            $evt    = new Doku_Event('FEED_ITEM_ADD', $evdata);
+            if($evt->advise_before()) {
+                $rss->addItem($item);
             }
+            $evt->advise_after(); // for completeness
+           }
         }
     }
     $event->advise_after();
