@@ -158,7 +158,7 @@ importiso8859,"F'.chr(0xF8).'rd Prefect",ford@example.com,user
      * @deprecated    remove when dokuwiki requires 5.3+
      *                also associated usermanager & mock usermanager access methods
      */
-    private function test_getcsvcompatibility() {
+    function test_getcsvcompatibility() {
         $line = 'importuser,"Ford Prefect",ford@example.com,user'.NL;
 
         $this->assertEquals(str_getcsv($line), $this->usermanager->access_str_getcsv($line));
