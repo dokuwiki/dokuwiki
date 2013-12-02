@@ -181,6 +181,37 @@ class mailer_test extends DokuWikiTest {
         $this->assertEquals(0, preg_match('/(^|\n)To: (\n|$)/', $header), 'To found in headers.');
     }
 
+    function test_MultipleHeaderInstances() {
+        $mail = new TestMailer();
+        $mail->setHeader('X-Count',array("1","2"));
+        $mail->cleanHeaders();
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(2, preg_match_all('/(^|\n)X-Count: \d/', $header), "X-Count header count incorrect.");
+    }
+
+    function test_ZeroHeaders() {
+        $mail = new TestMailer();
+        $mail->setHeader('X-Zero-String',array("0"));
+        $mail->setHeader('X-Zero-Int',array(0));
+        $mail->setHeader('X-Zero-Float',array(0.0));
+        $mail->cleanHeaders();
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Zero-String: \d/', $header), "X-ZeroString header count incorrect.");
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Zero-Int: \d/', $header), "X-ZeroInt header count incorrect.");
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Zero-Float: [\d.]+/', $header), "X-ZeroFloat header count incorrect.");
+    }
+
+    /**
+     * only one subject should end up in the cleaned & prep'd headers
+     */
+    function test_multipleSubjects() {
+        $mail = new TestMailer();
+        $mail->subject(array("foo","bar"));
+        $mail->cleanHeaders();
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(1, preg_match_all('/(^|\n)Subject: /', $header), "multiple Subject: headers found.");
+    }
+
     /**
      * @group internet
      */
