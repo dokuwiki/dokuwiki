@@ -141,15 +141,15 @@ class Mailer {
         // empty value deletes
         if(is_array($value)){
             $value = array_map('trim', $value);
-            $value = array_filter($value);
+            $value = array_filter($value, array($this, '_notEmpty'));
             if(!$value) $value = '';
         }else{
             $value = trim($value);
         }
-        if($value === '') {
-            if(isset($this->headers[$header])) unset($this->headers[$header]);
-        } else {
+        if($this->_notEmpty($value)) {
             $this->headers[$header] = $value;
+        } else {
+            unset($this->headers[$header]);
         }
     }
 
@@ -323,7 +323,7 @@ class Mailer {
      * @param string $subject the mail subject
      */
     public function subject($subject) {
-        $this->headers['Subject'] = $subject;
+        $this->setHeader('Subject', $subject, false);
     }
 
     /**
@@ -530,6 +530,9 @@ class Mailer {
         }
 
         if(isset($this->headers['Subject'])) {
+            if (is_array($this->headers['Subject'])) {
+                $this->headers['Subject'] = reset($this->headers['Subject']);
+            }
             // add prefix to subject
             if(empty($conf['mailprefix'])) {
                 if(utf8_strlen($conf['title']) < 20) {
@@ -576,8 +579,15 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
-            if ($val === '' || is_null($val)) continue;
-            $headers .= $this->wrappedHeaderLine($key, $val);
+            if (is_array($val)) {
+                foreach ($val as $v) {
+                    if ($this->_notEmpty($v)) {
+                        $headers .= $this->wrappedHeaderLine($key, $v);
+                    }
+                }
+            } else if ($this->_notEmpty($val)) {
+                $headers .= $this->wrappedHeaderLine($key, $val);
+            }
         }
         return $headers;
     }
@@ -685,5 +695,16 @@ class Mailer {
         }
 
         return $success;
+    }
+
+    /**
+     * Test to see if header value is not empty. Empty values are:
+     * - an empty string, ''
+     * - null
+     *
+     * 0, 0.0 and "0" are not empty headers
+     */
+    protected function _notEmpty($val) {
+        return !($val === '' || is_null($val));
     }
 }
