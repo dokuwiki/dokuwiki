@@ -8,8 +8,6 @@
  */
 class Subscription {
 
-    protected $Mailer = null;
-
     /**
      * Check if subscription system is enabled
      *
@@ -19,12 +17,13 @@ class Subscription {
         return actionOK('subscribe');
     }
 
+    /**
+     * return a Mailer object
+     *
+     * used to support overriding in test suite
+     */
     protected function getMailer(){
-        if (is_null($this->Mailer)) {
-            $this->Mailer = new Mailer();
-        }
-
-        return $this->Mailer;
+        return new Mailer();
     }
 
     /**
