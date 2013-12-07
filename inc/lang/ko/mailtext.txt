@@ -13,4 +13,4 @@ IP 주소: @IPADDRESS@
 
 
 -- 
-이 메일은 @DOKUWIKIURL@에서 도쿠위키가 발송하였습니다.
+이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다
