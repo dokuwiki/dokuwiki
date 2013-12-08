@@ -9,6 +9,7 @@
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['menu']                  = '플러그인 관리';
 $lang['download']              = '새 플러그인을 다운로드하고 설치';

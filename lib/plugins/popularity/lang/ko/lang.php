@@ -9,6 +9,7 @@
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['name']                  = '인기도 조사 (불러오는 데 시간이 걸릴 수 있습니다)';
 $lang['submit']                = '자료 보내기';

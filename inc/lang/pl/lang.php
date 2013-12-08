@@ -1,8 +1,8 @@
 <?php
+
 /**
- * polish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
@@ -14,6 +14,7 @@
  * @author Łukasz Chmaj <teachmeter@gmail.com>
  * @author Begina Felicysym <begina.felicysym@wp.eu>
  * @author Aoi Karasu <aoikarasu@gmail.com>
+ * @author Tomasz Bosak <bosak.tomasz@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +58,7 @@ $lang['btn_revert']            = 'Przywróć';
 $lang['btn_register']          = 'Zarejestruj się!';
 $lang['btn_apply']             = 'Zastosuj';
 $lang['btn_media']             = 'Menadżer multimediów';
+$lang['btn_deleteuser']        = 'Usuń moje konto';
 $lang['loggedinas']            = 'Zalogowany jako';
 $lang['user']                  = 'Użytkownik';
 $lang['pass']                  = 'Hasło';
@@ -68,6 +70,7 @@ $lang['fullname']              = 'Imię i nazwisko';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Profil użytkownika';
 $lang['badlogin']              = 'Nazwa użytkownika lub hasło są nieprawidłowe.';
+$lang['badpassconfirm']        = 'Niestety, hasło jest niepoprawne.';
 $lang['minoredit']             = 'Mniejsze zmiany';
 $lang['draftdate']             = 'Czas zachowania szkicu';
 $lang['nosecedit']             = 'Strona została zmodyfikowana, sekcje zostały zmienione. Załadowano całą stronę.';
@@ -84,6 +87,11 @@ $lang['profna']                = 'To wiki nie pozwala na zmianę profilu.';
 $lang['profnochange']          = 'Żadnych zmian, nic do zrobienia.';
 $lang['profnoempty']           = 'Pusta nazwa lub adres e-mail nie dozwolone.';
 $lang['profchanged']           = 'Zaktualizowano profil użytkownika.';
+$lang['profnodelete']          = 'Ta wiki nie umożliwia usuwania użytkowników';
+$lang['profdeleteuser']        = 'Usuń konto';
+$lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
+$lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
+$lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
 $lang['resendpwd']             = 'Podaj nowe hasło dla';
@@ -199,6 +207,7 @@ $lang['user_tools']            = 'Narzędzia użytkownika';
 $lang['site_tools']            = 'Narzędzia witryny';
 $lang['page_tools']            = 'Narzędzia strony';
 $lang['skip_to_content']       = 'przejście do zawartości';
+$lang['sidebar']               = 'Pasek boczny';
 $lang['mail_newpage']          = 'Strona dodana:';
 $lang['mail_changed']          = 'Strona zmieniona:';
 $lang['mail_subscribe_list']   = 'Zmienione strony w katalogu:';
@@ -265,6 +274,8 @@ $lang['subscr_m_unsubscribe']  = 'Zrezygnuj z subskrypcji';
 $lang['subscr_m_subscribe']    = 'Subskrybuj';
 $lang['subscr_m_receive']      = 'Otrzymuj';
 $lang['subscr_style_every']    = 'email przy każdej zmianie';
+$lang['subscr_style_digest']   = 'e-mailowy wyciąg zmian dla każdej strony (co %.2f dni)';
+$lang['subscr_style_list']     = 'lista zmienionych stron od ostatniego e-maila (co %.2f dni)';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
 $lang['authpwdexpire']         = 'Twoje hasło wygaśnie za %d dni. Należy je zmienić w krótkim czasie.';
 $lang['i_chooselang']          = 'Wybierz język';
@@ -288,8 +299,12 @@ $lang['i_policy']              = 'Wstępna polityka uprawnień ACL';
 $lang['i_pol0']                = 'Otwarte Wiki (odczyt, zapis i dodawanie plików dla wszystkich)';
 $lang['i_pol1']                = 'Publiczne Wiki (odczyt dla wszystkich, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
 $lang['i_pol2']                = 'Zamknięte Wiki (odczyt, zapis i dodawanie plików tylko dla zarejestrowanych użytkowników)';
+$lang['i_allowreg']            = 'Pozwól użytkownikom rejestrować się.';
 $lang['i_retry']               = 'Spróbuj ponownie';
 $lang['i_license']             = 'Wybierz licencję, na warunkach której chcesz udostępniać treści:';
+$lang['i_license_none']        = 'Nie pokazuj żadnych informacji o licencji.';
+$lang['i_pop_field']           = 'Proszę, pomóż nam ulepszyć doświadczenia z DokuWiki:';
+$lang['i_pop_label']           = 'Raz na miesiąc, wysyłaj anonimowe statystyki do deweloperów DokuWiki';
 $lang['recent_global']         = 'W tej chwili przeglądasz zmiany w katalogu <b>%s</b>. Możesz przejrzeć także <a href="%s">zmiany w całym wiki</a>.';
 $lang['years']                 = '%d lat temu';
 $lang['months']                = '%d miesięcy temu';
@@ -322,3 +337,6 @@ $lang['media_perm_read']       = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawnień do przesyłania plików.';
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
+$lang['currentns']             = 'Obecna przestrzeń nazw.';
+$lang['searchresult']          = 'Wyniki wyszukiwania';
+$lang['plainhtml']             = 'Czysty HTML';
