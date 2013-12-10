@@ -17,6 +17,7 @@
  * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
+ * @author admin <admin@gottardi.homepc.it>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
