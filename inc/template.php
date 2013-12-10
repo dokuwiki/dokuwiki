@@ -1786,5 +1786,24 @@ function tpl_classes() {
     return join(' ', $classes);
 }
 
+/**
+ * Create event for tools menues
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_toolsevent($toolsname, $items, $view='main') {
+    $data = array(
+        'view'  => $view,
+        'items' => $items
+    );
+
+    $hook = 'TEMPLATE_'.strtoupper($toolsname).'_DISPLAY';
+    $evt = new Doku_Event($hook, $data);
+    if($evt->advise_before()){
+        foreach($evt->data['items'] as $k => $html) echo $html;
+    }
+    $evt->advise_after();
+}
+
 //Setup VIM: ex: et ts=4 :
 
