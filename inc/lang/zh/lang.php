@@ -19,6 +19,7 @@
  * @author Donald <donaldtcong@gmail.com>
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author anjianshi <anjianshi@gmail.com>
+ * @author lyh05240524 <lyh05240524@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
