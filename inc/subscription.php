@@ -18,6 +18,15 @@ class Subscription {
     }
 
     /**
+     * return a Mailer object
+     *
+     * used to support overriding in test suite
+     */
+    protected function getMailer(){
+        return new Mailer();
+    }
+
+    /**
      * Return the subscription meta file for the given ID
      *
      * @author Adrian Lang <lang@cosmocode.de>
@@ -593,7 +602,7 @@ class Subscription {
 
         $text = rawLocale($template);
         $subject = $lang['mail_'.$subject].' '.$context;
-        $mail = new Mailer();
+        $mail = $this->getMailer();
         $mail->bcc($subscriber_mail);
         $mail->subject($subject);
         $mail->setBody($text, $trep, $hrep);

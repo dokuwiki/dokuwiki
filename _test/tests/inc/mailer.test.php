@@ -4,6 +4,9 @@
  * Extends the mailer class to expose internal variables for testing
  */
 class TestMailer extends Mailer {
+    public $use_mock_mail = true;
+    public $msgs = array();
+
     public function prop($name){
         return $this->$name;
     }
@@ -18,6 +21,15 @@ class TestMailer extends Mailer {
 
     public function cleanHeaders() {
         parent::cleanHeaders();
+    }
+
+    protected function _mail($to, $subject, $body, $headers, $sendparam=null){
+        if ($this->use_mock_mail) {
+            $this->msgs[] = compact('to','subject','body','headers','sendparam');
+            return true;
+        } else {
+            return parent::_mail($to, $subject, $body, $headers, $sendparam);
+        }
     }
 
 }
@@ -169,6 +181,37 @@ class mailer_test extends DokuWikiTest {
         $this->assertEquals(0, preg_match('/(^|\n)To: (\n|$)/', $header), 'To found in headers.');
     }
 
+    function test_MultipleHeaderInstances() {
+        $mail = new TestMailer();
+        $mail->setHeader('X-Count',array("1","2"));
+        $mail->cleanHeaders();
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(2, preg_match_all('/(^|\n)X-Count: \d/', $header), "X-Count header count incorrect.");
+    }
+
+    function test_ZeroHeaders() {
+        $mail = new TestMailer();
+        $mail->setHeader('X-Zero-String',array("0"));
+        $mail->setHeader('X-Zero-Int',array(0));
+        $mail->setHeader('X-Zero-Float',array(0.0));
+        $mail->cleanHeaders();
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Zero-String: \d/', $header), "X-ZeroString header count incorrect.");
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Zero-Int: \d/', $header), "X-ZeroInt header count incorrect.");
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Zero-Float: [\d.]+/', $header), "X-ZeroFloat header count incorrect.");
+    }
+
+    /**
+     * only one subject should end up in the cleaned & prep'd headers
+     */
+    function test_multipleSubjects() {
+        $mail = new TestMailer();
+        $mail->subject(array("foo","bar"));
+        $mail->cleanHeaders();
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(1, preg_match_all('/(^|\n)Subject: /', $header), "multiple Subject: headers found.");
+    }
+
     /**
      * @group internet
      */
@@ -229,7 +272,103 @@ class mailer_test extends DokuWikiTest {
                 throw new Exception($line.$errorin);
             }
         }
+    }
 
+    /**
+     * check that Mailer is handing off the correct parameters to php's mail()
+     */
+    function test_send() {
+        global $conf, $EVENT_HANDLER;
+        $old_conf = $conf;
+
+        $to = 'foo <foo@example.com>';
+        $from = 'Me <test@example.com>';
+        $subject = 'Subject';
+        $body = 'Hello Wörld';
+        $conf['title'] = 'MailTest';
+
+        global $EVENT_HANDLER;
+        $before = 0;
+        $after = 0;
+
+        $EVENT_HANDLER->register_hook('MAIL_MESSAGE_SEND', 'BEFORE', null,
+            function() use (&$before) {
+                $before++;
+            }
+        );
+
+        $EVENT_HANDLER->register_hook('MAIL_MESSAGE_SEND', 'AFTER', null,
+            function() use (&$after) {
+                $after++;
+            }
+        );
+
+        $mail = new TestMailer();
+        $mail->to(array($to));
+        $mail->from($from);
+        $mail->subject($subject);
+        $mail->setHeader('X-Mailer','DokuWiki Mail Tester');
+        $mail->setBody($body);
+        $mail->attachContent('some test data', 'text/plain', 'test.txt');
+        $ok = $mail->send();
+
+        // One and only one call to mail()
+        $this->assertTrue($ok, 'send failed');
+        $this->assertCount(1, $mail->msgs, 'mail() called '.count($mail->msgs).' times, should be 1');
+
+        // To: handling...
+        $this->assertEquals($to, $mail->msgs[0]['to'], '$to param not set correctly');
+        $this->assertEquals(0,preg_match('/(^|\n)To: /',$mail->msgs[0]['headers']), 'To: found in headers');
+
+        // Subject handling...
+        $this->assertEquals('[MailTest] '.$subject, $mail->msgs[0]['subject'], '$subject param not set correctly');
+        $this->assertEquals(0,preg_match('/(^|\n)Subject: /', $mail->msgs[0]['headers']), 'Subject: found in headers');
+
+        // headers present, just check "From: " & our "X-Mailer:"
+        $this->assertEquals(1, preg_match_all('/(^|\n)From: '.$from.'(\n|$)/', $mail->msgs[0]['headers']), 'From: missing from headers');
+        $this->assertEquals(1, preg_match_all('/(^|\n)X-Mailer: DokuWiki Mail Tester(\n|$)/', $mail->msgs[0]['headers']),'X-Mailer: header incorrect');
+
+        // body is present, contains our string and an attachment
+        $this->assertEquals(1, preg_match_all('/'.preg_quote(base64_encode($body),'/').'/', $mail->msgs[0]['body']),'expected content not found in $body param');
+        $this->assertEquals(1, preg_match_all('/Content-Disposition: attachment; filename=test.txt/', $mail->msgs[0]['body']),'expected attachment header not found in $body param');
+
+        // MAIL_MESSAGE_SEND triggered correctly
+        $this->assertEquals(1, $before, 'MAIL_MESSAGE_SEND.BEFORE event triggered '.$before.' times, should be 1');
+        $this->assertEquals(1, $after, 'MAIL_MESSAGE_SEND.AFTER event triggered '.$after.' times, should be 1');
+
+        $conf = $old_conf;
+    }
+
+    function test_dontsend_norecipients() {
+        $to = 'foo <foo@example.com>';
+        $from = 'Me <test@example.com>';
+        $subject = 'Subject';
+        $body = 'Hello Wörld';
+
+        $mail = new TestMailer();
+        $mail->from($from);
+        $mail->subject($subject);
+        $mail->setBody($body);
+
+        $ok = $mail->send();
+
+        $this->assertFalse($ok, 'Attempted send with no recipients');
+    }
+
+    function test_dontsend_nobody() {
+        $to = 'foo <foo@example.com>';
+        $from = 'Me <test@example.com>';
+        $subject = 'Subject';
+        $body = 'Hello Wörld';
+
+        $mail = new TestMailer();
+        $mail->to($to);
+        $mail->from($from);
+        $mail->subject($subject);
+
+        $ok = $mail->send();
+
+        $this->assertFalse($ok, 'Attempted send with no body');
     }
 }
 //Setup VIM: ex: et ts=4 :
