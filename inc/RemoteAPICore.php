@@ -3,7 +3,7 @@
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_API_VERSION', 8);
+define('DOKU_API_VERSION', 9);
 
 class RemoteAPICore {
 
@@ -24,6 +24,10 @@ class RemoteAPICore {
                 'return' => 'int',
                 'doc' => 'Tries to login with the given credentials and sets auth cookies.',
                 'public' => '1'
+            ), 'dokuwiki.logoff' => array(
+                'args' => array(),
+                'return' => 'int',
+                'doc' => 'Tries to logoff by expiring auth cookies and the associated PHP session.'
             ), 'dokuwiki.getPagelist' => array(
                 'args' => array('string', 'array'),
                 'return' => 'array',
@@ -765,6 +769,17 @@ class RemoteAPICore {
         session_write_close(); // we're done with the session
 
         return $ok;
+    }
+
+    function logoff(){
+        global $conf;
+        global $auth;
+        if(!$conf['useacl']) return 0;
+        if(!$auth) return 0;
+        
+        auth_logoff();
+
+        return 1;
     }
 
     private function resolvePageId($id) {
