@@ -21,6 +21,7 @@
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Klap-in <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
+ * @author gicalle <gicalle@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
