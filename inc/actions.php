@@ -24,6 +24,11 @@ function act_dispatch(){
     global $lang;
     global $conf;
 
+    // Message indicating read only status of the server
+    if($conf['readonly'] && $conf['readonlymsg']){
+      msg($conf['readonlymsg']);
+    }
+
     $preact = $ACT;
 
     // give plugins an opportunity to process the action
@@ -45,7 +50,7 @@ function act_dispatch(){
         }
 
         //check if user is asking to (un)subscribe a page
-        if($ACT == 'subscribe') {
+        if($ACT == 'subscribe' && !$conf['readonly']) {
             try {
                 $ACT = act_subscription($ACT);
             } catch (Exception $e) {
@@ -84,11 +89,11 @@ function act_dispatch(){
         }
 
         //register
-        if($ACT == 'register' && $INPUT->post->bool('save') && register()){
+        if($ACT == 'register' && $INPUT->post->bool('save') && register() && !$conf['readonly']){
             $ACT = 'login';
         }
 
-        if ($ACT == 'resendpwd' && act_resendpwd()) {
+        if ($ACT == 'resendpwd' && act_resendpwd() && !$conf['readonly']) {
             $ACT = 'login';
         }
 
@@ -117,7 +122,7 @@ function act_dispatch(){
         }
 
         //revert
-        if($ACT == 'revert'){
+        if($ACT == 'revert' && !$conf['readonly']){
             if(checkSecurityToken()){
                 $ACT = act_revert($ACT);
             }else{
@@ -126,7 +131,7 @@ function act_dispatch(){
         }
 
         //save
-        if($ACT == 'save'){
+        if($ACT == 'save' && !$conf['readonly']){
             if(checkSecurityToken()){
                 $ACT = act_save($ACT);
             }else{
@@ -139,26 +144,26 @@ function act_dispatch(){
             $ACT = 'show';
 
         //draft deletion
-        if($ACT == 'draftdel')
+        if($ACT == 'draftdel' && !$conf['readonly'])
             $ACT = act_draftdel($ACT);
 
         //draft saving on preview
-        if($ACT == 'preview')
+        if($ACT == 'preview' && !$conf['readonly'])
             $ACT = act_draftsave($ACT);
 
         //edit
-        if(in_array($ACT, array('edit', 'preview', 'recover'))) {
+        if(in_array($ACT, array('edit', 'preview', 'recover')) && !$conf['readonly']) {
             $ACT = act_edit($ACT);
         }else{
             unlock($ID); //try to unlock
         }
 
         //handle export
-        if(substr($ACT,0,7) == 'export_')
+        if(substr($ACT,0,7) == 'export_' && !$conf['readonly'])
             $ACT = act_export($ACT);
 
         //handle admin tasks
-        if($ACT == 'admin'){
+        if($ACT == 'admin' && !$conf['readonly']){
             // retrieve admin plugin name from $_REQUEST['page']
             if (($page = $INPUT->str('page', '', true)) != '') {
                 $pluginlist = plugin_list('admin');

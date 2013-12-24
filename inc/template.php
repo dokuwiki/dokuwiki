@@ -325,7 +325,7 @@ function tpl_metaheaders($alt = true) {
             'title'=> $lang['currentns'],
             'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
         );
-        if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
+        if(($ACT == 'show' || $ACT == 'search') && $INFO['writable'] && !$conf['readonly']) {
             $head['link'][] = array(
                 'rel'  => 'edit',
                 'title'=> $lang['btn_edit'],
@@ -619,7 +619,7 @@ function tpl_get_action($type) {
             // most complicated type - we need to decide on current action
             if($ACT == 'show' || $ACT == 'search') {
                 $method = 'post';
-                if($INFO['writable']) {
+                if($INFO['writable'] && !$conf['readonly']) {
                     $accesskey = 'e';
                     if(!empty($INFO['draft'])) {
                         $type         = 'draft';
@@ -681,29 +681,29 @@ function tpl_get_action($type) {
             }
             break;
         case 'register':
-            if(!empty($_SERVER['REMOTE_USER'])) {
+            if(!empty($_SERVER['REMOTE_USER']) || $conf['readonly']) {
                 return false;
             }
             break;
         case 'resendpwd':
-            if(!empty($_SERVER['REMOTE_USER'])) {
+            if(!empty($_SERVER['REMOTE_USER']) || $conf['readonly']) {
                 return false;
             }
             break;
         case 'admin':
-            if(!$INFO['ismanager']) {
+            if(!$INFO['ismanager'] && !$conf['readonly']) {
                 return false;
             }
             break;
         case 'revert':
-            if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
+            if(!$INFO['ismanager'] || !$REV || !$INFO['writable'] || $conf['readonly']) {
                 return false;
             }
             $params['rev']    = $REV;
             $params['sectok'] = getSecurityToken();
             break;
         case 'subscribe':
-            if(!$_SERVER['REMOTE_USER']) {
+            if(!$_SERVER['REMOTE_USER'] || $conf['readonly']) {
                 return false;
             }
             break;
