@@ -106,6 +106,7 @@ $conf['subscribers'] = 0;                //enable change notice subscription sup
 $conf['subscribe_time'] = 24*60*60;      //Time after which digests / lists are sent (in sec, default 1 day)
                                          //Should be smaller than the time specified in recent_days
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
+$conf['notifyself']  = 0;                //when sending notifications to subscribers, include self
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
 $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails

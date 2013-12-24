@@ -1173,7 +1173,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     } elseif($who == 'subscribers') {
         if(!actionOK('subscribe')) return false; //subscribers enabled?
         if($conf['useacl'] && $_SERVER['REMOTE_USER'] && $minor) return false; //skip minors
-        $data = array('id' => $id, 'addresslist' => '', 'self' => false);
+        $data = array('id' => $id, 'addresslist' => '', 'self' => $conf['notifyself']);
         trigger_event(
             'COMMON_NOTIFY_ADDRESSLIST', $data,
             array(new Subscription(), 'notifyaddresses')
