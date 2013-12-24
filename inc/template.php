@@ -154,7 +154,11 @@ function tpl_content_core() {
             html_resendpwd();
             break;
         case 'denied':
-            print p_locale_xhtml('denied');
+            if($_SERVER['REMOTE_USER']){
+                print p_locale_xhtml('denied');
+            } else {
+                html_login();
+            }
             break;
         case 'profile' :
             html_updateprofile();
