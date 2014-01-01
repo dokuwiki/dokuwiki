@@ -12,6 +12,7 @@
  * @author Roy Zahor <roy.zahor@gmail.com>
  * @author alex <ralexay@gmail.com>
  * @author matt carroll <matt.carroll@gmail.com>
+ * @author tomer <tomercarolldergicz@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -53,7 +54,9 @@ $lang['btn_recover']           = 'שחזור טיוטה';
 $lang['btn_draftdel']          = 'מחיקת טיוטה';
 $lang['btn_revert']            = 'שחזור';
 $lang['btn_register']          = 'הרשמה';
+$lang['btn_apply']             = 'ליישם';
 $lang['btn_media']             = 'מנהל המדיה';
+$lang['btn_deleteuser']        = 'להסיר את החשבון שלי';
 $lang['loggedinas']            = 'נכנסת בשם';
 $lang['user']                  = 'שם משתמש';
 $lang['pass']                  = 'ססמה';
@@ -82,7 +85,11 @@ $lang['profna']                = 'בוויקי הזה לא ניתן לשנות �
 $lang['profnochange']          = 'אין שינויים, הפרופיל לא עודכן';
 $lang['profnoempty']           = 'השם וכתובת הדוא״ל לא יכולים להיות ריקים';
 $lang['profchanged']           = 'הפרופיל עודכן בהצלחה';
+$lang['profnodelete']          = 'ויקי  אינה תומכת במחיקת משתמשים';
 $lang['profdeleteuser']        = 'הסר חשבון';
+$lang['profdeleted']           = 'חשבון המשתמש שלך נמחק מויקי זה';
+$lang['profconfdelete']        = 'ברצוני להסיר את החשבון שלי מוויקי זה. <br/> לא ניתן לבטל פעולה זו.';
+$lang['profconfdeletemissing'] = 'תיבת אישור אינו מסומן';
 $lang['pwdforget']             = 'שכחת את הססמה שלך? ניתן לקבל חדשה';
 $lang['resendna']              = 'הוויקי הזה אינו תומך בחידוש ססמה';
 $lang['resendpwd']             = 'הגדר סיסמא חדשה בעבור';
