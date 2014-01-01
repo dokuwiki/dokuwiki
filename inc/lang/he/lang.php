@@ -12,6 +12,7 @@
  * @author Roy Zahor <roy.zahor@gmail.com>
  * @author alex <ralexay@gmail.com>
  * @author matt carroll <matt.carroll@gmail.com>
+ * @author tomer <tomercarolldergicz@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
