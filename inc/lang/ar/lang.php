@@ -8,6 +8,7 @@
  * @author Usama Akkad <uahello@gmail.com>
  * @author uahello@gmail.com
  * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
+ * @author alhajr <alhajr300@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -32,8 +33,8 @@ $lang['btn_upload']            = 'ارفع';
 $lang['btn_cancel']            = 'ألغ';
 $lang['btn_index']             = 'خريطة موقع';
 $lang['btn_secedit']           = 'حرر';
-$lang['btn_login']             = 'لج';
-$lang['btn_logout']            = 'اخرج';
+$lang['btn_login']             = 'تسجيل الدخول';
+$lang['btn_logout']            = 'خروج';
 $lang['btn_admin']             = 'المدير';
 $lang['btn_update']            = 'حدّث';
 $lang['btn_delete']            = 'احذف';
