@@ -55,6 +55,16 @@ $lang['conflicts']                    = 'Conflicts with:';
 $lang['donate']                       = 'Like this?';
 $lang['donate_action']                = 'Buy the author a coffee!';
 $lang['repo_retry']                   = 'Retry';
+$lang['provides']                     = 'Provides:';
+$lang['status']                       = 'Status:';
+$lang['status_installed']             = 'installed';
+$lang['status_not_installed']         = 'not installed';
+$lang['status_protected']             = 'protected';
+$lang['status_enabled']               = 'enabled';
+$lang['status_disabled']              = 'disabled';
+$lang['status_unmodifiable']          = 'unmodifiable';
+$lang['status_plugin']                = 'plugin';
+$lang['status_template']              = 'template';
 
 $lang['msg_enabled']                  = 'Plugin %s enabled';
 $lang['msg_disabled']                 = 'Plugin %s disabled';
@@ -65,7 +75,6 @@ $lang['msg_plugin_install_success']   = 'Plugin %s installed successfully';
 $lang['msg_plugin_update_success']    = 'Plugin %s updated successfully';
 $lang['msg_upload_failed']            = 'Uploading the file failed';
 
-$lang['provides']                     = 'Provides:';
 $lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
 $lang['security_issue']               = '<strong>Security Issue:</strong> %s';
 $lang['security_warning']             = '<strong>Security Warning:</strong> %s';

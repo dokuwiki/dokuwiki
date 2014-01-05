@@ -252,14 +252,13 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if ($extension->getBugtrackerURL()) {
             $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="interwiki iw_dokubug">'.$this->getLang('bugs_features').'</a> ';
         }
-        if($extension->getTags()){
+        if ($extension->getTags()){
             $first = true;
-            $return .= '<span class="tags">';
-            $return .= '<span class="a11y">'.$this->getLang('tags').'</span> ';
+            $return .= '<span class="tags">'.$this->getLang('tags').' ';
             foreach ($extension->getTags() as $tag) {
-                if(!$first){
+                if (!$first){
                     $return .= ', ';
-                }else{
+                } else {
                     $first = false;
                 }
                 $url = $this->gui->tabURL('search', array('q' => 'tag:'.$tag));
@@ -345,13 +344,15 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $default = $this->getLang('unknown');
         $return = '<dl class="details">';
 
+        $return .= '<dt>'.$this->getLang('status').'</dt>';
+        $return .= '<dd>'.$this->make_status($extension).'</dd>';
+
         if ($extension->getDonationURL()) {
             $return .= '<dt>'.$this->getLang('donate').'</dt>';
             $return .= '<dd>';
             $return .= '<a href="'.$extension->getDonationURL().'" class="donate">'.$this->getLang('donate_action').'</a>';
             $return .= '</dd>';
         }
-
 
         if (!$extension->isBundled()) {
             $return .= '<dt>'.$this->getLang('downloadurl').'</dt>';
@@ -513,7 +514,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         switch ($action) {
             case 'install':
             case 'reinstall':
-                $title = 'title="'.$extension->getDownloadURL().'"';
+                $title = 'title="'.hsc($extension->getDownloadURL()).'"';
                 break;
         }
 
@@ -522,4 +523,28 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
         return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
     }
+
+    /**
+     * Plugin/template status
+     *
+     * @param helper_plugin_extension_extension $extension The extension
+     * @return string The description of all relevant statusses
+     */
+    function make_status(helper_plugin_extension_extension $extension) {
+        $return = '';
+        if ($extension->isInstalled()) {
+            $return .= $this->getLang('status_installed').' ';
+            if ($extension->isProtected()) {
+                $return .= $this->getLang('status_protected').' ';
+            } else {
+                $return .= $extension->isEnabled() ? $this->getLang('status_enabled').' ' : $this->getLang('status_disabled').' ';
+            }
+        } else {
+            $return .= $this->getLang('status_not_installed').' ';
+        }
+        $return .= !$extension->canModify() ? $this->getLang('status_unmodifiable').' ' : '';
+        $return .= $extension->isTemplate() ? $this->getLang('status_template') : $this->getLang('status_plugin');
+        return $return;
+    }
+
 }
