@@ -66,8 +66,8 @@ $lang['error_copy']       = 'There was a file copy error while attempting to ins
                             '<em>%s</em>: the disk could be full or file access permissions may be incorrect. '.
                             'This may have resulted in a partially installed plugin and leave your wiki '.
                             'installation unstable.';
-$lang['error_delete']     = 'There was an error while attempting to delete plugin <em>%s</em>.  '.
-                            'The most probably cause is insufficient file or directory access permissions';
+$lang['error_delete']     = 'There was an error while attempting to delete plugin <em>%s</em>. '.
+                            'The most probably cause is insufficient file or directory access permissions.';
 
 $lang['enabled']          = 'Plugin %s enabled.';
 $lang['notenabled']       = 'Plugin %s could not be enabled, check file permissions.';

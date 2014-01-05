@@ -178,7 +178,7 @@ $lang['mediaupload']           = 'Upload a file to the current namespace here. T
 $lang['mediaextchange']        = 'Filextension changed from .%s to .%s!';
 $lang['reference']             = 'References for';
 $lang['ref_inuse']             = 'The file can\'t be deleted, because it\'s still used by the following pages:';
-$lang['ref_hidden']            = 'Some references  are on pages you don\'t have permission to read';
+$lang['ref_hidden']            = 'Some references are on pages you don\'t have permission to read';
 
 $lang['hits']                  = 'Hits';
 $lang['quickhits']             = 'Matching pagenames';
@@ -299,7 +299,7 @@ $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'The installer found some problems, indicated below. You can not continue until you have fixed them.';
 $lang['i_modified']            = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
                                   You should either re-extract the files from the downloaded package or consult the complete
-                                  <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                                  <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>.';
 $lang['i_funcna']              = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
 $lang['i_permfail']            = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
