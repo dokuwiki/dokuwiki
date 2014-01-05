@@ -35,7 +35,8 @@ $lang['search_for']                   = 'Search Extension:';
 $lang['search']                       = 'Search';
 
 $lang['extensionby']                  = '<strong>%s</strong> by %s';
-$lang['popularity']                   = 'Popularity: %s';
+$lang['screenshot']                   = 'Screenshot of %s';
+$lang['popularity']                   = 'Popularity: %s%%';
 $lang['homepage_link']                = 'Docs';
 $lang['bugs_features']                = 'Bugs';
 $lang['author_hint']                  = 'Search extensions by this author';

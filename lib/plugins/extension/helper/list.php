@@ -56,7 +56,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param int    $level  The level of the header
      */
     function add_header($id, $header, $level = 2) {
-        $this->form .='<h'.$level.' id="'.$id.'">'.hsc($header).'</h'.$level.'>';
+        $this->form .='<h'.$level.' id="'.$id.'">'.hsc($header).'</h'.$level.'>'.DOKU_LF;
     }
 
     /**
@@ -65,7 +65,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param string $data The content
      */
     function add_p($data) {
-        $this->form .= '<p>'.hsc($data).'</p>';
+        $this->form .= '<p>'.hsc($data).'</p>'.DOKU_LF;
     }
 
     /**
@@ -77,7 +77,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         foreach ($array as $key => $value) {
             $this->form .= '<input type="hidden" name="'.hsc($key).'" value="'.hsc($value).'" />';
         }
-        $this->form .= '</div>';
+        $this->form .= '</div>'.DOKU_LF;
     }
 
     /**
@@ -85,7 +85,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      */
     function end_form() {
         $this->form .= '</ul>';
-        $this->form .= '</form>';
+        $this->form .= '</form>'.DOKU_LF;
     }
 
     /**
@@ -110,7 +110,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @param string $html  The content
      */
     private function populate_column($class, $html) {
-        $this->form .= '<div class="'.$class.' col">'.$html.'</div>';
+        $this->form .= '<div class="'.$class.' col">'.$html.'</div>'.DOKU_LF;
     }
 
     /**
@@ -164,13 +164,13 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $mailid = $extension->getEmailID();
             if($mailid){
                 $url = $this->gui->tabURL('search', array('q' => 'authorid:'.$mailid));
-                return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&d=mm" width="20" height="20"> '.hsc($extension->getAuthor()).'</a>';
+                return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&amp;d=mm" width="20" height="20" alt="" /> '.hsc($extension->getAuthor()).'</a>';
 
             }else{
                 return '<span class="author">'.hsc($extension->getAuthor()).'</span>';
             }
         }
-        return "<em class=\"author\">".$this->getLang('unknown_author')."</em>";
+        return "<em class=\"author\">".$this->getLang('unknown_author')."</em>".DOKU_LF;
     }
 
     /**
@@ -181,16 +181,17 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      */
     function make_screenshot(helper_plugin_extension_extension $extension) {
         if($extension->getScreenshotURL()) {
-            $img = '<a title="'.hsc($extension->getDisplayName()).'" href="'.$extension->getScreenshotURL().'" target="_blank" class="extension_screenshot">'.
-                '<img alt="'.hsc($extension->getDisplayName()).'" width="120" height="70" src="'.$extension->getThumbnailURL().'" />'.
+            $title = sprintf($this->getLang('screenshot'), hsc($extension->getDisplayName()));
+            $img = '<a href="'.hsc($extension->getScreenshotURL()).'" target="_blank" class="extension_screenshot">'.
+                '<img alt="'.$title.'" width="120" height="70" src="'.hsc($extension->getThumbnailURL()).'" />'.
                 '</a>';
         } elseif($extension->isTemplate()) {
-            $img = '<img alt="template" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/template.png" />';
+            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/template.png" />';
 
         } else {
-            $img = '<img alt="plugin" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/plugin.png" />';
+            $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/plugin.png" />';
         }
-        return '<div class="screenshot" >'.$img.'<span></span></div>';
+        return '<div class="screenshot" >'.$img.'<span></span></div>'.DOKU_LF;
     }
 
     /**
@@ -204,21 +205,21 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return  = '<div>';
         $return .= '<h2>';
         $return .= sprintf($this->getLang('extensionby'), hsc($extension->getDisplayName()), $this->make_author($extension));
-        $return .= '</h2>';
+        $return .= '</h2>'.DOKU_LF;
 
         $return .= $this->make_screenshot($extension);
 
         $popularity = $extension->getPopularity();
         if ($popularity !== false && !$extension->isBundled()) {
-            $popularityText = sprintf($this->getLang('popularity'), $popularity);
-            $return .= '<div class="popularity" title="'.$popularityText.'"><div style="width: '.($popularity * 100).'%;"><span></span></div></div>';
+            $popularityText = sprintf($this->getLang('popularity'), round($popularity*100, 2));
+            $return .= '<div class="popularity" title="'.$popularityText.'"><div style="width: '.($popularity * 100).'%;"><span class="a11y">'.$popularityText.'</span></div></div>'.DOKU_LF;
         }
 
         $return .= '<p>';
         if($extension->getDescription()) {
             $return .=  hsc($extension->getDescription()).' ';
         }
-        $return .= '</p>';
+        $return .= '</p>'.DOKU_LF;
 
         $return .= $this->make_linkbar($extension);
 
@@ -229,13 +230,13 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $url = $this->gui->tabURL('', array('info' => $extension->getID()));
             $class = '';
         }
-        $return .= '<a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info '.$class.'" data-extid="'.$extension->getID().'">'.$this->getLang('btn_info').'</a>';
+        $return .= ' <a href="'.$url.'#extensionplugin__'.$extension->getID().'" class="info '.$class.'" title="'.$this->getLang('btn_info').'" data-extid="'.$extension->getID().'">'.$this->getLang('btn_info').'</a>';
 
         if ($showinfo) {
             $return .= $this->make_info($extension);
         }
         $return .= $this->make_noticearea($extension);
-        $return .= '</div>';
+        $return .= '</div>'.DOKU_LF;
         return $return;
     }
 
@@ -246,7 +247,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @return string The HTML code
      */
     function make_linkbar(helper_plugin_extension_extension $extension) {
-        $return  = '<span class="linkbar">';
+        $return  = '<div class="linkbar">';
         $return .= $this->make_homepagelink($extension);
         if ($extension->getBugtrackerURL()) {
             $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="interwiki iw_dokubug">'.$this->getLang('bugs_features').'</a> ';
@@ -265,7 +266,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             }
             $return .= '</span>';
         }
-        $return .= '</span>';
+        $return .= '</div>'.DOKU_LF;
         return $return;
     }
 
@@ -308,7 +309,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 sprintf($this->getLang('url_change'), hsc($extension->getDownloadURL()), hsc($extension->getLastDownloadURL())).
                 '</div>';
         }
-        return $return;
+        return $return.DOKU_LF;
     }
 
     /**
@@ -424,7 +425,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= $this->make_linklist($extension->getConflicts());
             $return .= '</dd>';
         }
-        $return .= '</dl>';
+        $return .= '</dl>'.DOKU_LF;
         return $return;
     }
 
@@ -495,7 +496,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown')).'</span>';
         }
 
-        return $return.' '.$errors;
+        return $return.' '.$errors.DOKU_LF;
     }
 
     /**

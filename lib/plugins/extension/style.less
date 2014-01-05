@@ -161,15 +161,11 @@
         div {
             background-color: @ini_border;
             height: 100%;
-
-            span {
-                display: none;// @todo: hide accessibly
-            }
         }
     }
 
     // Docs, Bugs, Tags
-    span.linkbar {
+    div.linkbar {
         font-size: 85%;
 
         span.tags {
@@ -180,7 +176,7 @@
 
     // more info button
     a.info {
-        background: transparent url(images/up.png) no-repeat 0 0;
+        background: transparent url(images/down.png) no-repeat 0 0;
         border-width: 0;
         height: 13px;
         width: 13px;
@@ -190,7 +186,7 @@
         overflow: hidden;
 
         &.close {
-            background: transparent url(images/down.png) no-repeat 0 0;
+            background: transparent url(images/up.png) no-repeat 0 0;
         }
     }
 
