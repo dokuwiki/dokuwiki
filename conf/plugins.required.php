@@ -5,7 +5,7 @@
  * It is not recommended to change this file, as it is overwritten on DokuWiki upgrades.
  */
 $plugins['acl']               = 1;
-$plugins['plugin']            = 1;
+$plugins['extension']         = 1;
 $plugins['config']            = 1;
 $plugins['usermanager']       = 1;
 $plugins['template:dokuwiki'] = 1; // not a plugin, but this should not be uninstalled either
