@@ -94,10 +94,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function isBundled() {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
         return in_array($this->base,
-                        array('acl', 'info', 'extension', 'testing', 'revert', 'popularity',
-                              'config', 'plugin', 'safefnrecode', 'authplain', 'testing',
-                              'template:dokuwiki'
-                              )
+                        array(
+                            'authad', 'authldap', 'authmysql', 'authpgsql', 'authplain', 'acl', 'info', 'extension',
+                            'revert', 'popularity', 'config', 'plugin', 'safefnrecode', 'testing', 'template:dokuwiki'
+                        )
         );
     }
 
