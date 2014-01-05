@@ -829,7 +829,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         // download
         if(!$file = io_download($url, $tmp.'/', true, $file, 0)) {
             $this->dir_delete($tmp);
-            throw new Exception(sprintf($this->getLang('error_download'), hsc($url)));
+            throw new Exception(sprintf($this->getLang('error_download'), '<bdi>'.hsc($url).'</bdi>'));
         }
 
         return $tmp.'/'.$file;
@@ -921,7 +921,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                     'action' => $action
                 );
             } else {
-                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, $item['base']));
+                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, '<bdi>'.$item['base'].'</bdi>'));
             }
         }
 

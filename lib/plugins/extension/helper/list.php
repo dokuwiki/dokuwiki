@@ -164,10 +164,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $mailid = $extension->getEmailID();
             if($mailid){
                 $url = $this->gui->tabURL('search', array('q' => 'authorid:'.$mailid));
-                return '<a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&amp;d=mm" width="20" height="20" alt="" /> '.hsc($extension->getAuthor()).'</a>';
+                return '<bdi><a href="'.$url.'" class="author" title="'.$this->getLang('author_hint').'" ><img src="//www.gravatar.com/avatar/'.$mailid.'?s=20&amp;d=mm" width="20" height="20" alt="" /> '.hsc($extension->getAuthor()).'</a></bdi>';
 
             }else{
-                return '<span class="author">'.hsc($extension->getAuthor()).'</span>';
+                return '<bdi><span class="author">'.hsc($extension->getAuthor()).'</span></bdi>';
             }
         }
         return "<em class=\"author\">".$this->getLang('unknown_author')."</em>".DOKU_LF;
@@ -204,7 +204,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     function make_legend(helper_plugin_extension_extension $extension, $showinfo = false) {
         $return  = '<div>';
         $return .= '<h2>';
-        $return .= sprintf($this->getLang('extensionby'), hsc($extension->getDisplayName()), $this->make_author($extension));
+        $return .= sprintf($this->getLang('extensionby'), '<bdi>'.hsc($extension->getDisplayName()).'</bdi>', $this->make_author($extension));
         $return .= '</h2>'.DOKU_LF;
 
         $return .= $this->make_screenshot($extension);
@@ -215,11 +215,11 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= '<div class="popularity" title="'.$popularityText.'"><div style="width: '.($popularity * 100).'%;"><span class="a11y">'.$popularityText.'</span></div></div>'.DOKU_LF;
         }
 
-        $return .= '<p>';
         if($extension->getDescription()) {
+            $return .= '<p><bdi>';
             $return .=  hsc($extension->getDescription()).' ';
+            $return .= '</bdi></p>'.DOKU_LF;
         }
-        $return .= '</p>'.DOKU_LF;
 
         $return .= $this->make_linkbar($extension);
 
@@ -255,6 +255,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if($extension->getTags()){
             $first = true;
             $return .= '<span class="tags">';
+            $return .= '<span class="a11y">'.$this->getLang('tags').'</span> ';
             foreach ($extension->getTags() as $tag) {
                 if(!$first){
                     $return .= ', ';
@@ -262,7 +263,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                     $first = false;
                 }
                 $url = $this->gui->tabURL('search', array('q' => 'tag:'.$tag));
-                $return .= '<a href="'.$url.'">'.hsc($tag).'</a>';
+                $return .= '<bdi><a href="'.$url.'">'.hsc($tag).'</a></bdi>';
             }
             $return .= '</span>';
         }
@@ -281,22 +282,22 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $missing_dependencies = $extension->getMissingDependencies();
         if(!empty($missing_dependencies)) {
             $return .= '<div class="msg error">'.
-                sprintf($this->getLang('missing_dependency'), implode(', ', /*array_map(array($this->helper, 'make_extensionsearchlink'),*/ $missing_dependencies)).
+                sprintf($this->getLang('missing_dependency'), '<bdi>'.implode(', ', /*array_map(array($this->helper, 'make_extensionsearchlink'),*/ $missing_dependencies).'</bdi>').
                 '</div>';
         }
         if($extension->isInWrongFolder()) {
             $return .= '<div class="msg error">'.
-                sprintf($this->getLang('wrong_folder'), hsc($extension->getInstallName()), hsc($extension->getBase())).
+                sprintf($this->getLang('wrong_folder'), '<bdi>'.hsc($extension->getInstallName()).'</bdi>', '<bdi>'.hsc($extension->getBase()).'</bdi>').
                 '</div>';
         }
         if(($securityissue = $extension->getSecurityIssue()) !== false) {
             $return .= '<div class="msg error">'.
-                sprintf($this->getLang('security_issue'), hsc($securityissue )).
+                sprintf($this->getLang('security_issue'), '<bdi>'.hsc($securityissue).'</bdi>').
                 '</div>';
         }
         if(($securitywarning = $extension->getSecurityWarning()) !== false) {
             $return .= '<div class="msg notify">'.
-                sprintf($this->getLang('security_warning'), hsc($securitywarning)).
+                sprintf($this->getLang('security_warning'), '<bdi>'.hsc($securitywarning).'</bdi>').
                 '</div>';
         }
         if($extension->updateAvailable()) {
@@ -306,7 +307,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         }
         if($extension->hasDownloadURLChanged()) {
             $return .=  '<div class="msg notify">'.
-                sprintf($this->getLang('url_change'), hsc($extension->getDownloadURL()), hsc($extension->getLastDownloadURL())).
+                sprintf($this->getLang('url_change'), '<bdi>'.hsc($extension->getDownloadURL()).'</bdi>', '<bdi>'.hsc($extension->getLastDownloadURL()).'</bdi>').
                 '</div>';
         }
         return $return.DOKU_LF;
@@ -354,14 +355,14 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
         if (!$extension->isBundled()) {
             $return .= '<dt>'.$this->getLang('downloadurl').'</dt>';
-            $return .= '<dd>';
+            $return .= '<dd><bdi>';
             $return .= ($extension->getDownloadURL() ? $this->shortlink($extension->getDownloadURL()) : $default);
-            $return .= '</dd>';
+            $return .= '</bdi></dd>';
 
             $return .= '<dt>'.$this->getLang('repository').'</dt>';
-            $return .= '<dd>';
+            $return .= '<dd><bdi>';
             $return .= ($extension->getSourcerepoURL() ? $this->shortlink($extension->getSourcerepoURL()) : $default);
-            $return .= '</dd>';
+            $return .= '</bdi></dd>';
         }
 
         if ($extension->isInstalled()) {
@@ -392,15 +393,15 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         }
 
         $return .= '<dt>'.$this->getLang('provides').'</dt>';
-        $return .= '<dd>';
+        $return .= '<dd><bdi>';
         $return .= ($extension->getTypes() ? hsc(implode(', ', $extension->getTypes())) : $default);
-        $return .= '</dd>';
+        $return .= '</bdi></dd>';
 
         if($extension->getCompatibleVersions()) {
             $return .= '<dt>'.$this->getLang('compatible').'</dt>';
             $return .= '<dd>';
             foreach ($extension->getCompatibleVersions() as $date => $version) {
-                $return .= $version['label'].' ('.$date.'), ';
+                $return .= '<bdi>'.$version['label'].' ('.$date.')</bdi>, ';
             }
             $return = rtrim($return, ', ');
             $return .= '</dd>';
@@ -438,7 +439,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     function make_linklist($ext) {
         $return = '';
         foreach ($ext as $link) {
-            $return .= '<a href="'.$this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a>, ';
+            $return .= '<bdi><a href="'.$this->gui->tabURL('search', array('q'=>'ext:'.$link)).'">'.hsc($link).'</a></bdi>, ';
         }
         return rtrim($return, ', ');
     }

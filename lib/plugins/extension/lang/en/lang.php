@@ -39,6 +39,7 @@ $lang['screenshot']                   = 'Screenshot of %s';
 $lang['popularity']                   = 'Popularity: %s%%';
 $lang['homepage_link']                = 'Docs';
 $lang['bugs_features']                = 'Bugs';
+$lang['tags']                         = 'Tags:';
 $lang['author_hint']                  = 'Search extensions by this author';
 $lang['installed']                    = 'Installed:';
 $lang['downloadurl']                  = 'Download URL:';

@@ -52,7 +52,6 @@
         background-color: @ini_background_alt;
         margin: 0 0 10px 0;
         padding: 10px 10px 8px;
-        text-align: left;
         overflow: hidden;
     }
 
@@ -120,8 +119,8 @@
             min-height: 24px;
             min-width: 24px;
             position: absolute;
-            left: 0px;
-            top: 0px;
+            left: 0;
+            top: 0;
         }
     }
 
@@ -220,6 +219,64 @@
     }
 }
 
+[dir=rtl] #extension__list .legend {
+    float: right;
+
+    > div {
+        padding: 0 132px 0 .5em;
+        border-left: 1px solid @ini_background_alt;
+        border-right-width: 0;
+    }
+
+    div.screenshot {
+        margin-left: 0;
+        margin-right: -132px;
+        float: right;
+
+        span {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    h2 {
+        float: left;
+    }
+
+    div.popularity {
+        right: auto;
+        left: .5em;
+    }
+
+    div.linkbar span.tags,
+    dl.details dd a.donate {
+        padding-left: 0;
+        padding-right: 18px;
+        background-position: top right;
+    }
+
+    a.info {
+        float: left;
+    }
+
+    dl.details {
+        dt {
+            clear: right;
+            float: right;
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 0;
+        }
+
+        dd {
+            margin-left: 0;
+            margin-right: 25%;
+            padding-left: 0;
+            padding-right: 5px;
+        }
+    }
+}
+
 /*
  * Enabled/Disabled overrides
  */
@@ -263,6 +320,20 @@
         background: transparent url(images/warning.png) center left no-repeat;
         line-height: 18px;
         font-size: 12px;
+    }
+}
+
+[dir=rtl] #extension__manager .actions {
+    float: left;
+    text-align: left;
+
+    p.permerror {
+        margin-left: 0;
+        margin-right: 0.4em;
+        text-align: right;
+        padding-left: 0;
+        padding-right: 19px;
+        background-position: center right;
     }
 }
 
