@@ -107,7 +107,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return bool if the extension is protected
      */
     public function isProtected() {
-        return in_array($this->id, array('acl', 'config', 'info', 'plugin', 'revert', 'usermanager', 'template:dokuwiki'));
+        /** @var Doku_Plugin_Controller $plugin_controller */
+        global $plugin_controller;
+        $cascade = $plugin_controller->getCascade();
+        return (isset($cascade['protected'][$this->id]) && $cascade['protected'][$this->id]);
     }
 
     /**
