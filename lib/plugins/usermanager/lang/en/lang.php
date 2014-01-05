@@ -61,7 +61,9 @@ $lang['add_fail'] = 'User addition failed';
 $lang['notify_ok'] = 'Notification email sent';
 $lang['notify_fail'] = 'Notification email could not be sent';
 
-// import errors
+// import & errors
+$lang['import_userlistcsv'] = 'User list file (CSV):  ';
+$lang['import_header'] = 'Most Recent Import - Failures';
 $lang['import_success_count'] = 'User Import: %d users found, %d imported successfully.';
 $lang['import_failure_count'] = 'User Import: %d failed. Failures are listed below.';
 $lang['import_error_fields']  = "Insufficient fields, found %d, require 4.";
@@ -72,5 +74,6 @@ $lang['import_error_upload']  = 'Import Failed. The csv file could not be upload
 $lang['import_error_readfail'] = 'Import Failed. Unable to read uploaded file.';
 $lang['import_error_create']  = 'Unable to create the user';
 $lang['import_notify_fail']   = 'Notification message could not be sent for imported user, %s with email %s.';
+$lang['import_downloadfailures'] = 'Download Failures as CSV for correction';
 
 

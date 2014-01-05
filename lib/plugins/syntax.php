@@ -137,7 +137,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
 
             $idx = array_search(substr(get_class($this), 7), (array) $this->allowedModes);
             if ($idx !== false) {
-              unset($this->allowedModes[$idx]);
+                unset($this->allowedModes[$idx]);
             }
             $this->allowedModesSetup = true;
         }
@@ -169,9 +169,9 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * @return  string  string in appropriate language or english if not available
      */
     function getLang($id) {
-      if (!$this->localised) $this->setupLocale();
+        if (!$this->localised) $this->setupLocale();
 
-      return (isset($this->lang[$id]) ? $this->lang[$id] : '');
+        return (isset($this->lang[$id]) ? $this->lang[$id] : '');
     }
 
     /**
@@ -184,7 +184,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * @return  string  parsed contents of the wiki page in xhtml format
      */
     function locale_xhtml($id) {
-      return p_cached_output($this->localFN($id));
+        return p_cached_output($this->localFN($id));
     }
 
     /**
@@ -193,17 +193,17 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
      * plugin equivalent of localFN()
      */
     function localFN($id) {
-      global $conf;
-      $plugin = $this->getPluginName();
-      $file = DOKU_CONF.'/plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
-      if (!@file_exists($file)){
-        $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
-        if(!@file_exists($file)){
-          //fall back to english
-          $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+        global $conf;
+        $plugin = $this->getPluginName();
+        $file = DOKU_CONF.'/plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
+        if (!@file_exists($file)){
+            $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
+            if(!@file_exists($file)){
+                //fall back to english
+                $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+            }
         }
-      }
-      return $file;
+        return $file;
     }
 
     /**
@@ -214,16 +214,16 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     function setupLocale() {
         if ($this->localised) return;
 
-      global $conf;            // definitely don't invoke "global $lang"
-      $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
+        global $conf;            // definitely don't invoke "global $lang"
+        $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
 
-      $lang = array();
-      // don't include once, in case several plugin components require the same language file
-      @include($path.'en/lang.php');
-      if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
+        $lang = array();
+        // don't include once, in case several plugin components require the same language file
+        @include($path.'en/lang.php');
+        if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
 
-      $this->lang = $lang;
-      $this->localised = true;
+        $this->lang = $lang;
+        $this->localised = true;
     }
 
     // configuration methods

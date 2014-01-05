@@ -1,12 +1,13 @@
 <?php
+
 /**
- * Slovaklanguage file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
-$lang['menu']                  = 'Reverzný manažér';
+$lang['menu']                  = 'Obnova dát';
 $lang['filter']                = 'Hľadať spamerské stránky';
 $lang['revert']                = 'Vrátiť vybrané stránky';
 $lang['reverted']              = '%s vrátená na revíziu %s';

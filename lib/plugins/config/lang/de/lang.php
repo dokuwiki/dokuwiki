@@ -76,7 +76,6 @@ $lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';
 $lang['deaccent']              = 'Seitennamen bereinigen';
 $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
 $lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
-$lang['refshow']               = 'Wie viele Verwendungsorte der Media-Datei zeigen';
 $lang['allowdebug']            = 'Debug-Ausgaben erlauben <b>Abschalten wenn nicht benötigt!</b>';
 $lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
 $lang['usewordblock']          = 'Spam-Blocking benutzen';

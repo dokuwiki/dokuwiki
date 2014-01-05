@@ -90,7 +90,7 @@ function media_metasave($id,$auth,$data){
  * @return bool
  */
 function media_isexternal($id){
-    if (preg_match('#^(https?|ftp)://#i', $id)) return true;
+    if (preg_match('#^(?:https?|ftp)://#i', $id)) return true;
     return false;
 }
 
@@ -1484,7 +1484,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
 }
 
 /**
- * Prints a thumbnail and metainfos
+ * Prints a thumbnail and metainfo
  */
 function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail

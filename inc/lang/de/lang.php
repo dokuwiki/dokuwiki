@@ -22,6 +22,7 @@
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
+ * @author Benedikt Fey <spam@lifeisgoooood.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -281,7 +282,6 @@ $lang['subscr_m_receive']      = 'Benachrichtigung';
 $lang['subscr_style_every']    = 'E-Mail bei jeder Bearbeitung';
 $lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
-$lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wenden Sie sich an den Admin.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Admin.';
 $lang['authpwdexpire']         = 'Ihr Passwort läuft in %d Tag(en) ab. Sie sollten es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
@@ -304,6 +304,7 @@ $lang['i_policy']              = 'Anfangseinstellungen der Zugangskontrolle (ACL
 $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Benutzer)';
 $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Benutzer)';
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Benutzer)';
+$lang['i_allowreg']            = 'Benutzer dürfen sich registrieren';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wählen Sie die Lizenz, unter die Sie Ihre Inhalte stellen möchten:';
 $lang['i_license_none']        = 'Lizensierungsinformation nicht anzeigen';
@@ -341,3 +342,6 @@ $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['currentns']             = 'Aktueller Namensraum';
+$lang['searchresult']          = 'Suchergebnisse';
+$lang['plainhtml']             = 'HTML Klartext';

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Hungarian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
@@ -11,6 +11,7 @@
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
+ * @author Serenity87HUN <anikototh87@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -54,6 +55,7 @@ $lang['btn_revert']            = 'Helyreállítás';
 $lang['btn_register']          = 'Regisztráció';
 $lang['btn_apply']             = 'Alkalmaz';
 $lang['btn_media']             = 'Médiakezelő';
+$lang['btn_deleteuser']        = 'Felhasználói fiókom eltávolítása';
 $lang['loggedinas']            = 'Belépett felhasználó: ';
 $lang['user']                  = 'Azonosító';
 $lang['pass']                  = 'Jelszó';
@@ -65,6 +67,7 @@ $lang['fullname']              = 'Teljes név';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Személyes beállítások';
 $lang['badlogin']              = 'Sajnáljuk, az azonosító vagy a jelszó nem jó.';
+$lang['badpassconfirm']        = 'Hibás jelszó';
 $lang['minoredit']             = 'Apróbb változások';
 $lang['draftdate']             = 'Piszkozat elmentve:';
 $lang['nosecedit']             = 'Időközben megváltozott az oldal, emiatt a szakasz nem friss. Töltsd újra az egész oldalt!';
@@ -81,6 +84,11 @@ $lang['profna']                = 'Ez a wiki nem támogatja a személyes beállí
 $lang['profnochange']          = 'Nem történt változás.';
 $lang['profnoempty']           = 'A név és e-mail mező nem maradhat üresen!';
 $lang['profchanged']           = 'A személyes beállítások változtatása megtörtént.';
+$lang['profnodelete']          = 'Ez a wiki nem támogatja a felhasználói fiókok törlését';
+$lang['profdeleteuser']        = 'Felhasználói fiók törlése';
+$lang['profdeleted']           = 'Felhasználói fiókodat eltávolítottuk erről a wiki-ről.';
+$lang['profconfdelete']        = 'Szeretném eltávolítani a felhasználói fiókomat erről a wikiről. <br/> Ez a cselekvés nem visszavonható.';
+$lang['profconfdeletemissing'] = 'A megerősítő négyzet nincs bepipálva';
 $lang['pwdforget']             = 'Elfelejtetted a jelszavad? Itt kérhetsz újat';
 $lang['resendna']              = 'Ez a wiki nem támogatja a jelszó újraküldést.';
 $lang['resendpwd']             = 'Új jelszó beállítása a következőhöz:';
@@ -264,7 +272,6 @@ $lang['subscr_m_receive']      = 'Küldj';
 $lang['subscr_style_every']    = 'e-mailt minden változásról';
 $lang['subscr_style_digest']   = 'összefoglaló e-mailt oldalanként (minden %.2f nap)';
 $lang['subscr_style_list']     = 'egy listát a módosított oldalakról a legutóbbi e-mail óta (minden %.2f nap)';
-$lang['authmodfailed']         = 'Hibás felhasználó-azonosítási módszer van beállítva. Légy szíves értesítsd az Adminisztrátorokat!';
 $lang['authtempfail']          = 'A felhasználó azonosítás átmenetileg nem működik. Ha sokáig így lenne, légy szíves értesítsd az Adminisztrátorokat!';
 $lang['authpwdexpire']         = 'A jelszavad %d nap múlva lejár, hamarosan meg kell változtatnod.';
 $lang['i_chooselang']          = 'Válassz nyelvet';

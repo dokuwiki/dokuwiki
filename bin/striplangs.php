@@ -15,7 +15,7 @@ require_once DOKU_INC.'inc/cliopts.php';
 function usage($show_examples = false) {
     print "Usage: striplangs.php [-h [-x]] [-e] [-k lang1[,lang2]..[,langN]]
 
-    Removes all languages from the instalation, besides the ones
+    Removes all languages from the installation, besides the ones
     after the -k option. English language is never removed!
 
     OPTIONS
@@ -127,7 +127,7 @@ if ( $OPTS->has('k') or $OPTS->has('keep') ) {
 
     // ! always enforce 'en' lang when using '--keep' (DW relies on it)
     if ( !isset($langs['en']) ) {
-      $langs[]='en';
+        $langs[]='en';
     }
 } elseif ( $OPTS->has('e') or $OPTS->has('english') ) {
     // '--english' was specified strip everything besides 'en'

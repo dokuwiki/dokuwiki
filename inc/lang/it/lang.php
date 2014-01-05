@@ -16,6 +16,7 @@
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
+ * @author Claudio Lanconelli <lancos@libero.it>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -274,7 +275,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'email per ogni modifica';
 $lang['subscr_style_digest']   = 'email di riassunto dei cambiamenti per ogni pagina (ogni %.2f giorni)';
 $lang['subscr_style_list']     = 'lista delle pagine cambiate dall\'ultima email (ogni %.2f giorni)';
-$lang['authmodfailed']         = 'La configurazione dell\'autenticazione non è corretta. Informa l\'amministratore di questo wiki.';
 $lang['authtempfail']          = 'L\'autenticazione è temporaneamente non disponibile. Se questa situazione persiste, informa l\'amministratore di questo wiki.';
 $lang['authpwdexpire']         = 'La tua password scadrà in %d giorni, dovresti cambiarla quanto prima.';
 $lang['i_chooselang']          = 'Scegli la lingua';
@@ -299,6 +299,7 @@ $lang['i_policy']              = 'Regole di accesso iniziali';
 $lang['i_pol0']                = 'Wiki Aperto (lettura, scrittura, caricamento file per tutti)';
 $lang['i_pol1']                = 'Wiki Pubblico (lettura per tutti, scrittura e caricamento file per gli utenti registrati)';
 $lang['i_pol2']                = 'Wiki Chiuso (lettura, scrittura, caricamento file solamente per gli utenti registrati)';
+$lang['i_allowreg']            = 'Permetti agli utenti di registrarsi';
 $lang['i_retry']               = 'Riprova';
 $lang['i_license']             = 'Per favore scegli la licenza sotto cui vuoi rilasciare il contenuto:';
 $lang['i_license_none']        = 'Non mostrare informazioni sulla licenza';
@@ -336,3 +337,4 @@ $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per le
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
+$lang['searchresult']          = 'Risultati della ricerca';

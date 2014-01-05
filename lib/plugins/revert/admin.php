@@ -120,7 +120,6 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         $recents = getRecents(0,$this->max_lines);
         echo '<ul>';
 
-
         $cnt = 0;
         foreach($recents as $recent){
             if($filter){
@@ -157,7 +156,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             echo "<img $att />";
             echo '</a> ';
 
-            echo html_wikilink(':'.$recent['id'],(useHeading('navigation'))?NULL:$recent['id']);
+            echo html_wikilink(':'.$recent['id'],(useHeading('navigation'))?null:$recent['id']);
             echo ' – '.htmlspecialchars($recent['sum']);
 
             echo ' <span class="user">';

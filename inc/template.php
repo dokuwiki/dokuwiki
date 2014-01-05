@@ -54,7 +54,7 @@ function tpl_incdir($tpl='') {
 function tpl_basedir($tpl='') {
     global $conf;
     if(!$tpl) $tpl = $conf['template'];
-    return DOKU_BASE.'lib/tpl/'.$conf['template'].'/';
+    return DOKU_BASE.'lib/tpl/'.$tpl.'/';
 }
 
 /**
@@ -223,7 +223,7 @@ function tpl_toc($return = false) {
             if(in_array($class, $pluginlist)) {
                 // attempt to load the plugin
                 /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin =& plugin_load('admin', $class);
+                $plugin = plugin_load('admin', $class);
             }
         }
         if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
@@ -257,7 +257,7 @@ function tpl_admin() {
         if(in_array($class, $pluginlist)) {
             // attempt to load the plugin
             /** @var $plugin DokuWiki_Admin_Plugin */
-            $plugin =& plugin_load('admin', $class);
+            $plugin = plugin_load('admin', $class);
         }
     }
 
@@ -290,6 +290,7 @@ function tpl_metaheaders($alt = true) {
     global $QUERY;
     global $lang;
     global $conf;
+    global $updateVersion;
 
     // prepare the head array
     $head = array();
@@ -317,11 +318,11 @@ function tpl_metaheaders($alt = true) {
     if($alt) {
         $head['link'][] = array(
             'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> 'Recent Changes', 'href'=> DOKU_BASE.'feed.php'
+            'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
         );
         $head['link'][] = array(
             'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> 'Current Namespace',
+            'title'=> $lang['currentns'],
             'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
         );
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
@@ -335,21 +336,21 @@ function tpl_metaheaders($alt = true) {
         if($ACT == 'search') {
             $head['link'][] = array(
                 'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-                'title'=> 'Search Result',
+                'title'=> $lang['searchresult'],
                 'href' => DOKU_BASE.'feed.php?mode=search&q='.$QUERY
             );
         }
 
         if(actionOK('export_xhtml')) {
             $head['link'][] = array(
-                'rel' => 'alternate', 'type'=> 'text/html', 'title'=> 'Plain HTML',
+                'rel' => 'alternate', 'type'=> 'text/html', 'title'=> $lang['plainhtml'],
                 'href'=> exportlink($ID, 'xhtml', '', false, '&')
             );
         }
 
         if(actionOK('export_raw')) {
             $head['link'][] = array(
-                'rel' => 'alternate', 'type'=> 'text/plain', 'title'=> 'Wiki Markup',
+                'rel' => 'alternate', 'type'=> 'text/plain', 'title'=> $lang['wikimarkup'],
                 'href'=> exportlink($ID, 'raw', '', false, '&')
             );
         }
@@ -400,7 +401,7 @@ function tpl_metaheaders($alt = true) {
     // make $INFO and other vars available to JavaScripts
     $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
-    if($conf['useacl'] && $_SERVER['REMOTE_USER']) {
+    if($conf['useacl'] && !empty($_SERVER['REMOTE_USER'])) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
@@ -605,6 +606,7 @@ function tpl_get_action($type) {
 
     // check disabled actions and fix the badly named ones
     if($type == 'history') $type = 'revisions';
+    if ($type == 'subscription') $type = 'subscribe';
     if(!actionOK($type)) return false;
 
     $accesskey = null;
@@ -679,12 +681,12 @@ function tpl_get_action($type) {
             }
             break;
         case 'register':
-            if($_SERVER['REMOTE_USER']) {
+            if(!empty($_SERVER['REMOTE_USER'])) {
                 return false;
             }
             break;
         case 'resendpwd':
-            if($_SERVER['REMOTE_USER']) {
+            if(!empty($_SERVER['REMOTE_USER'])) {
                 return false;
             }
             break;
@@ -700,10 +702,6 @@ function tpl_get_action($type) {
             $params['rev']    = $REV;
             $params['sectok'] = getSecurityToken();
             break;
-        /** @noinspection PhpMissingBreakStatementInspection */
-        case 'subscription':
-            $type         = 'subscribe';
-            $params['do'] = 'subscribe';
         case 'subscribe':
             if(!$_SERVER['REMOTE_USER']) {
                 return false;
@@ -1411,7 +1409,7 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if ($_SERVER['REMOTE_USER']) {
+    if (!empty($_SERVER['REMOTE_USER'])) {
         echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
     }
 
@@ -1696,18 +1694,6 @@ function tpl_includeFile($file) {
 }
 
 /**
- * Returns icon from data/media root directory if it exists, otherwise
- * the one in the template's image directory.
- *
- * @deprecated Use tpl_getMediaFile() instead
- * @author Anika Henke <anika@selfthinker.org>
- */
-function tpl_getFavicon($abs = false, $fileName = 'favicon.ico') {
-    $look = array(":wiki:$fileName", ":$fileName", "images/$fileName");
-    return tpl_getMediaFile($look, $abs);
-}
-
-/**
  * Returns <link> tag for various icon types (favicon|mobile|generic)
  *
  * @author Anika Henke <anika@selfthinker.org>
@@ -1793,7 +1779,7 @@ function tpl_classes() {
         'dokuwiki',
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
-        $_SERVER['REMOTE_USER'] ? 'loggedIn' : '',
+        !empty($_SERVER['REMOTE_USER']) ? 'loggedIn' : '',
         $INFO['exists'] ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );

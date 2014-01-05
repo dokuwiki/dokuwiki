@@ -15,6 +15,7 @@
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
+ * @author Claudio Lanconelli <lancos@libero.it>
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
@@ -37,6 +38,8 @@ $lang['search']                = 'Cerca';
 $lang['search_prompt']         = 'Esegui ricerca';
 $lang['clear']                 = 'Azzera filtro di ricerca';
 $lang['filter']                = 'Filtro';
+$lang['export_all']            = 'Esporta tutti gli utenti (CSV)';
+$lang['export_filtered']       = 'Esporta elenco utenti filtrati (CSV)';
 $lang['summary']               = 'Visualizzazione utenti %1$d-%2$d di %3$d trovati. %4$d utenti totali.';
 $lang['nonefound']             = 'Nessun utente trovato. %d utenti totali.';
 $lang['delete_ok']             = '%d utenti eliminati';

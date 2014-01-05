@@ -48,15 +48,15 @@ function auth_setup() {
 
     // try to load auth backend from plugins
     foreach ($plugin_controller->getList('auth') as $plugin) {
-      if ($conf['authtype'] === $plugin) {
-        $auth = $plugin_controller->load('auth', $plugin);
-        break;
-      } elseif ('auth' . $conf['authtype'] === $plugin) {
-        // matches old auth backends (pre-Weatherwax)
-        $auth = $plugin_controller->load('auth', $plugin);
-        msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
-             . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
-      }
+        if ($conf['authtype'] === $plugin) {
+            $auth = $plugin_controller->load('auth', $plugin);
+            break;
+        } elseif ('auth' . $conf['authtype'] === $plugin) {
+            // matches old auth backends (pre-Weatherwax)
+            $auth = $plugin_controller->load('auth', $plugin);
+            msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
+                 . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
+        }
     }
 
     if(!isset($auth) || !$auth){
@@ -65,10 +65,10 @@ function auth_setup() {
     }
 
     if ($auth->success == false) {
-    // degrade to unauthenticated user
-      unset($auth);
-      auth_logoff();
-      msg($lang['authtempfail'], -1);
+        // degrade to unauthenticated user
+        unset($auth);
+        auth_logoff();
+        msg($lang['authtempfail'], -1);
         return false;
     }
 
@@ -139,10 +139,10 @@ function auth_loadACL() {
     $out = array();
     foreach($acl as $line) {
         $line = trim($line);
-        if($line{0} == '#') continue;
-        list($id,$rest) = preg_split('/\s+/',$line,2);
+        if(empty($line) || ($line{0} == '#')) continue; // skip blank lines & comments
+        list($id,$rest) = preg_split('/[ \t]+/',$line,2);
 
-        // substitue user wildcard first (its 1:1)
+        // substitute user wildcard first (its 1:1)
         if(strstr($line, '%USER%')){
             // if user is not logged in, this ACL line is meaningless - skip it
             if (!isset($_SERVER['REMOTE_USER'])) continue;
@@ -390,7 +390,6 @@ function auth_randombytes($length) {
             $strong = true;
         }
     }
-
 
     // If no strong randoms available, try OS the specific ways
     if(!$strong) {
@@ -717,11 +716,11 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     //check exact match first
-    $matches = preg_grep('/^'.preg_quote($id, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
+    $matches = preg_grep('/^'.preg_quote($id, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
     if(count($matches)) {
         foreach($matches as $match) {
             $match = preg_replace('/#.*$/', '', $match); //ignore comments
-            $acl   = preg_split('/\s+/', $match);
+            $acl   = preg_split('/[ \t]+/', $match);
             if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                 $acl[1] = utf8_strtolower($acl[1]);
             }
@@ -747,11 +746,11 @@ function auth_aclcheck($id, $user, $groups) {
     }
 
     do {
-        $matches = preg_grep('/^'.preg_quote($path, '/').'\s+(\S+)\s+/u', $AUTH_ACL);
+        $matches = preg_grep('/^'.preg_quote($path, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
         if(count($matches)) {
             foreach($matches as $match) {
                 $match = preg_replace('/#.*$/', '', $match); //ignore comments
-                $acl   = preg_split('/\s+/', $match);
+                $acl   = preg_split('/[ \t]+/', $match);
                 if(!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                     $acl[1] = utf8_strtolower($acl[1]);
                 }
@@ -809,19 +808,23 @@ function auth_nameencode($name, $skip_group = false) {
 
     if(!isset($cache[$name][$skip_group])) {
         if($skip_group && $name{0} == '@') {
-            $cache[$name][$skip_group] = '@'.preg_replace(
-                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
-                "'%'.dechex(ord(substr('\\1',-1)))", substr($name, 1)
+            $cache[$name][$skip_group] = '@'.preg_replace_callback(
+                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
+                'auth_nameencode_callback', substr($name, 1)
             );
         } else {
-            $cache[$name][$skip_group] = preg_replace(
-                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/e',
-                "'%'.dechex(ord(substr('\\1',-1)))", $name
+            $cache[$name][$skip_group] = preg_replace_callback(
+                '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
+                'auth_nameencode_callback', $name
             );
         }
     }
 
     return $cache[$name][$skip_group];
+}
+
+function auth_nameencode_callback($matches) {
+    return '%'.dechex(ord(substr($matches[1],-1)));
 }
 
 /**
@@ -1061,7 +1064,7 @@ function auth_deleteprofile(){
     if(!$INPUT->post->bool('delete')) return false;
     if(!checkSecurityToken()) return false;
 
-    // action prevented or auth module disallows 
+    // action prevented or auth module disallows
     if(!actionOK('profile_delete') || !$auth->canDo('delUser')) {
         msg($lang['profnodelete'], -1);
         return false;

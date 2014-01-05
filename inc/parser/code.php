@@ -15,7 +15,7 @@ class Doku_Renderer_code extends Doku_Renderer {
      *
      * When the correct block was found it exits the script.
      */
-    function code($text, $language = NULL, $filename='' ) {
+    function code($text, $language = null, $filename='' ) {
         global $INPUT;
         if(!$language) $language = 'txt';
         if(!$filename) $filename = 'snippet.'.$language;
@@ -36,7 +36,7 @@ class Doku_Renderer_code extends Doku_Renderer {
     /**
      * Wraps around code()
      */
-    function file($text, $language = NULL, $filename='') {
+    function file($text, $language = null, $filename='') {
         $this->code($text, $language, $filename);
     }
 

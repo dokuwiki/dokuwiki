@@ -84,16 +84,6 @@ function css_out(){
         if(isset($config_cascade['userstyle'][$mediatype])){
             $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
         }
-        // load rtl styles
-        // note: this adds the rtl styles only to the 'screen' media type
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if ($mediatype=='screen') {
-            if($lang['direction'] == 'rtl'){
-                if (isset($styleini['stylesheets']['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets']['rtl']);
-                if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
-            }
-        }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
     }
@@ -148,9 +138,6 @@ function css_out(){
     // parse less
     $css = css_parseless($css);
 
-    // place all remaining @import statements at the top of the file
-    $css = css_moveimports($css);
-
     // compress whitespace and comments
     if($conf['compress']){
         $css = css_compress($css);
@@ -176,6 +163,12 @@ function css_out(){
  */
 function css_parseless($css) {
     $less = new lessc();
+    $less->importDir[] = DOKU_INC;
+
+    if (defined('DOKU_UNITTEST')){
+        $less->importDir[] = TMP_DIR;
+    }
+
     try {
         return $less->compile($css);
     } catch(Exception $e) {
@@ -274,7 +267,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -291,7 +284,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -309,7 +302,7 @@ function css_styleini($tpl) {
 
         // replacements
         if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, $data['replacements']);
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
 
@@ -317,6 +310,18 @@ function css_styleini($tpl) {
         'stylesheets' => $stylesheets,
         'replacements' => $replacements
     );
+}
+
+/**
+ * Amend paths used in replacement relative urls, refer FS#2879
+ *
+ * @author Chris Smith <chris@jalakai.co.uk>
+ */
+function css_fixreplacementurls($replacements, $location) {
+    foreach($replacements as $key => $value) {
+        $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
+    }
+    return $replacements;
 }
 
 /**
@@ -396,18 +401,99 @@ function css_filetypes(){
  * given location prefix
  */
 function css_loadfile($file,$location=''){
-    if(!@file_exists($file)) return '';
-    $css = io_readFile($file);
-    if(!$location) return $css;
-
-    $css = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
-    $css = preg_replace('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
-
-    return $css;
+    $css_file = new DokuCssFile($file);
+    return $css_file->load($location);
 }
 
 /**
- * Converte local image URLs to data URLs if the filesize is small
+ *  Helper class to abstract loading of css/less files
+ *
+ *  @author Chris Smith <chris@jalakai.co.uk>
+ */
+class DokuCssFile {
+
+    protected $filepath;             // file system path to the CSS/Less file
+    protected $location;             // base url location of the CSS/Less file
+    private   $relative_path = null;
+
+    public function __construct($file) {
+        $this->filepath = $file;
+    }
+
+    /**
+     * Load the contents of the css/less file and adjust any relative paths/urls (relative to this file) to be
+     * relative to the dokuwiki root: the web root (DOKU_BASE) for most files; the file system root (DOKU_INC)
+     * for less files.
+     *
+     * @param   string   $location   base url for this file
+     * @return  string               the CSS/Less contents of the file
+     */
+    public function load($location='') {
+        if (!@file_exists($this->filepath)) return '';
+
+        $css = io_readFile($this->filepath);
+        if (!$location) return $css;
+
+        $this->location = $location;
+
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',array($this,'replacements'),$css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',array($this,'replacements'),$css);
+
+        return $css;
+    }
+
+    /**
+     * Get the relative file system path of this file, relative to dokuwiki's root folder, DOKU_INC
+     *
+     * @return string   relative file system path
+     */
+    private function getRelativePath(){
+
+        if (is_null($this->relative_path)) {
+            $basedir = array(DOKU_INC);
+
+            // during testing, files may be found relative to a second base dir, TMP_DIR
+            if (defined('DOKU_UNITTEST')) {
+                $basedir[] = realpath(TMP_DIR);
+            }
+            $regex = '#^('.join('|',$basedir).')#';
+
+            $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
+        }
+
+        return $this->relative_path;
+    }
+
+    /**
+     * preg_replace callback to adjust relative urls from relative to this file to relative
+     * to the appropriate dokuwiki root location as described in the code
+     *
+     * @param  array    see http://php.net/preg_replace_callback
+     * @return string   see http://php.net/preg_replace_callback
+     */
+    public function replacements($match) {
+
+        // not a relative url? - no adjustment required
+        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+            return $match[0];
+        }
+        // a less file import? - requires a file system location
+        else if (substr($match[3],-5) == '.less') {
+            if ($match[3]{0} != '/') {
+                $match[3] = $this->getRelativePath() . '/' . $match[3];
+            }
+        }
+        // everything else requires a url adjustment
+        else {
+            $match[3] = $this->location . $match[3];
+        }
+
+        return join('',array_slice($match,1));
+    }
+}
+
+/**
+ * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
  */
@@ -425,7 +511,7 @@ function css_datauri($match){
         $data = base64_encode(file_get_contents($local));
     }
     if($data){
-        $url = '\'data:image/'.$ext.';base64,'.$data.'\'';
+        $url = 'data:image/'.$ext.';base64,'.$data;
     }else{
         $url = $base.$url;
     }
@@ -450,36 +536,8 @@ function css_pluginstyles($mediatype='screen'){
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
             $list[DOKU_PLUGIN."$p/style.less"]  = DOKU_BASE."lib/plugins/$p/";
         }
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if($lang['direction'] == 'rtl'){
-            $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
-        }
     }
     return $list;
-}
-
-/**
- * Move all @import statements in a combined stylesheet to the top so they
- * aren't ignored by the browser.
- *
- * @author Gabriel Birke <birke@d-scribe.de>
- */
-function css_moveimports($css)
-{
-    if(!preg_match_all('/@import\s+(?:url\([^)]+\)|"[^"]+")\s*[^;]*;\s*/', $css, $matches, PREG_OFFSET_CAPTURE)) {
-        return $css;
-    }
-    $newCss  = "";
-    $imports = "";
-    $offset  = 0;
-    foreach($matches[0] as $match) {
-        $newCss  .= substr($css, $offset, $match[1] - $offset);
-        $imports .= $match[0];
-        $offset   = $match[1] + strlen($match[0]);
-    }
-    $newCss .= substr($css, $offset);
-    return $imports.$newCss;
 }
 
 /**
@@ -499,8 +557,19 @@ function css_compress($css){
     $css = preg_replace('/ ?([;,{}\/]) ?/','\\1',$css);
     $css = preg_replace('/ ?: /',':',$css);
 
+    // number compression
+    $css = preg_replace('/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2$3', $css); // "0.1em" to ".1em", "1.10em" to "1.1em"
+    $css = preg_replace('/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2', $css); // ".0em" to "0"
+    $css = preg_replace('/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1', $css); // "0.0em" to "0"
+    $css = preg_replace('/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$3', $css); // "1.0em" to "1em"
+    $css = preg_replace('/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$2$3', $css); // "001em" to "1em"
+
+    // shorten attributes (1em 1em 1em 1em -> 1em)
+    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/', '$1$2', $css); // "1em 1em 1em 1em" to "1em"
+    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/', '$1$2 $3', $css); // "1em 2em 1em 2em" to "1em 2em"
+
     // shorten colors
-    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3/", "#\\1\\2\\3",$css);
+    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/", "#\\1\\2\\3", $css);
 
     return $css;
 }

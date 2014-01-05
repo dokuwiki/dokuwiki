@@ -50,8 +50,8 @@ class mailer_test extends DokuWikiTest {
         // set a bunch of test headers
         $mail->setHeader('test-header','bla');
         $mail->setHeader('to','A valid ASCII name <test@example.com>');
-        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning$§%.");
-        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning$§%.",false);
+        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning\$§%.");
+        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning\$§%.",false);
         $mail->setHeader("weird\n*+\x00foo.-_@bar?",'now clean');
 
         // are they set?
@@ -63,7 +63,7 @@ class mailer_test extends DokuWikiTest {
         $this->assertArrayHasKey('From',$headers);
         $this->assertEquals('Ths neeedsserious cleaning.',$headers['From']);
         $this->assertArrayHasKey('Bad',$headers);
-        $this->assertEquals("Thös ne\needs\x00serious cleaning$§%.",$headers['Bad']);
+        $this->assertEquals("Thös ne\needs\x00serious cleaning\$§%.",$headers['Bad']);
         $this->assertArrayHasKey('Weird+foo.-_@bar',$headers);
 
         // unset a header again
@@ -154,7 +154,82 @@ class mailer_test extends DokuWikiTest {
         $headers['Cc'] = '';
         $header = $mail->prepareHeaders();
         $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
-        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Cc found in headers.');
+    }
+
+    function test_nullTOorCCorBCC() {
+        $mail = new TestMailer();
+        $headers = &$mail->propRef('headers');
+        $headers['Bcc'] = NULL;
+        $headers['Cc'] = NULL;
+        $headers['To'] = NULL;
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Cc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)To: (\n|$)/', $header), 'To found in headers.');
+    }
+
+    /**
+     * @group internet
+     */
+    function test_lint(){
+        // prepare a simple multipart message
+        $mail = new TestMailer();
+        $mail->to(array('Möp <moep@example.com> ',' foo <foo@example.com>'));
+        $mail->from('Me <test@example.com>');
+        $mail->subject('This is a töst');
+        $mail->setBody('Hello Wörld,
+
+        please don\'t burn, okay?
+        ');
+        $mail->attachContent('some test data', 'text/plain', 'a text.txt');
+        $msg = $mail->dump();
+        $msglines = explode("\n", $msg);
+
+        //echo $msg;
+
+        // ask message lint if it is okay
+        $html = new HTTPClient();
+        $results = $html->post('http://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
+        $this->assertTrue($results !== false);
+
+        // parse the result lines
+        $lines = explode("\n", $results);
+        $rows  = count($lines);
+        $i=0;
+        while(trim($lines[$i]) != '-----------' && $i<$rows) $i++; //skip preamble
+        for($i=$i+1; $i<$rows; $i++){
+            $line = trim($lines[$i]);
+            if($line == '-----------') break; //skip appendix
+
+            // get possible continuation of the line
+            while($lines[$i+1][0] == ' '){
+                $line .= ' '.trim($lines[$i+1]);
+                $i++;
+            }
+
+            // check the line for errors
+            if(substr($line,0,5) == 'ERROR' || substr($line,0,7) == 'WARNING'){
+                // ignore some errors
+                if(strpos($line, "missing mandatory header 'return-path'")) continue; #set by MDA
+                if(strpos($line, "bare newline in text body decoded")) continue; #seems to be false positive
+
+                // get the context in which the error occured
+                $errorin = '';
+                if(preg_match('/line (\d+)$/', $line, $m)){
+                    $errorin .= "\n".$msglines[$m[1] - 1];
+                }
+                if(preg_match('/lines (\d+)-(\d+)$/', $line, $m)){
+                    for($x=$m[1]-1; $x<$m[2]; $x++){
+                        $errorin .= "\n".$msglines[$x];
+                    }
+                }
+
+                // raise the error
+                throw new Exception($line.$errorin);
+            }
+        }
+
     }
 }
 //Setup VIM: ex: et ts=4 :

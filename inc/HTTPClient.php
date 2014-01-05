@@ -553,7 +553,7 @@ class HTTPClient {
         }while($r_line != "\r\n" && $r_line != "\n");
 
         $this->_debug('SSL Tunnel Response',$r_headers);
-        if(preg_match('/^HTTP\/1\.0 200/i',$r_headers)){
+        if(preg_match('/^HTTP\/1\.[01] 200/i',$r_headers)){
             if (stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
                 $requesturl = $requestinfo['path'];
                 return true;

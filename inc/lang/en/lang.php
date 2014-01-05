@@ -84,7 +84,7 @@ $lang['profnochange']          = 'No changes, nothing to do.';
 $lang['profnoempty']           = 'An empty name or email address is not allowed.';
 $lang['profchanged']           = 'User profile successfully updated.';
 $lang['profnodelete']          = 'This wiki does not support deleting users';
-$lang['profdeleteuser']        = 'Delete Account'; 
+$lang['profdeleteuser']        = 'Delete Account';
 $lang['profdeleted']           = 'Your user account has been deleted from this wiki';
 $lang['profconfdelete']        = 'I wish to remove my account from this wiki. <br/> This action can not be undone.';
 $lang['profconfdeletemissing'] = 'Confirmation check box not ticked';
@@ -287,7 +287,6 @@ $lang['subscr_style_digest']        = 'digest email of changes for each page (ev
 $lang['subscr_style_list']          = 'list of changed pages since last email (every %.2f days)';
 
 /* auth.class language support */
-$lang['authmodfailed']         = 'Bad user authentication configuration. Please inform your Wiki Admin.';
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
 $lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 
@@ -316,6 +315,7 @@ $lang['i_policy']              = 'Initial ACL policy';
 $lang['i_pol0']                = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']                = 'Public Wiki (read for everyone, write and upload for registered users)';
 $lang['i_pol2']                = 'Closed Wiki (read, write, upload for registered users only)';
+$lang['i_allowreg']            = 'Allow users to register themselves';
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
 $lang['i_license_none']        = 'Do not show any license information';
@@ -357,4 +357,8 @@ $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
 
+$lang['currentns']             = 'Current namespace';
+$lang['searchresult']          = 'Search Result';
+$lang['plainhtml']             = 'Plain HTML';
+$lang['wikimarkup']            = 'Wiki Markup';
 //Setup VIM: ex: et ts=2 :

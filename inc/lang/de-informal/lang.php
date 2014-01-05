@@ -1,8 +1,8 @@
 <?php
+
 /**
- * german informal language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -21,6 +21,7 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
+ * @author Janosch <janosch@moinzen.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -94,10 +95,10 @@ $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
 $lang['profnoempty']           = 'Es muss ein Name oder eine E-Mail Adresse angegeben werden.';
 $lang['profchanged']           = 'Benutzerprofil erfolgreich geändert.';
 $lang['profnodelete']          = 'Dieses Wiki unterstützt nicht das Löschen von Benutzern.';
-$lang['profdeleteuser']        = 'Benutzerprofil löschen'; 
+$lang['profdeleteuser']        = 'Benutzerprofil löschen';
 $lang['profdeleted']           = 'Dein Benutzerprofil wurde im Wiki gelöscht.';
 $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
-$lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.'; 
+$lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
@@ -280,7 +281,6 @@ $lang['subscr_m_receive']      = 'Erhalten';
 $lang['subscr_style_every']    = 'E-Mail bei jeder Änderung';
 $lang['subscr_style_digest']   = 'E-Mail mit zusammengefasster Übersicht der Seitenänderungen (alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Auflistung aller geänderten Seiten seit der letzten E-Mail (alle %.2f Tage)';
-$lang['authmodfailed']         = 'Benutzerüberprüfung nicht möglich. Bitte wende dich an den Admin.';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wende dich an den Admin.';
 $lang['authpwdexpire']         = 'Dein Passwort läuft in %d Tag(en) ab. Du solltest es es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wähle deine Sprache';
@@ -303,6 +303,7 @@ $lang['i_policy']              = 'Anfangseinstellungen der Zugangskontrolle (ACL
 $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Benutzer)';
 $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Benutzer)';
 $lang['i_pol2']                = 'Geschlossenes Wiki (Lesen, Schreiben und Hochladen nur für registrierte Benutzer)';
+$lang['i_allowreg']            = 'Benutzer können sich selbst registrieren';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wähle die Lizenz aus unter der die Wiki-Inhalte veröffentlicht werden sollen:';
 $lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen';
@@ -340,3 +341,5 @@ $lang['media_perm_read']       = 'Du besitzt nicht die notwendigen Berechtigunge
 $lang['media_perm_upload']     = 'Du besitzt nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['currentns']             = 'Aktueller Namensraum';
+$lang['searchresult']          = 'Suchergebnis';

@@ -14,7 +14,6 @@
  * @author Timon Van Overveldt <timonvo@gmail.com>
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
- * @author Gerrit <klapinklapin@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['menu']                  = 'Gebruikersmanager';
@@ -39,7 +38,7 @@ $lang['search_prompt']         = 'Voer zoekopdracht uit';
 $lang['clear']                 = 'Verwijder zoekfilter';
 $lang['filter']                = 'Filter';
 $lang['export_all']            = 'Exporteer Alle Gebruikers (CSV)';
-$lang['export_filtered']       = 'Exporteer de lijst van Gefilterde Gebruikers (CSV)';
+$lang['export_filtered']       = 'Exporteer Gefilterde Gebruikers (CSV)';
 $lang['import']                = 'Importeer Nieuwe Gebruikers';
 $lang['line']                  = 'Regelnummer';
 $lang['error']                 = 'Foutmelding';
@@ -63,6 +62,8 @@ $lang['add_ok']                = 'Gebruiker succesvol toegevoegd';
 $lang['add_fail']              = 'Gebruiker kon niet worden toegevoegd';
 $lang['notify_ok']             = 'Notificatie-e-mail verzonden';
 $lang['notify_fail']           = 'Notificatie-e-mail kon niet worden verzonden';
+$lang['import_userlistcsv']    = 'Gebruikerslijst (CSV-bestand):';
+$lang['import_header']         = 'Meest recente import - Gevonden fouten';
 $lang['import_success_count']  = 'Gebruikers importeren: %d gebruikers gevonden, %d geïmporteerd';
 $lang['import_failure_count']  = 'Gebruikers importeren: %d mislukt. Fouten zijn hieronder weergegeven.';
 $lang['import_error_fields']   = 'Onvoldoende velden, gevonden %d, nodig 4.';
@@ -73,3 +74,4 @@ $lang['import_error_upload']   = 'Importeren mislukt. Het CSV bestand kon niet w
 $lang['import_error_readfail'] = 'Importeren mislukt. Lezen van het geüploade bestand is mislukt.';
 $lang['import_error_create']   = 'Aanmaken van de gebruiker was niet mogelijk.';
 $lang['import_notify_fail']    = 'Notificatiebericht kon niet naar de geïmporteerde gebruiker worden verstuurd, %s met e-mail %s.';
+$lang['import_downloadfailures'] = 'Download de gevonden fouten als CSV voor correctie';

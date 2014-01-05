@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
  * @author Oleksandr Kunytsia <okunia@gmail.com>
@@ -250,7 +250,6 @@ $lang['subscr_m_receive']      = 'Отримувати';
 $lang['subscr_style_every']    = 'повідомляти на пошту про кожну зміну';
 $lang['subscr_style_digest']   = 'лист з дайджестом для зміни кожної сторінки (кожні %.2f днів)';
 $lang['subscr_style_list']     = 'список змінених сторінок від часу отримання останнього листа (кожні %.2f днів)';
-$lang['authmodfailed']         = 'Неправильні налаштування автентифікації користувача. Будь ласка, повідомте про це адміністратора.';
 $lang['authtempfail']          = 'Автентифікація користувача тимчасово не доступна. Якщо це буде продовжуватись, будь ласка, повідомте адміністратора.';
 $lang['i_chooselang']          = 'Виберіть мову';
 $lang['i_installer']           = 'Програма установки ДокуВікі';

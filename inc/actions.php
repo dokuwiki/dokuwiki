@@ -53,7 +53,7 @@ function act_dispatch(){
             }
         }
 
-        //display some infos
+        //display some info
         if($ACT == 'check'){
             check();
             $ACT = 'show';
@@ -164,7 +164,8 @@ function act_dispatch(){
                 $pluginlist = plugin_list('admin');
                 if (in_array($page, $pluginlist)) {
                     // attempt to load the plugin
-                    if ($plugin =& plugin_load('admin',$page) !== null){
+
+                    if (($plugin = plugin_load('admin',$page)) !== null){
                         /** @var DokuWiki_Admin_Plugin $plugin */
                         if($plugin->forAdminOnly() && !$INFO['isadmin']){
                             // a manager tried to load a plugin that's for admins only
