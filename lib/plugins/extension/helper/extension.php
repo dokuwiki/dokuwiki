@@ -96,7 +96,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         return in_array($this->base,
                         array('acl', 'info', 'extension', 'testing', 'revert', 'popularity',
                               'config', 'plugin', 'safefnrecode', 'authplain', 'testing',
-                              'template:dokuwiki', 'template:default'
+                              'template:dokuwiki'
                               )
         );
     }
