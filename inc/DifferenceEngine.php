@@ -826,7 +826,7 @@ class DiffFormatter {
      * @param $str string Text string to escape
      * @return string The escaped string.
      */
-     function _escape($str){
+    function _escape($str){
         return $str;
     }
 }

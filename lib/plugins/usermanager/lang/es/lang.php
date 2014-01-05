@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Spanish language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Miguel Pagano <miguel.pagano>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>

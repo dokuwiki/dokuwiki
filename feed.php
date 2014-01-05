@@ -476,8 +476,12 @@ function rssListNamespace($opt) {
     $ns = str_replace(':', '/', $ns);
 
     $data = array();
-    sort($data);
-    search($data, $conf['datadir'], 'search_list', '', $ns);
+    $search_opts = array(
+        'depth' => 1,
+        'pagesonly' => true,
+        'listfiles' => true
+    );
+    search($data, $conf['datadir'], 'search_universal', $search_opts, $ns);
 
     return $data;
 }

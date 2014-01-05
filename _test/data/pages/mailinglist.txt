@@ -1,0 +1,11 @@
+====== Mailing Lists ======
+
+[[DokuWiki]]'s development is coordinated through multiple Mailinglists hosted by [[http://www.freelists.org|freelists.org]].
+
+===== Using the lists =====
+
+First you should subscribe to one or several of the mailing lists presented below. After subscribing you can send emails to the list(s) by using the mailing list address stated in its description. If you rather want to use the mailing list through a news group interface, please read the section [[#News group interface]].
+
+If you are new to mailing lists in general, please read [[rfc>1855|RFC 1855 - Netiquette Guidelines]], especially the sections 3.1.1 and 3.1.2. Before you ask any questions you should also have a look at [[http://www.catb.org/~esr/faqs/smart-questions.html|How To Ask Questions The Smart Way]].
+
+:!: Please note that these documents are linked here solely for the purpose of information. Their respective authors have nothing do to with [[DokuWiki]] and in **no case** should you send email to them, asking for help related to [[DokuWiki]]! 

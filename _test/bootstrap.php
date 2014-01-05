@@ -15,7 +15,8 @@ require_once DOKU_UNITTEST.'core/TestUtils.php';
 define('SIMPLE_TEST', true);
 
 // basic behaviours
-error_reporting(E_ALL);
+define('DOKU_E_LEVEL',E_ALL ^ E_NOTICE);
+error_reporting(DOKU_E_LEVEL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
@@ -67,6 +68,13 @@ $default_server_vars = array(
     'PHP_SELF' => '/doku.php',
     'REQUEST_TIME' => time(),
 );
+
+// fixup for $_SERVER when run from CLI,
+// some values should be mocked for use by inc/init.php which is called here
+// [ $_SERVER is also mocked in TestRequest::execute() ]
+if (php_sapi_name() == 'cli') {
+  $_SERVER = array_merge($default_server_vars, $_SERVER);
+}
 
 // create temp directories
 mkdir(TMP_DIR);

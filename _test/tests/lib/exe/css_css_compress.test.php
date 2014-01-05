@@ -62,6 +62,46 @@ class css_css_compress_test extends DokuWikiTest {
         $this->assertEquals(css_compress($text), 'a{left:20px;top:20px}');
     }
 
+    function test_shortening() {
+        $input = array(
+            'margin:0em 0em 0em 0em ul.test margin:0em :0em div#FFFFFF {',
+            'margin:  1px 1px 1px 1px;',
+            'padding: 1px 2px 1px 2px;',
+            'margin:  1px 2px 3px 1px;',
+            'padding: 1px 2px 3px 4px;',
+            'margin:  00.00em 0em 01.00px 0em;',
+            'padding: 0010em 0010.00em 00.00em 00.00100em;',
+            'padding: 0010% 0010.00% 00.00% 00.00100xxx;',
+            'padding: 0.0em .0em 0.em 00.00em;',
+            'padding: 01.0em;',
+            'color:   #FFFFFF;',
+            'color:   #777777;',
+            'color:   #123456;',
+            'border:  01.0em solid #ffffff;',
+        );
+
+        $expected = array(
+            'margin:0em 0em 0em 0em ul.test margin:0em :0em div#FFFFFF{',
+            'margin:1px;',
+            'padding:1px 2px;',
+            'margin:1px 2px 3px 1px;',
+            'padding:1px 2px 3px 4px;',
+            'margin:0 0 1px 0;',
+            'padding:10em 10em 0 .001em;',
+            'padding:10% 10% 0 00.00100xxx;',
+            'padding:0;',
+            'padding:1em;',
+            'color:#FFF;',
+            'color:#777;',
+            'color:#123456;',
+            'border:1em solid #fff;',
+        );
+
+        $input = array_map('css_compress', $input);
+
+        $this->assertEquals($expected, $input);
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 :

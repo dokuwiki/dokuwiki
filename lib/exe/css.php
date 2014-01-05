@@ -40,43 +40,32 @@ function css_out(){
         $type = '';
     }
 
+    // decide from where to get the template
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
-    if($tpl){
-        $tplinc = DOKU_INC.'lib/tpl/'.$tpl.'/';
-        $tpldir = DOKU_BASE.'lib/tpl/'.$tpl.'/';
-    }else{
-        $tplinc = tpl_incdir();
-        $tpldir = tpl_basedir();
-    }
-
-    // used style.ini file
-    $styleini = css_styleini($tplinc);
+    if(!$tpl) $tpl = $conf['template'];
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tplinc.$type,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
 
-    // load template styles
-    $tplstyles = array();
-    if ($styleini) {
-        foreach($styleini['stylesheets'] as $file => $mode) {
-            $tplstyles[$mode][$tplinc.$file] = $tpldir;
-        }
-    }
+    // load styl.ini
+    $styleini = css_styleini($tpl);
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
         $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
     }
 
+    // cache influencers
+    $tplinc = tpl_basedir($tpl);
+    $cache_files = getConfigFiles('main');
+    $cache_files[] = $tplinc.'style.ini';
+    $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
+    $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
+    $cache_files[] = __FILE__;
+
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
     $files = array();
-
-    $cache_files = getConfigFiles('main');
-    $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = $tplinc.'style.local.ini';
-    $cache_files[] = __FILE__;
-
     foreach($mediatypes as $mediatype) {
         $files[$mediatype] = array();
         // load core styles
@@ -88,22 +77,12 @@ function css_out(){
         // load plugin styles
         $files[$mediatype] = array_merge($files[$mediatype], css_pluginstyles($mediatype));
         // load template styles
-        if (isset($tplstyles[$mediatype])) {
-            $files[$mediatype] = array_merge($files[$mediatype], $tplstyles[$mediatype]);
+        if (isset($styleini['stylesheets'][$mediatype])) {
+            $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
         if(isset($config_cascade['userstyle'][$mediatype])){
             $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
-        }
-        // load rtl styles
-        // note: this adds the rtl styles only to the 'screen' media type
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if ($mediatype=='screen') {
-            if($lang['direction'] == 'rtl'){
-                if (isset($tplstyles['rtl'])) $files[$mediatype] = array_merge($files[$mediatype], $tplstyles['rtl']);
-                if (isset($config_cascade['userstyle']['rtl'])) $files[$mediatype][$config_cascade['userstyle']['rtl']] = DOKU_BASE;
-            }
         }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
@@ -131,6 +110,8 @@ function css_out(){
         // load files
         $css_content = '';
         foreach($files[$mediatype] as $file => $location){
+            $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
+            $css_content .= "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             $css_content .= css_loadfile($file, $location);
         }
         switch ($mediatype) {
@@ -152,10 +133,10 @@ function css_out(){
     ob_end_clean();
 
     // apply style replacements
-    $css = css_applystyle($css,$tplinc);
+    $css = css_applystyle($css, $styleini['replacements']);
 
-    // place all @import statements at the top of the file
-    $css = css_moveimports($css);
+    // parse less
+    $css = css_parseless($css);
 
     // compress whitespace and comments
     if($conf['compress']){
@@ -172,40 +153,175 @@ function css_out(){
 }
 
 /**
+ * Uses phpless to parse LESS in our CSS
+ *
+ * most of this function is error handling to show a nice useful error when
+ * LESS compilation fails
+ *
+ * @param $css
+ * @return string
+ */
+function css_parseless($css) {
+    $less = new lessc();
+    $less->importDir[] = DOKU_INC;
+
+    if (defined('DOKU_UNITTEST')){
+        $less->importDir[] = TMP_DIR;
+    }
+
+    try {
+        return $less->compile($css);
+    } catch(Exception $e) {
+        // get exception message
+        $msg = str_replace(array("\n", "\r", "'"), array(), $e->getMessage());
+
+        // try to use line number to find affected file
+        if(preg_match('/line: (\d+)$/', $msg, $m)){
+            $msg = substr($msg, 0, -1* strlen($m[0])); //remove useless linenumber
+            $lno = $m[1];
+
+            // walk upwards to last include
+            $lines = explode("\n", $css);
+            for($i=$lno-1; $i>=0; $i--){
+                if(preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)){
+                    // we found it, add info to message
+                    $msg .= ' in '.$m[2].' at line '.($lno-$i);
+                    break;
+                }
+            }
+        }
+
+        // something went wrong
+        $error = 'A fatal error occured during compilation of the CSS files. '.
+            'If you recently installed a new plugin or template it '.
+            'might be broken and you should try disabling it again. ['.$msg.']';
+
+        echo ".dokuwiki:before {
+            content: '$error';
+            background-color: red;
+            display: block;
+            background-color: #fcc;
+            border-color: #ebb;
+            color: #000;
+            padding: 0.5em;
+        }";
+
+        exit;
+    }
+}
+
+/**
  * Does placeholder replacements in the style according to
  * the ones defined in a templates style.ini file
  *
+ * This also adds the ini defined placeholders as less variables
+ * (sans the surrounding __ and with a ini_ prefix)
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function css_applystyle($css,$tplinc){
-    $styleini = css_styleini($tplinc);
+function css_applystyle($css, $replacements) {
+    // we convert ini replacements to LESS variable names
+    // and build a list of variable: value; pairs
+    $less = '';
+    foreach((array) $replacements as $key => $value) {
+        $lkey = trim($key, '_');
+        $lkey = '@ini_'.$lkey;
+        $less .= "$lkey: $value;\n";
 
-    if($styleini){
-        $css = strtr($css,$styleini['replacements']);
+        $replacements[$key] = $lkey;
     }
+
+    // we now replace all old ini replacements with LESS variables
+    $css = strtr($css, $replacements);
+
+    // now prepend the list of LESS variables as the very first thing
+    $css = $less.$css;
     return $css;
 }
 
 /**
- * Get contents of merged style.ini and style.local.ini as an array.
+ * Load style ini contents
  *
- * @author Anika Henke <anika@selfthinker.org>
+ * Loads and merges style.ini files from template and config and prepares
+ * the stylesheet modes
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $tpl the used template
+ * @return array with keys 'stylesheets' and 'replacements'
  */
-function css_styleini($tplinc) {
-    $styleini = array();
+function css_styleini($tpl) {
+    $stylesheets = array(); // mode, file => base
+    $replacements = array(); // placeholder => value
 
-    foreach (array($tplinc.'style.ini', $tplinc.'style.local.ini') as $ini) {
-        $tmp = (@file_exists($ini)) ? parse_ini_file($ini, true) : array();
+    // load template's style.ini
+    $incbase = tpl_incdir($tpl);
+    $webbase = tpl_basedir($tpl);
+    $ini = $incbase.'style.ini';
+    if(file_exists($ini)){
+        $data = parse_ini_file($ini, true);
 
-        foreach($tmp as $key => $value) {
-            if(array_key_exists($key, $styleini) && is_array($value)) {
-                $styleini[$key] = array_merge($styleini[$key], $tmp[$key]);
-            } else {
-                $styleini[$key] = $value;
-            }
+        // stylesheets
+        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+            $stylesheets[$mode][$incbase.$file] = $webbase;
+        }
+
+        // replacements
+        if(is_array($data['replacements'])){
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
-    return $styleini;
+
+    // load template's style.local.ini
+    // @deprecated 2013-08-03
+    $ini = $incbase.'style.local.ini';
+    if(file_exists($ini)){
+        $data = parse_ini_file($ini, true);
+
+        // stylesheets
+        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+            $stylesheets[$mode][$incbase.$file] = $webbase;
+        }
+
+        // replacements
+        if(is_array($data['replacements'])){
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
+        }
+    }
+
+    // load configs's style.ini
+    $webbase = DOKU_BASE;
+    $ini = DOKU_CONF."tpl/$tpl/style.ini";
+    $incbase = dirname($ini).'/';
+    if(file_exists($ini)){
+        $data = parse_ini_file($ini, true);
+
+        // stylesheets
+        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+            $stylesheets[$mode][$incbase.$file] = $webbase;
+        }
+
+        // replacements
+        if(is_array($data['replacements'])){
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
+        }
+    }
+
+    return array(
+        'stylesheets' => $stylesheets,
+        'replacements' => $replacements
+    );
+}
+
+/**
+ * Amend paths used in replacement relative urls, refer FS#2879
+ *
+ * @author Chris Smith <chris@jalakai.co.uk>
+ */
+function css_fixreplacementurls($replacements, $location) {
+    foreach($replacements as $key => $value) {
+        $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
+    }
+    return $replacements;
 }
 
 /**
@@ -285,18 +401,99 @@ function css_filetypes(){
  * given location prefix
  */
 function css_loadfile($file,$location=''){
-    if(!@file_exists($file)) return '';
-    $css = io_readFile($file);
-    if(!$location) return $css;
-
-    $css = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$css);
-    $css = preg_replace('#(@import\s+[\'"])(?!/|data:|http://|https://)#', '\\1'.$location, $css);
-
-    return $css;
+    $css_file = new DokuCssFile($file);
+    return $css_file->load($location);
 }
 
 /**
- * Converte local image URLs to data URLs if the filesize is small
+ *  Helper class to abstract loading of css/less files
+ *
+ *  @author Chris Smith <chris@jalakai.co.uk>
+ */
+class DokuCssFile {
+
+    protected $filepath;             // file system path to the CSS/Less file
+    protected $location;             // base url location of the CSS/Less file
+    private   $relative_path = null;
+
+    public function __construct($file) {
+        $this->filepath = $file;
+    }
+
+    /**
+     * Load the contents of the css/less file and adjust any relative paths/urls (relative to this file) to be
+     * relative to the dokuwiki root: the web root (DOKU_BASE) for most files; the file system root (DOKU_INC)
+     * for less files.
+     *
+     * @param   string   $location   base url for this file
+     * @return  string               the CSS/Less contents of the file
+     */
+    public function load($location='') {
+        if (!@file_exists($this->filepath)) return '';
+
+        $css = io_readFile($this->filepath);
+        if (!$location) return $css;
+
+        $this->location = $location;
+
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#',array($this,'replacements'),$css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#',array($this,'replacements'),$css);
+
+        return $css;
+    }
+
+    /**
+     * Get the relative file system path of this file, relative to dokuwiki's root folder, DOKU_INC
+     *
+     * @return string   relative file system path
+     */
+    private function getRelativePath(){
+
+        if (is_null($this->relative_path)) {
+            $basedir = array(DOKU_INC);
+
+            // during testing, files may be found relative to a second base dir, TMP_DIR
+            if (defined('DOKU_UNITTEST')) {
+                $basedir[] = realpath(TMP_DIR);
+            }
+            $regex = '#^('.join('|',$basedir).')#';
+
+            $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
+        }
+
+        return $this->relative_path;
+    }
+
+    /**
+     * preg_replace callback to adjust relative urls from relative to this file to relative
+     * to the appropriate dokuwiki root location as described in the code
+     *
+     * @param  array    see http://php.net/preg_replace_callback
+     * @return string   see http://php.net/preg_replace_callback
+     */
+    public function replacements($match) {
+
+        // not a relative url? - no adjustment required
+        if (preg_match('#^(/|data:|https?://)#',$match[3])) {
+            return $match[0];
+        }
+        // a less file import? - requires a file system location
+        else if (substr($match[3],-5) == '.less') {
+            if ($match[3]{0} != '/') {
+                $match[3] = $this->getRelativePath() . '/' . $match[3];
+            }
+        }
+        // everything else requires a url adjustment
+        else {
+            $match[3] = $this->location . $match[3];
+        }
+
+        return join('',array_slice($match,1));
+    }
+}
+
+/**
+ * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
  */
@@ -333,40 +530,14 @@ function css_pluginstyles($mediatype='screen'){
     $plugins = plugin_list();
     foreach ($plugins as $p){
         $list[DOKU_PLUGIN."$p/$mediatype.css"]  = DOKU_BASE."lib/plugins/$p/";
+        $list[DOKU_PLUGIN."$p/$mediatype.less"]  = DOKU_BASE."lib/plugins/$p/";
         // alternative for screen.css
         if ($mediatype=='screen') {
             $list[DOKU_PLUGIN."$p/style.css"]  = DOKU_BASE."lib/plugins/$p/";
-        }
-        // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-        //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-        if($lang['direction'] == 'rtl'){
-            $list[DOKU_PLUGIN."$p/rtl.css"] = DOKU_BASE."lib/plugins/$p/";
+            $list[DOKU_PLUGIN."$p/style.less"]  = DOKU_BASE."lib/plugins/$p/";
         }
     }
     return $list;
-}
-
-/**
- * Move all @import statements in a combined stylesheet to the top so they
- * aren't ignored by the browser.
- *
- * @author Gabriel Birke <birke@d-scribe.de>
- */
-function css_moveimports($css)
-{
-    if(!preg_match_all('/@import\s+(?:url\([^)]+\)|"[^"]+")\s*[^;]*;\s*/', $css, $matches, PREG_OFFSET_CAPTURE)) {
-        return $css;
-    }
-    $newCss  = "";
-    $imports = "";
-    $offset  = 0;
-    foreach($matches[0] as $match) {
-        $newCss  .= substr($css, $offset, $match[1] - $offset);
-        $imports .= $match[0];
-        $offset   = $match[1] + strlen($match[0]);
-    }
-    $newCss .= substr($css, $offset);
-    return $imports.$newCss;
 }
 
 /**
@@ -386,8 +557,19 @@ function css_compress($css){
     $css = preg_replace('/ ?([;,{}\/]) ?/','\\1',$css);
     $css = preg_replace('/ ?: /',':',$css);
 
+    // number compression
+    $css = preg_replace('/([: ])0+(\.\d+?)0*((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2$3', $css); // "0.1em" to ".1em", "1.10em" to "1.1em"
+    $css = preg_replace('/([: ])\.(0)+((?:pt|pc|in|mm|cm|em|ex|px)\b|%)(?=[^\{]*[;\}])/', '$1$2', $css); // ".0em" to "0"
+    $css = preg_replace('/([: ]0)0*(\.0*)?((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1', $css); // "0.0em" to "0"
+    $css = preg_replace('/([: ]\d+)(\.0*)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$3', $css); // "1.0em" to "1em"
+    $css = preg_replace('/([: ])0+(\d+|\d*\.\d+)((?:pt|pc|in|mm|cm|em|ex|px)(?=[^\{]*[;\}])\b|%)/', '$1$2$3', $css); // "001em" to "1em"
+
+    // shorten attributes (1em 1em 1em 1em -> 1em)
+    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width|radius)):)([\w\.]+)( \2)+(?=[;\}]| !)/', '$1$2', $css); // "1em 1em 1em 1em" to "1em"
+    $css = preg_replace('/(?<![\w\-])((?:margin|padding|border|border-(?:width)):)([\w\.]+) ([\w\.]+) \2 \3(?=[;\}]| !)/', '$1$2 $3', $css); // "1em 2em 1em 2em" to "1em 2em"
+
     // shorten colors
-    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3/", "#\\1\\2\\3",$css);
+    $css = preg_replace("/#([0-9a-fA-F]{1})\\1([0-9a-fA-F]{1})\\2([0-9a-fA-F]{1})\\3(?=[^\{]*[;\}])/", "#\\1\\2\\3", $css);
 
     return $css;
 }

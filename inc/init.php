@@ -267,10 +267,10 @@ function init_lang($langCode) {
     $lang = array();
 
     //load the language files
-    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    require(DOKU_INC.'inc/lang/en/lang.php');
     if ($langCode && $langCode != 'en') {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
-            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+            require(DOKU_INC."inc/lang/$langCode/lang.php");
         }
     }
 }
@@ -288,7 +288,7 @@ function init_files(){
             $fh = @fopen($file,'a');
             if($fh){
                 fclose($fh);
-                if($conf['fperm']) chmod($file, $conf['fperm']);
+                if(!empty($conf['fperm'])) chmod($file, $conf['fperm']);
             }else{
                 nice_die("$file is not writable. Check your permissions settings!");
             }

@@ -680,7 +680,7 @@ function form_wikitext($attrs) {
     // mandatory attributes
     unset($attrs['name']);
     unset($attrs['id']);
-    return '<textarea name="wikitext" id="wiki__text" '
+    return '<textarea name="wikitext" id="wiki__text" dir="auto" '
                  .buildAttributes($attrs,true).'>'.DOKU_LF
                  .formText($attrs['_text'])
                  .'</textarea>';

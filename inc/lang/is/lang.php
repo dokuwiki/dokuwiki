@@ -44,7 +44,6 @@ $lang['btn_back']              = 'Til baka';
 $lang['btn_backlink']          = 'Hvað tengist hingað';
 $lang['btn_backtomedia']       = 'Aftur til miðlaskrá';
 $lang['btn_subscribe']         = 'Vakta';
-$lang['btn_unsubscribe']       = 'Afvakta';
 $lang['btn_profile']           = 'Uppfæra notanda';
 $lang['btn_reset']             = 'Endurstilla';
 $lang['btn_draft']             = 'Breyta uppkasti';

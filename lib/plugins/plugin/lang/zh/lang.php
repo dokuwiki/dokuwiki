@@ -1,8 +1,8 @@
 <?php
+
 /**
- * english language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
@@ -15,6 +15,7 @@
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
+ * @author anjianshi <anjianshi@gmail.com>
  */
 $lang['menu']                  = '插件管理器';
 $lang['download']              = '下载并安装新的插件';
@@ -26,7 +27,7 @@ $lang['btn_settings']          = '设置';
 $lang['btn_download']          = '下载';
 $lang['btn_enable']            = '保存';
 $lang['url']                   = 'URL';
-$lang['installed']             = '已安装：';
+$lang['installed']             = '安装时间：';
 $lang['lastupdate']            = '最后更新于：';
 $lang['source']                = '来源：';
 $lang['unknown']               = '未知';

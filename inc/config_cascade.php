@@ -50,9 +50,6 @@ $config_cascade = array_merge(
             ),
         'userstyle' => array(
             'screen'  => DOKU_CONF.'userstyle.css',
-            // @deprecated 2012-04-09: rtl will cease to be a mode of its own,
-            //     please use "[dir=rtl]" in any css file in all, screen or print mode instead
-            'rtl'     => DOKU_CONF.'userrtl.css',
             'print'   => DOKU_CONF.'userprint.css',
             'feed'    => DOKU_CONF.'userfeed.css',
             'all'     => DOKU_CONF.'userall.css',

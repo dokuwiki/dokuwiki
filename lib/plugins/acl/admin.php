@@ -61,7 +61,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         // fresh 1:1 copy without replacements
         $AUTH_ACL = file($config_cascade['acl']['default']);
 
-
         // namespace given?
         if($INPUT->str('ns') == '*'){
             $this->ns = '*';
@@ -346,7 +345,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Print infos and editor
+     * Print info and editor
      */
     function _html_info(){
         global $ID;
@@ -385,7 +384,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }else{
             echo '<legend>'.$this->getLang('acl_mod').'</legend>';
         }
-
 
         echo $this->_html_checkboxes($current,empty($this->ns),'acl');
 
@@ -556,7 +554,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $line = trim(preg_replace('/#.*$/','',$line)); //ignore comments
             if(!$line) continue;
 
-            $acl = preg_split('/\s+/',$line);
+            $acl = preg_split('/[ \t]+/',$line);
             //0 is pagename, 1 is user, 2 is acl
 
             $acl[1] = rawurldecode($acl[1]);
@@ -686,7 +684,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             if($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
         }
 
-
         $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
 
         $new_config = $acl_config.$new_acl;
@@ -704,7 +701,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $acl_config = file($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
-        $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
+        $acl_pattern = '^'.preg_quote($acl_scope,'/').'[ \t]+'.$acl_user.'[ \t]+[0-8].*$';
 
         // save all non!-matching
         $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
@@ -724,7 +721,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         static $label = 0; //number labels
         $ret = '';
 
-        if($ispage && $setperm > AUTH_EDIT) $perm = AUTH_EDIT;
+        if($ispage && $setperm > AUTH_EDIT) $setperm = AUTH_EDIT;
 
         foreach(array(AUTH_NONE,AUTH_READ,AUTH_EDIT,AUTH_CREATE,AUTH_UPLOAD,AUTH_DELETE) as $perm){
             $label += 1;
@@ -774,7 +771,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $gsel = '';
             $inlist = true;
         }
-
 
         echo '<select name="acl_t" class="edit">'.NL;
         echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;

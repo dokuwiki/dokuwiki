@@ -53,7 +53,7 @@ function act_dispatch(){
             }
         }
 
-        //display some infos
+        //display some info
         if($ACT == 'check'){
             check();
             $ACT = 'show';
@@ -92,14 +92,26 @@ function act_dispatch(){
             $ACT = 'login';
         }
 
-        //update user profile
-        if ($ACT == 'profile') {
+        // user profile changes
+        if (in_array($ACT, array('profile','profile_delete'))) {
             if(!$_SERVER['REMOTE_USER']) {
                 $ACT = 'login';
             } else {
-                if(updateprofile()) {
-                    msg($lang['profchanged'],1);
-                    $ACT = 'show';
+                switch ($ACT) {
+                    case 'profile' :
+                        if(updateprofile()) {
+                            msg($lang['profchanged'],1);
+                            $ACT = 'show';
+                        }
+                        break;
+                    case 'profile_delete' :
+                        if(auth_deleteprofile()){
+                            msg($lang['profdeleted'],1);
+                            $ACT = 'show';
+                        } else {
+                            $ACT = 'profile';
+                        }
+                        break;
                 }
             }
         }
@@ -152,7 +164,8 @@ function act_dispatch(){
                 $pluginlist = plugin_list('admin');
                 if (in_array($page, $pluginlist)) {
                     // attempt to load the plugin
-                    if ($plugin =& plugin_load('admin',$page) !== null){
+
+                    if (($plugin = plugin_load('admin',$page)) !== null){
                         /** @var DokuWiki_Admin_Plugin $plugin */
                         if($plugin->forAdminOnly() && !$INFO['isadmin']){
                             // a manager tried to load a plugin that's for admins only
@@ -247,7 +260,7 @@ function act_validate($act) {
     //disable all acl related commands if ACL is disabled
     if(!$conf['useacl'] && in_array($act,array('login','logout','register','admin',
                     'subscribe','unsubscribe','profile','revert',
-                    'resendpwd'))){
+                    'resendpwd','profile_delete'))){
         msg('Command unavailable: '.htmlspecialchars($act),-1);
         return 'show';
     }
@@ -258,7 +271,7 @@ function act_validate($act) {
     if(!in_array($act,array('login','logout','register','save','cancel','edit','draft',
                     'preview','search','show','check','index','revisions',
                     'diff','recent','backlink','admin','subscribe','revert',
-                    'unsubscribe','profile','resendpwd','recover',
+                    'unsubscribe','profile','profile_delete','resendpwd','recover',
                     'draftdel','sitemap','media')) && substr($act,0,7) != 'export_' ) {
         msg('Command unknown: '.htmlspecialchars($act),-1);
         return 'show';
@@ -287,7 +300,7 @@ function act_permcheck($act){
         }else{
             $permneed = AUTH_CREATE;
         }
-    }elseif(in_array($act,array('login','search','recent','profile','index', 'sitemap'))){
+    }elseif(in_array($act,array('login','search','recent','profile','profile_delete','index', 'sitemap'))){
         $permneed = AUTH_NONE;
     }elseif($act == 'revert'){
         $permneed = AUTH_ADMIN;

@@ -27,9 +27,8 @@ $showSidebar = $hasSidebar && ($ACT=='show');
 
 <body>
     <!--[if lte IE 7 ]><div id="IE7"><![endif]--><!--[if IE 8 ]><div id="IE8"><![endif]-->
-    <div id="dokuwiki__site"><div id="dokuwiki__top"
-        class="dokuwiki site mode_<?php echo $ACT ?> <?php echo ($showSidebar) ? 'showSidebar' : '';
-        ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
+    <div id="dokuwiki__site"><div id="dokuwiki__top" class="site <?php echo tpl_classes(); ?> <?php
+        echo ($showSidebar) ? 'showSidebar' : ''; ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
 
         <?php include('tpl_header.php') ?>
 
@@ -75,12 +74,26 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <div class="tools">
                     <ul>
                         <?php
-                            tpl_action('edit',      1, 'li', 0, '<span>', '</span>');
-                            tpl_action('revert',    1, 'li', 0, '<span>', '</span>');
-                            tpl_action('revisions', 1, 'li', 0, '<span>', '</span>');
-                            tpl_action('backlink',  1, 'li', 0, '<span>', '</span>');
-                            tpl_action('subscribe', 1, 'li', 0, '<span>', '</span>');
-                            tpl_action('top',       1, 'li', 0, '<span>', '</span>');
+                            $data = array(
+                                'view'  => 'main',
+                                'items' => array(
+                                    'edit'      => tpl_action('edit',      1, 'li', 1, '<span>', '</span>'),
+                                    'revert'    => tpl_action('revert',    1, 'li', 1, '<span>', '</span>'),
+                                    'revisions' => tpl_action('revisions', 1, 'li', 1, '<span>', '</span>'),
+                                    'backlink'  => tpl_action('backlink',  1, 'li', 1, '<span>', '</span>'),
+                                    'subscribe' => tpl_action('subscribe', 1, 'li', 1, '<span>', '</span>'),
+                                    'top'       => tpl_action('top',       1, 'li', 1, '<span>', '</span>')
+                                )
+                            );
+
+                            // the page tools can be amended through a custom plugin hook
+                            $evt = new Doku_Event('TEMPLATE_PAGETOOLS_DISPLAY', $data);
+                            if($evt->advise_before()){
+                                foreach($evt->data['items'] as $k => $html) echo $html;
+                            }
+                            $evt->advise_after();
+                            unset($data);
+                            unset($evt);
                         ?>
                     </ul>
                 </div>
