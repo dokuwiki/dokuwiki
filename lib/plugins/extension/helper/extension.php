@@ -94,7 +94,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     public function isBundled() {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
         return in_array($this->base,
-                        array('acl', 'info', 'extension', 'test', 'revert', 'popularity',
+                        array('acl', 'info', 'extension', 'testing', 'revert', 'popularity',
                               'config', 'plugin', 'safefnrecode', 'authplain', 'testing',
                               'template:dokuwiki', 'template:default'
                               )
