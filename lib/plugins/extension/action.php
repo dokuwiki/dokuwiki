@@ -16,12 +16,18 @@ class action_plugin_extension extends DokuWiki_Action_Plugin {
      * @param Doku_Event_Handler $controller DokuWiki's event controller object
      * @return void
      */
-    public function register(Doku_Event_Handler &$controller) {
+    public function register(Doku_Event_Handler $controller) {
 
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'info');
 
     }
 
+    /**
+     * Create the detail info for a single plugin
+     *
+     * @param Doku_Event $event
+     * @param            $param
+     */
     public function info(Doku_Event &$event, $param){
         global $INPUT;
         if($event->data != 'plugin_extension') return;
