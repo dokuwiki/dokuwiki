@@ -476,6 +476,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 }
             }
 
+            if ($extension->isGitControlled()){
+                $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
+            }
+
         }else{
             if (($canmod = $extension->canModify()) === true) {
                 if ($extension->getDownloadURL()) {

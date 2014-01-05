@@ -87,6 +87,16 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
+     * If the extension is under git control
+     *
+     * @return bool
+     */
+    public function isGitControlled() {
+        if(!$this->isInstalled()) return false;
+        return is_dir($this->getInstallDir().'/.git');
+    }
+
+    /**
      * If the extension is bundled
      *
      * @return bool If the extension is bundled
