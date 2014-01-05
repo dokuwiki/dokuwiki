@@ -29,7 +29,7 @@ class ORIGINAL_RENDERER_EventDispatcher extends ORIGINAL_RENDERER {
      */
     private function _trigger_call($call, &$arguments){
         $result = null;
-        $this->EVENT->name = strtoupper('RCALL_ORIGINAL_RENDERER_'.$call);
+        $this->EVENT->name = strtoupper('RCALL_'.$this->getFormat().'_'.$call);
         $this->EVENT->data =& $arguments;
         if($this->EVENT->advise_before()){
             $result = call_user_func_array(array(parent, $call), $this->EVENT->data);
