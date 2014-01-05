@@ -102,11 +102,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
-     * If the extension is protected
+     * If the extension is protected against any modification (disable/uninstall)
      *
      * @return bool if the extension is protected
      */
     public function isProtected() {
+        // never allow deinstalling the current auth plugin:
+        global $conf;
+        if ($this->id == $conf['authtype']) return true;
+
         /** @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
         $cascade = $plugin_controller->getCascade();
