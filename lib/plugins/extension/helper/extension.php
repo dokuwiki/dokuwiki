@@ -145,6 +145,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function updateAvailable() {
         if(!$this->isInstalled()) return false;
+        if($this->isBundled()) return false;
         $lastupdate = $this->getLastUpdate();
         if ($lastupdate === false) return false;
         $installed  = $this->getInstalledVersion();
