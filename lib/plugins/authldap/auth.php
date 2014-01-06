@@ -117,6 +117,14 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 return false;
             }
             $this->bound = 1;
+
+	    // We've authenticated the user, now verify group membership if groupfilter was specified 
+            if($this->getConf('groupfilter')){
+                if(!$info['satisfygroupfilter']){
+                        return false;
+                }
+            }
+
             return true;
         }
     }
@@ -243,7 +251,13 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 if(!empty($grp[$this->getConf('groupkey')][0])) {
                     $this->_debug('LDAP usergroup: '.htmlspecialchars($grp[$this->getConf('groupkey')][0]), 0, __LINE__, __FILE__);
                     $info['grps'][] = $grp[$this->getConf('groupkey')][0];
+		
+		    // checkPass will use this to authorize the user if groupfilter was used
+		    $info['satisfygroupfilter']=true;
+                } else {
+                    $info['satisfygroupfilter']=false;
                 }
+
             }
         }
 
