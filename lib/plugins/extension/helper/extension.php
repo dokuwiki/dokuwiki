@@ -575,12 +575,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
         try {
             $installed = $this->installArchive("$tmp/upload.archive", true, $basename);
-
-            // purge caches
-            foreach($installed as $ext => $info){
-                $this->setExtension($ext);
-                $this->purgeCache();
-            }
+            // purge cache
+            $this->purgeCache();
         }catch (Exception $e){
             throw $e;
         }
