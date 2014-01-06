@@ -29,7 +29,15 @@ class action_plugin_extension extends DokuWiki_Action_Plugin {
      * @param            $param
      */
     public function info(Doku_Event &$event, $param){
+        global $USERINFO;
         global $INPUT;
+
+        if(empty($_SERVER['REMOTE_USER']) || !auth_isadmin($_SERVER['REMOTE_USER'], $USERINFO['grps'])){
+            http_status(403);
+            echo 'Forbidden';
+            exit;
+        }
+
         if($event->data != 'plugin_extension') return;
         $event->preventDefault();
         $event->stopPropagation();
