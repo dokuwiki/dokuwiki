@@ -632,7 +632,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     /**
      * Uninstall the extension
      *
-     * @return bool If the plugin was sucessfully installed
+     * @return bool If the plugin was sucessfully uninstalled
      */
     public function uninstall() {
         $this->purgeCache();
