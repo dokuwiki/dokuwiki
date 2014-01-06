@@ -2,6 +2,66 @@
 
 class io_rmdir_test extends DokuWikiTest {
 
+    function test_nopes(){
+        // set up test dir
+        $dir = io_mktmpdir();
+        $top = dirname($dir);
+        $this->assertTrue($dir !== false);
+        $this->assertTrue(is_dir($dir));
+
+        // switch into it
+        $this->assertTrue(chdir($dir));
+        $this->assertEquals($dir, getcwd());
+
+
+        $this->assertFalse(io_rmdir('', false));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir('', true));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir(null, false));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir(null, true));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir(false, false));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir(false, true));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir(array(), false));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFalse(io_rmdir(array(), true));
+        clearstatcache();
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+
+        $this->assertFileNotExists("$dir/this/does/not/exist");
+        $this->assertTrue(io_rmdir("$dir/this/does/not/exist"));
+        clearstatcache();
+        $this->assertFileNotExists("$dir/this/does/not/exist");
+        $this->assertTrue(is_dir($dir));
+        $this->assertTrue(is_dir($top));
+    }
+
 
     function test_empty_single(){
         // set up test dir

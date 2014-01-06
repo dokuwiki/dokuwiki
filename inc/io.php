@@ -410,6 +410,7 @@ function io_mkdir_p($target){
  */
 function io_rmdir($path, $removefiles = false) {
     if(!is_string($path) || $path == "") return false;
+    if(!file_exists($path)) return true; // it's already gone or was never there, count as success
 
     if(is_dir($path) && !is_link($path)) {
         $dirs  = array();
