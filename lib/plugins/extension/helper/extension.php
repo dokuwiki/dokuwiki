@@ -33,7 +33,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function __destruct() {
         foreach($this->temporary as $dir){
-            $this->dir_delete($dir);
+            io_rmdir($dir, true);
         }
     }
 
@@ -640,7 +640,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function uninstall() {
         $this->purgeCache();
-        return $this->dir_delete($this->getInstallDir());
+        return io_rmdir($this->getInstallDir(), true);
     }
 
     /**
@@ -769,30 +769,6 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
     }
 
     /**
-     * delete, with recursive sub-directory support
-     *
-     * @param string $path The path that shall be deleted
-     * @return bool If the directory has been successfully deleted
-     */
-    protected function dir_delete($path) {
-        if(!is_string($path) || $path == "") return false;
-
-        if(is_dir($path) && !is_link($path)) {
-            if(!$dh = @opendir($path)) return false;
-
-            while ($f = readdir($dh)) {
-                if($f == '..' || $f == '.') continue;
-                $this->dir_delete("$path/$f");
-            }
-
-            closedir($dh);
-            return @rmdir($path);
-        } else {
-            return @unlink($path);
-        }
-    }
-
-    /**
      * Returns a temporary directory
      *
      * The directory is registered for cleanup when the class is destroyed
@@ -828,7 +804,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
         // download
         if(!$file = io_download($url, $tmp.'/', true, $file, 0)) {
-            $this->dir_delete($tmp);
+            io_rmdir($tmp, true);
             throw new Exception(sprintf($this->getLang('error_download'), '<bdi>'.hsc($url).'</bdi>'));
         }
 
@@ -926,7 +902,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         // cleanup
-        if($tmp) $this->dir_delete($tmp);
+        if($tmp) io_rmdir($tmp, true);
 
         return $installed_extensions;
     }
