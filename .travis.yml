@@ -9,7 +9,7 @@ notifications:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-script: cd _test && phpunit --stderr --verbose --coverage-clover=coverage.clover
+script: cd _test && phpunit --stderr --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
