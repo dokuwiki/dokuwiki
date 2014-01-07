@@ -566,7 +566,7 @@ function media_notify($id,$file,$mime,$old_rev=false){
     if(empty($conf['notify'])) return; //notify enabled?
 
     $subscription = new Subscription();
-    return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev, '');
+    return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev);
 }
 
 /**
