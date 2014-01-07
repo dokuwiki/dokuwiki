@@ -126,16 +126,14 @@ class Doku_Parser {
 
 //-------------------------------------------------------------------
 /**
- * This class and all the subclasses below are
- * used to reduce the effort required to register
- * modes with the Lexer. For performance these
- * could all be eliminated later perhaps, or
- * the Parser could be serialized to a file once
- * all modes are registered
+ * This class and all the subclasses below are used to reduce the effort required to register
+ * modes with the Lexer.
+ *
+ * Inherits from DokuWiki_Plugin for giving additional functions to syntax plugins
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-class Doku_Parser_Mode {
+class Doku_Parser_Mode extends DokuWiki_Plugin {
 
     /**
      * @var Doku_Lexer $Lexer
