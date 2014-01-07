@@ -12,7 +12,7 @@ if(!defined('DOKU_INC')) die();
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  */
-class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
+class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
 
     var $allowedModesSetup = false;
 
