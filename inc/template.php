@@ -893,12 +893,12 @@ function tpl_breadcrumbs($sep = '•') {
  * @author Nigel McNie <oracle.shinoda@gmail.com>
  * @author Sean Coates <sean@caedmon.net>
  * @author <fredrik@averpil.com>
- * @todo   May behave strangely in RTL languages
+ * @author Mark C. Prins <mprins@users.sf.net>
  *
  * @param string $sep Separator between entries
  * @return bool
  */
-function tpl_youarehere($sep = ' » ') {
+function tpl_youarehere($sep = ' → ') {
     global $conf;
     global $ID;
     global $lang;
@@ -909,12 +909,15 @@ function tpl_youarehere($sep = ' » ') {
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<span class="bchead">'.$lang['youarehere'].' </span>';
-
+    echo '<nav><h2 class="bchead">'.$lang['youarehere'].': </h2>';
+    echo '<ul class="navlist">';
     // always print the startpage
-    echo '<span class="home">';
-    tpl_pagelink(':'.$conf['start']);
-    echo '</span>';
+    if ($count > 1) {
+        echo '<li class="home">'.html_wikilink(':'.$conf['start']).$sep.'</li>';
+    } else {
+        echo '<li class="home">'.$conf['start'].'</li>';
+    }
+
 
     // print intermediate namespace links
     $part = '';
@@ -923,18 +926,28 @@ function tpl_youarehere($sep = ' » ') {
         $page = $part;
         if($page == $conf['start']) continue; // Skip startpage
 
-        // output
-        echo $sep;
-        tpl_pagelink($page);
+        echo '<li>'.html_wikilink($page);
+        if ($i < $count - 2) {
+            echo $sep.'</li>';
+        } else {
+            echo '</li>';
+        }
     }
 
     // print current page, skipping start page, skipping for namespace index
     resolve_pageid('', $page, $exists);
-    if(isset($page) && $page == $part.$parts[$i]) return true;
+    if(isset($page) && $page == $part.$parts[$i]) {
+        echo '</li></ul></nav>';
+        return true;
+    }
+
     $page = $part.$parts[$i];
-    if($page == $conf['start']) return true;
-    echo $sep;
-    tpl_pagelink($page);
+    if($page == $conf['start']) {
+        echo '</li></ul></nav>';
+        return true;
+    }
+
+    echo $sep.'</li><li class="curid">'.noNSorNS($page).'</li></ul></nav>';
     return true;
 }
 
