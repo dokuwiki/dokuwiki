@@ -783,11 +783,17 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function download($url) {
         // check the url
-        $matches = array();
-        if(!preg_match('/[^\/]*$/', $url, $matches) || !$matches[0]) {
+        if(!preg_match('/https?:\/\//i', $url)){
             throw new Exception($this->getLang('error_badurl'));
         }
-        $file = $matches[0];
+
+        // try to get the file from the path (used as plugin name fallback)
+        $file = parse_url($url, PHP_URL_PATH);
+        if(is_null($file)){
+            $file = md5($url);
+        }else{
+            $file = utf8_basename($file);
+        }
 
         // create tmp directory for download
         if(!($tmp = $this->mkTmpDir())) {

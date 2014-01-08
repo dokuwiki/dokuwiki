@@ -82,7 +82,7 @@ $lang['update_available']             = '<strong>Update:</strong> New version %s
 $lang['wrong_folder']                 = '<strong>Plugin installed incorrectly:</strong> Rename plugin directory "%s" to "%s".';
 $lang['url_change']                   = '<strong>URL changed:</strong> Download URL has changed since last download. Check if the new URL is valid before updating the extension.<br />New: %s<br />Old: %s';
 
-$lang['error_badurl']                 = 'URL ends with slash - unable to determine file name from the url';
+$lang['error_badurl']                 = 'URLs should start with http or https';
 $lang['error_dircreate']              = 'Unable to create temporary folder to receive download';
 $lang['error_download']               = 'Unable to download the file: %s';
 $lang['error_decompress']             = 'Unable to decompress the downloaded file. This maybe as a result of a bad download, in which case you should try again; or the compression format may be unknown, in which case you will need to download and install manually.';
