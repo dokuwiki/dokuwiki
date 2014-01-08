@@ -42,6 +42,7 @@
 !/lib/plugins/authplain
 !/lib/plugins/acl
 !/lib/plugins/config
+!/lib/plugins/extension
 !/lib/plugins/info
 !/lib/plugins/plugin
 !/lib/plugins/popularity
