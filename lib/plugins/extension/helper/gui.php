@@ -106,9 +106,13 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
         $list->start_form();
-        foreach($result as $name) {
-            $extension->setExtension($name);
-            $list->add_row($extension, $extension->getID() == $this->infoFor);
+        if($result){
+            foreach($result as $name) {
+                $extension->setExtension($name);
+                $list->add_row($extension, $extension->getID() == $this->infoFor);
+            }
+        } else {
+            $list->nothing_found();
         }
         $list->end_form();
         $list->render();

@@ -89,6 +89,14 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
     }
 
     /**
+     * Show message when no results are found
+     */
+    function nothing_found() {
+        global $lang;
+        $this->form .= '<li class="notfound">'.$lang['nothingfound'].'</li>';
+    }
+
+    /**
      * Print the form
      */
     function render() {
