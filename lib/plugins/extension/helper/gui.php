@@ -124,9 +124,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         echo '</div>';
 
         $form = new Doku_Form(array('action' => $this->tabURL('', array(), '&'), 'enctype' => 'multipart/form-data', 'class' => 'install'));
-        $form->addElement(form_makeTextField('installurl', '', 'Install from URL:', '', 'block'));
-        $form->addElement(form_makeFileField('installfile', 'Upload Extension:', '', 'block'));
-        $form->addElement(form_makeButton('submit', '', 'Install'));
+        $form->addElement(form_makeTextField('installurl', '', $this->getLang('install_url'), '', 'block'));
+        $form->addElement(form_makeFileField('installfile', $this->getLang('install_upload'), '', 'block'));
+        $form->addElement(form_makeButton('submit', '', $this->getLang('btn_install')));
         $form->printForm();
     }
 

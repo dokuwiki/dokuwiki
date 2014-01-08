@@ -92,5 +92,7 @@ $lang['error_copy']                   = 'There was a file copy error while attem
 $lang['noperms']                      = 'Extension directory is not writable';
 $lang['notplperms']                   = 'Template directory is not writable';
 $lang['nopluginperms']                = 'Plugin directory is not writable';
-
 $lang['git']                          = 'This extension was installed via git, you may not want to update it here.';
+
+$lang['install_url']                  = 'Install from URL:';
+$lang['install_upload']               = 'Upload Extension:';
