@@ -613,19 +613,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The list of installed extensions
      */
     public function installOrUpdate() {
-        try {
-            $path      = $this->download($this->getDownloadURL());
-            $installed = $this->installArchive($path, $this->isInstalled(), $this->getBase());
+        $path      = $this->download($this->getDownloadURL());
+        $installed = $this->installArchive($path, $this->isInstalled(), $this->getBase());
 
-            // refresh extension information
-            if (!isset($installed[$this->getID()])) {
-                throw new Exception('Error, the requested extension hasn\'t been installed or updated');
-            }
-            $this->setExtension($this->getID());
-            $this->purgeCache();
-        }catch (Exception $e){
-            throw $e;
+        // refresh extension information
+        if (!isset($installed[$this->getID()])) {
+            throw new Exception('Error, the requested extension hasn\'t been installed or updated');
         }
+        $this->setExtension($this->getID());
+        $this->purgeCache();
         return $installed;
     }
 
@@ -828,11 +824,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         // decompress
-        try{
-            $this->decompress($file, "$tmp/".$base);
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $this->decompress($file, "$tmp/".$base);
 
         // search $tmp/$base for the folder(s) that has been created
         // move the folder(s) to lib/..
