@@ -19,6 +19,7 @@
  * @author Donald <donaldtcong@gmail.com>
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author anjianshi <anjianshi@gmail.com>
+ * @author oott123 <ip.192.168.1.1@qq.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -346,3 +347,5 @@ $lang['media_update']          = '上传新版本';
 $lang['media_restore']         = '恢复这个版本';
 $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
+$lang['plainhtml']             = '纯HTML';
+$lang['wikimarkup']            = 'Wiki Markup 语言';
