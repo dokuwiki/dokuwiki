@@ -33,5 +33,6 @@ $lang['UpdateLogin']           = 'SQL podmienka pre aktualizáciu prihlasovacieh
 $lang['UpdatePass']            = 'SQL podmienka pre aktualizáciu hesla používateľa';
 $lang['UpdateEmail']           = 'SQL podmienka pre aktualizáciu emailovej adresy používateľa';
 $lang['UpdateName']            = 'SQL podmienka pre aktualizáciu mena a priezviska používateľa';
+$lang['UpdateTarget']          = 'Podmienka identifikácie používateľa pri aktualizácii';
 $lang['delUserGroup']          = 'SQL príkaz pre vyradenie používateľa z danej skupiny';
 $lang['getGroupID']            = 'SQL príkaz pre získanie primárneho kľúča skupiny';

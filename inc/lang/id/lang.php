@@ -1,11 +1,12 @@
 <?php
+
 /**
- * Indonesian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
+ * @author zamroni <therons@ymail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -39,7 +40,6 @@ $lang['btn_back']              = 'Kembali';
 $lang['btn_backlink']          = 'Backlinks';
 $lang['btn_backtomedia']       = 'Kembali ke Pilihan Mediafile';
 $lang['btn_subscribe']         = 'Ikuti Perubahan';
-$lang['btn_unsubscribe']       = 'Berhenti Ikuti Perubahan';
 $lang['btn_profile']           = 'Ubah Profil';
 $lang['btn_reset']             = 'Reset';
 $lang['btn_draft']             = 'Edit draft';
@@ -83,8 +83,13 @@ $lang['txt_filename']          = 'Masukkan nama wiki (opsional)';
 $lang['txt_overwrt']           = 'File yang telah ada akan ditindih';
 $lang['lockedby']              = 'Sedang dikunci oleh';
 $lang['lockexpire']            = 'Penguncian artikel sampai dengan';
-$lang['js']['willexpire']            = 'Halaman yang sedang Anda kunci akan berakhir dalam waktu kurang lebih satu menit.\nUntuk menghindari konflik, gunakan tombol Preview untuk me-reset timer pengunci.';
+$lang['js']['willexpire']      = 'Halaman yang sedang Anda kunci akan berakhir dalam waktu kurang lebih satu menit.\nUntuk menghindari konflik, gunakan tombol Preview untuk me-reset timer pengunci.';
 $lang['js']['notsavedyet']     = 'Perubahan yang belum disimpan akan hilang.\nYakin akan dilanjutkan?';
+$lang['js']['keepopen']        = 'Biarkan window terbuka dalam pemilihan';
+$lang['js']['hidedetails']     = 'Sembunyikan detil';
+$lang['js']['nosmblinks']      = 'Link ke share Windows hanya bekerja di Microsoft Internet Explorer.
+Anda masih dapat mengcopy and paste linknya.';
+$lang['js']['del_confirm']     = 'Hapus tulisan ini?';
 $lang['rssfailed']             = 'Error terjadi saat mengambil feed: ';
 $lang['nothingfound']          = 'Tidak menemukan samasekali.';
 $lang['mediaselect']           = 'Pilihan Mediafile';
@@ -101,8 +106,6 @@ $lang['deletefail']            = '"%s" tidak dapat dihapus - cek hak aksesnya.';
 $lang['mediainuse']            = 'File "%s" belum dihapus - file ini sedang digunakan.';
 $lang['namespaces']            = 'Namespaces';
 $lang['mediafiles']            = 'File tersedia didalam';
-$lang['js']['keepopen']        = 'Biarkan window terbuka dalam pemilihan';
-$lang['js']['hidedetails']     = 'Sembunyikan detil';
 $lang['mediausage']            = 'Gunakan sintaks berikut untuk me-refer ke file ini';
 $lang['mediaview']             = 'Tampilkan file asli';
 $lang['mediaroot']             = 'root';
@@ -132,7 +135,6 @@ $lang['mail_newpage']          = 'Halaman ditambahkan:';
 $lang['mail_changed']          = 'Halaman diubah:';
 $lang['mail_new_user']         = 'User baru:';
 $lang['mail_upload']           = 'Berkas di-upload:';
-$lang['js']['nosmblinks']            = "Link ke share Windows hanya bekerja di Microsoft Internet Explorer.\nAnda masih dapat mengcopy and paste linknya.";
 $lang['qb_bold']               = 'Tebal';
 $lang['qb_italic']             = 'Miring';
 $lang['qb_underl']             = 'Garis Bawah';
@@ -152,7 +154,6 @@ $lang['qb_media']              = 'Tambahkan gambar atau file lain';
 $lang['qb_sig']                = 'Sisipkan tanda tangan';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Karakter Khusus';
-$lang['js']['del_confirm']           = 'Hapus tulisan ini?';
 $lang['admin_register']        = 'Tambah user baru';
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Gagal menulis metadata';
@@ -168,11 +169,6 @@ $lang['img_copyr']             = 'Hakcipta';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Katakunci';
-$lang['subscribe_success']     = 'Penambahan %s ke data subsripsi untuk %s';
-$lang['subscribe_error']       = 'Gagal menambahkan %s ke data subsripsi untuk %s';
-$lang['subscribe_noaddress']   = 'Tidak ditemukan alamat yang berhubungan dengan login Anda, Anda tidak dapat menambahkan daftar subscription';
-$lang['unsubscribe_success']   = 'Menghapus %s dari daftar subscription untuk %s';
-$lang['unsubscribe_error']     = 'Gagal menghapus %s dari daftar subscription untuk %s';
 $lang['authtempfail']          = 'Autentikasi user saat ini sedang tidak dapat digunakan. Jika kejadian ini berlanjut, Harap informasikan admin Wiki Anda.';
 $lang['i_chooselang']          = 'Pilih bahasa';
 $lang['i_installer']           = 'Instalasi DokuWiki';

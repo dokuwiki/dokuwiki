@@ -289,11 +289,11 @@ function tpl_metaheaders($alt = true) {
     if($alt) {
         $head['link'][] = array(
             'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> 'Recent Changes', 'href'=> DOKU_BASE.'feed.php'
+            'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
         );
         $head['link'][] = array(
             'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> 'Current Namespace',
+            'title'=> $lang['currentns'],
             'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
         );
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
@@ -307,21 +307,21 @@ function tpl_metaheaders($alt = true) {
         if($ACT == 'search') {
             $head['link'][] = array(
                 'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-                'title'=> 'Search Result',
+                'title'=> $lang['searchresult'],
                 'href' => DOKU_BASE.'feed.php?mode=search&q='.$QUERY
             );
         }
 
         if(actionOK('export_xhtml')) {
             $head['link'][] = array(
-                'rel' => 'alternate', 'type'=> 'text/html', 'title'=> 'Plain HTML',
+                'rel' => 'alternate', 'type'=> 'text/html', 'title'=> $lang['plainhtml'],
                 'href'=> exportlink($ID, 'xhtml', '', false, '&')
             );
         }
 
         if(actionOK('export_raw')) {
             $head['link'][] = array(
-                'rel' => 'alternate', 'type'=> 'text/plain', 'title'=> 'Wiki Markup',
+                'rel' => 'alternate', 'type'=> 'text/plain', 'title'=> $lang['wikimarkup'],
                 'href'=> exportlink($ID, 'raw', '', false, '&')
             );
         }
@@ -1662,18 +1662,6 @@ function tpl_includeFile($file) {
     if(file_exists($file)) {
         include($file);
     }
-}
-
-/**
- * Returns icon from data/media root directory if it exists, otherwise
- * the one in the template's image directory.
- *
- * @deprecated Use tpl_getMediaFile() instead
- * @author Anika Henke <anika@selfthinker.org>
- */
-function tpl_getFavicon($abs = false, $fileName = 'favicon.ico') {
-    $look = array(":wiki:$fileName", ":$fileName", "images/$fileName");
-    return tpl_getMediaFile($look, $abs);
 }
 
 /**

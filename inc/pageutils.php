@@ -94,9 +94,8 @@ function getID($param='id',$clean=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
- * @param  boolean $media     DEPRECATED
  */
-function cleanID($raw_id,$ascii=false,$media=false){
+function cleanID($raw_id,$ascii=false){
     global $conf;
     static $sepcharpat = null;
 

@@ -10,7 +10,7 @@
 if(!defined('DOKU_INC')) die('meh.');
 
 // Version tag used to force rebuild on upgrade
-define('INDEXER_VERSION', 7);
+define('INDEXER_VERSION', 8);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
 if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH',2);
@@ -215,6 +215,7 @@ class Doku_Indexer {
         foreach (array_keys($words) as $wlen) {
             $word_idx = $this->getIndex('w', $wlen);
             foreach ($words[$wlen] as $word => $freq) {
+                $word = (string)$word;
                 $wid = array_search($word, $word_idx, true);
                 if ($wid === false) {
                     $wid = count($word_idx);

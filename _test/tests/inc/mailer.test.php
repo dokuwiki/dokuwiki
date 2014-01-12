@@ -154,7 +154,19 @@ class mailer_test extends DokuWikiTest {
         $headers['Cc'] = '';
         $header = $mail->prepareHeaders();
         $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
-        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Cc found in headers.');
+    }
+
+    function test_nullTOorCCorBCC() {
+        $mail = new TestMailer();
+        $headers = &$mail->propRef('headers');
+        $headers['Bcc'] = NULL;
+        $headers['Cc'] = NULL;
+        $headers['To'] = NULL;
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Cc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)To: (\n|$)/', $header), 'To found in headers.');
     }
 
     /**

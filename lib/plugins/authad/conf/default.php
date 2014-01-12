@@ -4,6 +4,7 @@ $conf['account_suffix']     = '';
 $conf['base_dn']            = '';
 $conf['domain_controllers'] = '';
 $conf['sso']                = 0;
+$conf['sso_charset']        = '';
 $conf['admin_username']     = '';
 $conf['admin_password']     = '';
 $conf['real_primarygroup']  = 0;

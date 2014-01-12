@@ -1,10 +1,13 @@
 <?php
+
 /**
- * Arabic language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
  * @author Usama Akkad <uahello@gmail.com>
  * @author uahello@gmail.com
+ * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
+ * @author alhajr <alhajr300@gmail.com>
  */
 $lang['menu']                  = 'مدير الاسترجاع';
 $lang['filter']                = 'ابحث في الصفحات المتأذاة';
