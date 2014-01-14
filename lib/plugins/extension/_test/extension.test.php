@@ -14,6 +14,7 @@ class mock_helper_plugin_extension_extension extends helper_plugin_extension_ext
 
 /**
  * @group plugin_extension
+ * @group plugins
  */
 class helper_plugin_extension_extension_test extends DokuWikiTest {
 
