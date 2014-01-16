@@ -340,3 +340,4 @@ $lang['media_perm_read']       = 'Du besitzt nicht die notwendigen Berechtigunge
 $lang['media_perm_upload']     = 'Du besitzt nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
