@@ -1,23 +1,23 @@
-Bună ziua!
+Salutare, @FULLNAME@!
 
-Pagina @PAGE@ în @TITLE@ wiki s-a modificat.
-Acestea sunt modificările:
+Pagina @PAGE@ în @TITLE@ wiki a fost modificată.
+Modificările sunt următoarele:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Data: @DATE@
+Dată: @DATE@
 Utilizator: @USER@
 Sumarul editării: @SUMMARY@
-Vechea revizie: @OLDPAGE@
-Noua revizie: @NEWPAGE@
+Versiune anterioară: @OLDPAGE@
+Versiune curentă: @NEWPAGE@
 
-Pentru a anula notificarea paginii, logați-vă pe wiki la
-@DOKUWIKIURL@ apoi navigați la
+Pentru a anula notificarea paginii, autentificcă-te pe wiki la
+@DOKUWIKIURL@ apoi accesează
 @SUBSCRIBE@
-și dezabonați-vă de la pagină și/sau modificările numelui de spațiu.
+și dezabonează-te de la pagină și/sau modificările spațiului de nume.
 
 --
-Acest mail a fost generat de DokuWiki la
+Acest e-mail a fost generat de DokuWiki la
 @DOKUWIKIURL@
