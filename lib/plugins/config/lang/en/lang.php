@@ -15,7 +15,7 @@ $lang['error']      = 'Settings not updated due to an invalid value, please revi
                        <br />The incorrect value(s) will be shown surrounded by a red border.';
 $lang['updated']    = 'Settings updated successfully.';
 $lang['nochoice']   = '(no other choices available)';
-$lang['locked']     = 'The settings file can not be updated, if this is unintentional, <br />
+$lang['locked']     = 'The settings file can not be updated, if this is unintentional,<br />
                        ensure the local settings file name and permissions are correct.';
 
 $lang['danger']     = 'Danger: Changing this option could make your wiki and the configuration menu inaccessible.';
@@ -38,7 +38,7 @@ $lang['_editing'] = 'Editing';
 $lang['_links'] = 'Links';
 $lang['_media'] = 'Media';
 $lang['_notifications'] = 'Notification';
-$lang['_syndication']   = 'Syndication (RSS)';
+$lang['_syndication'] = 'Syndication (RSS)';
 $lang['_advanced'] = 'Advanced';
 $lang['_network'] = 'Network';
 
