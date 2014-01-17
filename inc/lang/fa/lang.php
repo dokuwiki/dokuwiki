@@ -10,6 +10,7 @@
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
  * @author mehrdad <mehrdad.jafari.bojd@gmail.com>
+ * @author reza_khn <reza_khn@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -84,6 +85,7 @@ $lang['profnoempty']           = 'نام و آدرس ایمیل باید پر ش
 $lang['profchanged']           = 'پروفایل کاربر با موفقیت به روز شد';
 $lang['profnodelete']          = 'ویکی توانایی پشتیبانی از حذف کاربران را ندارد';
 $lang['profdeleteuser']        = 'حذف حساب کاربری';
+$lang['profdeleted']           = 'حساب کاربری شما حذف گردیده است.';
 $lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ جدید دریافت کنید';
 $lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
 $lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
