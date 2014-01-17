@@ -7,15 +7,15 @@
 # @author Andreas Gohr <andi@splitbrain.org>
 # @author Stefan Grönke <stefan@gronke.net>
 # @link   https://code.google.com/apis/libraries/devguide.html#jquery
- 
+
 # load jQuery
 wget -nv https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js      -O jquery.min.js
 wget -nv https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js          -O jquery.js
- 
+
 # load jQuery-UI
 wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js -O jquery-ui.min.js
 wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js     -O jquery-ui.js
- 
+
 # load the smoothness theme
 mkdir -p jquery-ui-theme/images
 wget -nv -qO- https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css | sed "s/font-family:[^;]*;//" > jquery-ui-theme/smoothness.css
@@ -24,3 +24,17 @@ for img in $images
 do
     wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/$img -O jquery-ui-theme/$img
 done
+
+# load the localization data for jquery ui
+for LNG in ../../../inc/lang/*
+do
+    CODE=`basename $LNG`
+    wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-$CODE.js -O $LNG/jquery.ui.datepicker.js
+done
+
+# some custom language codes
+wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-de.js -O ../../../inc/lang/de-informal/jquery.ui.datepicker.js
+wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-pt-BR.js -O ../../../inc/lang/pt-br/jquery.ui.datepicker.js
+wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-zh-CN.js -O ../../../inc/lang/zh/jquery.ui.datepicker.js
+wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-zh-TW.js -O ../../../inc/lang/zh-tw/jquery.ui.datepicker.js
+
