@@ -30,6 +30,9 @@ for LNG in ../../../inc/lang/*
 do
     CODE=`basename $LNG`
     wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-$CODE.js -O $LNG/jquery.ui.datepicker.js
+    if [ ! -s "$LNG/jquery.ui.datepicker.js" ]; then
+        rm -f $LNG/jquery.ui.datepicker.js
+    fi
 done
 
 # some custom language codes
