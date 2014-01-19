@@ -315,15 +315,6 @@ class HTTPClient {
                 return false;
             }
 
-
-
-
-
-
-            $this->_debug('context', stream_context_get_params($socket));
-
-
-
             // try establish a CONNECT tunnel for SSL
             if($this->_ssltunnel($socket, $request_url)){
                 // no keep alive for tunnels
