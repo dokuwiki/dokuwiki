@@ -417,7 +417,7 @@ function io_rmdir($path, $removefiles = false) {
         $files = array();
 
         if(!$dh = @opendir($path)) return false;
-        while($f = readdir($dh)) {
+        while(false !== ($f = readdir($dh))) {
             if($f == '..' || $f == '.') continue;
 
             // collect dirs and files first
