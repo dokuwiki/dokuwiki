@@ -10,6 +10,7 @@
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
+ * @author Marina Vladi <deldadam@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
 $lang['download']              = 'Új bővítmény letöltése és telepítése';
@@ -20,19 +21,19 @@ $lang['btn_delete']            = 'törlés';
 $lang['btn_settings']          = 'beállítások';
 $lang['btn_download']          = 'Letöltés';
 $lang['btn_enable']            = 'Mentés';
-$lang['url']                   = 'Cím';
+$lang['url']                   = 'URL-cím';
 $lang['installed']             = 'Telepítve:';
 $lang['lastupdate']            = 'Utolsó frissítés:';
 $lang['source']                = 'Forrás:';
 $lang['unknown']               = 'ismeretlen';
 $lang['updating']              = 'Frissítés...';
-$lang['updated']               = 'A %s bővítmény frissítése sikeres';
+$lang['updated']               = 'A(z) %s bővítmény frissítése sikeres.';
 $lang['updates']               = 'A következő bővítmények frissítése sikeres:';
 $lang['update_none']           = 'Nem találtam újabb verziót.';
 $lang['deleting']              = 'Törlés...';
-$lang['deleted']               = 'A %s bővítményt eltávolítva.';
+$lang['deleted']               = 'A(z) %s bővítményt eltávolítva.';
 $lang['downloading']           = 'Letöltés...';
-$lang['downloaded']            = 'A %s bővítmény telepítése sikeres.';
+$lang['downloaded']            = 'A(z) %s bővítmény telepítése sikeres.';
 $lang['downloads']             = 'A következő bővítmények telepítése sikeres.';
 $lang['download_none']         = 'Nem találtam bővítményt vagy ismeretlen hiba történt a letöltés/telepítés közben.';
 $lang['plugin']                = 'Bővítmény:';
