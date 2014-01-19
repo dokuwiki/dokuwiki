@@ -1,0 +1,7 @@
+base     plugin6
+author   Andreas Gohr
+email    andi@splitbrain.org
+date     2013-05-02
+name     Dummy Plugin
+desc     Dummy plugin data
+url      http://example.com/plugin:plugin6
