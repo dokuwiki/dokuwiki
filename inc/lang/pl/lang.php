@@ -15,6 +15,7 @@
  * @author Begina Felicysym <begina.felicysym@wp.eu>
  * @author Aoi Karasu <aoikarasu@gmail.com>
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
+ * @author Paweł Jan Czochański <czochanski@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -340,3 +341,4 @@ $lang['media_restore']         = 'Odtwórz tą wersję';
 $lang['currentns']             = 'Obecna przestrzeń nazw.';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
+$lang['wikimarkup']            = 'Znaczniki';
