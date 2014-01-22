@@ -11,6 +11,7 @@
  * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
  * @author Constantinos Xanthopoulos <conx@xanthopoulos.info>
  * @author chris taklis <ctaklis@gmail.com>
+ * @author cross <cross1962@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
