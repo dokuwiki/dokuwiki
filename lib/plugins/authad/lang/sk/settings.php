@@ -15,6 +15,6 @@ $lang['sso_charset']           = 'Znaková sada, v ktorej bude webserver prená�
 $lang['real_primarygroup']     = 'Použiť skutočnú primárnu skupinu používateľa namiesto "Doménoví používatelia" (pomalšie).';
 $lang['use_ssl']               = 'Použiť SSL pripojenie? Ak áno, nepovoľte TLS nižšie.';
 $lang['use_tls']               = 'Použiť TLS pripojenie? Ak áno, nepovoľte SSL vyššie.';
-$lang['debug']                 = 'Zobraziť doplňujúce ladiace informácie pri chybe?';
+$lang['debug']                 = 'Zobraziť dodatočné ladiace informácie pri chybe?';
 $lang['expirywarn']            = 'Počet dní pred uplynutím platnosti hesla, počas ktorých používateľ dostáva upozornenie. 0 deaktivuje túto voľbu.';
 $lang['additional']            = 'Zoznam dodatočných AD atribútov oddelených čiarkou získaných z údajov používateľa. Používané niektorými pluginmi.';
