@@ -1,0 +1,4 @@
+====== Gestion des extensions ======
+
+Cette page vous permet de gérer tout ce qui a trait aux [[doku>fr:plugins|extensions]] de DokuWiki. Pour pouvoir télécharger et installer un module, le répertoire « ''plugin'' » doit être accessible en écriture pour le serveur web.
+
