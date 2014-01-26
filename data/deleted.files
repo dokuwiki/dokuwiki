@@ -2,6 +2,17 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed in 2013-11-18
+lib/images/arrow_down.gif
+lib/images/arrow_up.gif
+lib/images/at.gif
+lib/images/close.png
+lib/images/del.png
+lib/images/edit.gif
+lib/images/list-minus.gif
+lib/images/list-plus.gif
+lib/images/pencil.png
+
 # removed in 2013-10-28
 lib/images/interwiki/meatball.gif
 lib/images/interwiki/wiki.gif

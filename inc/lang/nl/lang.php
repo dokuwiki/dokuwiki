@@ -21,6 +21,7 @@
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Klap-in <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
+ * @author gicalle <gicalle@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -304,6 +305,7 @@ $lang['i_policy']              = 'Initieel ACL-beleid';
 $lang['i_pol0']                = 'Open wiki (lezen, schrijven, uploaden voor iedereen)';
 $lang['i_pol1']                = 'Publieke wiki (lezen voor iedereen, schrijven en uploaden voor geregistreerde gebruikers)';
 $lang['i_pol2']                = 'Besloten wiki (lezen, schrijven en uploaden alleen voor geregistreerde gebruikers)';
+$lang['i_allowreg']            = 'Toestaan dat gebruikers zichzelf registeren';
 $lang['i_retry']               = 'Opnieuw';
 $lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
 $lang['i_license_none']        = 'Toon geen licentie informatie';

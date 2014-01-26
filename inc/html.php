@@ -28,20 +28,6 @@ function html_wikilink($id,$name=null,$search=''){
 }
 
 /**
- * Helps building long attribute lists
- *
- * @deprecated Use buildAttributes instead
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_attbuild($attributes){
-    $ret = '';
-    foreach ( $attributes as $key => $value ) {
-        $ret .= $key.'="'.formText($value).'" ';
-    }
-    return trim($ret);
-}
-
-/**
  * The loginform
  *
  * @author   Andreas Gohr <andi@splitbrain.org>

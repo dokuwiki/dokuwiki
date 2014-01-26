@@ -56,7 +56,7 @@ $dokuwiki_hash = array(
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
     '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3',
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
-    '2013-10-28'   => '263c76af309fbf083867c18a34ff5214',
+    '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
 );
 
 
@@ -207,6 +207,10 @@ function print_form($d){
                     <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
                 </select>
 
+                <label for="allowreg">
+                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
+                    <?php echo $lang['i_allowreg']?>
+                </label>
             </fieldset>
         </fieldset>
 
@@ -270,6 +274,7 @@ function check_data(&$d){
         'password'  => '',
         'confirm'   => '',
         'policy'    => '0',
+        'allowreg'  => '0',
         'license'   => 'cc-by-sa'
     );
     global $lang;
@@ -350,6 +355,9 @@ EOT;
     if($d['acl']){
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";
+    }
+    if(!$d['allowreg']){
+        $output .= '$conf[\'disableactions\'] = \'register\''.";\n";
     }
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 

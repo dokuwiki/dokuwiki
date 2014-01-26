@@ -345,7 +345,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Print infos and editor
+     * Print info and editor
      */
     function _html_info(){
         global $ID;

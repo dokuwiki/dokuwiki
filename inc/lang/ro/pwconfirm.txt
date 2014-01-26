@@ -1,13 +1,14 @@
-Salut @FULLNAME@!
+Salutare, @FULLNAME@!
 
-Cineva a cerut o parolă nouă pentru @TITLE@ pentru conectarea la @DOKUWIKIURL@
+Cineva a cerut o parolă nouă pentru @TITLE@ pentru conectarea la
+@DOKUWIKIURL@.
 
-Dacă nu ați solicitat o parolă nouă, ignorați acest email.
+Dacă nu ai solicitat o parolă nouă, ignoră acest e-mail.
 
-Pentru a confirma că cererea a fost într-adevăr trimisă de dumneavoastră, folosiți link-ul de mai jos.
+Pentru a confirma că cererea a fost într-adevăr trimisă de tine, folosește link-ul de mai jos.
 
 @CONFIRM@
 
 -- 
-Acest mail a fost generat de DocuWiki la
+Acest e-mail a fost generat de DokuWiki la
 @DOKUWIKIURL@

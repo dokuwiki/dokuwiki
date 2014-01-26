@@ -24,7 +24,7 @@ class ap_download extends ap_manage {
         ptln('<h2>'.$this->lang['downloading'].'</h2>');
 
         if ($this->manager->error) {
-            ptln('<div class="error">'.str_replace("\n","<br />",$this->manager->error).'</div>');
+            ptln('<div class="error">'.str_replace("\n","<br />",hsc($this->manager->error)).'</div>');
         } else if (count($this->downloaded) == 1) {
             ptln('<p>'.sprintf($this->lang['downloaded'],$this->downloaded[0]).'</p>');
         } else if (count($this->downloaded)) {   // more than one plugin in the download

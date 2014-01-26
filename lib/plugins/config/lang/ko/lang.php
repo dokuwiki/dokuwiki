@@ -71,7 +71,7 @@ $lang['deaccent']              = '문서 이름을 지우는 방법';
 $lang['useheading']            = '문서 이름으로 첫 문단 제목 사용';
 $lang['sneaky_index']          = '기본적으로 도쿠위키는 색인 목록에 모든 이름공간을 보여줍니다.
 이 옵션을 설정하면 사용자가 읽기 권한을 가지고 있지 않은 이름공간은 보여주지 않습니다. 접근 가능한 하위 이름공간을 보이지 않게 설정하면 자동으로 설정됩니다. 특정 ACL 설정은 색인 사용이 불가능하게 할 수도 있습니다.';
-$lang['hidepages']             = '사이트맵과 기타 자동 색인과 같은 찾기에서 정규 표현식과 일치하는 문서 숨기기';
+$lang['hidepages']             = '검색, 사이트맵과 기타 자동 색인에서 정규 표현식과 일치하는 문서 숨기기';
 $lang['useacl']                = '접근 제어 목록 (ACL) 사용';
 $lang['autopasswd']            = '자동으로 만들어진 비밀번호';
 $lang['authtype']              = '인증 백-엔드';
@@ -137,7 +137,7 @@ $lang['gzip_output']           = 'xhml 내용 gzip 압축 사용';
 $lang['compress']              = '최적화된 CSS, 자바스크립트 출력';
 $lang['cssdatauri']            = '그림이 렌더링될 최대 용량 크기를 CSS에 규정해야 HTTP 요청 헤더 오버헤드 크기를 감소시킬 수 있습니다. 이 기술은 IE 7 이하에서는 작동하지 않습니다! <code>400</code>에서 <code>600</code> 정도면 좋은 효율을 가져옵니다. <code>0</code>로 지정할 경우 비활성화 됩니다.';
 $lang['send404']               = '존재하지 않는 페이지에 대해 "HTTP 404/페이지를 찾을 수 없습니다" 응답';
-$lang['broken_iua']            = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있습니까? 문제가 있다면 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참고하시기 바랍니다.';
+$lang['broken_iua']            = '설치된 시스템에서 ignore_user_abort 기능에 문제가 있습니까? 문제가 있다면 검색 색인이 정상적으로 동작하지 않습니다. 이 기능이 IIS+PHP/CGI에서 문제가 있는 것으로 알려졌습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참고하시기 바랍니다.';
 $lang['xsendfile']             = '웹 서버가 정적 파일을 제공하도록 X-Sendfile 헤더를 사용하겠습니까? 웹 서버가 이 기능을 지원해야 합니다.';
 $lang['renderer_xhtml']        = '주 (xhtml) 위키 출력 처리기';
 $lang['renderer__core']        = '%s (도쿠위키 내부)';
