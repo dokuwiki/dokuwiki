@@ -15,6 +15,7 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
  * @param string $file   local file to send
  * @param string $orig   original file to send - the file name will be used for the Content-Disposition
  * @param string $mime   mime type of the file
