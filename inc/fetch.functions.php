@@ -16,12 +16,13 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @param string $file   local file to send
+ * @param string $orig   original file to send - the file name will be used for the Content-Disposition
  * @param string $mime   mime type of the file
  * @param bool   $dl     set to true to force a browser download
  * @param int    $cache  remaining cache time in seconds (-1 for $conf['cache'], 0 for no-cache)
  * @param bool   $public is this a public ressource or a private one?
  */
-function sendFile($file, $mime, $dl, $cache, $public = false) {
+function sendFile($file, $orig, $mime, $dl, $cache, $public = false) {
     global $conf;
     // send mime headers
     header("Content-Type: $mime");
@@ -64,9 +65,9 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
 
     //download or display?
     if($dl) {
-        header('Content-Disposition: attachment; filename="'.utf8_basename($file).'";');
+        header('Content-Disposition: attachment; filename="'.utf8_basename($orig).'";');
     } else {
-        header('Content-Disposition: inline; filename="'.utf8_basename($file).'";');
+        header('Content-Disposition: inline; filename="'.utf8_basename($orig).'";');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
