@@ -20,7 +20,7 @@ before_install:
   #- composer install --dev --prefer-dist --no-interaction
 
 script:
-  - phpunit -c _test/phpunit.xml --stderr
+  - phpunit -c _test/phpunit.xml --stderr --testdox
   #- cat tmp/coverage.xml
 
 notifications:
