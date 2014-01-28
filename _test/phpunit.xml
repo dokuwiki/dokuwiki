@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    bootstrap="bootstrap.php"
-    convertNoticesToExceptions="false">
+    colors="true"
+    convertNoticesToExceptions="false"
+    verbose="true"
+    bootstrap="bootstrap.php">
 
     <testsuites>
         <testsuite name="DokuWiki Tests">
@@ -27,4 +29,8 @@
         </whitelist>
     </filter>
 
+    <logging>
+        <log type="coverage-clover" target="../tmp/coverage.xml" />
+        <log type="coverage-text" target="php://stdout" showOnlySummary="true" />
+    </logging>
 </phpunit>

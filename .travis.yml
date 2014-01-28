@@ -1,12 +1,35 @@
+#
+# .travis.yml - configuration file for the travis continuous integration service
+#
+# see http://about.travis-ci.org/docs/user/languages/php for more hints
+#
 language: php
 php:
-  - "5.5"
-  - "5.4"
-  - "5.3"
+  - 5.3
+  - 5.4
+  - 5.5
+  - hhvm
+
+matrix:
+  allow_failures:
+   - php: hhvm
+  fast_finish: true
+
+before_install:
+  #- composer self-update
+  #- composer install --dev --prefer-dist --no-interaction
+
+script:
+  - phpunit -c _test/phpunit.xml --stderr
+  #- cat tmp/coverage.xml
+
 notifications:
   irc:
     channels:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-script: cd _test && phpunit --stderr
+
+# reduce commit history of git checkout
+git:
+  depth: 1

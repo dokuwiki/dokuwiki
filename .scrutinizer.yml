@@ -1,0 +1,21 @@
+#
+# scrutinizer-ci.com Configuration File
+#
+# https://scrutinizer-ci.com/docs/
+#
+filter:
+    excluded_paths:
+        - 'vendor/*'
+        - 'inc/*'
+before_commands:
+    - 'sudo composer self-update'
+    - 'composer install --dev --prefer-source'
+changetracking:
+    bug_patterns: ["\bfix(?:es|ed)?\b", "\bclose(?:s|ed)?\b"]
+    feature_patterns: ["\badd(?:s|ed)?\b", "\bimplement(?:s|ed)?\b"]
+tools:
+    php_code_coverage:
+        test_command: 'phpunit -c _test/phpunit.xml --stderr'
+        #filter:
+        #    paths: ['lib/*']
+    php_analyzer: true
