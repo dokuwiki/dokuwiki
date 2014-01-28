@@ -32,15 +32,16 @@ class action_plugin_extension extends DokuWiki_Action_Plugin {
         global $USERINFO;
         global $INPUT;
 
+
+        if($event->data != 'plugin_extension') return;
+        $event->preventDefault();
+        $event->stopPropagation();
+
         if(empty($_SERVER['REMOTE_USER']) || !auth_isadmin($_SERVER['REMOTE_USER'], $USERINFO['grps'])){
             http_status(403);
             echo 'Forbidden';
             exit;
         }
-
-        if($event->data != 'plugin_extension') return;
-        $event->preventDefault();
-        $event->stopPropagation();
 
         header('Content-Type: text/html; charset=utf-8');
 
