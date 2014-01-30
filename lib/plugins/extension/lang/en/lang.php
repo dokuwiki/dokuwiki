@@ -65,6 +65,7 @@ $lang['status_disabled']              = 'disabled';
 $lang['status_unmodifiable']          = 'unmodifiable';
 $lang['status_plugin']                = 'plugin';
 $lang['status_template']              = 'template';
+$lang['status_bundled']               = 'bundled';
 
 $lang['msg_enabled']                  = 'Plugin %s enabled';
 $lang['msg_disabled']                 = 'Plugin %s disabled';

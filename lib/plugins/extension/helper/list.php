@@ -406,7 +406,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return .= ($extension->getTypes() ? hsc(implode(', ', $extension->getTypes())) : $default);
         $return .= '</bdi></dd>';
 
-        if($extension->getCompatibleVersions()) {
+        if(!$extension->isBundled() && $extension->getCompatibleVersions()) {
             $return .= '<dt>'.$this->getLang('compatible').'</dt>';
             $return .= '<dd>';
             foreach ($extension->getCompatibleVersions() as $date => $version) {
@@ -539,20 +539,23 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @return string The description of all relevant statusses
      */
     function make_status(helper_plugin_extension_extension $extension) {
-        $return = '';
+        $status = array();
+
+
         if ($extension->isInstalled()) {
-            $return .= $this->getLang('status_installed').' ';
+            $status[] = $this->getLang('status_installed');
             if ($extension->isProtected()) {
-                $return .= $this->getLang('status_protected').' ';
+                $status[] = $this->getLang('status_protected');
             } else {
-                $return .= $extension->isEnabled() ? $this->getLang('status_enabled').' ' : $this->getLang('status_disabled').' ';
+                $status[] = $extension->isEnabled() ? $this->getLang('status_enabled') : $this->getLang('status_disabled');
             }
         } else {
-            $return .= $this->getLang('status_not_installed').' ';
+            $status[] = $this->getLang('status_not_installed');
         }
-        $return .= !$extension->canModify() ? $this->getLang('status_unmodifiable').' ' : '';
-        $return .= $extension->isTemplate() ? $this->getLang('status_template') : $this->getLang('status_plugin');
-        return $return;
+        if(!$extension->canModify()) $status[] = $this->getLang('status_unmodifiable');
+        if($extension->isBundled()) $status[] = $this->getLang('status_bundled');
+        $status[] = $extension->isTemplate() ? $this->getLang('status_template') : $this->getLang('status_plugin');
+        return join(', ', $status);
     }
 
 }
