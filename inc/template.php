@@ -1143,7 +1143,10 @@ function tpl_getConf($id) {
         }
     }
 
-    return $conf['tpl'][$tpl][$id];
+    if(isset($conf['tpl'][$tpl][$id]))
+        return $conf['tpl'][$tpl][$id];
+    else
+        return false;
 }
 
 /**
