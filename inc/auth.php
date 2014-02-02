@@ -661,17 +661,39 @@ function auth_quickaclcheck($id) {
 }
 
 /**
- * Returns the maximum rights a user has for
- * the given ID or its namespace
+ * Returns the maximum rights a user has for the given ID or its namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- *
+ * @triggers AUTH_ACL_CHECK
  * @param  string       $id     page ID (needs to be resolved and cleaned)
  * @param  string       $user   Username
  * @param  array|null   $groups Array of groups the user is in
  * @return int             permission level
  */
 function auth_aclcheck($id, $user, $groups) {
+    $data = array(
+        'id'     => $id,
+        'user'   => $user,
+        'groups' => $groups
+    );
+
+    return trigger_event('AUTH_ACL_CHECK', $data, 'auth_aclcheck_cb');
+}
+
+/**
+ * default ACL check method
+ *
+ * DO NOT CALL DIRECTLY, use auth_aclcheck() instead
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ * @param  array $data event data
+ * @return int   permission level
+ */
+function auth_aclcheck_cb($data) {
+    $id     =& $data['id'];
+    $user   =& $data['user'];
+    $groups =& $data['groups'];
+
     global $conf;
     global $AUTH_ACL;
     /* @var DokuWiki_Auth_Plugin $auth */

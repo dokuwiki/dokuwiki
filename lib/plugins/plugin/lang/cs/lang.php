@@ -16,6 +16,7 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Petr Klíma <qaxi@seznam.cz>
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';

@@ -1698,12 +1698,12 @@ function html_admin(){
         }
         unset($menu['acl']);
 
-        if($menu['plugin']){
+        if($menu['extension']){
             ptln('  <li class="admin_plugin"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'plugin')).'">'.
-                    $menu['plugin']['prompt'].'</a></div></li>');
+                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'extension')).'">'.
+                    $menu['extension']['prompt'].'</a></div></li>');
         }
-        unset($menu['plugin']);
+        unset($menu['extension']);
 
         if($menu['config']){
             ptln('  <li class="admin_config"><div class="li">'.

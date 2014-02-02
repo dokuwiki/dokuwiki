@@ -15,6 +15,7 @@
  * @author Begina Felicysym <begina.felicysym@wp.eu>
  * @author Aoi Karasu <aoikarasu@gmail.com>
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
+ * @author Paweł Jan Czochański <czochanski@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -324,7 +325,7 @@ $lang['media_list_thumbs']     = 'Miniatury';
 $lang['media_list_rows']       = 'Wiersze';
 $lang['media_sort_name']       = 'Nazwa';
 $lang['media_sort_date']       = 'Data';
-$lang['media_namespaces']      = 'Wybierz przestrzeń nazw';
+$lang['media_namespaces']      = 'Wybierz katalog';
 $lang['media_files']           = 'Pliki w %s';
 $lang['media_upload']          = 'Przesyłanie plików na %s';
 $lang['media_search']          = 'Znajdź w %s';
@@ -337,6 +338,7 @@ $lang['media_perm_read']       = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawnień do przesyłania plików.';
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
-$lang['currentns']             = 'Obecna przestrzeń nazw.';
+$lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
+$lang['wikimarkup']            = 'Znaczniki';

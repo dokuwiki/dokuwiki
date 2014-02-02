@@ -1,3 +1,0 @@
-====== Xestión de Extensións ======
-
-Nesta páxina podes xestionar todas as accións posíbeis cos [[doku>plugins|extensións]] do DokuWiki. Para poder descargar e instalar unha extensión, o teu cartafol de extensións debe ser escribíbel polo servidor web.

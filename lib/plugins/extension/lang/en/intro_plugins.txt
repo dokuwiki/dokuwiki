@@ -1,0 +1,1 @@
+These are the plugins currently installed in your DokuWiki. You can enable or disable or even completely uninstall them here. Plugin updates are shown here as well, be sure to read the plugin's documentation before updating.

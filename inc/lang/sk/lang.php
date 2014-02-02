@@ -290,6 +290,7 @@ $lang['i_policy']              = 'Počiatočná ACL politika';
 $lang['i_pol0']                = 'Otvorená Wiki (čítanie, zápis a nahrávanie pre každého)';
 $lang['i_pol1']                = 'Verejná Wiki (čítanie pre každého, zápis a nahrávanie pre registrovaných užívateľov)';
 $lang['i_pol2']                = 'Uzatvorená Wiki (čítanie, zápis a nahrávanie len pre registrovaných užívateľov)';
+$lang['i_allowreg']            = 'Povolenie samostanej registrácie používateľov';
 $lang['i_retry']               = 'Skúsiť znovu';
 $lang['i_license']             = 'Vyberte licenciu, pod ktorou chcete uložiť váš obsah:';
 $lang['i_license_none']        = 'Nezobrazovať žiadne licenčné informácie';
