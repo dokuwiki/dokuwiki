@@ -1302,8 +1302,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out = '';
         // open video tag
         $out .= '<video '.buildAttributes($atts).' controls="controls"';
-        if ($posterUrl) $out .= ' poster="'.$posterUrl.'"';
+        if ($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
         $out .= '>'.NL;
+        $fallback = '';
 
         // output source for each alternative video format
         foreach($alternatives as $mime => $file) {
@@ -1312,10 +1313,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
-            $out .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
         }
 
         // finish
+        $out .= $fallback;
         $out .= '</video>'.NL;
         return $out;
     }
@@ -1338,6 +1340,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out = '';
         // open audio tag
         $out .= '<audio '.buildAttributes($atts).' controls="controls">'.NL;
+        $fallback = '';
 
         // output source for each alternative audio format
         foreach($alternatives as $mime => $file) {
@@ -1346,10 +1349,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
-            $out .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
         }
 
         // finish
+        $out .= $fallback;
         $out .= '</audio>'.NL;
         return $out;
     }
