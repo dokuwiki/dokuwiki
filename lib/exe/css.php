@@ -456,8 +456,9 @@ class DokuCssFile {
             if (defined('DOKU_UNITTEST')) {
                 $basedir[] = realpath(TMP_DIR);
             }
-            $regex = '#^('.join('|',$basedir).')#';
 
+            $basedir = array_map('preg_quote_cb', $basedir);
+            $regex = '/^('.join('|',$basedir).')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
 
