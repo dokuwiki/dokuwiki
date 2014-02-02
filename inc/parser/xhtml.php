@@ -781,7 +781,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function internalmedia ($src, $title=null, $align=null, $width=null,
-                            $height=null, $cache=null, $linking=null) {
+                            $height=null, $cache=null, $linking=null, $return=NULL) {
         global $ID;
         list($src,$hash) = explode('#',$src,2);
         resolve_mediaid(getNS($ID),$src, $exists);
@@ -793,8 +793,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -812,8 +812,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //output formatted
-        if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
-        else $this->doc .= $this->_formatLink($link);
+        if ($return) {
+            if ($linking == 'nolink' || $noLink) return $link['name'];
+            else return $this->_formatLink($link);
+        } else {
+            if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
+            else $this->doc .= $this->_formatLink($link);
+        }
     }
 
     function externalmedia ($src, $title=null, $align=null, $width=null,
@@ -829,8 +834,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(substr($mime,0,5) == 'image' && $render){
             // link only jpeg images
             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -1091,6 +1096,48 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $ret .= ' />';
 
+        }elseif(media_supportedav($mime, 'video')){
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }
+            if (!$title) {
+                // just show the sourcename
+                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+            if (!$render) {
+                // if the video is not supposed to be rendered
+                // return the title of the video
+                return $title;
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+
+            //add video(s)
+            $ret .= $this->_video($src, $width, $height, $att);
+
+        }elseif(media_supportedav($mime, 'audio')){
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }
+            if (!$title) {
+                // just show the sourcename
+                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+            if (!$render) {
+                // if the video is not supposed to be rendered
+                // return the title of the video
+                return $title;
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+
+            //add audio
+            $ret .= $this->_audio($src, $att);
+
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
                 // if the flash is not supposed to be rendered
@@ -1222,6 +1269,94 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         return $link;
     }
 
+
+    /**
+     * Embed video(s) in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of video to embed
+     * @param int $width       - width of the video in pixels
+     * @param int $height      - height of the video in pixels
+     * @param array $atts      - additional attributes for the <video> tag
+     * @return string
+     */
+    function _video($src,$width,$height,$atts=null){
+
+        // prepare width and height
+        if(is_null($atts)) $atts = array();
+        $atts['width']  = (int) $width;
+        $atts['height'] = (int) $height;
+        if(!$atts['width'])  $atts['width']  = 320;
+        if(!$atts['height']) $atts['height'] = 240;
+
+        // prepare alternative formats
+        $extensions = array('webm', 'ogv', 'mp4');
+        $alternatives = media_alternativefiles($src, $extensions);
+        $poster = media_alternativefiles($src, array('jpg', 'png'), true);
+        $posterUrl = '';
+        if (!empty($poster)) {
+            $posterUrl = ml(reset($poster),array('cache'=>$cache),true,'&');
+        }
+
+        $out = '';
+        // open video tag
+        $out .= '<video '.buildAttributes($atts).' controls="controls"';
+        if ($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
+        $out .= '>'.NL;
+        $fallback = '';
+
+        // output source for each alternative video format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+        }
+
+        // finish
+        $out .= $fallback;
+        $out .= '</video>'.NL;
+        return $out;
+    }
+
+    /**
+     * Embed audio in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of audio to embed
+     * @param array $atts      - additional attributes for the <audio> tag
+     * @return string
+     */
+    function _audio($src,$atts=null){
+
+        // prepare alternative formats
+        $extensions = array('ogg', 'mp3', 'wav');
+        $alternatives = media_alternativefiles($src, $extensions);
+
+        $out = '';
+        // open audio tag
+        $out .= '<audio '.buildAttributes($atts).' controls="controls">'.NL;
+        $fallback = '';
+
+        // output source for each alternative audio format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+        }
+
+        // finish
+        $out .= $fallback;
+        $out .= '</audio>'.NL;
+        return $out;
+    }
 
 }
 
