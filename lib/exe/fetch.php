@@ -89,7 +89,7 @@ if (defined('SIMPLE_TEST')) {
     // finally send the file to the client
     $evt = new Doku_Event('MEDIA_SENDFILE', $data);
     if($evt->advise_before()) {
-        sendFile($data['file'], $data['mime'], $data['download'], $data['cache'], $data['ispublic']);
+        sendFile($data['file'], $data['mime'], $data['download'], $data['cache'], $data['ispublic'], $data['orig']);
     }
     // Do something after the download finished.
     $evt->advise_after();  // will not be emitted on 304 or x-sendfile
