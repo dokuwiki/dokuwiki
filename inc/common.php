@@ -1451,7 +1451,7 @@ function userinfo($username = false) {
         'userinfo' => ''
     );
     if($username === false) {
-        $data['username'] = $_SERVER['REMOTE_USER'];
+        $data['username'] = $username = $_SERVER['REMOTE_USER'];
         $data['name'] = '<bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
     }
 
