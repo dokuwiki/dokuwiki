@@ -242,13 +242,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
             if(is_array($result)) foreach($result as $grp) {
                 if(!empty($grp[$this->getConf('groupkey')][0])) {
-                    if(is_array($grp[$this->getConf('groupkey')][0])) {
-                        $this->_debug('LDAP usergroup: '.htmlspecialchars($grp[$this->getConf('groupkey')][0]), 0, __LINE__, __FILE__);
-                        $info['grps'][] = $grp[$this->getConf('groupkey')][0];
-                    } else {
-                        $this->_debug('LDAP usergroup: '.htmlspecialchars($grp[$this->getConf('groupkey')]), 0, __LINE__, __FILE__);
-                        $info['grps'][] = $grp[$this->getConf('groupkey')];
-                    }
+                    $groupkey = (is_array($grp[$this->getConf('groupkey')][0])) ? $grp[$this->getConf('groupkey')][0] : $grp[$this->getConf('groupkey')];
+                    $this->_debug('LDAP usergroup: '.htmlspecialchars($groupkey), 0, __LINE__, __FILE__);
+                    $info['grps'][] = $groupkey;
                 }
             }
         }
