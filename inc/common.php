@@ -1418,34 +1418,95 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
 function editorinfo($username) {
-    global $conf;
+    return userinfo($username);
+}
+
+/**
+ * Returns users realname w/o link
+ *
+ * @param string|bool $username or false when currently logged-in user should be used
+ * @return string html of formatted user name
+ *
+ * @triggers COMMON_USER_LINK
+ */
+function userinfo($username = false) {
+    global $conf, $INFO;
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
-    switch($conf['showuseras']) {
-        case 'username':
-        case 'email':
-        case 'email_link':
-            if($auth) $info = $auth->getUserData($username);
-            break;
-        default:
-            return hsc($username);
+    // prepare initial event data
+    $data = array(
+        'username' => $username, // the unique user name
+        'name' => '',
+        'link' => array(  //setting 'link' to false disables linking
+                          'target' => '',
+                          'pre' => '',
+                          'suf' => '',
+                          'style' => '',
+                          'more' => '',
+                          'url' => '',
+                          'title' => '',
+                          'class' => ''
+        ),
+        'userinfo' => ''
+    );
+    if($username === false) {
+        $data['username'] = $_SERVER['REMOTE_USER'];
+        $data['name'] = '<bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
     }
 
-    if(isset($info) && $info) {
-        switch($conf['showuseras']) {
-            case 'username':
-                return hsc($info['name']);
-            case 'email':
-                return obfuscate($info['mail']);
-            case 'email_link':
-                $mail = obfuscate($info['mail']);
-                return '<a href="mailto:'.$mail.'">'.$mail.'</a>';
-            default:
-                return hsc($username);
+    $evt = new Doku_Event('COMMON_USER_LINK', $data);
+    if($evt->advise_before(true)) {
+        if(empty($data['name'])) {
+            if($conf['showuseras'] == 'loginname') {
+                $data['name'] = hsc($data['username']);
+            } else {
+                if($auth) $info = $auth->getUserData($username);
+                if(isset($info) && $info) {
+                    switch($conf['showuseras']) {
+                        case 'username':
+                            $data['name'] = hsc($info['name']);
+                            break;
+                        case 'email':
+                        case 'email_link':
+                            $data['name'] = obfuscate($info['mail']);
+                            break;
+                    }
+                }
+            }
         }
-    } else {
-        return hsc($username);
+        if($data['link'] !== false && empty($data['link']['url'])){
+            if($conf['showuseras'] == 'email_link') {
+                if(!isset($info)) {
+                    if($auth) $info = $auth->getUserData($username);
+                }
+                if(isset($info) && $info) {
+                    $data['link']['url'] = 'mailto:'.obfuscate($info['mail']);
+                } else {
+                    $data['link'] = false;
+                }
+
+            } else {
+                $data['link'] = false;
+            }
+        }
+
+        if($data['link'] === false) {
+            $data['userinfo'] = $data['name'];
+        } else{
+            $data['link']['name'] = $data['name'];
+            /** @var Doku_Renderer_xhtml $xhtml_renderer */
+            static $xhtml_renderer = null;
+            if(is_null($xhtml_renderer)){
+                $xhtml_renderer = p_get_renderer('xhtml');
+            }
+            $data['userinfo'] = $xhtml_renderer->_formatLink($data['link']);
+        }
     }
+    $evt->advise_after();
+    unset($evt);
+
+    return $data['userinfo'];
 }
 
 /**

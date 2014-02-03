@@ -885,9 +885,8 @@ function tpl_youarehere($sep = ' » ') {
  */
 function tpl_userinfo() {
     global $lang;
-    global $INFO;
     if(isset($_SERVER['REMOTE_USER'])) {
-        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
+        print $lang['loggedinas'].': '.userinfo();
         return true;
     }
     return false;
