@@ -16,6 +16,7 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author milousek22 <luci.stef@seznam.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
