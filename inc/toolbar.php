@@ -56,7 +56,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'format',
                 'title'  => $lang['qb_code'],
                 'icon'   => 'mono.png',
-                'key'    => 'c',
+                'key'    => 'm',
                 'open'   => "''",
                 'close'  => "''",
                 'block'  => false
