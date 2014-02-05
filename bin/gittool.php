@@ -276,15 +276,18 @@ EOF;
         if(!$ext) die("extension plugin not available, can't continue");
         $ext->setExtension($extension);
 
+        $repourl = $ext->getSourcerepoURL();
+        if(!$repourl) return false;
+
         // match github repos
-        if(preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $ext->getSourcerepoURL(), $m)) {
+        if(preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
             return 'https://github.com/'.$user.'/'.$repo.'.git';
         }
 
         // match gitorious repos
-        if(preg_match('/gitorious.org\/([^\/]+)\/([^\/]+)?/i', $ext->getSourcerepoURL(), $m)) {
+        if(preg_match('/gitorious.org\/([^\/]+)\/([^\/]+)?/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
             if(!$repo) $repo = $user;
@@ -293,7 +296,7 @@ EOF;
         }
 
         // match bitbucket repos - most people seem to use mercurial there though
-        if(preg_match('/bitbucket\.org\/([^\/]+)\/([^\/]+)/i', $ext->getSourcerepoURL(), $m)) {
+        if(preg_match('/bitbucket\.org\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
             return 'https://bitbucket.org/'.$user.'/'.$repo.'.git';
