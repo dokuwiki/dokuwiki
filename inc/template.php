@@ -615,7 +615,7 @@ function tpl_get_action($type) {
     $params    = array('do' => $type);
     $nofollow  = true;
 
-    $hook = 'TPL_ACTION_GET';
+    $hook = 'TEMPLATE_ACTION_GET';
     $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
     $evt = new Doku_Event($hook, $data);
 
