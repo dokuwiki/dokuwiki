@@ -1,4 +1,3 @@
-====== Különbségek ======
+====== Eltérések ======
 
-A kiválasztott változat és az aktuális verzió közötti különbségek a következők.
-
+Alább láthatók az oldal két változata közti különbségek.

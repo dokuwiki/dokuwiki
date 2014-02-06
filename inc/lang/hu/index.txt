@@ -1,4 +1,3 @@
-====== Áttekintő (index) ======
+====== Oldaltérkép (tartalom) ======
 
-Az összes elérhető oldal áttekintése [[doku>namespaces|névterek]] szerint rendezve.
-
+Oldaltérkép az összes elérhető oldalról [[doku>namespaces|névterek]] szerint rendezve.
