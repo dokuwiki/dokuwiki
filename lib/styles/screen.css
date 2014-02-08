@@ -55,7 +55,7 @@ div.notify {
 
 /* modal windows */
 .JSpopup,
-#link__wiz {
+.link__wiz {
     position: absolute;
     background-color: #fff;
     color: #000;
@@ -63,7 +63,7 @@ div.notify {
     overflow: hidden;
 }
 
-#link__wiz .ui-dialog-content {
+.link__wiz .ui-dialog-content {
     padding-left: 0;
     padding-right: 0;
 }
