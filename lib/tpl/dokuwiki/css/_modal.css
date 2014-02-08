@@ -10,14 +10,14 @@
 /* link wizard (opens from the link button in the edit toolbar)
 ********************************************************************/
 
-#link__wiz {
+.link__wiz {
 }
 
-[dir=rtl] #link__wiz_close {
+[dir=rtl] .link__wiz_close {
     float: left;
 }
 
-#link__wiz_result {
+.link__wiz_result {
     background-color: @ini_background;
     width:  293px;
     height: 193px;
@@ -27,44 +27,44 @@
     text-align: left;
     line-height: 1;
 }
-[dir=rtl] #link__wiz_result {
+[dir=rtl] .link__wiz_result {
     text-align: right;
 }
 
-#link__wiz_result div {
+.link__wiz_result div {
     padding: 3px 3px 3px 0;
 }
 
-#link__wiz_result div a {
+.link__wiz_result div a {
     display: block;
     padding-left: 22px;
     min-height: 16px;
     background: transparent 3px center no-repeat;
 }
-[dir=rtl] #link__wiz_result div a {
+[dir=rtl] .link__wiz_result div a {
     padding: 3px 22px 3px 3px;
     background-position: 257px 3px;
 }
 
-#link__wiz_result div.type_u a {
+.link__wiz_result div.type_u a {
     background-image: url(../../images/up.png);
 }
-#link__wiz_result div.type_f a {
+.link__wiz_result div.type_f a {
     background-image: url(../../images/page.png);
 }
-#link__wiz_result div.type_d a {
+.link__wiz_result div.type_d a {
     background-image: url(../../images/ns.png);
 }
 
-#link__wiz_result div.even {
+.link__wiz_result div.even {
     background-color: @ini_background_neu;
 }
 
-#link__wiz_result div.selected {
+.link__wiz_result div.selected {
     background-color: @ini_background_alt;
 }
 
-#link__wiz_result span {
+.link__wiz_result span {
     display: block;
     color: @ini_text_neu;
     margin-left: 22px;

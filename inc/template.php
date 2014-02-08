@@ -614,114 +614,131 @@ function tpl_get_action($type) {
     $method    = 'get';
     $params    = array('do' => $type);
     $nofollow  = true;
-    switch($type) {
-        case 'edit':
-            // most complicated type - we need to decide on current action
-            if($ACT == 'show' || $ACT == 'search') {
-                $method = 'post';
-                if($INFO['writable']) {
-                    $accesskey = 'e';
-                    if(!empty($INFO['draft'])) {
-                        $type         = 'draft';
-                        $params['do'] = 'draft';
-                    } else {
-                        $params['rev'] = $REV;
-                        if(!$INFO['exists']) {
-                            $type = 'create';
+
+    $hook = 'TEMPLATE_ACTION_GET';
+
+    $data['accesskey'] = &$accesskey;
+    $data['type'] = &$type;
+    $data['id'] = &$id;
+    $data['method'] = &$method;
+    $data['params'] = &$params;
+    $data['nofollow'] = &$nofollow;
+
+    $evt = new Doku_Event($hook, $data);
+
+    if($evt->advise_before()) {
+        switch($type) {
+            case 'edit':
+                // most complicated type - we need to decide on current action
+                if($ACT == 'show' || $ACT == 'search') {
+                    $method = 'post';
+                    if($INFO['writable']) {
+                        $accesskey = 'e';
+                        if(!empty($INFO['draft'])) {
+                            $type         = 'draft';
+                            $params['do'] = 'draft';
+                        } else {
+                            $params['rev'] = $REV;
+                            if(!$INFO['exists']) {
+                                $type = 'create';
+                            }
                         }
+                    } else {
+                        if(!actionOK('source')) return false; //pseudo action
+                        $params['rev'] = $REV;
+                        $type          = 'source';
+                        $accesskey     = 'v';
                     }
                 } else {
-                    if(!actionOK('source')) return false; //pseudo action
-                    $params['rev'] = $REV;
-                    $type          = 'source';
-                    $accesskey     = 'v';
+                    $params    = array();
+                    $type      = 'show';
+                    $accesskey = 'v';
                 }
-            } else {
+                break;
+            case 'revisions':
+                $type      = 'revs';
+                $accesskey = 'o';
+                break;
+            case 'recent':
+                $accesskey = 'r';
+                break;
+            case 'index':
+                $accesskey = 'x';
+                // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
+                if ($conf['start'] == $ID && !$conf['sitemap']) {
+                    $nofollow = false;
+                }
+                break;
+            case 'top':
+                $accesskey = 't';
                 $params    = array();
-                $type      = 'show';
-                $accesskey = 'v';
-            }
-            break;
-        case 'revisions':
-            $type      = 'revs';
-            $accesskey = 'o';
-            break;
-        case 'recent':
-            $accesskey = 'r';
-            break;
-        case 'index':
-            $accesskey = 'x';
-            // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
-            if ($conf['start'] == $ID && !$conf['sitemap']) {
-                $nofollow = false;
-            }
-            break;
-        case 'top':
-            $accesskey = 't';
-            $params    = array();
-            $id        = '#dokuwiki__top';
-            break;
-        case 'back':
-            $parent = tpl_getparent($ID);
-            if(!$parent) {
-                return false;
-            }
-            $id        = $parent;
-            $params    = array();
-            $accesskey = 'b';
-            break;
-        case 'login':
-            $params['sectok'] = getSecurityToken();
-            if(isset($_SERVER['REMOTE_USER'])) {
-                if(!actionOK('logout')) {
+                $id        = '#dokuwiki__top';
+                break;
+            case 'back':
+                $parent = tpl_getparent($ID);
+                if(!$parent) {
                     return false;
                 }
-                $params['do'] = 'logout';
-                $type         = 'logout';
-            }
-            break;
-        case 'register':
-            if(!empty($_SERVER['REMOTE_USER'])) {
-                return false;
-            }
-            break;
-        case 'resendpwd':
-            if(!empty($_SERVER['REMOTE_USER'])) {
-                return false;
-            }
-            break;
-        case 'admin':
-            if(!$INFO['ismanager']) {
-                return false;
-            }
-            break;
-        case 'revert':
-            if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
-                return false;
-            }
-            $params['rev']    = $REV;
-            $params['sectok'] = getSecurityToken();
-            break;
-        case 'subscribe':
-            if(!$_SERVER['REMOTE_USER']) {
-                return false;
-            }
-            break;
-        case 'backlink':
-            break;
-        case 'profile':
-            if(!isset($_SERVER['REMOTE_USER'])) {
-                return false;
-            }
-            break;
-        case 'media':
-            $params['ns'] = getNS($ID);
-            break;
-        default:
-            return '[unknown %s type]';
-            break;
+                $id        = $parent;
+                $params    = array();
+                $accesskey = 'b';
+                break;
+            case 'login':
+                $params['sectok'] = getSecurityToken();
+                if(isset($_SERVER['REMOTE_USER'])) {
+                    if(!actionOK('logout')) {
+                        return false;
+                    }
+                    $params['do'] = 'logout';
+                    $type         = 'logout';
+                }
+                break;
+            case 'register':
+                if(!empty($_SERVER['REMOTE_USER'])) {
+                    return false;
+                }
+                break;
+            case 'resendpwd':
+                if(!empty($_SERVER['REMOTE_USER'])) {
+                    return false;
+                }
+                break;
+            case 'admin':
+                if(!$INFO['ismanager']) {
+                    return false;
+                }
+                break;
+            case 'revert':
+                if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
+                    return false;
+                }
+                $params['rev']    = $REV;
+                $params['sectok'] = getSecurityToken();
+                break;
+            case 'subscribe':
+                if(!$_SERVER['REMOTE_USER']) {
+                    return false;
+                }
+                break;
+            case 'backlink':
+                break;
+            case 'profile':
+                if(!isset($_SERVER['REMOTE_USER'])) {
+                    return false;
+                }
+                break;
+            case 'media':
+                $params['ns'] = getNS($ID);
+                break;
+            default:
+
+                return '[unknown %s type]';
+                break;
+        }
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
+    $evt->advise_after();
+
+    return $data;
 }
 
 /**
@@ -1789,6 +1806,25 @@ function tpl_classes() {
         ($ID == $conf['start']) ? 'home' : '',
     );
     return join(' ', $classes);
+}
+
+/**
+ * Create event for tools menues
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+function tpl_toolsevent($toolsname, $items, $view='main') {
+    $data = array(
+        'view'  => $view,
+        'items' => $items
+    );
+
+    $hook = 'TEMPLATE_'.strtoupper($toolsname).'_DISPLAY';
+    $evt = new Doku_Event($hook, $data);
+    if($evt->advise_before()){
+        foreach($evt->data['items'] as $k => $html) echo $html;
+    }
+    $evt->advise_after();
 }
 
 //Setup VIM: ex: et ts=4 :

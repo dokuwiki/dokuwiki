@@ -10,6 +10,6 @@ div.notify,
 .secedit, /* section edit button */
 .a11y, /* accessibly hidden text */
 .JSpopup, /* modal windows */
-#link__wiz {
+.link__wiz {
     display: none;
 }
