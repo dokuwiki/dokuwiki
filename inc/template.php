@@ -614,124 +614,113 @@ function tpl_get_action($type) {
     $method    = 'get';
     $params    = array('do' => $type);
     $nofollow  = true;
-
-    $hook = 'TPL_ACTION_GET';
-    $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
-    $evt = new Doku_Event($hook, $data);
-
-    if($evt->advise_before()) {
-        switch($type) {
-            case 'edit':
-                // most complicated type - we need to decide on current action
-                if($ACT == 'show' || $ACT == 'search') {
-                    $method = 'post';
-                    if($INFO['writable']) {
-                        $accesskey = 'e';
-                        if(!empty($INFO['draft'])) {
-                            $type         = 'draft';
-                            $params['do'] = 'draft';
-                        } else {
-                            $params['rev'] = $REV;
-                            if(!$INFO['exists']) {
-                                $type = 'create';
-                            }
-                        }
+    switch($type) {
+        case 'edit':
+            // most complicated type - we need to decide on current action
+            if($ACT == 'show' || $ACT == 'search') {
+                $method = 'post';
+                if($INFO['writable']) {
+                    $accesskey = 'e';
+                    if(!empty($INFO['draft'])) {
+                        $type         = 'draft';
+                        $params['do'] = 'draft';
                     } else {
-                        if(!actionOK('source')) return false; //pseudo action
                         $params['rev'] = $REV;
-                        $type          = 'source';
-                        $accesskey     = 'v';
+                        if(!$INFO['exists']) {
+                            $type = 'create';
+                        }
                     }
                 } else {
-                    $params    = array();
-                    $type      = 'show';
-                    $accesskey = 'v';
+                    if(!actionOK('source')) return false; //pseudo action
+                    $params['rev'] = $REV;
+                    $type          = 'source';
+                    $accesskey     = 'v';
                 }
-                break;
-            case 'revisions':
-                $type      = 'revs';
-                $accesskey = 'o';
-                break;
-            case 'recent':
-                $accesskey = 'r';
-                break;
-            case 'index':
-                $accesskey = 'x';
-                // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
-                if ($conf['start'] == $ID && !$conf['sitemap']) {
-                    $nofollow = false;
-                }
-                break;
-            case 'top':
-                $accesskey = 't';
+            } else {
                 $params    = array();
-                $id        = '#dokuwiki__top';
-                break;
-            case 'back':
-                $parent = tpl_getparent($ID);
-                if(!$parent) {
+                $type      = 'show';
+                $accesskey = 'v';
+            }
+            break;
+        case 'revisions':
+            $type      = 'revs';
+            $accesskey = 'o';
+            break;
+        case 'recent':
+            $accesskey = 'r';
+            break;
+        case 'index':
+            $accesskey = 'x';
+            // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
+            if ($conf['start'] == $ID && !$conf['sitemap']) {
+                $nofollow = false;
+            }
+            break;
+        case 'top':
+            $accesskey = 't';
+            $params    = array();
+            $id        = '#dokuwiki__top';
+            break;
+        case 'back':
+            $parent = tpl_getparent($ID);
+            if(!$parent) {
+                return false;
+            }
+            $id        = $parent;
+            $params    = array();
+            $accesskey = 'b';
+            break;
+        case 'login':
+            $params['sectok'] = getSecurityToken();
+            if(isset($_SERVER['REMOTE_USER'])) {
+                if(!actionOK('logout')) {
                     return false;
                 }
-                $id        = $parent;
-                $params    = array();
-                $accesskey = 'b';
-                break;
-            case 'login':
-                $params['sectok'] = getSecurityToken();
-                if(isset($_SERVER['REMOTE_USER'])) {
-                    if(!actionOK('logout')) {
-                        return false;
-                    }
-                    $params['do'] = 'logout';
-                    $type         = 'logout';
-                }
-                break;
-            case 'register':
-                if(!empty($_SERVER['REMOTE_USER'])) {
-                    return false;
-                }
-                break;
-            case 'resendpwd':
-                if(!empty($_SERVER['REMOTE_USER'])) {
-                    return false;
-                }
-                break;
-            case 'admin':
-                if(!$INFO['ismanager']) {
-                    return false;
-                }
-                break;
-            case 'revert':
-                if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
-                    return false;
-                }
-                $params['rev']    = $REV;
-                $params['sectok'] = getSecurityToken();
-                break;
-            case 'subscribe':
-                if(!$_SERVER['REMOTE_USER']) {
-                    return false;
-                }
-                break;
-            case 'backlink':
-                break;
-            case 'profile':
-                if(!isset($_SERVER['REMOTE_USER'])) {
-                    return false;
-                }
-                break;
-            case 'media':
-                $params['ns'] = getNS($ID);
-                break;
-            default:
-
-                return '[unknown %s type]';
-                break;
-        }
+                $params['do'] = 'logout';
+                $type         = 'logout';
+            }
+            break;
+        case 'register':
+            if(!empty($_SERVER['REMOTE_USER'])) {
+                return false;
+            }
+            break;
+        case 'resendpwd':
+            if(!empty($_SERVER['REMOTE_USER'])) {
+                return false;
+            }
+            break;
+        case 'admin':
+            if(!$INFO['ismanager']) {
+                return false;
+            }
+            break;
+        case 'revert':
+            if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
+                return false;
+            }
+            $params['rev']    = $REV;
+            $params['sectok'] = getSecurityToken();
+            break;
+        case 'subscribe':
+            if(!$_SERVER['REMOTE_USER']) {
+                return false;
+            }
+            break;
+        case 'backlink':
+            break;
+        case 'profile':
+            if(!isset($_SERVER['REMOTE_USER'])) {
+                return false;
+            }
+            break;
+        case 'media':
+            $params['ns'] = getNS($ID);
+            break;
+        default:
+            return '[unknown %s type]';
+            break;
     }
-    $evt->advise_after();
-    extract($data);
-
     return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
 }
 
