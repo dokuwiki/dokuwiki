@@ -616,14 +616,7 @@ function tpl_get_action($type) {
     $nofollow  = true;
 
     $hook = 'TEMPLATE_ACTION_GET';
-
-    $data['accesskey'] = &$accesskey;
-    $data['type'] = &$type;
-    $data['id'] = &$id;
-    $data['method'] = &$method;
-    $data['params'] = &$params;
-    $data['nofollow'] = &$nofollow;
-
+    $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
     $evt = new Doku_Event($hook, $data);
 
     if($evt->advise_before()) {
@@ -737,8 +730,9 @@ function tpl_get_action($type) {
         }
     }
     $evt->advise_after();
+    extract($data);
 
-    return $data;
+    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
 }
 
 /**
