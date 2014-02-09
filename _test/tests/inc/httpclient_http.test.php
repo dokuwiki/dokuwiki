@@ -9,7 +9,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_simpleget(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/get?foo=bar');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('args',$resp);
@@ -22,7 +22,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_dget(){
         $http = new HTTPClient();
         $data = $http->dget($this->server.'/get',array('foo'=>'bar'));
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('args',$resp);
@@ -35,7 +35,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_gzip(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/gzip');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('gzipped',$resp);
@@ -48,7 +48,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_simplepost(){
         $http = new HTTPClient();
         $data = $http->post($this->server.'/post',array('foo'=>'bar'));
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('form',$resp);
@@ -61,7 +61,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_redirect(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/redirect/3');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('url',$resp);
@@ -74,7 +74,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_relredirect(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/relative-redirect/3');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('url',$resp);
@@ -87,7 +87,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_redirectfail(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/redirect/5');
-        $this->assertTrue($data === false, 'HTTP response');
+        $this->assertTrue($data === false, 'HTTP response '.$http->error);
         $this->assertEquals('Maximum number of redirects exceeded',$http->error);
     }
 
@@ -99,7 +99,7 @@ class httpclient_http_test extends DokuWikiTest {
         $http->get($this->server.'/cookies/set/foo/bar');
         $this->assertEquals(array('foo' => 'bar'), $http->cookies);
         $data = $http->get($this->server.'/cookies');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('cookies',$resp);
@@ -112,7 +112,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_teapot(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/status/418');
-        $this->assertTrue($data === false, 'HTTP response');
+        $this->assertTrue($data === false, 'HTTP response '.$http->error);
         $this->assertEquals(418,$http->status);
     }
 
@@ -125,13 +125,13 @@ class httpclient_http_test extends DokuWikiTest {
 
         // this should abort completely
         $data = $http->get($this->server.'/stream/30');
-        $this->assertTrue($data === false, 'HTTP response');
+        $this->assertTrue($data === false, 'HTTP response '.$http->error);
 
         // this should read just the needed bytes
         $http->max_bodysize_abort = false;
         $http->keep_alive = false;
         $data = $http->get($this->server.'/stream/30');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         /* should read no more than max_bodysize+1 */
         $this->assertLessThanOrEqual(251,strlen($data));
     }
@@ -143,10 +143,10 @@ class httpclient_http_test extends DokuWikiTest {
         $http = new HTTPClient();
         $http->max_bodysize = 500*1024;
         $data = $http->get($this->server.'/stream/5');
-        $this->assertTrue($data !== false, 'HTTP response');
+        $this->assertTrue($data !== false, 'HTTP response '.$http->error);
         $http->max_bodysize_abort = false;
         $data = $http->get($this->server.'/stream/5');
-        $this->assertTrue($data !== false, 'HTTP response');
+        $this->assertTrue($data !== false, 'HTTP response '.$http->error);
     }
 
     /**
@@ -157,7 +157,7 @@ class httpclient_http_test extends DokuWikiTest {
         $http->user = 'user';
         $http->pass = 'pass';
         $data = $http->get($this->server.'/basic-auth/user/pass');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertEquals(array('authenticated'=>true,'user'=>'user'), $resp);
@@ -171,7 +171,7 @@ class httpclient_http_test extends DokuWikiTest {
         $http->user = 'user';
         $http->pass = 'invalid';
         $data = $http->get($this->server.'/basic-auth/user/pass');
-        $this->assertTrue($data === false, 'HTTP response');
+        $this->assertTrue($data === false, 'HTTP response '.$http->error);
         $this->assertEquals(401,$http->status);
     }
 
@@ -182,7 +182,7 @@ class httpclient_http_test extends DokuWikiTest {
         $http = new HTTPClient();
         $http->timeout = 5;
         $data = $http->get($this->server.'/delay/10');
-        $this->assertTrue($data === false, 'HTTP response');
+        $this->assertTrue($data === false, 'HTTP response '.$http->error);
         $this->assertEquals(-100,$http->status);
     }
 
@@ -192,7 +192,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_headers(){
         $http = new HTTPClient();
         $data = $http->get($this->server.'/response-headers?baz=&foo=bar');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('baz',$http->resp_headers);
@@ -206,7 +206,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_chunked(){
         $http = new HTTPClient();
         $data = $http->get('http://whoopdedo.org/cgi-bin/chunked/2550');
-        $this->assertFalse($data === false, 'HTTP response');
+        $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $this->assertEquals(2550,strlen($data));
     }
 
@@ -218,7 +218,7 @@ class httpclient_http_test extends DokuWikiTest {
     function test_wikimatrix(){
         $http = new HTTPClient();
         $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
-        $this->assertTrue($data !== false, $http->error);
+        $this->assertTrue($data !== false, 'HTTP response '.$http->error);
     }
 
     function test_postencode(){
