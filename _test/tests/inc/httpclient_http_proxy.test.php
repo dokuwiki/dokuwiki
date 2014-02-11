@@ -18,5 +18,4 @@ class httpclient_http_proxy_test extends DokuWikiTest {
         $this->assertFalse($data === false, 'HTTP response '.$http->error);
         $this->assertTrue(strpos($data,'DokuWiki') !== false, 'response content');
     }
-
 }

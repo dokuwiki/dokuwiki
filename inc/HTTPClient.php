@@ -304,11 +304,18 @@ class HTTPClient {
             }
 
             // try establish a CONNECT tunnel for SSL
-            if($this->_ssltunnel($socket, $request_url)){
-                // no keep alive for tunnels
-                $this->keep_alive = false;
-                // tunnel is authed already
-                if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+            try {
+                if($this->_ssltunnel($socket, $request_url)){
+                    // no keep alive for tunnels
+                    $this->keep_alive = false;
+                    // tunnel is authed already
+                    if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+                }
+            } catch (HTTPClientException $e) {
+                $this->status = $e->getCode();
+                $this->error = $e->getMessage();
+                fclose($socket);
+                return false;
             }
 
             // keep alive?
@@ -363,7 +370,7 @@ class HTTPClient {
 
             // get Status
             if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m))
-                throw new HTTPClientException('Server returned bad answer');
+                throw new HTTPClientException('Server returned bad answer '.$r_headers);
 
             $this->status = $m[2];
 
@@ -526,6 +533,7 @@ class HTTPClient {
      *
      * @param resource &$socket
      * @param string   &$requesturl
+     * @throws HTTPClientException when a tunnel is needed but could not be established
      * @return bool true if a tunnel was established
      */
     function _ssltunnel(&$socket, &$requesturl){
@@ -559,7 +567,8 @@ class HTTPClient {
                 return true;
             }
         }
-        return false;
+
+        throw new HTTPClientException('Failed to establish secure proxy connection', -150);
     }
 
     /**
