@@ -1,7 +1,3 @@
-====== Újabb változat létezik ======
+====== Újabb verzió érhető el ======
 
-Az általad szerkesztett dokumentumnak egy újabb változata létezik. Ez akkor történik, ha egy másik felhasználó megváltoztatta a dokumentumot, amíg szerkesztetted.
-
-Nézd át gondosan a lenti eltéréseket, aztán dönts arról, melyik változatot tartod meg. Ha ''Mentés'' gombot választod, akkor a Te változatod kerül mentésre. Nyomj ''Mégsem'' gombot a jelenlegi változat megtartásához.
-
-
+Az Ön által szerkesztett dokumentumnak egy újabb változata érhető el. Ez akkor fordulhat elő, ha egy másik felhasználó módosította a dokumentumot, miközben Ön szerkesztette azt.
