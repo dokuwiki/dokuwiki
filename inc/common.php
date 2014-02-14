@@ -1429,7 +1429,7 @@ function editorinfo($username) {
  *
  * @triggers COMMON_USER_LINK
  */
-function userinfo($username = false) {
+function userinfo($username = null) {
     global $conf, $INFO;
     /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
@@ -1450,7 +1450,7 @@ function userinfo($username = false) {
         ),
         'userinfo' => ''
     );
-    if($username === false) {
+    if($username === null) {
         $data['username'] = $username = $_SERVER['REMOTE_USER'];
         $data['name'] = '<bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
     }
