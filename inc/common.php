@@ -1465,6 +1465,7 @@ function userinfo($username = null) {
                 if(isset($info) && $info) {
                     switch($conf['showuseras']) {
                         case 'username':
+                        case 'username_link':
                             $data['name'] = hsc($info['name']);
                             break;
                         case 'email':
@@ -1475,13 +1476,31 @@ function userinfo($username = null) {
                 }
             }
         }
+
+        /** @var Doku_Renderer_xhtml $xhtml_renderer */
+        static $xhtml_renderer = null;
+
         if($data['link'] !== false && empty($data['link']['url'])){
-            if($conf['showuseras'] == 'email_link') {
+
+            if(in_array($conf['showuseras'], array('email_link', 'username_link'))) {
                 if(!isset($info)) {
                     if($auth) $info = $auth->getUserData($username);
                 }
                 if(isset($info) && $info) {
-                    $data['link']['url'] = 'mailto:'.obfuscate($info['mail']);
+                    if($conf['showuseras'] == 'email_link') {
+                        $data['link']['url'] = 'mailto:'.obfuscate($info['mail']);
+                    } else {
+                        if(is_null($xhtml_renderer)){
+                            $xhtml_renderer = p_get_renderer('xhtml');
+                        }
+                        if(empty($xhtml_renderer->interwiki)) {
+                            $xhtml_renderer->interwiki = getInterwiki();
+                        }
+                        $shortcut = 'user';
+                        $url = $xhtml_renderer->_resolveInterWiki($shortcut, $username);
+                        list($url, $urlparam) = explode('?', $url, 2);
+                        $data['link']['url'] = wl($url, $urlparam);
+                    }
                 } else {
                     $data['link'] = false;
                 }
@@ -1495,8 +1514,6 @@ function userinfo($username = null) {
             $data['userinfo'] = $data['name'];
         } else{
             $data['link']['name'] = $data['name'];
-            /** @var Doku_Renderer_xhtml $xhtml_renderer */
-            static $xhtml_renderer = null;
             if(is_null($xhtml_renderer)){
                 $xhtml_renderer = p_get_renderer('xhtml');
             }
