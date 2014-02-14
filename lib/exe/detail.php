@@ -32,8 +32,8 @@ if($conf['allowdebug'] && $INPUT->has('debug')){
 
 $ERROR = false;
 // check image permissions
-$AUTHLEVEL = auth_quickaclcheck($IMG);
-if($AUTHLEVEL >= AUTH_READ){
+$AUTH = auth_quickaclcheck($IMG);
+if($AUTH >= AUTH_READ){
     // check if image exists
     $SRC = mediaFN($IMG);
     if(!@file_exists($SRC)){
