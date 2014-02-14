@@ -143,6 +143,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @author  Dan Allen <dan.j.allen@gmail.com>
      * @author  <evaldas.auryla@pheur.org>
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
+     * @author  Steffen Schoch <schoch@dsb.net>
      *
      * @param   string $user
      * @param   bool   $inbind authldap specific, true if in bind phase
@@ -241,8 +242,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
             if(is_array($result)) foreach($result as $grp) {
                 if(!empty($grp[$this->getConf('groupkey')][0])) {
-                    $this->_debug('LDAP usergroup: '.htmlspecialchars($grp[$this->getConf('groupkey')][0]), 0, __LINE__, __FILE__);
-                    $info['grps'][] = $grp[$this->getConf('groupkey')][0];
+                    $groupkey = (is_array($grp[$this->getConf('groupkey')][0])) ? $grp[$this->getConf('groupkey')][0] : $grp[$this->getConf('groupkey')];
+                    $this->_debug('LDAP usergroup: '.htmlspecialchars($groupkey), 0, __LINE__, __FILE__);
+                    $info['grps'][] = $groupkey;
                 }
             }
         }
