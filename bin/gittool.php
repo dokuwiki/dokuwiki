@@ -260,7 +260,7 @@ EOF;
         } else {
             $this->msg_success('Found '.count($data).' .git directories');
         }
-        $data = array_map('dirname', $data);
+        $data = array_map('fullpath', array_map('dirname', $data));
         return $data;
     }
 
