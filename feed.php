@@ -299,7 +299,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                         $src_l = '';
 
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)), 300)) {
-                            $more  = 'w='.$size[0].'&h='.$size[1].'t='.@filemtime(mediaFN($id));
+                            $more  = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
                             $src_r = ml($id, $more);
                         }
                         if($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)), 300)) {
@@ -347,7 +347,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 case 'html':
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w='.$size[0].'&h='.$size[1].'t='.@filemtime(mediaFN($id));
+                            $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
                             $src     = ml($id, $more);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
                         } else {
@@ -378,7 +378,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 default:
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w='.$size[0].'&h='.$size[1].'t='.@filemtime(mediaFN($id));
+                            $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
                             $src     = ml($id, $more);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
                         } else {
