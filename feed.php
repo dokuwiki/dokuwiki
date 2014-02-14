@@ -300,11 +300,11 @@ function rss_buildItems(&$rss, &$data, $opt) {
 
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)), 300)) {
                             $more  = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
-                            $src_r = ml($id, $more);
+                            $src_r = ml($id, $more, true, '&amp;', true);
                         }
                         if($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)), 300)) {
                             $more  = 'rev='.$rev.'&w='.$size[0].'&h='.$size[1];
-                            $src_l = ml($id, $more);
+                            $src_l = ml($id, $more, true, '&amp;', true);
                         }
                         $content = '';
                         if($src_r) {
@@ -348,7 +348,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
                             $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
-                            $src     = ml($id, $more);
+                            $src     = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
                         } else {
                             $content = '';
@@ -379,7 +379,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
                             $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
-                            $src     = ml($id, $more);
+                            $src     = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
                         } else {
                             $content = '';
