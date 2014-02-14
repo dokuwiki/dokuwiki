@@ -702,6 +702,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(strpos($url,'/') === false) {
             list($url, $urlparam) = explode('?', $url, 2);
             $url = wl($url, $urlparam);
+            $link['target'] = $conf['target']['wiki'];
         }
 
         if ( !$isImage ) {
