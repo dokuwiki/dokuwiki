@@ -1634,6 +1634,17 @@ function html_debug(){
     print_r($inis);
     print '</pre>';
 
+    if (function_exists('apache_get_version')) {
+        $apache['version'] = apache_get_version();
+
+        if (function_exists('apache_get_modules')) {
+            $apache['modules'] = apache_get_modules();
+        }
+        print '<b>Apache</b><pre>';
+        print_r($apache);
+        print '</pre>';
+    }
+
     print '</body></html>';
 }
 
