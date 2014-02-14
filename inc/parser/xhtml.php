@@ -699,6 +699,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //get interwiki URL
         $url = $this->_resolveInterWiki($wikiName,$wikiUri);
 
+        if(strpos($url,'/') === false) {
+            list($url, $urlparam) = explode('?', $url, 2);
+            $url = wl($url, $urlparam);
+        }
+
         if ( !$isImage ) {
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
             $link['class'] = "interwiki iw_$class";
