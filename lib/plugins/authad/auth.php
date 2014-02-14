@@ -512,6 +512,31 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Returns a list of configured domains
+     *
+     * The default domain has an empty string as key
+     *
+     * @return array associative array(key => domain)
+     */
+    public function _getConfiguredDomains() {
+        $domains = array();
+        if(empty($this->conf['account_suffix'])) return $domains; // not configured yet
+
+        // add default domain, using the name from account suffix
+        $domains[''] = ltrim($this->conf['account_suffix'], '@');
+
+        // find additional domains
+        foreach($this->conf as $key => $val) {
+            if(is_array($val) && isset($val['account_suffix'])) {
+                $domains[$key] = ltrim($val['account_suffix'], '@');
+            }
+        }
+        ksort($domains);
+
+        return $domains;
+    }
+
+    /**
      * Check provided user and userinfo for matching patterns
      *
      * The patterns are set up with $this->_constructPattern()
