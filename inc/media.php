@@ -704,7 +704,7 @@ function media_tab_files_options(){
             if ($checked == $option) {
                 $attrs['checked'] = 'checked';
             }
-            $form->addElement(form_makeRadioField($group, $option,
+            $form->addElement(form_makeRadioField($group . '_dwmedia', $option,
                                        $lang['media_' . $group . '_' . $option],
                                                   $content[0] . '__' . $option,
                                                   $option, $attrs));
