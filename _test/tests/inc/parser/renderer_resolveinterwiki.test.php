@@ -25,9 +25,9 @@ class Test_resolveInterwiki extends PHPUnit_Framework_TestCase {
             //relative url
             array('withslash', 'foo @+%/#txt', '/testfoo%20%40%2B%25%2F#txt'),
             //dokuwiki id's
-            array('onlytext', 'foo @+%#txt', '/tmp/doku.php?id=onlytextfoo%20%40%2B%25#txt'),
-            array('user', 'foo @+%#txt', '/tmp/doku.php?id=wiki:users:foo%20%40%2B%25#txt'),
-            array('withquery', 'foo @+%#txt', '/tmp/doku.php?id=anyns:foo%20%40%2B%25&amp;do=edit#txt')
+            array('onlytext', 'foo @+%#txt', DOKU_BASE.'doku.php?id=onlytextfoo%20%40%2B%25#txt'),
+            array('user', 'foo @+%#txt', DOKU_BASE.'doku.php?id=wiki:users:foo%20%40%2B%25#txt'),
+            array('withquery', 'foo @+%#txt', DOKU_BASE.'doku.php?id=anyns:foo%20%40%2B%25&amp;do=edit#txt')
         );
 
         foreach($tests as $test) {
