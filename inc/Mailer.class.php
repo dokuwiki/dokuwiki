@@ -277,7 +277,7 @@ class Mailer {
     /**
      * Add the To: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
@@ -287,7 +287,7 @@ class Mailer {
     /**
      * Add the Cc: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
@@ -297,7 +297,7 @@ class Mailer {
     /**
      * Add the Bcc: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
@@ -310,7 +310,7 @@ class Mailer {
      * This is set to $conf['mailfrom'] when not specified so you shouldn't need
      * to call this function
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string  $address from address
      */
     public function from($address) {
@@ -333,9 +333,9 @@ class Mailer {
      * for headers. Addresses may not contain Non-ASCII data!
      *
      * Example:
-     *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
+     *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @param string|array  $addresses Multiple adresses separated by commas or as array
      * @return bool|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
