@@ -1193,6 +1193,7 @@ function html_diff($text='',$intro=true,$type=null){
     if (!$text) {
         ptln('<div class="diffoptions">');
 
+        //display type
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
         $form->addHidden('rev2[0]',$l_rev);
@@ -1211,44 +1212,83 @@ function html_diff($text='',$intro=true,$type=null){
         $form->printForm();
 
         $diffurl = wl($ID, array(
-                        'do'       => 'diff',
-                        'rev2[0]'  => $l_rev,
-                        'rev2[1]'  => $r_rev ? $r_rev : $INFO['lastmod'], // link to exactly this view FS#2835
-                        'difftype' => $type,
-                      ));
+                             'do'       => 'diff',
+                             'rev2[0]'  => $l_rev,
+                             'rev2[1]'  => $r_rev ? $r_rev : $INFO['lastmod'], // link to exactly this view FS#2835
+                             'difftype' => $type,
+                         ));
         ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a><br />');
+
+        //revisions navigation
+        list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
+        foreach($l_revs as $rev) {
+            $info = $pagelog->getRevisionInfo($rev);
+            $l_revisions[$rev] = array($rev, dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum']);
+        }
+        foreach($r_revs as $rev) {
+            $info = $pagelog->getRevisionInfo($rev);
+            $r_revisions[$rev] = array($rev, dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum']);
+        }
+
+
         if($prev_rev){
             $diffurlprev = wl($ID, array(
-                                'do'       => 'diff',
-                                'rev2[0]'  => $prev_rev,
-                                'rev2[1]'  => $l_rev,
-                                'difftype' => $type,
-                              ));
-            ptln('<a class="wikilink1" href="'.$diffurlprev.'">← '.$lang['diffpreviousedit'].'</a> - ');
+                                        'do'       => 'diff',
+                                        'rev2[0]'  => $prev_rev,
+                                        'rev2[1]'  => $l_rev,
+                                        'difftype' => $type,
+                                   ));
+            ptln('<a class="wikilink1" href="'.$diffurlprev.'">← '.$lang['diffpreviousedit'].'</a>');
         }
-        $recenturl = wl($ID, array(
-                        'do'       => 'revisions'
-                      ));
-        ptln('<a class="wikilink1" href="'.$recenturl.'">'.$lang['overviewrevs'].'</a>');
+        var_dump($l_revisions);
+        $form = new Doku_Form(array('action'=>wl()));
+        $form->addHidden('id',$ID);
+        $form->addHidden('difftype',$type);
+        $form->addHidden('rev2[1]',$r_rev);
+        $form->addHidden('do','diff');
+        $form->addElement(form_makeListboxField(
+                              'rev2[0]',
+                              $l_revisions,
+                              $l_rev,
+                              '','','',
+                              array('class'=>'quickselect')));
+        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form->printForm();
+
+        $form = new Doku_Form(array('action'=>wl()));
+        $form->addHidden('id',$ID);
+        $form->addHidden('rev2[0]',$l_rev);
+        $form->addHidden('difftype',$type);
+        $form->addHidden('do','diff');
+        $form->addElement(form_makeListboxField(
+                              'rev2[1]',
+                              $r_revisions,
+                              $r_rev ? $r_rev : $INFO['meta']['last_change']['date'],
+                              '','','',
+                              array('class'=>'quickselect')));
+        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form->printForm();
+
         if($next_rev){
             if($pagelog->isCurrentRevision($next_rev)) {
                 $diffurlnextparam = array(
-                                'do'       => 'diff',
-                                'rev'      => $r_rev,
-                                'difftype' => $type,
-                           );
+                    'do'       => 'diff',
+                    'rev'      => $r_rev,
+                    'difftype' => $type,
+                );
                 $navnexttitle = $lang['difflastedit'];
             } else {
                 $diffurlnextparam = array(
-                                'do'       => 'diff',
-                                'rev2[0]'  => $r_rev,
-                                'rev2[1]'  => $next_rev,
-                                'difftype' => $type,
-                           );
+                    'do'       => 'diff',
+                    'rev2[0]'  => $r_rev,
+                    'rev2[1]'  => $next_rev,
+                    'difftype' => $type,
+                );
                 $navnexttitle = $lang['diffnextedit'];
             }
-            ptln(' - <a class="wikilink1" href="'.wl($ID, $diffurlnextparam).'">'.$navnexttitle.' →</a>');
+            ptln('<a class="wikilink1" href="'.wl($ID, $diffurlnextparam).'">'.$navnexttitle.' →</a>');
         }
+
         ptln('</p>');
         ptln('</div>');
     }
