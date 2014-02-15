@@ -72,8 +72,20 @@ function _ft_pageSearch(&$data) {
                 $pages  = end($stack);
                 $pages_matched = array();
                 foreach(array_keys($pages) as $id){
-                    $text = utf8_strtolower(rawWiki($id));
-                    if (strpos($text, $phrase) !== false) {
+                    $evdata = array(
+                        'id' => $id,
+                        'phrase' => $phrase,
+                        'text' => rawWiki($id)
+                    );
+                    $evt = new Doku_Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    if ($evt->advise_before() && $evt->result !== true) {
+                        $text = utf8_strtolower($evdata['text']);
+                        if (strpos($text, $phrase) !== false) {
+                            $evt->result = true;
+                        }
+                    }
+                    $evt->advise_after();
+                    if ($evt->result === true) {
                         $pages_matched[$id] = 0; // phrase: always 0 hit
                     }
                 }
