@@ -1220,14 +1220,23 @@ function html_diff($text='',$intro=true,$type=null){
         ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a><br />');
 
         //revisions navigation
+        $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
         list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
         foreach($l_revs as $rev) {
             $info = $pagelog->getRevisionInfo($rev);
-            $l_revisions[$rev] = array($rev, dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum']);
+            $l_revisions[$rev] = array(
+                $rev,
+                dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum'],
+                $rev >= $r_rev
+            );
         }
         foreach($r_revs as $rev) {
             $info = $pagelog->getRevisionInfo($rev);
-            $r_revisions[$rev] = array($rev, dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum']);
+            $r_revisions[$rev] = array(
+                $rev,
+                dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum'],
+                $rev <= $l_rev
+            );
         }
 
 
@@ -1240,7 +1249,7 @@ function html_diff($text='',$intro=true,$type=null){
                                    ));
             ptln('<a class="wikilink1" href="'.$diffurlprev.'">← '.$lang['diffpreviousedit'].'</a>');
         }
-        var_dump($l_revisions);
+
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
         $form->addHidden('difftype',$type);
@@ -1263,7 +1272,7 @@ function html_diff($text='',$intro=true,$type=null){
         $form->addElement(form_makeListboxField(
                               'rev2[1]',
                               $r_revisions,
-                              $r_rev ? $r_rev : $INFO['meta']['last_change']['date'],
+                              $r_rev,
                               '','','',
                               array('class'=>'quickselect')));
         $form->addElement(form_makeButton('submit', 'diff','Go'));
