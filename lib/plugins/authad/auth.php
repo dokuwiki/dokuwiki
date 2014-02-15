@@ -336,7 +336,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
-        if($this->users === null) {
+        if(!$this->users) {
             //get info for given user
             $result = $adldap->user()->all();
             if (!$result) return array();
