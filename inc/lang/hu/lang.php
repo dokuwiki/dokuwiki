@@ -12,6 +12,7 @@
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Serenity87HUN <anikototh87@gmail.com>
+ * @author Marina Vladi <deldadam@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -295,6 +296,7 @@ $lang['i_policy']              = 'Kezdeti hozzáférési lista házirend';
 $lang['i_pol0']                = 'Nyitott wiki (mindenki olvashatja, írhatja és fájlokat tölthet fel)';
 $lang['i_pol1']                = 'Publikus wiki (mindenki olvashatja, de csak regisztrált felhasználók írhatják és tölthetnek fel fájlokat)';
 $lang['i_pol2']                = 'Zárt wiki (csak regisztrált felhasználók olvashatják, írhatják és tölthetnek fel fájlokat)';
+$lang['i_allowreg']            = 'A felhasználók saját maguk is regisztrálhatnak';
 $lang['i_retry']               = 'Újra';
 $lang['i_license']             = 'Kérlek, válassz licencet a feltöltött tartalomhoz:';
 $lang['i_license_none']        = 'Ne jelenítsen meg licenc információt';
@@ -332,3 +334,7 @@ $lang['media_perm_read']       = 'Sajnáljuk, nincs jogod a fájlok olvasásáho
 $lang['media_perm_upload']     = 'Sajnáljuk, nincs jogod a feltöltéshez.';
 $lang['media_update']          = 'Új verzió feltöltése';
 $lang['media_restore']         = 'Ezen verzió visszaállítása';
+$lang['currentns']             = 'Aktuális névtér';
+$lang['searchresult']          = 'Keresés eredménye';
+$lang['plainhtml']             = 'Sima HTML';
+$lang['wikimarkup']            = 'Wiki-jelölő nyelv';

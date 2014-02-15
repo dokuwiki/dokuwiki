@@ -1,5 +1,0 @@
-====== Udvidelsesstyring ======
-
-På denne side kan du kontrollere alle Dokuwikis [[doku>plugins|udvidelser]]. For at hente og opsætte en udvidelse, må din udvidelsesmappe kunne skrives til af serveren.
-
-

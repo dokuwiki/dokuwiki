@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -19,6 +19,7 @@
  * @author Smorkster Andersson smorkster@gmail.com
  * @author Henrik <henrik@idealis.se>
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
+ * @author Hans Iwan Bratt <hibratt@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -148,6 +149,8 @@ $lang['js']['del_confirm']     = 'Vill du verkligen radera?';
 $lang['js']['restore_confirm'] = 'Återställa denna version?';
 $lang['js']['media_diff']      = 'Se skillnader:';
 $lang['js']['media_diff_both'] = 'Sida vid sida';
+$lang['js']['media_diff_opacity'] = 'Genomskinlig';
+$lang['js']['media_diff_portions'] = 'Svep';
 $lang['js']['media_select']    = 'Välj filer...';
 $lang['js']['media_upload_btn'] = 'Ladda upp';
 $lang['js']['media_done_btn']  = 'Färdig';
@@ -204,8 +207,10 @@ $lang['noflash']               = '<a href="http://www.adobe.com/products/flashpl
 $lang['download']              = 'Ladda ner kodfragmentet';
 $lang['tools']                 = 'Verktyg';
 $lang['user_tools']            = 'Användarverktyg';
+$lang['site_tools']            = 'Webbverktyg';
 $lang['page_tools']            = 'Sidverktyg';
 $lang['skip_to_content']       = 'hoppa till innehåll';
+$lang['sidebar']               = 'Sidmeny';
 $lang['mail_newpage']          = 'sida tillagd:';
 $lang['mail_changed']          = 'sida ändrad:';
 $lang['mail_subscribe_list']   = 'sidor ändrade i namnrymd:';
@@ -298,6 +303,7 @@ $lang['i_policy']              = 'Initial ACL-policy';
 $lang['i_pol0']                = 'Öppen wiki (alla får läsa, skriva och ladda upp filer)';
 $lang['i_pol1']                = 'Publik wiki (alla får läsa, registrerade användare för skriva och ladda upp filer)';
 $lang['i_pol2']                = 'Sluten wiki (endast registrerade användare får läsa, skriva och ladda upp filer)';
+$lang['i_allowreg']            = 'Tillåt användare att registrera sig själva';
 $lang['i_retry']               = 'Försök igen';
 $lang['i_license']             = 'Vänligen välj licens du vill använda för ditt innehåll:';
 $lang['i_license_none']        = 'Visa ingen licensinformation';
@@ -335,3 +341,5 @@ $lang['media_perm_read']       = 'Du har tyvärr inte tillräckliga behörighete
 $lang['media_perm_upload']     = 'Du har tyvärr inte tillräckliga behörigheter för att ladda upp filer.';
 $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
+$lang['searchresult']          = 'Sökresultat';
+$lang['plainhtml']             = 'Ren HTML';

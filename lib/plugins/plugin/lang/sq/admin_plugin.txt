@@ -1,3 +1,0 @@
-====== Menaxhimi i Plugin-eve ======
-
-Në këtë faqe mund të menaxhoni çdo gjë që ka të bëjë me [[doku>plugins|plugin-et]] Dokuwiki. Që të jetë në gjendje për të shkarkuar dhe instaluar një plugin, dosja e plugin-it duhet të jetë e shkrueshme nga webserver-i.

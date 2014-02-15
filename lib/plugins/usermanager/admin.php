@@ -814,6 +814,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             fputcsv($fd, $line);
         }
         fclose($fd);
+        if (defined('DOKU_UNITTEST')){ return; }
+
         die;
     }
 
@@ -822,7 +824,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * csv file should have 4 columns, user_id, full name, email, groups (comma separated)
      *
-     * @return bool whether succesful
+     * @return bool whether successful
      */
     protected function _import() {
         // check we are allowed to add users
@@ -830,7 +832,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!$this->_auth->canDo('addUser')) return false;
 
         // check file uploaded ok.
-        if (empty($_FILES['import']['size']) || !empty($FILES['import']['error']) && is_uploaded_file($FILES['import']['tmp_name'])) {
+        if (empty($_FILES['import']['size']) || !empty($_FILES['import']['error']) && $this->_isUploadedFile($_FILES['import']['tmp_name'])) {
             msg($this->lang['import_error_upload'],-1);
             return false;
         }
@@ -845,7 +847,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 if (!utf8_check($csv)) {
                     $csv = utf8_encode($csv);
                 }
-                $raw = str_getcsv($csv);
+                $raw = $this->_getcsv($csv);
                 $error = '';                        // clean out any errors from the previous line
                 // data checks...
                 if (1 == ++$line) {
@@ -867,6 +869,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                     $import_success_count++;
                 } else {
                     $import_fail_count++;
+                    array_splice($raw, 1, 1);                                  // remove the spliced in password
                     $this->_import_failures[$line] = array('error' => $error, 'user' => $raw, 'orig' => $csv);
                 }
             }
@@ -940,7 +943,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @param array  $user   data of user
      * @param string &$error reference catched error message
-     * @return bool whether succesful
+     * @return bool whether successful
      */
     protected function _addImportUser($user, & $error){
         if (!$this->_auth->triggerUserMod('create', $user)) {
@@ -973,4 +976,37 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         die;
     }
 
+    /**
+     * wrapper for is_uploaded_file to facilitate overriding by test suite
+     */
+    protected function _isUploadedFile($file) {
+        return is_uploaded_file($file);
+    }
+
+    /**
+     * wrapper for str_getcsv() to simplify maintaining compatibility with php 5.2
+     *
+     * @deprecated    remove when dokuwiki php requirement increases to 5.3+
+     *                also associated unit test & mock access method
+     */
+    protected function _getcsv($csv) {
+        return function_exists('str_getcsv') ? str_getcsv($csv) : $this->str_getcsv($csv);
+    }
+
+    /**
+     * replacement str_getcsv() function for php < 5.3
+     * loosely based on www.php.net/str_getcsv#88311
+     *
+     * @deprecated    remove when dokuwiki php requirement increases to 5.3+
+     */
+    protected function str_getcsv($str) {
+        $fp = fopen("php://temp/maxmemory:1048576", 'r+');    // 1MiB
+        fputs($fp, $str);
+        rewind($fp);
+
+        $data = fgetcsv($fp);
+
+        fclose($fp);
+        return $data;
+    }
 }

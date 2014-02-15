@@ -70,6 +70,7 @@ function css_out(){
         $files[$mediatype] = array();
         // load core styles
         $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
             $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
@@ -312,6 +313,11 @@ function css_styleini($tpl) {
     );
 }
 
+/**
+ * Amend paths used in replacement relative urls, refer FS#2879
+ *
+ * @author Chris Smith <chris@jalakai.co.uk>
+ */
 function css_fixreplacementurls($replacements, $location) {
     foreach($replacements as $key => $value) {
         $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
@@ -400,16 +406,29 @@ function css_loadfile($file,$location=''){
     return $css_file->load($location);
 }
 
+/**
+ *  Helper class to abstract loading of css/less files
+ *
+ *  @author Chris Smith <chris@jalakai.co.uk>
+ */
 class DokuCssFile {
 
-    protected $filepath;
-    protected $location;
+    protected $filepath;             // file system path to the CSS/Less file
+    protected $location;             // base url location of the CSS/Less file
     private   $relative_path = null;
 
     public function __construct($file) {
         $this->filepath = $file;
     }
 
+    /**
+     * Load the contents of the css/less file and adjust any relative paths/urls (relative to this file) to be
+     * relative to the dokuwiki root: the web root (DOKU_BASE) for most files; the file system root (DOKU_INC)
+     * for less files.
+     *
+     * @param   string   $location   base url for this file
+     * @return  string               the CSS/Less contents of the file
+     */
     public function load($location='') {
         if (!@file_exists($this->filepath)) return '';
 
@@ -424,31 +443,49 @@ class DokuCssFile {
         return $css;
     }
 
+    /**
+     * Get the relative file system path of this file, relative to dokuwiki's root folder, DOKU_INC
+     *
+     * @return string   relative file system path
+     */
     private function getRelativePath(){
 
         if (is_null($this->relative_path)) {
             $basedir = array(DOKU_INC);
+
+            // during testing, files may be found relative to a second base dir, TMP_DIR
             if (defined('DOKU_UNITTEST')) {
                 $basedir[] = realpath(TMP_DIR);
             }
-            $regex = '#^('.join('|',$basedir).')#';
 
+            $basedir = array_map('preg_quote_cb', $basedir);
+            $regex = '/^('.join('|',$basedir).')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
 
         return $this->relative_path;
     }
 
+    /**
+     * preg_replace callback to adjust relative urls from relative to this file to relative
+     * to the appropriate dokuwiki root location as described in the code
+     *
+     * @param  array    see http://php.net/preg_replace_callback
+     * @return string   see http://php.net/preg_replace_callback
+     */
     public function replacements($match) {
 
+        // not a relative url? - no adjustment required
         if (preg_match('#^(/|data:|https?://)#',$match[3])) {
             return $match[0];
         }
+        // a less file import? - requires a file system location
         else if (substr($match[3],-5) == '.less') {
             if ($match[3]{0} != '/') {
                 $match[3] = $this->getRelativePath() . '/' . $match[3];
             }
         }
+        // everything else requires a url adjustment
         else {
             $match[3] = $this->location . $match[3];
         }

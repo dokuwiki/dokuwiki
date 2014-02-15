@@ -176,7 +176,7 @@ class Doku_Form {
      * Gets the position of the first of a type of element.
      *
      * @param   string  $type   Element type to look for.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByType($type) {
@@ -193,7 +193,7 @@ class Doku_Form {
      * Gets the position of the element with an ID attribute.
      *
      * @param   string  $id     ID of the element to find.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementById($id) {
@@ -211,7 +211,7 @@ class Doku_Form {
      *
      * @param   string  $name   Attribute name.
      * @param   string  $value  Attribute value.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByAttribute($name, $value) {
@@ -680,7 +680,7 @@ function form_wikitext($attrs) {
     // mandatory attributes
     unset($attrs['name']);
     unset($attrs['id']);
-    return '<textarea name="wikitext" id="wiki__text" '
+    return '<textarea name="wikitext" id="wiki__text" dir="auto" '
                  .buildAttributes($attrs,true).'>'.DOKU_LF
                  .formText($attrs['_text'])
                  .'</textarea>';

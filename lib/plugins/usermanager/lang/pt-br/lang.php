@@ -20,6 +20,7 @@
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Leone Lisboa Magevski <leone1983@gmail.com>
  * @author Dário Estevão <darioems@gmail.com>
+ * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
@@ -43,6 +44,7 @@ $lang['search_prompt']         = 'Executar a pesquisa';
 $lang['clear']                 = 'Limpar o filtro de pesquisa';
 $lang['filter']                = 'Filtro';
 $lang['export_all']            = 'Exportar Todos Usuários (CSV)';
+$lang['export_filtered']       = 'Exportar lista de Usuários Filtrados (CSV)';
 $lang['import']                = 'Importar Novos Usuários';
 $lang['line']                  = 'Linha Nº.';
 $lang['error']                 = 'Mensagem de Erro';
@@ -66,6 +68,8 @@ $lang['add_ok']                = 'O usuário foi adicionado com sucesso';
 $lang['add_fail']              = 'O usuário não foi adicionado';
 $lang['notify_ok']             = 'O e-mail de notificação foi enviado';
 $lang['notify_fail']           = 'Não foi possível enviar o e-mail de notificação';
+$lang['import_userlistcsv']    = 'Arquivo de lista de usuários (CSV):';
+$lang['import_header']         = 'Importações Mais Recentes - Falhas';
 $lang['import_success_count']  = 'Importação de Usuário: %d usuário (s) encontrado (s), %d importado (s) com sucesso.';
 $lang['import_failure_count']  = 'Importação de Usuário: %d falhou. As falhas estão listadas abaixo.';
 $lang['import_error_fields']   = 'Campos insuficientes, encontrado (s) %d, necessário 4.';
@@ -75,3 +79,5 @@ $lang['import_error_badmail']  = 'Endereço de email errado';
 $lang['import_error_upload']   = 'Falha na Importação: O arquivo csv não pode ser carregado ou está vazio.';
 $lang['import_error_readfail'] = 'Falha na Importação: Habilitar para ler o arquivo a ser carregado.';
 $lang['import_error_create']   = 'Habilitar para criar o usuário.';
+$lang['import_notify_fail']    = 'Mensagem de notificação não pode ser enviada para o usuário importado, %s com email %s.';
+$lang['import_downloadfailures'] = 'Falhas no Download como CSV para correção';

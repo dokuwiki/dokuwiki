@@ -59,9 +59,15 @@ class Doku_Renderer extends DokuWiki_Plugin {
         return false;
     }
 
-
-    //handle plugin rendering
-    function plugin($name,$data){
+    /**
+     * handle plugin rendering
+     *
+     * @param string $name Plugin name
+     * @param mixed  $data custom data set by handler
+     * @param string $state matched state if any
+     * @param string $match raw matched syntax
+     */
+    function plugin($name,$data,$state='',$match=''){
         $plugin = plugin_load('syntax',$name);
         if($plugin != null){
             $plugin->render($this->getFormat(),$this,$data);

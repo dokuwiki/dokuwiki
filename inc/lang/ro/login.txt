@@ -1,4 +1,4 @@
-====== Login ======
+====== Autentificare ======
 
-Nu sînteți logat! Introduceți datele de autentificare pentru logare. Trebuie să permiteți cookie-uri pentru logare.
-
+Nu ești autentificat! Introdu datele de autentificare. Pentru ca
+autentificarea să funcționeze trebuie să fie permise cookie-urile în browser.

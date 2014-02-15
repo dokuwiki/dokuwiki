@@ -626,5 +626,24 @@ def');
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
+
+    function testTable_FS1833() {
+        $syntax = " \n| Row 0 Col 1    |\n";
+        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->parse($syntax);
+        $calls = array (
+            array('document_start',array()),
+            array('table_open',array(1, 1, 2)),
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,'left',1)),
+            array('cdata',array(' Row 0 Col 1    ')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+            array('table_close',array(strlen($syntax))),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
+    }
+
 }
 
