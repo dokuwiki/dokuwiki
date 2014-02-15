@@ -92,3 +92,5 @@ div.notify {
     left: auto !important;
     right: -99999em !important;
 }
+
+@import "geshi.less";

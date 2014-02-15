@@ -70,9 +70,6 @@ function css_out(){
         $files[$mediatype] = array();
         // load core styles
         $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
-        if($mediatype == 'screen') {
-            $files[$mediatype][DOKU_INC.'lib/styles/geshi.less'] = DOKU_BASE.'lib/styles/';
-        }
 
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
