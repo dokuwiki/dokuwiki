@@ -1225,11 +1225,11 @@ function html_diff($text='',$intro=true,$type=null){
         }
 
         $l_index = array_search($l_rev, $l_revs);
-        $l_prev = $l_revs[$l_index - 1];
-        $l_next = $l_revs[$l_index + 1];
+        $l_prev = $l_revs[$l_index + 1];
+        $l_next = $l_revs[$l_index - 1];
         $r_index = array_search($r_rev, $r_revs);
-        $r_prev = $r_revs[$r_index - 1];
-        $r_next = $r_revs[$r_index + 1];
+        $r_prev = $r_revs[$r_index + 1];
+        $r_next = $r_revs[$r_index - 1];
 
         if($l_prev) {
             html_diff_navigationlink($type, '←← ', $l_prev, $r_prev);
