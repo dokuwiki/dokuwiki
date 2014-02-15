@@ -354,12 +354,12 @@ function ft_snippet($id,$highlight){
             }
 
             // set $offset for next match attempt
-            //   substract strlen to avoid splitting a potential search success,
-            //   this is an approximation as the search pattern may match strings
-            //   of varying length and it will fail if the context snippet
-            //   boundary breaks a matching string longer than the current match
-            $utf8_offset = $utf8_idx + $post;
-            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
+            // continue matching after the current match
+            // if the current match is not the longest possible match starting at the current offset
+            // this prevents further matching of this snippet but for possible matches of length
+            // smaller than match length + context (at least 50 characters) this match is part of the context
+            $utf8_offset = $utf8_idx + $utf8_len;
+            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$utf8_len));
             $offset = utf8_correctIdx($text,$offset);
         }
 
