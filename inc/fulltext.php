@@ -333,7 +333,7 @@ function ft_snippet($id,$highlight){
                 $pre = min($pre,100-$post);
             } else if ($post>50) {
                 $post = min($post, 100-$pre);
-            } else {
+            } else if ($offset == 0) {
                 // both are less than 50, means the context is the whole string
                 // make it so and break out of this loop - there is no need for the
                 // complex snippet calculations
