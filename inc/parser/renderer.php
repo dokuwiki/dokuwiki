@@ -321,7 +321,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
             //default
             $url = $url . rawurlencode($reference);
         }
-        //url without slashes is handled as a pageid
+        //handle as wiki links
         if($url{0} === ':') {
             list($id, $urlparam) = explode('?', $url, 2);
             $url = wl(cleanID($id), $urlparam);
