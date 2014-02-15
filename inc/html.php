@@ -1280,7 +1280,6 @@ function html_diff($text='',$intro=true,$type=null){
             html_diff_navigationlink($type, ' →→', $l_next, $r_next);
         }
 
-        ptln('</p>'); //todo paragraphs are a mess..
         ptln('</div>');
     }
     ?>
