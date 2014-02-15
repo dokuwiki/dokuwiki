@@ -643,9 +643,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($ok = $this->_auth->triggerUserMod('modify', array($olduser, $changes))) {
             msg($this->lang['update_ok'],1);
 
-            if ($INPUT->has('usernotify') && $newpass) {
+            if ($INPUT->has('usernotify') && !empty($changes['pass'])) {
                 $notify = empty($changes['user']) ? $olduser : $newuser;
-                $this->_notifyUser($notify,$newpass);
+                $this->_notifyUser($notify,$changes['pass']);
             }
 
             // invalidate all sessions
