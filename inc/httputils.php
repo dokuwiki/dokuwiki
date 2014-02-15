@@ -64,12 +64,13 @@ function http_conditionalRequest($timestamp){
  * Let the webserver send the given file via x-sendfile method
  *
  * @author Chris Smith <chris@jalakai.co.uk>
+ * @param string $file absolute path of file to send
  * @returns  void or exits with previously header() commands executed
  */
 function http_sendfile($file) {
     global $conf;
 
-    //use x-sendfile header to pass the delivery to compatible webservers
+    //use x-sendfile header to pass the delivery to compatible web servers
     if($conf['xsendfile'] == 1){
         header("X-LIGHTTPD-send-file: $file");
         ob_end_clean();
@@ -83,8 +84,6 @@ function http_sendfile($file) {
         ob_end_clean();
         exit;
     }
-
-    return false;
 }
 
 /**
@@ -223,7 +222,8 @@ function http_cached($cache, $cache_ok) {
             header('Content-Encoding: gzip');
             readfile($cache.".gz");
         } else {
-            if (!http_sendfile($cache)) readfile($cache);
+            http_sendfile($cache);
+            readfile($cache);
         }
         exit;
     }
