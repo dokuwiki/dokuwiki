@@ -28,25 +28,23 @@ class action_plugin_extension extends DokuWiki_Action_Plugin {
      * @param Doku_Event $event
      * @param            $param
      */
-    public function info(Doku_Event &$event, $param){
+    public function info(Doku_Event &$event, $param) {
         global $USERINFO;
         global $INPUT;
-
 
         if($event->data != 'plugin_extension') return;
         $event->preventDefault();
         $event->stopPropagation();
 
-        if(empty($_SERVER['REMOTE_USER']) || !auth_isadmin($_SERVER['REMOTE_USER'], $USERINFO['grps'])){
+        if(empty($_SERVER['REMOTE_USER']) || !auth_isadmin($_SERVER['REMOTE_USER'], $USERINFO['grps'])) {
             http_status(403);
             echo 'Forbidden';
             exit;
         }
 
-        header('Content-Type: text/html; charset=utf-8');
-
         $ext = $INPUT->str('ext');
         if(!$ext) {
+            http_status(400);
             echo 'no extension given';
             return;
         }
@@ -55,11 +53,32 @@ class action_plugin_extension extends DokuWiki_Action_Plugin {
         $extension = plugin_load('helper', 'extension_extension');
         $extension->setExtension($ext);
 
-        /** @var helper_plugin_extension_list $list */
-        $list = plugin_load('helper', 'extension_list');
+        $act = $INPUT->str('act');
+        switch($act) {
+            case 'enable':
+            case 'disable':
+                $json = new JSON();
+                $extension->$act(); //enables/disables
 
+                $reverse = ($act == 'disable') ? 'enable' : 'disable';
 
-        echo $list->make_info($extension);
+                $return = array(
+                    'state'   => $act.'d', // isn't English wonderful? :-)
+                    'reverse' => $reverse,
+                    'label'   => $extension->getLang('btn_'.$reverse)
+                );
+
+                header('Content-Type: application/json');
+                echo $json->encode($return);
+                break;
+
+            case 'info':
+            default:
+                /** @var helper_plugin_extension_list $list */
+                $list = plugin_load('helper', 'extension_list');
+                header('Content-Type: text/html; charset=utf-8');
+                echo $list->make_info($extension);
+        }
     }
 
 }
