@@ -352,7 +352,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @param  array|string $filter array of field/pattern pairs
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($first = 0, $limit = 10, $filter = array()) {
+    public function retrieveUsers($first = 0, $limit = 0, $filter = array()) {
         $out = array();
 
         if($this->_openDB()) {

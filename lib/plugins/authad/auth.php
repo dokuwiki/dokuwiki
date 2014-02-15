@@ -332,7 +332,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @param   array $filter    array of field/pattern pairs, null for no filter
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
@@ -357,7 +357,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             }
             if($this->_filter($user, $info)) {
                 $result[$user] = $info;
-                if(($limit >= 0) && (++$count >= $limit)) break;
+                if(($limit > 0) && (++$count >= $limit)) break;
             }
         }
         return $result;

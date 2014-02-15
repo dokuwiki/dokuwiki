@@ -281,7 +281,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @param   array $filter  array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
      */
-    function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
+    function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         if(!$this->_openLDAP()) return false;
 
         if(is_null($this->users)) {
@@ -316,7 +316,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             }
             if($this->_filter($user, $info)) {
                 $result[$user] = $info;
-                if(($limit >= 0) && (++$count >= $limit)) break;
+                if(($limit > 0) && (++$count >= $limit)) break;
             }
         }
         return $result;
