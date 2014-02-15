@@ -1497,7 +1497,15 @@ function userinfo($username = null) {
                             $xhtml_renderer->interwiki = getInterwiki();
                         }
                         $shortcut = 'user';
-                        $data['link']['url'] = $xhtml_renderer->_resolveInterWiki($shortcut, $username);
+                        $data['link']['url'] = $xhtml_renderer->_resolveInterWiki($shortcut, $username, $exists);
+                        if($exists !== null) {
+                            if($exists) {
+                                $data['link']['class'] .= ' wikilink1';
+                            } else {
+                                $data['link']['class'] .= ' wikilink2';
+                                $data['link']['rel'] = 'nofollow';
+                            }
+                        }
                     }
                 } else {
                     $data['link'] = false;

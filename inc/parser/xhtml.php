@@ -697,7 +697,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        $url = $this->_resolveInterWiki($wikiName, $wikiUri);
+        $exists = null;
+        $url = $this->_resolveInterWiki($wikiName, $wikiUri, $exists);
 
         if(!$isImage) {
             $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $wikiName);
@@ -709,6 +710,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //do we stay at the same server? Use local target
         if(strpos($url, DOKU_URL) === 0 OR strpos($url, DOKU_BASE) === 0) {
             $link['target'] = $conf['target']['wiki'];
+        }
+        if($exists !== null && !$isImage) {
+            if($exists) {
+                $link['class'] .= ' wikilink1';
+            } else {
+                $link['class'] .= ' wikilink2';
+                $link['rel'] = 'nofollow';
+            }
         }
 
         $link['url'] = $url;

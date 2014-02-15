@@ -12,8 +12,8 @@ class Test_resolveInterwiki extends PHPUnit_Framework_TestCase {
         $Renderer->interwiki = getInterwiki();
         $Renderer->interwiki['scheme'] = '{SCHEME}://example.com';
         $Renderer->interwiki['withslash'] = '/test';
-        $Renderer->interwiki['onlytext'] = 'onlytext{NAME}'; //with {URL} double urlencoded
-        $Renderer->interwiki['withquery'] = 'anyns:{NAME}?do=edit';
+        $Renderer->interwiki['onlytext'] = ':onlytext{NAME}'; //with {URL} double urlencoded
+        $Renderer->interwiki['withquery'] = ':anyns:{NAME}?do=edit';
 
         $tests = array(
             // shortcut, reference and expected
@@ -24,10 +24,11 @@ class Test_resolveInterwiki extends PHPUnit_Framework_TestCase {
             array('scheme', 'ftp://foo @+%/#txt', 'ftp://example.com#txt'),
             //relative url
             array('withslash', 'foo @+%/#txt', '/testfoo%20%40%2B%25%2F#txt'),
+            array('skype',  'foo @+%/#txt', 'skype:foo @+%/#txt'),
             //dokuwiki id's
-            array('onlytext', 'foo @+%#txt', DOKU_BASE.'doku.php?id=onlytextfoo%20%40%2B%25#txt'),
-            array('user', 'foo @+%#txt', DOKU_BASE.'doku.php?id=wiki:users:foo%20%40%2B%25#txt'),
-            array('withquery', 'foo @+%#txt', DOKU_BASE.'doku.php?id=anyns:foo%20%40%2B%25&amp;do=edit#txt')
+            array('onlytext', 'foo @+%#txt', DOKU_BASE.'doku.php?id=onlytextfoo#txt'),
+            array('user', 'foo @+%#txt', DOKU_BASE.'doku.php?id=wiki:users:foo#txt'),
+            array('withquery', 'foo @+%#txt', DOKU_BASE.'doku.php?id=anyns:foo&amp;do=edit#txt')
         );
 
         foreach($tests as $test) {

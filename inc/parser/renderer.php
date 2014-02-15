@@ -292,7 +292,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Resolve an interwikilink
      */
-    function _resolveInterWiki(&$shortcut, $reference) {
+    function _resolveInterWiki(&$shortcut, $reference, &$exists=null) {
         //get interwiki URL
         if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
@@ -322,9 +322,10 @@ class Doku_Renderer extends DokuWiki_Plugin {
             $url = $url . rawurlencode($reference);
         }
         //url without slashes is handled as a pageid
-        if(strpos($url, '/') === false) {
-            list($url, $urlparam) = explode('?', $url, 2);
-            $url = wl($url, $urlparam);
+        if($url{0} === ':') {
+            list($id, $urlparam) = explode('?', $url, 2);
+            $url = wl(cleanID($id), $urlparam);
+            $exists = page_exists($id);
         }
         if($hash) $url .= '#' . rawurlencode($hash);
 
