@@ -76,4 +76,7 @@ $lang['import_error_create']  = 'Unable to create the user';
 $lang['import_notify_fail']   = 'Notification message could not be sent for imported user, %s with email %s.';
 $lang['import_downloadfailures'] = 'Download Failures as CSV for correction';
 
+// added 2014-02
+$lang['user_passconfirm'] = 'Confirm Password';
+$lang['pass_confirm_fail'] = 'Passwords do not match';
 

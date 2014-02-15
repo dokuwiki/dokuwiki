@@ -299,6 +299,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $this->_htmlInputField($cmd."_userid",    "userid",    $this->lang["user_id"],    $user,  $this->_auth->canDo("modLogin"), $indent+6);
         $this->_htmlInputField($cmd."_userpass",  "userpass",  $this->lang["user_pass"],  "",     $this->_auth->canDo("modPass"),  $indent+6);
+        $this->_htmlInputField($cmd."_userpass2", "userpass2", $this->lang["user_passconfirm"], "", $this->_auth->canDo("modPass"), $indent+6);
         $this->_htmlInputField($cmd."_username",  "username",  $this->lang["user_name"],  $name,  $this->_auth->canDo("modName"),  $indent+6);
         $this->_htmlInputField($cmd."_usermail",  "usermail",  $this->lang["user_mail"],  $mail,  $this->_auth->canDo("modMail"),  $indent+6);
         $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"),$indent+6);
@@ -358,7 +359,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $class = $cando ? '' : ' class="disabled"';
         echo str_pad('',$indent);
 
-        if($name == 'userpass'){
+        if($name == 'userpass' || $name == 'userpass2'){
             $fieldtype = 'password';
             $autocomp  = 'autocomplete="off"';
         }elseif($name == 'usermail'){
@@ -475,7 +476,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!checkSecurityToken()) return false;
         if (!$this->_auth->canDo('addUser')) return false;
 
-        list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser();
+        list($user,$pass,$name,$mail,$grps,$passconfirm) = $this->_retrieveUser();
         if (empty($user)) return false;
 
         if ($this->_auth->canDo('modPass')){
@@ -484,6 +485,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                     $pass = auth_pwgen($user);
                 } else {
                     msg($this->lang['add_fail'], -1);
+                    return false;
+                }
+            } else {
+                if (!$this->_verifyPassword($pass,$passconfirm)) {
                     return false;
                 }
             }
@@ -606,7 +611,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $oldinfo = $this->_auth->getUserData($olduser);
 
         // get new user data subject to change
-        list($newuser,$newpass,$newname,$newmail,$newgrps) = $this->_retrieveUser();
+        list($newuser,$newpass,$newname,$newmail,$newgrps,$passconfirm) = $this->_retrieveUser();
         if (empty($newuser)) return false;
 
         $changes = array();
@@ -625,10 +630,19 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 $changes['user'] = $newuser;
             }
         }
-
-        // generate password if left empty and notification is on
-        if($INPUT->has('usernotify') && empty($newpass)){
-            $newpass = auth_pwgen($olduser);
+        if ($this->_auth->canDo('modPass')) {
+            if ($newpass || $confirm) {
+                if ($this->_verifyPassword($newpass,$passconfirm)) {
+                    $changes['pass'] = $newpass;
+                } else {
+                    return false;
+                }
+            } else {
+                // no new password supplied, check if we need to generate one (or it stays unchanged)
+                if ($INPUT->has('usernotify')) {
+                    $changes['pass'] = auth_pwgen($olduser);
+                }
+            }
         }
 
         if (!empty($newname) && $this->_auth->canDo('modName') && $newname != $oldinfo['name']) {
@@ -687,6 +701,31 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * Verify password meets minimum requirements
+     * :TODO: extend to support password strength
+     *
+     * @param string  $password   candidate string for new password
+     * @param string  $confirm    repeated password for confirmation
+     * @return bool   true if meets requirements, false otherwise
+     */
+    protected function _verifyPassword($password, $confirm) {
+
+        if (empty($password)) {
+            return false;
+        }
+
+        if ($password !== $confirm) {
+            msg($this->lang['pass_confirm_fail'], -1);
+            return false;
+        }
+
+        // :TODO: test password for required strength
+
+        // if we make it this far the password is good
+        return true;
+    }
+
+    /**
      * Retrieve & clean user data from the form
      *
      * @param bool $clean whether the cleanUser method of the authentication backend is applied
@@ -702,6 +741,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $user[2] = $INPUT->str('username');
         $user[3] = $INPUT->str('usermail');
         $user[4] = explode(',',$INPUT->str('usergroups'));
+        $user[5] = $INPUT->str('userpass2');                // repeated password for confirmation
 
         $user[4] = array_map('trim',$user[4]);
         if($clean) $user[4] = array_map(array($auth,'cleanGroup'),$user[4]);
