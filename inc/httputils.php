@@ -80,6 +80,8 @@ function http_sendfile($file) {
         ob_end_clean();
         exit;
     }elseif($conf['xsendfile'] == 3){
+        // FS#2388 nginx just needs the relative path.
+        $file = DOKU_REL.substr($file, strlen(fullpath(DOKU_INC)) + 1);
         header("X-Accel-Redirect: $file");
         ob_end_clean();
         exit;
