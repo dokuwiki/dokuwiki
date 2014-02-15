@@ -631,14 +631,15 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $newpass = auth_pwgen($olduser);
         }
 
-        if (!empty($newpass) && $this->_auth->canDo('modPass'))
-          $changes['pass'] = $newpass;
-        if (!empty($newname) && $this->_auth->canDo('modName') && $newname != $oldinfo['name'])
-          $changes['name'] = $newname;
-        if (!empty($newmail) && $this->_auth->canDo('modMail') && $newmail != $oldinfo['mail'])
-          $changes['mail'] = $newmail;
-        if (!empty($newgrps) && $this->_auth->canDo('modGroups') && $newgrps != $oldinfo['grps'])
-          $changes['grps'] = $newgrps;
+        if (!empty($newname) && $this->_auth->canDo('modName') && $newname != $oldinfo['name']) {
+            $changes['name'] = $newname;
+        }
+        if (!empty($newmail) && $this->_auth->canDo('modMail') && $newmail != $oldinfo['mail']) {
+            $changes['mail'] = $newmail;
+        }
+        if (!empty($newgrps) && $this->_auth->canDo('modGroups') && $newgrps != $oldinfo['grps']) {
+            $changes['grps'] = $newgrps;
+        }
 
         if ($ok = $this->_auth->triggerUserMod('modify', array($olduser, $changes))) {
             msg($this->lang['update_ok'],1);
