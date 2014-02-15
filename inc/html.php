@@ -1165,18 +1165,6 @@ function html_diff($text='',$intro=true,$type=null){
         }
         $r_text = rawWiki($ID,$r_rev);
 
-        //look for previous/next revision
-        if($r_rev) {
-            $next_rev = $pagelog->getRelativeRevision($r_rev, 1);
-        } else {
-            $next_rev = false;
-        }
-        if($l_rev) {
-            $prev_rev = $pagelog->getRelativeRevision($l_rev, -1);
-        } else {
-            $prev_rev = false;
-        }
-
         list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev, null, false, $type == 'inline');
     }
 
@@ -1211,13 +1199,10 @@ function html_diff($text='',$intro=true,$type=null){
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
 
-        $diffurl = wl($ID, array(
-                             'do'       => 'diff',
-                             'rev2[0]'  => $l_rev,
-                             'rev2[1]'  => $r_rev ? $r_rev : $INFO['lastmod'], // link to exactly this view FS#2835
-                             'difftype' => $type,
-                         ));
-        ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a><br />');
+        ptln('<p>');
+        // link to exactly this view FS#2835
+        html_diff_navigationlink($type, $lang['difflink'], $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
+        ptln('</p><br />');
 
         //revisions navigation
         $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
@@ -1239,15 +1224,16 @@ function html_diff($text='',$intro=true,$type=null){
             );
         }
 
+        $l_index = array_search($l_rev, $l_revs);
+        $l_prev = $l_revs[$l_index - 1];
+        $l_next = $l_revs[$l_index + 1];
+        $r_index = array_search($r_rev, $r_revs);
+        $r_prev = $r_revs[$r_index - 1];
+        $r_next = $r_revs[$r_index + 1];
 
-        if($prev_rev){
-            $diffurlprev = wl($ID, array(
-                                        'do'       => 'diff',
-                                        'rev2[0]'  => $prev_rev,
-                                        'rev2[1]'  => $l_rev,
-                                        'difftype' => $type,
-                                   ));
-            ptln('<a class="wikilink1" href="'.$diffurlprev.'">← '.$lang['diffpreviousedit'].'</a>');
+        if($l_prev) {
+            html_diff_navigationlink($type, '←← ', $l_prev, $r_prev);
+            html_diff_navigationlink($type, '← ', $l_prev, $r_rev);
         }
 
         $form = new Doku_Form(array('action'=>wl()));
@@ -1264,6 +1250,13 @@ function html_diff($text='',$intro=true,$type=null){
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
 
+        if($l_next < $r_rev) {
+            html_diff_navigationlink($type, ' →', $l_next, $r_rev);
+        }
+        if($l_rev < $r_prev) {
+            html_diff_navigationlink($type, '← ', $l_rev, $r_prev);
+        }
+
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
         $form->addHidden('rev2[0]',$l_rev);
@@ -1278,27 +1271,16 @@ function html_diff($text='',$intro=true,$type=null){
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
 
-        if($next_rev){
-            if($pagelog->isCurrentRevision($next_rev)) {
-                $diffurlnextparam = array(
-                    'do'       => 'diff',
-                    'rev'      => $r_rev,
-                    'difftype' => $type,
-                );
-                $navnexttitle = $lang['difflastedit'];
+        if($r_next) {
+            if($pagelog->isCurrentRevision($r_next)) {
+                html_diff_navigationlink($type, ' →', $l_rev); //last
             } else {
-                $diffurlnextparam = array(
-                    'do'       => 'diff',
-                    'rev2[0]'  => $r_rev,
-                    'rev2[1]'  => $next_rev,
-                    'difftype' => $type,
-                );
-                $navnexttitle = $lang['diffnextedit'];
+                html_diff_navigationlink($type, ' →', $l_rev, $r_next); //next
             }
-            ptln('<a class="wikilink1" href="'.wl($ID, $diffurlnextparam).'">'.$navnexttitle.' →</a>');
+            html_diff_navigationlink($type, ' →→', $l_next, $r_next);
         }
 
-        ptln('</p>');
+        ptln('</p>'); //todo paragraphs are a mess..
         ptln('</div>');
     }
     ?>
@@ -1329,6 +1311,34 @@ function html_diff($text='',$intro=true,$type=null){
     </table>
     </div>
     <?php
+}
+
+/**
+ * Create html link to a diff defined by two revisions
+ *
+ * @param string $type display type
+ * @param int $lrev oldest revision
+ * @param int $rrev newest revision or null for diff with current revision
+ * @param string $name
+ * @return string html of link to a diff
+ */
+function html_diff_navigationlink($type, $name, $lrev, $rrev = null) {
+    global $ID;
+    if($rrev === null) {
+        $urlparam = array(
+            'do' => 'diff',
+            'rev' => $lrev,
+            'difftype' => $type,
+        );
+    } else {
+        $urlparam = array(
+            'do' => 'diff',
+            'rev2[0]' => $lrev,
+            'rev2[1]' => $rrev,
+            'difftype' => $type,
+        );
+    }
+    ptln('<a class="wikilink1" href="' . wl($ID, $urlparam) . '">' . $name . '</a>');
 }
 
 function html_insert_softbreaks($diffhtml) {
