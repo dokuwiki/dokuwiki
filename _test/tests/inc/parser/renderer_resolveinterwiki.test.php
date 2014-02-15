@@ -20,8 +20,7 @@ class Test_resolveInterwiki extends PHPUnit_Framework_TestCase {
             array('wp', 'foo @+%/#txt', 'http://en.wikipedia.org/wiki/foo @+%/#txt'),
             array('amazon', 'foo @+%/#txt', 'http://www.amazon.com/exec/obidos/ASIN/foo%20%40%2B%25%2F/splitbrain-20/#txt'),
             array('doku', 'foo @+%/#txt', 'http://www.dokuwiki.org/foo%20%40%2B%25%2F#txt'),
-            //ToDo: Check needed, is double slash in path desired
-            array('coral', 'http://example.com:83/path/naar/?query=foo%20%40%2B%25%2F', 'http://example.com.83.nyud.net:8090//path/naar/?query=foo%20%40%2B%25%2F'),
+            array('coral', 'http://example.com:83/path/naar/?query=foo%20%40%2B%25%2F', 'http://example.com.83.nyud.net:8090/path/naar/?query=foo%20%40%2B%25%2F'),
             array('scheme', 'ftp://foo @+%/#txt', 'ftp://example.com#txt'),
             //relative url
             array('withslash', 'foo @+%/#txt', '/testfoo%20%40%2B%25%2F#txt'),
