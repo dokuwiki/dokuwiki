@@ -1819,7 +1819,7 @@ function media_resize_image($file, $ext, $w, $h=0){
     if( $mtime > filemtime($file) ||
             media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
             media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
-        if($conf['fperm']) chmod($local, $conf['fperm']);
+        if($conf['fperm']) @chmod($local, $conf['fperm']);
         return $local;
     }
     //still here? resizing failed
@@ -1880,7 +1880,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-        if($conf['fperm']) chmod($local, $conf['fperm']);
+        if($conf['fperm']) @chmod($local, $conf['fperm']);
         return media_resize_image($local,$ext, $w, $h);
     }
 
