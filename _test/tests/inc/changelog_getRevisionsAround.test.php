@@ -12,19 +12,19 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
      * list of revisions in mailinglist.changes
      */
     private $revsexpected = array(
-        1360110636,
-        1361901536, 1362524799,
-        1362525145, 1362525359,
-        1362525899, 1362525926,
-        1362526039, 1362526119,
-        1362526167, 1362526767,
-        1362526861, 1362527046,
-        1362527164, 1363436892,
-        1368575634, 1368609772,
-        1368612506, 1368612599,
-        1368622152, 1368622195,
-        1368622240, 1371579614,
-        1374261194 //current page
+        1374261194, //current page
+        1371579614, 1368622240,
+        1368622195, 1368622152,
+        1368612599, 1368612506,
+        1368609772, 1368575634,
+        1363436892, 1362527164,
+        1362527046, 1362526861,
+        1362526767, 1362526167,
+        1362526119, 1362526039,
+        1362525926, 1362525899,
+        1362525359, 1362525145,
+        1362524799, 1361901536,
+        1360110636
     );
     private $pageid = 'mailinglist';
 
@@ -63,8 +63,8 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
         $rev2 = 1362527164;
         $max = 10;
         $revsexpected = array(
-            array_slice($this->revsexpected, 5, 11),
-            array_slice($this->revsexpected, 8, 11)
+            array_slice($this->revsexpected, 8, 11),
+            array_slice($this->revsexpected, 5, 11)
         );
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -88,8 +88,8 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
         $rev2 = 1368612599;
         $max = 10;
         $revsexpected = array(
-            array_slice($this->revsexpected, 0, 11),
-            array_slice($this->revsexpected, 13, 11)
+            array_slice($this->revsexpected, 13, 11),
+            array_slice($this->revsexpected, 0, 11)
         );
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
@@ -114,14 +114,19 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
         $rev2 = 1374261194;
         $max = 10;
         $revsexpected = array(
-            array_slice($this->revsexpected, 0, 11),
-            array_slice($this->revsexpected, 13, 11)
+            array_slice($this->revsexpected, 13, 11),
+            array_slice($this->revsexpected, 0, 11)
         );
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
         $this->assertEquals($revsexpected, $revs);
 
+        //todo: number of revisions on the left side is not (yet) completed until max number
+        $revsexpected = array(
+            array_slice($this->revsexpected, 18, 6),
+            array_slice($this->revsexpected, 0, 11)
+        );
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $revs = $pagelog->getRevisionsAround($rev1, $rev2, $max);
         $this->assertEquals($revsexpected, $revs);
@@ -163,8 +168,8 @@ class changelog_getrevisionsaround_test extends DokuWikiTest {
         $rev2 = 1362526767;
         $max = 10;
         $revsexpected = array(
-            array_slice($this->revsexpected, 5, 11),
-            array_slice($this->revsexpected, 8, 11)
+            array_slice($this->revsexpected, 8, 11),
+            array_slice($this->revsexpected, 5, 11)
         );
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
