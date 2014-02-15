@@ -273,17 +273,17 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _simpleTitle($name){
+    function _simpleTitle($name) {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        list($name,$hash) = explode('#',$name,2);
+        list($name, $hash) = explode('#', $name, 2);
         if($hash) return $hash;
 
-        if($conf['useslash']){
-            $name = strtr($name,';/',';:');
-        }else{
-            $name = strtr($name,';',':');
+        if($conf['useslash']) {
+            $name = strtr($name, ';/', ';:');
+        } else {
+            $name = strtr($name, ';', ':');
         }
 
         return noNSorNS($name);
@@ -292,9 +292,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Resolve an interwikilink
      */
-    function _resolveInterWiki(&$shortcut,$reference){
+    function _resolveInterWiki(&$shortcut, $reference) {
         //get interwiki URL
-        if ( isset($this->interwiki[$shortcut]) ) {
+        if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
         } else {
             // Default to Google I'm feeling lucky
@@ -303,30 +303,30 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
 
         //split into hash and url part
-        list($reference,$hash) = explode('#',$reference,2);
+        list($reference, $hash) = explode('#', $reference, 2);
 
         //replace placeholder
-        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
+        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
             //use placeholders
-            $url = str_replace('{URL}',rawurlencode($reference),$url);
-            $url = str_replace('{NAME}',$reference,$url);
+            $url = str_replace('{URL}', rawurlencode($reference), $url);
+            $url = str_replace('{NAME}', $reference, $url);
             $parsed = parse_url($reference);
             if(!$parsed['port']) $parsed['port'] = 80;
-            $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
-            $url = str_replace('{HOST}',$parsed['host'],$url);
-            $url = str_replace('{PORT}',$parsed['port'],$url);
-            $url = str_replace('{PATH}',$parsed['path'],$url);
-            $url = str_replace('{QUERY}',$parsed['query'],$url);
-        }else{
+            $url = str_replace('{SCHEME}', $parsed['scheme'], $url);
+            $url = str_replace('{HOST}', $parsed['host'], $url);
+            $url = str_replace('{PORT}', $parsed['port'], $url);
+            $url = str_replace('{PATH}', $parsed['path'], $url);
+            $url = str_replace('{QUERY}', $parsed['query'], $url);
+        } else {
             //default
-            $url = $url.rawurlencode($reference);
+            $url = $url . rawurlencode($reference);
         }
         //url without slashes is handled as a pageid
-        if(strpos($url,'/') === false) {
+        if(strpos($url, '/') === false) {
             list($url, $urlparam) = explode('?', $url, 2);
             $url = wl($url, $urlparam);
         }
-        if($hash) $url .= '#'.rawurlencode($hash);
+        if($hash) $url .= '#' . rawurlencode($hash);
 
         return $url;
     }

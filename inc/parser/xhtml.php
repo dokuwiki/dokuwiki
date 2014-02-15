@@ -685,7 +685,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-    */
+     */
     function interwikilink($match, $name = null, $wikiName, $wikiUri) {
         global $conf;
 
@@ -697,17 +697,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        $url = $this->_resolveInterWiki($wikiName,$wikiUri);
+        $url = $this->_resolveInterWiki($wikiName, $wikiUri);
 
-        if ( !$isImage ) {
-            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
+        if(!$isImage) {
+            $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $wikiName);
             $link['class'] = "interwiki iw_$class";
         } else {
             $link['class'] = 'media';
         }
 
         //do we stay at the same server? Use local target
-        if( strpos($url,DOKU_URL) === 0  OR strpos($url,DOKU_BASE) === 0){
+        if(strpos($url, DOKU_URL) === 0 OR strpos($url, DOKU_BASE) === 0) {
             $link['target'] = $conf['target']['wiki'];
         }
 

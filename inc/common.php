@@ -1438,21 +1438,21 @@ function userinfo($username = null) {
     $data = array(
         'username' => $username, // the unique user name
         'name' => '',
-        'link' => array(  //setting 'link' to false disables linking
-                          'target' => '',
-                          'pre' => '',
-                          'suf' => '',
-                          'style' => '',
-                          'more' => '',
-                          'url' => '',
-                          'title' => '',
-                          'class' => ''
+        'link' => array( //setting 'link' to false disables linking
+                         'target' => '',
+                         'pre' => '',
+                         'suf' => '',
+                         'style' => '',
+                         'more' => '',
+                         'url' => '',
+                         'title' => '',
+                         'class' => ''
         ),
         'userinfo' => ''
     );
     if($username === null) {
         $data['username'] = $username = $_SERVER['REMOTE_USER'];
-        $data['name'] = '<bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
+        $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($_SERVER['REMOTE_USER']) . '</bdi>)';
     }
 
     $evt = new Doku_Event('COMMON_USER_LINK', $data);
@@ -1480,7 +1480,7 @@ function userinfo($username = null) {
         /** @var Doku_Renderer_xhtml $xhtml_renderer */
         static $xhtml_renderer = null;
 
-        if($data['link'] !== false && empty($data['link']['url'])){
+        if($data['link'] !== false && empty($data['link']['url'])) {
 
             if(in_array($conf['showuseras'], array('email_link', 'username_link'))) {
                 if(!isset($info)) {
@@ -1488,9 +1488,9 @@ function userinfo($username = null) {
                 }
                 if(isset($info) && $info) {
                     if($conf['showuseras'] == 'email_link') {
-                        $data['link']['url'] = 'mailto:'.obfuscate($info['mail']);
+                        $data['link']['url'] = 'mailto:' . obfuscate($info['mail']);
                     } else {
-                        if(is_null($xhtml_renderer)){
+                        if(is_null($xhtml_renderer)) {
                             $xhtml_renderer = p_get_renderer('xhtml');
                         }
                         if(empty($xhtml_renderer->interwiki)) {
@@ -1510,9 +1510,9 @@ function userinfo($username = null) {
 
         if($data['link'] === false) {
             $data['userinfo'] = $data['name'];
-        } else{
+        } else {
             $data['link']['name'] = $data['name'];
-            if(is_null($xhtml_renderer)){
+            if(is_null($xhtml_renderer)) {
                 $xhtml_renderer = p_get_renderer('xhtml');
             }
             $data['userinfo'] = $xhtml_renderer->_formatLink($data['link']);
