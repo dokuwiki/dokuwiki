@@ -699,12 +699,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         //get interwiki URL
         $url = $this->_resolveInterWiki($wikiName,$wikiUri);
 
-        if(strpos($url,'/') === false) {
-            list($url, $urlparam) = explode('?', $url, 2);
-            $url = wl($url, $urlparam);
-            $link['target'] = $conf['target']['wiki'];
-        }
-
         if ( !$isImage ) {
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
             $link['class'] = "interwiki iw_$class";
@@ -713,7 +707,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //do we stay at the same server? Use local target
-        if( strpos($url,DOKU_URL) === 0 ){
+        if( strpos($url,DOKU_URL) === 0  OR strpos($url,DOKU_BASE) === 0){
             $link['target'] = $conf['target']['wiki'];
         }
 

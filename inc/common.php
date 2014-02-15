@@ -1497,9 +1497,7 @@ function userinfo($username = null) {
                             $xhtml_renderer->interwiki = getInterwiki();
                         }
                         $shortcut = 'user';
-                        $url = $xhtml_renderer->_resolveInterWiki($shortcut, $username);
-                        list($url, $urlparam) = explode('?', $url, 2);
-                        $data['link']['url'] = wl($url, $urlparam);
+                        $data['link']['url'] = $xhtml_renderer->_resolveInterWiki($shortcut, $username);
                     }
                 } else {
                     $data['link'] = false;
