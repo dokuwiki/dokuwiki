@@ -358,7 +358,12 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
         if($this->_openDB()) {
             $this->_lockTables("READ");
             $sql = $this->_createSQLFilter($this->getConf('getUsers'), $filter);
-            $sql .= " ".$this->getConf('SortOrder')." LIMIT $first, $limit";
+            $sql .= " ".$this->getConf('SortOrder');
+            if($limit) {
+                $sql .= " LIMIT $first, $limit";
+            } elseif($first) {
+                $sql .= " LIMIT $first";
+            }
             $result = $this->_queryDB($sql);
 
             if(!empty($result)) {

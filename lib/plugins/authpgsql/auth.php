@@ -154,7 +154,9 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
         if($this->_openDB()) {
             $this->_lockTables("READ");
             $sql = $this->_createSQLFilter($this->conf['getUsers'], $filter);
-            $sql .= " ".$this->conf['SortOrder']." LIMIT $limit OFFSET $first";
+            $sql .= " ".$this->conf['SortOrder'];
+            if($limit) $sql .= " LIMIT $limit";
+            if($first) $sql .= " OFFSET $first";
             $result = $this->_queryDB($sql);
 
             foreach($result as $user)
