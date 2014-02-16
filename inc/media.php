@@ -2164,7 +2164,7 @@ function media_alternativefiles($src, $exts){
 /**
  * Check if video/audio is supported to be embedded.
  *
- * @param string $src       - mimetype of media file
+ * @param string $mime      - mimetype of media file
  * @param string $type      - type of media files to check ('video', 'audio', or none)
  * @return boolean
  *

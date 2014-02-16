@@ -1096,47 +1096,29 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $ret .= ' />';
 
-        }elseif(media_supportedav($mime, 'video')){
+        }elseif(media_supportedav($mime, 'video') || media_supportedav($mime, 'audio')){
             // first get the $title
-            if (!is_null($title)) {
-                $title  = $this->_xmlEntities($title);
-            }
-            if (!$title) {
-                // just show the sourcename
-                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
-            }
+            $title = !is_null($title) ? $this->_xmlEntities($title) : false;
             if (!$render) {
-                // if the video is not supposed to be rendered
-                // return the title of the video
-                return $title;
+                // if the file is not supposed to be rendered
+                // return the title of the file (just the sourcename if there is no title)
+                return $title ? $title : $this->_xmlEntities(utf8_basename(noNS($src)));
             }
 
             $att = array();
             $att['class'] = "media$align";
-
-            //add video(s)
-            $ret .= $this->_video($src, $width, $height, $att);
-
-        }elseif(media_supportedav($mime, 'audio')){
-            // first get the $title
-            if (!is_null($title)) {
-                $title  = $this->_xmlEntities($title);
-            }
-            if (!$title) {
-                // just show the sourcename
-                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
-            }
-            if (!$render) {
-                // if the video is not supposed to be rendered
-                // return the title of the video
-                return $title;
+            if ($title) {
+                $att['title'] = $title;
             }
 
-            $att = array();
-            $att['class'] = "media$align";
-
-            //add audio
-            $ret .= $this->_audio($src, $att);
+            if (media_supportedav($mime, 'video')) {
+                //add video
+                $ret .= $this->_video($src, $width, $height, $att);
+            }
+            if (media_supportedav($mime, 'audio')) {
+                //add audio
+                $ret .= $this->_audio($src, $att);
+            }
 
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
@@ -1282,7 +1264,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string
      */
     function _video($src,$width,$height,$atts=null){
-
         // prepare width and height
         if(is_null($atts)) $atts = array();
         $atts['width']  = (int) $width;
@@ -1309,7 +1290,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // output source for each alternative video format
         foreach($alternatives as $mime => $file) {
             $url = ml($file,array('cache'=>$cache),true,'&');
-            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
@@ -1345,7 +1326,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // output source for each alternative audio format
         foreach($alternatives as $mime => $file) {
             $url = ml($file,array('cache'=>$cache),true,'&');
-            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
