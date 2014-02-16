@@ -158,7 +158,7 @@ class Doku_Event_Handler {
         $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param, (int)$seq);
     }
 
-    function process_event(&$event,$advise='') {
+    function process_event($event,$advise='') {
 
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
 
