@@ -32,6 +32,10 @@ class Doku_Event {
 
     }
 
+    function __toString() {
+        return $this->name;
+    }
+
     /**
      * advise functions
      *
