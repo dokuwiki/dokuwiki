@@ -277,6 +277,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     protected function _htmlUserForm($cmd,$user='',$userdata=array(),$indent=0) {
         global $conf;
         global $ID;
+        global $lang;
 
         $name = $mail = $groups = '';
         $notes = array();
@@ -299,7 +300,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $this->_htmlInputField($cmd."_userid",    "userid",    $this->lang["user_id"],    $user,  $this->_auth->canDo("modLogin"), $indent+6);
         $this->_htmlInputField($cmd."_userpass",  "userpass",  $this->lang["user_pass"],  "",     $this->_auth->canDo("modPass"),  $indent+6);
-        $this->_htmlInputField($cmd."_userpass2", "userpass2", $this->lang["user_passconfirm"], "", $this->_auth->canDo("modPass"), $indent+6);
+        $this->_htmlInputField($cmd."_userpass2", "userpass2", $lang["passchk"],          "",     $this->_auth->canDo("modPass"),  $indent+6);
         $this->_htmlInputField($cmd."_username",  "username",  $this->lang["user_name"],  $name,  $this->_auth->canDo("modName"),  $indent+6);
         $this->_htmlInputField($cmd."_usermail",  "usermail",  $this->lang["user_mail"],  $mail,  $this->_auth->canDo("modMail"),  $indent+6);
         $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"),$indent+6);
@@ -709,13 +710,14 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @return bool   true if meets requirements, false otherwise
      */
     protected function _verifyPassword($password, $confirm) {
+        global $lang;
 
         if (empty($password)) {
             return false;
         }
 
         if ($password !== $confirm) {
-            msg($this->lang['pass_confirm_fail'], -1);
+            msg($lang['regbadpass'], -1);
             return false;
         }
 
