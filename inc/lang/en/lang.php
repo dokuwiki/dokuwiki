@@ -196,7 +196,6 @@ $lang['diffnextrev']           = 'Next revision';
 $lang['difflastrev']           = 'Last revision';
 $lang['diffbothprevrev']       = 'Both sides previous revision';
 $lang['diffbothnextrev']       = 'Both sides next revision';
-$lang['overviewrevs']          = 'Overview of revisions';
 $lang['line']                  = 'Line';
 $lang['breadcrumb']            = 'Trace';
 $lang['youarehere']            = 'You are here';
