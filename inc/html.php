@@ -1181,7 +1181,9 @@ function html_diff($text='',$intro=true,$type=null){
     if (!$text) {
         ptln('<div class="diffoptions">');
 
-        //display type
+        /*
+         * display type and exact reference
+         */
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
         $form->addHidden('rev2[0]',$l_rev);
@@ -1204,8 +1206,10 @@ function html_diff($text='',$intro=true,$type=null){
         html_diff_navigationlink($type, $lang['difflink'], $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
         ptln('</p><br />');
 
-        //revisions navigation
-        $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
+        /*
+         * Revisions navigation
+         */
+        $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date']; //last timestamp is not in changelog
         list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
         $l_revisions = array();
         foreach($l_revs as $rev) {
@@ -1213,7 +1217,7 @@ function html_diff($text='',$intro=true,$type=null){
             $l_revisions[$rev] = array(
                 $rev,
                 dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum'],
-                $rev >= $r_rev
+                $rev >= $r_rev //disable?
             );
         }
         $r_revisions = array();
@@ -1222,10 +1226,10 @@ function html_diff($text='',$intro=true,$type=null){
             $r_revisions[$rev] = array(
                 $rev,
                 dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum'],
-                $rev <= $l_rev
+                $rev <= $l_rev //disable?
             );
         }
-
+        //determine previous/next revisions
         $l_index = array_search($l_rev, $l_revs);
         $l_prev = $l_revs[$l_index + 1];
         $l_next = $l_revs[$l_index - 1];
@@ -1233,11 +1237,12 @@ function html_diff($text='',$intro=true,$type=null){
         $r_prev = $r_revs[$r_index + 1];
         $r_next = $r_revs[$r_index - 1];
 
+        //move back
         if($l_prev) {
             html_diff_navigationlink($type, $lang['diffbothprevrev'], $l_prev, $r_prev);
             html_diff_navigationlink($type, $lang['diffprevrev'], $l_prev, $r_rev);
         }
-
+        //left dropdown
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
         $form->addHidden('difftype',$type);
@@ -1252,13 +1257,14 @@ function html_diff($text='',$intro=true,$type=null){
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
 
+        //move forward/back
         if($l_next < $r_rev) {
             html_diff_navigationlink($type, $lang['diffnextrev'], $l_next, $r_rev);
         }
         if($l_rev < $r_prev) {
             html_diff_navigationlink($type, $lang['diffprevrev'], $l_rev, $r_prev);
         }
-
+        //rigth dropdown
         $form = new Doku_Form(array('action'=>wl()));
         $form->addHidden('id',$ID);
         $form->addHidden('rev2[0]',$l_rev);
@@ -1272,10 +1278,10 @@ function html_diff($text='',$intro=true,$type=null){
                               array('class'=>'quickselect')));
         $form->addElement(form_makeButton('submit', 'diff','Go'));
         $form->printForm();
-
+        //move forward
         if($r_next) {
             if($pagelog->isCurrentRevision($r_next)) {
-                html_diff_navigationlink($type, $lang['difflastrev'], $l_rev);
+                html_diff_navigationlink($type, $lang['difflastrev'], $l_rev); //last revision is diff with current page
             } else {
                 html_diff_navigationlink($type, $lang['diffnextrev'], $l_rev, $r_next);
             }
@@ -1284,6 +1290,9 @@ function html_diff($text='',$intro=true,$type=null){
 
         ptln('</div>');
     }
+    /*
+     * Diff view
+     */
     ?>
     <div class="table">
     <table class="diff diff_<?php echo $type?>">
