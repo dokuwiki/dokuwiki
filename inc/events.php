@@ -148,9 +148,10 @@ class Doku_Event_Handler {
      *                             if NULL, method is assumed to be a globally available function
      * @param  $method  (function) event handler function
      * @param  $param   (mixed)    data passed to the event handler
+     * @param  $seq     (int)      sequence number for ordering hook execution (ascending)
      */
-    function register_hook($event, $advise, $obj, $method, $param=null) {
-        $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param);
+    function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
+        $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param, (int)$seq);
     }
 
     function process_event(&$event,$advise='') {
@@ -158,8 +159,8 @@ class Doku_Event_Handler {
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
 
         if (!empty($this->_hooks[$evt_name])) {
-            foreach ($this->_hooks[$evt_name] as $hook) {
-                //        list($obj, $method, $param) = $hook;
+            foreach ($this->sort_hooks($this->_hooks[$evt_name]) as $hook) {
+                //        list($obj, $method, $param, $seq) = $hook;
                 $obj =& $hook[0];
                 $method = $hook[1];
                 $param = $hook[2];
@@ -174,6 +175,20 @@ class Doku_Event_Handler {
             }
         }
     }
+
+    protected function sort_hooks($hooks) {
+        usort($hooks, array('Doku_Event_Handler','cmp_hooks'));
+        return $hooks;
+    }
+
+    public static function cmp_hooks($a, $b) {
+        if ($a[3] == $b[3]) {
+            return 0;
+        }
+
+        return ($a[3] < $b[3]) ? -1 : 1;
+    }
+
 }
 
 /**
