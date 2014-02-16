@@ -48,6 +48,12 @@
         margin-bottom: 0;
         font-size: 0.875em;
     }
+
+    /* make all links in header (including breadcrumb and interwiki) same colour as the rest */
+    a {
+        color: @ini_link;
+        background-color: inherit;
+    }
 }
 
 [dir=rtl] #dokuwiki__header h1 img {
@@ -258,11 +264,6 @@
 
     div:last-child {
         border-bottom: 1px solid @ini_border;
-    }
-
-    a {
-        color: @ini_link;
-        background-color: inherit;
     }
 
     .bcsep {
