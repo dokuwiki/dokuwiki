@@ -27,7 +27,7 @@ class Test_resolveInterwiki extends PHPUnit_Framework_TestCase {
             array('skype',  'foo @+%/#txt', 'skype:foo @+%/#txt'),
             //dokuwiki id's
             array('onlytext', 'foo @+%#txt', DOKU_BASE.'doku.php?id=onlytextfoo#txt'),
-            array('user', 'foo @+%#txt', DOKU_BASE.'doku.php?id=wiki:users:foo#txt'),
+            array('user', 'foo @+%#txt', DOKU_BASE.'doku.php?id=user:foo#txt'),
             array('withquery', 'foo @+%#txt', DOKU_BASE.'doku.php?id=anyns:foo&amp;do=edit#txt')
         );
 
