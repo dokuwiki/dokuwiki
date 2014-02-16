@@ -11,12 +11,12 @@ if(!defined('DOKU_INC')) die('meh.');
 class Doku_Event {
 
     // public properties
-    var $name = '';                // READONLY  event name, objects must register against this name to see the event
-    var $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
-    var $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
+    public $name = '';                // READONLY  event name, objects must register against this name to see the event
+    public $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
+    public $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
     //    event handlers may modify this if they are preventing the default action
     //    to provide the after event handlers with event results
-    var $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
+    public $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
 
     // private properties, event handlers can effect these through the provided methods
     var $_default = true;     // whether or not to carry out the default action associated with the event
@@ -121,7 +121,7 @@ class Doku_Event_Handler {
     // public properties:  none
 
     // private properties
-    var $_hooks = array();          // array of events and their registered handlers
+    protected $_hooks = array();          // array of events and their registered handlers
 
     /**
      * event_handler
