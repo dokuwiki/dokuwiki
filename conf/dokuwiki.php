@@ -84,6 +84,7 @@ $conf['htmlok']      = 0;                //may raw HTML be embedded? This may br
 $conf['phpok']       = 0;                //may PHP code be embedded? Never do this on the internet! 0|1
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds (defaults to a day)
+$conf['geshi_cache_expiry'] = 60*60*24*28; // age of cached geshi files before expiry & purging (defaults to 28 days)
 
 /* Link Settings */
 // Set target to use when creating links - leave empty for same window
