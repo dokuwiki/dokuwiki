@@ -164,10 +164,7 @@ class Doku_Event_Handler {
 
         if (!empty($this->_hooks[$evt_name])) {
             foreach ($this->sort_hooks($this->_hooks[$evt_name]) as $hook) {
-                //        list($obj, $method, $param, $seq) = $hook;
-                $obj =& $hook[0];
-                $method = $hook[1];
-                $param = $hook[2];
+                list($obj, $method, $param, $seq) = $hook;
 
                 if (is_null($obj)) {
                     $method($event, $param);
