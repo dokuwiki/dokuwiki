@@ -1207,6 +1207,7 @@ function html_diff($text='',$intro=true,$type=null){
         //revisions navigation
         $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
         list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
+        $l_revisions = array();
         foreach($l_revs as $rev) {
             $info = $pagelog->getRevisionInfo($rev);
             $l_revisions[$rev] = array(
@@ -1215,6 +1216,7 @@ function html_diff($text='',$intro=true,$type=null){
                 $rev >= $r_rev
             );
         }
+        $r_revisions = array();
         foreach($r_revs as $rev) {
             $info = $pagelog->getRevisionInfo($rev);
             $r_revisions[$rev] = array(
@@ -1232,8 +1234,8 @@ function html_diff($text='',$intro=true,$type=null){
         $r_next = $r_revs[$r_index - 1];
 
         if($l_prev) {
-            html_diff_navigationlink($type, '←← ', $l_prev, $r_prev);
-            html_diff_navigationlink($type, '← ', $l_prev, $r_rev);
+            html_diff_navigationlink($type, $lang['diffbothprevrev'], $l_prev, $r_prev);
+            html_diff_navigationlink($type, $lang['diffprevrev'], $l_prev, $r_rev);
         }
 
         $form = new Doku_Form(array('action'=>wl()));
@@ -1251,10 +1253,10 @@ function html_diff($text='',$intro=true,$type=null){
         $form->printForm();
 
         if($l_next < $r_rev) {
-            html_diff_navigationlink($type, ' →', $l_next, $r_rev);
+            html_diff_navigationlink($type, $lang['diffnextrev'], $l_next, $r_rev);
         }
         if($l_rev < $r_prev) {
-            html_diff_navigationlink($type, '← ', $l_rev, $r_prev);
+            html_diff_navigationlink($type, $lang['diffprevrev'], $l_rev, $r_prev);
         }
 
         $form = new Doku_Form(array('action'=>wl()));
@@ -1273,11 +1275,11 @@ function html_diff($text='',$intro=true,$type=null){
 
         if($r_next) {
             if($pagelog->isCurrentRevision($r_next)) {
-                html_diff_navigationlink($type, ' →', $l_rev); //last
+                html_diff_navigationlink($type, $lang['difflastrev'], $l_rev);
             } else {
-                html_diff_navigationlink($type, ' →', $l_rev, $r_next); //next
+                html_diff_navigationlink($type, $lang['diffnextrev'], $l_rev, $r_next);
             }
-            html_diff_navigationlink($type, ' →→', $l_next, $r_next);
+            html_diff_navigationlink($type, $lang['diffbothnextrev'], $l_next, $r_next);
         }
 
         ptln('</div>');
