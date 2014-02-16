@@ -1427,10 +1427,10 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
 function media_printicon($filename){
     list($ext) = mimetype(mediaFN($filename),false);
 
-    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')) {
-        $icon = DOKU_BASE.'lib/images/fileicons/'.$ext.'.png';
+    if (@file_exists(DOKU_INC.'lib/images/fileicons/32x32/'.$ext.'.png')) {
+        $icon = DOKU_BASE.'lib/images/fileicons/32x32/'.$ext.'.png';
     } else {
-        $icon = DOKU_BASE.'lib/images/fileicons/file.png';
+        $icon = DOKU_BASE.'lib/images/fileicons/32x32/file.png';
     }
 
     return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
