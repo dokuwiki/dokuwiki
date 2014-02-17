@@ -1080,14 +1080,14 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
 }
 
 /**
- * show diff
+ * Show diff
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param  string $text - compare with this text with most current version
- * @param  bool   $intro - display the intro text
- * @param  string $type type of the diff (inline or sidebyside)
+ * @param  string $text  compare with this text with most current version
+ * @param  bool   $intro display the intro text
+ * @param  string $type  type of the diff (inline or sidebyside)
  */
-function html_diff($text='',$intro=true,$type=null){
+function html_diff($text = '', $intro = true, $type = null) {
     global $ID;
     global $REV;
     global $lang;
@@ -1097,9 +1097,9 @@ function html_diff($text='',$intro=true,$type=null){
 
     if(!$type) {
         $type = $INPUT->str('difftype');
-        if (empty($type)) {
+        if(empty($type)) {
             $type = get_doku_pref('difftype', $type);
-            if (empty($type) && $INFO['ismobile']) {
+            if(empty($type) && $INFO['ismobile']) {
                 $type = 'inline';
             }
         }
@@ -1112,45 +1112,45 @@ function html_diff($text='',$intro=true,$type=null){
     $rev1 = $REV;
 
     $rev2 = $INPUT->ref('rev2');
-    if(is_array($rev2)){
+    if(is_array($rev2)) {
         $rev1 = (int) $rev2[0];
         $rev2 = (int) $rev2[1];
 
-        if(!$rev1){
+        if(!$rev1) {
             $rev1 = $rev2;
             unset($rev2);
         }
-    }else{
+    } else {
         $rev2 = $INPUT->int('rev2');
     }
 
     $r_minor = '';
     $l_minor = '';
 
-    if($text){                      // compare text to the most current revision
-        $l_rev   = '';
-        $l_text  = rawWiki($ID,'');
-        $l_head  = '<a class="wikilink1" href="'.wl($ID).'">'.
-            $ID.' '.dformat((int) @filemtime(wikiFN($ID))).'</a> '.
+    if($text) { // compare text to the most current revision
+        $l_rev = '';
+        $l_text = rawWiki($ID, '');
+        $l_head = '<a class="wikilink1" href="' . wl($ID) . '">' .
+            $ID . ' ' . dformat((int) @filemtime(wikiFN($ID))) . '</a> ' .
             $lang['current'];
 
-        $r_rev   = '';
-        $r_text  = cleanText($text);
-        $r_head  = $lang['yours'];
-    }else{
-        if($rev1 && isset($rev2) && $rev2){            // two specific revisions wanted
+        $r_rev = '';
+        $r_text = cleanText($text);
+        $r_head = $lang['yours'];
+    } else {
+        if($rev1 && isset($rev2) && $rev2) { // two specific revisions wanted
             // make sure order is correct (older on the left)
-            if($rev1 < $rev2){
+            if($rev1 < $rev2) {
                 $l_rev = $rev1;
                 $r_rev = $rev2;
-            }else{
+            } else {
                 $l_rev = $rev2;
                 $r_rev = $rev1;
             }
-        }elseif($rev1){                // single revision given, compare to current
+        } elseif($rev1) { // single revision given, compare to current
             $r_rev = '';
             $l_rev = $rev1;
-        }else{                        // no revision was given, compare previous to current
+        } else { // no revision was given, compare previous to current
             $r_rev = '';
             $revs = $pagelog->getRevisions(0, 1);
             $l_rev = $revs[0];
@@ -1158,54 +1158,60 @@ function html_diff($text='',$intro=true,$type=null){
         }
 
         // when both revisions are empty then the page was created just now
-        if(!$l_rev && !$r_rev){
+        if(!$l_rev && !$r_rev) {
             $l_text = '';
-        }else{
-            $l_text = rawWiki($ID,$l_rev);
+        } else {
+            $l_text = rawWiki($ID, $l_rev);
         }
-        $r_text = rawWiki($ID,$r_rev);
+        $r_text = rawWiki($ID, $r_rev);
 
         list($l_head, $r_head, $l_minor, $r_minor) = html_diff_head($l_rev, $r_rev, null, false, $type == 'inline');
     }
 
-    $df = new Diff(explode("\n",$l_text),explode("\n",$r_text));
+    $diff = new Diff(explode("\n", $l_text), explode("\n", $r_text));
 
-    if($type == 'inline'){
-        $tdf = new InlineDiffFormatter();
+    if($type == 'inline') {
+        $diffformatter = new InlineDiffFormatter();
     } else {
-        $tdf = new TableDiffFormatter();
+        $diffformatter = new TableDiffFormatter();
     }
 
     if($intro) print p_locale_xhtml('diff');
 
-    if (!$text) {
+    if(!$text) {
         ptln('<div class="diffoptions">');
 
         /*
          * display type and exact reference
          */
-        $form = new Doku_Form(array('action'=>wl()));
-        $form->addHidden('id',$ID);
-        $form->addHidden('rev2[0]',$l_rev);
-        $form->addHidden('rev2[1]',$r_rev);
-        $form->addHidden('do','diff');
-        $form->addElement(form_makeListboxField(
-                            'difftype',
-                            array(
-                                'sidebyside' => $lang['diff_side'],
-                                'inline'     => $lang['diff_inline']),
-                            $type,
-                            $lang['diff_type'],
-                            '','',
-                            array('class'=>'quickselect')));
-        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form = new Doku_Form(array('action' => wl()));
+        $form->addHidden('id', $ID);
+        $form->addHidden('rev2[0]', $l_rev);
+        $form->addHidden('rev2[1]', $r_rev);
+        $form->addHidden('do', 'diff');
+        $form->addElement(
+             form_makeListboxField(
+                 'difftype',
+                 array(
+                     'sidebyside' => $lang['diff_side'],
+                     'inline' => $lang['diff_inline']
+                 ),
+                 $type,
+                 $lang['diff_type'],
+                 '', '',
+                 array('class' => 'quickselect')
+             )
+        );
+        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
         $form->printForm();
 
         ptln('<p>');
         // link to exactly this view FS#2835
         html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
         ptln('</p>');
+    }
 
+    if(!$text) {
         /*
          * Revisions navigation
          */
@@ -1218,7 +1224,7 @@ function html_diff($text='',$intro=true,$type=null){
             $info = $pagelog->getRevisionInfo($rev);
             $l_revisions[$rev] = array(
                 $rev,
-                dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum'],
+                dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
                 $rev >= $r_rev //disable?
             );
         }
@@ -1227,7 +1233,7 @@ function html_diff($text='',$intro=true,$type=null){
             $info = $pagelog->getRevisionInfo($rev);
             $r_revisions[$rev] = array(
                 $rev,
-                dformat($info['date']).' '.editorinfo($info['user']).' '.$info['sum'],
+                dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
                 $rev <= $l_rev //disable?
             );
         }
@@ -1245,18 +1251,21 @@ function html_diff($text='',$intro=true,$type=null){
             html_diff_navigationlink($type, 'diffprevrev', $l_prev, $r_rev);
         }
         //left dropdown
-        $form = new Doku_Form(array('action'=>wl()));
-        $form->addHidden('id',$ID);
-        $form->addHidden('difftype',$type);
-        $form->addHidden('rev2[1]',$r_rev);
-        $form->addHidden('do','diff');
-        $form->addElement(form_makeListboxField(
-                              'rev2[0]',
-                              $l_revisions,
-                              $l_rev,
-                              '','','',
-                              array('class'=>'quickselect')));
-        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form = new Doku_Form(array('action' => wl()));
+        $form->addHidden('id', $ID);
+        $form->addHidden('difftype', $type);
+        $form->addHidden('rev2[1]', $r_rev);
+        $form->addHidden('do', 'diff');
+        $form->addElement(
+             form_makeListboxField(
+                 'rev2[0]',
+                 $l_revisions,
+                 $l_rev,
+                 '', '', '',
+                 array('class' => 'quickselect')
+             )
+        );
+        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
         $form->printForm();
 
         //move forward/back
@@ -1267,18 +1276,21 @@ function html_diff($text='',$intro=true,$type=null){
             html_diff_navigationlink($type, 'diffprevrev', $l_rev, $r_prev);
         }
         //rigth dropdown
-        $form = new Doku_Form(array('action'=>wl()));
-        $form->addHidden('id',$ID);
-        $form->addHidden('rev2[0]',$l_rev);
-        $form->addHidden('difftype',$type);
-        $form->addHidden('do','diff');
-        $form->addElement(form_makeListboxField(
-                              'rev2[1]',
-                              $r_revisions,
-                              $r_rev,
-                              '','','',
-                              array('class'=>'quickselect')));
-        $form->addElement(form_makeButton('submit', 'diff','Go'));
+        $form = new Doku_Form(array('action' => wl()));
+        $form->addHidden('id', $ID);
+        $form->addHidden('rev2[0]', $l_rev);
+        $form->addHidden('difftype', $type);
+        $form->addHidden('do', 'diff');
+        $form->addElement(
+             form_makeListboxField(
+                 'rev2[1]',
+                 $r_revisions,
+                 $r_rev,
+                 '', '', '',
+                 array('class' => 'quickselect')
+             )
+        );
+        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
         $form->printForm();
         //move forward
         if($r_next) {
@@ -1293,37 +1305,41 @@ function html_diff($text='',$intro=true,$type=null){
         ptln('</div>'); // .diffnav
         ptln('</div>'); // .diffoptions
     }
+
     /*
      * Diff view
      */
     ?>
     <div class="table">
-    <table class="diff diff_<?php echo $type?>">
-    <?php if ($type == 'inline') { ?>
-    <tr>
-    <th class="diff-lineheader">-</th><th <?php echo $l_minor?>>
-    <?php echo $l_head?>
-    </th>
-    </tr>
-    <tr>
-    <th class="diff-lineheader">+</th><th <?php echo $r_minor?>>
-    <?php echo $r_head?>
-    </th>
-    </tr>
+    <table class="diff diff_<?php echo $type ?>">
+    <?php
+    if($type == 'inline') { ?>
+        <tr>
+            <th class="diff-lineheader">-</th>
+            <th <?php echo $l_minor ?>>
+                <?php echo $l_head ?>
+            </th>
+        </tr>
+        <tr>
+            <th class="diff-lineheader">+</th>
+            <th <?php echo $r_minor ?>>
+                <?php echo $r_head ?>
+            </th>
+        </tr>
     <?php } else { ?>
-    <tr>
-    <th colspan="2" <?php echo $l_minor?>>
-    <?php echo $l_head?>
-    </th>
-    <th colspan="2" <?php echo $r_minor?>>
-    <?php echo $r_head?>
-    </th>
-    </tr>
+        <tr>
+            <th colspan="2" <?php echo $l_minor ?>>
+                <?php echo $l_head ?>
+            </th>
+            <th colspan="2" <?php echo $r_minor ?>>
+                <?php echo $r_head ?>
+            </th>
+        </tr>
     <?php }
-    echo html_insert_softbreaks($tdf->format($df)); ?>
+    echo html_insert_softbreaks($diffformatter->format($diff)); ?>
     </table>
     </div>
-    <?php
+<?php
 }
 
 /**
