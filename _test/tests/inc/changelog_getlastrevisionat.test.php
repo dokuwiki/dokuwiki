@@ -7,7 +7,7 @@
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrelativerevision_test extends DokuWikiTest {
+class changelog_getlastrevisionat_test extends DokuWikiTest {
 
     private $pageid = 'mailinglist';
     
