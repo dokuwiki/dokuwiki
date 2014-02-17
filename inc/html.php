@@ -19,6 +19,7 @@ if(!defined('NL')) define('NL',"\n");
  * @return string the HTML code of the link
  */
 function html_wikilink($id,$name=null,$search=''){
+    /** @var Doku_Renderer_xhtml $xhtml_renderer */
     static $xhtml_renderer = null;
     if(is_null($xhtml_renderer)){
         $xhtml_renderer = p_get_renderer('xhtml');
@@ -1410,6 +1411,12 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
             '</a>' . "\n";
 }
 
+/**
+ * Insert soft breaks in diff html
+ *
+ * @param $diffhtml
+ * @return string
+ */
 function html_insert_softbreaks($diffhtml) {
     // search the diff html string for both:
     // - html tags, so these can be ignored
@@ -1417,6 +1424,12 @@ function html_insert_softbreaks($diffhtml) {
     return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/','html_softbreak_callback',$diffhtml);
 }
 
+/**
+ * callback which adds softbreaks
+ *
+ * @param array $match array with first the complete match
+ * @return string the replacement
+ */
 function html_softbreak_callback($match){
     // if match is an html tag, return it intact
     if ($match[0]{0} == '<') return $match[0];
@@ -1528,7 +1541,7 @@ function html_updateprofile(){
     global $conf;
     global $INPUT;
     global $INFO;
-    /** @var auth_basic $auth */
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     print p_locale_xhtml('updateprofile');
@@ -1744,7 +1757,7 @@ function html_minoredit(){
 function html_debug(){
     global $conf;
     global $lang;
-    /** @var auth_basic $auth */
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
     global $INFO;
 
