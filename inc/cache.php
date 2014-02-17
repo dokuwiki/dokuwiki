@@ -8,6 +8,9 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
+/**
+ * Generic handling of caching
+ */
 class cache {
     public $key = '';          // primary identifier for this item
     public $ext = '';          // file ext for cache data, secondary identifier for this item
@@ -162,6 +165,9 @@ class cache {
     }
 }
 
+/**
+ * Parser caching
+ */
 class cache_parser extends cache {
 
     public $file = '';       // source file for cache
@@ -213,6 +219,9 @@ class cache_parser extends cache {
 
 }
 
+/**
+ * Caching of data of renderer
+ */
 class cache_renderer extends cache_parser {
 
     /**
@@ -275,6 +284,9 @@ class cache_renderer extends cache_parser {
     }
 }
 
+/**
+ * Caching of parser instructions
+ */
 class cache_instructions extends cache_parser {
 
     /**
