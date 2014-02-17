@@ -1272,6 +1272,95 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         return $link;
     }
+
+
+    /**
+     * Embed video(s) in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of video to embed
+     * @param int $width       - width of the video in pixels
+     * @param int $height      - height of the video in pixels
+     * @param array $atts      - additional attributes for the <video> tag
+     * @return string
+     */
+    function _video($src,$width,$height,$atts=null){
+
+        // prepare width and height
+        if(is_null($atts)) $atts = array();
+        $atts['width']  = (int) $width;
+        $atts['height'] = (int) $height;
+        if(!$atts['width'])  $atts['width']  = 320;
+        if(!$atts['height']) $atts['height'] = 240;
+
+        // prepare alternative formats
+        $extensions = array('webm', 'ogv', 'mp4');
+        $alternatives = media_alternativefiles($src, $extensions);
+        $poster = media_alternativefiles($src, array('jpg', 'png'), true);
+        $posterUrl = '';
+        if (!empty($poster)) {
+            $posterUrl = ml(reset($poster),array('cache'=>$cache),true,'&');
+        }
+
+        $out = '';
+        // open video tag
+        $out .= '<video '.buildAttributes($atts).' controls="controls"';
+        if ($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
+        $out .= '>'.NL;
+        $fallback = '';
+
+        // output source for each alternative video format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+        }
+
+        // finish
+        $out .= $fallback;
+        $out .= '</video>'.NL;
+        return $out;
+    }
+
+    /**
+     * Embed audio in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of audio to embed
+     * @param array $atts      - additional attributes for the <audio> tag
+     * @return string
+     */
+    function _audio($src,$atts=null){
+
+        // prepare alternative formats
+        $extensions = array('ogg', 'mp3', 'wav');
+        $alternatives = media_alternativefiles($src, $extensions);
+
+        $out = '';
+        // open audio tag
+        $out .= '<audio '.buildAttributes($atts).' controls="controls">'.NL;
+        $fallback = '';
+
+        // output source for each alternative audio format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+        }
+
+        // finish
+        $out .= $fallback;
+        $out .= '</audio>'.NL;
+        return $out;
+    }
     
     /**
      * _getLastMediaRevisionAt is a helperfunction to internalmedia() and _media()
@@ -1280,14 +1369,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @author lisps
      * @param string $media_id
      * @access protected
-     * @return string revision ('' for current) 
+     * @return string revision ('' for current)
      */
     function _getLastMediaRevisionAt($media_id){
         if(!$this->date_at || media_isexternal($media_id)) return '';
         $pagelog = new MediaChangeLog($media_id);
         return $pagelog->getLastRevisionAt($this->date_at);
     }
-
 
 }
 
