@@ -2,13 +2,14 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  * @author Matej Urbančič <mateju@svn.gnome.org>
+ * @author matej <mateju@svn.gnome.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -195,6 +196,7 @@ $lang['user_tools']            = 'Uporabniška orodja';
 $lang['site_tools']            = 'Orodja spletišča';
 $lang['page_tools']            = 'Orodja strani';
 $lang['skip_to_content']       = 'preskoči na vsebino';
+$lang['sidebar']               = 'Stranska vrstica';
 $lang['mail_newpage']          = '[DokuWiki] stran dodana:';
 $lang['mail_changed']          = '[DokuWiki] stran spremenjena:';
 $lang['mail_subscribe_list']   = 'strani s spremenjenim imenom:';
@@ -264,6 +266,7 @@ $lang['subscr_style_every']    = 'elektronsko sporočilo ob vsaki spremembi';
 $lang['subscr_style_digest']   = 'strnjeno elektronsko sporočilo sprememb za vsako stran (vsakih %.2f dni)';
 $lang['subscr_style_list']     = 'seznam spremenjenih strani od zadnjega elektronskega sporočila (vsakih %.2f dni)';
 $lang['authtempfail']          = 'Potrditev uporabnika je trenutno nedostopna. Stopite v stik s skrbnikom sistema wiki.';
+$lang['authpwdexpire']         = 'Geslo bo poteklo v %d dneh. Priporočljivo ga je zamenjati.';
 $lang['i_chooselang']          = 'Izberite jezik';
 $lang['i_installer']           = 'DokuWiki namestitev';
 $lang['i_wikiname']            = 'Ime Wiki spletišča';
@@ -284,6 +287,7 @@ $lang['i_policy']              = 'Začetna določila ACL';
 $lang['i_pol0']                = 'Odprt Wiki (branje, zapis, nalaganje datotek je javno za vse)';
 $lang['i_pol1']                = 'Javni Wiki (branje za vse, zapis in nalaganje datotek za prijavljene uporabnike)';
 $lang['i_pol2']                = 'Zaprt Wiki (berejo in urejajo lahko le prijavljeni uporabniki)';
+$lang['i_allowreg']            = 'Dovoli uporabnikom vpis';
 $lang['i_retry']               = 'Ponovni poskus';
 $lang['i_license']             = 'Izbor dovoljenja objave vsebine:';
 $lang['i_license_none']        = 'Ne pokaži podrobnosti dovoljenja.';
@@ -319,3 +323,7 @@ $lang['media_perm_read']       = 'Ni ustreznih dovoljenj za branje datotek.';
 $lang['media_perm_upload']     = 'Ni ustreznih dovoljenj za nalaganje datotek.';
 $lang['media_update']          = 'Naloži novo različico';
 $lang['media_restore']         = 'Obnovi to različico';
+$lang['currentns']             = 'Trenutni imenski prostor';
+$lang['searchresult']          = 'Rezultati iskanja';
+$lang['plainhtml']             = 'Zapis HTML';
+$lang['wikimarkup']            = 'Oblikovni jezik Wiki';

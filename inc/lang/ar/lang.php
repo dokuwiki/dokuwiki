@@ -8,6 +8,7 @@
  * @author Usama Akkad <uahello@gmail.com>
  * @author uahello@gmail.com
  * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
+ * @author alhajr <alhajr300@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -32,8 +33,8 @@ $lang['btn_upload']            = 'ارفع';
 $lang['btn_cancel']            = 'ألغ';
 $lang['btn_index']             = 'خريطة موقع';
 $lang['btn_secedit']           = 'حرر';
-$lang['btn_login']             = 'لج';
-$lang['btn_logout']            = 'اخرج';
+$lang['btn_login']             = 'تسجيل الدخول';
+$lang['btn_logout']            = 'خروج';
 $lang['btn_admin']             = 'المدير';
 $lang['btn_update']            = 'حدّث';
 $lang['btn_delete']            = 'احذف';
@@ -266,6 +267,8 @@ $lang['subscr_m_unsubscribe']  = 'ألغ الاشتراك';
 $lang['subscr_m_subscribe']    = 'اشترك';
 $lang['subscr_m_receive']      = 'استقبال';
 $lang['subscr_style_every']    = 'بريدا على كل تغيير';
+$lang['subscr_style_digest']   = 'البريد الإلكتروني, ملخص للتغييرات لكل صفحة (كل يوم %.2f)';
+$lang['subscr_style_list']     = 'قائمة بالصفحات التي تم تغييرها منذ آخر بريد الإلكتروني (كل يوم %.2f)';
 $lang['authtempfail']          = 'تصريح المشترك غير متوفر مؤقتاً، إن استمرت هذه الحالة يرجى مراسلة المدير';
 $lang['authpwdexpire']         = 'ستنتهي صلاحية كلمة السر في %d . عليك بتغييرها سريعا.';
 $lang['i_chooselang']          = 'اختر لغتك';
@@ -297,8 +300,12 @@ $lang['i_policy']              = 'تصريح ACL مبدئي';
 $lang['i_pol0']                = 'ويكي مفتوحة؛ أي القراءة والكتابة والتحميل مسموحة للجميع';
 $lang['i_pol1']                = 'ويكي عامة؛ أي القراءة للجميع ولكن الكتابة والتحميل للمشتركين المسجلين فقط';
 $lang['i_pol2']                = 'ويكي مغلقة؛ أي القراءة والكتابة والتحميل للمشتركين المسجلين فقط';
+$lang['i_allowreg']            = 'السماح للمستخدمين بتسجيل أنفسهم';
 $lang['i_retry']               = 'إعادة المحاولة';
 $lang['i_license']             = 'اختر الرخصة التي تريد وضع المحتوى تحتها:';
+$lang['i_license_none']        = 'لا تظهر أية معلومات للترخيص';
+$lang['i_pop_field']           = 'من فضلك، ساعدنا على تحسين تجربة دوكي ويكي:';
+$lang['i_pop_label']           = 'مرة واحدة في شهر، إرسال بيانات استخدام المجهول للمطورين دوكي ويكي';
 $lang['recent_global']         = 'انت تراقب حاليا التغييرات داخل نطاق <b>%s</b>. يمكنك أيضا <a href="%s">عرض أحدث تغييرات الويكي كلها</a>.';
 $lang['years']                 = '%d سنة مضت';
 $lang['months']                = '%d شهرا مضى';
@@ -331,3 +338,6 @@ $lang['media_perm_read']       = 'عفوا، لست مخولا بقراءة ال
 $lang['media_perm_upload']     = 'عفوا، لست مخولا برفع الملفات.';
 $lang['media_update']          = 'ارفع إصدارا أحدث';
 $lang['media_restore']         = 'استرجع هذه النسخة';
+$lang['currentns']             = 'مساحة الاسم الحالية';
+$lang['searchresult']          = 'نتيجة البحث';
+$lang['wikimarkup']            = 'علامات الوكي';

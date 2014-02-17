@@ -158,6 +158,8 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $text raw wiki syntax text
+ * @return array a list of instruction arrays
  */
 function p_get_instructions($text){
 

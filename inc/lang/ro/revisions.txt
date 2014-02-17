@@ -1,4 +1,5 @@
-====== Versiune veche ======
+====== Versiune anterioară ======
 
-Acestea sînt versiunile vechi ale documentului curent. Pentru revenirea la o versiune mai veche, selecteaz-o de mai jos, clic pe ''Editează această pagină'' și salveaz-o.
-
+Acestea sunt versiunile anterioare ale paginii curente. Pentru revenirea la o
+versiune anteroară, selectează versiunea de mai jos, clic pe ''Editează
+această pagină'' și salvează versiunea.

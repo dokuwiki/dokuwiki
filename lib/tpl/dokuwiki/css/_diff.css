@@ -73,3 +73,41 @@
     background-color: inherit;
     font-weight: bold;
 }
+
+/* diff nav */
+
+.dokuwiki .diffnav a {
+    display: inline-block;
+    vertical-align: middle;
+}
+.dokuwiki .diffnav a span {
+    display: none;
+}
+
+.dokuwiki .diffnav a:before {
+    font-size: 1.2em;
+    display: inline-block;
+    line-height: 1;
+    padding: .1em .2em;
+    border: 1px solid @ini_border;
+    border-radius: 2px;
+    color: @ini_text;
+}
+
+.dokuwiki .diffnav a.diffprevrev:before {
+    content: '\25C0'; /* left triangle */
+}
+.dokuwiki .diffnav a.diffnextrev:before,
+.dokuwiki .diffnav a.difflastrev:before {
+    content: '\25B6'; /* right triangle */
+}
+.dokuwiki .diffnav a.diffbothprevrev:before {
+    content: '\25C0\25C0';
+}
+.dokuwiki .diffnav a.diffbothnextrev:before {
+    content: '\25B6\25B6';
+}
+
+.dokuwiki .diffnav select {
+    width: 15em;
+}

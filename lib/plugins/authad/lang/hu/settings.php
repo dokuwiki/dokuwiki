@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Marton Sebok <sebokmarton@gmail.com>
+ * @author Marina Vladi <deldadam@gmail.com>
  */
 $lang['account_suffix']        = 'Felhasználói azonosító végződése, pl. <code>@my.domain.org</code>.';
 $lang['base_dn']               = 'Bázis DN, pl. <code>DC=my,DC=domain,DC=org</code>.';
@@ -11,6 +12,7 @@ $lang['domain_controllers']    = 'Tartománykezelők listája vesszővel elvála
 $lang['admin_username']        = 'Privilegizált AD felhasználó, aki az összes feéhasználó adatait elérheti. Elhagyható, de bizonyos funkciókhoz, például a feliratkozási e-mailek kiküldéséhez szükséges.';
 $lang['admin_password']        = 'Ehhez tartozó jelszó.';
 $lang['sso']                   = 'Single-Sign-On Kerberos-szal vagy NTML használata?';
+$lang['sso_charset']           = 'A webkiszolgáló karakterkészlete megfelel a Kerberos- és NTLM-felhasználóneveknek. Üres UTF-8 és Latin-1-hez. Szükséges az iconv bővítmény.';
 $lang['real_primarygroup']     = 'A valódi elsődleges csoport feloldása a "Tartományfelhasználók" csoport használata helyett? (lassabb)';
 $lang['use_ssl']               = 'SSL használata? Ha használjuk, tiltsuk le a TLS-t!';
 $lang['use_tls']               = 'TLS használata? Ha használjuk, tiltsuk le az SSL-t!';

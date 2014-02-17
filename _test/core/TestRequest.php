@@ -44,13 +44,18 @@ class TestRequest {
      * @return TestResponse the resulting output of the request
      */
     public function execute($uri='/doku.php') {
+        global $INPUT;
+        global $ID;
+        global $INFO;
+
         // save old environment
         $server = $_SERVER;
         $session = $_SESSION;
         $get = $_GET;
         $post = $_POST;
         $request = $_REQUEST;
-
+        $input = $INPUT;
+        
         // prepare the right URI
         $this->setUri($uri);
 
@@ -74,6 +79,7 @@ class TestRequest {
         // now execute dokuwiki and grep the output
         header_remove();
         ob_start('ob_start_callback');
+        $INPUT = new Input();
         include(DOKU_INC.$this->script);
         ob_end_flush();
 
@@ -89,6 +95,7 @@ class TestRequest {
         $_GET = $get;
         $_POST = $post;
         $_REQUEST = $request;
+        $INPUT = $input;
 
         return $response;
     }

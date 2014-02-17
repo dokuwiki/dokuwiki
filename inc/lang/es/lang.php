@@ -30,6 +30,7 @@
  * @author Mercè López mercelz@gmail.com
  * @author r0sk <r0sk10@gmail.com>
  * @author monica <may.dorado@gmail.com>
+ * @author Antonio Bueno <atnbueno@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -313,6 +314,7 @@ $lang['i_policy']              = 'Política de ACL inicial';
 $lang['i_pol0']                = 'Wiki abierto (leer, escribir y subir archivos para todos)';
 $lang['i_pol1']                = 'Wiki público (leer para todos, escribir y subir archivos para usuarios registrados únicamente)';
 $lang['i_pol2']                = 'Wiki cerrado (leer, escribir y subir archivos para usuarios registrados únicamente)';
+$lang['i_allowreg']            = 'Permitir que los usuarios se registren a sí mismos';
 $lang['i_retry']               = 'Reintentar';
 $lang['i_license']             = 'Por favor escoja una licencia bajo la que publicar su contenido:';
 $lang['i_license_none']        = 'No mostrar ninguna información sobre licencias';
@@ -350,3 +352,7 @@ $lang['media_perm_read']       = 'Disculpa, no tienes los permisos necesarios pa
 $lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios para cargar ficheros.';
 $lang['media_update']          = 'Actualizar nueva versión';
 $lang['media_restore']         = 'Restaurar esta versión';
+$lang['currentns']             = 'Espacio de nombres actual';
+$lang['searchresult']          = 'Resultado de la búsqueda';
+$lang['plainhtml']             = 'HTML sencillo';
+$lang['wikimarkup']            = 'Etiquetado Wiki';

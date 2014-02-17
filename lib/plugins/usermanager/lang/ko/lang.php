@@ -10,6 +10,7 @@
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Garam <rowain8@gmail.com>
  */
 $lang['menu']                  = '사용자 관리자';
 $lang['noauth']                = '(사용자 인증이 불가능합니다)';
@@ -52,7 +53,7 @@ $lang['edit_usermissing']      = '선택된 사용자를 찾을 수 없습니다
 $lang['user_notify']           = '사용자에게 알림';
 $lang['note_notify']           = '사용자에게 새로운 비밀번호를 준 경우에만 알림 이메일이 보내집니다.';
 $lang['note_group']            = '새로운 사용자는 어떤 그룹도 설정하지 않은 경우에 기본 그룹(%s)에 추가됩니다.';
-$lang['note_pass']             = '사용자 통지가 지정되어 있을 때 필드에 아무 값도 입력하지 않으면 비밀번호가 자동으로 만들어집니다.';
+$lang['note_pass']             = '사용자 알림이 지정되어 있을 때 필드에 아무 값도 입력하지 않으면 비밀번호가 자동으로 만들어집니다.';
 $lang['add_ok']                = '사용자를 성공적으로 추가했습니다';
 $lang['add_fail']              = '사용자 추가를 실패했습니다';
 $lang['notify_ok']             = '알림 이메일을 성공적으로 보냈습니다';
@@ -68,5 +69,5 @@ $lang['import_error_badmail']  = '잘못된 이메일 주소';
 $lang['import_error_upload']   = '가져오기를 실패했습니다. csv 파일을 올릴 수 없거나 비어 있습니다.';
 $lang['import_error_readfail'] = '가져오기를 실패했습니다. 올린 파일을 읽을 수 없습니다.';
 $lang['import_error_create']   = '사용자를 만들 수 없습니다.';
-$lang['import_notify_fail']    = '알림 메시지를 가져온 %2$s (이메일: %1$s ) 사용자에게 보낼 수 없습니다.';
+$lang['import_notify_fail']    = '알림 메시지를 가져온 %s (이메일: %s) 사용자에게 보낼 수 없습니다.';
 $lang['import_downloadfailures'] = '교정을 위한 CSV로 다운로드 실패';

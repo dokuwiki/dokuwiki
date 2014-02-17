@@ -11,6 +11,7 @@
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Serenity87HUN <anikototh87@gmail.com>
+ * @author Marina Vladi <deldadam@gmail.com>
  */
 $lang['menu']                  = 'Felhasználók kezelése';
 $lang['noauth']                = '(A felhasználói azonosítás nem működik.)';
@@ -58,14 +59,14 @@ $lang['add_ok']                = 'A felhasználó sikeresen hozzáadva.';
 $lang['add_fail']              = 'A felhasználó hozzáadása nem sikerült.';
 $lang['notify_ok']             = 'Értesítő levél elküldve.';
 $lang['notify_fail']           = 'Nem sikerült az értesítő levelet elküldeni.';
-$lang['import_userlistcsv']    = 'Felhasználók listája fájl (CSV)';
+$lang['import_userlistcsv']    = 'Felhasználók listájának fájlja (CSV)';
 $lang['import_header']         = 'Legutóbbi importálás - Hibák';
 $lang['import_success_count']  = 'Felhasználók importálása: %d felhasználót találtunk, ebből %d sikeresen importálva.';
 $lang['import_failure_count']  = 'Felhasználók importálása: %d sikertelen. A sikertelenség okait lejjebb találod.';
 $lang['import_error_fields']   = 'Túl kevés mezőt adtál meg, %d darabot találtunk, legalább 4-re van szükség.';
 $lang['import_error_baduserid'] = 'Felhasználói azonosító hiányzik';
-$lang['import_error_badname']  = 'Nem megfelelő név';
-$lang['import_error_badmail']  = 'Nem megfelelő e-mailcím';
+$lang['import_error_badname']  = 'Helytelen név';
+$lang['import_error_badmail']  = 'Helytelen e-mailcím';
 $lang['import_error_upload']   = 'Sikertelen importálás. A csv fájl nem feltölthető vagy üres.';
 $lang['import_error_readfail'] = 'Sikertelen importálás. A feltöltött fájl nem olvasható.';
 $lang['import_error_create']   = 'Ez a felhasználó nem hozható létre';

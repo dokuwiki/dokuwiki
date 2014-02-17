@@ -785,7 +785,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function internalmedia ($src, $title=null, $align=null, $width=null,
-                            $height=null, $cache=null, $linking=null) {
+                            $height=null, $cache=null, $linking=null, $return=NULL) {
         global $ID;
         list($src,$hash) = explode('#',$src,2);
         resolve_mediaid(getNS($ID),$src, $exists);
@@ -797,8 +797,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src)),($linking=='direct'));
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -816,8 +816,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //output formatted
-        if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
-        else $this->doc .= $this->_formatLink($link);
+        if ($return) {
+            if ($linking == 'nolink' || $noLink) return $link['name'];
+            else return $this->_formatLink($link);
+        } else {
+            if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
+            else $this->doc .= $this->_formatLink($link);
+        }
     }
 
     function externalmedia ($src, $title=null, $align=null, $width=null,
@@ -833,8 +838,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(substr($mime,0,5) == 'image' && $render){
             // link only jpeg images
             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -1052,6 +1057,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                       $height=null, $cache=null, $render = true) {
 
         $ret = '';
+
         list($ext,$mime,$dl) = mimetype($src);
         if(substr($mime,0,5) == 'image'){
             // first get the $title
@@ -1093,6 +1099,48 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $ret .= ' height="'.$this->_xmlEntities($height).'"';
 
             $ret .= ' />';
+
+        }elseif(media_supportedav($mime, 'video')){
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }
+            if (!$title) {
+                // just show the sourcename
+                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+            if (!$render) {
+                // if the video is not supposed to be rendered
+                // return the title of the video
+                return $title;
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+
+            //add video(s)
+            $ret .= $this->_video($src, $width, $height, $att);
+
+        }elseif(media_supportedav($mime, 'audio')){
+            // first get the $title
+            if (!is_null($title)) {
+                $title  = $this->_xmlEntities($title);
+            }
+            if (!$title) {
+                // just show the sourcename
+                $title = $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+            if (!$render) {
+                // if the video is not supposed to be rendered
+                // return the title of the video
+                return $title;
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+
+            //add audio
+            $ret .= $this->_audio($src, $att);
 
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {

@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Indonesian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
+ * @author zamroni <therons@ymail.com>
+ * @author umriya afini <bigdream.power@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -41,9 +43,14 @@ $lang['btn_backtomedia']       = 'Kembali ke Pilihan Mediafile';
 $lang['btn_subscribe']         = 'Ikuti Perubahan';
 $lang['btn_profile']           = 'Ubah Profil';
 $lang['btn_reset']             = 'Reset';
+$lang['btn_resendpwd']         = 'Atur password baru';
 $lang['btn_draft']             = 'Edit draft';
+$lang['btn_recover']           = 'Cadangkan draf';
 $lang['btn_draftdel']          = 'Hapus draft';
+$lang['btn_revert']            = 'Kembalikan';
 $lang['btn_register']          = 'Daftar';
+$lang['btn_apply']             = 'Terapkan';
+$lang['btn_deleteuser']        = 'Hapus Akun Saya';
 $lang['loggedinas']            = 'Login sebagai ';
 $lang['user']                  = 'Username';
 $lang['pass']                  = 'Password';
@@ -55,6 +62,7 @@ $lang['fullname']              = 'Nama lengkap';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Profil User';
 $lang['badlogin']              = 'Maaf, username atau password salah.';
+$lang['badpassconfirm']        = 'Maaf, password salah';
 $lang['minoredit']             = 'Perubahan Minor';
 $lang['draftdate']             = 'Simpan draft secara otomatis';
 $lang['regmissing']            = 'Maaf, Anda harus mengisi semua field.';
@@ -70,20 +78,43 @@ $lang['profna']                = 'Wiki ini tidak mengijinkan perubahan profil.';
 $lang['profnochange']          = 'Tidak ada perubahan.';
 $lang['profnoempty']           = 'Mohon mengisikan nama atau alamat email.';
 $lang['profchanged']           = 'Profil User berhasil diubah.';
+$lang['profdeleteuser']        = 'Hapus Akun';
+$lang['profdeleted']           = 'Akun anda telah dihapus dari wiki ini';
+$lang['profconfdelete']        = 'Saya berharap menghapus akun saya dari wiki ini.
+Aksi ini tidak bisa diselesaikan.';
+$lang['profconfdeletemissing'] = 'Knfirmasi check box tidak tercentang';
 $lang['pwdforget']             = 'Lupa Password? Dapatkan yang baru';
 $lang['resendna']              = 'Wiki ini tidak mendukung pengiriman ulang password.';
+$lang['resendpwd']             = 'Atur password baru';
 $lang['resendpwdmissing']      = 'Maaf, Anda harus mengisikan semua field.';
 $lang['resendpwdnouser']       = 'Maaf, user ini tidak ditemukan.';
 $lang['resendpwdbadauth']      = 'Maaf, kode autentikasi tidak valid. Pastikan Anda menggunakan keseluruhan link konfirmasi.';
 $lang['resendpwdconfirm']      = 'Link konfirmasi telah dikirim melalui email.';
 $lang['resendpwdsuccess']      = 'Password baru Anda telah dikirim melalui email.';
+$lang['searchmedia']           = 'Cari nama file:';
 $lang['txt_upload']            = 'File yang akan diupload';
 $lang['txt_filename']          = 'Masukkan nama wiki (opsional)';
 $lang['txt_overwrt']           = 'File yang telah ada akan ditindih';
 $lang['lockedby']              = 'Sedang dikunci oleh';
 $lang['lockexpire']            = 'Penguncian artikel sampai dengan';
-$lang['js']['willexpire']            = 'Halaman yang sedang Anda kunci akan berakhir dalam waktu kurang lebih satu menit.\nUntuk menghindari konflik, gunakan tombol Preview untuk me-reset timer pengunci.';
+$lang['js']['willexpire']      = 'Halaman yang sedang Anda kunci akan berakhir dalam waktu kurang lebih satu menit.\nUntuk menghindari konflik, gunakan tombol Preview untuk me-reset timer pengunci.';
 $lang['js']['notsavedyet']     = 'Perubahan yang belum disimpan akan hilang.\nYakin akan dilanjutkan?';
+$lang['js']['searchmedia']     = 'Cari file';
+$lang['js']['keepopen']        = 'Biarkan window terbuka dalam pemilihan';
+$lang['js']['hidedetails']     = 'Sembunyikan detil';
+$lang['js']['mediatitle']      = 'Pengaturan Link';
+$lang['js']['mediasize']       = 'Ukuran gambar';
+$lang['js']['mediaclose']      = 'Tutup';
+$lang['js']['mediadisplayimg'] = 'Lihat gambar';
+$lang['js']['mediadisplaylnk'] = 'Lihat hanya link';
+$lang['js']['nosmblinks']      = 'Link ke share Windows hanya bekerja di Microsoft Internet Explorer.
+Anda masih dapat mengcopy and paste linknya.';
+$lang['js']['del_confirm']     = 'Hapus tulisan ini?';
+$lang['js']['media_select']    = 'Pilih file...';
+$lang['js']['media_upload_btn'] = 'Unggah';
+$lang['js']['media_done_btn']  = 'Selesai';
+$lang['js']['media_drop']      = 'Tarik file disini untuk mengunggah';
+$lang['js']['media_cancel']    = 'Buang';
 $lang['rssfailed']             = 'Error terjadi saat mengambil feed: ';
 $lang['nothingfound']          = 'Tidak menemukan samasekali.';
 $lang['mediaselect']           = 'Pilihan Mediafile';
@@ -95,13 +126,13 @@ $lang['uploadexist']           = 'File telah ada. Tidak mengerjakan apa-apa.';
 $lang['uploadbadcontent']      = 'Isi file yang diupload tidak cocok dengan ekstensi file %s.';
 $lang['uploadspam']            = 'File yang diupload diblok oleh spam blacklist.';
 $lang['uploadxss']             = 'File yang diupload diblok karena kemungkinan isi yang berbahaya.';
+$lang['uploadsize']            = 'File yang diupload terlalu besar. (max.%)';
 $lang['deletesucc']            = 'File "%s" telah dihapus.';
 $lang['deletefail']            = '"%s" tidak dapat dihapus - cek hak aksesnya.';
 $lang['mediainuse']            = 'File "%s" belum dihapus - file ini sedang digunakan.';
 $lang['namespaces']            = 'Namespaces';
 $lang['mediafiles']            = 'File tersedia didalam';
-$lang['js']['keepopen']        = 'Biarkan window terbuka dalam pemilihan';
-$lang['js']['hidedetails']     = 'Sembunyikan detil';
+$lang['accessdenied']          = 'Anda tidak diperbolehkan melihat halaman ini';
 $lang['mediausage']            = 'Gunakan sintaks berikut untuk me-refer ke file ini';
 $lang['mediaview']             = 'Tampilkan file asli';
 $lang['mediaroot']             = 'root';
@@ -131,7 +162,7 @@ $lang['mail_newpage']          = 'Halaman ditambahkan:';
 $lang['mail_changed']          = 'Halaman diubah:';
 $lang['mail_new_user']         = 'User baru:';
 $lang['mail_upload']           = 'Berkas di-upload:';
-$lang['js']['nosmblinks']            = "Link ke share Windows hanya bekerja di Microsoft Internet Explorer.\nAnda masih dapat mengcopy and paste linknya.";
+$lang['pages_changes']         = 'Halaman';
 $lang['qb_bold']               = 'Tebal';
 $lang['qb_italic']             = 'Miring';
 $lang['qb_underl']             = 'Garis Bawah';
@@ -151,7 +182,6 @@ $lang['qb_media']              = 'Tambahkan gambar atau file lain';
 $lang['qb_sig']                = 'Sisipkan tanda tangan';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Karakter Khusus';
-$lang['js']['del_confirm']           = 'Hapus tulisan ini?';
 $lang['admin_register']        = 'Tambah user baru';
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Gagal menulis metadata';

@@ -689,7 +689,7 @@ abstract class ChangeLog {
             $revs1 = array_slice($revs1, max($index - floor($max/2), 0), $max);
         }
 
-        return array($revs1, $revs2);
+        return array(array_reverse($revs1), array_reverse($revs2));
     }
 
     /**

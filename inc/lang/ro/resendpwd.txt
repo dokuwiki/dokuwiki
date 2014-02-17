@@ -1,3 +1,5 @@
 ====== Trimite parolă nouă ======
 
-Introduceți numele de utilizator în formularul de mai jos pentru a solicita o nouă parolă pentru această wiki. Un link de confirmare va fi trimis la adresa de email înregistrată.
+Introduc numele de utilizator în formularul de mai jos pentru a solicita o
+nouă parolă pentru aceast wiki. Un link de confirmare va fi trimis la adresa
+de e-mail înregistrată.

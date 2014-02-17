@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
@@ -16,6 +16,7 @@
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
+ * @author Claudio Lanconelli <lancos@libero.it>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -298,6 +299,7 @@ $lang['i_policy']              = 'Regole di accesso iniziali';
 $lang['i_pol0']                = 'Wiki Aperto (lettura, scrittura, caricamento file per tutti)';
 $lang['i_pol1']                = 'Wiki Pubblico (lettura per tutti, scrittura e caricamento file per gli utenti registrati)';
 $lang['i_pol2']                = 'Wiki Chiuso (lettura, scrittura, caricamento file solamente per gli utenti registrati)';
+$lang['i_allowreg']            = 'Permetti agli utenti di registrarsi';
 $lang['i_retry']               = 'Riprova';
 $lang['i_license']             = 'Per favore scegli la licenza sotto cui vuoi rilasciare il contenuto:';
 $lang['i_license_none']        = 'Non mostrare informazioni sulla licenza';
@@ -335,3 +337,4 @@ $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per le
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
+$lang['searchresult']          = 'Risultati della ricerca';

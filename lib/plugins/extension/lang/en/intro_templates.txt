@@ -1,0 +1,1 @@
+These are the templates currently installed in your DokuWiki. You can select the template to be used in the [[?do=admin&page=config|Configuration Manager]].
