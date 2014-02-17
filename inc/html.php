@@ -1209,14 +1209,16 @@ function html_diff($text = '', $intro = true, $type = null) {
         // link to exactly this view FS#2835
         html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
         ptln('</p>');
+
+        ptln('</div>'); // .diffoptions
     }
 
+    $l_nav = '';
+    $r_nav = '';
     if(!$text) {
         /*
          * Revisions navigation
          */
-        ptln('<div class="diffnav">');
-
         $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date']; //last timestamp is not in changelog
         list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
         $l_revisions = array();
@@ -1245,10 +1247,11 @@ function html_diff($text = '', $intro = true, $type = null) {
         $r_prev = $r_revs[$r_index + 1];
         $r_next = $r_revs[$r_index - 1];
 
+
         //move back
         if($l_prev) {
-            html_diff_navigationlink($type, 'diffbothprevrev', $l_prev, $r_prev);
-            html_diff_navigationlink($type, 'diffprevrev', $l_prev, $r_rev);
+            $l_nav .= html_diff_navigationlink($type, 'diffbothprevrev', $l_prev, $r_prev);
+            $l_nav .= html_diff_navigationlink($type, 'diffprevrev', $l_prev, $r_rev);
         }
         //left dropdown
         $form = new Doku_Form(array('action' => wl()));
@@ -1266,14 +1269,15 @@ function html_diff($text = '', $intro = true, $type = null) {
              )
         );
         $form->addElement(form_makeButton('submit', 'diff', 'Go'));
-        $form->printForm();
-
-        //move forward/back
+        $l_nav .= $form->getForm();
+        //move forward
         if($l_next < $r_rev) {
-            html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
+            $l_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
         }
+
+        //move back
         if($l_rev < $r_prev) {
-            html_diff_navigationlink($type, 'diffprevrev', $l_rev, $r_prev);
+            $r_nav .= html_diff_navigationlink($type, 'diffprevrev', $l_rev, $r_prev);
         }
         //rigth dropdown
         $form = new Doku_Form(array('action' => wl()));
@@ -1291,19 +1295,16 @@ function html_diff($text = '', $intro = true, $type = null) {
              )
         );
         $form->addElement(form_makeButton('submit', 'diff', 'Go'));
-        $form->printForm();
+        $r_nav .= $form->getForm();
         //move forward
         if($r_next) {
             if($pagelog->isCurrentRevision($r_next)) {
-                html_diff_navigationlink($type, 'difflastrev', $l_rev); //last revision is diff with current page
+                $r_nav .= html_diff_navigationlink($type, 'difflastrev', $l_rev); //last revision is diff with current page
             } else {
-                html_diff_navigationlink($type, 'diffnextrev', $l_rev, $r_next);
+                $r_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_rev, $r_next);
             }
-            html_diff_navigationlink($type, 'diffbothnextrev', $l_next, $r_next);
+            $r_nav .= html_diff_navigationlink($type, 'diffbothnextrev', $l_next, $r_next);
         }
-
-        ptln('</div>'); // .diffnav
-        ptln('</div>'); // .diffoptions
     }
 
     /*
@@ -1313,12 +1314,22 @@ function html_diff($text = '', $intro = true, $type = null) {
     <div class="table">
     <table class="diff diff_<?php echo $type ?>">
     <?php
-    if($type == 'inline') { ?>
+    if($type == 'inline') {
+        if(!$text) { ?>
+            <tr>
+                <td class="diff-lineheader">-</td>
+                <td class="diffnav"><?php echo $l_nav ?></td>
+            </tr>
+            <tr>
+                <th class="diff-lineheader">-</th>
+                <th <?php echo $l_minor ?>>
+                    <?php echo $l_head ?>
+                </th>
+            </tr>
+        <?php } ?>
         <tr>
-            <th class="diff-lineheader">-</th>
-            <th <?php echo $l_minor ?>>
-                <?php echo $l_head ?>
-            </th>
+            <td class="diff-lineheader">+</td>
+            <td class="diffnav"><?php echo $r_nav ?></td>
         </tr>
         <tr>
             <th class="diff-lineheader">+</th>
@@ -1326,7 +1337,13 @@ function html_diff($text = '', $intro = true, $type = null) {
                 <?php echo $r_head ?>
             </th>
         </tr>
-    <?php } else { ?>
+    <?php } else {
+        if(!$text) { ?>
+            <tr>
+                <td colspan="2" class="diffnav"><?php echo $l_nav ?></td>
+                <td colspan="2" class="diffnav"><?php echo $r_nav ?></td>
+            </tr>
+        <?php } ?>
         <tr>
             <th colspan="2" <?php echo $l_minor ?>>
                 <?php echo $l_head ?>
@@ -1367,7 +1384,9 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
             'difftype' => $difftype,
         );
     }
-    ptln('<a class="'.$linktype.'" href="' . wl($ID, $urlparam) . '" title="' . $lang[$linktype] . '"><span>' . $lang[$linktype] . '</span></a>');
+    return  '<a class="' . $linktype . '" href="' . wl($ID, $urlparam) . '" title="' . $lang[$linktype] . '">' .
+                '<span>' . $lang[$linktype] . '</span>' .
+            '</a>' . "\n";
 }
 
 function html_insert_softbreaks($diffhtml) {
