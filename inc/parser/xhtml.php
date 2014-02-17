@@ -562,6 +562,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * $search,$returnonly & $linktype are not for the renderer but are used
      * elsewhere - no need to implement them in other renderers
      *
+     * @param string $id pageid
+     * @param string|null $name link name
+     * @param string|null $search adds search url param
+     * @param bool $returnonly whether to return html or write to doc attribute
+     * @param string $linktype type to set use of headings
+     * @return void|string writes to doc attribute or returns html depends on $returnonly
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function internallink($id, $name = null, $search=null,$returnonly=false,$linktype='content') {
