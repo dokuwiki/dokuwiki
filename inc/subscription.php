@@ -288,7 +288,7 @@ class Subscription {
     public function send_bulk($page) {
         if(!$this->isenabled()) return 0;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
@@ -651,7 +651,7 @@ class Subscription {
     public function notifyaddresses(&$data) {
         if(!$this->isenabled()) return;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
 

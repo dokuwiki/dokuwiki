@@ -182,7 +182,7 @@ function rss_parseOptions() {
 function rss_buildItems(&$rss, &$data, $opt) {
     global $conf;
     global $lang;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     $eventData = array(
