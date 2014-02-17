@@ -1203,12 +1203,14 @@ function html_diff($text='',$intro=true,$type=null){
 
         ptln('<p>');
         // link to exactly this view FS#2835
-        html_diff_navigationlink($type, $lang['difflink'], $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
-        ptln('</p><br />');
+        html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
+        ptln('</p>');
 
         /*
          * Revisions navigation
          */
+        ptln('<div class="diffnav">');
+
         $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date']; //last timestamp is not in changelog
         list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
         $l_revisions = array();
@@ -1239,8 +1241,8 @@ function html_diff($text='',$intro=true,$type=null){
 
         //move back
         if($l_prev) {
-            html_diff_navigationlink($type, $lang['diffbothprevrev'], $l_prev, $r_prev);
-            html_diff_navigationlink($type, $lang['diffprevrev'], $l_prev, $r_rev);
+            html_diff_navigationlink($type, 'diffbothprevrev', $l_prev, $r_prev);
+            html_diff_navigationlink($type, 'diffprevrev', $l_prev, $r_rev);
         }
         //left dropdown
         $form = new Doku_Form(array('action'=>wl()));
@@ -1259,10 +1261,10 @@ function html_diff($text='',$intro=true,$type=null){
 
         //move forward/back
         if($l_next < $r_rev) {
-            html_diff_navigationlink($type, $lang['diffnextrev'], $l_next, $r_rev);
+            html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
         }
         if($l_rev < $r_prev) {
-            html_diff_navigationlink($type, $lang['diffprevrev'], $l_rev, $r_prev);
+            html_diff_navigationlink($type, 'diffprevrev', $l_rev, $r_prev);
         }
         //rigth dropdown
         $form = new Doku_Form(array('action'=>wl()));
@@ -1281,14 +1283,15 @@ function html_diff($text='',$intro=true,$type=null){
         //move forward
         if($r_next) {
             if($pagelog->isCurrentRevision($r_next)) {
-                html_diff_navigationlink($type, $lang['difflastrev'], $l_rev); //last revision is diff with current page
+                html_diff_navigationlink($type, 'difflastrev', $l_rev); //last revision is diff with current page
             } else {
-                html_diff_navigationlink($type, $lang['diffnextrev'], $l_rev, $r_next);
+                html_diff_navigationlink($type, 'diffnextrev', $l_rev, $r_next);
             }
-            html_diff_navigationlink($type, $lang['diffbothnextrev'], $l_next, $r_next);
+            html_diff_navigationlink($type, 'diffbothnextrev', $l_next, $r_next);
         }
 
-        ptln('</div>');
+        ptln('</div>'); // .diffnav
+        ptln('</div>'); // .diffoptions
     }
     /*
      * Diff view
@@ -1326,29 +1329,29 @@ function html_diff($text='',$intro=true,$type=null){
 /**
  * Create html link to a diff defined by two revisions
  *
- * @param string $type display type
+ * @param string $difftype display type
+ * @param string $linktype
  * @param int $lrev oldest revision
  * @param int $rrev newest revision or null for diff with current revision
- * @param string $name
  * @return string html of link to a diff
  */
-function html_diff_navigationlink($type, $name, $lrev, $rrev = null) {
-    global $ID;
+function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
+    global $ID, $lang;
     if($rrev === null) {
         $urlparam = array(
             'do' => 'diff',
             'rev' => $lrev,
-            'difftype' => $type,
+            'difftype' => $difftype,
         );
     } else {
         $urlparam = array(
             'do' => 'diff',
             'rev2[0]' => $lrev,
             'rev2[1]' => $rrev,
-            'difftype' => $type,
+            'difftype' => $difftype,
         );
     }
-    ptln('<a class="wikilink1" href="' . wl($ID, $urlparam) . '">' . $name . '</a>');
+    ptln('<a class="'.$linktype.'" href="' . wl($ID, $urlparam) . '" title="' . $lang[$linktype] . '"><span>' . $lang[$linktype] . '</span></a>');
 }
 
 function html_insert_softbreaks($diffhtml) {
