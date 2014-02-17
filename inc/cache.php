@@ -16,6 +16,7 @@ class cache {
     //   used by _useCache to determine cache validity
 
     var $_event = '';       // event to be triggered during useCache
+    var $_time;
 
     function cache($key,$ext) {
         $this->key = $key;
