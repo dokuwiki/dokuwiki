@@ -9,27 +9,36 @@ if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../../.
 define('NOSESSION', 1);
 require_once(DOKU_INC.'inc/init.php');
 
-
-/**
- * Class DokuFileIconBuilder
- *
- * overwrite mime type loading with loading DokuWiki's mime type config instead
- */
-class DokuFileIconBuilder extends FileIconBuilder {
-
-    protected function loadmimetypes(){
-        $this->mimetypes = getMimeTypes();
-        foreach(array_keys($this->mimetypes) as $ext) {
-            $this->mimetypes[$ext] = ltrim($this->mimetypes[$ext], '!');
-        }
-    }
-}
-
-
-echo "Important: you should enable the commented file types in mime.conf to make sure the icon are generated!\n";
+$extensions = array(
+    'jpg', 'gif', 'png', 'ico',
+    'swf', 'mp3', 'ogg', 'wav', 'webm', 'ogv', 'mp4',
+    'tgz', 'tar', 'gz', 'bz2', 'zip', 'rar', '7z',
+    'pdf', 'ps',
+    'rpm', 'deb',
+    'doc', 'xls', 'ppt', 'rtf',
+    'docx', 'xlsx', 'pptx',
+    'sxw', 'sxc', 'sxi', 'sxd',
+    'odc', 'odf', 'odg', 'odi', 'odp', 'ods', 'odt',
+    'html', 'htm', 'txt', 'conf', 'xml', 'csv',
+    // these might be used in downloadable code blocks:
+    'c', 'cc', 'cpp', 'h', 'hpp', 'csh', 'diff', 'java', 'pas',
+    'pl', 'py', 'sh', 'bash', 'asm', 'htm', 'css', 'js', 'json'
+);
 
 // generate all the icons
-$DFIB = new DokuFileIconBuilder();
-$DFIB->createAll(__DIR__);
+@mkdir('16x16');
+@mkdir('32x32');
 
-echo "generation done\n";
+$DFIB = new FileIconBuilder();
+foreach($extensions as $ext) {
+    echo "$ext\n";
+    $DFIB->create16x16($ext,"16x16/$ext.png");
+    $DFIB->create32x32($ext,"32x32/$ext.png");
+}
+
+copy("16x16/jpg.png", "16x16/jpeg.png");
+copy("32x32/jpg.png", "32x32/jpeg.png");
+
+copy("16x16/htm.png", "16x16/html.png");
+copy("32x32/htm.png", "32x32/html.png");
+
