@@ -94,6 +94,7 @@ function getID($param='id',$clean=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
+ * @return string cleaned id
  */
 function cleanID($raw_id,$ascii=false){
     global $conf;
@@ -244,6 +245,7 @@ function page_exists($id,$rev='',$clean=true) {
  * @param  $rev     string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
+ * @return string full path
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -361,6 +363,7 @@ function mediaFN($id, $rev=''){
  *
  * @param  string $id  The id of the local file
  * @param  string $ext The file extension (usually txt)
+ * @return string full filepath to localized file
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function localeFN($id,$ext='txt'){
@@ -543,6 +546,11 @@ function isHiddenPage($id){
     return $data['hidden'];
 }
 
+/**
+ * callback checks if page is hidden
+ *
+ * @param array $data event data    see isHiddenPage()
+ */
 function _isHiddenPage(&$data) {
     global $conf;
     global $ACT;
