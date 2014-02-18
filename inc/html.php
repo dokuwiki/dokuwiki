@@ -1339,7 +1339,6 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
     $r_prev = $r_revs[$r_index + 1];
     $r_next = $r_revs[$r_index - 1];
 
-
     /*
      * Left side:
      */
@@ -1367,7 +1366,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
     $form->addElement(form_makeButton('submit', 'diff', 'Go'));
     $l_nav .= $form->getForm();
     //move forward
-    if($l_next < $r_rev) {
+    if($l_next && $l_next < $r_rev) {
         $l_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
     }
 
