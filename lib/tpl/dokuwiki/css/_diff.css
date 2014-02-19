@@ -76,6 +76,9 @@
 
 /* diff nav */
 
+.dokuwiki table.diff_sidebyside td.diffnav {
+    padding-bottom: .7em;
+}
 .dokuwiki .diffnav a {
     display: inline-block;
     vertical-align: middle;
@@ -84,11 +87,17 @@
     display: none;
 }
 
+.dokuwiki .diffnav a:hover,
+.dokuwiki .diffnav a:active,
+.dokuwiki .diffnav a:focus {
+    background-color: @ini_background_alt;
+    text-decoration: none;
+}
+
 .dokuwiki .diffnav a:before {
-    font-size: 1.2em;
     display: inline-block;
     line-height: 1;
-    padding: .1em .2em;
+    padding: .2em .4em;
     border: 1px solid @ini_border;
     border-radius: 2px;
     color: @ini_text;
@@ -110,4 +119,9 @@
 
 .dokuwiki .diffnav select {
     width: 15em;
+    height: 1.5em; /* height is necessary for longer options in Webkit */
+}
+
+.dokuwiki .diffnav select option[selected] {
+    font-weight: bold;
 }
