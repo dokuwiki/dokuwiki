@@ -642,7 +642,7 @@ abstract class ChangeLog {
      * When available it returns $max entries for each revision
      *
      * @param int $rev1 oldest revision timestamp
-     * @param int $rev2 newest revision timestamp
+     * @param int $rev2 newest revision timestamp (0 looks up last revision)
      * @param int $max maximum number of revisions returned
      * @return array with two arrays with revisions surrounding rev1 respectively rev2
      */
@@ -651,10 +651,16 @@ abstract class ChangeLog {
         $rev1 = max($rev1, 0);
         $rev2 = max($rev2, 0);
 
-        if($rev2 < $rev1) {
-            $rev = $rev2;
-            $rev2 = $rev1;
-            $rev1 = $rev;
+        if($rev2) {
+            if($rev2 < $rev1) {
+                $rev = $rev2;
+                $rev2 = $rev1;
+                $rev1 = $rev;
+            }
+        } else {
+            //empty right side means a removed page. Look up last revision.
+            $revs = $this->getRevisions(-1, 1);
+            $rev2 = $revs[0];
         }
         //collect revisions around rev2
         list($revs2, $allrevs, $fp, $lines, $head, $tail) = $this->retrieveRevisionsAround($rev2, $max);

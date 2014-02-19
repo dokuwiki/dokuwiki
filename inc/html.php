@@ -1308,21 +1308,27 @@ function html_diff($text = '', $intro = true, $type = null) {
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
     global $INFO, $ID;
 
-    //last timestamp is not in changelog
+    //last timestamp is not in changelog (note: when page is removed, the metadata timestamp is zero as well)
     $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
 
     //retrieve revisions with additional info
     list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
     $l_revisions = array();
+    if(!$l_rev) {
+        $l_revisions[0] = array(0, "", false); //no left revision given, add dummy
+    }
     foreach($l_revs as $rev) {
         $info = $pagelog->getRevisionInfo($rev);
         $l_revisions[$rev] = array(
             $rev,
             dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
-            $rev >= $r_rev //disable?
+            $r_rev ? $rev >= $r_rev : false //disable?
         );
     }
     $r_revisions = array();
+    if(!$r_rev) {
+        $r_revisions[0] = array(0, "", false); //no right revision given, add dummy
+    }
     foreach($r_revs as $rev) {
         $info = $pagelog->getRevisionInfo($rev);
         $r_revisions[$rev] = array(
@@ -1331,13 +1337,24 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
             $rev <= $l_rev //disable?
         );
     }
+
     //determine previous/next revisions
     $l_index = array_search($l_rev, $l_revs);
     $l_prev = $l_revs[$l_index + 1];
     $l_next = $l_revs[$l_index - 1];
-    $r_index = array_search($r_rev, $r_revs);
-    $r_prev = $r_revs[$r_index + 1];
-    $r_next = $r_revs[$r_index - 1];
+    if($r_rev) {
+        $r_index = array_search($r_rev, $r_revs);
+        $r_prev = $r_revs[$r_index + 1];
+        $r_next = $r_revs[$r_index - 1];
+    } else {
+        //removed page
+        if($l_next) {
+            $r_prev = $r_revs[0];
+        } else {
+            $r_prev = null;
+        }
+        $r_next = null;
+    }
 
     /*
      * Left side:
@@ -1366,7 +1383,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
     $form->addElement(form_makeButton('submit', 'diff', 'Go'));
     $l_nav .= $form->getForm();
     //move forward
-    if($l_next && $l_next < $r_rev) {
+    if($l_next && ($l_next < $r_rev || !$r_rev)) {
         $l_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
     }
 
@@ -1418,7 +1435,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
  */
 function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
     global $ID, $lang;
-    if($rrev === null) {
+    if(!$rrev) {
         $urlparam = array(
             'do' => 'diff',
             'rev' => $lrev,
