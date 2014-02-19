@@ -1207,7 +1207,7 @@ function html_diff($text = '', $intro = true, $type = null) {
      * Display type and exact reference
      */
     if(!$text) {
-        ptln('<div class="diffoptions">');
+        ptln('<div class="diffoptions group">');
 
 
         $form = new Doku_Form(array('action' => wl()));

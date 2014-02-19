@@ -74,6 +74,15 @@
     font-weight: bold;
 }
 
+/* diff options */
+
+.dokuwiki .diffoptions form {
+    float: left;
+}
+.dokuwiki .diffoptions p {
+    float: right;
+}
+
 /* diff nav */
 
 .dokuwiki table.diff_sidebyside td.diffnav {
