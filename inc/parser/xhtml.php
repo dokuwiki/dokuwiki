@@ -589,7 +589,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
-        resolve_pageid(getNS($ID),$id,$exists);
+        resolve_pageid(getNS($ID),$id,$exists,$this->date_at);
 
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if ( !$isImage ) {
@@ -788,7 +788,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                             $height=null, $cache=null, $linking=null, $return=NULL) {
         global $ID;
         list($src,$hash) = explode('#',$src,2);
-        resolve_mediaid(getNS($ID),$src, $exists);
+        resolve_mediaid(getNS($ID),$src, $exists,$this->date_at);
 
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -1231,7 +1231,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // see internalmedia() and externalmedia()
         list($img['src'],$hash) = explode('#',$img['src'],2);
         if ($img['type'] == 'internalmedia') {
-            resolve_mediaid(getNS($ID),$img['src'],$exists);
+            resolve_mediaid(getNS($ID),$img['src'],$exists,$this->date_at);
         }
 
         return $this->_media($img['src'],

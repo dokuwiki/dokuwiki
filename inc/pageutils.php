@@ -432,9 +432,9 @@ function resolve_id($ns,$id,$clean=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function resolve_mediaid($ns,&$page,&$exists){
+function resolve_mediaid($ns,&$page,&$exists,$rev='' ){
     $page   = resolve_id($ns,$page);
-    $file   = mediaFN($page);
+    $file   = mediaFN($page,$rev);
     $exists = @file_exists($file);
 }
 
@@ -443,7 +443,7 @@ function resolve_mediaid($ns,&$page,&$exists){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function resolve_pageid($ns,&$page,&$exists){
+function resolve_pageid($ns,&$page,&$exists,$rev='' ){
     global $conf;
     global $ID;
     $exists = false;
@@ -463,20 +463,20 @@ function resolve_pageid($ns,&$page,&$exists){
     $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
 
     // get filename (calls clean itself)
-    $file = wikiFN($page);
+    $file = wikiFN($page,$rev);
 
     // if ends with colon or slash we have a namespace link
     if(in_array(substr($page,-1), array(':', ';')) ||
        ($conf['useslash'] && substr($page,-1) == '/')){
-        if(page_exists($page.$conf['start'])){
+        if(page_exists($page.$conf['start'],$rev)){
             // start page inside namespace
             $page = $page.$conf['start'];
             $exists = true;
-        }elseif(page_exists($page.noNS(cleanID($page)))){
+        }elseif(page_exists($page.noNS(cleanID($page),$rev))){
             // page named like the NS inside the NS
             $page = $page.noNS(cleanID($page));
             $exists = true;
-        }elseif(page_exists($page)){
+        }elseif(page_exists($page,$rev)){
             // page like namespace exists
             $page = $page;
             $exists = true;
@@ -493,7 +493,7 @@ function resolve_pageid($ns,&$page,&$exists){
                 }else{
                     $try = $page.'s';
                 }
-                if(page_exists($try)){
+                if(page_exists($try,$rev)){
                     $page   = $try;
                     $exists = true;
                 }
