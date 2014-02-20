@@ -1039,7 +1039,6 @@ function media_details($image, $auth, $rev=false, $meta=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
-    global $lang;
     global $conf;
     global $INPUT;
 
