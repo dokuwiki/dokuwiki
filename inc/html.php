@@ -1308,7 +1308,8 @@ function html_diff($text = '', $intro = true, $type = null) {
 function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
     global $INFO, $ID;
 
-    //last timestamp is not in changelog (note: when page is removed, the metadata timestamp is zero as well)
+    // last timestamp is not in changelog, retrieve timestamp from metadata
+    // note: when page is removed, the metadata timestamp is zero
     $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
 
     //retrieve revisions with additional info
