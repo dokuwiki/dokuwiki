@@ -728,10 +728,23 @@ function _media_get_sort_type() {
     return _media_get_display_param('sort', array('default' => 'name', 'date'));
 }
 
+/**
+ * Returns type of listing for the list of files in media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @return string - list type
+ */
 function _media_get_list_type() {
     return _media_get_display_param('list', array('default' => 'thumbs', 'rows'));
 }
 
+/**
+ * Get display parameters
+ *
+ * @param string $param   name of parameter
+ * @param array  $values  allowed values, where default value has index key 'default'
+ * @return string the parameter value
+ */
 function _media_get_display_param($param, $values) {
     global $INPUT;
     if (in_array($INPUT->str($param), $values)) {
@@ -859,6 +872,10 @@ function media_tab_history($image, $ns, $auth=null) {
 /**
  * Prints mediafile details
  *
+ * @param string        $image media id
+ * @param               $auth
+ * @param int|bool      $rev
+ * @param JpegMeta|bool $meta
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_preview($image, $auth, $rev=false, $meta=false) {
@@ -1097,9 +1114,15 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
 
 }
 
+/**
+ * Callback for media file diff
+ *
+ * @param $data
+ * @return bool|void
+ */
 function _media_file_diff($data) {
     if(is_array($data) && count($data)===6) {
-        return media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
+        media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
     } else {
         return false;
     }
@@ -1558,7 +1581,7 @@ function media_printimgdetail($item, $fullscreen=false){
  * @param string     $amp - separator
  * @param bool       $abs
  * @param bool       $params_array
- * @return string - link
+ * @return string|array - link
  */
 function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
     global $ID;
