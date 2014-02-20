@@ -1140,7 +1140,6 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function saveOldRevision($id) {
-    global $conf;
     $oldf = wikiFN($id);
     if(!@file_exists($oldf)) return '';
     $date = filemtime($oldf);
@@ -1230,8 +1229,9 @@ function getGoogleQuery() {
 /**
  * Return the human readable size of a file
  *
- * @param       int    $size   A file size
- * @param       int    $dec    A number of decimal places
+ * @param       int $size A file size
+ * @param       int $dec A number of decimal places
+ * @return string human readable size
  * @author      Martin Benjamin <b.martin@cybernet.ch>
  * @author      Aidan Lister <aidan@php.net>
  * @version     1.0.0
@@ -1362,12 +1362,16 @@ function php_to_byte($v) {
     $l   = substr($v, -1);
     $ret = substr($v, 0, -1);
     switch(strtoupper($l)) {
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'P':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'T':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'G':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'M':
             $ret *= 1024;
         case 'K':
