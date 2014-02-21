@@ -299,15 +299,17 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    global $QUERY;
+    global $QUERY, $ID;
     global $lang;
 
     $intro = p_locale_xhtml('searchpage');
     // allow use of placeholder in search intro
+    $pagecreateinfo = (auth_quickaclcheck($ID) > AUTH_READ) ? $lang['searchcreatepage'] : '';
     $intro = str_replace(
-                array('@QUERY@','@SEARCH@'),
-                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
-                $intro);
+        array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
+        array(hsc(rawurlencode($QUERY)), hsc($QUERY), $pagecreateinfo),
+        $intro
+    );
     echo $intro;
     flush();
 
