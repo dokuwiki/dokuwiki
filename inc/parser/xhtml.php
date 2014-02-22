@@ -589,7 +589,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
-        resolve_pageid(getNS($ID),$id,$exists,$this->date_at);
+        resolve_pageid(getNS($ID),$id,$exists,$this->date_at,true);
 
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if ( !$isImage ) {
