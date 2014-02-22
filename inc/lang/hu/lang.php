@@ -337,4 +337,4 @@ $lang['media_restore']         = 'Ezen verzió visszaállítása';
 $lang['currentns']             = 'Aktuális névtér';
 $lang['searchresult']          = 'Keresés eredménye';
 $lang['plainhtml']             = 'Sima HTML';
-$lang['wikimarkup']            = 'Wiki-jelölő nyelv';
+$lang['wikimarkup']            = 'Wiki-jelölőnyelv';
