@@ -284,7 +284,7 @@ function media_upload_xhr($ns,$auth){
         'copy'
     );
     unlink($path);
-    if ($tmp) dir_delete($tmp);
+    if ($tmp) io_rmdir($tmp, true);
     if (is_array($res)) {
         msg($res[0], $res[1]);
         return false;
