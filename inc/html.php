@@ -1233,7 +1233,7 @@ function html_diff($text = '', $intro = true, $type = null) {
 
         ptln('<p>');
         // link to exactly this view FS#2835
-        echo html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
+        echo html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
         ptln('</p>');
 
         ptln('</div>'); // .diffoptions

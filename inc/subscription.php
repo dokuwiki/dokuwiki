@@ -653,7 +653,7 @@ class Subscription {
     public function notifyaddresses(&$data) {
         if(!$this->isenabled()) return;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
 

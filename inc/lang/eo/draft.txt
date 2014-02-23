@@ -1,5 +1,5 @@
 ====== Skiza dosiero troviĝis ======
 
-Via lasta sekcio de redakto en tiu ĉi paĝo ne korekte kompletiĝis. DokuWiki aŭtomate konservis skizon dum vi laboris, kiun vi nun povas uzi por daŭrigi vian redaktadon. Sube vi povas vidi la datumaron, kiu konserviĝis el via lasta sekcio.
+Via lasta redaktosesio en tiu ĉi paĝo ne ĝuste kompletiĝis. DokuWiki aŭtomate konservis skizon dum vi laboris, kiun vi nun povas uzi por daŭrigi vian redaktadon. Sube vi povas vidi la datumaron, kiu konserviĝis el via lasta sesio.
 
 Bonvolu decidi ĉu vi volas //restarigi// vian perditan redakton, //forigi// la aŭtomate konservitan skizon aŭ //rezigni// pri la redakta procezo.

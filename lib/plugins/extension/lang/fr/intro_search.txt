@@ -1,0 +1,1 @@
+Cet onglet vous donne accès à toutes les extensions de tierces parties. Restez conscients qu'installer du code de tierce partie peut poser un problème de **sécurité**.  Vous voudrez peut-être au préalable lire l'article sur la [[doku>fr:security##securite_des_plugins|sécurité des plugins]].

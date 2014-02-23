@@ -6,8 +6,8 @@
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Marina Vladi <deldadam@gmail.com>
  */
-$lang['server']                = 'MySQL-szerver';
-$lang['user']                  = 'MySQL felhasználónév';
+$lang['server']                = 'MySQL-kiszolgáló';
+$lang['user']                  = 'MySQL-felhasználónév';
 $lang['password']              = 'Fenti felhasználó jelszava';
 $lang['database']              = 'Adatbázis';
 $lang['charset']               = 'Az adatbázisban használt karakterkészlet';

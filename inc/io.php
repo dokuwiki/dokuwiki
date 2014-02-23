@@ -367,8 +367,6 @@ function io_createNamespace($id, $ns_type='pages') {
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function io_makeFileDir($file){
-    global $conf;
-
     $dir = dirname($file);
     if(!@is_dir($dir)){
         io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);

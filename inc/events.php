@@ -11,12 +11,12 @@ if(!defined('DOKU_INC')) die('meh.');
 class Doku_Event {
 
     // public properties
-    var $name = '';                // READONLY  event name, objects must register against this name to see the event
-    var $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
-    var $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
+    public $name = '';                // READONLY  event name, objects must register against this name to see the event
+    public $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
+    public $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
     //    event handlers may modify this if they are preventing the default action
     //    to provide the after event handlers with event results
-    var $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
+    public $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
 
     // private properties, event handlers can effect these through the provided methods
     var $_default = true;     // whether or not to carry out the default action associated with the event
@@ -30,6 +30,10 @@ class Doku_Event {
         $this->name = $name;
         $this->data =& $data;
 
+    }
+
+    function __toString() {
+        return $this->name;
     }
 
     /**
@@ -117,7 +121,7 @@ class Doku_Event_Handler {
     // public properties:  none
 
     // private properties
-    var $_hooks = array();          // array of events and their registered handlers
+    protected $_hooks = array();          // array of events and their registered handlers
 
     /**
      * event_handler
@@ -148,29 +152,35 @@ class Doku_Event_Handler {
      *                             if NULL, method is assumed to be a globally available function
      * @param  $method  (function) event handler function
      * @param  $param   (mixed)    data passed to the event handler
+     * @param  $seq     (int)      sequence number for ordering hook execution (ascending)
      */
-    function register_hook($event, $advise, $obj, $method, $param=null) {
-        $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param);
+    function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
+        $seq = (int)$seq;
+        $doSort = !isset($this->_hooks[$event.'_'.$advise][$seq]);
+        $this->_hooks[$event.'_'.$advise][$seq][] = array($obj, $method, $param);
+
+        if ($doSort) {
+            ksort($this->_hooks[$event.'_'.$advise]);
+        }
     }
 
-    function process_event(&$event,$advise='') {
+    function process_event($event,$advise='') {
 
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
 
         if (!empty($this->_hooks[$evt_name])) {
-            foreach ($this->_hooks[$evt_name] as $hook) {
-                //        list($obj, $method, $param) = $hook;
-                $obj =& $hook[0];
-                $method = $hook[1];
-                $param = $hook[2];
+            foreach ($this->_hooks[$evt_name] as $sequenced_hooks) {
+                foreach ($sequenced_hooks as $hook) {
+                    list($obj, $method, $param) = $hook;
 
-                if (is_null($obj)) {
-                    $method($event, $param);
-                } else {
-                    $obj->$method($event, $param);
+                    if (is_null($obj)) {
+                        $method($event, $param);
+                    } else {
+                        $obj->$method($event, $param);
+                    }
+
+                    if (!$event->_continue) return;
                 }
-
-                if (!$event->_continue) break;
             }
         }
     }

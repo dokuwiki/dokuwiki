@@ -183,11 +183,6 @@ if($conf['compression'] == 'gz' && !function_exists('gzopen')){
     $conf['compression'] = 0;
 }
 
-// fix dateformat for upgraders
-if(strpos($conf['dformat'],'%') === false){
-    $conf['dformat'] = '%Y/%m/%d %H:%M';
-}
-
 // precalculate file creation modes
 init_creationmodes();
 
