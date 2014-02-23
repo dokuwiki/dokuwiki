@@ -186,50 +186,50 @@
     text-align: right;
 
     form.search {
-        display: block;
         font-size: 0.875em;
-        position: relative;
-
-        input.edit {
-            width: 18em;
-            padding: .35em 22px .35em .1em;
-        }
-
-        input.button {
-            background: transparent url(images/search.png) no-repeat 0 0;
-            border-width: 0;
-            width: 19px;
-            height: 14px;
-            text-indent: -99999px;
-            margin-left: -20px;
-            box-shadow: none;
-            padding: 0;
-        }
-    }
-
-    ul {
-        margin-top: 0.5em;
     }
 }
 
 [dir=rtl] #dokuwiki__sitetools {
     text-align: left;
+}
 
-    form.search {
-        input.edit {
-            padding: .35em .1em .35em 22px;
-        }
+form.search {
+    display: block;
+    position: relative;
+    margin-bottom: 0.5em;
 
-        input.button {
-            background-position: 5px 0;
-            margin-left: 0;
-            margin-right: -20px;
-            position: relative;
-        }
+    input.edit {
+        width: 18em;
+        padding: .35em 22px .35em .1em;
+    }
+
+    input.button {
+        background: transparent url(images/search.png) no-repeat 0 0;
+        border-width: 0;
+        width: 19px;
+        height: 14px;
+        text-indent: -99999px;
+        margin-left: -20px;
+        box-shadow: none;
+        padding: 0;
     }
 }
 
-#IE7 #dokuwiki__sitetools form.search {
+[dir=rtl] form.search {
+    input.edit {
+        padding: .35em .1em .35em 22px;
+    }
+
+    input.button {
+        background-position: 5px 0;
+        margin-left: 0;
+        margin-right: -20px;
+        position: relative;
+    }
+}
+
+#IE7 form.search {
     min-height: 1px;
     z-index: 21;
 }
