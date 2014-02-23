@@ -155,12 +155,13 @@ function pageinfo() {
         $info['subscribed'] = false;
     }
 
-    $info['locked']    = checklock($ID);
-    $info['filepath']  = fullpath(wikiFN($ID));
-    $info['exists']    = @file_exists($info['filepath']);
+    $info['locked']     = checklock($ID);
+    $info['filepath']   = fullpath(wikiFN($ID));
+    $info['exists']     = @file_exists($info['filepath']);
+    $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
         //check if current revision was meant
-        if($info['exists'] && (@filemtime($info['filepath']) == $REV)) {
+        if($info['exists'] && ($info['currentrev'] == $REV)) {
             $REV = '';
         } elseif($RANGE) {
             //section editing does not work with old revisions!
