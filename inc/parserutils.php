@@ -631,26 +631,42 @@ function & p_get_renderer($mode) {
         return $Renderer;
     }
 
-    // try default renderer first:
-    $file = DOKU_INC."inc/parser/$rname.php";
-    if(@file_exists($file)){
-        require_once $file;
-
-        if ( !class_exists($rclass) ) {
-            trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
-            msg("Renderer '$rname' for $mode not valid",-1);
-            return null;
-        }
-        $Renderer = new $rclass();
-    }else{
-        // Maybe a plugin/component is available?
+    // assuming the configured renderer is bundled, construct its file name
+    $default = DOKU_INC."inc/parser/$rname.php";
+    if (!file_exists($default)) {
+        // not bundled, see if its an enabled plugin for rendering $mode
         $Renderer = $plugin_controller->load('renderer',$rname);
+        if (is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
+            return $Renderer;
+        }
 
-        if(!isset($Renderer) || is_null($Renderer)){
+        // there is a configuration error!
+        // not bundled, not an enabled plugin, try to fallback to a bundled renderer
+        $fallback = DOKU_INC."inc/parser/$mode.php";
+        if (!file_exists($fallback)) {
             msg("No renderer '$rname' found for mode '$mode'",-1);
             return null;
+        } else {
+            $default = $fallback;
+            $rclass = "Doku_Renderer_$mode";
+
+            // viewers should see renderered output, so restrict the warning to admins only
+            $msg = "No renderer '$rname' found for mode '$mode', check your plugins";
+            if ($mode == 'xhtml') {
+                $msg .= " and the 'renderer_xhtml' config setting";
+            }
+            $msg .= ".<br/>Attempting to fallback to the bundled renderer.";
+            msg($msg,-1,'','',MSG_ADMIN_ONLY);
         }
     }
+
+    require_once $default;
+    if ( !class_exists($rclass) ) {
+        trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
+        msg("Renderer '$rname' for $mode not valid",-1);
+        return null;
+    }
+    $Renderer = new $rclass();
 
     return $Renderer;
 }
