@@ -444,8 +444,6 @@ function p_render_metadata($id, $orig){
     $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
 
-        require_once DOKU_INC."inc/parser/metadata.php";
-
         // get instructions
         $instructions = p_cached_instructions(wikiFN($id),false,$id);
         if(is_null($instructions)){
