@@ -614,8 +614,13 @@ function p_render($mode,$instructions,&$info){
 }
 
 /**
+ * Figure out the correct renderer class to use for $mode,
+ * instantiate and return it
+ *
  * @param $mode string Mode of the renderer to get
  * @return null|Doku_Renderer The renderer
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
  */
 function p_get_renderer($mode) {
     /** @var Doku_Plugin_Controller $plugin_controller */
@@ -624,49 +629,44 @@ function p_get_renderer($mode) {
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
     $rclass = "Doku_Renderer_$rname";
 
+    // if requested earlier or a bundled renderer
     if( class_exists($rclass) ) {
         $Renderer = new $rclass();
         return $Renderer;
     }
 
-    // assuming the configured renderer is bundled, construct its file name
-    $default = DOKU_INC."inc/parser/$rname.php";
-    if (!file_exists($default)) {
-        // not bundled, see if its an enabled plugin for rendering $mode
-        $Renderer = $plugin_controller->load('renderer',$rname);
+    // not bundled, see if its an enabled plugin for rendering $mode
+    $Renderer = $plugin_controller->load('renderer',$rname);
+    if ($Renderer) {
         if (is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
             return $Renderer;
-        }
-
-        // there is a configuration error!
-        // not bundled, not an enabled plugin, try to fallback to a bundled renderer
-        $fallback = DOKU_INC."inc/parser/$mode.php";
-        if (!file_exists($fallback)) {
-            msg("No renderer '$rname' found for mode '$mode'",-1);
-            return null;
         } else {
-            $default = $fallback;
-            $rclass = "Doku_Renderer_$mode";
-
-            // viewers should see renderered output, so restrict the warning to admins only
-            $msg = "No renderer '$rname' found for mode '$mode', check your plugins";
-            if ($mode == 'xhtml') {
-                $msg .= " and the 'renderer_xhtml' config setting";
-            }
-            $msg .= ".<br/>Attempting to fallback to the bundled renderer.";
-            msg($msg,-1,'','',MSG_ADMIN_ONLY);
+            // plugin found, but not a renderer or not the right renderer for this $mode
+            msg("Renderer plugin '$rname' not valid for $mode",-1,'','',MSG_ADMINS_ONLY);
         }
     }
 
-    require_once $default;
-    if ( !class_exists($rclass) ) {
-        trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
-        msg("Renderer '$rname' for $mode not valid",-1);
-        return null;
-    }
-    $Renderer = new $rclass();
+    // there is a configuration error!
+    // not bundled, not a valid enabled plugin, use $mode to try to fallback to a bundled renderer
+    $rclass = "Doku_Renderer_$mode";
+    if ( class_exists($rclass) ) {
+        // viewers should see renderered output, so restrict the warning to admins only
+        $msg = "No renderer '$rname' found for mode '$mode', check your plugins";
+        if ($mode == 'xhtml') {
+            $msg .= " and the 'renderer_xhtml' config setting";
+        }
+        $msg .= ".<br/>Attempting to fallback to the bundled renderer.";
+        msg($msg,-1,'','',MSG_ADMINS_ONLY);
 
-    return $Renderer;
+        $Renderer = new $rclass;
+        $Renderer->nocache();     // fallback only (and may include admin alerts), don't cache
+        return $Renderer;
+    }
+
+    // fallback failed, alert the world
+    trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
+    msg("No renderer '$rname' found for mode '$mode'",-1);
+    return null;
 }
 
 /**
