@@ -430,8 +430,9 @@ function p_render_metadata($id, $orig){
     global $ID, $METADATA_RENDERERS;
 
     // avoid recursive rendering processes for the same id
-    if (isset($METADATA_RENDERERS[$id]))
+    if (isset($METADATA_RENDERERS[$id])) {
         return $orig;
+    }
 
     // store the original metadata in the global $METADATA_RENDERERS so p_set_metadata can use it
     $METADATA_RENDERERS[$id] =& $orig;
