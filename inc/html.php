@@ -64,6 +64,25 @@ function html_login(){
     print '</div>'.NL;
 }
 
+
+/**
+ * Denied page content
+ *
+ * @return string html
+ */
+function html_denied() {
+    global $lang;
+    $denied = p_locale_xhtml('denied');
+    $notloggedin = isset($_SERVER['REMOTE_USER']) ? '' : $lang['notloggedin'];
+
+    $denied = str_replace(
+        array('@NOTLOGGEDIN@'),
+        array($notloggedin),
+        $denied
+    );
+    print $denied;
+}
+
 /**
  * inserts section edit buttons if wanted or removes the markers
  *
