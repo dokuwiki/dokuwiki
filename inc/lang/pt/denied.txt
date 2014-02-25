@@ -1,3 +1,3 @@
 ====== Permissão Negada ======
 
-Não possui direitos e permissões suficientes para continuar. Talvez se tenha esquecido de iniciar sessão?
+Não possui direitos e permissões suficientes para continuar. @NOTLOGGEDIN@
