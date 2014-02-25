@@ -588,7 +588,7 @@ function p_sort_modes($a, $b){
 function p_render($mode,$instructions,&$info){
     if(is_null($instructions)) return '';
 
-    $Renderer =& p_get_renderer($mode);
+    $Renderer = p_get_renderer($mode);
     if (is_null($Renderer)) return null;
 
     $Renderer->reset();
@@ -619,7 +619,7 @@ function p_render($mode,$instructions,&$info){
  * @param $mode string Mode of the renderer to get
  * @return null|Doku_Renderer The renderer
  */
-function & p_get_renderer($mode) {
+function p_get_renderer($mode) {
     /** @var Doku_Plugin_Controller $plugin_controller */
     global $conf, $plugin_controller;
 
