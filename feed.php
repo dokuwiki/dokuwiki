@@ -20,7 +20,7 @@ $opt = rss_parseOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$key   = join('', array_values($opt)).$_SERVER['REMOTE_USER'].$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'];
+$key   = join('', array_values($opt)).'$'.$_SERVER['REMOTE_USER'].'$'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'];
 $cache = new cache($key, '.feed');
 
 // prepare cache depends
