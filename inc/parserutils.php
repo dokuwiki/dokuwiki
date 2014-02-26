@@ -665,7 +665,7 @@ function p_get_renderer($mode) {
     }
 
     // fallback failed, alert the world
-    throw new Exception("Unable to resolve render class $rclass",E_USER_WARNING);
+    trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
     msg("No renderer '$rname' found for mode '$mode'",-1);
     return null;
 }
