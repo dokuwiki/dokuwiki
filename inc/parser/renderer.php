@@ -6,7 +6,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-require_once DOKU_INC . 'inc/pluginutils.php';
 
 /**
  * An empty renderer, produces no output
