@@ -638,13 +638,8 @@ function p_get_renderer($mode) {
 
     // not bundled, see if its an enabled plugin for rendering $mode
     $Renderer = $plugin_controller->load('renderer',$rname);
-    if ($Renderer) {
-        if (is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
-            return $Renderer;
-        } else {
-            // plugin found, but not a renderer or not the right renderer for this $mode
-            msg("Renderer plugin '$rname' not valid for $mode",-1,'','',MSG_ADMINS_ONLY);
-        }
+    if (is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
+        return $Renderer;
     }
 
     // there is a configuration error!
