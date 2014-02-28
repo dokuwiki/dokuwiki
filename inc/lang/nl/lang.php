@@ -347,3 +347,4 @@ $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
 $lang['wikimarkup']            = 'Wiki Opmaak';
+$lang['notloggedin']           = 'Misschien ben je vergeten in te loggen?';

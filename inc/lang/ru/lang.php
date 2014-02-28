@@ -350,3 +350,4 @@ $lang['media_restore']         = 'Восстановить эту версию';
 $lang['currentns']             = 'Текущее пространство имен';
 $lang['searchresult']          = 'Результаты поиска';
 $lang['plainhtml']             = 'Чистый HTML';
+$lang['notloggedin']           = 'Может быть вы забыли войти в вики под своим логином?';

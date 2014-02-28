@@ -342,3 +342,4 @@ $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
+$lang['notloggedin']           = 'Zaloguj się!';

@@ -342,3 +342,4 @@ $lang['currentns']             = 'Aktuální jmenný prostor';
 $lang['searchresult']          = 'Výsledek hledání';
 $lang['plainhtml']             = 'Čisté HTML';
 $lang['wikimarkup']            = 'Wiki jazyk';
+$lang['notloggedin']           = 'Možná jste se zapomněli přihlásit?';

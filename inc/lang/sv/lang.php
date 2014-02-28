@@ -343,3 +343,4 @@ $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
 $lang['searchresult']          = 'Sökresultat';
 $lang['plainhtml']             = 'Ren HTML';
+$lang['notloggedin']           = 'Kanske har du glömt att logga in?';

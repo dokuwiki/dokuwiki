@@ -235,3 +235,4 @@ $lang['days']                  = '%d ditë më parë';
 $lang['hours']                 = '%d orë më parë';
 $lang['minutes']               = '%d minuta më parë';
 $lang['seconds']               = '%d sekonda më parë';
+$lang['notloggedin']           = 'Mbase harruat të hyni?';

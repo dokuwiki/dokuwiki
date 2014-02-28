@@ -336,3 +336,4 @@ $lang['currentns']             = '현재 이름공간';
 $lang['searchresult']          = '검색 결과';
 $lang['plainhtml']             = '일반 HTML';
 $lang['wikimarkup']            = '위키 문법';
+$lang['notloggedin']           = '로그인을 잊으셨나요?';

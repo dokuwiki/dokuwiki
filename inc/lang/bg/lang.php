@@ -330,3 +330,4 @@ $lang['media_update']          = 'Качване на нова версия';
 $lang['media_restore']         = 'Възстановяване на тази версия';
 $lang['searchresult']          = 'Резултати от търсенето';
 $lang['plainhtml']             = 'Обикновен HTML';
+$lang['notloggedin']           = 'Може би сте забравили да се впишете?';

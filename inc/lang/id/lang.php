@@ -218,3 +218,4 @@ $lang['i_pol0']                = 'Wiki Terbuka (baca, tulis, upload untuk semua 
 $lang['i_pol1']                = 'Wiki Publik (baca untuk semua orang, tulis dan upload untuk pengguna terdaftar)';
 $lang['i_pol2']                = 'Wiki Privat (baca, tulis dan upload hanya untuk pengguna terdaftar)';
 $lang['i_retry']               = 'Coba Lagi';
+$lang['notloggedin']           = 'Apakah Anda belum login?';
