@@ -632,7 +632,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             }
         }
         if ($this->_auth->canDo('modPass')) {
-            if ($newpass || $confirm) {
+            if ($newpass || $passconfirm) {
                 if ($this->_verifyPassword($newpass,$passconfirm)) {
                     $changes['pass'] = $newpass;
                 } else {
@@ -712,7 +712,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     protected function _verifyPassword($password, $confirm) {
         global $lang;
 
-        if (empty($password)) {
+        if (empty($password) && empty($confirm)) {
             return false;
         }
 
