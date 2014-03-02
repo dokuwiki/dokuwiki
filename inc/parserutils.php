@@ -638,7 +638,7 @@ function p_get_renderer($mode) {
 
     // not bundled, see if its an enabled plugin for rendering $mode
     $Renderer = $plugin_controller->load('renderer',$rname);
-    if (is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
+    if ($Renderer && is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
         return $Renderer;
     }
 
