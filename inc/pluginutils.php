@@ -37,7 +37,7 @@ function plugin_list($type='',$all=false) {
  * @param  $name     string name of the plugin to load
  * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
  * @param  $disabled bool   true to load even disabled plugins
- * @return DokuWiki_Plugin|DokuWiki_Syntax_Plugin|null  the plugin object or null on failure
+ * @return DokuWiki_Plugin|null  the plugin object or null on failure
  */
 function plugin_load($type,$name,$new=false,$disabled=false) {
     /** @var $plugin_controller Doku_Plugin_Controller */
