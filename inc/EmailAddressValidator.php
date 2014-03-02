@@ -15,8 +15,8 @@ class EmailAddressValidator {
 
     /**
      * Check email address validity
-     * @param   strEmailAddress     Email address to be checked
-     * @return  True if email is valid, false if not
+     * @param  string $strEmailAddress     Email address to be checked
+     * @return bool True if email is valid, false if not
      */
     public function check_email_address($strEmailAddress) {
 
@@ -82,8 +82,8 @@ class EmailAddressValidator {
 
     /**
      * Checks email section before "@" symbol for validity
-     * @param   strLocalPortion     Text to be checked
-     * @return  True if local portion is valid, false if not
+     * @param string  $strLocalPortion     Text to be checked
+     * @return bool True if local portion is valid, false if not
      */
     protected function check_local_portion($strLocalPortion) {
         // Local portion can only be from 1 to 64 characters, inclusive.
@@ -113,8 +113,8 @@ class EmailAddressValidator {
 
     /**
      * Checks email section after "@" symbol for validity
-     * @param   strDomainPortion     Text to be checked
-     * @return  True if domain portion is valid, false if not
+     * @param  string $strDomainPortion     Text to be checked
+     * @return bool True if domain portion is valid, false if not
      */
     protected function check_domain_portion($strDomainPortion) {
         // Total domain can only be from 1 to 255 characters, inclusive
@@ -172,10 +172,10 @@ class EmailAddressValidator {
 
     /**
      * Check given text length is between defined bounds
-     * @param   strText     Text to be checked
-     * @param   intMinimum  Minimum acceptable length
-     * @param   intMaximum  Maximum acceptable length
-     * @return  True if string is within bounds (inclusive), false if not
+     * @param   string $strText     Text to be checked
+     * @param   int $intMinimum  Minimum acceptable length
+     * @param   int $intMaximum  Maximum acceptable length
+     * @return bool True if string is within bounds (inclusive), false if not
      */
     protected function check_text_length($strText, $intMinimum, $intMaximum) {
         // Minimum and maximum are both inclusive

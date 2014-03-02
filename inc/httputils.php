@@ -65,7 +65,7 @@ function http_conditionalRequest($timestamp){
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  * @param string $file absolute path of file to send
- * @returns  void or exits with previously header() commands executed
+ * @returns  void or exits with previous header() commands executed
  */
 function http_sendfile($file) {
     global $conf;
@@ -93,7 +93,7 @@ function http_sendfile($file) {
  *
  * This function exits the running script
  *
- * @param ressource $fh - file handle for an already open file
+ * @param resource $fh - file handle for an already open file
  * @param int $size     - size of the whole file
  * @param int $mime     - MIME type of the file
  *
@@ -205,7 +205,7 @@ function http_gzip_valid($uncompressed_file) {
  *
  * This function handles output of cacheable resource files. It ses the needed
  * HTTP headers. If a useable cache is present, it is passed to the web server
- * and the scrpt is terminated.
+ * and the script is terminated.
  */
 function http_cached($cache, $cache_ok) {
     global $conf;

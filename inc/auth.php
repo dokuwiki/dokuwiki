@@ -845,6 +845,12 @@ function auth_nameencode($name, $skip_group = false) {
     return $cache[$name][$skip_group];
 }
 
+/**
+ * callback encodes the matches
+ *
+ * @param array $matches first complete match, next matching subpatterms
+ * @return string
+ */
 function auth_nameencode_callback($matches) {
     return '%'.dechex(ord(substr($matches[1],-1)));
 }
@@ -1075,6 +1081,11 @@ function updateprofile() {
     return false;
 }
 
+/**
+ * Delete the current logged-in user
+ *
+ * @return bool true on success, false on any error
+ */
 function auth_deleteprofile(){
     global $conf;
     global $lang;

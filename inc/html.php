@@ -1189,7 +1189,7 @@ function html_diff($text='',$intro=true,$type=null){
         $diffurl = wl($ID, array(
                         'do'       => 'diff',
                         'rev2[0]'  => $l_rev,
-                        'rev2[1]'  => $r_rev,
+                        'rev2[1]'  => $r_rev ? $r_rev : $INFO['currentrev'], // link to exactly this view FS#2835
                         'difftype' => $type,
                       ));
         ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a></p>');
