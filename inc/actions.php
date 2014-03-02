@@ -697,7 +697,7 @@ function act_sitemap($act) {
 
         // Send file
         //use x-sendfile header to pass the delivery to compatible webservers
-        if (http_sendfile($sitemap)) exit;
+        http_sendfile($sitemap);
 
         readfile($sitemap);
         exit;
