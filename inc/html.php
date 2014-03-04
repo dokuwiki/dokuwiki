@@ -81,6 +81,10 @@ function html_denied() {
         $denied
     );
     print $denied;
+
+    if(!$_SERVER['REMOTE_USER']){
+        html_login();
+    }
 }
 
 /**
