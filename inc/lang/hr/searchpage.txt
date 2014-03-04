@@ -1,1 +1,3 @@
 ====== Rezultati pretraživanja ======
+
+@CREATEPAGEINFO@

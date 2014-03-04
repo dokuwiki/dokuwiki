@@ -1,5 +1,5 @@
 ====== Sök ======
 
-Nedan ser du resultatet av sökningen. Om du inte hittar det du letar efter, så kan du skapa eller redigera sidan med någon av knapparna.
+Nedan ser du resultatet av sökningen. @CREATEPAGEINFO@
 
 ===== Resultat =====
