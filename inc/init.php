@@ -143,16 +143,14 @@ if ($conf['gzip_output'] &&
 if(!headers_sent() && !defined('NOSESSION')) {
     if(!defined('DOKU_SESSION_NAME'))     define ('DOKU_SESSION_NAME', "DokuWiki");
     if(!defined('DOKU_SESSION_LIFETIME')) define ('DOKU_SESSION_LIFETIME', 0);
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if(!defined('DOKU_SESSION_PATH'))     define ('DOKU_SESSION_PATH', $cookieDir);
+    if(!defined('DOKU_SESSION_PATH')) {
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        define ('DOKU_SESSION_PATH', $cookieDir);
+    }
     if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
 
     session_name(DOKU_SESSION_NAME);
-    if(version_compare(PHP_VERSION, '5.2.0', '>')) {
-        session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
-    } else {
-        session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()));
-    }
+    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
     session_start();
 
     // load left over messages
