@@ -16,8 +16,6 @@ if ( !defined('DOKU_TAB') ) {
     define ('DOKU_TAB',"\t");
 }
 
-require_once DOKU_INC . 'inc/parser/renderer.php';
-
 /**
  * The Renderer
  */

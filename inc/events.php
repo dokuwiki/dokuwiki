@@ -8,6 +8,9 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
+/**
+ * The event
+ */
 class Doku_Event {
 
     // public properties
@@ -32,6 +35,9 @@ class Doku_Event {
 
     }
 
+    /**
+     * @return string
+     */
     function __toString() {
         return $this->name;
     }
@@ -51,7 +57,8 @@ class Doku_Event {
      *    $evt->advise_after();
      *    unset($evt);
      *
-     * @return  results of processing the event, usually $this->_default
+     * @param bool $enablePreventDefault
+     * @return bool results of processing the event, usually $this->_default
      */
     function advise_before($enablePreventDefault=true) {
         global $EVENT_HANDLER;
@@ -77,7 +84,9 @@ class Doku_Event {
      *   $this->_default, all of which may have been modified by the event handlers.
      * - advise all registered (<event>_AFTER) handlers that the event has taken place
      *
-     * @return  $event->results
+     * @param null|callable $action
+     * @param bool $enablePrevent
+     * @return  mixed $event->results
      *          the value set by any <event>_before or <event> handlers if the default action is prevented
      *          or the results of the default action (as modified by <event>_after handlers)
      *          or NULL no action took place and no handler modified the value
@@ -116,6 +125,9 @@ class Doku_Event {
     function preventDefault() { $this->_default = false;  }
 }
 
+/**
+ * Controls the registration and execution of all events,
+ */
 class Doku_Event_Handler {
 
     // public properties:  none
@@ -132,6 +144,7 @@ class Doku_Event_Handler {
     function Doku_Event_Handler() {
 
         // load action plugins
+        /** @var DokuWiki_Action_Plugin $plugin */
         $plugin = null;
         $pluginlist = plugin_list('action');
 
@@ -147,12 +160,13 @@ class Doku_Event_Handler {
      *
      * register a hook for an event
      *
-     * @param  $event   (string)   name used by the event, (incl '_before' or '_after' for triggers)
-     * @param  $obj     (obj)      object in whose scope method is to be executed,
+     * @param  $event   string   name used by the event, (incl '_before' or '_after' for triggers)
+     * @param  $advise  string
+     * @param  $obj     object   object in whose scope method is to be executed,
      *                             if NULL, method is assumed to be a globally available function
-     * @param  $method  (function) event handler function
-     * @param  $param   (mixed)    data passed to the event handler
-     * @param  $seq     (int)      sequence number for ordering hook execution (ascending)
+     * @param  $method  string   event handler function
+     * @param  $param   mixed    data passed to the event handler
+     * @param  $seq     int      sequence number for ordering hook execution (ascending)
      */
     function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
         $seq = (int)$seq;
@@ -164,6 +178,12 @@ class Doku_Event_Handler {
         }
     }
 
+    /**
+     * process the before/after event
+     *
+     * @param Doku_Event $event
+     * @param string     $advise BEFORE or AFTER
+     */
     function process_event($event,$advise='') {
 
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
@@ -191,12 +211,12 @@ class Doku_Event_Handler {
  *
  * function wrapper to process (create, trigger and destroy) an event
  *
- * @param  $name               (string)   name for the event
- * @param  $data               (mixed)    event data
- * @param  $action             (callback) (optional, default=NULL) default action, a php callback function
- * @param  $canPreventDefault  (bool)     (optional, default=true) can hooks prevent the default action
+ * @param  $name               string   name for the event
+ * @param  $data               mixed    event data
+ * @param  $action             callback (optional, default=NULL) default action, a php callback function
+ * @param  $canPreventDefault  bool     (optional, default=true) can hooks prevent the default action
  *
- * @return (mixed)                        the event results value after all event processing is complete
+ * @return mixed                        the event results value after all event processing is complete
  *                                         by default this is the return value of the default action however
  *                                         it can be set or modified by event handler hooks
  */
