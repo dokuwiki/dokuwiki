@@ -304,7 +304,7 @@ function html_search(){
 
     $intro = p_locale_xhtml('searchpage');
     // allow use of placeholder in search intro
-    $pagecreateinfo = (auth_quickaclcheck($ID) > AUTH_READ) ? $lang['searchcreatepage'] : '';
+    $pagecreateinfo = (auth_quickaclcheck($ID) >= AUTH_CREATE) ? $lang['searchcreatepage'] : '';
     $intro = str_replace(
         array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
         array(hsc(rawurlencode($QUERY)), hsc($QUERY), $pagecreateinfo),
