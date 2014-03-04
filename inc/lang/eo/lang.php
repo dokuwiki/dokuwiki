@@ -335,3 +335,4 @@ $lang['currentns']             = 'Aktuala nomspaco';
 $lang['searchresult']          = 'Serĉrezulto';
 $lang['plainhtml']             = 'Plena HTML';
 $lang['wikimarkup']            = 'Vikiteksto';
+$lang['notloggedin']           = 'Eble vi forgesis identiĝi.';

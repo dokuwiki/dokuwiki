@@ -349,3 +349,4 @@ $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
 $lang['plainhtml']             = '纯HTML';
 $lang['wikimarkup']            = 'Wiki Markup 语言';
+$lang['notloggedin']           = '对不起，您没有足够权限，无法继续。也许您忘了登录？';

@@ -330,3 +330,4 @@ $lang['media_perm_upload']     = 'Συγνώμη, δεν έχετε επαρκή
 $lang['media_update']          = 'Φόρτωση νέας έκδοσης';
 $lang['media_restore']         = 'Επαναφορά αυτή της έκδοσης';
 $lang['searchresult']          = 'Αποτέλεσμα έρευνας';
+$lang['notloggedin']           = 'Μήπως παραλείψατε να συνδεθείτε;';

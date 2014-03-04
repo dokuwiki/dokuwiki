@@ -319,3 +319,4 @@ $lang['media_perm_read']       = 'Perdão, não tem permissão para ler ficheiro
 $lang['media_perm_upload']     = 'Perdão, não tem permissão para enviar ficheiros.';
 $lang['media_update']          = 'enviar nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['notloggedin']           = 'Talvez se tenha esquecido de iniciar sessão?';

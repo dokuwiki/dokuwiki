@@ -313,3 +313,4 @@ $lang['media_perm_read']       = 'No teniu permisos suficients per a llegir arxi
 $lang['media_perm_upload']     = 'No teniu permisos suficients per a pujar arxius';
 $lang['media_update']          = 'Puja la nova versió';
 $lang['media_restore']         = 'Restaura aquesta versió';
+$lang['notloggedin']           = 'Potser us heu descuidat d\'entrar?';

@@ -336,3 +336,4 @@ $lang['currentns']             = '現在の名前空間';
 $lang['searchresult']          = '検索結果';
 $lang['plainhtml']             = 'プレーンHTML';
 $lang['wikimarkup']            = 'Wikiマークアップ';
+$lang['notloggedin']           = '実行する権限がありません。ログインされているか確認してください。';

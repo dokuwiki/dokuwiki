@@ -356,3 +356,4 @@ $lang['currentns']             = 'Espacio de nombres actual';
 $lang['searchresult']          = 'Resultado de la búsqueda';
 $lang['plainhtml']             = 'HTML sencillo';
 $lang['wikimarkup']            = 'Etiquetado Wiki';
+$lang['notloggedin']           = '¿Quizás has olvidado identificarte?';

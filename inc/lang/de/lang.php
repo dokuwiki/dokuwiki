@@ -345,3 +345,4 @@ $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
+$lang['notloggedin']           = 'Eventuell sind Sie nicht am Wiki angemeldet?';

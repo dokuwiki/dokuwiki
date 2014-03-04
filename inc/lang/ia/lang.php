@@ -260,3 +260,4 @@ $lang['days']                  = '%d dies retro';
 $lang['hours']                 = '%d horas retro';
 $lang['minutes']               = '%d minutas retro';
 $lang['seconds']               = '%d secundas retro';
+$lang['notloggedin']           = 'Pote esser que tu ha oblidate de aperir un session.';

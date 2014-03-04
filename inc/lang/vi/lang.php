@@ -239,3 +239,4 @@ $lang['media_perm_read']       = 'Sorry, bạn không đủ quyền truy cập.'
 $lang['media_perm_upload']     = 'Xin lỗi, bạn không đủ quyền để upload file lên.';
 $lang['media_update']          = 'Tải lên phiên bản mới';
 $lang['media_restore']         = 'Phục hồi phiên bản này';
+$lang['notloggedin']           = 'Bạn quên đăng nhập hay sao?';

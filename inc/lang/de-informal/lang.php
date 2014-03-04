@@ -343,3 +343,4 @@ $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnis';
+$lang['notloggedin']           = 'Eventuell bist du nicht am Wiki angemeldet?';

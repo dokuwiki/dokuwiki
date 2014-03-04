@@ -304,3 +304,4 @@ $lang['media_history']         = 'Geçmiş %s';
 $lang['media_perm_upload']     = 'Üzgünüm, karşıya dosya yükleme yetkiniz yok.';
 $lang['media_update']          = 'Yeni versiyonu yükleyin';
 $lang['media_restore']         = 'Bu sürümü eski haline getir';
+$lang['notloggedin']           = 'Giriş yapmayı unutmuş olabilir misiniz?';
