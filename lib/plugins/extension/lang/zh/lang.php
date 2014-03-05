@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Cupen <Cupenoruler@foxmail.com>
+ * @author xiqingongzi <Xiqingongzi@Gmail.com>
  */
 $lang['menu']                  = '扩展管理器';
 $lang['tab_plugins']           = '安装插件';
@@ -31,3 +32,19 @@ $lang['extensionby']           = '<strong>%s</strong> by %s';
 $lang['screenshot']            = '%s 的截图';
 $lang['popularity']            = '人气: %s%%';
 $lang['homepage_link']         = '文档';
+$lang['bugs_features']         = '错误';
+$lang['tags']                  = '标签：';
+$lang['author_hint']           = '搜索这个作者的插件';
+$lang['installed']             = '已安装的：';
+$lang['downloadurl']           = '下载地址：';
+$lang['repository']            = '版本库：';
+$lang['unknown']               = '<em>未知的</em>';
+$lang['installed_version']     = '已安装版本：';
+$lang['install_date']          = '您的最后一次升级：';
+$lang['donate']                = '喜欢？';
+$lang['donate_action']         = '捐给作者一杯咖啡钱！';
+$lang['repo_retry']            = '重试';
+$lang['status']                = '现状：';
+$lang['status_installed']      = '已安装的';
+$lang['status_plugin']         = '插件';
+$lang['status_template']       = '模板';
