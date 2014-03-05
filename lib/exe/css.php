@@ -611,14 +611,9 @@ function css_onelinecomment_cb($matches) {
             $out .= substr($line, $i, $len-$i);
             break;
         }
-        if($nexturl === false) {
+        if($nexturl === false || $nextcom < $nexturl) {
             // no url anymore, strip comment and be done
             $out .= substr($line, $i, $nextcom-$i);
-            break;
-        }
-        if($nextcom < $nexturl) {
-            // that comment comments out the url
-            $out .= substr($line, $i, $len-$i);
             break;
         }
         // we have an upcoming url
