@@ -2929,7 +2929,8 @@ class JpegMeta {
             $length = strlen($data) - $pos;
         }
 
-        return substr($data, $pos, $length);
+        $rv = substr($data, $pos, $length);
+        return $rv;
     }
 
     /*************************************************************/
