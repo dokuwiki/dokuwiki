@@ -102,6 +102,13 @@ class css_css_compress_test extends DokuWikiTest {
         $this->assertEquals($expected, $input);
     }
 
+    function test_data() {
+        $input  = 'list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);';
+        $expect = 'list-style-image:url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);';
+
+        $this->assertEquals($expect, css_compress($input));
+    }
+
 }
 
 //Setup VIM: ex: et ts=4 :
