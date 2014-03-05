@@ -79,7 +79,7 @@ if (defined('SIMPLE_TEST')) {
 
     //handle image resizing/cropping
     if((substr($MIME, 0, 5) == 'image') && ($WIDTH || $HEIGHT)) {
-        if($HEIGHT && $WDITH) {
+        if($HEIGHT && $WIDTH) {
             $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
         } else {
             $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
