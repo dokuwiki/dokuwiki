@@ -733,7 +733,7 @@ function act_subscription($act){
     }
 
     // any action given? if not just return and show the subscription page
-    if(!$params['action'] || !checkSecurityToken()) return $act;
+    if(empty($params['action']) || !checkSecurityToken()) return $act;
 
     // Handle POST data, may throw exception.
     trigger_event('ACTION_HANDLE_SUBSCRIBE', $params, 'subscription_handle_post');

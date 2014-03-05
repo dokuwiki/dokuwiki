@@ -488,7 +488,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     function _html_list_acl($item){
         $ret = '';
         // what to display
-        if($item['label']){
+        if(!empty($item['label'])){
             $base = $item['label'];
         }else{
             $base = ':'.$item['id'];

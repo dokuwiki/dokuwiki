@@ -176,7 +176,7 @@ if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 $_REQUEST = array_merge($_GET,$_POST);
 
 // we don't want a purge URL to be digged
-if(isset($_REQUEST['purge']) && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
+if(isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
 // disable gzip if not available
 if($conf['compression'] == 'bz2' && !function_exists('bzopen')){

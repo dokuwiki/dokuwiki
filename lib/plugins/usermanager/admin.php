@@ -53,7 +53,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
 
         // attempt to retrieve any import failures from the session
-        if ($_SESSION['import_failures']){
+        if (!empty($_SESSION['import_failures'])){
             $this->_import_failures = $_SESSION['import_failures'];
         }
     }

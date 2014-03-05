@@ -191,7 +191,7 @@ function pageinfo() {
     if($REV) {
         $revinfo = getRevisionInfo($ID, $REV, 1024);
     } else {
-        if(is_array($info['meta']['last_change'])) {
+        if(!empty($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
             $revinfo = $info['meta']['last_change'];
         } else {
             $revinfo = getRevisionInfo($ID, $info['lastmod'], 1024);
