@@ -371,8 +371,12 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
                 $return = true;
             }
         }
-        if($return && !preg_match('/'.$opts['recmatch'].'/',$file)){
-            $return = false; // doesn't match
+
+        if ($return) {
+            $match = empty($opts['recmatch']) || preg_match('/'.$opts['recmatch'].'/',$file);
+            if (!$match) {
+                return false; // doesn't match
+            }
         }
     }
 
