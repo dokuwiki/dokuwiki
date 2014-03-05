@@ -1,16 +1,17 @@
 #!/bin/sh
 #
-# This script loads the latest jQuery and jQuery-UI 1.* versions from Google's CDN
+# This script loads the latest jQuery and jQuery-UI 1.* versions from Google's and jQuery's CDN
 #
 # It also loads the 'smoothness' jQuery-UI theme and all referenced images.
 #
 # @author Andreas Gohr <andi@splitbrain.org>
 # @author Stefan Grönke <stefan@gronke.net>
 # @link   https://code.google.com/apis/libraries/devguide.html#jquery
+# @link   http://code.jquery.com/
 
 # load jQuery
-wget -nv https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js      -O jquery.min.js
-wget -nv https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js          -O jquery.js
+wget -nv http://code.jquery.com/jquery-latest.min.js      -O jquery.min.js
+wget -nv http://code.jquery.com/jquery-latest.js          -O jquery.js
 
 # load jQuery-UI
 wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js -O jquery-ui.min.js
@@ -29,15 +30,15 @@ done
 for LNG in ../../../inc/lang/*
 do
     CODE=`basename $LNG`
-    wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-$CODE.js -O $LNG/jquery.ui.datepicker.js
+    wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-$CODE.js -O $LNG/jquery.ui.datepicker.js
     if [ ! -s "$LNG/jquery.ui.datepicker.js" ]; then
         rm -f $LNG/jquery.ui.datepicker.js
     fi
 done
 
 # some custom language codes
-wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-de.js -O ../../../inc/lang/de-informal/jquery.ui.datepicker.js
-wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-pt-BR.js -O ../../../inc/lang/pt-br/jquery.ui.datepicker.js
-wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-zh-CN.js -O ../../../inc/lang/zh/jquery.ui.datepicker.js
-wget -nv https://raw2.github.com/jquery/jquery-ui/master/ui/i18n/jquery.ui.datepicker-zh-TW.js -O ../../../inc/lang/zh-tw/jquery.ui.datepicker.js
+wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-de.js -O ../../../inc/lang/de-informal/jquery.ui.datepicker.js
+wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-pt-BR.js -O ../../../inc/lang/pt-br/jquery.ui.datepicker.js
+wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-zh-CN.js -O ../../../inc/lang/zh/jquery.ui.datepicker.js
+wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-zh-TW.js -O ../../../inc/lang/zh-tw/jquery.ui.datepicker.js
 
