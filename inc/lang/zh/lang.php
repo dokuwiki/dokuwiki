@@ -20,6 +20,7 @@
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author anjianshi <anjianshi@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
+ * @author Cupen <Cupenoruler@foxmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
