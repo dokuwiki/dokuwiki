@@ -42,3 +42,5 @@ wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepic
 wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-zh-CN.js -O ../../../inc/lang/zh/jquery.ui.datepicker.js
 wget -nv https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-zh-TW.js -O ../../../inc/lang/zh-tw/jquery.ui.datepicker.js
 
+# strip source maps
+sed -i '/sourceMappingURL/d' *.min.js
