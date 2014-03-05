@@ -325,7 +325,7 @@ function auth_browseruid() {
     $uid = '';
     $uid .= $_SERVER['HTTP_USER_AGENT'];
     $uid .= $_SERVER['HTTP_ACCEPT_ENCODING'];
-    $uid .= $_SERVER['HTTP_ACCEPT_CHARSET'];
+    $uid .= @$_SERVER['HTTP_ACCEPT_CHARSET'];
     $uid .= substr($ip, 0, strpos($ip, '.'));
     $uid = strtolower($uid);
     return md5($uid);

@@ -210,7 +210,7 @@ function tpl_toc($return = false) {
         } else {
             $tocok = true;
         }
-        $toc = $meta['description']['tableofcontents'];
+        $toc = isset($meta['description']['tableofcontents']) ? $meta['description']['tableofcontents'] : null;
         if(!$tocok || !is_array($toc) || !$conf['tocminheads'] || count($toc) < $conf['tocminheads']) {
             $toc = array();
         }

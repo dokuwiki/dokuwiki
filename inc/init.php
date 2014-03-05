@@ -441,12 +441,12 @@ function getBaseURL($abs=null){
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
         $parsed_host = parse_url('http://'.$_SERVER['HTTP_HOST']);
-        $host = $parsed_host['host'];
-        $port = $parsed_host['port'];
+        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
+        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
     }elseif(isset($_SERVER['SERVER_NAME'])){
         $parsed_host = parse_url('http://'.$_SERVER['SERVER_NAME']);
-        $host = $parsed_host['host'];
-        $port = $parsed_host['port'];
+        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
+        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
     }else{
         $host = php_uname('n');
         $port = '';
