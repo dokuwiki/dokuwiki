@@ -773,7 +773,7 @@ function checklock($id) {
     }
 
     //my own lock
-    list($ip, $session) = explode("\n", io_readFile($lock));
+    @list($ip, $session) = explode("\n", io_readFile($lock));
     if($ip == $_SERVER['REMOTE_USER'] || $ip == clientIP() || $session == session_id()) {
         return false;
     }
@@ -811,7 +811,7 @@ function lock($id) {
 function unlock($id) {
     $lock = wikiLockFN($id);
     if(@file_exists($lock)) {
-        list($ip, $session) = explode("\n", io_readFile($lock));
+        @list($ip, $session) = explode("\n", io_readFile($lock));
         if($ip == $_SERVER['REMOTE_USER'] || $ip == clientIP() || $session == session_id()) {
             @unlink($lock);
             return true;
@@ -1536,7 +1536,7 @@ function send_redirect($url) {
 
     // work around IE bug
     // http://www.ianhoar.com/2008/11/16/internet-explorer-6-and-redirected-anchor-links/
-    list($url, $hash) = explode('#', $url);
+    @list($url, $hash) = explode('#', $url);
     if($hash) {
         if(strpos($url, '?')) {
             $url = $url.'&#'.$hash;

@@ -606,7 +606,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //keep hash anchor
-        list($id,$hash) = explode('#',$id,2);
+        @list($id,$hash) = explode('#',$id,2);
         if(!empty($hash)) $hash = $this->_headerToLink($hash);
 
         //prepare for formating
