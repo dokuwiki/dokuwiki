@@ -63,7 +63,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * @param   string       $match   The text matched by the patterns
      * @param   int          $state   The lexer state for the match
      * @param   int          $pos     The character position of the matched text
-     * @param   Doku_Handler $handler Reference to the Doku_Handler object
+     * @param   Doku_Handler $handler The Doku_Handler object
      * @return  array Return an array with all data you want to use in render
      */
     function handle($match, $state, $pos, Doku_Handler $handler){
@@ -89,7 +89,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * created
      *
      * @param   $format   string        output format being rendered
-     * @param   $renderer Doku_Renderer reference to the current renderer object
+     * @param   $renderer Doku_Renderer the current renderer object
      * @param   $data     array         data created by handler()
      * @return  boolean                 rendered correctly?
      */
