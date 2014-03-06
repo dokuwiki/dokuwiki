@@ -1,4 +1,4 @@
 ====== Permís denegat ======
 
-No teniu prou drets per continuar. @NOTLOGGEDIN@
+No teniu prou drets per continuar.
 

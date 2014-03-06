@@ -1,3 +1,4 @@
 ====== Ez duzu baimenik ======
 
-Barkatu, ez duzu baimenik orri hau ikusteko. @NOTLOGGEDIN@
+Barkatu, ez duzu baimenik orri hau ikusteko.
+

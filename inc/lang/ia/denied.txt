@@ -1,3 +1,4 @@
 ====== Permission refusate ======
 
-Pardono, tu non ha le derectos requisite pro continuar. @NOTLOGGEDIN@
+Pardono, tu non ha le derectos requisite pro continuar.
+

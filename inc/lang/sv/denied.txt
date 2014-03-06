@@ -1,4 +1,4 @@
 ====== Åtkomst nekad ======
 
-Tyvärr, du har inte behörighet att fortsätta. @NOTLOGGEDIN@
+Tyvärr, du har inte behörighet att fortsätta.
 

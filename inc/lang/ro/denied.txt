@@ -1,3 +1,4 @@
 ====== Acces nepermis ======
 
-Din păcate nu ai destule drepturi pentru a continua. @NOTLOGGEDIN@
+Din păcate nu ai destule drepturi pentru a continua.
+

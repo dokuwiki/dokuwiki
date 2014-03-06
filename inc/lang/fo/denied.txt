@@ -1,3 +1,4 @@
 ====== Atgongd nokta! ======
 
-Tú hevur ikki rættindi til at halda áfram. @NOTLOGGEDIN@
+Tú hevur ikki rættindi til at halda áfram.
+

@@ -2,4 +2,3 @@
 
 Nemate autorizaciju.
 
-@NOTLOGGEDIN@

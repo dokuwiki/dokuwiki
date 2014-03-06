@@ -1,3 +1,4 @@
 ====== Toegang geweigerd ======
 
-Sorry: je hebt niet voldoende rechten om verder te gaan. @NOTLOGGEDIN@
+Sorry: je hebt niet voldoende rechten om verder te gaan.
+

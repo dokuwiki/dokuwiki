@@ -1,3 +1,4 @@
 ====== Autorisation refusée ======
 
-Désolé, vous n'avez pas suffisement d'autorisations pour poursuivre votre demande. @NOTLOGGEDIN@
+Désolé, vous n'avez pas suffisement d'autorisations pour poursuivre votre demande.
+

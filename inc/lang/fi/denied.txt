@@ -1,3 +1,4 @@
 ====== Lupa evätty ======
 
-Sinulla ei ole tarpeeksi valtuuksia jatkaa. @NOTLOGGEDIN@
+Sinulla ei ole tarpeeksi valtuuksia jatkaa.
+

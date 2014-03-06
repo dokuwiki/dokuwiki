@@ -1,3 +1,4 @@
 ====== Permiso Denegado ======
 
-Lo siento, no tienes suficientes permisos para continuar. @NOTLOGGEDIN@
+Lo siento, no tienes suficientes permisos para continuar.
+

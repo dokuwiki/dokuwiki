@@ -1,4 +1,4 @@
 ====== Brak dostępu ======
 
-Nie masz wystarczających uprawnień. @NOTLOGGEDIN@
+Nie masz wystarczających uprawnień.
 

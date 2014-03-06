@@ -1,3 +1,4 @@
 ====== Ni ustreznih dovoljenj ======
 
-Za nadaljevanje opravila je treba imeti ustrezna dovoljenja. @NOTLOGGEDIN@
+Za nadaljevanje opravila je treba imeti ustrezna dovoljenja.
+
