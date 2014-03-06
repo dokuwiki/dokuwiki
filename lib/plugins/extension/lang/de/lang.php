@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author H. Richard <wanderer379@t-online.de>
+ * @author Joerg <scooter22@gmx.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -36,6 +37,7 @@ $lang['tags']                  = 'Schlagworte';
 $lang['author_hint']           = 'Suche weitere Erweiterungen dieses Autors';
 $lang['installed']             = 'Installiert:';
 $lang['downloadurl']           = 'URL zum Herunterladen';
+$lang['repository']            = 'Quelle:';
 $lang['unknown']               = '<em>unbekannt</em>';
 $lang['installed_version']     = 'Installierte Version';
 $lang['install_date']          = 'Ihr letztes Update:';
@@ -57,6 +59,7 @@ $lang['status_disabled']       = 'deaktiviert';
 $lang['status_unmodifiable']   = 'unveränderlich';
 $lang['status_plugin']         = 'Plugin';
 $lang['status_template']       = 'Template';
+$lang['status_bundled']        = 'gebündelt';
 $lang['msg_enabled']           = 'Plugin %s ist aktiviert';
 $lang['msg_disabled']          = 'Erweiterung %s ist deaktiviert';
 $lang['msg_delete_success']    = 'Erweiterung wurde entfernt';
@@ -66,8 +69,15 @@ $lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installie
 $lang['msg_plugin_update_success'] = 'Das Update des Plugins %s war erfolgreich';
 $lang['msg_upload_failed']     = 'Fehler beim Hochladen der Datei';
 $lang['missing_dependency']    = '<strong>fehlende oder deaktivierte Abhängigkeit:<strong>%s';
+$lang['error_badurl']          = 'URLs sollten mit http oder https beginnen';
+$lang['error_dircreate']       = 'Temporären Ordner konnte nicht erstellt werden, um Download zu empfangen';
+$lang['error_download']        = 'Download der Datei: %s nicht möglich.';
+$lang['error_decompress']      = 'Die heruntergeladene Datei konnte nicht entpackt werden. Dies kann die Folge eines fehlerhaften Downloads sein. In diesem Fall sollten Sie versuchen den Vorgang zu wiederholen. Es kann auch die Folge eines unbekannten Kompressionsformates sein, in diesem ​​Fall müssen Sie die Datei selber herunterladen und manuell installieren.';
+$lang['error_findfolder']      = 'Das Erweiterungs-Verzeichnis konnte nicht identifiziert werden, laden und installieren sie die Datei manuell.';
+$lang['error_copy']            = 'Beim Versuch Dateien in den Ordner <em>%s</em>: zu installieren trat ein Kopierfehler auf. Die Dateizugriffsberechtigungen könnten falsch sein. Dies kann an einem unvollständig installierten Plugin liegen und beeinträchtigt somit die Stabilität Ihre Wiki-Installation.';
 $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgeschützt';
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';
 $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
+$lang['git']                   = 'Diese Erweiterung wurde über git installiert, daher kann diese nicht hier aktualisiert werden.';
 $lang['install_url']           = 'Von Webadresse (URL) installieren';
 $lang['install_upload']        = 'Erweiterung hochladen:';
