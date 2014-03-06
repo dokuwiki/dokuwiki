@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Estonian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author kristian.kankainen@kuu.la
  * @author Rivo Zängov <eraser@eraser.ee>
  */
