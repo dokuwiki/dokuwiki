@@ -318,4 +318,3 @@ $lang['media_perm_read']       = 'Sentímolo, non tes permisos suficientes para 
 $lang['media_perm_upload']     = 'Sentímolo, non tes permisos suficientes para subir arquivos.';
 $lang['media_update']          = 'Subir nova versión';
 $lang['media_restore']         = 'Restaurar esta versión';
-$lang['notloggedin']           = 'Pode que esqueceses iniciar a sesión?';

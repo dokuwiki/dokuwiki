@@ -341,4 +341,3 @@ $lang['currentns']             = '目前的命名空間';
 $lang['searchresult']          = '搜尋結果';
 $lang['plainhtml']             = '純 HTML';
 $lang['wikimarkup']            = 'Wiki 語法標記';
-$lang['notloggedin']           = '抱歉，您沒有足夠權限繼續執行。或許您忘了登入？';

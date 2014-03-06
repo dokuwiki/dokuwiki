@@ -229,4 +229,3 @@ $lang['i_pol0']                = 'Avatud (lugemine, kirjutamine ja üleslaadimin
 $lang['i_pol1']                = 'Avalikuks lugemiseks (lugeda saavad kõik, kirjutada ja üles laadida vaid registreeritud kasutajad)';
 $lang['i_pol2']                = 'Suletud (kõik õigused, kaasaarvatud lugemine on lubatud vaid registreeritud kasutajatele)';
 $lang['i_retry']               = 'Proovi uuesti';
-$lang['notloggedin']           = 'liikuda, selleks on vastavaid õigusi vaja.';

@@ -219,4 +219,3 @@ $lang['days']                  = '%d วันก่อน';
 $lang['hours']                 = '%d ชั่วโมงก่อน';
 $lang['minutes']               = '%d นาทีก่อน';
 $lang['seconds']               = '%d วินาทีก่อน';
-$lang['notloggedin']           = 'บางทีคุณอาจจะลืมล็อกอิน?';

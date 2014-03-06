@@ -140,4 +140,3 @@ $lang['img_camera']  = 'Camera';
 $lang['img_keywords']= 'Keywords';
 
 //Setup VIM: ex: et ts=2 :
-$lang['notloggedin']           = 'Perhaps you forgot to login?';

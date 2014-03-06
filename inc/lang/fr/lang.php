@@ -353,5 +353,3 @@ $lang['currentns']             = 'Namespace actuel';
 $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
-$lang['notloggedin']           = 'Peut-être avez-vous oublié de vous identifier ?';
-

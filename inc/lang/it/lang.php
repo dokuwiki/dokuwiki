@@ -338,4 +338,3 @@ $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per ca
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
 $lang['searchresult']          = 'Risultati della ricerca';
-$lang['notloggedin']           = 'Forse hai dimenticato di effettuare l\'accesso?';

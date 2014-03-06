@@ -306,4 +306,3 @@ $lang['media_viewold']         = '%s -n %s';
 $lang['media_edit']            = '%s editatu';
 $lang['media_update']          = 'Bertsio berria igo';
 $lang['media_restore']         = 'Bertsio hau berrezarri';
-$lang['notloggedin']           = 'Agian sesioa hastea ahaztu zaizu?';

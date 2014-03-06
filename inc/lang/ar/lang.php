@@ -341,4 +341,3 @@ $lang['media_restore']         = 'استرجع هذه النسخة';
 $lang['currentns']             = 'مساحة الاسم الحالية';
 $lang['searchresult']          = 'نتيجة البحث';
 $lang['wikimarkup']            = 'علامات الوكي';
-$lang['notloggedin']           = 'الاستمرار، لعلك نسيت تسجيل الدخول؟';

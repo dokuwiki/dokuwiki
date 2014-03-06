@@ -349,4 +349,3 @@ $lang['currentns']             = 'Domínio atual';
 $lang['searchresult']          = 'Resultado da Busca';
 $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Marcação wiki';
-$lang['notloggedin']           = 'Por acaso esqueceu de autenticar-se?';

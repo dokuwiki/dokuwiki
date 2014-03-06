@@ -327,4 +327,3 @@ $lang['currentns']             = 'Trenutni imenski prostor';
 $lang['searchresult']          = 'Rezultati iskanja';
 $lang['plainhtml']             = 'Zapis HTML';
 $lang['wikimarkup']            = 'Oblikovni jezik Wiki';
-$lang['notloggedin']           = 'Ali ste se morda pozabili prijaviti?';

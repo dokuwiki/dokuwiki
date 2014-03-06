@@ -260,4 +260,3 @@ $lang['hours']                 = 'a horis %d';
 $lang['minutes']               = 'a minutis %d';
 $lang['seconds']               = 'a secundis %d';
 $lang['wordblock']             = 'Mutationes non seruantur, eo quod mala uerba contenit';
-$lang['notloggedin']           = 'Ad hanc paginam accedere non potes: antea in conuentum ineas, deinde rursum temptas ';

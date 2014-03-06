@@ -325,4 +325,3 @@ $lang['media_sort_date']       = 'תאריך';
 $lang['media_namespaces']      = 'בחר מרחב שמות';
 $lang['media_files']           = 'קבצים ב s%';
 $lang['media_upload']          = 'להעלות s%';
-$lang['notloggedin']           = 'אולי שכחת להיכנס למערכת?';

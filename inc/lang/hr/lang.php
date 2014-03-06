@@ -263,4 +263,3 @@ $lang['hours']                 = '%d sati prije';
 $lang['minutes']               = '%d minuta prije';
 $lang['seconds']               = '%d sekundi prije';
 $lang['wordblock']             = 'Vaša promjena nije spremljena jer sadrži blokirani tekst (spam).';
-$lang['notloggedin']           = 'Niste li se možda zaboravili prijaviti u aplikaciju?';

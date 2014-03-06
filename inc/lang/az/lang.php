@@ -215,4 +215,3 @@ $lang['days']                  = '%d gün əvvəl';
 $lang['hours']                 = '%d saat əvvəl';
 $lang['minutes']               = '%d dəqiqə əvvəl';
 $lang['seconds']               = '%d saniyə əvvəl';
-$lang['notloggedin']           = 'Bəlkə, Siz sistemə oz istifadəçi adınız ilə girməyi unutmusunuz?';

@@ -119,4 +119,3 @@ $lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 $lang['admin_register']= 'Ampio mpampiasa vaovao...';
 
 //Setup VIM: ex: et ts=2 :
-$lang['notloggedin']           = 'Angamba hadinonao ny niditra.';

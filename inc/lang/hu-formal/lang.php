@@ -25,4 +25,3 @@ $lang['btn_older']             = 'régebbi >>';
 $lang['btn_revs']              = 'Korábbi változatok';
 $lang['btn_recent']            = 'Legújabb változások';
 $lang['btn_upload']            = 'Feltöltés';
-$lang['notloggedin']           = 'Talán elfelejtett bejelentkezni?';

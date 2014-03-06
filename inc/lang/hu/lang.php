@@ -338,4 +338,3 @@ $lang['currentns']             = 'Aktuális névtér';
 $lang['searchresult']          = 'Keresés eredménye';
 $lang['plainhtml']             = 'Sima HTML';
 $lang['wikimarkup']            = 'Wiki-jelölőnyelv';
-$lang['notloggedin']           = 'Esetleg elfelejtettél bejelentkezni?';

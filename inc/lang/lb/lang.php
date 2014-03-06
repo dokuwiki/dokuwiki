@@ -194,4 +194,3 @@ $lang['days']                  = 'virun %d Deeg';
 $lang['hours']                 = 'virun %d Stonnen';
 $lang['minutes']               = 'virun %d Minutten';
 $lang['seconds']               = 'virun %d Sekonnen';
-$lang['notloggedin']           = 'Hues de vläicht vergiess dech anzeloggen?';

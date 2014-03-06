@@ -334,4 +334,3 @@ $lang['currentns']             = 'Nykyinen nimiavaruus';
 $lang['searchresult']          = 'Haun tulokset';
 $lang['plainhtml']             = 'pelkkä HTML';
 $lang['wikimarkup']            = 'Wiki markup';
-$lang['notloggedin']           = 'Ehkä unohdit kirjautua sisään?';

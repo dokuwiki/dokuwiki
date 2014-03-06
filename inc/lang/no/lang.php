@@ -348,4 +348,3 @@ $lang['media_restore']         = 'Gjenopprett denne versjonen';
 $lang['currentns']             = 'gjeldende navnemellomrom';
 $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
-$lang['notloggedin']           = 'Kanskje du har glemt å logge inn?';

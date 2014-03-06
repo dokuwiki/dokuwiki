@@ -318,4 +318,3 @@ $lang['media_perm_read']       = 'Atvainojiet, jums nav tiesību skatīt failus.
 $lang['media_perm_upload']     = 'Atvainojiet, jums nav tiesību augšupielādēt. ';
 $lang['media_update']          = 'Augšupielādēt jaunu versiju';
 $lang['media_restore']         = 'Atjaunot šo versiju';
-$lang['notloggedin']           = 'Varbūt aizmirsi ielogoties?';
