@@ -5,6 +5,7 @@
  * 
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
+ * @author Juan De La Cruz <juann.dlc@gmail.com>
  */
 $lang['account_suffix']        = 'Su cuenta, sufijo. Ejem. <code> @ my.domain.org </ code>';
 $lang['base_dn']               = 'Su base DN. Ejem. <code>DC=my,DC=dominio,DC=org</code>';
@@ -13,3 +14,4 @@ $lang['admin_username']        = 'Un usuario con privilegios de Active Directory
 $lang['admin_password']        = 'La contraseña del usuario anterior.';
 $lang['sso']                   = 'En caso de inicio de sesión usará ¿Kerberos o NTLM?';
 $lang['sso_charset']           = 'La codificación con que tu servidor web pasará el nombre de usuario Kerberos o NTLM. Si es UTF-8 o latin-1 dejar en blanco. Requiere la extensión iconv.';
+$lang['debug']                 = 'Mostrar información adicional de depuración sobre los errores?';

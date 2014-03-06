@@ -31,6 +31,7 @@
  * @author r0sk <r0sk10@gmail.com>
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
+ * @author Juan De La Cruz <juann.dlc@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
