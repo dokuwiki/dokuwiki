@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Estonian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Oliver S6ro <seem.iges@mail.ee>
  * @author Aari Juhanson <aari@vmg.vil.ee>
  * @author Kaiko Kaur <kaiko@kultuur.edu.ee>
  * @author kristian.kankainen@kuu.la
  * @author Rivo Zängov <eraser@eraser.ee>
+ * @author Janar Leas <janarleas@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -43,11 +44,15 @@ $lang['btn_backtomedia']       = 'Tagasi faili valikusse';
 $lang['btn_subscribe']         = 'Jälgi seda lehte (teated meilile)';
 $lang['btn_profile']           = 'Minu info';
 $lang['btn_reset']             = 'Taasta';
+$lang['btn_resendpwd']         = 'Sea uus salasõna';
 $lang['btn_draft']             = 'Toimeta mustandit';
 $lang['btn_recover']           = 'Taata mustand';
 $lang['btn_draftdel']          = 'Kustuta mustand';
 $lang['btn_revert']            = 'Taasta';
 $lang['btn_register']          = 'Registreeri uus kasutaja';
+$lang['btn_apply']             = 'Kinnita';
+$lang['btn_media']             = 'Meedia haldur';
+$lang['btn_deleteuser']        = 'Eemalda minu konto';
 $lang['loggedinas']            = 'Logis sisse kui';
 $lang['user']                  = 'Kasutaja';
 $lang['pass']                  = 'Parool';
@@ -59,8 +64,10 @@ $lang['fullname']              = 'Täielik nimi';
 $lang['email']                 = 'E-post';
 $lang['profile']               = 'Kasutaja info';
 $lang['badlogin']              = 'Oops, Sinu kasutajanimi või parool oli vale.';
+$lang['badpassconfirm']        = 'Väär salasõna';
 $lang['minoredit']             = 'Ebaolulised muudatused';
 $lang['draftdate']             = 'Mustand automaatselt salvestatud';
+$lang['nosecedit']             = 'Leht on vahepeal muutunud, jaotiste teave osutus aegunuks sestap laeti tervelehekülg.';
 $lang['regmissing']            = 'Kõik väljad tuleb ära täita.';
 $lang['reguexists']            = 'Tegelikult on sellise nimega kasutaja juba olemas.';
 $lang['regsuccess']            = 'Kasutaja sai tehtud. Parool saadeti Sulle e-posti aadressil.';
@@ -76,21 +83,30 @@ $lang['profna']                = 'Viki ei toeta profiili muudatusi';
 $lang['profnochange']          = 'Muutused puuduvad.';
 $lang['profnoempty']           = 'Tühi nimi ega meiliaadress pole lubatud.';
 $lang['profchanged']           = 'Kasutaja info edukalt muudetud';
+$lang['profnodelete']          = 'See wiki ei toeta kasutajate kustutamist';
+$lang['profdeleteuser']        = 'Kustuta konto';
+$lang['profdeleted']           = 'Sinu kasutajakonto on sellest wikist kustutatud';
+$lang['profconfdelete']        = 'Soovin sellest wikist oma konnto eemaldada. <br/> See tegevus on taastamatu.';
+$lang['profconfdeletemissing'] = 'Kinnituse valikkast märkimata.';
 $lang['pwdforget']             = 'Unustasid parooli? Tee uus';
 $lang['resendna']              = 'See wiki ei toeta parooli taassaatmist.';
+$lang['resendpwd']             = 'Sea uus salasõna';
 $lang['resendpwdmissing']      = 'Khmm... Sa pead täitma kõik väljad.';
 $lang['resendpwdnouser']       = 'Aga sellist kasutajat ei ole.';
 $lang['resendpwdbadauth']      = 'See autentimiskood ei ole õige. Kontrolli, et kopeerisid terve lingi.';
 $lang['resendpwdconfirm']      = 'Kinnituslink saadeti meilile.';
 $lang['resendpwdsuccess']      = 'Uus parool saadeti Sinu meilile.';
+$lang['license']               = 'Kus pole öeldud teisiti, kehtib selle wiki sisule järgmine leping:';
+$lang['licenseok']             = 'Teadmiseks: Toimetades seda lehte, nõustud avaldama oma sisu järgmise lepingu alusel:';
 $lang['searchmedia']           = 'Otsi failinime:';
 $lang['searchmedia_in']        = 'Otsi %s';
 $lang['txt_upload']            = 'Vali fail, mida üles laadida';
 $lang['txt_filename']          = 'Siseta oma Wikinimi (soovituslik)';
 $lang['txt_overwrt']           = 'Kirjutan olemasoleva faili üle';
+$lang['maxuploadsize']         = 'Üleslaadimiseks lubatu enim %s faili kohta.';
 $lang['lockedby']              = 'Praegu on selle lukustanud';
 $lang['lockexpire']            = 'Lukustus aegub';
-$lang['js']['willexpire']            = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
+$lang['js']['willexpire']      = 'Teie lukustus selle lehe toimetamisele aegub umbes minuti pärast.\nIgasugu  probleemide vältimiseks kasuta eelvaate nuppu, et lukustusarvesti taas tööle panna.';
 $lang['js']['notsavedyet']     = 'Sul on seal salvestamata muudatusi, mis kohe kõige kaduva teed lähevad.
 Kas Sa ikka tahad edasi liikuda?';
 $lang['js']['searchmedia']     = 'Otsi faile';
@@ -122,6 +138,17 @@ Siiski võid kopeerida ja asetada lingi.';
 $lang['js']['linkwiz']         = 'Lingi nõustaja';
 $lang['js']['linkto']          = 'Lingi:';
 $lang['js']['del_confirm']     = 'Kas kustutame selle kirje?';
+$lang['js']['restore_confirm'] = 'Tõesti taastad selle järgu?';
+$lang['js']['media_diff']      = 'Vaatle erisusi:';
+$lang['js']['media_diff_both'] = 'Kõrvuti';
+$lang['js']['media_diff_opacity'] = 'Kuma läbi';
+$lang['js']['media_diff_portions'] = 'Puhasta';
+$lang['js']['media_select']    = 'Vali failid…';
+$lang['js']['media_upload_btn'] = 'Lae üles';
+$lang['js']['media_done_btn']  = 'Valmis';
+$lang['js']['media_drop']      = 'Üleslaadimiseks viska failid siia';
+$lang['js']['media_cancel']    = 'eemalda';
+$lang['js']['media_overwrt']   = 'Asenda olemasolevad failid';
 $lang['rssfailed']             = 'Sinu soovitud info ammutamisel tekkis viga: ';
 $lang['nothingfound']          = 'Oops, aga mitte muhvigi ei leitud.';
 $lang['mediaselect']           = 'Hunnik faile';
@@ -131,6 +158,8 @@ $lang['uploadfail']            = 'Üleslaadimine läks nässu. Äkki pole Sa sel
 $lang['uploadwrong']           = 'Ei saa Sa midagi üles laadida. Oops, aga seda tüüpi faili sul lihtsalt ei lubata üles laadida';
 $lang['uploadexist']           = 'Fail on juba olemas. Midagi ei muudetud.';
 $lang['uploadbadcontent']      = 'Üles laaditu ei sobinud %s faililaiendiga.';
+$lang['uploadspam']            = 'Üleslaadimine tõrjuti rämpssisu vältija poolt.';
+$lang['uploadxss']             = 'Üleslaadimine tõrjuti kahtlase sisu võimaluse tõttu';
 $lang['uploadsize']            = 'Üles laaditud fail on liiga suur (maksimaalne suurus on %s).';
 $lang['deletesucc']            = 'Fail nimega "%s" sai kustutatud.';
 $lang['deletefail']            = 'Faili nimega "%s" ei kustutatud (kontrolli õigusi).';
@@ -155,6 +184,7 @@ $lang['diff']                  = 'Näita erinevusi hetkel kehtiva versiooniga';
 $lang['diff2']                 = 'Näita valitud versioonide erinevusi';
 $lang['difflink']              = 'Lõlita võrdlemise vaatele';
 $lang['diff_type']             = 'Vaata erinevusi:';
+$lang['diff_inline']           = 'Jooksvalt';
 $lang['diff_side']             = 'Kõrvuti';
 $lang['line']                  = 'Rida';
 $lang['breadcrumb']            = 'Käidud rada';
