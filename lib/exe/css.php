@@ -369,7 +369,7 @@ function css_filetypes(){
 
     // default style
     echo '.mediafile {';
-    echo ' background: transparent url('.DOKU_BASE.'lib/images/fileicons/16x16/file.png) 0px 1px no-repeat;';
+    echo ' background: transparent url('.DOKU_BASE.'lib/images/fileicons/file.png) 0px 1px no-repeat;';
     echo ' padding-left: 18px;';
     echo ' padding-bottom: 1px;';
     echo '}';
@@ -377,7 +377,7 @@ function css_filetypes(){
     // additional styles when icon available
     // scan directory for all icons
     $exts = array();
-    if($dh = opendir(DOKU_INC.'lib/images/fileicons/16x16')){
+    if($dh = opendir(DOKU_INC.'lib/images/fileicons')){
         while(false !== ($file = readdir($dh))){
             if(preg_match('/([_\-a-z0-9]+(?:\.[_\-a-z0-9]+)*?)\.(png|gif)/i',$file,$match)){
                 $ext = strtolower($match[1]);
@@ -392,7 +392,7 @@ function css_filetypes(){
     foreach($exts as $ext=>$type){
         $class = preg_replace('/[^_\-a-z0-9]+/','_',$ext);
         echo ".mf_$class {";
-        echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/16x16/'.$ext.$type.')';
+        echo '  background-image: url('.DOKU_BASE.'lib/images/fileicons/'.$ext.$type.')';
         echo '}';
     }
 }
