@@ -15,6 +15,8 @@ class Input {
     public $post;
     /** @var GetInput Access $_GET parameters */
     public $get;
+    /** @var ServerInput Access $_SERVER parameters */
+    public $server;
 
     protected $access;
 
@@ -25,6 +27,7 @@ class Input {
         $this->access = &$_REQUEST;
         $this->post   = new PostInput();
         $this->get    = new GetInput();
+        $this->server = new ServerInput();
     }
 
     /**
@@ -259,4 +262,19 @@ class GetInput extends Input {
         parent::set($name, $value);
         $_REQUEST[$name] = $value;
     }
+}
+
+/**
+ * Internal class used for $_SERVER access in Input class
+ */
+class ServerInput extends Input {
+    protected $access;
+
+    /**
+     * Initialize the $access array, remove subclass members
+     */
+    function __construct() {
+        $this->access = &$_SERVER;
+    }
+
 }
