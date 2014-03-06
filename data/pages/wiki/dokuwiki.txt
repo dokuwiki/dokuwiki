@@ -1,12 +1,12 @@
 ====== DokuWiki ======
 
-[[doku>wiki:dokuwiki|{{wiki:dokuwiki-128.png }}]] DokuWiki is a standards compliant, simple to use [[wp>Wiki]], mainly aimed at creating documentation of any kind. It is targeted at developer teams, workgroups and small companies. It has a simple but powerful [[wiki:syntax]] which makes sure the datafiles remain readable outside the Wiki and eases the creation of structured texts. All data is stored in plain text files -- no database is required.
+[[doku>wiki:dokuwiki|{{wiki:dokuwiki-128.png }}]] DokuWiki is a simple to use and highly versatile Open Source [[wp>wiki]] software that doesn't require a database. It is loved by users for its clean and readable [[wiki:syntax]]. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [[doku>acl|access controls]] and [[doku>auth|authentication connectors]] make DokuWiki especially useful in the enterprise context and the large number of [[doku>plugins]] contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
 
 Read the [[doku>manual|DokuWiki Manual]] to unleash the full power of DokuWiki.
 
 ===== Download =====
 
-DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
+DokuWiki is available at http://download.dokuwiki.org/
 
 
 ===== Read More =====
@@ -24,7 +24,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
 **Installing DokuWiki**
 
   * [[doku>requirements|System Requirements]]
-  * [[http://www.splitbrain.org/go/dokuwiki|Download DokuWiki]] :!:
+  * [[http://download.dokuwiki.org/|Download DokuWiki]] :!:
   * [[doku>changes|Change Log]]
   * [[doku>Install|How to install or upgrade]] :!:
   * [[doku>config|Configuration]]
@@ -50,7 +50,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>mailinglist|Join the mailing list]]
   * [[http://forum.dokuwiki.org|Check out the user forum]]
   * [[doku>irc|Talk to other users in the IRC channel]]
-  * [[http://bugs.splitbrain.org/index.php?project=1|Submit bugs and feature wishes]]
+  * [[https://github.com/splitbrain/dokuwiki/issues|Submit bugs and feature wishes]]
   * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
   * [[doku>thanks|Some humble thanks]]
 

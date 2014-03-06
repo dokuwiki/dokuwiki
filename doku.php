@@ -9,7 +9,7 @@
  */
 
 // update message version
-$updateVersion = 40.1;
+$updateVersion = 43;
 
 //  xdebug_start_profiling();
 
@@ -47,10 +47,10 @@ $PRE = cleanText(substr($INPUT->post->str('prefix'), 0, -1));
 $SUF = cleanText($INPUT->post->str('suffix'));
 $SUM = $INPUT->post->str('summary');
 
-//make infos about the selected page available
+//make info about the selected page available
 $INFO = pageinfo();
 
-//export minimal infos to JS, plugins can add more
+//export minimal info to JS, plugins can add more
 $JSINFO['id']        = $ID;
 $JSINFO['namespace'] = (string) $INFO['namespace'];
 

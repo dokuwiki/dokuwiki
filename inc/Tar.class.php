@@ -114,7 +114,7 @@ class Tar {
             $header = $this->parseHeader($read);
             if(!is_array($header)) continue;
 
-            $this->skipbytes(ceil($header['size'] / 512) * 512, 1);
+            $this->skipbytes(ceil($header['size'] / 512) * 512);
             $result[] = $header;
         }
 
@@ -568,29 +568,23 @@ class Tar {
     }
 
     /**
-     * Cleans up a path and removes relative parts
+     * Cleans up a path and removes relative parts, also strips leading slashes
      *
      * @param string $p_dir
      * @return string
      */
-    protected function cleanPath($p_dir) {
-        $r = '';
-        if($p_dir) {
-            $subf = explode("/", $p_dir);
-
-            for($i = count($subf) - 1; $i >= 0; $i--) {
-                if($subf[$i] == ".") {
-                    # do nothing
-                } elseif($subf[$i] == "..") {
-                    $i--;
-                } elseif(!$subf[$i] && $i != count($subf) - 1 && $i) {
-                    # do nothing
-                } else {
-                    $r = $subf[$i].($i != (count($subf) - 1) ? "/".$r : "");
-                }
+    public function cleanPath($path) {
+        $path=explode('/', $path);
+        $newpath=array();
+        foreach($path as $p) {
+            if ($p === '' || $p === '.') continue;
+            if ($p==='..') {
+                array_pop($newpath);
+                continue;
             }
+            array_push($newpath, $p);
         }
-        return $r;
+        return trim(implode('/', $newpath), '/');
     }
 
     /**

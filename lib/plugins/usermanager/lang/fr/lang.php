@@ -1,7 +1,8 @@
 <?php
+
 /**
- * french language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -20,6 +21,9 @@
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
+ * @author Antoine Turmel <geekshadow@gmail.com>
+ * @author schplurtz <Schplurtz@laposte.net>
+ * @author Jérôme Brandt <jeromebrandt@gmail.com>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
@@ -42,6 +46,11 @@ $lang['search']                = 'Rechercher';
 $lang['search_prompt']         = 'Effectuer la recherche';
 $lang['clear']                 = 'Réinitialiser la recherche';
 $lang['filter']                = 'Filtre';
+$lang['export_all']            = 'Exporter tous les utilisateurs (CSV)';
+$lang['export_filtered']       = 'Exporter la liste d\'utilisateurs filtrés (CSV)';
+$lang['import']                = 'Importer de nouveaux utilisateurs';
+$lang['line']                  = 'Ligne n°';
+$lang['error']                 = 'Message d\'erreur';
 $lang['summary']               = 'Affichage des utilisateurs %1$d-%2$d parmi %3$d trouvés. %4$d utilisateurs au total.';
 $lang['nonefound']             = 'Aucun utilisateur trouvé. %d utilisateurs au total.';
 $lang['delete_ok']             = '%d utilisateurs effacés';
@@ -62,3 +71,16 @@ $lang['add_ok']                = 'Utilisateur ajouté avec succès';
 $lang['add_fail']              = 'Échec de l\'ajout de l\'utilisateur';
 $lang['notify_ok']             = 'Courriel de notification expédié';
 $lang['notify_fail']           = 'Échec de l\'expédition du courriel de notification';
+$lang['import_userlistcsv']    = 'Liste utilisateur (fichier CSV)';
+$lang['import_header']         = 'Erreurs d\'import les plus récentes';
+$lang['import_success_count']  = 'Import d’utilisateurs : %d utilisateurs trouvés, %d utilisateurs importés avec succès.';
+$lang['import_failure_count']  = 'Import d\'utilisateurs : %d ont échoué. Les erreurs sont listées ci-dessous.';
+$lang['import_error_fields']   = 'Nombre de champs insuffisant, %d trouvé, 4 requis.';
+$lang['import_error_baduserid'] = 'Identifiant de l\'utilisateur manquant';
+$lang['import_error_badname']  = 'Mauvais nom';
+$lang['import_error_badmail']  = 'Mauvaise adresse e-mail';
+$lang['import_error_upload']   = 'L\'import a échoué. Le fichier csv n\'a pas pu être téléchargé ou bien il est vide.';
+$lang['import_error_readfail'] = 'L\'import a échoué. Impossible de lire le fichier téléchargé.';
+$lang['import_error_create']   = 'Impossible de créer l\'utilisateur';
+$lang['import_notify_fail']    = 'Impossible d\'expédier une notification à l\'utilisateur importé %s, adresse %s.';
+$lang['import_downloadfailures'] = 'Télécharger les erreurs au format CSV pour correction';

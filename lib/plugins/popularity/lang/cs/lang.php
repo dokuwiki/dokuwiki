@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author tomas@valenta.cz
  * @author Marek Sacha <sachamar@fel.cvut.cz>

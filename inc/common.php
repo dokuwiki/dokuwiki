@@ -64,7 +64,7 @@ function getSecurityToken() {
  */
 function checkSecurityToken($token = null) {
     global $INPUT;
-    if(!$_SERVER['REMOTE_USER']) return true; // no logged in user, no need for a check
+    if(empty($_SERVER['REMOTE_USER'])) return true; // no logged in user, no need for a check
 
     if(is_null($token)) $token = $INPUT->str('sectok');
     if(getSecurityToken() != $token) {
@@ -155,12 +155,13 @@ function pageinfo() {
         $info['subscribed'] = false;
     }
 
-    $info['locked']    = checklock($ID);
-    $info['filepath']  = fullpath(wikiFN($ID));
-    $info['exists']    = @file_exists($info['filepath']);
+    $info['locked']     = checklock($ID);
+    $info['filepath']   = fullpath(wikiFN($ID));
+    $info['exists']     = @file_exists($info['filepath']);
+    $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
         //check if current revision was meant
-        if($info['exists'] && (@filemtime($info['filepath']) == $REV)) {
+        if($info['exists'] && ($info['currentrev'] == $REV)) {
             $REV = '';
         } elseif($RANGE) {
             //section editing does not work with old revisions!
@@ -474,23 +475,24 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
 
     if(is_array($more)) {
         // add token for resized images
-        if($more['w'] || $more['h']){
+        if(!empty($more['w']) || !empty($more['h']) || $isexternalimage){
             $more['tok'] = media_get_token($id,$more['w'],$more['h']);
         }
         // strip defaults for shorter URLs
         if(isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
-        if(!$more['w']) unset($more['w']);
-        if(!$more['h']) unset($more['h']);
+        if(empty($more['w'])) unset($more['w']);
+        if(empty($more['h'])) unset($more['h']);
         if(isset($more['id']) && $direct) unset($more['id']);
         $more = buildURLparams($more, $sep);
     } else {
         $matches = array();
-        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER)){
+        if (preg_match_all('/\b(w|h)=(\d*)\b/',$more,$matches,PREG_SET_ORDER) || $isexternalimage){
             $resize = array('w'=>0, 'h'=>0);
             foreach ($matches as $match){
                 $resize[$match[1]] = $match[2];
             }
-            $more .= $sep.'tok='.media_get_token($id,$resize['w'],$resize['h']);
+            $more .= $more === '' ? '' : $sep;
+            $more .= 'tok='.media_get_token($id,$resize['w'],$resize['h']);
         }
         $more = str_replace('cache=cache', '', $more); //skip default
         $more = str_replace(',,', ',', $more);
@@ -506,14 +508,8 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
     // external URLs are always direct without rewriting
     if($isexternalimage) {
         $xlink .= 'lib/exe/fetch.php';
-        // add hash:
-        $xlink .= '?hash='.substr(PassHash::hmac('md5', $id, auth_cookiesalt()), 0, 6);
-        if($more) {
-            $xlink .= $sep.$more;
-            $xlink .= $sep.'media='.rawurlencode($id);
-        } else {
-            $xlink .= $sep.'media='.rawurlencode($id);
-        }
+        $xlink .= '?'.$more;
+        $xlink .= $sep.'media='.rawurlencode($id);
         return $xlink;
     }
 
@@ -1130,7 +1126,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     // if useheading is enabled, purge the cache of all linking pages
     if(useHeading('content')) {
-        $pages = ft_backlinks($id);
+        $pages = ft_backlinks($id, true);
         foreach($pages as $page) {
             $cache = new cache_renderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
@@ -1145,7 +1141,6 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function saveOldRevision($id) {
-    global $conf;
     $oldf = wikiFN($id);
     if(!@file_exists($oldf)) return '';
     $date = filemtime($oldf);
@@ -1235,8 +1230,9 @@ function getGoogleQuery() {
 /**
  * Return the human readable size of a file
  *
- * @param       int    $size   A file size
- * @param       int    $dec    A number of decimal places
+ * @param       int $size A file size
+ * @param       int $dec A number of decimal places
+ * @return string human readable size
  * @author      Martin Benjamin <b.martin@cybernet.ch>
  * @author      Aidan Lister <aidan@php.net>
  * @version     1.0.0
@@ -1367,12 +1363,16 @@ function php_to_byte($v) {
     $l   = substr($v, -1);
     $ret = substr($v, 0, -1);
     switch(strtoupper($l)) {
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'P':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'T':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'G':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'M':
             $ret *= 1024;
         case 'K':
@@ -1630,7 +1630,8 @@ function set_doku_pref($pref, $val) {
     }
 
     if (!empty($cookieVal)) {
-        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, DOKU_BASE, '', ($conf['securecookie'] && is_ssl()));
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
     }
 }
 

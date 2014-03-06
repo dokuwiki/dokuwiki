@@ -94,9 +94,9 @@ function getID($param='id',$clean=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
- * @param  boolean $media     DEPRECATED
+ * @return string cleaned id
  */
-function cleanID($raw_id,$ascii=false,$media=false){
+function cleanID($raw_id,$ascii=false){
     global $conf;
     static $sepcharpat = null;
 
@@ -245,6 +245,7 @@ function page_exists($id,$rev='',$clean=true) {
  * @param  $rev     string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
+ * @return string full path
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -362,11 +363,12 @@ function mediaFN($id, $rev=''){
  *
  * @param  string $id  The id of the local file
  * @param  string $ext The file extension (usually txt)
+ * @return string full filepath to localized file
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function localeFN($id,$ext='txt'){
     global $conf;
-    $file = DOKU_CONF.'/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
+    $file = DOKU_CONF.'lang/'.$conf['lang'].'/'.$id.'.'.$ext;
     if(!@file_exists($file)){
         $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
         if(!@file_exists($file)){
@@ -396,7 +398,7 @@ function resolve_id($ns,$id,$clean=true){
 
     // if the id starts with a dot we need to handle the
     // relative stuff
-    if($id{0} == '.'){
+    if($id && $id{0} == '.'){
         // normalize initial dots without a colon
         $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
         // prepend the current namespace
@@ -544,6 +546,11 @@ function isHiddenPage($id){
     return $data['hidden'];
 }
 
+/**
+ * callback checks if page is hidden
+ *
+ * @param array $data event data    see isHiddenPage()
+ */
 function _isHiddenPage(&$data) {
     global $conf;
     global $ACT;

@@ -120,7 +120,6 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         $recents = getRecents(0,$this->max_lines);
         echo '<ul>';
 
-
         $cnt = 0;
         foreach($recents as $recent){
             if($filter){
@@ -128,7 +127,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             }
 
             $cnt++;
-            $date = strftime($conf['dformat'],$recent['date']);
+            $date = dformat($recent['date']);
 
             echo ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
             echo '<div class="li">';
@@ -157,7 +156,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             echo "<img $att />";
             echo '</a> ';
 
-            echo html_wikilink(':'.$recent['id'],(useHeading('navigation'))?NULL:$recent['id']);
+            echo html_wikilink(':'.$recent['id'],(useHeading('navigation'))?null:$recent['id']);
             echo ' – '.htmlspecialchars($recent['sum']);
 
             echo ' <span class="user">';

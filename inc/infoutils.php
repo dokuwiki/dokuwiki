@@ -26,13 +26,13 @@ function checkUpdateMessages(){
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdatesMessages(): downloading messages.txt");
+        dbglog("checkUpdateMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
         io_saveFile($cf,$data);
     }else{
-        dbglog("checkUpdatesMessages(): messages.txt up to date");
+        dbglog("checkUpdateMessages(): messages.txt up to date");
         $data = io_readFile($cf);
     }
 
@@ -105,12 +105,16 @@ function check(){
 
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
-    }
 
-    if(version_compare(phpversion(),'5.2.0','<')){
-        msg('Your PHP version is too old ('.phpversion().' vs. 5.2.0+ needed)',-1);
-    }else{
-        msg('PHP version '.phpversion(),1);
+        if(version_compare(phpversion(),'5.2.0','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 5.2.0+ needed)',-1);
+        }else{
+            msg('PHP version '.phpversion(),1);
+        }
+    } else {
+        if(version_compare(phpversion(),'5.2.0','<')){
+            msg('Your PHP version is too old',-1);
+        }
     }
 
     $mem = (int) php_to_byte(ini_get('memory_limit'));
@@ -192,7 +196,6 @@ function check(){
     }else{
         msg('Valid locale '.hsc($loc).' found.', 1);
     }
-
 
     if($conf['allowdebug']){
         msg('Debugging support is enabled. If you don\'t need it you should set $conf[\'allowdebug\'] = 0',-1);

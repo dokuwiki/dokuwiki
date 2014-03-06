@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Tomas Valenta <tomas@valenta.cz>
@@ -14,6 +14,9 @@
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
+ * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Petr Klíma <qaxi@seznam.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +60,7 @@ $lang['btn_revert']            = 'Vrátit zpět';
 $lang['btn_register']          = 'Registrovat';
 $lang['btn_apply']             = 'Použít';
 $lang['btn_media']             = 'Správa médií';
+$lang['btn_deleteuser']        = 'Odstranit můj účet';
 $lang['loggedinas']            = 'Přihlášen(a) jako';
 $lang['user']                  = 'Uživatelské jméno';
 $lang['pass']                  = 'Heslo';
@@ -68,6 +72,7 @@ $lang['fullname']              = 'Celé jméno';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Uživatelský profil';
 $lang['badlogin']              = 'Zadané uživatelské jméno a heslo není správně.';
+$lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
@@ -84,6 +89,11 @@ $lang['profna']                = 'Tato wiki neumožňuje změnu profilu';
 $lang['profnochange']          = 'Žádné změny nebyly provedeny.';
 $lang['profnoempty']           = 'Nelze zadat prázdné jméno nebo mailová adresa.';
 $lang['profchanged']           = 'Uživatelský profil změněn.';
+$lang['profnodelete']          = 'Tato wiki nepodporuje mazání uživatelů';
+$lang['profdeleteuser']        = 'Smazat účet';
+$lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki smazán';
+$lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
+$lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
 $lang['resendpwd']             = 'Nastavit nové heslo pro';
@@ -153,7 +163,7 @@ $lang['uploadsucc']            = 'Přenos proběhl v pořádku';
 $lang['uploadfail']            = 'Chyba při načítání. Možná kvůli špatně nastaveným právům?';
 $lang['uploadwrong']           = 'Načtení souboru s takovouto příponou není dovoleno.';
 $lang['uploadexist']           = 'Soubor už existuje, necháme ho být.';
-$lang['uploadbadcontent']      = 'Obsah načteného dokumentu %s neodpovídá jeho příponě.';
+$lang['uploadbadcontent']      = 'Nahraný obsah neodpovídá jeho příponě souboru %s.';
 $lang['uploadspam']            = 'Načtený dokument byl odmítnut, je na spamovém blacklistu.';
 $lang['uploadxss']             = 'Načtený dokument byl odmítnut. Zdá se, že obsahuje škodlivé věci.';
 $lang['uploadsize']            = 'Nahraný soubor byl příliš velký (max. %s)';
@@ -204,7 +214,7 @@ $lang['mail_newpage']          = 'nová stránka:';
 $lang['mail_changed']          = 'změna stránky:';
 $lang['mail_subscribe_list']   = 'stránky změněné ve jmenném prostoru:';
 $lang['mail_new_user']         = 'nový uživatel:';
-$lang['mail_upload']           = 'načtený dokument:';
+$lang['mail_upload']           = 'nahraný soubor:';
 $lang['changes_type']          = 'Prohlednou změny ';
 $lang['pages_changes']         = 'stránek';
 $lang['media_changes']         = 'souborů médií';
@@ -268,7 +278,6 @@ $lang['subscr_m_receive']      = 'Přejete si dostávat';
 $lang['subscr_style_every']    = 'email pro každou změnu';
 $lang['subscr_style_digest']   = 'souhrnný email změn pro každou stránku (každé %.2f dny/dní)';
 $lang['subscr_style_list']     = 'seznam změněných stránek od posledního emailu (každé %.2f dny/dní)';
-$lang['authmodfailed']         = 'Autentizace uživatelů je špatně nastavena. Informujte prosím správce této wiki.';
 $lang['authtempfail']          = 'Autentizace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte prosím správce této wiki.';
 $lang['authpwdexpire']         = 'Platnost vašeho hesla vyprší za %d dní, měli byste ho změnit co nejdříve.';
 $lang['i_chooselang']          = 'Vyberte si jazyk';
@@ -291,8 +300,12 @@ $lang['i_policy']              = 'Úvodní politika ACL';
 $lang['i_pol0']                = 'Otevřená wiki (čtení, zápis a upload pro všechny)';
 $lang['i_pol1']                = 'Veřejná wiki (čtení pro všechny, zápis a upload pro registrované uživatele)';
 $lang['i_pol2']                = 'Uzavřená wiki (čtení, zápis a upload pouze pro registrované uživatele)';
+$lang['i_allowreg']            = 'Povol uživatelům registraci';
 $lang['i_retry']               = 'Zkusit znovu';
 $lang['i_license']             = 'Vyberte prosím licenci obsahu:';
+$lang['i_license_none']        = 'Nezobrazovat žádné licenční informace';
+$lang['i_pop_field']           = 'Prosím, pomozte nám vylepšit DokuWiki:';
+$lang['i_pop_label']           = 'Jednou měsíčně zaslat anonymní data o využívání DokuWiki jejím vývojářům';
 $lang['recent_global']         = 'Právě si prohlížíte změny ve jmenném prostoru <b>%s</b>. Také si můžete <a href="%s">zobrazit změny v celé wiki</a>.';
 $lang['years']                 = 'před %d roky';
 $lang['months']                = 'před %d měsíci';
@@ -325,3 +338,7 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
+$lang['currentns']             = 'Aktuální jmenný prostor';
+$lang['searchresult']          = 'Výsledek hledání';
+$lang['plainhtml']             = 'Čisté HTML';
+$lang['wikimarkup']            = 'Wiki jazyk';

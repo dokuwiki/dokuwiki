@@ -1,11 +1,14 @@
 <?php
+
 /**
- * Slovenian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
+ * @author Matej Urbančič <mateju@svn.gnome.org>
+ * @author matej <mateju@svn.gnome.org>
  */
 $lang['menu']                  = 'Upravljanje uporabnikov';
 $lang['noauth']                = '(overjanje istovetnosti uporabnikov ni na voljo)';
@@ -28,6 +31,11 @@ $lang['search']                = 'Iskanje';
 $lang['search_prompt']         = 'Poišči';
 $lang['clear']                 = 'Počisti filter iskanja';
 $lang['filter']                = 'Filter';
+$lang['export_all']            = 'Izvozi seznam vseh uporabnikov (CSV)';
+$lang['export_filtered']       = 'Izvozi filtriran seznam uporabnikov (CSV)';
+$lang['import']                = 'Uvozi nove uporabnike';
+$lang['line']                  = 'Številka vrstice';
+$lang['error']                 = 'Sporočilo napake';
 $lang['summary']               = 'Izpisani so uporabniki %1$d-%2$d od skupno %3$d. Vseh uporabnikov je %4$d.';
 $lang['nonefound']             = 'Ni najdenih uporabnikov. Vseh uporabnikov je %d.';
 $lang['delete_ok']             = '%d uporabnikov je izbrisanih';
@@ -48,3 +56,16 @@ $lang['add_ok']                = 'Uporabnik je uspešno dodan';
 $lang['add_fail']              = 'Dodajanje uporabnika je spodletelo';
 $lang['notify_ok']             = 'Obvestilno sporočilo je poslano.';
 $lang['notify_fail']           = 'Obvestilnega sporočila ni mogoče poslati.';
+$lang['import_userlistcsv']    = 'Datoteka seznama uporabnikov (CSV)';
+$lang['import_header']         = 'Zadnji uvoz podatkov – napake';
+$lang['import_success_count']  = 'Uvoz uporabnikov: %d najdenih, %d uspešno uvoženih.';
+$lang['import_failure_count']  = 'Uvoz uporabnikov: %d spodletelih. Napake so izpisane spodaj.';
+$lang['import_error_fields']   = 'Neustrezno število polj; najdenih je %d, zahtevana pa so 4.';
+$lang['import_error_baduserid'] = 'Manjka ID uporabnika';
+$lang['import_error_badname']  = 'Napačno navedeno ime';
+$lang['import_error_badmail']  = 'Napačno naveden elektronski naslov';
+$lang['import_error_upload']   = 'Uvoz je spodletel. Datoteke CSV ni mogoče naložiti ali pa je prazna.';
+$lang['import_error_readfail'] = 'Uvoz je spodletel. Ni mogoče prebrati vsebine datoteke.';
+$lang['import_error_create']   = 'Ni mogoče ustvariti računa uporabnika';
+$lang['import_notify_fail']    = 'Obvestilnega sporočila za uvoženega uporabnika %s z elektronskim naslovom %s ni mogoče poslati.';
+$lang['import_downloadfailures'] = 'Prejmi podatke o napakah v datoteki CSV';

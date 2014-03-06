@@ -1,0 +1,4 @@
+enabled.png - CC-BY-ND, (c) Emey87 http://www.iconfinder.com/icondetails/65590/48/lightbulb_icon
+disabled.png - CC-BY-ND, (c) Emey87 http://www.iconfinder.com/icondetails/65589/48/idea_lightbulb_off_icon
+plugin.png - public domain, (c) nicubunu, http://openclipart.org/detail/15093/blue-jigsaw-piece-07-by-nicubunu
+template.png - public domain, (c) mathec, http://openclipart.org/detail/166596/palette-by-mathec

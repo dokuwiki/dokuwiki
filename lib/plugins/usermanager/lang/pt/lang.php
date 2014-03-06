@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Portugueselanguage file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
@@ -29,6 +30,10 @@ $lang['search']                = 'Pesquisar';
 $lang['search_prompt']         = 'Pesquisar';
 $lang['clear']                 = 'Limpar Filtro de Pesquisa';
 $lang['filter']                = 'Filtro';
+$lang['export_all']            = 'Exportar Todos os Utilizadores (CSV)';
+$lang['export_filtered']       = 'Exportar a lista de utilizadores filtrada (CSV)';
+$lang['import']                = 'Importar Novos Utilizadores';
+$lang['error']                 = 'Mensagem de erro';
 $lang['summary']               = 'Apresentar utilizadores %1$d-%2$d de %3$d encontrados. %4$d inscritos.';
 $lang['nonefound']             = 'Nenhum utilizador encontrado. %d inscritos.';
 $lang['delete_ok']             = '%d utilizadores removidos';
@@ -49,3 +54,11 @@ $lang['add_ok']                = 'Utilizador adicionado.';
 $lang['add_fail']              = 'Utilizador não adicionado.';
 $lang['notify_ok']             = 'Mensagem de notificação enviada.';
 $lang['notify_fail']           = 'Não foi possível enviar mensagem de notificação';
+$lang['import_success_count']  = 'Importar Utilizadores: %d utiliyadores encontrados, %d importados com sucesso.';
+$lang['import_failure_count']  = 'Importar Utilizadores: %d falharam. As falhas estão listadas abaixo.';
+$lang['import_error_fields']   = 'Campos insuficientes, encontrados %d mas requeridos 4.';
+$lang['import_error_baduserid'] = 'Falta id de utilizador';
+$lang['import_error_upload']   = 'Falhou a importação. O ficheiro csv não pôde ser importado ou está vazio.';
+$lang['import_error_readfail'] = 'Falhou a importação. Não foi possível ler o ficheiro submetido.';
+$lang['import_error_create']   = 'Não foi possível criar o utilizador.';
+$lang['import_notify_fail']    = 'A mensagem de notificação não pôde ser enviada para o utilizador importado, %s com email %s.';

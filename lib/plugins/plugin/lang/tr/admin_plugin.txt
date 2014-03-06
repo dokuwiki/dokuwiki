@@ -1,3 +1,0 @@
-====== Eklenti Yönetimi ======
-
-Bu sayfada DokuWiki [[doku>plugins|eklentileri]] ile ilgili herşeyi düzenleyebilirsiniz. Eklenti kurup indirmek için, eklenti dizininin yazılabilir olması gerekmektedir.

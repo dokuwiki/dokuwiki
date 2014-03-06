@@ -1,4 +1,4 @@
 ====== Diferencoj ======
 
-Ĉi tie vi povas vidi diferencojn inter la aktuala versio kaj la elektita revizio de la paĝo.
+Tio montras diferencojn inter du versioj de la paĝo.
 

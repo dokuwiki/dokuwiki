@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Esperanta dosiero
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
@@ -37,13 +37,13 @@ $lang['btn_secedit']           = 'Redakti';
 $lang['btn_login']             = 'Ensaluti';
 $lang['btn_logout']            = 'Elsaluti';
 $lang['btn_admin']             = 'Administri';
-$lang['btn_update']            = 'Ĝisdatigi';
+$lang['btn_update']            = 'Aktualigi';
 $lang['btn_delete']            = 'Forigi';
 $lang['btn_back']              = 'Retroiri';
 $lang['btn_backlink']          = 'Retroligoj';
 $lang['btn_backtomedia']       = 'Retroiri al elekto de dosiero';
 $lang['btn_subscribe']         = 'Aliĝi al paĝaj modifoj';
-$lang['btn_profile']           = 'Ĝisdatigi profilon';
+$lang['btn_profile']           = 'Aktualigi profilon';
 $lang['btn_reset']             = 'Rekomenci';
 $lang['btn_resendpwd']         = 'Sendi novan pasvorton';
 $lang['btn_draft']             = 'Redakti skizon';
@@ -53,6 +53,7 @@ $lang['btn_revert']            = 'Restarigi';
 $lang['btn_register']          = 'Registriĝi';
 $lang['btn_apply']             = 'Apliki';
 $lang['btn_media']             = 'Medio-administrilo';
+$lang['btn_deleteuser']        = 'Forigi mian konton';
 $lang['loggedinas']            = 'Ensalutinta kiel';
 $lang['user']                  = 'Uzant-nomo';
 $lang['pass']                  = 'Pasvorto';
@@ -64,6 +65,7 @@ $lang['fullname']              = 'Kompleta nomo';
 $lang['email']                 = 'Retpoŝto';
 $lang['profile']               = 'Uzanto-profilo';
 $lang['badlogin']              = 'Pardonu, uzant-nomo aŭ pasvorto estis erara.';
+$lang['badpassconfirm']        = 'Pardonu, la pasvorto malĝustis';
 $lang['minoredit']             = 'Etaj modifoj';
 $lang['draftdate']             = 'Lasta konservo de la skizo:';
 $lang['nosecedit']             = 'La paĝo ŝanĝiĝis intertempe, sekcio-informo estis malĝisdata, tial la tuta paĝo estas reŝargita.';
@@ -79,7 +81,12 @@ $lang['reghere']               = 'Se vi ne havas konton, vi povas akiri ĝin';
 $lang['profna']                = 'Tiu ĉi vikio ne ebligas modifon en la profiloj.';
 $lang['profnochange']          = 'Neniu ŝanĝo, nenio farinda.';
 $lang['profnoempty']           = 'Malplena nomo aŭ retadreso ne estas permesata.';
-$lang['profchanged']           = 'La profilo de la uzanto sukcese ĝisdatiĝis.';
+$lang['profchanged']           = 'La profilo de la uzanto sukcese aktualiĝis.';
+$lang['profnodelete']          = 'Tiu ĉi vikio ne subtenas forigo de uzantoj';
+$lang['profdeleteuser']        = 'Forigi aliĝon';
+$lang['profdeleted']           = 'Via uzant-aliĝo estis forigata de tiu ĉi vikio';
+$lang['profconfdelete']        = 'Mi deziras forigi mian aliĝon de tiu ĉi vikio. <br/> Tiu ĉi ago ne povos esti malfarata.';
+$lang['profconfdeletemissing'] = 'Konfirmilo ne estas markita';
 $lang['pwdforget']             = 'Ĉu vi forgesis vian pasvorton? Prenu novan';
 $lang['resendna']              = 'Tiu ĉi vikio ne ebligas resendon de la pasvortoj.';
 $lang['resendpwd']             = 'Sendi novan pasvorton al';
@@ -97,7 +104,7 @@ $lang['txt_filename']          = 'Alŝuti kiel (laŭvole)';
 $lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
 $lang['maxuploadsize']         = 'Alŝuto maks. %s po dosiero.';
 $lang['lockedby']              = 'Nune ŝlosita de';
-$lang['lockexpire']            = 'Ŝlosado ĉesos en';
+$lang['lockexpire']            = 'Ŝlosado ĉesos je';
 $lang['js']['willexpire']      = 'Vi povos redakti ĉi tiun paĝon post unu minuto.\nSe vi volas nuligi tempokontrolon de la ŝlosado, premu la butonon "Antaŭrigardi".';
 $lang['js']['notsavedyet']     = 'Ne konservitaj modifoj perdiĝos.
 Ĉu vi certe volas daŭrigi la procezon?';
@@ -263,7 +270,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'retpoŝtaĵo pro ĉiu ŝanĝo';
 $lang['subscr_style_digest']   = 'resuma retpoŝtaĵo de ŝanĝoj por ĉiu paĝo (je %.2f tagoj)';
 $lang['subscr_style_list']     = 'listo de ŝanĝitaj paĝoj ekde la lasta retpoŝtaĵo (je %.2f tagoj)';
-$lang['authmodfailed']         = 'Malbona agordo por identigi la uzanton. Bonvolu informi la administranton de la vikio.';
 $lang['authtempfail']          = 'La identigo de via uzantonomo estas intertempe maldisponebla. Se tiu ĉi situacio daŭros, bonvolu informi la adminstranton de la vikio.';
 $lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';
 $lang['i_chooselang']          = 'Elektu vian lingvon';
@@ -287,6 +293,7 @@ $lang['i_policy']              = 'Komenca ACL-a agordo';
 $lang['i_pol0']                = 'Malferma Vikio (legi, skribi, alŝuti povas ĉiuj)';
 $lang['i_pol1']                = 'Publika Vikio (legi povas ĉiuj, skribi kaj alŝuti povas registritaj uzantoj)';
 $lang['i_pol2']                = 'Ferma Vikio (legi, skribi, alŝuti nur povas registritaj uzantoj)';
+$lang['i_allowreg']            = 'Permesi al uzantoj registri sin mem';
 $lang['i_retry']               = 'Reprovi';
 $lang['i_license']             = 'Bonvolu elekti la permesilon, sub kiun vi volas meti vian enhavon:';
 $lang['i_license_none']        = 'Ne montri licencinformojn';
@@ -324,3 +331,7 @@ $lang['media_perm_read']       = 'Bedaûrinde viaj rajtoj ne sufiĉas por legi d
 $lang['media_perm_upload']     = 'Bedaûrinde viaj rajtoj ne sufiĉas por alŝuti dosierojn.';
 $lang['media_update']          = 'Alŝuti novan version';
 $lang['media_restore']         = 'Restarigi ĉi tiun version';
+$lang['currentns']             = 'Aktuala nomspaco';
+$lang['searchresult']          = 'Serĉrezulto';
+$lang['plainhtml']             = 'Plena HTML';
+$lang['wikimarkup']            = 'Vikiteksto';

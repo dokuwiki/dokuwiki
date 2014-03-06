@@ -140,18 +140,21 @@ if ($conf['gzip_output'] &&
 }
 
 // init session
-if (!headers_sent() && !defined('NOSESSION')){
-    session_name("DokuWiki");
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-        session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()),true);
-    }else{
-        session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()));
+if(!headers_sent() && !defined('NOSESSION')) {
+    if(!defined('DOKU_SESSION_NAME'))     define ('DOKU_SESSION_NAME', "DokuWiki");
+    if(!defined('DOKU_SESSION_LIFETIME')) define ('DOKU_SESSION_LIFETIME', 0);
+    if(!defined('DOKU_SESSION_PATH')) {
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        define ('DOKU_SESSION_PATH', $cookieDir);
     }
+    if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
+
+    session_name(DOKU_SESSION_NAME);
+    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
     session_start();
 
     // load left over messages
-    if(isset($_SESSION[DOKU_COOKIE]['msg'])){
+    if(isset($_SESSION[DOKU_COOKIE]['msg'])) {
         $MSG = $_SESSION[DOKU_COOKIE]['msg'];
         unset($_SESSION[DOKU_COOKIE]['msg']);
     }
@@ -181,11 +184,6 @@ if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
 }
 if($conf['compression'] == 'gz' && !function_exists('gzopen')){
     $conf['compression'] = 0;
-}
-
-// fix dateformat for upgraders
-if(strpos($conf['dformat'],'%') === false){
-    $conf['dformat'] = '%Y/%m/%d %H:%M';
 }
 
 // precalculate file creation modes
@@ -267,10 +265,10 @@ function init_lang($langCode) {
     $lang = array();
 
     //load the language files
-    require_once(DOKU_INC.'inc/lang/en/lang.php');
+    require(DOKU_INC.'inc/lang/en/lang.php');
     if ($langCode && $langCode != 'en') {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
-            require_once(DOKU_INC."inc/lang/$langCode/lang.php");
+            require(DOKU_INC."inc/lang/$langCode/lang.php");
         }
     }
 }
@@ -288,7 +286,7 @@ function init_files(){
             $fh = @fopen($file,'a');
             if($fh){
                 fclose($fh);
-                if($conf['fperm']) chmod($file, $conf['fperm']);
+                if(!empty($conf['fperm'])) chmod($file, $conf['fperm']);
             }else{
                 nice_die("$file is not writable. Check your permissions settings!");
             }

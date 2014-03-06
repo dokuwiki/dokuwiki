@@ -62,7 +62,7 @@ class Subscription {
             return false;
         }
 
-        if($conf['dperm']) chmod($lock, $conf['dperm']);
+        if(!empty($conf['dperm'])) chmod($lock, $conf['dperm']);
         return true;
     }
 
@@ -288,7 +288,7 @@ class Subscription {
     public function send_bulk($page) {
         if(!$this->isenabled()) return 0;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
@@ -617,7 +617,7 @@ class Subscription {
      * @param string $rev The revision of the page, set to the current revision of the page $id if not set
      * @return string
      */
-    protected function getMessageID($id, $rev = NULL) {
+    protected function getMessageID($id, $rev = null) {
         static $listid = null;
         if (is_null($listid)) {
             $server = parse_url(DOKU_URL, PHP_URL_HOST);
@@ -651,7 +651,7 @@ class Subscription {
     public function notifyaddresses(&$data) {
         if(!$this->isenabled()) return;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
 

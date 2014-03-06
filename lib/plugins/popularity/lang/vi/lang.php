@@ -1,5 +1,0 @@
-<?php
-/**
- * Vietnamese language file
- *
- */

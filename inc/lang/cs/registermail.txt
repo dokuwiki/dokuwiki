@@ -7,7 +7,7 @@ E-mail : @NEWEMAIL@
 Datum : @DATE@
 Prohlížeč : @BROWSER@
 IP adresa : @IPADDRESS@
-Hostitel : @HOSTNAME
+Hostitel : @HOSTNAME@
 
 -- 
 Tento email byl automaticky vygenerován systémem DokuWiki

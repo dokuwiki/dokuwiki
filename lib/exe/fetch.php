@@ -60,6 +60,7 @@ if (defined('SIMPLE_TEST')) {
     if($evt->advise_before()) {
         // redirects
         if($data['status'] > 300 && $data['status'] <= 304) {
+            if (defined('SIMPLE_TEST')) return; //TestResponse doesn't recognize redirects
             send_redirect($data['statusmessage']);
         }
         // send any non 200 status
@@ -77,8 +78,8 @@ if (defined('SIMPLE_TEST')) {
     unset($evt);
 
     //handle image resizing/cropping
-    if((substr($MIME, 0, 5) == 'image') && $WIDTH) {
-        if($HEIGHT) {
+    if((substr($MIME, 0, 5) == 'image') && ($WIDTH || $HEIGHT)) {
+        if($HEIGHT && $WIDTH) {
             $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
         } else {
             $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
@@ -88,7 +89,7 @@ if (defined('SIMPLE_TEST')) {
     // finally send the file to the client
     $evt = new Doku_Event('MEDIA_SENDFILE', $data);
     if($evt->advise_before()) {
-        sendFile($data['file'], $data['mime'], $data['download'], $data['cache'], $data['ispublic']);
+        sendFile($data['file'], $data['mime'], $data['download'], $data['cache'], $data['ispublic'], $data['orig']);
     }
     // Do something after the download finished.
     $evt->advise_after();  // will not be emitted on 304 or x-sendfile

@@ -1,19 +1,16 @@
 <?php
+
 /**
- * fa language file
- *
- * This file was initially built by fetching translations from other
- * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
- * lines starting with @author
- *
- * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesFa.php?view=co
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
+ * @author mehrdad <mehrdad.jafari.bojd@gmail.com>
+ * @author reza_khn <reza_khn@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -57,6 +54,7 @@ $lang['btn_revert']            = 'بازیابی';
 $lang['btn_register']          = 'یک حساب جدید بسازید';
 $lang['btn_apply']             = 'اعمال کن';
 $lang['btn_media']             = 'مدیریت محتوای چند رسانه ای';
+$lang['btn_deleteuser']        = 'حذف حساب کاربری خود';
 $lang['loggedinas']            = 'به عنوان کاربر روبرو وارد شده‌اید:';
 $lang['user']                  = 'نام کاربری:';
 $lang['pass']                  = 'گذرواژه‌ی شما';
@@ -68,6 +66,7 @@ $lang['fullname']              = '*نام واقعی شما';
 $lang['email']                 = 'ایمیل شما*';
 $lang['profile']               = 'پروفایل کاربر';
 $lang['badlogin']              = 'خطا در ورود به سیستم';
+$lang['badpassconfirm']        = 'متاسفم ، رمز عبور اشتباه است';
 $lang['minoredit']             = 'این ویرایش خُرد است';
 $lang['draftdate']             = 'ذخیره خودکار پیش‌نویس';
 $lang['nosecedit']             = 'این صفحه در این میان تغییر کرده است، اطلاعات بخش قدیمی شده است، در عوض محتوای کل نمایش داده می‌شود.';
@@ -84,6 +83,9 @@ $lang['profna']                = 'این ویکی اجازه ویرایش پرو
 $lang['profnochange']          = 'تغییری صورت نگرفت';
 $lang['profnoempty']           = 'نام و آدرس ایمیل باید پر شود';
 $lang['profchanged']           = 'پروفایل کاربر با موفقیت به روز شد';
+$lang['profnodelete']          = 'ویکی توانایی پشتیبانی از حذف کاربران را ندارد';
+$lang['profdeleteuser']        = 'حذف حساب کاربری';
+$lang['profdeleted']           = 'حساب کاربری شما حذف گردیده است.';
 $lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ جدید دریافت کنید';
 $lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
 $lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
@@ -266,7 +268,6 @@ $lang['subscr_m_unsubscribe']  = 'لغو آبونه';
 $lang['subscr_m_subscribe']    = 'آبونه شدن';
 $lang['subscr_m_receive']      = 'دریافت کردن';
 $lang['subscr_style_every']    = 'ارسال رای‌نامه در تمامی تغییرات';
-$lang['authmodfailed']         = 'اشکال در نوع معتبرسازی کاربران، مدیر ویکی را باخبر سازید.';
 $lang['authtempfail']          = 'معتبرسازی کابران موقتن مسدود می‌باشد. اگر این حالت پایدار بود، مدیر ویکی را باخبر سازید.';
 $lang['authpwdexpire']         = 'کلمه عبور شما در %d روز منقضی خواهد شد ، شما باید آن را زود تغییر دهید';
 $lang['i_chooselang']          = 'انتخاب زبان';

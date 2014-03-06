@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Slovak language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
@@ -50,6 +50,7 @@ $lang['btn_revert']            = 'Obnoviť';
 $lang['btn_register']          = 'Registrovať';
 $lang['btn_apply']             = 'Použiť';
 $lang['btn_media']             = 'Správa médií';
+$lang['btn_deleteuser']        = 'Zrušiť môj účet';
 $lang['loggedinas']            = 'Prihlásený(á) ako';
 $lang['user']                  = 'Užívateľské meno';
 $lang['pass']                  = 'Heslo';
@@ -61,6 +62,7 @@ $lang['fullname']              = 'Celé meno';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Užívateľský profil';
 $lang['badlogin']              = 'Zadané užívateľské meno a heslo nie je správne.';
+$lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
@@ -77,6 +79,11 @@ $lang['profna']                = 'Táto wiki nepodporuje zmenu profilu';
 $lang['profnochange']          = 'Žiadne zmeny, nie je čo robiť.';
 $lang['profnoempty']           = 'Prázdne meno alebo mailová adresa nie sú povolené.';
 $lang['profchanged']           = 'Užívateľský účet úspešne zmenený.';
+$lang['profnodelete']          = 'Táto wiki neumožňuje zrušenie používateľov.';
+$lang['profdeleteuser']        = 'Zrušiť účet';
+$lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
+$lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
+$lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
 $lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
 $lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
 $lang['resendpwd']             = 'Nastaviť nové heslo pre';
@@ -261,7 +268,6 @@ $lang['subscr_m_receive']      = 'Dostávať';
 $lang['subscr_style_every']    = 'email pri každej zmene';
 $lang['subscr_style_digest']   = 'email so zhrnutím zmien pre každú stránku (perióda %.2f dňa)';
 $lang['subscr_style_list']     = 'zoznam zmenených stránok od posledného emailu (perióda %.2f dňa)';
-$lang['authmodfailed']         = 'Užívateľská autentifikácia nie je možná. Prosím informujte správcu systému.';
 $lang['authtempfail']          = 'Užívateľská autentifikácia je dočasne nedostupná. Ak táto situácia pretrváva, prosím informujte správcu systému.';
 $lang['authpwdexpire']         = 'Platnosť hesla vyprší za %d dní, mali by ste ho zmeniť čo najskôr.';
 $lang['i_chooselang']          = 'Zvoľte váš jazyk';
@@ -284,8 +290,12 @@ $lang['i_policy']              = 'Počiatočná ACL politika';
 $lang['i_pol0']                = 'Otvorená Wiki (čítanie, zápis a nahrávanie pre každého)';
 $lang['i_pol1']                = 'Verejná Wiki (čítanie pre každého, zápis a nahrávanie pre registrovaných užívateľov)';
 $lang['i_pol2']                = 'Uzatvorená Wiki (čítanie, zápis a nahrávanie len pre registrovaných užívateľov)';
+$lang['i_allowreg']            = 'Povolenie samostanej registrácie používateľov';
 $lang['i_retry']               = 'Skúsiť znovu';
 $lang['i_license']             = 'Vyberte licenciu, pod ktorou chcete uložiť váš obsah:';
+$lang['i_license_none']        = 'Nezobrazovať žiadne licenčné informácie';
+$lang['i_pop_field']           = 'Prosím pomôžte nám zlepšiť prácu s DokuWiki:';
+$lang['i_pop_label']           = 'Raz mesačne zaslať anonymné údaje vývojárom DokuWiki';
 $lang['recent_global']         = 'Práve prehliadate zmeny v mennom priestore <b>%s</b>. Môžete si tiež pozrieť <a href="%s">aktuálne zmeny celej wiki</a>.';
 $lang['years']                 = 'pred %d rokmi';
 $lang['months']                = 'pred %d mesiacmi';
@@ -318,3 +328,7 @@ $lang['media_perm_read']       = 'Prepáčte, ale nemáte dostatočné oprávnen
 $lang['media_perm_upload']     = 'Prepáčte, ale nemáte dostatočné oprávnenie na nahrávanie súborov.';
 $lang['media_update']          = 'Nahrať novú verziu';
 $lang['media_restore']         = 'Obnoviť túto verziu';
+$lang['currentns']             = 'Aktuálny menný priestor';
+$lang['searchresult']          = 'Výsledky hľadania';
+$lang['plainhtml']             = 'Jednoduché HTML';
+$lang['wikimarkup']            = 'Wiki formát';

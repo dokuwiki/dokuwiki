@@ -1,0 +1,363 @@
+/*
+ * Extension plugin styles
+ *
+ * @author  Christopher Smith <chris@jalakai.co.uk>
+ * @author  Piyush Mishra <me@piyushmishra.com>
+ * @author  Håkan Sandell <sandell.hakan@gmail.com>
+ * @author  Anika Henke <anika@selfthinker.org>
+ */
+
+/**
+ * very simple lightbox
+ * @link http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/super-simple-lightbox-with-css-and-jquery/
+ */
+#plugin__extensionlightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(images/overlay.png) repeat;
+    text-align: center;
+    cursor: pointer;
+    z-index: 9999;
+
+    p {
+        text-align: right;
+        color: #fff;
+        margin-right: 20px;
+        font-size: 12px;
+    }
+
+    img {
+        box-shadow: 0 0 25px #111;
+        -webkit-box-shadow: 0 0 25px #111;
+        -moz-box-shadow: 0 0 25px #111;
+        max-width: 90%;
+        max-height: 90%;
+    }
+}
+
+/**
+ * general styles
+ */
+#extension__manager {
+    // tab layout - most of it is in the main template
+    ul.tabs li.active a {
+        background-color: @ini_background_alt;
+        border-bottom: solid 1px @ini_background_alt;
+        z-index: 2;
+    }
+    .panelHeader {
+        background-color: @ini_background_alt;
+        margin: 0 0 10px 0;
+        padding: 10px 10px 8px;
+        overflow: hidden;
+    }
+
+    // message spacing
+    div.msg {
+        margin: 0.4em 0 0 0;
+    }
+}
+
+/*
+ * extensions table
+ */
+#extension__list {
+    ul.extensionList {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    ul.extensionList li {
+        margin: 0 0 .5em;
+        padding: 0 0 .5em;
+        color: @ini_text;
+        border-bottom: 1px solid @ini_border;
+        overflow: hidden;
+    }
+
+    input.button {
+        margin: 0 .3em .3em 0;
+    }
+}
+
+/**
+ * extension table left column
+ */
+#extension__list .legend {
+    position: relative;
+    width: 75%;
+    float: left;
+
+    // padding
+    > div {
+        padding: 0 .5em 0 132px;
+        border-right: 1px solid @ini_background_alt;
+        overflow: hidden;
+    }
+
+    // screenshot
+    div.screenshot {
+        margin-top: 4px;
+        margin-left: -132px;
+        max-width: 120px;
+        float: left;
+        position: relative;
+
+        img {
+            width: 120px;
+            height: 70px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px #666;
+        }
+
+        span {
+            min-height: 24px;
+            min-width: 24px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    // plugin headline
+    h2 {
+        width: 100%;
+        float: right;
+        margin: 0.2em 0 0.5em;
+        font-size: 100%;
+        font-weight: normal;
+        border: none;
+
+        strong {
+            font-size: 120%;
+            font-weight: bold;
+            vertical-align: baseline;
+        }
+    }
+
+    // description
+    p {
+        margin: 0 0 0.6em 0;
+    }
+
+    // popularity bar
+    div.popularity {
+        background-color: @ini_background;
+        border: 1px solid silver;
+        height: .4em;
+        margin: 0 auto;
+        padding: 1px;
+        width: 5.5em;
+        position: absolute;
+        right: .5em;
+        top: 0.2em;
+
+        div {
+            background-color: @ini_border;
+            height: 100%;
+        }
+    }
+
+    // Docs, Bugs, Tags
+    div.linkbar {
+        font-size: 85%;
+
+        span.tags {
+            padding-left: 18px;
+            background: transparent url(images/tag.png) no-repeat 0 0;
+        }
+    }
+
+    // more info button
+    a.info {
+        background: transparent url(images/down.png) no-repeat 0 0;
+        border-width: 0;
+        height: 13px;
+        width: 13px;
+        text-indent: -9999px;
+        float: right;
+        margin: .5em 0 0;
+        overflow: hidden;
+
+        &.close {
+            background: transparent url(images/up.png) no-repeat 0 0;
+        }
+    }
+
+    // detailed info box
+    dl.details {
+        margin: 0.4em 0 0 0;
+        font-size: 85%;
+        border-top: 1px solid @ini_background_alt;
+        clear: both;
+
+        dt {
+            clear: left;
+            float: left;
+            width: 25%;
+            margin: 0;
+            text-align: right;
+            font-weight: normal;
+            padding: 0.2em 5px 0 0;
+            font-weight: bold;
+        }
+
+        dd {
+            margin-left: 25%;
+            padding: 0.2em 0 0 5px;
+
+            a.donate {
+                padding-left: 18px;
+                background: transparent url(images/donate.png) left center no-repeat;
+            }
+        }
+    }
+}
+
+[dir=rtl] #extension__list .legend {
+    float: right;
+
+    > div {
+        padding: 0 132px 0 .5em;
+        border-left: 1px solid @ini_background_alt;
+        border-right-width: 0;
+    }
+
+    div.screenshot {
+        margin-left: 0;
+        margin-right: -132px;
+        float: right;
+
+        span {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    h2 {
+        float: left;
+    }
+
+    div.popularity {
+        right: auto;
+        left: .5em;
+    }
+
+    div.linkbar span.tags,
+    dl.details dd a.donate {
+        padding-left: 0;
+        padding-right: 18px;
+        background-position: top right;
+    }
+
+    a.info {
+        float: left;
+    }
+
+    dl.details {
+        dt {
+            clear: right;
+            float: right;
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 0;
+        }
+
+        dd {
+            margin-left: 0;
+            margin-right: 25%;
+            padding-left: 0;
+            padding-right: 5px;
+        }
+    }
+}
+
+/*
+ * Enabled/Disabled overrides
+ */
+#extension__list {
+    .enabled div.screenshot span {
+        background: transparent url(images/enabled.png) no-repeat 2px 2px;
+    }
+
+    .disabled div.screenshot span {
+        background: transparent url(images/disabled.png) no-repeat 2px 2px;
+    }
+
+    .disabled .legend {
+        opacity: 0.7;
+    }
+}
+
+/**
+ * extension table right column
+ */
+#extension__manager .actions {
+    padding: 0;
+    font-size: 95%;
+    width: 25%;
+    float: right;
+    text-align: right;
+
+    .version {
+        display: block;
+    }
+
+    p {
+        margin: 0.2em 0;
+        text-align: center;
+    }
+
+    p.permerror {
+        margin-left: 0.4em;
+        text-align: left;
+        padding-left: 19px;
+        background: transparent url(images/warning.png) center left no-repeat;
+        line-height: 18px;
+        font-size: 12px;
+    }
+}
+
+[dir=rtl] #extension__manager .actions {
+    float: left;
+    text-align: left;
+
+    p.permerror {
+        margin-left: 0;
+        margin-right: 0.4em;
+        text-align: right;
+        padding-left: 0;
+        padding-right: 19px;
+        background-position: center right;
+    }
+}
+
+/**
+ * Search form
+ */
+#extension__manager form.search {
+    display: block;
+    margin-bottom: 2em;
+
+    span {
+        font-weight: bold;
+    }
+
+    input.edit {
+        width: 25em;
+    }
+}
+
+/**
+ * Install form
+ */
+#extension__manager form.install {
+    text-align: center;
+    display: block;
+    width: 60%;
+}

@@ -1,1 +1,1 @@
-Pas de pagina aan en klik op ''Opslaan''. Zie [[wiki:syntax]] voor de Wiki-syntax. Pas  de pagina allen aan als hij **verbeterd** kan worden. Als je iets wilt uitproberen kun je spelen in de  [[playground:playground|zandbak]].
+Pas de pagina aan en klik op ''Opslaan''. Zie [[wiki:syntax]] voor de Wiki-syntax. Pas  de pagina alleen aan als hij **verbeterd** kan worden. Als je iets wilt uitproberen kun je spelen in de  [[playground:playground|zandbak]].

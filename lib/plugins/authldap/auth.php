@@ -143,6 +143,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @author  Dan Allen <dan.j.allen@gmail.com>
      * @author  <evaldas.auryla@pheur.org>
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
+     * @author  Steffen Schoch <schoch@dsb.net>
      *
      * @param   string $user
      * @param   bool   $inbind authldap specific, true if in bind phase
@@ -166,7 +167,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             // be accessible anonymously, so we try to rebind the current user here
             list($loginuser, $loginsticky, $loginpass) = auth_getCookie();
             if($loginuser && $loginpass) {
-                $loginpass = PMA_blowfish_decrypt($loginpass, auth_cookiesalt(!$loginsticky));
+                $loginpass = auth_decrypt($loginpass, auth_cookiesalt(!$loginsticky, true));
                 $this->checkPass($loginuser, $loginpass);
             }
         }
@@ -208,8 +209,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 if(is_array($key)) {
                     // use regexp to clean up user_result
                     list($key, $regexp) = each($key);
-                    if($user_result[$key]) foreach($user_result[$key] as $grp) {
-                        if(preg_match($regexp, $grp, $match)) {
+                    if($user_result[$key]) foreach($user_result[$key] as $grpkey => $grp) {
+                        if($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
                             if($localkey == 'grps') {
                                 $info[$localkey][] = $match[1];
                             } else {
@@ -240,9 +241,17 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             ldap_free_result($sr);
 
             if(is_array($result)) foreach($result as $grp) {
-                if(!empty($grp[$this->getConf('groupkey')][0])) {
-                    $this->_debug('LDAP usergroup: '.htmlspecialchars($grp[$this->getConf('groupkey')][0]), 0, __LINE__, __FILE__);
-                    $info['grps'][] = $grp[$this->getConf('groupkey')][0];
+                if(!empty($grp[$this->getConf('groupkey')])) {
+                    $group = $grp[$this->getConf('groupkey')];
+                    if(is_array($group)){
+                        $group = $group[0];
+                    } else {
+                        $this->_debug('groupkey did not return a detailled result', 0, __LINE__, __FILE__);
+                    }
+                    if($group === '') continue;
+
+                    $this->_debug('LDAP usergroup: '.htmlspecialchars($group), 0, __LINE__, __FILE__);
+                    $info['grps'][] = $group;
                 }
             }
         }
@@ -272,7 +281,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @param   array $filter  array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
      */
-    function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
+    function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         if(!$this->_openLDAP()) return false;
 
         if(is_null($this->users)) {
@@ -307,7 +316,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             }
             if($this->_filter($user, $info)) {
                 $result[$user] = $info;
-                if(($limit >= 0) && (++$count >= $limit)) break;
+                if(($limit > 0) && (++$count >= $limit)) break;
             }
         }
         return $result;

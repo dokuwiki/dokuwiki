@@ -1,9 +1,11 @@
 <?php
+
 /**
- * German (informal) language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Volker Bödker <volker@boedker.de>
  */
 $lang['account_suffix']        = 'Dein Account-Suffix. Z.B. <code>@my.domain.org</code>';
 $lang['base_dn']               = 'Dein Base-DN. Z.B. <code>DC=my,DC=domain,DC=org</code>';

@@ -204,7 +204,6 @@ $lang['subscr_m_unsubscribe']  = 'Fshi Abonimin';
 $lang['subscr_m_subscribe']    = 'Abonohu';
 $lang['subscr_m_receive']      = 'Mer';
 $lang['subscr_style_every']    = 'email mbi çdo ndryshim';
-$lang['authmodfailed']         = 'Konfigurim i gabuar i autentikimit të përdoruesit. Ju lutem informoni Administratorin tuaj të Wiki-it.';
 $lang['authtempfail']          = 'Autentikimi i përdoruesve është përkohësisht i padisponueshëm. Nëse kjo gjendje vazhdon, ju lutemi të informoni Administratorin tuaj të Wiki-it.';
 $lang['i_chooselang']          = 'Zgjidhni gjuhën tuaj';
 $lang['i_installer']           = 'Installer-i DokuWiki';

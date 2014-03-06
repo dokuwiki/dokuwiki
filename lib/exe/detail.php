@@ -6,10 +6,12 @@ require_once(DOKU_INC.'inc/init.php');
 $IMG  = getID('media');
 $ID   = cleanID($INPUT->str('id'));
 
-// this makes some general infos available as well as the info about the
+// this makes some general info available as well as the info about the
 // "parent" page
 $INFO = array_merge(pageinfo(),mediainfo());
-trigger_event('DETAIL_STARTED', $tmp=array());
+
+$tmp = array();
+trigger_event('DETAIL_STARTED', $tmp);
 
 //close session
 session_write_close();
