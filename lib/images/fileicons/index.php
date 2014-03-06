@@ -30,7 +30,7 @@
 
 <div class="white box">
 <?php
-foreach (glob('16x16/*.png') as $img) {
+foreach (glob('*.png') as $img) {
     echo '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
 }
 ?>
@@ -38,7 +38,7 @@ foreach (glob('16x16/*.png') as $img) {
 
 <div class="black box">
 <?php
-foreach (glob('16x16/*.png') as $img) {
+foreach (glob('*.png') as $img) {
     echo '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
 }
 ?>
