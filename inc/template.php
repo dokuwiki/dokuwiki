@@ -291,6 +291,8 @@ function tpl_metaheaders($alt = true) {
     global $lang;
     global $conf;
     global $updateVersion;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // prepare the head array
     $head = array();
@@ -401,7 +403,7 @@ function tpl_metaheaders($alt = true) {
     // make $INFO and other vars available to JavaScripts
     $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
-    if($conf['useacl'] && !empty($_SERVER['REMOTE_USER'])) {
+    if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
@@ -603,6 +605,8 @@ function tpl_get_action($type) {
     global $REV;
     global $ACT;
     global $conf;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // check disabled actions and fix the badly named ones
     if($type == 'history') $type = 'revisions';
@@ -672,7 +676,7 @@ function tpl_get_action($type) {
             break;
         case 'login':
             $params['sectok'] = getSecurityToken();
-            if(isset($_SERVER['REMOTE_USER'])) {
+            if($INPUT->server->has('REMOTE_USER')) {
                 if(!actionOK('logout')) {
                     return false;
                 }
@@ -681,12 +685,12 @@ function tpl_get_action($type) {
             }
             break;
         case 'register':
-            if(!empty($_SERVER['REMOTE_USER'])) {
+            if($INPUT->server->str('REMOTE_USER')) {
                 return false;
             }
             break;
         case 'resendpwd':
-            if(!empty($_SERVER['REMOTE_USER'])) {
+            if($INPUT->server->str('REMOTE_USER')) {
                 return false;
             }
             break;
@@ -703,14 +707,14 @@ function tpl_get_action($type) {
             $params['sectok'] = getSecurityToken();
             break;
         case 'subscribe':
-            if(!$_SERVER['REMOTE_USER']) {
+            if(!$INPUT->server->str('REMOTE_USER')) {
                 return false;
             }
             break;
         case 'backlink':
             break;
         case 'profile':
-            if(!isset($_SERVER['REMOTE_USER'])) {
+            if(!$INPUT->server->has('REMOTE_USER')) {
                 return false;
             }
             break;
@@ -886,8 +890,11 @@ function tpl_youarehere($sep = ' » ') {
 function tpl_userinfo() {
     global $lang;
     global $INFO;
-    if(isset($_SERVER['REMOTE_USER'])) {
-        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
+    /** @var Input $INPUT */
+    global $INPUT;
+
+    if($INPUT->server->str('REMOTE_USER')) {
+        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($INPUT->server->str('REMOTE_USER')).'</bdi>)';
         return true;
     }
     return false;
@@ -1030,6 +1037,7 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
  */
 function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
+    /** @var Input $INPUT */
     global $INPUT;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
@@ -1242,6 +1250,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
     global $INUSE;
     global $NS;
     global $JUMPTO;
+    /** @var Input $INPUT */
     global $INPUT;
 
     $do = $INPUT->extract('do')->str('do');
@@ -1291,6 +1300,7 @@ function tpl_mediaFileList() {
     global $NS;
     global $JUMPTO;
     global $lang;
+    /** @var Input $INPUT */
     global $INPUT;
 
     $opened_tab = $INPUT->str('tab_files');
@@ -1331,7 +1341,9 @@ function tpl_mediaFileList() {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_mediaFileDetails($image, $rev) {
-    global $AUTH, $NS, $conf, $DEL, $lang, $INPUT;
+    global $AUTH, $NS, $conf, $DEL, $lang;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
@@ -1409,12 +1421,14 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $ID;
     global $REV;
     global $lang;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if (!empty($_SERVER['REMOTE_USER'])) {
+    if ($INPUT->server->str('REMOTE_USER')) {
         echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
     }
 
@@ -1780,11 +1794,14 @@ function tpl_media() {
  */
 function tpl_classes() {
     global $ACT, $conf, $ID, $INFO;
+    /** @var Input $INPUT */
+    global $INPUT;
+
     $classes = array(
         'dokuwiki',
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
-        !empty($_SERVER['REMOTE_USER']) ? 'loggedIn' : '',
+        $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',
         $INFO['exists'] ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );

@@ -52,6 +52,8 @@ function parseChangelogLine($line) {
  */
 function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
     global $conf, $INFO;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // check for special flags as keys
     if (!is_array($flags)) { $flags = array(); }
@@ -65,7 +67,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
 
     if(!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit)?clientIP(true):'127.0.0.1';
-    $user   = (!$flagExternalEdit)?$_SERVER['REMOTE_USER']:'';
+    $user   = (!$flagExternalEdit)?$INPUT->server->str('REMOTE_USER'):'';
 
     $strip = array("\t", "\n");
     $logline = array(
@@ -117,12 +119,14 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
  */
 function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
     global $conf;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     $id = cleanid($id);
 
     if(!$date) $date = time(); //use current time if none supplied
     $remote = clientIP(true);
-    $user   = $_SERVER['REMOTE_USER'];
+    $user   = $INPUT->server->str('REMOTE_USER');
 
     $strip = array("\t", "\n");
     $logline = array(

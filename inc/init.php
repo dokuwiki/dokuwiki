@@ -402,6 +402,10 @@ function remove_magic_quotes(&$array) {
  * Returns the full absolute URL to the directory where
  * DokuWiki is installed in (includes a trailing slash)
  *
+ * !! Can not access $_SERVER values through $INPUT
+ * !! here as this function is called before $INPUT is
+ * !! initialized.
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getBaseURL($abs=null){
