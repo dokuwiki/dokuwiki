@@ -270,8 +270,9 @@ class Doku_Indexer {
         // Special handling for titles so the index file is simpler
         if (array_key_exists('title', $key)) {
             $value = $key['title'];
-            if (is_array($value))
+            if (is_array($value)) {
                 $value = $value[0];
+            }
             $this->saveIndexKey('title', '', $pid, $value);
             unset($key['title']);
         }
@@ -299,8 +300,10 @@ class Doku_Indexer {
                 if ($val !== "") {
                     $id = array_search($val, $metawords, true);
                     if ($id === false) {
+                        // didn't find $val, so we'll add it to the end of metawords and create a placeholder in metaidx
                         $id = count($metawords);
                         $metawords[$id] = $val;
+                        $metaidx[$id] = '';
                         $addwords = true;
                     }
                     // test if value is already in the index
