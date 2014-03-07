@@ -1,13 +1,15 @@
-Dosiero alŝutiĝis al via DokuVikio. Jen detaloj:
+В вашу вики был закачан файл. Подробная информация:
 
-Dosiero: @MEDIA@
-Dato: @DATE@
-Foliumilo: @BROWSER@
-IP-Adreso: @IPADDRESS@
-Ret-nodo: @HOSTNAME@
-Grandeco: @SIZE@
-Dosier-tipo: @MIME@
-Uzanto: @USER@
+Файл: @MEDIA@
+Старая версия: @OLD@
+Дата: @DATE@
+Браузер: @BROWSER@
+Адрес IP: @IPADDRESS@
+Хост: @HOSTNAME@
+Размер: @SIZE@
+Тип MIME: @MIME@
+Пользователь: @USER@
 
 -- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@
+Это письмо было сгенерировано «Докувики» по адресу
+@DOKUWIKIURL@

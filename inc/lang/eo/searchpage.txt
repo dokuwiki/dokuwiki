@@ -1,5 +1,5 @@
-====== Serĉo ======
+====== Поиск ======
 
-Sube estas rezultoj de serĉo en la retejo.\\ Se vi ne trovis tion, kion vi serĉis, vi povas krei novan paĝon kun necesa nomo per la koresponda butono.
+Перед вами результаты поиска. Если вы не нашли то, что искали, вы можете создать новую страницу с именем, совпадающим с запросом. Чтобы сделать это, просто нажмите на кнопку «Создать страницу».
 
-===== Rezultoj =====
+===== Результаты =====

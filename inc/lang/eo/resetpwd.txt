@@ -1,4 +1,3 @@
-====== Difini novan pasvorton ======
+====== Установка нового пароля ======
 
-
-Bonvolu indiki novan pasvorton por via konto en tiu ĉi vikio.
+Пожалуйста введите новый пароль для вашей учетной записи для этой вики.

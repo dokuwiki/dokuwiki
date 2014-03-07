@@ -1,3 +1,4 @@
-====== Enirejo ======
+====== Авторизация ======
 
-Vi ankoraŭ ne identiĝis! Entajpu necesajn informojn sube por identiĝi. Kuketoj (cookies) devas esti ŝaltitaj.
+В данный момент вы не в системе. Авторизируйтесь при помощи следующей формы. //Замечание:// для работы у вас должны быть включены куки (cookies).
+

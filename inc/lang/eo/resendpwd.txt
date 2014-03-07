@@ -1,3 +1,3 @@
-====== Sendi novan pasvorton ======
+====== Выслать новый пароль ======
 
-Bonvolu meti vian uzantonomon en la suban formularon petante novan pasvorton por via aliĝo en tiu ĉi vikio. Konfirma ligilo sendaiĝos al via registrita retadreso.
+Для получения нового пароля введите требуемые данные ниже. Ваш новый пароль будет послан по адресу электронной почты, зарегистрированному на ваше имя. Указанное ниже имя должно быть вашим логином в этой вики.

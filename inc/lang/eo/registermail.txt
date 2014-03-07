@@ -1,13 +1,14 @@
-Nova uzanto registriĝis. Jen la detaloj:
+Был зарегистрирован новый пользователь. Подробности:
 
-Uzantonomo: @NEWUSER@
-Kompleta nomo: @NEWNAME@
-Retadreso: @NEWEMAIL@
+Логин: @NEWUSER@
+Полное имя: @NEWNAME@
+Эл. адрес: @NEWEMAIL@
 
-Dato: @DATE@
-Foliumilo: @BROWSER@
-IP-Adreso: @IPADDRESS@
-Provizanto: @HOSTNAME@
+Дата: @DATE@
+Браузер: @BROWSER@
+Адрес IP: @IPADDRESS@
+Хост: @HOSTNAME@
 
 -- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@
+Это сообщение было сгенерировано «Докувики» по адресу
+@DOKUWIKIURL@

@@ -1,3 +1,4 @@
-====== Tiu revizio ne ekzistas ======
+====== Такой версии не существует ======
 
-La elektita revizio ne ekzistas. Premu butonon "Malnovaj revizioj" por vidi liston de malnovaj revizioj de la dokumento.
+Указанная версия страницы не существует. Нажмите на кнопку «История страницы», чтобы получить список доступных предыдущих версий этого документа.
+
