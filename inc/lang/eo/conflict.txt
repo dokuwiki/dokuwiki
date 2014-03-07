@@ -1,5 +1,5 @@
-====== Pli nova versio ekzistas ======
+====== Существует более новая версия ======
 
-Ekzistas pli nova versio de la dokumento. Tio okazas kiam iu alia uzanto ŝanĝis enhavon de la dokumento dum vi redaktis ĝin.
+Существует более новая версия документа, который вы редактировали. Такое случается, когда другой пользователь изменил документ, пока вы делали то же самое.
 
-Atente esploru distingojn kaj decidu kiun version vi tenos. Se vi premos '"Konservi'", do via versio estos konservita. Presonte butonon '"Rezigni" vi tenos la kurantan version.
+Внимательно изучите различия, приведенные ниже, и решите, какую версию оставить. Если вы выберете «Сохранить», то ваша версия будет сохранена. Нажав «Отменить», вы оставите текущую версию.

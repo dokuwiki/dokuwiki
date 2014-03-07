@@ -1,13 +1,13 @@
-Saluton, @FULLNAME@!
+Здравствуйте, @FULLNAME@.
 
-Iu petis novan pasvorton por via @TITLE@
-ensalutnomo ĉe @DOKUWIKIURL@
+Кто-то запросил новый пароль для входа в @TITLE@ по адресу @DOKUWIKIURL@
 
-Se ne vi petis tion, ignoru tiun ĉi mesaĝon.
+Если вы не запрашивали новый пароль, просто проигнорируйте это письмо.
 
-Por konfirmi, ke la peto estis vere via, bonvolu musklaki jenan ligilon:
+Для подтверждения, что запрос был действительно сделан вами, пожалуйста, перейдите по следующей ссылке.
 
 @CONFIRM@
 
 -- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@
+Это сообщение было сгенерировано «Докувики» по адресу
+@DOKUWIKIURL@

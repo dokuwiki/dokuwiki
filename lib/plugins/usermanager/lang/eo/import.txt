@@ -1,9 +1,9 @@
-===== Amasa importo de uzantoj =====
+===== Импорт нескольких пользователей =====
 
-Tio ĉi postulas CSV-dosiero de uzantoj kun minimume kvar kolumnoj.
-La kolumnoj devas enhavi, laŭorde: uzant-id, kompleta nomo, retadreso kaj grupoj.
-La CSV-kampoj devos esti apartitaj per komoj (,) kaj ĉenoj devas esti limigitaj per citiloj (""). Retroklino (\) povas esti uzata por eskapo.
-Por ekzemplo de taŭga dosiero, provu la funkcion "Eksporti uzantojn" supre.
-Duobligitaj uzant-id estos preteratentataj.
+Потребуется список пользователей в файле формата CSV, состоящий из 4 столбцов. 
+Столбцы должны быть заполнены следующим образом: user-id, полное имя, эл. почта, группы. 
+Поля CSV должны быть отделены запятой (,), а строки должны быть заключены в кавычки (""). Обратный слэш используется как прерывание. 
+В качестве примера можете взять список пользователей, экспортированный через «Экспорт пользователей».  
+Повторяющиеся идентификаторы user-id будут игнорироваться.
 
-Pasvorto estos generata kaj retsendata al ĉiu sukecse importita uzanto.
+Пароль доступа будет сгенерирован и отправлен по почте удачно импортированному пользователю.

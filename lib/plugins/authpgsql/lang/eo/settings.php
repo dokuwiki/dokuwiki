@@ -3,35 +3,29 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
-$lang['server']                = 'Via PostgreSQL-servilo';
-$lang['port']                  = 'Via PostgreSQL-servila pordego';
-$lang['user']                  = 'PostgreSQL-uzantonomo';
-$lang['password']              = 'Pasvorto por tiu uzanto';
-$lang['database']              = 'Uzenda datumbazo';
-$lang['debug']                 = 'Ĉu indiki aldonajn erarinformojn';
-$lang['forwardClearPass']      = 'Ĉu transdoni pasvortojn klartekste al la SQL-frazoj sube anstataŭ uzi pasvortan kaŝon';
-$lang['checkPass']             = 'SQL-frazo por testi pasvortojn';
-$lang['getUserInfo']           = 'SQL-frazo por ricevi uzantajn informojn';
-$lang['getGroups']             = 'SQL-frazo por ricevi la grupmembrecojn de uzanto';
-$lang['getUsers']              = 'SQL-frazo por listigi ĉiujn uzantojn';
-$lang['FilterLogin']           = 'SQL-frazo por filtri uzantojn je ensaluta nomo';
-$lang['FilterName']            = 'SQL-frazo por filtri uzantojn je plena nomo';
-$lang['FilterEmail']           = 'SQL-frazo por filtri uzantojn je retpoŝtadreso';
-$lang['FilterGroup']           = 'SQL-frazo por filtri uzantojn je grupmembreco';
-$lang['SortOrder']             = 'SQL-frazo por ordigi uzantojn';
-$lang['addUser']               = 'SQL-frazo por aldoni novan uzanton';
-$lang['addGroup']              = 'SQL-frazo por aldoni novan grupon';
-$lang['addUserGroup']          = 'SQL-frazo por aldoni uzanton al ekzistanta grupo';
-$lang['delGroup']              = 'SQL-frazo por forigi grupon';
-$lang['getUserID']             = 'SQL-frazo por ricevi la ĉefan ŝlosilon de uzanto';
-$lang['delUser']               = 'SQL-frazo por forigi uzanton';
-$lang['delUserRefs']           = 'SQL-frazo por forigi uzanton el ĉiuj grupoj';
-$lang['updateUser']            = 'SQL-frazo por aktualigi uzantan profilon';
-$lang['UpdateLogin']           = 'Aktualiga frazo por uzanta ensalutnomo';
-$lang['UpdatePass']            = 'Aktualiga frazo por uzanta pasvorto';
-$lang['UpdateEmail']           = 'Aktualiga frazo por uzanta retpoŝtadreso';
-$lang['UpdateName']            = 'Aktualiga frazo por plena uzanta nomo';
-$lang['UpdateTarget']          = 'Limiga frazo por identigi la uzanton dum aktualigado';
-$lang['delUserGroup']          = 'SQL-frazo por forigi uzanton el indikita grupo';
-$lang['getGroupID']            = 'SQL-frazo por ricevi la ĉefan ŝlosilon de indikita grupo';
+$lang['server']                = 'Ваш PostgreSQL-сервер';
+$lang['port']                  = 'Порт вашего PostgreSQL-сервера';
+$lang['user']                  = 'Имя пользователя PostgreSQL';
+$lang['password']              = 'Пароль для указанного пользователя.';
+$lang['database']              = 'Имя базы данных';
+$lang['checkPass']             = 'Выражение SQL, осуществляющее проверку пароля';
+$lang['getUserInfo']           = 'Выражение SQL, осуществляющее извлечение информации о пользователе';
+$lang['getGroups']             = 'Выражение SQL, осуществляющее извлечение информации о членстве пользователе в группах';
+$lang['getUsers']              = 'Выражение SQL, осуществляющее извлечение полного списка пользователей';
+$lang['FilterLogin']           = 'Выражение SQL, осуществляющее фильтрацию пользователей по логину';
+$lang['FilterName']            = 'Выражение SQL, осуществляющее фильтрацию пользователей по полному имени';
+$lang['FilterEmail']           = 'Выражение SQL, осуществляющее фильтрацию пользователей по адресу электронной почты';
+$lang['FilterGroup']           = 'Выражение SQL, осуществляющее фильтрацию пользователей согласно членству в группе';
+$lang['SortOrder']             = 'Выражение SQL, осуществляющее сортировку пользователей';
+$lang['addUser']               = 'Выражение SQL, осуществляющее добавление нового пользователя';
+$lang['addGroup']              = 'Выражение SQL, осуществляющее добавление новой группы';
+$lang['addUserGroup']          = 'Выражение SQL, осуществляющее добавление пользователя в существующую группу';
+$lang['delGroup']              = 'Выражение SQL, осуществляющее удаление группы';
+$lang['getUserID']             = 'Выражение SQL, обеспечивающее получение первичного ключа пользователя';
+$lang['delUser']               = 'Выражение SQL, осуществляющее удаление пользователя';
+$lang['delUserRefs']           = 'Выражение SQL, осуществляющее удаление пользователя из всех группы';
+$lang['updateUser']            = 'Выражение SQL, осуществляющее обновление профиля пользователя';
+$lang['delUserGroup']          = 'Выражение SQL, осуществляющее удаление пользователя из указанной группы';
+$lang['getGroupID']            = 'Выражение SQL, обеспечивающее получение первичного ключа указанной группы';

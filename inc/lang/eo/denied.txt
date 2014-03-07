@@ -1,4 +1,3 @@
-====== Aliro malpermesita ======
+====== Доступ запрещён ======
 
-Vi ne havas sufiĉajn rajtojn rigardi ĉi tiujn paĝojn. Eble vi forgesis identiĝi.
-
+Извините, у вас не хватает прав для этого действия. Может быть вы забыли войти в вики под своим логином?

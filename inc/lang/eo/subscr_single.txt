@@ -1,22 +1,24 @@
-Saluton!
+Привет.
 
-La paĝo @PAGE@ en la vikio @TITLE@ ŝanĝiĝis.
-Jen sekvas la ŝanĝoj:
+Страница @PAGE@ в вики @TITLE@ изменилась.
+Список изменений:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Dato: @DATE@
-Uzanto: @USER@
-Modifa resumo: @SUMMARY@
-Malnova versio: @OLDPAGE@
-Nova versio: @NEWPAGE@
+Дата: @DATE@
+Автор: @USER@
 
-Por nuligi la paĝinformojn, ensalutu la vikion ĉe
-@DOKUWIKIURL@, poste iru al
+Примечание: @SUMMARY@
+Старая версия: @OLDPAGE@
+Новая версия: @NEWPAGE@
+
+Чтобы отписаться от уведомлений об изменениях, войдите в вики
+@DOKUWIKIURL@ в раздел
 @SUBSCRIBE@
-kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.
+и отмените подписку на страницу и/или пространство имён.
 
---
-Tiu retpoŝtaĵo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@
+-- 
+Это письмо создано «Докувики» с сайта
+@DOKUWIKIURL@

@@ -1,5 +1,6 @@
-====== Skiza dosiero troviĝis ======
+====== Найден черновик ======
 
-Via lasta redaktosesio en tiu ĉi paĝo ne ĝuste kompletiĝis. DokuWiki aŭtomate konservis skizon dum vi laboris, kiun vi nun povas uzi por daŭrigi vian redaktadon. Sube vi povas vidi la datumaron, kiu konserviĝis el via lasta sesio.
+Последний раз редактирование этой страницы не было корректно завершено. Во время вашей работы был автоматически сохранён черновик, который вы теперь можете восстановить и продолжить прерванную правку. Ниже вы видите автоматически сохранённую версию.
 
-Bonvolu decidi ĉu vi volas //restarigi// vian perditan redakton, //forigi// la aŭtomate konservitan skizon aŭ //rezigni// pri la redakta procezo.
+Пожалуйста, решите, хотите ли вы //восстановить// потерянную версию, //удалить// черновик, или //отменить// редактирование.
+

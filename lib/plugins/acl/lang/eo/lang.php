@@ -10,32 +10,33 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <bogi@uea.org>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
-$lang['admin_acl']             = 'Administrado de Alirkontrola Listo (ACL)';
-$lang['acl_group']             = 'Grupo';
-$lang['acl_user']              = 'Uzanto';
-$lang['acl_perms']             = 'Rajtoj por';
-$lang['page']                  = 'Paĝo';
-$lang['namespace']             = 'Nomspaco';
-$lang['btn_select']            = 'Elekti';
-$lang['p_user_id']             = 'Uzanto <b class="acluser">%s</b> aktuale havas la jenajn rajtojn en la paĝo <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_user_ns']             = 'Uzanto <b class="acluser">%s</b> aktuale havas la jenajn rajtojn en la nomspaco <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_group_id']            = 'Anoj de la grupo <b class="aclgroup">%s</b> aktuale havas la jenajn rajtojn en la paĝo <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_group_ns']            = 'Anoj de la grupo <b class="aclgroup">%s</b> aktuale havas la jenajn rajtojn en la nomspaco <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Bonvolu <b>enmeti uzanton aŭ grupon</b> en la suban agordilon por rigardi aŭ redakti la aron da rajtoj por la paĝo <b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Bonvolu <b>enmeti uzanton aŭ grupon</b> en la suban agordilon por rigardi aŭ redakti la aron da rajtoj por la nomspaco <b class="aclns">%s</b>.';
-$lang['p_inherited']           = 'Rimarko: tiuj rajtoj ne estas rekte difinitaj, sed ili herediĝas el aliaj pli supraj grupoj aŭ nomspacoj.';
-$lang['p_isadmin']             = 'Rimarko: la elektita grupo aŭ uzanto ĉiam havas plenan rajtaron ĉar ĝi estas difinita kiel superuzanto.';
-$lang['p_include']             = 'Plialtaj permesoj inkluzivas malpli altajn. La permesoj por Krei, Alŝuti kaj Forigi nur aplikeblas al nomspacoj, ne al paĝoj.';
-$lang['current']               = 'Aktuala regularo ACL';
-$lang['where']                 = 'Paĝo/Nomspaco';
-$lang['who']                   = 'Uzanto/Grupo';
-$lang['perm']                  = 'Rajtoj';
-$lang['acl_perm0']             = 'Nenio';
-$lang['acl_perm1']             = 'Legi';
-$lang['acl_perm2']             = 'Redakti';
-$lang['acl_perm4']             = 'Krei';
-$lang['acl_perm8']             = 'Alŝuti';
-$lang['acl_perm16']            = 'Forigi';
-$lang['acl_new']               = 'Aldoni novan enmetaĵon';
-$lang['acl_mod']               = 'Modifi enmetaĵon';
+$lang['admin_acl']             = 'Управление списками контроля доступа';
+$lang['acl_group']             = 'Группа';
+$lang['acl_user']              = 'Пользователь';
+$lang['acl_perms']             = 'Права доступа для';
+$lang['page']                  = 'Страница';
+$lang['namespace']             = 'Пространство имён';
+$lang['btn_select']            = 'Выбрать';
+$lang['p_user_id']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_user_ns']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_id']            = 'Сейчас члены группы <b class="aclgroup">%s</b> имеют следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Сейчас члены группы <b class="aclgroup">%s</b> имеют следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_choose_id']           = 'Пожалуйста, <b>введите пользователя или группу</b> в форме выше, чтобы просмотреть или отредактировать права на доступ к странице <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Пожалуйста, <b>введите пользователя или группу</b> в форме выше, чтобы просмотреть или отредактировать права на доступ к пространству имён <b class="aclns">%s</b>.';
+$lang['p_inherited']           = 'Замечание: эти права доступа не были заданы явно, а были унаследованы от других групп или пространств имён более высокого порядка.';
+$lang['p_isadmin']             = 'Замечание: выбранный пользователь всегда имеет полные права, так как он является суперпользователем.';
+$lang['p_include']             = 'Более высокие права доступа включают в себя более низкие. Права доступа «Создание», «Загрузка» и «Удаление» относятся только к пространствам имён, а не к страницам.';
+$lang['current']               = 'Текущие права ACL';
+$lang['where']                 = 'Страница/Пространство имён';
+$lang['who']                   = 'Пользователь/Группа';
+$lang['perm']                  = 'Права доступа';
+$lang['acl_perm0']             = 'Нет доступа';
+$lang['acl_perm1']             = 'Чтение';
+$lang['acl_perm2']             = 'Правка';
+$lang['acl_perm4']             = 'Создание';
+$lang['acl_perm8']             = 'Загрузка файлов';
+$lang['acl_perm16']            = 'Удаление';
+$lang['acl_new']               = 'Добавить новую запись';
+$lang['acl_mod']               = 'Отредактировать запись';

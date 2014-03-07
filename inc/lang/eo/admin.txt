@@ -1,3 +1,4 @@
-====== Administrado ======
+====== Управление ======
 
-Sube vi trovas liston de administraj taskoj haveblaj en DokuWiki.
+Ниже вы сможете найти список административных операций, доступных в «Докувики».
+

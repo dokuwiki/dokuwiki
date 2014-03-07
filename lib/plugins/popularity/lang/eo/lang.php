@@ -9,11 +9,12 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <bogi@uea.org>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
-$lang['name']                  = 'Populareca enketo (eble la ŝargo prokrastos iomete)';
-$lang['submit']                = 'Sendi datumaron';
-$lang['autosubmit']            = 'Aŭtomate sendi datumaron monate';
-$lang['submissionFailed']      = 'La datumaro ne povis esti sendata tial:';
-$lang['submitDirectly']        = 'Vi povas sendi vi mem la datumaron per la sekva informilo.';
-$lang['autosubmitError']       = 'La lasta aŭtomata sendo malsukcesis, tial:';
-$lang['lastSent']              = 'La datumaro sendiĝis';
+$lang['name']                  = 'Сбор информации о популярности (для загрузки может потребоваться некоторое время)';
+$lang['submit']                = 'Отправить данные';
+$lang['autosubmit']            = 'Автоматически отправлять данные один раз в месяц';
+$lang['submissionFailed']      = 'Данные не могут быть отправлены из-за ошибки:';
+$lang['submitDirectly']        = 'Вы можете отправлять данные вручную, заполнив форму:';
+$lang['autosubmitError']       = 'Последнее автоотправление данных не удалось из-за ошибки:';
+$lang['lastSent']              = 'Данные отправлены';

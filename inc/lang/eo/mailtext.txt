@@ -1,15 +1,17 @@
-Paĝo en via DokuVikio ŝanĝiĝis aŭ aldoniĝis. Jen detaloj:
+В вашей вики была добавлена или изменена страница. Подробности:
 
-Dato: @DATE@
-Foliumilo: @BROWSER@
-IP-adreso: @IPADDRESS@
-RetNodo: @HOSTNAME@
-Antaŭa revizio: @OLDPAGE@
-Nova revizio: @NEWPAGE@
-Bulteno de ŝanĝoj: @SUMMARY@
-Uzanto: @USER@
+Дата: @DATE@
+Браузер: @BROWSER@
+IP-адрес: @IPADDRESS@
+Хост: @HOSTNAME@
+Старая версия: @OLDPAGE@
+Новая версия: @NEWPAGE@
+Сводка изменений: @SUMMARY@
+Пользователь: @USER@
 
 @DIFF@
 
+
 -- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki, kiu lokiĝas ĉe @DOKUWIKIURL@
+Это письмо было сгенерировано «Докувики» по адресу
+@DOKUWIKIURL@

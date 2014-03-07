@@ -1,16 +1,17 @@
-Saluton!
+Привет.
 
-Paĝoj en la nomspaco @PAGE@ en la vikio @TITLE@ ŝanĝiĝis.
-Jen sekvas la ŝanĝitaj paĝoj:
+Страницы в пространстве имён @PAGE@ в вики @TITLE@ были изменены.
+Список изменившихся страниц:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Por nuligi la paĝinformojn, ensalutu la vikion ĉe
-@DOKUWIKIURL@, poste iru al
+Чтобы отписаться от уведомлений об изменениях, войдите в вики
+@DOKUWIKIURL@ в раздел
 @SUBSCRIBE@
-kaj malabonu la paĝajn kaj/aŭ nomspacajn ŝanĝojn.
+и отмените подписку на страницу и/или пространство имён.
 
---
-Tiu retpoŝtaĵo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@
+-- 
+Это письмо создано «Докувики» с сайта
+@DOKUWIKIURL@

@@ -1,3 +1,4 @@
-====== Antaŭrigardo ======
+====== Просмотр ======
 
-Tiu ĉi estas antaŭrigardo de redaktita teksto. Memoru: ĝi ankoraŭ **ne konserviĝis**!
+Здесь показано, как ваш текст будет выглядеть. Внимание: текст ещё **не сохранён.**
+

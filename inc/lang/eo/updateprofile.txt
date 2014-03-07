@@ -1,3 +1,5 @@
-====== Ĝisdatigi vian profilon ======
+====== Обновить профиль ======
 
-Vi nur kompletigu tiujn kampojn, kiujn vi deziras ŝanĝi. Vi ne povas ŝanĝi vian uzantonomon.
+Необходимо заполнить только те поля, которые вы хотите изменить. Имя пользователя не может быть изменено.
+
+

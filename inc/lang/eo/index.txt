@@ -1,3 +1,4 @@
-====== Enhavo ======
+====== Содержание ======
 
-Tio ĉi estas indekso pri ĉiuj disponeblaj paĝoj ordigitaj laŭ [[doku>namespaces|nomspacoj]].
+Перед вами список доступных страниц, упорядоченный по ([[doku>namespaces|пространствам имён]]).
+

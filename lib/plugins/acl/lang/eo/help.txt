@@ -1,11 +1,8 @@
-=== Helpeto: ===
+=== Краткая справка ===
 
-En tiu ĉi paĝo vi povas aldoni kaj forigi rajtojn por nomspacoj kaj paĝoj en via vikio.
+На этой странице вы можете добавить или удалить права доступа к пространствам имён и страницам своей вики.
+  * На панели слева отображены доступные пространства имён и страницы.
+  * Форма выше позволяет вам просмотреть и изменить права доступа для выбранного пользователя или группы.
+  * Текущие права доступа отображены в таблице ниже. Вы можете использовать её для быстрого удаления или изменения правил.
 
-La maldekstra panelo montras ĉiujn disponeblajn nomspacojn kaj paĝojn.
-
-La suba agordilo permesas al vi rigardi kaj modifi la rajtojn de elektita uzanto aŭ grupo.
-
-En la suba tabelo ĉiuj aktuale difinitaj alirkontrolaj reguloj estas montrataj. Vi povas uzi ĝin por rapide forigi aŭ ŝanĝi multoblajn regulojn.
-
-Legi la [[doku>acl|oficialan dokumentaron pri ACL]] povus helpi vin bone kompreni kiel alirkontrolo funkcias en DokuWiki.
+Прочтение  [[doku>acl|официальной документации по спискам контроля доступа]] может помочь вам в полном понимании работы управления правами доступа в «Докувики».

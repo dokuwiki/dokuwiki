@@ -11,13 +11,14 @@
  * @author Erik Pedersen <erik pedersen@shaw.ca>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Robert Bogenschneider <bogi@uea.org>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
-$lang['menu']                  = 'Administrado de restarigo';
-$lang['filter']                = 'Serĉi spamecajn paĝojn';
-$lang['revert']                = 'Restarigi la elektitajn paĝojn';
-$lang['reverted']              = '%s estas restarigita al revizio %s';
-$lang['removed']               = '%s estas forigita';
-$lang['revstart']              = 'Restariga procezo ekis. Tio povas daŭri longan tempon. Se la skripto tro prokrastos antaŭ plenumo, vi restarigu po pli etaj blokoj.';
-$lang['revstop']               = 'Restariga procezo plenumiĝis sukcese.';
-$lang['note1']                 = 'Rimarko: tiu ĉi serĉo distingas usklecon';
-$lang['note2']                 = 'Rimarko: la paĝo restariĝos al la lasta versio ne enhavanta la menditan spaman terminon <i>%s</i>.';
+$lang['menu']                  = 'Менеджер откаток';
+$lang['filter']                = 'Поиск спам-страниц';
+$lang['revert']                = 'Откатить изменения для выбранных страниц';
+$lang['reverted']              = '%s возвращена к версии %s';
+$lang['removed']               = '%s удалена';
+$lang['revstart']              = 'Начат процесс откатки. Он может занять много времени. Если скрипт не успевает завершить работу и выдаёт ошибку, необходимо произвести откатку более маленькими частями.';
+$lang['revstop']               = 'Процесс откатки успешно завершён.';
+$lang['note1']                 = 'Замечание: поиск с учётом регистра';
+$lang['note2']                 = 'Замечание: страница будет восстановлена до последней версии, не содержащей спам-термин <i>%s</i>.';
