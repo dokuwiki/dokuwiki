@@ -1,10 +1,8 @@
 <?php
+
 /**
- * German language file for addomain plugin
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
-
-$lang['domain'] = 'Anmelde-Domäne';
-
-//Setup VIM: ex: et ts=4 :
+$lang['domain']                = 'Anmelde-Domäne';
