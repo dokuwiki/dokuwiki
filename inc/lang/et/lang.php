@@ -9,6 +9,7 @@
  * @author kristian.kankainen@kuu.la
  * @author Rivo Zängov <eraser@eraser.ee>
  * @author Janar Leas <janarleas@gmail.com>
+ * @author Janar Leas <janar.leas@eesti.ee>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -196,9 +197,22 @@ $lang['created']               = 'tekitatud';
 $lang['restored']              = 'vana versioon taastatud (%s)';
 $lang['external_edit']         = 'väline muutmine';
 $lang['summary']               = 'kokkuvõte muudatustest';
+$lang['noflash']               = 'Sele sisu vaatamisesks on vajalik <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Laiendus</a>.';
+$lang['tools']                 = 'Tööriistad';
+$lang['user_tools']            = 'Kasutaja tarvikud';
+$lang['site_tools']            = 'Lehe tööriistad';
+$lang['page_tools']            = 'Lehekülje tarvikud';
+$lang['skip_to_content']       = 'mine sisule';
+$lang['sidebar']               = 'Külgriba';
 $lang['mail_newpage']          = 'leht lisatud:';
 $lang['mail_changed']          = 'leht muudetud';
+$lang['mail_subscribe_list']   = 'muutunud lehed nimeruumis:';
 $lang['mail_new_user']         = 'Uus kasutaja:';
+$lang['mail_upload']           = 'üles laetud fail:';
+$lang['changes_type']          = 'Näita mmutuseid';
+$lang['pages_changes']         = 'Leheküljed';
+$lang['media_changes']         = 'Meedia failid';
+$lang['both_changes']          = 'Mõlemid, leheküljed ja meedia failid';
 $lang['qb_bold']               = 'Rasvane kiri';
 $lang['qb_italic']             = 'Kaldkiri';
 $lang['qb_underl']             = 'Alajoonega kiri';
@@ -223,6 +237,7 @@ $lang['qb_media']              = 'Lisa pilte ja muid faile';
 $lang['qb_sig']                = 'Lisa allkiri!';
 $lang['qb_smileys']            = 'Emotikonid';
 $lang['qb_chars']              = 'Erisümbolid';
+$lang['upperns']               = 'mine ülemisse nimeruumi';
 $lang['admin_register']        = 'Lisa kasutaja';
 $lang['metaedit']              = 'Muuda lisainfot';
 $lang['metasaveerr']           = 'Lisainfo salvestamine läks untsu.';
@@ -238,6 +253,21 @@ $lang['img_copyr']             = 'Autoriõigused';
 $lang['img_format']            = 'Formaat';
 $lang['img_camera']            = 'Kaamera';
 $lang['img_keywords']          = 'Võtmesõnad';
+$lang['img_width']             = 'Laius';
+$lang['img_height']            = 'Kõrgus';
+$lang['img_manager']           = 'Näita meediahalduris';
+$lang['subscr_subscribe_success'] = '%s lisati %s tellijaks';
+$lang['subscr_subscribe_error'] = 'Viga %s lisamisel %s tellijaks';
+$lang['subscr_subscribe_noaddress'] = 'Sinu kasutajaga pole seotud ühtegi aadressi, seega ei saa sind tellijaks lisada';
+$lang['subscr_unsubscribe_success'] = '%s eemaldati %s tellijatest';
+$lang['subscr_unsubscribe_error'] = 'Viga %s eemaldamisel %s tellijatest';
+$lang['subscr_already_subscribed'] = '%s on juba %s tellija';
+$lang['subscr_not_subscribed'] = '%s pole %s tellija';
+$lang['subscr_m_not_subscribed'] = 'Sina pole hetkel selle lehekülje ega nimeruumi tellija.';
+$lang['subscr_m_new_header']   = 'Lisa tellimus';
+$lang['subscr_m_current_header'] = 'Hetkel tellitud';
+$lang['subscr_m_unsubscribe']  = 'Eemalda tellimus';
+$lang['subscr_m_subscribe']    = 'Telli';
 $lang['authtempfail']          = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
 $lang['i_chooselang']          = 'Vali keel';
 $lang['i_installer']           = 'DokuWiki paigaldaja';
