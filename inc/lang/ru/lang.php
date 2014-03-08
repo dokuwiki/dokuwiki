@@ -24,6 +24,7 @@
  * @author Pavel <ivanovtsk@mail.ru>
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -350,3 +351,4 @@ $lang['media_restore']         = 'Восстановить эту версию';
 $lang['currentns']             = 'Текущее пространство имен';
 $lang['searchresult']          = 'Результаты поиска';
 $lang['plainhtml']             = 'Чистый HTML';
+$lang['wikimarkup']            = 'вики-разметка';
