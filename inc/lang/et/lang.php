@@ -9,6 +9,7 @@
  * @author kristian.kankainen@kuu.la
  * @author Rivo Zängov <eraser@eraser.ee>
  * @author Janar Leas <janarleas@gmail.com>
+ * @author Janar Leas <janar.leas@eesti.ee>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -238,7 +239,11 @@ $lang['img_copyr']             = 'Autoriõigused';
 $lang['img_format']            = 'Formaat';
 $lang['img_camera']            = 'Kaamera';
 $lang['img_keywords']          = 'Võtmesõnad';
+$lang['subscr_style_every']    = 'igast toimetamisest teavitab ekiri';
+$lang['subscr_style_digest']   = 'kokkuvõte ekirjaga toimetamistest igal leheküljel (iga %.2f päeva järel)';
+$lang['subscr_style_list']     = 'Peale viimast ekirja (iga %.2f päeva järel) toimetaud lehekülgede loend.';
 $lang['authtempfail']          = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
+$lang['authpwdexpire']         = 'Sinu salasõna aegub %päeva pärast, võiksid seda peatselt muuta.';
 $lang['i_chooselang']          = 'Vali keel';
 $lang['i_installer']           = 'DokuWiki paigaldaja';
 $lang['i_wikiname']            = 'Wiki nimi';
@@ -248,9 +253,11 @@ $lang['i_problems']            = 'Paigaldaja leidis mõned vead, mis on allpool 
 $lang['i_modified']            = 'Õnnetuste vältimiseks läheb see skript käima ainult värskelt paigaldatud ja muutmata Dokuwiki peal.
                        Sa peaksid ilmselt kogu koodi uuesti lahti pakkima. Vaata ka <a href="http://dokuwiki.org/install">Dokuwiki installeerimis juhendit</a>';
 $lang['i_funcna']              = 'PHP funktsiooni <code>%s</code> ei ole olemas.võibolla sinu serveri hooldaja on selle mingil põhjusel keelanud?';
+$lang['i_phpver']              = 'Sinu PHP versioon <code>%s</code> on vanem nõutavast <code>%s</code>. Pead oma paigaldatud PHP-d uuendama.';
 $lang['i_permfail']            = 'Dokuwiki ei saa kirjutada faili <code>%s</code>. Kontrolli serveris failide õigused üle.';
 $lang['i_confexists']          = '<code>%s</code> on juba olemas';
 $lang['i_writeerr']            = 'Faili <code>%s</code> ei lubata tekitada. Kontrolli kataloogi ja faili õigusi.';
+$lang['i_badhash']             = 'Tundmatu või muutunud dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - lubamatu või tühi väärtus';
 $lang['i_success']             = 'Seadistamine on õnnelikult lõpule viidud. Sa võid nüüd kustutada faili install.php. Alusta oma <a href="doku.php?id=wiki:welcome">uue DokuWiki</a> täitmist.';
 $lang['i_failure']             = 'Konfiguratsiooni faili kirjutamisel esines vigu. Võimalik, et pead need käsitsi parandama enne <a href="doku.php?id=wiki:welcome">uue DokuWiki</a> täitma asumist.';
@@ -258,4 +265,45 @@ $lang['i_policy']              = 'Wiki õiguste algne poliitika';
 $lang['i_pol0']                = 'Avatud (lugemine, kirjutamine ja üleslaadimine kõigile lubatud)';
 $lang['i_pol1']                = 'Avalikuks lugemiseks (lugeda saavad kõik, kirjutada ja üles laadida vaid registreeritud kasutajad)';
 $lang['i_pol2']                = 'Suletud (kõik õigused, kaasaarvatud lugemine on lubatud vaid registreeritud kasutajatele)';
+$lang['i_allowreg']            = 'Luba kasutajail endid ise arvele võtta';
 $lang['i_retry']               = 'Proovi uuesti';
+$lang['i_license']             = 'Vali leping, mille alusel wiki sisu avaldatakse:';
+$lang['i_license_none']        = 'Ära näita mingit lepingu teavet';
+$lang['i_pop_field']           = 'Aitake meil täiendada DokuWiki kasutuskogemsut:';
+$lang['i_pop_label']           = 'Kord kuus, saada DokuWiki arendajatele anonüümseid kasutus andmeid.';
+$lang['recent_global']         = 'Uurid hetkel nimeruumi <b>%s</b> muudatusi. Võid uurida ka <a href="%s">kogu selle wiki</a> muudatusi.';
+$lang['years']                 = '%d aasta eest';
+$lang['months']                = '%d kuu eest';
+$lang['weeks']                 = '%d nädala eest';
+$lang['days']                  = '%d päeva eest';
+$lang['hours']                 = '%d tunni eest';
+$lang['minutes']               = '%d minuti eest';
+$lang['seconds']               = '%d sekundi eest';
+$lang['wordblock']             = 'Sinu toimetus jäeti muutmata tõrjutud teksti tõttu (rämpspost?).';
+$lang['media_uploadtab']       = 'Lae-↑ ';
+$lang['media_searchtab']       = 'Otsi';
+$lang['media_file']            = 'Fail';
+$lang['media_viewtab']         = 'Vaata';
+$lang['media_edittab']         = 'Toimeta';
+$lang['media_historytab']      = 'Ajalugu';
+$lang['media_list_thumbs']     = 'Pisipildid';
+$lang['media_list_rows']       = 'Ridu';
+$lang['media_sort_name']       = 'Nimi';
+$lang['media_sort_date']       = 'Kuupäev';
+$lang['media_namespaces']      = 'Vali nimeruum';
+$lang['media_files']           = 'Failid %s-is';
+$lang['media_upload']          = 'Lae %s-ssi';
+$lang['media_search']          = 'Leia %s-st';
+$lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s asub %s-s';
+$lang['media_edit']            = 'Muuda %s-i';
+$lang['media_history']         = '%s ajalugu';
+$lang['media_meta_edited']     = 'toimetati päiseteavet';
+$lang['media_perm_read']       = 'Sul pole piisavaid õigusi failide vaatamiseks';
+$lang['media_perm_upload']     = 'Sul pole piisavaid õigusi failide üleslaadimiseks';
+$lang['media_update']          = 'Lea üles uus järk';
+$lang['media_restore']         = 'Ennista sellele järgule';
+$lang['currentns']             = 'Hetkel nimeruumis';
+$lang['searchresult']          = 'Otsingu tulemus';
+$lang['plainhtml']             = 'Liht-HTML';
+$lang['wikimarkup']            = 'Wiki märgistus';
