@@ -176,7 +176,7 @@ if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 $_REQUEST = array_merge($_GET,$_POST);
 
 // we don't want a purge URL to be digged
-if(isset($_REQUEST['purge']) && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
+if(isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
 // disable gzip if not available
 if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
@@ -402,6 +402,10 @@ function remove_magic_quotes(&$array) {
  * Returns the full absolute URL to the directory where
  * DokuWiki is installed in (includes a trailing slash)
  *
+ * !! Can not access $_SERVER values through $INPUT
+ * !! here as this function is called before $INPUT is
+ * !! initialized.
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getBaseURL($abs=null){
@@ -441,12 +445,12 @@ function getBaseURL($abs=null){
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
         $parsed_host = parse_url('http://'.$_SERVER['HTTP_HOST']);
-        $host = $parsed_host['host'];
-        $port = $parsed_host['port'];
+        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
+        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
     }elseif(isset($_SERVER['SERVER_NAME'])){
         $parsed_host = parse_url('http://'.$_SERVER['SERVER_NAME']);
-        $host = $parsed_host['host'];
-        $port = $parsed_host['port'];
+        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
+        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
     }else{
         $host = php_uname('n');
         $port = '';

@@ -141,7 +141,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
     //we do nothing with directories
     if($type == 'd') {
-        if(!$opts['depth']) return true; // recurse forever
+        if(empty($opts['depth'])) return true; // recurse forever
         $depth = substr_count($file,'/');
         if($depth >= $opts['depth']) return false; // depth reached
         return true;
@@ -157,12 +157,12 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
     //check ACL for namespace (we have no ACL for mediafiles)
     $info['perm'] = auth_quickaclcheck(getNS($info['id']).':*');
-    if(!$opts['skipacl'] && $info['perm'] < AUTH_READ){
+    if(empty($opts['skipacl']) && $info['perm'] < AUTH_READ){
         return false;
     }
 
     //check pattern filter
-    if($opts['pattern'] && !@preg_match($opts['pattern'], $info['id'])){
+    if(!empty($opts['pattern']) && !@preg_match($opts['pattern'], $info['id'])){
         return false;
     }
 
@@ -176,7 +176,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     }else{
         $info['isimg'] = false;
     }
-    if($opts['hash']){
+    if(!empty($opts['hash'])){
         $info['hash'] = md5(io_readFile(mediaFN($info['id']),false));
     }
 
@@ -351,17 +351,18 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $return = true;
 
     // get ID and check if it is a valid one
-    $item['id'] = pathID($file,($type == 'd' || $opts['keeptxt']));
+    $item['id'] = pathID($file,($type == 'd' || !empty($opts['keeptxt'])));
     if($item['id'] != cleanID($item['id'])){
-        if($opts['showmsg'])
+        if(!empty($opts['showmsg'])){
             msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);
+        }
         return false; // skip non-valid files
     }
     $item['ns']  = getNS($item['id']);
 
     if($type == 'd') {
         // decide if to recursion into this directory is wanted
-        if(!$opts['depth']){
+        if(empty($opts['depth'])){
             $return = true; // recurse forever
         }else{
             $depth = substr_count($file,'/');
@@ -371,8 +372,12 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
                 $return = true;
             }
         }
-        if($return && !preg_match('/'.$opts['recmatch'].'/',$file)){
-            $return = false; // doesn't match
+
+        if ($return) {
+            $match = empty($opts['recmatch']) || preg_match('/'.$opts['recmatch'].'/',$file);
+            if (!$match) {
+                return false; // doesn't match
+            }
         }
     }
 
@@ -407,7 +412,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['level'] = $lvl;
     $item['open']  = $return;
 
-    if($opts['meta']){
+    if(!empty($opts['meta'])){
         $item['file']       = utf8_basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
@@ -417,8 +422,8 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     }
 
     if($type == 'f'){
-        if($opts['hash']) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
-        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
+        if(!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
+        if(!empty($opts['firsthead'])) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
     }
 
     // finally add the item

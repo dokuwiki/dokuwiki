@@ -274,8 +274,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
     function _simpleTitle($name){
         global $conf;
 
-        //if there is a hash we use the ancor name only
-        list($name,$hash) = explode('#',$name,2);
+        //if there is a hash we use the anchor name only
+        @list($name,$hash) = explode('#',$name,2);
         if($hash) return $hash;
 
         if($conf['useslash']){
@@ -301,7 +301,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
 
         //split into hash and url part
-        list($reference,$hash) = explode('#',$reference,2);
+        @list($reference,$hash) = explode('#',$reference,2);
 
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){

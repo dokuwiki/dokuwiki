@@ -691,7 +691,7 @@ function html_recent($first=0, $show_changes='both'){
 
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $form->addElement(media_printicon($recent['id']));
         } else {
             $icon = DOKU_BASE.'lib/images/fileicons/file.png';
@@ -705,7 +705,7 @@ function html_recent($first=0, $show_changes='both'){
         $diff = false;
         $href = '';
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
                 $href = media_managerURL(array('tab_details' => 'history',
@@ -715,7 +715,7 @@ function html_recent($first=0, $show_changes='both'){
             $href = wl($recent['id'],"do=diff", false, '&');
         }
 
-        if ($recent['media'] && !$diff) {
+        if (!empty($recent['media']) && !$diff) {
             $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
         } else {
             $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => $href)));
@@ -729,7 +729,7 @@ function html_recent($first=0, $show_changes='both'){
             $form->addElement(form_makeCloseTag('a'));
         }
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'history',
                 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
         } else {
@@ -745,7 +745,7 @@ function html_recent($first=0, $show_changes='both'){
                         )));
         $form->addElement(form_makeCloseTag('a'));
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
             $class = (file_exists(mediaFN($recent['id']))) ? 'wikilink1' : $class = 'wikilink2';
             $form->addElement(form_makeOpenTag('a', array('class' => $class, 'href' => $href)));
