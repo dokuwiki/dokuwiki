@@ -8,6 +8,7 @@
  * @author Kaiko Kaur <kaiko@kultuur.edu.ee>
  * @author kristian.kankainen@kuu.la
  * @author Rivo Zängov <eraser@eraser.ee>
+ * @author Janar Leas <janar.leas@eesti.ee>
  */
 $lang['admin_acl']             = 'Ligipääsukontrolli nimekirja haldamine';
 $lang['acl_group']             = 'Grupp';
@@ -16,6 +17,8 @@ $lang['acl_perms']             = 'Lubatud';
 $lang['page']                  = 'leht';
 $lang['namespace']             = 'alajaotus';
 $lang['btn_select']            = 'Vali';
+$lang['p_choose_id']           = 'Sisesta ülal-olevasse vormi <b>kasutaja või rühm</b> nägemaks leheküljele <b class="aclpage">%s</b> sätestatud volitusi.';
+$lang['p_choose_ns']           = 'Sisesta ülal-olevasse vormi <b>kasutaja või rühm</b> nägemaks nimeruumile <b class="aclpage">%s</b> sätestatud volitusi.';
 $lang['who']                   = 'Kasutaja/Grupp';
 $lang['perm']                  = 'Õigused';
 $lang['acl_perm0']             = 'Pole';
