@@ -5,12 +5,14 @@
  * 
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
 $lang['server']                = 'Ваш PostgreSQL-сервер';
 $lang['port']                  = 'Порт вашего PostgreSQL-сервера';
 $lang['user']                  = 'Имя пользователя PostgreSQL';
 $lang['password']              = 'Пароль для указанного пользователя.';
 $lang['database']              = 'Имя базы данных';
+$lang['debug']                 = 'Отображать дополнительную отладочную информацию';
 $lang['checkPass']             = 'Выражение SQL, осуществляющее проверку пароля';
 $lang['getUserInfo']           = 'Выражение SQL, осуществляющее извлечение информации о пользователе';
 $lang['getGroups']             = 'Выражение SQL, осуществляющее извлечение информации о членстве пользователе в группах';
