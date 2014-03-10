@@ -1541,6 +1541,7 @@ function userinfo($username = null) {
                             $xhtml_renderer->interwiki = getInterwiki();
                         }
                         $shortcut = 'user';
+                        $exists = null;
                         $data['link']['url'] = $xhtml_renderer->_resolveInterWiki($shortcut, $username, $exists);
                         $data['link']['class'] .= ' interwiki iw_user';
                         if($exists !== null) {
