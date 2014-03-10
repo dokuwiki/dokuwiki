@@ -5,7 +5,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-require_once DOKU_INC . 'inc/parser/renderer.php';
 
 class Doku_Renderer_code extends Doku_Renderer {
     var $_codeblock=0;

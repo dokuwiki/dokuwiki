@@ -19,6 +19,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getID($param='id',$clean=true){
+    /** @var Input $INPUT */
     global $INPUT;
     global $conf;
     global $ACT;
@@ -27,7 +28,7 @@ function getID($param='id',$clean=true){
 
     //construct page id from request URI
     if(empty($id) && $conf['userewrite'] == 2){
-        $request = $_SERVER['REQUEST_URI'];
+        $request = $INPUT->server->str('REQUEST_URI');
         $script = '';
 
         //get the script URL
@@ -36,15 +37,15 @@ function getID($param='id',$clean=true){
             if($param != 'id') {
                 $relpath = 'lib/exe/';
             }
-            $script = $conf['basedir'].$relpath.utf8_basename($_SERVER['SCRIPT_FILENAME']);
+            $script = $conf['basedir'].$relpath.utf8_basename($INPUT->server->str('SCRIPT_FILENAME'));
 
-        }elseif($_SERVER['PATH_INFO']){
-            $request = $_SERVER['PATH_INFO'];
-        }elseif($_SERVER['SCRIPT_NAME']){
-            $script = $_SERVER['SCRIPT_NAME'];
-        }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
-            $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
-                    $_SERVER['SCRIPT_FILENAME']);
+        }elseif($INPUT->server->str('PATH_INFO')){
+            $request = $INPUT->server->str('PATH_INFO');
+        }elseif($INPUT->server->str('SCRIPT_NAME')){
+            $script = $INPUT->server->str('SCRIPT_NAME');
+        }elseif($INPUT->server->str('DOCUMENT_ROOT') && $INPUT->server->str('SCRIPT_FILENAME')){
+            $script = preg_replace ('/^'.preg_quote($INPUT->server->str('DOCUMENT_ROOT'),'/').'/','',
+                    $INPUT->server->str('SCRIPT_FILENAME'));
             $script = '/'.$script;
         }
 
@@ -94,6 +95,7 @@ function getID($param='id',$clean=true){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
+ * @return string cleaned id
  */
 function cleanID($raw_id,$ascii=false){
     global $conf;
@@ -244,6 +246,7 @@ function page_exists($id,$rev='',$clean=true) {
  * @param  $rev     string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
+ * @return string full path
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -361,6 +364,7 @@ function mediaFN($id, $rev=''){
  *
  * @param  string $id  The id of the local file
  * @param  string $ext The file extension (usually txt)
+ * @return string full filepath to localized file
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function localeFN($id,$ext='txt'){
@@ -543,6 +547,11 @@ function isHiddenPage($id){
     return $data['hidden'];
 }
 
+/**
+ * callback checks if page is hidden
+ *
+ * @param array $data event data    see isHiddenPage()
+ */
 function _isHiddenPage(&$data) {
     global $conf;
     global $ACT;

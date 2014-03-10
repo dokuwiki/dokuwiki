@@ -47,15 +47,11 @@ class Doku_Form {
      * with up to four parameters is deprecated, instead the first parameter
      * should be an array with parameters.
      *
-     * @param   mixed   $params  Parameters for the HTML form element; Using the
-     *                           deprecated calling convention this is the ID
-     *                           attribute of the form
-     * @param   string  $action  (optional, deprecated) submit URL, defaults to
-     *                                                  current page
-     * @param   string  $method  (optional, deprecated) 'POST' or 'GET', default
-     *                                                  is POST
-     * @param   string  $enctype (optional, deprecated) Encoding type of the
-     *                                                  data
+     * @param mixed       $params  Parameters for the HTML form element; Using the deprecated
+     *                             calling convention this is the ID attribute of the form
+     * @param bool|string $action  (optional, deprecated) submit URL, defaults to current page
+     * @param bool|string $method  (optional, deprecated) 'POST' or 'GET', default is POST
+     * @param bool|string $enctype (optional, deprecated) Encoding type of the data
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function Doku_Form($params, $action=false, $method=false, $enctype=false) {
@@ -176,7 +172,7 @@ class Doku_Form {
      * Gets the position of the first of a type of element.
      *
      * @param   string  $type   Element type to look for.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByType($type) {
@@ -193,7 +189,7 @@ class Doku_Form {
      * Gets the position of the element with an ID attribute.
      *
      * @param   string  $id     ID of the element to find.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementById($id) {
@@ -211,7 +207,7 @@ class Doku_Form {
      *
      * @param   string  $name   Attribute name.
      * @param   string  $value  Attribute value.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByAttribute($name, $value) {
@@ -230,7 +226,7 @@ class Doku_Form {
      * first (underflow) or last (overflow) element.
      *
      * @param   int     $pos    0-based index
-     * @return  arrayreference  pseudo-element
+     * @return  array reference  pseudo-element
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function &getElementAt($pos) {

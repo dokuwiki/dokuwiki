@@ -6,8 +6,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-require_once DOKU_INC . 'inc/plugin.php';
-require_once DOKU_INC . 'inc/pluginutils.php';
 
 /**
  * An empty renderer, produces no output
@@ -277,7 +275,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        list($name, $hash) = explode('#', $name, 2);
+        @list($name, $hash) = explode('#', $name, 2);
         if($hash) return $hash;
 
         if($conf['useslash']) {
@@ -303,7 +301,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
 
         //split into hash and url part
-        list($reference, $hash) = explode('#', $reference, 2);
+        @list($reference, $hash) = explode('#', $reference, 2);
 
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {

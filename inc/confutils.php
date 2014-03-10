@@ -237,13 +237,14 @@ function getConfigFiles($type) {
  * check if the given action was disabled in config
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $action
  * @returns boolean true if enabled, false if disabled
  */
 function actionOK($action){
     static $disabled = null;
     if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
 
         // prepare disabled actions array and handle legacy options

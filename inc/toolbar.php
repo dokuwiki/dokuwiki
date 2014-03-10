@@ -56,7 +56,7 @@ function toolbar_JSdefines($varname){
                 'type'   => 'format',
                 'title'  => $lang['qb_code'],
                 'icon'   => 'mono.png',
-                'key'    => 'c',
+                'key'    => 'm',
                 'open'   => "''",
                 'close'  => "''",
                 'block'  => false
@@ -241,10 +241,12 @@ function toolbar_JSdefines($varname){
 function toolbar_signature(){
     global $conf;
     global $INFO;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     $sig = $conf['signature'];
     $sig = dformat(null,$sig);
-    $sig = str_replace('@USER@',$_SERVER['REMOTE_USER'],$sig);
+    $sig = str_replace('@USER@',$INPUT->server->str('REMOTE_USER'),$sig);
     $sig = str_replace('@NAME@',$INFO['userinfo']['name'],$sig);
     $sig = str_replace('@MAIL@',$INFO['userinfo']['mail'],$sig);
     $sig = str_replace('@DATE@',dformat(),$sig);

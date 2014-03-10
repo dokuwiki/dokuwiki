@@ -1,0 +1,1 @@
+Jenaj ŝablonoj momente instaliĝis en via DokuWiki. Elektu la ŝablonon por uzi en la [[?do=admin&page=config|Opcia administrilo]].

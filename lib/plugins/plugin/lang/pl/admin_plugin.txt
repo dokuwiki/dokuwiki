@@ -1,5 +1,0 @@
-====== Menadżer wtyczek ======
-
-Na tej stronie możesz zarządzać wszystkim co jest związane z [[doku>plugins|wtyczkami]] Dokuwiki. Aby móc ściągnąć i zainstalować wtyczkę, serwer WWW musi mieć prawo do zapisu w katalogu ''plugins''.
-
-

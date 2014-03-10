@@ -5,6 +5,7 @@
  * 
  * @author Foysol <ragebot1125@gmail.com>
  * @author ninetailz <ninetailz1125@gmail.com>
+ * @author Khan M. B. Asad <muhammad2017@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'itr';
@@ -117,3 +118,43 @@ $lang['js']['mediadisplayimg'] = 'ছবিটি দেখান';
 $lang['js']['mediadisplaylnk'] = 'শুধুমাত্র লিঙ্ক দেখান';
 $lang['js']['mediasmall']      = 'ক্ষুদ্র সংস্করণ';
 $lang['js']['mediamedium']     = 'মাধ্যম সংস্করণ';
+$lang['js']['medialarge']      = 'বড় সংস্করণ';
+$lang['js']['mediaoriginal']   = 'আসল সংস্করণ';
+$lang['js']['medialnk']        = 'বিস্তারিত পৃষ্ঠায় লিংক';
+$lang['js']['mediadirect']     = 'মূল সরাসরি লিঙ্ক';
+$lang['js']['medianolnk']      = 'কোনো লিঙ্ক নাই';
+$lang['js']['medianolink']     = 'ইমেজ লিঙ্ক কোরো না';
+$lang['js']['medialeft']       = 'বাম দিকে ইমেজ সারিবদ্ধ কর';
+$lang['js']['mediaright']      = 'ডান দিকে ইমেজ সারিবদ্ধ কর';
+$lang['js']['mediacenter']     = 'মাঝখানে ইমেজ সারিবদ্ধ কর';
+$lang['js']['medianoalign']    = 'কোনো সারিবদ্ধ করা প্রয়োজন নেই';
+$lang['js']['nosmblinks']      = 'উইন্ডোস শেয়ার এর সাথে সংযোগ সাধন কেবল মাইক্রোসফ্ট ইন্টারনেট এক্সপ্লোরারেই সম্ভব।\nতবে আপনি লিংকটি কপি পেস্ট করতেই পারেন।';
+$lang['js']['linkwiz']         = 'লিংক উইজার্ড';
+$lang['js']['linkto']          = 'সংযোগের লক্ষ্য:';
+$lang['js']['del_confirm']     = 'নির্বাচিত আইটেম(গুলো) আসলেই মুছে ফেলতে চান?';
+$lang['js']['restore_confirm'] = 'এই সংস্করণ সত্যিই পূর্বাবস্থায় ফিরিয়ে আনতে চান?';
+$lang['js']['media_diff']      = 'পার্থক্যগুলো দেখুন:';
+$lang['js']['media_diff_both'] = 'পাশাপাশি';
+$lang['js']['media_diff_opacity'] = 'শাইন-থ্রু';
+$lang['js']['media_diff_portions'] = 'ঝেঁটিয়ে বিদায়';
+$lang['js']['media_select']    = 'ফাইল নির্বাচন...';
+$lang['js']['media_upload_btn'] = 'আপলোড';
+$lang['js']['media_done_btn']  = 'সাধিত';
+$lang['js']['media_drop']      = 'আপলোডের জন্য এখানে ফাইল ফেলুন';
+$lang['js']['media_cancel']    = 'অপসারণ';
+$lang['js']['media_overwrt']   = 'বর্তমান ফাইল ওভাররাইট করুন';
+$lang['rssfailed']             = 'ফিডটি জোগাড় করতে গিয়ে একটি ত্রুটি ঘটেছে:';
+$lang['nothingfound']          = 'কিছু পাওয়া যায়নি।';
+$lang['mediaselect']           = 'মিডিয়া ফাইল';
+$lang['fileupload']            = 'মিডিয়া ফাইল আপলোড';
+$lang['uploadsucc']            = 'আপলোড সফল';
+$lang['uploadfail']            = 'আপলোড ব্যর্থ। অনুমতি জনিত ত্রুটি কী?';
+$lang['uploadwrong']           = 'আপলোড প্রত্যাখ্যাত। এই ফাইল এক্সটেনশন অননুমোদিত।';
+$lang['uploadexist']           = 'ফাইল ইতিমধ্যেই বিরাজমান। কিছু করা হয়নি।';
+$lang['uploadbadcontent']      = 'আপলোডকৃত সামগ্রী %s ফাইল এক্সটেনশন এর সাথে মিলেনি।';
+$lang['uploadspam']            = 'স্প্যাম ব্ল্যাকলিস্ট আপলোড আটকে দিয়েছে।';
+$lang['uploadxss']             = 'সামগ্রীটি ক্ষতিকর ভেবে আপলোড আটকে দেয়া হয়েছে।';
+$lang['uploadsize']            = 'আপলোডকৃত ফাইলটি বেশি বড়ো। (সর্বোচ্চ %s)';
+$lang['deletesucc']            = '"%s" ফাইলটি মুছে ফেলা হয়েছে।';
+$lang['deletefail']            = '"%s" ডিলিট করা যায়নি - অনুমতি আছে কি না দেখুন।';
+$lang['mediainuse']            = '"%s" ফাইলটি মোছা হয়নি - এটি এখনো ব্যবহৃত হচ্ছে।';

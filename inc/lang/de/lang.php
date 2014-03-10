@@ -23,6 +23,7 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Benedikt Fey <spam@lifeisgoooood.de>
+ * @author Joerg <scooter22@gmx.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -345,3 +346,4 @@ $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
+$lang['wikimarkup']            = 'Wiki Markup';

@@ -70,6 +70,7 @@ function css_out(){
         $files[$mediatype] = array();
         // load core styles
         $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
             $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
