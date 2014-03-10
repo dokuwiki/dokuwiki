@@ -1475,6 +1475,8 @@ function userinfo($username = null) {
     global $conf, $INFO;
     /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // prepare initial event data
     $data = array(
@@ -1493,8 +1495,8 @@ function userinfo($username = null) {
         'userinfo' => ''
     );
     if($username === null) {
-        $data['username'] = $username = $_SERVER['REMOTE_USER'];
-        $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($_SERVER['REMOTE_USER']) . '</bdi>)';
+        $data['username'] = $username = $INPUT->server->str('REMOTE_USER');
+        $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
     }
 
     $evt = new Doku_Event('COMMON_USER_LINK', $data);
