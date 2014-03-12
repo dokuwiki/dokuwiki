@@ -1,6 +1,6 @@
 Tere! 
 
-Wikis @TITLE@ toimetati lehekülge @PAGE@. 
+Wiki-s @TITLE@ toimetati lehekülge @PAGE@. 
 Muudatustest lähemalt: 
  
 -------------------------------------------------------- 
