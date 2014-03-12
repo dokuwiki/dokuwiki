@@ -8,6 +8,7 @@
  * @author uahello@gmail.com
  * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
  * @author alhajr <alhajr300@gmail.com>
+ * @author shagawy8 <shagawy8@gmail.com>
  */
 $lang['menu']                  = 'مدير الاسترجاع';
 $lang['filter']                = 'ابحث في الصفحات المتأذاة';
