@@ -1,8 +1,8 @@
 <?php
+
 /**
- * danish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -14,6 +14,9 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
+ * @author Soren Birk <soer9648@hotmail.com>
+ * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
+ * @author soer9648 <soer9648@eucl.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +60,7 @@ $lang['btn_revert']            = 'Reetablér';
 $lang['btn_register']          = 'Registrér';
 $lang['btn_apply']             = 'Anvend';
 $lang['btn_media']             = 'Media Manager';
+$lang['btn_deleteuser']        = 'Fjern Min Konto';
 $lang['loggedinas']            = 'Logget ind som';
 $lang['user']                  = 'Brugernavn';
 $lang['pass']                  = 'Adgangskode';
@@ -68,6 +72,7 @@ $lang['fullname']              = 'Fulde navn';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Brugerprofil';
 $lang['badlogin']              = 'Brugernavn eller adgangskode var forkert.';
+$lang['badpassconfirm']        = 'Kodeordet var desværre forkert';
 $lang['minoredit']             = 'Mindre ændringer';
 $lang['draftdate']             = 'Kladde automatisk gemt d.';
 $lang['nosecedit']             = 'Siden blev ændret i mellemtiden, sektions information var for gammel, hentede hele siden i stedet.';
@@ -84,6 +89,10 @@ $lang['profna']                = 'Denne wiki understøtter ikke ændring af prof
 $lang['profnochange']          = 'Ingen ændringer, intet modificeret.';
 $lang['profnoempty']           = 'Tomt navn eller e-mail adresse er ikke tilladt.';
 $lang['profchanged']           = 'Brugerprofil opdateret korrekt.';
+$lang['profnodelete']          = 'Denne wiki supporterer ikke sletning af brugere';
+$lang['profdeleteuser']        = 'Slet Konto';
+$lang['profdeleted']           = 'Din brugerkonto er blevet slettet fra denne wiki';
+$lang['profconfdelete']        = 'Jeg ønsker at slette min konto fra denne wiki. <br/> Denne handling kan ikke fortrydes.';
 $lang['pwdforget']             = 'Har du glemt dit adgangskode? Få et nyt';
 $lang['resendna']              = 'Denne wiki understøtter ikke udsendelse af nyt adgangskode.';
 $lang['resendpwd']             = 'Vælg ny adgangskode for';
@@ -198,6 +207,7 @@ $lang['user_tools']            = 'Brugerværktøjer';
 $lang['site_tools']            = 'Webstedsværktøjer';
 $lang['page_tools']            = 'Sideværktøjer';
 $lang['skip_to_content']       = 'hop til indhold';
+$lang['sidebar']               = 'Sidebjælke';
 $lang['mail_newpage']          = 'dokument tilføjet:';
 $lang['mail_changed']          = 'dokument ændret:';
 $lang['mail_subscribe_list']   = 'sider ændret i navnerum';
@@ -292,6 +302,8 @@ $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrere
 $lang['i_pol2']                = 'Lukket Wiki (kun for registerede brugere kan læse, skrive og overføre)';
 $lang['i_retry']               = 'Forsøg igen';
 $lang['i_license']             = 'Vælg venligst licensen du vil tilføje dit indhold under:';
+$lang['i_license_none']        = 'Vis ikke licensinformationer';
+$lang['i_pop_field']           = 'Hjælp os venligst med at forbedre oplevelsen af DokuWiki:';
 $lang['recent_global']         = 'Du ser lige nu ændringerne i <b>%s</b> navnerummet. Du kan også <a href="%s">se de sidste ændringer for hele wiki siden </a>';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måned siden';

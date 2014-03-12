@@ -48,7 +48,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Handle the match
      */
-    function handle($match, $state, $pos, Doku_Handler &$handler){
+    function handle($match, $state, $pos, Doku_Handler $handler){
         $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
         return array(strtolower($match));
     }
@@ -56,8 +56,9 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Create output
      */
-    function render($format, Doku_Renderer &$renderer, $data) {
+    function render($format, Doku_Renderer $renderer, $data) {
         if($format == 'xhtml'){
+            /** @var Doku_Renderer_xhtml $renderer */
             //handle various info stuff
             switch ($data[0]){
                 case 'syntaxmodes':
@@ -142,8 +143,6 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * uses some of the original renderer methods
      */
     function _helpermethods_xhtml(Doku_Renderer &$renderer){
-        global $lang;
-
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
             if (!$po = plugin_load('helper',$p)) continue;
@@ -251,10 +250,11 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Adds a TOC item
      */
-    function _addToTOC($text, $level, Doku_Renderer_xhtml &$renderer){
+    function _addToTOC($text, $level, Doku_Renderer &$renderer){
         global $conf;
 
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){
+            /** @var $renderer Doku_Renderer_xhtml */
             $hid  = $renderer->_headerToLink($text, 'true');
             $renderer->toc[] = array(
                 'hid'   => $hid,

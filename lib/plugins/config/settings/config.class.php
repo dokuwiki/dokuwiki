@@ -330,8 +330,7 @@ if (!class_exists('configuration')) {
             foreach ($this->get_plugin_list() as $plugin) {
                 $plugin_dir = plugin_directory($plugin);
                 if (@file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
-                    $conf = array();
-                    @include(DOKU_PLUGIN.$plugin_dir.$file);
+                    $conf = $this->_read_config(DOKU_PLUGIN.$plugin_dir.$file);
                     foreach ($conf as $key => $value){
                         $default['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
                     }
@@ -340,8 +339,7 @@ if (!class_exists('configuration')) {
 
             // the same for the active template
             if (@file_exists(tpl_incdir().$file)){
-                $conf = array();
-                @include(tpl_incdir().$file);
+                $conf = $this->_read_config(tpl_incdir().$file);
                 foreach ($conf as $key => $value){
                     $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
                 }
@@ -794,7 +792,7 @@ if (!class_exists('setting_numericopt')) {
 if (!class_exists('setting_onoff')) {
     class setting_onoff extends setting_numeric {
 
-        function html(&$plugin) {
+        function html(&$plugin, $echo = false) {
             $value = '';
             $disable = '';
 
@@ -830,7 +828,7 @@ if (!class_exists('setting_multichoice')) {
     class setting_multichoice extends setting_string {
         var $_choices = array();
 
-        function html(&$plugin) {
+        function html(&$plugin, $echo = false) {
             $value = '';
             $disable = '';
             $nochoice = '';

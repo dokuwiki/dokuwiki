@@ -16,6 +16,7 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Petr Klíma <qaxi@seznam.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -299,6 +300,7 @@ $lang['i_policy']              = 'Úvodní politika ACL';
 $lang['i_pol0']                = 'Otevřená wiki (čtení, zápis a upload pro všechny)';
 $lang['i_pol1']                = 'Veřejná wiki (čtení pro všechny, zápis a upload pro registrované uživatele)';
 $lang['i_pol2']                = 'Uzavřená wiki (čtení, zápis a upload pouze pro registrované uživatele)';
+$lang['i_allowreg']            = 'Povol uživatelům registraci';
 $lang['i_retry']               = 'Zkusit znovu';
 $lang['i_license']             = 'Vyberte prosím licenci obsahu:';
 $lang['i_license_none']        = 'Nezobrazovat žádné licenční informace';
@@ -336,3 +338,7 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
+$lang['currentns']             = 'Aktuální jmenný prostor';
+$lang['searchresult']          = 'Výsledek hledání';
+$lang['plainhtml']             = 'Čisté HTML';
+$lang['wikimarkup']            = 'Wiki jazyk';

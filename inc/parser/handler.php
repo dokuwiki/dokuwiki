@@ -70,7 +70,7 @@ class Doku_Handler {
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
-        $plugin =& plugin_load('syntax',$pluginname);
+        $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
         }
@@ -653,8 +653,8 @@ function Doku_Handler_Parse_Media($match) {
 
     //parse width and height
     if(preg_match('#(\d+)(x(\d+))?#i',$param,$size)){
-        ($size[1]) ? $w = $size[1] : $w = null;
-        ($size[3]) ? $h = $size[3] : $h = null;
+        !empty($size[1]) ? $w = $size[1] : $w = null;
+        !empty($size[3]) ? $h = $size[3] : $h = null;
     } else {
         $w = null;
         $h = null;
@@ -1456,6 +1456,7 @@ class Doku_Handler_Table {
 class Doku_Handler_Block {
     var $calls = array();
     var $skipEol = false;
+    var $inParagraph = false;
 
     // Blocks these should not be inside paragraphs
     var $blockOpen = array(

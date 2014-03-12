@@ -708,7 +708,7 @@ class lessc {
 				}
 
 				$oldParent = $mixin->parent;
-				if ($mixin != $block) $mixin->parent = $block;
+				if ($mixin !== $block) $mixin->parent = $block;
 
 				foreach ($this->sortProps($mixin->props) as $subProp) {
 					if ($suffix !== null &&

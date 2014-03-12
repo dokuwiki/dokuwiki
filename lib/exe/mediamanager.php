@@ -34,7 +34,8 @@
     $JSINFO = array('id' => '', 'namespace' => '');
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
-    trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
+    $tmp = array();
+    trigger_event('MEDIAMANAGER_STARTED', $tmp);
     session_write_close();  //close session
 
     // do not display the manager if user does not have read access
@@ -56,7 +57,7 @@
     }
 
     // give info on PHP caught upload errors
-    if($_FILES['upload']['error']){
+    if(!empty($_FILES['upload']['error'])){
         switch($_FILES['upload']['error']){
             case 1:
             case 2:
@@ -70,7 +71,7 @@
     }
 
     // handle upload
-    if($_FILES['upload']['tmp_name']){
+    if(!empty($_FILES['upload']['tmp_name'])){
         $JUMPTO = media_upload($NS,$AUTH);
         if($JUMPTO) $NS = getNS($JUMPTO);
     }

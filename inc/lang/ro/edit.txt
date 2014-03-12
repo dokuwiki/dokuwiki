@@ -1,2 +1,1 @@
-Editează pagina și apasă ''Salvează''. Vezi [[wiki:syntax]] pentru sintaxă. Te rog editează pagina doar pentru a o **îmbunătați**. Dacă vrei să testezi cîteva lucruri, învață sa faci primii pași în [[playground:playground]].
-
+Editează pagina și apasă ''Salvează''. Vezi [[wiki:syntax]] pentru sintaxă. Te rog editează pagina doar pentru a o **îmbunătați**. Dacă vrei să testezi câteva lucruri, învață sa faci primii pași în [[playground:playground]].

@@ -176,7 +176,7 @@ if (!class_exists('setting_renderer')) {
             $format = $this->_format;
 
             foreach (plugin_list('renderer') as $plugin) {
-                $renderer =& plugin_load('renderer',$plugin);
+                $renderer = plugin_load('renderer',$plugin);
                 if (method_exists($renderer,'canRender') && $renderer->canRender($format)) {
                     $this->_choices[] = $plugin;
 

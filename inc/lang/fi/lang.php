@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Finnish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Rami Lehti <rammer@ipi.fi>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -51,6 +52,7 @@ $lang['btn_revert']            = 'palauta';
 $lang['btn_register']          = 'Rekisteröidy';
 $lang['btn_apply']             = 'Toteuta';
 $lang['btn_media']             = 'Media manager';
+$lang['btn_deleteuser']        = 'Poista tilini';
 $lang['loggedinas']            = 'Kirjautunut nimellä';
 $lang['user']                  = 'Käyttäjänimi';
 $lang['pass']                  = 'Salasana';
@@ -62,6 +64,7 @@ $lang['fullname']              = 'Koko nimi';
 $lang['email']                 = 'Sähköposti';
 $lang['profile']               = 'Käyttäjän profiili';
 $lang['badlogin']              = 'Käyttäjänimi tai salasana oli väärä.';
+$lang['badpassconfirm']        = 'Valitan. Salasana oli väärin';
 $lang['minoredit']             = 'Pieni muutos';
 $lang['draftdate']             = 'Luonnos tallennettu automaattisesti';
 $lang['nosecedit']             = 'Sivu on muuttunut välillä ja kappaleen tiedot olivat vanhentuneet. Koko sivu ladattu.';
@@ -78,6 +81,11 @@ $lang['profna']                = 'Tässä wikissä profiilien muokkaaminen ei ol
 $lang['profnochange']          = 'Ei muutoksia.';
 $lang['profnoempty']           = 'Tyhjä nimi tai sähköpostiosoite ei ole sallittu.';
 $lang['profchanged']           = 'Käyttäjän profiilin päivitys onnistui.';
+$lang['profnodelete']          = 'Tässä wikissä ei voi poistaa käyttäjiä';
+$lang['profdeleteuser']        = 'Poista tili';
+$lang['profdeleted']           = 'Käyttäjätilisi on postettu tästä wikistä';
+$lang['profconfdelete']        = 'Haluan poistaa käyttäjätilini tästä wikistä. <br/> Tätä toimintoa ei voi myöhemmin peruuttaa.';
+$lang['profconfdeletemissing'] = 'Vahvistus rastia ei valittu';
 $lang['pwdforget']             = 'Unohtuiko salasana? Hanki uusi';
 $lang['resendna']              = 'Tämä wiki ei tue salasanan uudelleenlähettämistä.';
 $lang['resendpwd']             = 'Aseta uusisalasana';
@@ -284,6 +292,7 @@ $lang['i_policy']              = 'Käyttöoikeuksien oletusmenettelytapa';
 $lang['i_pol0']                = 'Avoin Wiki (luku, kirjoitus, tiedostojen lähetys on sallittu kaikille)';
 $lang['i_pol1']                = 'Julkinen Wiki (luku kaikilla, kirjoitus ja tiedostojen lähetys rekisteröidyillä käyttäjillä)';
 $lang['i_pol2']                = 'Suljettu Wiki (luku, kirjoitus ja tiedostojen lähetys vain rekisteröityneillä käyttäjillä)';
+$lang['i_allowreg']            = 'Salli käyttäjien rekisteröityminen';
 $lang['i_retry']               = 'Yritä uudelleen';
 $lang['i_license']             = 'Valitse lisenssi, jonka alle haluat sisältösi laittaa:';
 $lang['i_license_none']        = 'Älä näytä mitään lisenssitietoja';
@@ -321,3 +330,7 @@ $lang['media_perm_read']       = 'Anteeksi. Sinulla ei ole riittävästi oikeuks
 $lang['media_perm_upload']     = 'Anteeksi. Sinulla ei ole riittävästi oikeuksia lähettääksesi tiedostoja.';
 $lang['media_update']          = 'Lähetä uusi versio';
 $lang['media_restore']         = 'Palauta tämä versio';
+$lang['currentns']             = 'Nykyinen nimiavaruus';
+$lang['searchresult']          = 'Haun tulokset';
+$lang['plainhtml']             = 'pelkkä HTML';
+$lang['wikimarkup']            = 'Wiki markup';

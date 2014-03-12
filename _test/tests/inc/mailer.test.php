@@ -50,8 +50,8 @@ class mailer_test extends DokuWikiTest {
         // set a bunch of test headers
         $mail->setHeader('test-header','bla');
         $mail->setHeader('to','A valid ASCII name <test@example.com>');
-        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning$§%.");
-        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning$§%.",false);
+        $mail->setHeader('from',"Thös ne\needs\x00serious cleaning\$§%.");
+        $mail->setHeader('bad',"Thös ne\needs\x00serious cleaning\$§%.",false);
         $mail->setHeader("weird\n*+\x00foo.-_@bar?",'now clean');
 
         // are they set?
@@ -63,7 +63,7 @@ class mailer_test extends DokuWikiTest {
         $this->assertArrayHasKey('From',$headers);
         $this->assertEquals('Ths neeedsserious cleaning.',$headers['From']);
         $this->assertArrayHasKey('Bad',$headers);
-        $this->assertEquals("Thös ne\needs\x00serious cleaning$§%.",$headers['Bad']);
+        $this->assertEquals("Thös ne\needs\x00serious cleaning\$§%.",$headers['Bad']);
         $this->assertArrayHasKey('Weird+foo.-_@bar',$headers);
 
         // unset a header again
@@ -154,7 +154,19 @@ class mailer_test extends DokuWikiTest {
         $headers['Cc'] = '';
         $header = $mail->prepareHeaders();
         $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
-        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Cc found in headers.');
+    }
+
+    function test_nullTOorCCorBCC() {
+        $mail = new TestMailer();
+        $headers = &$mail->propRef('headers');
+        $headers['Bcc'] = NULL;
+        $headers['Cc'] = NULL;
+        $headers['To'] = NULL;
+        $header = $mail->prepareHeaders();
+        $this->assertEquals(0, preg_match('/(^|\n)Bcc: (\n|$)/', $header), 'Bcc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)Cc: (\n|$)/', $header), 'Cc found in headers.');
+        $this->assertEquals(0, preg_match('/(^|\n)To: (\n|$)/', $header), 'To found in headers.');
     }
 
     /**
@@ -179,7 +191,10 @@ class mailer_test extends DokuWikiTest {
         // ask message lint if it is okay
         $html = new HTTPClient();
         $results = $html->post('http://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
-        $this->assertTrue($results !== false);
+        if($results === false) {
+            $this->markTestSkipped('no response from validator');
+            return;
+        }
 
         // parse the result lines
         $lines = explode("\n", $results);

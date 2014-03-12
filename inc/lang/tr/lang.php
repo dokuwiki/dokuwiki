@@ -1,14 +1,16 @@
 <?php
+
 /**
- * turkish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
  * @author farukerdemoncel@gmail.com
+ * @author Mustafa Aslan <maslan@hotmail.com>
+ * @author huseyin can <huseyincan73@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -52,6 +54,7 @@ $lang['btn_revert']            = 'Geri Yükle';
 $lang['btn_register']          = 'Kayıt ol';
 $lang['btn_apply']             = 'Uygula';
 $lang['btn_media']             = 'Çokluortam Yöneticisi';
+$lang['btn_deleteuser']        = 'Hesabımı Sil';
 $lang['loggedinas']            = 'Giriş ismi';
 $lang['user']                  = 'Kullanıcı ismi';
 $lang['pass']                  = 'Parola';
@@ -63,6 +66,7 @@ $lang['fullname']              = 'Tam isim';
 $lang['email']                 = 'E-posta';
 $lang['profile']               = 'Kullanıcı Bilgileri';
 $lang['badlogin']              = 'Üzgünüz, Kullanıcı adı veya şifre yanlış oldu.';
+$lang['badpassconfirm']        = 'Üzgünüz, parolanız yanlış';
 $lang['minoredit']             = 'Küçük Değişiklikler';
 $lang['draftdate']             = 'Taslak şu saatte otomatik kaydedildi:';
 $lang['nosecedit']             = 'Sayfa yakın zamanda değiştirilmiştir, bölüm bilgisi eski kalmıştır. Bunun için bölüm yerine tüm sayfa yüklenmiştir.';
@@ -79,6 +83,11 @@ $lang['profna']                = 'Bu wiki kullanıcı bilgilerini değiştirmeyi
 $lang['profnochange']          = 'Değişiklik yok, birşey yapılmadı.';
 $lang['profnoempty']           = 'Boş isim veya e-posta adresine izin verilmiyor.';
 $lang['profchanged']           = 'Kullanıcı bilgileri başarıyla değiştirildi.';
+$lang['profnodelete']          = 'Bu wiki kullanıcı silmeyi desteklemiyor';
+$lang['profdeleteuser']        = 'Hesabı Sil';
+$lang['profdeleted']           = 'Bu wiki\'den hesabınız silindi';
+$lang['profconfdelete']        = 'Bu wiki\'den hesabımı silmek istiyorum. <br/>Bu işlem geri alınamaz';
+$lang['profconfdeletemissing'] = 'Onay kutusu işaretlenmedi';
 $lang['pwdforget']             = 'Parolanızı mı unuttunuz? Yeni bir parola alın';
 $lang['resendna']              = 'Bu wiki parolayı tekrar göndermeyi desteklememektedir.';
 $lang['resendpwd']             = 'İçin yeni şifre belirle';
@@ -94,6 +103,7 @@ $lang['searchmedia_in']        = '%s içinde ara';
 $lang['txt_upload']            = 'Yüklenecek dosyayı seç';
 $lang['txt_filename']          = 'Dosya adı (zorunlu değil)';
 $lang['txt_overwrt']           = 'Mevcut dosyanın üstüne yaz';
+$lang['maxuploadsize']         = 'Yükleme dosya başına en fazla %s';
 $lang['lockedby']              = 'Şu an şunun tarafından kilitli:';
 $lang['lockexpire']            = 'Kilitin açılma tarihi:';
 $lang['js']['willexpire']      = 'Bu sayfayı değiştirme kilidinin süresi yaklaşık bir dakika içinde geçecek.\nÇakışmaları önlemek için önizleme tuşunu kullanarak kilit sayacını sıfırla.';
@@ -129,6 +139,7 @@ $lang['js']['linkto']          = 'Bağlantı:';
 $lang['js']['del_confirm']     = 'Bu girişi sil?';
 $lang['js']['restore_confirm'] = 'Bu sürüme geri dönmek istediğinizden emin misiniz?';
 $lang['js']['media_diff']      = 'Farkları gör:';
+$lang['js']['media_diff_both'] = 'Yan yana';
 $lang['js']['media_select']    = 'Dosyalar seç...';
 $lang['js']['media_upload_btn'] = 'Yükle';
 $lang['js']['media_done_btn']  = 'Bitti';
@@ -169,6 +180,7 @@ $lang['yours']                 = 'Senin Sürümün';
 $lang['diff']                  = 'Kullanılan sürüm ile farkları göster';
 $lang['diff2']                 = 'Seçili sürümler arasındaki farkı göster';
 $lang['difflink']              = 'Karşılaştırma görünümüne bağlantı';
+$lang['diff_type']             = 'farklı görünüş';
 $lang['line']                  = 'Satır';
 $lang['breadcrumb']            = 'İz';
 $lang['youarehere']            = 'Buradasınız';
@@ -181,10 +193,17 @@ $lang['external_edit']         = 'Dışarıdan düzenle';
 $lang['summary']               = 'Özeti düzenle';
 $lang['noflash']               = 'Bu içeriği göstermek için <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Eklentisi</a> gerekmektedir.';
 $lang['download']              = 'Parçacığı indir';
+$lang['tools']                 = 'Alet';
+$lang['user_tools']            = 'Kullanıcı Aletleri';
+$lang['site_tools']            = 'Site Aletleri';
+$lang['page_tools']            = 'Sayfa Aletleri';
+$lang['skip_to_content']       = 'Bağlanmak için kaydır';
+$lang['sidebar']               = 'kaydırma çubuğu';
 $lang['mail_newpage']          = 'sayfa eklenme:';
 $lang['mail_changed']          = 'sayfa değiştirilme:';
 $lang['mail_new_user']         = 'yeni kullanıcı';
 $lang['mail_upload']           = 'dosya yüklendi:';
+$lang['changes_type']          = 'görünüşü değiştir';
 $lang['pages_changes']         = 'Sayfalar';
 $lang['media_changes']         = 'Çokluortam dosyaları';
 $lang['both_changes']          = 'Sayfalar ve çoklu ortam dosyaları';
@@ -228,6 +247,9 @@ $lang['img_keywords']          = 'Anahtar Sözcükler';
 $lang['img_width']             = 'Genişlik';
 $lang['img_height']            = 'Yükseklik';
 $lang['img_manager']           = 'Ortam oynatıcısında göster';
+$lang['subscr_m_new_header']   = 'Üyelik ekle';
+$lang['subscr_m_current_header'] = 'Üyeliğini onayla';
+$lang['subscr_m_unsubscribe']  = 'Üyelik iptali';
 $lang['subscr_m_subscribe']    = 'Kayıt ol';
 $lang['subscr_m_receive']      = 'Al';
 $lang['authtempfail']          = 'Kullanıcı doğrulama geçici olarak yapılamıyor. Eğer bu durum devam ederse lütfen Wiki yöneticine haber veriniz.';
@@ -280,4 +302,5 @@ $lang['media_view']            = '%s';
 $lang['media_edit']            = 'Düzenle %s';
 $lang['media_history']         = 'Geçmiş %s';
 $lang['media_perm_upload']     = 'Üzgünüm, karşıya dosya yükleme yetkiniz yok.';
+$lang['media_update']          = 'Yeni versiyonu yükleyin';
 $lang['media_restore']         = 'Bu sürümü eski haline getir';

@@ -28,20 +28,6 @@ function html_wikilink($id,$name=null,$search=''){
 }
 
 /**
- * Helps building long attribute lists
- *
- * @deprecated Use buildAttributes instead
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function html_attbuild($attributes){
-    $ret = '';
-    foreach ( $attributes as $key => $value ) {
-        $ret .= $key.'="'.formText($value).'" ';
-    }
-    return trim($ret);
-}
-
-/**
  * The loginform
  *
  * @author   Andreas Gohr <andi@splitbrain.org>
@@ -428,7 +414,7 @@ function html_revisions($first=0, $media_id = false){
     global $conf;
     global $lang;
     $id = $ID;
-    /* we need to get one additionally log entry to be able to
+    /* we need to get one additional log entry to be able to
      * decide if this is the last page or is there another one.
      * see html_recent()
      */
@@ -705,7 +691,7 @@ function html_recent($first=0, $show_changes='both'){
 
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $form->addElement(media_printicon($recent['id']));
         } else {
             $icon = DOKU_BASE.'lib/images/fileicons/file.png';
@@ -719,7 +705,7 @@ function html_recent($first=0, $show_changes='both'){
         $diff = false;
         $href = '';
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
                 $href = media_managerURL(array('tab_details' => 'history',
@@ -729,7 +715,7 @@ function html_recent($first=0, $show_changes='both'){
             $href = wl($recent['id'],"do=diff", false, '&');
         }
 
-        if ($recent['media'] && !$diff) {
+        if (!empty($recent['media']) && !$diff) {
             $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
         } else {
             $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => $href)));
@@ -743,7 +729,7 @@ function html_recent($first=0, $show_changes='both'){
             $form->addElement(form_makeCloseTag('a'));
         }
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'history',
                 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
         } else {
@@ -759,7 +745,7 @@ function html_recent($first=0, $show_changes='both'){
                         )));
         $form->addElement(form_makeCloseTag('a'));
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
             $class = (file_exists(mediaFN($recent['id']))) ? 'wikilink1' : $class = 'wikilink2';
             $form->addElement(form_makeOpenTag('a', array('class' => $class, 'href' => $href)));
@@ -1203,7 +1189,7 @@ function html_diff($text='',$intro=true,$type=null){
         $diffurl = wl($ID, array(
                         'do'       => 'diff',
                         'rev2[0]'  => $l_rev,
-                        'rev2[1]'  => $r_rev,
+                        'rev2[1]'  => $r_rev ? $r_rev : $INFO['currentrev'], // link to exactly this view FS#2835
                         'difftype' => $type,
                       ));
         ptln('<p><a class="wikilink1" href="'.$diffurl.'">'.$lang['difflink'].'</a></p>');
@@ -1648,6 +1634,17 @@ function html_debug(){
     print_r($inis);
     print '</pre>';
 
+    if (function_exists('apache_get_version')) {
+        $apache['version'] = apache_get_version();
+
+        if (function_exists('apache_get_modules')) {
+            $apache['modules'] = apache_get_modules();
+        }
+        print '<b>Apache</b><pre>';
+        print_r($apache);
+        print '</pre>';
+    }
+
     print '</body></html>';
 }
 
@@ -1661,7 +1658,7 @@ function html_admin(){
     global $ID;
     global $INFO;
     global $conf;
-    /** @var auth_basic $auth */
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     // build menu of admin functions from the plugins that handle them
@@ -1669,7 +1666,7 @@ function html_admin(){
     $menu = array();
     foreach ($pluginlist as $p) {
         /** @var DokuWiki_Admin_Plugin $obj */
-        if($obj =& plugin_load('admin',$p) === null) continue;
+        if(($obj = plugin_load('admin',$p)) === null) continue;
 
         // check permissions
         if($obj->forAdminOnly() && !$INFO['isadmin']) continue;
@@ -1712,12 +1709,12 @@ function html_admin(){
         }
         unset($menu['acl']);
 
-        if($menu['plugin']){
+        if($menu['extension']){
             ptln('  <li class="admin_plugin"><div class="li">'.
-                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'plugin')).'">'.
-                    $menu['plugin']['prompt'].'</a></div></li>');
+                    '<a href="'.wl($ID, array('do' => 'admin','page' => 'extension')).'">'.
+                    $menu['extension']['prompt'].'</a></div></li>');
         }
-        unset($menu['plugin']);
+        unset($menu['extension']);
 
         if($menu['config']){
             ptln('  <li class="admin_config"><div class="li">'.

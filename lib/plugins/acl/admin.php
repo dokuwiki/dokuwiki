@@ -268,7 +268,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         usort($data,array($this,'_tree_sort'));
         $count = count($data);
         if($count>0) for($i=1; $i<$count; $i++){
-            if($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) unset($data[$i]);
+            if($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) {
+                unset($data[$i]);
+                $i++;  // duplicate found, next $i can't be a duplicate, so skip forward one
+            }
         }
         return $data;
     }
@@ -345,7 +348,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Print infos and editor
+     * Print info and editor
      */
     function _html_info(){
         global $ID;
@@ -488,7 +491,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     function _html_list_acl($item){
         $ret = '';
         // what to display
-        if($item['label']){
+        if(!empty($item['label'])){
             $base = $item['label'];
         }else{
             $base = ':'.$item['id'];
@@ -496,8 +499,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // highlight?
-        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id']))
+        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id'])) {
             $cl = ' cur';
+        } else {
+            $cl = '';
+        }
 
         // namespace or page?
         if($item['type']=='d'){
@@ -554,7 +560,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             $line = trim(preg_replace('/#.*$/','',$line)); //ignore comments
             if(!$line) continue;
 
-            $acl = preg_split('/\s+/',$line);
+            $acl = preg_split('/[ \t]+/',$line);
             //0 is pagename, 1 is user, 2 is acl
 
             $acl[1] = rawurldecode($acl[1]);
@@ -701,7 +707,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         $acl_config = file($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
-        $acl_pattern = '^'.preg_quote($acl_scope,'/').'\s+'.$acl_user.'\s+[0-8].*$';
+        $acl_pattern = '^'.preg_quote($acl_scope,'/').'[ \t]+'.$acl_user.'[ \t]+[0-8].*$';
 
         // save all non!-matching
         $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);

@@ -20,6 +20,7 @@ function act_dispatch(){
     global $ID;
     global $INFO;
     global $QUERY;
+    /* @var Input $INPUT */
     global $INPUT;
     global $lang;
     global $conf;
@@ -53,7 +54,7 @@ function act_dispatch(){
             }
         }
 
-        //display some infos
+        //display some info
         if($ACT == 'check'){
             check();
             $ACT = 'show';
@@ -94,7 +95,7 @@ function act_dispatch(){
 
         // user profile changes
         if (in_array($ACT, array('profile','profile_delete'))) {
-            if(!$_SERVER['REMOTE_USER']) {
+            if(!$INPUT->server->str('REMOTE_USER')) {
                 $ACT = 'login';
             } else {
                 switch ($ACT) {
@@ -164,7 +165,8 @@ function act_dispatch(){
                 $pluginlist = plugin_list('admin');
                 if (in_array($page, $pluginlist)) {
                     // attempt to load the plugin
-                    if ($plugin =& plugin_load('admin',$page) !== null){
+
+                    if (($plugin = plugin_load('admin',$page)) !== null){
                         /** @var DokuWiki_Admin_Plugin $plugin */
                         if($plugin->forAdminOnly() && !$INFO['isadmin']){
                             // a manager tried to load a plugin that's for admins only
@@ -189,7 +191,7 @@ function act_dispatch(){
     unset($evt);
 
     // when action 'show', the intial not 'show' and POST, do a redirect
-    if($ACT == 'show' && $preact != 'show' && strtolower($_SERVER['REQUEST_METHOD']) == 'post'){
+    if($ACT == 'show' && $preact != 'show' && strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post'){
         act_redirect($ID,$preact);
     }
 
@@ -413,6 +415,8 @@ function act_revert($act){
     global $ID;
     global $REV;
     global $lang;
+    /* @var Input $INPUT */
+    global $INPUT;
     // FIXME $INFO['writable'] currently refers to the attic version
     // global $INFO;
     // if (!$INFO['writable']) {
@@ -444,7 +448,7 @@ function act_revert($act){
     session_write_close();
 
     // when done, show current page
-    $_SERVER['REQUEST_METHOD'] = 'post'; //should force a redirect
+    $INPUT->server->set('REQUEST_METHOD','post'); //should force a redirect
     $REV = '';
     return 'show';
 }
@@ -492,17 +496,20 @@ function act_redirect_execute($opts){
 function act_auth($act){
     global $ID;
     global $INFO;
+    /* @var Input $INPUT */
+    global $INPUT;
 
     //already logged in?
-    if(isset($_SERVER['REMOTE_USER']) && $act=='login'){
+    if($INPUT->server->has('REMOTE_USER') && $act=='login'){
         return 'show';
     }
 
     //handle logout
     if($act=='logout'){
         $lockedby = checklock($ID); //page still locked?
-        if($lockedby == $_SERVER['REMOTE_USER'])
+        if($lockedby == $INPUT->server->str('REMOTE_USER')){
             unlock($ID); //try to unlock
+        }
 
         // do the logout stuff
         auth_logoff();
@@ -696,7 +703,7 @@ function act_sitemap($act) {
 
         // Send file
         //use x-sendfile header to pass the delivery to compatible webservers
-        if (http_sendfile($sitemap)) exit;
+        http_sendfile($sitemap);
 
         readfile($sitemap);
         exit;
@@ -718,10 +725,11 @@ function act_subscription($act){
     global $lang;
     global $INFO;
     global $ID;
+    /* @var Input $INPUT */
     global $INPUT;
 
     // subcriptions work for logged in users only
-    if(!$_SERVER['REMOTE_USER']) return 'show';
+    if(!$INPUT->server->str('REMOTE_USER')) return 'show';
 
     // get and preprocess data.
     $params = array();
@@ -732,7 +740,7 @@ function act_subscription($act){
     }
 
     // any action given? if not just return and show the subscription page
-    if(!$params['action'] || !checkSecurityToken()) return $act;
+    if(empty($params['action']) || !checkSecurityToken()) return $act;
 
     // Handle POST data, may throw exception.
     trigger_event('ACTION_HANDLE_SUBSCRIBE', $params, 'subscription_handle_post');
@@ -744,9 +752,9 @@ function act_subscription($act){
     // Perform action.
     $sub = new Subscription();
     if($action == 'unsubscribe'){
-        $ok = $sub->remove($target, $_SERVER['REMOTE_USER'], $style);
+        $ok = $sub->remove($target, $INPUT->server->str('REMOTE_USER'), $style);
     }else{
-        $ok = $sub->add($target, $_SERVER['REMOTE_USER'], $style);
+        $ok = $sub->add($target, $INPUT->server->str('REMOTE_USER'), $style);
     }
 
     if($ok) {
@@ -775,6 +783,8 @@ function act_subscription($act){
 function subscription_handle_post(&$params) {
     global $INFO;
     global $lang;
+    /* @var Input $INPUT */
+    global $INPUT;
 
     // Get and validate parameters.
     if (!isset($params['target'])) {
@@ -805,7 +815,7 @@ function subscription_handle_post(&$params) {
         }
         if ($is === false) {
             throw new Exception(sprintf($lang['subscr_not_subscribed'],
-                                        $_SERVER['REMOTE_USER'],
+                                        $INPUT->server->str('REMOTE_USER'),
                                         prettyprint_id($target)));
         }
         // subscription_set deletes a subscription if style = null.

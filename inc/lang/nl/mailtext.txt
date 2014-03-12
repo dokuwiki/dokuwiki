@@ -1,9 +1,9 @@
-Er is een pagina in je DokuWiki toegevoegd of gewijzigd. Hier zijn de details
+Er is een pagina in je DokuWiki toegevoegd of gewijzigd. Hier zijn de details:
 
 Datum         : @DATE@
 Browser       : @BROWSER@
 IP-Adres      : @IPADDRESS@
-Hostname      : @HOSTNAME@
+Hostnaam      : @HOSTNAME@
 Oude revisie  : @OLDPAGE@
 Nieuwe revisie: @NEWPAGE@
 Samenvatting  : @SUMMARY@

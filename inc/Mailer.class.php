@@ -39,11 +39,13 @@ class Mailer {
      */
     public function __construct() {
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
         if(strpos($server,'.') === false) $server = $server.'.localhost';
 
-        $this->partid   = md5(uniqid(rand(), true)).'@'.$server;
+        $this->partid   = substr(md5(uniqid(rand(), true)),0, 8).'@'.$server;
         $this->boundary = '__________'.md5(uniqid(rand(), true));
 
         $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
@@ -53,7 +55,7 @@ class Mailer {
 
         // add some default headers for mailfiltering FS#2247
         $this->setHeader('X-Mailer', 'DokuWiki');
-        $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
+        $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
         $this->setHeader('X-DokuWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
@@ -181,6 +183,9 @@ class Mailer {
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
         global $INFO;
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
+
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
 
@@ -218,24 +223,24 @@ class Mailer {
         $cip  = gethostsbyaddrs($ip);
         $trep = array(
             'DATE'        => dformat(),
-            'BROWSER'     => $_SERVER['HTTP_USER_AGENT'],
+            'BROWSER'     => $INPUT->server->str('HTTP_USER_AGENT'),
             'IPADDRESS'   => $ip,
             'HOSTNAME'    => $cip,
             'TITLE'       => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
-            'USER'        => $_SERVER['REMOTE_USER'],
+            'USER'        => $INPUT->server->str('REMOTE_USER'),
             'NAME'        => $INFO['userinfo']['name'],
             'MAIL'        => $INFO['userinfo']['mail'],
         );
         $trep = array_merge($trep, (array)$textrep);
         $hrep = array(
             'DATE'        => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'     => hsc($_SERVER['HTTP_USER_AGENT']),
+            'BROWSER'     => hsc($INPUT->server->str('HTTP_USER_AGENT')),
             'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
             'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
             'TITLE'       => hsc($conf['title']),
             'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'        => hsc($_SERVER['REMOTE_USER']),
+            'USER'        => hsc($INPUT->server->str('REMOTE_USER')),
             'NAME'        => hsc($INFO['userinfo']['name']),
             'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
                 hsc($INFO['userinfo']['mail']).'</a>',
@@ -277,7 +282,7 @@ class Mailer {
     /**
      * Add the To: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
@@ -287,7 +292,7 @@ class Mailer {
     /**
      * Add the Cc: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
@@ -297,7 +302,7 @@ class Mailer {
     /**
      * Add the Bcc: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
@@ -310,7 +315,7 @@ class Mailer {
      * This is set to $conf['mailfrom'] when not specified so you shouldn't need
      * to call this function
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string  $address from address
      */
     public function from($address) {
@@ -333,9 +338,9 @@ class Mailer {
      * for headers. Addresses may not contain Non-ASCII data!
      *
      * Example:
-     *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
+     *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @param string|array  $addresses Multiple adresses separated by commas or as array
      * @return bool|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
@@ -430,14 +435,13 @@ class Mailer {
             }
 
             $mime .= '--'.$this->boundary.MAILHEADER_EOL;
-            $mime .= 'Content-Type: '.$media['mime'].';'.MAILHEADER_EOL.
-                     ' id="'.$cid.'"'.MAILHEADER_EOL;
-            $mime .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
-            $mime .= "Content-ID: <$cid>".MAILHEADER_EOL;
+            $mime .= $this->wrappedHeaderLine('Content-Type', $media['mime'].'; id="'.$cid.'"');
+            $mime .= $this->wrappedHeaderLine('Content-Transfer-Encoding', 'base64');
+            $mime .= $this->wrappedHeaderLine('Content-ID',"<$cid>");
             if($media['embed']) {
-                $mime .= 'Content-Disposition: inline; filename='.$media['name'].''.MAILHEADER_EOL;
+                $mime .= $this->wrappedHeaderLine('Content-Disposition', 'inline; filename='.$media['name']);
             } else {
-                $mime .= 'Content-Disposition: attachment; filename='.$media['name'].''.MAILHEADER_EOL;
+                $mime .= $this->wrappedHeaderLine('Content-Disposition', 'attachment; filename='.$media['name']);
             }
             $mime .= MAILHEADER_EOL; //end of headers
             $mime .= chunk_split(base64_encode($media['data']), 74, MAILHEADER_EOL);
@@ -523,7 +527,7 @@ class Mailer {
 
         // clean up addresses
         if(empty($this->headers['From'])) $this->from($conf['mailfrom']);
-        $addrs = array('To', 'From', 'Cc', 'Bcc');
+        $addrs = array('To', 'From', 'Cc', 'Bcc', 'Reply-To', 'Sender');
         foreach($addrs as $addr) {
             if(isset($this->headers[$addr])) {
                 $this->headers[$addr] = $this->cleanAddress($this->headers[$addr]);
@@ -556,10 +560,17 @@ class Mailer {
             }
         }
 
-        // wrap headers
-        foreach($this->headers as $key => $val) {
-            $this->headers[$key] = wordwrap($val, 78, MAILHEADER_EOL.'  ');
-        }
+    }
+
+    /**
+     * Returns a complete, EOL terminated header line, wraps it if necessary
+     *
+     * @param $key
+     * @param $val
+     * @return string
+     */
+    protected function wrappedHeaderLine($key, $val){
+        return wordwrap("$key: $val", 78, MAILHEADER_EOL.'  ').MAILHEADER_EOL;
     }
 
     /**
@@ -570,8 +581,8 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
-            if ($val === '') continue;
-            $headers .= "$key: $val".MAILHEADER_EOL;
+            if ($val === '' || is_null($val)) continue;
+            $headers .= $this->wrappedHeaderLine($key, $val);
         }
         return $headers;
     }
@@ -634,16 +645,16 @@ class Mailer {
             ) return false;
 
             // The To: header is special
-            if(isset($this->headers['To'])) {
-                $to = $this->headers['To'];
+            if(array_key_exists('To', $this->headers)) {
+                $to = (string)$this->headers['To'];
                 unset($this->headers['To']);
             } else {
                 $to = '';
             }
 
             // so is the subject
-            if(isset($this->headers['Subject'])) {
-                $subject = $this->headers['Subject'];
+            if(array_key_exists('Subject', $this->headers)) {
+                $subject = (string)$this->headers['Subject'];
                 unset($this->headers['Subject']);
             } else {
                 $subject = '';

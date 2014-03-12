@@ -6,7 +6,7 @@ Read the [[doku>manual|DokuWiki Manual]] to unleash the full power of DokuWiki.
 
 ===== Download =====
 
-DokuWiki is available at http://www.splitbrain.org/go/dokuwiki
+DokuWiki is available at http://download.dokuwiki.org/
 
 
 ===== Read More =====
@@ -24,7 +24,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
 **Installing DokuWiki**
 
   * [[doku>requirements|System Requirements]]
-  * [[http://www.splitbrain.org/go/dokuwiki|Download DokuWiki]] :!:
+  * [[http://download.dokuwiki.org/|Download DokuWiki]] :!:
   * [[doku>changes|Change Log]]
   * [[doku>Install|How to install or upgrade]] :!:
   * [[doku>config|Configuration]]
@@ -50,7 +50,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
   * [[doku>mailinglist|Join the mailing list]]
   * [[http://forum.dokuwiki.org|Check out the user forum]]
   * [[doku>irc|Talk to other users in the IRC channel]]
-  * [[http://bugs.splitbrain.org/index.php?project=1|Submit bugs and feature wishes]]
+  * [[https://github.com/splitbrain/dokuwiki/issues|Submit bugs and feature wishes]]
   * [[http://www.wikimatrix.org/forum/viewforum.php?id=10|Share your experiences in the WikiMatrix forum]]
   * [[doku>thanks|Some humble thanks]]
 

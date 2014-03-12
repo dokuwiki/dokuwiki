@@ -16,8 +16,6 @@ if ( !defined('DOKU_TAB') ) {
     define ('DOKU_TAB',"\t");
 }
 
-require_once DOKU_INC . 'inc/parser/renderer.php';
-
 /**
  * The Renderer
  */
@@ -274,7 +272,12 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $this->internallink($link, $link);
     }
 
-    function locallink($hash, $name = null){}
+    function locallink($hash, $name = null){
+        if(is_array($name)) {
+            $this->_firstimage($name['src']);
+            if ($name['type'] == 'internalmedia') $this->_recordMediaUsage($name['src']);
+        }
+    }
 
     /**
      * keep track of internal links in $this->meta['relation']['references']
@@ -296,7 +299,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
 
         // first resolve and clean up the $id
         resolve_pageid(getNS($ID), $id, $exists);
-        list($page, $hash) = explode('#', $id, 2);
+        @list($page, $hash) = explode('#', $id, 2);
 
         // set metadata
         $this->meta['relation']['references'][$page] = $exists;

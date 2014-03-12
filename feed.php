@@ -20,8 +20,7 @@ $opt = rss_parseOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$cache = getCacheName(join('', array_values($opt)).$_SERVER['REMOTE_USER'], '.feed');
-$key   = join('', array_values($opt)).$_SERVER['REMOTE_USER'];
+$key   = join('', array_values($opt)).'$'.$_SERVER['REMOTE_USER'].'$'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'];
 $cache = new cache($key, '.feed');
 
 // prepare cache depends
@@ -182,7 +181,7 @@ function rss_parseOptions() {
 function rss_buildItems(&$rss, &$data, $opt) {
     global $conf;
     global $lang;
-    /* @var auth_basic $auth */
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     $eventData = array(
@@ -299,12 +298,12 @@ function rss_buildItems(&$rss, &$data, $opt) {
                         $src_l = '';
 
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)), 300)) {
-                            $more  = 'w='.$size[0].'&h='.$size[1].'t='.@filemtime(mediaFN($id));
-                            $src_r = ml($id, $more);
+                            $more  = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
+                            $src_r = ml($id, $more, true, '&amp;', true);
                         }
                         if($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)), 300)) {
                             $more  = 'rev='.$rev.'&w='.$size[0].'&h='.$size[1];
-                            $src_l = ml($id, $more);
+                            $src_l = ml($id, $more, true, '&amp;', true);
                         }
                         $content = '';
                         if($src_r) {
@@ -347,8 +346,8 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 case 'html':
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w='.$size[0].'&h='.$size[1].'t='.@filemtime(mediaFN($id));
-                            $src     = ml($id, $more);
+                            $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
+                            $src     = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
                         } else {
                             $content = '';
@@ -378,8 +377,8 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 default:
                     if($ditem['media']) {
                         if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w='.$size[0].'&h='.$size[1].'t='.@filemtime(mediaFN($id));
-                            $src     = ml($id, $more);
+                            $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
+                            $src     = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
                         } else {
                             $content = '';
@@ -429,22 +428,19 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $cat = getNS($id);
                 if($cat) $item->category = $cat;
             }
-           
-            // Add only visible items
-            if(isVisiblePage($id)) {
-                // finally add the item to the feed object, after handing it to registered plugins
-                $evdata = array(
-                    'item'  => &$item,
-                    'opt'   => &$opt,
-                    'ditem' => &$ditem,
-                    'rss'   => &$rss
-                );
-                $evt    = new Doku_Event('FEED_ITEM_ADD', $evdata);
-                if($evt->advise_before()) {
-                    $rss->addItem($item);
-                }
-                $evt->advise_after(); // for completeness
+
+            // finally add the item to the feed object, after handing it to registered plugins
+            $evdata = array(
+                'item'  => &$item,
+                'opt'   => &$opt,
+                'ditem' => &$ditem,
+                'rss'   => &$rss
+            );
+            $evt    = new Doku_Event('FEED_ITEM_ADD', $evdata);
+            if($evt->advise_before()) {
+                $rss->addItem($item);
             }
+            $evt->advise_after(); // for completeness
         }
     }
     $event->advise_after();
@@ -479,8 +475,12 @@ function rssListNamespace($opt) {
     $ns = str_replace(':', '/', $ns);
 
     $data = array();
-    sort($data);
-    search($data, $conf['datadir'], 'search_list', '', $ns);
+    $search_opts = array(
+        'depth' => 1,
+        'pagesonly' => true,
+        'listfiles' => true
+    );
+    search($data, $conf['datadir'], 'search_universal', $search_opts, $ns);
 
     return $data;
 }

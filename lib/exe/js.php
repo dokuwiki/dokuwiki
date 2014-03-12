@@ -44,6 +44,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
                 DOKU_INC."lib/scripts/jquery/jquery-migrate$min.js",
+                DOKU_INC.'inc/lang/'.$conf['lang'].'/jquery.ui.datepicker.js',
                 DOKU_INC."lib/scripts/fileuploader.js",
                 DOKU_INC."lib/scripts/fileuploaderextended.js",
                 DOKU_INC.'lib/scripts/helpers.js',
@@ -112,6 +113,7 @@ function js_out(){
 
     // load files
     foreach($files as $file){
+        if(!file_exists($file)) continue;
         $ismin = (substr($file,-7) == '.min.js');
         $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC.'lib/scripts/') !== 0);
 
@@ -218,6 +220,12 @@ function js_pluginstrings() {
     return $pluginstrings;
 }
 
+/**
+ * Return an two-dimensional array with strings from the language file of current active template.
+ *
+ * - $lang['js'] must be an array.
+ * - Nothing is returned for template without an entry for $lang['js']
+ */
 function js_templatestrings() {
     global $conf;
     $templatestrings = array();

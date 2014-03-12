@@ -1,8 +1,68 @@
 # This is a list of files that were present in previous DokuWiki releases
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
-# A copy of this list is maintained at
-# http://www.dokuwiki.org/install:upgrade#files_to_remove
+
+# removed in 2013-11-18
+lib/images/arrow_down.gif
+lib/images/arrow_up.gif
+lib/images/at.gif
+lib/images/close.png
+lib/images/del.png
+lib/images/edit.gif
+lib/images/list-minus.gif
+lib/images/list-plus.gif
+lib/images/pencil.png
+
+# removed in 2013-10-28
+lib/images/interwiki/meatball.gif
+lib/images/interwiki/wiki.gif
+lib/plugins/acl/ajax.php
+lib/tpl/default/_admin.css
+lib/tpl/default/_fileuploader.css
+lib/tpl/default/_linkwiz.css
+lib/tpl/default/_mediamanager.css
+lib/tpl/default/_mediaoptions.css
+lib/tpl/default/_subscription.css
+lib/tpl/default/_tabs.css
+lib/tpl/default/design.css
+lib/tpl/default/detail.php
+lib/tpl/default/footer.html
+lib/tpl/default/images/UWEB.png
+lib/tpl/default/images/UWEBshadow.png
+lib/tpl/default/images/apple-touch-icon.png
+lib/tpl/default/images/bullet.gif
+lib/tpl/default/images/button-cc.gif
+lib/tpl/default/images/button-css.png
+lib/tpl/default/images/button-donate.gif
+lib/tpl/default/images/button-dw.png
+lib/tpl/default/images/button-php.gif
+lib/tpl/default/images/button-rss.png
+lib/tpl/default/images/button-xhtml.png
+lib/tpl/default/images/buttonshadow.png
+lib/tpl/default/images/closed.gif
+lib/tpl/default/images/favicon.ico
+lib/tpl/default/images/inputshadow.png
+lib/tpl/default/images/link_icon.gif
+lib/tpl/default/images/mail_icon.gif
+lib/tpl/default/images/open.gif
+lib/tpl/default/images/resizecol.png
+lib/tpl/default/images/tocdot2.gif
+lib/tpl/default/images/windows.gif
+lib/tpl/default/layout.css
+lib/tpl/default/main.php
+lib/tpl/default/media.css
+lib/tpl/default/mediamanager.php
+lib/tpl/default/print.css
+lib/tpl/default/rtl.css
+lib/tpl/default/style.ini
+lib/tpl/default/template.info.txt
+lib/tpl/dokuwiki/css/basic.css
+lib/tpl/dokuwiki/css/content.css
+lib/tpl/dokuwiki/css/design.css
+lib/tpl/dokuwiki/css/includes.css
+lib/tpl/dokuwiki/css/mobile.css
+lib/tpl/dokuwiki/css/pagetools.css
+lib/tpl/dokuwiki/css/structure.css
 
 # removed in 2013-05-10
 lib/plugins/info/lang/sl/lang.php
