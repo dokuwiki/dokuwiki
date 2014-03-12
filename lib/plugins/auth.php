@@ -15,6 +15,9 @@ if(!defined('DOKU_INC')) die();
 class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     public $success = true;
 
+    const  IGNORE_GROUPS = false;
+    const  REQUIRE_GROUPS = true;
+
     /**
      * Possible things an auth backend module may be able to
      * do. The things a backend can do need to be set to true
@@ -234,9 +237,10 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param   string $user the user name
+     * @param   bool $requireGroups whether or not the returned data must include groups
      * @return  array containing user data or false
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         if(!$this->cando['external']) msg("no valid authorisation system in use", -1);
         return false;
     }

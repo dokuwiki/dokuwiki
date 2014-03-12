@@ -146,9 +146,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @author  Steffen Schoch <schoch@dsb.net>
      *
      * @param   string $user
+     * @param   bool   $requireGroups (optional) - ignored, groups are always supplied by this plugin
      * @return  array containing user data or false
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         return $this->_getUserData($user);
     }
 
