@@ -1,3 +1,3 @@
 ====== Sisukord ======
 
-See siin on nimekiri kõigist saadaval olevatest lehtedest järjestatud [[doku>namespaces|alajaotuste]] järgi.
+Alloleavs on loetletud kõik saada olevaist leheküljed, mis on järjestatud [[doku>namespaces|nimeruumi]]de alusel.
