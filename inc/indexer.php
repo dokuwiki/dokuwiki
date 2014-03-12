@@ -1218,19 +1218,18 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function updateTuple($line, $id, $count) {
-        $newLine = $line;
-        if ($newLine !== ''){
-            $newLine = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $newLine);
+        if ($line != ''){
+            $line = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $line);
         }
-        $newLine = trim($newLine, ':');
+        $line = trim($line, ':');
         if ($count) {
-            if (strlen($newLine) > 0) {
-                return "$id*$count:".$newLine;
+            if ($line) {
+                return "$id*$count:".$line;
             } else {
-                return "$id*$count".$newLine;
+                return "$id*$count";
             }
         }
-        return $newLine;
+        return $line;
     }
 
     /**
