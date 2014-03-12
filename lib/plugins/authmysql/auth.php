@@ -247,17 +247,17 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * The dataset update will be rejected if the user name should be changed
      * to an already existing one.
      *
-     * The password must be provides unencrypted. Pasword cryption is done
+     * The password must be provided unencrypted. Pasword encryption is done
      * automatically if configured.
      *
-     * If one or more groups could't be updated, an error would be set. In
+     * If one or more groups can't be updated, an error will be set. In
      * this case the dataset might already be changed and we can't rollback
-     * the changes. Transactions would be really usefull here.
+     * the changes. Transactions would be really useful here.
      *
      * modifyUser() may be called without SQL statements defined that are
      * needed to change group membership (for example if only the user profile
-     * should be modified). In this case we asure that we don't touch groups
-     * even $changes['grps'] is set by mistake.
+     * should be modified). In this case we assure that we don't touch groups
+     * even when $changes['grps'] is set by mistake.
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -642,7 +642,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
-     * @param  string $user user whose id is desired
+     * @param  string $user username of the user to be deleted
      * @return bool
      */
     protected function _delUser($user) {
