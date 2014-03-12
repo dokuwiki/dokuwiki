@@ -160,10 +160,11 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $result = $this->_queryDB($sql);
 
             if($result !== false && count($result) == 1) {
-                if($this->getConf('forwardClearPass') == 1)
+                if($this->getConf('forwardClearPass') == 1) {
                     $rc = true;
-                else
+                } else {
                     $rc = auth_verifyPassword($pass, $result[0]['pass']);
+                }
             }
             $this->_closeDB();
         }
@@ -191,8 +192,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $info = $this->_getUserInfo($user, $requireGroups);
             $this->_unlockTables();
             $this->_closeDB();
-        } else
+        } else {
             $info = false;
+        }
         return $info;
     }
 
@@ -218,12 +220,14 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
         global $conf;
 
         if($this->_openDB()) {
-            if(($info = $this->_getUserInfo($user)) !== false)
+            if(($info = $this->_getUserInfo($user)) !== false) {
                 return false; // user already exists
+            }
 
             // set defaultgroup if no groups were given
-            if($grps == null)
+            if($grps == null) {
                 $grps = array($conf['defaultgroup']);
+            }
 
             $this->_lockTables("WRITE");
             $pwd = $this->getConf('forwardClearPass') ? $pwd : auth_cryptPassword($pwd);
@@ -265,8 +269,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     public function modifyUser($user, $changes) {
         $rc = false;
 
-        if(!is_array($changes) || !count($changes))
+        if(!is_array($changes) || !count($changes)) {
             return true; // nothing to change
+        }
 
         if($this->_openDB()) {
             $this->_lockTables("WRITE");
@@ -315,8 +320,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             if(is_array($users) && count($users)) {
                 $this->_lockTables("WRITE");
                 foreach($users as $user) {
-                    if($this->_delUser($user))
+                    if($this->_delUser($user)) {
                         $count++;
+                    }
                 }
                 $this->_unlockTables();
             }
@@ -378,9 +384,11 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $result = $this->_queryDB($sql);
 
             if(!empty($result)) {
-                foreach($result as $user)
-                    if(($info = $this->_getUserInfo($user['user'])))
+                foreach($result as $user) {
+                    if(($info = $this->_getUserInfo($user['user']))) {
                         $out[$user['user']] = $info;
+                    }
+                }
             }
 
             $this->_unlockTables();
@@ -544,8 +552,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $result = $this->_queryDB($sql);
 
             if($result !== false && count($result)) {
-                foreach($result as $row)
+                foreach($result as $row) {
                     $groups[] = $row['group'];
+                }
             }
             return $groups;
         }
