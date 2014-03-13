@@ -19,6 +19,8 @@ $lang['namespace']             = 'alajaotus';
 $lang['btn_select']            = 'Vali';
 $lang['p_choose_id']           = 'Sisesta ülal-olevasse vormi <b>kasutaja või rühm</b> nägemaks leheküljele <b class="aclpage">%s</b> sätestatud volitusi.';
 $lang['p_choose_ns']           = 'Sisesta ülal-olevasse vormi <b>kasutaja või rühm</b> nägemaks nimeruumile <b class="aclpage">%s</b> sätestatud volitusi.';
+$lang['p_inherited']           = 'Teadmiseks: Neid õigusi pole eralti määratletud, vaid on päritud teistest rühmadest või ülemast nimeruumist.';
+$lang['p_isadmin']             = 'Teadmiseks: Valitud rühm või kasutaja omab alati kõiki õigusi, kuna nii on sätestanud ülemkasutaja.';
 $lang['who']                   = 'Kasutaja/Grupp';
 $lang['perm']                  = 'Õigused';
 $lang['acl_perm0']             = 'Pole';
