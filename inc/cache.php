@@ -63,11 +63,13 @@ class cache {
      *   age   - expire cache if older than age (seconds)
      *   files - expire cache if any file in this array was updated more recently than the cache
      *
+     * Note that this function needs to be public as it is used as callback for the event handler
+     *
      * can be overridden
      *
      * @return bool               see useCache()
      */
-    protected function _useCache() {
+    public function _useCache() {
 
         if (!empty($this->depends['purge'])) return false;              // purge requested?
         if (!($this->_time = @filemtime($this->cache))) return false;   // cache exists?
@@ -194,7 +196,7 @@ class cache_parser extends cache {
      *
      * @return bool               see useCache()
      */
-    protected function _useCache() {
+    public function _useCache() {
 
         if (!@file_exists($this->file)) return false;                   // source exists?
         return parent::_useCache();
@@ -229,7 +231,7 @@ class cache_renderer extends cache_parser {
      *
      * @return bool               see useCache()
      */
-    protected function _useCache() {
+    public function _useCache() {
         global $conf;
 
         if (!parent::_useCache()) return false;
