@@ -1150,6 +1150,7 @@ class Doku_Handler_Table {
     var $firstCell = false;
     var $lastCellType = 'tablecell';
     var $inTableHead = true;
+    var $currentRow = array('tableheader' => 0, 'tablecell' => 0);
     var $countTableHeadRows = 0;
 
     function Doku_Handler_Table(& $CallWriter) {
@@ -1218,10 +1219,13 @@ class Doku_Handler_Table {
         $this->firstCell = true;
         $this->lastCellType = 'tablecell';
         $this->maxRows++;
+        if ($this->inTableHead) {
+            $this->currentRow = array('tablecell' => 0, 'tableheader' => 0);
+        }
     }
 
     function tableRowClose($call) {
-        if ($this->inTableHead) {
+        if ($this->inTableHead && ($this->inTableHead = $this->isTableHeadRow())) {
             $this->countTableHeadRows++;
         }
         // Strip off final cell opening and anything after it
@@ -1229,6 +1233,9 @@ class Doku_Handler_Table {
 
             if ( $discard[0] == 'tablecell_open' || $discard[0] == 'tableheader_open') {
                 break;
+            }
+            if (!empty($this->currentRow[$discard[0]])) {
+                $this->currentRow[$discard[0]]--;
             }
         }
         $this->tableCalls[] = array('tablerow_close', array(), $call[2]);
@@ -1238,9 +1245,19 @@ class Doku_Handler_Table {
         }
     }
 
+    function isTableHeadRow() {
+        $td = $this->currentRow['tablecell'];
+        $th = $this->currentRow['tableheader'];
+
+        if (!$th || $td > 2) return false;
+        if (2*$td > $th) return false;
+
+        return true;
+    }
+
     function tableCell($call) {
-        if ($call[0] != 'tableheader') {
-            $this->inTableHead = false;
+        if ($this->inTableHead) {
+            $this->currentRow[$call[0]]++;
         }
         if ( !$this->firstCell ) {
 
@@ -1288,6 +1305,13 @@ class Doku_Handler_Table {
         $lastCell = 0;
         $cellKey = array();
         $toDelete = array();
+
+        // if still in tableheader, then there can be no table header
+        // as all rows can't be within <THEAD>
+        if ($this->inTableHead) {
+            $this->inTableHead = false;
+            $this->countTableHeadRows = 0;
+        }
 
         // Look for the colspan elements and increment the colspan on the
         // previous non-empty opening cell. Once done, delete all the cells
