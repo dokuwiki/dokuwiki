@@ -78,6 +78,7 @@ $lang['regbadmail']            = 'The given email address looks invalid - if you
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
 $lang['regpwmail']             = 'Your DokuWiki password';
 $lang['reghere']               = 'You don\'t have an account yet? Just get one';
+$lang['notloggedin']           = 'Perhaps you forgot to login?';
 
 $lang['profna']                = 'This wiki does not support profile modification';
 $lang['profnochange']          = 'No changes, nothing to do.';

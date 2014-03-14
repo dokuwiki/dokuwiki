@@ -1,4 +1,4 @@
 ====== Acces nepermis ======
 
-Din păcate nu ai destule drepturi pentru a continua. Poate ai uitat să te
-autentifici?
+Din păcate nu ai destule drepturi pentru a continua.
+

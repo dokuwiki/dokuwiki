@@ -64,6 +64,20 @@ function html_login(){
     print '</div>'.NL;
 }
 
+
+/**
+ * Denied page content
+ *
+ * @return string html
+ */
+function html_denied() {
+    print p_locale_xhtml('denied');
+
+    if(!$_SERVER['REMOTE_USER']){
+        html_login();
+    }
+}
+
 /**
  * inserts section edit buttons if wanted or removes the markers
  *

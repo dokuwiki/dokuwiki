@@ -154,7 +154,7 @@ function tpl_content_core() {
             html_resendpwd();
             break;
         case 'denied':
-            print p_locale_xhtml('denied');
+            html_denied();
             break;
         case 'profile' :
             html_updateprofile();
