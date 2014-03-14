@@ -1457,21 +1457,26 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  * Return the users realname or e-mail address for use
  * in page footer and recent changes pages
  *
+ * @param string|bool $username or false when currently logged-in user should be used
+ * @param bool $textonly true returns only plain text, true allows returning html
+ * @return string html or text of formatted user name
+ *
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
-function editorinfo($username) {
-    return userinfo($username);
+function editorinfo($username, $textonly = false) {
+    return userinfo($username, $textonly);
 }
 
 /**
  * Returns users realname w/o link
  *
  * @param string|bool $username or false when currently logged-in user should be used
- * @return string html of formatted user name
+ * @param bool $textonly true returns only plain text, true allows returning html
+ * @return string html or text of formatted user name
  *
  * @triggers COMMON_USER_LINK
  */
-function userinfo($username = null) {
+function userinfo($username = null, $textonly = false) {
     global $conf, $INFO;
     /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
@@ -1492,25 +1497,30 @@ function userinfo($username = null) {
                          'title' => '',
                          'class' => ''
         ),
-        'userinfo' => ''
+        'userinfo' => '', // formatted user name as will be returned
+        'textonly' => $textonly
     );
     if($username === null) {
         $data['username'] = $username = $INPUT->server->str('REMOTE_USER');
-        $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
+        if($textonly){
+            $data['name'] = $INFO['userinfo']['name']. ' (' . $INPUT->server->str('REMOTE_USER') . ')';
+        }else {
+            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
+        }
     }
 
     $evt = new Doku_Event('COMMON_USER_LINK', $data);
     if($evt->advise_before(true)) {
         if(empty($data['name'])) {
             if($conf['showuseras'] == 'loginname') {
-                $data['name'] = hsc($data['username']);
+                $data['name'] = $textonly ? $data['username'] : hsc($data['username']);
             } else {
                 if($auth) $info = $auth->getUserData($username);
                 if(isset($info) && $info) {
                     switch($conf['showuseras']) {
                         case 'username':
                         case 'username_link':
-                            $data['name'] = hsc($info['name']);
+                            $data['name'] = $textonly ? $info['name'] : hsc($info['name']);
                             break;
                         case 'email':
                         case 'email_link':
@@ -1524,7 +1534,7 @@ function userinfo($username = null) {
         /** @var Doku_Renderer_xhtml $xhtml_renderer */
         static $xhtml_renderer = null;
 
-        if($data['link'] !== false && empty($data['link']['url'])) {
+        if(!$data['textonly'] && empty($data['link']['url'])) {
 
             if(in_array($conf['showuseras'], array('email_link', 'username_link'))) {
                 if(!isset($info)) {
@@ -1554,15 +1564,15 @@ function userinfo($username = null) {
                         }
                     }
                 } else {
-                    $data['link'] = false;
+                    $data['textonly'] = true;
                 }
 
             } else {
-                $data['link'] = false;
+                $data['textonly'] = true;
             }
         }
 
-        if($data['link'] === false) {
+        if($data['textonly']) {
             $data['userinfo'] = $data['name'];
         } else {
             $data['link']['name'] = $data['name'];
