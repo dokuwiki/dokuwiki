@@ -29,6 +29,7 @@
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Emmanuel <seedfloyd@gmail.com>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
+ * @author Wild <wild.dagger@free.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -51,10 +52,10 @@ $lang['btn_revs']              = 'Anciennes révisions';
 $lang['btn_recent']            = 'Derniers changements';
 $lang['btn_upload']            = 'Envoyer';
 $lang['btn_cancel']            = 'Annuler';
-$lang['btn_index']             = 'Index';
+$lang['btn_index']             = 'Plan du site';
 $lang['btn_secedit']           = 'Modifier';
-$lang['btn_login']             = 'Connexion';
-$lang['btn_logout']            = 'Déconnexion';
+$lang['btn_login']             = 'S\'identifier';
+$lang['btn_logout']            = 'Se déconnecter';
 $lang['btn_admin']             = 'Administrer';
 $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
@@ -69,7 +70,7 @@ $lang['btn_draft']             = 'Modifier le brouillon';
 $lang['btn_recover']           = 'Récupérer le brouillon';
 $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
-$lang['btn_register']          = 'S\'enregistrer';
+$lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';

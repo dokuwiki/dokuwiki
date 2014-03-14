@@ -47,15 +47,11 @@ class Doku_Form {
      * with up to four parameters is deprecated, instead the first parameter
      * should be an array with parameters.
      *
-     * @param   mixed   $params  Parameters for the HTML form element; Using the
-     *                           deprecated calling convention this is the ID
-     *                           attribute of the form
-     * @param   string  $action  (optional, deprecated) submit URL, defaults to
-     *                                                  current page
-     * @param   string  $method  (optional, deprecated) 'POST' or 'GET', default
-     *                                                  is POST
-     * @param   string  $enctype (optional, deprecated) Encoding type of the
-     *                                                  data
+     * @param mixed       $params  Parameters for the HTML form element; Using the deprecated
+     *                             calling convention this is the ID attribute of the form
+     * @param bool|string $action  (optional, deprecated) submit URL, defaults to current page
+     * @param bool|string $method  (optional, deprecated) 'POST' or 'GET', default is POST
+     * @param bool|string $enctype (optional, deprecated) Encoding type of the data
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function Doku_Form($params, $action=false, $method=false, $enctype=false) {
@@ -230,7 +226,7 @@ class Doku_Form {
      * first (underflow) or last (overflow) element.
      *
      * @param   int     $pos    0-based index
-     * @return  arrayreference  pseudo-element
+     * @return  array reference  pseudo-element
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function &getElementAt($pos) {

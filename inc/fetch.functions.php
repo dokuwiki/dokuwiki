@@ -77,7 +77,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
-    if(http_sendfile($file)) exit;
+    http_sendfile($file);
 
     // send file contents
     $fp = @fopen($file, "rb");

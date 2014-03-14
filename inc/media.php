@@ -1019,7 +1019,7 @@ function media_file_tags($meta) {
     foreach($fields as $key => $tag){
         $t = array();
         if (!empty($tag[0])) $t = array($tag[0]);
-        if(is_array($tag[3])) $t = array_merge($t,$tag[3]);
+        if(isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
         $value = media_getTag($t, $meta);
         $tags[] = array('tag' => $tag, 'value' => $value);
     }
@@ -1451,10 +1451,10 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
 function media_printicon($filename){
     list($ext) = mimetype(mediaFN($filename),false);
 
-    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')) {
-        $icon = DOKU_BASE.'lib/images/fileicons/'.$ext.'.png';
+    if (@file_exists(DOKU_INC.'lib/images/fileicons/32x32/'.$ext.'.png')) {
+        $icon = DOKU_BASE.'lib/images/fileicons/32x32/'.$ext.'.png';
     } else {
-        $icon = DOKU_BASE.'lib/images/fileicons/file.png';
+        $icon = DOKU_BASE.'lib/images/fileicons/32x32/file.png';
     }
 
     return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
@@ -1781,7 +1781,7 @@ function media_nstree_item($item){
     global $INPUT;
     $pos   = strrpos($item['id'], ':');
     $label = substr($item['id'], $pos > 0 ? $pos + 1 : 0);
-    if(!$item['label']) $item['label'] = $label;
+    if(empty($item['label'])) $item['label'] = $label;
 
     $ret  = '';
     if (!($INPUT->str('do') == 'media'))
@@ -1843,7 +1843,7 @@ function media_resize_image($file, $ext, $w, $h=0){
     if( $mtime > filemtime($file) ||
             media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
             media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
+        if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
         return $local;
     }
     //still here? resizing failed
@@ -1904,7 +1904,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
+        if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
         return media_resize_image($local,$ext, $w, $h);
     }
 
