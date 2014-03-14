@@ -93,7 +93,12 @@ class Doku_Event {
      */
     function trigger($action=null, $enablePrevent=true) {
 
-        if (!is_callable($action)) $enablePrevent = false;
+        if (!is_callable($action)) {
+            $enablePrevent = false;
+            if (!is_null($action)) {
+                trigger_error('The default action of '.$this.' is not null but also not callable. Maybe the method is not public?', E_USER_WARNING);
+            }
+        }
 
         if ($this->advise_before($enablePrevent) && is_callable($action)) {
             if (is_array($action)) {
