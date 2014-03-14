@@ -1454,13 +1454,14 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
 }
 
 /**
- * Return the users realname or e-mail address for use
+ * Return the users real name or e-mail address for use
  * in page footer and recent changes pages
  *
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
 function editorinfo($username) {
     global $conf;
+    /* @var DokuWiki_Auth_Plugin $auth */
     global $auth;
 
     switch($conf['showuseras']) {
@@ -1473,7 +1474,7 @@ function editorinfo($username) {
             return hsc($username);
     }
 
-    if(isset($info) && $info) {
+    if(!empty($info)) {
         switch($conf['showuseras']) {
             case 'username':
                 return hsc($info['name']);
@@ -1485,9 +1486,9 @@ function editorinfo($username) {
             default:
                 return hsc($username);
         }
-    } else {
-        return hsc($username);
     }
+
+    return hsc($username);
 }
 
 /**
