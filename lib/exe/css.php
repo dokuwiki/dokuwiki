@@ -133,6 +133,9 @@ function css_out(){
     $css = ob_get_contents();
     ob_end_clean();
 
+    // strip any source maps
+    stripsourcemaps($css);
+
     // apply style replacements
     $css = css_applystyle($css, $styleini['replacements']);
 

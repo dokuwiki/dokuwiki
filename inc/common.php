@@ -1675,4 +1675,13 @@ function set_doku_pref($pref, $val) {
     }
 }
 
+/**
+ * Strips source mapping declarations from given text #601
+ *
+ * @param &string $text reference to the CSS or JavaScript code to clean
+ */
+function stripsourcemaps(&$text){
+    $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);
+}
+
 //Setup VIM: ex: et ts=2 :
