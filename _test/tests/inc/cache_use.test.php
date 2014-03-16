@@ -6,7 +6,7 @@
  * Tests if caching can actually be used
  */
 class cache_use_test extends DokuWikiTest {
-    /** @var cache_parser $cache */
+    /** @var cache_renderer $cache */
     private $cache;
 
     function setUp() {
