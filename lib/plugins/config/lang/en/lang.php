@@ -245,10 +245,11 @@ $lang['xsendfile_o_2'] = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3'] = 'Proprietary Nginx X-Accel-Redirect header';
 
 /* Display user info */
-$lang['showuseras_o_loginname']  = 'Login name';
-$lang['showuseras_o_username']   = "User's full name";
-$lang['showuseras_o_email']      = "User's e-mail addresss (obfuscated according to mailguard setting)";
-$lang['showuseras_o_email_link'] = "User's e-mail addresss as a mailto: link";
+$lang['showuseras_o_loginname']     = 'Login name';
+$lang['showuseras_o_username']      = "User's full name";
+$lang['showuseras_o_username_link'] = "User's full name as interwiki user link";
+$lang['showuseras_o_email']         = "User's e-mail addresss (obfuscated according to mailguard setting)";
+$lang['showuseras_o_email_link']    = "User's e-mail addresss as a mailto: link";
 
 /* useheading options */
 $lang['useheading_o_0'] = 'Never';

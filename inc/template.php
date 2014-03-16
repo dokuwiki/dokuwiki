@@ -914,12 +914,11 @@ function tpl_youarehere($sep = ' » ') {
  */
 function tpl_userinfo() {
     global $lang;
-    global $INFO;
     /** @var Input $INPUT */
     global $INPUT;
 
     if($INPUT->server->str('REMOTE_USER')) {
-        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($INPUT->server->str('REMOTE_USER')).'</bdi>)';
+        print $lang['loggedinas'].': '.userlink();
         return true;
     }
     return false;
