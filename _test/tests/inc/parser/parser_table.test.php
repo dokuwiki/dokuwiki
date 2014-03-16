@@ -152,6 +152,7 @@ def');
         $this->P->parse('
 abc
 ^ X ^ Y ^ Z ^
+| x | y | z |
 def');
 
         $calls = array (
@@ -159,7 +160,7 @@ def');
             array('p_open',array()),
             array('cdata',array("\n\nabc")),
             array('p_close',array()),
-            array('table_open',array(3, 1, 6)),
+            array('table_open',array(3, 2, 6)),
             array('tablethead_open',array()),
             array('tablerow_open',array()),
             array('tableheader_open',array(1,NULL,1)),
@@ -173,6 +174,52 @@ def');
             array('tableheader_close',array()),
             array('tablerow_close',array()),
             array('tablethead_close',array()),
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,NULL,1)),
+            array('cdata',array(' x ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,NULL,1)),
+            array('cdata',array(' y ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,NULL,1)),
+            array('cdata',array(' z ')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+            array('table_close',array(33)),
+            array('p_open',array()),
+            array('cdata',array('def')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+
+        $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
+
+    }
+
+    function testTableHeadOneRowTable() {
+        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->parse('
+abc
+^ X ^ Y ^ Z ^
+def');
+
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n\nabc")),
+            array('p_close',array()),
+            array('table_open',array(3, 1, 6)),
+            array('tablerow_open',array()),
+            array('tableheader_open',array(1,NULL,1)),
+            array('cdata',array(' X ')),
+            array('tableheader_close',array()),
+            array('tableheader_open',array(1,NULL,1)),
+            array('cdata',array(' Y ')),
+            array('tableheader_close',array()),
+            array('tableheader_open',array(1,NULL,1)),
+            array('cdata',array(' Z ')),
+            array('tableheader_close',array()),
+            array('tablerow_close',array()),
             array('table_close',array(19)),
             array('p_open',array()),
             array('cdata',array('def')),
