@@ -127,7 +127,8 @@
 }
 
 .dokuwiki .diffnav select {
-    width: 15em;
+    width: 60%;
+    min-width: 9em;
     height: 1.5em; /* height is necessary for longer options in Webkit */
 }
 
