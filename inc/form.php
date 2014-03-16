@@ -561,10 +561,11 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
     if (is_null($label)) $label = $name;
     $options = array();
     reset($values);
-    if (is_null($selected) || $selected == '')
+    if (is_null($selected) || $selected == '') {
         $selected = array();
-    elseif (!is_array($selected))
+    } elseif (!is_array($selected)) {
         $selected = array($selected);
+    }
     // FIXME: php doesn't know the difference between a string and an integer
     if (is_string(key($values))) {
         foreach ($values as $val=>$text) {
@@ -572,11 +573,13 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
         }
     } else {
         foreach ($values as $val) {
-            if (is_array($val))
-                @list($val,$text) = $val;
-            else
+            $disabled = false;
+            if (is_array($val)) {
+                @list($val,$text,$disabled) = $val;
+            } else {
                 $text = null;
-            $options[] = array($val,$text,in_array($val,$selected));
+            }
+            $options[] = array($val,$text,in_array($val,$selected),$disabled);
         }
     }
     $elem = array('_elem'=>'listboxfield', '_options'=>$options, '_text'=>$label, '_class'=>$class,
@@ -930,11 +933,12 @@ function form_listboxfield($attrs) {
     $s .= '<select '.buildAttributes($attrs,true).'>'.DOKU_LF;
     if (!empty($attrs['_options'])) {
         foreach ($attrs['_options'] as $opt) {
-            @list($value,$text,$select) = $opt;
+            @list($value,$text,$select,$disabled) = $opt;
             $p = '';
             if(is_null($text)) $text = $value;
             $p .= ' value="'.formText($value).'"';
             if (!empty($select)) $p .= ' selected="selected"';
+            if ($disabled) $p .= ' disabled="disabled"';
             $s .= '<option'.$p.'>'.formText($text).'</option>';
         }
     } else {

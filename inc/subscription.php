@@ -340,7 +340,8 @@ class Subscription {
                     while(!is_null($rev) && $rev['date'] >= $lastupdate &&
                         ($INPUT->server->str('REMOTE_USER') === $rev['user'] ||
                             $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)) {
-                        $rev = getRevisions($rev['id'], $n++, 1);
+                        $pagelog = new PageChangeLog($rev['id']);
+                        $rev = $pagelog->getRevisions($n++, 1);
                         $rev = (count($rev) > 0) ? $rev[0] : null;
                     }
 
@@ -519,9 +520,10 @@ class Subscription {
      * @return bool
      */
     protected function send_digest($subscriber_mail, $id, $lastupdate) {
+        $pagelog = new PageChangeLog($id);
         $n = 0;
         do {
-            $rev = getRevisions($id, $n++, 1);
+            $rev = $pagelog->getRevisions($n++, 1);
             $rev = (count($rev) > 0) ? $rev[0] : null;
         } while(!is_null($rev) && $rev > $lastupdate);
 

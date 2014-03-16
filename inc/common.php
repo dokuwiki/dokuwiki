@@ -195,13 +195,14 @@ function pageinfo() {
     $info['meta'] = p_get_metadata($ID);
 
     //who's the editor
+    $pagelog = new PageChangeLog($ID, 1024);
     if($REV) {
-        $revinfo = getRevisionInfo($ID, $REV, 1024);
+        $revinfo = $pagelog->getRevisionInfo($REV);
     } else {
         if(!empty($info['meta']['last_change']) && is_array($info['meta']['last_change'])) {
             $revinfo = $info['meta']['last_change'];
         } else {
-            $revinfo = getRevisionInfo($ID, $info['lastmod'], 1024);
+            $revinfo = $pagelog->getRevisionInfo($info['lastmod']);
             // cache most recent changelog line in metadata if missing and still valid
             if($revinfo !== false) {
                 $info['meta']['last_change'] = $revinfo;
@@ -1092,8 +1093,9 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $wasRemoved  = (trim($text) == ''); // check for empty or whitespace only
     $wasCreated  = !@file_exists($file);
     $wasReverted = ($REV == true);
+    $pagelog     = new PageChangeLog($id, 1024);
     $newRev      = false;
-    $oldRev      = getRevisions($id, -1, 1, 1024); // from changelog
+    $oldRev      = $pagelog->getRevisions(-1, 1); // from changelog
     $oldRev      = (int) (empty($oldRev) ? 0 : $oldRev[0]);
     if(!@file_exists(wikiFN($id, $old)) && @file_exists($file) && $old >= $oldRev) {
         // add old revision to the attic if missing
