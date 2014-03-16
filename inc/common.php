@@ -1459,7 +1459,7 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  *
  * @param string|bool $username or false when currently logged-in user should be used
  * @param bool $textonly true returns only plain text, true allows returning html
- * @return string html or text of formatted user name
+ * @return string html or plain text(not escaped) of formatted user name
  *
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
@@ -1472,7 +1472,7 @@ function editorinfo($username, $textonly = false) {
  *
  * @param string|bool $username or false when currently logged-in user should be used
  * @param bool $textonly true returns only plain text, true allows returning html
- * @return string html or text of formatted user name
+ * @return string html or plain text(not escaped) of formatted user name
  *
  * @triggers COMMON_USER_LINK
  */
