@@ -1497,7 +1497,7 @@ function userlink($username = null, $textonly = false) {
                          'title' => '',
                          'class' => ''
         ),
-        'userinfo' => '', // formatted user name as will be returned
+        'userlink' => '', // formatted user name as will be returned
         'textonly' => $textonly
     );
     if($username === null) {
@@ -1573,19 +1573,19 @@ function userlink($username = null, $textonly = false) {
         }
 
         if($data['textonly']) {
-            $data['userinfo'] = $data['name'];
+            $data['userlink'] = $data['name'];
         } else {
             $data['link']['name'] = $data['name'];
             if(is_null($xhtml_renderer)) {
                 $xhtml_renderer = p_get_renderer('xhtml');
             }
-            $data['userinfo'] = $xhtml_renderer->_formatLink($data['link']);
+            $data['userlink'] = $xhtml_renderer->_formatLink($data['link']);
         }
     }
     $evt->advise_after();
     unset($evt);
 
-    return $data['userinfo'];
+    return $data['userlink'];
 }
 
 /**
