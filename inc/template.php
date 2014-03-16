@@ -893,7 +893,7 @@ function tpl_userinfo() {
     global $INPUT;
 
     if($INPUT->server->str('REMOTE_USER')) {
-        print $lang['loggedinas'].': '.userinfo();
+        print $lang['loggedinas'].': '.userlink();
         return true;
     }
     return false;

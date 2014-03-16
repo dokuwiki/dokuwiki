@@ -1464,7 +1464,7 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
 function editorinfo($username, $textonly = false) {
-    return userinfo($username, $textonly);
+    return userlink($username, $textonly);
 }
 
 /**
@@ -1476,7 +1476,7 @@ function editorinfo($username, $textonly = false) {
  *
  * @triggers COMMON_USER_LINK
  */
-function userinfo($username = null, $textonly = false) {
+function userlink($username = null, $textonly = false) {
     global $conf, $INFO;
     /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
