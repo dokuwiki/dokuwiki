@@ -56,7 +56,7 @@ function css_out(){
     }
 
     // cache influencers
-    $tplinc = tpl_basedir($tpl);
+    $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
     $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
