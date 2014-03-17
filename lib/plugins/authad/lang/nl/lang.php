@@ -5,4 +5,4 @@
  * 
  * @author Rene <wllywlnt@yahoo.com>
  */
-$lang['domain']                = 'Aanlog Domein';
+$lang['domain']                = 'Inlog Domein';

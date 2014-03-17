@@ -93,7 +93,6 @@ $lang['regbadmail']            = 'Het opgegeven e-mailadres lijkt ongeldig - als
 $lang['regbadpass']            = 'De twee ingevoerde wachtwoorden zijn niet identiek. Probeer het nog eens.';
 $lang['regpwmail']             = 'Je DokuWiki wachtwoord';
 $lang['reghere']               = 'Je hebt nog geen account? Vraag er eentje aan';
-$lang['notloggedin']           = 'Misschien vergat je in te loggen?';
 $lang['profna']                = 'Deze wiki ondersteunt geen profielwijzigingen';
 $lang['profnochange']          = 'Geen wijzigingen, niets gedaan';
 $lang['profnoempty']           = 'Een lege gebruikersnaam of e-mailadres is niet toegestaan';
