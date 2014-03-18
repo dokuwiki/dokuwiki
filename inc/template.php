@@ -318,15 +318,17 @@ function tpl_metaheaders($alt = true) {
     }
 
     if($alt) {
-        $head['link'][] = array(
-            'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
-        );
-        $head['link'][] = array(
-            'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> $lang['currentns'],
-            'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
-        );
+        if(actionOK('rss')) {
+            $head['link'][] = array(
+                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
+                'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
+            );
+            $head['link'][] = array(
+                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
+                'title'=> $lang['currentns'],
+                'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
+            );
+        }
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
             $head['link'][] = array(
                 'rel'  => 'edit',
@@ -335,7 +337,7 @@ function tpl_metaheaders($alt = true) {
             );
         }
 
-        if($ACT == 'search') {
+        if(actionOK('rss') && $ACT == 'search') {
             $head['link'][] = array(
                 'rel'  => 'alternate', 'type'=> 'application/rss+xml',
                 'title'=> $lang['searchresult'],
