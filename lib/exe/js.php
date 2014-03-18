@@ -137,6 +137,9 @@ function js_out(){
     $js = ob_get_contents();
     ob_end_clean();
 
+    // strip any source maps
+    stripsourcemaps($js);
+
     // compress whitespace and comments
     if($conf['compress']){
         $js = js_compress($js);
