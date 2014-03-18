@@ -552,7 +552,7 @@ function css_compress($css){
     $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
 
     //strip (incorrect but common) one line comments
-    $css = preg_replace('/(?<!:)\/\/.*$/m','',$css);
+    $css = preg_replace_callback('/^.*\/\/.*$/m','css_onelinecomment_cb',$css);
 
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
@@ -586,6 +586,43 @@ function css_compress($css){
 function css_comment_cb($matches){
     if(strlen($matches[2]) > 4) return '';
     return $matches[0];
+}
+
+/**
+ * Callback for css_compress()
+ *
+ * Strips one line comments but makes sure it will not destroy url() constructs with slashes
+ *
+ * @param $matches
+ * @return string
+ */
+function css_onelinecomment_cb($matches) {
+    $line = $matches[0];
+
+    $out = '';
+    $i = 0;
+    $len = strlen($line);
+    while ($i< $len){
+        $nextcom = strpos($line, '//', $i);
+        $nexturl = stripos($line, 'url(', $i);
+
+        if($nextcom === false) {
+            // no more comments, we're done
+            $out .= substr($line, $i, $len-$i);
+            break;
+        }
+        if($nexturl === false || $nextcom < $nexturl) {
+            // no url anymore, strip comment and be done
+            $out .= substr($line, $i, $nextcom-$i);
+            break;
+        }
+        // we have an upcoming url
+        $urlclose = strpos($line, ')', $nexturl);
+        $out .= substr($line, $i, $urlclose-$i);
+        $i = $urlclose;
+    }
+
+    return $out;
 }
 
 //Setup VIM: ex: et ts=4 :
