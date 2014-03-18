@@ -101,6 +101,7 @@ $lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
 $lang['disableactions_wikicode'] = 'View source/Export Raw';
 $lang['disableactions_profile_delete'] = 'Delete Own Account';
 $lang['disableactions_other'] = 'Other actions (comma separated)';
+$lang['disableactions_rss'] = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
 $lang['remote']      = 'Enable the remote API system. This allows other applications to access the wiki via XML-RPC or other mechanisms.';
