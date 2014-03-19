@@ -171,6 +171,7 @@ $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver s
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['date_at_format'] = 'Date at format (see PHP\'s <a href="http://www.php.net/manual/datetime.formats.php">datetime.formats</a> information). If empty UNIX timestamp format will be used.';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
@@ -245,10 +246,11 @@ $lang['xsendfile_o_2'] = 'Standard X-Sendfile header';
 $lang['xsendfile_o_3'] = 'Proprietary Nginx X-Accel-Redirect header';
 
 /* Display user info */
-$lang['showuseras_o_loginname']  = 'Login name';
-$lang['showuseras_o_username']   = "User's full name";
-$lang['showuseras_o_email']      = "User's e-mail addresss (obfuscated according to mailguard setting)";
-$lang['showuseras_o_email_link'] = "User's e-mail addresss as a mailto: link";
+$lang['showuseras_o_loginname']     = 'Login name';
+$lang['showuseras_o_username']      = "User's full name";
+$lang['showuseras_o_username_link'] = "User's full name as interwiki user link";
+$lang['showuseras_o_email']         = "User's e-mail addresss (obfuscated according to mailguard setting)";
+$lang['showuseras_o_email_link']    = "User's e-mail addresss as a mailto: link";
 
 /* useheading options */
 $lang['useheading_o_0'] = 'Never';

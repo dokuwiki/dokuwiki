@@ -394,6 +394,8 @@ function idfilter($id, $ue = true) {
 function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;') {
     global $conf;
     if(is_array($urlParameters)) {
+        if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
+        if(isset($urlParameters['at']) && $conf['date_at_format']) $urlParameters['at'] = date($conf['date_at_format'],$urlParameters['at']);
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
@@ -494,6 +496,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         if(empty($more['w'])) unset($more['w']);
         if(empty($more['h'])) unset($more['h']);
         if(isset($more['id']) && $direct) unset($more['id']);
+        if(isset($more['rev']) && !$more['rev']) unset($more['rev']);
         $more = buildURLparams($more, $sep);
     } else {
         $matches = array();
@@ -1459,37 +1462,135 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  * Return the users realname or e-mail address for use
  * in page footer and recent changes pages
  *
+ * @param string|bool $username or false when currently logged-in user should be used
+ * @param bool $textonly true returns only plain text, true allows returning html
+ * @return string html or plain text(not escaped) of formatted user name
+ *
  * @author Andy Webber <dokuwiki AT andywebber DOT com>
  */
-function editorinfo($username) {
-    global $conf;
+function editorinfo($username, $textonly = false) {
+    return userlink($username, $textonly);
+}
+
+/**
+ * Returns users realname w/o link
+ *
+ * @param string|bool $username or false when currently logged-in user should be used
+ * @param bool $textonly true returns only plain text, true allows returning html
+ * @return string html or plain text(not escaped) of formatted user name
+ *
+ * @triggers COMMON_USER_LINK
+ */
+function userlink($username = null, $textonly = false) {
+    global $conf, $INFO;
+    /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
+    /** @var Input $INPUT */
+    global $INPUT;
 
-    switch($conf['showuseras']) {
-        case 'username':
-        case 'email':
-        case 'email_link':
-            if($auth) $info = $auth->getUserData($username);
-            break;
-        default:
-            return hsc($username);
-    }
-
-    if(isset($info) && $info) {
-        switch($conf['showuseras']) {
-            case 'username':
-                return hsc($info['name']);
-            case 'email':
-                return obfuscate($info['mail']);
-            case 'email_link':
-                $mail = obfuscate($info['mail']);
-                return '<a href="mailto:'.$mail.'">'.$mail.'</a>';
-            default:
-                return hsc($username);
+    // prepare initial event data
+    $data = array(
+        'username' => $username, // the unique user name
+        'name' => '',
+        'link' => array( //setting 'link' to false disables linking
+                         'target' => '',
+                         'pre' => '',
+                         'suf' => '',
+                         'style' => '',
+                         'more' => '',
+                         'url' => '',
+                         'title' => '',
+                         'class' => ''
+        ),
+        'userlink' => '', // formatted user name as will be returned
+        'textonly' => $textonly
+    );
+    if($username === null) {
+        $data['username'] = $username = $INPUT->server->str('REMOTE_USER');
+        if($textonly){
+            $data['name'] = $INFO['userinfo']['name']. ' (' . $INPUT->server->str('REMOTE_USER') . ')';
+        }else {
+            $data['name'] = '<bdi>' . hsc($INFO['userinfo']['name']) . '</bdi> (<bdi>' . hsc($INPUT->server->str('REMOTE_USER')) . '</bdi>)';
         }
-    } else {
-        return hsc($username);
     }
+
+    $evt = new Doku_Event('COMMON_USER_LINK', $data);
+    if($evt->advise_before(true)) {
+        if(empty($data['name'])) {
+            if($conf['showuseras'] == 'loginname') {
+                $data['name'] = $textonly ? $data['username'] : hsc($data['username']);
+            } else {
+                if($auth) $info = $auth->getUserData($username);
+                if(isset($info) && $info) {
+                    switch($conf['showuseras']) {
+                        case 'username':
+                        case 'username_link':
+                            $data['name'] = $textonly ? $info['name'] : hsc($info['name']);
+                            break;
+                        case 'email':
+                        case 'email_link':
+                            $data['name'] = obfuscate($info['mail']);
+                            break;
+                    }
+                }
+            }
+        }
+
+        /** @var Doku_Renderer_xhtml $xhtml_renderer */
+        static $xhtml_renderer = null;
+
+        if(!$data['textonly'] && empty($data['link']['url'])) {
+
+            if(in_array($conf['showuseras'], array('email_link', 'username_link'))) {
+                if(!isset($info)) {
+                    if($auth) $info = $auth->getUserData($username);
+                }
+                if(isset($info) && $info) {
+                    if($conf['showuseras'] == 'email_link') {
+                        $data['link']['url'] = 'mailto:' . obfuscate($info['mail']);
+                    } else {
+                        if(is_null($xhtml_renderer)) {
+                            $xhtml_renderer = p_get_renderer('xhtml');
+                        }
+                        if(empty($xhtml_renderer->interwiki)) {
+                            $xhtml_renderer->interwiki = getInterwiki();
+                        }
+                        $shortcut = 'user';
+                        $exists = null;
+                        $data['link']['url'] = $xhtml_renderer->_resolveInterWiki($shortcut, $username, $exists);
+                        $data['link']['class'] .= ' interwiki iw_user';
+                        if($exists !== null) {
+                            if($exists) {
+                                $data['link']['class'] .= ' wikilink1';
+                            } else {
+                                $data['link']['class'] .= ' wikilink2';
+                                $data['link']['rel'] = 'nofollow';
+                            }
+                        }
+                    }
+                } else {
+                    $data['textonly'] = true;
+                }
+
+            } else {
+                $data['textonly'] = true;
+            }
+        }
+
+        if($data['textonly']) {
+            $data['userlink'] = $data['name'];
+        } else {
+            $data['link']['name'] = $data['name'];
+            if(is_null($xhtml_renderer)) {
+                $xhtml_renderer = p_get_renderer('xhtml');
+            }
+            $data['userlink'] = $xhtml_renderer->_formatLink($data['link']);
+        }
+    }
+    $evt->advise_after();
+    unset($evt);
+
+    return $data['userlink'];
 }
 
 /**
@@ -1675,6 +1776,15 @@ function set_doku_pref($pref, $val) {
         $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
         setcookie('DOKU_PREFS', $cookieVal, time()+365*24*3600, $cookieDir, '', ($conf['securecookie'] && is_ssl()));
     }
+}
+
+/**
+ * Strips source mapping declarations from given text #601
+ *
+ * @param &string $text reference to the CSS or JavaScript code to clean
+ */
+function stripsourcemaps(&$text){
+    $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);
 }
 
 //Setup VIM: ex: et ts=2 :

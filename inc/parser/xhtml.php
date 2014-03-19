@@ -25,6 +25,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     // @access public
     var $doc = '';        // will contain the whole document
     var $toc = array();   // will contain the Table of Contents
+    var $date_at = '';    // link pages and media against this revision
 
     var $sectionedits = array(); // A stack of section edit data
     private $lastsecid = 0; // last section edit id, used by startSectionEdit
@@ -591,7 +592,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
-        resolve_pageid(getNS($ID),$id,$exists);
+        resolve_pageid(getNS($ID),$id,$exists,$this->date_at,true);
 
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if ( !$isImage ) {
@@ -621,6 +622,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
         $link['more']   = '';
         $link['class']  = $class;
+        if($this->date_at) {
+            $params['at'] = $this->date_at;
+        }
         $link['url']    = wl($id, $params);
         $link['name']   = $name;
         $link['title']  = $id;
@@ -688,7 +692,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-    */
+     */
     function interwikilink($match, $name = null, $wikiName, $wikiUri) {
         global $conf;
 
@@ -700,18 +704,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        $url = $this->_resolveInterWiki($wikiName,$wikiUri);
+        $exists = null;
+        $url = $this->_resolveInterWiki($wikiName, $wikiUri, $exists);
 
-        if ( !$isImage ) {
-            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
+        if(!$isImage) {
+            $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $wikiName);
             $link['class'] = "interwiki iw_$class";
         } else {
             $link['class'] = 'media';
         }
 
         //do we stay at the same server? Use local target
-        if( strpos($url,DOKU_URL) === 0 ){
+        if(strpos($url, DOKU_URL) === 0 OR strpos($url, DOKU_BASE) === 0) {
             $link['target'] = $conf['target']['wiki'];
+        }
+        if($exists !== null && !$isImage) {
+            if($exists) {
+                $link['class'] .= ' wikilink1';
+            } else {
+                $link['class'] .= ' wikilink2';
+                $link['rel'] = 'nofollow';
+            }
         }
 
         $link['url'] = $url;
@@ -787,7 +800,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                             $height=null, $cache=null, $linking=null, $return=NULL) {
         global $ID;
         list($src,$hash) = explode('#',$src,2);
-        resolve_mediaid(getNS($ID),$src, $exists);
+        resolve_mediaid(getNS($ID),$src, $exists,$this->date_at,true);
 
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -795,7 +808,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
-            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src)),($linking=='direct'));
         }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
             // don't link movies
             $noLink = true;
@@ -803,7 +816,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // add file icons
             $class = preg_replace('/[^_\-a-z0-9]+/i','_',$ext);
             $link['class'] .= ' mediafile mf_'.$class;
-            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),true);
+            $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src)),true);
             if ($exists) $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))).')';
         }
 
@@ -1081,7 +1094,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 return $title;
             }
             //add image tag
-            $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache)).'"';
+            $ret .= '<img src="'.ml($src,array('w'=>$width,'h'=>$height,'cache'=>$cache,'rev'=>$this->_getLastMediaRevisionAt($src))).'"';
             $ret .= ' class="media'.$align.'"';
 
             if ($title) {
@@ -1212,7 +1225,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // see internalmedia() and externalmedia()
         list($img['src'],$hash) = explode('#',$img['src'],2);
         if ($img['type'] == 'internalmedia') {
-            resolve_mediaid(getNS($ID),$img['src'],$exists);
+            resolve_mediaid(getNS($ID),$img['src'],$exists,$this->date_at,true);
         }
 
         return $this->_media($img['src'],
@@ -1340,6 +1353,21 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out .= $fallback;
         $out .= '</audio>'.NL;
         return $out;
+    }
+    
+    /**
+     * _getLastMediaRevisionAt is a helperfunction to internalmedia() and _media()
+     * which returns an existing media revision less or equal to rev or date_at
+     *
+     * @author lisps
+     * @param string $media_id
+     * @access protected
+     * @return string revision ('' for current)
+     */
+    function _getLastMediaRevisionAt($media_id){
+        if(!$this->date_at || media_isexternal($media_id)) return '';
+        $pagelog = new MediaChangeLog($media_id);
+        return $pagelog->getLastRevisionAt($this->date_at);
     }
 
 }

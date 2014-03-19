@@ -56,7 +56,7 @@ define('METADATA_RENDER_UNLIMITED', 4);
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_wiki_xhtml($id, $rev='', $excuse=true){
+function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
     $file = wikiFN($id,$rev);
     $ret  = '';
 
@@ -65,9 +65,9 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
     $keep = $ID;
     $ID   = $id;
 
-    if($rev){
+    if($rev || $date_at){
         if(@file_exists($file)){
-            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info); //no caching on old revisions
+            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
@@ -584,7 +584,7 @@ function p_sort_modes($a, $b){
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_render($mode,$instructions,&$info){
+function p_render($mode,$instructions,&$info,$date_at=''){
     if(is_null($instructions)) return '';
 
     $Renderer = p_get_renderer($mode);
@@ -592,6 +592,10 @@ function p_render($mode,$instructions,&$info){
 
     $Renderer->reset();
 
+    if($date_at) {
+        $Renderer->date_at = $date_at;
+    }
+    
     $Renderer->smileys = getSmileys();
     $Renderer->entities = getEntities();
     $Renderer->acronyms = getAcronyms();

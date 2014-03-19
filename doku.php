@@ -34,6 +34,7 @@ $QUERY          = trim($INPUT->str('id'));
 $ID             = getID();
 
 $REV   = $INPUT->int('rev');
+$DATE_AT = $INPUT->str('at');
 $IDX   = $INPUT->str('idx');
 $DATE  = $INPUT->int('date');
 $RANGE = $INPUT->str('range');
@@ -47,7 +48,38 @@ $PRE = cleanText(substr($INPUT->post->str('prefix'), 0, -1));
 $SUF = cleanText($INPUT->post->str('suffix'));
 $SUM = $INPUT->post->str('summary');
 
-//make info about the selected page available
+
+//parse DATE_AT
+if($DATE_AT && $conf['date_at_format']) {
+    $date_o = DateTime::createFromFormat($conf['date_at_format'],$DATE_AT);
+    if(!$date_o) {
+        msg(sprintf($lang['unable_to_parse_date'], $DATE_AT,$conf['date_at_format']));
+        $DATE_AT = null;
+    } else {
+        $DATE_AT = $date_o->getTimestamp();
+    }
+}
+
+//check for existing $REV related to $DATE_AT
+if($DATE_AT) {
+    $pagelog = new PageChangeLog($ID);
+    $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
+    if($rev_t === '') {
+        $REV = '';
+    } else if ($rev_t === false) {
+        $rev_n = $pagelog->getRelativeRevision($DATE_AT,+1);
+        if($conf['date_at_format']) {
+            msg(sprintf($lang['page_nonexist_rev'], date($conf['date_at_format'],$DATE_AT),date($conf['date_at_format'],$rev_n)));
+        } else {
+            msg(sprintf($lang['page_nonexist_rev'], $DATE_AT,$rev_n));
+        }
+        $REV = $DATE_AT;
+    } else {
+        $REV = $rev_t;
+    }
+}
+
+//make infos about the selected page available
 $INFO = pageinfo();
 
 //export minimal info to JS, plugins can add more

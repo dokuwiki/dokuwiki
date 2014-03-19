@@ -550,6 +550,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
          * @var string $method
          * @var bool   $nofollow
          * @var array  $params
+         * @var string $replacement
          */
         extract($data);
         if(strpos($id, '#') === 0) {
@@ -558,6 +559,9 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
             $linktarget = wl($id, $params);
         }
         $caption = $lang['btn_'.$type];
+        if(strpos($caption, '%s')){
+            $caption = sprintf($caption, $replacement);
+        }
         $akey    = $addTitle = '';
         if($accesskey) {
             $akey     = 'accesskey="'.$accesskey.'" ';
@@ -613,11 +617,12 @@ function tpl_get_action($type) {
     if ($type == 'subscription') $type = 'subscribe';
     if(!actionOK($type)) return false;
 
-    $accesskey = null;
-    $id        = $ID;
-    $method    = 'get';
-    $params    = array('do' => $type);
-    $nofollow  = true;
+    $accesskey   = null;
+    $id          = $ID;
+    $method      = 'get';
+    $params      = array('do' => $type);
+    $nofollow    = true;
+    $replacement = '';
     switch($type) {
         case 'edit':
             // most complicated type - we need to decide on current action
@@ -674,6 +679,11 @@ function tpl_get_action($type) {
             $params    = array('do' => '');
             $accesskey = 'b';
             break;
+        case 'img_backto':
+            $params = array();
+            $accesskey = 'b';
+            $replacement = $ID;
+            break;
         case 'login':
             $params['sectok'] = getSecurityToken();
             if($INPUT->server->has('REMOTE_USER')) {
@@ -721,11 +731,26 @@ function tpl_get_action($type) {
         case 'media':
             $params['ns'] = getNS($ID);
             break;
+        case 'mediaManager':
+            // View image in media manager
+            global $IMG;
+            $imgNS = getNS($IMG);
+            $authNS = auth_quickaclcheck("$imgNS:*");
+            if ($authNS < AUTH_UPLOAD) {
+                return false;
+            }
+            $params = array(
+                'ns' => $imgNS,
+                'image' => $IMG,
+                'do' => 'media'
+            );
+            //$type = 'media';
+            break;
         default:
             return '[unknown %s type]';
             break;
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
+    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 }
 
 /**
@@ -889,12 +914,11 @@ function tpl_youarehere($sep = ' » ') {
  */
 function tpl_userinfo() {
     global $lang;
-    global $INFO;
     /** @var Input $INPUT */
     global $INPUT;
 
     if($INPUT->server->str('REMOTE_USER')) {
-        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($INPUT->server->str('REMOTE_USER')).'</bdi>)';
+        print $lang['loggedinas'].': '.userlink();
         return true;
     }
     return false;
@@ -1024,6 +1048,67 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
 }
 
 /**
+ * Returns a description list of the metatags of the current image
+ *
+ * @return string html of description list
+ */
+function tpl_img_meta() {
+    global $lang;
+
+    $tags = tpl_get_img_meta();
+
+    echo '<dl>';
+    foreach($tags as $tag) {
+        $label = $lang[$tag['langkey']];
+        if(!$label) $label = $tag['langkey'];
+
+        echo '<dt>'.$label.':</dt><dd>';
+        if ($tag['type'] == 'date') {
+            echo dformat($tag['value']);
+        } else {
+            echo hsc($tag['value']);
+        }
+        echo '</dd>';
+    }
+    echo '</dl>';
+}
+
+/**
+ * Returns metadata as configured in mediameta config file, ready for creating html
+ *
+ * @return array with arrays containing the entries:
+ *   - string langkey  key to lookup in the $lang var, if not found printed as is
+ *   - string type     type of value
+ *   - string value    tag value (unescaped)
+ */
+function tpl_get_img_meta() {
+
+    $config_files = getConfigFiles('mediameta');
+    foreach ($config_files as $config_file) {
+        if(@file_exists($config_file)) {
+            include($config_file);
+        }
+    }
+    /** @var array $fields the included array with metadata */
+
+    $tags = array();
+    foreach($fields as $tag){
+        $t = array();
+        if (!empty($tag[0])) {
+            $t = array($tag[0]);
+        }
+        if(is_array($tag[3])) {
+            $t = array_merge($t,$tag[3]);
+        }
+        $value = tpl_img_getTag($t);
+        if ($value) {
+            $tags[] = array('langkey' => $tag[1], 'type' => $tag[2], 'value' => $value);
+        }
+    }
+    return $tags;
+}
+
+/**
  * Prints the image with a link to the full sized version
  *
  * Only allowed in: detail.php
@@ -1039,6 +1124,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
     /** @var Input $INPUT */
     global $INPUT;
+    global $REV;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
 
@@ -1063,8 +1149,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     }
 
     //prepare URLs
-    $url = ml($IMG, array('cache'=> $INPUT->str('cache')), true, '&');
-    $src = ml($IMG, array('cache'=> $INPUT->str('cache'), 'w'=> $w, 'h'=> $h), true, '&');
+    $url = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV), true, '&');
+    $src = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV, 'w'=> $w, 'h'=> $h), true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');
