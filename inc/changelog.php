@@ -52,6 +52,8 @@ function parseChangelogLine($line) {
  */
 function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
     global $conf, $INFO;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // check for special flags as keys
     if (!is_array($flags)) { $flags = array(); }
@@ -65,7 +67,7 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
 
     if(!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit)?clientIP(true):'127.0.0.1';
-    $user   = (!$flagExternalEdit)?$_SERVER['REMOTE_USER']:'';
+    $user   = (!$flagExternalEdit)?$INPUT->server->str('REMOTE_USER'):'';
 
     $strip = array("\t", "\n");
     $logline = array(
@@ -117,12 +119,14 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
  */
 function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
     global $conf;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     $id = cleanid($id);
 
     if(!$date) $date = time(); //use current time if none supplied
     $remote = clientIP(true);
-    $user   = $_SERVER['REMOTE_USER'];
+    $user   = $INPUT->server->str('REMOTE_USER');
 
     $strip = array("\t", "\n");
     $logline = array(
@@ -642,7 +646,7 @@ abstract class ChangeLog {
      * When available it returns $max entries for each revision
      *
      * @param int $rev1 oldest revision timestamp
-     * @param int $rev2 newest revision timestamp
+     * @param int $rev2 newest revision timestamp (0 looks up last revision)
      * @param int $max maximum number of revisions returned
      * @return array with two arrays with revisions surrounding rev1 respectively rev2
      */
@@ -651,10 +655,16 @@ abstract class ChangeLog {
         $rev1 = max($rev1, 0);
         $rev2 = max($rev2, 0);
 
-        if($rev2 < $rev1) {
-            $rev = $rev2;
-            $rev2 = $rev1;
-            $rev1 = $rev;
+        if($rev2) {
+            if($rev2 < $rev1) {
+                $rev = $rev2;
+                $rev2 = $rev1;
+                $rev1 = $rev;
+            }
+        } else {
+            //empty right side means a removed page. Look up last revision.
+            $revs = $this->getRevisions(-1, 1);
+            $rev2 = $revs[0];
         }
         //collect revisions around rev2
         list($revs2, $allrevs, $fp, $lines, $head, $tail) = $this->retrieveRevisionsAround($rev2, $max);

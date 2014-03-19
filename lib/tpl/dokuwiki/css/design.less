@@ -48,6 +48,12 @@
         margin-bottom: 0;
         font-size: 0.875em;
     }
+
+    /* make all links in header (including breadcrumb and interwiki) same colour as the rest */
+    a {
+        color: @ini_link;
+        background-color: inherit;
+    }
 }
 
 [dir=rtl] #dokuwiki__header h1 img {
@@ -100,7 +106,8 @@
     margin-left: 0;
 }
 
-#dokuwiki__usertools a.action {
+#dokuwiki__usertools a.action,
+#dokuwiki__usertools a.iw_user {
     padding-left: 20px;
     background: transparent url(images/usertools.png) no-repeat 0 0;
 }
@@ -137,6 +144,7 @@
         background-position: left 0;
     }
 
+    a.iw_user,
     a.action.profile {
         background-position: left -32px;
     }
@@ -186,50 +194,50 @@
     text-align: right;
 
     form.search {
-        display: block;
         font-size: 0.875em;
-        position: relative;
-
-        input.edit {
-            width: 18em;
-            padding: .35em 22px .35em .1em;
-        }
-
-        input.button {
-            background: transparent url(images/search.png) no-repeat 0 0;
-            border-width: 0;
-            width: 19px;
-            height: 14px;
-            text-indent: -99999px;
-            margin-left: -20px;
-            box-shadow: none;
-            padding: 0;
-        }
-    }
-
-    ul {
-        margin-top: 0.5em;
     }
 }
 
 [dir=rtl] #dokuwiki__sitetools {
     text-align: left;
+}
 
-    form.search {
-        input.edit {
-            padding: .35em .1em .35em 22px;
-        }
+form.search {
+    display: block;
+    position: relative;
+    margin-bottom: 0.5em;
 
-        input.button {
-            background-position: 5px 0;
-            margin-left: 0;
-            margin-right: -20px;
-            position: relative;
-        }
+    input.edit {
+        width: 18em;
+        padding: .35em 22px .35em .1em;
+    }
+
+    input.button {
+        background: transparent url(images/search.png) no-repeat 0 0;
+        border-width: 0;
+        width: 19px;
+        height: 14px;
+        text-indent: -99999px;
+        margin-left: -20px;
+        box-shadow: none;
+        padding: 0;
     }
 }
 
-#IE7 #dokuwiki__sitetools form.search {
+[dir=rtl] form.search {
+    input.edit {
+        padding: .35em .1em .35em 22px;
+    }
+
+    input.button {
+        background-position: 5px 0;
+        margin-left: 0;
+        margin-right: -20px;
+        position: relative;
+    }
+}
+
+#IE7 form.search {
     min-height: 1px;
     z-index: 21;
 }
@@ -260,11 +268,6 @@
         border-bottom: 1px solid @ini_border;
     }
 
-    a {
-        color: @ini_link;
-        background-color: inherit;
-    }
-
     .bcsep {
         font-size: 0.75em;
     }
@@ -278,13 +281,10 @@
 /* sidebar
 ********************************************************************/
 
-#dokuwiki__aside {
-
-    > .pad {
-        font-size: 0.875em;
-        overflow: hidden;
-        word-wrap: break-word;
-    }
+.dokuwiki .aside {
+    font-size: 0.875em;
+    overflow: hidden;
+    word-wrap: break-word;
 
     /* make sidebar more condensed */
 
@@ -340,8 +340,8 @@
     }
 }
 
-[dir=rtl] #dokuwiki__aside ul,
-[dir=rtl] #dokuwiki__aside ol {
+[dir=rtl] .dokuwiki .aside ul,
+[dir=rtl] .dokuwiki .aside ol {
     padding-right: .5em;
 }
 

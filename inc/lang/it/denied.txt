@@ -1,5 +1,4 @@
 ====== Accesso negato ======
 
-Non hai i diritti per continuare. Forse hai dimenticato di effettuare l'accesso?
-
+Non hai i diritti per continuare.
 

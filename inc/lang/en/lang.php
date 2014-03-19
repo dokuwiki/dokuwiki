@@ -52,6 +52,8 @@ $lang['btn_register']          = 'Register';
 $lang['btn_apply']             = 'Apply';
 $lang['btn_media']             = 'Media Manager';
 $lang['btn_deleteuser']        = 'Remove My Account';
+$lang['btn_img_backto']        = 'Back to %s';
+$lang['btn_mediaManager']      = 'View in media manager';
 
 $lang['loggedinas']            = 'Logged in as';
 $lang['user']                  = 'Username';
@@ -258,7 +260,6 @@ $lang['admin_register']        = 'Add new user';
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Writing metadata failed';
 $lang['metasaveok']            = 'Metadata saved';
-$lang['img_backto']            = 'Back to';
 $lang['img_title']             = 'Title';
 $lang['img_caption']           = 'Caption';
 $lang['img_date']              = 'Date';
@@ -271,7 +272,6 @@ $lang['img_camera']            = 'Camera';
 $lang['img_keywords']          = 'Keywords';
 $lang['img_width']             = 'Width';
 $lang['img_height']            = 'Height';
-$lang['img_manager']           = 'View in media manager';
 
 $lang['subscr_subscribe_success']   = 'Added %s to subscription list for %s';
 $lang['subscr_subscribe_error']     = 'Error adding %s to subscription list for %s';

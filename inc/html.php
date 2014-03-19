@@ -65,6 +65,20 @@ function html_login(){
     print '</div>'.NL;
 }
 
+
+/**
+ * Denied page content
+ *
+ * @return string html
+ */
+function html_denied() {
+    print p_locale_xhtml('denied');
+
+    if(!$_SERVER['REMOTE_USER']){
+        html_login();
+    }
+}
+
 /**
  * inserts section edit buttons if wanted or removes the markers
  *
@@ -698,7 +712,7 @@ function html_recent($first=0, $show_changes='both'){
 
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $form->addElement(media_printicon($recent['id']));
         } else {
             $icon = DOKU_BASE.'lib/images/fileicons/file.png';
@@ -712,9 +726,8 @@ function html_recent($first=0, $show_changes='both'){
         $diff = false;
         $href = '';
 
-        if ($recent['media']) {
-            $medialog = new MediaChangeLog($recent['id']);
-            $diff = (count($medialog->getRevisions(0, 1)) && @file_exists(mediaFN($recent['id'])));
+        if (!empty($recent['media'])) {
+            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
             if ($diff) {
                 $href = media_managerURL(array('tab_details' => 'history',
                     'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
@@ -723,7 +736,7 @@ function html_recent($first=0, $show_changes='both'){
             $href = wl($recent['id'],"do=diff", false, '&');
         }
 
-        if ($recent['media'] && !$diff) {
+        if (!empty($recent['media']) && !$diff) {
             $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
         } else {
             $form->addElement(form_makeOpenTag('a', array('class' => 'diff_link', 'href' => $href)));
@@ -737,7 +750,7 @@ function html_recent($first=0, $show_changes='both'){
             $form->addElement(form_makeCloseTag('a'));
         }
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'history',
                 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
         } else {
@@ -753,7 +766,7 @@ function html_recent($first=0, $show_changes='both'){
                         )));
         $form->addElement(form_makeCloseTag('a'));
 
-        if ($recent['media']) {
+        if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
             $class = (file_exists(mediaFN($recent['id']))) ? 'wikilink1' : $class = 'wikilink2';
             $form->addElement(form_makeOpenTag('a', array('class' => $class, 'href' => $href)));
@@ -1083,9 +1096,11 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
 
 /**
  * Show diff
+ * between current page version and provided $text
+ * or between the revisions provided via GET or POST
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param  string $text  compare with this text with most current version
+ * @param  string $text  when non-empty: compare with this text with most current version
  * @param  bool   $intro display the intro text
  * @param  string $type  type of the diff (inline or sidebyside)
  */
@@ -1185,94 +1200,7 @@ function html_diff($text = '', $intro = true, $type = null) {
     $l_nav = '';
     $r_nav = '';
     if(!$text) {
-        $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date']; //last timestamp is not in changelog
-        //retrieve revisions with additional info
-        list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
-        $l_revisions = array();
-        foreach($l_revs as $rev) {
-            $info = $pagelog->getRevisionInfo($rev);
-            $l_revisions[$rev] = array(
-                $rev,
-                dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
-                $rev >= $r_rev //disable?
-            );
-        }
-        $r_revisions = array();
-        foreach($r_revs as $rev) {
-            $info = $pagelog->getRevisionInfo($rev);
-            $r_revisions[$rev] = array(
-                $rev,
-                dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
-                $rev <= $l_rev //disable?
-            );
-        }
-        //determine previous/next revisions
-        $l_index = array_search($l_rev, $l_revs);
-        $l_prev = $l_revs[$l_index + 1];
-        $l_next = $l_revs[$l_index - 1];
-        $r_index = array_search($r_rev, $r_revs);
-        $r_prev = $r_revs[$r_index + 1];
-        $r_next = $r_revs[$r_index - 1];
-
-        //Left side:
-        //move back
-        if($l_prev) {
-            $l_nav .= html_diff_navigationlink($type, 'diffbothprevrev', $l_prev, $r_prev);
-            $l_nav .= html_diff_navigationlink($type, 'diffprevrev', $l_prev, $r_rev);
-        }
-        //dropdown
-        $form = new Doku_Form(array('action' => wl()));
-        $form->addHidden('id', $ID);
-        $form->addHidden('difftype', $type);
-        $form->addHidden('rev2[1]', $r_rev);
-        $form->addHidden('do', 'diff');
-        $form->addElement(
-             form_makeListboxField(
-                 'rev2[0]',
-                 $l_revisions,
-                 $l_rev,
-                 '', '', '',
-                 array('class' => 'quickselect')
-             )
-        );
-        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
-        $l_nav .= $form->getForm();
-        //move forward
-        if($l_next < $r_rev) {
-            $l_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
-        }
-
-        //Right side:
-        //move back
-        if($l_rev < $r_prev) {
-            $r_nav .= html_diff_navigationlink($type, 'diffprevrev', $l_rev, $r_prev);
-        }
-        //dropdown
-        $form = new Doku_Form(array('action' => wl()));
-        $form->addHidden('id', $ID);
-        $form->addHidden('rev2[0]', $l_rev);
-        $form->addHidden('difftype', $type);
-        $form->addHidden('do', 'diff');
-        $form->addElement(
-             form_makeListboxField(
-                 'rev2[1]',
-                 $r_revisions,
-                 $r_rev,
-                 '', '', '',
-                 array('class' => 'quickselect')
-             )
-        );
-        $form->addElement(form_makeButton('submit', 'diff', 'Go'));
-        $r_nav .= $form->getForm();
-        //move forward
-        if($r_next) {
-            if($pagelog->isCurrentRevision($r_next)) {
-                $r_nav .= html_diff_navigationlink($type, 'difflastrev', $l_rev); //last revision is diff with current page
-            } else {
-                $r_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_rev, $r_next);
-            }
-            $r_nav .= html_diff_navigationlink($type, 'diffbothnextrev', $l_next, $r_next);
-        }
+        list($l_nav, $r_nav) = html_diff_navigation($pagelog, $type, $l_rev, $r_rev);
     }
     /*
      * Create diff object and the formatter
@@ -1293,7 +1221,7 @@ function html_diff($text = '', $intro = true, $type = null) {
      * Display type and exact reference
      */
     if(!$text) {
-        ptln('<div class="diffoptions">');
+        ptln('<div class="diffoptions group">');
 
 
         $form = new Doku_Form(array('action' => wl()));
@@ -1319,7 +1247,7 @@ function html_diff($text = '', $intro = true, $type = null) {
 
         ptln('<p>');
         // link to exactly this view FS#2835
-        html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['lastmod']);
+        echo html_diff_navigationlink($type, 'difflink', $l_rev, $r_rev ? $r_rev : $INFO['currentrev']);
         ptln('</p>');
 
         ptln('</div>'); // .diffoptions
@@ -1383,6 +1311,135 @@ function html_diff($text = '', $intro = true, $type = null) {
 }
 
 /**
+ * Create html for revision navigation
+ *
+ * @param PageChangeLog $pagelog changelog object of current page
+ * @param string        $type    inline vs sidebyside
+ * @param int           $l_rev   left revision timestamp
+ * @param int           $r_rev   right revision timestamp
+ * @return string[] html of left and right navigation elements
+ */
+function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
+    global $INFO, $ID;
+
+    // last timestamp is not in changelog, retrieve timestamp from metadata
+    // note: when page is removed, the metadata timestamp is zero
+    $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
+
+    //retrieve revisions with additional info
+    list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
+    $l_revisions = array();
+    if(!$l_rev) {
+        $l_revisions[0] = array(0, "", false); //no left revision given, add dummy
+    }
+    foreach($l_revs as $rev) {
+        $info = $pagelog->getRevisionInfo($rev);
+        $l_revisions[$rev] = array(
+            $rev,
+            dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
+            $r_rev ? $rev >= $r_rev : false //disable?
+        );
+    }
+    $r_revisions = array();
+    if(!$r_rev) {
+        $r_revisions[0] = array(0, "", false); //no right revision given, add dummy
+    }
+    foreach($r_revs as $rev) {
+        $info = $pagelog->getRevisionInfo($rev);
+        $r_revisions[$rev] = array(
+            $rev,
+            dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
+            $rev <= $l_rev //disable?
+        );
+    }
+
+    //determine previous/next revisions
+    $l_index = array_search($l_rev, $l_revs);
+    $l_prev = $l_revs[$l_index + 1];
+    $l_next = $l_revs[$l_index - 1];
+    if($r_rev) {
+        $r_index = array_search($r_rev, $r_revs);
+        $r_prev = $r_revs[$r_index + 1];
+        $r_next = $r_revs[$r_index - 1];
+    } else {
+        //removed page
+        if($l_next) {
+            $r_prev = $r_revs[0];
+        } else {
+            $r_prev = null;
+        }
+        $r_next = null;
+    }
+
+    /*
+     * Left side:
+     */
+    $l_nav = '';
+    //move back
+    if($l_prev) {
+        $l_nav .= html_diff_navigationlink($type, 'diffbothprevrev', $l_prev, $r_prev);
+        $l_nav .= html_diff_navigationlink($type, 'diffprevrev', $l_prev, $r_rev);
+    }
+    //dropdown
+    $form = new Doku_Form(array('action' => wl()));
+    $form->addHidden('id', $ID);
+    $form->addHidden('difftype', $type);
+    $form->addHidden('rev2[1]', $r_rev);
+    $form->addHidden('do', 'diff');
+    $form->addElement(
+         form_makeListboxField(
+             'rev2[0]',
+             $l_revisions,
+             $l_rev,
+             '', '', '',
+             array('class' => 'quickselect')
+         )
+    );
+    $form->addElement(form_makeButton('submit', 'diff', 'Go'));
+    $l_nav .= $form->getForm();
+    //move forward
+    if($l_next && ($l_next < $r_rev || !$r_rev)) {
+        $l_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_next, $r_rev);
+    }
+
+    /*
+     * Right side:
+     */
+    $r_nav = '';
+    //move back
+    if($l_rev < $r_prev) {
+        $r_nav .= html_diff_navigationlink($type, 'diffprevrev', $l_rev, $r_prev);
+    }
+    //dropdown
+    $form = new Doku_Form(array('action' => wl()));
+    $form->addHidden('id', $ID);
+    $form->addHidden('rev2[0]', $l_rev);
+    $form->addHidden('difftype', $type);
+    $form->addHidden('do', 'diff');
+    $form->addElement(
+         form_makeListboxField(
+             'rev2[1]',
+             $r_revisions,
+             $r_rev,
+             '', '', '',
+             array('class' => 'quickselect')
+         )
+    );
+    $form->addElement(form_makeButton('submit', 'diff', 'Go'));
+    $r_nav .= $form->getForm();
+    //move forward
+    if($r_next) {
+        if($pagelog->isCurrentRevision($r_next)) {
+            $r_nav .= html_diff_navigationlink($type, 'difflastrev', $l_rev); //last revision is diff with current page
+        } else {
+            $r_nav .= html_diff_navigationlink($type, 'diffnextrev', $l_rev, $r_next);
+        }
+        $r_nav .= html_diff_navigationlink($type, 'diffbothnextrev', $l_next, $r_next);
+    }
+    return array($l_nav, $r_nav);
+}
+
+/**
  * Create html link to a diff defined by two revisions
  *
  * @param string $difftype display type
@@ -1393,7 +1450,7 @@ function html_diff($text = '', $intro = true, $type = null) {
  */
 function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
     global $ID, $lang;
-    if($rrev === null) {
+    if(!$rrev) {
         $urlparam = array(
             'do' => 'diff',
             'rev' => $lrev,
@@ -1716,6 +1773,7 @@ function html_edit(){
  * Display the default edit form
  *
  * Is the default action for HTML_EDIT_FORMSELECTION.
+ * @param mixed[] $param
  */
 function html_edit_form($param) {
     global $TEXT;

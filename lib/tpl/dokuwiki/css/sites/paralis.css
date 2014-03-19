@@ -1,0 +1,58 @@
+
+@media screen {
+
+body {
+    font: normal 100%/1.4 Frutiger, Calibri, "Myriad Pro", Myriad, "Nimbus Sans L", Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Constantia, Utopia, Lucidabright, Lucida, Georgia, "Nimbus Roman No9 L", serif;
+    color: @ini_text_neu;
+}
+
+q {
+    font-style: italic;
+}
+
+#dokuwiki__header h1 a {
+    color: @ini_link;
+    font-weight: bold;
+}
+
+div.dokuwiki p.plugin__pagenav {
+    margin: 0 0 1.4em;
+}
+
+
+} /* /@media */
+
+
+#dokuwiki__header h1 {
+    position: relative;
+}
+#dokuwiki__header h1 img {
+    position: absolute;
+    top: -27px;
+    left: -33px;
+    max-width: none;
+}
+#dokuwiki__header h1 {
+    padding-left: 110px;
+}
+#dokuwiki__header p.claim {
+    padding-left: 110px;
+}
+
+
+@media print {
+
+.dokuwiki p.plugin__pagenav {
+    display: none;
+}
+
+} /* /@media */

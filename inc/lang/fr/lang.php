@@ -29,6 +29,7 @@
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Emmanuel <seedfloyd@gmail.com>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
+ * @author Wild <wild.dagger@free.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -51,10 +52,10 @@ $lang['btn_revs']              = 'Anciennes révisions';
 $lang['btn_recent']            = 'Derniers changements';
 $lang['btn_upload']            = 'Envoyer';
 $lang['btn_cancel']            = 'Annuler';
-$lang['btn_index']             = 'Index';
+$lang['btn_index']             = 'Plan du site';
 $lang['btn_secedit']           = 'Modifier';
-$lang['btn_login']             = 'Connexion';
-$lang['btn_logout']            = 'Déconnexion';
+$lang['btn_login']             = 'S\'identifier';
+$lang['btn_logout']            = 'Se déconnecter';
 $lang['btn_admin']             = 'Administrer';
 $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
@@ -69,7 +70,7 @@ $lang['btn_draft']             = 'Modifier le brouillon';
 $lang['btn_recover']           = 'Récupérer le brouillon';
 $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
-$lang['btn_register']          = 'S\'enregistrer';
+$lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
@@ -258,7 +259,7 @@ $lang['admin_register']        = 'Ajouter un nouvel utilisateur';
 $lang['metaedit']              = 'Modifier les métadonnées';
 $lang['metasaveerr']           = 'Erreur lors de l\'enregistrement des métadonnées';
 $lang['metasaveok']            = 'Métadonnées enregistrées';
-$lang['img_backto']            = 'Retour à';
+$lang['btn_img_backto']            = 'Retour à %s';
 $lang['img_title']             = 'Titre';
 $lang['img_caption']           = 'Légende';
 $lang['img_date']              = 'Date';
@@ -271,7 +272,7 @@ $lang['img_camera']            = 'Appareil photo';
 $lang['img_keywords']          = 'Mots-clés';
 $lang['img_width']             = 'Largeur';
 $lang['img_height']            = 'Hauteur';
-$lang['img_manager']           = 'Voir dans le gestionnaire de médias';
+$lang['btn_mediaManager']           = 'Voir dans le gestionnaire de médias';
 $lang['subscr_subscribe_success'] = '%s a été ajouté à la liste de souscription de %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste de souscription de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste de souscription';

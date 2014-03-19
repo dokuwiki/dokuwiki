@@ -284,7 +284,7 @@ function media_upload_xhr($ns,$auth){
         'copy'
     );
     unlink($path);
-    if ($tmp) dir_delete($tmp);
+    if ($tmp) io_rmdir($tmp, true);
     if (is_array($res)) {
         msg($res[0], $res[1]);
         return false;
@@ -729,10 +729,23 @@ function _media_get_sort_type() {
     return _media_get_display_param('sort', array('default' => 'name', 'date'));
 }
 
+/**
+ * Returns type of listing for the list of files in media manager
+ *
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ * @return string - list type
+ */
 function _media_get_list_type() {
     return _media_get_display_param('list', array('default' => 'thumbs', 'rows'));
 }
 
+/**
+ * Get display parameters
+ *
+ * @param string $param   name of parameter
+ * @param array  $values  allowed values, where default value has index key 'default'
+ * @return string the parameter value
+ */
 function _media_get_display_param($param, $values) {
     global $INPUT;
     if (in_array($INPUT->str($param), $values)) {
@@ -860,6 +873,10 @@ function media_tab_history($image, $ns, $auth=null) {
 /**
  * Prints mediafile details
  *
+ * @param string        $image media id
+ * @param               $auth
+ * @param int|bool      $rev
+ * @param JpegMeta|bool $meta
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_preview($image, $auth, $rev=false, $meta=false) {
@@ -1002,7 +1019,7 @@ function media_file_tags($meta) {
     foreach($fields as $key => $tag){
         $t = array();
         if (!empty($tag[0])) $t = array($tag[0]);
-        if(is_array($tag[3])) $t = array_merge($t,$tag[3]);
+        if(isset($tag[3]) && is_array($tag[3])) $t = array_merge($t,$tag[3]);
         $value = media_getTag($t, $meta);
         $tags[] = array('tag' => $tag, 'value' => $value);
     }
@@ -1040,7 +1057,6 @@ function media_details($image, $auth, $rev=false, $meta=false) {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
-    global $lang;
     global $conf;
     global $INPUT;
 
@@ -1100,9 +1116,15 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
 
 }
 
+/**
+ * Callback for media file diff
+ *
+ * @param $data
+ * @return bool|void
+ */
 function _media_file_diff($data) {
     if(is_array($data) && count($data)===6) {
-        return media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
+        media_file_diff($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
     } else {
         return false;
     }
@@ -1429,10 +1451,10 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
 function media_printicon($filename){
     list($ext) = mimetype(mediaFN($filename),false);
 
-    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$ext.'.png')) {
-        $icon = DOKU_BASE.'lib/images/fileicons/'.$ext.'.png';
+    if (@file_exists(DOKU_INC.'lib/images/fileicons/32x32/'.$ext.'.png')) {
+        $icon = DOKU_BASE.'lib/images/fileicons/32x32/'.$ext.'.png';
     } else {
-        $icon = DOKU_BASE.'lib/images/fileicons/file.png';
+        $icon = DOKU_BASE.'lib/images/fileicons/32x32/file.png';
     }
 
     return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
@@ -1561,7 +1583,7 @@ function media_printimgdetail($item, $fullscreen=false){
  * @param string     $amp - separator
  * @param bool       $abs
  * @param bool       $params_array
- * @return string - link
+ * @return string|array - link
  */
 function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
     global $ID;
@@ -1759,7 +1781,7 @@ function media_nstree_item($item){
     global $INPUT;
     $pos   = strrpos($item['id'], ':');
     $label = substr($item['id'], $pos > 0 ? $pos + 1 : 0);
-    if(!$item['label']) $item['label'] = $label;
+    if(empty($item['label'])) $item['label'] = $label;
 
     $ret  = '';
     if (!($INPUT->str('do') == 'media'))
@@ -1821,7 +1843,7 @@ function media_resize_image($file, $ext, $w, $h=0){
     if( $mtime > filemtime($file) ||
             media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
             media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
+        if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
         return $local;
     }
     //still here? resizing failed
@@ -1882,7 +1904,7 @@ function media_crop_image($file, $ext, $w, $h=0){
     if( $mtime > @filemtime($file) ||
             media_crop_imageIM($ext,$file,$info[0],$info[1],$local,$cw,$ch,$cx,$cy) ||
             media_resize_imageGD($ext,$file,$cw,$ch,$local,$cw,$ch,$cx,$cy) ){
-        if($conf['fperm']) @chmod($local, $conf['fperm']);
+        if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
         return media_resize_image($local,$ext, $w, $h);
     }
 
@@ -2166,7 +2188,7 @@ function media_alternativefiles($src, $exts){
 /**
  * Check if video/audio is supported to be embedded.
  *
- * @param string $src       - mimetype of media file
+ * @param string $mime      - mimetype of media file
  * @param string $type      - type of media files to check ('video', 'audio', or none)
  * @return boolean
  *

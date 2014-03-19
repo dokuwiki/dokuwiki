@@ -137,6 +137,9 @@ function js_out(){
     $js = ob_get_contents();
     ob_end_clean();
 
+    // strip any source maps
+    stripsourcemaps($js);
+
     // compress whitespace and comments
     if($conf['compress']){
         $js = js_compress($js);
@@ -220,6 +223,12 @@ function js_pluginstrings() {
     return $pluginstrings;
 }
 
+/**
+ * Return an two-dimensional array with strings from the language file of current active template.
+ *
+ * - $lang['js'] must be an array.
+ * - Nothing is returned for template without an entry for $lang['js']
+ */
 function js_templatestrings() {
     global $conf;
     $templatestrings = array();

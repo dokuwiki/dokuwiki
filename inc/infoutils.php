@@ -102,6 +102,8 @@ function getVersion(){
 function check(){
     global $conf;
     global $INFO;
+    /* @var Input $INPUT */
+    global $INPUT;
 
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
@@ -204,7 +206,7 @@ function check(){
     }
 
     if($INFO['userinfo']['name']){
-        msg('You are currently logged in as '.$_SERVER['REMOTE_USER'].' ('.$INFO['userinfo']['name'].')',0);
+        msg('You are currently logged in as '.$INPUT->server->str('REMOTE_USER').' ('.$INFO['userinfo']['name'].')',0);
         msg('You are part of the groups '.join($INFO['userinfo']['grps'],', '),0);
     }else{
         msg('You are currently not logged in',0);
@@ -361,6 +363,9 @@ function dbg($msg,$hidden=false){
  */
 function dbglog($msg,$header=''){
     global $conf;
+    /* @var Input $INPUT */
+    global $INPUT;
+
     // The debug log isn't automatically cleaned thus only write it when
     // debugging has been enabled by the user.
     if($conf['allowdebug'] !== 1) return;
@@ -373,7 +378,7 @@ function dbglog($msg,$header=''){
     $file = $conf['cachedir'].'/debug.log';
     $fh = fopen($file,'a');
     if($fh){
-        fwrite($fh,date('H:i:s ').$_SERVER['REMOTE_ADDR'].': '.$msg."\n");
+        fwrite($fh,date('H:i:s ').$INPUT->server->str('REMOTE_ADDR').': '.$msg."\n");
         fclose($fh);
     }
 }
