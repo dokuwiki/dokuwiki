@@ -15,6 +15,13 @@ require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
+//feed disabled?
+if(!actionOK('rss')) {
+    http_status(404);
+    echo '<error>RSS feed is disabled.</error>';
+    exit;
+}
+
 // get params
 $opt = rss_parseOptions();
 
