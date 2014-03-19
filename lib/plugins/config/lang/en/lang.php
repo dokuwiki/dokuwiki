@@ -171,6 +171,7 @@ $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver s
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
+$lang['date_at_format'] = 'Date at format (see PHP\'s <a href="http://www.php.net/manual/datetime.formats.php">datetime.formats</a> information). If empty UNIX timestamp format will be used.';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
