@@ -10,8 +10,6 @@
 abstract class DokuCLI {
     /** @var string the executed script itself */
     protected $bin;
-    /** @var  array list of non-option arguments */
-    protected $args;
     /** @var  DokuCLI_Options the option parser */
     protected $options;
     /** @var  DokuCLI_Colors */
@@ -25,8 +23,6 @@ abstract class DokuCLI {
     public function __construct() {
         set_exception_handler(array($this, 'fatal'));
 
-        $this->args = $this->readPHPArgv();
-        $this->bin  = basename(array_shift($this->args));
 
         $this->options = new DokuCLI_Options();
         $this->colors  = new DokuCLI_Colors();
@@ -46,10 +42,9 @@ abstract class DokuCLI {
      * Arguments and options have been parsed when this is run
      *
      * @param DokuCLI_Options $options
-     * @param array $args
      * @return void
      */
-    abstract protected function main(DokuCLI_Options $options, &$args);
+    abstract protected function main(DokuCLI_Options $options);
 
     /**
      * Execute the CLI program
@@ -73,22 +68,24 @@ abstract class DokuCLI {
         );
 
         // parse
-        $this->options->parseOptions($this->args);
+        $this->options->parseOptions();
 
         // handle defaults
         if($this->options->getOpt('no-colors')) {
             $this->colors->disable();
         }
         if($this->options->getOpt('help')) {
-            $this->options->help($this->bin);
+            echo $this->options->help($this->bin);
             exit(0);
         }
 
         // check arguments
-        $this->options->checkArguments($this->args);
+        $this->options->checkArguments();
 
         // execute
-        $this->main($this->options, $this->args);
+        $this->main($this->options);
+
+        exit(0);
     }
 
     /**
@@ -98,7 +95,7 @@ abstract class DokuCLI {
      */
     public function fatal($error) {
         $code = 0;
-        if(is_a($error, 'Exception')) {
+        if(is_object($error) && is_a($error, 'Exception')) {
             /** @var Exception $error */
             $code  = $error->getCode();
             $error = $error->getMessage();
@@ -136,29 +133,6 @@ abstract class DokuCLI {
         $this->colors->ptln("I: $string", 'cyan');
     }
 
-    /**
-     * Safely read the $argv PHP array across different PHP configurations.
-     * Will take care on register_globals and register_argc_argv ini directives
-     *
-     * @throws DokuCLI_Exception
-     * @return array the $argv PHP array or PEAR error if not registered
-     */
-    private function readPHPArgv() {
-        global $argv;
-        if(!is_array($argv)) {
-            if(!@is_array($_SERVER['argv'])) {
-                if(!@is_array($GLOBALS['HTTP_SERVER_VARS']['argv'])) {
-                    throw new DokuCLI_Exception(
-                        "Could not read cmd args (register_argc_argv=Off?)",
-                        DOKU_CLI_OPTS_ARG_READ
-                    );
-                }
-                return $GLOBALS['HTTP_SERVER_VARS']['argv'];
-            }
-            return $_SERVER['argv'];
-        }
-        return $argv;
-    }
 }
 
 /**
@@ -264,13 +238,20 @@ class DokuCLI_Colors {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 class DokuCLI_Options {
-    /** @var  array $setup keeps the list of options to parse */
+    /** @var  array keeps the list of options to parse */
     protected $setup;
 
-    /** @var  array $options store parsed options */
-    protected $options;
+    /** @var  array store parsed options */
+    protected $options = array();
 
+    /** @var string current parsed command if any */
     protected $command = '';
+
+    /** @var  array passed non-option arguments*/
+    public $args = array();
+
+    /** @var  string the executed script */
+    protected $bin;
 
     public function __construct() {
         $this->setup = array(
@@ -280,6 +261,9 @@ class DokuCLI_Options {
                 'help' => ''
             )
         ); // default command
+
+        $this->args = $this->readPHPArgv();
+        $this->bin  = basename(array_shift($this->args));
 
         $this->options = array();
     }
@@ -317,7 +301,7 @@ class DokuCLI_Options {
     /**
      * This registers a sub command
      *
-     * Sub commands have their own options and use their own function (not main())
+     * Sub commands have their own options and use their own function (not main()).
      *
      * @param string $command
      * @param string $help
@@ -365,15 +349,14 @@ class DokuCLI_Options {
      *
      * Throws an exception if arguments are missing. Called from parseOptions()
      *
-     * @param array $args
      * @throws DokuCLI_Exception
      */
-    public function checkArguments($args) {
-        $argc = count($args);
+    public function checkArguments() {
+        $argc = count($this->args);
 
         $req = 0;
         foreach($this->setup[$this->command]['args'] as $arg) {
-            if(!$args['required']) break; // last required arguments seen
+            if(!$arg['required']) break; // last required arguments seen
             $req++;
         }
 
@@ -389,32 +372,31 @@ class DokuCLI_Options {
      *
      * Note that command options will overwrite any global options with the same name
      *
-     * @param array $args
      * @throws DokuCLI_Exception
      */
-    public function parseOptions(&$args) {
+    public function parseOptions() {
         $non_opts = array();
 
-        $argc = count($args);
+        $argc = count($this->args);
         for($i = 0; $i < $argc; $i++) {
-            $arg = $args[$i];
+            $arg = $this->args[$i];
 
             // The special element '--' means explicit end of options. Treat the rest of the arguments as non-options
             // and end the loop.
             if($arg == '--') {
-                $non_opts = array_merge($non_opts, array_slice($args, $i + 1));
+                $non_opts = array_merge($non_opts, array_slice($this->args, $i + 1));
                 break;
             }
 
             // '-' is stdin - a normal argument
             if($arg == '-') {
-                $non_opts = array_merge($non_opts, array_slice($args, $i));
+                $non_opts = array_merge($non_opts, array_slice($this->args, $i));
                 break;
             }
 
             // first non-option
             if($arg{0} != '-') {
-                $non_opts = array_merge($non_opts, array_slice($args, $i));
+                $non_opts = array_merge($non_opts, array_slice($this->args, $i));
                 break;
             }
 
@@ -428,8 +410,8 @@ class DokuCLI_Options {
 
                 // argument required?
                 if($this->setup[$this->command]['opts'][$opt]['needsarg']) {
-                    if(is_null($val) && $i + 1 < $argc && !preg_match('/^--?[\w]/', $args[$i + 1])) {
-                        $val = $args[++$i];
+                    if(is_null($val) && $i + 1 < $argc && !preg_match('/^--?[\w]/', $this->args[$i + 1])) {
+                        $val = $this->args[++$i];
                     }
                     if(is_null($val)) {
                         throw new DokuCLI_Exception("Option $arg requires an argument", DokuCLI_Exception::E_OPT_ARG_REQUIRED);
@@ -453,8 +435,8 @@ class DokuCLI_Options {
             // argument required?
             if($this->setup[$this->command]['opts'][$opt]['needsarg']) {
                 $val = null;
-                if($i + 1 < $argc && !preg_match('/^--?[\w]/', $args[$i + 1])) {
-                    $val = $args[++$i];
+                if($i + 1 < $argc && !preg_match('/^--?[\w]/', $this->args[$i + 1])) {
+                    $val = $this->args[++$i];
                 }
                 if(is_null($val)) {
                     throw new DokuCLI_Exception("Option $arg requires an argument", DokuCLI_Exception::E_OPT_ARG_REQUIRED);
@@ -466,13 +448,13 @@ class DokuCLI_Options {
         }
 
         // parsing is now done, update args array
-        $args = $non_opts;
+        $this->args = $non_opts;
 
         // if not done yet, check if first argument is a command and reexecute argument parsing if it is
-        if(!$this->command && $args && isset($this->setup[$args[0]])) {
+        if(!$this->command && $this->args && isset($this->setup[$this->args[0]]) ) {
             // it is a command!
-            $this->command = array_shift($args);
-            $this->parseOptions($args); // second pass
+            $this->command = array_shift($this->args);
+            $this->parseOptions(); // second pass
         }
     }
 
@@ -504,10 +486,9 @@ class DokuCLI_Options {
     /**
      * Builds a help screen from the available options. You may want to call it from -h or on error
      *
-     * @param string $bin name of the script itself
      * @return string
      */
-    public function help($bin) {
+    public function help() {
         $text = '';
 
         $hascommands = (count($this->setup) > 1);
@@ -516,7 +497,7 @@ class DokuCLI_Options {
             $hasargs = (bool) $this->setup[$command]['args'];
 
             if(!$command) {
-                $text .= 'USAGE: ' . $bin;
+                $text .= 'USAGE: ' . $this->bin;
             } else {
                 $text .= "\n$command";
             }
@@ -563,6 +544,30 @@ class DokuCLI_Options {
         }
 
         return $text;
+    }
+
+    /**
+     * Safely read the $argv PHP array across different PHP configurations.
+     * Will take care on register_globals and register_argc_argv ini directives
+     *
+     * @throws DokuCLI_Exception
+     * @return array the $argv PHP array or PEAR error if not registered
+     */
+    private function readPHPArgv() {
+        global $argv;
+        if(!is_array($argv)) {
+            if(!@is_array($_SERVER['argv'])) {
+                if(!@is_array($GLOBALS['HTTP_SERVER_VARS']['argv'])) {
+                    throw new DokuCLI_Exception(
+                        "Could not read cmd args (register_argc_argv=Off?)",
+                        DOKU_CLI_OPTS_ARG_READ
+                    );
+                }
+                return $GLOBALS['HTTP_SERVER_VARS']['argv'];
+            }
+            return $_SERVER['argv'];
+        }
+        return $argv;
     }
 
 }

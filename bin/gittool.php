@@ -3,77 +3,107 @@
 
 if('cli' != php_sapi_name()) die();
 ini_set('memory_limit', '128M');
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
 define('NOSESSION', 1);
-require_once(DOKU_INC.'inc/init.php');
+require_once(DOKU_INC . 'inc/init.php');
 
-$GitToolCLI = new GitToolCLI();
 
-array_shift($argv);
-$command = array_shift($argv);
-
-switch($command) {
-    case '':
-    case 'help':
-        $GitToolCLI->cmd_help();
-        break;
-    case 'clone':
-        $GitToolCLI->cmd_clone($argv);
-        break;
-    case 'install':
-        $GitToolCLI->cmd_install($argv);
-        break;
-    case 'repo':
-    case 'repos':
-        $GitToolCLI->cmd_repos();
-        break;
-    default:
-        $GitToolCLI->cmd_git($command, $argv);
-}
 
 /**
  * Easily manage DokuWiki git repositories
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class GitToolCLI {
-    private $color = true;
+class GitToolCLI extends DokuCLI {
 
-    public function cmd_help() {
-        echo <<<EOF
-Usage: gittool.php <command> [parameters]
+    /**
+     * Register options and arguments on the given $options object
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function setup(DokuCLI_Options $options) {
+        $options->setHelp(
+                "Manage git repositories for DokuWiki and its plugins and templates.\n\n" .
+                "EXAMPLE\n\n" .
+                "$> ./bin/gittool.php clone gallery template:ach\n" .
+                "$> ./bin/gittool.php repos\n" .
+                "$> ./bin/gittool.php origin -v\n"
+        );
 
-Manage git repositories for DokuWiki and its plugins and templates.
+        $options->registerArgument(
+                'command',
+                'Command to execute. See below',
+                true
+        );
 
-EXAMPLE
+        $options->registerCommand(
+                'clone',
+                'Tries to install a known plugin or template (prefix with template:) via git. Uses the DokuWiki.org ' .
+                'plugin repository to find the proper git repository. Multiple extensions can be given as parameters'
+        );
+        $options->registerArgument(
+                'extension',
+                'name of the extension to install, prefix with \'template:\' for templates',
+                true,
+                'clone'
+        );
 
-$> ./bin/gittool.php clone gallery template:ach
-$> ./bin/gittool.php repos
-$> ./bin/gittool.php origin -v
+        $options->registerCommand(
+                'install',
+                'The same as clone, but when no git source repository can be found, the extension is installed via ' .
+                'download'
+        );
+        $options->registerArgument(
+                'extension',
+                'name of the extension to install, prefix with \'template:\' for templates',
+                true,
+                'install'
+        );
 
-COMMANDS
+        $options->registerCommand(
+                'repos',
+                'Lists all git repositories found in this DokuWiki installation'
+        );
 
-help
-    This help screen
-
-clone <extensions>
-    Tries to install a known plugin or template (prefix with template:) via
-    git. Uses the DokuWiki.org plugin repository to find the proper git
-    repository. Multiple extensions can be given as parameters
-
-install <extensions>
-    The same as clone, but when no git source repository can be found, the
-    extension is installed via download
-
-repos
-    Lists all git repositories found in this DokuWiki installation
-
-<any>
-    Any unknown commands are assumed to be arguments to git and will be
-    executed in all repositories found within this DokuWiki installation
-
-EOF;
+        $options->registerCommand(
+                '*',
+                'Any unknown commands are assumed to be arguments to git and will be executed in all repositories ' .
+                'found within this DokuWiki installation'
+        );
     }
+
+    /**
+     * Your main program
+     *
+     * Arguments and options have been parsed when this is run
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function main(DokuCLI_Options $options) {
+        $command = $options->getCmd();
+        if(!$command) $command = array_shift($options->args);
+
+        switch($command) {
+            case '':
+                echo $options->help('foo');
+                break;
+            case 'clone':
+                $this->cmd_clone($options->args);
+                break;
+            case 'install':
+                $this->cmd_install($options->args);
+                break;
+            case 'repo':
+            case 'repos':
+                $this->cmd_repos();
+                break;
+            default:
+                $this->cmd_git($command, $options->args);
+        }
+    }
+
 
     /**
      * Tries to install the given extensions using git clone
@@ -88,7 +118,7 @@ EOF;
             $repo = $this->getSourceRepo($ext);
 
             if(!$repo) {
-                $this->msg_error("could not find a repository for $ext");
+                $this->error("could not find a repository for $ext");
                 $errors[] = $ext;
             } else {
                 if($this->cloneExtension($ext, $repo)) {
@@ -100,8 +130,8 @@ EOF;
         }
 
         echo "\n";
-        if($succeeded) $this->msg_success('successfully cloned the following extensions: '.join(', ', $succeeded));
-        if($errors) $this->msg_error('failed to clone the following extensions: '.join(', ', $errors));
+        if($succeeded) $this->success('successfully cloned the following extensions: ' . join(', ', $succeeded));
+        if($errors) $this->error('failed to clone the following extensions: ' . join(', ', $errors));
     }
 
     /**
@@ -117,7 +147,7 @@ EOF;
             $repo = $this->getSourceRepo($ext);
 
             if(!$repo) {
-                $this->msg_info("could not find a repository for $ext");
+                $this->info("could not find a repository for $ext");
                 if($this->downloadExtension($ext)) {
                     $succeeded[] = $ext;
                 } else {
@@ -133,8 +163,8 @@ EOF;
         }
 
         echo "\n";
-        if($succeeded) $this->msg_success('successfully installed the following extensions: '.join(', ', $succeeded));
-        if($errors) $this->msg_error('failed to install the following extensions: '.join(', ', $errors));
+        if($succeeded) $this->success('successfully installed the following extensions: ' . join(', ', $succeeded));
+        if($errors) $this->error('failed to install the following extensions: ' . join(', ', $errors));
     }
 
     /**
@@ -152,19 +182,19 @@ EOF;
 
         foreach($repos as $repo) {
             if(!@chdir($repo)) {
-                $this->msg_error("Could not change into $repo");
+                $this->error("Could not change into $repo");
                 continue;
             }
 
             echo "\n";
-            $this->msg_info("executing $shell in $repo");
+            $this->info("executing $shell in $repo");
             $ret = 0;
             system($shell, $ret);
 
             if($ret == 0) {
-                $this->msg_success("git succeeded in $repo");
+                $this->success("git succeeded in $repo");
             } else {
-                $this->msg_error("git failed in $repo");
+                $this->error("git failed in $repo");
             }
         }
     }
@@ -193,23 +223,23 @@ EOF;
 
         $url = $plugin->getDownloadURL();
         if(!$url) {
-            $this->msg_error("no download URL for $ext");
+            $this->error("no download URL for $ext");
             return false;
         }
 
         $ok = false;
         try {
-            $this->msg_info("installing $ext via download from $url");
+            $this->info("installing $ext via download from $url");
             $ok = $plugin->installFromURL($url);
         } catch(Exception $e) {
-            $this->msg_error($e->getMessage());
+            $this->error($e->getMessage());
         }
 
         if($ok) {
-            $this->msg_success("installed $ext via download");
+            $this->success("installed $ext via download");
             return true;
         } else {
-            $this->msg_success("failed to install $ext via download");
+            $this->success("failed to install $ext via download");
             return false;
         }
     }
@@ -223,19 +253,19 @@ EOF;
      */
     private function cloneExtension($ext, $repo) {
         if(substr($ext, 0, 9) == 'template:') {
-            $target = fullpath(tpl_incdir().'../'.substr($ext, 9));
+            $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
         } else {
-            $target = DOKU_PLUGIN.$ext;
+            $target = DOKU_PLUGIN . $ext;
         }
 
-        $this->msg_info("cloning $ext from $repo to $target");
+        $this->info("cloning $ext from $repo to $target");
         $ret = 0;
         system("git clone $repo $target", $ret);
         if($ret === 0) {
-            $this->msg_success("cloning of $ext succeeded");
+            $this->success("cloning of $ext succeeded");
             return true;
         } else {
-            $this->msg_error("cloning of $ext failed");
+            $this->error("cloning of $ext failed");
             return false;
         }
     }
@@ -248,17 +278,17 @@ EOF;
      * @return array
      */
     private function findRepos() {
-        $this->msg_info('Looking for .git directories');
+        $this->info('Looking for .git directories');
         $data = array_merge(
-            glob(DOKU_INC.'.git', GLOB_ONLYDIR),
-            glob(DOKU_PLUGIN.'*/.git', GLOB_ONLYDIR),
-            glob(fullpath(tpl_incdir().'../').'/*/.git', GLOB_ONLYDIR)
+            glob(DOKU_INC . '.git', GLOB_ONLYDIR),
+            glob(DOKU_PLUGIN . '*/.git', GLOB_ONLYDIR),
+            glob(fullpath(tpl_incdir() . '../') . '/*/.git', GLOB_ONLYDIR)
         );
 
         if(!$data) {
-            $this->msg_error('Found no .git directories');
+            $this->error('Found no .git directories');
         } else {
-            $this->msg_success('Found '.count($data).' .git directories');
+            $this->success('Found ' . count($data) . ' .git directories');
         }
         $data = array_map('fullpath', array_map('dirname', $data));
         return $data;
@@ -283,7 +313,7 @@ EOF;
         if(preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
-            return 'https://github.com/'.$user.'/'.$repo.'.git';
+            return 'https://github.com/' . $user . '/' . $repo . '.git';
         }
 
         // match gitorious repos
@@ -292,49 +322,20 @@ EOF;
             $repo = $m[2];
             if(!$repo) $repo = $user;
 
-            return 'https://git.gitorious.org/'.$user.'/'.$repo.'.git';
+            return 'https://git.gitorious.org/' . $user . '/' . $repo . '.git';
         }
 
         // match bitbucket repos - most people seem to use mercurial there though
         if(preg_match('/bitbucket\.org\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
-            return 'https://bitbucket.org/'.$user.'/'.$repo.'.git';
+            return 'https://bitbucket.org/' . $user . '/' . $repo . '.git';
         }
 
         return false;
     }
-
-    /**
-     * Print an error message
-     *
-     * @param $string
-     */
-    private function msg_error($string) {
-        if($this->color) echo "\033[31m"; // red
-        echo "E: $string\n";
-        if($this->color) echo "\033[37m"; // reset
-    }
-
-    /**
-     * Print a success message
-     *
-     * @param $string
-     */
-    private function msg_success($string) {
-        if($this->color) echo "\033[32m"; // green
-        echo "S: $string\n";
-        if($this->color) echo "\033[37m"; // reset
-    }
-
-    /**
-     * Print an info message
-     *
-     * @param $string
-     */
-    private function msg_info($string) {
-        if($this->color) echo "\033[36m"; // cyan
-        echo "I: $string\n";
-        if($this->color) echo "\033[37m"; // reset
-    }
 }
+
+
+$GitToolCLI = new GitToolCLI();
+$GitToolCLI->run();
