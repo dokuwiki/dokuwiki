@@ -1448,17 +1448,23 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
     echo '</div>'.NL;
 }
 
-function media_printicon($filename){
+/**
+ * Display a media icon
+ *
+ * @param $filename
+ * @param string $size the size subfolder, if not specified 16x16 is used
+ * @return string
+ */
+function media_printicon($filename, $size=''){
     list($ext) = mimetype(mediaFN($filename),false);
 
-    if (@file_exists(DOKU_INC.'lib/images/fileicons/32x32/'.$ext.'.png')) {
-        $icon = DOKU_BASE.'lib/images/fileicons/32x32/'.$ext.'.png';
+    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$ext.'.png')) {
+        $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/'.$ext.'.png';
     } else {
-        $icon = DOKU_BASE.'lib/images/fileicons/32x32/file.png';
+        $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/file.png';
     }
 
     return '<img src="'.$icon.'" alt="'.$filename.'" class="icon" />';
-
 }
 
 /**
@@ -1482,7 +1488,7 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
         echo '<a id="d_:'.$item['id'].'" class="image" title="'.$item['id'].'" href="'.
             media_managerURL(array('image' => hsc($item['id']), 'ns' => getNS($item['id']),
             'tab_details' => 'view')).'">';
-        echo media_printicon($item['id']);
+        echo media_printicon($item['id'], '32x32');
         echo '</a>';
     }
     echo '</dt>'.NL;
