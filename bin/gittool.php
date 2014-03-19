@@ -8,7 +8,6 @@ define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
 
-
 /**
  * Easily manage DokuWiki git repositories
  *
@@ -25,10 +24,9 @@ class GitToolCLI extends DokuCLI {
     protected function setup(DokuCLI_Options $options) {
         $options->setHelp(
                 "Manage git repositories for DokuWiki and its plugins and templates.\n\n" .
-                "EXAMPLE\n\n" .
                 "$> ./bin/gittool.php clone gallery template:ach\n" .
                 "$> ./bin/gittool.php repos\n" .
-                "$> ./bin/gittool.php origin -v\n"
+                "$> ./bin/gittool.php origin -v"
         );
 
         $options->registerArgument(
@@ -103,7 +101,6 @@ class GitToolCLI extends DokuCLI {
                 $this->cmd_git($command, $options->args);
         }
     }
-
 
     /**
      * Tries to install the given extensions using git clone

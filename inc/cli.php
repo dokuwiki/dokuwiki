@@ -23,7 +23,6 @@ abstract class DokuCLI {
     public function __construct() {
         set_exception_handler(array($this, 'fatal'));
 
-
         $this->options = new DokuCLI_Options();
         $this->colors  = new DokuCLI_Colors();
     }
@@ -247,7 +246,7 @@ class DokuCLI_Options {
     /** @var string current parsed command if any */
     protected $command = '';
 
-    /** @var  array passed non-option arguments*/
+    /** @var  array passed non-option arguments */
     public $args = array();
 
     /** @var  string the executed script */
@@ -451,7 +450,7 @@ class DokuCLI_Options {
         $this->args = $non_opts;
 
         // if not done yet, check if first argument is a command and reexecute argument parsing if it is
-        if(!$this->command && $this->args && isset($this->setup[$this->args[0]]) ) {
+        if(!$this->command && $this->args && isset($this->setup[$this->args[0]])) {
             // it is a command!
             $this->command = array_shift($this->args);
             $this->parseOptions(); // second pass
@@ -502,7 +501,6 @@ class DokuCLI_Options {
                 $text .= "\n$command";
             }
 
-            if($hasopts) $text .= ' <OPTIONS>';
             foreach($this->setup[$command]['args'] as $arg) {
                 if($arg['required']) {
                     $text .= ' <' . $arg['name'] . '>';
@@ -510,36 +508,45 @@ class DokuCLI_Options {
                     $text .= ' [<' . $arg['name'] . '>]';
                 }
             }
-            $text .= "\n\n";
+            $text .= "\n";
 
             if($this->setup[$command]['help']) {
-                $text .= '  ' . $this->setup[$command]['help'] . "\n\n";
+                $text .= "\n";
+                $text .= $this->tableFormat(
+                              array(2, 72),
+                              array('', $this->setup[$command]['help'] . "\n")
+                );
             }
 
             if($hasopts) {
-                $text .= "  OPTIONS\n\n";
-
+                $text .= "\n";
                 foreach($this->setup[$command]['opts'] as $long => $opt) {
 
                     $name = "--$long";
                     if($opt['short']) $name = '-' . $opt['short'] . ' ' . $name;
                     if($opt['needsarg']) $name .= ' <arg>';
 
-                    $text .= sprintf("    %-15s  %s\n", $name, $opt['help']);
-
+                    $text .= $this->tableFormat(
+                                  array(2, 20, 52),
+                                  array('', $name, $opt['help'])
+                    );
                 }
             }
 
             if($hasargs) {
-                $text .= "  ARGUMENTS\n\n";
+                $text .= "\n";
                 foreach($this->setup[$command]['args'] as $arg) {
                     $name = '<' . $arg['name'] . '>';
-                    $text .= sprintf("    %-15s  %s\n", $name, $arg['help']);
+
+                    $text .= $this->tableFormat(
+                                  array(2, 20, 52),
+                                  array('', $name, $arg['help'])
+                    );
                 }
             }
 
-            if($command == '' && $hascommands){
-                $text .= "\n\nThis tool accepts a command as first parameter as outlined below:\n";
+            if($command == '' && $hascommands) {
+                $text .= "\nThis tool accepts a command as first parameter as outlined below:\n";
             }
         }
 
@@ -570,6 +577,38 @@ class DokuCLI_Options {
         return $argv;
     }
 
+    /**
+     * Displays text in multiple word wrapped columns
+     *
+     * @param array $widths list of column widths (in characters)
+     * @param array $texts list of texts for each column
+     * @return string
+     */
+    private function tableFormat($widths, $texts) {
+        $wrapped = array();
+        $maxlen  = 0;
+
+        foreach($widths as $col => $width) {
+            $wrapped[$col] = explode("\n", wordwrap($texts[$col], $width - 1, true)); // -1 char border
+            $len           = count($wrapped[$col]);
+            if($len > $maxlen) $maxlen = $len;
+
+        }
+
+        $out = '';
+        for($i = 0; $i < $maxlen; $i++) {
+            foreach($widths as $col => $width) {
+                if(isset($wrapped[$col][$i])) {
+                    $val = $wrapped[$col][$i];
+                } else {
+                    $val = '';
+                }
+                $out .= sprintf('%-' . $width . 's', $val);
+            }
+            $out .= "\n";
+        }
+        return $out;
+    }
 }
 
 /**
