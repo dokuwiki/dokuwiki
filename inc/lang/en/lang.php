@@ -366,5 +366,6 @@ $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
-$lang['page_nonexist_rev']     = "Page has not existed with revision %d, try %d";
+$lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently created at %s.';
+$lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s" with format "%s".';
 //Setup VIM: ex: et ts=2 :

@@ -395,6 +395,7 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     global $conf;
     if(is_array($urlParameters)) {
         if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
+        if(isset($urlParameters['at']) && $conf['date_at_format']) $urlParameters['at'] = date($conf['date_at_format'],$urlParameters['at']);
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
