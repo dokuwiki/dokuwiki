@@ -74,7 +74,7 @@ abstract class DokuCLI {
             $this->colors->disable();
         }
         if($this->options->getOpt('help')) {
-            echo $this->options->help($this->bin);
+            echo $this->options->help();
             exit(0);
         }
 
