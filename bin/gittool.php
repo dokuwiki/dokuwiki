@@ -1,12 +1,8 @@
 #!/usr/bin/php
 <?php
-
-if('cli' != php_sapi_name()) die();
-ini_set('memory_limit', '128M');
 if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
-
 
 /**
  * Easily manage DokuWiki git repositories
@@ -333,6 +329,6 @@ class GitToolCLI extends DokuCLI {
     }
 }
 
-
-$GitToolCLI = new GitToolCLI();
-$GitToolCLI->run();
+// Main
+$cli = new GitToolCLI();
+$cli->run();

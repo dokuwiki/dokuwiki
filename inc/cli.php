@@ -323,7 +323,7 @@ class DokuCLI_Options {
      * @param string $long multi character option (specified with --)
      * @param string $help help text for this option
      * @param string|null $short one character option (specified with -)
-     * @param bool $needsarg does this option require an argument?
+     * @param bool|string $needsarg does this option require an argument? give it a name here
      * @param string $command what command does this option apply to
      * @throws DokuCLI_Exception
      */
@@ -465,12 +465,13 @@ class DokuCLI_Options {
      *
      * Can only be used after parseOptions() has been run
      *
-     * @param $option
+     * @param string $option
+     * @param mixed $default what to return if the option was not set
      * @return mixed
      */
-    public function getOpt($option) {
+    public function getOpt($option, $default = false) {
         if(isset($this->options[$option])) return $this->options[$option];
-        return false;
+        return $default;
     }
 
     /**
@@ -501,6 +502,8 @@ class DokuCLI_Options {
                 $text .= "\n$command";
             }
 
+            if($hasopts) $text .= ' <OPTIONS>';
+
             foreach($this->setup[$command]['args'] as $arg) {
                 if($arg['required']) {
                     $text .= ' <' . $arg['name'] . '>';
@@ -519,17 +522,23 @@ class DokuCLI_Options {
             }
 
             if($hasopts) {
-                $text .= "\n";
+                $text .= "\n  OPTIONS\n\n";
                 foreach($this->setup[$command]['opts'] as $long => $opt) {
 
-                    $name = "--$long";
-                    if($opt['short']) $name = '-' . $opt['short'] . ' ' . $name;
-                    if($opt['needsarg']) $name .= ' <arg>';
+                    $name = '';
+                    if($opt['short']) {
+                        $name .= '-' . $opt['short'];
+                        if($opt['needsarg']) $name .= ' <'.$opt['needsarg'].'>';
+                        $name .= ', ';
+                    }
+                    $name .= "--$long";
+                    if($opt['needsarg']) $name .= ' <'.$opt['needsarg'].'>';
 
                     $text .= $this->tableFormat(
                                   array(2, 20, 52),
                                   array('', $name, $opt['help'])
                     );
+                    $text .= "\n";
                 }
             }
 
