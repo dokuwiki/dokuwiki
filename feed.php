@@ -474,7 +474,7 @@ function rssListNamespace($opt) {
     global $conf;
 
     $ns = ':'.cleanID($opt['namespace']);
-    $ns = str_replace(':', '/', $ns);
+    $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
     $data = array();
     $search_opts = array(
