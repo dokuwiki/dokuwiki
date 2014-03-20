@@ -589,7 +589,7 @@ class DokuCLI_Options {
         $maxlen  = 0;
 
         foreach($widths as $col => $width) {
-            $wrapped[$col] = explode("\n", wordwrap($texts[$col], $width - 1, true)); // -1 char border
+            $wrapped[$col] = explode("\n", wordwrap($texts[$col], $width - 1, "\n", true)); // -1 char border
             $len           = count($wrapped[$col]);
             if($len > $maxlen) $maxlen = $len;
 
