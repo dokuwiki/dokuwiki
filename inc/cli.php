@@ -111,7 +111,7 @@ abstract class DokuCLI {
      * @param $string
      */
     public function error($string) {
-        $this->colors->ptln("E: $string", 'red');
+        $this->colors->ptln("E: $string", 'red', STDERR);
     }
 
     /**
@@ -120,7 +120,7 @@ abstract class DokuCLI {
      * @param $string
      */
     public function success($string) {
-        $this->colors->ptln("S: $string", 'green');
+        $this->colors->ptln("S: $string", 'green', STDERR);
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class DokuCLI {
      * @param $string
      */
     public function info($string) {
-        $this->colors->ptln("I: $string", 'cyan');
+        $this->colors->ptln("I: $string", 'cyan', STDERR);
     }
 
 }
@@ -201,10 +201,11 @@ class DokuCLI_Colors {
      *
      * @param $line
      * @param $color
+     * @param resource $channel
      */
-    public function ptln($line, $color) {
+    public function ptln($line, $color, $channel=STDOUT) {
         $this->set($color);
-        echo rtrim($line) . "\n";
+        fwrite($channel, rtrim($line) . "\n");
         $this->reset();
     }
 
