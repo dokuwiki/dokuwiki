@@ -12,6 +12,7 @@ class Doku_Handler {
 
     var $status = array(
         'section' => false,
+        'doublequote' => 0,
     );
 
     var $rewriteBlocks = true;
@@ -401,11 +402,17 @@ class Doku_Handler {
 
     function doublequoteopening($match, $state, $pos) {
         $this->_addCall('doublequoteopening',array(), $pos);
+        $this->status['doublequote']++;
         return true;
     }
 
     function doublequoteclosing($match, $state, $pos) {
-        $this->_addCall('doublequoteclosing',array(), $pos);
+        if ($this->status['doublequote'] <= 0) {
+            $this->doublequoteopening($match, $state, $pos);
+        } else {
+            $this->_addCall('doublequoteclosing',array(), $pos);
+            $this->status['doublequote'] = max(0, --$this->status['doublequote']);
+        }
         return true;
     }
 
