@@ -963,6 +963,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
     }
 
+    function tablethead_open(){
+        $this->doc .= DOKU_TAB . '<thead>' . DOKU_LF;
+    }
+
+    function tablethead_close(){
+        $this->doc .= DOKU_TAB . '</thead>' . DOKU_LF;
+    }
+
     function tablerow_open(){
         // initialize the cell counter used for classes
         $this->_counter['cell_counter'] = 0;
