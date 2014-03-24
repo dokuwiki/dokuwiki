@@ -30,6 +30,7 @@
  * @author Emmanuel <seedfloyd@gmail.com>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
  * @author Wild <wild.dagger@free.fr>
+ * @author ggallon <gwenael.gallon@mac.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -74,6 +75,8 @@ $lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
+$lang['btn_img_backto']        = 'Retour à %s';
+$lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
 $lang['pass']                  = 'Mot de passe';
@@ -203,6 +206,9 @@ $lang['difflink']              = 'Lien vers cette vue comparative';
 $lang['diff_type']             = 'Voir les différences :';
 $lang['diff_inline']           = 'Sur une seule ligne';
 $lang['diff_side']             = 'Côte à côte';
+$lang['diffprevrev']           = 'Révision précédente';
+$lang['diffnextrev']           = 'Prochaine révision';
+$lang['difflastrev']           = 'Dernière révision';
 $lang['line']                  = 'Ligne';
 $lang['breadcrumb']            = 'Piste';
 $lang['youarehere']            = 'Vous êtes ici';
@@ -259,7 +265,6 @@ $lang['admin_register']        = 'Ajouter un nouvel utilisateur';
 $lang['metaedit']              = 'Modifier les métadonnées';
 $lang['metasaveerr']           = 'Erreur lors de l\'enregistrement des métadonnées';
 $lang['metasaveok']            = 'Métadonnées enregistrées';
-$lang['btn_img_backto']            = 'Retour à %s';
 $lang['img_title']             = 'Titre';
 $lang['img_caption']           = 'Légende';
 $lang['img_date']              = 'Date';
@@ -272,7 +277,6 @@ $lang['img_camera']            = 'Appareil photo';
 $lang['img_keywords']          = 'Mots-clés';
 $lang['img_width']             = 'Largeur';
 $lang['img_height']            = 'Hauteur';
-$lang['btn_mediaManager']           = 'Voir dans le gestionnaire de médias';
 $lang['subscr_subscribe_success'] = '%s a été ajouté à la liste de souscription de %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste de souscription de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste de souscription';
