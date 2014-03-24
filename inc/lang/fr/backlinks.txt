@@ -1,4 +1,4 @@
-====== Pages pointant sur la page en cours ======
+====== Rétroliens ======
 
 Ceci est la liste des pages qui semblent pointer sur la page actuelle.
 
