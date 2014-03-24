@@ -1044,7 +1044,7 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
     static $meta = null;
     if(is_null($meta)) $meta = new JpegMeta($src);
     if($meta === false) return $alt;
-    $info = $meta->getField($tags);
+    $info = cleanText($meta->getField($tags));
     if($info == false) return $alt;
     return $info;
 }
