@@ -11,6 +11,7 @@
  * @author farukerdemoncel@gmail.com
  * @author Mustafa Aslan <maslan@hotmail.com>
  * @author huseyin can <huseyincan73@gmail.com>
+ * @author ilknur <nur.oksuz_53@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,6 +56,8 @@ $lang['btn_register']          = 'Kayıt ol';
 $lang['btn_apply']             = 'Uygula';
 $lang['btn_media']             = 'Çokluortam Yöneticisi';
 $lang['btn_deleteuser']        = 'Hesabımı Sil';
+$lang['btn_img_backto']        = 'Şuna dön: %s';
+$lang['btn_mediaManager']      = 'Ortam oynatıcısında göster';
 $lang['loggedinas']            = 'Giriş ismi';
 $lang['user']                  = 'Kullanıcı ismi';
 $lang['pass']                  = 'Parola';
@@ -233,7 +236,6 @@ $lang['admin_register']        = 'Yeni kullanıcı ekle...';
 $lang['metaedit']              = 'Metaverileri Değiştir';
 $lang['metasaveerr']           = 'Metaveri yazma başarısız ';
 $lang['metasaveok']            = 'Metaveri kaydedildi';
-$lang['btn_img_backto']            = 'Şuna dön: %s';
 $lang['img_title']             = 'Başlık';
 $lang['img_caption']           = 'Serlevha';
 $lang['img_date']              = 'Tarih';
@@ -246,7 +248,6 @@ $lang['img_camera']            = 'Fotoğraf Makinası';
 $lang['img_keywords']          = 'Anahtar Sözcükler';
 $lang['img_width']             = 'Genişlik';
 $lang['img_height']            = 'Yükseklik';
-$lang['btn_mediaManager']           = 'Ortam oynatıcısında göster';
 $lang['subscr_m_new_header']   = 'Üyelik ekle';
 $lang['subscr_m_current_header'] = 'Üyeliğini onayla';
 $lang['subscr_m_unsubscribe']  = 'Üyelik iptali';
