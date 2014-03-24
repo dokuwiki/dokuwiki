@@ -45,10 +45,6 @@ class parserutils_get_renderer_test extends DokuWikiTest {
     }
 
     // test fallback fails
-    /**
-     * @expectedException        PHPUnit_Framework_Error
-     * @expectedExceptionCode    E_USER_WARNING
-     */
     function test_p_get_renderer_fallback_fail() {
         global $conf;
 
