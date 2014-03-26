@@ -32,6 +32,7 @@
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
+ * @author Fernando <fdiezala@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -76,6 +77,8 @@ $lang['btn_register']          = 'Registrarse';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gestor de ficheros';
 $lang['btn_deleteuser']        = 'Elimina Mi Cuenta';
+$lang['btn_img_backto']        = 'Volver a %s';
+$lang['btn_mediaManager']      = 'Ver en el Administrador de medios';
 $lang['loggedinas']            = 'Conectado como ';
 $lang['user']                  = 'Usuario';
 $lang['pass']                  = 'Contraseña';
@@ -207,6 +210,9 @@ $lang['difflink']              = 'Enlace a la vista de comparación';
 $lang['diff_type']             = 'Ver diferencias';
 $lang['diff_inline']           = 'En línea';
 $lang['diff_side']             = 'Lado a lado';
+$lang['diffprevrev']           = 'Revisión previa';
+$lang['diffnextrev']           = 'Próxima revisión';
+$lang['difflastrev']           = 'Última revisión';
 $lang['line']                  = 'Línea';
 $lang['breadcrumb']            = 'Traza';
 $lang['youarehere']            = 'Estás aquí';
@@ -263,7 +269,6 @@ $lang['admin_register']        = 'Añadir nuevo usuario';
 $lang['metaedit']              = 'Editar metadatos';
 $lang['metasaveerr']           = 'La escritura de los metadatos ha fallado';
 $lang['metasaveok']            = 'Los metadatos han sido guardados';
-$lang['btn_img_backto']            = 'Volver a %s';
 $lang['img_title']             = 'Título';
 $lang['img_caption']           = 'Epígrafe';
 $lang['img_date']              = 'Fecha';
@@ -276,7 +281,6 @@ $lang['img_camera']            = 'Cámara';
 $lang['img_keywords']          = 'Palabras claves';
 $lang['img_width']             = 'Ancho';
 $lang['img_height']            = 'Alto';
-$lang['btn_mediaManager']           = 'Ver en el Administrador de medios';
 $lang['subscr_subscribe_success'] = 'Se agregó %s a las listas de suscripción para %s';
 $lang['subscr_subscribe_error'] = 'Error al agregar %s a las listas de suscripción para %s';
 $lang['subscr_subscribe_noaddress'] = 'No hay dirección asociada con tu registro, no se puede agregarte a la lista de suscripción';
