@@ -285,7 +285,7 @@ $lang['i_modified']            = 'משיקולי אבטחה סקריפט זה י
                          עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להיעזר בדף
                          <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקציית ה-PHP&rlm; <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
-$lang['i_phpver']              = 'גרסת PHP שלך <code>%s</code> נמוכה מ <code>%s</ code> הצורך. אתה צריך לשדרג PHP שלך להתקין.';
+$lang['i_phpver']              = 'גרסת PHP שלך <code>%s</code> נמוכה מ <code>%s</code> הצורך. אתה צריך לשדרג PHP שלך להתקין.';
 $lang['i_permfail']            = '<code>%s</code> אינה ניתנת לכתיבה על ידי DokuWiki. עליך לשנות הרשאות תיקייה זו!';
 $lang['i_confexists']          = '<code>%s</code> כבר קיים';
 $lang['i_writeerr']            = 'אין אפשרות ליצור את <code>%s</code>. נא לבדוק את הרשאות הקובץ/תיקייה וליצור את הקובץ ידנית.';
