@@ -12,6 +12,7 @@
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Garam <rowain8@gmail.com>
+ * @author Young gon Cha <garmede@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -56,6 +57,8 @@ $lang['btn_register']          = '등록';
 $lang['btn_apply']             = '적용';
 $lang['btn_media']             = '미디어 관리';
 $lang['btn_deleteuser']        = '내 계정 제거';
+$lang['btn_img_backto']        = '뒤로 %s';
+$lang['btn_mediaManager']      = '미디어 관리자에서 보기';
 $lang['loggedinas']            = '로그인한 사용자';
 $lang['user']                  = '사용자 이름';
 $lang['pass']                  = '비밀번호';
@@ -185,6 +188,9 @@ $lang['difflink']              = '차이 보기로 링크';
 $lang['diff_type']             = '차이 보기:';
 $lang['diff_inline']           = '직렬 방식';
 $lang['diff_side']             = '다중 창 방식';
+$lang['diffprevrev']           = '이전 리비전';
+$lang['diffnextrev']           = '다음 리비전';
+$lang['difflastrev']           = '마지막 리비전';
 $lang['line']                  = '줄';
 $lang['breadcrumb']            = '추적';
 $lang['youarehere']            = '현재 위치';
@@ -241,7 +247,6 @@ $lang['admin_register']        = '새 사용자 추가';
 $lang['metaedit']              = '메타데이터 편집';
 $lang['metasaveerr']           = '메타데이터 쓰기 실패';
 $lang['metasaveok']            = '메타데이터 저장됨';
-$lang['btn_img_backto']            = '뒤로 %s';
 $lang['img_title']             = '제목';
 $lang['img_caption']           = '설명';
 $lang['img_date']              = '날짜';
@@ -254,7 +259,6 @@ $lang['img_camera']            = '카메라';
 $lang['img_keywords']          = '키워드';
 $lang['img_width']             = '너비';
 $lang['img_height']            = '높이';
-$lang['btn_mediaManager']           = '미디어 관리자에서 보기';
 $lang['subscr_subscribe_success'] = '%s 사용자가 %s 구독 목록에 추가했습니다';
 $lang['subscr_subscribe_error'] = '%s 사용자가 %s 구독 목록에 추가하는데 실패했습니다';
 $lang['subscr_subscribe_noaddress'] = '로그인으로 연결된 주소가 없기 때문에 구독 목록에 추가할 수 없습니다';
