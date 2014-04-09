@@ -33,6 +33,7 @@
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Juan De La Cruz <juann.dlc@gmail.com>
  * @author Fernando <fdiezala@gmail.com>
+ * @author UNIDAD1 <sauldp80@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
