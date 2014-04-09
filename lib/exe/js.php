@@ -166,7 +166,10 @@ function js_load($file){
         // is it a include_once?
         if($match[1]){
             $base = utf8_basename($ifile);
-            if($loaded[$base]) continue;
+            if($loaded[$base]){
+                $data  = str_replace($match[0], '' ,$data);
+                continue;
+            }
             $loaded[$base] = true;
         }
 
