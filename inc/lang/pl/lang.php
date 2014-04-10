@@ -16,6 +16,7 @@
  * @author Aoi Karasu <aoikarasu@gmail.com>
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
  * @author Paweł Jan Czochański <czochanski@gmail.com>
+ * @author Urszula Grabska <ula-grabska@tlen.pl>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -60,6 +61,8 @@ $lang['btn_register']          = 'Zarejestruj się!';
 $lang['btn_apply']             = 'Zastosuj';
 $lang['btn_media']             = 'Menadżer multimediów';
 $lang['btn_deleteuser']        = 'Usuń moje konto';
+$lang['btn_img_backto']        = 'Wróć do %s';
+$lang['btn_mediaManager']      = 'Zobacz w menadżerze multimediów';
 $lang['loggedinas']            = 'Zalogowany jako';
 $lang['user']                  = 'Użytkownik';
 $lang['pass']                  = 'Hasło';
@@ -247,7 +250,6 @@ $lang['admin_register']        = 'Dodawanie użytkownika';
 $lang['metaedit']              = 'Edytuj metadane';
 $lang['metasaveerr']           = 'Zapis metadanych nie powiódł się';
 $lang['metasaveok']            = 'Metadane zapisano';
-$lang['btn_img_backto']            = 'Wróć do %s';
 $lang['img_title']             = 'Tytuł';
 $lang['img_caption']           = 'Nagłówek';
 $lang['img_date']              = 'Data';
@@ -260,7 +262,6 @@ $lang['img_camera']            = 'Aparat';
 $lang['img_keywords']          = 'Słowa kluczowe';
 $lang['img_width']             = 'Szerokość';
 $lang['img_height']            = 'Wysokość';
-$lang['btn_mediaManager']           = 'Zobacz w menadżerze multimediów';
 $lang['subscr_subscribe_success'] = 'Dodano %s do listy subskrypcji %s';
 $lang['subscr_subscribe_error'] = 'Błąd podczas dodawania %s do listy subskrypcji %s';
 $lang['subscr_subscribe_noaddress'] = 'Brak adresu skojarzonego z twoim loginem, nie możesz zostać dodany(a) do listy subskrypcji';
