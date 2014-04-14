@@ -1,6 +1,32 @@
 <?php
 
 class Tar_TestCase extends DokuWikiTest {
+    /**
+     * file extensions that several tests use
+     */
+    protected $extensions = array('tar', 'tgz', 'tbz');
+
+    /*
+     * dependency for tests needing zlib extension to pass
+     */
+    public function test_ext_zlib() {
+        if (!extension_loaded('zlib')) {
+            $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
+        }
+    }
+
+    /**
+     * dependency test to test available extensions
+     * fills $this->extensions array
+     */
+    public function test_extensions() {
+        if (!extension_loaded('zlib')) {
+            $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
+        }
+        if (!extension_loaded('bz2')) {
+            $this->markTestSkipped('skipping all bz2 tests.  Need bz2 extension');
+        }
+    }
 
     /**
      * simple test that checks that the given filenames and contents can be grepped from
@@ -58,8 +84,6 @@ class Tar_TestCase extends DokuWikiTest {
         $tar->addData('another/testdata3.txt', 'testcontent3');
         $tar->close();
 
-copy ($tmp, '/tmp/test.tar');
-
         $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
         $data = file_get_contents($tmp);
 
@@ -85,11 +109,12 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * List the contents of the prebuilt TAR files
+     * @depends test_extensions
      */
     public function test_tarcontent() {
         $dir = dirname(__FILE__).'/tar';
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -107,12 +132,13 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Extract the prebuilt tar files
+     * @depends test_extensions
      */
     public function test_tarextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -133,12 +159,13 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Extract the prebuilt tar files with component stripping
+     * @depends test_extensions
      */
     public function test_compstripextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -159,12 +186,13 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Extract the prebuilt tar files with prefix stripping
+     * @depends test_extensions
      */
     public function test_prefixstripextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -185,12 +213,13 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Extract the prebuilt tar files with include regex
+     * @depends test_extensions
      */
     public function test_includeextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -210,12 +239,13 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Extract the prebuilt tar files with exclude regex
+     * @depends test_extensions
      */
     public function test_excludeextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -235,6 +265,7 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Check the extension to compression guesser
+     * @depends test_extensions
      */
     public function test_filetype() {
         $tar = new Tar();
@@ -249,6 +280,9 @@ copy ($tmp, '/tmp/test.tar');
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz2'));
     }
 
+    /**
+     * @depends test_ext_zlib
+     */
     public function test_longpathextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
@@ -338,6 +372,7 @@ copy ($tmp, '/tmp/test.tar');
 
     /**
      * Extract a tarbomomb
+     * @depends test_ext_zlib
      */
     public function test_tarbomb() {
         $dir = dirname(__FILE__).'/tar';
