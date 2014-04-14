@@ -4,7 +4,16 @@ class Tar_TestCase extends DokuWikiTest {
     /**
      * file extensions that several tests use
      */
-    protected $extensions = array('tar', 'tgz', 'tbz');
+    protected $extensions = array('tar');
+
+    public function setUp() {
+        if (extension_loaded('zlib')) {
+            $this->extensions[] = 'tgz';
+        }
+        if (extension_loaded('bz2')) {
+            $this->extensions[] = 'tbz';
+        }
+    }
 
     /*
      * dependency for tests needing zlib extension to pass
@@ -15,16 +24,12 @@ class Tar_TestCase extends DokuWikiTest {
         }
     }
 
-    /**
-     * dependency test to test available extensions
-     * fills $this->extensions array
+    /*
+     * dependency for tests needing zlib extension to pass
      */
-    public function test_extensions() {
-        if (!extension_loaded('zlib')) {
-            $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
-        }
+    public function test_ext_bz2() {
         if (!extension_loaded('bz2')) {
-            $this->markTestSkipped('skipping all bz2 tests.  Need bz2 extension');
+            $this->markTestSkipped('skipping all bzip2 tests.  Need bz2 extension');
         }
     }
 
@@ -109,7 +114,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * List the contents of the prebuilt TAR files
-     * @depends test_extensions
      */
     public function test_tarcontent() {
         $dir = dirname(__FILE__).'/tar';
@@ -132,7 +136,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Extract the prebuilt tar files
-     * @depends test_extensions
      */
     public function test_tarextract() {
         $dir = dirname(__FILE__).'/tar';
@@ -159,7 +162,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Extract the prebuilt tar files with component stripping
-     * @depends test_extensions
      */
     public function test_compstripextract() {
         $dir = dirname(__FILE__).'/tar';
@@ -186,7 +188,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Extract the prebuilt tar files with prefix stripping
-     * @depends test_extensions
      */
     public function test_prefixstripextract() {
         $dir = dirname(__FILE__).'/tar';
@@ -213,7 +214,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Extract the prebuilt tar files with include regex
-     * @depends test_extensions
      */
     public function test_includeextract() {
         $dir = dirname(__FILE__).'/tar';
@@ -239,7 +239,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Extract the prebuilt tar files with exclude regex
-     * @depends test_extensions
      */
     public function test_excludeextract() {
         $dir = dirname(__FILE__).'/tar';
@@ -265,7 +264,6 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Check the extension to compression guesser
-     * @depends test_extensions
      */
     public function test_filetype() {
         $tar = new Tar();
