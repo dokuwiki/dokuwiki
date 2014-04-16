@@ -1335,7 +1335,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
         $info = $pagelog->getRevisionInfo($rev);
         $l_revisions[$rev] = array(
             $rev,
-            dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
+            dformat($info['date']) . ' ' . editorinfo($info['user'], true) . ' ' . $info['sum'],
             $r_rev ? $rev >= $r_rev : false //disable?
         );
     }
@@ -1347,7 +1347,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
         $info = $pagelog->getRevisionInfo($rev);
         $r_revisions[$rev] = array(
             $rev,
-            dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
+            dformat($info['date']) . ' ' . editorinfo($info['user'], true) . ' ' . $info['sum'],
             $rev <= $l_rev //disable?
         );
     }
