@@ -24,6 +24,7 @@
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López mercelz@gmail.com
+ * @author Antonio Bueno <atnbueno@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';
@@ -46,6 +47,8 @@ $lang['search']                = 'Buscar';
 $lang['search_prompt']         = 'Realizar la búsqueda';
 $lang['clear']                 = 'Limpiar los filtros de la búsqueda';
 $lang['filter']                = 'Filtrar';
+$lang['line']                  = 'Línea nº';
+$lang['error']                 = 'Mensaje de error';
 $lang['summary']               = 'Mostrando los usuarios %1$d-%2$d de %3$d encontrados. Cantidad total de usuarios %4$d.';
 $lang['nonefound']             = 'No se encontraron usuarios que coincidan con los párametros de la búsqueda. Cantidad total de usuarios %d.';
 $lang['delete_ok']             = '%d usuarios eliminados';
