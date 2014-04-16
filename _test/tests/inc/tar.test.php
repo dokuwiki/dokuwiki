@@ -7,6 +7,7 @@ class Tar_TestCase extends DokuWikiTest {
     protected $extensions = array('tar');
 
     public function setUp() {
+        parent::setUp();
         if (extension_loaded('zlib')) {
             $this->extensions[] = 'tgz';
         }
