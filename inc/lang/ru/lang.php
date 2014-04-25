@@ -25,6 +25,7 @@
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Владимир <id37736@yandex.ru>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
