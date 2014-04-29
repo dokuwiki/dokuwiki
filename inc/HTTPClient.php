@@ -552,7 +552,7 @@ class HTTPClient {
         $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;
         $request .= "Host: {$requestinfo['host']}".HTTP_NL;
         if($this->proxy_user) {
-            $request .= 'Proxy-Authorization Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
+            $request .= 'Proxy-Authorization: Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
         }
         $request .= HTTP_NL;
 
