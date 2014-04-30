@@ -141,12 +141,10 @@ function rss_parseOptions() {
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
-    $type = valid_input_set(
-        'type', array(
-                     'rss', 'rss2', 'atom', 'atom1', 'rss1',
-                     'default' => $conf['rss_type']
-                ),
-        $_REQUEST
+    $type = $INPUT->valid(
+        'type',
+        array( 'rss', 'rss2', 'atom', 'atom1', 'rss1'),
+        $conf['rss_type']
     );
     switch($type) {
         case 'rss':
