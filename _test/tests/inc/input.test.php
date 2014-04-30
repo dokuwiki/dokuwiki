@@ -225,6 +225,7 @@ class input_test extends DokuWikiTest {
         $this->assertSame('bang', $INPUT->valid('nope', $valids, 'bang'));
         $this->assertSame(17, $INPUT->valid('int', $valids));
         $this->assertSame('foo', $INPUT->valid('string', $valids));
+        $this->assertSame(null, $INPUT->valid('array', $valids));
 
         $valids = array(true);
         $this->assertSame(true, $INPUT->valid('string', $valids));
