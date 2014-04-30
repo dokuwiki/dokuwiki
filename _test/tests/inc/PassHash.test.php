@@ -5,7 +5,7 @@
  *
  * most tests are in auth_password.test.php
  */
-class PassHash_test extends PHPUnit_Framework_TestCase {
+class PassHash_test extends DokuWikiTest {
 
     function test_hmac(){
         // known hashes taken from https://code.google.com/p/yii/issues/detail?id=1942

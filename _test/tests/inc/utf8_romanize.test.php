@@ -5,7 +5,7 @@ if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 /**
  * @group slow
  */
-class utf8_romanize_test extends PHPUnit_Framework_TestCase {
+class utf8_romanize_test extends DokuWikiTest {
 
     /**
      * Check Japanese romanization

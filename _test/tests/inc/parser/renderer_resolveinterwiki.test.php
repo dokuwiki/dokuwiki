@@ -5,7 +5,7 @@ require_once DOKU_INC . 'inc/parser/renderer.php';
 /**
  * Tests for Doku_Renderer::_resolveInterWiki()
  */
-class Test_resolveInterwiki extends PHPUnit_Framework_TestCase {
+class Test_resolveInterwiki extends DokuWikiTest {
 
     function testDefaults() {
         $Renderer = new Doku_Renderer();
