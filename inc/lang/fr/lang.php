@@ -31,6 +31,7 @@
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
  * @author Wild <wild.dagger@free.fr>
  * @author ggallon <gwenael.gallon@mac.com>
+ * @author David VANTYGHEM <david.vantyghem@free.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -96,7 +97,7 @@ $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.'
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà utilisé.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
-$lang['regmailfail']           = 'Il semble y avoir un problème à l\'envoi du courriel. Contactez l\'administrateur.';
+$lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
 $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
 $lang['regpwmail']             = 'Votre mot de passe DokuWiki';
