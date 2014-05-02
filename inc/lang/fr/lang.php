@@ -31,6 +31,7 @@
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
  * @author Wild <wild.dagger@free.fr>
  * @author ggallon <gwenael.gallon@mac.com>
+ * @author David VANTYGHEM <david.vantyghem@free.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,7 +64,7 @@ $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens vers cette page';
 $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
-$lang['btn_subscribe']         = 'S\'abonner à la page';
+$lang['btn_subscribe']         = 'S\'abonner à cette page';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
 $lang['btn_resendpwd']         = 'Définir un nouveau mot de passe';
