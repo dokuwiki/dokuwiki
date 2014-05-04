@@ -182,7 +182,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *                             when false, it maybe included, but is not required by the caller
      * @return array|bool
      */
-    public function getUserData($user, $requireGroups=DokuWiki_Auth_Plugin::REQUIRE_GROUPS) {
+    public function getUserData($user, $requireGroups=true) {
         if($this->_cacheExists($user, $requireGroups)) {
             return $this->cacheUserInfo[$user];
         }
@@ -690,13 +690,13 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @return bool    existence of required user information in the cache
      */
-    protected function _cacheExists($user, $requireGroups=DokuWiki_Auth_Plugin::REQUIRE_GROUPS) {
+    protected function _cacheExists($user, $requireGroups=true) {
         if (isset($this->cacheUserInfo[$user])) {
             if (!is_array($this->cacheUserInfo[$user])) {
                 return true;          // user doesn't exist
             }
 
-            if ($requireGroups == DokuWiki_Auth_Plugin::IGNORE_GROUPS || isset($this->cacheUserInfo[$user]['grps'])) {
+            if (!$requireGroups || isset($this->cacheUserInfo[$user]['grps'])) {
                 return true;
             }
         }
@@ -718,7 +718,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @return mixed   false|array     false if the user doesn't exist
      *                                 array containing user information if user does exist
      */
-    protected function _getUserInfo($user, $requireGroups=DokuWiki_Auth_Plugin::REQUIRE_GROUPS, $useCache=true) {
+    protected function _getUserInfo($user, $requireGroups=true, $useCache=true) {
         $info = null;
 
         if ($useCache && isset($this->cacheUserInfo[$user])) {
@@ -729,7 +729,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $info = $this->_retrieveUserInfo($user);
         }
 
-        if (($requireGroups == DokuWiki_Auth_Plugin::REQUIRE_GROUPS) && $info && !isset($info['grps'])) {
+        if (($requireGroups == true) && $info && !isset($info['grps'])) {
             $info['grps'] = $this->_getGroups($user);
         }
 

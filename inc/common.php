@@ -1468,7 +1468,7 @@ function editorinfo($username) {
         case 'username':
         case 'email':
         case 'email_link':
-            if($auth) $info = $auth->getUserData($username, DokuWiki_Auth_Plugin::IGNORE_GROUPS);
+            if($auth) $info = $auth->getUserData($username, $requireGroups = false);
             break;
         default:
             return hsc($username);

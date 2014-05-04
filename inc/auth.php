@@ -922,7 +922,7 @@ function auth_sendPassword($user, $password) {
     if(!$auth) return false;
 
     $user     = $auth->cleanUser($user);
-    $userinfo = $auth->getUserData($user, DokuWiki_Auth_Plugin::IGNORE_GROUPS);
+    $userinfo = $auth->getUserData($user, $requireGroups = false);
 
     if(!$userinfo['mail']) return false;
 
@@ -1184,7 +1184,7 @@ function act_resendpwd() {
         }
 
         $user     = io_readfile($tfile);
-        $userinfo = $auth->getUserData($user, DokuWiki_Auth_Plugin::IGNORE_GROUPS);
+        $userinfo = $auth->getUserData($user, $requireGroups = false);
         if(!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;
@@ -1236,7 +1236,7 @@ function act_resendpwd() {
             $user = trim($auth->cleanUser($INPUT->post->str('login')));
         }
 
-        $userinfo = $auth->getUserData($user, DokuWiki_Auth_Plugin::IGNORE_GROUPS);
+        $userinfo = $auth->getUserData($user, $requireGroups = false);
         if(!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;
