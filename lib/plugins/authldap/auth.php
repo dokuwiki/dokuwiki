@@ -296,13 +296,25 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         // find the old password of the user
         list($loginuser,$loginsticky,$loginpass) = auth_getCookie();
-        $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
-        $pass   = auth_decrypt($loginpass, $secret);
+        if ($loginuser !== null) { // the user is currently logged in
+            $secret = auth_cookiesalt(!$sticky, true);
+            $pass   = auth_decrypt($loginpass, $secret);
 
-        // bind with the ldap
-        if(!@ldap_bind($this->con,$dn,$pass)){
-            msg('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
-            return false;
+            // bind with the ldap
+            if(!@ldap_bind($this->con, $dn, $pass)){
+                msg('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                return false;
+            }
+        } elseif ($this->getConf('binddn') && $this->getConf('bindpw')) {
+            // we are changing the password on behalf of the user (eg: forgotten password)
+            // bind with the superuser ldap
+            if (!@ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'))){
+                $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                return false;
+            }
+        }
+        else {
+            return false; // no otherway
         }
 
         // change the password
