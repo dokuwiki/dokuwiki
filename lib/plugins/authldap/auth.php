@@ -288,10 +288,6 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         if(empty($changes['pass'])) {
             msg('The new password is not allow because it\'s empty');
             return false;
-        } else {
-            mt_srand((double)microtime()*1000000);
-            $salt = pack("CCCC", mt_rand(), mt_rand(), mt_rand(), mt_rand());
-            $hash = "{SSHA}" . base64_encode(pack("H*", sha1($changes['pass'] . $salt)) . $salt);
         }
 
         // find the old password of the user
@@ -316,6 +312,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         else {
             return false; // no otherway
         }
+
+        // Generate the salted hashed password for LDAP
+        $phash = new PassHash();
+        $hash = $phash->hash_ssha($changes['pass']);
 
         // change the password
         if(!@ldap_mod_replace($this->con, $dn,array('userpassword' => $hash))){
