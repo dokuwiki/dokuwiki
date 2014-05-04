@@ -36,8 +36,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return;
         }
 
-        // auth_ldap currently just handles authentication, so no
-        // capabilities are set
+        // Add the capabilities to change the password
+        $this->cando['modPass'] = true;
     }
 
     /**
@@ -261,6 +261,57 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $info['grps'][] = $conf['defaultgroup'];
         }
         return $info;
+    }
+
+    /**
+     * Definition of the function modifyUser in order to modify the password
+     */
+
+    function modifyUser($user,$changes){
+
+        // open the connection to the ldap
+        if(!$this->_openLDAP()){
+            msg('LDAP cannot connect: '. htmlspecialchars(ldap_error($this->con)));
+            return false;
+        }
+
+        // find the information about the user, in particular the "dn"
+        $info = $this->getUserData($user,true);
+        if(empty($info['dn'])) {
+            msg('LDAP cannot find your user dn: '. htmlspecialchars($info['dn']));
+            return false;
+        } else {
+            $dn = $info['dn'];
+        }
+
+        // find the new password and encrypt it whit SSHA
+        if(empty($changes['pass'])) {
+            msg('The new password is not allow because it\'s empty');
+            return false;
+        } else {
+            mt_srand((double)microtime()*1000000);
+            $salt = pack("CCCC", mt_rand(), mt_rand(), mt_rand(), mt_rand());
+            $hash = "{SSHA}" . base64_encode(pack("H*", sha1($changes['pass'] . $salt)) . $salt);
+        }
+
+        // find the old password of the user
+        list($loginuser,$loginsticky,$loginpass) = auth_getCookie();
+        $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
+        $pass   = auth_decrypt($loginpass, $secret);
+
+        // bind with the ldap
+        if(!@ldap_bind($this->con,$dn,$pass)){
+            msg('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+            return false;
+        }
+
+        // change the password
+        if(!@ldap_mod_replace($this->con, $dn,array('userpassword' => $hash))){
+            msg('LDAP mod replace failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)));
+            return false;
+        }
+
+        return true;
     }
 
     /**
