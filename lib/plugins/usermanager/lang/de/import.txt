@@ -1,7 +1,7 @@
 ===== Benutzer-Massenimport =====
 
 Um mehrere Benutzer gleichzeitig zu importieren, wird eine CSV-Datei mit den folgenden vier Spalten benötigt (In dieser Reihenfolge): Benutzer-ID, Voller Name, E-Mail-Adresse und Gruppen.
-Die CSV-Felder sind Kommata-separiert (,) und mit Anführungszeichen eingefasst ("). Mit Backslashes (\) können Sonderzeichen maskiert werden.
+Die CSV-Felder sind Kommata-separiert (,) und mit Anführungszeichen eingefasst (%%"%%). Mit Backslashes (\) können Sonderzeichen maskiert werden.
 Ein Beispiel für eine gültige Datei kann mit der Benutzer-Export-Funktion oben generiert werden.
 Doppelte Benutzer-IDs werden ignoriert.
 

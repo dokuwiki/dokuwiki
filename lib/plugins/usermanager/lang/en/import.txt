@@ -2,7 +2,7 @@
 
 Requires a CSV file of users with at least four columns.
 The columns must contain, in order: user-id, full name, email address and groups.
-The CSV fields should be separated by commas (,) and strings delimited by quotation marks ("").  Backslash (\) can be used for escaping.
+The CSV fields should be separated by commas (,) and strings delimited by quotation marks (%%""%%).  Backslash (\) can be used for escaping.
 For an example of a suitable file, try the "Export Users" function above.  
 Duplicate user-ids will be ignored.
 
