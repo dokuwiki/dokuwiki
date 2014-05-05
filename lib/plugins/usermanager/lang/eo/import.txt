@@ -2,7 +2,7 @@
 
 Tio ĉi postulas CSV-dosiero de uzantoj kun minimume kvar kolumnoj.
 La kolumnoj devas enhavi, laŭorde: uzant-id, kompleta nomo, retadreso kaj grupoj.
-La CSV-kampoj devos esti apartitaj per komoj (,) kaj ĉenoj devas esti limigitaj per citiloj (""). Retroklino (\) povas esti uzata por eskapo.
+La CSV-kampoj devos esti apartitaj per komoj (,) kaj ĉenoj devas esti limigitaj per citiloj (%%""%%). Retroklino (\) povas esti uzata por eskapo.
 Por ekzemplo de taŭga dosiero, provu la funkcion "Eksporti uzantojn" supre.
 Duobligitaj uzant-id estos preteratentataj.
 
