@@ -36,7 +36,6 @@ $lang['btn_back']   = 'ត្រឡប់';
 $lang['btn_backlink']    = 'ខ្សែចំណងក្រោយ';
 $lang['btn_backtomedia'] = 'ទៅប្រព័នឯកសាវិញ';
 $lang['btn_subscribe']   = 'ដាក់ដំណឹងផ្លស់ប្តូរ';
-$lang['btn_unsubscribe'] = 'ដកដំណឹងផ្លស់ប្តូរ';
 $lang['btn_profile']     = 'កែប្រវត្តិរូប';
 $lang['btn_reset']       = 'កមណត់ឡើងរិញ';
 $lang['btn_draft']    = 'កែគំរោង';
@@ -140,8 +139,6 @@ $lang['mail_changed']  = 'ទំព័រប្រែប្រួល';
 $lang['mail_new_user'] = 'អ្នកប្រើថ្មី';
 $lang['mail_upload']   = 'រុញអក្សាលើង';
 
-$lang['nosmblinks'] = 'ខ្សែបន្តទៅ «Windows share» ប្រើបានក្នុង «Microsoft IE»។ អ្នកអាច កាត់ឬបិត ខ្សែនេះ។';
-
 $lang['qb_bold']    = 'ឃ្វាមក្រស';
 $lang['qb_italic']  = 'ឃ្វាមជ្រៀង';
 $lang['qb_underl']  = 'ឃ្វាម';
@@ -165,13 +162,6 @@ $lang['qb_chars']   = 'អក្ខរៈពិសេស';
 $lang['js']['del_confirm']= 'លុប';
 $lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
 
-$lang['spell_start'] = 'ពិនិត្យអក្ខរាវិរុទ្ធ';//'Check Spelling';
-$lang['spell_stop']  = 'បណ្តកំរែ';
-$lang['spell_wait']  = 'សូមចាំ';//'Please wait...';
-$lang['spell_noerr'] = 'ឥតមានខុះទេ';
-$lang['spell_nosug'] = 'ឥតមានយោបល់';
-$lang['spell_change']= 'ដូរជំនួស';//'Change';
-
 $lang['metaedit']    = 'កែទិន្នន័យអរូប';//'Edit Metadata';
 $lang['metasaveerr'] = 'ពំអាចកត់រទិន្នន័យអរូប';//'Writing metadata failed';
 $lang['metasaveok']  = 'ទិន្នន័យអរូប';
@@ -187,14 +177,7 @@ $lang['img_format']  = 'ធុនប្រភេទ';
 $lang['img_camera']  = 'គ្រឿងថត';
 $lang['img_keywords']= 'មេពាក្ស';//'Keywords';
 
-$lang['subscribe_success']  = ' ដកថែម %s ចូលបញ្ជីបរិវិសកមចំពោះ %s';
-$lang['subscribe_error']    = 'មានកំហុសពេលបន្ថែម %s ចូលបញ្ជីបរិវិសកមចំពោះ %s';
-$lang['subscribe_noaddress']= 'ឥតមានអាសយដ្ឋាន អ្នកមិនអាចកត់ចុល';
-$lang['unsubscribe_success']= 'ដក %s ចេញពីបញ្ជីបរិវិសកមចំពោះ %s';
-$lang['unsubscribe_error']  = 'មានកំហុសពេលដក %s​  ចេញពីបញ្ជីបរិវិសកមចំពោះ %s';
-
 /* auth.class language support */
-$lang['authmodfailed']   = 'និនផ្ទៀងផ្ទាត់​ភាព​​ត្រឹមត្រូវបានទេ។ សុំទាកទងអ្នកក្របគ្រោង។';
 $lang['authtempfail']    = 'ការផ្ទៀងផ្ទាត់​ភាព​​ត្រឹមត្រូវឥតដំនេ។ ប្រើ ....';
 
 /* installer strings */

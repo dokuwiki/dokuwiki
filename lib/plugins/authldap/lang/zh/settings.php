@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Chinese language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author lainme <lainme993@gmail.com>
  */
 $lang['server']                = '您的 LDAP 服务器。填写主机名 (<code>localhost</code>) 或者完整的 URL (<code>ldap://server.tld:389</code>)';
@@ -19,3 +20,7 @@ $lang['userscope']             = '限制用户搜索的范围';
 $lang['groupscope']            = '限制组搜索的范围';
 $lang['groupkey']              = '根据任何用户属性得来的组成员(而不是标准的 AD 组)，例如根据部门或者电话号码得到的组。';
 $lang['debug']                 = '有错误时显示额外的调试信息';
+$lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
+$lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
+$lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
+$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';

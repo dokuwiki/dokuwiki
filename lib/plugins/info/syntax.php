@@ -48,7 +48,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Handle the match
      */
-    function handle($match, $state, $pos, &$handler){
+    function handle($match, $state, $pos, Doku_Handler &$handler){
         $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
         return array(strtolower($match));
     }
@@ -56,8 +56,9 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
     /**
      * Create output
      */
-    function render($format, &$renderer, $data) {
+    function render($format, Doku_Renderer &$renderer, $data) {
         if($format == 'xhtml'){
+            /** @var Doku_Renderer_xhtml $renderer */
             //handle various info stuff
             switch ($data[0]){
                 case 'syntaxmodes':
@@ -80,6 +81,12 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
                     break;
                 case 'helperplugins':
                     $this->_plugins_xhtml('helper', $renderer);
+                    break;
+                case 'authplugins':
+                    $this->_plugins_xhtml('auth', $renderer);
+                    break;
+                case 'remoteplugins':
+                    $this->_plugins_xhtml('remote', $renderer);
                     break;
                 case 'helpermethods':
                     $this->_helpermethods_xhtml($renderer);
@@ -106,7 +113,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         // remove subparts
         foreach($plugins as $p){
-            if (!$po =& plugin_load($type,$p)) continue;
+            if (!$po = plugin_load($type,$p)) continue;
             list($name,$part) = explode('_',$p,2);
             $plginfo[$name] = $po->getInfo();
         }
@@ -136,11 +143,9 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * uses some of the original renderer methods
      */
     function _helpermethods_xhtml(Doku_Renderer &$renderer){
-        global $lang;
-
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
-            if (!$po =& plugin_load('helper',$p)) continue;
+            if (!$po = plugin_load('helper',$p)) continue;
 
             if (!method_exists($po, 'getMethods')) continue;
             $methods = $po->getMethods();
@@ -150,7 +155,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
             $doc = '<h2><a name="'.$hid.'" id="'.$hid.'">'.hsc($info['name']).'</a></h2>';
             $doc .= '<div class="level2">';
             $doc .= '<p>'.strtr(hsc($info['desc']), array("\n"=>"<br />")).'</p>';
-            $doc .= '<pre class="code">$'.$p." =& plugin_load('helper', '".$p."');</pre>";
+            $doc .= '<pre class="code">$'.$p." = plugin_load('helper', '".$p."');</pre>";
             $doc .= '</div>';
             foreach ($methods as $method){
                 $title = '$'.$p.'->'.$method['name'].'()';
@@ -209,21 +214,47 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      */
     function _syntaxmodes_xhtml(){
         $modes = p_get_parsermodes();
-        $doc  = '';
 
-        foreach ($modes as $mode){
-            $doc .= $mode['mode'].' ('.$mode['sort'].'), ';
+        $compactmodes = array();
+        foreach($modes as $mode){
+            $compactmodes[$mode['sort']][] = $mode['mode'];
         }
+        $doc  = '';
+        $doc .= '<div class="table"><table class="inline"><tbody>';
+
+        foreach($compactmodes as $sort => $modes){
+            $rowspan = '';
+            if(count($modes) > 1) {
+                $rowspan = ' rowspan="'.count($modes).'"';
+            }
+
+            foreach($modes as $index => $mode) {
+                $doc .= '<tr>';
+                $doc .= '<td class="leftalign">';
+                $doc .= $mode;
+                $doc .= '</td>';
+
+                if($index === 0) {
+                    $doc .= '<td class="rightalign" '.$rowspan.'>';
+                    $doc .= $sort;
+                    $doc .= '</td>';
+                }
+                $doc .= '</tr>';
+            }
+        }
+
+        $doc .= '</tbody></table></div>';
         return $doc;
     }
 
     /**
      * Adds a TOC item
      */
-    function _addToTOC($text, $level, Doku_Renderer_xhtml &$renderer){
+    function _addToTOC($text, $level, Doku_Renderer &$renderer){
         global $conf;
 
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){
+            /** @var $renderer Doku_Renderer_xhtml */
             $hid  = $renderer->_headerToLink($text, 'true');
             $renderer->toc[] = array(
                 'hid'   => $hid,

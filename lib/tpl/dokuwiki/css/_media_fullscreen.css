@@ -38,7 +38,7 @@
 }
 
 #mediamanager__page .panelHeader {
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
     margin: 0 10px 10px 0;
     padding: 10px 10px 8px;
     text-align: left;
@@ -68,7 +68,7 @@
     background: transparent url(../../images/resizecol.png) center center no-repeat;
 }
 #mediamanager__page .ui-resizable-e:hover {
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
 }
 
 
@@ -99,10 +99,10 @@
     margin: 0 0 0 .3em;
     border-radius: .5em .5em 0 0;
     font-weight: normal;
-    background-color: __background_alt__;
-    color: __text__;
-    border: 1px solid __border__;
-    border-bottom-color: __background_alt__;
+    background-color: @ini_background_alt;
+    color: @ini_text;
+    border: 1px solid @ini_border;
+    border-bottom-color: @ini_background_alt;
     line-height: 1.4em;
     position: relative;
     bottom: -1px;
@@ -118,7 +118,7 @@
     right: 10px;
 }
 #mediamanager__page .namespaces .panelHeader {
-    border-top: 1px solid __border__;
+    border-top: 1px solid @ini_border;
     z-index: 1;
 }
 
@@ -164,7 +164,7 @@
     padding: 0;
 }
 #mediamanager__page .panelHeader ul li {
-    color: __text__;
+    color: @ini_text;
     float: left;
     line-height: 1;
     padding-left: 3px;
@@ -205,7 +205,7 @@
 }
 
 #mediamanager__page .filelist .panelContent ul li:hover {
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
 }
 
 #mediamanager__page .filelist li dt a {
@@ -231,8 +231,8 @@
     display: -moz-inline-stack;
     /* the right margin should visually be 10px, but because of its inline-block nature the whitespace inbetween is about 4px more */
     margin: 0 6px 10px 0;
-    background-color: __background_neu__;
-    color: __text__;
+    background-color: @ini_background_neu;
+    color: @ini_text;
     padding: 5px;
     vertical-align: top;
     text-align: center;
@@ -287,13 +287,13 @@
     max-height: 50px;
     margin: 0;
     margin-bottom: 3px;
-    background-color: __background__;
-    color: __text__;
+    background-color: @ini_background;
+    color: @ini_text;
     overflow: hidden;
 }
 
 #mediamanager__page .filelist .rows li:nth-child(2n+1) {
-    background-color: __background_neu__;
+    background-color: @ini_background_neu;
 }
 
 #mediamanager__page .filelist .rows li dt {
@@ -372,11 +372,11 @@
 #mediamanager__page .file dl dt {
     font-weight: bold;
     display: block;
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
 }
 #mediamanager__page .file dl dd {
     display: block;
-    background-color: __background_neu__;
+    background-color: @ini_background_neu;
 }
 
 
@@ -415,7 +415,7 @@
 
 #mediamanager__page #page__revisions ul li div.li div {
     font-size: 90%;
-    color: __text_neu__;
+    color: @ini_text_neu;
     padding-left: 18px;
 }
 
@@ -438,7 +438,7 @@
     padding: 0;
     vertical-align: top;
     text-align: left;
-    border-color: __background__;
+    border-color: @ini_background;
 }
 [dir=rtl] #mediamanager__diff td,
 [dir=rtl] #mediamanager__diff th {
@@ -447,7 +447,7 @@
 
 #mediamanager__diff th {
     font-weight: normal;
-    background-color: __background__;
+    background-color: @ini_background;
     line-height: 1.2;
 }
 #mediamanager__diff th a {
@@ -459,7 +459,7 @@
 
 #mediamanager__diff dl dd strong{
     background-color: __highlight__;
-    color: __text__;
+    color: @ini_text;
     font-weight: normal;
 }
 
@@ -501,4 +501,3 @@
     width: 100%;
     max-width: none;
 }
-

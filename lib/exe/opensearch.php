@@ -21,7 +21,7 @@ if(file_exists(DOKU_INC.'favicon.ico')){
 }elseif(file_exists(tpl_incdir().'favicon.ico')){
     $ico = DOKU_URL.'lib/tpl/'.$conf['template'].'/favicon.ico';
 }else{
-    $ico = DOKU_URL.'lib/tpl/default/images/favicon.ico';
+    $ico = DOKU_URL.'lib/tpl/dokuwiki/images/favicon.ico';
 }
 
 // output

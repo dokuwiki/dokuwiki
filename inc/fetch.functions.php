@@ -89,17 +89,20 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
  * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
  *
  * @author Gerry Weissbach <gerry.w@gammaproduction.de>
- * @param $media reference to the media id
- * @param $file  reference to the file variable
- * @returns array(STATUS, STATUSMESSAGE)
+ * @param string $media  reference to the media id
+ * @param string $file   reference to the file variable
+ * @param string $rev
+ * @param int    $width
+ * @param int    $height
+ * @return array(STATUS, STATUSMESSAGE)
  */
 function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     global $MIME, $EXT, $CACHE, $INPUT;
 
     //media to local file
-    if(preg_match('#^(https?)://#i', $media)) {
-        //check hash
-        if(substr(md5(auth_cookiesalt().$media), 0, 6) !== $INPUT->str('hash')) {
+    if(media_isexternal($media)) {
+        //check token for external image and additional for resized and cached images
+        if(media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
             return array(412, 'Precondition Failed');
         }
         //handle external images

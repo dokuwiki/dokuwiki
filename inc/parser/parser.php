@@ -45,9 +45,9 @@ $PARSER_MODES = array(
 //-------------------------------------------------------------------
 
 /**
-* Sets up the Lexer with modes and points it to the Handler
-* For an intro to the Lexer see: wiki:parser
-*/
+ * Sets up the Lexer with modes and points it to the Handler
+ * For an intro to the Lexer see: wiki:parser
+ */
 class Doku_Parser {
 
     var $Handler;
@@ -70,9 +70,9 @@ class Doku_Parser {
     }
 
     /**
-    * PHP preserves order of associative elements
-    * Mode sequence is important
-    */
+     * PHP preserves order of associative elements
+     * Mode sequence is important
+     */
     function addMode($name, & $Mode) {
         if ( !isset($this->modes['base']) ) {
             $this->addBaseMode(new Doku_Parser_Mode_base());
@@ -134,7 +134,7 @@ class Doku_Parser {
  * all modes are registered
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
-*/
+ */
 class Doku_Parser_Mode {
 
     /**
@@ -454,8 +454,8 @@ class Doku_Parser_Mode_table extends Doku_Parser_Mode {
     }
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('\n\^',$mode,'table');
-        $this->Lexer->addEntryPattern('\n\|',$mode,'table');
+        $this->Lexer->addEntryPattern('[\t ]*\n\^',$mode,'table');
+        $this->Lexer->addEntryPattern('[\t ]*\n\|',$mode,'table');
     }
 
     function postConnect() {
@@ -555,7 +555,7 @@ class Doku_Parser_Mode_preformatted extends Doku_Parser_Mode {
 class Doku_Parser_Mode_code extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<code(?=.*</code>)',$mode,'code');
+        $this->Lexer->addEntryPattern('<code\b(?=.*</code>)',$mode,'code');
     }
 
     function postConnect() {
@@ -571,7 +571,7 @@ class Doku_Parser_Mode_code extends Doku_Parser_Mode {
 class Doku_Parser_Mode_file extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<file(?=.*</file>)',$mode,'file');
+        $this->Lexer->addEntryPattern('<file\b(?=.*</file>)',$mode,'file');
     }
 
     function postConnect() {
@@ -621,7 +621,7 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
     var $pattern = '';
 
     function Doku_Parser_Mode_acronym($acronyms) {
-    	usort($acronyms,array($this,'_compare'));
+        usort($acronyms,array($this,'_compare'));
         $this->acronyms = $acronyms;
     }
 
@@ -652,12 +652,12 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
         $a_len = strlen($a);
         $b_len = strlen($b);
         if ($a_len > $b_len) {
-          return -1;
+            return -1;
         } else if ($a_len < $b_len) {
-          return 1;
+            return 1;
         }
 
-    	return 0;
+        return 0;
     }
 }
 
@@ -806,7 +806,6 @@ class Doku_Parser_Mode_quotes extends Doku_Parser_Mode {
         $this->Lexer->addSpecialPattern(
                     "\"",$mode,'doublequoteclosing'
                 );
-
 
     }
 

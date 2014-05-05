@@ -80,7 +80,7 @@ class parserutils_set_metadata_during_rendering_test extends DokuWikiTest {
     }
 
     // wrapper function for the fake plugin controller, return $this for the fake syntax of this test
-    function &load($type,$name,$new=false,$disabled=false){
+    function load($type,$name,$new=false,$disabled=false){
         if ($name == 'parserutils_test') {
             return $this;
         } else {

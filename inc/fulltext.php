@@ -125,17 +125,21 @@ function _ft_pageSearch(&$data) {
  * Returns the backlinks for a given page
  *
  * Uses the metadata index.
+ *
+ * @param string $id           The id for which links shall be returned
+ * @param bool   $ignore_perms Ignore the fact that pages are hidden or read-protected
+ * @return array The pages that contain links to the given page
  */
-function ft_backlinks($id){
-    $result = array();
-
+function ft_backlinks($id, $ignore_perms = false){
     $result = idx_get_indexer()->lookupKey('relation_references', $id);
 
     if(!count($result)) return $result;
 
     // check ACL permissions
     foreach(array_keys($result) as $idx){
-        if(isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ || !page_exists($result[$idx], '', false)){
+        if(($ignore_perms !== true && (
+                isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
+            )) || !page_exists($result[$idx], '', false)){
             unset($result[$idx]);
         }
     }
@@ -147,42 +151,28 @@ function ft_backlinks($id){
 /**
  * Returns the pages that use a given media file
  *
- * Does a quick lookup with the fulltext index, then
- * evaluates the instructions of the found pages
+ * Uses the relation media metadata property and the metadata index.
  *
- * Aborts after $max found results
+ * Note that before 2013-07-31 the second parameter was the maximum number of results and
+ * permissions were ignored. That's why the parameter is now checked to be explicitely set
+ * to true (with type bool) in order to be compatible with older uses of the function.
+ *
+ * @param string $id           The media id to look for
+ * @param bool   $ignore_perms Ignore hidden pages and acls (optional, default: false)
+ * @return array A list of pages that use the given media file
  */
-function ft_mediause($id,$max){
-    if(!$max) $max = 1; // need to find at least one
+function ft_mediause($id, $ignore_perms = false){
+    $result = idx_get_indexer()->lookupKey('relation_media', $id);
 
-    $result = array();
+    if(!count($result)) return $result;
 
-    // quick lookup of the mediafile
-    // FIXME use metadata key lookup
-    $media   = noNS($id);
-    $matches = idx_lookup(idx_tokenizer($media));
-    $docs    = array_keys(ft_resultCombine(array_values($matches)));
-    if(!count($docs)) return $result;
-
-    // go through all found pages
-    $found = 0;
-    $pcre  = preg_quote($media,'/');
-    foreach($docs as $doc){
-        $ns = getNS($doc);
-        preg_match_all('/\{\{([^|}]*'.$pcre.'[^|}]*)(|[^}]+)?\}\}/i',rawWiki($doc),$matches);
-        foreach($matches[1] as $img){
-            $img = trim($img);
-            if(preg_match('/^https?:\/\//i',$img)) continue; // skip external images
-                list($img) = explode('?',$img);                  // remove any parameters
-            resolve_mediaid($ns,$img,$exists);               // resolve the possibly relative img
-
-            if($img == $id){                                 // we have a match
-                $result[] = $doc;
-                $found++;
-                break;
-            }
+    // check ACL permissions
+    foreach(array_keys($result) as $idx){
+        if(($ignore_perms !== true && (
+                    isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
+                )) || !page_exists($result[$idx], '', false)){
+            unset($result[$idx]);
         }
-        if($found >= $max) break;
     }
 
     sort($result);
@@ -404,7 +394,6 @@ function ft_snippet_re_preprocess($term) {
         $BL = '\b';
         $BR = '\b';
     }
-
 
     if(substr($term,0,2) == '\\*'){
         $term = substr($term,2);

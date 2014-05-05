@@ -173,7 +173,6 @@ $lang['img_copyr']             = 'Copyright';
 $lang['img_format']            = 'Format';
 $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Schlësselwieder';
-$lang['authmodfailed']         = 'Falsch Konfiguratioun vun der Benotzerautentifikatioun. Informéier w.e.g. de Wiki Admin.';
 $lang['authtempfail']          = 'D\'Benotzerautentifikatioun ass de Moment net verfügbar. Wann dës Situatioun unhält, dann informéier w.e.g. de Wiki Admin.';
 $lang['i_chooselang']          = 'Wiel deng Sprooch';
 $lang['i_installer']           = 'DokuWiki Installer';

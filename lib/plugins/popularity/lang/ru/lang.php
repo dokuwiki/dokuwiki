@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Russian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
  * @author Alexei Tereschenko <alexeitlex@yahoo.com>

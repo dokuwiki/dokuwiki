@@ -1,4 +1,3 @@
-
 /* TODO: this file is not up to the best standards and will be fixed after an overhaul of the form code */
 
 /**
@@ -48,7 +47,7 @@
 .dokuwiki fieldset {
   width: 400px;
   text-align: center;
-  border: 1px solid __border__;
+  border: 1px solid @ini_border;
   padding: 0.5em;
   margin: auto;
 }
@@ -79,7 +78,10 @@
 #dw__register fieldset {
     padding-bottom: 0.7em;
 }
-
+#dw__profiledelete {
+    display: block;
+    margin-top: 2.8em;
+}
 
 /**
  * Styles for the subscription page

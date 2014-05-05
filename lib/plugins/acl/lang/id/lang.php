@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Indonesian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
  */

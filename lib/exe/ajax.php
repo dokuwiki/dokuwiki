@@ -219,10 +219,11 @@ function ajax_medialist(){
     global $INPUT;
 
     $NS = cleanID($INPUT->post->str('ns'));
+    $sort = $INPUT->post->bool('recent') ? 'date' : 'natural';
     if ($INPUT->post->str('do') == 'media') {
         tpl_mediaFileList();
     } else {
-        tpl_mediaContent(true);
+        tpl_mediaContent(true, $sort);
     }
 }
 

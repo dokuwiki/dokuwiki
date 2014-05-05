@@ -1,6 +1,8 @@
 <?php
+
 /**
- * polish language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>

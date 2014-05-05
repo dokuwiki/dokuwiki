@@ -1,8 +1,8 @@
 <?php
+
 /**
- * french language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -27,6 +27,8 @@
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
+ * @author Emmanuel <seedfloyd@gmail.com>
+ * @author Jérôme Brandt <jeromebrandt@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -70,6 +72,7 @@ $lang['btn_revert']            = 'Restaurer';
 $lang['btn_register']          = 'S\'enregistrer';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
+$lang['btn_deleteuser']        = 'Supprimer mon compte';
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
 $lang['pass']                  = 'Mot de passe';
@@ -81,6 +84,7 @@ $lang['fullname']              = 'Nom';
 $lang['email']                 = 'Adresse de courriel';
 $lang['profile']               = 'Profil utilisateur';
 $lang['badlogin']              = 'L\'utilisateur ou le mot de passe est incorrect.';
+$lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
 $lang['draftdate']             = 'Brouillon enregistré de manière automatique le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
@@ -97,6 +101,11 @@ $lang['profna']                = 'Ce wiki ne permet pas de modifier les profils'
 $lang['profnochange']          = 'Pas de modification, rien à faire.';
 $lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
 $lang['profchanged']           = 'Mise à jour du profil réussie.';
+$lang['profnodelete']          = 'Ce wiki ne permet pas la suppression des utilisateurs';
+$lang['profdeleteuser']        = 'Supprimer le compte';
+$lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
+$lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
+$lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
 $lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
@@ -279,7 +288,6 @@ $lang['subscr_m_receive']      = 'Recevoir';
 $lang['subscr_style_every']    = 'Recevoir un courriel à chaque modification';
 $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
-$lang['authmodfailed']         = 'Mauvais paramétrage de l\'authentification. Merci d\'en informer l\'administrateur du wiki.';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'en informer l\'administrateur du wiki.';
 $lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
@@ -302,6 +310,7 @@ $lang['i_policy']              = 'Politique de contrôle d\'accès initiale';
 $lang['i_pol0']                = 'Wiki ouvert (lecture, écriture, envoi de fichiers pour tout le monde)';
 $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';
 $lang['i_pol2']                = 'Wiki fermé (lecture, écriture, envoi de fichiers pour les utilisateurs enregistrés uniquement)';
+$lang['i_allowreg']            = 'Permettre aux utilisateurs de s\'enregistrer eux-mêmes.';
 $lang['i_retry']               = 'Réessayer';
 $lang['i_license']             = 'Veuillez choisir la licence sous laquelle vous souhaitez placer votre contenu :';
 $lang['i_license_none']        = 'Ne pas afficher d\'information de licence.';
@@ -339,3 +348,7 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas l\'autorisation de 
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas l\'autorisation d\'envoyer des fichiers.';
 $lang['media_update']          = 'Envoyer une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
+$lang['currentns']             = 'Namespace actuel';
+$lang['searchresult']          = 'Résultat de la recherche';
+$lang['plainhtml']             = 'HTML brut';
+$lang['wikimarkup']            = 'Wiki balise';

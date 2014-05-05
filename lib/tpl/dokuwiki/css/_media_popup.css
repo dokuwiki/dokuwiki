@@ -20,13 +20,13 @@ html.popup {
     overflow: auto;
     position: absolute;
     left: 0;
-    border-right: 1px solid __border__;
+    border-right: 1px solid @ini_border;
 }
 [dir=rtl] #mediamgr__aside {
     left: auto;
     right: 0;
     border-right-width: 0;
-    border-left: 1px solid __border__;
+    border-left: 1px solid @ini_border;
 }
 #mediamgr__aside .pad {
     padding: .5em;
@@ -52,7 +52,7 @@ html.popup {
     font-size: 1.5em;
     margin-bottom: .5em;
     padding-bottom: .2em;
-    border-bottom: 1px solid __border__;
+    border-bottom: 1px solid @ini_border;
 }
 
 /* left side
@@ -141,19 +141,20 @@ html.popup {
     padding: .5em;
 }
 #media__content .odd {
-    background-color: __background_alt__;
+    background-color: @ini_background_alt;
 }
 #media__content .even {
 }
 /* highlight newly uploaded or edited file */
 #media__content #scroll__here {
-    border: 1px dashed __border__;
+    border: 1px dashed @ini_border;
 }
 
 /* link which inserts media file */
 #media__content a.mediafile {
     margin-right: 1.5em;
     font-weight: bold;
+    cursor: pointer;
 }
 [dir=rtl] #media__content a.mediafile {
     margin-right: 0;
@@ -167,7 +168,7 @@ html.popup {
 
 /* info how to insert media, if JS disabled */
 #media__content div.example {
-    color: __text_neu__;
+    color: @ini_text_neu;
     margin-left: 1em;
 }
 

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
@@ -14,6 +14,8 @@
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
+ * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['menu']                  = 'Správa pluginů';
 $lang['download']              = 'Stáhnout a instalovat plugin';

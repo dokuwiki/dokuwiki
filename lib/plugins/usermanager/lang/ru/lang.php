@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Russian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
@@ -18,6 +18,7 @@
  * @author Eugene <windy.wanderer@gmail.com>
  * @author Johnny Utah <pcpa@cyberpunk.su>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
+ * @author Pavel <ivanovtsk@mail.ru>
  */
 $lang['menu']                  = 'Управление пользователями';
 $lang['noauth']                = '(авторизация пользователей недоступна)';
@@ -40,7 +41,12 @@ $lang['search']                = 'Поиск';
 $lang['search_prompt']         = 'Искать';
 $lang['clear']                 = 'Сброс фильтра поиска';
 $lang['filter']                = 'Фильтр';
-$lang['summary']               = 'Показаны пользователи %1$d-%2$d из %3$d найденных. Всего пользователей: %4$d.';
+$lang['export_all']            = 'Экспорт всех пользователей (CSV)';
+$lang['export_filtered']       = 'Экспорт пользователей с фильтрацией списка (CSV)';
+$lang['import']                = 'Импорт новых пользователей';
+$lang['line']                  = 'Строка №';
+$lang['error']                 = 'Ошибка';
+$lang['summary']               = 'Показаны пользователи %1$d–%2$d из %3$d найденных. Всего пользователей: %4$d.';
 $lang['nonefound']             = 'Не найдено ни одного пользователя. Всего пользователей: %d.';
 $lang['delete_ok']             = 'Удалено пользователей: %d';
 $lang['delete_fail']           = 'Не удалось удалить %d.';
@@ -60,3 +66,13 @@ $lang['add_ok']                = 'Пользователь успешно доб
 $lang['add_fail']              = 'Не удалось добавить пользователя';
 $lang['notify_ok']             = 'Письмо с уведомлением отправлено';
 $lang['notify_fail']           = 'Не удалось отправить письмо с уведомлением';
+$lang['import_success_count']  = 'Импорт пользователей: %d пользователей найдено, %d импортировано успешно.';
+$lang['import_failure_count']  = 'Импорт пользователей: %d не удалось. Список ошибок прочтите ниже.';
+$lang['import_error_fields']   = 'Не все поля заполнены. Найдено %d, а нужно 4.';
+$lang['import_error_baduserid'] = 'Отсутствует идентификатор пользователя';
+$lang['import_error_badname']  = 'Имя не годится';
+$lang['import_error_badmail']  = 'Адрес электронной почты не годится';
+$lang['import_error_upload']   = 'Импорт не удался. CSV файл не загружен или пуст.';
+$lang['import_error_readfail'] = 'Импорт не удался. Невозможно прочесть загруженный файл.';
+$lang['import_error_create']   = 'Невозможно создать пользователя';
+$lang['import_notify_fail']    = 'Оповещение не может быть отправлено импортированному пользователю %s по электронной почте %s.';

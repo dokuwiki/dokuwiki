@@ -7,15 +7,12 @@
 
     require_once(DOKU_INC.'inc/init.php');
 
-    trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
-    session_write_close();  //close session
-
     global $INPUT;
     // handle passed message
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);
 
-
+    global $DEL;
     // get namespace to display (either direct or from deletion order)
     if($INPUT->str('delete')){
         $DEL = cleanID($INPUT->str('delete'));
@@ -29,10 +26,17 @@
         $NS  = getNS($IMG);
     }else{
         $NS = cleanID($INPUT->str('ns'));
+        $IMG = null;
     }
 
-    // check auth
-    $AUTH = auth_quickaclcheck("$NS:*");
+    global $INFO, $JSINFO;
+    $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
+    $JSINFO = array('id' => '', 'namespace' => '');
+    $AUTH = $INFO['perm'];    // shortcut for historical reasons
+
+    $tmp = array();
+    trigger_event('MEDIAMANAGER_STARTED', $tmp);
+    session_write_close();  //close session
 
     // do not display the manager if user does not have read access
     if($AUTH < AUTH_READ && !$fullscreen) {
@@ -52,7 +56,7 @@
         exit;
     }
 
-    // give info on PHP catched upload errors
+    // give info on PHP caught upload errors
     if($_FILES['upload']['error']){
         switch($_FILES['upload']['error']){
             case 1:

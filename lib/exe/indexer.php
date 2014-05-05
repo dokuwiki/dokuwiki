@@ -31,12 +31,12 @@ else header('Content-Type: text/plain');
 $tmp = array(); // No event data
 $evt = new Doku_Event('INDEXER_TASKS_RUN', $tmp);
 if ($evt->advise_before()) {
-  runIndexer() or
-  runSitemapper() or
-  sendDigest() or
-  runTrimRecentChanges() or
-  runTrimRecentChanges(true) or
-  $evt->advise_after();
+    runIndexer() or
+    runSitemapper() or
+    sendDigest() or
+    runTrimRecentChanges() or
+    runTrimRecentChanges(true) or
+    $evt->advise_after();
 }
 
 if(!$output) {
@@ -85,13 +85,13 @@ function runTrimRecentChanges($media_changes = false) {
             $out_lines = array();
 
             for ($i=0; $i<count($lines); $i++) {
-              $log = parseChangelogLine($lines[$i]);
-              if ($log === false) continue;                      // discard junk
-              if ($log['date'] < $trim_time) {
-                $old_lines[$log['date'].".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
-              } else {
-                $out_lines[$log['date'].".$i"] = $lines[$i];     // definitely keep these lines
-              }
+                $log = parseChangelogLine($lines[$i]);
+                if ($log === false) continue;                      // discard junk
+                if ($log['date'] < $trim_time) {
+                    $old_lines[$log['date'].".$i"] = $lines[$i];     // keep old lines for now (append .$i to prevent key collisions)
+                } else {
+                    $out_lines[$log['date'].".$i"] = $lines[$i];     // definitely keep these lines
+                }
             }
 
             if (count($lines)==count($out_lines)) {

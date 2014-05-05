@@ -19,7 +19,7 @@
 
 /* table header */
 .dokuwiki table.diff th {
-    border-bottom: 1px solid __border__;
+    border-bottom: 1px solid @ini_border;
     font-size: 110%;
     font-weight: normal;
 }

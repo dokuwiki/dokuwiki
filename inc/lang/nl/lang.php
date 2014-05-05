@@ -1,8 +1,8 @@
 <?php
+
 /**
- * dutch language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -17,6 +17,10 @@
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
+ * @author mprins <mprins@users.sf.net>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Klap-in <klapinklapin@gmail.com>
+ * @author Remon <no@email.local>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -60,6 +64,7 @@ $lang['btn_revert']            = 'Herstellen';
 $lang['btn_register']          = 'Registreren';
 $lang['btn_apply']             = 'Toepassen';
 $lang['btn_media']             = 'Mediabeheerder';
+$lang['btn_deleteuser']        = 'Verwijder mijn account';
 $lang['loggedinas']            = 'Ingelogd als';
 $lang['user']                  = 'Gebruikersnaam';
 $lang['pass']                  = 'Wachtwoord';
@@ -71,6 +76,7 @@ $lang['fullname']              = 'Volledige naam';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Gebruikersprofiel';
 $lang['badlogin']              = 'Sorry, gebruikersnaam of wachtwoord onjuist';
+$lang['badpassconfirm']        = 'Sorry, het wachtwoord was onjuist';
 $lang['minoredit']             = 'Kleine wijziging';
 $lang['draftdate']             = 'Concept automatisch opgeslagen op';
 $lang['nosecedit']             = 'De pagina is tussentijds veranderd, sectie-informatie was verouderd, volledige pagina geladen.';
@@ -87,6 +93,11 @@ $lang['profna']                = 'Deze wiki ondersteunt geen profielwijzigingen'
 $lang['profnochange']          = 'Geen wijzigingen, niets gedaan';
 $lang['profnoempty']           = 'Een lege gebruikersnaam of e-mailadres is niet toegestaan';
 $lang['profchanged']           = 'Gebruikersprofiel succesvol aangepast';
+$lang['profnodelete']          = 'Deze wiki heeft biedt geen ondersteuning voor verwijdering van gebruikers';
+$lang['profdeleteuser']        = 'Verwijder gebruiker';
+$lang['profdeleted']           = 'Uw gebruikersaccount is verwijderd van deze wiki';
+$lang['profconfdelete']        = 'Ik wil mijn gebruikersaccount verwijderen van deze wiki. <br/> Deze actie kan niet ongedaan gemaakt worden.';
+$lang['profconfdeletemissing'] = 'Bevestigingsvinkje niet gezet';
 $lang['pwdforget']             = 'Je wachtwoord vergeten? Vraag een nieuw wachtwoord aan';
 $lang['resendna']              = 'Deze wiki ondersteunt het verzenden van wachtwoorden niet';
 $lang['resendpwd']             = 'Nieuw wachtwoord bepalen voor';
@@ -212,7 +223,7 @@ $lang['changes_type']          = 'Bekijk wijzigingen van';
 $lang['pages_changes']         = 'Pagina\'s';
 $lang['media_changes']         = 'Mediabestanden';
 $lang['both_changes']          = 'Zowel pagina\'s als mediabestanden';
-$lang['qb_bold']               = 'Vette tekst';
+$lang['qb_bold']               = 'Vetgedrukte tekst';
 $lang['qb_italic']             = 'Cursieve tekst';
 $lang['qb_underl']             = 'Onderstreepte tekst';
 $lang['qb_code']               = 'Code tekst';
@@ -257,7 +268,7 @@ $lang['img_height']            = 'Hoogte';
 $lang['img_manager']           = 'In mediabeheerder bekijken';
 $lang['subscr_subscribe_success'] = '%s is ingeschreven voor %s';
 $lang['subscr_subscribe_error'] = 'Fout bij inschrijven van %s voor %s';
-$lang['subscr_subscribe_noaddress'] = 'Er is geen emailadres geassocieerd met uw account, u kunt daardoor niet worden ingeschreven.';
+$lang['subscr_subscribe_noaddress'] = 'Er is geen e-mailadres gekoppeld aan uw account, u kunt daardoor niet worden ingeschreven.';
 $lang['subscr_unsubscribe_success'] = '%s is nu uitgeschreven bij %s.';
 $lang['subscr_unsubscribe_error'] = 'Fout bij uitschrijven van %s bij %s.';
 $lang['subscr_already_subscribed'] = '%s is reeds ingeschreven bij %s.';
@@ -271,7 +282,6 @@ $lang['subscr_m_receive']      = 'Ontvang';
 $lang['subscr_style_every']    = 'Email bij iedere wijziging';
 $lang['subscr_style_digest']   = 'Samenvattings-email met wijzigingen per pagina (elke %.2f dagen)';
 $lang['subscr_style_list']     = 'Lijst van veranderde pagina\'s sinds laatste email (elke %.2f dagen)';
-$lang['authmodfailed']         = 'Ongeldige gebruikersauthenticatie-configuratie. Informeer de wikibeheerder.';
 $lang['authtempfail']          = 'Gebruikersauthenticatie is tijdelijk niet beschikbaar. Als deze situatie zich blijft voordoen, informeer dan de wikibeheerder.';
 $lang['authpwdexpire']         = 'Je wachtwoord verloopt in %d dagen, je moet het binnenkort veranderen';
 $lang['i_chooselang']          = 'Kies je taal';
@@ -294,6 +304,7 @@ $lang['i_policy']              = 'Initieel ACL-beleid';
 $lang['i_pol0']                = 'Open wiki (lezen, schrijven, uploaden voor iedereen)';
 $lang['i_pol1']                = 'Publieke wiki (lezen voor iedereen, schrijven en uploaden voor geregistreerde gebruikers)';
 $lang['i_pol2']                = 'Besloten wiki (lezen, schrijven en uploaden alleen voor geregistreerde gebruikers)';
+$lang['i_allowreg']            = 'Toestaan dat gebruikers zichzelf registeren';
 $lang['i_retry']               = 'Opnieuw';
 $lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
 $lang['i_license_none']        = 'Toon geen licentie informatie';
@@ -331,3 +342,7 @@ $lang['media_perm_read']       = 'Sorry, u heeft niet voldoende rechten om besta
 $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om bestanden te uploaden.';
 $lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
+$lang['currentns']             = 'Huidige namespace';
+$lang['searchresult']          = 'Zoekresultaat';
+$lang['plainhtml']             = 'Alleen HTML';
+$lang['wikimarkup']            = 'Wiki Opmaak';

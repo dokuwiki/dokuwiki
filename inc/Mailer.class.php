@@ -41,9 +41,10 @@ class Mailer {
         global $conf;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
+        if(strpos($server,'.') === false) $server = $server.'.localhost';
 
-        $this->partid   = md5(uniqid(rand(), true)).'@'.$server;
-        $this->boundary = '----------'.md5(uniqid(rand(), true));
+        $this->partid   = substr(md5(uniqid(rand(), true)),0, 8).'@'.$server;
+        $this->boundary = '__________'.md5(uniqid(rand(), true));
 
         $listid = join('.', array_reverse(explode('/', DOKU_BASE))).$server;
         $listid = strtolower(trim($listid, '.'));
@@ -57,6 +58,7 @@ class Mailer {
         $this->setHeader('X-DokuWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
         $this->setHeader('List-Id', $conf['title'].' <'.$listid.'>');
+        $this->setHeader('Date', date('r'), false);
     }
 
     /**
@@ -137,7 +139,13 @@ class Mailer {
         }
 
         // empty value deletes
-        $value = trim($value);
+        if(is_array($value)){
+            $value = array_map('trim', $value);
+            $value = array_filter($value);
+            if(!$value) $value = '';
+        }else{
+            $value = trim($value);
+        }
         if($value === '') {
             if(isset($this->headers[$header])) unset($this->headers[$header]);
         } else {
@@ -192,7 +200,7 @@ class Mailer {
         // copy over all replacements missing for HTML (autolink URLs)
         foreach($textrep as $key => $value) {
             if(isset($htmlrep[$key])) continue;
-            if(preg_match('/^https?:\/\//i', $value)) {
+            if(media_isexternal($value)) {
                 $htmlrep[$key] = '<a href="'.hsc($value).'">'.hsc($value).'</a>';
             } else {
                 $htmlrep[$key] = hsc($value);
@@ -270,7 +278,7 @@ class Mailer {
      * Add the To: recipients
      *
      * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
         $this->setHeader('To', $address, false);
@@ -280,7 +288,7 @@ class Mailer {
      * Add the Cc: recipients
      *
      * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
         $this->setHeader('Cc', $address, false);
@@ -290,7 +298,7 @@ class Mailer {
      * Add the Bcc: recipients
      *
      * @see setAddress
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
         $this->setHeader('Bcc', $address, false);
@@ -327,18 +335,20 @@ class Mailer {
      * Example:
      *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string  $address Multiple adresses separated by commas
+     * @param string|array  $address Multiple adresses separated by commas or as array
      * @return bool|string  the prepared header (can contain multiple lines)
      */
-    public function cleanAddress($address) {
+    public function cleanAddress($addresses) {
         // No named recipients for To: in Windows (see FS#652)
         $names = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? false : true;
 
-        $address = preg_replace('/[\r\n\0]+/', ' ', $address); // remove attack vectors
-
         $headers = '';
-        $parts   = explode(',', $address);
-        foreach($parts as $part) {
+        if(!is_array($addresses)){
+            $addresses = explode(',', $addresses);
+        }
+
+        foreach($addresses as $part) {
+            $part = preg_replace('/[\r\n\0]+/', ' ', $part); // remove attack vectors
             $part = trim($part);
 
             // parse address
@@ -378,7 +388,7 @@ class Mailer {
                     $text = utf8_strip($text);
                 }
 
-                if(!utf8_isASCII($text)) {
+                if(strpos($text, ',') !== false || !utf8_isASCII($text)) {
                     $text = '=?UTF-8?B?'.base64_encode($text).'?=';
                 }
             } else {
@@ -392,6 +402,7 @@ class Mailer {
             $headers .= $text.' '.$addr;
         }
 
+        $headers = trim($headers);
         if(empty($headers)) return false;
 
         return $headers;
@@ -408,6 +419,8 @@ class Mailer {
         $part = 1;
         // embedded attachments
         foreach($this->attach as $media) {
+            $media['name'] = str_replace(':', '_', cleanID($media['name'], true));
+
             // create content id
             $cid = 'part'.$part.'.'.$this->partid;
 
@@ -417,13 +430,13 @@ class Mailer {
             }
 
             $mime .= '--'.$this->boundary.MAILHEADER_EOL;
-            $mime .= 'Content-Type: '.$media['mime'].';'.MAILHEADER_EOL;
-            $mime .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
-            $mime .= "Content-ID: <$cid>".MAILHEADER_EOL;
+            $mime .= $this->wrappedHeaderLine('Content-Type', $media['mime'].'; id="'.$cid.'"');
+            $mime .= $this->wrappedHeaderLine('Content-Transfer-Encoding', 'base64');
+            $mime .= $this->wrappedHeaderLine('Content-ID',"<$cid>");
             if($media['embed']) {
-                $mime .= 'Content-Disposition: inline; filename="'.$media['name'].'"'.MAILHEADER_EOL;
+                $mime .= $this->wrappedHeaderLine('Content-Disposition', 'inline; filename='.$media['name']);
             } else {
-                $mime .= 'Content-Disposition: attachment; filename="'.$media['name'].'"'.MAILHEADER_EOL;
+                $mime .= $this->wrappedHeaderLine('Content-Disposition', 'attachment; filename='.$media['name']);
             }
             $mime .= MAILHEADER_EOL; //end of headers
             $mime .= chunk_split(base64_encode($media['data']), 74, MAILHEADER_EOL);
@@ -460,7 +473,7 @@ class Mailer {
         if(!$this->html && !count($this->attach)) { // we can send a simple single part message
             $this->headers['Content-Type']              = 'text/plain; charset=UTF-8';
             $this->headers['Content-Transfer-Encoding'] = 'base64';
-            $body .= chunk_split(base64_encode($this->text), 74, MAILHEADER_EOL);
+            $body .= chunk_split(base64_encode($this->text), 72, MAILHEADER_EOL);
         } else { // multi part it is
             $body .= "This is a multi-part message in MIME format.".MAILHEADER_EOL;
 
@@ -475,10 +488,11 @@ class Mailer {
                 $body .= 'Content-Type: text/plain; charset=UTF-8'.MAILHEADER_EOL;
                 $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
-                $body .= chunk_split(base64_encode($this->text), 74, MAILHEADER_EOL);
+                $body .= chunk_split(base64_encode($this->text), 72, MAILHEADER_EOL);
                 $body .= '--'.$this->boundary.'XX'.MAILHEADER_EOL;
                 $body .= 'Content-Type: multipart/related;'.MAILHEADER_EOL.
-                    '  boundary="'.$this->boundary.'"'.MAILHEADER_EOL;
+                    '  boundary="'.$this->boundary.'";'.MAILHEADER_EOL.
+                    '  type="text/html"'.MAILHEADER_EOL;
                 $body .= MAILHEADER_EOL;
             }
 
@@ -486,7 +500,7 @@ class Mailer {
             $body .= 'Content-Type: text/html; charset=UTF-8'.MAILHEADER_EOL;
             $body .= 'Content-Transfer-Encoding: base64'.MAILHEADER_EOL;
             $body .= MAILHEADER_EOL;
-            $body .= chunk_split(base64_encode($this->html), 74, MAILHEADER_EOL);
+            $body .= chunk_split(base64_encode($this->html), 72, MAILHEADER_EOL);
             $body .= MAILHEADER_EOL;
             $body .= $attachments;
             $body .= '--'.$this->boundary.'--'.MAILHEADER_EOL;
@@ -541,10 +555,17 @@ class Mailer {
             }
         }
 
-        // wrap headers
-        foreach($this->headers as $key => $val) {
-            $this->headers[$key] = wordwrap($val, 78, MAILHEADER_EOL.'  ');
-        }
+    }
+
+    /**
+     * Returns a complete, EOL terminated header line, wraps it if necessary
+     *
+     * @param $key
+     * @param $val
+     * @return string
+     */
+    protected function wrappedHeaderLine($key, $val){
+        return wordwrap("$key: $val", 78, MAILHEADER_EOL.'  ').MAILHEADER_EOL;
     }
 
     /**
@@ -555,8 +576,8 @@ class Mailer {
     protected function prepareHeaders() {
         $headers = '';
         foreach($this->headers as $key => $val) {
-            if ($val === '') continue;
-            $headers .= "$key: $val".MAILHEADER_EOL;
+            if ($val === '' || is_null($val)) continue;
+            $headers .= $this->wrappedHeaderLine($key, $val);
         }
         return $headers;
     }
@@ -619,16 +640,16 @@ class Mailer {
             ) return false;
 
             // The To: header is special
-            if(isset($this->headers['To'])) {
-                $to = $this->headers['To'];
+            if(array_key_exists('To', $this->headers)) {
+                $to = (string)$this->headers['To'];
                 unset($this->headers['To']);
             } else {
                 $to = '';
             }
 
             // so is the subject
-            if(isset($this->headers['Subject'])) {
-                $subject = $this->headers['Subject'];
+            if(array_key_exists('Subject', $this->headers)) {
+                $subject = (string)$this->headers['Subject'];
                 unset($this->headers['Subject']);
             } else {
                 $subject = '';

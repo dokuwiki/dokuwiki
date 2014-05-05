@@ -1,0 +1,3 @@
+====== Obnova dát ======
+
+Táto stránka slúži na automatické obnovenie obsahu stránok po útoku spamom. Pre identifikáciu napadnutých stránok zadajte vyhľadávací reťazec (napr. spam URL), potom potvrďte, že nájdené stránky sú skutočne napadnuté, a zrušte posledné zmeny.

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * French language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['server']                = 'Votre serveur MySQL';
