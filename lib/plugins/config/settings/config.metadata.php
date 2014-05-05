@@ -116,7 +116,7 @@ $meta['fullpath']    = array('onoff','_caution' => 'security');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));
 $meta['dformat']     = array('string');
 $meta['signature']   = array('string');
-$meta['showuseras']  = array('multichoice','_choices' => array('loginname','username','email','email_link'));
+$meta['showuseras']  = array('multichoice','_choices' => array('loginname','username','username_link','email','email_link'));
 $meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
 $meta['tocminheads'] = array('multichoice','_choices' => array(0,1,2,3,4,5,10,15,20));
 $meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
@@ -138,7 +138,7 @@ $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
 $meta['disableactions'] = array('disableactions',
-                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','profile_delete','edit','wikicode','check'),
+                                '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','profile_delete','edit','wikicode','check', 'rss'),
                                 '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');

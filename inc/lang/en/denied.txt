@@ -1,4 +1,4 @@
 ====== Permission Denied ======
 
-Sorry, you don't have enough rights to continue. Perhaps you forgot to login?
+Sorry, you don't have enough rights to continue.
 

@@ -9,6 +9,8 @@
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  * @author Matej Urbančič <mateju@svn.gnome.org>
+ * @author matej <mateju@svn.gnome.org>
+ * @author Jernej Vidmar <jernej.vidmar@vidmarboehm.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -53,6 +55,8 @@ $lang['btn_register']          = 'Prijava';
 $lang['btn_apply']             = 'Uveljavi';
 $lang['btn_media']             = 'Urejevalnik predstavnih vsebin';
 $lang['btn_deleteuser']        = 'Odstrani račun';
+$lang['btn_img_backto']        = 'Nazaj na %s';
+$lang['btn_mediaManager']      = 'Poglej v urejevalniku predstavnih vsebin';
 $lang['loggedinas']            = 'Prijava kot';
 $lang['user']                  = 'Uporabniško ime';
 $lang['pass']                  = 'Geslo';
@@ -84,6 +88,7 @@ $lang['profchanged']           = 'Uporabniški profil je uspešno posodobljen.';
 $lang['profnodelete']          = 'Ni omogočena podpora za brisanje uporabnikov.';
 $lang['profdeleteuser']        = 'Izbriši račun';
 $lang['profdeleted']           = 'Uporabniški račun je izbrisan.';
+$lang['profconfdeletemissing'] = 'Potrditveno okno ni označeno';
 $lang['pwdforget']             = 'Ali ste pozabili geslo? Pridobite si novo geslo.';
 $lang['resendna']              = 'DokuWiki ne podpira možnosti ponovnega pošiljanja gesel.';
 $lang['resendpwd']             = 'Nastavi novo geslo za';
@@ -178,6 +183,9 @@ $lang['difflink']              = 'Poveži s tem pogledom primerjave.';
 $lang['diff_type']             = 'Razlike:';
 $lang['diff_inline']           = 'V besedilu';
 $lang['diff_side']             = 'Eno ob drugem';
+$lang['diffprevrev']           = 'Prejšnja revizija';
+$lang['diffnextrev']           = 'Naslednja revizija';
+$lang['difflastrev']           = 'Zadnja revizija';
 $lang['line']                  = 'Vrstica';
 $lang['breadcrumb']            = 'Sled';
 $lang['youarehere']            = 'Trenutno dejavna stran';
@@ -234,7 +242,6 @@ $lang['admin_register']        = 'Dodaj novega uporabnika';
 $lang['metaedit']              = 'Uredi metapodatke';
 $lang['metasaveerr']           = 'Zapisovanje metapodatkov je spodletelo';
 $lang['metasaveok']            = 'Metapodatki so shranjeni';
-$lang['img_backto']            = 'Nazaj na';
 $lang['img_title']             = 'Naslov';
 $lang['img_caption']           = 'Opis';
 $lang['img_date']              = 'Datum';
@@ -247,7 +254,6 @@ $lang['img_camera']            = 'Fotoaparat';
 $lang['img_keywords']          = 'Ključne besede';
 $lang['img_width']             = 'Širina';
 $lang['img_height']            = 'Višina';
-$lang['img_manager']           = 'Poglej v urejevalniku predstavnih vsebin';
 $lang['subscr_subscribe_success'] = 'Uporabniški račun %s je dodan na seznam naročnin na %s';
 $lang['subscr_subscribe_error'] = 'Napaka med dodajanjem %s na seznam naročnin na %s';
 $lang['subscr_subscribe_noaddress'] = 'S trenutnimi prijavnimi podatki ni povezanega elektronskega naslova, zato uporabniškega računa ni mogoče dodati na seznam naročnikov.';
@@ -265,6 +271,7 @@ $lang['subscr_style_every']    = 'elektronsko sporočilo ob vsaki spremembi';
 $lang['subscr_style_digest']   = 'strnjeno elektronsko sporočilo sprememb za vsako stran (vsakih %.2f dni)';
 $lang['subscr_style_list']     = 'seznam spremenjenih strani od zadnjega elektronskega sporočila (vsakih %.2f dni)';
 $lang['authtempfail']          = 'Potrditev uporabnika je trenutno nedostopna. Stopite v stik s skrbnikom sistema wiki.';
+$lang['authpwdexpire']         = 'Geslo bo poteklo v %d dneh. Priporočljivo ga je zamenjati.';
 $lang['i_chooselang']          = 'Izberite jezik';
 $lang['i_installer']           = 'DokuWiki namestitev';
 $lang['i_wikiname']            = 'Ime Wiki spletišča';
@@ -289,6 +296,8 @@ $lang['i_allowreg']            = 'Dovoli uporabnikom vpis';
 $lang['i_retry']               = 'Ponovni poskus';
 $lang['i_license']             = 'Izbor dovoljenja objave vsebine:';
 $lang['i_license_none']        = 'Ne pokaži podrobnosti dovoljenja.';
+$lang['i_pop_field']           = 'Prosimo pomagajte nam izboljšati DokuWiki izkušnjo:';
+$lang['i_pop_label']           = 'Enkrat na mesec pošlji anonimne uporabniške podatke DokuWiki razvijalcem';
 $lang['recent_global']         = 'Trenutno so prikazane spremembe znotraj imenskega prostora <b>%s</b>. Mogoče si je ogledati tudi spremembe <a href="%s">celotnega sistema Wiki</a>.';
 $lang['years']                 = '%d let nazaj';
 $lang['months']                = '%d mesecev nazaj';
@@ -324,3 +333,4 @@ $lang['media_restore']         = 'Obnovi to različico';
 $lang['currentns']             = 'Trenutni imenski prostor';
 $lang['searchresult']          = 'Rezultati iskanja';
 $lang['plainhtml']             = 'Zapis HTML';
+$lang['wikimarkup']            = 'Oblikovni jezik Wiki';

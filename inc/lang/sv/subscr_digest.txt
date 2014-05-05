@@ -1,0 +1,19 @@
+Hej
+
+Sidan @PAGE@ med @TITLE@ har ändrats.
+Här är ändringarna:
+
+-----------------------------
+@DIFF@
+-----------------------------
+
+Äldre versionen: @OLDPAGE@
+Ny version: @NEWPAGE@
+
+För att avbryta meddelanden om sidändringar logga in till wikin @DOKUWIKIURL@, besök sedan 
+@SUBSCRIBE@ 
+och avbeställ ändringar av sidor och/eller namespace.
+
+--
+Detta meddelande har skapats av DokuWiki vid 
+@DOKUWIKIURL@

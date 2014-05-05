@@ -10,6 +10,7 @@
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
  * @author mehrdad <mehrdad.jafari.bojd@gmail.com>
+ * @author reza_khn <reza_khn@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -84,6 +85,7 @@ $lang['profnoempty']           = 'نام و آدرس ایمیل باید پر ش
 $lang['profchanged']           = 'پروفایل کاربر با موفقیت به روز شد';
 $lang['profnodelete']          = 'ویکی توانایی پشتیبانی از حذف کاربران را ندارد';
 $lang['profdeleteuser']        = 'حذف حساب کاربری';
+$lang['profdeleted']           = 'حساب کاربری شما حذف گردیده است.';
 $lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ جدید دریافت کنید';
 $lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
 $lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
@@ -238,7 +240,7 @@ $lang['admin_register']        = 'یک حساب جدید بسازید';
 $lang['metaedit']              = 'ویرایش داده‌های متا';
 $lang['metasaveerr']           = 'نوشتن داده‌نما با مشکل مواجه شد';
 $lang['metasaveok']            = 'داده‌نما ذخیره شد';
-$lang['img_backto']            = 'بازگشت به ';
+$lang['btn_img_backto']            = 'بازگشت به  %s';
 $lang['img_title']             = 'عنوان تصویر';
 $lang['img_caption']           = 'عنوان';
 $lang['img_date']              = 'تاریخ';
@@ -251,7 +253,7 @@ $lang['img_camera']            = 'دوربین';
 $lang['img_keywords']          = 'واژه‌های کلیدی';
 $lang['img_width']             = 'عرض';
 $lang['img_height']            = 'ارتفاع';
-$lang['img_manager']           = 'دیدن در مدیریت محتوای چند رسانه ای';
+$lang['btn_mediaManager']           = 'دیدن در مدیریت محتوای چند رسانه ای';
 $lang['subscr_subscribe_success'] = '%s به لیست آبونه %s افزوده شد';
 $lang['subscr_subscribe_error'] = 'اشکال در افزودن %s به لیست آبونه %s';
 $lang['subscr_subscribe_noaddress'] = 'هیچ آدرسی برای این عضویت اضافه نشده است، شما نمی‌توانید به لیست آبونه اضافه شوید';

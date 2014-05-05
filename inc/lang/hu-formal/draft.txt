@@ -1,0 +1,5 @@
+===== Piszkozatot találtam =====
+
+Az Ön ezen az oldalon végzett utolsó szerkesztési művelete helytelenül fejeződött be. A DokuWiki automatikusan elmentett egy piszkozatot az Ön munkája során. Alább láthatók az utolsó munkafázis mentett adatai.
+
+Kérjük, döntse el, hogy //helyreállítja-e// a befejezetlen módosításokat, vagy //törli// az automatikusan mentett piszkozatot, vagy //megszakítja// a szerkesztési folyamatot.

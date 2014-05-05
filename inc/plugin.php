@@ -239,10 +239,35 @@ class DokuWiki_Plugin {
     }
 
     /**
+     * A fallback to provide access to the old render() method
+     *
+     * Since syntax plugins provide their own render method with a different signature and they now
+     * inherit from Doku_Plugin we can no longer have a render() method here (Strict Standards Violation).
+     * Instead use render_text()
+     *
+     * @deprecated 2014-01-22
+     * @param $name
+     * @param $arguments
+     * @return null|string
+     */
+    function __call($name, $arguments) {
+        if($name == 'render'){
+            if(!isset($arguments[1])) $arguments[1] = 'xhtml';
+            return $this->render_text($arguments[0], $arguments[1]);
+        }
+        trigger_error("no such method $name", E_USER_ERROR);
+        return null;
+    }
+
+    /**
      * output text string through the parser, allows dokuwiki markup to be used
      * very ineffecient for small pieces of data - try not to use
+     *
+     * @param string $text wiki markup to parse
+     * @param string $format output format
+     * @return null|string
      */
-    function render($text, $format='xhtml') {
+    function render_text($text, $format='xhtml') {
         return p_render($format, p_get_instructions($text),$info);
     }
 

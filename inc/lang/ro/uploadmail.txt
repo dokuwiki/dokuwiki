@@ -1,7 +1,9 @@
-Un fișier a fost încărcat în DocuWiki. Iată detaliile:
+Salutare, @FULLNAME@!
+
+Un fișier a fost încărcat în DokuWiki. Iată detaliile:
 
 Fișier : @MEDIA@
-Data : @DATE@
+Dată : @DATE@
 Browser : @BROWSER@
 Adresă IP : @IPADDRESS@
 Hostname : @HOSTNAME@
@@ -10,5 +12,5 @@ MIME Type : @MIME@
 Utilizator : @USER@
 
 -- 
-Acest mail a fost generat automat de către DokuWiki la
+Acest e-mail a fost generat de DokuWiki la
 @DOKUWIKIURL@

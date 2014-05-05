@@ -1,6 +1,6 @@
 <?php
 
-class auth_password_test extends PHPUnit_Framework_TestCase {
+class auth_password_test extends DokuWikiTest {
 
     // hashes for the password foo$method, using abcdefgh as salt
     var $passes = array(

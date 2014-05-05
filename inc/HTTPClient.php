@@ -254,7 +254,13 @@ class HTTPClient {
         }
 
         // add SSL stream prefix if needed - needs SSL support in PHP
-        if($port == 443 || $this->proxy_ssl) $server = 'ssl://'.$server;
+        if($port == 443 || $this->proxy_ssl) {
+            if(!in_array('ssl', stream_get_transports())) {
+                $this->status = -200;
+                $this->error = 'This PHP version does not support SSL - cannot connect to server';
+            }
+            $server = 'ssl://'.$server;
+        }
 
         // prepare headers
         $headers               = $this->headers;
@@ -304,11 +310,18 @@ class HTTPClient {
             }
 
             // try establish a CONNECT tunnel for SSL
-            if($this->_ssltunnel($socket, $request_url)){
-                // no keep alive for tunnels
-                $this->keep_alive = false;
-                // tunnel is authed already
-                if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+            try {
+                if($this->_ssltunnel($socket, $request_url)){
+                    // no keep alive for tunnels
+                    $this->keep_alive = false;
+                    // tunnel is authed already
+                    if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+                }
+            } catch (HTTPClientException $e) {
+                $this->status = $e->getCode();
+                $this->error = $e->getMessage();
+                fclose($socket);
+                return false;
             }
 
             // keep alive?
@@ -363,7 +376,7 @@ class HTTPClient {
 
             // get Status
             if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m))
-                throw new HTTPClientException('Server returned bad answer');
+                throw new HTTPClientException('Server returned bad answer '.$r_headers);
 
             $this->status = $m[2];
 
@@ -526,6 +539,7 @@ class HTTPClient {
      *
      * @param resource &$socket
      * @param string   &$requesturl
+     * @throws HTTPClientException when a tunnel is needed but could not be established
      * @return bool true if a tunnel was established
      */
     function _ssltunnel(&$socket, &$requesturl){
@@ -538,7 +552,7 @@ class HTTPClient {
         $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;
         $request .= "Host: {$requestinfo['host']}".HTTP_NL;
         if($this->proxy_user) {
-                'Proxy-Authorization Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
+            $request .= 'Proxy-Authorization: Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
         }
         $request .= HTTP_NL;
 
@@ -559,7 +573,8 @@ class HTTPClient {
                 return true;
             }
         }
-        return false;
+
+        throw new HTTPClientException('Failed to establish secure proxy connection', -150);
     }
 
     /**

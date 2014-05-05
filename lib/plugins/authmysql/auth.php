@@ -352,13 +352,18 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @param  array|string $filter array of field/pattern pairs
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($first = 0, $limit = 10, $filter = array()) {
+    public function retrieveUsers($first = 0, $limit = 0, $filter = array()) {
         $out = array();
 
         if($this->_openDB()) {
             $this->_lockTables("READ");
             $sql = $this->_createSQLFilter($this->getConf('getUsers'), $filter);
-            $sql .= " ".$this->getConf('SortOrder')." LIMIT $first, $limit";
+            $sql .= " ".$this->getConf('SortOrder');
+            if($limit) {
+                $sql .= " LIMIT $first, $limit";
+            } elseif($first) {
+                $sql .= " LIMIT $first";
+            }
             $result = $this->_queryDB($sql);
 
             if(!empty($result)) {

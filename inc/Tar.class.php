@@ -114,7 +114,7 @@ class Tar {
             $header = $this->parseHeader($read);
             if(!is_array($header)) continue;
 
-            $this->skipbytes(ceil($header['size'] / 512) * 512, 1);
+            $this->skipbytes(ceil($header['size'] / 512) * 512);
             $result[] = $header;
         }
 

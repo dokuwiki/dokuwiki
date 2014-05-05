@@ -1,5 +1,0 @@
-====== Verwaltung der Plugins ======
-
-Auf dieser Seite kannst du alles machen, was mit DokuWiki [[doku>plugins|Plugins]] zu tun hat. Um Plugins automatisch herunterladen und installieren zu können, muss der Webserver im Plugin-Ordner schreiben dürfen.
-
-

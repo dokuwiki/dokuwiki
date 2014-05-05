@@ -8,15 +8,18 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
+/**
+ * The event
+ */
 class Doku_Event {
 
     // public properties
-    var $name = '';                // READONLY  event name, objects must register against this name to see the event
-    var $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
-    var $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
+    public $name = '';                // READONLY  event name, objects must register against this name to see the event
+    public $data = null;              // READWRITE data relevant to the event, no standardised format (YET!)
+    public $result = null;            // READWRITE the results of the event action, only relevant in "_AFTER" advise
     //    event handlers may modify this if they are preventing the default action
     //    to provide the after event handlers with event results
-    var $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
+    public $canPreventDefault = true; // READONLY  if true, event handlers can prevent the events default action
 
     // private properties, event handlers can effect these through the provided methods
     var $_default = true;     // whether or not to carry out the default action associated with the event
@@ -30,6 +33,13 @@ class Doku_Event {
         $this->name = $name;
         $this->data =& $data;
 
+    }
+
+    /**
+     * @return string
+     */
+    function __toString() {
+        return $this->name;
     }
 
     /**
@@ -47,7 +57,8 @@ class Doku_Event {
      *    $evt->advise_after();
      *    unset($evt);
      *
-     * @return  results of processing the event, usually $this->_default
+     * @param bool $enablePreventDefault
+     * @return bool results of processing the event, usually $this->_default
      */
     function advise_before($enablePreventDefault=true) {
         global $EVENT_HANDLER;
@@ -73,14 +84,21 @@ class Doku_Event {
      *   $this->_default, all of which may have been modified by the event handlers.
      * - advise all registered (<event>_AFTER) handlers that the event has taken place
      *
-     * @return  $event->results
+     * @param null|callable $action
+     * @param bool $enablePrevent
+     * @return  mixed $event->results
      *          the value set by any <event>_before or <event> handlers if the default action is prevented
      *          or the results of the default action (as modified by <event>_after handlers)
      *          or NULL no action took place and no handler modified the value
      */
     function trigger($action=null, $enablePrevent=true) {
 
-        if (!is_callable($action)) $enablePrevent = false;
+        if (!is_callable($action)) {
+            $enablePrevent = false;
+            if (!is_null($action)) {
+                trigger_error('The default action of '.$this.' is not null but also not callable. Maybe the method is not public?', E_USER_WARNING);
+            }
+        }
 
         if ($this->advise_before($enablePrevent) && is_callable($action)) {
             if (is_array($action)) {
@@ -112,12 +130,15 @@ class Doku_Event {
     function preventDefault() { $this->_default = false;  }
 }
 
+/**
+ * Controls the registration and execution of all events,
+ */
 class Doku_Event_Handler {
 
     // public properties:  none
 
     // private properties
-    var $_hooks = array();          // array of events and their registered handlers
+    protected $_hooks = array();          // array of events and their registered handlers
 
     /**
      * event_handler
@@ -128,6 +149,7 @@ class Doku_Event_Handler {
     function Doku_Event_Handler() {
 
         // load action plugins
+        /** @var DokuWiki_Action_Plugin $plugin */
         $plugin = null;
         $pluginlist = plugin_list('action');
 
@@ -143,34 +165,47 @@ class Doku_Event_Handler {
      *
      * register a hook for an event
      *
-     * @param  $event   (string)   name used by the event, (incl '_before' or '_after' for triggers)
-     * @param  $obj     (obj)      object in whose scope method is to be executed,
+     * @param  $event   string   name used by the event, (incl '_before' or '_after' for triggers)
+     * @param  $advise  string
+     * @param  $obj     object   object in whose scope method is to be executed,
      *                             if NULL, method is assumed to be a globally available function
-     * @param  $method  (function) event handler function
-     * @param  $param   (mixed)    data passed to the event handler
+     * @param  $method  string   event handler function
+     * @param  $param   mixed    data passed to the event handler
+     * @param  $seq     int      sequence number for ordering hook execution (ascending)
      */
-    function register_hook($event, $advise, $obj, $method, $param=null) {
-        $this->_hooks[$event.'_'.$advise][] = array($obj, $method, $param);
+    function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
+        $seq = (int)$seq;
+        $doSort = !isset($this->_hooks[$event.'_'.$advise][$seq]);
+        $this->_hooks[$event.'_'.$advise][$seq][] = array($obj, $method, $param);
+
+        if ($doSort) {
+            ksort($this->_hooks[$event.'_'.$advise]);
+        }
     }
 
-    function process_event(&$event,$advise='') {
+    /**
+     * process the before/after event
+     *
+     * @param Doku_Event $event
+     * @param string     $advise BEFORE or AFTER
+     */
+    function process_event($event,$advise='') {
 
         $evt_name = $event->name . ($advise ? '_'.$advise : '_BEFORE');
 
         if (!empty($this->_hooks[$evt_name])) {
-            foreach ($this->_hooks[$evt_name] as $hook) {
-                //        list($obj, $method, $param) = $hook;
-                $obj =& $hook[0];
-                $method = $hook[1];
-                $param = $hook[2];
+            foreach ($this->_hooks[$evt_name] as $sequenced_hooks) {
+                foreach ($sequenced_hooks as $hook) {
+                    list($obj, $method, $param) = $hook;
 
-                if (is_null($obj)) {
-                    $method($event, $param);
-                } else {
-                    $obj->$method($event, $param);
+                    if (is_null($obj)) {
+                        $method($event, $param);
+                    } else {
+                        $obj->$method($event, $param);
+                    }
+
+                    if (!$event->_continue) return;
                 }
-
-                if (!$event->_continue) break;
             }
         }
     }
@@ -181,12 +216,12 @@ class Doku_Event_Handler {
  *
  * function wrapper to process (create, trigger and destroy) an event
  *
- * @param  $name               (string)   name for the event
- * @param  $data               (mixed)    event data
- * @param  $action             (callback) (optional, default=NULL) default action, a php callback function
- * @param  $canPreventDefault  (bool)     (optional, default=true) can hooks prevent the default action
+ * @param  $name               string   name for the event
+ * @param  $data               mixed    event data
+ * @param  $action             callback (optional, default=NULL) default action, a php callback function
+ * @param  $canPreventDefault  bool     (optional, default=true) can hooks prevent the default action
  *
- * @return (mixed)                        the event results value after all event processing is complete
+ * @return mixed                        the event results value after all event processing is complete
  *                                         by default this is the return value of the default action however
  *                                         it can be set or modified by event handler hooks
  */

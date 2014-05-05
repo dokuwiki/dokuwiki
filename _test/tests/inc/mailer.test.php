@@ -191,7 +191,10 @@ class mailer_test extends DokuWikiTest {
         // ask message lint if it is okay
         $html = new HTTPClient();
         $results = $html->post('http://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
-        $this->assertTrue($results !== false);
+        if($results === false) {
+            $this->markTestSkipped('no response from validator');
+            return;
+        }
 
         // parse the result lines
         $lines = explode("\n", $results);

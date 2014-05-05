@@ -154,7 +154,7 @@ function tpl_content_core() {
             html_resendpwd();
             break;
         case 'denied':
-            print p_locale_xhtml('denied');
+            html_denied();
             break;
         case 'profile' :
             html_updateprofile();
@@ -210,7 +210,7 @@ function tpl_toc($return = false) {
         } else {
             $tocok = true;
         }
-        $toc = $meta['description']['tableofcontents'];
+        $toc = isset($meta['description']['tableofcontents']) ? $meta['description']['tableofcontents'] : null;
         if(!$tocok || !is_array($toc) || !$conf['tocminheads'] || count($toc) < $conf['tocminheads']) {
             $toc = array();
         }
@@ -291,6 +291,8 @@ function tpl_metaheaders($alt = true) {
     global $lang;
     global $conf;
     global $updateVersion;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // prepare the head array
     $head = array();
@@ -316,15 +318,17 @@ function tpl_metaheaders($alt = true) {
     }
 
     if($alt) {
-        $head['link'][] = array(
-            'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
-        );
-        $head['link'][] = array(
-            'rel'  => 'alternate', 'type'=> 'application/rss+xml',
-            'title'=> $lang['currentns'],
-            'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
-        );
+        if(actionOK('rss')) {
+            $head['link'][] = array(
+                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
+                'title'=> $lang['btn_recent'], 'href'=> DOKU_BASE.'feed.php'
+            );
+            $head['link'][] = array(
+                'rel'  => 'alternate', 'type'=> 'application/rss+xml',
+                'title'=> $lang['currentns'],
+                'href' => DOKU_BASE.'feed.php?mode=list&ns='.$INFO['namespace']
+            );
+        }
         if(($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
             $head['link'][] = array(
                 'rel'  => 'edit',
@@ -333,7 +337,7 @@ function tpl_metaheaders($alt = true) {
             );
         }
 
-        if($ACT == 'search') {
+        if(actionOK('rss') && $ACT == 'search') {
             $head['link'][] = array(
                 'rel'  => 'alternate', 'type'=> 'application/rss+xml',
                 'title'=> $lang['searchresult'],
@@ -401,7 +405,7 @@ function tpl_metaheaders($alt = true) {
     // make $INFO and other vars available to JavaScripts
     $json   = new JSON();
     $script = "var NS='".$INFO['namespace']."';";
-    if($conf['useacl'] && !empty($_SERVER['REMOTE_USER'])) {
+    if($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         $script .= "var SIG='".toolbar_signature()."';";
     }
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
@@ -548,6 +552,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
          * @var string $method
          * @var bool   $nofollow
          * @var array  $params
+         * @var string $replacement
          */
         extract($data);
         if(strpos($id, '#') === 0) {
@@ -556,6 +561,9 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
             $linktarget = wl($id, $params);
         }
         $caption = $lang['btn_'.$type];
+        if(strpos($caption, '%s')){
+            $caption = sprintf($caption, $replacement);
+        }
         $akey    = $addTitle = '';
         if($accesskey) {
             $akey     = 'accesskey="'.$accesskey.'" ';
@@ -603,17 +611,20 @@ function tpl_get_action($type) {
     global $REV;
     global $ACT;
     global $conf;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // check disabled actions and fix the badly named ones
     if($type == 'history') $type = 'revisions';
     if ($type == 'subscription') $type = 'subscribe';
     if(!actionOK($type)) return false;
 
-    $accesskey = null;
-    $id        = $ID;
-    $method    = 'get';
-    $params    = array('do' => $type);
-    $nofollow  = true;
+    $accesskey   = null;
+    $id          = $ID;
+    $method      = 'get';
+    $params      = array('do' => $type);
+    $nofollow    = true;
+    $replacement = '';
     switch($type) {
         case 'edit':
             // most complicated type - we need to decide on current action
@@ -637,7 +648,7 @@ function tpl_get_action($type) {
                     $accesskey     = 'v';
                 }
             } else {
-                $params    = array();
+                $params    = array('do' => '');
                 $type      = 'show';
                 $accesskey = 'v';
             }
@@ -658,7 +669,7 @@ function tpl_get_action($type) {
             break;
         case 'top':
             $accesskey = 't';
-            $params    = array();
+            $params    = array('do' => '');
             $id        = '#dokuwiki__top';
             break;
         case 'back':
@@ -667,12 +678,17 @@ function tpl_get_action($type) {
                 return false;
             }
             $id        = $parent;
-            $params    = array();
+            $params    = array('do' => '');
             $accesskey = 'b';
+            break;
+        case 'img_backto':
+            $params = array();
+            $accesskey = 'b';
+            $replacement = $ID;
             break;
         case 'login':
             $params['sectok'] = getSecurityToken();
-            if(isset($_SERVER['REMOTE_USER'])) {
+            if($INPUT->server->has('REMOTE_USER')) {
                 if(!actionOK('logout')) {
                     return false;
                 }
@@ -681,12 +697,12 @@ function tpl_get_action($type) {
             }
             break;
         case 'register':
-            if(!empty($_SERVER['REMOTE_USER'])) {
+            if($INPUT->server->str('REMOTE_USER')) {
                 return false;
             }
             break;
         case 'resendpwd':
-            if(!empty($_SERVER['REMOTE_USER'])) {
+            if($INPUT->server->str('REMOTE_USER')) {
                 return false;
             }
             break;
@@ -703,25 +719,40 @@ function tpl_get_action($type) {
             $params['sectok'] = getSecurityToken();
             break;
         case 'subscribe':
-            if(!$_SERVER['REMOTE_USER']) {
+            if(!$INPUT->server->str('REMOTE_USER')) {
                 return false;
             }
             break;
         case 'backlink':
             break;
         case 'profile':
-            if(!isset($_SERVER['REMOTE_USER'])) {
+            if(!$INPUT->server->has('REMOTE_USER')) {
                 return false;
             }
             break;
         case 'media':
             $params['ns'] = getNS($ID);
             break;
+        case 'mediaManager':
+            // View image in media manager
+            global $IMG;
+            $imgNS = getNS($IMG);
+            $authNS = auth_quickaclcheck("$imgNS:*");
+            if ($authNS < AUTH_UPLOAD) {
+                return false;
+            }
+            $params = array(
+                'ns' => $imgNS,
+                'image' => $IMG,
+                'do' => 'media'
+            );
+            //$type = 'media';
+            break;
         default:
             return '[unknown %s type]';
             break;
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow');
+    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 }
 
 /**
@@ -885,9 +916,11 @@ function tpl_youarehere($sep = ' » ') {
  */
 function tpl_userinfo() {
     global $lang;
-    global $INFO;
-    if(isset($_SERVER['REMOTE_USER'])) {
-        print $lang['loggedinas'].': <bdi>'.hsc($INFO['userinfo']['name']).'</bdi> (<bdi>'.hsc($_SERVER['REMOTE_USER']).'</bdi>)';
+    /** @var Input $INPUT */
+    global $INPUT;
+
+    if($INPUT->server->str('REMOTE_USER')) {
+        print $lang['loggedinas'].': '.userlink();
         return true;
     }
     return false;
@@ -1011,9 +1044,70 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
     static $meta = null;
     if(is_null($meta)) $meta = new JpegMeta($src);
     if($meta === false) return $alt;
-    $info = $meta->getField($tags);
+    $info = cleanText($meta->getField($tags));
     if($info == false) return $alt;
     return $info;
+}
+
+/**
+ * Returns a description list of the metatags of the current image
+ *
+ * @return string html of description list
+ */
+function tpl_img_meta() {
+    global $lang;
+
+    $tags = tpl_get_img_meta();
+
+    echo '<dl>';
+    foreach($tags as $tag) {
+        $label = $lang[$tag['langkey']];
+        if(!$label) $label = $tag['langkey'];
+
+        echo '<dt>'.$label.':</dt><dd>';
+        if ($tag['type'] == 'date') {
+            echo dformat($tag['value']);
+        } else {
+            echo hsc($tag['value']);
+        }
+        echo '</dd>';
+    }
+    echo '</dl>';
+}
+
+/**
+ * Returns metadata as configured in mediameta config file, ready for creating html
+ *
+ * @return array with arrays containing the entries:
+ *   - string langkey  key to lookup in the $lang var, if not found printed as is
+ *   - string type     type of value
+ *   - string value    tag value (unescaped)
+ */
+function tpl_get_img_meta() {
+
+    $config_files = getConfigFiles('mediameta');
+    foreach ($config_files as $config_file) {
+        if(@file_exists($config_file)) {
+            include($config_file);
+        }
+    }
+    /** @var array $fields the included array with metadata */
+
+    $tags = array();
+    foreach($fields as $tag){
+        $t = array();
+        if (!empty($tag[0])) {
+            $t = array($tag[0]);
+        }
+        if(is_array($tag[3])) {
+            $t = array_merge($t,$tag[3]);
+        }
+        $value = tpl_img_getTag($t);
+        if ($value) {
+            $tags[] = array('langkey' => $tag[1], 'type' => $tag[2], 'value' => $value);
+        }
+    }
+    return $tags;
 }
 
 /**
@@ -1030,6 +1124,7 @@ function tpl_img_getTag($tags, $alt = '', $src = null) {
  */
 function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
+    /** @var Input $INPUT */
     global $INPUT;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
@@ -1123,10 +1218,11 @@ function tpl_indexerWebBug() {
  *
  * use this function to access template configuration variables
  *
- * @param string $id
- * @return string
+ * @param string $id      name of the value to access
+ * @param mixed  $notset  what to return if the setting is not available
+ * @return mixed
  */
-function tpl_getConf($id) {
+function tpl_getConf($id, $notset=false) {
     global $conf;
     static $tpl_configloaded = false;
 
@@ -1143,7 +1239,11 @@ function tpl_getConf($id) {
         }
     }
 
-    return $conf['tpl'][$tpl][$id];
+    if(isset($conf['tpl'][$tpl][$id])){
+        return $conf['tpl'][$tpl][$id];
+    }
+
+    return $notset;
 }
 
 /**
@@ -1237,6 +1337,7 @@ function tpl_mediaContent($fromajax = false, $sort='natural') {
     global $INUSE;
     global $NS;
     global $JUMPTO;
+    /** @var Input $INPUT */
     global $INPUT;
 
     $do = $INPUT->extract('do')->str('do');
@@ -1286,6 +1387,7 @@ function tpl_mediaFileList() {
     global $NS;
     global $JUMPTO;
     global $lang;
+    /** @var Input $INPUT */
     global $INPUT;
 
     $opened_tab = $INPUT->str('tab_files');
@@ -1326,7 +1428,9 @@ function tpl_mediaFileList() {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_mediaFileDetails($image, $rev) {
-    global $AUTH, $NS, $conf, $DEL, $lang, $INPUT;
+    global $AUTH, $NS, $conf, $DEL, $lang;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
@@ -1404,12 +1508,14 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $ID;
     global $REV;
     global $lang;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
     if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if (!empty($_SERVER['REMOTE_USER'])) {
+    if ($INPUT->server->str('REMOTE_USER')) {
         echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
     }
 
@@ -1775,11 +1881,14 @@ function tpl_media() {
  */
 function tpl_classes() {
     global $ACT, $conf, $ID, $INFO;
+    /** @var Input $INPUT */
+    global $INPUT;
+
     $classes = array(
         'dokuwiki',
         'mode_'.$ACT,
         'tpl_'.$conf['template'],
-        !empty($_SERVER['REMOTE_USER']) ? 'loggedIn' : '',
+        $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',
         $INFO['exists'] ? '' : 'notFound',
         ($ID == $conf['start']) ? 'home' : '',
     );
