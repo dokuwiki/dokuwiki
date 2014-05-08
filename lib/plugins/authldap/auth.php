@@ -278,17 +278,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         // find the information about the user, in particular the "dn"
         $info = $this->getUserData($user,true);
         if(empty($info['dn'])) {
-            msg('LDAP cannot find your user dn: '. htmlspecialchars($info['dn']));
-            return false;
-        } else {
-            $dn = $info['dn'];
-        }
-
-        // find the new password and encrypt it whit SSHA
-        if(empty($changes['pass'])) {
-            msg('The new password is not allow because it\'s empty');
+            msg('LDAP cannot find your user dn');
             return false;
         }
+        $dn = $info['dn'];
 
         // find the old password of the user
         list($loginuser,$loginsticky,$loginpass) = auth_getCookie();
