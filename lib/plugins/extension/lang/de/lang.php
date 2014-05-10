@@ -85,6 +85,6 @@ $lang['error_copy']            = 'Beim Versuch Dateien in den Ordner <em>%s</em>
 $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgeschützt';
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';
 $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
-$lang['git']                   = 'Diese Erweiterung wurde über git installiert, daher kann diese nicht hier aktualisiert werden.';
+$lang['git']                   = 'Diese Erweiterung wurde über git installiert und sollte daher nicht hier aktualisiert werden.';
 $lang['install_url']           = 'Von Webadresse (URL) installieren';
 $lang['install_upload']        = 'Erweiterung hochladen:';
