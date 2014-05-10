@@ -57,6 +57,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if(substr($id, 0 , 9) == 'template:'){
             $this->base = substr($id, 9);
             $this->is_template = true;
+        } else {
+            $this->is_template = false;
         }
 
         $this->localInfo = array();
