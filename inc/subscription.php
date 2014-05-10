@@ -700,6 +700,7 @@ class Subscription {
  * @deprecated 2012-12-07
  */
 function subscription_addresslist(&$data) {
+    dbg_deprecated('class Subscription');
     $sub = new Subscription();
     $sub->notifyaddresses($data);
 }
