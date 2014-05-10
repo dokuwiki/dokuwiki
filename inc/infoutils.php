@@ -280,6 +280,15 @@ define('MSG_USERS_ONLY', 1);
 define('MSG_MANAGERS_ONLY',2);
 define('MSG_ADMINS_ONLY',4);
 
+/**
+ * Display a message to the user
+ *
+ * @param string $message
+ * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
+ * @param string $line  line number
+ * @param string $file  file number
+ * @param int    $allow who's allowed to see the message, see MSG_* constants
+ */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
     $errors[-1] = 'error';
@@ -309,6 +318,7 @@ function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
  *                         lvl   => int, level of the message (see msg() function)
  *                         allow => int, flag used to determine who is allowed to see the message
  *                                       see MSG_* constants
+ * @return bool
  */
 function info_msg_allowed($msg){
     global $INFO, $auth;
