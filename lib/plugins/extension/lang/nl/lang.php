@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Rene <wllywlnt@yahoo.com>
+ * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
 $lang['menu']                  = 'Uitbreidings Beheerder';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -30,7 +31,7 @@ $lang['search']                = 'Zoek';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
 $lang['screenshot']            = 'Schermafdruk bij %s';
 $lang['popularity']            = 'Populariteit:%s%%';
-$lang['homepage_link']         = 'Dokumenten';
+$lang['homepage_link']         = 'Documentatie';
 $lang['bugs_features']         = 'Bugs';
 $lang['tags']                  = 'Tags:';
 $lang['author_hint']           = 'Zoek uitbreidingen van deze auteur:';
