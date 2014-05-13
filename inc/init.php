@@ -259,6 +259,11 @@ function init_paths(){
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
 }
 
+/**
+ * Load the language strings
+ *
+ * @param string $langCode language code, as passed by event handler
+ */
 function init_lang($langCode) {
     //prepare language array
     global $lang;
@@ -270,6 +275,9 @@ function init_lang($langCode) {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
             require(DOKU_INC."inc/lang/$langCode/lang.php");
         }
+    }
+    if (file_exists(DOKU_CONF."lang/$langCode/lang.php")) {
+        require(DOKU_CONF."lang/$langCode/lang.php");
     }
 }
 

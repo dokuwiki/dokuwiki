@@ -124,6 +124,7 @@ class DokuWiki_Plugin {
         // don't include once, in case several plugin components require the same language file
         @include($path.'en/lang.php');
         if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
+        @include(DOKU_CONF.'plugin_lang/'.$this->getPluginName().'/'.$conf['lang'].'/lang.php');
 
         $this->lang = $lang;
         $this->localised = true;

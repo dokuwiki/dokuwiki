@@ -1285,8 +1285,8 @@ function tpl_getLang($id) {
         // don't include once
         @include($path.'en/lang.php');
         if($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
+        @include(DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/lang.php');
     }
-
     return $lang[$id];
 }
 
@@ -1307,7 +1307,7 @@ function tpl_locale_xhtml($id) {
 function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
     global $conf;
-    $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
+    $file = DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
     if (!@file_exists($file)){
         $file = $path.$conf['lang'].'/'.$id.'.txt';
         if(!@file_exists($file)){
@@ -1329,6 +1329,7 @@ function tpl_localeFN($id) {
  *
  * @triggers MEDIAMANAGER_CONTENT_OUTPUT
  * @param bool $fromajax - set true when calling this function via ajax
+ * @param string $sort
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_mediaContent($fromajax = false, $sort='natural') {
