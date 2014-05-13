@@ -5,7 +5,7 @@
  * 
  * @author Rene <wllywlnt@yahoo.com>
  */
-$lang['menu']                  = 'Extension Manager (Uitbreidings Beheerder)';
+$lang['menu']                  = 'Uitbreidings Beheerder';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
 $lang['tab_templates']         = 'Geïnstalleerde Templates';
 $lang['tab_search']            = 'Zoek en installeer';
@@ -24,7 +24,7 @@ $lang['btn_enable']            = 'Schakel aan';
 $lang['btn_disable']           = 'Schakel uit';
 $lang['btn_install']           = 'Installeer';
 $lang['btn_reinstall']         = 'Her-installeer';
-$lang['js']['reallydel']       = 'Wilt u deze uitbreiding deinstalleren ?';
+$lang['js']['reallydel']       = 'Wilt u deze uitbreiding deinstalleren?';
 $lang['search_for']            = 'Zoek Uitbreiding:';
 $lang['search']                = 'Zoek';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
@@ -36,16 +36,16 @@ $lang['tags']                  = 'Tags:';
 $lang['author_hint']           = 'Zoek uitbreidingen van deze auteur:';
 $lang['installed']             = 'Geinstalleerd:';
 $lang['downloadurl']           = 'Download URL:';
-$lang['repository']            = 'Repository ( centrale opslag)';
+$lang['repository']            = 'Centrale opslag:';
 $lang['unknown']               = '<em>onbekend</em>';
-$lang['installed_version']     = 'Geïnstalleerde versie';
-$lang['install_date']          = 'Uw laatste update :';
+$lang['installed_version']     = 'Geïnstalleerde versie:';
+$lang['install_date']          = 'Uw laatste update:';
 $lang['available_version']     = 'Beschikbare versie:';
-$lang['compatible']            = 'Compatible met :';
-$lang['depends']               = 'Afhankelijk van :';
-$lang['similar']               = 'Soortgelijk :';
-$lang['conflicts']             = 'Conflicteerd met :';
-$lang['donate']                = 'Vindt u dit leuk ?';
+$lang['compatible']            = 'Compatible met:';
+$lang['depends']               = 'Afhankelijk van:';
+$lang['similar']               = 'Soortgelijk:';
+$lang['conflicts']             = 'Conflicteerd met:';
+$lang['donate']                = 'Vindt u dit leuk?';
 $lang['donate_action']         = 'Koop een kop koffie voor de auteur!';
 $lang['repo_retry']            = 'Herhaal';
 $lang['provides']              = 'Zorgt voor:';
@@ -85,3 +85,4 @@ $lang['nopluginperms']         = 'Plugin directory is niet schrijfbaar';
 $lang['git']                   = 'De uitbreiding werd geïnstalleerd via git, u wilt deze hier wellicht niet aanpassen.';
 $lang['install_url']           = 'Installeer vanaf URL:';
 $lang['install_upload']        = 'Upload Uitbreiding:';
+$lang['repo_error']            = 'Er kon geen verbinding worden gemaakt met de centrale plugin opslag. Controleer of de server verbinding mag maken met www.dokuwiki.org en controleer de proxy instellingen.';
