@@ -17,6 +17,7 @@
  * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
+ * @author Mirko <malisan.mirko@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,6 +62,8 @@ $lang['btn_register']          = 'Registrazione';
 $lang['btn_apply']             = 'Applica';
 $lang['btn_media']             = 'Gestore Media';
 $lang['btn_deleteuser']        = 'Rimuovi il mio account';
+$lang['btn_img_backto']        = 'Torna a %s';
+$lang['btn_mediaManager']      = 'Guarda nel gestore media';
 $lang['loggedinas']            = 'Collegato come';
 $lang['user']                  = 'Nome utente';
 $lang['pass']                  = 'Password';
@@ -189,6 +192,9 @@ $lang['difflink']              = 'Link a questa pagina di confronto';
 $lang['diff_type']             = 'Guarda le differenze:';
 $lang['diff_inline']           = 'In linea';
 $lang['diff_side']             = 'Fianco a Fianco';
+$lang['diffprevrev']           = 'Revisione precedente';
+$lang['diffnextrev']           = 'Prossima revisione';
+$lang['difflastrev']           = 'Ultima revisione';
 $lang['line']                  = 'Linea';
 $lang['breadcrumb']            = 'Traccia';
 $lang['youarehere']            = 'Ti trovi qui';
@@ -245,7 +251,6 @@ $lang['admin_register']        = 'Aggiungi un nuovo utente';
 $lang['metaedit']              = 'Modifica metadati';
 $lang['metasaveerr']           = 'Scrittura metadati fallita';
 $lang['metasaveok']            = 'Metadati salvati';
-$lang['btn_img_backto']            = 'Torna a %s';
 $lang['img_title']             = 'Titolo';
 $lang['img_caption']           = 'Descrizione';
 $lang['img_date']              = 'Data';
@@ -258,7 +263,6 @@ $lang['img_camera']            = 'Camera';
 $lang['img_keywords']          = 'Parole chiave';
 $lang['img_width']             = 'Larghezza';
 $lang['img_height']            = 'Altezza';
-$lang['btn_mediaManager']           = 'Guarda nel gestore media';
 $lang['subscr_subscribe_success'] = 'Aggiunto %s alla lista di sottoscrizioni %s';
 $lang['subscr_subscribe_error'] = 'Impossibile aggiungere %s alla lista di sottoscrizioni %s';
 $lang['subscr_subscribe_noaddress'] = 'Non esiste alcun indirizzo associato al tuo account, non puoi essere aggiunto alla lista di sottoscrizioni';
@@ -338,3 +342,4 @@ $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per ca
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
 $lang['searchresult']          = 'Risultati della ricerca';
+$lang['plainhtml']             = 'HTML';
