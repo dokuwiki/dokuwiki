@@ -36,8 +36,8 @@ class DokuWiki_Plugin {
         if(@file_exists($info)) return confToHash($info);
 
         msg('getInfo() not implemented in '.get_class($this).
-               ' and '.$info.' not found.<br />This is a bug in the '.
-               $parts[2].' plugin and should be reported to the '.
+               ' and '.$info.' not found.<br />Do you have installed the last version of the plugin? '.
+               'If that is the case, this is a bug in the '. $parts[2].' plugin and should be reported to the '.
                'plugin author.',-1);
         return array(
             'date'   => '0000-00-00',
