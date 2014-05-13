@@ -66,6 +66,7 @@ $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considere
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
 $conf['remoteuser']  = '!!not set !!';   //user/groups that have access to remote interface (comma separated)
+$conf['show_loginform_on_deny'] = 1;     //Show the login form to unauthenticated users on access deny pages.
 
 /* Antispam Features */
 $conf['usewordblock']= 1;                //block spam based on words? 0|1

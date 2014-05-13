@@ -181,6 +181,7 @@ $lang['mediaextchange']        = 'Filextension changed from .%s to .%s!';
 $lang['reference']             = 'References for';
 $lang['ref_inuse']             = 'The file can\'t be deleted, because it\'s still used by the following pages:';
 $lang['ref_hidden']            = 'Some references  are on pages you don\'t have permission to read';
+$lang['show_loginform_on_deny']= 'Show the login form on access denied pages to unauthenticated users.';
 
 $lang['hits']                  = 'Hits';
 $lang['quickhits']             = 'Matching pagenames';
