@@ -53,6 +53,13 @@ class css_css_compress_test extends DokuWikiTest {
         $this->assertEquals('#foo{background-image:url(http://foo.bar/baz.jpg);}', css_compress($text));
     }
 
+    function test_slcom6(){
+        $text = '#foo {
+                    background-image: url(//foo.bar/baz.jpg); // background-image: url(http://foo.bar/baz.jpg); this is all commented
+                }';
+        $this->assertEquals('#foo{background-image:url(//foo.bar/baz.jpg);}', css_compress($text));
+    }
+
     function test_hack(){
         $text = '/* Mac IE will not see this and continue with inline-block */
                  /* \\*/
