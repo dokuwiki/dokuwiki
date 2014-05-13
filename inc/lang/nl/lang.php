@@ -26,11 +26,11 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '„';
+$lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‚';
+$lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Pagina aanpassen';
 $lang['btn_source']            = 'Toon broncode';
 $lang['btn_show']              = 'Toon pagina';
