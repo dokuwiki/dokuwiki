@@ -18,6 +18,7 @@
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
+ * @author Francesco <francesco.cavalli@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
