@@ -405,6 +405,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 if($userInfo) {
                     switch($conf['showuseras']) {
                         case 'username':
+                        case 'username_link':
                             $item->author = $userInfo['name'];
                             break;
                         default:
