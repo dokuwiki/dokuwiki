@@ -18,6 +18,7 @@
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
+ * @author Francesco <francesco.cavalli@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -149,6 +150,7 @@ $lang['js']['del_confirm']     = 'Eliminare veramente questa voce?';
 $lang['js']['restore_confirm'] = 'Vuoi davvero ripristinare questa versione?';
 $lang['js']['media_diff']      = 'Guarda le differenze:';
 $lang['js']['media_diff_both'] = 'Fianco a Fianco';
+$lang['js']['media_diff_portions'] = 'rubare';
 $lang['js']['media_select']    = 'Seleziona files..';
 $lang['js']['media_upload_btn'] = 'Upload';
 $lang['js']['media_done_btn']  = 'Fatto';
@@ -341,5 +343,6 @@ $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per le
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
+$lang['currentns']             = 'Namespace corrente';
 $lang['searchresult']          = 'Risultati della ricerca';
 $lang['plainhtml']             = 'HTML';
