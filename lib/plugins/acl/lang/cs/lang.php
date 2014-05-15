@@ -15,8 +15,8 @@
  * @author mkucera66@seznam.cz
  */
 $lang['admin_acl']             = 'Správa přístupových práv';
-$lang['acl_group']             = 'Skupina';
-$lang['acl_user']              = 'Uživatel';
+$lang['acl_group']             = 'Skupina:';
+$lang['acl_user']              = 'Uživatel:';
 $lang['acl_perms']             = 'Práva pro';
 $lang['page']                  = 'Stránka';
 $lang['namespace']             = 'Jmenný prostor';

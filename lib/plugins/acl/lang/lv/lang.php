@@ -6,8 +6,8 @@
  * @author Aivars Miška <allefm@gmail.com>
  */
 $lang['admin_acl']             = 'Piekļuves tiesību vadība';
-$lang['acl_group']             = 'Grupa';
-$lang['acl_user']              = 'Lietotājs';
+$lang['acl_group']             = 'Grupa:';
+$lang['acl_user']              = 'Lietotājs:';
 $lang['acl_perms']             = 'Tiesības';
 $lang['page']                  = 'Lapa';
 $lang['namespace']             = 'Nodaļa';

@@ -7,8 +7,8 @@
  * @author Dejan Igrec dejan.igrec@gmail.com
  */
 $lang['admin_acl']             = 'Upravljanje listom kontrole pristupa';
-$lang['acl_group']             = 'Grupa';
-$lang['acl_user']              = 'Korisnik';
+$lang['acl_group']             = 'Grupa:';
+$lang['acl_user']              = 'Korisnik:';
 $lang['acl_perms']             = 'Dozvole za';
 $lang['page']                  = 'Stranica';
 $lang['namespace']             = 'Imenski prostor';

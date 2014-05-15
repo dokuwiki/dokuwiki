@@ -15,8 +15,8 @@
  * @author Garam <rowain8@gmail.com>
  */
 $lang['admin_acl']             = '접근 제어 목록 관리';
-$lang['acl_group']             = '그룹';
-$lang['acl_user']              = '사용자';
+$lang['acl_group']             = '그룹:';
+$lang['acl_user']              = '사용자:';
 $lang['acl_perms']             = '권한';
 $lang['page']                  = '문서';
 $lang['namespace']             = '이름공간';

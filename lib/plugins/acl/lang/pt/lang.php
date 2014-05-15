@@ -11,8 +11,8 @@
  * @author José Campos zecarlosdecampos@gmail.com
  */
 $lang['admin_acl']             = 'Gestão de ACLs';
-$lang['acl_group']             = 'Grupo';
-$lang['acl_user']              = 'Utilizador';
+$lang['acl_group']             = 'Grupo:';
+$lang['acl_user']              = 'Utilizador:';
 $lang['acl_perms']             = 'Permissão para';
 $lang['page']                  = 'Documento';
 $lang['namespace']             = 'Namespace';

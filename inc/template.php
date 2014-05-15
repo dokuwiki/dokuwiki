@@ -836,7 +836,7 @@ function tpl_breadcrumbs($sep = '•') {
     $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
 
     //render crumbs, highlight the last one
-    print '<span class="bchead">'.$lang['breadcrumb'].':</span>';
+    print '<span class="bchead">'.$lang['breadcrumb'].'</span>';
     $last = count($crumbs);
     $i    = 0;
     foreach($crumbs as $id => $name) {
@@ -876,7 +876,7 @@ function tpl_youarehere($sep = ' » ') {
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<span class="bchead">'.$lang['youarehere'].': </span>';
+    echo '<span class="bchead">'.$lang['youarehere'].' </span>';
 
     // always print the startpage
     echo '<span class="home">';
@@ -920,7 +920,7 @@ function tpl_userinfo() {
     global $INPUT;
 
     if($INPUT->server->str('REMOTE_USER')) {
-        print $lang['loggedinas'].': '.userlink();
+        print $lang['loggedinas'].' '.userlink();
         return true;
     }
     return false;
@@ -962,7 +962,7 @@ function tpl_pageinfo($ret = false) {
         $out .= '<bdi>'.$fn.'</bdi>';
         $out .= ' · ';
         $out .= $lang['lastmod'];
-        $out .= ': ';
+        $out .= ' ';
         $out .= $date;
         if($INFO['editor']) {
             $out .= ' '.$lang['by'].' ';
@@ -973,7 +973,7 @@ function tpl_pageinfo($ret = false) {
         if($INFO['locked']) {
             $out .= ' · ';
             $out .= $lang['lockedby'];
-            $out .= ': ';
+            $out .= ' ';
             $out .= '<bdi>'.editorinfo($INFO['locked']).'</bdi>';
         }
         if($ret) {
@@ -1062,9 +1062,9 @@ function tpl_img_meta() {
     echo '<dl>';
     foreach($tags as $tag) {
         $label = $lang[$tag['langkey']];
-        if(!$label) $label = $tag['langkey'];
+        if(!$label) $label = $tag['langkey'] . ':';
 
-        echo '<dt>'.$label.':</dt><dd>';
+        echo '<dt>'.$label.'</dt><dd>';
         if ($tag['type'] == 'date') {
             echo dformat($tag['value']);
         } else {

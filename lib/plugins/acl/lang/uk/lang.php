@@ -11,8 +11,8 @@
  * @author Ulrikhe Lukoie  <lukoie@gmail>.com
  */
 $lang['admin_acl']             = 'Керування списками контролю доступу';
-$lang['acl_group']             = 'Група';
-$lang['acl_user']              = 'Користувач';
+$lang['acl_group']             = 'Група:';
+$lang['acl_user']              = 'Користувач:';
 $lang['acl_perms']             = 'Права доступу для';
 $lang['page']                  = 'Сторінка';
 $lang['namespace']             = 'Простір імен';

@@ -6,8 +6,8 @@
  * @author Ólafur Gunnlaugsson <oli@audiotools.com>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  */
-$lang['acl_group']             = 'Hópur';
-$lang['acl_user']              = 'Notandi';
+$lang['acl_group']             = 'Hópur:';
+$lang['acl_user']              = 'Notandi:';
 $lang['page']                  = 'Síða';
 $lang['namespace']             = 'Nafnrými';
 $lang['btn_select']            = 'Veldu';

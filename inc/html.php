@@ -411,8 +411,8 @@ function html_locked(){
 
     print p_locale_xhtml('locked');
     print '<ul>';
-    print '<li><div class="li"><strong>'.$lang['lockedby'].':</strong> '.editorinfo($INFO['locked']).'</div></li>';
-    print '<li><div class="li"><strong>'.$lang['lockexpire'].':</strong> '.$expire.' ('.$min.' min)</div></li>';
+    print '<li><div class="li"><strong>'.$lang['lockedby'].'</strong> '.editorinfo($INFO['locked']).'</div></li>';
+    print '<li><div class="li"><strong>'.$lang['lockexpire'].'</strong> '.$expire.' ('.$min.' min)</div></li>';
     print '</ul>';
 }
 
