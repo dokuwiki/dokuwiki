@@ -1,9 +1,12 @@
 #!/usr/bin/php
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(DOKU_INC.'inc/init.php');
 
+/**
+ * Update the Search Index from command line
+ */
 class IndexerCLI extends DokuCLI {
 
     private $quiet = false;
@@ -17,19 +20,19 @@ class IndexerCLI extends DokuCLI {
      */
     protected function setup(DokuCLI_Options $options) {
         $options->setHelp(
-                'Updates the searchindex by indexing all new or changed pages. When the -c option is ' .
-                'given the index is cleared first.'
+            'Updates the searchindex by indexing all new or changed pages. When the -c option is '.
+            'given the index is cleared first.'
         );
 
         $options->registerOption(
-                'clear',
-                'clear the index before updating',
-                'c'
+            'clear',
+            'clear the index before updating',
+            'c'
         );
         $options->registerOption(
-                'quiet',
-                'don\'t produce any output',
-                'q'
+            'quiet',
+            'don\'t produce any output',
+            'q'
         );
     }
 
@@ -58,7 +61,7 @@ class IndexerCLI extends DokuCLI {
         $data = array();
         $this->quietecho("Searching pages... ");
         search($data, $conf['datadir'], 'search_allpages', array('skipacl' => true));
-        $this->quietecho(count($data) . " pages found.\n");
+        $this->quietecho(count($data)." pages found.\n");
 
         foreach($data as $val) {
             $this->index($val['id']);

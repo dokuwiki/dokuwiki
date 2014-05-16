@@ -1,8 +1,8 @@
 #!/usr/bin/php
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(DOKU_INC.'inc/init.php');
 
 /**
  * Easily manage DokuWiki git repositories
@@ -19,51 +19,51 @@ class GitToolCLI extends DokuCLI {
      */
     protected function setup(DokuCLI_Options $options) {
         $options->setHelp(
-                "Manage git repositories for DokuWiki and its plugins and templates.\n\n" .
-                "$> ./bin/gittool.php clone gallery template:ach\n" .
-                "$> ./bin/gittool.php repos\n" .
-                "$> ./bin/gittool.php origin -v"
+            "Manage git repositories for DokuWiki and its plugins and templates.\n\n".
+            "$> ./bin/gittool.php clone gallery template:ach\n".
+            "$> ./bin/gittool.php repos\n".
+            "$> ./bin/gittool.php origin -v"
         );
 
         $options->registerArgument(
-                'command',
-                'Command to execute. See below',
-                true
+            'command',
+            'Command to execute. See below',
+            true
         );
 
         $options->registerCommand(
-                'clone',
-                'Tries to install a known plugin or template (prefix with template:) via git. Uses the DokuWiki.org ' .
-                'plugin repository to find the proper git repository. Multiple extensions can be given as parameters'
+            'clone',
+            'Tries to install a known plugin or template (prefix with template:) via git. Uses the DokuWiki.org '.
+            'plugin repository to find the proper git repository. Multiple extensions can be given as parameters'
         );
         $options->registerArgument(
-                'extension',
-                'name of the extension to install, prefix with \'template:\' for templates',
-                true,
-                'clone'
+            'extension',
+            'name of the extension to install, prefix with \'template:\' for templates',
+            true,
+            'clone'
         );
 
         $options->registerCommand(
-                'install',
-                'The same as clone, but when no git source repository can be found, the extension is installed via ' .
-                'download'
+            'install',
+            'The same as clone, but when no git source repository can be found, the extension is installed via '.
+            'download'
         );
         $options->registerArgument(
-                'extension',
-                'name of the extension to install, prefix with \'template:\' for templates',
-                true,
-                'install'
+            'extension',
+            'name of the extension to install, prefix with \'template:\' for templates',
+            true,
+            'install'
         );
 
         $options->registerCommand(
-                'repos',
-                'Lists all git repositories found in this DokuWiki installation'
+            'repos',
+            'Lists all git repositories found in this DokuWiki installation'
         );
 
         $options->registerCommand(
-                '*',
-                'Any unknown commands are assumed to be arguments to git and will be executed in all repositories ' .
-                'found within this DokuWiki installation'
+            '*',
+            'Any unknown commands are assumed to be arguments to git and will be executed in all repositories '.
+            'found within this DokuWiki installation'
         );
     }
 
@@ -81,7 +81,7 @@ class GitToolCLI extends DokuCLI {
 
         switch($command) {
             case '':
-                echo $options->help('foo');
+                echo $options->help();
                 break;
             case 'clone':
                 $this->cmd_clone($options->args);
@@ -123,8 +123,8 @@ class GitToolCLI extends DokuCLI {
         }
 
         echo "\n";
-        if($succeeded) $this->success('successfully cloned the following extensions: ' . join(', ', $succeeded));
-        if($errors) $this->error('failed to clone the following extensions: ' . join(', ', $errors));
+        if($succeeded) $this->success('successfully cloned the following extensions: '.join(', ', $succeeded));
+        if($errors) $this->error('failed to clone the following extensions: '.join(', ', $errors));
     }
 
     /**
@@ -156,8 +156,8 @@ class GitToolCLI extends DokuCLI {
         }
 
         echo "\n";
-        if($succeeded) $this->success('successfully installed the following extensions: ' . join(', ', $succeeded));
-        if($errors) $this->error('failed to install the following extensions: ' . join(', ', $errors));
+        if($succeeded) $this->success('successfully installed the following extensions: '.join(', ', $succeeded));
+        if($errors) $this->error('failed to install the following extensions: '.join(', ', $errors));
     }
 
     /**
@@ -246,9 +246,9 @@ class GitToolCLI extends DokuCLI {
      */
     private function cloneExtension($ext, $repo) {
         if(substr($ext, 0, 9) == 'template:') {
-            $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
+            $target = fullpath(tpl_incdir().'../'.substr($ext, 9));
         } else {
-            $target = DOKU_PLUGIN . $ext;
+            $target = DOKU_PLUGIN.$ext;
         }
 
         $this->info("cloning $ext from $repo to $target");
@@ -273,15 +273,15 @@ class GitToolCLI extends DokuCLI {
     private function findRepos() {
         $this->info('Looking for .git directories');
         $data = array_merge(
-            glob(DOKU_INC . '.git', GLOB_ONLYDIR),
-            glob(DOKU_PLUGIN . '*/.git', GLOB_ONLYDIR),
-            glob(fullpath(tpl_incdir() . '../') . '/*/.git', GLOB_ONLYDIR)
+            glob(DOKU_INC.'.git', GLOB_ONLYDIR),
+            glob(DOKU_PLUGIN.'*/.git', GLOB_ONLYDIR),
+            glob(fullpath(tpl_incdir().'../').'/*/.git', GLOB_ONLYDIR)
         );
 
         if(!$data) {
             $this->error('Found no .git directories');
         } else {
-            $this->success('Found ' . count($data) . ' .git directories');
+            $this->success('Found '.count($data).' .git directories');
         }
         $data = array_map('fullpath', array_map('dirname', $data));
         return $data;
@@ -306,7 +306,7 @@ class GitToolCLI extends DokuCLI {
         if(preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
-            return 'https://github.com/' . $user . '/' . $repo . '.git';
+            return 'https://github.com/'.$user.'/'.$repo.'.git';
         }
 
         // match gitorious repos
@@ -315,14 +315,14 @@ class GitToolCLI extends DokuCLI {
             $repo = $m[2];
             if(!$repo) $repo = $user;
 
-            return 'https://git.gitorious.org/' . $user . '/' . $repo . '.git';
+            return 'https://git.gitorious.org/'.$user.'/'.$repo.'.git';
         }
 
         // match bitbucket repos - most people seem to use mercurial there though
         if(preg_match('/bitbucket\.org\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
-            return 'https://bitbucket.org/' . $user . '/' . $repo . '.git';
+            return 'https://bitbucket.org/'.$user.'/'.$repo.'.git';
         }
 
         return false;

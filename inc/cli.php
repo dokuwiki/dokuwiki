@@ -57,13 +57,13 @@ abstract class DokuCLI {
         // setup
         $this->setup($this->options);
         $this->options->registerOption(
-                      'no-colors',
-                      'Do not use any colors in output. Useful when piping output to other tools or files.'
+            'no-colors',
+            'Do not use any colors in output. Useful when piping output to other tools or files.'
         );
         $this->options->registerOption(
-                      'help',
-                      'Display this help screen and exit immeadiately.',
-                      'h'
+            'help',
+            'Display this help screen and exit immeadiately.',
+            'h'
         );
 
         // parse
@@ -101,7 +101,7 @@ abstract class DokuCLI {
         }
         if(!$code) $code = DokuCLI_Exception::E_ANY;
 
-        $this->colors->ptln($error, 'red');
+        $this->error($error);
         exit($code);
     }
 
@@ -199,13 +199,13 @@ class DokuCLI_Colors {
     /**
      * Convenience function to print a line in a given color
      *
-     * @param $line
-     * @param $color
+     * @param          $line
+     * @param          $color
      * @param resource $channel
      */
-    public function ptln($line, $color, $channel=STDOUT) {
+    public function ptln($line, $color, $channel = STDOUT) {
         $this->set($color);
-        fwrite($channel, rtrim($line) . "\n");
+        fwrite($channel, rtrim($line)."\n");
         $this->reset();
     }
 
@@ -253,6 +253,9 @@ class DokuCLI_Options {
     /** @var  string the executed script */
     protected $bin;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $this->setup = array(
             '' => array(
@@ -282,10 +285,10 @@ class DokuCLI_Options {
      *
      * This has to be called in the order arguments are expected
      *
-     * @param string $arg argument name (just for help)
-     * @param string $help help text
-     * @param bool $required is this a required argument
-     * @param string $command if theses apply to a sub command only
+     * @param string $arg      argument name (just for help)
+     * @param string $help     help text
+     * @param bool   $required is this a required argument
+     * @param string $command  if theses apply to a sub command only
      * @throws DokuCLI_Exception
      */
     public function registerArgument($arg, $help, $required = true, $command = '') {
@@ -321,11 +324,11 @@ class DokuCLI_Options {
     /**
      * Register an option for option parsing and help generation
      *
-     * @param string $long multi character option (specified with --)
-     * @param string $help help text for this option
-     * @param string|null $short one character option (specified with -)
+     * @param string      $long     multi character option (specified with --)
+     * @param string      $help     help text for this option
+     * @param string|null $short    one character option (specified with -)
      * @param bool|string $needsarg does this option require an argument? give it a name here
-     * @param string $command what command does this option apply to
+     * @param string      $command  what command does this option apply to
      * @throws DokuCLI_Exception
      */
     public function registerOption($long, $help, $short = null, $needsarg = false, $command = '') {
@@ -467,7 +470,7 @@ class DokuCLI_Options {
      * Can only be used after parseOptions() has been run
      *
      * @param string $option
-     * @param mixed $default what to return if the option was not set
+     * @param mixed  $default what to return if the option was not set
      * @return mixed
      */
     public function getOpt($option, $default = false) {
@@ -498,7 +501,7 @@ class DokuCLI_Options {
             $hasargs = (bool) $this->setup[$command]['args'];
 
             if(!$command) {
-                $text .= 'USAGE: ' . $this->bin;
+                $text .= 'USAGE: '.$this->bin;
             } else {
                 $text .= "\n$command";
             }
@@ -507,9 +510,9 @@ class DokuCLI_Options {
 
             foreach($this->setup[$command]['args'] as $arg) {
                 if($arg['required']) {
-                    $text .= ' <' . $arg['name'] . '>';
+                    $text .= ' <'.$arg['name'].'>';
                 } else {
-                    $text .= ' [<' . $arg['name'] . '>]';
+                    $text .= ' [<'.$arg['name'].'>]';
                 }
             }
             $text .= "\n";
@@ -517,8 +520,8 @@ class DokuCLI_Options {
             if($this->setup[$command]['help']) {
                 $text .= "\n";
                 $text .= $this->tableFormat(
-                              array(2, 72),
-                              array('', $this->setup[$command]['help'] . "\n")
+                    array(2, 72),
+                    array('', $this->setup[$command]['help']."\n")
                 );
             }
 
@@ -528,7 +531,7 @@ class DokuCLI_Options {
 
                     $name = '';
                     if($opt['short']) {
-                        $name .= '-' . $opt['short'];
+                        $name .= '-'.$opt['short'];
                         if($opt['needsarg']) $name .= ' <'.$opt['needsarg'].'>';
                         $name .= ', ';
                     }
@@ -536,8 +539,8 @@ class DokuCLI_Options {
                     if($opt['needsarg']) $name .= ' <'.$opt['needsarg'].'>';
 
                     $text .= $this->tableFormat(
-                                  array(2, 20, 52),
-                                  array('', $name, $opt['help'])
+                        array(2, 20, 52),
+                        array('', $name, $opt['help'])
                     );
                     $text .= "\n";
                 }
@@ -546,11 +549,11 @@ class DokuCLI_Options {
             if($hasargs) {
                 $text .= "\n";
                 foreach($this->setup[$command]['args'] as $arg) {
-                    $name = '<' . $arg['name'] . '>';
+                    $name = '<'.$arg['name'].'>';
 
                     $text .= $this->tableFormat(
-                                  array(2, 20, 52),
-                                  array('', $name, $arg['help'])
+                        array(2, 20, 52),
+                        array('', $name, $arg['help'])
                     );
                 }
             }
@@ -591,7 +594,7 @@ class DokuCLI_Options {
      * Displays text in multiple word wrapped columns
      *
      * @param array $widths list of column widths (in characters)
-     * @param array $texts list of texts for each column
+     * @param array $texts  list of texts for each column
      * @return string
      */
     private function tableFormat($widths, $texts) {
@@ -613,7 +616,7 @@ class DokuCLI_Options {
                 } else {
                     $val = '';
                 }
-                $out .= sprintf('%-' . $width . 's', $val);
+                $out .= sprintf('%-'.$width.'s', $val);
             }
             $out .= "\n";
         }

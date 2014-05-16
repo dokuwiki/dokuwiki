@@ -1,9 +1,12 @@
 #!/usr/bin/php
 <?php
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(DOKU_INC.'inc/init.php');
 
+/**
+ * Find wanted pages
+ */
 class WantedPagesCLI extends DokuCLI {
 
     const DIR_CONTINUE = 1;
@@ -18,12 +21,12 @@ class WantedPagesCLI extends DokuCLI {
      */
     protected function setup(DokuCLI_Options $options) {
         $options->setHelp(
-                'Outputs a list of wanted pages (pages which have internal links but do not yet exist).'
+            'Outputs a list of wanted pages (pages which have internal links but do not yet exist).'
         );
         $options->registerArgument(
-                'namespace',
-                'The namespace to lookup. Defaults to root namespace',
-                false
+            'namespace',
+            'The namespace to lookup. Defaults to root namespace',
+            false
         );
     }
 
@@ -38,7 +41,7 @@ class WantedPagesCLI extends DokuCLI {
     protected function main(DokuCLI_Options $options) {
 
         if($options->args) {
-            $startdir = dirname(wikiFN($options->args[0] . ':xxx'));
+            $startdir = dirname(wikiFN($options->args[0].':xxx'));
         } else {
             $startdir = dirname(wikiFN('xxx'));
         }
@@ -54,7 +57,7 @@ class WantedPagesCLI extends DokuCLI {
         sort($wanted_pages);
 
         foreach($wanted_pages as $page) {
-            print $page . "\n";
+            print $page."\n";
         }
     }
 
@@ -62,7 +65,7 @@ class WantedPagesCLI extends DokuCLI {
         if($entry == '.' || $entry == '..') {
             return WantedPagesCLI::DIR_CONTINUE;
         }
-        if(is_dir($basepath . '/' . $entry)) {
+        if(is_dir($basepath.'/'.$entry)) {
             if(strpos($entry, '_') === 0) {
                 return WantedPagesCLI::DIR_CONTINUE;
             }
@@ -78,7 +81,7 @@ class WantedPagesCLI extends DokuCLI {
         static $trunclen = null;
         if(!$trunclen) {
             global $conf;
-            $trunclen = strlen($conf['datadir'] . ':');
+            $trunclen = strlen($conf['datadir'].':');
         }
 
         if(!is_dir($dir)) {
@@ -92,11 +95,11 @@ class WantedPagesCLI extends DokuCLI {
             if($status == WantedPagesCLI::DIR_CONTINUE) {
                 continue;
             } else if($status == WantedPagesCLI::DIR_NS) {
-                $pages = array_merge($pages, $this->get_pages($dir . '/' . $entry));
+                $pages = array_merge($pages, $this->get_pages($dir.'/'.$entry));
             } else {
                 $page    = array(
-                    'id'   => pathID(substr($dir . '/' . $entry, $trunclen)),
-                    'file' => $dir . '/' . $entry,
+                    'id'   => pathID(substr($dir.'/'.$entry, $trunclen)),
+                    'file' => $dir.'/'.$entry,
                 );
                 $pages[] = $page;
             }
