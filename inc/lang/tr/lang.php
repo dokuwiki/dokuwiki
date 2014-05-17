@@ -12,6 +12,7 @@
  * @author Mustafa Aslan <maslan@hotmail.com>
  * @author huseyin can <huseyincan73@gmail.com>
  * @author ilker rifat kapaç <irifat@gmail.com>
+ * @author esra <esraa__olgunn@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
