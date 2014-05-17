@@ -83,3 +83,4 @@ $lang['nopluginperms']         = 'プラグインディレクトリが書き込�
 $lang['git']                   = 'この拡張機能は Git 経由でインストールされており、ここで更新すべきでないかもしれません。';
 $lang['install_url']           = 'URL からインストール：';
 $lang['install_upload']        = '拡張機能をアップロード：';
+$lang['repo_error']            = 'プラグインのリポジトリに接続できません。サーバーが www.dokuwiki.org に接続できることやプロキシの設定を確認して下さい。';
