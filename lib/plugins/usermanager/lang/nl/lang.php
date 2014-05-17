@@ -15,8 +15,9 @@
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Rene <wllywlnt@yahoo.com>
  */
-$lang['menu']                  = 'Gebruikersmanager';
+$lang['menu']                  = 'Gebruikersbeheer';
 $lang['noauth']                = '(gebruikersauthenticatie niet beschikbaar)';
 $lang['nosupport']             = '(gebruikersbeheer niet ondersteund)';
 $lang['badauth']               = 'ongeldige authenticatiemethode';
