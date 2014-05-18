@@ -236,7 +236,7 @@ class VersionFixCLI extends DokuCLI {
         if(preg_match('/<div class="error">(.*?)(<\/div>)/', $response, $m)) {
             $this->error('Seems like something went wrong on editing the page ' . $page . '. Error was: ' . $m[1]);
         } else {
-            $this->success('Page ' . $page . ' updated with new version.');
+            $this->success('Updated ' . $page . ' at dokuwiki.org.');
         }
     }
 
