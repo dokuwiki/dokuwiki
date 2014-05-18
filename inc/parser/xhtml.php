@@ -688,7 +688,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-    */
+     */
     function interwikilink($match, $name = null, $wikiName, $wikiUri) {
         global $conf;
 
@@ -700,18 +700,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        $url = $this->_resolveInterWiki($wikiName,$wikiUri);
+        $exists = null;
+        $url = $this->_resolveInterWiki($wikiName, $wikiUri, $exists);
 
-        if ( !$isImage ) {
-            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
+        if(!$isImage) {
+            $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $wikiName);
             $link['class'] = "interwiki iw_$class";
         } else {
             $link['class'] = 'media';
         }
 
         //do we stay at the same server? Use local target
-        if( strpos($url,DOKU_URL) === 0 ){
+        if(strpos($url, DOKU_URL) === 0 OR strpos($url, DOKU_BASE) === 0) {
             $link['target'] = $conf['target']['wiki'];
+        }
+        if($exists !== null && !$isImage) {
+            if($exists) {
+                $link['class'] .= ' wikilink1';
+            } else {
+                $link['class'] .= ' wikilink2';
+                $link['rel'] = 'nofollow';
+            }
         }
 
         $link['url'] = $url;
@@ -952,6 +961,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ($pos !== null) {
             $this->finishSectionEdit($pos);
         }
+    }
+
+    function tablethead_open(){
+        $this->doc .= DOKU_TAB . '<thead>' . DOKU_LF;
+    }
+
+    function tablethead_close(){
+        $this->doc .= DOKU_TAB . '</thead>' . DOKU_LF;
     }
 
     function tablerow_open(){

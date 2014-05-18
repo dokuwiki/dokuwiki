@@ -137,6 +137,9 @@ function js_out(){
     $js = ob_get_contents();
     ob_end_clean();
 
+    // strip any source maps
+    stripsourcemaps($js);
+
     // compress whitespace and comments
     if($conf['compress']){
         $js = js_compress($js);
@@ -163,7 +166,10 @@ function js_load($file){
         // is it a include_once?
         if($match[1]){
             $base = utf8_basename($ifile);
-            if($loaded[$base]) continue;
+            if($loaded[$base]){
+                $data  = str_replace($match[0], '' ,$data);
+                continue;
+            }
             $loaded[$base] = true;
         }
 

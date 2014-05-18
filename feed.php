@@ -15,6 +15,13 @@ require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
+//feed disabled?
+if(!actionOK('rss')) {
+    http_status(404);
+    echo '<error>RSS feed is disabled.</error>';
+    exit;
+}
+
 // get params
 $opt = rss_parseOptions();
 
@@ -134,12 +141,10 @@ function rss_parseOptions() {
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
-    $type = valid_input_set(
-        'type', array(
-                     'rss', 'rss2', 'atom', 'atom1', 'rss1',
-                     'default' => $conf['rss_type']
-                ),
-        $_REQUEST
+    $type = $INPUT->valid(
+        'type',
+        array( 'rss', 'rss2', 'atom', 'atom1', 'rss1'),
+        $conf['rss_type']
     );
     switch($type) {
         case 'rss':
@@ -292,7 +297,8 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 case 'diff':
                 case 'htmldiff':
                     if($ditem['media']) {
-                        $revs  = getRevisions($id, 0, 1, 8192, true);
+                        $medialog = new MediaChangeLog($id);
+                        $revs  = $medialog->getRevisions(0, 1);
                         $rev   = $revs[0];
                         $src_r = '';
                         $src_l = '';
@@ -317,7 +323,8 @@ function rss_buildItems(&$rss, &$data, $opt) {
 
                     } else {
                         require_once(DOKU_INC.'inc/DifferenceEngine.php');
-                        $revs = getRevisions($id, 0, 1);
+                        $pagelog = new PageChangeLog($id);
+                        $revs = $pagelog->getRevisions(0, 1);
                         $rev  = $revs[0];
 
                         if($rev) {
@@ -398,6 +405,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 if($userInfo) {
                     switch($conf['showuseras']) {
                         case 'username':
+                        case 'username_link':
                             $item->author = $userInfo['name'];
                             break;
                         default:

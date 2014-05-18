@@ -112,8 +112,7 @@ function p_cached_output($file, $format='xhtml', $id='') {
     } else {
         $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
-        if ($info['cache']) {
-            $cache->storeCache($parsed);               //save cachefile
+        if ($info['cache'] && $cache->storeCache($parsed)) {              // storeCache() attempts to save cachefile
             if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
         }else{
             $cache->removeCache();                     //try to delete cachefile
@@ -636,9 +635,9 @@ function p_get_renderer($mode) {
         return $Renderer;
     }
 
-    // not bundled, see if its an enabled plugin for rendering $mode
+    // not bundled, see if its an enabled renderer plugin & when $mode is 'xhtml', the renderer can supply that format.
     $Renderer = $plugin_controller->load('renderer',$rname);
-    if ($Renderer && is_a($Renderer, 'Doku_Renderer')  && ($mode == $Renderer->getFormat())) {
+    if ($Renderer && is_a($Renderer, 'Doku_Renderer')  && ($mode != 'xhtml' || $mode == $Renderer->getFormat())) {
         return $Renderer;
     }
 
@@ -660,7 +659,6 @@ function p_get_renderer($mode) {
     }
 
     // fallback failed, alert the world
-    trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
     msg("No renderer '$rname' found for mode '$mode'",-1);
     return null;
 }

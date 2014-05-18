@@ -25,6 +25,7 @@
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Владимир <id37736@yandex.ru>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -69,6 +70,8 @@ $lang['btn_register']          = 'Зарегистрироваться';
 $lang['btn_apply']             = 'Применить';
 $lang['btn_media']             = 'Управление медиафайлами';
 $lang['btn_deleteuser']        = 'Удалить мой аккаунт';
+$lang['btn_img_backto']        = 'Вернуться к %s';
+$lang['btn_mediaManager']      = 'Просмотр в «управлении медиафайлами»';
 $lang['loggedinas']            = 'Зашли как';
 $lang['user']                  = 'Логин';
 $lang['pass']                  = 'Пароль';
@@ -198,6 +201,9 @@ $lang['difflink']              = 'Ссылка на это сравнение';
 $lang['diff_type']             = 'Посмотреть отличия';
 $lang['diff_inline']           = 'встроенный';
 $lang['diff_side']             = 'бок о бок';
+$lang['diffprevrev']           = 'Предыдущая версия';
+$lang['diffnextrev']           = 'Следущая версия';
+$lang['difflastrev']           = 'Последняя версия';
 $lang['line']                  = 'Строка';
 $lang['breadcrumb']            = 'Вы посетили';
 $lang['youarehere']            = 'Вы находитесь здесь';
@@ -254,7 +260,6 @@ $lang['admin_register']        = 'Добавить пользователя';
 $lang['metaedit']              = 'Править метаданные';
 $lang['metasaveerr']           = 'Ошибка записи метаданных';
 $lang['metasaveok']            = 'Метаданные сохранены';
-$lang['img_backto']            = 'Вернуться к';
 $lang['img_title']             = 'Название';
 $lang['img_caption']           = 'Подпись';
 $lang['img_date']              = 'Дата';
@@ -267,7 +272,6 @@ $lang['img_camera']            = 'Модель';
 $lang['img_keywords']          = 'Ключевые слова';
 $lang['img_width']             = 'Ширина';
 $lang['img_height']            = 'Высота';
-$lang['img_manager']           = 'Просмотр в «управлении медиафайлами»';
 $lang['subscr_subscribe_success'] = 'Добавлен %s в подписку на %s';
 $lang['subscr_subscribe_error'] = 'Невозможно добавить %s в подписку на %s';
 $lang['subscr_subscribe_noaddress'] = 'Нет адреса электронной почты, сопоставленного с вашей учётной записью. Вы не можете подписаться на рассылку';

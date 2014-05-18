@@ -20,6 +20,7 @@
  * @author Egil Hansen <egil@rosetta.no>
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
  * @author Boris <boris@newton-media.no>
+ * @author Christopher Schive <chschive@frisurf.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -64,6 +65,8 @@ $lang['btn_register']          = 'Registrer deg';
 $lang['btn_apply']             = 'Bruk';
 $lang['btn_media']             = 'Mediefiler';
 $lang['btn_deleteuser']        = 'Fjern min konto';
+$lang['btn_img_backto']        = 'Tilbake til %s';
+$lang['btn_mediaManager']      = 'Vis i mediefilbehandler';
 $lang['loggedinas']            = 'Innlogget som';
 $lang['user']                  = 'Brukernavn';
 $lang['pass']                  = 'Passord';
@@ -195,6 +198,11 @@ $lang['difflink']              = 'Lenk til denne sammenligningen';
 $lang['diff_type']             = 'Vis forskjeller:';
 $lang['diff_inline']           = 'I teksten';
 $lang['diff_side']             = 'Side ved side';
+$lang['diffprevrev']           = 'Forrige revisjon';
+$lang['diffnextrev']           = 'Neste revisjon';
+$lang['difflastrev']           = 'Siste revisjon';
+$lang['diffbothprevrev']       = 'Begge sider forrige revisjon';
+$lang['diffbothnextrev']       = 'Begge sider neste revisjon';
 $lang['line']                  = 'Linje';
 $lang['breadcrumb']            = 'Spor';
 $lang['youarehere']            = 'Du er her';
@@ -251,7 +259,6 @@ $lang['admin_register']        = 'Legg til ny bruker';
 $lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skriving av metadata feilet';
 $lang['metasaveok']            = 'Metadata lagret';
-$lang['img_backto']            = 'Tilbake til';
 $lang['img_title']             = 'Tittel';
 $lang['img_caption']           = 'Bildetekst';
 $lang['img_date']              = 'Dato';
@@ -264,7 +271,6 @@ $lang['img_camera']            = 'Kamera';
 $lang['img_keywords']          = 'Nøkkelord';
 $lang['img_width']             = 'Bredde';
 $lang['img_height']            = 'Høyde';
-$lang['img_manager']           = 'Vis i mediefilbehandler';
 $lang['subscr_subscribe_success'] = 'La til %s som abonnent på %s';
 $lang['subscr_subscribe_error'] = 'Klarte ikke å legge til %s som abonnent på %s';
 $lang['subscr_subscribe_noaddress'] = 'Brukeren din er ikke registrert med noen adresse. Du kan derfor ikke legges til som abonnent.';
@@ -348,3 +354,4 @@ $lang['media_restore']         = 'Gjenopprett denne versjonen';
 $lang['currentns']             = 'gjeldende navnemellomrom';
 $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
+$lang['wikimarkup']            = 'wiki-format';

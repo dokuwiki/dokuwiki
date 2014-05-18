@@ -255,7 +255,7 @@ class DokuWiki_Plugin {
             if(!isset($arguments[1])) $arguments[1] = 'xhtml';
             return $this->render_text($arguments[0], $arguments[1]);
         }
-        trigger_error("no such method $name", E_ERROR);
+        trigger_error("no such method $name", E_USER_ERROR);
         return null;
     }
 

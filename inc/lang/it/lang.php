@@ -17,6 +17,8 @@
  * @author snarchio@gmail.com
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
+ * @author Mirko <malisan.mirko@gmail.com>
+ * @author Francesco <francesco.cavalli@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,6 +63,8 @@ $lang['btn_register']          = 'Registrazione';
 $lang['btn_apply']             = 'Applica';
 $lang['btn_media']             = 'Gestore Media';
 $lang['btn_deleteuser']        = 'Rimuovi il mio account';
+$lang['btn_img_backto']        = 'Torna a %s';
+$lang['btn_mediaManager']      = 'Guarda nel gestore media';
 $lang['loggedinas']            = 'Collegato come';
 $lang['user']                  = 'Nome utente';
 $lang['pass']                  = 'Password';
@@ -146,6 +150,7 @@ $lang['js']['del_confirm']     = 'Eliminare veramente questa voce?';
 $lang['js']['restore_confirm'] = 'Vuoi davvero ripristinare questa versione?';
 $lang['js']['media_diff']      = 'Guarda le differenze:';
 $lang['js']['media_diff_both'] = 'Fianco a Fianco';
+$lang['js']['media_diff_portions'] = 'rubare';
 $lang['js']['media_select']    = 'Seleziona files..';
 $lang['js']['media_upload_btn'] = 'Upload';
 $lang['js']['media_done_btn']  = 'Fatto';
@@ -189,6 +194,9 @@ $lang['difflink']              = 'Link a questa pagina di confronto';
 $lang['diff_type']             = 'Guarda le differenze:';
 $lang['diff_inline']           = 'In linea';
 $lang['diff_side']             = 'Fianco a Fianco';
+$lang['diffprevrev']           = 'Revisione precedente';
+$lang['diffnextrev']           = 'Prossima revisione';
+$lang['difflastrev']           = 'Ultima revisione';
 $lang['line']                  = 'Linea';
 $lang['breadcrumb']            = 'Traccia';
 $lang['youarehere']            = 'Ti trovi qui';
@@ -245,7 +253,6 @@ $lang['admin_register']        = 'Aggiungi un nuovo utente';
 $lang['metaedit']              = 'Modifica metadati';
 $lang['metasaveerr']           = 'Scrittura metadati fallita';
 $lang['metasaveok']            = 'Metadati salvati';
-$lang['img_backto']            = 'Torna a';
 $lang['img_title']             = 'Titolo';
 $lang['img_caption']           = 'Descrizione';
 $lang['img_date']              = 'Data';
@@ -258,7 +265,6 @@ $lang['img_camera']            = 'Camera';
 $lang['img_keywords']          = 'Parole chiave';
 $lang['img_width']             = 'Larghezza';
 $lang['img_height']            = 'Altezza';
-$lang['img_manager']           = 'Guarda nel gestore media';
 $lang['subscr_subscribe_success'] = 'Aggiunto %s alla lista di sottoscrizioni %s';
 $lang['subscr_subscribe_error'] = 'Impossibile aggiungere %s alla lista di sottoscrizioni %s';
 $lang['subscr_subscribe_noaddress'] = 'Non esiste alcun indirizzo associato al tuo account, non puoi essere aggiunto alla lista di sottoscrizioni';
@@ -337,4 +343,6 @@ $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per le
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
+$lang['currentns']             = 'Namespace corrente';
 $lang['searchresult']          = 'Risultati della ricerca';
+$lang['plainhtml']             = 'HTML';
