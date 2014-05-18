@@ -51,23 +51,25 @@ class VersionFixCLI extends DokuCLI {
         $this->info('dokuwiki.org version: ' . $repoinfo['repoversion']);
         $repoinfo['txtversion'] = $this->fetchInfoTxtVersion($repoinfo['github_user'], $repoinfo['github_repo'], $repoinfo['is_template']);
         $this->info('github.com version:   ' . $repoinfo['txtversion']);
+        $repoinfo['commitversion'] = $this->fetchLastCommit($repoinfo['github_user'], $repoinfo['github_repo']);
+        $this->info('last real commit:     ' . $repoinfo['commitversion']);
 
-        if($repoinfo['repoversion'] == $repoinfo['txtversion']) {
+        if($repoinfo['repoversion'] == $repoinfo['txtversion'] && $repoinfo['txtversion'] == $repoinfo['commitversion']) {
             $this->info('versions match, no update needed.');
             exit (0);
         }
 
-        $today = date('Y-m-d');
-        $this->info('today\'s date:         ' . $today);
+        $target = max($repoinfo['txtversion'], $repoinfo['commitversion']);
+        $this->info('target version:       ' . $target);
 
-        if($today != $repoinfo['txtversion']) {
-            $this->updateGithub($repoinfo['github_user'], $repoinfo['github_repo'], $repoinfo['is_template'], $repoinfo['txtversion'], $today);
+        if($target != $repoinfo['txtversion']) {
+            $this->updateGithub($repoinfo['github_user'], $repoinfo['github_repo'], $repoinfo['is_template'], $repoinfo['txtversion'], $target);
         } else {
             $this->info('info.txt is uptodate already.');
         }
 
-        if($today != $repoinfo['repoversion']) {
-            $dwpage = $this->fetchAndAdjustPage($repoinfo['page'], $repoinfo['repoversion'], $today);
+        if($target != $repoinfo['repoversion']) {
+            $dwpage = $this->fetchAndAdjustPage($repoinfo['page'], $repoinfo['repoversion'], $target);
             $this->updatePage($repoinfo['page'], $dwpage);
         } else {
             $this->info('extension page is uptodate already.');
@@ -294,6 +296,39 @@ class VersionFixCLI extends DokuCLI {
             $this->fatal('Failed to talk to github API for updating file.');
         }
         $this->success('Updated '.$infotxt.' at github.');
+    }
+
+    /**
+     * Return the date of the last significant commit
+     *
+     * @param string $user The github user owning the git repository (might be a organization)
+     * @param string $repo The git repositor name at github
+     * @return string
+     */
+    protected function fetchLastCommit($user, $repo) {
+        $http = new HTTPClient();
+        $http->headers['Accept'] = 'application/vnd.github.v3+json';
+        $http->user = $this->github_user;
+        $http->pass = $this->github_key;
+        $json = new JSON(JSON_LOOSE_TYPE);
+
+        $url = 'https://api.github.com/repos/'.$user.'/'.$repo.'/commits?per_page=100';
+        $commits = $http->get($url);
+        if(!$commits) {
+            $this->error($http->error);
+            $this->error($http->resp_body);
+            $this->fatal('Failed to talk to github API for fetching commits.');
+        }
+
+        $commits = $json->decode($commits);
+        foreach($commits as $commit) {
+            if(preg_match('/^Merge/i', $commit['commit']['message'])) continue; // skip merges;
+            if($commit['commit']['committer']['email'] == 'translate@dokuwiki.org') continue; //skip translations
+
+            return substr($commit['commit']['author']['date'], 0, 10);
+        }
+
+        return date('Y-m-d');
     }
 }
 
