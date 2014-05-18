@@ -149,7 +149,7 @@ class VersionFixCLI extends DokuCLI {
      * @param bool $is_template Is this a template? Plugin otherwise
      * @return string
      */
-    protected function fetchInfoTxt($user, $repo, $is_template) {
+    protected function fetchInfoTxtVersion($user, $repo, $is_template) {
         $http = new HTTPClient();
         $http->headers['Accept'] = 'application/vnd.github.v3+json';
         $http->user = $this->github_user;
