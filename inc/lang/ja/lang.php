@@ -11,6 +11,7 @@
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <chuno@live.jp>
  * @author Hideaki SAWADA <sawadakun@live.jp>
+ * @author PzF_X <jp_minecraft@yahoo.co.jp>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

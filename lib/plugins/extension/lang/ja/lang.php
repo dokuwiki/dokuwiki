@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Hideaki SAWADA <chuno@live.jp>
+ * @author PzF_X <jp_minecraft@yahoo.co.jp>
  */
 $lang['menu']                  = '拡張機能管理';
 $lang['tab_plugins']           = 'インストール済プラグイン';
@@ -52,8 +53,10 @@ $lang['provides']              = '提供：';
 $lang['status']                = '状態：';
 $lang['status_installed']      = 'インストール済';
 $lang['status_not_installed']  = '未インストール';
+$lang['status_protected']      = '保護されています';
 $lang['status_enabled']        = '有効';
 $lang['status_disabled']       = '無効';
+$lang['status_unmodifiable']   = '編集不可';
 $lang['status_plugin']         = 'プラグイン';
 $lang['status_template']       = 'テンプレート';
 $lang['status_bundled']        = '同梱';
