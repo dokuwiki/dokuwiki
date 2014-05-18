@@ -394,6 +394,32 @@ function dbglog($msg,$header=''){
 }
 
 /**
+ * Log accesses to deprecated fucntions to the debug log
+ *
+ * @param string $alternative The function or method that should be used instead
+ */
+function dbg_deprecated($alternative = '') {
+    global $conf;
+    if(!$conf['allowdebug']) return;
+
+    $backtrace = debug_backtrace();
+    array_shift($backtrace);
+    $self = array_shift($backtrace);
+    $call = array_shift($backtrace);
+
+    $called = trim($self['class'].'::'.$self['function'].'()', ':');
+    $caller = trim($call['class'].'::'.$call['function'].'()', ':');
+
+    $msg = $called.' is deprecated. It was called from ';
+    $msg .= $caller.' in '.$call['file'].':'.$call['line'];
+    if($alternative) {
+        $msg .= ' '.$alternative.' should be used instead!';
+    }
+
+    dbglog($msg);
+}
+
+/**
  * Print a reversed, prettyprinted backtrace
  *
  * @author Gary Owen <gary_owen@bigfoot.com>
