@@ -286,7 +286,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         // find the old password of the user
         list($loginuser,$loginsticky,$loginpass) = auth_getCookie();
         if ($loginuser !== null) { // the user is currently logged in
-            $secret = auth_cookiesalt(!$sticky, true);
+            $secret = auth_cookiesalt(!$loginsticky, true);
             $pass   = auth_decrypt($loginpass, $secret);
 
             // bind with the ldap
