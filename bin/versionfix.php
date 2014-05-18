@@ -49,8 +49,7 @@ class VersionFixCLI extends DokuCLI {
 
         $repoinfo = $this->getRepoInfo($extension);
         $this->info('dokuwiki.org version: ' . $repoinfo['repoversion']);
-        $infotxt                = $this->fetchInfoTxt($repoinfo['github_user'], $repoinfo['github_repo'], $repoinfo['is_template']);
-        $repoinfo['txtversion'] = $this->extractInfoTxtVersion($infotxt);
+        $repoinfo['txtversion'] = $this->fetchInfoTxtVersion($repoinfo['github_user'], $repoinfo['github_repo'], $repoinfo['is_template']);
         $this->info('github.com version:   ' . $repoinfo['txtversion']);
 
         if($repoinfo['repoversion'] == $repoinfo['txtversion']) {
@@ -75,6 +74,9 @@ class VersionFixCLI extends DokuCLI {
         }
     }
 
+    /**
+     * Load credentials from config file
+     */
     protected function loadCredentials() {
         $home = getenv("HOME");
         $conf = "$home/.dwversionfix.conf";
@@ -105,6 +107,12 @@ class VersionFixCLI extends DokuCLI {
         ) $this->fatal('Please edit the credentials in '.$conf);
     }
 
+    /**
+     * Load info about the extension from the plugin repository
+     *
+     * @param string $extension name of extension
+     * @return array
+     */
     protected function getRepoInfo($extension) {
         /** @var helper_plugin_extension_extension $ext */
         $ext = plugin_load('helper', 'extension_extension');
@@ -133,6 +141,14 @@ class VersionFixCLI extends DokuCLI {
         );
     }
 
+    /**
+     * Get the date from the *info.txt file at github
+     *
+     * @param string $user The github user owning the git repository (might be a organization)
+     * @param string $repo The git repositor name at github
+     * @param bool $is_template Is this a template? Plugin otherwise
+     * @return string
+     */
     protected function fetchInfoTxt($user, $repo, $is_template) {
         $http = new HTTPClient();
         $http->headers['Accept'] = 'application/vnd.github.v3+json';
@@ -152,16 +168,22 @@ class VersionFixCLI extends DokuCLI {
             $this->fatal('Failed to talk to github API for fetching file.');
         }
         $response = $json->decode($response);
-        return base64_decode($response['content']);
-    }
+        $infotxt = base64_decode($response['content']);
 
-    protected function extractInfoTxtVersion($infotxt) {
         $infotxt = linesToHash(explode("\n", $infotxt));
 
         if(empty($infotxt['date'])) $this->fatal('info.txt has no date field');
         return $infotxt['date'];
     }
 
+    /**
+     * Load the current page from dokuwiki.org and adjust the date
+     *
+     * @param string $page The extension's page name
+     * @param string $search The date to replace
+     * @param string $date The new date to set
+     * @return string The adjusted page content
+     */
     protected function fetchAndAdjustPage($page, $search, $date) {
         $http = new DokuHTTPClient();
         $data = $http->get('https://www.dokuwiki.org/' . $page . '?do=export_raw');
@@ -175,6 +197,12 @@ class VersionFixCLI extends DokuCLI {
         return $newdata;
     }
 
+    /**
+     * Save the extension's page at dokuwiki.org
+     *
+     * @param string $page The extension's page name
+     * @param string $content The new content
+     */
     protected function updatePage($page, $content) {
         $http = new DokuHTTPClient();
 
@@ -210,6 +238,15 @@ class VersionFixCLI extends DokuCLI {
         }
     }
 
+    /**
+     * Update the *info.txt file at github
+     *
+     * @param string $user The github user owning the git repository (might be a organization)
+     * @param string $repo The git repositor name at github
+     * @param bool $is_template Is this a template? Plugin otherwise
+     * @param string $search The date to replace
+     * @param string $date The new date to set
+     */
     protected function updateGithub($user, $repo, $is_template, $search, $date) {
         $http = new HTTPClient();
         $http->headers['Accept'] = 'application/vnd.github.v3+json';
