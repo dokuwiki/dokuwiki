@@ -1004,12 +1004,13 @@ class MediaChangelog extends ChangeLog {
  * changelog files, only the chunk containing the
  * requested changelog line is read.
  *
- * @deprecated 20-11-2013
+ * @deprecated 2013-11-20
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
+    dbg_deprecated('class PageChangeLog or class MediaChanglog');
     if($media) {
         $changelog = new MediaChangeLog($id, $chunk_size);
     } else {
@@ -1036,12 +1037,13 @@ function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
  * backwards in chunks until the requested number of changelog
  * lines are recieved.
  *
- * @deprecated 20-11-2013
+ * @deprecated 2013-11-20
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
+    dbg_deprecated('class PageChangeLog or class MediaChanglog');
     if($media) {
         $changelog = new MediaChangeLog($id, $chunk_size);
     } else {

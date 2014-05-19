@@ -252,6 +252,7 @@ class DokuWiki_Plugin {
      */
     function __call($name, $arguments) {
         if($name == 'render'){
+            dbg_deprecated('render_text()');
             if(!isset($arguments[1])) $arguments[1] = 'xhtml';
             return $this->render_text($arguments[0], $arguments[1]);
         }

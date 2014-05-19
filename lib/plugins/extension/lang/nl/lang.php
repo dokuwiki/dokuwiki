@@ -6,7 +6,7 @@
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  */
-$lang['menu']                  = 'Uitbreidings Beheerder';
+$lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
 $lang['tab_templates']         = 'Geïnstalleerde Templates';
 $lang['tab_search']            = 'Zoek en installeer';
