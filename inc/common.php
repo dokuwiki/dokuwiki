@@ -386,10 +386,15 @@ function idfilter($id, $ue = true) {
 /**
  * This builds a link to a wikipage
  *
- * It handles URL rewriting and adds additional parameter if
- * given in $more
+ * It handles URL rewriting and adds additional parameters
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string       $id             page id, defaults to start page
+ * @param string|array $urlParameters  URL parameters, associative array recommended
+ * @param bool         $absolute       request an absolute URL instead of relative
+ * @param string       $separator      parameter separator
+ * @return string
  */
 function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;') {
     global $conf;
@@ -431,13 +436,19 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
  * Handles URL rewriting if enabled. Follows the style of wl().
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @param string       $id             page id, defaults to start page
+ * @param string       $format         the export renderer to use
+ * @param string|array $urlParameters  URL parameters, associative array recommended
+ * @param bool         $abs            request an absolute URL instead of relative
+ * @param string       $sep            parameter separator
+ * @return string
  */
-function exportlink($id = '', $format = 'raw', $more = '', $abs = false, $sep = '&amp;') {
+function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false, $sep = '&amp;') {
     global $conf;
-    if(is_array($more)) {
-        $more = buildURLparams($more, $sep);
+    if(is_array($urlParameters)) {
+        $urlParameters = buildURLparams($urlParameters, $sep);
     } else {
-        $more = str_replace(',', $sep, $more);
+        $urlParameters = str_replace(',', $sep, $urlParameters);
     }
 
     $format = rawurlencode($format);
@@ -450,13 +461,13 @@ function exportlink($id = '', $format = 'raw', $more = '', $abs = false, $sep = 
 
     if($conf['userewrite'] == 2) {
         $xlink .= DOKU_SCRIPT.'/'.$id.'?do=export_'.$format;
-        if($more) $xlink .= $sep.$more;
+        if($urlParameters) $xlink .= $sep.$urlParameters;
     } elseif($conf['userewrite'] == 1) {
         $xlink .= '_export/'.$format.'/'.$id;
-        if($more) $xlink .= '?'.$more;
+        if($urlParameters) $xlink .= '?'.$urlParameters;
     } else {
         $xlink .= DOKU_SCRIPT.'?do=export_'.$format.$sep.'id='.$id;
-        if($more) $xlink .= $sep.$more;
+        if($urlParameters) $xlink .= $sep.$urlParameters;
     }
 
     return $xlink;
