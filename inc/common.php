@@ -1536,6 +1536,7 @@ function php_to_byte($v) {
         /** @noinspection PhpMissingBreakStatementInspection */
         case 'M':
             $ret *= 1024;
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'K':
             $ret *= 1024;
             break;
@@ -1597,7 +1598,7 @@ function editorinfo($username, $textonly = false) {
 /**
  * Returns users realname w/o link
  *
- * @param string|bool $username or false when currently logged-in user should be used
+ * @param string|null $username or null when currently logged-in user should be used
  * @param bool $textonly true returns only plain text, true allows returning html
  * @return string html or plain text(not escaped) of formatted user name
  *
@@ -1729,7 +1730,6 @@ function license_img($type) {
     global $conf;
     if(!$conf['license']) return '';
     if(!is_array($license[$conf['license']])) return '';
-    $lic   = $license[$conf['license']];
     $try   = array();
     $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.png';
     $try[] = 'lib/images/license/'.$type.'/'.$conf['license'].'.gif';
