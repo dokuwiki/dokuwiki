@@ -1585,7 +1585,7 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
  * Return the users realname or e-mail address for use
  * in page footer and recent changes pages
  *
- * @param string|bool $username or false when currently logged-in user should be used
+ * @param string|null $username or null when currently logged-in user should be used
  * @param bool $textonly true returns only plain text, true allows returning html
  * @return string html or plain text(not escaped) of formatted user name
  *
@@ -1858,7 +1858,7 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
  * (remembering both keys & values are urlencoded)
  *
  * @param string $pref     preference key
- * @param string $default  value returned when preference not found
+ * @param mixed  $default  value returned when preference not found
  * @return string preference value
  */
 function get_doku_pref($pref, $default) {
