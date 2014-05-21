@@ -146,19 +146,25 @@ function cleanID($raw_id,$ascii=false){
  * Return namespacepart of a wiki ID
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id
+ * @return string
  */
 function getNS($id){
     $pos = strrpos((string)$id,':');
     if($pos!==false){
         return substr((string)$id,0,$pos);
     }
-    return false;
+    return '';
 }
 
 /**
  * Returns the ID without the namespace
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id
+ * @return string
  */
 function noNS($id) {
     $pos = strrpos($id, ':');
