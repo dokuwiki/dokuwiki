@@ -32,6 +32,7 @@
  * @author Wild <wild.dagger@free.fr>
  * @author ggallon <gwenael.gallon@mac.com>
  * @author David VANTYGHEM <david.vantyghem@free.fr>
+ * @author Caillot <remicaillot5@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -52,7 +53,7 @@ $lang['btn_newer']             = '<< Plus récent';
 $lang['btn_older']             = 'Moins récent >>';
 $lang['btn_revs']              = 'Anciennes révisions';
 $lang['btn_recent']            = 'Derniers changements';
-$lang['btn_upload']            = 'Envoyer';
+$lang['btn_upload']            = 'Téléverser';
 $lang['btn_cancel']            = 'Annuler';
 $lang['btn_index']             = 'Plan du site';
 $lang['btn_secedit']           = 'Modifier';
@@ -62,7 +63,7 @@ $lang['btn_admin']             = 'Administrer';
 $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
-$lang['btn_backlink']          = 'Liens vers cette page';
+$lang['btn_backlink']          = 'Liens de retour';
 $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
 $lang['btn_subscribe']         = 'S\'abonner à cette page';
 $lang['btn_profile']           = 'Mettre à jour le profil';
@@ -76,7 +77,7 @@ $lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
-$lang['btn_img_backto']        = 'Retour à %s';
+$lang['btn_img_backto']        = 'Retour vers %s';
 $lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
@@ -88,20 +89,20 @@ $lang['remember']              = 'Mémoriser';
 $lang['fullname']              = 'Nom';
 $lang['email']                 = 'Adresse de courriel';
 $lang['profile']               = 'Profil utilisateur';
-$lang['badlogin']              = 'L\'utilisateur ou le mot de passe est incorrect.';
+$lang['badlogin']              = 'Le nom d\'utilisateur ou le mot de passe est incorrect.';
 $lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
-$lang['draftdate']             = 'Brouillon enregistré de manière automatique le';
+$lang['draftdate']             = 'Brouillon enregistré automatiquement le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
-$lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà utilisé.';
+$lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
 $lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
 $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
 $lang['regpwmail']             = 'Votre mot de passe DokuWiki';
-$lang['reghere']               = 'Vous n\'avez pas encore de compte ? Enregistrez-vous ici ';
+$lang['reghere']               = 'Vous n\'avez pas encore de compte ? Inscrivez-vous';
 $lang['profna']                = 'Ce wiki ne permet pas de modifier les profils';
 $lang['profnochange']          = 'Pas de modification, rien à faire.';
 $lang['profnoempty']           = 'Un nom ou une adresse de courriel vide n\'est pas permis.';
