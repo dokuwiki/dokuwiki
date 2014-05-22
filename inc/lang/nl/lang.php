@@ -23,6 +23,7 @@
  * @author Remon <no@email.local>
  * @author gicalle <gicalle@hotmail.com>
  * @author Rene <wllywlnt@yahoo.com>
+ * @author Johan Vervloet <johan.vervloet@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
