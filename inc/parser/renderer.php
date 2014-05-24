@@ -44,7 +44,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * Has to be overidden by decendend classes
      */
-    function getFormat(){
+    function getFormat() {
         trigger_error('getFormat() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
@@ -60,15 +60,15 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * handle plugin rendering
      *
-     * @param string $name Plugin name
-     * @param mixed  $data custom data set by handler
+     * @param string $name  Plugin name
+     * @param mixed  $data  custom data set by handler
      * @param string $state matched state if any
      * @param string $match raw matched syntax
      */
-    function plugin($name,$data,$state='',$match=''){
-        $plugin = plugin_load('syntax',$name);
-        if($plugin != null){
-            $plugin->render($this->getFormat(),$this,$data);
+    function plugin($name, $data, $state = '', $match = '') {
+        $plugin = plugin_load('syntax', $name);
+        if($plugin != null) {
+            $plugin->render($this->getFormat(), $this, $data);
         }
     }
 
@@ -78,9 +78,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      */
     function nest($instructions) {
 
-        foreach ( $instructions as $instruction ) {
+        foreach($instructions as $instruction) {
             // execute the callback against ourself
-            if (method_exists($this,$instruction[0])) {
+            if(method_exists($this, $instruction[0])) {
                 call_user_func_array(array($this, $instruction[0]), $instruction[1] ? $instruction[1] : array());
             }
         }
@@ -89,185 +89,264 @@ class Doku_Renderer extends DokuWiki_Plugin {
     // dummy closing instruction issued by Doku_Handler_Nest, normally the syntax mode should
     // override this instruction when instantiating Doku_Handler_Nest - however plugins will not
     // be able to - as their instructions require data.
-    function nest_close() {}
+    function nest_close() {
+    }
 
-    function document_start() {}
+    function document_start() {
+    }
 
-    function document_end() {}
+    function document_end() {
+    }
 
-    function render_TOC() { return ''; }
+    function render_TOC() {
+        return '';
+    }
 
-    function toc_additem($id, $text, $level) {}
+    function toc_additem($id, $text, $level) {
+    }
 
-    function header($text, $level, $pos) {}
+    function header($text, $level, $pos) {
+    }
 
-    function section_open($level) {}
+    function section_open($level) {
+    }
 
-    function section_close() {}
+    function section_close() {
+    }
 
-    function cdata($text) {}
+    function cdata($text) {
+    }
 
-    function p_open() {}
+    function p_open() {
+    }
 
-    function p_close() {}
+    function p_close() {
+    }
 
-    function linebreak() {}
+    function linebreak() {
+    }
 
-    function hr() {}
+    function hr() {
+    }
 
-    function strong_open() {}
+    function strong_open() {
+    }
 
-    function strong_close() {}
+    function strong_close() {
+    }
 
-    function emphasis_open() {}
+    function emphasis_open() {
+    }
 
-    function emphasis_close() {}
+    function emphasis_close() {
+    }
 
-    function underline_open() {}
+    function underline_open() {
+    }
 
-    function underline_close() {}
+    function underline_close() {
+    }
 
-    function monospace_open() {}
+    function monospace_open() {
+    }
 
-    function monospace_close() {}
+    function monospace_close() {
+    }
 
-    function subscript_open() {}
+    function subscript_open() {
+    }
 
-    function subscript_close() {}
+    function subscript_close() {
+    }
 
-    function superscript_open() {}
+    function superscript_open() {
+    }
 
-    function superscript_close() {}
+    function superscript_close() {
+    }
 
-    function deleted_open() {}
+    function deleted_open() {
+    }
 
-    function deleted_close() {}
+    function deleted_close() {
+    }
 
-    function footnote_open() {}
+    function footnote_open() {
+    }
 
-    function footnote_close() {}
+    function footnote_close() {
+    }
 
-    function listu_open() {}
+    function listu_open() {
+    }
 
-    function listu_close() {}
+    function listu_close() {
+    }
 
-    function listo_open() {}
+    function listo_open() {
+    }
 
-    function listo_close() {}
+    function listo_close() {
+    }
 
-    function listitem_open($level) {}
+    function listitem_open($level) {
+    }
 
-    function listitem_close() {}
+    function listitem_close() {
+    }
 
-    function listcontent_open() {}
+    function listcontent_open() {
+    }
 
-    function listcontent_close() {}
+    function listcontent_close() {
+    }
 
-    function unformatted($text) {}
+    function unformatted($text) {
+    }
 
-    function php($text) {}
+    function php($text) {
+    }
 
-    function phpblock($text) {}
+    function phpblock($text) {
+    }
 
-    function html($text) {}
+    function html($text) {
+    }
 
-    function htmlblock($text) {}
+    function htmlblock($text) {
+    }
 
-    function preformatted($text) {}
+    function preformatted($text) {
+    }
 
-    function quote_open() {}
+    function quote_open() {
+    }
 
-    function quote_close() {}
+    function quote_close() {
+    }
 
-    function file($text, $lang = null, $file = null ) {}
+    function file($text, $lang = null, $file = null) {
+    }
 
-    function code($text, $lang = null, $file = null ) {}
+    function code($text, $lang = null, $file = null) {
+    }
 
-    function acronym($acronym) {}
+    function acronym($acronym) {
+    }
 
-    function smiley($smiley) {}
+    function smiley($smiley) {
+    }
 
-    function wordblock($word) {}
+    function wordblock($word) {
+    }
 
-    function entity($entity) {}
+    function entity($entity) {
+    }
 
     // 640x480 ($x=640, $y=480)
-    function multiplyentity($x, $y) {}
+    function multiplyentity($x, $y) {
+    }
 
-    function singlequoteopening() {}
+    function singlequoteopening() {
+    }
 
-    function singlequoteclosing() {}
+    function singlequoteclosing() {
+    }
 
-    function apostrophe() {}
+    function apostrophe() {
+    }
 
-    function doublequoteopening() {}
+    function doublequoteopening() {
+    }
 
-    function doublequoteclosing() {}
+    function doublequoteclosing() {
+    }
 
     // $link like 'SomePage'
-    function camelcaselink($link) {}
+    function camelcaselink($link) {
+    }
 
-    function locallink($hash, $name = null) {}
+    function locallink($hash, $name = null) {
+    }
 
     // $link like 'wiki:syntax', $title could be an array (media)
-    function internallink($link, $title = null) {}
+    function internallink($link, $title = null) {
+    }
 
     // $link is full URL with scheme, $title could be an array (media)
-    function externallink($link, $title = null) {}
+    function externallink($link, $title = null) {
+    }
 
-    function rss ($url,$params) {}
+    function rss($url, $params) {
+    }
 
     // $link is the original link - probably not much use
     // $wikiName is an indentifier for the wiki
     // $wikiUri is the URL fragment to append to some known URL
-    function interwikilink($link, $title = null, $wikiName, $wikiUri) {}
+    function interwikilink($link, $title = null, $wikiName, $wikiUri) {
+    }
 
     // Link to file on users OS, $title could be an array (media)
-    function filelink($link, $title = null) {}
+    function filelink($link, $title = null) {
+    }
 
     // Link to a Windows share, , $title could be an array (media)
-    function windowssharelink($link, $title = null) {}
+    function windowssharelink($link, $title = null) {
+    }
 
 //  function email($address, $title = null) {}
-    function emaillink($address, $name = null) {}
+    function emaillink($address, $name = null) {
+    }
 
-    function internalmedia ($src, $title=null, $align=null, $width=null,
-                            $height=null, $cache=null, $linking=null) {}
+    function internalmedia($src, $title = null, $align = null, $width = null,
+                           $height = null, $cache = null, $linking = null) {
+    }
 
-    function externalmedia ($src, $title=null, $align=null, $width=null,
-                            $height=null, $cache=null, $linking=null) {}
+    function externalmedia($src, $title = null, $align = null, $width = null,
+                           $height = null, $cache = null, $linking = null) {
+    }
 
-    function internalmedialink (
-        $src,$title=null,$align=null,$width=null,$height=null,$cache=null
-        ) {}
+    function internalmedialink(
+        $src, $title = null, $align = null, $width = null, $height = null, $cache = null
+    ) {
+    }
 
     function externalmedialink(
-        $src,$title=null,$align=null,$width=null,$height=null,$cache=null
-        ) {}
+        $src, $title = null, $align = null, $width = null, $height = null, $cache = null
+    ) {
+    }
 
-    function table_open($maxcols = null, $numrows = null, $pos = null){}
+    function table_open($maxcols = null, $numrows = null, $pos = null) {
+    }
 
-    function table_close($pos = null){}
+    function table_close($pos = null) {
+    }
 
-    function tablethead_open(){}
+    function tablethead_open() {
+    }
 
-    function tablethead_close(){}
+    function tablethead_close() {
+    }
 
-    function tablerow_open(){}
+    function tablerow_open() {
+    }
 
-    function tablerow_close(){}
+    function tablerow_close() {
+    }
 
-    function tableheader_open($colspan = 1, $align = null, $rowspan = 1){}
+    function tableheader_open($colspan = 1, $align = null, $rowspan = 1) {
+    }
 
-    function tableheader_close(){}
+    function tableheader_close() {
+    }
 
-    function tablecell_open($colspan = 1, $align = null, $rowspan = 1){}
+    function tablecell_open($colspan = 1, $align = null, $rowspan = 1) {
+    }
 
-    function tablecell_close(){}
-
+    function tablecell_close() {
+    }
 
     // util functions follow, you probably won't need to reimplement them
-
 
     /**
      * Removes any Namespace from the given name but keeps
@@ -294,13 +373,13 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Resolve an interwikilink
      */
-    function _resolveInterWiki(&$shortcut, $reference, &$exists=null) {
+    function _resolveInterWiki(&$shortcut, $reference, &$exists = null) {
         //get interwiki URL
         if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
         } else {
             // Default to Google I'm feeling lucky
-            $url = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
+            $url      = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
             $shortcut = 'go';
         }
 
@@ -310,8 +389,8 @@ class Doku_Renderer extends DokuWiki_Plugin {
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
             //use placeholders
-            $url = str_replace('{URL}', rawurlencode($reference), $url);
-            $url = str_replace('{NAME}', $reference, $url);
+            $url    = str_replace('{URL}', rawurlencode($reference), $url);
+            $url    = str_replace('{NAME}', $reference, $url);
             $parsed = parse_url($reference);
             if(!$parsed['port']) $parsed['port'] = 80;
             $url = str_replace('{SCHEME}', $parsed['scheme'], $url);
@@ -321,15 +400,15 @@ class Doku_Renderer extends DokuWiki_Plugin {
             $url = str_replace('{QUERY}', $parsed['query'], $url);
         } else {
             //default
-            $url = $url . rawurlencode($reference);
+            $url = $url.rawurlencode($reference);
         }
         //handle as wiki links
         if($url{0} === ':') {
             list($id, $urlparam) = explode('?', $url, 2);
-            $url = wl(cleanID($id), $urlparam);
+            $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);
         }
-        if($hash) $url .= '#' . rawurlencode($hash);
+        if($hash) $url .= '#'.rawurlencode($hash);
 
         return $url;
     }
