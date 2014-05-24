@@ -202,7 +202,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
-     * Create a line breake
+     * Create a line break
      */
     function linebreak() {
     }
@@ -607,7 +607,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * Should honor $conf['mailguard'] setting
      *
      * @param string $address Email-Address
-     * @param string $name    Display name
+     * @param string|array $name name for the link, array for media file
      */
     function emaillink($address, $name = null) {
     }
