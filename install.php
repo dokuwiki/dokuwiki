@@ -533,6 +533,11 @@ function check_functions(){
         $ok = false;
     }
 
+    if(ini_get('mbstring.func_overload') != 0){
+        $error[] = $lang['i_mbfuncoverload'];
+        $ok = false;
+    }
+
     $funcs = explode(' ','addslashes call_user_func chmod copy fgets '.
                          'file file_exists fseek flush filesize ftell fopen '.
                          'glob header ignore_user_abort ini_get mail mkdir '.
