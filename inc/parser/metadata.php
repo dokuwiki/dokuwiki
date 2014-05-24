@@ -26,6 +26,11 @@ if(!defined('DOKU_TAB')) {
  * Some simplified rendering to $doc is done to gather the page's (text-only) abstract.
  */
 class Doku_Renderer_metadata extends Doku_Renderer {
+    /** the approximate byte lenght to capture for the abstract */
+    const ABSTRACT_LEN = 250;
+
+    /** the maximum UTF8 character length for the abstract */
+    const ABSTRACT_MAX = 500;
 
     /** @var array transient meta data, will be reset on each rendering */
     public $meta = array();
@@ -36,14 +41,17 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /** @var array the list of headers used to create unique link ids */
     protected $headers = array();
 
-    /** @var bool determines if enough data for a page summary was collected, yet */
-    protected $capture = true;
-
     /** @var string temporary $doc store */
     protected $store = '';
 
     /** @var string keeps the first image reference */
     protected $firstimage = '';
+
+    /** @var bool determines if enough data for the abstract was collected, yet */
+    protected $capture = true;
+
+    /** @var int number of bytes captured for abstract */
+    protected $captured = 0;
 
     /**
      * Returns the format produced by this renderer.
@@ -92,8 +100,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         if(!isset($this->meta['description']['abstract'])) {
             // cut off too long abstracts
             $this->doc = trim($this->doc);
-            if(strlen($this->doc) > 500)
-                $this->doc = utf8_substr($this->doc, 0, 500).'…';
+            if(strlen($this->doc) > self::ABSTRACT_MAX) {
+                $this->doc = utf8_substr($this->doc, 0, self::ABSTRACT_MAX).'…';
+            }
             $this->meta['description']['abstract'] = $this->doc;
         }
 
@@ -103,6 +112,23 @@ class Doku_Renderer_metadata extends Doku_Renderer {
             $this->meta['date']['modified'] = filemtime(wikiFN($ID));
         }
 
+    }
+
+    /**
+     * Render plain text data
+     *
+     * This function takes care of the amount captured data and will stop capturing when
+     * enough abstract data is available
+     *
+     * @param $text
+     */
+    function cdata($text) {
+        if(!$this->capture) return;
+
+        $this->doc .= $text;
+
+        $this->captured += strlen($text);
+        if($this->captured > self::ABSTRACT_LEN) $this->capture = false;
     }
 
     /**
@@ -143,50 +169,35 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         $this->toc_additem($hid, $text, $level);
 
         // add to summary
-        if($this->capture && ($level > 1)) $this->doc .= DOKU_LF.$text.DOKU_LF;
-    }
-
-    /**
-     * Render plain text data
-     *
-     * @param $text
-     */
-    function cdata($text) {
-        if($this->capture) $this->doc .= $text;
+        $this->cdata(DOKU_LF.$text.DOKU_LF);
     }
 
     /**
      * Open a paragraph
      */
     function p_open() {
-        if($this->capture) $this->doc .= DOKU_LF;
+        $this->cdata(DOKU_LF);
     }
 
     /**
      * Close a paragraph
      */
     function p_close() {
-        if($this->capture) {
-            if(strlen($this->doc) > 250) $this->capture = false;
-            else $this->doc .= DOKU_LF;
-        }
+        $this->cdata(DOKU_LF);
     }
 
     /**
      * Create a line break
      */
     function linebreak() {
-        if($this->capture) $this->doc .= DOKU_LF;
+        $this->cdata(DOKU_LF);
     }
 
     /**
      * Create a horizontal line
      */
     function hr() {
-        if($this->capture) {
-            if(strlen($this->doc) > 250) $this->capture = false;
-            else $this->doc .= DOKU_LF.'----------'.DOKU_LF;
-        }
+        $this->cdata(DOKU_LF.'----------'.DOKU_LF);
     }
 
     /**
@@ -226,28 +237,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * Open an unordered list
      */
     function listu_open() {
-        if($this->capture) $this->doc .= DOKU_LF;
-    }
-
-    /**
-     * Close an unordered list
-     */
-    function listu_close() {
-        if($this->capture && (strlen($this->doc) > 250)) $this->capture = false;
+        $this->cdata(DOKU_LF);
     }
 
     /**
      * Open an ordered list
      */
     function listo_open() {
-        if($this->capture) $this->doc .= DOKU_LF;
-    }
-
-    /**
-     * Close an ordered list
-     */
-    function listo_close() {
-        if($this->capture && (strlen($this->doc) > 250)) $this->capture = false;
+        $this->cdata(DOKU_LF);
     }
 
     /**
@@ -256,14 +253,14 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param int $level the nesting level
      */
     function listitem_open($level) {
-        if($this->capture) $this->doc .= str_repeat(DOKU_TAB, $level).'* ';
+        $this->cdata(str_repeat(DOKU_TAB, $level).'* ');
     }
 
     /**
      * Close a list item
      */
     function listitem_close() {
-        if($this->capture) $this->doc .= DOKU_LF;
+        $this->cdata(DOKU_LF);
     }
 
     /**
@@ -272,25 +269,21 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $text
      */
     function preformatted($text) {
-        if($this->capture) $this->doc .= $text;
+        $this->cdata($text);
     }
 
     /**
      * Start a block quote
      */
     function quote_open() {
-        if($this->capture) $this->doc .= DOKU_LF.DOKU_TAB.'"';
+        $this->cdata(DOKU_LF.DOKU_TAB.'"');
     }
 
     /**
      * Stop a block quote
      */
     function quote_close() {
-        if($this->capture) {
-            $this->doc .= '"';
-            if(strlen($this->doc) > 250) $this->capture = false;
-            else $this->doc .= DOKU_LF;
-        }
+        $this->cdata('"'.DOKU_LF);
     }
 
     /**
@@ -301,11 +294,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $file file path label
      */
     function file($text, $lang = null, $file = null) {
-        if($this->capture) {
-            $this->doc .= DOKU_LF.$text;
-            if(strlen($this->doc) > 250) $this->capture = false;
-            else $this->doc .= DOKU_LF;
-        }
+        $this->cdata(DOKU_LF.$text.DOKU_LF);
     }
 
     /**
@@ -316,11 +305,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $file     file path label
      */
     function code($text, $language = null, $file = null) {
-        if($this->capture) {
-            $this->doc .= DOKU_LF.$text;
-            if(strlen($this->doc) > 250) $this->capture = false;
-            else $this->doc .= DOKU_LF;
-        }
+        $this->cdata(DOKU_LF.$text.DOKU_LF);
     }
 
     /**
@@ -331,7 +316,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $acronym
      */
     function acronym($acronym) {
-        if($this->capture) $this->doc .= $acronym;
+        $this->cdata($acronym);
     }
 
     /**
@@ -342,7 +327,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $smiley
      */
     function smiley($smiley) {
-        if($this->capture) $this->doc .= $smiley;
+        $this->cdata($smiley);
     }
 
     /**
@@ -355,7 +340,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string $entity
      */
     function entity($entity) {
-        if($this->capture) $this->doc .= $entity;
+        $this->cdata($entity);
     }
 
     /**
@@ -367,7 +352,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * @param string|int $y second value
      */
     function multiplyentity($x, $y) {
-        if($this->capture) $this->doc .= $x.'×'.$y;
+        $this->cdata($x.'×'.$y);
     }
 
     /**
@@ -375,7 +360,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      */
     function singlequoteopening() {
         global $lang;
-        if($this->capture) $this->doc .= $lang['singlequoteopening'];
+        $this->cdata($lang['singlequoteopening']);
     }
 
     /**
@@ -383,7 +368,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      */
     function singlequoteclosing() {
         global $lang;
-        if($this->capture) $this->doc .= $lang['singlequoteclosing'];
+        $this->cdata($lang['singlequoteclosing']);
     }
 
     /**
@@ -391,7 +376,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      */
     function apostrophe() {
         global $lang;
-        if($this->capture) $this->doc .= $lang['apostrophe'];
+        $this->cdata($lang['apostrophe']);
     }
 
     /**
@@ -399,7 +384,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      */
     function doublequoteopening() {
         global $lang;
-        if($this->capture) $this->doc .= $lang['doublequoteopening'];
+        $this->cdata($lang['doublequoteopening']);
     }
 
     /**
@@ -407,7 +392,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      */
     function doublequoteclosing() {
         global $lang;
-        if($this->capture) $this->doc .= $lang['doublequoteclosing'];
+        $this->cdata($lang['doublequoteclosing']);
     }
 
     /**
