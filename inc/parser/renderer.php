@@ -11,6 +11,12 @@ if(!defined('DOKU_INC')) die('meh.');
  * An empty renderer, produces no output
  *
  * Inherits from DokuWiki_Plugin for giving additional functions to render plugins
+ *
+ * The renderer transforms the syntax instructions created by the parser and handler into the
+ * desired output format. For each instruction a corresponding method defined in this class will
+ * be called. That method needs to produce the desired output for the instruction and add it to the
+ * $doc field. When all instructions are processed, the $doc field contents will be cached by
+ * DokuWiki and sent to the user.
  */
 class Doku_Renderer extends DokuWiki_Plugin {
     /** @var array Settings, control the behavior of the renderer */
