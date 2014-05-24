@@ -1297,7 +1297,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $poster = media_alternativefiles($src, array('jpg', 'png'), true);
         $posterUrl = '';
         if (!empty($poster)) {
-            $posterUrl = ml(reset($poster),array('cache'=>$cache),true,'&');
+            $posterUrl = ml(reset($poster),'',true,'&');
         }
 
         $out = '';
@@ -1309,7 +1309,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // output source for each alternative video format
         foreach($alternatives as $mime => $file) {
-            $url = ml($file,array('cache'=>$cache),true,'&');
+            $url = ml($file,'',true,'&');
             $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
@@ -1345,7 +1345,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // output source for each alternative audio format
         foreach($alternatives as $mime => $file) {
-            $url = ml($file,array('cache'=>$cache),true,'&');
+            $url = ml($file,'',true,'&');
             $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
