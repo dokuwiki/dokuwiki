@@ -85,3 +85,4 @@ $lang['nopluginperms']         = 'Impossible d\'écrire dans le dossier des gref
 $lang['git']                   = 'Cette extension a été installé via git, vous voudrez peut-être ne pas la mettre à jour ici.';
 $lang['install_url']           = 'Installez depuis l\'URL :';
 $lang['install_upload']        = 'Téléversez l\'extension :';
+$lang['repo_error']            = 'L\'entrepôt d\'extensions est injoignable. Veuillez vous assurer que le server web est autorisé à contacter www.dokuwiki.org et vérifier les réglages de proxy.';
