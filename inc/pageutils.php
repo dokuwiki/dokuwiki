@@ -152,14 +152,14 @@ function cleanID($raw_id,$ascii=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id
- * @return string
+ * @return string|bool the namespace part or false if the given ID has no namespace (root)
  */
 function getNS($id){
     $pos = strrpos((string)$id,':');
     if($pos!==false){
         return substr((string)$id,0,$pos);
     }
-    return '';
+    return false;
 }
 
 /**

@@ -31,7 +31,7 @@ function io_sweepNS($id,$basedir='datadir'){
     $delone = false;
 
     //scan all namespaces
-    while(($id = getNS($id)) !== ''){
+    while(($id = getNS($id)) !== false){
         $dir = $conf[$basedir].'/'.utf8_encodeFN(str_replace(':','/',$id));
 
         //try to delete dir else return
