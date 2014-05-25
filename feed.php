@@ -127,6 +127,8 @@ function rss_parseOptions() {
                 'items'        => array('int', 'num', $conf['recent']),
                 // Boolean, only used in rc mode
                 'show_minor'   => array('bool', 'minor', false),
+                // String, only used in list mode
+                'sort'         => array('str', 'sort', 'natural'),
                 // String, only used in search mode
                 'search_query' => array('str', 'q', null),
                 // One of: pages, media, both
@@ -138,6 +140,7 @@ function rss_parseOptions() {
 
     $opt['items']      = max(0, (int) $opt['items']);
     $opt['show_minor'] = (bool) $opt['show_minor'];
+    $opt['sort'] = valid_input_set('sort', array('default' => 'natural', 'date'), $opt);
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
@@ -480,7 +483,7 @@ function rssListNamespace($opt) {
     global $conf;
 
     $ns = ':'.cleanID($opt['namespace']);
-    $ns = str_replace(':', '/', $ns);
+    $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
     $data = array();
     $search_opts = array(
@@ -488,7 +491,7 @@ function rssListNamespace($opt) {
         'pagesonly' => true,
         'listfiles' => true
     );
-    search($data, $conf['datadir'], 'search_universal', $search_opts, $ns);
+    search($data, $conf['datadir'], 'search_universal', $search_opts, $ns, $lvl = 1, $opt['sort']);
 
     return $data;
 }
