@@ -33,6 +33,7 @@
  * @author ggallon <gwenael.gallon@mac.com>
  * @author David VANTYGHEM <david.vantyghem@free.fr>
  * @author Caillot <remicaillot5@gmail.com>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -211,6 +212,8 @@ $lang['diff_side']             = 'Côte à côte';
 $lang['diffprevrev']           = 'Révision précédente';
 $lang['diffnextrev']           = 'Prochaine révision';
 $lang['difflastrev']           = 'Dernière révision';
+$lang['diffbothprevrev']       = 'Les deux révisions précédentes';
+$lang['diffbothnextrev']       = 'Les deux révisions suivantes';
 $lang['line']                  = 'Ligne';
 $lang['breadcrumb']            = 'Piste';
 $lang['youarehere']            = 'Vous êtes ici';
@@ -306,6 +309,7 @@ $lang['i_problems']            = 'L\'installateur a détecté les problèmes ind
 $lang['i_modified']            = 'Pour des raisons de sécurité, ce script ne fonctionne qu\'avec une installation neuve et non modifiée de DokuWiki. Vous devriez ré-extraire les fichiers depuis le paquet téléchargé ou consulter les <a href="http://dokuwiki.org/install">instructions d\'installation de DokuWiki</a>';
 $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas disponible. Peut-être que votre hébergeur web l\'a désactivée ?';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
+$lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
 $lang['i_permfail']            = '<code>%s</code> n\'est pas accessible en écriture pour DokuWiki. Vous devez corriger les autorisations de ce répertoire !';
 $lang['i_confexists']          = '<code>%s</code> existe déjà';
 $lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous devez vérifier les autorisations des répertoires/fichiers et créer le fichier manuellement.';
