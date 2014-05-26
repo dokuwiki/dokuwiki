@@ -48,7 +48,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     protected $firstimage = '';
 
     /** @var bool determines if enough data for the abstract was collected, yet */
-    protected $capture = true;
+    public $capture = true;
 
     /** @var int number of bytes captured for abstract */
     protected $captured = 0;
