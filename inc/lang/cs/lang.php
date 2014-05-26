@@ -15,8 +15,8 @@
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
- * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Petr Klíma <qaxi@seznam.cz>
+ * @author Radovan Buroň <radovan@buron.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,6 +61,8 @@ $lang['btn_register']          = 'Registrovat';
 $lang['btn_apply']             = 'Použít';
 $lang['btn_media']             = 'Správa médií';
 $lang['btn_deleteuser']        = 'Odstranit můj účet';
+$lang['btn_img_backto']        = 'Zpět na %s';
+$lang['btn_mediaManager']      = 'Zobrazit ve správě médií';
 $lang['loggedinas']            = 'Přihlášen(a) jako:';
 $lang['user']                  = 'Uživatelské jméno';
 $lang['pass']                  = 'Heslo';
@@ -248,7 +250,6 @@ $lang['admin_register']        = 'Přidat nového uživatele';
 $lang['metaedit']              = 'Upravit Metadata';
 $lang['metasaveerr']           = 'Chyba při zápisu metadat';
 $lang['metasaveok']            = 'Metadata uložena';
-$lang['btn_img_backto']        = 'Zpět na %s';
 $lang['img_title']             = 'Titulek:';
 $lang['img_caption']           = 'Popis:';
 $lang['img_date']              = 'Datum:';
@@ -261,7 +262,6 @@ $lang['img_camera']            = 'Typ fotoaparátu:';
 $lang['img_keywords']          = 'Klíčová slova:';
 $lang['img_width']             = 'Šířka:';
 $lang['img_height']            = 'Výška:';
-$lang['btn_mediaManager']           = 'Zobrazit ve správě médií';
 $lang['subscr_subscribe_success'] = '%s byl přihlášen do seznamu odběratelů %s';
 $lang['subscr_subscribe_error'] = 'Došlo k chybě při přihlašování %s do seznamu odběratelů %s';
 $lang['subscr_subscribe_noaddress'] = 'K Vašemu loginu neexistuje žádná adresa, nemohl jste být přihlášen do seznamu odběratelů.';

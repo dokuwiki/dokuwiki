@@ -5,6 +5,7 @@
  * 
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Johan Vervloet <johan.vervloet@gmail.com>
  */
 $lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -64,16 +65,16 @@ $lang['msg_enabled']           = 'Plugin %s ingeschakeld';
 $lang['msg_disabled']          = 'Plugin %s uitgeschakeld';
 $lang['msg_delete_success']    = 'Uitbreiding gedeinstalleerd';
 $lang['msg_template_install_success'] = 'Template %s werd succesvol geïnstalleerd';
-$lang['msg_template_update_success'] = 'Template %s werd succesvol ge-update';
+$lang['msg_template_update_success'] = 'Template %s werd succesvol geüpdatet';
 $lang['msg_plugin_install_success'] = 'Plugin %s werd succesvol geïnstalleerd';
-$lang['msg_plugin_update_success'] = 'Plugin %s werd succesvol ge-update';
+$lang['msg_plugin_update_success'] = 'Plugin %s werd succesvol geüpdatet';
 $lang['msg_upload_failed']     = 'Uploaden van het bestand is mislukt';
 $lang['missing_dependency']    = '<strong>niet aanwezige of uitgeschakelde afhankelijkheid</strong> %s';
 $lang['security_issue']        = '<strong>Veiligheids kwestie:</strong> %s';
 $lang['security_warning']      = '<strong>Veiligheids Waarschuwing</strong> %s';
 $lang['update_available']      = '<strong>Update:</strong> Nieuwe versie %s is beschikbaar.';
 $lang['wrong_folder']          = '<strong>Plugin onjuist geïnstalleerd:</strong> Hernoem de plugin directory van "%s" naar"%s"';
-$lang['url_change']            = '<strong>URL gewijzigd:</strong> Download URL is gewijzigd sinds de laatste download. Controleer of de nieuwe URL juist is voordat u de uitbreiding update. <br />Nieuw:%s<Br /> Vorig: %s';
+$lang['url_change']            = '<strong>URL gewijzigd:</strong> Download URL is gewijzigd sinds de laatste download. Controleer of de nieuwe URL juist is voordat u de uitbreiding updatet. <br />Nieuw:%s<Br /> Vorig: %s';
 $lang['error_badurl']          = 'URLs moeten beginnen met http of https';
 $lang['error_dircreate']       = 'De tijdelijke map kon niet worden gemaakt om de download te ontvangen';
 $lang['error_download']        = 'Het is niet mogelijk het bestand te downloaden: %s';
