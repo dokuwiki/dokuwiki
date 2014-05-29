@@ -23,3 +23,4 @@ $lang['addUserGroup']          = 'Sentencia SQL para agregar un usuario a un gru
 $lang['delGroup']              = 'Instrucción SQL para eliminar un grupo';
 $lang['getUserID']             = 'Sentencia SQL para obtener la clave principal de un usuario';
 $lang['delUser']               = 'Sentencia SQL para eliminar un usuario';
+$lang['getGroupID']            = 'Sentencia SQL para obtener la clave principal de un grupo dado';
