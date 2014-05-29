@@ -34,6 +34,7 @@
  * @author Juan De La Cruz <juann.dlc@gmail.com>
  * @author Fernando <fdiezala@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
+ * @author Antonio Castilla <antoniocastilla@trazoide.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
