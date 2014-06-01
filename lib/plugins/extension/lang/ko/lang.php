@@ -86,3 +86,4 @@ $lang['nopluginperms']         = '플러그인 디렉터리에 쓸 수 없습니
 $lang['git']                   = '이 확장 기능은 git을 통해 설치되었으며, 여기에서 업데이트할 수 없을 수 있습니다.';
 $lang['install_url']           = 'URL에서 설치:';
 $lang['install_upload']        = '확장 기능 올리기:';
+$lang['repo_error']            = '플러그인 저장소에 연결할 수 없습니다. 서버가 www.dokuwiki.org에 연결할 수 있는지 확인하고 프록시 설정을 확인하세요.';
