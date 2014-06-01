@@ -10,6 +10,7 @@
  * @author André Neves <drakferion@gmail.com>
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Murilo <muriloricci@hotmail.com>
+ * @author Paulo Silva <paulotsilva@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,6 +68,7 @@ $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'Email';
 $lang['profile']               = 'Perfil do Utilizador';
 $lang['badlogin']              = 'O utilizador inválido ou senha inválida.';
+$lang['badpassconfirm']        = 'Infelizmente a palavra-passe não é a correcta';
 $lang['minoredit']             = 'Alterações Menores';
 $lang['draftdate']             = 'Rascunho automaticamente gravado em';
 $lang['nosecedit']             = 'A página foi modificada entretanto. Como a informação da secção estava desactualizada, foi carregada a página inteira.';
@@ -86,6 +88,8 @@ $lang['profchanged']           = 'Perfil do utilizador actualizado com sucesso.'
 $lang['profnodelete']          = 'Esta wiki não suporta remoção de utilizadores';
 $lang['profdeleteuser']        = 'Apagar Conta';
 $lang['profdeleted']           = 'A sua conta de utilizador foi removida desta wiki';
+$lang['profconfdelete']        = 'Quero remover a minha conta desta wiki. <br/> Esta acção não pode ser anulada.';
+$lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
 $lang['pwdforget']             = 'Esqueceu a sua senha? Pedir nova senha';
 $lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
 $lang['resendpwd']             = 'Definir nova senha para';
@@ -291,6 +295,7 @@ $lang['i_policy']              = 'Politica ACL inicial';
 $lang['i_pol0']                = 'Wiki Aberto (ler, escrever e carregar para todos)';
 $lang['i_pol1']                = 'Wiki Público (ler para todos, escrever e carregar para utilizadores inscritos)';
 $lang['i_pol2']                = 'Wiki Fechado (ler, escrever e carregar somente para utilizadores inscritos)';
+$lang['i_allowreg']            = 'Permitir aos utilizadores registarem-se por si próprios';
 $lang['i_retry']               = 'Repetir';
 $lang['i_license']             = 'Por favor escolha a licença sob a qual quer colocar o seu conteúdo:';
 $lang['i_license_none']        = 'Não mostrar nenhuma informação de licença';
@@ -315,6 +320,7 @@ $lang['media_list_thumbs']     = 'Miniaturas';
 $lang['media_list_rows']       = 'Linhas';
 $lang['media_sort_name']       = 'Ordenar por nome';
 $lang['media_sort_date']       = 'Ordenar por data';
+$lang['media_namespaces']      = 'Escolha o namespace';
 $lang['media_files']           = 'Ficheiros em %s';
 $lang['media_upload']          = 'Enviar para o grupo <strong>%s</strong>.';
 $lang['media_search']          = 'Procurar no grupo <strong>%s</strong>.';
@@ -326,3 +332,7 @@ $lang['media_perm_read']       = 'Perdão, não tem permissão para ler ficheiro
 $lang['media_perm_upload']     = 'Perdão, não tem permissão para enviar ficheiros.';
 $lang['media_update']          = 'enviar nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['currentns']             = 'Namespace actual';
+$lang['searchresult']          = 'Resultado da pesquisa';
+$lang['plainhtml']             = 'HTML simples';
+$lang['wikimarkup']            = 'Markup de Wiki';
