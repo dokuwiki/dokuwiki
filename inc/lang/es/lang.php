@@ -34,6 +34,7 @@
  * @author Juan De La Cruz <juann.dlc@gmail.com>
  * @author Fernando <fdiezala@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
+ * @author Antonio Castilla <antoniocastilla@trazoide.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -311,6 +312,7 @@ $lang['i_problems']            = 'El instalador encontró algunos problemas, se 
 $lang['i_modified']            = 'Por razones de seguridad este script sólo funcionará con una instalación nueva y no modificada de Dokuwiki. Usted debe extraer nuevamente los ficheros del paquete bajado, o bien consultar las <a href="http://dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completas.';
 $lang['i_funcna']              = 'La función de PHP <code>%s</code> no está disponible. ¿Tal vez su proveedor de hosting la ha deshabilitado por alguna razón?';
 $lang['i_phpver']              = 'Su versión de PHP <code>%s</code> es menor que la necesaria <code>%s</code>. Es necesario que actualice su instalación de PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload se debe deshabilitar en php.ini para que funcione DokuWiki.';
 $lang['i_permfail']            = 'DokuWili no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
 $lang['i_confexists']          = '<code>%s</code> ya existe';
 $lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';

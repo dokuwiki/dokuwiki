@@ -289,6 +289,7 @@ $lang['i_modified']            = '보안 상의 이유로 이 스크립트는 �
 다운로드한 압축 패키지를 다시 설치하거나 <a href="http://dokuwiki.org/ko:install">도쿠위키 설치 과정</a>을 참고해서 설치하세요.';
 $lang['i_funcna']              = '<code>%s</code> PHP 함수를 사용할 수 없습니다. 호스트 제공자가 어떤 이유에서인지 막아 놓았을지 모릅니다.';
 $lang['i_phpver']              = 'PHP <code>%s</code> 버전은 필요한 <code>%s</code> 버전보다 오래되었습니다. PHP를 업그레이드할 필요가 있습니다.';
+$lang['i_mbfuncoverload']      = '도쿠위키를 실행하려면 mbstring.func_overload를 php.ini에서 비활성화해야 합니다.';
 $lang['i_permfail']            = '<code>%s</code>는 도쿠위키가 쓰기 가능 권한이 없습니다. 먼저 이 디렉터리에 쓰기 권한이 설정되어야 합니다!';
 $lang['i_confexists']          = '<code>%s</code>(은)는 이미 존재합니다';
 $lang['i_writeerr']            = '<code>%s</code>(을)를 만들 수 없습니다. 먼저 디렉터리/파일 권한을 확인하고 파일을 수동으로 만드세요.';

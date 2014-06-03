@@ -5,6 +5,7 @@
  * 
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
+ * @author Antonio Castilla <antoniocastilla@trazoide.com>
  */
 $lang['server']                = 'Tu servidor MySQL';
 $lang['user']                  = 'Nombre de usuario MySQL';
@@ -31,5 +32,8 @@ $lang['getUserID']             = 'Sentencia SQL para obtener la clave primaria d
 $lang['delUser']               = 'Sentencia SQL para eliminar un usuario';
 $lang['delUserRefs']           = 'Sentencia SQL para eliminar un usuario de todos los grupos';
 $lang['updateUser']            = 'Sentencia SQL para actualizar un perfil de usuario';
+$lang['delUserGroup']          = 'Sentencia SQL para eliminar un usuario de un grupo dado';
+$lang['getGroupID']            = 'Sentencia SQL para obtener la clave principal de un grupo dado';
 $lang['debug_o_0']             = 'ninguno';
 $lang['debug_o_1']             = 'sólo errores';
+$lang['debug_o_2']             = 'todas las consultas SQL';

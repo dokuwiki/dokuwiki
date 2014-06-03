@@ -2,13 +2,15 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
  * @author José Campos zecarlosdecampos@gmail.com
+ * @author Murilo <muriloricci@hotmail.com>
+ * @author Paulo Silva <paulotsilva@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -44,6 +46,7 @@ $lang['btn_backtomedia']       = 'Voltar à Selecção de Media';
 $lang['btn_subscribe']         = 'Subscrever Alterações';
 $lang['btn_profile']           = 'Actualizar Perfil';
 $lang['btn_reset']             = 'Limpar';
+$lang['btn_resendpwd']         = 'Definir nova senha';
 $lang['btn_draft']             = 'Editar rascunho';
 $lang['btn_recover']           = 'Recuperar rascunho';
 $lang['btn_draftdel']          = 'Apagar rascunho';
@@ -52,6 +55,8 @@ $lang['btn_register']          = 'Registar';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gestor de Media';
 $lang['btn_deleteuser']        = 'Remover a Minha Conta';
+$lang['btn_img_backto']        = 'De volta a %s';
+$lang['btn_mediaManager']      = 'Ver em gestor de media';
 $lang['loggedinas']            = 'Está em sessão como:';
 $lang['user']                  = 'Utilizador';
 $lang['pass']                  = 'Senha';
@@ -63,6 +68,7 @@ $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'Email';
 $lang['profile']               = 'Perfil do Utilizador';
 $lang['badlogin']              = 'O utilizador inválido ou senha inválida.';
+$lang['badpassconfirm']        = 'Infelizmente a palavra-passe não é a correcta';
 $lang['minoredit']             = 'Alterações Menores';
 $lang['draftdate']             = 'Rascunho automaticamente gravado em';
 $lang['nosecedit']             = 'A página foi modificada entretanto. Como a informação da secção estava desactualizada, foi carregada a página inteira.';
@@ -82,8 +88,11 @@ $lang['profchanged']           = 'Perfil do utilizador actualizado com sucesso.'
 $lang['profnodelete']          = 'Esta wiki não suporta remoção de utilizadores';
 $lang['profdeleteuser']        = 'Apagar Conta';
 $lang['profdeleted']           = 'A sua conta de utilizador foi removida desta wiki';
+$lang['profconfdelete']        = 'Quero remover a minha conta desta wiki. <br/> Esta acção não pode ser anulada.';
+$lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
 $lang['pwdforget']             = 'Esqueceu a sua senha? Pedir nova senha';
 $lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
+$lang['resendpwd']             = 'Definir nova senha para';
 $lang['resendpwdmissing']      = 'É preciso preencher todos os campos.';
 $lang['resendpwdnouser']       = 'Não foi possível encontrar este utilizador.';
 $lang['resendpwdbadauth']      = 'O código de autenticação não é válido. Por favor, assegure-se de que o link de confirmação está completo.';
@@ -177,6 +186,9 @@ $lang['difflink']              = 'Ligação para esta vista de comparação';
 $lang['diff_type']             = 'Ver diferenças';
 $lang['diff_inline']           = 'Embutido';
 $lang['diff_side']             = 'Lado a lado';
+$lang['diffprevrev']           = 'Revisão anterior';
+$lang['diffnextrev']           = 'Próxima revisão';
+$lang['difflastrev']           = 'Última revisão';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Está em:';
 $lang['youarehere']            = 'Está aqui:';
@@ -233,7 +245,6 @@ $lang['admin_register']        = 'Registar Novo Utilizador';
 $lang['metaedit']              = 'Editar Metadata';
 $lang['metasaveerr']           = 'Falhou a escrita de Metadata';
 $lang['metasaveok']            = 'Metadata gravada';
-$lang['btn_img_backto']            = 'De volta a %s';
 $lang['img_title']             = 'Título:';
 $lang['img_caption']           = 'Legenda:';
 $lang['img_date']              = 'Data:';
@@ -246,7 +257,6 @@ $lang['img_camera']            = 'Câmara:';
 $lang['img_keywords']          = 'Palavras-Chave:';
 $lang['img_width']             = 'Largura:';
 $lang['img_height']            = 'Altura:';
-$lang['btn_mediaManager']           = 'Ver em gestor de media';
 $lang['subscr_subscribe_success'] = 'Adicionado %s à lista de subscrição para %s';
 $lang['subscr_subscribe_error'] = 'Erro ao adicionar %s à lista de subscrição para %s';
 $lang['subscr_subscribe_noaddress'] = 'Não existe endereço algum associado com o seu nome de utilizador, não pode ser adicionado à lista de subscrição';
@@ -285,6 +295,7 @@ $lang['i_policy']              = 'Politica ACL inicial';
 $lang['i_pol0']                = 'Wiki Aberto (ler, escrever e carregar para todos)';
 $lang['i_pol1']                = 'Wiki Público (ler para todos, escrever e carregar para utilizadores inscritos)';
 $lang['i_pol2']                = 'Wiki Fechado (ler, escrever e carregar somente para utilizadores inscritos)';
+$lang['i_allowreg']            = 'Permitir aos utilizadores registarem-se por si próprios';
 $lang['i_retry']               = 'Repetir';
 $lang['i_license']             = 'Por favor escolha a licença sob a qual quer colocar o seu conteúdo:';
 $lang['i_license_none']        = 'Não mostrar nenhuma informação de licença';
@@ -305,9 +316,11 @@ $lang['media_file']            = 'Ficheiro';
 $lang['media_viewtab']         = 'Ver';
 $lang['media_edittab']         = 'Editar';
 $lang['media_historytab']      = 'Histórico';
+$lang['media_list_thumbs']     = 'Miniaturas';
 $lang['media_list_rows']       = 'Linhas';
 $lang['media_sort_name']       = 'Ordenar por nome';
 $lang['media_sort_date']       = 'Ordenar por data';
+$lang['media_namespaces']      = 'Escolha o namespace';
 $lang['media_files']           = 'Ficheiros em %s';
 $lang['media_upload']          = 'Enviar para o grupo <strong>%s</strong>.';
 $lang['media_search']          = 'Procurar no grupo <strong>%s</strong>.';
@@ -319,3 +332,7 @@ $lang['media_perm_read']       = 'Perdão, não tem permissão para ler ficheiro
 $lang['media_perm_upload']     = 'Perdão, não tem permissão para enviar ficheiros.';
 $lang['media_update']          = 'enviar nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['currentns']             = 'Namespace actual';
+$lang['searchresult']          = 'Resultado da pesquisa';
+$lang['plainhtml']             = 'HTML simples';
+$lang['wikimarkup']            = 'Markup de Wiki';
