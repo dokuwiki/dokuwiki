@@ -13,6 +13,7 @@
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Serenity87HUN <anikototh87@gmail.com>
  * @author Marina Vladi <deldadam@gmail.com>
+ * @author Mátyás Jani <jzombi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -59,7 +60,7 @@ $lang['btn_media']             = 'Médiakezelő';
 $lang['btn_deleteuser']        = 'Felhasználói fiókom eltávolítása';
 $lang['btn_img_backto']        = 'Vissza %s';
 $lang['btn_mediaManager']      = 'Megtekintés a médiakezelőben';
-$lang['loggedinas']            = 'Belépett felhasználó: ';
+$lang['loggedinas']            = 'Belépett felhasználó';
 $lang['user']                  = 'Azonosító';
 $lang['pass']                  = 'Jelszó';
 $lang['newpass']               = 'Új jelszó';
