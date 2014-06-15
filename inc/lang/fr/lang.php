@@ -34,6 +34,7 @@
  * @author David VANTYGHEM <david.vantyghem@free.fr>
  * @author Caillot <remicaillot5@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author YoBoY <yoboy@ubuntu-fr.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -66,7 +67,7 @@ $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens de retour';
 $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
-$lang['btn_subscribe']         = 'S\'abonner à cette page';
+$lang['btn_subscribe']         = 'Gérer souscriptions';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
 $lang['btn_resendpwd']         = 'Définir un nouveau mot de passe';
