@@ -20,8 +20,8 @@
  * @author Egil Hansen <egil@rosetta.no>
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
-$lang['acl_group']             = 'Gruppe';
-$lang['acl_user']              = 'Bruker';
+$lang['acl_group']             = 'Gruppe:';
+$lang['acl_user']              = 'Bruker:';
 $lang['acl_perms']             = 'Rettigheter for';
 $lang['page']                  = 'Side';
 $lang['namespace']             = 'Navnerom';

@@ -5,8 +5,8 @@
  * @author Massimiliano Vassalli <vassalli.max@gmail.com>
  */
 $lang['admin_acl']             = 'Administratio Indicis Custodiae Aditus';
-$lang['acl_group']             = 'Grex';
-$lang['acl_user']              = 'Sodalis';
+$lang['acl_group']             = 'Grex:';
+$lang['acl_user']              = 'Sodalis:';
 $lang['acl_perms']             = 'Facultas:';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Genus';

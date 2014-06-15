@@ -14,8 +14,8 @@
  * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
  */
 $lang['admin_acl']             = 'Διαχείριση Δικαιωμάτων Πρόσβασης';
-$lang['acl_group']             = 'Ομάδα';
-$lang['acl_user']              = 'Χρήστης';
+$lang['acl_group']             = 'Ομάδα:';
+$lang['acl_user']              = 'Χρήστης:';
 $lang['acl_perms']             = 'Δικαιώματα για';
 $lang['page']                  = 'Σελίδα';
 $lang['namespace']             = 'Φάκελος';

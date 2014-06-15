@@ -9,8 +9,8 @@
  * @author Matej Urbančič (mateju@svn.gnome.org)
  */
 $lang['admin_acl']             = 'Upravljanje dostopa';
-$lang['acl_group']             = 'Skupina';
-$lang['acl_user']              = 'Uporabnik';
+$lang['acl_group']             = 'Skupina:';
+$lang['acl_user']              = 'Uporabnik:';
 $lang['acl_perms']             = 'Dovoljenja za';
 $lang['page']                  = 'Stran';
 $lang['namespace']             = 'Imenski prostor';

@@ -9,8 +9,8 @@
  * @author uahello@gmail.com
  */
 $lang['admin_acl']             = 'إدارة قوائم التحكم بالدخول';
-$lang['acl_group']             = 'مجموعة';
-$lang['acl_user']              = 'مستخدم';
+$lang['acl_group']             = 'مجموعة:';
+$lang['acl_user']              = 'مستخدم:';
 $lang['acl_perms']             = 'ترخيص لـ';
 $lang['page']                  = 'صفحة';
 $lang['namespace']             = 'فضاء التسمية';

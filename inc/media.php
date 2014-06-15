@@ -1042,7 +1042,7 @@ function media_details($image, $auth, $rev=false, $meta=false) {
     foreach($tags as $tag){
         if ($tag['value']) {
             $value = cleanText($tag['value']);
-            echo '<dt>'.$lang[$tag['tag'][1]].':</dt><dd>';
+            echo '<dt>'.$lang[$tag['tag'][1]].'</dt><dd>';
             if ($tag['tag'][2] == 'date') echo dformat($value);
             else echo hsc($value);
             echo '</dd>'.NL;
@@ -1225,7 +1225,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         foreach($tags as $tag){
             $value = cleanText($tag['value']);
             if (!$value) $value = '-';
-            echo '<dt>'.$lang[$tag['tag'][1]].':</dt>';
+            echo '<dt>'.$lang[$tag['tag'][1]].'</dt>';
             echo '<dd>';
             if ($tag['highlighted']) {
                 echo '<strong>';
@@ -1654,10 +1654,10 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeFileField('upload', $lang['txt_upload'].':', 'upload__file'));
+    $form->addElement(form_makeFileField('upload', $lang['txt_upload'], 'upload__file'));
     $form->addElement(form_makeCloseTag('p'));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'].':', 'upload__name'));
+    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'], 'upload__name'));
     $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
     $form->addElement(form_makeCloseTag('p'));
 
