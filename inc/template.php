@@ -383,9 +383,9 @@ function tpl_metaheaders($alt = true) {
     if($ACT == 'show' || $ACT == 'export_xhtml') {
         // date of modification
         if($REV) {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
+            $head['meta'][] = array('name'=> 'dcterms.date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
         } else {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
+            $head['meta'][] = array('name'=> 'dcterms.date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
         }
 
         // keywords (explicit or implicit)
