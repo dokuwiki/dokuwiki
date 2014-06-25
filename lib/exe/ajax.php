@@ -256,7 +256,7 @@ function ajax_mediadiff(){
     global $INPUT;
 
     if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
-    $NS = $INPUT->post->str('ns');
+    $NS = getNS($image);
     $auth = auth_quickaclcheck("$NS:*");
     media_diff($image, $NS, $auth, true);
 }
