@@ -1428,14 +1428,14 @@ function tpl_mediaFileList() {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_mediaFileDetails($image, $rev) {
-    global $AUTH, $NS, $conf, $DEL, $lang;
+    global $conf, $DEL, $lang;
     /** @var Input $INPUT */
     global $INPUT;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
     if($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
-    if(isset($NS) && getNS($image) != $NS) return;
+    $ns = getNS($image);
     $do = $INPUT->str('mediado');
 
     $opened_tab = $INPUT->str('tab_details');
@@ -1471,13 +1471,13 @@ function tpl_mediaFileDetails($image, $rev) {
     echo '<div class="panelContent">'.NL;
 
     if($opened_tab == 'view') {
-        media_tab_view($image, $NS, $AUTH, $rev);
+        media_tab_view($image, $ns, null, $rev);
 
     } elseif($opened_tab == 'edit' && !$removed) {
-        media_tab_edit($image, $NS, $AUTH);
+        media_tab_edit($image, $ns);
 
     } elseif($opened_tab == 'history' && $conf['mediarevisions']) {
-        media_tab_history($image, $NS, $AUTH);
+        media_tab_history($image, $ns);
     }
 
     echo '</div>'.NL;
