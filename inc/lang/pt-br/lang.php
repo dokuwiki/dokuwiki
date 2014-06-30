@@ -23,6 +23,7 @@
  * @author Leone Lisboa Magevski <leone1983@gmail.com>
  * @author Dário Estevão <darioems@gmail.com>
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
+ * @author Ednei <leuloch@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,6 +68,8 @@ $lang['btn_register']          = 'Cadastre-se';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gerenciador de mídias';
 $lang['btn_deleteuser']        = 'Remover minha conta';
+$lang['btn_img_backto']        = 'Voltar para %s';
+$lang['btn_mediaManager']      = 'Ver no gerenciador de mídias';
 $lang['loggedinas']            = 'Identificado(a) como:';
 $lang['user']                  = 'Nome de usuário';
 $lang['pass']                  = 'Senha';
@@ -198,6 +201,9 @@ $lang['difflink']              = 'Link para esta página de comparações';
 $lang['diff_type']             = 'Ver as diferenças:';
 $lang['diff_inline']           = 'Mescladas';
 $lang['diff_side']             = 'Lado a lado';
+$lang['diffprevrev']           = 'Revisão anterior';
+$lang['diffnextrev']           = 'Próxima revisão';
+$lang['difflastrev']           = 'Última revisão';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Visitou:';
 $lang['youarehere']            = 'Você está aqui:';
@@ -254,7 +260,6 @@ $lang['admin_register']        = 'Adicionar novo usuário';
 $lang['metaedit']              = 'Editar metadados';
 $lang['metasaveerr']           = 'Não foi possível escrever os metadados';
 $lang['metasaveok']            = 'Os metadados foram salvos';
-$lang['btn_img_backto']            = 'Voltar para %s';
 $lang['img_title']             = 'Título:';
 $lang['img_caption']           = 'Descrição:';
 $lang['img_date']              = 'Data:';
@@ -267,7 +272,6 @@ $lang['img_camera']            = 'Câmera:';
 $lang['img_keywords']          = 'Palavras-chave:';
 $lang['img_width']             = 'Largura:';
 $lang['img_height']            = 'Altura:';
-$lang['btn_mediaManager']           = 'Ver no gerenciador de mídias';
 $lang['subscr_subscribe_success'] = 'Adicionado %s à lista de monitoramentos de %s';
 $lang['subscr_subscribe_error'] = 'Ocorreu um erro na adição de %s à lista de monitoramentos de %s';
 $lang['subscr_subscribe_noaddress'] = 'Como não há nenhum endereço associado ao seu usuário, você não pode ser adicionado à lista de monitoramento';
@@ -296,6 +300,7 @@ $lang['i_modified']            = 'Por questões de segurança, esse script funci
 Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="http://dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. O seu host a mantém desabilitada por algum motivo?';
 $lang['i_phpver']              = 'A sua versão do PHP (<code>%s</code>) é inferior à necessária (<code>%s</code>). Você precisa atualizar a sua instalação do PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload precisa ser desabilitado no php.ini para executar o DokuWiki';
 $lang['i_permfail']            = 'O DokuWiki não tem permissão de escrita em <code>%s</code>. Você precisa corrigir as configurações de permissão nesse diretório!';
 $lang['i_confexists']          = '<code>%s</code> já existe';
 $lang['i_writeerr']            = 'Não foi possível criar <code>%s</code>. É necessário checar as permissões de arquivos/diretórios e criar o arquivo manualmente.';
