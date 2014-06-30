@@ -175,6 +175,9 @@ class RemoteAPI {
         if (!$conf['remote']) {
             return false;
         }
+        if(trim($conf['remoteuser']) == '!!not set!!') {
+            return false;
+        }
         if(!$conf['useacl']) {
             return true;
         }
