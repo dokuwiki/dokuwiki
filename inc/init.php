@@ -413,7 +413,7 @@ function getBaseURL($abs=null){
     //if canonical url enabled always return absolute
     if(is_null($abs)) $abs = $conf['canonical'];
 
-    if($conf['basedir']){
+    if(isset($conf['basedir'])){
         $dir = $conf['basedir'];
     }elseif(substr($_SERVER['SCRIPT_NAME'],-4) == '.php'){
         $dir = dirname($_SERVER['SCRIPT_NAME']);
@@ -440,7 +440,7 @@ function getBaseURL($abs=null){
     if(!$abs) return $dir;
 
     //use config option if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
-    if($conf['baseurl']) return rtrim($conf['baseurl'],'/').$dir;
+    if(isset($conf['baseurl'])) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
