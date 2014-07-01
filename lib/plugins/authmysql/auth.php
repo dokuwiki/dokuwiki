@@ -964,7 +964,6 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _escape($string, $like = false) {
         if($this->dbcon) {
-            //$string = mysql_real_escape_string($string, $this->dbcon);
             $string = $this->dbcon->real_escape_string($string);
         } else {
             $string = addslashes($string);
