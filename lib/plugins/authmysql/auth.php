@@ -10,6 +10,7 @@ if(!defined('DOKU_INC')) die();
  * @author     Chris Smith <chris@jalakai.co.uk>
  * @author     Matthias Grimm <matthias.grimmm@sourceforge.net>
  * @author     Jan Schumann <js@schumann-it.com>
+ * @author     Torge Riedel <torgeriedel@gmx.de>
  */
 class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     /** @var resource holds the database connection */
@@ -741,26 +742,27 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * essential for most functions in this object.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @author Torge Riedel <torgeriedel@gmx.de>
      *
      * @return bool
      */
     protected function _openDB() {
         if(!$this->dbcon) {
-            $con = @mysql_connect($this->getConf('server'), $this->getConf('user'), $this->getConf('password'));
+            $con = new mysqli($this->getConf('server'), $this->getConf('user'), $this->getConf('password'));
             if($con) {
-                if((mysql_select_db($this->getConf('database'), $con))) {
-                    if((preg_match('/^(\d+)\.(\d+)\.(\d+).*/', mysql_get_server_info($con), $result)) == 1) {
+                if(($con->select_db($this->getConf('database')))) {
+                    if((preg_match('/^(\d+)\.(\d+)\.(\d+).*/', $con->server_info, $result)) == 1) {
                         $this->dbver = $result[1];
                         $this->dbrev = $result[2];
                         $this->dbsub = $result[3];
                     }
                     $this->dbcon = $con;
                     if($this->getConf('charset')) {
-                        mysql_query('SET CHARACTER SET "'.$this->getConf('charset').'"', $con);
+                        $con->query('SET CHARACTER SET "'.$this->getConf('charset').'"');
                     }
                     return true; // connection and database successfully opened
                 } else {
-                    mysql_close($con);
+                    $con->close();
                     $this->_debug("MySQL err: No access to database {$this->getConf('database')}.", -1, __LINE__, __FILE__);
                 }
             } else {
@@ -779,10 +781,11 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * Closes a database connection.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @author Torge Riedel <torgeriedel@gmx.de>
      */
     protected function _closeDB() {
         if($this->dbcon) {
-            mysql_close($this->dbcon);
+            $this->dbcon->close();
             $this->dbcon = 0;
         }
     }
@@ -795,6 +798,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * table such as SELECT.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @author Torge Riedel <torgeriedel@gmx.de>
      *
      * @param string $query  SQL string that contains the query
      * @return array with the result table
@@ -806,14 +810,19 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
 
         $resultarray = array();
         if($this->dbcon) {
-            $result = @mysql_query($query, $this->dbcon);
-            if($result) {
-                while(($t = mysql_fetch_assoc($result)) !== false)
-                    $resultarray[] = $t;
-                mysql_free_result($result);
+            $success = $this->dbcon->real_query($query);
+            if($success) {
+                do {
+                    $result = $this->dbcon->store_result();
+                    if($result) {
+                        while(($t = $result->fetch_assoc()) !== NULL)
+                            $resultarray[] = $t;
+                        $result->free();
+                    }
+                } while($this->dbcon->next_result());
                 return $resultarray;
             }
-            $this->_debug('MySQL err: '.mysql_error($this->dbcon), -1, __LINE__, __FILE__);
+            $this->_debug('MySQL err: '.$this->dbcon->error, -1, __LINE__, __FILE__);
         }
         return false;
     }
@@ -825,6 +834,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * either nothing or an id value such as INPUT, DELETE, UPDATE, etc.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     * @author Torge Riedel <torgeriedel@gmx.de>
      *
      * @param string $query  SQL string that contains the query
      * @return int|bool insert id or 0, false on error
@@ -835,12 +845,12 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
         }
 
         if($this->dbcon) {
-            $result = @mysql_query($query, $this->dbcon);
+            $result = $this->dbcon->query($query);
             if($result) {
-                $rc = mysql_insert_id($this->dbcon); //give back ID on insert
+                $rc = $this->dbcon->insert_id; //give back ID on insert
                 if($rc !== false) return $rc;
             }
-            $this->_debug('MySQL err: '.mysql_error($this->dbcon), -1, __LINE__, __FILE__);
+            $this->_debug('MySQL err: '.$this->dbcon->error, -1, __LINE__, __FILE__);
         }
         return false;
     }
@@ -954,7 +964,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _escape($string, $like = false) {
         if($this->dbcon) {
-            $string = mysql_real_escape_string($string, $this->dbcon);
+            //$string = mysql_real_escape_string($string, $this->dbcon);
+            $string = $this->dbcon->real_escape_string($string);
         } else {
             $string = addslashes($string);
         }
