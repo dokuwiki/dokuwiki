@@ -35,10 +35,11 @@ class DokuWiki_Plugin {
         $info = DOKU_PLUGIN . '/' . $parts[2] . '/plugin.info.txt';
         if(@file_exists($info)) return confToHash($info);
 
-        msg('getInfo() not implemented in ' . get_class($this) .
-            ' and ' . $info . ' not found.<br />Do you have installed the last version of the plugin? ' .
-            'If that is the case, this is a bug in the ' . $parts[2] . ' plugin and should be reported to the ' .
-            'plugin author.', -1);
+        msg(
+            'getInfo() not implemented in ' . get_class($this) . ' and ' . $info . ' not found.<br />' .
+            'Verify you\'re running the latest version of the plugin. If the problem persists, send a ' .
+            'bug report to the author of the ' . $parts[2] . ' plugin.', -1
+        );
         return array(
             'date' => '0000-00-00',
             'name' => $parts[2] . ' plugin',
