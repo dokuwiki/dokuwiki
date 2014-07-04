@@ -5,7 +5,9 @@
  * 
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
+ * @author Jonathan Hernández <me@jhalicea.com>
  */
+$lang['menu']                  = 'Administrador de Extensiones ';
 $lang['tab_plugins']           = 'Plugins instalados';
 $lang['tab_templates']         = 'Plantillas instaladas';
 $lang['tab_search']            = 'Buscar e instalar';
@@ -47,6 +49,8 @@ $lang['similar']               = 'Similar a:';
 $lang['conflicts']             = 'Conflictos con:';
 $lang['donate']                = '¿Cómo está?';
 $lang['donate_action']         = '¡Págale un café al autor!';
+$lang['repo_retry']            = 'Trate otra vez';
+$lang['provides']              = 'Provee: ';
 $lang['status']                = 'Estado:';
 $lang['status_installed']      = 'instalado';
 $lang['status_not_installed']  = 'no instalado';
@@ -56,6 +60,7 @@ $lang['status_disabled']       = 'desactivado';
 $lang['status_unmodifiable']   = 'no modificable';
 $lang['status_plugin']         = 'plugin';
 $lang['status_template']       = 'plantilla';
+$lang['status_bundled']        = 'agrupado';
 $lang['msg_enabled']           = 'Plugin %s activado';
 $lang['msg_disabled']          = 'Plugin %s desactivado';
 $lang['msg_delete_success']    = 'Extensión desinstalada';
@@ -64,3 +69,8 @@ $lang['msg_template_update_success'] = 'Plantilla %s actualizada con éxito';
 $lang['msg_plugin_install_success'] = 'Plugin %s instalado con éxito';
 $lang['msg_plugin_update_success'] = 'Plugin %s actualizado con éxito';
 $lang['msg_upload_failed']     = 'Falló la carga del archivo';
+$lang['missing_dependency']    = '<strong>Dependencia deshabilitada o perdida:</strong> %s';
+$lang['security_issue']        = '<strong>Problema de seguridad:</strong> %s';
+$lang['security_warning']      = '<strong>Aviso de seguridad:</strong> %s';
+$lang['update_available']      = '<strong>Actualizar:</strong> Nueva versión %s disponible.';
+$lang['wrong_folder']          = '<strong>"Plugin" instalado incorrectamente:</strong> Cambie el nombre del directorio del plugin "%s" a "%s".';

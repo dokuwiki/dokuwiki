@@ -35,6 +35,7 @@
  * @author Fernando <fdiezala@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
+ * @author Jonathan Hernández <me@jhalicea.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -44,13 +45,13 @@ $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Editar esta página';
-$lang['btn_source']            = 'Ver fuente';
+$lang['btn_source']            = 'Ver la fuente de esta página';
 $lang['btn_show']              = 'Ver página';
 $lang['btn_create']            = 'Crear esta página';
 $lang['btn_search']            = 'Buscar';
 $lang['btn_save']              = 'Guardar';
 $lang['btn_preview']           = 'Previsualización';
-$lang['btn_top']               = 'Ir hasta arriba';
+$lang['btn_top']               = 'Volver arriba';
 $lang['btn_newer']             = '<< más reciente';
 $lang['btn_older']             = 'menos reciente >>';
 $lang['btn_revs']              = 'Revisiones antiguas';
@@ -77,11 +78,11 @@ $lang['btn_draftdel']          = 'Eliminar borrador';
 $lang['btn_revert']            = 'Restaurar';
 $lang['btn_register']          = 'Registrarse';
 $lang['btn_apply']             = 'Aplicar';
-$lang['btn_media']             = 'Gestor de ficheros';
+$lang['btn_media']             = 'Administrador de Ficheros';
 $lang['btn_deleteuser']        = 'Elimina Mi Cuenta';
 $lang['btn_img_backto']        = 'Volver a %s';
-$lang['btn_mediaManager']      = 'Ver en el Administrador de medios';
-$lang['loggedinas']            = 'Conectado como :';
+$lang['btn_mediaManager']      = 'Ver en el administrador de ficheros';
+$lang['loggedinas']            = 'Conectado como:';
 $lang['user']                  = 'Usuario';
 $lang['pass']                  = 'Contraseña';
 $lang['newpass']               = 'Nueva contraseña';
