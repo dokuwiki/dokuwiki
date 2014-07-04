@@ -35,6 +35,7 @@
  * @author Fernando <fdiezala@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
+ * @author Jonathan Hernández <me@jhalicea.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -274,7 +275,7 @@ $lang['metaedit']              = 'Editar metadatos';
 $lang['metasaveerr']           = 'La escritura de los metadatos ha fallado';
 $lang['metasaveok']            = 'Los metadatos han sido guardados';
 $lang['img_title']             = 'Título:';
-$lang['img_caption']           = 'Epígrafe:';
+$lang['img_caption']           = 'Información: ';
 $lang['img_date']              = 'Fecha:';
 $lang['img_fname']             = 'Nombre de fichero:';
 $lang['img_fsize']             = 'Tamaño:';
