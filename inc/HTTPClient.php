@@ -35,6 +35,19 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
         $this->proxy_ssl    = $conf['proxy']['ssl'];
         $this->proxy_except = $conf['proxy']['except'];
+
+        // allow enabling debugging via URL parameter (if debugging allowed)
+        if($conf['allowdebug']) {
+            if(
+                isset($_REQUEST['httpdebug']) ||
+                (
+                    isset($_SERVER['HTTP_REFERER']) &&
+                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                )
+            ) {
+                $this->debug = true;
+            }
+        }
     }
 
 
