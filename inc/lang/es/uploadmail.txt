@@ -1,6 +1,7 @@
-Se ha subido un fichero a tu DokuWuki. Estos son los detalles:
+Se ha subido un fichero a tu DokuWiki. Estos son los detalles:
 
 Archivo : @MEDIA@
+Ultima revisión: @OLD@
 Fecha : @DATE@
 Navegador : @BROWSER@
 Dirección IP : @IPADDRESS@
