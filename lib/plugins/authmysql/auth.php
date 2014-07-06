@@ -13,8 +13,8 @@ if(!defined('DOKU_INC')) die();
  * @author     Torge Riedel <torgeriedel@gmx.de>
  */
 class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
-    /** @var resource holds the database connection */
-    protected $dbcon = 0;
+    /** @var mysqli holds the database connection */
+    protected $dbcon = null;
     /** @var int database version*/
     protected $dbver = 0;
     /** @var int database revision */
@@ -786,7 +786,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     protected function _closeDB() {
         if($this->dbcon) {
             $this->dbcon->close();
-            $this->dbcon = 0;
+            $this->dbcon = null;
         }
     }
 
