@@ -11,6 +11,7 @@
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Murilo <muriloricci@hotmail.com>
  * @author Paulo Silva <paulotsilva@yahoo.com>
+ * @author Marcio Sardinha <marcio.sardinha.infra@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -105,6 +106,7 @@ $lang['searchmedia_in']        = 'Procurar em %s';
 $lang['txt_upload']            = 'Escolha ficheiro para carregar:';
 $lang['txt_filename']          = 'Carregar como (opcional):';
 $lang['txt_overwrt']           = 'Escrever por cima do ficheiro já existente';
+$lang['maxuploadsize']         = 'Security Hotfix 2014-05-05a for Issue 765 available. upgrade now! [44.1] (what\'s this?)';
 $lang['lockedby']              = 'Bloqueado por:';
 $lang['lockexpire']            = 'Expira em:';
 $lang['js']['willexpire']      = 'O bloqueio de edição para este documento irá expirar num minuto.\nPara evitar conflitos use o botão Prever para re-iniciar o temporizador de bloqueio.';
