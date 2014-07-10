@@ -1,0 +1,1 @@
+Ovo su dodaci (plugin) trenutno instalirani na Vašem DokuWiku-u. Možete ih omogućiti, onemogućiti ili u potpunosti deinstalirati. Nadogradnje dodataka su također prikazane, obavezno pročitajte dokumentaciju  dodatka prije nadogradnje.
