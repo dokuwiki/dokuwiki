@@ -1,0 +1,4 @@
+====== Nađena neuspjelo uređivanje stranice ======
+
+Vaše zadnje uređivanje ove stranice nije završilo uredno. DokuWiki je automatski snimio kopiju tijekom rada koju sada možete iskoristiti da nastavite uređivanje. Niže možete vidjeti sadržaj koji je snimljen pri vašem zadnjem uređivanju.
+Molimo odlučite da li želite //vratiti// ili //obrisati// snimljeni sadržaj pri vašem zadnjem neuspjelom uređivanju, ili pak želite //odustati// od uređivanja.
