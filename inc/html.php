@@ -72,9 +72,11 @@ function html_login(){
  * @return string html
  */
 function html_denied() {
+    global $conf;
+    
     print p_locale_xhtml('denied');
 
-    if(!$_SERVER['REMOTE_USER']){
+    if(!$_SERVER['REMOTE_USER'] && $conf['show_loginform_on_deny']){
         html_login();
     }
 }
