@@ -922,6 +922,14 @@ function html_li_default($item){
  * a member of an object.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array    $data  array with item arrays
+ * @param string   $class class of ul wrapper
+ * @param callable $func  callback to print an list item
+ * @param string   $lifunc callback to the opening li tag
+ * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
+                                 0 (we have a root object) or 1 (just the root content)
+ * @return string html of an unordered list
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
     if (count($data) === 0) {
