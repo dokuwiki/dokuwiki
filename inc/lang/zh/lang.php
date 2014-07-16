@@ -20,6 +20,9 @@
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author anjianshi <anjianshi@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
+ * @author Cupen <Cupenoruler@foxmail.com>
+ * @author xiqingongzi <Xiqingongzi@Gmail.com>
+ * @author qinghao <qingxianhao@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -64,7 +67,9 @@ $lang['btn_register']          = '注册';
 $lang['btn_apply']             = '应用';
 $lang['btn_media']             = '媒体管理器';
 $lang['btn_deleteuser']        = '移除我的账户';
-$lang['loggedinas']            = '登录为';
+$lang['btn_img_backto']        = '返回到 %s';
+$lang['btn_mediaManager']      = '在媒体管理器中查看';
+$lang['loggedinas']            = '登录为:';
 $lang['user']                  = '用户名';
 $lang['pass']                  = '密码';
 $lang['newpass']               = '请输入新密码';
@@ -109,12 +114,12 @@ $lang['license']               = '除额外注明的地方外，本维基上的�
 $lang['licenseok']             = '当您选择开始编辑本页，即寓示你同意将你贡献的内容按下列许可协议发布：';
 $lang['searchmedia']           = '查找文件名：';
 $lang['searchmedia_in']        = '在%s中查找';
-$lang['txt_upload']            = '选择要上传的文件';
-$lang['txt_filename']          = '上传并重命名为（可选）';
+$lang['txt_upload']            = '选择要上传的文件:';
+$lang['txt_filename']          = '上传并重命名为（可选）:';
 $lang['txt_overwrt']           = '覆盖已存在的同名文件';
 $lang['maxuploadsize']         = '上传限制。每个文件 %s';
-$lang['lockedby']              = '目前已被下列人员锁定';
-$lang['lockexpire']            = '预计锁定解除于';
+$lang['lockedby']              = '目前已被下列人员锁定:';
+$lang['lockexpire']            = '预计锁定解除于:';
 $lang['js']['willexpire']      = '您对本页的独有编辑权将于一分钟之后解除。\n为了防止与其他人的编辑冲突，请使用预览按钮重设计时器。';
 $lang['js']['notsavedyet']     = '未保存的更改将丢失。
 真的要继续？';
@@ -195,10 +200,15 @@ $lang['difflink']              = '到此差别页面的链接';
 $lang['diff_type']             = '查看差异：';
 $lang['diff_inline']           = '行内显示';
 $lang['diff_side']             = '并排显示';
+$lang['diffprevrev']           = '前一修订版';
+$lang['diffnextrev']           = '后一修订版';
+$lang['difflastrev']           = '上一修订版';
+$lang['diffbothprevrev']       = '两侧同时换到之前的修订记录';
+$lang['diffbothnextrev']       = '两侧同时换到之后的修订记录';
 $lang['line']                  = '行';
-$lang['breadcrumb']            = '您的足迹';
-$lang['youarehere']            = '您在这里';
-$lang['lastmod']               = '最后更改';
+$lang['breadcrumb']            = '您的足迹:';
+$lang['youarehere']            = '您在这里:';
+$lang['lastmod']               = '最后更改:';
 $lang['by']                    = '由';
 $lang['deleted']               = '移除';
 $lang['created']               = '创建';
@@ -251,20 +261,18 @@ $lang['admin_register']        = '添加新用户';
 $lang['metaedit']              = '编辑元数据';
 $lang['metasaveerr']           = '写入元数据失败';
 $lang['metasaveok']            = '元数据已保存';
-$lang['img_backto']            = '返回到';
-$lang['img_title']             = '标题';
-$lang['img_caption']           = '说明';
-$lang['img_date']              = '日期';
-$lang['img_fname']             = '名称';
-$lang['img_fsize']             = '大小';
-$lang['img_artist']            = '摄影师';
-$lang['img_copyr']             = '版权';
-$lang['img_format']            = '格式';
-$lang['img_camera']            = '相机';
-$lang['img_keywords']          = '关键字';
-$lang['img_width']             = '宽度';
-$lang['img_height']            = '高度';
-$lang['img_manager']           = '在媒体管理器中查看';
+$lang['img_title']             = '标题:';
+$lang['img_caption']           = '说明:';
+$lang['img_date']              = '日期:';
+$lang['img_fname']             = '名称:';
+$lang['img_fsize']             = '大小:';
+$lang['img_artist']            = '摄影师:';
+$lang['img_copyr']             = '版权:';
+$lang['img_format']            = '格式:';
+$lang['img_camera']            = '相机:';
+$lang['img_keywords']          = '关键字:';
+$lang['img_width']             = '宽度:';
+$lang['img_height']            = '高度:';
 $lang['subscr_subscribe_success'] = '添加 %s 到 %s 的订阅列表';
 $lang['subscr_subscribe_error'] = '添加 %s 到 %s 的订阅列表中出现错误';
 $lang['subscr_subscribe_noaddress'] = '没有与您登录信息相关联的地址，您无法被添加到订阅列表';

@@ -200,6 +200,11 @@ class Doku_Parser_Mode_Plugin extends DokuWiki_Plugin implements Doku_Parser_Mod
     var $Lexer;
     var $allowedModes = array();
 
+    /**
+     * Sort for applying this mode
+     *
+     * @return int
+     */
     function getSort() {
         trigger_error('getSort() not implemented in '.get_class($this), E_USER_WARNING);
     }

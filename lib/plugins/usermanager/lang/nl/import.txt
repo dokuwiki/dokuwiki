@@ -1,7 +1,7 @@
 ===== Massa-import van gebruikers =====
 
 Hiervoor is een CSV-bestand nodig van de gebruikers met minstens vier kolommen. De kolommen moeten bevatten, in deze volgorde: gebruikers-id, complete naam, e-mailadres en groepen.
-Het CSV-velden moeten worden gescheiden met komma's (,) en de teksten moeten worden omringd met dubbele aanhalingstekens (""). Backslash (\) kan worden gebruikt om te escapen.
+Het CSV-velden moeten worden gescheiden met komma's (,) en de teksten moeten worden omringd met dubbele aanhalingstekens (%%""%%). Backslash (\) kan worden gebruikt om te escapen.
 Voor een voorbeeld van een werkend bestand, probeer de "Exporteer Gebruikers" functie hierboven.
 Dubbele gebruikers-id's zullen worden genegeerd.
 

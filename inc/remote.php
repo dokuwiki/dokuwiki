@@ -169,6 +169,9 @@ class RemoteAPI {
     public function hasAccess() {
         global $conf;
         global $USERINFO;
+        /** @var Input $INPUT */
+        global $INPUT;
+
         if (!$conf['remote']) {
             return false;
         }
@@ -179,7 +182,7 @@ class RemoteAPI {
             return true;
         }
 
-        return auth_isMember($conf['remoteuser'], $_SERVER['REMOTE_USER'], (array) $USERINFO['grps']);
+        return auth_isMember($conf['remoteuser'], $INPUT->server->str('REMOTE_USER'), (array) $USERINFO['grps']);
     }
 
     /**

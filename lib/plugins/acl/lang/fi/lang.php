@@ -9,8 +9,8 @@
  * @author Sami Olmari <sami@olmari.fi>
  */
 $lang['admin_acl']             = 'Käyttöoikeudet (ACL)';
-$lang['acl_group']             = 'Ryhmä';
-$lang['acl_user']              = 'Käyttäjä';
+$lang['acl_group']             = 'Ryhmä:';
+$lang['acl_user']              = 'Käyttäjä:';
 $lang['acl_perms']             = 'Oikeudet';
 $lang['page']                  = 'Sivu';
 $lang['namespace']             = 'Nimiavaruus';

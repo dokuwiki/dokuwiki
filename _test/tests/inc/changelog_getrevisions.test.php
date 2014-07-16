@@ -36,7 +36,7 @@ class changelog_getrevisions_test extends DokuWikiTest {
             unset($cache['nonexist']);
         }
         if(isset($cache['mailinglist'])) {
-            unset($cache['nonexist']);
+            unset($cache['mailinglist']);
         }
     }
 
@@ -45,11 +45,12 @@ class changelog_getrevisions_test extends DokuWikiTest {
      */
     function test_changemetadatanotexists() {
         $first = 0;
-        $num   = 1;
-        $id    = 'nonexist';
-
-        $revs         = getRevisions($id, $first, $num, $chunk_size = 8192, $media = false);
+        $num = 1;
+        $id = 'nonexist';
         $revsexpected = array();
+
+        $pagelog = new PageChangeLog($id, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -58,14 +59,20 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * (so skips first line which belongs to the current existing page)
      */
     function test_requestlastrev() {
-        $first        = 0;
-        $num          = 1;
+        $first = 0;
+        $num = 1;
         $revsexpected = array($this->revsexpected[1]);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -74,14 +81,20 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * (so skips first line which belongs to the current existing page)
      */
     function test_requestonebutlastrev() {
-        $first        = 1;
-        $num          = 1;
+        $first = 1;
+        $num = 1;
         $revsexpected = array($this->revsexpected[2]);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -90,14 +103,20 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * (so skips first line of current existing page)
      */
     function test_requestrevswithoffset() {
-        $first        = 10;
-        $num          = 5;
+        $first = 10;
+        $num = 5;
         $revsexpected = array_slice($this->revsexpected, $first + 1, $num);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
+        $this->assertEquals($revsexpected, $revs);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -105,14 +124,16 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * first = -1 requests recentest logline, without skipping
      */
     function test_requestrecentestlogline() {
-        $first        = -1;
-        $num          = 1;
+        $first = -1;
+        $num = 1;
         $revsexpected = array($this->revsexpected[0]);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -120,11 +141,12 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * chunck size = 0 skips chuncked loading
      */
     function test_wholefile() {
-        $first        = 0;
-        $num          = 1000;
+        $first = 0;
+        $num = 1000;
         $revsexpected = array_slice($this->revsexpected, 1);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 0, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 0);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -132,14 +154,16 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * Negative range returns no result
      */
     function test_negativenum() {
-        $first        = 0;
-        $num          = -10;
+        $first = 0;
+        $num = -10;
         $revsexpected = array();
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -147,14 +171,16 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * Negative range returns no result
      */
     function test_negativennumoffset() {
-        $first        = 2;
-        $num          = -10;
+        $first = 2;
+        $num = -10;
         $revsexpected = array();
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -162,14 +188,16 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * zero range returns no result
      */
     function test_zeronum() {
-        $first        = 5;
-        $num          = 0;
+        $first = 5;
+        $num = 0;
         $revsexpected = array();
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -177,11 +205,12 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * get oldest revisions
      */
     function test_requestlargeoffset() {
-        $first        = 22;
-        $num          = 50;
+        $first = 22;
+        $num = 50;
         $revsexpected = array_slice($this->revsexpected, $first + 1);
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -189,11 +218,12 @@ class changelog_getrevisions_test extends DokuWikiTest {
      * request with too large offset and range
      */
     function test_requesttoolargenumberrevs() {
-        $first        = 50;
-        $num          = 50;
+        $first = 50;
+        $num = 50;
         $revsexpected = array();
 
-        $revs = getRevisions($this->pageid, $first, $num, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $revs = $pagelog->getRevisions($first, $num);
         $this->assertEquals($revsexpected, $revs);
     }
 

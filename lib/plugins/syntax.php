@@ -20,9 +20,12 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * Syntax Type
      *
      * Needs to return one of the mode types defined in $PARSER_MODES in parser.php
+     *
+     * @return string
      */
     function getType(){
         trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
+        return '';
     }
 
     /**
@@ -31,6 +34,8 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * Defines the mode types for other dokuwiki markup that maybe nested within the
      * plugin's own markup. Needs to return an array of one or more of the mode types
      * defined in $PARSER_MODES in parser.php
+     *
+     * @return array
      */
     function getAllowedTypes() {
         return array();
@@ -47,6 +52,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
      * @see Doku_Handler_Block
+     * @return string
      */
     function getPType(){
         return 'normal';
@@ -63,10 +69,10 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * @param   string       $match   The text matched by the patterns
      * @param   int          $state   The lexer state for the match
      * @param   int          $pos     The character position of the matched text
-     * @param   Doku_Handler $handler Reference to the Doku_Handler object
+     * @param   Doku_Handler $handler The Doku_Handler object
      * @return  array Return an array with all data you want to use in render
      */
-    function handle($match, $state, $pos, Doku_Handler &$handler){
+    function handle($match, $state, $pos, Doku_Handler $handler){
         trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
@@ -89,17 +95,20 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * created
      *
      * @param   $format   string        output format being rendered
-     * @param   $renderer Doku_Renderer reference to the current renderer object
+     * @param   $renderer Doku_Renderer the current renderer object
      * @param   $data     array         data created by handler()
      * @return  boolean                 rendered correctly?
      */
-    function render($format, Doku_Renderer &$renderer, $data) {
+    function render($format, Doku_Renderer $renderer, $data) {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);
 
     }
 
     /**
-     *  There should be no need to override these functions
+     *  There should be no need to override this function
+     *
+     * @param string $mode
+     * @return bool
      */
     function accepts($mode) {
 

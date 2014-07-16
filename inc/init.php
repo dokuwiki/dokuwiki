@@ -140,18 +140,21 @@ if ($conf['gzip_output'] &&
 }
 
 // init session
-if (!headers_sent() && !defined('NOSESSION')){
-    session_name("DokuWiki");
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if (version_compare(PHP_VERSION, '5.2.0', '>')) {
-        session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()),true);
-    }else{
-        session_set_cookie_params(0,$cookieDir,'',($conf['securecookie'] && is_ssl()));
+if(!headers_sent() && !defined('NOSESSION')) {
+    if(!defined('DOKU_SESSION_NAME'))     define ('DOKU_SESSION_NAME', "DokuWiki");
+    if(!defined('DOKU_SESSION_LIFETIME')) define ('DOKU_SESSION_LIFETIME', 0);
+    if(!defined('DOKU_SESSION_PATH')) {
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        define ('DOKU_SESSION_PATH', $cookieDir);
     }
+    if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
+
+    session_name(DOKU_SESSION_NAME);
+    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
     session_start();
 
     // load left over messages
-    if(isset($_SESSION[DOKU_COOKIE]['msg'])){
+    if(isset($_SESSION[DOKU_COOKIE]['msg'])) {
         $MSG = $_SESSION[DOKU_COOKIE]['msg'];
         unset($_SESSION[DOKU_COOKIE]['msg']);
     }
@@ -173,7 +176,7 @@ if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 $_REQUEST = array_merge($_GET,$_POST);
 
 // we don't want a purge URL to be digged
-if(isset($_REQUEST['purge']) && $_SERVER['HTTP_REFERER']) unset($_REQUEST['purge']);
+if(isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
 // disable gzip if not available
 if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
@@ -181,11 +184,6 @@ if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
 }
 if($conf['compression'] == 'gz' && !function_exists('gzopen')){
     $conf['compression'] = 0;
-}
-
-// fix dateformat for upgraders
-if(strpos($conf['dformat'],'%') === false){
-    $conf['dformat'] = '%Y/%m/%d %H:%M';
 }
 
 // precalculate file creation modes
@@ -404,6 +402,10 @@ function remove_magic_quotes(&$array) {
  * Returns the full absolute URL to the directory where
  * DokuWiki is installed in (includes a trailing slash)
  *
+ * !! Can not access $_SERVER values through $INPUT
+ * !! here as this function is called before $INPUT is
+ * !! initialized.
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getBaseURL($abs=null){
@@ -443,12 +445,12 @@ function getBaseURL($abs=null){
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
         $parsed_host = parse_url('http://'.$_SERVER['HTTP_HOST']);
-        $host = $parsed_host['host'];
-        $port = $parsed_host['port'];
+        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
+        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
     }elseif(isset($_SERVER['SERVER_NAME'])){
         $parsed_host = parse_url('http://'.$_SERVER['SERVER_NAME']);
-        $host = $parsed_host['host'];
-        $port = $parsed_host['port'];
+        $host = isset($parsed_host['host']) ? $parsed_host['host'] : null;
+        $port = isset($parsed_host['port']) ? $parsed_host['port'] : null;
     }else{
         $host = php_uname('n');
         $port = '';

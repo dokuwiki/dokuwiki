@@ -8,8 +8,8 @@
  * @author shantanoo@gmail.com
  */
 $lang['admin_acl']             = 'Access Control List  व्यवस्थापन';
-$lang['acl_group']             = 'गट';
-$lang['acl_user']              = 'सदस्य';
+$lang['acl_group']             = 'गट:';
+$lang['acl_user']              = 'सदस्य:';
 $lang['acl_perms']             = 'परवानगी \'च्या साठी';
 $lang['page']                  = 'पान';
 $lang['namespace']             = 'नेमस्पेस';

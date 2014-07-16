@@ -1,0 +1,9 @@
+===== Masveida lietotāju imports =====
+
+Vajag CSV failu ar vismaz četrām lietotāju datu kolonām šādā secībā: identifikators, pilns vārds, e-pasta adrese un grupas. 
+
+CSV lauki jāatdala ar komatiem (,) un virknes — ar pēdiņām (%%""%%). Backslash (\) can be used for escaping. 
+Derīga faila paraugam izmantojiem augtāk redzamo "Lietotāju eksportu".  
+Dublētus identifikatorus ignorēs. 
+
+Paroli katram veiksmīgi importētajam lietotājam izveidos un nosūtīs pa e-pastu.

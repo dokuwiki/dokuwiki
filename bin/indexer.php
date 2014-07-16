@@ -1,98 +1,103 @@
 #!/usr/bin/php
 <?php
-if ('cli' != php_sapi_name()) die();
-
-ini_set('memory_limit','128M');
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
+define('NOSESSION', 1);
 require_once(DOKU_INC.'inc/init.php');
-require_once(DOKU_INC.'inc/cliopts.php');
-session_write_close();
-
-// handle options
-$short_opts = 'hcuq';
-$long_opts  = array('help', 'clear', 'update', 'quiet');
-$OPTS = Doku_Cli_Opts::getOptions(__FILE__,$short_opts,$long_opts);
-if ( $OPTS->isError() ) {
-    fwrite( STDERR, $OPTS->getMessage() . "\n");
-    _usage();
-    exit(1);
-}
-$CLEAR = false;
-$QUIET = false;
-$INDEXER = null;
-foreach ($OPTS->options as $key => $val) {
-    switch ($key) {
-        case 'h':
-        case 'help':
-            _usage();
-            exit;
-        case 'c':
-        case 'clear':
-            $CLEAR = true;
-            break;
-        case 'q':
-        case 'quiet':
-            $QUIET = true;
-            break;
-    }
-}
-
-#------------------------------------------------------------------------------
-# Action
-
-if($CLEAR) _clearindex();
-_update();
-
-
-
-#------------------------------------------------------------------------------
-
-function _usage() {
-    print "Usage: indexer.php <options>
-
-    Updates the searchindex by indexing all new or changed pages
-    when the -c option is given the index is cleared first.
-
-    OPTIONS
-        -h, --help     show this help and exit
-        -c, --clear    clear the index before updating
-        -q, --quiet    don't produce any output
-";
-}
-
-function _update(){
-    global $conf;
-    $data = array();
-    _quietecho("Searching pages... ");
-    search($data,$conf['datadir'],'search_allpages',array('skipacl' => true));
-    _quietecho(count($data)." pages found.\n");
-
-    foreach($data as $val){
-        _index($val['id']);
-    }
-}
-
-function _index($id){
-    global $CLEAR;
-    global $QUIET;
-
-    _quietecho("$id... ");
-    idx_addPage($id, !$QUIET, $CLEAR);
-    _quietecho("done.\n");
-}
 
 /**
- * Clear all index files
+ * Update the Search Index from command line
  */
-function _clearindex(){
-    _quietecho("Clearing index... ");
-    idx_get_indexer()->clear();
-    _quietecho("done.\n");
+class IndexerCLI extends DokuCLI {
+
+    private $quiet = false;
+    private $clear = false;
+
+    /**
+     * Register options and arguments on the given $options object
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function setup(DokuCLI_Options $options) {
+        $options->setHelp(
+            'Updates the searchindex by indexing all new or changed pages. When the -c option is '.
+            'given the index is cleared first.'
+        );
+
+        $options->registerOption(
+            'clear',
+            'clear the index before updating',
+            'c'
+        );
+        $options->registerOption(
+            'quiet',
+            'don\'t produce any output',
+            'q'
+        );
+    }
+
+    /**
+     * Your main program
+     *
+     * Arguments and options have been parsed when this is run
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function main(DokuCLI_Options $options) {
+        $this->clear = $options->getOpt('clear');
+        $this->quiet = $options->getOpt('quiet');
+
+        if($this->clear) $this->clearindex();
+
+        $this->update();
+    }
+
+    /**
+     * Update the index
+     */
+    function update() {
+        global $conf;
+        $data = array();
+        $this->quietecho("Searching pages... ");
+        search($data, $conf['datadir'], 'search_allpages', array('skipacl' => true));
+        $this->quietecho(count($data)." pages found.\n");
+
+        foreach($data as $val) {
+            $this->index($val['id']);
+        }
+    }
+
+    /**
+     * Index the given page
+     *
+     * @param string $id
+     */
+    function index($id) {
+        $this->quietecho("$id... ");
+        idx_addPage($id, !$this->quiet, $this->clear);
+        $this->quietecho("done.\n");
+    }
+
+    /**
+     * Clear all index files
+     */
+    function clearindex() {
+        $this->quietecho("Clearing index... ");
+        idx_get_indexer()->clear();
+        $this->quietecho("done.\n");
+    }
+
+    /**
+     * Print message if not supressed
+     *
+     * @param string $msg
+     */
+    function quietecho($msg) {
+        if(!$this->quiet) echo $msg;
+    }
 }
 
-function _quietecho($msg) {
-    global $QUIET;
-    if(!$QUIET) echo $msg;
-}
-
-//Setup VIM: ex: et ts=2 :
+// Main
+$cli = new IndexerCLI();
+$cli->run();

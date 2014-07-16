@@ -270,8 +270,9 @@ class Doku_Indexer {
         // Special handling for titles so the index file is simpler
         if (array_key_exists('title', $key)) {
             $value = $key['title'];
-            if (is_array($value))
+            if (is_array($value)) {
                 $value = $value[0];
+            }
             $this->saveIndexKey('title', '', $pid, $value);
             unset($key['title']);
         }
@@ -299,20 +300,24 @@ class Doku_Indexer {
                 if ($val !== "") {
                     $id = array_search($val, $metawords, true);
                     if ($id === false) {
+                        // didn't find $val, so we'll add it to the end of metawords and create a placeholder in metaidx
                         $id = count($metawords);
                         $metawords[$id] = $val;
+                        $metaidx[$id] = '';
                         $addwords = true;
                     }
                     // test if value is already in the index
-                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0)
+                    if (isset($val_idx[$id]) && $val_idx[$id] <= 0){
                         $val_idx[$id] = 0;
-                    else // else add it
+                    } else { // else add it
                         $val_idx[$id] = 1;
+                    }
                 }
             }
 
-            if ($addwords)
+            if ($addwords) {
                 $this->saveIndex($metaname.'_w', '', $metawords);
+            }
             $vals_changed = false;
             foreach ($val_idx as $id => $action) {
                 if ($action == -1) {
@@ -1213,17 +1218,18 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     protected function updateTuple($line, $id, $count) {
-        $newLine = $line;
-        if ($newLine !== '')
-            $newLine = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $newLine);
-        $newLine = trim($newLine, ':');
-        if ($count) {
-            if (strlen($newLine) > 0)
-                return "$id*$count:".$newLine;
-            else
-                return "$id*$count".$newLine;
+        if ($line != ''){
+            $line = preg_replace('/(^|:)'.preg_quote($id,'/').'\*\d*/', '', $line);
         }
-        return $newLine;
+        $line = trim($line, ':');
+        if ($count) {
+            if ($line) {
+                return "$id*$count:".$line;
+            } else {
+                return "$id*$count";
+            }
+        }
+        return $line;
     }
 
     /**

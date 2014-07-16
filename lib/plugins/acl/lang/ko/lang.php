@@ -15,8 +15,8 @@
  * @author Garam <rowain8@gmail.com>
  */
 $lang['admin_acl']             = '접근 제어 목록 관리';
-$lang['acl_group']             = '그룹';
-$lang['acl_user']              = '사용자';
+$lang['acl_group']             = '그룹:';
+$lang['acl_user']              = '사용자:';
 $lang['acl_perms']             = '권한';
 $lang['page']                  = '문서';
 $lang['namespace']             = '이름공간';
@@ -33,7 +33,7 @@ $lang['p_include']             = '더 높은 접근 권한은 하위를 포함�
 $lang['current']               = '현재 ACL 규칙';
 $lang['where']                 = '문서/이름공간';
 $lang['who']                   = '사용자/그룹';
-$lang['perm']                  = '접근 권한';
+$lang['perm']                  = '권한';
 $lang['acl_perm0']             = '없음';
 $lang['acl_perm1']             = '읽기';
 $lang['acl_perm2']             = '편집';

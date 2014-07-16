@@ -7,8 +7,8 @@
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
  */
 $lang['admin_acl']             = 'Manajemen Daftar Pengendali Akses';
-$lang['acl_group']             = 'Grup';
-$lang['acl_user']              = 'User';
+$lang['acl_group']             = 'Grup:';
+$lang['acl_user']              = 'User:';
 $lang['acl_perms']             = 'Ijin untuk';
 $lang['page']                  = 'Halaman';
 $lang['namespace']             = 'Namespace';

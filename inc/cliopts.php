@@ -68,15 +68,16 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
  *
  * @author Andrei Zmievski <andrei@php.net>
  *
+ * @deprecated 2014-05-16
  */
 class Doku_Cli_Opts {
 
     /**
      * <?php ?>
      * @see http://www.sitepoint.com/article/php-command-line-1/3
-     * @param string executing file name - this MUST be passed the __FILE__ constant
-     * @param string short options
-     * @param array (optional) long options
+     * @param string $bin_file      executing file name - this MUST be passed the __FILE__ constant
+     * @param string $short_options short options
+     * @param array  $long_options  (optional) long options
      * @return Doku_Cli_Opts_Container or Doku_Cli_Opts_Error
      */
     function & getOptions($bin_file, $short_options, $long_options = null) {
@@ -233,12 +234,12 @@ class Doku_Cli_Opts {
      * Parse short option
      *
      * @param string     $arg           Argument
-     * @param string[]   $short_options Available short options
+     * @param string     $short_options Available short options
      * @param string[][] &$opts
      * @param string[]   &$args
      *
      * @access private
-     * @return void
+     * @return void|Doku_Cli_Opts_Error
      */
     function _parseShortOption($arg, $short_options, &$opts, &$args) {
         $len = strlen($arg);
@@ -324,7 +325,7 @@ class Doku_Cli_Opts {
      * @param string[]   &$args
      *
      * @access private
-     * @return void|PEAR_Error
+     * @return void|Doku_Cli_Opts_Error
      */
     function _parseLongOption($arg, $long_options, &$opts, &$args) {
         @list($opt, $opt_arg) = explode('=', $arg, 2);
@@ -402,7 +403,7 @@ class Doku_Cli_Opts {
      * Will take care on register_globals and register_argc_argv ini directives
      *
      * @access public
-     * @return mixed the $argv PHP array or PEAR error if not registered
+     * @return array|Doku_Cli_Opts_Error the $argv PHP array or PEAR error if not registered
      */
     function readPHPArgv() {
         global $argv;
@@ -421,10 +422,19 @@ class Doku_Cli_Opts {
         return $argv;
     }
 
+    /**
+     * @param $code
+     * @param $msg
+     * @return Doku_Cli_Opts_Error
+     */
     function raiseError($code, $msg) {
         return new Doku_Cli_Opts_Error($code, $msg);
     }
 
+    /**
+     * @param $obj
+     * @return bool
+     */
     function isError($obj) {
         return is_a($obj, 'Doku_Cli_Opts_Error');
     }

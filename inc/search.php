@@ -141,7 +141,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
     //we do nothing with directories
     if($type == 'd') {
-        if(!$opts['depth']) return true; // recurse forever
+        if(empty($opts['depth'])) return true; // recurse forever
         $depth = substr_count($file,'/');
         if($depth >= $opts['depth']) return false; // depth reached
         return true;
@@ -157,12 +157,12 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
 
     //check ACL for namespace (we have no ACL for mediafiles)
     $info['perm'] = auth_quickaclcheck(getNS($info['id']).':*');
-    if(!$opts['skipacl'] && $info['perm'] < AUTH_READ){
+    if(empty($opts['skipacl']) && $info['perm'] < AUTH_READ){
         return false;
     }
 
     //check pattern filter
-    if($opts['pattern'] && !@preg_match($opts['pattern'], $info['id'])){
+    if(!empty($opts['pattern']) && !@preg_match($opts['pattern'], $info['id'])){
         return false;
     }
 
@@ -176,7 +176,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     }else{
         $info['isimg'] = false;
     }
-    if($opts['hash']){
+    if(!empty($opts['hash'])){
         $info['hash'] = md5(io_readFile(mediaFN($info['id']),false));
     }
 
@@ -317,25 +317,25 @@ function pathID($path,$keeptxt=false){
  * How the function behaves, depends on the options passed in the $opts
  * array, where the following settings can be used.
  *
- * depth      int     recursion depth. 0 for unlimited
- * keeptxt    bool    keep .txt extension for IDs
- * listfiles  bool    include files in listing
- * listdirs   bool    include namespaces in listing
- * pagesonly  bool    restrict files to pages
- * skipacl    bool    do not check for READ permission
- * sneakyacl  bool    don't recurse into nonreadable dirs
- * hash       bool    create MD5 hash for files
- * meta       bool    return file metadata
- * filematch  string  match files against this regexp
- * idmatch    string  match full ID against this regexp
- * dirmatch   string  match directory against this regexp when adding
- * nsmatch    string  match namespace against this regexp when adding
- * recmatch   string  match directory against this regexp when recursing
- * showmsg    bool    warn about non-ID files
- * showhidden bool    show hidden files too
- * firsthead  bool    return first heading for pages
+ * depth      int     recursion depth. 0 for unlimited                       (default: 0)
+ * keeptxt    bool    keep .txt extension for IDs                            (default: false)
+ * listfiles  bool    include files in listing                               (default: false)
+ * listdirs   bool    include namespaces in listing                          (default: false)
+ * pagesonly  bool    restrict files to pages                                (default: false)
+ * skipacl    bool    do not check for READ permission                       (default: false)
+ * sneakyacl  bool    don't recurse into nonreadable dirs                    (default: false)
+ * hash       bool    create MD5 hash for files                              (default: false)
+ * meta       bool    return file metadata                                   (default: false)
+ * filematch  string  match files against this regexp                        (default: '', so accept everything)
+ * idmatch    string  match full ID against this regexp                      (default: '', so accept everything)
+ * dirmatch   string  match directory against this regexp when adding        (default: '', so accept everything)
+ * nsmatch    string  match namespace against this regexp when adding        (default: '', so accept everything)
+ * recmatch   string  match directory against this regexp when recursing     (default: '', so accept everything)
+ * showmsg    bool    warn about non-ID files                                (default: false)
+ * showhidden bool    show hidden files(e.g. by hidepages config) too        (default: false)
+ * firsthead  bool    return first heading for pages                         (default: false)
  *
- * @param array &$data - Reference to the result data structure
+ * @param array &$data  - Reference to the result data structure
  * @param string $base  - Base usually $conf['datadir']
  * @param string $file  - current file or directory relative to $base
  * @param string $type  - Type either 'd' for directory or 'f' for file
@@ -351,17 +351,18 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $return = true;
 
     // get ID and check if it is a valid one
-    $item['id'] = pathID($file,($type == 'd' || $opts['keeptxt']));
+    $item['id'] = pathID($file,($type == 'd' || !empty($opts['keeptxt'])));
     if($item['id'] != cleanID($item['id'])){
-        if($opts['showmsg'])
+        if(!empty($opts['showmsg'])){
             msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);
+        }
         return false; // skip non-valid files
     }
     $item['ns']  = getNS($item['id']);
 
     if($type == 'd') {
         // decide if to recursion into this directory is wanted
-        if(!$opts['depth']){
+        if(empty($opts['depth'])){
             $return = true; // recurse forever
         }else{
             $depth = substr_count($file,'/');
@@ -371,8 +372,12 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
                 $return = true;
             }
         }
-        if($return && !preg_match('/'.$opts['recmatch'].'/',$file)){
-            $return = false; // doesn't match
+
+        if ($return) {
+            $match = empty($opts['recmatch']) || preg_match('/'.$opts['recmatch'].'/',$file);
+            if (!$match) {
+                return false; // doesn't match
+            }
         }
     }
 
@@ -407,7 +412,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     $item['level'] = $lvl;
     $item['open']  = $return;
 
-    if($opts['meta']){
+    if(!empty($opts['meta'])){
         $item['file']       = utf8_basename($file);
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
@@ -417,8 +422,8 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
     }
 
     if($type == 'f'){
-        if($opts['hash']) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
-        if($opts['firsthead']) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
+        if(!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base.'/'.$file,false));
+        if(!empty($opts['firsthead'])) $item['title'] = p_get_first_heading($item['id'],METADATA_DONT_RENDER);
     }
 
     // finally add the item
