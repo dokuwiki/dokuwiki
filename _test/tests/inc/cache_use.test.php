@@ -29,6 +29,9 @@ class cache_use_test extends DokuWikiTest {
     }
 
     function test_use() {
+        $this->markTestSkipped('Disabled until Ticket #694 has been fixed');
+        return;
+
         $this->assertTrue($this->cache->useCache());
     }
 
