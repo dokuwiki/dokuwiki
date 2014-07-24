@@ -12,8 +12,8 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @todo   Maybe add some more error checking
  */
-$GAMMA = 0.8;
 $OPTIPNG = '/usr/bin/optipng';
+$OPACITY = 70;
 
 // load input images
 $input = glob('pagetools/*.png');
@@ -23,6 +23,10 @@ if(!$cnt){
     die("No input images found. This script needs to be called from within the image directory!\n");
 }
 
+$WIDTH=30;
+$BORDER=3;
+
+
 // create destination image
 $DST = imagecreatetruecolor(30,$cnt*45*2);
 imagesavealpha($DST, true);
@@ -30,30 +34,44 @@ $C_trans = imagecolorallocatealpha($DST, 0, 0, 0, 127);
 imagefill($DST, 0, 0, $C_trans);
 
 // load highlight color from style.ini
-$ini = parse_ini_file('../style.ini',true);
-$COLOR = hex2rgb($ini['replacements']['__link__']);
-$C_active = imagecolorallocate($DST, $COLOR['r'],$COLOR['g'],$COLOR['b']);
+// $ini = parse_ini_file('../style.ini',true);
+// $COLOR = hex2rgb($ini['replacements']['__link__']);
+
+$ACTIVE = hex2rgb('#2b73b7');
+$INACTIVE = hex2rgb('#999999');
+
+
 
 // add all the icons to the sprite image
 for($i=0; $i<$cnt; $i++){
-    $base = $i*90;
+    $base = $i*$WIDTH*3;
 
+    echo '.';
+
+    // inactive version
     $IN = imagecreatefrompng($input[$i]);
     imagesavealpha($IN, true);
-    imagecolorscale($IN,$GAMMA);
-    imagecopy($DST,$IN, 0,$base, 0,0, 30,30);
+    imagefilter($IN, IMG_FILTER_COLORIZE, $INACTIVE['r'],$INACTIVE['g'],$INACTIVE['b']);
+    list($w, $h) = getimagesize($input[$i]);
+    imagecopyresampled($DST,$IN, $BORDER, $base+$BORDER, 0,0, $WIDTH-$BORDER*2, $WIDTH-$BORDER*2, $w,$h);
     imagedestroy($IN);
 
+
+    $base = $base + $WIDTH + $WIDTH/2;
+
+    // active version
     $IN = imagecreatefrompng($input[$i]);
     imagesavealpha($IN, true);
-    imagecolorscale($IN,$GAMMA);
-    imagecopy($DST,$IN, 0,$base+45, 0,0, 30,30);
+    imagefilter($IN, IMG_FILTER_COLORIZE, $ACTIVE['r'],$ACTIVE['g'],$ACTIVE['b']);
+    list($w, $h) = getimagesize($input[$i]);
+    imagecopyresampled($DST,$IN, $BORDER, $base+$BORDER, 0,0, $WIDTH-$BORDER*2, $WIDTH-$BORDER*2, $w,$h);
     imagedestroy($IN);
 
-    imagelayereffect($DST, IMG_EFFECT_OVERLAY);
-    imagefilledrectangle($DST, 0,$base+45, 30,$base+45+30, $C_active);
-    imagelayereffect($DST, IMG_EFFECT_NORMAL);
 }
+
+// set opacity
+filter_opacity($DST, $OPACITY);
+
 
 // output sprite
 imagepng($DST,'pagetools-sprite.png');
@@ -88,6 +106,53 @@ function hex2rgb($hex) {
        'b' => hexdec(substr($hex, 4, 2))
     );
 }
+
+
+function filter_opacity( &$img, $opacity ) //params: image resource id, opacity in percentage (eg. 80)
+        {
+            if( !isset( $opacity ) )
+                { return false; }
+            $opacity /= 100;
+
+            //get image width and height
+            $w = imagesx( $img );
+            $h = imagesy( $img );
+
+            //turn alpha blending off
+            imagealphablending( $img, false );
+
+            //find the most opaque pixel in the image (the one with the smallest alpha value)
+            $minalpha = 127;
+            for( $x = 0; $x < $w; $x++ )
+                for( $y = 0; $y < $h; $y++ )
+                    {
+                        $alpha = ( imagecolorat( $img, $x, $y ) >> 24 ) & 0xFF;
+                        if( $alpha < $minalpha )
+                            { $minalpha = $alpha; }
+                    }
+
+            //loop through image pixels and modify alpha for each
+            for( $x = 0; $x < $w; $x++ )
+                {
+                    for( $y = 0; $y < $h; $y++ )
+                        {
+                            //get current alpha value (represents the TANSPARENCY!)
+                            $colorxy = imagecolorat( $img, $x, $y );
+                            $alpha = ( $colorxy >> 24 ) & 0xFF;
+                            //calculate new alpha
+                            if( $minalpha !== 127 )
+                                { $alpha = 127 + 127 * $opacity * ( $alpha - 127 ) / ( 127 - $minalpha ); }
+                            else
+                                { $alpha += 127 * $opacity; }
+                            //get the color index with new alpha
+                            $alphacolorxy = imagecolorallocatealpha( $img, ( $colorxy >> 16 ) & 0xFF, ( $colorxy >> 8 ) & 0xFF, $colorxy & 0xFF, $alpha );
+                            //set pixel with the new color + opacity
+                            if( !imagesetpixel( $img, $x, $y, $alphacolorxy ) )
+                                { return false; }
+                        }
+                }
+            return true;
+        }
 
 /**
  * Scale (darken/lighten) a given image
