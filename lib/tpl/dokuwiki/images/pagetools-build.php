@@ -41,12 +41,12 @@ class PagetoolBuilder extends DokuCLI {
     protected $optipng = '/usr/bin/optipng';
 
     /**
-     * @var array primary color
+     * @var string primary color
      */
     protected $primary = null;
 
     /**
-     * @var array secondary color
+     * @var string secondary color
      */
     protected $secondary = null;
 
@@ -59,8 +59,8 @@ class PagetoolBuilder extends DokuCLI {
         parent::__construct();
 
         $ini             = parse_ini_file(__DIR__.'/../style.ini', true);
-        $this->primary   = $this->hex2rgb($ini['replacements']['__link__']);
-        $this->secondary = $this->hex2rgb($ini['replacements']['__text_alt__']);
+        $this->primary   = $ini['replacements']['__link__'];
+        $this->secondary = $ini['replacements']['__text_alt__'];
     }
 
     /**
@@ -138,11 +138,11 @@ class PagetoolBuilder extends DokuCLI {
 
             // inactive version
             $offset = $i * ($this->width * 2 + $this->space * 2); // y-offset for top of the pair
-            $this->copyColored($sprite, $args[$i], $this->secondary, $offset);
+            $this->copyColored($sprite, $args[$i], $this->hex2rgb($this->secondary), $offset);
 
             // active version
             $offset = $offset + $this->width + $this->space; // y-offset for bottom of the pair
-            $this->copyColored($sprite, $args[$i], $this->primary, $offset);
+            $this->copyColored($sprite, $args[$i], $this->hex2rgb($this->primary), $offset);
         }
 
         // set opacity
