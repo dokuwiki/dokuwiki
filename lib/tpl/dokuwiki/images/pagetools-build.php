@@ -1,186 +1,286 @@
+#!/usr/bin/php
 <?php
-/**
- * This script generates a sprite from the unprocessed pagetool icons by combining them
- * and overlaying a color layer for the active state.
- *
- * This script requires a current libGD to be available.
- *
- * The color for the active state is read from the style.ini's __link__ replacement
- *
- * The final sprite is optimized with optipng if available.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @todo   Maybe add some more error checking
- */
-$OPTIPNG = '/usr/bin/optipng';
-$OPACITY = 70;
-
-// load input images
-$input = glob('pagetools/*.png');
-sort($input);
-$cnt   = count($input);
-if(!$cnt){
-    die("No input images found. This script needs to be called from within the image directory!\n");
-}
-
-$WIDTH=30;
-$BORDER=3;
-
-
-// create destination image
-$DST = imagecreatetruecolor(30,$cnt*45*2);
-imagesavealpha($DST, true);
-$C_trans = imagecolorallocatealpha($DST, 0, 0, 0, 127);
-imagefill($DST, 0, 0, $C_trans);
-
-// load highlight color from style.ini
-// $ini = parse_ini_file('../style.ini',true);
-// $COLOR = hex2rgb($ini['replacements']['__link__']);
-
-$ACTIVE = hex2rgb('#2b73b7');
-$INACTIVE = hex2rgb('#999999');
-
-
-
-// add all the icons to the sprite image
-for($i=0; $i<$cnt; $i++){
-    $base = $i*$WIDTH*3;
-
-    echo '.';
-
-    // inactive version
-    $IN = imagecreatefrompng($input[$i]);
-    imagesavealpha($IN, true);
-    imagefilter($IN, IMG_FILTER_COLORIZE, $INACTIVE['r'],$INACTIVE['g'],$INACTIVE['b']);
-    list($w, $h) = getimagesize($input[$i]);
-    imagecopyresampled($DST,$IN, $BORDER, $base+$BORDER, 0,0, $WIDTH-$BORDER*2, $WIDTH-$BORDER*2, $w,$h);
-    imagedestroy($IN);
-
-
-    $base = $base + $WIDTH + $WIDTH/2;
-
-    // active version
-    $IN = imagecreatefrompng($input[$i]);
-    imagesavealpha($IN, true);
-    imagefilter($IN, IMG_FILTER_COLORIZE, $ACTIVE['r'],$ACTIVE['g'],$ACTIVE['b']);
-    list($w, $h) = getimagesize($input[$i]);
-    imagecopyresampled($DST,$IN, $BORDER, $base+$BORDER, 0,0, $WIDTH-$BORDER*2, $WIDTH-$BORDER*2, $w,$h);
-    imagedestroy($IN);
-
-}
-
-// set opacity
-filter_opacity($DST, $OPACITY);
-
-
-// output sprite
-imagepng($DST,'pagetools-sprite.png');
-imagedestroy($DST);
-
-// optimize if possible
-if(is_executable($OPTIPNG)){
-    system("$OPTIPNG -o5 'pagetools-sprite.png'");
-}
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../../../../').'/');
+define('NOSESSION', 1);
+require_once(DOKU_INC.'inc/init.php');
 
 /**
- * Convert a hex color code to an rgb array
+ * Class PagetoolBuilder
+ *
+ * Create the pagetools-sprite
  */
-function hex2rgb($hex) {
-    // strip hash
-    $hex = str_replace('#', '', $hex);
+class PagetoolBuilder extends DokuCLI {
+    /**
+     * @var float opacity of the sprite
+     */
+    protected $opacity = 0.7;
 
-    // normalize short codes
-    if(strlen($hex) == 3){
-        $hex = substr($hex,0,1).
-               substr($hex,0,1).
-               substr($hex,1,1).
-               substr($hex,1,1).
-               substr($hex,2,1).
-               substr($hex,2,1);
+    /**
+     * @var int size of single sprite in pixels
+     */
+    protected $width = 30;
+
+    /**
+     * @var int border to use on each sprite in pixels
+     */
+    protected $border = 3;
+
+    /**
+     * @var int spacing between sprites in pixels
+     */
+    protected $space = 15;
+
+    /**
+     * @var string the output file
+     */
+    protected $output = 'pagetools-sprite.png';
+
+    /**
+     * @var string default location of optipng
+     */
+    protected $optipng = '/usr/bin/optipng';
+
+    /**
+     * @var array primary color
+     */
+    protected $primary = null;
+
+    /**
+     * @var array secondary color
+     */
+    protected $secondary = null;
+
+    /**
+     * Constructor
+     *
+     * initializes the colors
+     */
+    public function __construct() {
+        parent::__construct();
+
+        $ini             = parse_ini_file(__DIR__.'/../style.ini', true);
+        $this->primary   = $this->hex2rgb($ini['replacements']['__link__']);
+        $this->secondary = $this->hex2rgb($ini['replacements']['__text_alt__']);
     }
 
-    // calc rgb
-    return array(
-       'r' => hexdec(substr($hex, 0, 2)),
-       'g' => hexdec(substr($hex, 2, 2)),
-       'b' => hexdec(substr($hex, 4, 2))
-    );
-}
+    /**
+     * Register options and arguments on the given $options object
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function setup(DokuCLI_Options $options) {
+        $options->registerOption(
+            'primary',
+            'The primary color (HTML hex) to use, (defaults to template\'s __link__ replacement)',
+            'p',
+            'color'
+        );
+        $options->registerOption(
+            'secondary',
+            'The secondary color (HTML hex) to use, (defaults to template\'s __text_alt__ replacement)',
+            's',
+            'color'
+        );
+        $options->registerOption(
+            'output',
+            'Name of the sprite to generate, defaults to pagetools-sprite.png',
+            'o',
+            'file'
+        );
+        $options->registerOption(
+            'optipng',
+            'Path to the optipng binary',
+            '',
+            'path'
+        );
+        $options->setHelp('Creates a sprite image to use in the floating page tools');
+        $options->registerArgument(
+            'dir|files...',
+            'The input images in correct order or a directory to read',
+            true
+        );
+    }
 
+    /**
+     * Your main program
+     *
+     * Arguments and options have been parsed when this is run
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function main(DokuCLI_Options $options) {
+        // handle options
+        $this->primary   = $options->getOpt('primary', $this->primary);
+        $this->secondary = $options->getOpt('secondary', $this->secondary);
+        $this->optipng   = $options->getOpt('optipng', $this->optipng);
+        $this->output    = $options->getOpt('output', $this->output);
 
-function filter_opacity( &$img, $opacity ) //params: image resource id, opacity in percentage (eg. 80)
-        {
-            if( !isset( $opacity ) )
-                { return false; }
-            $opacity /= 100;
+        // first argument may be a directory
+        $args = $options->args;
+        if(is_dir($args[0])) {
+            $args = glob($args[0].'/*.png');
+            sort($args);
+        }
+        $cnt = count($args);
+        if(!$cnt) $this->fatal('No images found');
 
-            //get image width and height
-            $w = imagesx( $img );
-            $h = imagesy( $img );
+        // create destination image
+        $sprite = imagecreatetruecolor($this->width, $cnt * ($this->width + $this->space) * 2);
+        imagesavealpha($sprite, true);
+        $C_trans = imagecolorallocatealpha($sprite, 0, 0, 0, 127);
+        imagefill($sprite, 0, 0, $C_trans);
 
-            //turn alpha blending off
-            imagealphablending( $img, false );
+        // add all the icons to the sprite image
+        for($i = 0; $i < $cnt; $i++) {
+            $this->info($args[$i]);
 
-            //find the most opaque pixel in the image (the one with the smallest alpha value)
-            $minalpha = 127;
-            for( $x = 0; $x < $w; $x++ )
-                for( $y = 0; $y < $h; $y++ )
-                    {
-                        $alpha = ( imagecolorat( $img, $x, $y ) >> 24 ) & 0xFF;
-                        if( $alpha < $minalpha )
-                            { $minalpha = $alpha; }
-                    }
+            // inactive version
+            $offset = $i * ($this->width * 2 + $this->space * 2); // y-offset for top of the pair
+            $this->copyColored($sprite, $args[$i], $this->secondary, $offset);
 
-            //loop through image pixels and modify alpha for each
-            for( $x = 0; $x < $w; $x++ )
-                {
-                    for( $y = 0; $y < $h; $y++ )
-                        {
-                            //get current alpha value (represents the TANSPARENCY!)
-                            $colorxy = imagecolorat( $img, $x, $y );
-                            $alpha = ( $colorxy >> 24 ) & 0xFF;
-                            //calculate new alpha
-                            if( $minalpha !== 127 )
-                                { $alpha = 127 + 127 * $opacity * ( $alpha - 127 ) / ( 127 - $minalpha ); }
-                            else
-                                { $alpha += 127 * $opacity; }
-                            //get the color index with new alpha
-                            $alphacolorxy = imagecolorallocatealpha( $img, ( $colorxy >> 16 ) & 0xFF, ( $colorxy >> 8 ) & 0xFF, $colorxy & 0xFF, $alpha );
-                            //set pixel with the new color + opacity
-                            if( !imagesetpixel( $img, $x, $y, $alphacolorxy ) )
-                                { return false; }
-                        }
+            // active version
+            $offset = $offset + $this->width + $this->space; // y-offset for bottom of the pair
+            $this->copyColored($sprite, $args[$i], $this->primary, $offset);
+        }
+
+        // set opacity
+        $this->info('adjusting opacity');
+        $this->filter_opacity($sprite, $this->opacity);
+
+        // output sprite
+        if(imagepng($sprite, $this->output)) {
+            $this->success($this->output.' created.');
+            $this->optimize();
+        }
+        imagedestroy($sprite);
+    }
+
+    /**
+     * Optimize the output file if possible
+     */
+    protected function optimize() {
+        if(!file_exists($this->output)) return;
+
+        if(!is_executable($this->optipng)) {
+            $this->error($this->optipng.' not found, not optimizing the sprite');
+            return;
+        }
+
+        $file = escapeshellarg($this->output);
+        system($this->optipng.' -o5 '.$file);
+        $this->success($this->output.' optimized.');
+    }
+
+    /**
+     * Copy the icon file to the sprite at the given offet in a given color
+     *
+     * @param resource $sprite   The target sprite
+     * @param string   $iconfile Path to the icon file
+     * @param array    $color    RGB color to color the copied icon in
+     * @param int      $offset   Vertical offset to place the icon at
+     */
+    protected function copyColored(&$sprite, $iconfile, $color, $offset) {
+        list($icon_w, $icon_h) = getimagesize($iconfile);
+        $icon = imagecreatefrompng($iconfile);
+        imagesavealpha($icon, true);
+        imagefilter($icon, IMG_FILTER_COLORIZE, $color['r'], $color['g'], $color['b']);
+        imagecopyresampled(
+            $sprite, // dst_img
+            $icon, // src_img
+            $this->border, // dst_x
+            $offset + $this->border, // src_y
+            0, // src_x
+            0, // src_y
+            $this->width - $this->border * 2, // dst_w
+            $this->width - $this->border * 2, // dst_h
+            $icon_w, // src_w
+            $icon_h // src_h
+        );
+        imagedestroy($icon);
+    }
+
+    /**
+     * Convert a hex color code to an rgb array
+     *
+     * @param string $hex
+     * @return array
+     */
+    protected function hex2rgb($hex) {
+        // strip hash
+        $hex = str_replace('#', '', $hex);
+
+        // normalize short codes
+        if(strlen($hex) == 3) {
+            $hex = substr($hex, 0, 1).
+                substr($hex, 0, 1).
+                substr($hex, 1, 1).
+                substr($hex, 1, 1).
+                substr($hex, 2, 1).
+                substr($hex, 2, 1);
+        }
+
+        // calc rgb
+        return array(
+            'r' => hexdec(substr($hex, 0, 2)),
+            'g' => hexdec(substr($hex, 2, 2)),
+            'b' => hexdec(substr($hex, 4, 2))
+        );
+    }
+
+    /**
+     * Adjust opacity of the whole image
+     *
+     * @link     http://de1.php.net/manual/en/function.imagefilter.php#82162
+     * @author   aiden dot mail at freemail dot hu
+     *
+     * @param resource $img image resource
+     * @param float    $opacity
+     * @return bool
+     */
+    function filter_opacity(&$img, $opacity) {
+        //get image width and height
+        $w = imagesx($img);
+        $h = imagesy($img);
+
+        //turn alpha blending off
+        imagealphablending($img, false);
+
+        //find the most opaque pixel in the image (the one with the smallest alpha value)
+        $minalpha = 127;
+        for($x = 0; $x < $w; $x++)
+            for($y = 0; $y < $h; $y++) {
+                $alpha = (imagecolorat($img, $x, $y) >> 24) & 0xFF;
+                if($alpha < $minalpha) {
+                    $minalpha = $alpha;
                 }
-            return true;
+            }
+
+        //loop through image pixels and modify alpha for each
+        for($x = 0; $x < $w; $x++) {
+            for($y = 0; $y < $h; $y++) {
+                //get current alpha value (represents the TANSPARENCY!)
+                $colorxy = imagecolorat($img, $x, $y);
+                $alpha   = ($colorxy >> 24) & 0xFF;
+                //calculate new alpha
+                if($minalpha !== 127) {
+                    $alpha = 127 + 127 * $opacity * ($alpha - 127) / (127 - $minalpha);
+                } else {
+                    $alpha += 127 * $opacity;
+                }
+                //get the color index with new alpha
+                $alphacolorxy = imagecolorallocatealpha($img, ($colorxy >> 16) & 0xFF, ($colorxy >> 8) & 0xFF, $colorxy & 0xFF, $alpha);
+                //set pixel with the new color + opacity
+                if(!imagesetpixel($img, $x, $y, $alphacolorxy)) {
+                    return false;
+                }
+            }
         }
-
-/**
- * Scale (darken/lighten) a given image
- *
- * @param ressource $img    The truetype GD image to work on
- * @param float     $scale  Scale the colors by this value ( <1 darkens, >1 lightens)
- */
-function imagecolorscale(&$img, $scale){
-    $w = imagesx($img);
-    $h = imagesy($img);
-
-    imagealphablending($img, false);
-    for($x = 0; $x < $w; $x++){
-        for($y = 0; $y < $h; $y++){
-            $rgba   = imagecolorat($img, $x, $y);
-            $a = ($rgba >> 24) & 0xFF;
-            $r = ($rgba >> 16) & 0xFF;
-            $g = ($rgba >> 8) & 0xFF;
-            $b = $rgba & 0xFF;
-
-            $r = max(min(round($r*$scale),255),0);
-            $g = max(min(round($g*$scale),255),0);
-            $b = max(min(round($b*$scale),255),0);
-
-            $color = imagecolorallocatealpha($img, $r, $g, $b, $a);
-            imagesetpixel($img, $x, $y, $color);
-        }
+        return true;
     }
-    imagealphablending($img, true);
 }
 
+// Main
+$cli = new PagetoolBuilder();
+$cli->run();
