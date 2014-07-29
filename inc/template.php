@@ -381,13 +381,6 @@ function tpl_metaheaders($alt = true) {
 
     // set metadata
     if($ACT == 'show' || $ACT == 'export_xhtml') {
-        // date of modification
-        if($REV) {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
-        } else {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
-        }
-
         // keywords (explicit or implicit)
         if(!empty($INFO['meta']['subject'])) {
             $head['meta'][] = array('name'=> 'keywords', 'content'=> join(',', $INFO['meta']['subject']));
