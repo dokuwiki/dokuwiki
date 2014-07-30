@@ -212,7 +212,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  */
 function media_delete($id,$auth){
     global $lang;
-    $auth = auth_quickaclcheck($id);
+    $auth = auth_quickaclcheck(ltrim(getNS($id).':*', ':'));
     if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if(media_inuse($id)) return DOKU_MEDIA_INUSE;
 
