@@ -638,6 +638,7 @@ function auth_isMember($memberlist, $user, array $groups) {
 
     // compare cleaned values
     foreach($members as $member) {
+        if($member == '@ALL' ) return true;
         if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
         if($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
