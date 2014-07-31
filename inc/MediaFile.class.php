@@ -58,6 +58,7 @@ class MediaFile {
      *
      * @param resource $stream open stream/filehandle (will not be closed automatically)
      * @param int      $maxlen maximum bytes to read from stream
+     * @throws MediaUploadException
      */
     public function uploadStream($stream, $maxlen = null) {
         $this->uploadGuard(); // fail early
@@ -95,6 +96,7 @@ class MediaFile {
      * Upload/Create a new revision from a HTML form upload
      *
      * @param string $formfield Name of the HTML form field
+     * @throws MediaUploadException
      */
     public function uploadFormFile($formfield) {
         $this->uploadGuard(); // fail early
@@ -119,14 +121,16 @@ class MediaFile {
      *
      * This method is the final step of all other upload methods
      *
-     * @param string $file
-     * @param bool   $unlink delete local file after copy?
-     * @param int    $rev    given file is an old revision of that file from $rev
+     * @param string   $file
+     * @param bool     $unlink delete local file after copy?
+     * @param int|bool $rev    given file is an old revision of that file from $rev
      *
+     * @throws MediaUploadException
      * @triggers MEDIA_UPLOAD_FINISH FIXME
      */
-    public function uploadFile($file, $unlink = true, $rev = 0) {
+    public function uploadFile($file, $unlink = true, $rev = false) {
         global $conf;
+        global $lang;
 
         $this->uploadGuard();
         $this->contentCheck($file);
@@ -147,10 +151,10 @@ class MediaFile {
         // (Should normally chmod to $conf['fperm'] only if $conf['fperm'] is set.)
         chmod($this->file, $conf['fmode']);
 
-        $this->uploadNotify($this->id, $this->file, $this->mimetype, $old);
+        $this->uploadNotify($this->id, $this->file, $this->mimetype, $rev);
 
         // add a log entry to the media changelog
-        if($re) {
+        if($rev) {
             addMediaLogEntry($time, $this->id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($rev)), $rev);
         } elseif($overwrite) {
             addMediaLogEntry($time, $this->id, DOKU_CHANGE_TYPE_EDIT);
@@ -158,15 +162,15 @@ class MediaFile {
             addMediaLogEntry($time, $this->id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
         }
 
-        return true;
+        if($unlink) @unlink($file);
     }
 
     /**
      * Revert media file to the given revision
      *
-     * @param $rev revision number
+     * @param int $rev revision number
      *
-     * @return bool
+     * @throws MediaInputException
      */
     public function revertTo($rev) {
         $rev = (int) $rev;
@@ -175,7 +179,7 @@ class MediaFile {
         $revfile = mediaFN($this->id, $rev);
         if(!file_exists($revfile)) throw new MediaInputException('No such revision found', 1);
 
-        return $this->uploadFile($revfile, false, $rev);
+        $this->uploadFile($revfile, false, $rev);
     }
 
     /**
@@ -189,7 +193,7 @@ class MediaFile {
      * @link   http://www.splitbrain.org/blog/2007-02/12-internet_explorer_facilitates_cross_site_scripting
      * @fixme  check all 26 magic IE filetypes here?
      */
-    function contentCheck($file) {
+    public function contentCheck($file) {
         global $conf;
 
         if($conf['iexssprotect']) {
@@ -271,7 +275,7 @@ class MediaFile {
         if($this->isExternal()) throw new MediaInputException('Cannot delete external media', 2);
         if($this->auth < AUTH_DELETE) throw new MediaPermissionException('ACL: no permission to delete media', 1);
         if($conf['refshow'] && $this->usedBy(1)) throw new MediaPermissionException('Media is still in use', 4);
-        if(!$this->exists()) return true; // we treat deleting non-existant files as success
+        if(!$this->exists()) return; // we treat deleting non-existant files as success
 
         // FIXME trigger an event - MEDIA_DELETE_FILE
 
@@ -283,9 +287,9 @@ class MediaFile {
             addMediaLogEntry(time(), $this->id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted']);
             io_sweepNS($this->id, 'mediadir');
             clearstatcache(true, $this->file);
-            return true;
+            return;
         }
-        return false;
+        throw new MediaPermissionException('File deletion failed, check file permissions', 5);
     }
 
     /**
@@ -294,10 +298,7 @@ class MediaFile {
      * Does nothing if the attic copy already exists or if media revisions
      * are disabled
      *
-     * @author Kate Arzamastseva <pshns@ukr.net>
-     *
-     * @param string $id
-     *
+     * @author   Kate Arzamastseva <pshns@ukr.net>
      * @return int - revision date, false on error
      */
     protected function saveOldRevision() {
@@ -335,10 +336,10 @@ class MediaFile {
      */
     protected function uploadNotify($old_rev = false) {
         global $conf;
-        if(empty($conf['notify'])) return; //notify enabled?
+        if(empty($conf['notify'])) return true; // notify not enabled, treat as success
 
         $subscription = new Subscription();
-        return $subscription->send_media_diff($conf['notify'], 'uploadmail', $id, $old_rev, '');
+        return $subscription->send_media_diff($conf['notify'], 'uploadmail', $this->id, $old_rev, '');
     }
 
     /**
@@ -424,8 +425,8 @@ class MediaFile {
      *
      * @todo register the name to be unlinked in deconstructor?
      *
-     * @throws MediaException if temp dir can't be created
-     * @returns
+     * @throws MediaUploadException
+     * @return string
      */
     protected function getTempName() {
         if(!($tmp = io_mktmpdir())) throw new MediaUploadException('Failed to create temp dir', 1);
@@ -442,6 +443,7 @@ class MediaFile {
     public function getFile() {
         if($this->exists()) return $this->file;
         if(!$this->isExternal()) return false;
+        return $this->file;
     }
 }
 
