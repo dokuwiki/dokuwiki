@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Hungarian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
@@ -9,9 +10,10 @@
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
+ * @author Marina Vladi <deldadam@gmail.com>
  */
-$lang['menu']                  = 'Visszaállítás kezelő (anti-SPAM)';
-$lang['filter']                = 'SPAM tartalmú oldalak keresése';
+$lang['menu']                  = 'Visszaállítás-kezelő (anti-SPAM)';
+$lang['filter']                = 'SPAM-tartalmú oldalak keresése';
 $lang['revert']                = 'Kiválasztott oldalak visszaállítása';
 $lang['reverted']              = '%s a következő változatra lett visszaállítva: %s';
 $lang['removed']               = '%s törölve';

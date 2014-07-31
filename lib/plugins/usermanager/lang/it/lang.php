@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Italian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Pietro Battiston toobaz@email.it
@@ -14,6 +15,8 @@
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
+ * @author Claudio Lanconelli <lancos@libero.it>
+ * @author Francesco <francesco.cavalli@hotmail.com>
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
@@ -36,6 +39,11 @@ $lang['search']                = 'Cerca';
 $lang['search_prompt']         = 'Esegui ricerca';
 $lang['clear']                 = 'Azzera filtro di ricerca';
 $lang['filter']                = 'Filtro';
+$lang['export_all']            = 'Esporta tutti gli utenti (CSV)';
+$lang['export_filtered']       = 'Esporta elenco utenti filtrati (CSV)';
+$lang['import']                = 'Importa nuovi utenti';
+$lang['line']                  = 'Linea numero';
+$lang['error']                 = 'Messaggio di errore';
 $lang['summary']               = 'Visualizzazione utenti %1$d-%2$d di %3$d trovati. %4$d utenti totali.';
 $lang['nonefound']             = 'Nessun utente trovato. %d utenti totali.';
 $lang['delete_ok']             = '%d utenti eliminati';
@@ -56,3 +64,7 @@ $lang['add_ok']                = 'Utente aggiunto correttamente';
 $lang['add_fail']              = 'Aggiunta utente fallita';
 $lang['notify_ok']             = 'Email di notifica inviata';
 $lang['notify_fail']           = 'L\'email di notifica non può essere inviata';
+$lang['import_error_badname']  = 'Nome errato';
+$lang['import_error_badmail']  = 'Indirizzo email errato';
+$lang['import_error_readfail'] = 'Importazione in errore. Impossibile leggere i file caricati.';
+$lang['import_error_create']   = 'Impossibile creare l\'utente';

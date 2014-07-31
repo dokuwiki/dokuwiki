@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author mkucera66@seznam.cz
  */
 $lang['account_suffix']        = 'Přípona vašeho účtu, tj. <code>@moje.domena.org</code>';

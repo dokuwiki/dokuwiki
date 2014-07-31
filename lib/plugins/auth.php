@@ -55,6 +55,18 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     }
 
     /**
+     * Available Capabilities. [ DO NOT OVERRIDE ]
+     *
+     * For introspection/debugging
+     *
+     * @author  Christopher Smith <chris@jalakai.co.uk>
+     * @return  array
+     */
+    public function getCapabilities(){
+        return array_keys($this->cando);
+    }
+
+    /**
      * Capability check. [ DO NOT OVERRIDE ]
      *
      * Checks the capabilities set in the $this->cando array and
@@ -304,11 +316,11 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @param   int   $start     index of first user to be returned
-     * @param   int   $limit     max number of users to be returned
+     * @param   int   $limit     max number of users to be returned, 0 for unlimited
      * @param   array $filter    array of field/pattern pairs, null for no filter
      * @return  array list of userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = -1, $filter = null) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = null) {
         msg("authorisation method does not support mass retrieval of user data", -1);
         return array();
     }

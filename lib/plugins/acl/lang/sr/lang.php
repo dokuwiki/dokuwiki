@@ -9,8 +9,8 @@
  * @author Miroslav Šolti <solti.miroslav@gmail.com>
  */
 $lang['admin_acl']             = 'Управљање листом контроле приступа';
-$lang['acl_group']             = 'Група';
-$lang['acl_user']              = 'Корисник';
+$lang['acl_group']             = 'Група:';
+$lang['acl_user']              = 'Корисник:';
 $lang['acl_perms']             = 'Дозволе за';
 $lang['page']                  = 'Страница';
 $lang['namespace']             = 'Именски простор';

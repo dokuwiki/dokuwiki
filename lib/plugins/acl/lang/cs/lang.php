@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author tomas@valenta.cz
@@ -15,8 +15,8 @@
  * @author mkucera66@seznam.cz
  */
 $lang['admin_acl']             = 'Správa přístupových práv';
-$lang['acl_group']             = 'Skupina';
-$lang['acl_user']              = 'Uživatel';
+$lang['acl_group']             = 'Skupina:';
+$lang['acl_user']              = 'Uživatel:';
 $lang['acl_perms']             = 'Práva pro';
 $lang['page']                  = 'Stránka';
 $lang['namespace']             = 'Jmenný prostor';

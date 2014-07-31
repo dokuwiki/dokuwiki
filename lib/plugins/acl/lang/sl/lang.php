@@ -1,15 +1,16 @@
 <?php
+
 /**
- * Slovenian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Dejan Levec <webphp@gmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
  */
 $lang['admin_acl']             = 'Upravljanje dostopa';
-$lang['acl_group']             = 'Skupina';
-$lang['acl_user']              = 'Uporabnik';
+$lang['acl_group']             = 'Skupina:';
+$lang['acl_user']              = 'Uporabnik:';
 $lang['acl_perms']             = 'Dovoljenja za';
 $lang['page']                  = 'Stran';
 $lang['namespace']             = 'Imenski prostor';

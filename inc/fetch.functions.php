@@ -15,13 +15,15 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
  * @param string $file   local file to send
  * @param string $mime   mime type of the file
  * @param bool   $dl     set to true to force a browser download
  * @param int    $cache  remaining cache time in seconds (-1 for $conf['cache'], 0 for no-cache)
  * @param bool   $public is this a public ressource or a private one?
+ * @param string $orig   original file to send - the file name will be used for the Content-Disposition
  */
-function sendFile($file, $mime, $dl, $cache, $public = false) {
+function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
     global $conf;
     // send mime headers
     header("Content-Type: $mime");
@@ -62,15 +64,20 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
     $fmtime = @filemtime($file);
     http_conditionalRequest($fmtime);
 
+    // Use the current $file if is $orig is not set.
+    if ( $orig == null ) {
+        $orig = $file;
+    }
+
     //download or display?
     if($dl) {
-        header('Content-Disposition: attachment; filename="'.utf8_basename($file).'";');
+        header('Content-Disposition: attachment; filename="'.utf8_basename($orig).'";');
     } else {
-        header('Content-Disposition: inline; filename="'.utf8_basename($file).'";');
+        header('Content-Disposition: inline; filename="'.utf8_basename($orig).'";');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
-    if(http_sendfile($file)) exit;
+    http_sendfile($file);
 
     // send file contents
     $fp = @fopen($file, "rb");
@@ -101,8 +108,8 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
 
     //media to local file
     if(media_isexternal($media)) {
-        //check hash
-        if(substr(PassHash::hmac('md5', $media, auth_cookiesalt()), 0, 6) !== $INPUT->str('hash')) {
+        //check token for external image and additional for resized and cached images
+        if(media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
             return array(412, 'Precondition Failed');
         }
         //handle external images

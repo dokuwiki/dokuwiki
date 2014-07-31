@@ -56,6 +56,9 @@ $dokuwiki_hash = array(
     '2012-01-25'   => '72c083c73608fc43c586901fd5dabb74',
     '2012-09-10'   => 'eb0b3fc90056fbc12bac6f49f7764df3',
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
+    '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
+    '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
+    'devel'        => 'b3ddc3f793eac8c135176e535054c00a',
 );
 
 
@@ -206,6 +209,10 @@ function print_form($d){
                     <option value="2" <?php echo ($d['policy'] == 2)?'selected="selected"':'' ?>><?php echo $lang['i_pol2']?></option>
                 </select>
 
+                <label for="allowreg">
+                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
+                    <?php echo $lang['i_allowreg']?>
+                </label>
             </fieldset>
         </fieldset>
 
@@ -269,6 +276,7 @@ function check_data(&$d){
         'password'  => '',
         'confirm'   => '',
         'policy'    => '0',
+        'allowreg'  => '0',
         'license'   => 'cc-by-sa'
     );
     global $lang;
@@ -343,12 +351,25 @@ function store_data($d){
  */
 
 EOT;
+    // add any config options set by a previous installer
+    $preset = __DIR__.'/install.conf';
+    if(file_exists($preset)){
+        $output .= "# preset config options\n";
+        $output .= file_get_contents($preset);
+        $output .= "\n\n";
+        $output .= "# options selected in installer\n";
+        @unlink($preset);
+    }
+
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
     $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
     $output .= '$conf[\'license\'] = \''.addslashes($d['license'])."';\n";
     if($d['acl']){
         $output .= '$conf[\'useacl\'] = 1'.";\n";
         $output .= "\$conf['superuser'] = '@admin';\n";
+    }
+    if(!$d['allowreg']){
+        $output .= '$conf[\'disableactions\'] = \'register\''.";\n";
     }
     $ok = $ok && fileWrite(DOKU_LOCAL.'local.php',$output);
 
@@ -520,6 +541,11 @@ function check_functions(){
 
     if(version_compare(phpversion(),'5.2.0','<')){
         $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
+        $ok = false;
+    }
+
+    if(ini_get('mbstring.func_overload') != 0){
+        $error[] = $lang['i_mbfuncoverload'];
         $ok = false;
     }
 

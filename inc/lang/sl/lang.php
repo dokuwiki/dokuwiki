@@ -1,13 +1,16 @@
 <?php
+
 /**
- * Slovenian language file
- *
- * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
  * @author Gregor Skumavc (grega.skumavc@gmail.com)
  * @author Matej Urbančič (mateju@svn.gnome.org)
+ * @author Matej Urbančič <mateju@svn.gnome.org>
+ * @author matej <mateju@svn.gnome.org>
+ * @author Jernej Vidmar <jernej.vidmar@vidmarboehm.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -43,6 +46,7 @@ $lang['btn_backtomedia']       = 'Nazaj na izbiro predstavnih datotek';
 $lang['btn_subscribe']         = 'Urejanje naročnin';
 $lang['btn_profile']           = 'Posodobi profil';
 $lang['btn_reset']             = 'Ponastavi';
+$lang['btn_resendpwd']         = 'Nastavi novo geslo';
 $lang['btn_draft']             = 'Uredi osnutek';
 $lang['btn_recover']           = 'Obnovi osnutek';
 $lang['btn_draftdel']          = 'Izbriši osnutek';
@@ -50,7 +54,10 @@ $lang['btn_revert']            = 'Povrni';
 $lang['btn_register']          = 'Prijava';
 $lang['btn_apply']             = 'Uveljavi';
 $lang['btn_media']             = 'Urejevalnik predstavnih vsebin';
-$lang['loggedinas']            = 'Prijava kot';
+$lang['btn_deleteuser']        = 'Odstrani račun';
+$lang['btn_img_backto']        = 'Nazaj na %s';
+$lang['btn_mediaManager']      = 'Poglej v urejevalniku predstavnih vsebin';
+$lang['loggedinas']            = 'Prijava kot:';
 $lang['user']                  = 'Uporabniško ime';
 $lang['pass']                  = 'Geslo';
 $lang['newpass']               = 'Novo geslo';
@@ -61,6 +68,7 @@ $lang['fullname']              = 'Pravo ime';
 $lang['email']                 = 'Elektronski naslov';
 $lang['profile']               = 'Uporabniški profil';
 $lang['badlogin']              = 'Uporabniško ime ali geslo je napačno.';
+$lang['badpassconfirm']        = 'Napaka! Geslo ni pravo.';
 $lang['minoredit']             = 'Manjše spremembe';
 $lang['draftdate']             = 'Samodejno shranjevanje osnutka je omogočeno';
 $lang['nosecedit']             = 'Stran je bila v vmesnem času spremenjena. Podatki strani so bili zastareli, zato se je celotna vsebina naložila znova.';
@@ -77,8 +85,13 @@ $lang['profna']                = 'DokuWiki ne podpira spreminjanja profila.';
 $lang['profnochange']          = 'Brez sprememb.';
 $lang['profnoempty']           = 'Prazno polje elektronskega naslova ali imena ni dovoljeno.';
 $lang['profchanged']           = 'Uporabniški profil je uspešno posodobljen.';
+$lang['profnodelete']          = 'Ni omogočena podpora za brisanje uporabnikov.';
+$lang['profdeleteuser']        = 'Izbriši račun';
+$lang['profdeleted']           = 'Uporabniški račun je izbrisan.';
+$lang['profconfdeletemissing'] = 'Potrditveno okno ni označeno';
 $lang['pwdforget']             = 'Ali ste pozabili geslo? Pridobite si novo geslo.';
 $lang['resendna']              = 'DokuWiki ne podpira možnosti ponovnega pošiljanja gesel.';
+$lang['resendpwd']             = 'Nastavi novo geslo za';
 $lang['resendpwdmissing']      = 'Izpolniti je treba vsa polja.';
 $lang['resendpwdnouser']       = 'Podanega uporabniškega imena v podatkovni zbirki ni mogoče najti.';
 $lang['resendpwdbadauth']      = 'Koda za overitev ni prava. Prepričajte se, da ste uporabili celotno povezavo za potrditev.';
@@ -88,11 +101,11 @@ $lang['license']               = 'V kolikor ni posebej določeno, je vsebina Wik
 $lang['licenseok']             = 'Opomba: z urejanjem vsebine strani, se strinjate z objavo pod pogoji dovoljenja:';
 $lang['searchmedia']           = 'Poišči ime datoteke:';
 $lang['searchmedia_in']        = 'Poišči v %s';
-$lang['txt_upload']            = 'Izberite datoteko za pošiljanje';
-$lang['txt_filename']          = 'Pošlji z imenom (izborno)';
+$lang['txt_upload']            = 'Izberite datoteko za pošiljanje:';
+$lang['txt_filename']          = 'Pošlji z imenom (izborno):';
 $lang['txt_overwrt']           = 'Prepiši obstoječo datoteko';
-$lang['lockedby']              = 'Trenutno je zaklenjeno s strani';
-$lang['lockexpire']            = 'Zaklep preteče ob';
+$lang['lockedby']              = 'Trenutno je zaklenjeno s strani:';
+$lang['lockexpire']            = 'Zaklep preteče ob:';
 $lang['js']['willexpire']      = 'Zaklep za urejevanje bo pretekel čez eno minuto.\nV izogib sporom, uporabite predogled, da se merilnik časa za zaklep ponastavi.';
 $lang['js']['notsavedyet']     = 'Neshranjene spremembe bodo izgubljene.';
 $lang['js']['searchmedia']     = 'Poišči datoteke';
@@ -170,10 +183,13 @@ $lang['difflink']              = 'Poveži s tem pogledom primerjave.';
 $lang['diff_type']             = 'Razlike:';
 $lang['diff_inline']           = 'V besedilu';
 $lang['diff_side']             = 'Eno ob drugem';
+$lang['diffprevrev']           = 'Prejšnja revizija';
+$lang['diffnextrev']           = 'Naslednja revizija';
+$lang['difflastrev']           = 'Zadnja revizija';
 $lang['line']                  = 'Vrstica';
-$lang['breadcrumb']            = 'Sled';
-$lang['youarehere']            = 'Trenutno dejavna stran';
-$lang['lastmod']               = 'Zadnja sprememba';
+$lang['breadcrumb']            = 'Sled:';
+$lang['youarehere']            = 'Trenutno dejavna stran:';
+$lang['lastmod']               = 'Zadnja sprememba:';
 $lang['by']                    = 'uporabnika';
 $lang['deleted']               = 'odstranjena';
 $lang['created']               = 'ustvarjena';
@@ -187,6 +203,7 @@ $lang['user_tools']            = 'Uporabniška orodja';
 $lang['site_tools']            = 'Orodja spletišča';
 $lang['page_tools']            = 'Orodja strani';
 $lang['skip_to_content']       = 'preskoči na vsebino';
+$lang['sidebar']               = 'Stranska vrstica';
 $lang['mail_newpage']          = '[DokuWiki] stran dodana:';
 $lang['mail_changed']          = '[DokuWiki] stran spremenjena:';
 $lang['mail_subscribe_list']   = 'strani s spremenjenim imenom:';
@@ -225,20 +242,18 @@ $lang['admin_register']        = 'Dodaj novega uporabnika';
 $lang['metaedit']              = 'Uredi metapodatke';
 $lang['metasaveerr']           = 'Zapisovanje metapodatkov je spodletelo';
 $lang['metasaveok']            = 'Metapodatki so shranjeni';
-$lang['img_backto']            = 'Nazaj na';
-$lang['img_title']             = 'Naslov';
-$lang['img_caption']           = 'Opis';
-$lang['img_date']              = 'Datum';
-$lang['img_fname']             = 'Ime datoteke';
-$lang['img_fsize']             = 'Velikost';
-$lang['img_artist']            = 'Fotograf';
-$lang['img_copyr']             = 'Avtorska pravica';
-$lang['img_format']            = 'Zapis';
-$lang['img_camera']            = 'Fotoaparat';
-$lang['img_keywords']          = 'Ključne besede';
-$lang['img_width']             = 'Širina';
-$lang['img_height']            = 'Višina';
-$lang['img_manager']           = 'Poglej v urejevalniku predstavnih vsebin';
+$lang['img_title']             = 'Naslov:';
+$lang['img_caption']           = 'Opis:';
+$lang['img_date']              = 'Datum:';
+$lang['img_fname']             = 'Ime datoteke:';
+$lang['img_fsize']             = 'Velikost:';
+$lang['img_artist']            = 'Fotograf:';
+$lang['img_copyr']             = 'Avtorska pravica:';
+$lang['img_format']            = 'Zapis:';
+$lang['img_camera']            = 'Fotoaparat:';
+$lang['img_keywords']          = 'Ključne besede:';
+$lang['img_width']             = 'Širina:';
+$lang['img_height']            = 'Višina:';
 $lang['subscr_subscribe_success'] = 'Uporabniški račun %s je dodan na seznam naročnin na %s';
 $lang['subscr_subscribe_error'] = 'Napaka med dodajanjem %s na seznam naročnin na %s';
 $lang['subscr_subscribe_noaddress'] = 'S trenutnimi prijavnimi podatki ni povezanega elektronskega naslova, zato uporabniškega računa ni mogoče dodati na seznam naročnikov.';
@@ -255,8 +270,8 @@ $lang['subscr_m_receive']      = 'Prejmi';
 $lang['subscr_style_every']    = 'elektronsko sporočilo ob vsaki spremembi';
 $lang['subscr_style_digest']   = 'strnjeno elektronsko sporočilo sprememb za vsako stran (vsakih %.2f dni)';
 $lang['subscr_style_list']     = 'seznam spremenjenih strani od zadnjega elektronskega sporočila (vsakih %.2f dni)';
-$lang['authmodfailed']         = 'Slaba nastavitev overitve uporabniškega računa. Stopite v stik s skrbnikom sistema wiki.';
 $lang['authtempfail']          = 'Potrditev uporabnika je trenutno nedostopna. Stopite v stik s skrbnikom sistema wiki.';
+$lang['authpwdexpire']         = 'Geslo bo poteklo v %d dneh. Priporočljivo ga je zamenjati.';
 $lang['i_chooselang']          = 'Izberite jezik';
 $lang['i_installer']           = 'DokuWiki namestitev';
 $lang['i_wikiname']            = 'Ime Wiki spletišča';
@@ -277,8 +292,12 @@ $lang['i_policy']              = 'Začetna določila ACL';
 $lang['i_pol0']                = 'Odprt Wiki (branje, zapis, nalaganje datotek je javno za vse)';
 $lang['i_pol1']                = 'Javni Wiki (branje za vse, zapis in nalaganje datotek za prijavljene uporabnike)';
 $lang['i_pol2']                = 'Zaprt Wiki (berejo in urejajo lahko le prijavljeni uporabniki)';
+$lang['i_allowreg']            = 'Dovoli uporabnikom vpis';
 $lang['i_retry']               = 'Ponovni poskus';
 $lang['i_license']             = 'Izbor dovoljenja objave vsebine:';
+$lang['i_license_none']        = 'Ne pokaži podrobnosti dovoljenja.';
+$lang['i_pop_field']           = 'Prosimo pomagajte nam izboljšati DokuWiki izkušnjo:';
+$lang['i_pop_label']           = 'Enkrat na mesec pošlji anonimne uporabniške podatke DokuWiki razvijalcem';
 $lang['recent_global']         = 'Trenutno so prikazane spremembe znotraj imenskega prostora <b>%s</b>. Mogoče si je ogledati tudi spremembe <a href="%s">celotnega sistema Wiki</a>.';
 $lang['years']                 = '%d let nazaj';
 $lang['months']                = '%d mesecev nazaj';
@@ -311,3 +330,7 @@ $lang['media_perm_read']       = 'Ni ustreznih dovoljenj za branje datotek.';
 $lang['media_perm_upload']     = 'Ni ustreznih dovoljenj za nalaganje datotek.';
 $lang['media_update']          = 'Naloži novo različico';
 $lang['media_restore']         = 'Obnovi to različico';
+$lang['currentns']             = 'Trenutni imenski prostor';
+$lang['searchresult']          = 'Rezultati iskanja';
+$lang['plainhtml']             = 'Zapis HTML';
+$lang['wikimarkup']            = 'Oblikovni jezik Wiki';

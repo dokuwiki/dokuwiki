@@ -1,19 +1,16 @@
 <?php
+
 /**
- * fa language file
- *
- * This file was initially built by fetching translations from other
- * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
- * lines starting with @author
- *
- * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesFa.php?view=co
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
+ * @author mehrdad <mehrdad.jafari.bojd@gmail.com>
+ * @author reza_khn <reza_khn@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -57,6 +54,7 @@ $lang['btn_revert']            = 'بازیابی';
 $lang['btn_register']          = 'یک حساب جدید بسازید';
 $lang['btn_apply']             = 'اعمال کن';
 $lang['btn_media']             = 'مدیریت محتوای چند رسانه ای';
+$lang['btn_deleteuser']        = 'حذف حساب کاربری خود';
 $lang['loggedinas']            = 'به عنوان کاربر روبرو وارد شده‌اید:';
 $lang['user']                  = 'نام کاربری:';
 $lang['pass']                  = 'گذرواژه‌ی شما';
@@ -68,6 +66,7 @@ $lang['fullname']              = '*نام واقعی شما';
 $lang['email']                 = 'ایمیل شما*';
 $lang['profile']               = 'پروفایل کاربر';
 $lang['badlogin']              = 'خطا در ورود به سیستم';
+$lang['badpassconfirm']        = 'متاسفم ، رمز عبور اشتباه است';
 $lang['minoredit']             = 'این ویرایش خُرد است';
 $lang['draftdate']             = 'ذخیره خودکار پیش‌نویس';
 $lang['nosecedit']             = 'این صفحه در این میان تغییر کرده است، اطلاعات بخش قدیمی شده است، در عوض محتوای کل نمایش داده می‌شود.';
@@ -84,6 +83,9 @@ $lang['profna']                = 'این ویکی اجازه ویرایش پرو
 $lang['profnochange']          = 'تغییری صورت نگرفت';
 $lang['profnoempty']           = 'نام و آدرس ایمیل باید پر شود';
 $lang['profchanged']           = 'پروفایل کاربر با موفقیت به روز شد';
+$lang['profnodelete']          = 'ویکی توانایی پشتیبانی از حذف کاربران را ندارد';
+$lang['profdeleteuser']        = 'حذف حساب کاربری';
+$lang['profdeleted']           = 'حساب کاربری شما حذف گردیده است.';
 $lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ جدید دریافت کنید';
 $lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
 $lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
@@ -96,12 +98,12 @@ $lang['license']               = 'به جز مواردی که ذکر می‌شو
 $lang['licenseok']             = 'توجه: با ویرایش این صفحه، شما مجوز زیر را تایید می‌کنید:';
 $lang['searchmedia']           = 'نام فایل برای جستجو:';
 $lang['searchmedia_in']        = 'جستجو در %s';
-$lang['txt_upload']            = 'فایل را برای ارسال انتخاب کنید';
-$lang['txt_filename']          = 'ارسال به صورت (اختیاری)';
+$lang['txt_upload']            = 'فایل را برای ارسال انتخاب کنید:';
+$lang['txt_filename']          = 'ارسال به صورت (اختیاری):';
 $lang['txt_overwrt']           = 'بر روی فایل موجود بنویس';
 $lang['maxuploadsize']         = 'حداکثر %s برای هر فایل مجاز است.';
-$lang['lockedby']              = 'در حال حاضر قفل شده است';
-$lang['lockexpire']            = 'قفل منقضی شده است';
+$lang['lockedby']              = 'در حال حاضر قفل شده است:';
+$lang['lockexpire']            = 'قفل منقضی شده است:';
 $lang['js']['willexpire']      = 'حالت قفل شما مدتی است منقضی شده است \n برای جلوگیری از تداخل دکمه‌ی پیش‌نمایش را برای صفر شدن ساعت قفل بزنید.';
 $lang['js']['notsavedyet']     = 'تغییرات ذخیره شده از بین خواهد رفت.
  می‌خواهید ادامه دهید؟';
@@ -183,9 +185,9 @@ $lang['diff_type']             = 'مشاهده تغییرات:';
 $lang['diff_inline']           = 'خطی';
 $lang['diff_side']             = 'کلی';
 $lang['line']                  = 'خط';
-$lang['breadcrumb']            = 'ردپا';
-$lang['youarehere']            = 'محل شما';
-$lang['lastmod']               = 'آخرین ویرایش';
+$lang['breadcrumb']            = 'ردپا:';
+$lang['youarehere']            = 'محل شما:';
+$lang['lastmod']               = 'آخرین ویرایش:';
 $lang['by']                    = 'توسط';
 $lang['deleted']               = 'حذف شد';
 $lang['created']               = 'ایجاد شد';
@@ -238,20 +240,20 @@ $lang['admin_register']        = 'یک حساب جدید بسازید';
 $lang['metaedit']              = 'ویرایش داده‌های متا';
 $lang['metasaveerr']           = 'نوشتن داده‌نما با مشکل مواجه شد';
 $lang['metasaveok']            = 'داده‌نما ذخیره شد';
-$lang['img_backto']            = 'بازگشت به ';
-$lang['img_title']             = 'عنوان تصویر';
-$lang['img_caption']           = 'عنوان';
-$lang['img_date']              = 'تاریخ';
-$lang['img_fname']             = 'نام فایل';
-$lang['img_fsize']             = 'اندازه';
-$lang['img_artist']            = 'عکاس/هنرمند';
-$lang['img_copyr']             = 'دارنده‌ی حق تکثیر';
-$lang['img_format']            = 'فرمت';
-$lang['img_camera']            = 'دوربین';
-$lang['img_keywords']          = 'واژه‌های کلیدی';
-$lang['img_width']             = 'عرض';
-$lang['img_height']            = 'ارتفاع';
-$lang['img_manager']           = 'دیدن در مدیریت محتوای چند رسانه ای';
+$lang['btn_img_backto']            = 'بازگشت به  %s';
+$lang['img_title']             = 'عنوان تصویر:';
+$lang['img_caption']           = 'عنوان:';
+$lang['img_date']              = 'تاریخ:';
+$lang['img_fname']             = 'نام فایل:';
+$lang['img_fsize']             = 'اندازه:';
+$lang['img_artist']            = 'عکاس/هنرمند:';
+$lang['img_copyr']             = 'دارنده‌ی حق تکثیر:';
+$lang['img_format']            = 'فرمت:';
+$lang['img_camera']            = 'دوربین:';
+$lang['img_keywords']          = 'واژه‌های کلیدی:';
+$lang['img_width']             = 'عرض:';
+$lang['img_height']            = 'ارتفاع:';
+$lang['btn_mediaManager']           = 'دیدن در مدیریت محتوای چند رسانه ای';
 $lang['subscr_subscribe_success'] = '%s به لیست آبونه %s افزوده شد';
 $lang['subscr_subscribe_error'] = 'اشکال در افزودن %s به لیست آبونه %s';
 $lang['subscr_subscribe_noaddress'] = 'هیچ آدرسی برای این عضویت اضافه نشده است، شما نمی‌توانید به لیست آبونه اضافه شوید';
@@ -266,7 +268,6 @@ $lang['subscr_m_unsubscribe']  = 'لغو آبونه';
 $lang['subscr_m_subscribe']    = 'آبونه شدن';
 $lang['subscr_m_receive']      = 'دریافت کردن';
 $lang['subscr_style_every']    = 'ارسال رای‌نامه در تمامی تغییرات';
-$lang['authmodfailed']         = 'اشکال در نوع معتبرسازی کاربران، مدیر ویکی را باخبر سازید.';
 $lang['authtempfail']          = 'معتبرسازی کابران موقتن مسدود می‌باشد. اگر این حالت پایدار بود، مدیر ویکی را باخبر سازید.';
 $lang['authpwdexpire']         = 'کلمه عبور شما در %d روز منقضی خواهد شد ، شما باید آن را زود تغییر دهید';
 $lang['i_chooselang']          = 'انتخاب زبان';

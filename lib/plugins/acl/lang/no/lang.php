@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Norwegian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
  * @author Thomas Nygreen <nygreen@gmail.com>
@@ -10,7 +10,7 @@
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
- * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Kjell Tore Næsgaard <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -20,8 +20,8 @@
  * @author Egil Hansen <egil@rosetta.no>
  */
 $lang['admin_acl']             = 'Administrasjon av lister for adgangskontroll (ACL)';
-$lang['acl_group']             = 'Gruppe';
-$lang['acl_user']              = 'Bruker';
+$lang['acl_group']             = 'Gruppe:';
+$lang['acl_user']              = 'Bruker:';
 $lang['acl_perms']             = 'Rettigheter for';
 $lang['page']                  = 'Side';
 $lang['namespace']             = 'Navnerom';

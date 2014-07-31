@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Chinese(Traditional) language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -15,8 +15,8 @@
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
  */
 $lang['admin_acl']             = '管理存取控制表 (ACL)';
-$lang['acl_group']             = '群組';
-$lang['acl_user']              = '使用者';
+$lang['acl_group']             = '群組:';
+$lang['acl_user']              = '使用者:';
 $lang['acl_perms']             = '設定權限於';
 $lang['page']                  = '頁面';
 $lang['namespace']             = '分類名稱';

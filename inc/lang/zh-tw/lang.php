@@ -1,17 +1,18 @@
 <?php
+
 /**
- * Chinese(Traditional) language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
  * @author Cheng-Wei Chien <e.cwchien@gmail.com>
- * @author Danny Lin
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author syaoranhinata@gmail.com
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
+ * @author tsangho <ou4222@gmail.com>
+ * @author Danny Lin <danny0838@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,7 +56,8 @@ $lang['btn_revert']            = '復原';
 $lang['btn_register']          = '註冊';
 $lang['btn_apply']             = '套用';
 $lang['btn_media']             = '多媒體管理器';
-$lang['loggedinas']            = '登入成';
+$lang['btn_deleteuser']        = '移除我的帳號';
+$lang['loggedinas']            = '登入成:';
 $lang['user']                  = '帳號';
 $lang['pass']                  = '密碼';
 $lang['newpass']               = '新密碼';
@@ -66,6 +68,7 @@ $lang['fullname']              = '姓名';
 $lang['email']                 = '電郵';
 $lang['profile']               = '使用者個人資料';
 $lang['badlogin']              = '很抱歉，您的使用者名稱或密碼可能有錯誤。';
+$lang['badpassconfirm']        = '抱歉，這密碼是錯的';
 $lang['minoredit']             = '小修改';
 $lang['draftdate']             = '草稿已自動存檔於';
 $lang['nosecedit']             = '在您編輯期間，其他使用者修改過本頁面。區段資料已逾時，因此系統載入了全頁，以取代之。';
@@ -78,12 +81,17 @@ $lang['regbadmail']            = '您輸入的電郵地址似乎不正確。若�
 $lang['regbadpass']            = '兩次輸入的密碼不一致，請再試一次。';
 $lang['regpwmail']             = '您的 DokuWiki 帳號密碼';
 $lang['reghere']               = '您還沒有帳號嗎？註冊一個吧。';
-$lang['profna']                = '在本 wiki 上，不能修改個人資料。';
+$lang['profna']                = '本 wiki 不支援修改個人資料。';
 $lang['profnochange']          = '並未作任何變更。';
 $lang['profnoempty']           = '帳號或電郵地址不可空白！';
 $lang['profchanged']           = '個人資料已更新。';
+$lang['profnodelete']          = '本 wiki 不支援刪除使用者';
+$lang['profdeleteuser']        = '刪除帳號';
+$lang['profdeleted']           = '您的使用者帳號已從本 wiki 刪除';
+$lang['profconfdelete']        = '我想把帳號從本 wiki 刪除（不能復原）';
+$lang['profconfdeletemissing'] = '未勾選確認方塊';
 $lang['pwdforget']             = '忘記密碼了？索取新密碼！';
-$lang['resendna']              = '本 wiki 並不支援重寄密碼。';
+$lang['resendna']              = '本 wiki 不支援重寄密碼。';
 $lang['resendpwd']             = '設定新密碼供';
 $lang['resendpwdmissing']      = '抱歉，您必須填寫所有欄位。';
 $lang['resendpwdnouser']       = '抱歉，資料庫內找不到這個使用者。';
@@ -91,15 +99,15 @@ $lang['resendpwdbadauth']      = '抱歉，認證碼無效。請確認您使用�
 $lang['resendpwdconfirm']      = '確認連結已通過郵件發送給您了。';
 $lang['resendpwdsuccess']      = '您的新密碼已寄出。';
 $lang['license']               = '若無特別註明，本 wiki 上的內容都是採用以下授權方式：';
-$lang['licenseok']             = '注意：編輯此頁面表示您已同意以下的授權方式：';
+$lang['licenseok']             = '注意：編輯此頁面表示您同意用以下授權方式發布您撰寫的內容：';
 $lang['searchmedia']           = '搜尋檔名：';
 $lang['searchmedia_in']        = '在 %s 裏搜尋';
-$lang['txt_upload']            = '請選擇要上傳的檔案';
-$lang['txt_filename']          = '請輸入要上傳至本 wiki 的檔案名稱 (非必要)';
+$lang['txt_upload']            = '請選擇要上傳的檔案:';
+$lang['txt_filename']          = '請輸入要上傳至本 wiki 的檔案名稱 (非必要):';
 $lang['txt_overwrt']           = '是否要覆蓋原有檔案';
 $lang['maxuploadsize']         = '每個上傳檔案不可大於 %s 。';
-$lang['lockedby']              = '目前已被下列人員鎖定';
-$lang['lockexpire']            = '預計解除鎖定於';
+$lang['lockedby']              = '目前已被下列人員鎖定:';
+$lang['lockexpire']            = '預計解除鎖定於:';
 $lang['js']['willexpire']      = '本頁的編輯鎖定將在一分鐘內到期。要避免發生衝突，請按「預覽」鍵重設鎖定計時。';
 $lang['js']['notsavedyet']     = '未儲存的變更將會遺失，繼續嗎？';
 $lang['js']['searchmedia']     = '搜尋檔案';
@@ -180,9 +188,9 @@ $lang['diff_type']             = '檢視差異：';
 $lang['diff_inline']           = '行內';
 $lang['diff_side']             = '並排';
 $lang['line']                  = '行';
-$lang['breadcrumb']            = '足跡';
-$lang['youarehere']            = '您在這裏';
-$lang['lastmod']               = '上一次變更';
+$lang['breadcrumb']            = '足跡:';
+$lang['youarehere']            = '您在這裏:';
+$lang['lastmod']               = '上一次變更:';
 $lang['by']                    = '由';
 $lang['deleted']               = '移除';
 $lang['created']               = '建立';
@@ -226,7 +234,7 @@ $lang['qb_extlink']            = '外部連結';
 $lang['qb_hr']                 = '水平線';
 $lang['qb_ol']                 = '有序列表項目';
 $lang['qb_ul']                 = '無序列表項目';
-$lang['qb_media']              = '加入圖片或檔案';
+$lang['qb_media']              = '加入圖片或檔案 (開新視窗)';
 $lang['qb_sig']                = '插入簽名';
 $lang['qb_smileys']            = '表情符號';
 $lang['qb_chars']              = '特殊字元';
@@ -235,20 +243,20 @@ $lang['admin_register']        = '新增使用者';
 $lang['metaedit']              = '編輯後設資料';
 $lang['metasaveerr']           = '後設資料無法寫入';
 $lang['metasaveok']            = '後設資料已儲存';
-$lang['img_backto']            = '回上一頁';
-$lang['img_title']             = '標題';
-$lang['img_caption']           = '照片說明';
-$lang['img_date']              = '日期';
-$lang['img_fname']             = '檔名';
-$lang['img_fsize']             = '大小';
-$lang['img_artist']            = '攝影者';
-$lang['img_copyr']             = '版權';
-$lang['img_format']            = '格式';
-$lang['img_camera']            = '相機';
-$lang['img_keywords']          = '關鍵字';
-$lang['img_width']             = '寬度';
-$lang['img_height']            = '高度';
-$lang['img_manager']           = '在多媒體管理器中檢視';
+$lang['btn_img_backto']            = '回上一頁 %s';
+$lang['img_title']             = '標題:';
+$lang['img_caption']           = '照片說明:';
+$lang['img_date']              = '日期:';
+$lang['img_fname']             = '檔名:';
+$lang['img_fsize']             = '大小:';
+$lang['img_artist']            = '攝影者:';
+$lang['img_copyr']             = '版權:';
+$lang['img_format']            = '格式:';
+$lang['img_camera']            = '相機:';
+$lang['img_keywords']          = '關鍵字:';
+$lang['img_width']             = '寬度:';
+$lang['img_height']            = '高度:';
+$lang['btn_mediaManager']           = '在多媒體管理器中檢視';
 $lang['subscr_subscribe_success'] = '已將 %s 加入至 %s 的訂閱列表';
 $lang['subscr_subscribe_error'] = '將 %s 加入至 %s 的訂閱列表時發生錯誤';
 $lang['subscr_subscribe_noaddress'] = '沒有與您登入相關的地址，無法將您加入訂閱列表';
@@ -265,7 +273,8 @@ $lang['subscr_m_receive']      = '接收';
 $lang['subscr_style_every']    = '每次更改都發送信件';
 $lang['subscr_style_digest']   = '對每個頁面發送更改的摘要信件 (每 %.2f 天)';
 $lang['subscr_style_list']     = '自上次發信以來更改的頁面的列表 (每 %.2f 天)';
-$lang['authmodfailed']         = '帳號認證的設定不正確，請通知該本 wiki 管理員。';
+
+/* auth.class language support */
 $lang['authtempfail']          = '暫不提供帳號認證。若本狀況持續，請通知本 wiki 管理員。';
 $lang['authpwdexpire']         = '您的密碼將在 %d 天內到期，請馬上更換新密碼。';
 $lang['i_chooselang']          = '選擇您的語系';
@@ -302,7 +311,7 @@ $lang['weeks']                 = '%d 週前';
 $lang['days']                  = '%d 天前';
 $lang['hours']                 = '%d 個小時前';
 $lang['minutes']               = '%d 分鐘前';
-$lang['seconds']               = '%s 秒鐘前';
+$lang['seconds']               = '%d 秒鐘前';
 $lang['wordblock']             = '無法儲存您的更改，因它含有受阻擋的文字 (垃圾訊息)。';
 $lang['media_uploadtab']       = '上傳';
 $lang['media_searchtab']       = '搜尋';
@@ -327,3 +336,8 @@ $lang['media_perm_read']       = '抱歉，您沒有足夠權限讀取檔案。'
 $lang['media_perm_upload']     = '抱歉，您沒有足夠權限上傳檔案。';
 $lang['media_update']          = '上傳新的版本';
 $lang['media_restore']         = '還原這個版本';
+
+$lang['currentns']             = '目前的命名空間';
+$lang['searchresult']          = '搜尋結果';
+$lang['plainhtml']             = '純 HTML';
+$lang['wikimarkup']            = 'Wiki 語法標記';

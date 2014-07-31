@@ -92,16 +92,24 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // Prepare SSO
-        if(!utf8_check($_SERVER['REMOTE_USER'])) {
-            $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
-        }
-        if($_SERVER['REMOTE_USER'] && $this->conf['sso']) {
-            $_SERVER['REMOTE_USER'] = $this->cleanUser($_SERVER['REMOTE_USER']);
+        if(!empty($_SERVER['REMOTE_USER'])) {
 
-            // we need to simulate a login
-            if(empty($_COOKIE[DOKU_COOKIE])) {
-                $INPUT->set('u', $_SERVER['REMOTE_USER']);
-                $INPUT->set('p', 'sso_only');
+            // make sure the right encoding is used
+            if($this->getConf('sso_charset')) {
+                $_SERVER['REMOTE_USER'] = iconv($this->getConf('sso_charset'), 'UTF-8', $_SERVER['REMOTE_USER']);
+            } elseif(!utf8_check($_SERVER['REMOTE_USER'])) {
+                $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
+            }
+
+            // trust the incoming user
+            if($this->conf['sso']) {
+                $_SERVER['REMOTE_USER'] = $this->cleanUser($_SERVER['REMOTE_USER']);
+
+                // we need to simulate a login
+                if(empty($_COOKIE[DOKU_COOKIE])) {
+                    $INPUT->set('u', $_SERVER['REMOTE_USER']);
+                    $INPUT->set('p', 'sso_only');
+                }
             }
         }
 
@@ -324,11 +332,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @param   array $filter    array of field/pattern pairs, null for no filter
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
-        if($this->users === null) {
+        if(!$this->users) {
             //get info for given user
             $result = $adldap->user()->all();
             if (!$result) return array();
@@ -349,7 +357,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             }
             if($this->_filter($user, $info)) {
                 $result[$user] = $info;
-                if(($limit >= 0) && (++$count >= $limit)) break;
+                if(($limit > 0) && (++$count >= $limit)) break;
             }
         }
         return $result;
@@ -501,6 +509,31 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         return $opts;
+    }
+
+    /**
+     * Returns a list of configured domains
+     *
+     * The default domain has an empty string as key
+     *
+     * @return array associative array(key => domain)
+     */
+    public function _getConfiguredDomains() {
+        $domains = array();
+        if(empty($this->conf['account_suffix'])) return $domains; // not configured yet
+
+        // add default domain, using the name from account suffix
+        $domains[''] = ltrim($this->conf['account_suffix'], '@');
+
+        // find additional domains
+        foreach($this->conf as $key => $val) {
+            if(is_array($val) && isset($val['account_suffix'])) {
+                $domains[$key] = ltrim($val['account_suffix'], '@');
+            }
+        }
+        ksort($domains);
+
+        return $domains;
     }
 
     /**

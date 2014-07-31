@@ -1,0 +1,13 @@
+Pozdrav @FULLNAME@!
+
+Netko je zatražio novu lozinku za vašu @TITLE@ prijavu na @DOKUWIKIURL@.
+
+Ako to niste bili Vi, molimo da samo ignorirate ovu poruku.
+
+Da bi ste potvrdili da ste to ipak bili Vi, molimo slijedite link u nastavku:
+
+@CONFIRM@
+
+-- 
+Ova poruka je generirana od strane DokuWiki dostupnog na
+@DOKUWIKIURL@

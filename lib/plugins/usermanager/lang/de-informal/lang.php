@@ -1,7 +1,8 @@
 <?php
+
 /**
- * German (informal) language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -10,6 +11,7 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
+ * @author Dennis Plöger <develop@dieploegers.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
@@ -32,6 +34,11 @@ $lang['search']                = 'Suchen';
 $lang['search_prompt']         = 'Suche ausführen';
 $lang['clear']                 = 'Suchfilter zurücksetzen';
 $lang['filter']                = 'Filter';
+$lang['export_all']            = 'Alle Benutzer exportieren (CSV)';
+$lang['export_filtered']       = 'Gefilterte Benutzerliste exportieren (CSV)';
+$lang['import']                = 'Neue Benutzer importieren';
+$lang['line']                  = 'Zeile Nr.';
+$lang['error']                 = 'Fehlermeldung';
 $lang['summary']               = 'Zeige Benutzer %1$d-%2$d von %3$d gefundenen. %4$d Benutzer insgesamt.';
 $lang['nonefound']             = 'Keinen Benutzer gefunden. Insgesamt %d Benutzer.';
 $lang['delete_ok']             = '%d Benutzer wurden gelöscht';
@@ -52,3 +59,13 @@ $lang['add_ok']                = 'Benutzer erfolgreich hinzugefügt';
 $lang['add_fail']              = 'Hinzufügen des Benutzers fehlgeschlagen';
 $lang['notify_ok']             = 'Benachrichtigungsmail wurde versendet';
 $lang['notify_fail']           = 'Benachrichtigungsemail konnte nicht gesendet werden';
+$lang['import_success_count']  = 'Benutzerimport: %d Benutzer gefunden, %d erfolgreich importiert.';
+$lang['import_failure_count']  = 'Benutzerimport: %d Benutzerimporte fehlgeschalten. Alle Fehler werden unten angezeigt.';
+$lang['import_error_fields']   = 'Falsche Anzahl Felder. Gefunden: %d. Benötigt: 4.';
+$lang['import_error_baduserid'] = 'Benutzername fehlt';
+$lang['import_error_badname']  = 'Ungültiger Name';
+$lang['import_error_badmail']  = 'Ungültige E-Mailadresse';
+$lang['import_error_upload']   = 'Import fehlgeschlagen. Die CSV-Datei konnte nicht hochgeladen werden oder ist leer.';
+$lang['import_error_readfail'] = 'Import fehlgeschlagen. Konnte die hochgeladene Datei nicht lesen.';
+$lang['import_error_create']   = 'Konnte den Benutzer nicht erzeugen';
+$lang['import_notify_fail']    = 'Benachrichtigung konnte an Benutzer %s (%s) nicht geschickt werden.';

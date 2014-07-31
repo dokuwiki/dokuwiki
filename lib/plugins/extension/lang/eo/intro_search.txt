@@ -1,0 +1,1 @@
+Tiu tabelo donas aliron al ĉiuj haveblaj eksteraj kromaĵoj kaj ŝablonoj por DokuWiki. Bonvolu konscii, ke instali eksteran kodaĵon povas enkonduki **sekurecriskon**, prefere legu antaŭe pri [[doku>security#plugin_security|sekureco de kromaĵo]].

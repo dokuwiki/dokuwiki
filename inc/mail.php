@@ -40,6 +40,8 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['
 function mail_setup(){
     global $conf;
     global $USERINFO;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // auto constructed address
     $host = @parse_url(DOKU_URL,PHP_URL_HOST);
@@ -53,11 +55,8 @@ function mail_setup(){
         $replace['@MAIL@'] = $noreply;
     }
 
-    if(!empty($_SERVER['REMOTE_USER'])){
-        $replace['@USER@'] = $_SERVER['REMOTE_USER'];
-    }else{
-        $replace['@USER@'] = 'noreply';
-    }
+    // use 'noreply' if no user
+    $replace['@USER@'] = $INPUT->server->str('REMOTE_USER', 'noreply', true);
 
     if(!empty($USERINFO['name'])){
         $replace['@NAME@'] = $USERINFO['name'];
@@ -284,10 +283,9 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         // for EBCDIC safeness encode !"#$@[\]^`{|}~,
         // for complete safeness encode every character :)
         if ($bEmulate_imap_8bit)
-            $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/e';
+            $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/';
 
-        $sReplmt = 'sprintf( "=%02X", ord ( "$0" ) ) ;';
-        $sLine = preg_replace( $sRegExp, $sReplmt, $sLine );
+        $sLine = preg_replace_callback( $sRegExp, 'mail_quotedprintable_encode_callback', $sLine );
 
         // encode x09,x20 at lineends
         {
@@ -330,3 +328,6 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
     return implode(MAILHEADER_EOL,$aLines);
 }
 
+function mail_quotedprintable_encode_callback($matches){
+    return sprintf( "=%02X", ord ( $matches[0] ) ) ;
+}

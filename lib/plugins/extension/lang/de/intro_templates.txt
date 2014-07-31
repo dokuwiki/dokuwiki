@@ -1,0 +1,1 @@
+Dies sind die in Ihrem Dokuwiki installierten Templates. Sie können das gewünschte Template im [[?do=admin&page=config|Konfigurations Manager]] aktivieren.

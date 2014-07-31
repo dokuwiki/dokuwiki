@@ -49,11 +49,11 @@ $lang['regbadpass'] = 'Tsy mitovy ny alahidy roa nomenao, avereno indray.';
 $lang['regpwmail']  = 'Ny alahidy Wiki-nao';
 $lang['reghere']    = 'Mbola tsy manana kaonty ianao? Manaova vaovao';
 
-$lang['txt_upload']   = 'Misafidiana rakitra halefa';
-$lang['txt_filename'] = 'Ampidiro ny anaran\'ny wiki (tsy voatery)';
+$lang['txt_upload']   = 'Misafidiana rakitra halefa:';
+$lang['txt_filename'] = 'Ampidiro ny anaran\'ny wiki (tsy voatery):';
 $lang['txt_overwrt']  = 'Fafana izay rakitra efa misy?';
-$lang['lockedby']     = 'Mbola voahidin\'i';
-$lang['lockexpire']   = 'Afaka ny hidy amin\'ny';
+$lang['lockedby']     = 'Mbola voahidin\'i:';
+$lang['lockexpire']   = 'Afaka ny hidy amin\'ny:';
 $lang['js']['willexpire']   = 'Efa ho lany fotoana afaka iray minitra ny hidy ahafahanao manova ny pejy.\nMba hialana amin\'ny conflit dia ampiasao ny bokotra topi-maso hamerenana ny timer-n\'ny hidy.';
 
 $lang['js']['notsavedyet'] = 'Misy fiovana tsy voarakitra, ho very izany ireo.\nAzo antoka fa hotohizana?';
@@ -83,7 +83,7 @@ $lang['current']    = 'current';
 $lang['yours']      = 'Kinova-nao';
 $lang['diff']       = 'Asehoy ny tsy fitoviana amin\'ny kinova amin\'izao';
 $lang['line']       = 'Andalana';
-$lang['breadcrumb'] = 'Taiza ianao';
+$lang['breadcrumb'] = 'Taiza ianao:';
 $lang['lastmod']    = 'Novaina farany:';
 $lang['by']         = '/';
 $lang['deleted']    = 'voafafa';
@@ -116,20 +116,6 @@ $lang['qb_sig']     = 'Manisy sonia';
 
 $lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 
-$lang['admin_acl']  = 'Fitantanana ACL (Access Control List)...';
 $lang['admin_register']= 'Ampio mpampiasa vaovao...';
-
-$lang['acl_group']  = 'Vondrona';
-$lang['acl_user']   = 'Mpampiasa';
-$lang['acl_perms']  = 'Alalana @';
-$lang['page']       = 'Pejy';
-$lang['namespace']  = 'Namespace';
-
-$lang['acl_perm1']  = 'Mamaky';
-$lang['acl_perm2']  = 'Manova';
-$lang['acl_perm4']  = 'Manamboatra';
-$lang['acl_perm8']  = 'Mandefa rakitra';
-$lang['acl_perm16'] = 'Mamafa';
-$lang['acl_new']    = 'Ampio andalana vaovao';
 
 //Setup VIM: ex: et ts=2 :

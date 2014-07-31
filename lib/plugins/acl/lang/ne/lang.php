@@ -1,14 +1,15 @@
 <?php
+
 /**
- * Nepali language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author SarojKumar Dhakal <lotusnagarkot@yahoo.com>
  * @author Saroj Dhakal<lotusnagarkot@yahoo.com>
  */
 $lang['admin_acl']             = 'एक्सेस कन्ट्रोल लिस्ट व्यवस्थापन';
-$lang['acl_group']             = 'समूह';
-$lang['acl_user']              = 'प्रोगकर्ता';
+$lang['acl_group']             = 'समूह:';
+$lang['acl_user']              = 'प्रोगकर्ता:';
 $lang['acl_perms']             = 'को लागि अनुमति';
 $lang['page']                  = 'पृष्ठ';
 $lang['namespace']             = 'नेमस्पेस';

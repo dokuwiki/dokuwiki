@@ -1,14 +1,14 @@
 <?php
+
 /**
- * Indonesian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
  */
 $lang['admin_acl']             = 'Manajemen Daftar Pengendali Akses';
-$lang['acl_group']             = 'Grup';
-$lang['acl_user']              = 'User';
+$lang['acl_group']             = 'Grup:';
+$lang['acl_user']              = 'User:';
 $lang['acl_perms']             = 'Ijin untuk';
 $lang['page']                  = 'Halaman';
 $lang['namespace']             = 'Namespace';

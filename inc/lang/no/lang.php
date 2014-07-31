@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Norwegian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
  * @author Rune Rasmussen [http://www.syntaxerror.no/]
@@ -11,13 +11,16 @@
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen <me@jakobnielsen.net>
- * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Kjell Tore Næsgaard <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author Rune Rasmussen syntaxerror.no@gmail.com
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
+ * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
+ * @author Boris <boris@newton-media.no>
+ * @author Christopher Schive <chschive@frisurf.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -53,6 +56,7 @@ $lang['btn_backtomedia']       = 'Tilbake til valg av mediafil';
 $lang['btn_subscribe']         = 'Abonnér på endringer';
 $lang['btn_profile']           = 'Oppdater profil';
 $lang['btn_reset']             = 'Tilbakestill';
+$lang['btn_resendpwd']         = 'Sett nytt passord';
 $lang['btn_draft']             = 'Rediger kladd';
 $lang['btn_recover']           = 'Gjennvinn kladd';
 $lang['btn_draftdel']          = 'Slett kladd';
@@ -60,7 +64,10 @@ $lang['btn_revert']            = 'Gjenopprette';
 $lang['btn_register']          = 'Registrer deg';
 $lang['btn_apply']             = 'Bruk';
 $lang['btn_media']             = 'Mediefiler';
-$lang['loggedinas']            = 'Innlogget som';
+$lang['btn_deleteuser']        = 'Fjern min konto';
+$lang['btn_img_backto']        = 'Tilbake til %s';
+$lang['btn_mediaManager']      = 'Vis i mediefilbehandler';
+$lang['loggedinas']            = 'Innlogget som:';
 $lang['user']                  = 'Brukernavn';
 $lang['pass']                  = 'Passord';
 $lang['newpass']               = 'Nytt passord';
@@ -71,6 +78,7 @@ $lang['fullname']              = 'Fullt navn';
 $lang['email']                 = 'E-post';
 $lang['profile']               = 'Brukerprofil';
 $lang['badlogin']              = 'Ugyldig brukernavn og/eller passord.';
+$lang['badpassconfirm']        = 'Beklager, passordet var feil';
 $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
 $lang['nosecedit']             = 'Siden ble endret i mellomtiden, seksjonsinfo har blitt foreldet - lastet full side istedet.';
@@ -87,8 +95,14 @@ $lang['profna']                = 'Denne wikien støtter ikke profilendringer';
 $lang['profnochange']          = 'Ingen endringer, ingenting å gjøre.';
 $lang['profnoempty']           = 'Tomt navn- eller e-postfelt er ikke tillatt.';
 $lang['profchanged']           = 'Brukerprofilen ble vellykket oppdatert.';
+$lang['profnodelete']          = 'Denne wikien støtter ikke sletting av brukere';
+$lang['profdeleteuser']        = 'Slett konto';
+$lang['profdeleted']           = 'Din brukerkonto har blitt slettet fra denne wikien';
+$lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke omgjøres.';
+$lang['profconfdeletemissing'] = 'Boks for bekreftelse ikke avkrysset';
 $lang['pwdforget']             = 'Glemt passordet ditt? Få deg et nytt';
 $lang['resendna']              = 'Denne wikien støtter ikke nyutsending av passord.';
+$lang['resendpwd']             = 'Sett nytt passord for';
 $lang['resendpwdmissing']      = 'Beklager, du må fylle inn alle felt.';
 $lang['resendpwdnouser']       = 'Beklager, vi kan ikke finne denne brukeren i vår database.';
 $lang['resendpwdbadauth']      = 'Beklager, denne autorisasjonskoden er ikke gyldig. Sjekk at du brukte hele bekreftelseslenken.';
@@ -98,11 +112,12 @@ $lang['license']               = 'Der annet ikke er angitt, er innholdet på den
 $lang['licenseok']             = 'Merk: Ved å endre på denne siden godtar du at ditt innhold utgis under følgende lisens:';
 $lang['searchmedia']           = 'Søk filnavn';
 $lang['searchmedia_in']        = 'Søk i %s';
-$lang['txt_upload']            = 'Velg fil som skal lastes opp';
-$lang['txt_filename']          = 'Skriv inn wikinavn (alternativt)';
+$lang['txt_upload']            = 'Velg fil som skal lastes opp:';
+$lang['txt_filename']          = 'Skriv inn wikinavn (alternativt):';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
-$lang['lockedby']              = 'Låst av';
-$lang['lockexpire']            = 'Låsingen utløper';
+$lang['maxuploadsize']         = 'Opplast maks % per fil.';
+$lang['lockedby']              = 'Låst av:';
+$lang['lockexpire']            = 'Låsingen utløper:';
 $lang['js']['willexpire']      = 'Din redigeringslås for dette dokumentet kommer snart til å utløpe.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
 $lang['js']['notsavedyet']     = 'Ulagrede endringer vil gå tapt!
 Vil du fortsette?';
@@ -183,10 +198,15 @@ $lang['difflink']              = 'Lenk til denne sammenligningen';
 $lang['diff_type']             = 'Vis forskjeller:';
 $lang['diff_inline']           = 'I teksten';
 $lang['diff_side']             = 'Side ved side';
+$lang['diffprevrev']           = 'Forrige revisjon';
+$lang['diffnextrev']           = 'Neste revisjon';
+$lang['difflastrev']           = 'Siste revisjon';
+$lang['diffbothprevrev']       = 'Begge sider forrige revisjon';
+$lang['diffbothnextrev']       = 'Begge sider neste revisjon';
 $lang['line']                  = 'Linje';
-$lang['breadcrumb']            = 'Spor';
-$lang['youarehere']            = 'Du er her';
-$lang['lastmod']               = 'Sist endret';
+$lang['breadcrumb']            = 'Spor:';
+$lang['youarehere']            = 'Du er her:';
+$lang['lastmod']               = 'Sist endret:';
 $lang['by']                    = 'av';
 $lang['deleted']               = 'fjernet';
 $lang['created']               = 'opprettet';
@@ -195,6 +215,12 @@ $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Redigeringskommentar';
 $lang['noflash']               = 'For at dette innholdet skal vises må du ha <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Last ned utdraget';
+$lang['tools']                 = 'Verktøy';
+$lang['user_tools']            = 'Brukerverktøy';
+$lang['site_tools']            = 'Nettstedverktøy';
+$lang['page_tools']            = 'Sideverktøy';
+$lang['skip_to_content']       = 'Hopp til innhold';
+$lang['sidebar']               = 'Sidefelt';
 $lang['mail_newpage']          = 'side lagt til:';
 $lang['mail_changed']          = 'side endret:';
 $lang['mail_subscribe_list']   = 'side endret i \'namespace\':';
@@ -233,20 +259,18 @@ $lang['admin_register']        = 'Legg til ny bruker';
 $lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skriving av metadata feilet';
 $lang['metasaveok']            = 'Metadata lagret';
-$lang['img_backto']            = 'Tilbake til';
-$lang['img_title']             = 'Tittel';
-$lang['img_caption']           = 'Bildetekst';
-$lang['img_date']              = 'Dato';
-$lang['img_fname']             = 'Filnavn';
-$lang['img_fsize']             = 'Størrelse';
-$lang['img_artist']            = 'Fotograf';
-$lang['img_copyr']             = 'Opphavsrett';
-$lang['img_format']            = 'Format';
-$lang['img_camera']            = 'Kamera';
-$lang['img_keywords']          = 'Nøkkelord';
-$lang['img_width']             = 'Bredde';
-$lang['img_height']            = 'Høyde';
-$lang['img_manager']           = 'Vis i mediefilbehandler';
+$lang['img_title']             = 'Tittel:';
+$lang['img_caption']           = 'Bildetekst:';
+$lang['img_date']              = 'Dato:';
+$lang['img_fname']             = 'Filnavn:';
+$lang['img_fsize']             = 'Størrelse:';
+$lang['img_artist']            = 'Fotograf:';
+$lang['img_copyr']             = 'Opphavsrett:';
+$lang['img_format']            = 'Format:';
+$lang['img_camera']            = 'Kamera:';
+$lang['img_keywords']          = 'Nøkkelord:';
+$lang['img_width']             = 'Bredde:';
+$lang['img_height']            = 'Høyde:';
 $lang['subscr_subscribe_success'] = 'La til %s som abonnent på %s';
 $lang['subscr_subscribe_error'] = 'Klarte ikke å legge til %s som abonnent på %s';
 $lang['subscr_subscribe_noaddress'] = 'Brukeren din er ikke registrert med noen adresse. Du kan derfor ikke legges til som abonnent.';
@@ -263,8 +287,8 @@ $lang['subscr_m_receive']      = 'Motta';
 $lang['subscr_style_every']    = 'e-post for alle endringer';
 $lang['subscr_style_digest']   = 'e-post med sammendrag av endringer for hver side (%.2f dager mellom hver)';
 $lang['subscr_style_list']     = 'liste med sider som er endra siden forrige e-post (%.2f dager mellom hver)';
-$lang['authmodfailed']         = 'Feilkonfigurert brukerautorisasjon. Vennligst innformer Wiki-admin.';
 $lang['authtempfail']          = 'Brukerautorisasjon er midlertidig utilgjengelig. Om dette vedvarer, vennligst informer Wiki-admin.';
+$lang['authpwdexpire']         = 'Ditt passord går ut om %d dager, du bør endre det snarest.';
 $lang['i_chooselang']          = 'Velg språk';
 $lang['i_installer']           = 'DokuWiki-installasjon';
 $lang['i_wikiname']            = 'Wikinavn';
@@ -289,8 +313,12 @@ $lang['i_policy']              = 'Innledende ACL-politikk';
 $lang['i_pol0']                = 'Åpen Wiki (les, skriv og opplasting for alle)';
 $lang['i_pol1']                = 'Offentlig Wiki (les for alle, skriving og opplasting bare for registrerte brukere)';
 $lang['i_pol2']                = 'Lukket Wiki (les, skriv og opplasting bare for registrerte brukere)';
+$lang['i_allowreg']            = 'Tillat at brukere registrerer seg selv';
 $lang['i_retry']               = 'Prøv igjen';
 $lang['i_license']             = 'Velg lisens som du vil legge ut innholdet under:';
+$lang['i_license_none']        = 'Ikke vis noen lisensinformasjon';
+$lang['i_pop_field']           = 'Venligst hejlp oss å forbedre Dokuwiki-opplevelsen:';
+$lang['i_pop_label']           = 'Sand annonyme bruksdata til Dokuwiki-utviklerene, en gang i måneden';
 $lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måneder siden';
@@ -317,8 +345,13 @@ $lang['media_search']          = 'Søk i navnerommet <strong>%s</strong>.';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s på %s';
 $lang['media_edit']            = 'Rediger %s';
+$lang['media_history']         = '%vis historikk';
 $lang['media_meta_edited']     = 'metadata er endra';
 $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese filer.';
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';
 $lang['media_update']          = 'Last opp ny versjon';
 $lang['media_restore']         = 'Gjenopprett denne versjonen';
+$lang['currentns']             = 'gjeldende navnemellomrom';
+$lang['searchresult']          = 'Søk i resultat';
+$lang['plainhtml']             = 'Enkel HTML';
+$lang['wikimarkup']            = 'wiki-format';

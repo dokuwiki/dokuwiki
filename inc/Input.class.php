@@ -15,6 +15,8 @@ class Input {
     public $post;
     /** @var GetInput Access $_GET parameters */
     public $get;
+    /** @var ServerInput Access $_SERVER parameters */
+    public $server;
 
     protected $access;
 
@@ -25,6 +27,7 @@ class Input {
         $this->access = &$_REQUEST;
         $this->post   = new PostInput();
         $this->get    = new GetInput();
+        $this->server = new ServerInput();
     }
 
     /**
@@ -141,6 +144,26 @@ class Input {
     }
 
     /**
+     * Access a request parameter and make sure it is has a valid value
+     *
+     * Please note that comparisons to the valid values are not done typesafe (request vars
+     * are always strings) however the function will return the correct type from the $valids
+     * array when an match was found.
+     *
+     * @param string $name    Parameter name
+     * @param array  $valids  Array of valid values
+     * @param mixed  $default Default to return if parameter isn't set or not valid
+     * @return null|mixed
+     */
+    public function valid($name, $valids, $default = null) {
+        if(!isset($this->access[$name])) return $default;
+        if(is_array($this->access[$name])) return $default; // we don't allow arrays
+        $found = array_search($this->access[$name], $valids);
+        if($found !== false) return $valids[$found]; // return the valid value for type safety
+        return $default;
+    }
+
+    /**
      * Access a request parameter as bool
      *
      * Note: $nonempty is here for interface consistency and makes not much sense for booleans
@@ -238,7 +261,6 @@ class PostInput extends Input {
 
 /**
  * Internal class used for $_GET access in Input class
-
  */
 class GetInput extends Input {
     protected $access;
@@ -260,4 +282,19 @@ class GetInput extends Input {
         parent::set($name, $value);
         $_REQUEST[$name] = $value;
     }
+}
+
+/**
+ * Internal class used for $_SERVER access in Input class
+ */
+class ServerInput extends Input {
+    protected $access;
+
+    /**
+     * Initialize the $access array, remove subclass members
+     */
+    function __construct() {
+        $this->access = &$_SERVER;
+    }
+
 }

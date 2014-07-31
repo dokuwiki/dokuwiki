@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Esperantolanguage file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Felipe Castro <fefcas (cxe) gmail (punkto) com>

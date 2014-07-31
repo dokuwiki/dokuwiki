@@ -1,6 +1,38 @@
 <?php
 
 class Tar_TestCase extends DokuWikiTest {
+    /**
+     * file extensions that several tests use
+     */
+    protected $extensions = array('tar');
+
+    public function setUp() {
+        parent::setUp();
+        if (extension_loaded('zlib')) {
+            $this->extensions[] = 'tgz';
+        }
+        if (extension_loaded('bz2')) {
+            $this->extensions[] = 'tbz';
+        }
+    }
+
+    /*
+     * dependency for tests needing zlib extension to pass
+     */
+    public function test_ext_zlib() {
+        if (!extension_loaded('zlib')) {
+            $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
+        }
+    }
+
+    /*
+     * dependency for tests needing zlib extension to pass
+     */
+    public function test_ext_bz2() {
+        if (!extension_loaded('bz2')) {
+            $this->markTestSkipped('skipping all bzip2 tests.  Need bz2 extension');
+        }
+    }
 
     /**
      * simple test that checks that the given filenames and contents can be grepped from
@@ -11,7 +43,8 @@ class Tar_TestCase extends DokuWikiTest {
     public function test_createdynamic() {
         $tar = new Tar();
 
-        $dir = dirname(__FILE__).'/tar';
+        $dir  = dirname(__FILE__).'/tar';
+        $tdir = ltrim($dir,'/');
 
         $tar->create();
         $tar->AddFile("$dir/testdata1.txt");
@@ -24,11 +57,17 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir") !== false, 'Path in TAR');
+        $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
+
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir/foobar") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar.txt") === false, 'File not in TAR');
+
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
     }
 
@@ -42,6 +81,7 @@ class Tar_TestCase extends DokuWikiTest {
         $tar = new Tar();
 
         $dir = dirname(__FILE__).'/tar';
+        $tdir = ltrim($dir,'/');
         $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
 
         $tar->create($tmp, Tar::COMPRESS_NONE);
@@ -57,11 +97,17 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertTrue(strpos($data, 'testcontent2') !== false, 'Content in TAR');
         $this->assertTrue(strpos($data, 'testcontent3') !== false, 'Content in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/testdata1.txt") !== false, 'Path in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir") !== false, "Path in TAR '$tdir'");
+        $this->assertTrue(strpos($data, "testdata1.txt") !== false, 'File in TAR');
+
         $this->assertTrue(strpos($data, 'noway/testdata2.txt') !== false, 'Path in TAR');
         $this->assertTrue(strpos($data, 'another/testdata3.txt') !== false, 'Path in TAR');
 
-        $this->assertTrue(strpos($data, "$dir/foobar/testdata2.txt") === false, 'Path not in TAR');
+        // fullpath might be too long to be stored as full path FS#2802
+        $this->assertTrue(strpos($data, "$tdir/foobar") === false, 'Path not in TAR');
+        $this->assertTrue(strpos($data, "foobar.txt") === false, 'File not in TAR');
+
         $this->assertTrue(strpos($data, "foobar") === false, 'Path not in TAR');
 
         @unlink($tmp);
@@ -73,7 +119,7 @@ class Tar_TestCase extends DokuWikiTest {
     public function test_tarcontent() {
         $dir = dirname(__FILE__).'/tar';
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -96,7 +142,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -122,7 +168,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -148,7 +194,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -174,7 +220,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -199,7 +245,7 @@ class Tar_TestCase extends DokuWikiTest {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
 
-        foreach(array('tar', 'tgz', 'tbz') as $ext) {
+        foreach($this->extensions as $ext) {
             $tar  = new Tar();
             $file = "$dir/test.$ext";
 
@@ -233,6 +279,9 @@ class Tar_TestCase extends DokuWikiTest {
         $this->assertEquals(Tar::COMPRESS_BZIP, $tar->filetype('foo.tar.bz2'));
     }
 
+    /**
+     * @depends test_ext_zlib
+     */
     public function test_longpathextract() {
         $dir = dirname(__FILE__).'/tar';
         $out = sys_get_temp_dir().'/dwtartest'.md5(time());
@@ -246,6 +295,28 @@ class Tar_TestCase extends DokuWikiTest {
 
             TestUtils::rdelete($out);
         }
+    }
+
+    // FS#1442
+    public function test_createlongfile() {
+        $tar = new Tar();
+        $tmp = tempnam(sys_get_temp_dir(), 'dwtartest');
+
+        $path = '0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789.txt';
+
+        $tar->create($tmp, Tar::COMPRESS_NONE);
+        $tar->addData($path, 'testcontent1');
+        $tar->close();
+
+        $this->assertTrue(filesize($tmp) > 30); //arbitrary non-zero number
+        $data = file_get_contents($tmp);
+
+        // We should find the complete path and a longlink entry
+        $this->assertTrue(strpos($data, 'testcontent1') !== false, 'content in TAR');
+        $this->assertTrue(strpos($data, $path) !== false, 'path in TAR');
+        $this->assertTrue(strpos($data, '@LongLink') !== false, '@LongLink in TAR');
+
+        @unlink($tmp);
     }
 
     public function test_createlongpathustar() {
@@ -300,6 +371,7 @@ class Tar_TestCase extends DokuWikiTest {
 
     /**
      * Extract a tarbomomb
+     * @depends test_ext_zlib
      */
     public function test_tarbomb() {
         $dir = dirname(__FILE__).'/tar';
@@ -359,5 +431,24 @@ class Tar_TestCase extends DokuWikiTest {
         $file = $tar->getArchive(Tar::COMPRESS_NONE);
 
         $this->assertEquals(512*4, strlen($file)); // 1 header block + data block + 2 footer blocks
+    }
+
+
+    public function test_cleanPath(){
+        $tar = new Tar();
+        $tests = array (
+            '/foo/bar' => 'foo/bar',
+            '/foo/bar/' => 'foo/bar',
+            'foo//bar' => 'foo/bar',
+            'foo/0/bar' => 'foo/0/bar',
+            'foo/../bar' => 'bar',
+            'foo/bang/bang/../../bar' => 'foo/bar',
+            'foo/../../bar' => 'bar',
+            'foo/.././../bar' => 'bar',
+        );
+
+        foreach($tests as $in => $out){
+            $this->assertEquals($out, $tar->cleanPath($in), "Input: $in");
+        }
     }
 }

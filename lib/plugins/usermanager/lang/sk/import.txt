@@ -1,0 +1,9 @@
+===== Hromadný import používateľov =====
+
+Vyžaduje CSV súbor používateľov s minimálne 4 stĺpcami.
+Stĺpce musia obsahovať postupne: ID používateľa, meno a priezvisko, emailová adresa a skupiny.
+CVS záznamy by mali byť oddelené čiarkou (,) a reťazce uzavreté úvodzovkami (%%""%%). Znak (\) sa používa v spojení so špeciálnymi znakmi.
+Príklad vhodného súboru je možné získať funkciou "Export používateľov".
+Duplicitné ID používateľov budú ignorované.
+
+Každému úspešne importovanému používateľovi bude vygenerované heslo a zaslaný email.

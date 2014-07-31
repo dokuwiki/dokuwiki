@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Chinese Traditional language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author syaoranhinata@gmail.com
  */
 $lang['server']                = '您的 PostgreSQL 伺服器';

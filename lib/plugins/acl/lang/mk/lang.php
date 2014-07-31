@@ -4,8 +4,8 @@
  *
  * @author Dimitar Talevski <dimi3.14@gmail.com>
  */
-$lang['acl_group']             = 'Група';
-$lang['acl_user']              = 'Корисник';
+$lang['acl_group']             = 'Група:';
+$lang['acl_user']              = 'Корисник:';
 $lang['acl_perms']             = 'Пермисии за';
 $lang['page']                  = 'Страница';
 $lang['btn_select']            = 'Избери';

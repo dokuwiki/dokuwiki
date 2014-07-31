@@ -38,6 +38,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['writable'] = true;
         $info['editable'] = true;
         $info['lastmod'] = false;
+        $info['currentrev'] = false;
         $info['meta'] = array();
         $info['ip'] = null;
         $info['user'] = null;
@@ -77,6 +78,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['filepath'] = $filename;
         $info['exists'] = true;
         $info['lastmod'] = $rev;
+        $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
 
         $this->assertEquals($info, pageinfo());
@@ -101,6 +103,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['filepath'] = $filename;
         $info['exists'] = true;
         $info['lastmod'] = $rev;
+        $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
         $info['rev'] = '';
 
@@ -131,6 +134,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['namespace'] = 'wiki';
         $info['meta'] = p_get_metadata($ID);
         $info['rev'] = $REV;
+        $info['currentrev'] = $rev;
         $info['filepath'] = str_replace('pages','attic',substr($filename,0,-3).$REV.'.txt.gz');
 
         $this->assertEquals($info, pageinfo());
@@ -153,6 +157,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['namespace'] = 'wiki';
         $info['exists'] = true;
         $info['lastmod'] = $rev;
+        $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
         $info['filepath'] = $filename;
 
@@ -197,6 +202,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['filepath'] = $filename;
         $info['exists'] = true;
         $info['lastmod'] = $rev;
+        $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);  // need $INFO set correctly for addLogEntry()
 
         global $INFO;
@@ -226,6 +232,7 @@ class common_pageinfo_test extends DokuWikiTest {
         touch($filename,$now);
 
         $info['lastmod'] = $now;
+        $info['currentrev'] = $now;
         $info['meta']['last_change'] = false;
         $info['ip'] = null;
         $info['user'] = null;
@@ -251,6 +258,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['filepath'] = $filename;
         $info['exists'] = true;
         $info['lastmod'] = $rev;
+        $info['currentrev'] = $rev;
         $info['meta'] = p_get_metadata($ID);
 
         // setup a draft, make it more recent than the current page

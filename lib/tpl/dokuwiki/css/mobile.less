@@ -1,0 +1,326 @@
+/**
+ * This file provides styles for mobile devices
+ * and smaller screens (up to 480px and 768px width).
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ */
+
+/* for detecting media queries in JavaScript (see script.js): */
+#screen__mode {
+    position: relative;
+    z-index: 0;
+}
+
+/* for screen widths in the tablet range
+********************************************************************/
+@media only screen and (max-width: @ini_tablet_width) {
+
+#screen__mode {
+    z-index: 1; /* for detecting media queries in JavaScript (see script.js) */
+}
+
+/* structure */
+#dokuwiki__aside {
+    width: 100%;
+    float: none;
+}
+
+#dokuwiki__aside > .pad,
+[dir=rtl] #dokuwiki__aside > .pad {
+    margin: 0 0 .5em;
+    /* style like .page */
+    background: @ini_background;
+    color: inherit;
+    border: 1px solid #eee;
+    box-shadow: 0 0 .5em @ini_text_alt;
+    border-radius: 2px;
+    padding: 1em;
+    margin-bottom: .5em;
+}
+
+#dokuwiki__aside h3.toggle {
+    font-size: 1em;
+
+    &.closed {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    &.open {
+        border-bottom: 1px solid @ini_border;
+    }
+}
+
+.showSidebar #dokuwiki__content {
+    float: none;
+    margin-left: 0;
+    width: 100%;
+
+    > .pad {
+        margin-left: 0;
+    }
+}
+
+[dir=rtl] .showSidebar #dokuwiki__content,
+[dir=rtl] .showSidebar #dokuwiki__content > .pad {
+    margin-right: 0;
+}
+
+/* preview */
+.dokuwiki.hasSidebar div.preview {
+    border-right: none;
+}
+
+[dir=rtl] .dokuwiki.hasSidebar div.preview {
+    border-left: none;
+}
+
+/* toc */
+#dw__toc {
+    float: none;
+    margin: 0 0 1em 0;
+    width: auto;
+    border-left-width: 0;
+    border-bottom: 1px solid @ini_border;
+}
+[dir=rtl] #dw__toc {
+    float: none;
+    margin: 0 0 1em 0;
+    border-right-width: 0;
+}
+
+.dokuwiki h3.toggle {
+    padding: 0 .5em .5em 0;
+}
+#dw__toc > div,
+#dokuwiki__aside div.content {
+    padding: .2em 0 .5em;
+}
+
+/* page */
+.dokuwiki div.page {
+    padding: 1em;
+}
+/* enable horizontal scrolling in media manager */
+.mode_media div.page {
+    overflow: auto;
+}
+
+/* push pagetools closer to content */
+#dokuwiki__pagetools {
+    top: 0;
+}
+.showSidebar #dokuwiki__pagetools {
+    top: 3.5em;
+}
+
+
+/* _edit */
+.dokuwiki div.section_highlight {
+    margin: 0 -1em;
+    padding: 0 .5em;
+    border-width: 0 .5em;
+}
+.dokuwiki div.preview {
+    margin: 0 -1em;
+    padding: 1em;
+}
+
+/* _recent */
+.dokuwiki form.changes ul {
+    padding-left: 0;
+}
+[dir=rtl] .dokuwiki form.changes ul {
+    padding-right: 0;
+}
+
+
+} /* /@media */
+
+
+/* for screen widths in the smartphone range
+********************************************************************/
+@media only screen and (max-width: @ini_phone_width) {
+
+#screen__mode {
+    z-index: 2; /* for detecting media queries in JavaScript (see script.js) */
+}
+
+body {
+    font-size: 100%;
+}
+
+/*____________ structure ____________*/
+
+#dokuwiki__site {
+    max-width: 100%;
+
+    > .site {
+        padding: 0 .5em;
+    }
+}
+#dokuwiki__header {
+    padding: .5em 0;
+}
+
+
+/*____________ header ____________*/
+
+#dokuwiki__header ul.a11y.skip {
+    position: static !important;
+    left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    float: right;
+    font-size: 0.875em;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+
+    li {
+        margin-left: .35em;
+        display: inline;
+    }
+}
+[dir=rtl] #dokuwiki__header ul.a11y.skip {
+    left: auto !important;
+    right: 0 !important;
+    float: left;
+    padding-right: 0;
+
+    li {
+        margin: 0 .35em 0 0;
+    }
+}
+
+#dokuwiki__header .headings,
+#dokuwiki__header .tools {
+    float: none;
+    text-align: left;
+    width: auto;
+    margin-bottom: .5em;
+}
+[dir=rtl] #dokuwiki__header .headings,
+[dir=rtl] #dokuwiki__header .tools {
+    float: none;
+    text-align: right;
+    width: auto;
+}
+#dokuwiki__sitetools {
+    text-align: left;
+}
+[dir=rtl] #dokuwiki__sitetools {
+    text-align: right;
+}
+#dokuwiki__usertools,
+#dokuwiki__sitetools ul,
+#dokuwiki__sitetools h3,
+#dokuwiki__pagetools,
+.dokuwiki div.breadcrumbs, /* @todo: maybe move breadcrumbs to the bottom? */
+.dokuwiki .pageId {
+    display: none;
+}
+
+/* search form */
+#dokuwiki__sitetools form.search {
+    float: left;
+    margin: 0 .2em .2em 0;
+    width: 49%;
+}
+[dir=rtl] #dokuwiki__sitetools form.search {
+    float: right;
+    margin: 0 0 .2em .2em;
+}
+
+#dokuwiki__sitetools form.search input.edit {
+    width: 100% !important;
+}
+.dokuwiki form.search div.ajax_qsearch {
+    display: none !important;
+}
+
+/* action dropdown is alternative for all hidden tools */
+#dokuwiki__header .mobileTools {
+    display: block;
+    font-size: 0.875em;
+    margin: 0 0 .2em 0;
+    float: right;
+    width: 49%;
+}
+[dir=rtl] #dokuwiki__header .mobileTools {
+    float: left;
+}
+#dokuwiki__header .mobileTools select {
+    padding: .3em .1em;
+    width: 100% !important;
+}
+
+/* force same height on search input and tools select */
+#dokuwiki__sitetools form.search input.edit,
+#dokuwiki__header .mobileTools select {
+    height: 2.1em;
+    line-height: 2.1em;
+    overflow: visible;
+}
+
+
+/*____________ content ____________*/
+
+#dokuwiki__aside > .pad,
+.dokuwiki div.page {
+    padding: .5em;
+}
+
+/* form elements */
+#config__manager fieldset td.value,
+#config__manager td .input,
+.dokuwiki fieldset,
+.dokuwiki input.edit,
+.dokuwiki textarea {
+    width: auto !important;
+    max-width: 100% !important;
+}
+.dokuwiki select {
+    max-width: 100% !important;
+}
+#config__manager fieldset {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.dokuwiki label.block {
+    text-align: left;
+
+    span {
+        display: block;
+    }
+}
+[dir=rtl] .dokuwiki label.block {
+    text-align: right;
+}
+
+/* _edit */
+.dokuwiki div.section_highlight {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+}
+.dokuwiki div.preview {
+    margin: 0 -.5em;
+    padding: .5em;
+}
+
+
+} /* /@media */
+
+
+/* for screen heights smaller than the pagetools permit
+********************************************************************/
+@media only screen and (max-height: 400px) {
+// 400px is only roughly the required value, this may be wrong under non-standard circumstances
+
+#dokuwiki__pagetools div.tools {
+    position: static;
+}
+
+
+} /* /@media */

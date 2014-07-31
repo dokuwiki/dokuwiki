@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Hungarian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
@@ -11,6 +11,9 @@
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
  * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
+ * @author Serenity87HUN <anikototh87@gmail.com>
+ * @author Marina Vladi <deldadam@gmail.com>
+ * @author Mátyás Jani <jzombi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -54,7 +57,10 @@ $lang['btn_revert']            = 'Helyreállítás';
 $lang['btn_register']          = 'Regisztráció';
 $lang['btn_apply']             = 'Alkalmaz';
 $lang['btn_media']             = 'Médiakezelő';
-$lang['loggedinas']            = 'Belépett felhasználó: ';
+$lang['btn_deleteuser']        = 'Felhasználói fiókom eltávolítása';
+$lang['btn_img_backto']        = 'Vissza %s';
+$lang['btn_mediaManager']      = 'Megtekintés a médiakezelőben';
+$lang['loggedinas']            = 'Belépett felhasználó';
 $lang['user']                  = 'Azonosító';
 $lang['pass']                  = 'Jelszó';
 $lang['newpass']               = 'Új jelszó';
@@ -65,6 +71,7 @@ $lang['fullname']              = 'Teljes név';
 $lang['email']                 = 'E-Mail';
 $lang['profile']               = 'Személyes beállítások';
 $lang['badlogin']              = 'Sajnáljuk, az azonosító vagy a jelszó nem jó.';
+$lang['badpassconfirm']        = 'Hibás jelszó';
 $lang['minoredit']             = 'Apróbb változások';
 $lang['draftdate']             = 'Piszkozat elmentve:';
 $lang['nosecedit']             = 'Időközben megváltozott az oldal, emiatt a szakasz nem friss. Töltsd újra az egész oldalt!';
@@ -81,6 +88,11 @@ $lang['profna']                = 'Ez a wiki nem támogatja a személyes beállí
 $lang['profnochange']          = 'Nem történt változás.';
 $lang['profnoempty']           = 'A név és e-mail mező nem maradhat üresen!';
 $lang['profchanged']           = 'A személyes beállítások változtatása megtörtént.';
+$lang['profnodelete']          = 'Ez a wiki nem támogatja a felhasználói fiókok törlését';
+$lang['profdeleteuser']        = 'Felhasználói fiók törlése';
+$lang['profdeleted']           = 'Felhasználói fiókodat eltávolítottuk erről a wiki-ről.';
+$lang['profconfdelete']        = 'Szeretném eltávolítani a felhasználói fiókomat erről a wikiről. <br/> Ez a cselekvés nem visszavonható.';
+$lang['profconfdeletemissing'] = 'A megerősítő négyzet nincs bepipálva';
 $lang['pwdforget']             = 'Elfelejtetted a jelszavad? Itt kérhetsz újat';
 $lang['resendna']              = 'Ez a wiki nem támogatja a jelszó újraküldést.';
 $lang['resendpwd']             = 'Új jelszó beállítása a következőhöz:';
@@ -93,8 +105,8 @@ $lang['license']               = 'Hacsak máshol nincs egyéb rendelkezés, ezen
 $lang['licenseok']             = 'Megjegyzés: az oldal szerkesztésével elfogadja, hogy a tartalom a következő licenc alatt lesz elérhető:';
 $lang['searchmedia']           = 'Keresett fájl neve:';
 $lang['searchmedia_in']        = 'Keresés a következőben: %s';
-$lang['txt_upload']            = 'Válaszd ki a feltöltendő fájlt';
-$lang['txt_filename']          = 'Feltöltési név (elhagyható)';
+$lang['txt_upload']            = 'Válaszd ki a feltöltendő fájlt:';
+$lang['txt_filename']          = 'Feltöltési név (elhagyható):';
 $lang['txt_overwrt']           = 'Létező fájl felülírása';
 $lang['maxuploadsize']         = 'Maximum %s méretű fájlokat tölthetsz fel.';
 $lang['lockedby']              = 'Jelenleg zárolta:';
@@ -178,10 +190,15 @@ $lang['difflink']              = 'Összehasonlító nézet linkje';
 $lang['diff_type']             = 'Összehasonlítás módja:';
 $lang['diff_inline']           = 'Sorok között';
 $lang['diff_side']             = 'Egymás mellett';
+$lang['diffprevrev']           = 'Előző változat';
+$lang['diffnextrev']           = 'Következő változat';
+$lang['difflastrev']           = 'Utolsó változat';
+$lang['diffbothprevrev']       = 'Előző változat mindkét oldalon';
+$lang['diffbothnextrev']       = 'Következő változat mindkét oldalon';
 $lang['line']                  = 'Sor';
-$lang['breadcrumb']            = 'Nyomvonal';
-$lang['youarehere']            = 'Itt vagy';
-$lang['lastmod']               = 'Utolsó módosítás';
+$lang['breadcrumb']            = 'Nyomvonal:';
+$lang['youarehere']            = 'Itt vagy:';
+$lang['lastmod']               = 'Utolsó módosítás:';
 $lang['by']                    = 'szerkesztette:';
 $lang['deleted']               = 'eltávolítva';
 $lang['created']               = 'létrehozva';
@@ -234,20 +251,18 @@ $lang['admin_register']        = 'Új felhasználó';
 $lang['metaedit']              = 'Metaadatok szerkesztése';
 $lang['metasaveerr']           = 'A metaadatok írása nem sikerült';
 $lang['metasaveok']            = 'Metaadatok elmentve';
-$lang['img_backto']            = 'Vissza';
-$lang['img_title']             = 'Cím';
-$lang['img_caption']           = 'Képaláírás';
-$lang['img_date']              = 'Dátum';
-$lang['img_fname']             = 'Fájlnév';
-$lang['img_fsize']             = 'Méret';
-$lang['img_artist']            = 'Készítette';
-$lang['img_copyr']             = 'Szerzői jogok';
-$lang['img_format']            = 'Formátum';
-$lang['img_camera']            = 'Fényképezőgép típusa';
-$lang['img_keywords']          = 'Kulcsszavak';
-$lang['img_width']             = 'Szélesség';
-$lang['img_height']            = 'Magasság';
-$lang['img_manager']           = 'Megtekintés a médiakezelőben';
+$lang['img_title']             = 'Cím:';
+$lang['img_caption']           = 'Képaláírás:';
+$lang['img_date']              = 'Dátum:';
+$lang['img_fname']             = 'Fájlnév:';
+$lang['img_fsize']             = 'Méret:';
+$lang['img_artist']            = 'Készítette:';
+$lang['img_copyr']             = 'Szerzői jogok:';
+$lang['img_format']            = 'Formátum:';
+$lang['img_camera']            = 'Fényképezőgép típusa:';
+$lang['img_keywords']          = 'Kulcsszavak:';
+$lang['img_width']             = 'Szélesség:';
+$lang['img_height']            = 'Magasság:';
 $lang['subscr_subscribe_success'] = '%s hozzáadva az értesítési listához: %s';
 $lang['subscr_subscribe_error'] = 'Hiba történt %s hozzáadásakor az értesítési listához: %s';
 $lang['subscr_subscribe_noaddress'] = 'Nincs e-mail cím megadva az adataidnál, így a rendszer nem tudott hozzáadni az értesítési listához';
@@ -264,7 +279,6 @@ $lang['subscr_m_receive']      = 'Küldj';
 $lang['subscr_style_every']    = 'e-mailt minden változásról';
 $lang['subscr_style_digest']   = 'összefoglaló e-mailt oldalanként (minden %.2f nap)';
 $lang['subscr_style_list']     = 'egy listát a módosított oldalakról a legutóbbi e-mail óta (minden %.2f nap)';
-$lang['authmodfailed']         = 'Hibás felhasználó-azonosítási módszer van beállítva. Légy szíves értesítsd az Adminisztrátorokat!';
 $lang['authtempfail']          = 'A felhasználó azonosítás átmenetileg nem működik. Ha sokáig így lenne, légy szíves értesítsd az Adminisztrátorokat!';
 $lang['authpwdexpire']         = 'A jelszavad %d nap múlva lejár, hamarosan meg kell változtatnod.';
 $lang['i_chooselang']          = 'Válassz nyelvet';
@@ -288,6 +302,7 @@ $lang['i_policy']              = 'Kezdeti hozzáférési lista házirend';
 $lang['i_pol0']                = 'Nyitott wiki (mindenki olvashatja, írhatja és fájlokat tölthet fel)';
 $lang['i_pol1']                = 'Publikus wiki (mindenki olvashatja, de csak regisztrált felhasználók írhatják és tölthetnek fel fájlokat)';
 $lang['i_pol2']                = 'Zárt wiki (csak regisztrált felhasználók olvashatják, írhatják és tölthetnek fel fájlokat)';
+$lang['i_allowreg']            = 'A felhasználók saját maguk is regisztrálhatnak';
 $lang['i_retry']               = 'Újra';
 $lang['i_license']             = 'Kérlek, válassz licencet a feltöltött tartalomhoz:';
 $lang['i_license_none']        = 'Ne jelenítsen meg licenc információt';
@@ -325,3 +340,7 @@ $lang['media_perm_read']       = 'Sajnáljuk, nincs jogod a fájlok olvasásáho
 $lang['media_perm_upload']     = 'Sajnáljuk, nincs jogod a feltöltéshez.';
 $lang['media_update']          = 'Új verzió feltöltése';
 $lang['media_restore']         = 'Ezen verzió visszaállítása';
+$lang['currentns']             = 'Aktuális névtér';
+$lang['searchresult']          = 'Keresés eredménye';
+$lang['plainhtml']             = 'Sima HTML';
+$lang['wikimarkup']            = 'Wiki-jelölőnyelv';

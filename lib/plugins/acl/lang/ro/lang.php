@@ -13,8 +13,8 @@
  * @author Emanuel-Emeric Andrași <em.andrasi@mandrivausers.ro>
  */
 $lang['admin_acl']             = 'Managementul Listei de Control a Accesului';
-$lang['acl_group']             = 'Grup';
-$lang['acl_user']              = 'Utilizator';
+$lang['acl_group']             = 'Grup:';
+$lang['acl_user']              = 'Utilizator:';
 $lang['acl_perms']             = 'Autorizare pentru';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Spaţiu de nume';

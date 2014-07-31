@@ -44,6 +44,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
                 DOKU_INC."lib/scripts/jquery/jquery-migrate$min.js",
+                DOKU_INC.'inc/lang/'.$conf['lang'].'/jquery.ui.datepicker.js',
                 DOKU_INC."lib/scripts/fileuploader.js",
                 DOKU_INC."lib/scripts/fileuploaderextended.js",
                 DOKU_INC.'lib/scripts/helpers.js',
@@ -86,16 +87,25 @@ function js_out(){
     // start output buffering and build the script
     ob_start();
 
+    $json = new JSON();
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
     print "var DOKU_TPL    = '".tpl_basedir()."';";
+    print "var DOKU_COOKIE_PARAM = " . $json->encode(
+            array(
+                 'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
+                 'secure' => $conf['securecookie'] && is_ssl()
+            )).";";
     // FIXME: Move those to JSINFO
     print "var DOKU_UHN    = ".((int) useHeading('navigation')).";";
     print "var DOKU_UHC    = ".((int) useHeading('content')).";";
 
     // load JS specific translations
-    $json = new JSON();
     $lang['js']['plugins'] = js_pluginstrings();
+    $templatestrings = js_templatestrings();
+    if(!empty($templatestrings)) {
+        $lang['js']['template'] = $templatestrings;
+    }
     echo 'LANG = '.$json->encode($lang['js']).";\n";
 
     // load toolbar
@@ -103,11 +113,15 @@ function js_out(){
 
     // load files
     foreach($files as $file){
+        if(!file_exists($file)) continue;
         $ismin = (substr($file,-7) == '.min.js');
+        $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC.'lib/scripts/') !== 0);
 
         echo "\n\n/* XXXXXXXXXX begin of ".str_replace(DOKU_INC, '', $file) ." XXXXXXXXXX */\n\n";
         if($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";
+        if ($debugjs) echo "\ntry {\n";
         js_load($file);
+        if ($debugjs) echo "\n} catch (e) {\n   logError(e, '".str_replace(DOKU_INC, '', $file)."');\n}\n";
         if($ismin) echo "\n/* END NOCOMPRESS */\n";
         echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
@@ -122,6 +136,9 @@ function js_out(){
     // end output buffering and get contents
     $js = ob_get_contents();
     ob_end_clean();
+
+    // strip any source maps
+    stripsourcemaps($js);
 
     // compress whitespace and comments
     if($conf['compress']){
@@ -149,7 +166,10 @@ function js_load($file){
         // is it a include_once?
         if($match[1]){
             $base = utf8_basename($ifile);
-            if($loaded[$base]) continue;
+            if($loaded[$base]){
+                $data  = str_replace($match[0], '' ,$data);
+                continue;
+            }
             $loaded[$base] = true;
         }
 
@@ -187,8 +207,7 @@ function js_pluginscripts(){
  *
  * @author Gabriel Birke <birke@d-scribe.de>
  */
-function js_pluginstrings()
-{
+function js_pluginstrings() {
     global $conf;
     $pluginstrings = array();
     $plugins = plugin_list();
@@ -205,6 +224,27 @@ function js_pluginstrings()
         }
     }
     return $pluginstrings;
+}
+
+/**
+ * Return an two-dimensional array with strings from the language file of current active template.
+ *
+ * - $lang['js'] must be an array.
+ * - Nothing is returned for template without an entry for $lang['js']
+ */
+function js_templatestrings() {
+    global $conf;
+    $templatestrings = array();
+    if (@file_exists(tpl_incdir()."lang/en/lang.php")) {
+        include tpl_incdir()."lang/en/lang.php";
+    }
+    if (isset($conf['lang']) && $conf['lang']!='en' && @file_exists(tpl_incdir()."lang/".$conf['lang']."/lang.php")) {
+        include tpl_incdir()."lang/".$conf['lang']."/lang.php";
+    }
+    if (isset($lang['js'])) {
+        $templatestrings[$conf['template']] = $lang['js'];
+    }
+    return $templatestrings;
 }
 
 /**

@@ -1,0 +1,1 @@
+A DokuWiki rendszerben telepített sablonok az alábbiak. A használt sablont a [[?do=admin&page=config|Beállítóközpontban]] választhatod ki.

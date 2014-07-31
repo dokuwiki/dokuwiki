@@ -1,13 +1,14 @@
 <?php
+
 /**
- * Norwegianlanguage file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
- * @author Kjell Tore Næsgaard  <kjell.t.nasgaard@ntnu.no>
+ * @author Kjell Tore Næsgaard <kjell.t.nasgaard@ntnu.no>
  * @author Knut Staring <knutst@gmail.com>
  * @author Lisa Ditlefsen <lisa@vervesearch.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
@@ -15,6 +16,9 @@
  * @author Rune Rasmussen syntaxerror.no@gmail.com
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
+ * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
+ * @author Boris <boris@newton-media.no>
+ * @author Christopher Schive <chschive@frisurf.no>
  */
 $lang['menu']                  = 'Tilbakestillingsbehandler';
 $lang['filter']                = 'Søk etter søppelmeldinger';

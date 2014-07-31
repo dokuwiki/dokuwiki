@@ -42,12 +42,6 @@ $lang['_notifications'] = 'Настройки за известяване';
 $lang['_syndication']   = 'Настройки на RSS емисиите';
 $lang['_advanced'] = 'Допълнителни настройки';
 $lang['_network'] = 'Мрежови настройки';
-// The settings group name for plugins and templates can be set with
-// plugin_settings_name and template_settings_name respectively. If one
-// of these lang properties is not set, the group name will be generated
-// from the plugin or template name and the localized suffix.
-$lang['_plugin_sufix'] = ' (приставка)';
-$lang['_template_sufix'] = ' (шаблон)';
 
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'Няма метаданни за настройките.';
@@ -73,7 +67,7 @@ $lang['fmode']      = 'Режим (права) за създаване на фа
 $lang['allowdebug'] = 'Включване на режи debug - <b>изключете, ако не е нужен!</b>';
 
 /* Display Settings */
-$lang['recent']      = 'Скорошни промени - брой еленти на страница';
+$lang['recent']      = 'Скорошни промени - брой елементи на страница';
 $lang['recent_days'] = 'Колко от скорошните промени да се пазят (дни)';
 $lang['breadcrumbs'] = 'Брой на следите. За изключване на функцията задайте 0.';
 $lang['youarehere']  = 'Йерархични следи (в този случай можете да изключите горната опция)';
@@ -136,7 +130,6 @@ $lang['target____windows']   = 'Прозорец за препратки към 
 /* Media Settings */
 $lang['mediarevisions'] = 'Да се пазят ли стари версии на качените файлове (Mediarevisions)?';
 $lang['refcheck']    = 'Проверка за препратка към медия, преди да бъде изтрита';
-$lang['refshow']     = 'Брой на показваните медийни препратки';
 $lang['gdlib']       = 'Версия на GD Lib';
 $lang['im_convert']  = 'Път до инструмента за трансформация на ImageMagick';
 $lang['jpg_quality'] = 'Качество на JPG компресията (0-100)';
@@ -174,7 +167,7 @@ $lang['compress']    = 'Компактен CSS и javascript изглед';
 $lang['cssdatauri']  = 'Максимален размер, в байтове, до който изображенията посочени в .CSS файл ще бъдат вграждани в стила (stylesheet), за да се намали броя на HTTP заявките. Техниката не работи за версиите на IE преди 8! Препоръчителни стойности: <code>400</code> до <code>600</code> байта. Въведете <code>0</code> за изключване.';
 $lang['send404']     = 'Пращане на "HTTP 404/Page Not Found" за несъществуващи страници';
 $lang['broken_iua']  = 'Отметнете, ако ignore_user_abort функцията не работи. Може да попречи на търсенето в страниците. Знае се, че комбинацията IIS+PHP/CGI е лоша. Вижте  <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Грешка 852</a> за повече информация.';
-$lang['xsendfile']   = 'Ползване на Х-Sendfile header, за да може уебсървъра да дава статични файлове? Вашият уебсървър трябва да го поддържа.';
+$lang['xsendfile']   = 'Ползване на Х-Sendfile header, за да може уебсървъра да дава статични файлове? Вашият уеб сървър трябва да го поддържа.';
 $lang['renderer_xhtml']   = 'Представяне на основните изходни данни (xhtml) от Wiki-то с';
 $lang['renderer__core']   = '%s (ядрото на DokuWiki)';
 $lang['renderer__plugin'] = '%s (приставка)';

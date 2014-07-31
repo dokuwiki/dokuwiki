@@ -1,0 +1,9 @@
+===== Hromadný import uživatelů =====
+
+Vyžaduje CSV soubor s uživateli obsahující alespoň 4 sloupce.
+Sloupce obsahují (v daném pořadí): user-id, celé jméno, emailovou adresu, seznam skupin.
+Položky CSV musí být odděleny čárkou (,) a řetězce umístěny v uvozovkách (%%""%%). Zpětné lomítko (\) lze použít pro escapování.
+Pro získání příkladu takového souboru využijte funkci "Exportovat uživatele" výše.
+Záznamy s duplicitním user-id budou ignorovány.
+
+Hesla budou vygenerována a zaslána e-mailem všem úspěšně importovaným uživatelům.

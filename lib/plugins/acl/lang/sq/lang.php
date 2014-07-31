@@ -5,8 +5,8 @@
  * @author Leonard Elezi leonard.elezi@depinfo.info
  */
 $lang['admin_acl']             = 'Menaxhimi i Listës së Kontrollit të Aksesit';
-$lang['acl_group']             = 'Grup';
-$lang['acl_user']              = 'Përdorues';
+$lang['acl_group']             = 'Grup:';
+$lang['acl_user']              = 'Përdorues:';
 $lang['acl_perms']             = 'Të drejta për';
 $lang['page']                  = 'Faqe';
 $lang['namespace']             = 'Hapësira e Emrit';

@@ -33,10 +33,9 @@ $lang['btn_back']   = 'Paş';
 $lang['btn_backlink']    = 'Girêdanên paş';
 $lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
-$lang['btn_unsubscribe'] = 'Unsubscribe Changes';
 $lang['btn_register'] = 'Register';
 
-$lang['loggedinas'] = 'Logged in as';
+$lang['loggedinas'] = 'Logged in as:';
 $lang['user']       = 'Username';
 $lang['pass']       = 'Password';
 $lang['passchk']    = 'once again';
@@ -90,8 +89,8 @@ $lang['current']    = 'current';
 $lang['yours']      = 'Your Version';
 $lang['diff']       = 'show differences to current version';
 $lang['line']       = 'Rêz';
-$lang['breadcrumb'] = 'Şop';
-$lang['lastmod']    = 'Guherandina dawî';
+$lang['breadcrumb'] = 'Şop:';
+$lang['lastmod']    = 'Guherandina dawî:';
 $lang['by']         = 'by';
 $lang['deleted']    = 'hat jê birin';
 $lang['created']    = 'hat afirandin';
@@ -123,41 +122,21 @@ $lang['qb_sig']     = 'Insert Signature';
 
 $lang['js']['del_confirm']= 'Delete this entry?';
 
-$lang['admin_acl']  = 'Access Control List Management...';
 $lang['admin_register']= 'Add new user...';
-
-$lang['acl_group']  = 'Group';
-$lang['acl_user']   = 'User';
-$lang['acl_perms']  = 'Permissions for';
-$lang['page']       = 'Rûpel';
-$lang['namespace']  = 'Namespace';
-
-$lang['acl_perm1']  = 'Bixwîne';
-$lang['acl_perm2']  = 'Biguherîne';
-$lang['acl_perm4']  = 'Biafirîne';
-$lang['acl_perm8']  = 'Upload';
-$lang['acl_perm16'] = 'Jê bibe';
-$lang['acl_new']    = 'Add new Entry';
 
 $lang['metaedit']    = 'Edit Metadata';
 $lang['metasaveerr'] = 'Writing metadata failed';
 $lang['metasaveok']  = 'Metadata saved';
-$lang['img_backto']  = 'Back to';
-$lang['img_title']   = 'Title';
-$lang['img_caption'] = 'Caption';
-$lang['img_date']    = 'Date';
-$lang['img_fname']   = 'Filename';
-$lang['img_fsize']   = 'Size';
-$lang['img_artist']  = 'Photographer';
-$lang['img_copyr']   = 'Copyright';
-$lang['img_format']  = 'Format';
-$lang['img_camera']  = 'Camera';
-$lang['img_keywords']= 'Keywords';
-
-$lang['subscribe_success']  = 'Added %s to subscription list for %s';
-$lang['subscribe_error']    = 'Error adding %s to subscription list for %s';
-$lang['subscribe_noaddress']= 'There is no address associated with your login, you cannot be added to the subscription list';
-$lang['unsubscribe_success']= 'Removed %s from subscription list for %s';
-$lang['unsubscribe_error']  = 'Error removing %s from subscription list for %s';
+$lang['btn_img_backto']  = 'Back to %s';
+$lang['img_title']   = 'Title:';
+$lang['img_caption'] = 'Caption:';
+$lang['img_date']    = 'Date:';
+$lang['img_fname']   = 'Filename:';
+$lang['img_fsize']   = 'Size:';
+$lang['img_artist']  = 'Photographer:';
+$lang['img_copyr']   = 'Copyright:';
+$lang['img_format']  = 'Format:';
+$lang['img_camera']  = 'Camera:';
+$lang['img_keywords']= 'Keywords:';
 
 //Setup VIM: ex: et ts=2 :

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Italian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
@@ -15,6 +15,10 @@
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
+ * @author Edmondo Di Tucci <snarchio@gmail.com>
+ * @author Claudio Lanconelli <lancos@libero.it>
+ * @author Mirko <malisan.mirko@gmail.com>
+ * @author Francesco <francesco.cavalli@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -58,7 +62,10 @@ $lang['btn_revert']            = 'Ripristina';
 $lang['btn_register']          = 'Registrazione';
 $lang['btn_apply']             = 'Applica';
 $lang['btn_media']             = 'Gestore Media';
-$lang['loggedinas']            = 'Collegato come';
+$lang['btn_deleteuser']        = 'Rimuovi il mio account';
+$lang['btn_img_backto']        = 'Torna a %s';
+$lang['btn_mediaManager']      = 'Guarda nel gestore media';
+$lang['loggedinas']            = 'Collegato come:';
 $lang['user']                  = 'Nome utente';
 $lang['pass']                  = 'Password';
 $lang['newpass']               = 'Nuova password';
@@ -69,6 +76,7 @@ $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'Email';
 $lang['profile']               = 'Profilo utente';
 $lang['badlogin']              = 'Il nome utente o la password non sono validi.';
+$lang['badpassconfirm']        = 'La password è errata';
 $lang['minoredit']             = 'Modifiche minori';
 $lang['draftdate']             = 'Bozza salvata in automatico il';
 $lang['nosecedit']             = 'La pagina è stata modificata nel frattempo; è impossibile modificare solo la sezione scelta, quindi è stata caricata la pagina intera.';
@@ -85,6 +93,11 @@ $lang['profna']                = 'Questo wiki non supporta modifiche al profilo'
 $lang['profnochange']          = 'Nessuna modifica, niente da aggiornare.';
 $lang['profnoempty']           = 'Nome o indirizzo email vuoti non sono consentiti.';
 $lang['profchanged']           = 'Aggiornamento del profilo utente riuscito.';
+$lang['profnodelete']          = 'Questa wiki non supporta la cancellazione degli utenti';
+$lang['profdeleteuser']        = 'Elimina account';
+$lang['profdeleted']           = 'Il tuo account utente è stato rimosso da questa wiki';
+$lang['profconfdelete']        = 'Voglio rimuovere il mio account da questa wiki. <br/> Questa operazione non può essere annullata.';
+$lang['profconfdeletemissing'] = 'La check box di conferma non è selezionata';
 $lang['pwdforget']             = 'Hai dimenticato la password? Richiedine una nuova';
 $lang['resendna']              = 'Questo wiki non supporta l\'invio di nuove password.';
 $lang['resendpwd']             = 'Imposta nuova password per';
@@ -97,12 +110,12 @@ $lang['license']               = 'Ad eccezione da dove è diversamente indicato,
 $lang['licenseok']             = 'Nota: modificando questa pagina accetti di rilasciare il contenuto sotto la seguente licenza:';
 $lang['searchmedia']           = 'Cerca file di nome:';
 $lang['searchmedia_in']        = 'Cerca in %s';
-$lang['txt_upload']            = 'Seleziona un file da caricare';
-$lang['txt_filename']          = 'Carica come (opzionale)';
+$lang['txt_upload']            = 'Seleziona un file da caricare:';
+$lang['txt_filename']          = 'Carica come (opzionale):';
 $lang['txt_overwrt']           = 'Sovrascrivi file esistente';
 $lang['maxuploadsize']         = 'Upload max. %s per ogni file.';
-$lang['lockedby']              = 'Attualmente bloccato da';
-$lang['lockexpire']            = 'Il blocco scade alle';
+$lang['lockedby']              = 'Attualmente bloccato da:';
+$lang['lockexpire']            = 'Il blocco scade alle:';
 $lang['js']['willexpire']      = 'Il tuo blocco su questa pagina scadrà tra circa un minuto.\nPer evitare incongruenze usa il pulsante di anteprima per prolungare il periodo di blocco.';
 $lang['js']['notsavedyet']     = 'Le modifiche non salvate andranno perse.';
 $lang['js']['searchmedia']     = 'Cerca file';
@@ -137,6 +150,7 @@ $lang['js']['del_confirm']     = 'Eliminare veramente questa voce?';
 $lang['js']['restore_confirm'] = 'Vuoi davvero ripristinare questa versione?';
 $lang['js']['media_diff']      = 'Guarda le differenze:';
 $lang['js']['media_diff_both'] = 'Fianco a Fianco';
+$lang['js']['media_diff_portions'] = 'rubare';
 $lang['js']['media_select']    = 'Seleziona files..';
 $lang['js']['media_upload_btn'] = 'Upload';
 $lang['js']['media_done_btn']  = 'Fatto';
@@ -180,10 +194,13 @@ $lang['difflink']              = 'Link a questa pagina di confronto';
 $lang['diff_type']             = 'Guarda le differenze:';
 $lang['diff_inline']           = 'In linea';
 $lang['diff_side']             = 'Fianco a Fianco';
+$lang['diffprevrev']           = 'Revisione precedente';
+$lang['diffnextrev']           = 'Prossima revisione';
+$lang['difflastrev']           = 'Ultima revisione';
 $lang['line']                  = 'Linea';
-$lang['breadcrumb']            = 'Traccia';
-$lang['youarehere']            = 'Ti trovi qui';
-$lang['lastmod']               = 'Ultima modifica';
+$lang['breadcrumb']            = 'Traccia:';
+$lang['youarehere']            = 'Ti trovi qui:';
+$lang['lastmod']               = 'Ultima modifica:';
 $lang['by']                    = 'da';
 $lang['deleted']               = 'eliminata';
 $lang['created']               = 'creata';
@@ -236,20 +253,18 @@ $lang['admin_register']        = 'Aggiungi un nuovo utente';
 $lang['metaedit']              = 'Modifica metadati';
 $lang['metasaveerr']           = 'Scrittura metadati fallita';
 $lang['metasaveok']            = 'Metadati salvati';
-$lang['img_backto']            = 'Torna a';
-$lang['img_title']             = 'Titolo';
-$lang['img_caption']           = 'Descrizione';
-$lang['img_date']              = 'Data';
-$lang['img_fname']             = 'Nome File';
-$lang['img_fsize']             = 'Dimensione';
-$lang['img_artist']            = 'Autore';
-$lang['img_copyr']             = 'Copyright';
-$lang['img_format']            = 'Formato';
-$lang['img_camera']            = 'Camera';
-$lang['img_keywords']          = 'Parole chiave';
-$lang['img_width']             = 'Larghezza';
-$lang['img_height']            = 'Altezza';
-$lang['img_manager']           = 'Guarda nel gestore media';
+$lang['img_title']             = 'Titolo:';
+$lang['img_caption']           = 'Descrizione:';
+$lang['img_date']              = 'Data:';
+$lang['img_fname']             = 'Nome File:';
+$lang['img_fsize']             = 'Dimensione:';
+$lang['img_artist']            = 'Autore:';
+$lang['img_copyr']             = 'Copyright:';
+$lang['img_format']            = 'Formato:';
+$lang['img_camera']            = 'Camera:';
+$lang['img_keywords']          = 'Parole chiave:';
+$lang['img_width']             = 'Larghezza:';
+$lang['img_height']            = 'Altezza:';
 $lang['subscr_subscribe_success'] = 'Aggiunto %s alla lista di sottoscrizioni %s';
 $lang['subscr_subscribe_error'] = 'Impossibile aggiungere %s alla lista di sottoscrizioni %s';
 $lang['subscr_subscribe_noaddress'] = 'Non esiste alcun indirizzo associato al tuo account, non puoi essere aggiunto alla lista di sottoscrizioni';
@@ -266,7 +281,6 @@ $lang['subscr_m_receive']      = 'Ricevi';
 $lang['subscr_style_every']    = 'email per ogni modifica';
 $lang['subscr_style_digest']   = 'email di riassunto dei cambiamenti per ogni pagina (ogni %.2f giorni)';
 $lang['subscr_style_list']     = 'lista delle pagine cambiate dall\'ultima email (ogni %.2f giorni)';
-$lang['authmodfailed']         = 'La configurazione dell\'autenticazione non è corretta. Informa l\'amministratore di questo wiki.';
 $lang['authtempfail']          = 'L\'autenticazione è temporaneamente non disponibile. Se questa situazione persiste, informa l\'amministratore di questo wiki.';
 $lang['authpwdexpire']         = 'La tua password scadrà in %d giorni, dovresti cambiarla quanto prima.';
 $lang['i_chooselang']          = 'Scegli la lingua';
@@ -291,6 +305,7 @@ $lang['i_policy']              = 'Regole di accesso iniziali';
 $lang['i_pol0']                = 'Wiki Aperto (lettura, scrittura, caricamento file per tutti)';
 $lang['i_pol1']                = 'Wiki Pubblico (lettura per tutti, scrittura e caricamento file per gli utenti registrati)';
 $lang['i_pol2']                = 'Wiki Chiuso (lettura, scrittura, caricamento file solamente per gli utenti registrati)';
+$lang['i_allowreg']            = 'Permetti agli utenti di registrarsi';
 $lang['i_retry']               = 'Riprova';
 $lang['i_license']             = 'Per favore scegli la licenza sotto cui vuoi rilasciare il contenuto:';
 $lang['i_license_none']        = 'Non mostrare informazioni sulla licenza';
@@ -328,3 +343,6 @@ $lang['media_perm_read']       = 'Spiacente, non hai abbastanza privilegi per le
 $lang['media_perm_upload']     = 'Spiacente, non hai abbastanza privilegi per caricare files.';
 $lang['media_update']          = 'Carica nuova versione';
 $lang['media_restore']         = 'Ripristina questa versione';
+$lang['currentns']             = 'Namespace corrente';
+$lang['searchresult']          = 'Risultati della ricerca';
+$lang['plainhtml']             = 'HTML';

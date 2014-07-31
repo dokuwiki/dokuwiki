@@ -1,16 +1,16 @@
 <?php
+
 /**
- * Arabic language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Mostafa Hussein <mostafa@gmail.com>
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
  * @author Usama Akkad <uahello@gmail.com>
  * @author uahello@gmail.com
  */
 $lang['admin_acl']             = 'إدارة قوائم التحكم بالدخول';
-$lang['acl_group']             = 'مجموعة';
-$lang['acl_user']              = 'مستخدم';
+$lang['acl_group']             = 'مجموعة:';
+$lang['acl_user']              = 'مستخدم:';
 $lang['acl_perms']             = 'ترخيص لـ';
 $lang['page']                  = 'صفحة';
 $lang['namespace']             = 'فضاء التسمية';

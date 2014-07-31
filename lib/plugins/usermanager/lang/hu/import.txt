@@ -1,0 +1,9 @@
+==== Felhasználók tömeges importálása ====
+
+Szükséges egy legalább 4 oszlopot tartalmazó, felhasználókat tartalmazó fájl.
+Az oszlopok kötelező tartalma, sorrendben: felhasználói azonosító, teljes név, e-mailcím és csoport.
+A CSV-mezőket vesszővel (,) kell elválasztani, a szövegeket idézőjelek (%%""%%) közé kell tenni. A fordított törtvonal (\) használható feloldójelnek.
+Megfelelő mintafájl megtekintéséhez próbáld ki a "Felhasználók exportálása" funkciót fentebb. 
+A duplán szereplő felhasználói azonosítók kihagyásra kerülnek.
+
+Minden sikeresen importált felhasználó számára jelszó készül, amelyet e-mailben kézhez kap.

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Russian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Змей Этерийский evil_snake@eternion.ru
  * @author Hikaru Nakajima <jisatsu@mail.ru>
@@ -19,8 +19,8 @@
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  */
 $lang['admin_acl']             = 'Управление списками контроля доступа';
-$lang['acl_group']             = 'Группа';
-$lang['acl_user']              = 'Пользователь';
+$lang['acl_group']             = 'Группа:';
+$lang['acl_user']              = 'Пользователь:';
 $lang['acl_perms']             = 'Права доступа для';
 $lang['page']                  = 'Страница';
 $lang['namespace']             = 'Пространство имён';
@@ -28,7 +28,7 @@ $lang['btn_select']            = 'Выбрать';
 $lang['p_user_id']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_user_ns']             = 'Сейчас пользователь <b class="acluser">%s</b> имеет следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Сейчас члены группы <b class="aclgroup">%s</b> имеют следующие права на доступ к странице <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_group_ns']            = 'Сейчас члены группы <b class="aclgroup">%s</b> cимеют следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Сейчас члены группы <b class="aclgroup">%s</b> имеют следующие права на доступ к пространству имён <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_choose_id']           = 'Пожалуйста, <b>введите пользователя или группу</b> в форме выше, чтобы просмотреть или отредактировать права на доступ к странице <b class="aclpage">%s</b>.';
 $lang['p_choose_ns']           = 'Пожалуйста, <b>введите пользователя или группу</b> в форме выше, чтобы просмотреть или отредактировать права на доступ к пространству имён <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Замечание: эти права доступа не были заданы явно, а были унаследованы от других групп или пространств имён более высокого порядка.';

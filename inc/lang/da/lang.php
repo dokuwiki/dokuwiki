@@ -1,8 +1,8 @@
 <?php
+
 /**
- * danish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -14,6 +14,9 @@
  * @author rasmus@kinnerup.com
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
+ * @author Soren Birk <soer9648@hotmail.com>
+ * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
+ * @author soer9648 <soer9648@eucl.dk>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,7 +60,8 @@ $lang['btn_revert']            = 'Reetablér';
 $lang['btn_register']          = 'Registrér';
 $lang['btn_apply']             = 'Anvend';
 $lang['btn_media']             = 'Media Manager';
-$lang['loggedinas']            = 'Logget ind som';
+$lang['btn_deleteuser']        = 'Fjern Min Konto';
+$lang['loggedinas']            = 'Logget ind som:';
 $lang['user']                  = 'Brugernavn';
 $lang['pass']                  = 'Adgangskode';
 $lang['newpass']               = 'Ny adgangskode';
@@ -68,6 +72,7 @@ $lang['fullname']              = 'Fulde navn';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Brugerprofil';
 $lang['badlogin']              = 'Brugernavn eller adgangskode var forkert.';
+$lang['badpassconfirm']        = 'Kodeordet var desværre forkert';
 $lang['minoredit']             = 'Mindre ændringer';
 $lang['draftdate']             = 'Kladde automatisk gemt d.';
 $lang['nosecedit']             = 'Siden blev ændret i mellemtiden, sektions information var for gammel, hentede hele siden i stedet.';
@@ -84,6 +89,10 @@ $lang['profna']                = 'Denne wiki understøtter ikke ændring af prof
 $lang['profnochange']          = 'Ingen ændringer, intet modificeret.';
 $lang['profnoempty']           = 'Tomt navn eller e-mail adresse er ikke tilladt.';
 $lang['profchanged']           = 'Brugerprofil opdateret korrekt.';
+$lang['profnodelete']          = 'Denne wiki supporterer ikke sletning af brugere';
+$lang['profdeleteuser']        = 'Slet Konto';
+$lang['profdeleted']           = 'Din brugerkonto er blevet slettet fra denne wiki';
+$lang['profconfdelete']        = 'Jeg ønsker at slette min konto fra denne wiki. <br/> Denne handling kan ikke fortrydes.';
 $lang['pwdforget']             = 'Har du glemt dit adgangskode? Få et nyt';
 $lang['resendna']              = 'Denne wiki understøtter ikke udsendelse af nyt adgangskode.';
 $lang['resendpwd']             = 'Vælg ny adgangskode for';
@@ -96,12 +105,12 @@ $lang['license']               = 'Med mindre andet angivet, vil indhold på denn
 $lang['licenseok']             = 'Note: ved at ændre denne side, acceptere du at dit indhold bliver frigivet under følgende licens:';
 $lang['searchmedia']           = 'Søg filnavn';
 $lang['searchmedia_in']        = 'Søg i %s';
-$lang['txt_upload']            = 'Vælg den fil der skal overføres';
-$lang['txt_filename']          = 'Indtast wikinavn (valgfrit)';
+$lang['txt_upload']            = 'Vælg den fil der skal overføres:';
+$lang['txt_filename']          = 'Indtast wikinavn (valgfrit):';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
 $lang['maxuploadsize']         = 'Upload max. %s pr. fil.';
-$lang['lockedby']              = 'Midlertidig låst af';
-$lang['lockexpire']            = 'Lås udløber kl.';
+$lang['lockedby']              = 'Midlertidig låst af:';
+$lang['lockexpire']            = 'Lås udløber kl:.';
 $lang['js']['willexpire']      = 'Din lås på dette dokument udløber om et minut.\nTryk på Forhåndsvisning-knappen for at undgå konflikter.';
 $lang['js']['notsavedyet']     = 'Ugemte ændringer vil blive mistet
 Fortsæt alligevel?';
@@ -182,9 +191,9 @@ $lang['diff_type']             = 'Vis forskelle:';
 $lang['diff_inline']           = 'Indeni';
 $lang['diff_side']             = 'Side ved Side';
 $lang['line']                  = 'Linje';
-$lang['breadcrumb']            = 'Sti';
-$lang['youarehere']            = 'Du er her';
-$lang['lastmod']               = 'Sidst ændret';
+$lang['breadcrumb']            = 'Sti:';
+$lang['youarehere']            = 'Du er her:';
+$lang['lastmod']               = 'Sidst ændret:';
 $lang['by']                    = 'af';
 $lang['deleted']               = 'slettet';
 $lang['created']               = 'oprettet';
@@ -198,6 +207,7 @@ $lang['user_tools']            = 'Brugerværktøjer';
 $lang['site_tools']            = 'Webstedsværktøjer';
 $lang['page_tools']            = 'Sideværktøjer';
 $lang['skip_to_content']       = 'hop til indhold';
+$lang['sidebar']               = 'Sidebjælke';
 $lang['mail_newpage']          = 'dokument tilføjet:';
 $lang['mail_changed']          = 'dokument ændret:';
 $lang['mail_subscribe_list']   = 'sider ændret i navnerum';
@@ -236,20 +246,20 @@ $lang['admin_register']        = 'Tilføj ny bruger';
 $lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skrivning af metadata fejlede';
 $lang['metasaveok']            = 'Metadata gemt';
-$lang['img_backto']            = 'Tilbage til';
-$lang['img_title']             = 'Titel';
-$lang['img_caption']           = 'Billedtekst';
-$lang['img_date']              = 'Dato';
-$lang['img_fname']             = 'Filnavn';
-$lang['img_fsize']             = 'Størrelse';
-$lang['img_artist']            = 'Fotograf';
-$lang['img_copyr']             = 'Ophavsret';
-$lang['img_format']            = 'Format';
-$lang['img_camera']            = 'Kamera';
-$lang['img_keywords']          = 'Emneord';
-$lang['img_width']             = 'Bredde';
-$lang['img_height']            = 'Højde';
-$lang['img_manager']           = 'Vis i Media Manager';
+$lang['btn_img_backto']            = 'Tilbage til %s';
+$lang['img_title']             = 'Titel:';
+$lang['img_caption']           = 'Billedtekst:';
+$lang['img_date']              = 'Dato:';
+$lang['img_fname']             = 'Filnavn:';
+$lang['img_fsize']             = 'Størrelse:';
+$lang['img_artist']            = 'Fotograf:';
+$lang['img_copyr']             = 'Ophavsret:';
+$lang['img_format']            = 'Format:';
+$lang['img_camera']            = 'Kamera:';
+$lang['img_keywords']          = 'Emneord:';
+$lang['img_width']             = 'Bredde:';
+$lang['img_height']            = 'Højde:';
+$lang['btn_mediaManager']           = 'Vis i Media Manager';
 $lang['subscr_subscribe_success'] = 'Tilføjede %s til abonnement listen for %s';
 $lang['subscr_subscribe_error'] = 'Fejl ved tilføjelse af %s til abonnement listen for %s';
 $lang['subscr_subscribe_noaddress'] = 'Der er ikke nogen addresse forbundet til din bruger, så du kan ikke blive tilføjet til abonnement listen';
@@ -266,7 +276,6 @@ $lang['subscr_m_receive']      = 'Modtag';
 $lang['subscr_style_every']    = 'email på hver ændring';
 $lang['subscr_style_digest']   = 'opsummeringsmail med ændringer for hver side (hver %.2f dage)';
 $lang['subscr_style_list']     = 'list af ændrede sider siden sidste email (hver %.2f dage)';
-$lang['authmodfailed']         = 'Fejl i brugervalideringens konfiguration. Kontakt venligst wikiens administrator.';
 $lang['authtempfail']          = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
 $lang['authpwdexpire']         = 'Din adgangskode vil udløbe om %d dage, du bør ændre det snart.';
 $lang['i_chooselang']          = 'Vælg dit sprog';
@@ -293,6 +302,8 @@ $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrere
 $lang['i_pol2']                = 'Lukket Wiki (kun for registerede brugere kan læse, skrive og overføre)';
 $lang['i_retry']               = 'Forsøg igen';
 $lang['i_license']             = 'Vælg venligst licensen du vil tilføje dit indhold under:';
+$lang['i_license_none']        = 'Vis ikke licensinformationer';
+$lang['i_pop_field']           = 'Hjælp os venligst med at forbedre oplevelsen af DokuWiki:';
 $lang['recent_global']         = 'Du ser lige nu ændringerne i <b>%s</b> navnerummet. Du kan også <a href="%s">se de sidste ændringer for hele wiki siden </a>';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måned siden';

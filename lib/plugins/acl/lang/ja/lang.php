@@ -1,8 +1,8 @@
 <?php
+
 /**
- * japanese language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Davilin(Yuji Takenaka) <webmaster@davilin.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -12,8 +12,8 @@
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  */
 $lang['admin_acl']             = 'アクセスコントロール管理';
-$lang['acl_group']             = 'グループ';
-$lang['acl_user']              = 'ユーザー';
+$lang['acl_group']             = 'グループ:';
+$lang['acl_user']              = 'ユーザー:';
 $lang['acl_perms']             = '権限を追加';
 $lang['page']                  = '文書';
 $lang['namespace']             = '名前空間';

@@ -1,4 +1,0 @@
-====== Gestor de plúgins ======
-
-Des d'esta pàgina pot gestionar tot lo relacionat en els [[doku>plugins|plúgins]] de DokuWiki. Per a poder descarregar i instalar un plúgin, el servidor web deu poder escriure en la carpeta de plúgins.
-

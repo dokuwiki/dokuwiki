@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Chinese(Simplified) language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
@@ -17,8 +17,8 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['admin_acl']             = '访问控制列表（ACL）管理器';
-$lang['acl_group']             = '组';
-$lang['acl_user']              = '用户';
+$lang['acl_group']             = '组:';
+$lang['acl_user']              = '用户:';
 $lang['acl_perms']             = '许可给';
 $lang['page']                  = '页面';
 $lang['namespace']             = '命名空间';

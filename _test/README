@@ -1,6 +1,6 @@
 ====== DokuWiki Test Suite ======
 
-This is the test suit to automatically test various parts of DokuWiki.
+This is the test suite to automatically test various parts of DokuWiki.
 
 ===== Requirements =====
 
@@ -9,23 +9,27 @@ This is the test suit to automatically test various parts of DokuWiki.
 
 ===== PHPUnit Installation ======
 
-via PEAR:
+You can install phpunit through your distribution's package manager or simply
+download the newest phar file into the _test directory:
 
-  pear config-set auto_discover 1
-  pear upgrade
-  pear install pear.phpunit.de/PHPUnit
-
-on Windows:
-
-  FIXME
+  cd _test/
+  wget https://phar.phpunit.de/phpunit.phar
 
 
-===== Running all Tests =====
+===== Running all tests =====
 
-Just change to the ''_test'' directory and run phpunit:
+Just change to the ''_test'' directory and run phpunit (depending on your install
+method):
 
-  cd _testing/
+  cd _test/
   phpunit
+
+or
+
+  cd _test/
+  php phpunit.phar
+
+===== Troubleshooting =====
 
 PHPUnit will fail on some systems with a //headers already sent// error.
 This is a known problem with PHPUnit, the error can be avoided by passing the
@@ -35,8 +39,10 @@ This is a known problem with PHPUnit, the error can be avoided by passing the
 
 On windows you may have to enable OpenSSL support for https tests.
 Some of them point to httpclient_http.tests.php on the failure.
-To enable HTTPS support copy the ''libeay32.dll'' and ''ssleay32.dll'' to your ''windows\system32'' folder
-and add the following line to your php.ini in the extension section:
+To enable HTTPS support copy the ''libeay32.dll'' and ''ssleay32.dll''
+to your ''windows\system32'' folder and add the following line to your php.ini
+in the extension section:
+
 <code ini>
 extension=php_openssl.dll
 </code>
@@ -45,13 +51,13 @@ extension=php_openssl.dll
 
 You can run a single test file by providing it as an argument to phpunit:
 
-  phpunit --stderr tests/inc/common_cleanText.test.php
+  phpunit tests/inc/common_cleanText.test.php
 
 You can also use groups to exclude certain test from running. For example use
 the following command to avoid long running test or tests accessing the
 Internet.
 
-  phpunit --stderr --exclude-group slow,internet
+  phpunit --exclude-group slow,internet
 
 ===== Create new Tests =====
 
@@ -60,23 +66,10 @@ folder. Please respect the folder structure and naming convention. Inside the
 file, implement a class, extending 'DokuWikiTest'. Every method, starting
 with 'test' will be called as a test (e.g. 'testIfThisIsValid');
 
-
 ===== TODO for the test framework =====
 
-  * test cross platform compatibility: especially test windows
-  * update http://www.dokuwiki.org/devel:unittesting
   * optional: add helper methods to TestRequest for easy form submission
     * createForm(), ...
   * check PHP Unit test_helpers https://github.com/sebastianbergmann/php-test-helpers
 
-
-===== Migration Protocol =====
-
-The following tests were not migrated:
-
-  * inc/indexer_idx_indexlengths (fs dependencies)
-  * inc/mail_send (integration test)
-  * inc/parser/parser_formatting
-  * inc/parser/xhtml_htmlphp (runkit)
-  * inc/parser/xhtml_links
 

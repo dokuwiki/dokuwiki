@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Brazilian Portuguese language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
@@ -20,6 +20,10 @@
  * @author Frederico Guimarães <frederico@teia.bio.br>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Leone Lisboa Magevski <leone1983@gmail.com>
+ * @author Dário Estevão <darioems@gmail.com>
+ * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
+ * @author Ednei <leuloch@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,7 +67,10 @@ $lang['btn_revert']            = 'Restaurar';
 $lang['btn_register']          = 'Cadastre-se';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gerenciador de mídias';
-$lang['loggedinas']            = 'Identificado(a) como';
+$lang['btn_deleteuser']        = 'Remover minha conta';
+$lang['btn_img_backto']        = 'Voltar para %s';
+$lang['btn_mediaManager']      = 'Ver no gerenciador de mídias';
+$lang['loggedinas']            = 'Identificado(a) como:';
 $lang['user']                  = 'Nome de usuário';
 $lang['pass']                  = 'Senha';
 $lang['newpass']               = 'Nova senha';
@@ -74,6 +81,7 @@ $lang['fullname']              = 'Nome completo';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Perfil do usuário';
 $lang['badlogin']              = 'Desculpe, mas o nome de usuário ou a senha estão incorretos.';
+$lang['badpassconfirm']        = 'Desculpe, mas a senha está errada ';
 $lang['minoredit']             = 'Alterações mínimas';
 $lang['draftdate']             = 'O rascunho foi salvo automaticamente em';
 $lang['nosecedit']             = 'A página foi modificada nesse intervalo de tempo. Como a informação da seção estava desatualizada, foi carregada a página inteira.';
@@ -90,6 +98,11 @@ $lang['profna']                = 'Esse wiki não suporta modificações do perfi
 $lang['profnochange']          = 'Sem alterações, nada para fazer.';
 $lang['profnoempty']           = 'Não são permitidos nomes ou endereços de e-mail em branco.';
 $lang['profchanged']           = 'O perfil do usuário foi atualizado com sucesso.';
+$lang['profnodelete']          = 'Esse wiki não suporta a exclusão de usuários ';
+$lang['profdeleteuser']        = 'Excluir a conta';
+$lang['profdeleted']           = 'Sua conta de usuário foi excluída desse wiki';
+$lang['profconfdelete']        = 'Eu desejo remover minha conta dessa wiki. <br/> Essa ação não pode ser desfeita.';
+$lang['profconfdeletemissing'] = 'Caixa de confirmação não marcada';
 $lang['pwdforget']             = 'Esqueceu sua senha? Solicite outra';
 $lang['resendna']              = 'Esse wiki não tem suporte para o reenvio de senhas.';
 $lang['resendpwd']             = 'Definir a nova senha para';
@@ -102,12 +115,12 @@ $lang['license']               = 'Exceto onde for informado ao contrário, o con
 $lang['licenseok']             = 'Observe: editando esta página você aceita disponibilizar o seu conteúdo sob a seguinte licença:';
 $lang['searchmedia']           = 'Buscar arquivo:';
 $lang['searchmedia_in']        = 'Buscar em %s';
-$lang['txt_upload']            = 'Selecione o arquivo a ser enviado';
-$lang['txt_filename']          = 'Enviar como (opcional)';
+$lang['txt_upload']            = 'Selecione o arquivo a ser enviado:';
+$lang['txt_filename']          = 'Enviar como (opcional):';
 $lang['txt_overwrt']           = 'Substituir o arquivo existente';
 $lang['maxuploadsize']         = 'Tamanho máximo de %s por arquivo.';
-$lang['lockedby']              = 'Atualmente bloqueada por';
-$lang['lockexpire']            = 'O bloqueio expira em';
+$lang['lockedby']              = 'Atualmente bloqueada por:';
+$lang['lockexpire']            = 'O bloqueio expira em:';
 $lang['js']['willexpire']      = 'O seu bloqueio de edição deste página irá expirar em um minuto.\nPara evitar conflitos de edição, clique no botão de visualização para reiniciar o temporizador de bloqueio.';
 $lang['js']['notsavedyet']     = 'As alterações não salvas serão perdidas.
 Deseja realmente continuar?';
@@ -188,10 +201,13 @@ $lang['difflink']              = 'Link para esta página de comparações';
 $lang['diff_type']             = 'Ver as diferenças:';
 $lang['diff_inline']           = 'Mescladas';
 $lang['diff_side']             = 'Lado a lado';
+$lang['diffprevrev']           = 'Revisão anterior';
+$lang['diffnextrev']           = 'Próxima revisão';
+$lang['difflastrev']           = 'Última revisão';
 $lang['line']                  = 'Linha';
-$lang['breadcrumb']            = 'Visitou';
-$lang['youarehere']            = 'Você está aqui';
-$lang['lastmod']               = 'Última modificação';
+$lang['breadcrumb']            = 'Visitou:';
+$lang['youarehere']            = 'Você está aqui:';
+$lang['lastmod']               = 'Última modificação:';
 $lang['by']                    = 'por';
 $lang['deleted']               = 'removida';
 $lang['created']               = 'criada';
@@ -244,20 +260,18 @@ $lang['admin_register']        = 'Adicionar novo usuário';
 $lang['metaedit']              = 'Editar metadados';
 $lang['metasaveerr']           = 'Não foi possível escrever os metadados';
 $lang['metasaveok']            = 'Os metadados foram salvos';
-$lang['img_backto']            = 'Voltar para';
-$lang['img_title']             = 'Título';
-$lang['img_caption']           = 'Descrição';
-$lang['img_date']              = 'Data';
-$lang['img_fname']             = 'Nome do arquivo';
-$lang['img_fsize']             = 'Tamanho';
-$lang['img_artist']            = 'Fotógrafo';
-$lang['img_copyr']             = 'Direitos autorais';
-$lang['img_format']            = 'Formato';
-$lang['img_camera']            = 'Câmera';
-$lang['img_keywords']          = 'Palavras-chave';
-$lang['img_width']             = 'Largura';
-$lang['img_height']            = 'Altura';
-$lang['img_manager']           = 'Ver no gerenciador de mídias';
+$lang['img_title']             = 'Título:';
+$lang['img_caption']           = 'Descrição:';
+$lang['img_date']              = 'Data:';
+$lang['img_fname']             = 'Nome do arquivo:';
+$lang['img_fsize']             = 'Tamanho:';
+$lang['img_artist']            = 'Fotógrafo:';
+$lang['img_copyr']             = 'Direitos autorais:';
+$lang['img_format']            = 'Formato:';
+$lang['img_camera']            = 'Câmera:';
+$lang['img_keywords']          = 'Palavras-chave:';
+$lang['img_width']             = 'Largura:';
+$lang['img_height']            = 'Altura:';
 $lang['subscr_subscribe_success'] = 'Adicionado %s à lista de monitoramentos de %s';
 $lang['subscr_subscribe_error'] = 'Ocorreu um erro na adição de %s à lista de monitoramentos de %s';
 $lang['subscr_subscribe_noaddress'] = 'Como não há nenhum endereço associado ao seu usuário, você não pode ser adicionado à lista de monitoramento';
@@ -274,7 +288,6 @@ $lang['subscr_m_receive']      = 'Receber';
 $lang['subscr_style_every']    = 'um e-mail a cada modificação';
 $lang['subscr_style_digest']   = 'um agrupamento de e-mails com as mudanças para cada página (a cada %.2f dias)';
 $lang['subscr_style_list']     = 'uma lista de páginas modificadas desde o último e-mail (a cada %.2f dias)';
-$lang['authmodfailed']         = 'A configuração da autenticação de usuário está com problemas. Por favor, informe ao administrador do wiki.';
 $lang['authtempfail']          = 'A autenticação de usuários está temporariamente desabilitada. Se essa situação persistir, por favor, informe ao administrador do Wiki.';
 $lang['authpwdexpire']         = 'Sua senha vai expirar em %d dias. Você deve mudá-la assim que for possível.';
 $lang['i_chooselang']          = 'Selecione o seu idioma';
@@ -287,6 +300,7 @@ $lang['i_modified']            = 'Por questões de segurança, esse script funci
 Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="http://dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. O seu host a mantém desabilitada por algum motivo?';
 $lang['i_phpver']              = 'A sua versão do PHP (<code>%s</code>) é inferior à necessária (<code>%s</code>). Você precisa atualizar a sua instalação do PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload precisa ser desabilitado no php.ini para executar o DokuWiki';
 $lang['i_permfail']            = 'O DokuWiki não tem permissão de escrita em <code>%s</code>. Você precisa corrigir as configurações de permissão nesse diretório!';
 $lang['i_confexists']          = '<code>%s</code> já existe';
 $lang['i_writeerr']            = 'Não foi possível criar <code>%s</code>. É necessário checar as permissões de arquivos/diretórios e criar o arquivo manualmente.';
@@ -298,6 +312,7 @@ $lang['i_policy']              = 'Política inicial de permissões';
 $lang['i_pol0']                = 'Wiki aberto (leitura, escrita e envio de arquivos por todos)';
 $lang['i_pol1']                = 'Wiki público (leitura por todos, escrita e envio de arquivos por usuários registrados)';
 $lang['i_pol2']                = 'Wiki fechado (leitura, escrita e envio de arquivos somente por usuários registrados)';
+$lang['i_allowreg']            = 'Permite usuários se registrarem';
 $lang['i_retry']               = 'Tentar novamente';
 $lang['i_license']             = 'Por favor escolha a licença que voce deseja utilizar para seu conteúdo:';
 $lang['i_license_none']        = 'Não mostrar nenhuma informação da licença';
@@ -335,3 +350,7 @@ $lang['media_perm_read']       = 'Desculpe, mas você não tem privilégios sufi
 $lang['media_perm_upload']     = 'Desculpe, mas você não tem privilégios suficientes para enviar arquivos.';
 $lang['media_update']          = 'Enviar uma nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['currentns']             = 'Domínio atual';
+$lang['searchresult']          = 'Resultado da Busca';
+$lang['plainhtml']             = 'HTML simples';
+$lang['wikimarkup']            = 'Marcação wiki';

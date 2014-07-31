@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Italian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli <http://www.rbnet.it/>
  * @author Pietro Battiston toobaz@email.it
@@ -17,8 +17,8 @@
  * @author snarchio@gmail.com
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
-$lang['acl_group']             = 'Gruppo';
-$lang['acl_user']              = 'Utente';
+$lang['acl_group']             = 'Gruppo:';
+$lang['acl_user']              = 'Utente:';
 $lang['acl_perms']             = 'Permessi per';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Categoria';

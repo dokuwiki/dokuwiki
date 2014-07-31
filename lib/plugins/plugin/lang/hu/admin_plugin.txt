@@ -1,4 +1,0 @@
-====== Bővítménykezelő ======
-
-Ezen az oldalon a Dokuwiki [[doku>plugins|bővítményeivel]] kapcsolatos teendőket láthatod el. A webszervernek tudni kell írnia a //plugin// könyvtárat, hogy új bővítményeket tudj ezen a felületen keresztül letölteni és telepíteni.
-
