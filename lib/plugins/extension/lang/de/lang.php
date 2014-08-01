@@ -7,6 +7,7 @@
  * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
+ * @author Dominik Mahr <drache.mahr@gmx.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -88,3 +89,4 @@ $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
 $lang['git']                   = 'Diese Erweiterung wurde über git installiert und sollte daher nicht hier aktualisiert werden.';
 $lang['install_url']           = 'Von Webadresse (URL) installieren';
 $lang['install_upload']        = 'Erweiterung hochladen:';
+$lang['repo_error']            = 'Es konnte keine Verbindung zum Plugin-Verzeichnis hergestellt werden. Stellen sie sicher das der Server Verbindung mit www.dokuwiki.org aufnehmen darf und überprüfen sie ihre Proxy Einstellungen.';
