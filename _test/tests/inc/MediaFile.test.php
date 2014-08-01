@@ -38,7 +38,7 @@ class MediaFile_test extends DokuWikiTest {
         $ml = new MediaFile('new1.png');
 
         // upload
-        $this->assertTrue($ml->uploadFile(mediaFN('wiki:dokuwiki-128.png'), false));
+        $ml->uploadFile(mediaFN('wiki:dokuwiki-128.png'), false);
         $this->assertTrue($ml->exists());
         $this->assertFalse($ml->isExternal());
         $this->assertEquals(mediaFN('new1.png'), $ml->getFile());
@@ -52,7 +52,7 @@ class MediaFile_test extends DokuWikiTest {
         $ml = new MediaFile('new2.png');
 
         // upload
-        $this->assertTrue($ml->uploadFile(mediaFN('wiki:dokuwiki-128.png'), false));
+        $ml->uploadFile(mediaFN('wiki:dokuwiki-128.png'), false);
         // delete should throw ACL exception
         $ml->delete();
     }
@@ -61,9 +61,9 @@ class MediaFile_test extends DokuWikiTest {
         $ml = new MediaFile('full:new2.png');
 
         // upload
-        $this->assertTrue($ml->uploadFile(mediaFN('wiki:dokuwiki-128.png'), false));
+        $ml->uploadFile(mediaFN('wiki:dokuwiki-128.png'), false);
         // delete should work
-        $this->assertTrue($ml->delete(), 'deletion');
+        $ml->delete();
         $this->assertFalse($ml->exists(), 'existing');
     }
 
