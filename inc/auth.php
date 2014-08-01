@@ -653,6 +653,37 @@ function auth_isMember($memberlist, $user, array $groups) {
 }
 
 /**
+ * Caching wrapper around auth_quickaclcheck()
+ *
+ * This will check ACLs only once per request for the given ID. This is mostly useful when iterating over
+ * a larger list of media files in the same namespace. When in doubt, use the uncached variant!
+ *
+ * Cache is done in memory (static variable)
+ *
+ * @uthor Andreas Gohr <andi@splitbrain.org>
+ * @param  string  $id  page ID (needs to be resolved and cleaned)
+ * @return int permision level
+ */
+function auth_quickaclcheck_cached($id) {
+    /* @var Input $INPUT */
+    global $INPUT;
+    $user = $INPUT->server->str('REMOTE_USER');
+
+    // cache initialization
+    // the cache is user based even though the user should not change within a request this is
+    // an additional safe guard
+    static $aclcache = array();
+    if(!isset($aclcache[$user])) $aclcache[$user] = array();
+
+    // fill cache
+    if(!isset($aclcache[$user][$id])) {
+        $aclcache[$user][$id] = auth_quickaclcheck($id);
+    }
+
+    return $aclcache[$user][$id];
+}
+
+/**
  * Convinience function for auth_aclcheck()
  *
  * This checks the permissions for the current user

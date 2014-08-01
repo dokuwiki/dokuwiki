@@ -47,7 +47,7 @@ class MediaFile {
             $this->id         = cleanID($this->id);
             $this->isexternal = false;
             $this->file       = mediaFN($this->id);
-            $this->auth       = auth_quickaclcheck(getNS($this->id).':*');
+            $this->auth       = auth_quickaclcheck_cached(getNS($this->id).':*');
         }
     }
 
