@@ -311,7 +311,8 @@ class MediaFile {
         if(!$conf['mediarevisions']) return $rev; // no old revision wanted
 
         // make sure an initial log entry exists
-        if(!getRevisionInfo($this->id, $rev, 8192, true)) {
+        $changelog = new MediaChangeLog($this->id);
+        if(!$changelog->getRevisionInfo($rev)) {
             // there was an external edit,
             // there is no log entry for current version of file
             if(!@file_exists(mediaMetaFN($this->id, '.changes'))) {
