@@ -401,6 +401,19 @@ class MediaFile {
     }
 
     /**
+     * @param string $size the size folder to use
+     * @return string The (relative) URL to the icon associated with this media file type
+     */
+    public function getIcon($size='') {
+        if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$this->extension.'.png')) {
+            $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/'.$this->extension.'.png';
+        } else {
+            $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/file.png';
+        }
+        return $icon;
+    }
+
+    /**
      * @return bool true if the file should not be displayed inline
      */
     public function isDownload() {
