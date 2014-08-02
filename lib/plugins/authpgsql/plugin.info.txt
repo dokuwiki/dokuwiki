@@ -1,7 +1,7 @@
 base   authpgsql
 author Andreas Gohr
 email  andi@splitbrain.org
-date   2013-02-16
+date   2014-02-15
 name   PostgreSQL Auth Plugin
 desc   Provides user authentication against a PostgreSQL database
 url    http://www.dokuwiki.org/plugin:authpgsql
