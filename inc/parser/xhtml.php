@@ -1650,7 +1650,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         if ($isExternal) {
             // take direct source for external files
-            list($srcExt, $srcMime) = mimetype($src);
+            list(/*ext*/, $srcMime) = mimetype($src);
             $files[$srcMime] = $src;
         } else {
             // prepare alternative formats
@@ -1701,11 +1701,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string
      */
     function _audio($src, $atts = null) {
+        $files = array();
         $isExternal = media_isexternal($src);
 
         if ($isExternal) {
             // take direct source for external files
-            list($srcExt, $srcMime) = mimetype($src);
+            list(/*ext*/, $srcMime) = mimetype($src);
             $files[$srcMime] = $src;
         } else {
             // prepare alternative formats
