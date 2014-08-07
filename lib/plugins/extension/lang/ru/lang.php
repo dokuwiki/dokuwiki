@@ -4,13 +4,17 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Igor Degraf <igordegraf@gmail.com>
  */
 $lang['menu']                  = 'Управление дополнениями';
 $lang['tab_plugins']           = 'Установленные плагины';
 $lang['tab_templates']         = 'Установленные шаблоны';
 $lang['tab_search']            = 'Поиск и установка';
 $lang['tab_install']           = 'Ручная установка';
+$lang['notimplemented']        = 'Эта функция еще не реализована';
 $lang['notinstalled']          = 'Это дополнение не установлено';
+$lang['alreadyenabled']        = 'Это расширение уже включено';
+$lang['alreadydisabled']       = 'Это расширение уже отключено';
 $lang['unknownauthor']         = 'Автор неизвестен';
 $lang['unknownversion']        = 'Версия неизвестна';
 $lang['btn_info']              = 'Отобразить доп. информацию';
