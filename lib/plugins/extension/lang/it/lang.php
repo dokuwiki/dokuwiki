@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Francesco <francesco.cavalli@hotmail.com>
+ * @author Fabio <fabioslurp@yahoo.it>
  */
 $lang['btn_enable']            = 'Abilita';
 $lang['btn_disable']           = 'Disabilita';
@@ -36,6 +37,7 @@ $lang['status_template']       = 'modello';
 $lang['error_badurl']          = 'URLs deve iniziare con http o https';
 $lang['error_dircreate']       = 'Impossibile creare una cartella temporanea per ricevere il download';
 $lang['error_download']        = 'Impossibile scaricare il file: %s';
+$lang['noperms']               = 'La directory Extension non è scrivibile';
 $lang['notplperms']            = 'Il modello di cartella non è scrivibile';
 $lang['nopluginperms']         = 'La cartella plugin non è scrivibile';
 $lang['install_url']           = 'Installa da URL:';

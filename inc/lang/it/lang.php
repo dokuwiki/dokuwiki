@@ -19,6 +19,7 @@
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
+ * @author Fabio <fabioslurp@yahoo.it>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
