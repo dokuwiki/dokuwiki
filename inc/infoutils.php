@@ -30,7 +30,12 @@ function checkUpdateMessages(){
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
-        io_saveFile($cf,$data);
+        if(substr(trim($data), -1) != '%') {
+            // this doesn't look like one of our messages, maybe some WiFi login interferred
+            $data = '';
+        }else {
+            io_saveFile($cf,$data);
+        }
     }else{
         dbglog("checkUpdateMessages(): messages.txt up to date");
         $data = io_readFile($cf);
