@@ -3,15 +3,15 @@
 تاریخ: @DATE@
 مرورگر: @BROWSER@
 آدرس IP: @IPADDRESS@
-نام هوست: @HOSTNAME@
+نام میزبان: @HOSTNAME@
 نگارش پیشین: @OLDPAGE@
-نگارش نو: @NEWPAGE@
-خلاصه ویرایش: @SUMMARY@
+نگارش جدید: @NEWPAGE@
+خلاصه‌ی ویرایش: @SUMMARY@
 کاربر: @USER@
 
 @DIFF@
 
 
 -- 
-این ایمیل توسط DokuWiki تولید شده است
+این ایمیل توسط DokuWiki در نشانی زیر تولید شده است
 @DOKUWIKIURL@
