@@ -27,6 +27,7 @@
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Владимир <id37736@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
+ * @author roamn <brain_z@mail.ru>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
