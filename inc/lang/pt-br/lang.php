@@ -24,6 +24,7 @@
  * @author Dário Estevão <darioems@gmail.com>
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  * @author Ednei <leuloch@gmail.com>
+ * @author Andre Luz <adasi008@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -204,6 +205,8 @@ $lang['diff_side']             = 'Lado a lado';
 $lang['diffprevrev']           = 'Revisão anterior';
 $lang['diffnextrev']           = 'Próxima revisão';
 $lang['difflastrev']           = 'Última revisão';
+$lang['diffbothprevrev']       = 'Ambos os lados revisão anterior';
+$lang['diffbothnextrev']       = 'Ambos os lados próxima revisão';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Visitou:';
 $lang['youarehere']            = 'Você está aqui:';

@@ -1,0 +1,1 @@
+Aqui você pode instalar manualmente plugins e módulos por um ou outro enviá-las ou fornecer uma URL de download direto.
