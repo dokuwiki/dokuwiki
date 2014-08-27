@@ -1,0 +1,1 @@
+Estes são os modelos instalados atualmente no seu DokuWiki. Você pode selecionar o modelo a ser usado no [[?do=admin&page=config|Configuration Manager]].
