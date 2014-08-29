@@ -71,9 +71,9 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
 
     //download or display?
     if($dl) {
-        header('Content-Disposition: attachment; filename="'.utf8_basename($orig).'";');
+        header('Content-Disposition: attachment;'.rfc2231_encode('filename', utf8_basename($orig)).';');
     } else {
-        header('Content-Disposition: inline; filename="'.utf8_basename($orig).'";');
+        header('Content-Disposition: inline;'.rfc2231_encode('filename', utf8_basename($orig)).';');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
@@ -86,6 +86,31 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
     } else {
         http_status(500);
         print "Could not read $file - bad permissions?";
+    }
+}
+
+/**
+ * Try an rfc2231 compatible encoding. This ensures correct
+ * interpretation of filenames outside of the ASCII set.
+ * This seems to be needed for file names with e.g. umlauts that
+ * would otherwise decode wrongly in IE.
+ *
+ * There is no additional checking, just the encoding and setting the key=value for usage in headers
+ *
+ * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ * @param string $name      name of the field to be set in the header() call
+ * @param string $value     value of the field to be set in the header() call
+ * @param string $charset   used charset for the encoding of value
+ * @param string $lang      language used.
+ * @return string           in the format " name=value" for values WITHOUT special characters
+ * @return string           in the format " name*=charset'lang'value" for values WITH special characters
+ */
+function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
+    $internal = preg_replace_callback('/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/', function($match) { return rawurlencode($match[0]); }, $value);
+    if ( $value != $internal ) {
+        return ' '.$name.'*='.$charset."'".$lang."'".$internal;
+    } else {
+        return ' '.$name.'="'.$value.'"';
     }
 }
 
