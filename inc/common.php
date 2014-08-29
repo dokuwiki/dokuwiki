@@ -416,6 +416,7 @@ function idfilter($id, $ue = true) {
     if($ue) {
         $id = rawurlencode($id);
         $id = str_replace('%3A', ':', $id); //keep as colon
+        $id = str_replace('%3B', ';', $id); //keep as semicolon
         $id = str_replace('%2F', '/', $id); //keep as slash
     }
     return $id;

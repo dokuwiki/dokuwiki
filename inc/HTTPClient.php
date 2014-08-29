@@ -808,7 +808,7 @@ class HTTPClient {
     function _buildHeaders($headers){
         $string = '';
         foreach($headers as $key => $value){
-            if(empty($value)) continue;
+            if($value === '') continue;
             $string .= $key.': '.$value.HTTP_NL;
         }
         return $string;

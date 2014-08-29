@@ -36,6 +36,7 @@
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
+ * @author pokesakura <pokesakura@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

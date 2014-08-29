@@ -1,7 +1,7 @@
 base info
 author Andreas Gohr
 email andi@splitbrain.org
-date 2013-02-16
+date 2014-03-05
 name Info Plugin
 desc Displays information about various DokuWiki internals
 url http://dokuwiki.org/plugin:info

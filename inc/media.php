@@ -203,7 +203,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  *
  * @author             Andreas Gohr <andi@splitbrain.org>
  * @param string $id media id
- * @param int $auth current auth check result
+ * @param int $auth no longer used
  * @return int One of: 0,
  *                     DOKU_MEDIA_DELETED,
  *                     DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS,
@@ -212,6 +212,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  */
 function media_delete($id,$auth){
     global $lang;
+    $auth = auth_quickaclcheck(ltrim(getNS($id).':*', ':'));
     if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if(media_inuse($id)) return DOKU_MEDIA_INUSE;
 

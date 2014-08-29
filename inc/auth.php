@@ -1080,7 +1080,7 @@ function updateprofile() {
         }
     }
 
-    if($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), $changes))) {
+    if($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
         // update cookie and session with the changed data
         if($changes['pass']) {
             list( /*user*/, $sticky, /*pass*/) = auth_getCookie();

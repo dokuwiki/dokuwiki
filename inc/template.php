@@ -369,7 +369,11 @@ function tpl_metaheaders($alt = true) {
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
             }
-            $head['link'][] = array('rel'=> 'canonical', 'href'=> wl($ID, '', true, '&'));
+            $canonicalUrl = wl($ID, '', true, '&');
+            if ($ID == $conf['start']) {
+                $canonicalUrl = DOKU_URL;
+            }
+            $head['link'][] = array('rel'=> 'canonical', 'href'=> $canonicalUrl);
         } else {
             $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,follow');
         }
@@ -381,13 +385,6 @@ function tpl_metaheaders($alt = true) {
 
     // set metadata
     if($ACT == 'show' || $ACT == 'export_xhtml') {
-        // date of modification
-        if($REV) {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
-        } else {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
-        }
-
         // keywords (explicit or implicit)
         if(!empty($INFO['meta']['subject'])) {
             $head['meta'][] = array('name'=> 'keywords', 'content'=> join(',', $INFO['meta']['subject']));
