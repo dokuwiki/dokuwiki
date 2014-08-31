@@ -23,6 +23,7 @@
  * @author Cupen <Cupenoruler@foxmail.com>
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
  * @author qinghao <qingxianhao@gmail.com>
+ * @author khas erdene <harse@sohu.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
