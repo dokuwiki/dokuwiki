@@ -1641,22 +1641,20 @@ function userlink($username = null, $textonly = false) {
     $evt = new Doku_Event('COMMON_USER_LINK', $data);
     if($evt->advise_before(true)) {
         if(empty($data['name'])) {
-            if($conf['showuseras'] == 'loginname') {
-                $data['name'] = $textonly ? $data['username'] : hsc($data['username']);
-            } else {
-                if($auth) $info = $auth->getUserData($username);
-                if(isset($info) && $info) {
-                    switch($conf['showuseras']) {
-                        case 'username':
-                        case 'username_link':
-                            $data['name'] = $textonly ? $info['name'] : hsc($info['name']);
-                            break;
-                        case 'email':
-                        case 'email_link':
-                            $data['name'] = obfuscate($info['mail']);
-                            break;
-                    }
+            if($auth) $info = $auth->getUserData($username);
+            if($conf['showuseras'] != 'loginname' && isset($info) && $info) {
+                switch($conf['showuseras']) {
+                    case 'username':
+                    case 'username_link':
+                        $data['name'] = $textonly ? $info['name'] : hsc($info['name']);
+                        break;
+                    case 'email':
+                    case 'email_link':
+                        $data['name'] = obfuscate($info['mail']);
+                        break;
                 }
+            } else {
+                $data['name'] = $textonly ? $data['username'] : hsc($data['username']);
             }
         }
 
