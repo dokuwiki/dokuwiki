@@ -16,19 +16,14 @@
  * @author Danny Lin <danny0838@gmail.com>
  */
 $lang['menu']                  = '帳號管理器';
-
-// custom language strings for the plugin
 $lang['noauth']                = '(帳號認證尚未開放)';
 $lang['nosupport']             = '(尚不支援帳號管理)';
-
 $lang['badauth']               = '錯誤的認證機制';
-
 $lang['user_id']               = '帳號';
 $lang['user_pass']             = '密碼';
 $lang['user_name']             = '名稱';
 $lang['user_mail']             = '電郵';
 $lang['user_groups']           = '群組';
-
 $lang['field']                 = '欄位';
 $lang['value']                 = '設定值';
 $lang['add']                   = '增加';
@@ -46,7 +41,6 @@ $lang['export_filtered']       = '匯出篩選後的使用者列表 (CSV)';
 $lang['import']                = '匯入新使用者';
 $lang['line']                  = '列號';
 $lang['error']                 = '錯誤訊息';
-
 $lang['summary']               = '顯示帳號 %1$d-%2$d，共 %3$d 筆符合。共有 %4$d 個帳號。';
 $lang['nonefound']             = '找不到帳號。共有 %d 個帳號。';
 $lang['delete_ok']             = '已刪除 %d 個帳號';
@@ -54,13 +48,10 @@ $lang['delete_fail']           = '%d 個帳號無法刪除。';
 $lang['update_ok']             = '已更新該帳號';
 $lang['update_fail']           = '無法更新該帳號';
 $lang['update_exists']         = '無法變更帳號名稱 (%s) ，因為有同名帳號存在。其他修改則已套用。';
-
 $lang['start']                 = '開始';
 $lang['prev']                  = '上一頁';
 $lang['next']                  = '下一頁';
 $lang['last']                  = '最後一頁';
-
-// added after 2006-03-09 release
 $lang['edit_usermissing']      = '找不到選取的帳號，可能已被刪除或改為其他名稱。';
 $lang['user_notify']           = '通知使用者';
 $lang['note_notify']           = '通知信只會在指定使用者新密碼時寄送。';
@@ -70,8 +61,6 @@ $lang['add_ok']                = '已新增使用者';
 $lang['add_fail']              = '無法新增使用者';
 $lang['notify_ok']             = '通知信已寄出';
 $lang['notify_fail']           = '通知信無法寄出';
-
-// import & errors
 $lang['import_userlistcsv']    = '使用者列表檔案 (CSV):  ';
 $lang['import_header']         = '最近一次匯入 - 失敗';
 $lang['import_success_count']  = '使用者匯入：找到 %d 個使用者，已成功匯入 %d 個。';

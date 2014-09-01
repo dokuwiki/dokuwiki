@@ -17,6 +17,7 @@
  * @author snarchio@gmail.com
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Francesco <francesco.cavalli@hotmail.com>
+ * @author Fabio <fabioslurp@yahoo.it>
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
@@ -64,7 +65,12 @@ $lang['add_ok']                = 'Utente aggiunto correttamente';
 $lang['add_fail']              = 'Aggiunta utente fallita';
 $lang['notify_ok']             = 'Email di notifica inviata';
 $lang['notify_fail']           = 'L\'email di notifica non può essere inviata';
+$lang['import_success_count']  = 'Importazione utenti: %d utenti trovati, %d utenti importati con successo.';
+$lang['import_failure_count']  = 'Importazione utenti: %d falliti. Errori riportati qui sotto.';
+$lang['import_error_fields']   = 'Campi insufficienti, trovati %d, richiesti 4.';
+$lang['import_error_baduserid'] = 'User-id non trovato';
 $lang['import_error_badname']  = 'Nome errato';
 $lang['import_error_badmail']  = 'Indirizzo email errato';
+$lang['import_error_upload']   = 'Importazione fallita. Il file CSV non può essere caricato, o è vuoto.';
 $lang['import_error_readfail'] = 'Importazione in errore. Impossibile leggere i file caricati.';
 $lang['import_error_create']   = 'Impossibile creare l\'utente';

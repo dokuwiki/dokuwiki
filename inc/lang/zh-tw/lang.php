@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -13,6 +13,7 @@
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
  * @author tsangho <ou4222@gmail.com>
  * @author Danny Lin <danny0838@gmail.com>
+ * @author Stan <talktostan@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -57,6 +58,8 @@ $lang['btn_register']          = '註冊';
 $lang['btn_apply']             = '套用';
 $lang['btn_media']             = '多媒體管理器';
 $lang['btn_deleteuser']        = '移除我的帳號';
+$lang['btn_img_backto']        = '回上一頁 %s';
+$lang['btn_mediaManager']      = '在多媒體管理器中檢視';
 $lang['loggedinas']            = '登入成:';
 $lang['user']                  = '帳號';
 $lang['pass']                  = '密碼';
@@ -187,6 +190,11 @@ $lang['difflink']              = '連向這個比對檢視';
 $lang['diff_type']             = '檢視差異：';
 $lang['diff_inline']           = '行內';
 $lang['diff_side']             = '並排';
+$lang['diffprevrev']           = '前次修改
+';
+$lang['diffnextrev']           = '下次修改';
+$lang['difflastrev']           = '最後一次修改
+';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '足跡:';
 $lang['youarehere']            = '您在這裏:';
@@ -243,7 +251,6 @@ $lang['admin_register']        = '新增使用者';
 $lang['metaedit']              = '編輯後設資料';
 $lang['metasaveerr']           = '後設資料無法寫入';
 $lang['metasaveok']            = '後設資料已儲存';
-$lang['btn_img_backto']            = '回上一頁 %s';
 $lang['img_title']             = '標題:';
 $lang['img_caption']           = '照片說明:';
 $lang['img_date']              = '日期:';
@@ -256,7 +263,6 @@ $lang['img_camera']            = '相機:';
 $lang['img_keywords']          = '關鍵字:';
 $lang['img_width']             = '寬度:';
 $lang['img_height']            = '高度:';
-$lang['btn_mediaManager']           = '在多媒體管理器中檢視';
 $lang['subscr_subscribe_success'] = '已將 %s 加入至 %s 的訂閱列表';
 $lang['subscr_subscribe_error'] = '將 %s 加入至 %s 的訂閱列表時發生錯誤';
 $lang['subscr_subscribe_noaddress'] = '沒有與您登入相關的地址，無法將您加入訂閱列表';
@@ -273,8 +279,6 @@ $lang['subscr_m_receive']      = '接收';
 $lang['subscr_style_every']    = '每次更改都發送信件';
 $lang['subscr_style_digest']   = '對每個頁面發送更改的摘要信件 (每 %.2f 天)';
 $lang['subscr_style_list']     = '自上次發信以來更改的頁面的列表 (每 %.2f 天)';
-
-/* auth.class language support */
 $lang['authtempfail']          = '暫不提供帳號認證。若本狀況持續，請通知本 wiki 管理員。';
 $lang['authpwdexpire']         = '您的密碼將在 %d 天內到期，請馬上更換新密碼。';
 $lang['i_chooselang']          = '選擇您的語系';
@@ -336,7 +340,6 @@ $lang['media_perm_read']       = '抱歉，您沒有足夠權限讀取檔案。'
 $lang['media_perm_upload']     = '抱歉，您沒有足夠權限上傳檔案。';
 $lang['media_update']          = '上傳新的版本';
 $lang['media_restore']         = '還原這個版本';
-
 $lang['currentns']             = '目前的命名空間';
 $lang['searchresult']          = '搜尋結果';
 $lang['plainhtml']             = '純 HTML';
