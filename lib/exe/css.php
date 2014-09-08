@@ -56,7 +56,7 @@ function css_out(){
     }
 
     // cache influencers
-    $tplinc = tpl_basedir($tpl);
+    $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
     $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
@@ -70,6 +70,7 @@ function css_out(){
         $files[$mediatype] = array();
         // load core styles
         $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
             $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
@@ -131,6 +132,9 @@ function css_out(){
     // end output buffering and get contents
     $css = ob_get_contents();
     ob_end_clean();
+
+    // strip any source maps
+    stripsourcemaps($css);
 
     // apply style replacements
     $css = css_applystyle($css, $styleini['replacements']);
@@ -456,8 +460,9 @@ class DokuCssFile {
             if (defined('DOKU_UNITTEST')) {
                 $basedir[] = realpath(TMP_DIR);
             }
-            $regex = '#^('.join('|',$basedir).')#';
 
+            $basedir = array_map('preg_quote_cb', $basedir);
+            $regex = '/^('.join('|',$basedir).')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
 
@@ -550,7 +555,7 @@ function css_compress($css){
     $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
 
     //strip (incorrect but common) one line comments
-    $css = preg_replace('/(?<!:)\/\/.*$/m','',$css);
+    $css = preg_replace_callback('/^.*\/\/.*$/m','css_onelinecomment_cb',$css);
 
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
@@ -584,6 +589,60 @@ function css_compress($css){
 function css_comment_cb($matches){
     if(strlen($matches[2]) > 4) return '';
     return $matches[0];
+}
+
+/**
+ * Callback for css_compress()
+ *
+ * Strips one line comments but makes sure it will not destroy url() constructs with slashes
+ *
+ * @param $matches
+ * @return string
+ */
+function css_onelinecomment_cb($matches) {
+    $line = $matches[0];
+
+    $i = 0;
+    $len = strlen($line);
+
+    while ($i< $len){
+        $nextcom = strpos($line, '//', $i);
+        $nexturl = stripos($line, 'url(', $i);
+
+        if($nextcom === false) {
+            // no more comments, we're done
+            $i = $len;
+            break;
+        }
+
+        // keep any quoted string that starts before a comment
+        $nextsqt = strpos($line, "'", $i);
+        $nextdqt = strpos($line, '"', $i);
+        if(min($nextsqt, $nextdqt) < $nextcom) {
+            $skipto = false;
+            if($nextsqt !== false && ($nextdqt === false || $nextsqt < $nextdqt)) {
+                $skipto = strpos($line, "'", $nextsqt+1) +1;
+            } else if ($nextdqt !== false) {
+                $skipto = strpos($line, '"', $nextdqt+1) +1;
+            }
+
+            if($skipto !== false) {
+                $i = $skipto;
+                continue;
+            }
+        }
+
+        if($nexturl === false || $nextcom < $nexturl) {
+            // no url anymore, strip comment and be done
+            $i = $nextcom;
+            break;
+        }
+
+        // we have an upcoming url
+        $i = strpos($line, ')', $nexturl);
+    }
+
+    return substr($line, 0, $i);
 }
 
 //Setup VIM: ex: et ts=4 :

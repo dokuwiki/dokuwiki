@@ -1,0 +1,1 @@
+Estas são as extensões instaladas atualmente no seu DokuWiki. Você pode habilitar ou desabilitar ou desinstalar completamente elas aqui. Atualizações das extensões também são mostradas, certifique-se de ler a documentação da extensão antes de atualizá-la.

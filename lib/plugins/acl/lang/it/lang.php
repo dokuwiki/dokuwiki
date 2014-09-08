@@ -17,8 +17,8 @@
  * @author snarchio@gmail.com
  */
 $lang['admin_acl']             = 'Gestione Lista Controllo Accessi (ACL)';
-$lang['acl_group']             = 'Gruppo';
-$lang['acl_user']              = 'Utente';
+$lang['acl_group']             = 'Gruppo:';
+$lang['acl_user']              = 'Utente:';
 $lang['acl_perms']             = 'Permessi per';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Categoria';

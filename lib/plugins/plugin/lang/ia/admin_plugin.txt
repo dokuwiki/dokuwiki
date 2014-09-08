@@ -1,3 +1,0 @@
-====== Gestion de plug-ins ======
-
-In iste pagina tu pote gerer omne cosas con relation al [[doku>plugins|plug-ins]] de DokuWiki. Pro poter discargar e installar un plug-in, le directorio de plug-ins debe permitter le accesso de scriptura al servitor web.

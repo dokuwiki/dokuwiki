@@ -42,4 +42,21 @@ class indexer_indexing_test extends DokuWikiTest {
         $query = array('001', '01');
         $this->assertEquals(array('001' => array(), '01' => array('testpage')), $indexer->lookupKey('numkey', $query));
     }
+
+    public function test_numeric_twice() {
+        $indexer = idx_get_indexer();
+        $indexer->addPageWords('testpage', '| 1010 | Dallas |');
+        $query = array('1010');
+        $this->assertEquals(array('1010' => array('testpage' => 1)), $indexer->lookup($query));
+        $indexer->addPageWords('notfound', '| 1010 | Dallas |');
+        $this->assertEquals(array('1010' => array('testpage' => 1, 'notfound' => 1)), $indexer->lookup($query));
+    }
+
+    public function test_numeric_twice_meta() {
+        $indexer = idx_get_indexer();
+        $indexer->addMetaKeys('testpage', 'onezero', array('1010'));
+        $indexer->addMetaKeys('notfound', 'onezero', array('1010'));
+        $query = '1010';
+        $this->assertEquals(array('notfound', 'testpage'), $indexer->lookupKey('onezero', $query));
+    }
 }

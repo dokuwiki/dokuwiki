@@ -76,6 +76,7 @@ function load_autoload($name){
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
         'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
+        'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
@@ -94,6 +95,16 @@ function load_autoload($name){
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
         'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
         'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
+
+        'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
+        'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
+        'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',
+        'Doku_Renderer_xhtmlsummary' => DOKU_INC.'inc/parser/xhtmlsummary.php',
+        'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php',
+
+        'DokuCLI'                => DOKU_INC.'inc/cli.php',
+        'DokuCLI_Options'        => DOKU_INC.'inc/cli.php',
+        'DokuCLI_Colors'         => DOKU_INC.'inc/cli.php',
 
     );
 

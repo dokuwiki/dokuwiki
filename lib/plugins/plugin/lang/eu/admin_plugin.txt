@@ -1,3 +1,0 @@
-====== Plugin Kudeaketa ======
-
-Orri honetan Dokuwiki [[doku>plugins|plugin-ekin]] erlazionatutako edozer kudeatu dezakezu. Plugin-en bat deskargatu eta instalatu ahal izateko, plugin-en direktorioak web zerbitzariarengatik idazgarria izan behar du.

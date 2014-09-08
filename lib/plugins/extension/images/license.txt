@@ -1,0 +1,4 @@
+enabled.png - CC0, (c) Tanguy Ortolo
+disabled.png - public domain, (c) Tango Desktop Project http://commons.wikimedia.org/wiki/File:Dialog-information.svg
+plugin.png - public domain, (c) nicubunu, http://openclipart.org/detail/15093/blue-jigsaw-piece-07-by-nicubunu
+template.png - public domain, (c) mathec, http://openclipart.org/detail/166596/palette-by-mathec

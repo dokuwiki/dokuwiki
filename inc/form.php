@@ -47,15 +47,11 @@ class Doku_Form {
      * with up to four parameters is deprecated, instead the first parameter
      * should be an array with parameters.
      *
-     * @param   mixed   $params  Parameters for the HTML form element; Using the
-     *                           deprecated calling convention this is the ID
-     *                           attribute of the form
-     * @param   string  $action  (optional, deprecated) submit URL, defaults to
-     *                                                  current page
-     * @param   string  $method  (optional, deprecated) 'POST' or 'GET', default
-     *                                                  is POST
-     * @param   string  $enctype (optional, deprecated) Encoding type of the
-     *                                                  data
+     * @param mixed       $params  Parameters for the HTML form element; Using the deprecated
+     *                             calling convention this is the ID attribute of the form
+     * @param bool|string $action  (optional, deprecated) submit URL, defaults to current page
+     * @param bool|string $method  (optional, deprecated) 'POST' or 'GET', default is POST
+     * @param bool|string $enctype (optional, deprecated) Encoding type of the data
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function Doku_Form($params, $action=false, $method=false, $enctype=false) {
@@ -135,7 +131,7 @@ class Doku_Form {
      * The element can be either a pseudo-tag or string.
      * If string, it is printed without escaping special chars.   *
      *
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   string|array  $elem   Pseudo-tag or string to add to the form.
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function addElement($elem) {
@@ -147,8 +143,8 @@ class Doku_Form {
      *
      * Inserts a content element at a position.
      *
-     * @param   string  $pos    0-based index where the element will be inserted.
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   string       $pos  0-based index where the element will be inserted.
+     * @param   string|array $elem Pseudo-tag or string to add to the form.
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function insertElement($pos, $elem) {
@@ -160,8 +156,8 @@ class Doku_Form {
      *
      * Replace with NULL to remove an element.
      *
-     * @param   int     $pos    0-based index the element will be placed at.
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   int          $pos  0-based index the element will be placed at.
+     * @param   string|array $elem Pseudo-tag or string to add to the form.
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function replaceElement($pos, $elem) {
@@ -176,7 +172,7 @@ class Doku_Form {
      * Gets the position of the first of a type of element.
      *
      * @param   string  $type   Element type to look for.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByType($type) {
@@ -193,7 +189,7 @@ class Doku_Form {
      * Gets the position of the element with an ID attribute.
      *
      * @param   string  $id     ID of the element to find.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementById($id) {
@@ -211,7 +207,7 @@ class Doku_Form {
      *
      * @param   string  $name   Attribute name.
      * @param   string  $value  Attribute value.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int     position of element if found, otherwise false
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByAttribute($name, $value) {
@@ -230,7 +226,7 @@ class Doku_Form {
      * first (underflow) or last (overflow) element.
      *
      * @param   int     $pos    0-based index
-     * @return  arrayreference  pseudo-element
+     * @return  array reference  pseudo-element
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function &getElementAt($pos) {
@@ -565,10 +561,11 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
     if (is_null($label)) $label = $name;
     $options = array();
     reset($values);
-    if (is_null($selected) || $selected == '')
+    if (is_null($selected) || $selected == '') {
         $selected = array();
-    elseif (!is_array($selected))
+    } elseif (!is_array($selected)) {
         $selected = array($selected);
+    }
     // FIXME: php doesn't know the difference between a string and an integer
     if (is_string(key($values))) {
         foreach ($values as $val=>$text) {
@@ -576,11 +573,13 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
         }
     } else {
         foreach ($values as $val) {
-            if (is_array($val))
-                @list($val,$text) = $val;
-            else
+            $disabled = false;
+            if (is_array($val)) {
+                @list($val,$text,$disabled) = $val;
+            } else {
                 $text = null;
-            $options[] = array($val,$text,in_array($val,$selected));
+            }
+            $options[] = array($val,$text,in_array($val,$selected),$disabled);
         }
     }
     $elem = array('_elem'=>'listboxfield', '_options'=>$options, '_text'=>$label, '_class'=>$class,
@@ -934,11 +933,12 @@ function form_listboxfield($attrs) {
     $s .= '<select '.buildAttributes($attrs,true).'>'.DOKU_LF;
     if (!empty($attrs['_options'])) {
         foreach ($attrs['_options'] as $opt) {
-            @list($value,$text,$select) = $opt;
+            @list($value,$text,$select,$disabled) = $opt;
             $p = '';
             if(is_null($text)) $text = $value;
             $p .= ' value="'.formText($value).'"';
             if (!empty($select)) $p .= ' selected="selected"';
+            if ($disabled) $p .= ' disabled="disabled"';
             $s .= '<option'.$p.'>'.formText($text).'</option>';
         }
     } else {

@@ -72,8 +72,20 @@ function _ft_pageSearch(&$data) {
                 $pages  = end($stack);
                 $pages_matched = array();
                 foreach(array_keys($pages) as $id){
-                    $text = utf8_strtolower(rawWiki($id));
-                    if (strpos($text, $phrase) !== false) {
+                    $evdata = array(
+                        'id' => $id,
+                        'phrase' => $phrase,
+                        'text' => rawWiki($id)
+                    );
+                    $evt = new Doku_Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    if ($evt->advise_before() && $evt->result !== true) {
+                        $text = utf8_strtolower($evdata['text']);
+                        if (strpos($text, $phrase) !== false) {
+                            $evt->result = true;
+                        }
+                    }
+                    $evt->advise_after();
+                    if ($evt->result === true) {
                         $pages_matched[$id] = 0; // phrase: always 0 hit
                     }
                 }
@@ -333,7 +345,7 @@ function ft_snippet($id,$highlight){
                 $pre = min($pre,100-$post);
             } else if ($post>50) {
                 $post = min($post, 100-$pre);
-            } else {
+            } else if ($offset == 0) {
                 // both are less than 50, means the context is the whole string
                 // make it so and break out of this loop - there is no need for the
                 // complex snippet calculations
@@ -354,12 +366,12 @@ function ft_snippet($id,$highlight){
             }
 
             // set $offset for next match attempt
-            //   substract strlen to avoid splitting a potential search success,
-            //   this is an approximation as the search pattern may match strings
-            //   of varying length and it will fail if the context snippet
-            //   boundary breaks a matching string longer than the current match
-            $utf8_offset = $utf8_idx + $post;
-            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$post));
+            // continue matching after the current match
+            // if the current match is not the longest possible match starting at the current offset
+            // this prevents further matching of this snippet but for possible matches of length
+            // smaller than match length + context (at least 50 characters) this match is part of the context
+            $utf8_offset = $utf8_idx + $utf8_len;
+            $offset = $idx + strlen(utf8_substr($text,$utf8_idx,$utf8_len));
             $offset = utf8_correctIdx($text,$offset);
         }
 

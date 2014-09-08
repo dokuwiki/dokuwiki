@@ -1,3 +1,4 @@
 ====== Administrarea abonărilor ======
 
-Această pagină vă permite să vă administrați abonările pentru pagina curentă și numele de spațiu.
+Această pagină îți permite să îți administrăzi abonările pentru pagina curentă
+și pentru spațiul de nume.

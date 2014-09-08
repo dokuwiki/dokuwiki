@@ -1,134 +1,133 @@
 #!/usr/bin/php
 <?php
-if ('cli' != php_sapi_name()) die();
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
+define('NOSESSION', 1);
+require_once(DOKU_INC.'inc/init.php');
 
-#------------------------------------------------------------------------------
-ini_set('memory_limit','128M');
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-require_once DOKU_INC.'inc/init.php';
-require_once DOKU_INC.'inc/common.php';
-require_once DOKU_INC.'inc/search.php';
-require_once DOKU_INC.'inc/cliopts.php';
+/**
+ * Find wanted pages
+ */
+class WantedPagesCLI extends DokuCLI {
 
-#------------------------------------------------------------------------------
-function usage() {
-    print "Usage: wantedpages.php [wiki:namespace]
+    const DIR_CONTINUE = 1;
+    const DIR_NS       = 2;
+    const DIR_PAGE     = 3;
 
-    Outputs a list of wanted pages (pages which have
-    internal links but do not yet exist).
-
-    If the optional [wiki:namespace] is not provided,
-    defaults to the root wiki namespace
-
-    OPTIONS
-        -h, --help get help
-";
-}
-
-#------------------------------------------------------------------------------
-define ('DW_DIR_CONTINUE',1);
-define ('DW_DIR_NS',2);
-define ('DW_DIR_PAGE',3);
-
-#------------------------------------------------------------------------------
-function dw_dir_filter($entry, $basepath) {
-    if ($entry == '.' || $entry == '..' ) {
-        return DW_DIR_CONTINUE;
-    }
-    if ( is_dir($basepath . '/' . $entry) ) {
-        if ( strpos($entry, '_') === 0 ) {
-            return DW_DIR_CONTINUE;
-        }
-        return DW_DIR_NS;
-    }
-    if ( preg_match('/\.txt$/',$entry) ) {
-        return DW_DIR_PAGE;
-    }
-    return DW_DIR_CONTINUE;
-}
-
-#------------------------------------------------------------------------------
-function dw_get_pages($dir) {
-    static $trunclen = null;
-    if ( !$trunclen ) {
-        global $conf;
-        $trunclen = strlen($conf['datadir'].':');
+    /**
+     * Register options and arguments on the given $options object
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function setup(DokuCLI_Options $options) {
+        $options->setHelp(
+            'Outputs a list of wanted pages (pages which have internal links but do not yet exist).'
+        );
+        $options->registerArgument(
+            'namespace',
+            'The namespace to lookup. Defaults to root namespace',
+            false
+        );
     }
 
-    if ( !is_dir($dir) ) {
-        fwrite( STDERR, "Unable to read directory $dir\n");
-        exit(1);
-    }
+    /**
+     * Your main program
+     *
+     * Arguments and options have been parsed when this is run
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function main(DokuCLI_Options $options) {
 
-    $pages = array();
-    $dh = opendir($dir);
-    while ( false !== ( $entry = readdir($dh) ) ) {
-        $status = dw_dir_filter($entry, $dir);
-        if ( $status == DW_DIR_CONTINUE ) {
-            continue;
-        } else if ( $status == DW_DIR_NS ) {
-            $pages = array_merge($pages, dw_get_pages($dir . '/' . $entry));
+        if($options->args) {
+            $startdir = dirname(wikiFN($options->args[0].':xxx'));
         } else {
-            $page = array(
-                'id'  => pathID(substr($dir.'/'.$entry,$trunclen)),
-                'file'=> $dir.'/'.$entry,
-                );
-            $pages[] = $page;
+            $startdir = dirname(wikiFN('xxx'));
+        }
+
+        $this->info("searching $startdir");
+
+        $wanted_pages = array();
+
+        foreach($this->get_pages($startdir) as $page) {
+            $wanted_pages = array_merge($wanted_pages, $this->internal_links($page));
+        }
+        $wanted_pages = array_unique($wanted_pages);
+        sort($wanted_pages);
+
+        foreach($wanted_pages as $page) {
+            print $page."\n";
         }
     }
-    closedir($dh);
-    return $pages;
-}
 
-#------------------------------------------------------------------------------
-function dw_internal_links($page) {
-    global $conf;
-    $instructions = p_get_instructions(file_get_contents($page['file']));
-    $links = array();
-    $cns = getNS($page['id']);
-    $exists = false;
-    foreach($instructions as $ins){
-        if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink') ){
-            $mid = $ins[1][0];
-            resolve_pageid($cns,$mid,$exists);
-            if ( !$exists ) {
-                list($mid) = explode('#',$mid); //record pages without hashs
-                $links[] = $mid;
+    protected function dir_filter($entry, $basepath) {
+        if($entry == '.' || $entry == '..') {
+            return WantedPagesCLI::DIR_CONTINUE;
+        }
+        if(is_dir($basepath.'/'.$entry)) {
+            if(strpos($entry, '_') === 0) {
+                return WantedPagesCLI::DIR_CONTINUE;
+            }
+            return WantedPagesCLI::DIR_NS;
+        }
+        if(preg_match('/\.txt$/', $entry)) {
+            return WantedPagesCLI::DIR_PAGE;
+        }
+        return WantedPagesCLI::DIR_CONTINUE;
+    }
+
+    protected function get_pages($dir) {
+        static $trunclen = null;
+        if(!$trunclen) {
+            global $conf;
+            $trunclen = strlen($conf['datadir'].':');
+        }
+
+        if(!is_dir($dir)) {
+            throw new DokuCLI_Exception("Unable to read directory $dir");
+        }
+
+        $pages = array();
+        $dh    = opendir($dir);
+        while(false !== ($entry = readdir($dh))) {
+            $status = $this->dir_filter($entry, $dir);
+            if($status == WantedPagesCLI::DIR_CONTINUE) {
+                continue;
+            } else if($status == WantedPagesCLI::DIR_NS) {
+                $pages = array_merge($pages, $this->get_pages($dir.'/'.$entry));
+            } else {
+                $page    = array(
+                    'id'   => pathID(substr($dir.'/'.$entry, $trunclen)),
+                    'file' => $dir.'/'.$entry,
+                );
+                $pages[] = $page;
             }
         }
+        closedir($dh);
+        return $pages;
     }
-    return $links;
+
+    function internal_links($page) {
+        global $conf;
+        $instructions = p_get_instructions(file_get_contents($page['file']));
+        $links        = array();
+        $cns          = getNS($page['id']);
+        $exists       = false;
+        foreach($instructions as $ins) {
+            if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
+                $mid = $ins[1][0];
+                resolve_pageid($cns, $mid, $exists);
+                if(!$exists) {
+                    list($mid) = explode('#', $mid); //record pages without hashs
+                    $links[] = $mid;
+                }
+            }
+        }
+        return $links;
+    }
 }
 
-#------------------------------------------------------------------------------
-$OPTS = Doku_Cli_Opts::getOptions(__FILE__,'h',array('help'));
-
-if ( $OPTS->isError() ) {
-    fwrite( STDERR, $OPTS->getMessage() . "\n");
-    exit(1);
-}
-
-if ( $OPTS->has('h') or $OPTS->has('help') ) {
-    usage();
-    exit(0);
-}
-
-$START_DIR = $conf['datadir'];
-
-if ( $OPTS->numArgs() == 1 ) {
-    $START_DIR .= '/' . $OPTS->arg(0);
-}
-
-#------------------------------------------------------------------------------
-$WANTED_PAGES = array();
-
-foreach ( dw_get_pages($START_DIR) as $WIKI_PAGE ) {
-    $WANTED_PAGES = array_merge($WANTED_PAGES,dw_internal_links($WIKI_PAGE));
-}
-$WANTED_PAGES = array_unique($WANTED_PAGES);
-sort($WANTED_PAGES);
-
-foreach ( $WANTED_PAGES as $WANTED_PAGE ) {
-    print $WANTED_PAGE."\n";
-}
-exit(0);
+// Main
+$cli = new WantedPagesCLI();
+$cli->run();

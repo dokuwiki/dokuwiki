@@ -35,6 +35,19 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
         $this->proxy_ssl    = $conf['proxy']['ssl'];
         $this->proxy_except = $conf['proxy']['except'];
+
+        // allow enabling debugging via URL parameter (if debugging allowed)
+        if($conf['allowdebug']) {
+            if(
+                isset($_REQUEST['httpdebug']) ||
+                (
+                    isset($_SERVER['HTTP_REFERER']) &&
+                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                )
+            ) {
+                $this->debug = true;
+            }
+        }
     }
 
 
@@ -61,6 +74,9 @@ class DokuHTTPClient extends HTTPClient {
 
 }
 
+/**
+ * Class HTTPClientException
+ */
 class HTTPClientException extends Exception { }
 
 /**
@@ -249,12 +265,17 @@ class HTTPClient {
             if (empty($port)) $port = 8080;
         }else{
             $request_url = $path;
-            $server      = $server;
             if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
         }
 
         // add SSL stream prefix if needed - needs SSL support in PHP
-        if($port == 443 || $this->proxy_ssl) $server = 'ssl://'.$server;
+        if($port == 443 || $this->proxy_ssl) {
+            if(!in_array('ssl', stream_get_transports())) {
+                $this->status = -200;
+                $this->error = 'This PHP version does not support SSL - cannot connect to server';
+            }
+            $server = 'ssl://'.$server;
+        }
 
         // prepare headers
         $headers               = $this->headers;
@@ -274,7 +295,6 @@ class HTTPClient {
                 }
             }
             $headers['Content-Length'] = strlen($data);
-            $rmethod = 'POST';
         }elseif($method == 'GET'){
             $data = ''; //no data allowed on GET requests
         }
@@ -304,11 +324,18 @@ class HTTPClient {
             }
 
             // try establish a CONNECT tunnel for SSL
-            if($this->_ssltunnel($socket, $request_url)){
-                // no keep alive for tunnels
-                $this->keep_alive = false;
-                // tunnel is authed already
-                if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+            try {
+                if($this->_ssltunnel($socket, $request_url)){
+                    // no keep alive for tunnels
+                    $this->keep_alive = false;
+                    // tunnel is authed already
+                    if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+                }
+            } catch (HTTPClientException $e) {
+                $this->status = $e->getCode();
+                $this->error = $e->getMessage();
+                fclose($socket);
+                return false;
             }
 
             // keep alive?
@@ -330,7 +357,7 @@ class HTTPClient {
 
         try {
             //set non-blocking
-            stream_set_blocking($socket, false);
+            stream_set_blocking($socket, 0);
 
             // build request
             $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -363,7 +390,7 @@ class HTTPClient {
 
             // get Status
             if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m))
-                throw new HTTPClientException('Server returned bad answer');
+                throw new HTTPClientException('Server returned bad answer '.$r_headers);
 
             $this->status = $m[2];
 
@@ -445,7 +472,7 @@ class HTTPClient {
 
                     if ($chunk_size > 0) {
                         $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
-                        $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
+                        $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
             }elseif(isset($this->resp_headers['content-length']) && !isset($this->resp_headers['transfer-encoding'])){
@@ -467,7 +494,6 @@ class HTTPClient {
                 $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
             }else{
                 // read entire socket
-                $r_size = 0;
                 while (!feof($socket)) {
                     $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
                 }
@@ -496,7 +522,6 @@ class HTTPClient {
         if (!$this->keep_alive ||
                 (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')) {
             // close socket
-            $status = socket_get_status($socket);
             fclose($socket);
             unset(self::$connections[$connectionId]);
         }
@@ -526,6 +551,7 @@ class HTTPClient {
      *
      * @param resource &$socket
      * @param string   &$requesturl
+     * @throws HTTPClientException when a tunnel is needed but could not be established
      * @return bool true if a tunnel was established
      */
     function _ssltunnel(&$socket, &$requesturl){
@@ -538,7 +564,7 @@ class HTTPClient {
         $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;
         $request .= "Host: {$requestinfo['host']}".HTTP_NL;
         if($this->proxy_user) {
-                'Proxy-Authorization Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
+            $request .= 'Proxy-Authorization: Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
         }
         $request .= HTTP_NL;
 
@@ -559,7 +585,8 @@ class HTTPClient {
                 return true;
             }
         }
-        return false;
+
+        throw new HTTPClientException('Failed to establish secure proxy connection', -150);
     }
 
     /**
@@ -781,7 +808,7 @@ class HTTPClient {
     function _buildHeaders($headers){
         $string = '';
         foreach($headers as $key => $value){
-            if(empty($value)) continue;
+            if($value === '') continue;
             $string .= $key.': '.$value.HTTP_NL;
         }
         return $string;

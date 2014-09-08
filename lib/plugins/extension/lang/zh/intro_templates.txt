@@ -1,0 +1,1 @@
+DokuWiki当前所使用的模板已经安装了，你可以在[[?do=admin&page=config|配置管理器]]里选择你要的模板。

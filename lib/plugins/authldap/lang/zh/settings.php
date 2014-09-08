@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author lainme <lainme993@gmail.com>
+ * @author oott123 <ip.192.168.1.1@qq.com>
  */
 $lang['server']                = '您的 LDAP 服务器。填写主机名 (<code>localhost</code>) 或者完整的 URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'LDAP 服务器端口 (如果上面没有给出完整的 URL)';
@@ -14,6 +15,7 @@ $lang['groupfilter']           = '用于搜索组的 LDAP 筛选器。例如 <co
 $lang['version']               = '使用的协议版本。您或许需要设置为 <code>3</code>';
 $lang['starttls']              = '使用 TLS 连接？';
 $lang['referrals']             = '是否允许引用 (referrals)？';
+$lang['deref']                 = '如何间接引用别名？';
 $lang['binddn']                = '一个可选的绑定用户的 DN (如果匿名绑定不满足要求)。例如 <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = '上述用户的密码';
 $lang['userscope']             = '限制用户搜索的范围';

@@ -268,7 +268,10 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         usort($data,array($this,'_tree_sort'));
         $count = count($data);
         if($count>0) for($i=1; $i<$count; $i++){
-            if($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) unset($data[$i]);
+            if($data[$i-1]['id'] == $data[$i]['id'] && $data[$i-1]['type'] == $data[$i]['type']) {
+                unset($data[$i]);
+                $i++;  // duplicate found, next $i can't be a duplicate, so skip forward one
+            }
         }
         return $data;
     }
@@ -488,7 +491,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     function _html_list_acl($item){
         $ret = '';
         // what to display
-        if($item['label']){
+        if(!empty($item['label'])){
             $base = $item['label'];
         }else{
             $base = ':'.$item['id'];
@@ -496,8 +499,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         // highlight?
-        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id']))
+        if( ($item['type']== $this->current_item['type'] && $item['id'] == $this->current_item['id'])) {
             $cl = ' cur';
+        } else {
+            $cl = '';
+        }
 
         // namespace or page?
         if($item['type']=='d'){
@@ -773,8 +779,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         echo '<select name="acl_t" class="edit">'.NL;
-        echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
-        echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
+        echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').'</option>'.NL;
+        echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').'</option>'.NL;
         if (!empty($this->specials)) {
             echo '  <optgroup label="&#160;">'.NL;
             foreach($this->specials as $ug){

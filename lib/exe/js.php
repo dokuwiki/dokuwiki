@@ -44,6 +44,7 @@ function js_out(){
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
                 DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
                 DOKU_INC."lib/scripts/jquery/jquery-migrate$min.js",
+                DOKU_INC.'inc/lang/'.$conf['lang'].'/jquery.ui.datepicker.js',
                 DOKU_INC."lib/scripts/fileuploader.js",
                 DOKU_INC."lib/scripts/fileuploaderextended.js",
                 DOKU_INC.'lib/scripts/helpers.js',
@@ -112,6 +113,7 @@ function js_out(){
 
     // load files
     foreach($files as $file){
+        if(!file_exists($file)) continue;
         $ismin = (substr($file,-7) == '.min.js');
         $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC.'lib/scripts/') !== 0);
 
@@ -134,6 +136,9 @@ function js_out(){
     // end output buffering and get contents
     $js = ob_get_contents();
     ob_end_clean();
+
+    // strip any source maps
+    stripsourcemaps($js);
 
     // compress whitespace and comments
     if($conf['compress']){
@@ -161,7 +166,10 @@ function js_load($file){
         // is it a include_once?
         if($match[1]){
             $base = utf8_basename($ifile);
-            if($loaded[$base]) continue;
+            if($loaded[$base]){
+                $data  = str_replace($match[0], '' ,$data);
+                continue;
+            }
             $loaded[$base] = true;
         }
 
@@ -218,6 +226,12 @@ function js_pluginstrings() {
     return $pluginstrings;
 }
 
+/**
+ * Return an two-dimensional array with strings from the language file of current active template.
+ *
+ * - $lang['js'] must be an array.
+ * - Nothing is returned for template without an entry for $lang['js']
+ */
 function js_templatestrings() {
     global $conf;
     $templatestrings = array();

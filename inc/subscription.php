@@ -256,8 +256,10 @@ class Subscription {
         if(!$this->isenabled()) return false;
 
         global $ID;
+        /** @var Input $INPUT */
+        global $INPUT;
         if(!$id) $id = $ID;
-        if(!$user) $user = $_SERVER['REMOTE_USER'];
+        if(!$user) $user = $INPUT->server->str('REMOTE_USER');
 
         $subs = $this->subscribers($id, $user);
         if(!count($subs)) return false;
@@ -288,17 +290,19 @@ class Subscription {
     public function send_bulk($page) {
         if(!$this->isenabled()) return 0;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
+        /** @var Input $INPUT */
+        global $INPUT;
         $count = 0;
 
         $subscriptions = $this->subscribers($page, null, array('digest', 'list'));
 
         // remember current user info
         $olduinfo = $USERINFO;
-        $olduser = $_SERVER['REMOTE_USER'];
+        $olduser = $INPUT->server->str('REMOTE_USER');
 
         foreach($subscriptions as $target => $users) {
             if(!$this->lock($target)) continue;
@@ -315,7 +319,7 @@ class Subscription {
 
                 // Work as the user to make sure ACLs apply correctly
                 $USERINFO = $auth->getUserData($user);
-                $_SERVER['REMOTE_USER'] = $user;
+                $INPUT->server->set('REMOTE_USER',$user);
                 if($USERINFO === false) continue;
                 if(!$USERINFO['mail']) continue;
 
@@ -334,9 +338,10 @@ class Subscription {
                 foreach($changes as $rev) {
                     $n = 0;
                     while(!is_null($rev) && $rev['date'] >= $lastupdate &&
-                        ($_SERVER['REMOTE_USER'] === $rev['user'] ||
+                        ($INPUT->server->str('REMOTE_USER') === $rev['user'] ||
                             $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)) {
-                        $rev = getRevisions($rev['id'], $n++, 1);
+                        $pagelog = new PageChangeLog($rev['id']);
+                        $rev = $pagelog->getRevisions($n++, 1);
                         $rev = (count($rev) > 0) ? $rev[0] : null;
                     }
 
@@ -369,7 +374,7 @@ class Subscription {
 
         // restore current user info
         $USERINFO = $olduinfo;
-        $_SERVER['REMOTE_USER'] = $olduser;
+        $INPUT->server->set('REMOTE_USER',$olduser);
         return $count;
     }
 
@@ -515,9 +520,10 @@ class Subscription {
      * @return bool
      */
     protected function send_digest($subscriber_mail, $id, $lastupdate) {
+        $pagelog = new PageChangeLog($id);
         $n = 0;
         do {
-            $rev = getRevisions($id, $n++, 1);
+            $rev = $pagelog->getRevisions($n++, 1);
             $rev = (count($rev) > 0) ? $rev[0] : null;
         } while(!is_null($rev) && $rev > $lastupdate);
 
@@ -644,16 +650,20 @@ class Subscription {
      * @todo move the whole functionality into this class, trigger SUBSCRIPTION_NOTIFY_ADDRESSLIST instead,
      *       use an array for the addresses within it
      *
-     * @param array &$data Containing $id (the page id), $self (whether the author
-     *                     should be notified, $addresslist (current email address
-     *                     list)
+     * @param array &$data Containing the entries:
+     *    - $id (the page id),
+     *    - $self (whether the author should be notified,
+     *    - $addresslist (current email address list)
+     *    - $replacements (array of additional string substitutions, @KEY@ to be replaced by value)
      */
     public function notifyaddresses(&$data) {
         if(!$this->isenabled()) return;
 
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
         global $conf;
+        /** @var Input $INPUT */
+        global $INPUT;
 
         $id = $data['id'];
         $self = $data['self'];
@@ -667,7 +677,7 @@ class Subscription {
                 $userinfo = $auth->getUserData($user);
                 if($userinfo === false) continue;
                 if(!$userinfo['mail']) continue;
-                if(!$self && $user == $_SERVER['REMOTE_USER']) continue; //skip our own changes
+                if(!$self && $user == $INPUT->server->str('REMOTE_USER')) continue; //skip our own changes
 
                 $level = auth_aclcheck($id, $user, $userinfo['grps']);
                 if($level >= AUTH_READ) {
@@ -692,6 +702,7 @@ class Subscription {
  * @deprecated 2012-12-07
  */
 function subscription_addresslist(&$data) {
+    dbg_deprecated('class Subscription');
     $sub = new Subscription();
     $sub->notifyaddresses($data);
 }

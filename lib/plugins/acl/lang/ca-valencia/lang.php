@@ -8,8 +8,8 @@
  * @author Bernat Arlandis <berarma@llenguaitecnologia.com>
  */
 $lang['admin_acl']             = 'Gestor de les llistes de control d\'accés';
-$lang['acl_group']             = 'Grup';
-$lang['acl_user']              = 'Usuari';
+$lang['acl_group']             = 'Grup:';
+$lang['acl_user']              = 'Usuari:';
 $lang['acl_perms']             = 'Permissos per a';
 $lang['page']                  = 'Pàgina';
 $lang['namespace']             = 'Espai de noms';

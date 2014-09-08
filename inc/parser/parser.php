@@ -125,43 +125,96 @@ class Doku_Parser {
 }
 
 //-------------------------------------------------------------------
+
 /**
- * This class and all the subclasses below are
- * used to reduce the effort required to register
- * modes with the Lexer. For performance these
- * could all be eliminated later perhaps, or
- * the Parser could be serialized to a file once
- * all modes are registered
+ * Class Doku_Parser_Mode_Interface
+ *
+ * Defines a mode (syntax component) in the Parser
+ */
+interface Doku_Parser_Mode_Interface {
+    /**
+     * returns a number used to determine in which order modes are added
+     */
+    public function getSort();
+
+    /**
+     * Called before any calls to connectTo
+     */
+    function preConnect();
+
+    /**
+     * Connects the mode
+     *
+     * @param string $mode
+     */
+    function connectTo($mode);
+
+    /**
+     * Called after all calls to connectTo
+     */
+    function postConnect();
+
+    /**
+     * Check if given mode is accepted inside this mode
+     *
+     * @param string $mode
+     * @return bool
+     */
+    function accepts($mode);
+}
+
+/**
+ * This class and all the subclasses below are used to reduce the effort required to register
+ * modes with the Lexer.
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-class Doku_Parser_Mode {
-
+class Doku_Parser_Mode implements Doku_Parser_Mode_Interface {
     /**
      * @var Doku_Lexer $Lexer
      */
     var $Lexer;
-
     var $allowedModes = array();
 
-    // returns a number used to determine in which order modes are added
     function getSort() {
         trigger_error('getSort() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
-    // Called before any calls to connectTo
     function preConnect() {}
-
-    // Connects the mode
     function connectTo($mode) {}
-
-    // Called after all calls to connectTo
     function postConnect() {}
-
     function accepts($mode) {
         return in_array($mode, (array) $this->allowedModes );
     }
+}
 
+/**
+ * Basically the same as Doku_Parser_Mode but extends from DokuWiki_Plugin
+ *
+ * Adds additional functions to syntax plugins
+ */
+class Doku_Parser_Mode_Plugin extends DokuWiki_Plugin implements Doku_Parser_Mode_Interface {
+    /**
+     * @var Doku_Lexer $Lexer
+     */
+    var $Lexer;
+    var $allowedModes = array();
+
+    /**
+     * Sort for applying this mode
+     *
+     * @return int
+     */
+    function getSort() {
+        trigger_error('getSort() not implemented in '.get_class($this), E_USER_WARNING);
+    }
+
+    function preConnect() {}
+    function connectTo($mode) {}
+    function postConnect() {}
+    function accepts($mode) {
+        return in_array($mode, (array) $this->allowedModes );
+    }
 }
 
 //-------------------------------------------------------------------
