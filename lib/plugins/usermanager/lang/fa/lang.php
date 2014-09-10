@@ -11,6 +11,7 @@
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
  * @author Hamid <zarrabi@sharif.edu>
+ * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
  */
 $lang['menu']                  = 'مدیریت کاربر';
 $lang['noauth']                = '(معتبرسازی کاربر ممکن نیست)';
@@ -33,6 +34,8 @@ $lang['search']                = 'جستجو';
 $lang['search_prompt']         = 'انجام جستجو';
 $lang['clear']                 = 'بازنویسی فیلترهای جستجو';
 $lang['filter']                = 'فیلتر';
+$lang['import']                = 'ورود کاربران جدید';
+$lang['error']                 = 'متن خطا';
 $lang['summary']               = 'نمایش کاربر %1$d-%2$d از %3$d. در کل %4$d کاربر.';
 $lang['nonefound']             = 'هیچ کاربری یافت نشد. در کل %d کاربر.';
 $lang['delete_ok']             = '%d کاربر حذف شد';
