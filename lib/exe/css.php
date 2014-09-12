@@ -32,23 +32,24 @@ function css_out(){
     global $config_cascade;
     global $INPUT;
 
-    if ($INPUT->str('s') == 'feed') {
-        $mediatypes = array('feed');
-        $type = 'feed';
-    } else {
-        $mediatypes = array('screen', 'all', 'print');
-        $type = '';
-    }
-
     // decide from where to get the template
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
-
     // load styl.ini
     $styleini = css_styleini($tpl);
+    
+    // find mediatypes
+    if ($INPUT->str('s') == 'feed') {
+        $mediatypes = array('feed');
+        $type = 'feed';
+    } else {
+        $mediatypes = array_unique(array_merge(array('screen', 'all', 'print'), array_keys($styleini['stylesheets'])));
+        $type = '';
+    }
+
+    // The generated script depends on some dynamic options
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
