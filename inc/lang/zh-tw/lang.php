@@ -14,6 +14,7 @@
  * @author tsangho <ou4222@gmail.com>
  * @author Danny Lin <danny0838@gmail.com>
  * @author Stan <talktostan@gmail.com>
+ * @author June-Hao Hou <junehao@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -303,6 +304,7 @@ $lang['i_policy']              = '初步的 ACL 政策';
 $lang['i_pol0']                = '開放的 wiki (任何人可讀取、寫入、上傳)';
 $lang['i_pol1']                = '公開的 wiki (任何人可讀取，註冊使用者可寫入與上傳)';
 $lang['i_pol2']                = '封閉的 wiki (只有註冊使用者可讀取、寫入、上傳)';
+$lang['i_allowreg']            = '允許使用者自行註冊';
 $lang['i_retry']               = '重試';
 $lang['i_license']             = '請選擇您想要的內容發佈授權方式：';
 $lang['i_license_none']        = '不要顯示任何關於授權方式的訊息';
