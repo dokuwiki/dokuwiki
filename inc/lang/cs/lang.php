@@ -17,6 +17,7 @@
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Petr Klíma <qaxi@seznam.cz>
  * @author Radovan Buroň <radovan@buron.cz>
+ * @author Viktor Zavadil <vzavadil@newps.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -194,6 +195,9 @@ $lang['difflink']              = 'Odkaz na výstup diff';
 $lang['diff_type']             = 'Zobrazit rozdíly:';
 $lang['diff_inline']           = 'Vložené';
 $lang['diff_side']             = 'Přidané';
+$lang['diffprevrev']           = 'Předchozí verze';
+$lang['diffnextrev']           = 'Následující verze';
+$lang['difflastrev']           = 'Poslední revize';
 $lang['line']                  = 'Řádek';
 $lang['breadcrumb']            = 'Historie:';
 $lang['youarehere']            = 'Umístění:';

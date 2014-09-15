@@ -17,6 +17,7 @@
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Petr Klíma <qaxi@seznam.cz>
  * @author Radovan Buroň <radovan@buron.cz>
+ * @author Viktor Zavadil <vzavadil@newps.cz>
  */
 $lang['menu']                  = 'Obnova zaspamovaných stránek';
 $lang['filter']                = 'Hledat zaspamované stránky';
