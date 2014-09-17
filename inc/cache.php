@@ -11,7 +11,7 @@ if(!defined('DOKU_INC')) die('meh.');
 /**
  * Generic handling of caching
  */
-class cache {
+class doku_cache {
     public $key = '';          // primary identifier for this item
     public $ext = '';          // file ext for cache data, secondary identifier for this item
     public $cache = '';        // cache file name
@@ -174,7 +174,7 @@ class cache {
 /**
  * Parser caching
  */
-class cache_parser extends cache {
+class cache_parser extends doku_cache {
 
     public $file = '';       // source file for cache
     public $mode = '';       // input mode (represents the processing the input file will undergo)

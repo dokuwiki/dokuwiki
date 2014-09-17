@@ -45,7 +45,7 @@ function css_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
+    $cache = new doku_cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
 
     // load styl.ini
     $styleini = css_styleini($tpl);

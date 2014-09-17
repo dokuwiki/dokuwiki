@@ -32,7 +32,7 @@ function js_out(){
     global $config_cascade;
 
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
+    $cache = new doku_cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
     $cache->_event = 'JS_CACHE_USE';
 
     // load minified version for some files
