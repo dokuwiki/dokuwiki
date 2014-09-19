@@ -1,3 +1,3 @@
 ====== Stare verzije ======
 
-Slijedi spisak starih verzija za traženi dokument.
+Slijedi spisak starih verzija za traženi dokument. Da bi ste se vratili na neku od njih, odaberite ju, pritisnite Uređivanje i snimite ju.
