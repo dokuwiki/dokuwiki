@@ -95,9 +95,10 @@ function auth_setup() {
         $INPUT->set('http_credentials', true);
     }
 
-    // apply cleaning
+    // apply cleaning (auth specific user names, remove control chars)
     if (true === $auth->success) {
-        $INPUT->set('u', $auth->cleanUser($INPUT->str('u')));
+        $INPUT->set('u', $auth->cleanUser(stripctl($INPUT->str('u'))));
+        $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
     if($INPUT->str('authtok')) {
