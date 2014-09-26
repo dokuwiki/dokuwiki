@@ -21,6 +21,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     /** @var int database subrevision */
     protected $dbsub = 0;
 
+    /** @var array cache to avoid re-reading user info data */
+    protected $cacheUserInfo = array();
+
     /**
      * Constructor
      *
@@ -157,10 +160,11 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $result = $this->_queryDB($sql);
 
             if($result !== false && count($result) == 1) {
-                if($this->getConf('forwardClearPass') == 1)
+                if($this->getConf('forwardClearPass') == 1) {
                     $rc = true;
-                else
+                } else {
                     $rc = auth_verifyPassword($pass, $result[0]['pass']);
+                }
             }
             $this->_closeDB();
         }
@@ -174,16 +178,23 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param string $user user login to get data for
+     * @param bool $requireGroups  when true, group membership information should be included in the returned array;
+     *                             when false, it maybe included, but is not required by the caller
      * @return array|bool
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
+        if($this->_cacheExists($user, $requireGroups)) {
+            return $this->cacheUserInfo[$user];
+        }
+
         if($this->_openDB()) {
             $this->_lockTables("READ");
-            $info = $this->_getUserInfo($user);
+            $info = $this->_getUserInfo($user, $requireGroups);
             $this->_unlockTables();
             $this->_closeDB();
-        } else
+        } else {
             $info = false;
+        }
         return $info;
     }
 
@@ -209,12 +220,14 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
         global $conf;
 
         if($this->_openDB()) {
-            if(($info = $this->_getUserInfo($user)) !== false)
+            if(($info = $this->_getUserInfo($user)) !== false) {
                 return false; // user already exists
+            }
 
             // set defaultgroup if no groups were given
-            if($grps == null)
+            if($grps == null) {
                 $grps = array($conf['defaultgroup']);
+            }
 
             $this->_lockTables("WRITE");
             $pwd = $this->getConf('forwardClearPass') ? $pwd : auth_cryptPassword($pwd);
@@ -234,17 +247,17 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * The dataset update will be rejected if the user name should be changed
      * to an already existing one.
      *
-     * The password must be provides unencrypted. Pasword cryption is done
+     * The password must be provided unencrypted. Pasword encryption is done
      * automatically if configured.
      *
-     * If one or more groups could't be updated, an error would be set. In
+     * If one or more groups can't be updated, an error will be set. In
      * this case the dataset might already be changed and we can't rollback
-     * the changes. Transactions would be really usefull here.
+     * the changes. Transactions would be really useful here.
      *
      * modifyUser() may be called without SQL statements defined that are
      * needed to change group membership (for example if only the user profile
-     * should be modified). In this case we asure that we don't touch groups
-     * even $changes['grps'] is set by mistake.
+     * should be modified). In this case we assure that we don't touch groups
+     * even when $changes['grps'] is set by mistake.
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -256,27 +269,30 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     public function modifyUser($user, $changes) {
         $rc = false;
 
-        if(!is_array($changes) || !count($changes))
+        if(!is_array($changes) || !count($changes)) {
             return true; // nothing to change
+        }
 
         if($this->_openDB()) {
             $this->_lockTables("WRITE");
 
-            if(($uid = $this->_getUserID($user))) {
-                $rc = $this->_updateUserInfo($changes, $uid);
+            $rc = $this->_updateUserInfo($user, $changes);
 
-                if($rc && isset($changes['grps']) && $this->cando['modGroups']) {
-                    $groups = $this->_getGroups($user);
-                    $grpadd = array_diff($changes['grps'], $groups);
-                    $grpdel = array_diff($groups, $changes['grps']);
+            if($rc && isset($changes['grps']) && $this->cando['modGroups']) {
+                $groups = $this->_getGroups($user);
+                $grpadd = array_diff($changes['grps'], $groups);
+                $grpdel = array_diff($groups, $changes['grps']);
 
-                    foreach($grpadd as $group)
-                        if(($this->_addUserToGroup($user, $group, 1)) == false)
-                            $rc = false;
+                foreach($grpadd as $group) {
+                    if(($this->_addUserToGroup($user, $group, 1)) == false) {
+                        $rc = false;
+                    }
+                }
 
-                    foreach($grpdel as $group)
-                        if(($this->_delUserFromGroup($user, $group)) == false)
-                            $rc = false;
+                foreach($grpdel as $group) {
+                    if(($this->_delUserFromGroup($user, $group)) == false) {
+                        $rc = false;
+                    }
                 }
             }
 
@@ -304,8 +320,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             if(is_array($users) && count($users)) {
                 $this->_lockTables("WRITE");
                 foreach($users as $user) {
-                    if($this->_delUser($user))
+                    if($this->_delUser($user)) {
                         $count++;
+                    }
                 }
                 $this->_unlockTables();
             }
@@ -367,9 +384,11 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $result = $this->_queryDB($sql);
 
             if(!empty($result)) {
-                foreach($result as $user)
-                    if(($info = $this->_getUserInfo($user['user'])))
+                foreach($result as $user) {
+                    if(($info = $this->_getUserInfo($user['user']))) {
                         $out[$user['user']] = $info;
+                    }
+                }
             }
 
             $this->_unlockTables();
@@ -466,7 +485,10 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $sql = str_replace('%{user}', $this->_escape($user), $sql);
             $sql = str_replace('%{gid}', $this->_escape($gid), $sql);
             $sql = str_replace('%{group}', $this->_escape($group), $sql);
-            if($this->_modifyDB($sql) !== false) return true;
+            if($this->_modifyDB($sql) !== false) {
+                $this->_flushUserInfoCache($user);
+                return true;
+            }
 
             if($newgroup) { // remove previously created group on error
                 $sql = str_replace('%{gid}', $this->_escape($gid), $this->getConf('delGroup'));
@@ -501,6 +523,10 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                 $sql = str_replace('%{gid}', $this->_escape($gid), $sql);
                 $sql = str_replace('%{group}', $this->_escape($group), $sql);
                 $rc  = $this->_modifyDB($sql) == 0 ? true : false;
+
+                if ($rc) {
+                    $this->_flushUserInfoCache($user);
+                }
             }
         }
         return $rc;
@@ -526,8 +552,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $result = $this->_queryDB($sql);
 
             if($result !== false && count($result)) {
-                foreach($result as $row)
+                foreach($result as $row) {
                     $groups[] = $row['group'];
+                }
             }
             return $groups;
         }
@@ -590,6 +617,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                 }
 
                 if($gid !== false){
+                    $this->_flushUserInfoCache($user);
                     return true;
                 } else {
                     /* remove the new user and all group relations if a group can't
@@ -614,7 +642,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
-     * @param  string $user user whose id is desired
+     * @param  string $user username of the user to be deleted
      * @return bool
      */
     protected function _delUser($user) {
@@ -626,6 +654,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                 $sql = str_replace('%{uid}', $this->_escape($uid), $this->getConf('delUser'));
                 $sql = str_replace('%{user}', $this->_escape($user), $sql);
                 $this->_modifyDB($sql);
+                $this->_flushUserInfoCache($user);
                 return true;
             }
         }
@@ -633,9 +662,88 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * getUserInfo
+     * Flush cached user information
      *
-     * Gets the data for a specific user The database connection
+     * @author Christopher Smith <chris@jalakai.co.uk>
+     *
+     * @param  string  $user username of the user whose data is to be removed from the cache
+     *                       if null, empty the whole cache
+     * @return none
+     */
+    protected function _flushUserInfoCache($user=null) {
+        if (is_null($user)) {
+            $this->cacheUserInfo = array();
+        } else {
+            unset($this->cacheUserInfo[$user]);
+        }
+    }
+
+    /**
+     * Quick lookup to see if a user's information has been cached
+     *
+     * This test does not need a database connection or read lock
+     *
+     * @author Christopher Smith <chris@jalakai.co.uk>
+     *
+     * @param  string  $user  username to be looked up in the cache
+     * @param  bool    $requireGroups  true, if cached info should include group memberships
+     *
+     * @return bool    existence of required user information in the cache
+     */
+    protected function _cacheExists($user, $requireGroups=true) {
+        if (isset($this->cacheUserInfo[$user])) {
+            if (!is_array($this->cacheUserInfo[$user])) {
+                return true;          // user doesn't exist
+            }
+
+            if (!$requireGroups || isset($this->cacheUserInfo[$user]['grps'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get a user's information
+     *
+     * The database connection must already be established for this function to work.
+     *
+     * @author Christopher Smith <chris@jalakai.co.uk>
+     *
+     * @param  string  $user  username of the user whose information is being reterieved
+     * @param  bool    $requireGroups  true if group memberships should be included
+     * @param  bool    $useCache       true if ok to return cached data & to cache returned data
+     *
+     * @return mixed   false|array     false if the user doesn't exist
+     *                                 array containing user information if user does exist
+     */
+    protected function _getUserInfo($user, $requireGroups=true, $useCache=true) {
+        $info = null;
+
+        if ($useCache && isset($this->cacheUserInfo[$user])) {
+            $info = $this->cacheUserInfo[$user];
+        }
+
+        if (is_null($info)) {
+            $info = $this->_retrieveUserInfo($user);
+        }
+
+        if (($requireGroups == true) && $info && !isset($info['grps'])) {
+            $info['grps'] = $this->_getGroups($user);
+        }
+
+        if ($useCache) {
+            $this->cacheUserInfo[$user] = $info;
+        }
+
+        return $info;
+    }
+
+    /**
+     * retrieveUserInfo
+     *
+     * Gets the data for a specific user. The database connection
      * must already be established for this function to work.
      * Otherwise it will return 'false'.
      *
@@ -644,12 +752,11 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @param  string $user  user's nick to get data for
      * @return bool|array false on error, user info on success
      */
-    protected function _getUserInfo($user) {
+    protected function _retrieveUserInfo($user) {
         $sql    = str_replace('%{user}', $this->_escape($user), $this->getConf('getUserInfo'));
         $result = $this->_queryDB($sql);
         if($result !== false && count($result)) {
             $info         = $result[0];
-            $info['grps'] = $this->_getGroups($user);
             return $info;
         }
         return false;
@@ -666,20 +773,26 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * The database connection has already to be established for this
      * function to work. Otherwise it will return 'false'.
      *
-     * The password will be crypted if necessary.
+     * The password will be encrypted if necessary.
      *
+     * @param  string $user    user's nick being updated
      * @param  array $changes  array of items to change as pairs of item and value
      * @param  mixed $uid      user id of dataset to change, must be unique in DB
      * @return bool true on success or false on error
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      */
-    protected function _updateUserInfo($changes, $uid) {
+    protected function _updateUserInfo($user, $changes) {
         $sql = $this->getConf('updateUser')." ";
         $cnt = 0;
         $err = 0;
 
         if($this->dbcon) {
+            $uid = $this->_getUserID($user);
+            if ($uid === false) {
+                return false;
+            }
+
             foreach($changes as $item => $value) {
                 if($item == 'user') {
                     if(($this->_getUserID($changes['user']))) {
@@ -707,6 +820,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                     $sql .= " ".str_replace('%{uid}', $uid, $this->getConf('UpdateTarget'));
                     if(get_class($this) == 'auth_mysql') $sql .= " LIMIT 1"; //some PgSQL inheritance comp.
                     $this->_modifyDB($sql);
+                    $this->_flushUserInfoCache($user);
                 }
                 return true;
             }

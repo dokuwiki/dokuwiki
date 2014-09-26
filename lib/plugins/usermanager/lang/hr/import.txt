@@ -1,0 +1,9 @@
+===== Masovni unos korisnika =====
+
+Zahtjeva CSV datoteku popisa korisnika s minimalno četiri kolone.
+Kolone moraju sadržavati redom: korisničko ime, puno ime, adresu e-pošte i grupe.
+Polja trebaju biti odvojena zarezom (,) a znakovni nizovi s dvostrukim navodnicima (%%""%%). Obrnuta kosa crta (\) koristi se za specijalne kodove (escaping).
+Koristite "Izvoz korisnika" funkciju da bi ste dobili primjer odgovarajuće datoteke. 
+Duplikati korisničkih imena biti će ignorirani.
+
+Uspješno kreiranim korisnicima lozinka će biti generirana i poslana e-poštom.

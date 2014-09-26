@@ -6,8 +6,8 @@
  * @author Martijn Dekker <martijn@inlv.org>
  */
 $lang['admin_acl']             = 'Gestion de listas de controlo de accesso';
-$lang['acl_group']             = 'Gruppo';
-$lang['acl_user']              = 'Usator';
+$lang['acl_group']             = 'Gruppo:';
+$lang['acl_user']              = 'Usator:';
 $lang['acl_perms']             = 'Permissiones pro';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Spatio de nomines';

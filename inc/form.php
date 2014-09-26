@@ -131,7 +131,7 @@ class Doku_Form {
      * The element can be either a pseudo-tag or string.
      * If string, it is printed without escaping special chars.   *
      *
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   string|array  $elem   Pseudo-tag or string to add to the form.
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function addElement($elem) {
@@ -143,8 +143,8 @@ class Doku_Form {
      *
      * Inserts a content element at a position.
      *
-     * @param   string  $pos    0-based index where the element will be inserted.
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   string       $pos  0-based index where the element will be inserted.
+     * @param   string|array $elem Pseudo-tag or string to add to the form.
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function insertElement($pos, $elem) {
@@ -156,8 +156,8 @@ class Doku_Form {
      *
      * Replace with NULL to remove an element.
      *
-     * @param   int     $pos    0-based index the element will be placed at.
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   int          $pos  0-based index the element will be placed at.
+     * @param   string|array $elem Pseudo-tag or string to add to the form.
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function replaceElement($pos, $elem) {

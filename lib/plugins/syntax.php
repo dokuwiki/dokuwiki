@@ -20,9 +20,12 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * Syntax Type
      *
      * Needs to return one of the mode types defined in $PARSER_MODES in parser.php
+     *
+     * @return string
      */
     function getType(){
         trigger_error('getType() not implemented in '.get_class($this), E_USER_WARNING);
+        return '';
     }
 
     /**
@@ -31,6 +34,8 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * Defines the mode types for other dokuwiki markup that maybe nested within the
      * plugin's own markup. Needs to return an array of one or more of the mode types
      * defined in $PARSER_MODES in parser.php
+     *
+     * @return array
      */
     function getAllowedTypes() {
         return array();
@@ -47,6 +52,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
      * @see Doku_Handler_Block
+     * @return string
      */
     function getPType(){
         return 'normal';
@@ -99,7 +105,10 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
     }
 
     /**
-     *  There should be no need to override these functions
+     *  There should be no need to override this function
+     *
+     * @param string $mode
+     * @return bool
      */
     function accepts($mode) {
 

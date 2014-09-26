@@ -7,8 +7,8 @@
  * @author Rodrigo Rega <rodrigorega@gmail.com>
  */
 $lang['admin_acl']             = 'Xestión da Lista de Control de Acceso (ACL)';
-$lang['acl_group']             = 'Grupo';
-$lang['acl_user']              = 'Usuario';
+$lang['acl_group']             = 'Grupo:';
+$lang['acl_user']              = 'Usuario:';
 $lang['acl_perms']             = 'Permisos para';
 $lang['page']                  = 'Páxina';
 $lang['namespace']             = 'Nome de espazo';

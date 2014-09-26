@@ -1,7 +1,7 @@
 ===== Massenimport von Benutzern =====
 
 Dieser Import benötigt eine CSV-Datei mit mindestens vier Spalten. Diese Spalten müssen die folgenden Daten (in dieser Reihenfolge) enthalten: Benutzername, Name, E-Mailadresse und Gruppenzugehörigkeit.
-Die CSV-Felder müssen durch ein Komma (,) getrennt sein. Die Zeichenfolgen müssen von Anführungszeichen ("") umgeben sein. Ein Backslash (\) kann zum Maskieren benutzt werden.
+Die CSV-Felder müssen durch ein Komma (,) getrennt sein. Die Zeichenfolgen müssen von Anführungszeichen (%%""%%) umgeben sein. Ein Backslash (\) kann zum Maskieren benutzt werden.
 Für eine Beispieldatei kannst Du die "Benutzer exportieren"-Funktion oben benutzen. Doppelte Benutzername werden ignoriert.
 
 Ein Passwort wird generiert und den einzelnen, erfolgreich importierten Benutzern zugemailt.

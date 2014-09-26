@@ -18,8 +18,8 @@
  * @author Smorkster Andersson smorkster@gmail.com
  */
 $lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
-$lang['acl_group']             = 'Grupp';
-$lang['acl_user']              = 'Användare';
+$lang['acl_group']             = 'Grupp:';
+$lang['acl_user']              = 'Användare:';
 $lang['acl_perms']             = 'Behörighet för';
 $lang['page']                  = 'Sida';
 $lang['namespace']             = 'Namnrymd';

@@ -4,7 +4,7 @@ class io_rmdir_test extends DokuWikiTest {
 
     function test_nopes(){
         // set up test dir
-        $dir = io_mktmpdir();
+        $dir = realpath(io_mktmpdir());
         $top = dirname($dir);
         $this->assertTrue($dir !== false);
         $this->assertTrue(is_dir($dir));

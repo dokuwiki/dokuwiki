@@ -11,7 +11,7 @@
 새 판: @NEWPAGE@
 
 
-문서의 알림을 취소하려면, @DOKUWIKIURL@에 로그인한 뒤
+문서 알림을 취소하려면, @DOKUWIKIURL@에 로그인한 뒤
 @SUBSCRIBE@ 문서를 방문해 문서나 이름공간의 구독을 취소하세요.
 
 -- 

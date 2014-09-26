@@ -16,10 +16,11 @@ class cache {
     public $ext = '';          // file ext for cache data, secondary identifier for this item
     public $cache = '';        // cache file name
     public $depends = array(); // array containing cache dependency information,
-    //   used by _useCache to determine cache validity
+                               //   used by _useCache to determine cache validity
 
     var $_event = '';       // event to be triggered during useCache
     var $_time;
+    var $_nocache = false;  // if set to true, cache will not be used or stored
 
     /**
      * @param string $key primary identifier
@@ -34,7 +35,7 @@ class cache {
     /**
      * public method to determine whether the cache can be used
      *
-     * to assist in cetralisation of event triggering and calculation of cache statistics,
+     * to assist in centralisation of event triggering and calculation of cache statistics,
      * don't override this function override _useCache()
      *
      * @param  array   $depends   array of cache dependencies, support dependecies:
@@ -71,6 +72,7 @@ class cache {
      */
     public function _useCache() {
 
+        if ($this->_nocache) return false;                              // caching turned off
         if (!empty($this->depends['purge'])) return false;              // purge requested?
         if (!($this->_time = @filemtime($this->cache))) return false;   // cache exists?
 
@@ -115,6 +117,8 @@ class cache {
      * @return  bool           true on success, false otherwise
      */
     public function storeCache($data) {
+        if ($this->_nocache) return false;
+
         return io_savefile($this->cache, $data);
     }
 
@@ -174,6 +178,7 @@ class cache_parser extends cache {
 
     public $file = '';       // source file for cache
     public $mode = '';       // input mode (represents the processing the input file will undergo)
+    public $page = '';
 
     var $_event = 'PARSER_CACHE_USE';
 
@@ -203,10 +208,6 @@ class cache_parser extends cache {
     }
 
     protected function _addDependencies() {
-        global $conf;
-
-        $this->depends['age'] = isset($this->depends['age']) ?
-            min($this->depends['age'],$conf['cachetime']) : $conf['cachetime'];
 
         // parser cache file dependencies ...
         $files = array($this->file,                              // ... source
@@ -265,6 +266,18 @@ class cache_renderer extends cache_parser {
     }
 
     protected function _addDependencies() {
+        global $conf;
+
+        // default renderer cache file 'age' is dependent on 'cachetime' setting, two special values:
+        //    -1 : do not cache (should not be overridden)
+        //    0  : cache never expires (can be overridden) - no need to set depends['age']
+        if ($conf['cachetime'] == -1) {
+            $this->_nocache = true;
+            return;
+        } elseif ($conf['cachetime'] > 0) {
+            $this->depends['age'] = isset($this->depends['age']) ?
+                min($this->depends['age'],$conf['cachetime']) : $conf['cachetime'];
+        }
 
         // renderer cache file dependencies ...
         $files = array(
@@ -317,6 +330,8 @@ class cache_instructions extends cache_parser {
      * @return  bool                  true on success, false otherwise
      */
     public function storeCache($instructions) {
+        if ($this->_nocache) return false;
+
         return io_savefile($this->cache,serialize($instructions));
     }
 }

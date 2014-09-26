@@ -13,8 +13,8 @@ $lang['userfilter']            = '사용자 계정을 찾을 LDAP 필터. 예를
 $lang['groupfilter']           = '그룹을 찾을 LDAP 필터. 예를 들어 <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
 $lang['version']               = '사용할 프로토콜 버전. <code>3</code>으로 설정해야 할 수도 있습니다';
 $lang['starttls']              = 'TLS 연결을 사용하겠습니까?';
-$lang['referrals']             = '참고(referrals)를 허용하겠습니까? ';
-$lang['deref']                 = '어떻게 별명을 간접 참고하겠습니까?';
+$lang['referrals']             = '참조(referrals)를 허용하겠습니까? ';
+$lang['deref']                 = '어떻게 별명을 간접 참조하겠습니까?';
 $lang['binddn']                = '익명 바인드가 충분하지 않으면 선택적인 바인드 사용자의 DN. 예를 들어 <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = '위 사용자의 비밀번호';
 $lang['userscope']             = '사용자 검색에 대한 검색 범위 제한';

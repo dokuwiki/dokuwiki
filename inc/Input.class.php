@@ -144,6 +144,26 @@ class Input {
     }
 
     /**
+     * Access a request parameter and make sure it is has a valid value
+     *
+     * Please note that comparisons to the valid values are not done typesafe (request vars
+     * are always strings) however the function will return the correct type from the $valids
+     * array when an match was found.
+     *
+     * @param string $name    Parameter name
+     * @param array  $valids  Array of valid values
+     * @param mixed  $default Default to return if parameter isn't set or not valid
+     * @return null|mixed
+     */
+    public function valid($name, $valids, $default = null) {
+        if(!isset($this->access[$name])) return $default;
+        if(is_array($this->access[$name])) return $default; // we don't allow arrays
+        $found = array_search($this->access[$name], $valids);
+        if($found !== false) return $valids[$found]; // return the valid value for type safety
+        return $default;
+    }
+
+    /**
      * Access a request parameter as bool
      *
      * Note: $nonempty is here for interface consistency and makes not much sense for booleans

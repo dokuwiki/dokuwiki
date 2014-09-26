@@ -1,0 +1,1 @@
+Ezen a fülön harmadik fél által készített modulokat és sablonokat találsz a DokuWiki-hez. Ne feledd, hogy a harmadik féltől származó kódok **biztonsági kockázatot** jelenthetnek, ennek a [[doku>security#plugin_security|modulok biztonsága]] oldalon olvashatsz utána a telepítés előtt.

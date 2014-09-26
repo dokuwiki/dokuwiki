@@ -456,10 +456,6 @@ function getBaseURL($abs=null){
         $port = '';
     }
 
-    if(!$port && isset($_SERVER['SERVER_PORT'])) {
-        $port = $_SERVER['SERVER_PORT'];
-    }
-
     if(is_null($port)){
         $port = '';
     }
@@ -490,6 +486,14 @@ function getBaseURL($abs=null){
  * @returns bool true when SSL is active
  */
 function is_ssl(){
+    // check if we are behind a reverse proxy
+    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
     if (!isset($_SERVER['HTTPS']) ||
         preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
         return false;

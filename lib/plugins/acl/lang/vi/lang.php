@@ -6,8 +6,8 @@
  * @author NukeViet <admin@nukeviet.vn>
  */
 $lang['admin_acl']             = 'Quản lý danh sách quyền truy cập';
-$lang['acl_group']             = 'Nhóm';
-$lang['acl_user']              = 'Thành viên';
+$lang['acl_group']             = 'Nhóm:';
+$lang['acl_user']              = 'Thành viên:';
 $lang['acl_perms']             = 'Cấp phép cho';
 $lang['page']                  = 'Trang';
 $lang['namespace']             = 'Thư mục';

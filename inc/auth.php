@@ -638,6 +638,7 @@ function auth_isMember($memberlist, $user, array $groups) {
 
     // compare cleaned values
     foreach($members as $member) {
+        if($member == '@ALL' ) return true;
         if(!$auth->isCaseSensitive()) $member = utf8_strtolower($member);
         if($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
@@ -922,7 +923,7 @@ function auth_sendPassword($user, $password) {
     if(!$auth) return false;
 
     $user     = $auth->cleanUser($user);
-    $userinfo = $auth->getUserData($user);
+    $userinfo = $auth->getUserData($user, $requireGroups = false);
 
     if(!$userinfo['mail']) return false;
 
@@ -1080,7 +1081,7 @@ function updateprofile() {
         }
     }
 
-    if($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), $changes))) {
+    if($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
         // update cookie and session with the changed data
         if($changes['pass']) {
             list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
@@ -1184,7 +1185,7 @@ function act_resendpwd() {
         }
 
         $user     = io_readfile($tfile);
-        $userinfo = $auth->getUserData($user);
+        $userinfo = $auth->getUserData($user, $requireGroups = false);
         if(!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;
@@ -1236,7 +1237,7 @@ function act_resendpwd() {
             $user = trim($auth->cleanUser($INPUT->post->str('login')));
         }
 
-        $userinfo = $auth->getUserData($user);
+        $userinfo = $auth->getUserData($user, $requireGroups = false);
         if(!$userinfo['mail']) {
             msg($lang['resendpwdnouser'], -1);
             return false;

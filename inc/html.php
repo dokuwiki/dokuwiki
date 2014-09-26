@@ -412,8 +412,8 @@ function html_locked(){
 
     print p_locale_xhtml('locked');
     print '<ul>';
-    print '<li><div class="li"><strong>'.$lang['lockedby'].':</strong> '.editorinfo($INFO['locked']).'</div></li>';
-    print '<li><div class="li"><strong>'.$lang['lockexpire'].':</strong> '.$expire.' ('.$min.' min)</div></li>';
+    print '<li><div class="li"><strong>'.$lang['lockedby'].'</strong> '.editorinfo($INFO['locked']).'</div></li>';
+    print '<li><div class="li"><strong>'.$lang['lockexpire'].'</strong> '.$expire.' ('.$min.' min)</div></li>';
     print '</ul>';
 }
 
@@ -923,6 +923,14 @@ function html_li_default($item){
  * a member of an object.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array    $data  array with item arrays
+ * @param string   $class class of ul wrapper
+ * @param callable $func  callback to print an list item
+ * @param string   $lifunc callback to the opening li tag
+ * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
+                                 0 (we have a root object) or 1 (just the root content)
+ * @return string html of an unordered list
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
     if (count($data) === 0) {
@@ -1336,7 +1344,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
         $info = $pagelog->getRevisionInfo($rev);
         $l_revisions[$rev] = array(
             $rev,
-            dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
+            dformat($info['date']) . ' ' . editorinfo($info['user'], true) . ' ' . $info['sum'],
             $r_rev ? $rev >= $r_rev : false //disable?
         );
     }
@@ -1348,7 +1356,7 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
         $info = $pagelog->getRevisionInfo($rev);
         $r_revisions[$rev] = array(
             $rev,
-            dformat($info['date']) . ' ' . editorinfo($info['user']) . ' ' . $info['sum'],
+            dformat($info['date']) . ' ' . editorinfo($info['user'], true) . ' ' . $info['sum'],
             $rev <= $l_rev //disable?
         );
     }

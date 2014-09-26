@@ -1,2 +1,2 @@
-Edita la página y pulsa ''Guardar''. Mira [[wiki:syntax]] para sintaxis Wiki. Por favor edita la página solo si puedes **mejorarla**. Si quieres testear algunas cosas aprende a dar tus primeros pasos en el [[playground:playground]].
+Edita la página y pulsa ''Guardar''. Vaya a [[wiki:syntax]] para ver la sintaxis del Wiki. Por favor edite la página solo si puedes **mejorarla**. Si quieres probar algo relacionado a la sintaxis, aprende a dar tus primeros pasos en el [[playground:playground]].
 

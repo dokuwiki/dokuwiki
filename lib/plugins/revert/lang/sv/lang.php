@@ -19,6 +19,7 @@
  * @author Henrik <henrik@idealis.se>
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
  * @author Hans Iwan Bratt <hibratt@gmail.com>
+ * @author Mikael Bergström <krank23@gmail.com>
  */
 $lang['menu']                  = 'Hantera återställningar';
 $lang['filter']                = 'Sök efter spamsidor';

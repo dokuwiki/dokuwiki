@@ -15,6 +15,13 @@ require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
+//feed disabled?
+if(!actionOK('rss')) {
+    http_status(404);
+    echo '<error>RSS feed is disabled.</error>';
+    exit;
+}
+
 // get params
 $opt = rss_parseOptions();
 
@@ -120,6 +127,8 @@ function rss_parseOptions() {
                 'items'        => array('int', 'num', $conf['recent']),
                 // Boolean, only used in rc mode
                 'show_minor'   => array('bool', 'minor', false),
+                // String, only used in list mode
+                'sort'         => array('str', 'sort', 'natural'),
                 // String, only used in search mode
                 'search_query' => array('str', 'q', null),
                 // One of: pages, media, both
@@ -131,15 +140,14 @@ function rss_parseOptions() {
 
     $opt['items']      = max(0, (int) $opt['items']);
     $opt['show_minor'] = (bool) $opt['show_minor'];
+    $opt['sort'] = valid_input_set('sort', array('default' => 'natural', 'date'), $opt);
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
-    $type = valid_input_set(
-        'type', array(
-                     'rss', 'rss2', 'atom', 'atom1', 'rss1',
-                     'default' => $conf['rss_type']
-                ),
-        $_REQUEST
+    $type = $INPUT->valid(
+        'type',
+        array( 'rss', 'rss2', 'atom', 'atom1', 'rss1'),
+        $conf['rss_type']
     );
     switch($type) {
         case 'rss':
@@ -400,6 +408,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 if($userInfo) {
                     switch($conf['showuseras']) {
                         case 'username':
+                        case 'username_link':
                             $item->author = $userInfo['name'];
                             break;
                         default:
@@ -474,7 +483,7 @@ function rssListNamespace($opt) {
     global $conf;
 
     $ns = ':'.cleanID($opt['namespace']);
-    $ns = str_replace(':', '/', $ns);
+    $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
     $data = array();
     $search_opts = array(
@@ -482,7 +491,7 @@ function rssListNamespace($opt) {
         'pagesonly' => true,
         'listfiles' => true
     );
-    search($data, $conf['datadir'], 'search_universal', $search_opts, $ns);
+    search($data, $conf['datadir'], 'search_universal', $search_opts, $ns, $lvl = 1, $opt['sort']);
 
     return $data;
 }
