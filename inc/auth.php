@@ -229,7 +229,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
 
     if(!empty($user)) {
         //usual login
-        if($auth->checkPass($user, $pass)) {
+        if(!empty($pass) && $auth->checkPass($user, $pass)) {
             // make logininfo globally available
             $INPUT->server->set('REMOTE_USER', $user);
             $secret                 = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
