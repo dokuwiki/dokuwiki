@@ -103,7 +103,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return true;
         } else {
             // See if we can find the user
-            $info = $this->getUserData($user, true);
+            $info = $this->_getUserData($user, true);
             if(empty($info['dn'])) {
                 return false;
             } else {
@@ -146,10 +146,19 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @author  Steffen Schoch <schoch@dsb.net>
      *
      * @param   string $user
+     * @param   bool   $requireGroups (optional) - ignored, groups are always supplied by this plugin
+     * @return  array containing user data or false
+     */
+    public function getUserData($user, $requireGroups=true) {
+        return $this->_getUserData($user);
+    }
+
+    /**
+     * @param   string $user
      * @param   bool   $inbind authldap specific, true if in bind phase
      * @return  array containing user data or false
      */
-    public function getUserData($user, $inbind = false) {
+    protected function _getUserData($user, $inbind = false) {
         global $conf;
         if(!$this->_openLDAP()) return false;
 

@@ -177,9 +177,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      *
      * @author  James Van Lommel <james@nosq.com>
      * @param string $user
+     * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
      * @return array
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         global $conf;
         global $lang;
         global $ID;

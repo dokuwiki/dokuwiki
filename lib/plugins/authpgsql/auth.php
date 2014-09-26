@@ -160,7 +160,7 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
             $result = $this->_queryDB($sql);
 
             foreach($result as $user)
-                if(($info = $this->_getUserInfo($user['user'])))
+                if(($info = $this->_getCachedUserInfo($user['user'])))
                     $out[$user['user']] = $info;
 
             $this->_unlockTables();
@@ -212,7 +212,10 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
             $sql = str_replace('%{user}', addslashes($user), $sql);
             $sql = str_replace('%{gid}', addslashes($gid), $sql);
             $sql = str_replace('%{group}', addslashes($group), $sql);
-            if($this->_modifyDB($sql) !== false) return true;
+            if($this->_modifyDB($sql) !== false) {
+                $this->_flushUserInfoCache($user);
+                return true;
+            }
 
             if($newgroup) { // remove previously created group on error
                 $sql = str_replace('%{gid}', addslashes($gid), $this->conf['delGroup']);
@@ -267,6 +270,7 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
                 }
 
                 if($gid !== false){
+                    $this->_flushUserInfoCache($user);
                     return true;
                 } else {
                     /* remove the new user and all group relations if a group can't

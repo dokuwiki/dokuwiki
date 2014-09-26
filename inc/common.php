@@ -1583,7 +1583,7 @@ function shorten($keep, $short, $max, $min = 9, $char = '…') {
 }
 
 /**
- * Return the users realname or e-mail address for use
+ * Return the users real name or e-mail address for use
  * in page footer and recent changes pages
  *
  * @param string|null $username or null when currently logged-in user should be used
