@@ -255,9 +255,9 @@ function sectionID($title,&$check) {
  * @param bool       $clean  flag indicating that $id should be cleaned (see wikiFN as well)
  * @return bool exists?
  */
-function page_exists($id,$rev='',$clean=true, $data_at=false) {
+function page_exists($id,$rev='',$clean=true, $date_at=false) {
     if($rev !== '' && $date_at) {
-        $pagelog = new PageChangeLog($page);
+        $pagelog = new PageChangeLog($id);
         $pagelog_rev = $pagelog->getLastRevisionAt($rev);
         if($pagelog_rev !== false)
             $rev = $pagelog_rev;
@@ -493,14 +493,15 @@ function resolve_id($ns,$id,$clean=true){
  * @param bool   &$exists (reference) updated with existance of media
  */
 function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
+    $page   = resolve_id($ns,$page);
     if($rev !== '' &&  $date_at){
-        $medialog = new MediaChangeLog($media_id);
+        $medialog = new MediaChangeLog($page);
         $medialog_rev = $medialog->getLastRevisionAt($rev);
         if($medialog_rev !== false) {
             $rev = $medialog_rev;
         }
     }
-    $page   = resolve_id($ns,$page);
+    
     $file   = mediaFN($page,$rev);
     $exists = @file_exists($file);
 }
