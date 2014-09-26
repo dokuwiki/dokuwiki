@@ -36,7 +36,7 @@ class Input {
     }
 
     /**
-     * Applied the set filter to the given value
+     * Apply the set filter to the given value
      *
      * @param string $data
      * @return string
@@ -49,7 +49,7 @@ class Input {
     /**
      * Return a filtered copy of the input object
      *
-     * Expects a callable that accept one string parameter and returnes a filtered string.
+     * Expects a callable that accepts one string parameter and returns a filtered string
      *
      * @param Callable|string $filter
      * @return Input
