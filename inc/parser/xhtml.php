@@ -1109,9 +1109,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int    $height  height of media in pixel
      * @param string $cache   cache|recache|nocache
      * @param string $linking linkonly|detail|nolink
+     * @param bool   $return  return HTML instead of adding to $doc
      */
     function externalmedia($src, $title = null, $align = null, $width = null,
-                           $height = null, $cache = null, $linking = null) {
+                           $height = null, $cache = null, $linking = null, $return = false) {
         list($src, $hash) = explode('#', $src, 2);
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -1135,8 +1136,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($hash) $link['url'] .= '#'.$hash;
 
         //output formatted
-        if($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
-        else $this->doc .= $this->_formatLink($link);
+        if($return) {
+            if($linking == 'nolink' || $noLink) return $link['name'];
+            else return $this->_formatLink($link);
+        } else {
+            if($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
+            else $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
@@ -1638,13 +1644,22 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(!$atts['width']) $atts['width'] = 320;
         if(!$atts['height']) $atts['height'] = 240;
 
-        // prepare alternative formats
-        $extensions   = array('webm', 'ogv', 'mp4');
-        $alternatives = media_alternativefiles($src, $extensions);
-        $poster       = media_alternativefiles($src, array('jpg', 'png'), true);
-        $posterUrl    = '';
-        if(!empty($poster)) {
-            $posterUrl = ml(reset($poster), '', true, '&');
+        $posterUrl = '';
+        $files = array();
+        $isExternal = media_isexternal($src);
+
+        if ($isExternal) {
+            // take direct source for external files
+            list(/*ext*/, $srcMime) = mimetype($src);
+            $files[$srcMime] = $src;
+        } else {
+            // prepare alternative formats
+            $extensions   = array('webm', 'ogv', 'mp4');
+            $files        = media_alternativefiles($src, $extensions);
+            $poster       = media_alternativefiles($src, array('jpg', 'png'), true);
+            if(!empty($poster)) {
+                $posterUrl = ml(reset($poster), '', true, '&');
+            }
         }
 
         $out = '';
@@ -1655,13 +1670,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $fallback = '';
 
         // output source for each alternative video format
-        foreach($alternatives as $mime => $file) {
-            $url   = ml($file, '', true, '&');
+        foreach($files as $mime => $file) {
+            if ($isExternal) {
+                $url = $file;
+                $linkType = 'externalmedia';
+            } else {
+                $url = ml($file, '', true, '&');
+                $linkType = 'internalmedia';
+            }
             $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
-            $fallback .= $this->internalmedia($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
+            $fallback .= $this->$linkType($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
         }
 
         // finish
@@ -1680,10 +1701,18 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @return string
      */
     function _audio($src, $atts = null) {
+        $files = array();
+        $isExternal = media_isexternal($src);
 
-        // prepare alternative formats
-        $extensions   = array('ogg', 'mp3', 'wav');
-        $alternatives = media_alternativefiles($src, $extensions);
+        if ($isExternal) {
+            // take direct source for external files
+            list(/*ext*/, $srcMime) = mimetype($src);
+            $files[$srcMime] = $src;
+        } else {
+            // prepare alternative formats
+            $extensions   = array('ogg', 'mp3', 'wav');
+            $files        = media_alternativefiles($src, $extensions);
+        }
 
         $out = '';
         // open audio tag
@@ -1691,13 +1720,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $fallback = '';
 
         // output source for each alternative audio format
-        foreach($alternatives as $mime => $file) {
-            $url   = ml($file, '', true, '&');
+        foreach($files as $mime => $file) {
+            if ($isExternal) {
+                $url = $file;
+                $linkType = 'externalmedia';
+            } else {
+                $url = ml($file, '', true, '&');
+                $linkType = 'internalmedia';
+            }
             $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
 
             $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
             // alternative content (just a link to the file)
-            $fallback .= $this->internalmedia($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
+            $fallback .= $this->$linkType($file, $title, null, null, null, $cache = null, $linking = 'linkonly', $return = true);
         }
 
         // finish
