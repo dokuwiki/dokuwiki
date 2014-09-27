@@ -387,7 +387,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $return .= '<dd>';
                 $return .= hsc($extension->getInstalledVersion());
                 $return .= '</dd>';
-            } else {
+            }
+            if (!$extension->isBundled()) {
                 $return .= '<dt>'.$this->getLang('install_date').'</dt>';
                 $return .= '<dd>';
                 $return .= ($extension->getUpdateDate() ? hsc($extension->getUpdateDate()) : $this->getLang('unknown'));
@@ -398,13 +399,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= '<dt>'.$this->getLang('available_version').'</dt>';
             $return .= '<dd>';
             $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown'));
-            $return .= '</dd>';
-        }
-
-        if($extension->getInstallDate()) {
-            $return .= '<dt>'.$this->getLang('installed').'</dt>';
-            $return .= '<dd>';
-            $return .= hsc($extension->getInstallDate());
             $return .= '</dd>';
         }
 
