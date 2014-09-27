@@ -34,3 +34,19 @@ if(!function_exists('ctype_digit')) {
         return false;
     }
 }
+
+if(!function_exists('gzopen') && function_exists('gzopen64')) {
+    /**
+     * work around for PHP compiled against certain zlib versions #865
+     *
+     * @link http://stackoverflow.com/questions/23417519/php-zlib-gzopen-not-exists
+     *
+     * @param string    $filename
+     * @param string    $mode
+     * @param int $use_include_path
+     * @return mixed
+     */
+    function gzopen($filename, $mode, $use_include_path = 0) {
+        return gzopen64($filename, $mode, $use_include_path);
+    }
+}
