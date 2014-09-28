@@ -10,6 +10,8 @@
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
+ * @author Hamid <zarrabi@sharif.edu>
+ * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
  */
 $lang['menu']                  = 'مدیریت کاربر';
 $lang['noauth']                = '(معتبرسازی کاربر ممکن نیست)';
@@ -32,23 +34,25 @@ $lang['search']                = 'جستجو';
 $lang['search_prompt']         = 'انجام جستجو';
 $lang['clear']                 = 'بازنویسی فیلترهای جستجو';
 $lang['filter']                = 'فیلتر';
+$lang['import']                = 'ورود کاربران جدید';
+$lang['error']                 = 'متن خطا';
 $lang['summary']               = 'نمایش کاربر %1$d-%2$d از %3$d. در کل %4$d کاربر.';
 $lang['nonefound']             = 'هیچ کاربری یافت نشد. در کل %d کاربر.';
 $lang['delete_ok']             = '%d کاربر حذف شد';
 $lang['delete_fail']           = 'حذف %d کاربر با مشکل مواجه شد.';
-$lang['update_ok']             = 'کاربر با موفقیت به روز رسانی شد.';
-$lang['update_fail']           = 'به روز رسانی کاربر با مشکل مواجه شد';
-$lang['update_exists']         = 'تغییر نام کاربری ممکن نیست، نام کاربری مورد نظر (%s) قبلن وجود داشته (مابقی تغییرات اعمال شده است)';
+$lang['update_ok']             = 'کاربر با موفقیت به‌روز شد.';
+$lang['update_fail']           = 'به‌روزرسانی کاربر با مشکل مواجه شد';
+$lang['update_exists']         = 'تغییر نام کاربری ممکن نیست، نام کاربری مورد نظر (%s) از قبل وجود داشته است (مابقی تغییرات اعمال خواهد شد).';
 $lang['start']                 = 'شروع';
 $lang['prev']                  = 'قبلی';
 $lang['next']                  = 'بعدی';
 $lang['last']                  = 'آخرین';
-$lang['edit_usermissing']      = 'کاربر انتخاب شده یافت نشد، نام کاربری مورد نظر در جایی دیگر حذف شده یا تغییر کرده.';
+$lang['edit_usermissing']      = 'کاربر انتخاب شده یافت نشد، نام کاربری موردنظر در جایی دیگر حذف شده یا تغییر کرده است.';
 $lang['user_notify']           = 'آگاه کردن کاربر';
 $lang['note_notify']           = 'ایمیلی برای آگاهی، فقط در زمان تغییر گذرواژه‌ ارسال می‌شود.';
 $lang['note_group']            = 'اگر گروهی انتخاب نشود، کاربران جدید به گروه پیش‌فرض (%s) افزوده خواهند شد.';
 $lang['note_pass']             = 'اگر فیلد گذرواژه خالی گذاشته شود، گذرواژه به طور خودکار تولید و ایمیلی برای کاربر ارسال خواهد شد.';
 $lang['add_ok']                = 'کاربر با موفقیت افزوده شد';
 $lang['add_fail']              = 'افزودن کاربر با مشکل مواجه شد';
-$lang['notify_ok']             = 'ایمیل آگاهی دهنده ارسال شد';
-$lang['notify_fail']           = 'ارسال ایمیل آگاهی دهنده با مشکل مواجه شد';
+$lang['notify_ok']             = 'ایمیل آگاهی‌دهنده ارسال شد';
+$lang['notify_fail']           = 'ارسال ایمیل آگاهی‌دهنده با مشکل مواجه شد';

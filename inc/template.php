@@ -369,7 +369,11 @@ function tpl_metaheaders($alt = true) {
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
             }
-            $head['link'][] = array('rel'=> 'canonical', 'href'=> wl($ID, '', true, '&'));
+            $canonicalUrl = wl($ID, '', true, '&');
+            if ($ID == $conf['start']) {
+                $canonicalUrl = DOKU_URL;
+            }
+            $head['link'][] = array('rel'=> 'canonical', 'href'=> $canonicalUrl);
         } else {
             $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,follow');
         }
@@ -381,13 +385,6 @@ function tpl_metaheaders($alt = true) {
 
     // set metadata
     if($ACT == 'show' || $ACT == 'export_xhtml') {
-        // date of modification
-        if($REV) {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
-        } else {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
-        }
-
         // keywords (explicit or implicit)
         if(!empty($INFO['meta']['subject'])) {
             $head['meta'][] = array('name'=> 'keywords', 'content'=> join(',', $INFO['meta']['subject']));
@@ -836,7 +833,7 @@ function tpl_breadcrumbs($sep = '•') {
     $crumbs_sep = ' <span class="bcsep">'.$sep.'</span> ';
 
     //render crumbs, highlight the last one
-    print '<span class="bchead">'.$lang['breadcrumb'].':</span>';
+    print '<span class="bchead">'.$lang['breadcrumb'].'</span>';
     $last = count($crumbs);
     $i    = 0;
     foreach($crumbs as $id => $name) {
@@ -876,7 +873,7 @@ function tpl_youarehere($sep = ' » ') {
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<span class="bchead">'.$lang['youarehere'].': </span>';
+    echo '<span class="bchead">'.$lang['youarehere'].' </span>';
 
     // always print the startpage
     echo '<span class="home">';
@@ -920,7 +917,7 @@ function tpl_userinfo() {
     global $INPUT;
 
     if($INPUT->server->str('REMOTE_USER')) {
-        print $lang['loggedinas'].': '.userlink();
+        print $lang['loggedinas'].' '.userlink();
         return true;
     }
     return false;
@@ -962,7 +959,7 @@ function tpl_pageinfo($ret = false) {
         $out .= '<bdi>'.$fn.'</bdi>';
         $out .= ' · ';
         $out .= $lang['lastmod'];
-        $out .= ': ';
+        $out .= ' ';
         $out .= $date;
         if($INFO['editor']) {
             $out .= ' '.$lang['by'].' ';
@@ -973,7 +970,7 @@ function tpl_pageinfo($ret = false) {
         if($INFO['locked']) {
             $out .= ' · ';
             $out .= $lang['lockedby'];
-            $out .= ': ';
+            $out .= ' ';
             $out .= '<bdi>'.editorinfo($INFO['locked']).'</bdi>';
         }
         if($ret) {
@@ -1062,9 +1059,9 @@ function tpl_img_meta() {
     echo '<dl>';
     foreach($tags as $tag) {
         $label = $lang[$tag['langkey']];
-        if(!$label) $label = $tag['langkey'];
+        if(!$label) $label = $tag['langkey'] . ':';
 
-        echo '<dt>'.$label.':</dt><dd>';
+        echo '<dt>'.$label.'</dt><dd>';
         if ($tag['type'] == 'date') {
             echo dformat($tag['value']);
         } else {
@@ -1442,14 +1439,14 @@ function tpl_mediaFileList() {
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function tpl_mediaFileDetails($image, $rev) {
-    global $AUTH, $NS, $conf, $DEL, $lang;
+    global $conf, $DEL, $lang;
     /** @var Input $INPUT */
     global $INPUT;
 
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')) && $conf['mediarevisions']);
     if(!$image || (!file_exists(mediaFN($image)) && !$removed) || $DEL) return;
     if($rev && !file_exists(mediaFN($image, $rev))) $rev = false;
-    if(isset($NS) && getNS($image) != $NS) return;
+    $ns = getNS($image);
     $do = $INPUT->str('mediado');
 
     $opened_tab = $INPUT->str('tab_details');
@@ -1485,13 +1482,13 @@ function tpl_mediaFileDetails($image, $rev) {
     echo '<div class="panelContent">'.NL;
 
     if($opened_tab == 'view') {
-        media_tab_view($image, $NS, $AUTH, $rev);
+        media_tab_view($image, $ns, null, $rev);
 
     } elseif($opened_tab == 'edit' && !$removed) {
-        media_tab_edit($image, $NS, $AUTH);
+        media_tab_edit($image, $ns);
 
     } elseif($opened_tab == 'history' && $conf['mediarevisions']) {
-        media_tab_history($image, $NS, $AUTH);
+        media_tab_history($image, $ns);
     }
 
     echo '</div>'.NL;

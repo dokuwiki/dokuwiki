@@ -22,8 +22,8 @@
  * @author Victor Westmann <victor.westmann@gmail.com>
  */
 $lang['admin_acl']             = 'Administração da Lista de Controles de Acesso';
-$lang['acl_group']             = 'Grupo';
-$lang['acl_user']              = 'Usuário';
+$lang['acl_group']             = 'Grupo:';
+$lang['acl_user']              = 'Usuário:';
 $lang['acl_perms']             = 'Permissões para';
 $lang['page']                  = 'Página';
 $lang['namespace']             = 'Espaço de nomes';

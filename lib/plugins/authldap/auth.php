@@ -36,8 +36,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return;
         }
 
-        // auth_ldap currently just handles authentication, so no
-        // capabilities are set
+        // Add the capabilities to change the password
+        $this->cando['modPass'] = true;
     }
 
     /**
@@ -103,7 +103,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             return true;
         } else {
             // See if we can find the user
-            $info = $this->getUserData($user, true);
+            $info = $this->_getUserData($user, true);
             if(empty($info['dn'])) {
                 return false;
             } else {
@@ -146,10 +146,19 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @author  Steffen Schoch <schoch@dsb.net>
      *
      * @param   string $user
+     * @param   bool   $requireGroups (optional) - ignored, groups are always supplied by this plugin
+     * @return  array containing user data or false
+     */
+    public function getUserData($user, $requireGroups=true) {
+        return $this->_getUserData($user);
+    }
+
+    /**
+     * @param   string $user
      * @param   bool   $inbind authldap specific, true if in bind phase
      * @return  array containing user data or false
      */
-    public function getUserData($user, $inbind = false) {
+    protected function _getUserData($user, $inbind = false) {
         global $conf;
         if(!$this->_openLDAP()) return false;
 
@@ -261,6 +270,62 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $info['grps'][] = $conf['defaultgroup'];
         }
         return $info;
+    }
+
+    /**
+     * Definition of the function modifyUser in order to modify the password
+     */
+
+    function modifyUser($user,$changes){
+
+        // open the connection to the ldap
+        if(!$this->_openLDAP()){
+            msg('LDAP cannot connect: '. htmlspecialchars(ldap_error($this->con)));
+            return false;
+        }
+
+        // find the information about the user, in particular the "dn"
+        $info = $this->getUserData($user,true);
+        if(empty($info['dn'])) {
+            msg('LDAP cannot find your user dn');
+            return false;
+        }
+        $dn = $info['dn'];
+
+        // find the old password of the user
+        list($loginuser,$loginsticky,$loginpass) = auth_getCookie();
+        if ($loginuser !== null) { // the user is currently logged in
+            $secret = auth_cookiesalt(!$loginsticky, true);
+            $pass   = auth_decrypt($loginpass, $secret);
+
+            // bind with the ldap
+            if(!@ldap_bind($this->con, $dn, $pass)){
+                msg('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                return false;
+            }
+        } elseif ($this->getConf('binddn') && $this->getConf('bindpw')) {
+            // we are changing the password on behalf of the user (eg: forgotten password)
+            // bind with the superuser ldap
+            if (!@ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'))){
+                $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                return false;
+            }
+        }
+        else {
+            return false; // no otherway
+        }
+
+        // Generate the salted hashed password for LDAP
+        $phash = new PassHash();
+        $hash = $phash->hash_ssha($changes['pass']);
+
+        // change the password
+        if(!@ldap_mod_replace($this->con, $dn,array('userpassword' => $hash))){
+            msg('LDAP mod replace failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)));
+            return false;
+        }
+
+        return true;
     }
 
     /**

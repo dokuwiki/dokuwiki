@@ -25,6 +25,8 @@
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López mercelz@gmail.com
  * @author Antonio Bueno <atnbueno@gmail.com>
+ * @author Antonio Castilla <antoniocastilla@trazoide.com>
+ * @author Jonathan Hernández <me@jhalicea.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';
@@ -47,6 +49,9 @@ $lang['search']                = 'Buscar';
 $lang['search_prompt']         = 'Realizar la búsqueda';
 $lang['clear']                 = 'Limpiar los filtros de la búsqueda';
 $lang['filter']                = 'Filtrar';
+$lang['export_all']            = 'Exportar Todos los Usuarios (CSV)';
+$lang['export_filtered']       = 'Exportar Lista de Usuarios Filtrada (CSV)';
+$lang['import']                = 'Importar Nuevos Usuarios';
 $lang['line']                  = 'Línea nº';
 $lang['error']                 = 'Mensaje de error';
 $lang['summary']               = 'Mostrando los usuarios %1$d-%2$d de %3$d encontrados. Cantidad total de usuarios %4$d.';
@@ -69,3 +74,10 @@ $lang['add_ok']                = 'El usuario fue creado exitosamente';
 $lang['add_fail']              = 'Falló la creación del usuario';
 $lang['notify_ok']             = 'Se envió la notificación por correo electrónico';
 $lang['notify_fail']           = 'No se pudo enviar la notificación por correo electrónico';
+$lang['import_userlistcsv']    = 'Lista de usuarios (CSV): ';
+$lang['import_error_badmail']  = 'Dirección de correo electrónico incorrecta';
+$lang['import_error_upload']   = 'Error al importar. El archivo csv no se pudo cargar o está vacío.';
+$lang['import_error_readfail'] = 'Error al importar. No se puede leer el archivo subido.';
+$lang['import_error_create']   = 'No se puede crear el usuario';
+$lang['import_notify_fail']    = 'Mensaje de notificación no se ha podido enviar por el usuario importado,%s con el email %s.';
+$lang['import_downloadfailures'] = 'Descarga errores en archivo CSV para la corrección';

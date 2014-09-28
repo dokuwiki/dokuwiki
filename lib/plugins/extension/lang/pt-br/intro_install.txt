@@ -1,0 +1,1 @@
+Aqui você pode instalar extensões e modelos manualmente, ou subindo eles ou submetendo uma URL de baixar diretamente.

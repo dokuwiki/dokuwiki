@@ -11,8 +11,8 @@
  * @author farukerdemoncel@gmail.com
  */
 $lang['admin_acl']             = 'Erişim Kontrol Listesi (ACL) Yönetimi';
-$lang['acl_group']             = 'Grup';
-$lang['acl_user']              = 'Kullanıcı';
+$lang['acl_group']             = 'Grup:';
+$lang['acl_user']              = 'Kullanıcı:';
 $lang['acl_perms']             = 'Şunun için yetkiler:';
 $lang['page']                  = 'Sayfa';
 $lang['namespace']             = 'Namespace';

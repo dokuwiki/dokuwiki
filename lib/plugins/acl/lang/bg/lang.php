@@ -8,8 +8,8 @@
  * @author Kiril <neohidra@gmail.com>
  */
 $lang['admin_acl']             = 'Управление на списъците за достъп';
-$lang['acl_group']             = 'Група';
-$lang['acl_user']              = 'Потребител';
+$lang['acl_group']             = 'Група:';
+$lang['acl_user']              = 'Потребител:';
 $lang['acl_perms']             = 'Права за';
 $lang['page']                  = 'Страница';
 $lang['namespace']             = 'Именно пространство';

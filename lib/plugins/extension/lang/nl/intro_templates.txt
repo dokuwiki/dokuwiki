@@ -1,1 +1,1 @@
-Deze templates zijn thans in DokuWiki geïnstalleerd. U kent een template selecteren middels [[?do=admin&page=config|Configuration Manager]] .
+Deze templates zijn thans in DokuWiki geïnstalleerd. U kunt een template selecteren middels [[?do=admin&page=config|Configuration Manager]] .

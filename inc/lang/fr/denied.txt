@@ -1,4 +1,4 @@
 ====== Autorisation refusée ======
 
-Désolé, vous n'avez pas suffisement d'autorisations pour poursuivre votre demande.
+Désolé, vous n'avez pas suffisamment d'autorisations pour poursuivre votre demande.
 

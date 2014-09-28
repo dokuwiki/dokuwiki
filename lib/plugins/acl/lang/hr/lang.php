@@ -1,14 +1,15 @@
 <?php
+
 /**
- * Croatian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
  * @author Dejan Igrec dejan.igrec@gmail.com
  */
 $lang['admin_acl']             = 'Upravljanje listom kontrole pristupa';
-$lang['acl_group']             = 'Grupa';
-$lang['acl_user']              = 'Korisnik';
+$lang['acl_group']             = 'Grupa:';
+$lang['acl_user']              = 'Korisnik:';
 $lang['acl_perms']             = 'Dozvole za';
 $lang['page']                  = 'Stranica';
 $lang['namespace']             = 'Imenski prostor';

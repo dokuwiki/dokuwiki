@@ -11,8 +11,8 @@
  * @author Janar Leas <janar.leas@eesti.ee>
  */
 $lang['admin_acl']             = 'Ligipääsukontrolli nimekirja haldamine';
-$lang['acl_group']             = 'Rühm';
-$lang['acl_user']              = 'Kasutaja';
+$lang['acl_group']             = 'Rühm:';
+$lang['acl_user']              = 'Kasutaja:';
 $lang['acl_perms']             = 'Lubatud';
 $lang['page']                  = 'leht';
 $lang['namespace']             = 'Nimeruum';

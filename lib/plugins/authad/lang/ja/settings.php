@@ -5,6 +5,7 @@
  * 
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <chuno@live.jp>
+ * @author PzF_X <jp_minecraft@yahoo.co.jp>
  */
 $lang['account_suffix']        = 'アカウントの接尾語。例：<code>@my.domain.org</code>';
 $lang['base_dn']               = 'ベースDN。例：<code>DC=my,DC=domain,DC=org</code>';
@@ -12,6 +13,7 @@ $lang['domain_controllers']    = 'ドメインコントローラのカンマ区�
 $lang['admin_username']        = '全ユーザーデータへのアクセス権のある特権Active Directoryユーザー。任意ですが、メール通知の登録等の特定の動作に必要。';
 $lang['admin_password']        = '上記ユーザーのパスワード';
 $lang['sso']                   = 'Kerberos か NTLM を使ったシングルサインオン（SSO）をしますか？';
+$lang['sso_charset']           = 'サーバーは空のUTF-8かLatin-1でKerberosかNTLMユーザネームを送信します。iconv拡張モジュールが必要です。';
 $lang['real_primarygroup']     = '"Domain Users" を仮定する代わりに本当のプライマリグループを解決する（低速）';
 $lang['use_ssl']               = 'SSL接続を使用しますか？使用した場合、下のSSLを有効にしないでください。';
 $lang['use_tls']               = 'TLS接続を使用しますか？使用した場合、上のSSLを有効にしないでください。';

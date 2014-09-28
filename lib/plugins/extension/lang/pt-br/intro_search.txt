@@ -1,0 +1,1 @@
+Esta aba lhe dá acesso a extensões e modelos disponibilizados por terceiros para o DokuWiki. Favor ter cuidado pois instalar código de terceiros pode acarretar um **risco de segurança**, você poderia ler sobre [[doku>security#plugin_security|segurança de extensões]] primeiramente.
