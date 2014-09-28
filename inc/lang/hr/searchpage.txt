@@ -1,3 +1,5 @@
-====== Rezultati pretraživanja ======
+====== Pretraživanja ======
 
-@CREATEPAGEINFO@
+Možete naći rezultat vaše pretrage u nastavku. Ako ne možete naći što tražite, možete urediti ili stvoriti novu stranicu s odgovarajućim alatom.
+
+====== Rezultati ======

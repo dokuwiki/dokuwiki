@@ -40,6 +40,8 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['
 function mail_setup(){
     global $conf;
     global $USERINFO;
+    /** @var Input $INPUT */
+    global $INPUT;
 
     // auto constructed address
     $host = @parse_url(DOKU_URL,PHP_URL_HOST);
@@ -53,11 +55,8 @@ function mail_setup(){
         $replace['@MAIL@'] = $noreply;
     }
 
-    if(!empty($_SERVER['REMOTE_USER'])){
-        $replace['@USER@'] = $_SERVER['REMOTE_USER'];
-    }else{
-        $replace['@USER@'] = 'noreply';
-    }
+    // use 'noreply' if no user
+    $replace['@USER@'] = $INPUT->server->str('REMOTE_USER', 'noreply', true);
 
     if(!empty($USERINFO['name'])){
         $replace['@NAME@'] = $USERINFO['name'];

@@ -254,7 +254,7 @@ function ajax_mediadiff(){
 
     $image = '';
     if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));
-    $NS = $INPUT->post->str('ns');
+    $NS = getNS($image);
     $auth = auth_quickaclcheck("$NS:*");
     media_diff($image, $NS, $auth, true);
 }
@@ -304,26 +304,6 @@ function ajax_mediaupload(){
     }
     $json = new JSON;
     echo htmlspecialchars($json->encode($result), ENT_NOQUOTES);
-}
-
-function dir_delete($path) {
-    if (!is_string($path) || $path == "") return false;
-
-    if (is_dir($path) && !is_link($path)) {
-        if (!$dh = @opendir($path)) return false;
-
-        while ($f = readdir($dh)) {
-            if ($f == '..' || $f == '.') continue;
-            dir_delete("$path/$f");
-        }
-
-        closedir($dh);
-        return @rmdir($path);
-    } else {
-        return @unlink($path);
-    }
-
-    return false;
 }
 
 /**

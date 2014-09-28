@@ -1,6 +1,5 @@
 <?php
 if(!defined('DOKU_INC')) die('meh.');
-require_once DOKU_INC . 'inc/parser/xhtml.php';
 
 /**
  * The summary XHTML form selects either up to the first two paragraphs

@@ -19,8 +19,8 @@
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  */
 $lang['admin_acl']             = 'Управление списками контроля доступа';
-$lang['acl_group']             = 'Группа';
-$lang['acl_user']              = 'Пользователь';
+$lang['acl_group']             = 'Группа:';
+$lang['acl_user']              = 'Пользователь:';
 $lang['acl_perms']             = 'Права доступа для';
 $lang['page']                  = 'Страница';
 $lang['namespace']             = 'Пространство имён';

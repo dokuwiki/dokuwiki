@@ -73,3 +73,65 @@
     background-color: inherit;
     font-weight: bold;
 }
+
+/* diff options */
+
+.dokuwiki .diffoptions form {
+    float: left;
+}
+.dokuwiki .diffoptions p {
+    float: right;
+}
+
+/* diff nav */
+
+.dokuwiki table.diff_sidebyside td.diffnav {
+    padding-bottom: .7em;
+}
+.dokuwiki .diffnav a {
+    display: inline-block;
+    vertical-align: middle;
+}
+.dokuwiki .diffnav a span {
+    display: none;
+}
+
+.dokuwiki .diffnav a:hover,
+.dokuwiki .diffnav a:active,
+.dokuwiki .diffnav a:focus {
+    background-color: @ini_background_alt;
+    text-decoration: none;
+}
+
+.dokuwiki .diffnav a:before {
+    display: inline-block;
+    line-height: 1;
+    padding: .2em .4em;
+    border: 1px solid @ini_border;
+    border-radius: 2px;
+    color: @ini_text;
+}
+
+.dokuwiki .diffnav a.diffprevrev:before {
+    content: '\25C0'; /* left triangle */
+}
+.dokuwiki .diffnav a.diffnextrev:before,
+.dokuwiki .diffnav a.difflastrev:before {
+    content: '\25B6'; /* right triangle */
+}
+.dokuwiki .diffnav a.diffbothprevrev:before {
+    content: '\25C0\25C0';
+}
+.dokuwiki .diffnav a.diffbothnextrev:before {
+    content: '\25B6\25B6';
+}
+
+.dokuwiki .diffnav select {
+    width: 60%;
+    min-width: 9em;
+    height: 1.5em; /* height is necessary for longer options in Webkit */
+}
+
+.dokuwiki .diffnav select option[selected] {
+    font-weight: bold;
+}

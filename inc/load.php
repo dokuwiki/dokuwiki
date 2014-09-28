@@ -96,6 +96,16 @@ function load_autoload($name){
         'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
         'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
 
+        'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
+        'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
+        'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',
+        'Doku_Renderer_xhtmlsummary' => DOKU_INC.'inc/parser/xhtmlsummary.php',
+        'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php',
+
+        'DokuCLI'                => DOKU_INC.'inc/cli.php',
+        'DokuCLI_Options'        => DOKU_INC.'inc/cli.php',
+        'DokuCLI_Colors'         => DOKU_INC.'inc/cli.php',
+
     );
 
     if(isset($classes[$name])){

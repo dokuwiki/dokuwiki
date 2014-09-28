@@ -177,9 +177,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      *
      * @author  James Van Lommel <james@nosq.com>
      * @param string $user
+     * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
      * @return array
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         global $conf;
         global $lang;
         global $ID;
@@ -509,6 +510,31 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         return $opts;
+    }
+
+    /**
+     * Returns a list of configured domains
+     *
+     * The default domain has an empty string as key
+     *
+     * @return array associative array(key => domain)
+     */
+    public function _getConfiguredDomains() {
+        $domains = array();
+        if(empty($this->conf['account_suffix'])) return $domains; // not configured yet
+
+        // add default domain, using the name from account suffix
+        $domains[''] = ltrim($this->conf['account_suffix'], '@');
+
+        // find additional domains
+        foreach($this->conf as $key => $val) {
+            if(is_array($val) && isset($val['account_suffix'])) {
+                $domains[$key] = ltrim($val['account_suffix'], '@');
+            }
+        }
+        ksort($domains);
+
+        return $domains;
     }
 
     /**

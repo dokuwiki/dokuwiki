@@ -188,10 +188,17 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @return string The HTML code
      */
     function make_screenshot(helper_plugin_extension_extension $extension) {
-        if($extension->getScreenshotURL()) {
+        $screen = $extension->getScreenshotURL();
+        $thumb = $extension->getThumbnailURL();
+
+        if($screen) {
+            // use protocol independent URLs for images coming from us #595
+            $screen = str_replace('http://www.dokuwiki.org', '//www.dokuwiki.org', $screen);
+            $thumb = str_replace('http://www.dokuwiki.org', '//www.dokuwiki.org', $thumb);
+
             $title = sprintf($this->getLang('screenshot'), hsc($extension->getDisplayName()));
-            $img = '<a href="'.hsc($extension->getScreenshotURL()).'" target="_blank" class="extension_screenshot">'.
-                '<img alt="'.$title.'" width="120" height="70" src="'.hsc($extension->getThumbnailURL()).'" />'.
+            $img = '<a href="'.hsc($screen).'" target="_blank" class="extension_screenshot">'.
+                '<img alt="'.$title.'" width="120" height="70" src="'.hsc($thumb).'" />'.
                 '</a>';
         } elseif($extension->isTemplate()) {
             $img = '<img alt="" width="120" height="70" src="'.DOKU_BASE.'lib/plugins/extension/images/template.png" />';
@@ -380,7 +387,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $return .= '<dd>';
                 $return .= hsc($extension->getInstalledVersion());
                 $return .= '</dd>';
-            } else {
+            }
+            if (!$extension->isBundled()) {
                 $return .= '<dt>'.$this->getLang('install_date').'</dt>';
                 $return .= '<dd>';
                 $return .= ($extension->getUpdateDate() ? hsc($extension->getUpdateDate()) : $this->getLang('unknown'));
@@ -391,13 +399,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= '<dt>'.$this->getLang('available_version').'</dt>';
             $return .= '<dd>';
             $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown'));
-            $return .= '</dd>';
-        }
-
-        if($extension->getInstallDate()) {
-            $return .= '<dt>'.$this->getLang('installed').'</dt>';
-            $return .= '<dd>';
-            $return .= hsc($extension->getInstallDate());
             $return .= '</dd>';
         }
 

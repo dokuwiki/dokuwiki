@@ -28,8 +28,8 @@
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  */
 $lang['admin_acl']             = 'Gestion de la liste des contrôles d\'accès (ACL)';
-$lang['acl_group']             = 'Groupe';
-$lang['acl_user']              = 'Utilisateur';
+$lang['acl_group']             = 'Groupe:';
+$lang['acl_user']              = 'Utilisateur:';
 $lang['acl_perms']             = 'Autorisations pour';
 $lang['page']                  = 'Page';
 $lang['namespace']             = 'Catégorie';

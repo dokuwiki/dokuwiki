@@ -57,6 +57,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if(substr($id, 0 , 9) == 'template:'){
             $this->base = substr($id, 9);
             $this->is_template = true;
+        } else {
+            $this->is_template = false;
         }
 
         $this->localInfo = array();
@@ -290,7 +292,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function getUpdateDate() {
         if (!empty($this->managerData['updated'])) return $this->managerData['updated'];
-        return false;
+        return $this->getInstallDate();
     }
 
     /**
@@ -575,6 +577,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
         try {
             $installed = $this->installArchive("$tmp/upload.archive", true, $basename);
+            $this->updateManagerData('', $installed);
             // purge cache
             $this->purgeCache();
         }catch (Exception $e){
@@ -594,12 +597,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         try {
             $path      = $this->download($url);
             $installed = $this->installArchive($path, true);
+            $this->updateManagerData($url, $installed);
 
-            // purge caches
-            foreach($installed as $ext => $info){
-                $this->setExtension($ext);
-                $this->purgeCache();
-            }
+            // purge cache
+            $this->purgeCache();
         }catch (Exception $e){
             throw $e;
         }
@@ -613,8 +614,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      * @return array The list of installed extensions
      */
     public function installOrUpdate() {
-        $path      = $this->download($this->getDownloadURL());
+        $url       = $this->getDownloadURL();
+        $path      = $this->download($url);
         $installed = $this->installArchive($path, $this->isInstalled(), $this->getBase());
+        $this->updateManagerData($url, $installed);
 
         // refresh extension information
         if (!isset($installed[$this->getID()])) {
@@ -726,6 +729,37 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 $this->localInfo = $plugin->getInfo();
             }
         }
+    }
+
+    /**
+     * Save the given URL and current datetime in the manager.dat file of all installed extensions
+     *
+     * @param string $url       Where the extension was downloaded from. (empty for manual installs via upload)
+     * @param array  $installed Optional list of installed plugins
+     */
+    protected function updateManagerData($url = '', $installed = null) {
+        $origID = $this->getID();
+
+        if(is_null($installed)) {
+            $installed = array($origID);
+        }
+
+        foreach($installed as $ext => $info) {
+            if($this->getID() != $ext) $this->setExtension($ext);
+            if($url) {
+                $this->managerData['downloadurl'] = $url;
+            } elseif(isset($this->managerData['downloadurl'])) {
+                unset($this->managerData['downloadurl']);
+            }
+            if(isset($this->managerData['installed'])) {
+                $this->managerData['updated'] = date('r');
+            } else {
+                $this->managerData['installed'] = date('r');
+            }
+            $this->writeManagerData();
+        }
+
+        if($this->getID() != $origID) $this->setExtension($origID);
     }
 
     /**

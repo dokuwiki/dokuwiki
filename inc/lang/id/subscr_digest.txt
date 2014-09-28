@@ -1,0 +1,17 @@
+Hei! 
+
+Halaman @PAGE@ di wiki @TITLE@ telah disunting. 
+Berikut perubahannya:
+
+-------------------------------------------------------- 
+@DIFF@ 
+-------------------------------------------------------- 
+
+Revisi lama: @OLDPAGE@ 
+
+Revisi baru: @NEWPAGE@ 
+
+Untuk menonaktifkan pemberitahuan ini, masuk ke wiki di @DOKUWIKIURL@ kemudian kunjungi @SUBSCRIBE@ dan halaman batal berlangganan dan/atau namespace yang diubah.
+
+-- 
+Email ini dibuat oleh DokuWiki di @DOKUWIKIURL@

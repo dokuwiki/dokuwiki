@@ -137,6 +137,9 @@ function js_out(){
     $js = ob_get_contents();
     ob_end_clean();
 
+    // strip any source maps
+    stripsourcemaps($js);
+
     // compress whitespace and comments
     if($conf['compress']){
         $js = js_compress($js);
@@ -163,7 +166,10 @@ function js_load($file){
         // is it a include_once?
         if($match[1]){
             $base = utf8_basename($ifile);
-            if($loaded[$base]) continue;
+            if($loaded[$base]){
+                $data  = str_replace($match[0], '' ,$data);
+                continue;
+            }
             $loaded[$base] = true;
         }
 
@@ -220,6 +226,12 @@ function js_pluginstrings() {
     return $pluginstrings;
 }
 
+/**
+ * Return an two-dimensional array with strings from the language file of current active template.
+ *
+ * - $lang['js'] must be an array.
+ * - Nothing is returned for template without an entry for $lang['js']
+ */
 function js_templatestrings() {
     global $conf;
     $templatestrings = array();

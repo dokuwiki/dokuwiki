@@ -1,0 +1,9 @@
+=== Kiir-spikker: ===
+
+Käesoleval leheküljel saad oma wiki nimeruumidele ja lehekülgedele lisada ning eemaldada õigusi.
+  * Vasemas paanis on näidatud kõik saada olevad nimeruumid ja leheküljed.
+  * Ülal olev vorm laseb sul vaadelda ja muuta valitud rühma või kasutaja õigusi.
+  * Allolevas tabelis näidatakse kõiki hetkel sättestatud reegleid ligipääsudele.
+Saad seda kasutada reeglite hulgi muutmiseks või kustutamiseks
+
+Mõistmaks paremini DokuWiki ligipääsu halduse toimimist, võiks abiks olla [[doku>acl|ACL-i ametliku dokumentatsiooniga]] tutvumine.

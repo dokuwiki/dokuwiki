@@ -115,5 +115,8 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         // reload language
         $local = $conf['lang'];
         trigger_event('INIT_LANG_LOAD', $local, 'init_lang', true);
+
+        global $INPUT;
+        $INPUT = new Input();
     }
 }

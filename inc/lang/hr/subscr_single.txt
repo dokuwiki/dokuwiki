@@ -1,0 +1,22 @@
+Pozdrav !
+
+Stranica @PAGE@ na @TITLE@ wiki-u je izmijenjena.
+Ovo su promjene:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Datum  : @DATE@
+Korisnik: @USER@
+Sažetak izmjena: @SUMMARY@
+Stara verzija: @OLDPAGE@
+Nova verzija : @NEWPAGE@
+
+Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite
+@SUBSCRIBE@
+i odjavite se s promjena na stranici i/ili imeničkom prostoru.
+
+-- 
+Ova poruka je generirana od strane DokuWiki dostupnog na
+@DOKUWIKIURL@

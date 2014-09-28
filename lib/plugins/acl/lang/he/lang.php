@@ -10,8 +10,8 @@
  * @author Yaron Shahrabani <sh.yaron@gmail.com>
  */
 $lang['admin_acl']             = 'ניהול רשימת בקרת גישות';
-$lang['acl_group']             = 'קבוצה';
-$lang['acl_user']              = 'משתמש';
+$lang['acl_group']             = 'קבוצה:';
+$lang['acl_user']              = 'משתמש:';
 $lang['acl_perms']             = 'הרשאות עבור';
 $lang['page']                  = 'דף';
 $lang['namespace']             = 'מרחב שמות';

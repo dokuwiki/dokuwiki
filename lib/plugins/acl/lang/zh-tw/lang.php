@@ -15,8 +15,8 @@
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
  */
 $lang['admin_acl']             = '管理存取控制表 (ACL)';
-$lang['acl_group']             = '群組';
-$lang['acl_user']              = '使用者';
+$lang['acl_group']             = '群組:';
+$lang['acl_user']              = '使用者:';
 $lang['acl_perms']             = '設定權限於';
 $lang['page']                  = '頁面';
 $lang['namespace']             = '分類名稱';

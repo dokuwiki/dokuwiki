@@ -23,6 +23,10 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Benedikt Fey <spam@lifeisgoooood.de>
+ * @author Joerg <scooter22@gmx.de>
+ * @author Simon <st103267@stud.uni-stuttgart.de>
+ * @author Hoisl <hoisl@gmx.at>
+ * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,7 +71,9 @@ $lang['btn_register']          = 'Registrieren';
 $lang['btn_apply']             = 'Übernehmen';
 $lang['btn_media']             = 'Medien-Manager';
 $lang['btn_deleteuser']        = 'Benutzerprofil löschen';
-$lang['loggedinas']            = 'Angemeldet als';
+$lang['btn_img_backto']        = 'Zurück zu %s';
+$lang['btn_mediaManager']      = 'Im Medien-Manager anzeigen';
+$lang['loggedinas']            = 'Angemeldet als:';
 $lang['user']                  = 'Benutzername';
 $lang['pass']                  = 'Passwort';
 $lang['newpass']               = 'Neues Passwort';
@@ -112,12 +118,12 @@ $lang['license']               = 'Falls nicht anders bezeichnet, ist der Inhalt 
 $lang['licenseok']             = 'Hinweis: Durch das Bearbeiten dieser Seite geben Sie Ihr Einverständnis, dass Ihr Inhalt unter der folgenden Lizenz veröffentlicht wird:';
 $lang['searchmedia']           = 'Suche Dateinamen:';
 $lang['searchmedia_in']        = 'Suche in %s';
-$lang['txt_upload']            = 'Datei zum Hochladen auswählen';
-$lang['txt_filename']          = 'Hochladen als (optional)';
+$lang['txt_upload']            = 'Datei zum Hochladen auswählen:';
+$lang['txt_filename']          = 'Hochladen als (optional):';
 $lang['txt_overwrt']           = 'Bestehende Datei überschreiben';
 $lang['maxuploadsize']         = 'Max. %s pro Datei-Upload.';
-$lang['lockedby']              = 'Momentan gesperrt von';
-$lang['lockexpire']            = 'Sperre läuft ab am';
+$lang['lockedby']              = 'Momentan gesperrt von:';
+$lang['lockexpire']            = 'Sperre läuft ab am:';
 $lang['js']['willexpire']      = 'Die Sperre zur Bearbeitung dieser Seite läuft in einer Minute ab.\nUm Bearbeitungskonflikte zu vermeiden, sollten Sie sie durch einen Klick auf den Vorschau-Knopf verlängern.';
 $lang['js']['notsavedyet']     = 'Nicht gespeicherte Änderungen gehen verloren!';
 $lang['js']['searchmedia']     = 'Suche Dateien';
@@ -196,10 +202,13 @@ $lang['difflink']              = 'Link zu dieser Vergleichsansicht';
 $lang['diff_type']             = 'Unterschiede anzeigen:';
 $lang['diff_inline']           = 'Inline';
 $lang['diff_side']             = 'Side by Side';
+$lang['diffprevrev']           = 'Vorhergehende Überarbeitung';
+$lang['diffnextrev']           = 'Nächste  Überarbeitung';
+$lang['difflastrev']           = 'Letzte  Überarbeitung';
 $lang['line']                  = 'Zeile';
-$lang['breadcrumb']            = 'Zuletzt angesehen';
-$lang['youarehere']            = 'Sie befinden sich hier';
-$lang['lastmod']               = 'Zuletzt geändert';
+$lang['breadcrumb']            = 'Zuletzt angesehen:';
+$lang['youarehere']            = 'Sie befinden sich hier:';
+$lang['lastmod']               = 'Zuletzt geändert:';
 $lang['by']                    = 'von';
 $lang['deleted']               = 'gelöscht';
 $lang['created']               = 'angelegt';
@@ -252,20 +261,18 @@ $lang['admin_register']        = 'Neuen Benutzer anmelden';
 $lang['metaedit']              = 'Metadaten bearbeiten';
 $lang['metasaveerr']           = 'Die Metadaten konnten nicht gesichert werden';
 $lang['metasaveok']            = 'Metadaten gesichert';
-$lang['img_backto']            = 'Zurück zu';
-$lang['img_title']             = 'Titel';
-$lang['img_caption']           = 'Bildunterschrift';
-$lang['img_date']              = 'Datum';
-$lang['img_fname']             = 'Dateiname';
-$lang['img_fsize']             = 'Größe';
-$lang['img_artist']            = 'FotografIn';
-$lang['img_copyr']             = 'Copyright';
-$lang['img_format']            = 'Format';
-$lang['img_camera']            = 'Kamera';
-$lang['img_keywords']          = 'Schlagwörter';
-$lang['img_width']             = 'Breite';
-$lang['img_height']            = 'Höhe';
-$lang['img_manager']           = 'Im Medien-Manager anzeigen';
+$lang['img_title']             = 'Titel:';
+$lang['img_caption']           = 'Bildunterschrift:';
+$lang['img_date']              = 'Datum:';
+$lang['img_fname']             = 'Dateiname:';
+$lang['img_fsize']             = 'Größe:';
+$lang['img_artist']            = 'FotografIn:';
+$lang['img_copyr']             = 'Copyright:';
+$lang['img_format']            = 'Format:';
+$lang['img_camera']            = 'Kamera:';
+$lang['img_keywords']          = 'Schlagwörter:';
+$lang['img_width']             = 'Breite:';
+$lang['img_height']            = 'Höhe:';
 $lang['subscr_subscribe_success'] = '%s hat nun Änderungen der Seite %s abonniert';
 $lang['subscr_subscribe_error'] = '%s kann die Änderungen der Seite %s nicht abonnieren';
 $lang['subscr_subscribe_noaddress'] = 'Weil Ihre E-Mail-Adresse fehlt, können Sie das Thema nicht abonnieren';
@@ -293,6 +300,7 @@ $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführ
 $lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
 $lang['i_phpver']              = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP-Installation.';
+$lang['i_mbfuncoverload']      = 'Um DokuWiki zu starten muss mbstring.func_overload in php.ini ausgeschaltet sein.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Sie sollten die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
@@ -345,3 +353,4 @@ $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
+$lang['wikimarkup']            = 'Wiki Markup';

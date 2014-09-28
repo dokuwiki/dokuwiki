@@ -12,8 +12,8 @@
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['admin_acl']             = 'Administrado de Alirkontrola Listo (ACL)';
-$lang['acl_group']             = 'Grupo';
-$lang['acl_user']              = 'Uzanto';
+$lang['acl_group']             = 'Grupo:';
+$lang['acl_user']              = 'Uzanto:';
 $lang['acl_perms']             = 'Rajtoj por';
 $lang['page']                  = 'Paĝo';
 $lang['namespace']             = 'Nomspaco';

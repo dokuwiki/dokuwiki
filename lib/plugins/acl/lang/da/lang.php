@@ -16,8 +16,8 @@
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  */
 $lang['admin_acl']             = 'Rettighedsadministration';
-$lang['acl_group']             = 'Gruppe';
-$lang['acl_user']              = 'Bruger';
+$lang['acl_group']             = 'Gruppe:';
+$lang['acl_user']              = 'Bruger:';
 $lang['acl_perms']             = 'Rettigheder for';
 $lang['page']                  = 'Dokument';
 $lang['namespace']             = 'Navnerum';

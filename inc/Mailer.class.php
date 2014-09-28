@@ -39,6 +39,8 @@ class Mailer {
      */
     public function __construct() {
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
         if(strpos($server,'.') === false) $server = $server.'.localhost';
@@ -53,7 +55,7 @@ class Mailer {
 
         // add some default headers for mailfiltering FS#2247
         $this->setHeader('X-Mailer', 'DokuWiki');
-        $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
+        $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
         $this->setHeader('X-DokuWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
@@ -181,6 +183,9 @@ class Mailer {
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
         global $INFO;
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
+
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
 
@@ -218,24 +223,24 @@ class Mailer {
         $cip  = gethostsbyaddrs($ip);
         $trep = array(
             'DATE'        => dformat(),
-            'BROWSER'     => $_SERVER['HTTP_USER_AGENT'],
+            'BROWSER'     => $INPUT->server->str('HTTP_USER_AGENT'),
             'IPADDRESS'   => $ip,
             'HOSTNAME'    => $cip,
             'TITLE'       => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
-            'USER'        => $_SERVER['REMOTE_USER'],
+            'USER'        => $INPUT->server->str('REMOTE_USER'),
             'NAME'        => $INFO['userinfo']['name'],
             'MAIL'        => $INFO['userinfo']['mail'],
         );
         $trep = array_merge($trep, (array)$textrep);
         $hrep = array(
             'DATE'        => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'     => hsc($_SERVER['HTTP_USER_AGENT']),
+            'BROWSER'     => hsc($INPUT->server->str('HTTP_USER_AGENT')),
             'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
             'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
             'TITLE'       => hsc($conf['title']),
             'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'        => hsc($_SERVER['REMOTE_USER']),
+            'USER'        => hsc($INPUT->server->str('REMOTE_USER')),
             'NAME'        => hsc($INFO['userinfo']['name']),
             'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
                 hsc($INFO['userinfo']['mail']).'</a>',

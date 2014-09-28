@@ -26,6 +26,8 @@ class TarLib {
     public $_result = true;
 
     function __construct($file, $comptype = TarLib::COMPRESS_AUTO, $complevel = 9) {
+        dbg_deprecated('class Tar');
+
         if(!$file) $this->error('__construct', '$file');
 
         $this->file = $file;

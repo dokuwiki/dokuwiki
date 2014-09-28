@@ -72,8 +72,20 @@ function _ft_pageSearch(&$data) {
                 $pages  = end($stack);
                 $pages_matched = array();
                 foreach(array_keys($pages) as $id){
-                    $text = utf8_strtolower(rawWiki($id));
-                    if (strpos($text, $phrase) !== false) {
+                    $evdata = array(
+                        'id' => $id,
+                        'phrase' => $phrase,
+                        'text' => rawWiki($id)
+                    );
+                    $evt = new Doku_Event('FULLTEXT_PHRASE_MATCH',$evdata);
+                    if ($evt->advise_before() && $evt->result !== true) {
+                        $text = utf8_strtolower($evdata['text']);
+                        if (strpos($text, $phrase) !== false) {
+                            $evt->result = true;
+                        }
+                    }
+                    $evt->advise_after();
+                    if ($evt->result === true) {
                         $pages_matched[$id] = 0; // phrase: always 0 hit
                     }
                 }
@@ -203,7 +215,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 function _ft_pageLookup(&$data){
     // split out original parameters
     $id = $data['id'];
-    if (preg_match('/(?:^| )@(\w+)/', $id, $matches)) {
+    if (preg_match('/(?:^| )(?:@|ns:)([\w:]+)/', $id, $matches)) {
         $ns = cleanID($matches[1]) . ':';
         $id = str_replace($matches[0], '', $id);
     }

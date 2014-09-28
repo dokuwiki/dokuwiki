@@ -1,0 +1,14 @@
+Novi korisnik je registriran. Ovdje su detalji:
+
+Korisničko ime : @NEWUSER@
+Puno ime       : @NEWNAME@
+e-pošta        : @NEWEMAIL@ 
+
+Datum      : @DATE@ 
+Preglednik : @BROWSER@
+IP-Adresa  : @IPADDRESS@ 
+Računalo   : @HOSTNAME@
+
+-- 
+Ova poruka je generirana od strane DokuWiki dostupnog na
+@DOKUWIKIURL@
