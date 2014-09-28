@@ -636,6 +636,7 @@ function p_get_renderer($mode) {
     }
 
     // not bundled, see if its an enabled renderer plugin & when $mode is 'xhtml', the renderer can supply that format.
+    /** @var Doku_Renderer $Renderer */
     $Renderer = $plugin_controller->load('renderer',$rname);
     if ($Renderer && is_a($Renderer, 'Doku_Renderer')  && ($mode != 'xhtml' || $mode == $Renderer->getFormat())) {
         return $Renderer;
