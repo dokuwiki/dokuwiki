@@ -266,18 +266,26 @@ function init_paths(){
  */
 function init_lang($langCode) {
     //prepare language array
-    global $lang;
+    global $lang, $config_cascade;
     $lang = array();
 
     //load the language files
     require(DOKU_INC.'inc/lang/en/lang.php');
+    foreach ($config_cascade['lang']['core'] as $config_file) {
+        if (@file_exists($config_file . 'en/lang.php')) {
+            include($config_file . 'en/lang.php');
+        }
+    }
+
     if ($langCode && $langCode != 'en') {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
             require(DOKU_INC."inc/lang/$langCode/lang.php");
         }
-    }
-    if (file_exists(DOKU_CONF."lang/$langCode/lang.php")) {
-        require(DOKU_CONF."lang/$langCode/lang.php");
+        foreach ($config_cascade['lang']['core'] as $config_file) {
+            if (@file_exists($config_file . "$langCode/lang.php")) {
+                include($config_file . "$langCode/lang.php");
+            }
+        }
     }
 }
 

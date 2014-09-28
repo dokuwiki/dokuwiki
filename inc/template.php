@@ -1277,15 +1277,28 @@ function tpl_getLang($id) {
     static $lang = array();
 
     if(count($lang) === 0) {
-        $path = tpl_incdir().'lang/';
+        global $conf, $config_cascade; // definitely don't invoke "global $lang"
+
+        $path = tpl_incdir() . 'lang/';
 
         $lang = array();
 
-        global $conf; // definitely don't invoke "global $lang"
         // don't include once
-        @include($path.'en/lang.php');
-        if($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-        @include(DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/lang.php');
+        @include($path . 'en/lang.php');
+        foreach($config_cascade['lang']['template'] as $config_file) {
+            if(@file_exists($config_file . $conf['template'] . '/en/lang.php')) {
+                include($config_file . $conf['template'] . '/en/lang.php');
+            }
+        }
+
+        if($conf['lang'] != 'en') {
+            @include($path . $conf['lang'] . '/lang.php');
+            foreach($config_cascade['lang']['template'] as $config_file) {
+                if(@file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
+                    include($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php');
+                }
+            }
+        }
     }
     return $lang[$id];
 }

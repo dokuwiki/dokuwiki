@@ -114,17 +114,29 @@ class DokuWiki_Plugin {
      *  this function is automatically called by getLang()
      */
     function setupLocale() {
-        if ($this->localised) return;
+        if($this->localised) return;
 
-        global $conf;            // definitely don't invoke "global $lang"
-        $path = DOKU_PLUGIN.$this->getPluginName().'/lang/';
+        global $conf, $config_cascade; // definitely don't invoke "global $lang"
+        $path = DOKU_PLUGIN . $this->getPluginName() . '/lang/';
 
         $lang = array();
 
         // don't include once, in case several plugin components require the same language file
-        @include($path.'en/lang.php');
-        if ($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-        @include(DOKU_CONF.'plugin_lang/'.$this->getPluginName().'/'.$conf['lang'].'/lang.php');
+        @include($path . 'en/lang.php');
+        foreach($config_cascade['lang']['plugin'] as $config_file) {
+            if(@file_exists($config_file . $this->getPluginName() . '/en/lang.php')) {
+                include($config_file . $this->getPluginName() . '/en/lang.php');
+            }
+        }
+
+        if($conf['lang'] != 'en') {
+            @include($path . $conf['lang'] . '/lang.php');
+            foreach($config_cascade['lang']['plugin'] as $config_file) {
+                if(@file_exists($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php')) {
+                    include($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php');
+                }
+            }
+        }
 
         $this->lang = $lang;
         $this->localised = true;

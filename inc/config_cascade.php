@@ -73,8 +73,8 @@ $config_cascade = array_merge(
         ),
         'lang' => array(
             'core'      => array(DOKU_CONF . 'lang/'),
-            'template'  => array(DOKU_CONF . 'plugin_lang/'),
-            'plugin'    => array(DOKU_CONF . 'template_lang/')
+            'plugin'    => array(DOKU_CONF . 'plugin_lang/'),
+            'template'  => array(DOKU_CONF . 'template_lang/')
         )
     ),
     $config_cascade
