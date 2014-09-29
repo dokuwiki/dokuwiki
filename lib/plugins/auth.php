@@ -124,8 +124,11 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
             'modify' => 'modifyUser',
             'delete' => 'deleteUsers'
         );
-        if(empty($validTypes[$type]))
+        if(empty($validTypes[$type])) {
             return false;
+        }
+
+        $result = false;
         $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
         $evt       = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
         if($evt->advise_before(true)) {

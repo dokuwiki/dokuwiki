@@ -231,6 +231,7 @@ function media_delete($id,$auth){
     $file = mediaFN($id);
 
     // trigger an event - MEDIA_DELETE_FILE
+    $data = array();
     $data['id']   = $id;
     $data['name'] = utf8_basename($file);
     $data['path'] = $file;
@@ -439,6 +440,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     }
 
     // prepare event data
+    $data = array();
     $data[0] = $file['name'];
     $data[1] = $fn;
     $data[2] = $id;
@@ -910,11 +912,11 @@ function media_tab_history($image, $ns, $auth=null) {
  *
  * @param string        $image media id
  * @param int           $auth permission level
- * @param int|bool      $rev
+ * @param int|string    $rev revision timestamp or empty string
  * @param JpegMeta|bool $meta
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth, $rev=false, $meta=false) {
+function media_preview($image, $auth, $rev='', $meta=false) {
 
     $size = media_image_preview_size($image, $rev, $meta);
 
@@ -999,11 +1001,11 @@ function media_preview_buttons($image, $auth, $rev='') {
  * Returns image width and height for mediamanager preview panel
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string   $image
- * @param int|string $rev
- * @param JpegMeta $meta
- * @param int      $size
- * @return array
+ * @param string         $image
+ * @param int|string     $rev
+ * @param JpegMeta|bool $meta
+ * @param int            $size
+ * @return array|bool
  */
 function media_image_preview_size($image, $rev, $meta, $size = 500) {
     if (!preg_match("/\.(jpe?g|gif|png)$/", $image) || !file_exists(mediaFN($image, $rev))) return false;
@@ -1158,6 +1160,7 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
     }
 
     // prepare event data
+    $data = array();
     $data[0] = $image;
     $data[1] = $l_rev;
     $data[2] = $r_rev;
@@ -1397,13 +1400,12 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
     global $lang;
 
     $ns = cleanID($ns);
-
+    $evdata = array(
+        'ns'    => $ns,
+        'data'  => array(),
+        'query' => $query
+    );
     if ($query) {
-        $evdata = array(
-                'ns'    => $ns,
-                'data'  => array(),
-                'query' => $query
-                );
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
@@ -2169,6 +2171,7 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     }
 
     // create an image of the given filetype
+    $image = false;
     if ($ext == 'jpg' || $ext == 'jpeg'){
         if(!function_exists("imagecreatefromjpeg")) return false;
         $image = @imagecreatefromjpeg($from);
@@ -2182,6 +2185,7 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     }
     if(!$image) return false;
 
+    $newimg = false;
     if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif'){
         $newimg = @imagecreatetruecolor ($to_w, $to_h);
     }
@@ -2266,14 +2270,14 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
 function media_alternativefiles($src, $exts){
 
     $files = array();
-    list($srcExt, $srcMime) = mimetype($src);
+    list($srcExt, /* $srcMime */) = mimetype($src);
     $filebase = substr($src, 0, -1 * (strlen($srcExt)+1));
 
     foreach($exts as $ext) {
         $fileid = $filebase.'.'.$ext;
         $file = mediaFN($fileid);
         if(file_exists($file)) {
-            list($fileExt, $fileMime) = mimetype($file);
+            list(/* $fileExt */, $fileMime) = mimetype($file);
             $files[$fileMime] = $fileid;
         }
     }

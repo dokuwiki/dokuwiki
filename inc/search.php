@@ -258,6 +258,7 @@ function search_allpages(&$data,$base,$file,$type,$lvl,$opts){
     //only search txt files
     if(substr($file,-4) != '.txt') return true;
 
+    $item = array();
     $item['id']   = pathID($file);
     if(!$opts['skipacl'] && auth_quickaclcheck($item['id']) < AUTH_READ){
         return false;

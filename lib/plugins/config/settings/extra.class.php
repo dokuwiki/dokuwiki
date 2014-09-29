@@ -122,7 +122,7 @@ if (!class_exists('setting_disableactions')) {
 
             // make some language adjustments (there must be a better way)
             // transfer some DokuWiki language strings to the plugin
-            if (!$plugin->localised) $this->setupLocale();
+            if (!$plugin->localised) $plugin->setupLocale();
             $plugin->lang[$this->_key.'_revisions'] = $lang['btn_revs'];
 
             foreach ($this->_choices as $choice)
@@ -159,7 +159,7 @@ if (!class_exists('setting_license')) {
 
             foreach($license as $key => $data){
                 $this->_choices[] = $key;
-                $this->lang[$this->_key.'_o_'.$key] = $data['name'];
+                $this->lang[$this->_key.'_o_'.$key] = $data['name']; // stored in setting
             }
 
             parent::initialize($default,$local,$protected);
@@ -171,6 +171,7 @@ if (!class_exists('setting_license')) {
 if (!class_exists('setting_renderer')) {
     class setting_renderer extends setting_multichoice {
         var $_prompts = array();
+        var $_format = null;
 
         function initialize($default,$local,$protected) {
             $format = $this->_format;
@@ -192,7 +193,7 @@ if (!class_exists('setting_renderer')) {
 
             // make some language adjustments (there must be a better way)
             // transfer some plugin names to the config plugin
-            if (!$plugin->localised) $this->setupLocale();
+            if (!$plugin->localised) $plugin->setupLocale();
 
             foreach ($this->_choices as $choice) {
                 if (!isset($plugin->lang[$this->_key.'_o_'.$choice])) {

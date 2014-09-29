@@ -42,6 +42,7 @@
 class JpegMeta {
     var $_fileName;
     var $_fp = null;
+    var $_fpout = null;
     var $_type = 'unknown';
 
     var $_markers;
@@ -527,12 +528,12 @@ class JpegMeta {
     /**
      * Get the image's title, tries various fields
      *
-     * @param int $max  maximum number chars (keeps words)
+     * @param int $max maximum number chars (keeps words)
+     * @return bool|mixed|string
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function getTitle($max=80){
-        $cap = '';
-
         // try various fields
         $cap = $this->getField(array('Iptc.Headline',
                     'Iptc.Caption',
@@ -560,6 +561,7 @@ class JpegMeta {
         $this->_parseAll();
         if ($this->_markers == null) {
             if (@isset($this->_info['file']['UnixTime'])) {
+                $dates = array();
                 $dates['FileModified'] = $this->_info['file']['UnixTime'];
                 $dates['Time'] = $this->_info['file']['UnixTime'];
                 $dates['TimeSource'] = 'FileModified';
@@ -1334,7 +1336,6 @@ class JpegMeta {
             return false;
         }
 
-        $pos = 0;
         $this->_info['jfif'] = array();
 
         $vmaj = $this->_getByte($data, 5);
@@ -1420,7 +1421,6 @@ class JpegMeta {
                 break;
             default:
                 return false;
-                break;
         }
 
         $this->_info['sof']['Format']          = $format;

@@ -600,7 +600,6 @@ function act_export($act){
 
     $pre = '';
     $post = '';
-    $output = '';
     $headers = array();
 
     // search engines: never cache exported docs! (Google only currently)

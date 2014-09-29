@@ -366,7 +366,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @param  int          $first  index of first user to be returned
      * @param  int          $limit  max number of users to be returned
-     * @param  array|string $filter array of field/pattern pairs
+     * @param  array $filter array of field/pattern pairs
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
     public function retrieveUsers($first = 0, $limit = 0, $filter = array()) {

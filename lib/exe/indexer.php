@@ -84,7 +84,7 @@ function runTrimRecentChanges($media_changes = false) {
             io_saveFile($fn.'_tmp', '');          // presave tmp as 2nd lock
             $trim_time = time() - $conf['recent_days']*86400;
             $out_lines = array();
-
+            $old_lines = array();
             for ($i=0; $i<count($lines); $i++) {
                 $log = parseChangelogLine($lines[$i]);
                 if ($log === false) continue;                      // discard junk

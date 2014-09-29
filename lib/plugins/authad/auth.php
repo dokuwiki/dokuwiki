@@ -203,6 +203,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         //general user info
+        $info = array();
         $info['name'] = $result[0]['displayname'][0];
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];

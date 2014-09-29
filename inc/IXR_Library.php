@@ -15,6 +15,7 @@
 
 
 class IXR_Value {
+    /** @var  IXR_Value[]|IXR_Date|IXR_Base64|int|bool|double|string */
     var $data;
     var $type;
     function IXR_Value ($data, $type = false) {
@@ -177,7 +178,7 @@ class IXR_Message {
         return true;
     }
     function tag_open($parser, $tag, $attr) {
-        $this->currentTag = $tag;
+        $this->_currentTag = $tag;
         $this->_currentTagContents = '';
         switch($tag) {
             case 'methodCall':

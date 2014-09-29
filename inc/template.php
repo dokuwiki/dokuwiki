@@ -759,7 +759,6 @@ function tpl_get_action($type) {
             break;
         default:
             return '[unknown %s type]';
-            break;
     }
     return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 }

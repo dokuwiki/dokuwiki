@@ -738,6 +738,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         global $auth;
         global $INPUT;
 
+        $user = array();
         $user[0] = ($clean) ? $auth->cleanUser($INPUT->str('userid')) : $INPUT->str('userid');
         $user[1] = $INPUT->str('userpass');
         $user[2] = $INPUT->str('username');
@@ -764,7 +765,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $this->_filter = array();
 
         if ($op == 'new') {
-            list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser(false);
+            list($user,/* $pass */,$name,$mail,$grps) = $this->_retrieveUser(false);
 
             if (!empty($user)) $this->_filter['user'] = $user;
             if (!empty($name)) $this->_filter['name'] = $name;
@@ -816,6 +817,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $disabled = 'disabled="disabled"';
 
+        $buttons = array();
         $buttons['start'] = $buttons['prev'] = ($this->_start == 0) ? $disabled : '';
 
         if ($this->_user_total == -1) {
@@ -951,7 +953,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $INPUT->set('usergroups', $candidate[4]);
 
         $cleaned = $this->_retrieveUser();
-        list($user,$pass,$name,$mail,$grps) = $cleaned;
+        list($user,/* $pass */,$name,$mail,/* $grps */) = $cleaned;
         if (empty($user)) {
             $error = $this->lang['import_error_baduserid'];
             return false;

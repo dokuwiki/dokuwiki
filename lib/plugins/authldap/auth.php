@@ -181,6 +181,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             }
         }
 
+        $info = array();
         $info['user']   = $user;
         $info['server'] = $this->getConf('server');
 

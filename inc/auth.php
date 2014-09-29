@@ -1129,6 +1129,7 @@ function auth_deleteprofile(){
         }
     }
 
+    $deleted = array();
     $deleted[] = $INPUT->server->str('REMOTE_USER');
     if($auth->triggerUserMod('delete', array($deleted))) {
         // force and immediate logout including removing the sticky cookie

@@ -820,6 +820,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // now first resolve and clean up the $id
         resolve_pageid(getNS($ID), $id, $exists);
 
+        $link = array();
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if(!$isImage) {
             if($exists) {
@@ -904,6 +905,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //prepare for formating
+        $link = array();
         $link['target'] = $conf['target']['extern'];
         $link['style']  = '';
         $link['pre']    = '';
@@ -981,6 +983,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         //simple setup
+        $link = array();
         $link['target'] = $conf['target']['windows'];
         $link['pre']    = '';
         $link['suf']    = '';
@@ -1656,7 +1659,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // prepare alternative formats
             $extensions   = array('webm', 'ogv', 'mp4');
             $files        = media_alternativefiles($src, $extensions);
-            $poster       = media_alternativefiles($src, array('jpg', 'png'), true);
+            $poster       = media_alternativefiles($src, array('jpg', 'png'));
             if(!empty($poster)) {
                 $posterUrl = ml(reset($poster), '', true, '&');
             }
@@ -1700,7 +1703,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param array  $atts      - additional attributes for the <audio> tag
      * @return string
      */
-    function _audio($src, $atts = null) {
+    function _audio($src, $atts = array()) {
         $files = array();
         $isExternal = media_isexternal($src);
 

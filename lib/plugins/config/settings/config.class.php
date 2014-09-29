@@ -775,6 +775,7 @@ if (!class_exists('setting_email')) {
          * update setting with user provided value $input
          * if value fails error check, save it
          *
+         * @param mixed $input
          * @return boolean true if changed, false otherwise (incl. on error)
          */
         function update($input) {
@@ -925,6 +926,7 @@ if (!class_exists('setting_onoff')) {
 if (!class_exists('setting_multichoice')) {
     class setting_multichoice extends setting_string {
         var $_choices = array();
+        var $lang; //some custom language strings are stored in setting
 
         function html(&$plugin, $echo = false) {
             $value = '';
@@ -1125,7 +1127,7 @@ if (!class_exists('setting_multicheckbox')) {
             // handle any remaining values
             $other = join(',',$value);
 
-            $class = (count($default == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+            $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
                             " selectiondefault" : "";
 
             $input .= '<div class="other'.$class.'">'."\n";

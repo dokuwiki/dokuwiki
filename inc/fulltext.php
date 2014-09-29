@@ -23,6 +23,7 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  */
 function ft_pageSearch($query,&$highlight){
 
+    $data = array();
     $data['query'] = $query;
     $data['highlight'] =& $highlight;
 

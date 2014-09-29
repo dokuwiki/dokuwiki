@@ -24,10 +24,12 @@ class ZipLib {
         @rewind($zip);
         @fseek($zip, $centd['offset']);
 
+        $ret = array();
         for ($i=0; $i<$centd['entries']; $i++) {
             $header = $this->ReadCentralFileHeaders($zip);
             $header['index'] = $i;
 
+            $info = array();
             $info['filename']        = $header['filename'];
             $info['stored_filename'] = $header['stored_filename'];
             $info['size']            = $header['size'];
@@ -48,6 +50,7 @@ class ZipLib {
     function Add($files,$compact) {
         if(!is_array($files[0])) $files=Array($files);
 
+        $ret = array();
         for($i=0;$files[$i];$i++){
             $fn = $files[$i];
             if(!in_Array(dirname($fn[0]),$this->dirs))
@@ -189,7 +192,6 @@ class ZipLib {
      */
     function Extract ( $zn, $to, $index = Array(-1) ) {
         if(!@is_dir($to)) $this->_mkdir($to);
-        $ok = 0;
         $zip = @fopen($zn,'rb');
         if(!$zip) return(-1);
         $cdir = $this->ReadCentralDir($zip,$zn);
@@ -203,6 +205,7 @@ class ZipLib {
                 return(-1);
         }
 
+        $stat = array();
         for ($i=0; $i<$cdir['entries']; $i++) {
             @fseek($zip, $pos_entry);
             $header = $this->ReadCentralFileHeaders($zip);
@@ -320,6 +323,7 @@ class ZipLib {
         $data=unpack('vdisk/vdisk_start/vdisk_entries/ventries/Vsize/Voffset/vcomment_size',
                 fread($zip, 18));
 
+        $centd = array();
         if ($data['comment_size'] != 0){
             $centd['comment'] = fread($zip, $data['comment_size']);
         } else {
@@ -421,7 +425,6 @@ class ZipLib {
 
 
     function ExtractStr($zn, $name) {
-        $ok = 0;
         $zip = @fopen($zn,'rb');
         if(!$zip) return(null);
         $cdir = $this->ReadCentralDir($zip,$zn);

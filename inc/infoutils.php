@@ -296,6 +296,7 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
+    $errors = array();
     $errors[-1] = 'error';
     $errors[0]  = 'info';
     $errors[1]  = 'success';
@@ -452,7 +453,7 @@ function dbg_backtrace(){
                 }elseif(is_array($arg)){
                     $params[] = '[Array]';
                 }elseif(is_null($arg)){
-                    $param[] = '[NULL]';
+                    $params[] = '[NULL]';
                 }else{
                     $params[] = (string) '"'.$arg.'"';
                 }

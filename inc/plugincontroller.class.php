@@ -73,7 +73,7 @@ class Doku_Plugin_Controller {
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
 
-        list($plugin,$component) = $this->_splitName($name);
+        list($plugin, /* $component */) = $this->_splitName($name);
 
         // check if disabled
         if(!$disabled && $this->isdisabled($plugin)){

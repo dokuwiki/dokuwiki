@@ -1902,6 +1902,7 @@ function html_debug(){
     print '</pre>';
 
     if (function_exists('apache_get_version')) {
+        $apache = array();
         $apache['version'] = apache_get_version();
 
         if (function_exists('apache_get_modules')) {

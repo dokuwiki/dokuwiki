@@ -130,7 +130,7 @@ class Mailer {
      * If an empy value is passed, the header is removed
      *
      * @param string $header the header name (no trailing colon!)
-     * @param string $value  the value of the header
+     * @param string|string[] $value  the value of the header
      * @param bool   $clean  remove all non-ASCII chars and line feeds?
      */
     public function setHeader($header, $value, $clean = true) {
@@ -177,7 +177,7 @@ class Mailer {
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
      * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
-     * @param array  $html     the HTML body, leave null to create it from $text
+     * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
@@ -283,7 +283,7 @@ class Mailer {
      * Add the To: recipients
      *
      * @see cleanAddress
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
         $this->setHeader('To', $address, false);
@@ -293,7 +293,7 @@ class Mailer {
      * Add the Cc: recipients
      *
      * @see cleanAddress
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
         $this->setHeader('Cc', $address, false);
@@ -303,7 +303,7 @@ class Mailer {
      * Add the Bcc: recipients
      *
      * @see cleanAddress
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
         $this->setHeader('Bcc', $address, false);

@@ -454,7 +454,7 @@ class Subscription {
         global $conf;
 
         $file = mediaFN($id);
-        list($mime, $ext) = mimetype($id);
+        list($mime, /* $ext */) = mimetype($id);
 
         $trep = array(
             'MIME'  => $mime,

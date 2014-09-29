@@ -681,6 +681,7 @@ class RemoteAPICore {
                     $pagelog->setChunkSize(1024);
                     $info = $pagelog->getRevisionInfo($time);
                     if(!empty($info)) {
+                        $data = array();
                         $data['user'] = $info['user'];
                         $data['ip']   = $info['ip'];
                         $data['type'] = $info['type'];

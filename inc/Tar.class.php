@@ -536,6 +536,7 @@ class Tar {
         $header = @unpack("a100filename/a8perm/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $block);
         if(!$header) return false;
 
+        $return = array();
         $return['checksum'] = OctDec(trim($header['checksum']));
         if($return['checksum'] != $chks) return false;
 

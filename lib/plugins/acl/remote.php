@@ -18,11 +18,13 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
     }
 
     function addAcl($scope, $user, $level){
+        /** @var admin_plugin_acl $apa */
         $apa = plugin_load('admin', 'acl');
         return $apa->_acl_add($scope, $user, $level);
     }
 
     function delAcl($scope, $user){
+        /** @var admin_plugin_acl $apa */
         $apa = plugin_load('admin', 'acl');
         return $apa->_acl_del($scope, $user);
     }

@@ -120,6 +120,7 @@ function basicinfo($id, $htmlClient=true){
     global $INPUT;
 
     // set info about manager/admin status.
+    $info = array();
     $info['isadmin']   = false;
     $info['ismanager'] = false;
     if($INPUT->server->has('REMOTE_USER')) {
@@ -685,6 +686,7 @@ function checkwordblock($text = '') {
         }
         if(count($re) && preg_match('#('.join('|', $re).')#si', $text, $matches)) {
             // prepare event data
+            $data = array();
             $data['matches']        = $matches;
             $data['userinfo']['ip'] = $INPUT->server->str('REMOTE_ADDR');
             if($INPUT->server->str('REMOTE_USER')) {
@@ -1119,6 +1121,7 @@ function rawWikiSlices($range, $id, $rev = '') {
     $from = !$from ? 0 : ($from - 1);
     $to   = !$to ? strlen($text) : ($to - 1);
 
+    $slices = array();
     $slices[0] = substr($text, 0, $from);
     $slices[1] = substr($text, $from, $to - $from);
     $slices[2] = substr($text, $to);
