@@ -582,6 +582,12 @@ function media_notify($id,$file,$mime,$old_rev=false){
 
 /**
  * List all files in a given Media namespace
+ *
+ * @param string        $ns             namespace
+ * @param null|int      $auth           permission level
+ * @param string        $jump
+ * @param bool          $fullscreenview
+ * @param bool|string   $sort           sorting, false skips sorting
  */
 function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
     global $conf;

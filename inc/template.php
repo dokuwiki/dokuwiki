@@ -456,6 +456,12 @@ function _tpl_metaheaders_action($data) {
  * Just builds a link.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $url
+ * @param string $name
+ * @param string $more
+ * @param bool   $return if true return the link html, otherwise print
+ * @return bool|string html of the link, or true if printed
  */
 function tpl_link($url, $name, $more = '', $return = false) {
     $out = '<a href="'.$url.'" ';
@@ -472,6 +478,10 @@ function tpl_link($url, $name, $more = '', $return = false) {
  * Wrapper around html_wikilink
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string      $id   page id
+ * @param string|null $name link name
+ * @return bool true
  */
 function tpl_pagelink($id, $name = null) {
     print '<bdi>'.html_wikilink($id, $name).'</bdi>';
@@ -534,6 +544,13 @@ function tpl_button($type, $return = false) {
  *
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
+ *
+ * @param string $type  action name
+ * @param string $pre   prefix of link
+ * @param string $suf   suffix of link
+ * @param string $inner inner HTML for link
+ * @param bool $return  if true it returns html, otherwise prints
+ * @return bool|string html of action link or false if nothing, or true if printed
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
     global $lang;
@@ -571,7 +588,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
             $linktarget, $pre.(($inner) ? $inner : $caption).$suf,
             'class="action '.$type.'" '.
                 $akey.$rel.
-                'title="'.hsc($caption).$addTitle.'"', 1
+                'title="'.hsc($caption).$addTitle.'"', true
         );
     }
     if($return) return $out;
@@ -747,7 +764,6 @@ function tpl_get_action($type) {
             break;
         default:
             return '[unknown %s type]';
-            break;
     }
     return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 }
@@ -768,9 +784,9 @@ function tpl_get_action($type) {
 function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
     $out = '';
     if($link) {
-        $out .= tpl_actionlink($type, $pre, $suf, $inner, 1);
+        $out .= tpl_actionlink($type, $pre, $suf, $inner, true);
     } else {
-        $out .= tpl_button($type, 1);
+        $out .= tpl_button($type, true);
     }
     if($out && $wrapper) $out = "<$wrapper>$out</$wrapper>";
 
@@ -1027,7 +1043,7 @@ function tpl_pagetitle($id = null, $ret = false) {
  * Only allowed in: detail.php
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param array  $tags tags to try
+ * @param array|string  $tags tag or array of tags to try
  * @param string $alt alternative output if no data was found
  * @param null   $src the image src, uses global $SRC if not given
  * @return string
@@ -1275,16 +1291,29 @@ function tpl_getLang($id) {
     static $lang = array();
 
     if(count($lang) === 0) {
-        $path = tpl_incdir().'lang/';
+        global $conf, $config_cascade; // definitely don't invoke "global $lang"
+
+        $path = tpl_incdir() . 'lang/';
 
         $lang = array();
 
-        global $conf; // definitely don't invoke "global $lang"
         // don't include once
-        @include($path.'en/lang.php');
-        if($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-    }
+        @include($path . 'en/lang.php');
+        foreach($config_cascade['lang']['template'] as $config_file) {
+            if(@file_exists($config_file . $conf['template'] . '/en/lang.php')) {
+                include($config_file . $conf['template'] . '/en/lang.php');
+            }
+        }
 
+        if($conf['lang'] != 'en') {
+            @include($path . $conf['lang'] . '/lang.php');
+            foreach($config_cascade['lang']['template'] as $config_file) {
+                if(@file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
+                    include($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php');
+                }
+            }
+        }
+    }
     return $lang[$id];
 }
 
@@ -1305,7 +1334,7 @@ function tpl_locale_xhtml($id) {
 function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
     global $conf;
-    $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
+    $file = DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
     if (!@file_exists($file)){
         $file = $path.$conf['lang'].'/'.$id.'.txt';
         if(!@file_exists($file)){
@@ -1327,6 +1356,7 @@ function tpl_localeFN($id) {
  *
  * @triggers MEDIAMANAGER_CONTENT_OUTPUT
  * @param bool $fromajax - set true when calling this function via ajax
+ * @param string $sort
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_mediaContent($fromajax = false, $sort='natural') {
