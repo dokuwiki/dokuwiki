@@ -1,5 +1,5 @@
 ====== Iskanje ======
 
-Spodaj so izpisani rezultati iskanja. V kolikor rezultati niso skladni z zahtevami iskanja, je mogoče ustvariti  novo stran z nazivom vaše poizvedbe preko povezave ''Uredi stran''.
+Spodaj so izpisani rezultati iskanja. @CREATEPAGEINFO@
 
 ===== Rezultati =====

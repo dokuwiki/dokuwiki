@@ -138,5 +138,6 @@ $lang['img_copyr']   = 'Copyright:';
 $lang['img_format']  = 'Format:';
 $lang['img_camera']  = 'Camera:';
 $lang['img_keywords']= 'Keywords:';
+$lang['searchcreatepage']      = "Heke tiştek nehatibe dîtin, tu dikarî dest bi nivîsandina rûpelekê nû bikî. Ji bo vê, ''Vê rûpelê biguherîne'' bitikîne.";
 
 //Setup VIM: ex: et ts=2 :

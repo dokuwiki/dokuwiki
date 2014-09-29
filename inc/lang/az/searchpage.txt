@@ -1,5 +1,5 @@
 ====== Axtarış ======
 
-Qarşınızda - axtarışın nəticələridir. Əgər Siz axtardığınızı tapa bilmədinizsə, onda Siz adı axtarışınız ilə uyğun düşən yeni səhifə yarada bilərsiniz. Bunu eləmək üçün, sadəcə ''Səhifəni yarat'' düyməsini sıxın.
+Qarşınızda - axtarışın nəticələridir. @CREATEPAGEINFO@
 
 ===== Nəticələr =====
