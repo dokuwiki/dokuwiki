@@ -57,6 +57,12 @@ class DokuHTTPClient extends HTTPClient {
      * @triggers HTTPCLIENT_REQUEST_SEND
      * @author   Andreas Gohr <andi@splitbrain.org>
      */
+    /**
+     * @param string $url
+     * @param string|array $data the post data either as array or raw data
+     * @param string $method
+     * @return bool
+     */
     function sendRequest($url,$data='',$method='GET'){
         $httpdata = array('url'    => $url,
                           'data'   => $data,
@@ -104,7 +110,7 @@ class HTTPClient {
     var $header_regexp; // if set this RE must match against the headers, else abort
     var $headers;
     var $debug;
-    var $start = 0; // for timings
+    var $start = 0.0; // for timings
     var $keep_alive = true; // keep alive rocks
 
     // don't set these, read on error

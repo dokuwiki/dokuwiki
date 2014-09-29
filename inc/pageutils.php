@@ -265,7 +265,7 @@ function page_exists($id,$rev='',$clean=true) {
  * The filename is URL encoded to protect Unicode chars
  *
  * @param  $raw_id  string   id of wikipage
- * @param  $rev     string   page revision, empty string for current
+ * @param  $rev     int|string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
  * @return string full path

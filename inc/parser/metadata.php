@@ -165,7 +165,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         if(!isset($this->meta['title'])) $this->meta['title'] = $text;
 
         // add the header to the TOC
-        $hid = $this->_headerToLink($text, 'true');
+        $hid = $this->_headerToLink($text, true);
         $this->toc_additem($hid, $text, $level);
 
         // add to summary

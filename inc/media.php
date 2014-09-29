@@ -41,6 +41,11 @@ function media_filesinuse($data,$id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id media id
+ * @param int $auth permission level
+ * @param array $data
+ * @return bool
  */
 function media_metasave($id,$auth,$data){
     if($auth < AUTH_UPLOAD) return false;
@@ -113,6 +118,10 @@ function media_ispublic($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id media id
+ * @param int $auth permission level
+ * @return bool
  */
 function media_metaform($id,$auth){
     global $lang;
@@ -175,6 +184,9 @@ function media_metaform($id,$auth){
  * Convenience function to check if a media file is still in use
  *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @param string $id media id
+ * @return array|bool
  */
 function media_inuse($id) {
     global $conf;
@@ -367,8 +379,17 @@ function copy_uploaded_file($from, $to){
  * $data[2]     id: the future directory id of the uploaded file
  * $data[3]     imime: the mimetype of the uploaded file
  * $data[4]     overwrite: if an existing file is going to be overwritten
+ * $data[5]     move:
  *
  * @triggers MEDIA_UPLOAD_FINISH
+ */
+/**
+ * @param array $file
+ * @param string $id
+ * @param bool $ow
+ * @param int $auth permission level
+ * @param string $move function name
+ * @return array|mixed
  */
 function media_save($file, $id, $ow, $auth, $move) {
     if($auth < AUTH_UPLOAD) {
@@ -817,8 +838,13 @@ function media_tab_search($ns,$auth=null) {
  * Prints tab that displays mediafile details
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param string     $ns
+ * @param null|int   $auth permission level
+ * @param string|int $rev
  */
-function media_tab_view($image, $ns, $auth=null, $rev=false) {
+function media_tab_view($image, $ns, $auth=null, $rev='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
@@ -837,6 +863,10 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
  * Prints tab that displays form for editing mediafile metadata
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param string     $ns
+ * @param null|int   $auth permission level
  */
 function media_tab_edit($image, $ns, $auth=null) {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
@@ -851,6 +881,10 @@ function media_tab_edit($image, $ns, $auth=null) {
  * Prints tab that displays mediafile revisions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param string     $ns
+ * @param null|int   $auth permission level
  */
 function media_tab_history($image, $ns, $auth=null) {
     global $lang;
@@ -875,7 +909,7 @@ function media_tab_history($image, $ns, $auth=null) {
  * Prints mediafile details
  *
  * @param string        $image media id
- * @param               $auth
+ * @param int           $auth permission level
  * @param int|bool      $rev
  * @param JpegMeta|bool $meta
  * @author Kate Arzamastseva <pshns@ukr.net>
@@ -912,8 +946,12 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
  * Prints mediafile action buttons
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param int        $auth permission level
+ * @param string|int $rev revision timestamp, or empty string
  */
-function media_preview_buttons($image, $auth, $rev=false) {
+function media_preview_buttons($image, $auth, $rev='') {
     global $lang, $conf;
 
     echo '<ul class="actions">'.NL;
@@ -962,7 +1000,7 @@ function media_preview_buttons($image, $auth, $rev=false) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @param string   $image
- * @param int      $rev
+ * @param int|string $rev
  * @param JpegMeta $meta
  * @param int      $size
  * @return array
@@ -986,9 +1024,10 @@ function media_image_preview_size($image, $rev, $meta, $size = 500) {
  * Returns the requested EXIF/IPTC tag from the image meta
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param array $tags
+ *
+ * @param array    $tags
  * @param JpegMeta $meta
- * @param string $alt
+ * @param string   $alt
  * @return string
  */
 function media_getTag($tags,$meta,$alt=''){
@@ -1002,6 +1041,7 @@ function media_getTag($tags,$meta,$alt=''){
  * Returns mediafile tags
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  * @param JpegMeta $meta
  * @return array
  */
@@ -1033,7 +1073,13 @@ function media_file_tags($meta) {
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_details($image, $auth, $rev=false, $meta=false) {
+/**
+ * @param string        $image image id
+ * @param int           $auth  permission level
+ * @param string|int    $rev   revision timestamp, or empty string
+ * @param bool|JpegMeta $meta  image object, or create one if false
+ */
+function media_details($image, $auth, $rev='', $meta=false) {
     global $lang;
 
     if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
@@ -1056,6 +1102,13 @@ function media_details($image, $auth, $rev=false, $meta=false) {
  * Shows difference between two revisions of file
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ */
+/**
+ * @param string $image  image id
+ * @param string $ns
+ * @param int $auth permission level
+ * @param bool $fromajax
+ * @return void|bool|string
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
     global $conf;
@@ -1135,6 +1188,13 @@ function _media_file_diff($data) {
  * Shows difference between two revisions of image
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $image
+ * @param string|int $l_rev revision timestamp, or empty string
+ * @param string|int $r_rev revision timestamp, or empty string
+ * @param string $ns
+ * @param int $auth permission level
+ * @param bool $fromajax
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     global $lang;
@@ -1256,8 +1316,8 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @param string $image
- * @param int $l_rev
- * @param int $r_rev
+ * @param int $l_rev revision timestamp, or empty string
+ * @param int $r_rev revision timestamp, or empty string
  * @param array $l_size
  * @param array $r_size
  * @param string $type
@@ -1325,6 +1385,12 @@ function media_restore($image, $rev, $auth){
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @triggers MEDIA_SEARCH
+ *
+ * @param string $query
+ * @param string $ns
+ * @param null|int $auth
+ * @param bool $fullscreen
+ * @param string $sort
  */
 function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural'){
     global $conf;
@@ -1375,10 +1441,14 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
 
 /**
  * Formats and prints one file in the list
+ *
+ * @param array $item
+ * @param int $auth permission level
+ * @param string $jump item id
+ * @param bool $display_namespace
  */
 function media_printfile($item,$auth,$jump,$display_namespace=false){
     global $lang;
-    global $conf;
 
     // Prepare zebra coloring
     // I always wanted to use this variable name :-D
@@ -1472,6 +1542,11 @@ function media_printicon($filename, $size=''){
  * Formats and prints one file in the list in the thumbnails view
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param array       $item
+ * @param int         $auth
+ * @param bool|string $jump
+ * @param bool        $display_namespace
  */
 function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false){
 
@@ -1519,6 +1594,9 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
 
 /**
  * Prints a thumbnail and metainfo
+ *
+ * @param array $item
+ * @param bool $fullscreen
  */
 function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
@@ -1621,6 +1699,10 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $ns
+ * @param int $auth permission level
+ * @param bool $fullscreen
  */
 function media_uploadform($ns, $auth, $fullscreen = false){
     global $lang;
@@ -1708,6 +1790,10 @@ function media_getuploadsize(){
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $ns
+ * @param string $query
+ * @param bool $fullscreen
  */
 function media_searchform($ns,$query='',$fullscreen=false){
     global $lang;
@@ -1735,6 +1821,8 @@ function media_searchform($ns,$query='',$fullscreen=false){
  * Build a tree outline of available media namespaces
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $ns
  */
 function media_nstree($ns){
     global $conf;

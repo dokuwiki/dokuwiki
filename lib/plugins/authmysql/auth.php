@@ -284,7 +284,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                 $grpdel = array_diff($groups, $changes['grps']);
 
                 foreach($grpadd as $group) {
-                    if(($this->_addUserToGroup($user, $group, 1)) == false) {
+                    if(($this->_addUserToGroup($user, $group, true)) == false) {
                         $rc = false;
                     }
                 }
@@ -612,7 +612,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
 
             if($uid) {
                 foreach($grps as $group) {
-                    $gid = $this->_addUserToGroup($user, $group, 1);
+                    $gid = $this->_addUserToGroup($user, $group, true);
                     if($gid === false) break;
                 }
 
@@ -777,7 +777,6 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @param  string $user    user's nick being updated
      * @param  array $changes  array of items to change as pairs of item and value
-     * @param  mixed $uid      user id of dataset to change, must be unique in DB
      * @return bool true on success or false on error
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>

@@ -51,8 +51,9 @@ exit;
 /**
  * Trims the recent changes cache (or imports the old changelog) as needed.
  *
- * @param media_changes If the media changelog shall be trimmed instead of
- * the page changelog
+ * @param bool $media_changes If the media changelog shall be trimmed instead of
+ *                              the page changelog
+ * @return bool
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  */

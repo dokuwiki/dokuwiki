@@ -1571,7 +1571,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Returns HTML code for images used in link titles
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @param string $img
+     * @param array $img
      * @return string HTML img tag or similar
      */
     function _imageTitle($img) {

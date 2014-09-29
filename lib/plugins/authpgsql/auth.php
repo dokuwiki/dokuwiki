@@ -265,7 +265,7 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
 
             if($uid) {
                 foreach($grps as $group) {
-                    $gid = $this->_addUserToGroup($user, $group, 1);
+                    $gid = $this->_addUserToGroup($user, $group, true);
                     if($gid === false) break;
                 }
 

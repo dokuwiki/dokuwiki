@@ -255,7 +255,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){
             /** @var $renderer Doku_Renderer_xhtml */
-            $hid  = $renderer->_headerToLink($text, 'true');
+            $hid  = $renderer->_headerToLink($text, true);
             $renderer->toc[] = array(
                 'hid'   => $hid,
                 'title' => $text,

@@ -53,7 +53,7 @@ class Sitemapper {
         foreach($pages as $id){
             //skip hidden, non existing and restricted files
             if(isHiddenPage($id)) continue;
-            if(auth_aclcheck($id,'','') < AUTH_READ) continue;
+            if(auth_aclcheck($id,'',array()) < AUTH_READ) continue;
             $item = SitemapItem::createFromID($id);
             if ($item !== null)
                 $items[] = $item;

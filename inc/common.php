@@ -968,7 +968,7 @@ function rawLocale($id, $ext = 'txt') {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id   page id
- * @param string $rev  timestamp when a revision of wikitext is desired
+ * @param string|int $rev  timestamp when a revision of wikitext is desired
  * @return string
  */
 function rawWiki($id, $rev = '') {

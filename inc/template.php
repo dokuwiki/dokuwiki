@@ -204,7 +204,7 @@ function tpl_toc($return = false) {
         $toc = $TOC;
     } elseif(($ACT == 'show' || substr($ACT, 0, 6) == 'export') && !$REV && $INFO['exists']) {
         // get TOC from metadata, render if neccessary
-        $meta = p_get_metadata($ID, false, METADATA_RENDER_USING_CACHE);
+        $meta = p_get_metadata($ID, '', METADATA_RENDER_USING_CACHE);
         if(isset($meta['internal']['toc'])) {
             $tocok = $meta['internal']['toc'];
         } else {
@@ -503,6 +503,10 @@ function tpl_getparent($id) {
  *
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
+ *
+ * @param string $type
+ * @param bool $return
+ * @return bool|string html, or false if no data, true if printed
  */
 function tpl_button($type, $return = false) {
     $data = tpl_get_action($type);
@@ -534,6 +538,13 @@ function tpl_button($type, $return = false) {
  *
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
+ *
+ * @param string $type
+ * @param string $pre prefix of link
+ * @param string $suf suffix of link
+ * @param string $inner innerHML of link
+ * @param bool $return
+ * @return bool|string html or false if no data, true if printed
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
     global $lang;
@@ -571,7 +582,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
             $linktarget, $pre.(($inner) ? $inner : $caption).$suf,
             'class="action '.$type.'" '.
                 $akey.$rel.
-                'title="'.hsc($caption).$addTitle.'"', 1
+                'title="'.hsc($caption).$addTitle.'"', true
         );
     }
     if($return) return $out;
@@ -599,6 +610,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Adrian Lang <mail@adrianlang.de>
+ *
  * @param string $type
  * @return array|bool|string
  */
@@ -757,20 +769,20 @@ function tpl_get_action($type) {
  *
  * @author Anika Henke <anika@selfthinker.org>
  * @param
- * @param bool   $link link or form button?
- * @param bool   $wrapper HTML element wrapper
- * @param bool   $return return or print
- * @param string $pre prefix for links
- * @param string $suf suffix for links
- * @param string $inner inner HTML for links
+ * @param bool          $link link or form button?
+ * @param string|bool   $wrapper HTML element wrapper
+ * @param bool          $return return or print
+ * @param string        $pre prefix for links
+ * @param string        $suf suffix for links
+ * @param string        $inner inner HTML for links
  * @return bool|string
  */
 function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
     $out = '';
     if($link) {
-        $out .= tpl_actionlink($type, $pre, $suf, $inner, 1);
+        $out .= tpl_actionlink($type, $pre, $suf, $inner, true);
     } else {
-        $out .= tpl_button($type, 1);
+        $out .= tpl_button($type, true);
     }
     if($out && $wrapper) $out = "<$wrapper>$out</$wrapper>";
 
@@ -1029,7 +1041,7 @@ function tpl_pagetitle($id = null, $ret = false) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @param array  $tags tags to try
  * @param string $alt alternative output if no data was found
- * @param null   $src the image src, uses global $SRC if not given
+ * @param null|string   $src the image src, uses global $SRC if not given
  * @return string
  */
 function tpl_img_getTag($tags, $alt = '', $src = null) {
@@ -1613,6 +1625,11 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  *
  * This function is useful to populate sidebars or similar features in a
  * template
+ *
+ * @param string $pageid
+ * @param bool $print
+ * @param bool $propagate
+ * @return bool|null|string
  */
 function tpl_include_page($pageid, $print = true, $propagate = false) {
     if (!$pageid) return false;

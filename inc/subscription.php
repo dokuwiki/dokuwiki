@@ -515,7 +515,7 @@ class Subscription {
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param string $subscriber_mail The target mail address
-     * @param array  $id              The ID
+     * @param string $id              The ID
      * @param int    $lastupdate      Time of the last notification
      * @return bool
      */

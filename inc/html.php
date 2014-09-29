@@ -422,6 +422,9 @@ function html_locked(){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param int $first skip the first n changelog lines
+ * @param bool|string $media_id id of media, or false for current page
  */
 function html_revisions($first=0, $media_id = false){
     global $ID;
@@ -926,7 +929,7 @@ function html_li_default($item){
  * @param array    $data  array with item arrays
  * @param string   $class class of ul wrapper
  * @param callable $func  callback to print an list item
- * @param string   $lifunc callback to the opening li tag
+ * @param callable $lifunc callback to the opening li tag
  * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
                                  0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
