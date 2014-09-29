@@ -146,4 +146,15 @@ class common_ml_test extends DokuWikiTest {
         $this->assertEquals($expect, ml($id, $args));
 
     }
+    
+    function test_ml_empty_rev() {
+        global $conf;
+        $conf['useslash'] = 0;
+        $conf['userewrite'] = 0;
+
+        $args = array('a' => 'b', 'c' => 'd', 'rev' => '');
+
+        $expect = DOKU_BASE . $this->script . '?a=b&amp;c=d&amp;media=some:img.jpg';
+        $this->assertEquals($expect, ml('some:img.jpg', $args));
+    }
 }

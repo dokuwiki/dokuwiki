@@ -1123,6 +1123,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
     /** @var Input $INPUT */
     global $INPUT;
+    global $REV;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
 
@@ -1147,8 +1148,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     }
 
     //prepare URLs
-    $url = ml($IMG, array('cache'=> $INPUT->str('cache')), true, '&');
-    $src = ml($IMG, array('cache'=> $INPUT->str('cache'), 'w'=> $w, 'h'=> $h), true, '&');
+    $url = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV), true, '&');
+    $src = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV, 'w'=> $w, 'h'=> $h), true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');

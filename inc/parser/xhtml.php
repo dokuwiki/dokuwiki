@@ -28,6 +28,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
     /** @var array A stack of section edit data */
     protected $sectionedits = array();
+    var $date_at = '';    // link pages and media against this revision
 
     /** @var int last section edit id, used by startSectionEdit */
     protected $lastsecid = 0;
@@ -818,7 +819,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $default = $this->_simpleTitle($id);
 
         // now first resolve and clean up the $id
-        resolve_pageid(getNS($ID), $id, $exists);
+        resolve_pageid(getNS($ID), $id, $exists, $this->date_at, true);
 
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if(!$isImage) {
@@ -846,11 +847,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $link['pre'] = '<span class="curid">';
             $link['suf'] = '</span>';
         }
-        $link['more']  = '';
-        $link['class'] = $class;
-        $link['url']   = wl($id, $params);
-        $link['name']  = $name;
-        $link['title'] = $id;
+        $link['more']   = '';
+        $link['class']  = $class;
+        if($this->date_at) {
+            $params['at'] = $this->date_at;
+        }
+        $link['url']    = wl($id, $params);
+        $link['name']   = $name;
+        $link['title']  = $id;
         //add search string
         if($search) {
             ($conf['userewrite']) ? $link['url'] .= '?' : $link['url'] .= '&amp;';
@@ -1062,7 +1066,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                            $height = null, $cache = null, $linking = null, $return = false) {
         global $ID;
         list($src, $hash) = explode('#', $src, 2);
-        resolve_mediaid(getNS($ID), $src, $exists);
+        resolve_mediaid(getNS($ID), $src, $exists, $this->date_at, true);
 
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
@@ -1070,7 +1074,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         list($ext, $mime) = mimetype($src, false);
         if(substr($mime, 0, 5) == 'image' && $render) {
-            $link['url'] = ml($src, array('id' => $ID, 'cache' => $cache), ($linking == 'direct'));
+            $link['url'] = ml($src, array('id' => $ID, 'cache' => $cache, 'rev'=>$this->_getLastMediaRevisionAt($src)), ($linking == 'direct'));
         } elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render) {
             // don't link movies
             $noLink = true;
@@ -1078,7 +1082,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // add file icons
             $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
             $link['class'] .= ' mediafile mf_'.$class;
-            $link['url'] = ml($src, array('id' => $ID, 'cache' => $cache), true);
+            $link['url'] = ml($src, array('id' => $ID, 'cache' => $cache , 'rev'=>$this->_getLastMediaRevisionAt($src)), true);
             if($exists) $link['title'] .= ' ('.filesize_h(filesize(mediaFN($src))).')';
         }
 
@@ -1436,7 +1440,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 return $title;
             }
             //add image tag
-            $ret .= '<img src="'.ml($src, array('w' => $width, 'h' => $height, 'cache' => $cache)).'"';
+            $ret .= '<img src="'.ml($src, array('w' => $width, 'h' => $height, 'cache' => $cache, 'rev'=>$this->_getLastMediaRevisionAt($src))).'"';
             $ret .= ' class="media'.$align.'"';
 
             if($title) {
@@ -1581,7 +1585,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // see internalmedia() and externalmedia()
         list($img['src']) = explode('#', $img['src'], 2);
         if($img['type'] == 'internalmedia') {
-            resolve_mediaid(getNS($ID), $img['src'], $exists);
+            resolve_mediaid(getNS($ID), $img['src'], $exists ,$this->date_at, true);
         }
 
         return $this->_media(
@@ -1739,6 +1743,21 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out .= $fallback;
         $out .= '</audio>'.NL;
         return $out;
+    }
+    
+    /**
+     * _getLastMediaRevisionAt is a helperfunction to internalmedia() and _media()
+     * which returns an existing media revision less or equal to rev or date_at
+     *
+     * @author lisps
+     * @param string $media_id
+     * @access protected
+     * @return string revision ('' for current)
+     */
+    function _getLastMediaRevisionAt($media_id){
+        if(!$this->date_at || media_isexternal($media_id)) return '';
+        $pagelog = new MediaChangeLog($media_id);
+        return $pagelog->getLastRevisionAt($this->date_at);
     }
 
     #endregion

@@ -142,6 +142,17 @@ class common_wl_test extends DokuWikiTest {
         $expect = DOKU_BASE . DOKU_SCRIPT . '/some/one?a=b&c=d';
         $this->assertEquals($expect, wl('some:one', 'a=b,c=d', false, '&'));
     }
+    
+    function test_wl_empty_rev() {
+        global $conf;
+        $conf['useslash'] = 0;
+        $conf['userewrite'] = 0;
+
+        $args = array('a' => 'b', 'c' => 'd', 'rev' => '');
+
+        $expect = DOKU_BASE . DOKU_SCRIPT . '?id=some:&amp;a=b&amp;c=d';
+        $this->assertEquals($expect, wl('some:', $args));
+    }
 
 
 
