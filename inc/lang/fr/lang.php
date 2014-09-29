@@ -29,6 +29,9 @@
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Emmanuel <seedfloyd@gmail.com>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
+ * @author Wild <wild.dagger@free.fr>
+ * @author ggallon <gwenael.gallon@mac.com>
+ * @author David VANTYGHEM <david.vantyghem@free.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -51,17 +54,17 @@ $lang['btn_revs']              = 'Anciennes révisions';
 $lang['btn_recent']            = 'Derniers changements';
 $lang['btn_upload']            = 'Envoyer';
 $lang['btn_cancel']            = 'Annuler';
-$lang['btn_index']             = 'Index';
+$lang['btn_index']             = 'Plan du site';
 $lang['btn_secedit']           = 'Modifier';
-$lang['btn_login']             = 'Connexion';
-$lang['btn_logout']            = 'Déconnexion';
+$lang['btn_login']             = 'S\'identifier';
+$lang['btn_logout']            = 'Se déconnecter';
 $lang['btn_admin']             = 'Administrer';
 $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens vers cette page';
 $lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
-$lang['btn_subscribe']         = 'S\'abonner à la page';
+$lang['btn_subscribe']         = 'S\'abonner à cette page';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
 $lang['btn_resendpwd']         = 'Définir un nouveau mot de passe';
@@ -69,10 +72,12 @@ $lang['btn_draft']             = 'Modifier le brouillon';
 $lang['btn_recover']           = 'Récupérer le brouillon';
 $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
-$lang['btn_register']          = 'S\'enregistrer';
+$lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
 $lang['btn_media']             = 'Gestionnaire de médias';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
+$lang['btn_img_backto']        = 'Retour à %s';
+$lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
 $lang['loggedinas']            = 'Connecté en tant que ';
 $lang['user']                  = 'Utilisateur';
 $lang['pass']                  = 'Mot de passe';
@@ -92,7 +97,7 @@ $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.'
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà utilisé.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
-$lang['regmailfail']           = 'Il semble y avoir un problème à l\'envoi du courriel. Contactez l\'administrateur.';
+$lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
 $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
 $lang['regpwmail']             = 'Votre mot de passe DokuWiki';
@@ -202,6 +207,9 @@ $lang['difflink']              = 'Lien vers cette vue comparative';
 $lang['diff_type']             = 'Voir les différences :';
 $lang['diff_inline']           = 'Sur une seule ligne';
 $lang['diff_side']             = 'Côte à côte';
+$lang['diffprevrev']           = 'Révision précédente';
+$lang['diffnextrev']           = 'Prochaine révision';
+$lang['difflastrev']           = 'Dernière révision';
 $lang['line']                  = 'Ligne';
 $lang['breadcrumb']            = 'Piste';
 $lang['youarehere']            = 'Vous êtes ici';
@@ -258,7 +266,6 @@ $lang['admin_register']        = 'Ajouter un nouvel utilisateur';
 $lang['metaedit']              = 'Modifier les métadonnées';
 $lang['metasaveerr']           = 'Erreur lors de l\'enregistrement des métadonnées';
 $lang['metasaveok']            = 'Métadonnées enregistrées';
-$lang['img_backto']            = 'Retour à';
 $lang['img_title']             = 'Titre';
 $lang['img_caption']           = 'Légende';
 $lang['img_date']              = 'Date';
@@ -271,7 +278,6 @@ $lang['img_camera']            = 'Appareil photo';
 $lang['img_keywords']          = 'Mots-clés';
 $lang['img_width']             = 'Largeur';
 $lang['img_height']            = 'Hauteur';
-$lang['img_manager']           = 'Voir dans le gestionnaire de médias';
 $lang['subscr_subscribe_success'] = '%s a été ajouté à la liste de souscription de %s';
 $lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste de souscription de %s';
 $lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste de souscription';

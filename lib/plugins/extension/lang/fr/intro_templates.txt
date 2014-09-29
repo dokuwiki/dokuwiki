@@ -1,0 +1,1 @@
+Voici la liste des modèles actuellement installés. Le [[?do=admin&page=config|gestionnaire de configuration]] vous permet de choisir le modèle à utiliser.

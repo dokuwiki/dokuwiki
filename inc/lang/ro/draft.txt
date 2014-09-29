@@ -1,5 +1,8 @@
 ====== Fișierul schiță nu a fost găsit ======
 
-Ultima dvs. sesiune de editare nu s-a finalizat corect. În timpul lucrului, DocuWiki a salvat automat o schiță, pe care o puteți utiliza acum pentru a continua editarea. Mai jos puteți vedea informațiile care s-au salvat de la ultima dvs. sesiune.
+Ultima ta sesiune de editare nu s-a finalizat corect. În vreme ce lucrai,
+DokuWiki a salvat automat o schiță, pe care o poți utiliza acum pentru a
+continua editarea. Mai jos poți vedea informațiile care s-au salvat de la ultima sesiune.
 
-Decideți dacă vreți să //recuperați// sesiunea de editare pierdută, //ștergeți// schița salvată automat sau să //anulați// procesul de editare.
+Decide dacă vrei să //recuperezi// sesiunea de editare pierdută, să //ștergi//
+schița salvată automat sau să //anulezi// procesul de editare.

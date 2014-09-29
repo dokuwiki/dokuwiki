@@ -18,6 +18,7 @@ if (!class_exists('configuration')) {
         var $_heading = '';            // heading string written at top of config file - don't include comment indicators
         var $_loaded = false;          // set to true after configuration files are loaded
         var $_metadata = array();      // holds metadata describing the settings
+        /** @var setting[]  */
         var $setting = array();        // array of setting objects
         var $locked = false;           // configuration is considered locked if it can't be updated
         var $show_disabled_plugins = false;
@@ -31,8 +32,10 @@ if (!class_exists('configuration')) {
 
         /**
          * constructor
+         *
+         * @param string $datafile path to config metadata file
          */
-        function configuration($datafile) {
+        public function configuration($datafile) {
             global $conf, $config_cascade;
 
             if (!@file_exists($datafile)) {
@@ -55,7 +58,10 @@ if (!class_exists('configuration')) {
             $this->retrieve_settings();
         }
 
-        function retrieve_settings() {
+        /**
+         * Retrieve and stores settings in setting[] attribute
+         */
+        public function retrieve_settings() {
             global $conf;
             $no_default_check = array('setting_fieldset', 'setting_undefined', 'setting_no_class');
 
@@ -100,7 +106,15 @@ if (!class_exists('configuration')) {
             }
         }
 
-        function save_settings($id, $header='', $backup=true) {
+        /**
+         * Stores setting[] array to file
+         *
+         * @param string $id     Name of plugin, which saves the settings
+         * @param string $header Text at the top of the rewritten settings file
+         * @param bool $backup   backup current file? (remove any existing backup)
+         * @return bool succesful?
+         */
+        public function save_settings($id, $header='', $backup=true) {
             global $conf;
 
             if ($this->locked) return false;
@@ -138,13 +152,19 @@ if (!class_exists('configuration')) {
         /**
          * Update last modified time stamp of the config file
          */
-        function touch_settings(){
+        public function touch_settings(){
             if ($this->locked) return false;
             $file = end($this->_local_files);
             return @touch($file);
         }
 
-        function _read_config_group($files) {
+        /**
+         * Read and merge given config files
+         *
+         * @param array $files file paths
+         * @return array config settings
+         */
+        protected function _read_config_group($files) {
             $config = array();
             foreach ($files as $file) {
                 $config = array_merge($config, $this->_read_config($file));
@@ -154,7 +174,10 @@ if (!class_exists('configuration')) {
         }
 
         /**
-         * return an array of config settings
+         * Return an array of config settings
+         *
+         * @param string $file file path
+         * @return array config settings
          */
         function _read_config($file) {
 
@@ -206,7 +229,14 @@ if (!class_exists('configuration')) {
             return $config;
         }
 
-        function _out_header($id, $header) {
+        /**
+         * Returns header of rewritten settings file
+         *
+         * @param string $id plugin name of which generated this output
+         * @param string $header additional text for at top of the file
+         * @return string text of header
+         */
+        protected function _out_header($id, $header) {
             $out = '';
             if ($this->_format == 'php') {
                 $out .= '<'.'?php'."\n".
@@ -221,7 +251,12 @@ if (!class_exists('configuration')) {
             return $out;
         }
 
-        function _out_footer() {
+        /**
+         * Returns footer of rewritten settings file
+         *
+         * @return string text of footer
+         */
+        protected function _out_footer() {
             $out = '';
             if ($this->_format == 'php') {
                 $out .= "\n// end auto-generated content\n";
@@ -230,9 +265,13 @@ if (!class_exists('configuration')) {
             return $out;
         }
 
-        // configuration is considered locked if there is no local settings filename
-        // or the directory its in is not writable or the file exists and is not writable
-        function _is_locked() {
+        /**
+         * Configuration is considered locked if there is no local settings filename
+         * or the directory its in is not writable or the file exists and is not writable
+         *
+         * @return bool true: locked, false: writable
+         */
+        protected function _is_locked() {
             if (!$this->_local_files) return true;
 
             $local = $this->_local_files[0];
@@ -247,7 +286,7 @@ if (!class_exists('configuration')) {
          * not used ... conf's contents are an array!
          * reduce any multidimensional settings to one dimension using CM_KEYMARKER
          */
-        function _flatten($conf,$prefix='') {
+        protected function _flatten($conf,$prefix='') {
 
             $out = array();
 
@@ -264,6 +303,12 @@ if (!class_exists('configuration')) {
             return $out;
         }
 
+        /**
+         * Returns array of plugin names
+         *
+         * @return array plugin names
+         * @triggers PLUGIN_CONFIG_PLUGINLIST event
+         */
         function get_plugin_list() {
             if (is_null($this->_plugin_list)) {
                 $list = plugin_list('',$this->show_disabled_plugins);
@@ -281,6 +326,9 @@ if (!class_exists('configuration')) {
 
         /**
          * load metadata for plugin and template settings
+         *
+         * @param string $tpl name of active template
+         * @return array metadata of settings
          */
         function get_plugintpl_metadata($tpl){
             $file     = '/conf/metadata.php';
@@ -321,7 +369,10 @@ if (!class_exists('configuration')) {
         }
 
         /**
-         * load default settings for plugins and templates
+         * Load default settings for plugins and templates
+         *
+         * @param string $tpl name of active template
+         * @return array default settings
          */
         function get_plugintpl_default($tpl){
             $file    = '/conf/default.php';
@@ -368,7 +419,11 @@ if (!class_exists('setting')) {
 
         static protected $_validCautions = array('warning','danger','security');
 
-        function setting($key, $params=null) {
+        /**
+         * @param string $key
+         * @param array|null $params array with metadata of setting
+         */
+        public function setting($key, $params=null) {
             $this->_key = $key;
 
             if (is_array($params)) {
@@ -379,9 +434,13 @@ if (!class_exists('setting')) {
         }
 
         /**
-         * receives current values for the setting $key
+         * Receives current values for the setting $key
+         *
+         * @param mixed $default   default setting value
+         * @param mixed $local     local setting value
+         * @param mixed $protected protected setting value
          */
-        function initialize($default, $local, $protected) {
+        public function initialize($default, $local, $protected) {
             if (isset($default)) $this->_default = $default;
             if (isset($local)) $this->_local = $local;
             if (isset($protected)) $this->_protected = $protected;
@@ -395,7 +454,7 @@ if (!class_exists('setting')) {
          * @param  mixed   $input   the new value
          * @return boolean          true if changed, false otherwise (incl. on error)
          */
-        function update($input) {
+        public function update($input) {
             if (is_null($input)) return false;
             if ($this->is_protected()) return false;
 
@@ -413,9 +472,13 @@ if (!class_exists('setting')) {
         }
 
         /**
-         * @return   array(string $label_html, string $input_html)
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        public function html(&$plugin, $echo=false) {
             $value = '';
             $disable = '';
 
@@ -439,9 +502,9 @@ if (!class_exists('setting')) {
         }
 
         /**
-         * generate string to save setting value to file according to $fmt
+         * Generate string to save setting value to file according to $fmt
          */
-        function out($var, $fmt='php') {
+        public function out($var, $fmt='php') {
 
             if ($this->is_protected()) return '';
             if (is_null($this->_local) || ($this->_default == $this->_local)) return '';
@@ -457,17 +520,45 @@ if (!class_exists('setting')) {
             return $out;
         }
 
-        function prompt(&$plugin) {
+        /**
+         * Returns the localized prompt
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @return string text
+         */
+        public function prompt(&$plugin) {
             $prompt = $plugin->getLang($this->_key);
             if (!$prompt) $prompt = htmlspecialchars(str_replace(array('____','_'),' ',$this->_key));
             return $prompt;
         }
 
-        function is_protected() { return !is_null($this->_protected); }
-        function is_default() { return !$this->is_protected() && is_null($this->_local); }
-        function error() { return $this->_error; }
+        /**
+         * Is setting protected
+         *
+         * @return bool
+         */
+        public function is_protected() { return !is_null($this->_protected); }
 
-        function caution() {
+        /**
+         * Is setting the default?
+         *
+         * @return bool
+         */
+        public function is_default() { return !$this->is_protected() && is_null($this->_local); }
+
+        /**
+         * Has an error?
+         *
+         * @return bool
+         */
+        public function error() { return $this->_error; }
+
+        /**
+         * Returns caution
+         *
+         * @return bool|string caution string, otherwise false for invalid caution
+         */
+        public function caution() {
             if (!empty($this->_caution)) {
                 if (!in_array($this->_caution, setting::$_validCautions)) {
                     trigger_error('Invalid caution string ('.$this->_caution.') in metadata for setting "'.$this->_key.'"', E_USER_WARNING);
@@ -486,7 +577,14 @@ if (!class_exists('setting')) {
             return false;
         }
 
-        function _out_key($pretty=false,$url=false) {
+        /**
+         * Returns setting key, eventually with referer to config: namespace at dokuwiki.org
+         *
+         * @param bool $pretty create nice key
+         * @param bool $url    provide url to config: namespace
+         * @return string key
+         */
+        public function _out_key($pretty=false,$url=false) {
             if($pretty){
                 $out = str_replace(CM_KEYMARKER,"»",$this->_key);
                 if ($url && !strstr($out,'»')) {//provide no urls for plugins, etc.

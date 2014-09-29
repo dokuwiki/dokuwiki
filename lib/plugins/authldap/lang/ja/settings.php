@@ -7,7 +7,7 @@
  * @author Hideaki SAWADA <sawadakun@live.jp>
  * @author Hideaki SAWADA <chuno@live.jp>
  */
-$lang['server']                = 'LDAPサーバー。ホスト名（<code>localhost</code）又は完全修飾URL（<code>ldap://server.tld:389</code>）';
+$lang['server']                = 'LDAPサーバー。ホスト名（<code>localhost</code>）又は完全修飾URL（<code>ldap://server.tld:389</code>）';
 $lang['port']                  = '上記が完全修飾URLでない場合、LDAPサーバーポート';
 $lang['usertree']              = 'ユーザーアカウントを探す場所。例：<code>ou=People, dc=server, dc=tld</code>';
 $lang['grouptree']             = 'ユーザーグループを探す場所。例：<code>ou=Group, dc=server, dc=tld</code>';

@@ -5,7 +5,7 @@
  * following contents:
  *   fieldname - Where data will be saved (EXIF or IPTC field)
  *   label     - key to lookup in the $lang var, if not found printed as is
- *   htmltype  - 'text' or 'textarea'
+ *   htmltype  - 'text', 'textarea' or 'date'
  *   lookups   - array additional fields to lookup the data (EXIF or IPTC fields)
  *
  * The fields are not ordered continously to make inserting additional items

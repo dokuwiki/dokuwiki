@@ -1,0 +1,1 @@
+Módosítsa az oldalt, majd kattintson a "Mentés" gombra. A wiki-szintaxishoz nézze meg a [[wiki:syntax|szintaxis]] oldalt. Kérjük, csak akkor módosítsa az oldalt, ha **tökéletesíteni**, **javítani** tudja. Amennyiben szeretne kipróbálni ezt-azt, a [[playground:playground|játszótéren]] megtanulhatja az első lépéseket.

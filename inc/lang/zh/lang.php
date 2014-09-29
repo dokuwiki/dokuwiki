@@ -19,6 +19,10 @@
  * @author Donald <donaldtcong@gmail.com>
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author anjianshi <anjianshi@gmail.com>
+ * @author oott123 <ip.192.168.1.1@qq.com>
+ * @author Cupen <Cupenoruler@foxmail.com>
+ * @author xiqingongzi <Xiqingongzi@Gmail.com>
+ * @author qinghao <qingxianhao@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -63,6 +67,8 @@ $lang['btn_register']          = '注册';
 $lang['btn_apply']             = '应用';
 $lang['btn_media']             = '媒体管理器';
 $lang['btn_deleteuser']        = '移除我的账户';
+$lang['btn_img_backto']        = '返回到 %s';
+$lang['btn_mediaManager']      = '在媒体管理器中查看';
 $lang['loggedinas']            = '登录为';
 $lang['user']                  = '用户名';
 $lang['pass']                  = '密码';
@@ -194,6 +200,9 @@ $lang['difflink']              = '到此差别页面的链接';
 $lang['diff_type']             = '查看差异：';
 $lang['diff_inline']           = '行内显示';
 $lang['diff_side']             = '并排显示';
+$lang['diffprevrev']           = '前一修订版';
+$lang['diffnextrev']           = '后一修订版';
+$lang['difflastrev']           = '上一修订版';
 $lang['line']                  = '行';
 $lang['breadcrumb']            = '您的足迹';
 $lang['youarehere']            = '您在这里';
@@ -250,7 +259,6 @@ $lang['admin_register']        = '添加新用户';
 $lang['metaedit']              = '编辑元数据';
 $lang['metasaveerr']           = '写入元数据失败';
 $lang['metasaveok']            = '元数据已保存';
-$lang['img_backto']            = '返回到';
 $lang['img_title']             = '标题';
 $lang['img_caption']           = '说明';
 $lang['img_date']              = '日期';
@@ -263,7 +271,6 @@ $lang['img_camera']            = '相机';
 $lang['img_keywords']          = '关键字';
 $lang['img_width']             = '宽度';
 $lang['img_height']            = '高度';
-$lang['img_manager']           = '在媒体管理器中查看';
 $lang['subscr_subscribe_success'] = '添加 %s 到 %s 的订阅列表';
 $lang['subscr_subscribe_error'] = '添加 %s 到 %s 的订阅列表中出现错误';
 $lang['subscr_subscribe_noaddress'] = '没有与您登录信息相关联的地址，您无法被添加到订阅列表';
@@ -346,3 +353,5 @@ $lang['media_update']          = '上传新版本';
 $lang['media_restore']         = '恢复这个版本';
 $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
+$lang['plainhtml']             = '纯HTML';
+$lang['wikimarkup']            = 'Wiki Markup 语言';

@@ -39,6 +39,8 @@ class Mailer {
      */
     public function __construct() {
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
         if(strpos($server,'.') === false) $server = $server.'.localhost';
@@ -53,7 +55,7 @@ class Mailer {
 
         // add some default headers for mailfiltering FS#2247
         $this->setHeader('X-Mailer', 'DokuWiki');
-        $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
+        $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
         $this->setHeader('X-DokuWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
@@ -181,6 +183,9 @@ class Mailer {
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
         global $INFO;
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
+
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
 
@@ -218,24 +223,24 @@ class Mailer {
         $cip  = gethostsbyaddrs($ip);
         $trep = array(
             'DATE'        => dformat(),
-            'BROWSER'     => $_SERVER['HTTP_USER_AGENT'],
+            'BROWSER'     => $INPUT->server->str('HTTP_USER_AGENT'),
             'IPADDRESS'   => $ip,
             'HOSTNAME'    => $cip,
             'TITLE'       => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
-            'USER'        => $_SERVER['REMOTE_USER'],
+            'USER'        => $INPUT->server->str('REMOTE_USER'),
             'NAME'        => $INFO['userinfo']['name'],
             'MAIL'        => $INFO['userinfo']['mail'],
         );
         $trep = array_merge($trep, (array)$textrep);
         $hrep = array(
             'DATE'        => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'     => hsc($_SERVER['HTTP_USER_AGENT']),
+            'BROWSER'     => hsc($INPUT->server->str('HTTP_USER_AGENT')),
             'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
             'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
             'TITLE'       => hsc($conf['title']),
             'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'        => hsc($_SERVER['REMOTE_USER']),
+            'USER'        => hsc($INPUT->server->str('REMOTE_USER')),
             'NAME'        => hsc($INFO['userinfo']['name']),
             'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
                 hsc($INFO['userinfo']['mail']).'</a>',
@@ -277,7 +282,7 @@ class Mailer {
     /**
      * Add the To: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
@@ -287,7 +292,7 @@ class Mailer {
     /**
      * Add the Cc: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
@@ -297,7 +302,7 @@ class Mailer {
     /**
      * Add the Bcc: recipients
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string|array  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
@@ -310,7 +315,7 @@ class Mailer {
      * This is set to $conf['mailfrom'] when not specified so you shouldn't need
      * to call this function
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string  $address from address
      */
     public function from($address) {
@@ -333,9 +338,9 @@ class Mailer {
      * for headers. Addresses may not contain Non-ASCII data!
      *
      * Example:
-     *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
+     *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @param string|array  $addresses Multiple adresses separated by commas or as array
      * @return bool|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
@@ -522,7 +527,7 @@ class Mailer {
 
         // clean up addresses
         if(empty($this->headers['From'])) $this->from($conf['mailfrom']);
-        $addrs = array('To', 'From', 'Cc', 'Bcc');
+        $addrs = array('To', 'From', 'Cc', 'Bcc', 'Reply-To', 'Sender');
         foreach($addrs as $addr) {
             if(isset($this->headers[$addr])) {
                 $this->headers[$addr] = $this->cleanAddress($this->headers[$addr]);

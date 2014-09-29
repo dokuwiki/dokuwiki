@@ -1,3 +1,0 @@
-====== Gestor de Plugins ======
-
-Nesta página pode gerir tudo o que tenha a haver com [[doku>plugins|plugins]] DokuWiki. Atenção que a pasta que contém os plugins precisa de ter permissões de escrita para se poder efectuar o download.

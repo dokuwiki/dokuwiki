@@ -1,3 +1,0 @@
-====== Priedų Administravimas ======
-
-Šiame puslapyje galite administruoti, darbui su Dokuwiki, reikalingu įrankius [[doku>plugins|plugins]]. Tam kad parsiųsti ir įdiegti kokį nors priedą jūsų web serveris privalo turėti įrašymo teises priedų kataloge.

@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author lainme <lainme993@gmail.com>
+ * @author oott123 <ip.192.168.1.1@qq.com>
  */
 $lang['account_suffix']        = '您的账户后缀。例如 <code>@my.domain.org</code>';
 $lang['base_dn']               = '您的基本分辨名。例如 <code>DC=my,DC=domain,DC=org</code>';
@@ -11,6 +12,7 @@ $lang['domain_controllers']    = '逗号分隔的域名控制器列表。例如 
 $lang['admin_username']        = '一个活动目录的特权用户，可以查看其他所有用户的数据。可选，但对某些活动例如发送订阅邮件是必须的。';
 $lang['admin_password']        = '上述用户的密码。';
 $lang['sso']                   = '是否使用经由 Kerberos 和 NTLM 的 Single-Sign-On？';
+$lang['sso_charset']           = '服务器传入 Kerberos 或者 NTLM 用户名的编码。留空为 UTF-8 或 latin-1 。此功能需要服务器支持iconv扩展。';
 $lang['real_primarygroup']     = ' 是否解析真实的主要组，而不是假设为“域用户” (较慢)';
 $lang['use_ssl']               = '使用 SSL 连接？如果是，不要激活下面的 TLS。';
 $lang['use_tls']               = '使用 TLS 连接？如果是 ，不要激活上面的 SSL。';

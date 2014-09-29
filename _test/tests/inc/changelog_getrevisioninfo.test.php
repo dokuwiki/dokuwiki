@@ -21,7 +21,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
             unset($cache['nonexist']);
         }
         if(isset($cache['mailinglist'])) {
-            unset($cache['nonexist']);
+            unset($cache['mailinglist']);
         }
     }
 
@@ -29,11 +29,12 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * no nonexist.changes meta file available
      */
     function test_changemetadatanotexists() {
-        $rev          = 1362525899;
-        $id           = 'nonexist';
+        $rev = 1362525899;
+        $id = 'nonexist';
         $revsexpected = false;
 
-        $revs = getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($id, $chunk_size = 8192);
+        $revs = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($revsexpected, $revs);
     }
 
@@ -41,13 +42,14 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request existing rev
      */
     function test_requestrev() {
-        $rev          = 1362525899;
+        $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
         //returns cached value
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 8192, $media = false);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -55,10 +57,23 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request existing rev with chucked reading
      */
     function test_requestrev_chuncked() {
-        $rev          = 1362525899;
+        $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $info = $pagelog->getRevisionInfo($rev);
+        $this->assertEquals($infoexpected, $info);
+    }
+
+    /**
+     * request existing rev with chucked reading
+     */
+    function test_requestrev_chunckedsmallerthanlinelength() {
+        $rev = 1362525899;
+        $infoexpected = parseChangelogLine($this->logline);
+
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -66,13 +81,14 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request current version
      */
     function test_requestrecentestlogline() {
-        $rev          = 1374261194;
+        $rev = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
         //returns cached value
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 8192, $media = false);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -80,10 +96,11 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * request current version, with chuncked reading
      */
     function test_requestrecentestlogline_chuncked() {
-        $rev          = 1374261194;
+        $rev = 1374261194;
         $infoexpected = parseChangelogLine($this->firstlogline);
 
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 512, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 
@@ -93,7 +110,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
     function test_negativerev() {
         $rev = -10;
 
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals(false, $info);
     }
 
@@ -103,7 +121,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
     function test_notexistingrev() {
         $rev = 1362525890;
 
-        $info = getRevisionInfo($this->pageid, $rev, $chunk_size = 8192, $media = false);
+        $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals(false, $info);
     }
 
@@ -111,10 +130,11 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      * sometimes chuncksize is set to true
      */
     function test_chuncksizetrue() {
-        $rev          = 1362525899;
+        $rev = 1362525899;
         $infoexpected = parseChangelogLine($this->logline);
 
-        $info = getRevisionInfo($this->pageid, $rev, true);
+        $pagelog = new PageChangeLog($this->pageid, true);
+        $info = $pagelog->getRevisionInfo($rev);
         $this->assertEquals($infoexpected, $info);
     }
 }

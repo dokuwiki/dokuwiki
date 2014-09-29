@@ -17,9 +17,6 @@ if ( !defined('DOKU_TAB') ) {
     define ('DOKU_TAB',"\t");
 }
 
-require_once DOKU_INC . 'inc/parser/renderer.php';
-require_once DOKU_INC . 'inc/html.php';
-
 /**
  * The Renderer
  */
@@ -562,6 +559,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * $search,$returnonly & $linktype are not for the renderer but are used
      * elsewhere - no need to implement them in other renderers
      *
+     * @param string $id pageid
+     * @param string|null $name link name
+     * @param string|null $search adds search url param
+     * @param bool $returnonly whether to return html or write to doc attribute
+     * @param string $linktype type to set use of headings
+     * @return void|string writes to doc attribute or returns html depends on $returnonly
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function internallink($id, $name = null, $search=null,$returnonly=false,$linktype='content') {
@@ -603,7 +606,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //keep hash anchor
-        list($id,$hash) = explode('#',$id,2);
+        @list($id,$hash) = explode('#',$id,2);
         if(!empty($hash)) $hash = $this->_headerToLink($hash);
 
         //prepare for formating
@@ -685,7 +688,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
-    */
+     */
     function interwikilink($match, $name = null, $wikiName, $wikiUri) {
         global $conf;
 
@@ -697,18 +700,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
 
         //get interwiki URL
-        $url = $this->_resolveInterWiki($wikiName,$wikiUri);
+        $exists = null;
+        $url = $this->_resolveInterWiki($wikiName, $wikiUri, $exists);
 
-        if ( !$isImage ) {
-            $class = preg_replace('/[^_\-a-z0-9]+/i','_',$wikiName);
+        if(!$isImage) {
+            $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $wikiName);
             $link['class'] = "interwiki iw_$class";
         } else {
             $link['class'] = 'media';
         }
 
         //do we stay at the same server? Use local target
-        if( strpos($url,DOKU_URL) === 0 ){
+        if(strpos($url, DOKU_URL) === 0 OR strpos($url, DOKU_BASE) === 0) {
             $link['target'] = $conf['target']['wiki'];
+        }
+        if($exists !== null && !$isImage) {
+            if($exists) {
+                $link['class'] .= ' wikilink1';
+            } else {
+                $link['class'] .= ' wikilink2';
+                $link['rel'] = 'nofollow';
+            }
         }
 
         $link['url'] = $url;
@@ -781,7 +793,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     function internalmedia ($src, $title=null, $align=null, $width=null,
-                            $height=null, $cache=null, $linking=null) {
+                            $height=null, $cache=null, $linking=null, $return=NULL) {
         global $ID;
         list($src,$hash) = explode('#',$src,2);
         resolve_mediaid(getNS($ID),$src, $exists);
@@ -793,8 +805,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         list($ext,$mime,$dl) = mimetype($src,false);
         if(substr($mime,0,5) == 'image' && $render){
             $link['url'] = ml($src,array('id'=>$ID,'cache'=>$cache),($linking=='direct'));
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -812,8 +824,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //output formatted
-        if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
-        else $this->doc .= $this->_formatLink($link);
+        if ($return) {
+            if ($linking == 'nolink' || $noLink) return $link['name'];
+            else return $this->_formatLink($link);
+        } else {
+            if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
+            else $this->doc .= $this->_formatLink($link);
+        }
     }
 
     function externalmedia ($src, $title=null, $align=null, $width=null,
@@ -829,8 +846,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(substr($mime,0,5) == 'image' && $render){
             // link only jpeg images
             // if ($ext != 'jpg' && $ext != 'jpeg') $noLink = true;
-        }elseif($mime == 'application/x-shockwave-flash' && $render){
-            // don't link flash movies
+        }elseif(($mime == 'application/x-shockwave-flash' || media_supportedav($mime)) && $render){
+            // don't link movies
             $noLink = true;
         }else{
             // add file icons
@@ -944,6 +961,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if ($pos !== null) {
             $this->finishSectionEdit($pos);
         }
+    }
+
+    function tablethead_open(){
+        $this->doc .= DOKU_TAB . '<thead>' . DOKU_LF;
+    }
+
+    function tablethead_close(){
+        $this->doc .= DOKU_TAB . '</thead>' . DOKU_LF;
     }
 
     function tablerow_open(){
@@ -1091,6 +1116,30 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
             $ret .= ' />';
 
+        }elseif(media_supportedav($mime, 'video') || media_supportedav($mime, 'audio')){
+            // first get the $title
+            $title = !is_null($title) ? $this->_xmlEntities($title) : false;
+            if (!$render) {
+                // if the file is not supposed to be rendered
+                // return the title of the file (just the sourcename if there is no title)
+                return $title ? $title : $this->_xmlEntities(utf8_basename(noNS($src)));
+            }
+
+            $att = array();
+            $att['class'] = "media$align";
+            if ($title) {
+                $att['title'] = $title;
+            }
+
+            if (media_supportedav($mime, 'video')) {
+                //add video
+                $ret .= $this->_video($src, $width, $height, $att);
+            }
+            if (media_supportedav($mime, 'audio')) {
+                //add audio
+                $ret .= $this->_audio($src, $att);
+            }
+
         }elseif($mime == 'application/x-shockwave-flash'){
             if (!$render) {
                 // if the flash is not supposed to be rendered
@@ -1222,6 +1271,93 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         return $link;
     }
 
+
+    /**
+     * Embed video(s) in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of video to embed
+     * @param int $width       - width of the video in pixels
+     * @param int $height      - height of the video in pixels
+     * @param array $atts      - additional attributes for the <video> tag
+     * @return string
+     */
+    function _video($src,$width,$height,$atts=null){
+        // prepare width and height
+        if(is_null($atts)) $atts = array();
+        $atts['width']  = (int) $width;
+        $atts['height'] = (int) $height;
+        if(!$atts['width'])  $atts['width']  = 320;
+        if(!$atts['height']) $atts['height'] = 240;
+
+        // prepare alternative formats
+        $extensions = array('webm', 'ogv', 'mp4');
+        $alternatives = media_alternativefiles($src, $extensions);
+        $poster = media_alternativefiles($src, array('jpg', 'png'), true);
+        $posterUrl = '';
+        if (!empty($poster)) {
+            $posterUrl = ml(reset($poster),array('cache'=>$cache),true,'&');
+        }
+
+        $out = '';
+        // open video tag
+        $out .= '<video '.buildAttributes($atts).' controls="controls"';
+        if ($posterUrl) $out .= ' poster="'.hsc($posterUrl).'"';
+        $out .= '>'.NL;
+        $fallback = '';
+
+        // output source for each alternative video format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+        }
+
+        // finish
+        $out .= $fallback;
+        $out .= '</video>'.NL;
+        return $out;
+    }
+
+    /**
+     * Embed audio in HTML
+     *
+     * @author Anika Henke <anika@selfthinker.org>
+     *
+     * @param string $src      - ID of audio to embed
+     * @param array $atts      - additional attributes for the <audio> tag
+     * @return string
+     */
+    function _audio($src,$atts=null){
+
+        // prepare alternative formats
+        $extensions = array('ogg', 'mp3', 'wav');
+        $alternatives = media_alternativefiles($src, $extensions);
+
+        $out = '';
+        // open audio tag
+        $out .= '<audio '.buildAttributes($atts).' controls="controls">'.NL;
+        $fallback = '';
+
+        // output source for each alternative audio format
+        foreach($alternatives as $mime => $file) {
+            $url = ml($file,array('cache'=>$cache),true,'&');
+            $title = $atts['title'] ? $atts['title'] : $this->_xmlEntities(utf8_basename(noNS($file)));
+
+            $out .= '<source src="'.hsc($url).'" type="'.$mime.'" />'.NL;
+            // alternative content (just a link to the file)
+            $fallback .= $this->internalmedia($file, $title, NULL, NULL, NULL, $cache=NULL, $linking='linkonly', $return=true);
+        }
+
+        // finish
+        $out .= $fallback;
+        $out .= '</audio>'.NL;
+        return $out;
+    }
 
 }
 

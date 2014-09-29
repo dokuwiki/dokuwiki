@@ -16,6 +16,7 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Petr Klíma <qaxi@seznam.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -247,7 +248,7 @@ $lang['admin_register']        = 'Přidat nového uživatele';
 $lang['metaedit']              = 'Upravit Metadata';
 $lang['metasaveerr']           = 'Chyba při zápisu metadat';
 $lang['metasaveok']            = 'Metadata uložena';
-$lang['img_backto']            = 'Zpět na';
+$lang['btn_img_backto']        = 'Zpět na %s';
 $lang['img_title']             = 'Titulek';
 $lang['img_caption']           = 'Popis';
 $lang['img_date']              = 'Datum';
@@ -260,7 +261,7 @@ $lang['img_camera']            = 'Typ fotoaparátu';
 $lang['img_keywords']          = 'Klíčová slova';
 $lang['img_width']             = 'Šířka';
 $lang['img_height']            = 'Výška';
-$lang['img_manager']           = 'Zobrazit ve správě médií';
+$lang['btn_mediaManager']           = 'Zobrazit ve správě médií';
 $lang['subscr_subscribe_success'] = '%s byl přihlášen do seznamu odběratelů %s';
 $lang['subscr_subscribe_error'] = 'Došlo k chybě při přihlašování %s do seznamu odběratelů %s';
 $lang['subscr_subscribe_noaddress'] = 'K Vašemu loginu neexistuje žádná adresa, nemohl jste být přihlášen do seznamu odběratelů.';
@@ -299,6 +300,7 @@ $lang['i_policy']              = 'Úvodní politika ACL';
 $lang['i_pol0']                = 'Otevřená wiki (čtení, zápis a upload pro všechny)';
 $lang['i_pol1']                = 'Veřejná wiki (čtení pro všechny, zápis a upload pro registrované uživatele)';
 $lang['i_pol2']                = 'Uzavřená wiki (čtení, zápis a upload pouze pro registrované uživatele)';
+$lang['i_allowreg']            = 'Povol uživatelům registraci';
 $lang['i_retry']               = 'Zkusit znovu';
 $lang['i_license']             = 'Vyberte prosím licenci obsahu:';
 $lang['i_license_none']        = 'Nezobrazovat žádné licenční informace';
@@ -336,3 +338,7 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
+$lang['currentns']             = 'Aktuální jmenný prostor';
+$lang['searchresult']          = 'Výsledek hledání';
+$lang['plainhtml']             = 'Čisté HTML';
+$lang['wikimarkup']            = 'Wiki jazyk';

@@ -31,6 +31,9 @@
  * @author r0sk <r0sk10@gmail.com>
  * @author monica <may.dorado@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
+ * @author Juan De La Cruz <juann.dlc@gmail.com>
+ * @author Fernando <fdiezala@gmail.com>
+ * @author Eloy <ej.perezgomez@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -75,6 +78,8 @@ $lang['btn_register']          = 'Registrarse';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Gestor de ficheros';
 $lang['btn_deleteuser']        = 'Elimina Mi Cuenta';
+$lang['btn_img_backto']        = 'Volver a %s';
+$lang['btn_mediaManager']      = 'Ver en el Administrador de medios';
 $lang['loggedinas']            = 'Conectado como ';
 $lang['user']                  = 'Usuario';
 $lang['pass']                  = 'Contraseña';
@@ -206,6 +211,11 @@ $lang['difflink']              = 'Enlace a la vista de comparación';
 $lang['diff_type']             = 'Ver diferencias';
 $lang['diff_inline']           = 'En línea';
 $lang['diff_side']             = 'Lado a lado';
+$lang['diffprevrev']           = 'Revisión previa';
+$lang['diffnextrev']           = 'Próxima revisión';
+$lang['difflastrev']           = 'Última revisión';
+$lang['diffbothprevrev']       = 'Ambos lados, revisión anterior';
+$lang['diffbothnextrev']       = 'Ambos lados, revisión siguiente';
 $lang['line']                  = 'Línea';
 $lang['breadcrumb']            = 'Traza';
 $lang['youarehere']            = 'Estás aquí';
@@ -262,7 +272,6 @@ $lang['admin_register']        = 'Añadir nuevo usuario';
 $lang['metaedit']              = 'Editar metadatos';
 $lang['metasaveerr']           = 'La escritura de los metadatos ha fallado';
 $lang['metasaveok']            = 'Los metadatos han sido guardados';
-$lang['img_backto']            = 'Volver a';
 $lang['img_title']             = 'Título';
 $lang['img_caption']           = 'Epígrafe';
 $lang['img_date']              = 'Fecha';
@@ -275,7 +284,6 @@ $lang['img_camera']            = 'Cámara';
 $lang['img_keywords']          = 'Palabras claves';
 $lang['img_width']             = 'Ancho';
 $lang['img_height']            = 'Alto';
-$lang['img_manager']           = 'Ver en el Administrador de medios';
 $lang['subscr_subscribe_success'] = 'Se agregó %s a las listas de suscripción para %s';
 $lang['subscr_subscribe_error'] = 'Error al agregar %s a las listas de suscripción para %s';
 $lang['subscr_subscribe_noaddress'] = 'No hay dirección asociada con tu registro, no se puede agregarte a la lista de suscripción';
@@ -321,13 +329,13 @@ $lang['i_license_none']        = 'No mostrar ninguna información sobre licencia
 $lang['i_pop_field']           = 'Por favor, ayúdanos a mejorar la experiencia de DokuWiki:';
 $lang['i_pop_label']           = 'Una vez al mes, enviar información anónima de uso de datos a los desarrolladores de DokuWiki';
 $lang['recent_global']         = 'Actualmente estás viendo los cambios dentro del namespace <b>%s</b>. También puedes <a href="%s">ver los cambios recientes en el wiki completo</a>.';
-$lang['years']                 = '%d años atrás';
-$lang['months']                = '%d meses atrás';
-$lang['weeks']                 = '%d semanas atrás';
-$lang['days']                  = '%d días atrás';
-$lang['hours']                 = '%d horas atrás';
-$lang['minutes']               = '%d minutos atrás';
-$lang['seconds']               = '%d segundos atrás';
+$lang['years']                 = 'hace %d años';
+$lang['months']                = 'hace %d meses';
+$lang['weeks']                 = 'hace %d semanas';
+$lang['days']                  = 'hace %d días';
+$lang['hours']                 = 'hace %d horas';
+$lang['minutes']               = 'hace %d minutos';
+$lang['seconds']               = 'hace %d segundos';
 $lang['wordblock']             = 'Sus cambios no se han guardado porque contienen textos bloqueados (spam).';
 $lang['media_uploadtab']       = 'Cargar';
 $lang['media_searchtab']       = 'Buscar';

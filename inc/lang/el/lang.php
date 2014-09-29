@@ -11,6 +11,7 @@
  * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
  * @author Constantinos Xanthopoulos <conx@xanthopoulos.info>
  * @author chris taklis <ctaklis@gmail.com>
+ * @author cross <cross1962@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -240,7 +241,7 @@ $lang['admin_register']        = 'Προσθήκη νέου χρήστη';
 $lang['metaedit']              = 'Τροποποίηση metadata';
 $lang['metasaveerr']           = 'Η αποθήκευση των metadata απέτυχε';
 $lang['metasaveok']            = 'Επιτυχής αποθήκευση metadata';
-$lang['img_backto']            = 'Επιστροφή σε';
+$lang['btn_img_backto']            = 'Επιστροφή σε %s';
 $lang['img_title']             = 'Τίτλος';
 $lang['img_caption']           = 'Λεζάντα';
 $lang['img_date']              = 'Ημερομηνία';
@@ -253,7 +254,7 @@ $lang['img_camera']            = 'Camera';
 $lang['img_keywords']          = 'Λέξεις-κλειδιά';
 $lang['img_width']             = 'Πλάτος';
 $lang['img_height']            = 'Ύψος';
-$lang['img_manager']           = 'Εμφάνιση στον διαχειριστή πολυμέσων';
+$lang['btn_mediaManager']           = 'Εμφάνιση στον διαχειριστή πολυμέσων';
 $lang['subscr_subscribe_success'] = 'Ο/η %s προστέθηκε στην λίστα ειδοποιήσεων για το %s';
 $lang['subscr_subscribe_error'] = 'Σφάλμα κατά την προσθήκη του/της %s στην λίστα ειδοποιήσεων για το %s';
 $lang['subscr_subscribe_noaddress'] = 'Δεν υπάρχει διεύθυνση ταχυδρομείου συσχετισμένη με το όνομα χρήστη σας. Κατά συνέπεια δεν μπορείτε να προστεθείτε στην λίστα ειδοποιήσεων';

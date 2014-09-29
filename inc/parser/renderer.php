@@ -6,8 +6,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 if(!defined('DOKU_INC')) die('meh.');
-require_once DOKU_INC . 'inc/plugin.php';
-require_once DOKU_INC . 'inc/pluginutils.php';
 
 /**
  * An empty renderer, produces no output
@@ -59,9 +57,15 @@ class Doku_Renderer extends DokuWiki_Plugin {
         return false;
     }
 
-
-    //handle plugin rendering
-    function plugin($name,$data){
+    /**
+     * handle plugin rendering
+     *
+     * @param string $name Plugin name
+     * @param mixed  $data custom data set by handler
+     * @param string $state matched state if any
+     * @param string $match raw matched syntax
+     */
+    function plugin($name,$data,$state='',$match=''){
         $plugin = plugin_load('syntax',$name);
         if($plugin != null){
             $plugin->render($this->getFormat(),$this,$data);
@@ -245,6 +249,10 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     function table_close($pos = null){}
 
+    function tablethead_open(){}
+
+    function tablethead_close(){}
+
     function tablerow_open(){}
 
     function tablerow_close(){}
@@ -267,17 +275,17 @@ class Doku_Renderer extends DokuWiki_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function _simpleTitle($name){
+    function _simpleTitle($name) {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        list($name,$hash) = explode('#',$name,2);
+        @list($name, $hash) = explode('#', $name, 2);
         if($hash) return $hash;
 
-        if($conf['useslash']){
-            $name = strtr($name,';/',';:');
-        }else{
-            $name = strtr($name,';',':');
+        if($conf['useslash']) {
+            $name = strtr($name, ';/', ';:');
+        } else {
+            $name = strtr($name, ';', ':');
         }
 
         return noNSorNS($name);
@@ -286,9 +294,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Resolve an interwikilink
      */
-    function _resolveInterWiki(&$shortcut,$reference){
+    function _resolveInterWiki(&$shortcut, $reference, &$exists=null) {
         //get interwiki URL
-        if ( isset($this->interwiki[$shortcut]) ) {
+        if(isset($this->interwiki[$shortcut])) {
             $url = $this->interwiki[$shortcut];
         } else {
             // Default to Google I'm feeling lucky
@@ -297,25 +305,31 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
 
         //split into hash and url part
-        list($reference,$hash) = explode('#',$reference,2);
+        @list($reference, $hash) = explode('#', $reference, 2);
 
         //replace placeholder
-        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
+        if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
             //use placeholders
-            $url = str_replace('{URL}',rawurlencode($reference),$url);
-            $url = str_replace('{NAME}',$reference,$url);
+            $url = str_replace('{URL}', rawurlencode($reference), $url);
+            $url = str_replace('{NAME}', $reference, $url);
             $parsed = parse_url($reference);
             if(!$parsed['port']) $parsed['port'] = 80;
-            $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
-            $url = str_replace('{HOST}',$parsed['host'],$url);
-            $url = str_replace('{PORT}',$parsed['port'],$url);
-            $url = str_replace('{PATH}',$parsed['path'],$url);
-            $url = str_replace('{QUERY}',$parsed['query'],$url);
-        }else{
+            $url = str_replace('{SCHEME}', $parsed['scheme'], $url);
+            $url = str_replace('{HOST}', $parsed['host'], $url);
+            $url = str_replace('{PORT}', $parsed['port'], $url);
+            $url = str_replace('{PATH}', $parsed['path'], $url);
+            $url = str_replace('{QUERY}', $parsed['query'], $url);
+        } else {
             //default
-            $url = $url.rawurlencode($reference);
+            $url = $url . rawurlencode($reference);
         }
-        if($hash) $url .= '#'.rawurlencode($hash);
+        //handle as wiki links
+        if($url{0} === ':') {
+            list($id, $urlparam) = explode('?', $url, 2);
+            $url = wl(cleanID($id), $urlparam);
+            $exists = page_exists($id);
+        }
+        if($hash) $url .= '#' . rawurlencode($hash);
 
         return $url;
     }
