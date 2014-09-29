@@ -68,6 +68,7 @@ define('DOKU_CLI_OPTS_ARG_READ',5);//Could not read argv
  *
  * @author Andrei Zmievski <andrei@php.net>
  *
+ * @deprecated 2014-05-16
  */
 class Doku_Cli_Opts {
 

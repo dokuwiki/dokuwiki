@@ -1,5 +1,5 @@
 ====== Pencarian ======
 
-Anda dapat menemukan hasil pencarian dibawah ini. Jika Anda tidak menemukan apa yang diinginkan, Anda dapat membuat halaman baru, dengan nama sesuai "text pencarian" Anda. Gunakan tombol "Edit halaman ini".
+Anda dapat menemukan hasil pencarian dibawah ini. @CREATEPAGEINFO@
 
 ===== Hasil Pencarian =====

@@ -1,5 +1,5 @@
 ====== Leiting ======
 
-Tú kanst síggja úrslitini av tíni leiting niðanfyri. Um úrslitini ikki innihalda tað sum tú leitaði eftir kanst tú upprætta eitt nýtt skjal við sama navni sum leitingin við at trýsta á **''[Upprætta hetta skjal]''** knappin.
+Tú kanst síggja úrslitini av tíni leiting niðanfyri. @CREATEPAGEINFO@
 
 ===== Leitiúrslit =====

@@ -12,8 +12,8 @@
  * @author AmirH Hassaneini <mytechmix@gmail.com>
  */
 $lang['admin_acl']             = 'مدیریت کنترل دسترسی‌ها';
-$lang['acl_group']             = 'گروه';
-$lang['acl_user']              = 'کاربر';
+$lang['acl_group']             = 'گروه:';
+$lang['acl_user']              = 'کاربر:';
 $lang['acl_perms']             = 'مجوز برای';
 $lang['page']                  = 'صفحه';
 $lang['namespace']             = 'فضای‌نام';

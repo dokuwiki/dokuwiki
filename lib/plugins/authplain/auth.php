@@ -76,11 +76,33 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param string $user
+     * @param bool $requireGroups  (optional) ignored by this plugin, grps info always supplied
      * @return array|bool
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         if($this->users === null) $this->_loadUserData();
         return isset($this->users[$user]) ? $this->users[$user] : false;
+    }
+
+    /**
+     * Creates a string suitable for saving as a line
+     * in the file database
+     * (delimiters escaped, etc.)
+     *
+     * @param string $user
+     * @param string $pass
+     * @param string $name
+     * @param string $mail
+     * @param array  $grps list of groups the user is in
+     * @return string
+     */
+    protected function _createUserLine($user, $pass, $name, $mail, $grps) {
+        $groups   = join(',', $grps);
+        $userline = array($user, $pass, $name, $mail, $groups);
+        $userline = str_replace('\\', '\\\\', $userline); // escape \ as \\
+        $userline = str_replace(':', '\\:', $userline); // escape : as \:
+        $userline = join(':', $userline)."\n";
+        return $userline;
     }
 
     /**
@@ -115,8 +137,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         if(!is_array($grps)) $grps = array($conf['defaultgroup']);
 
         // prepare user line
-        $groups   = join(',', $grps);
-        $userline = join(':', array($user, $pass, $name, $mail, $groups))."\n";
+        $userline = $this->_createUserLine($user, $pass, $name, $mail, $grps);
 
         if(io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
             $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
@@ -157,8 +178,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             $userinfo[$field] = $value;
         }
 
-        $groups   = join(',', $userinfo['grps']);
-        $userline = join(':', array($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $groups))."\n";
+        $userline = $this->_createUserLine($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $userinfo['grps']);
 
         if(!$this->deleteUsers(array($user))) {
             msg('Unable to modify user data. Please inform the Wiki-Admin', -1);
@@ -308,7 +328,11 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             $line = trim($line);
             if(empty($line)) continue;
 
-            $row    = explode(":", $line, 5);
+            /* NB: preg_split can be deprecated/replaced with str_getcsv once dokuwiki is min php 5.3 */
+            $row = preg_split('/(?<![^\\\\]\\\\)\:/', $line, 5); // allow for : escaped as \:
+            $row = str_replace('\\:', ':', $row);
+            $row = str_replace('\\\\', '\\', $row);
+
             $groups = array_values(array_filter(explode(",", $row[4])));
 
             $this->users[$row[0]]['pass'] = $row[1];

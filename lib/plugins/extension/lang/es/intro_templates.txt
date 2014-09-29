@@ -1,0 +1,1 @@
+Estas son las plantillas actualmente instalados en su DokuWiki. Puede seleccionar la plantilla que se utilizará en [[?do=admin&page=config|Configuration Manager]]

@@ -9,8 +9,8 @@
  */
 
 $lang['admin_acl']  = 'Access Control List Management';
-$lang['acl_group']  = 'Group';
-$lang['acl_user']   = 'User';
+$lang['acl_group']  = 'Group:';
+$lang['acl_user']   = 'User:';
 $lang['acl_perms']  = 'Permissions for';
 $lang['page']       = 'Page';
 $lang['namespace']  = 'Namespace';

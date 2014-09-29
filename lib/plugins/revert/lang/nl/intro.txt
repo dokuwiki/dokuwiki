@@ -1,3 +1,3 @@
-===== Herstelmanager =====
+===== Herstel =====
 
 Deze pagina helpt u bij het herstellen van pagina's na een spam-aanval. Vul een zoekterm in (bijvoorbeeld een spam url) om een lijst te krijgen van bekladde pagina's, bevestig dat de pagina's inderdaad spam bevatten en herstel de wijzigingen.

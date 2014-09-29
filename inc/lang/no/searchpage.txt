@@ -1,5 +1,5 @@
 ====== Søk ======
 
-Du ser resultatet av dette søket nedenfor. Hvis du ikke finner det du leter etter, så kan du skape en ny side med samme navn som ditt søk ved å klikke på ''**Lag denne siden**''-knappen.
+Du ser resultatet av dette søket nedenfor. @CREATEPAGEINFO@
 
 ===== Resultat =====

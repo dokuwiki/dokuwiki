@@ -650,9 +650,11 @@ class Subscription {
      * @todo move the whole functionality into this class, trigger SUBSCRIPTION_NOTIFY_ADDRESSLIST instead,
      *       use an array for the addresses within it
      *
-     * @param array &$data Containing $id (the page id), $self (whether the author
-     *                     should be notified, $addresslist (current email address
-     *                     list)
+     * @param array &$data Containing the entries:
+     *    - $id (the page id),
+     *    - $self (whether the author should be notified,
+     *    - $addresslist (current email address list)
+     *    - $replacements (array of additional string substitutions, @KEY@ to be replaced by value)
      */
     public function notifyaddresses(&$data) {
         if(!$this->isenabled()) return;
@@ -700,6 +702,7 @@ class Subscription {
  * @deprecated 2012-12-07
  */
 function subscription_addresslist(&$data) {
+    dbg_deprecated('class Subscription');
     $sub = new Subscription();
     $sub->notifyaddresses($data);
 }

@@ -1,5 +1,5 @@
 ====== Buscar ======
 
-Pot vore els resultats de la busca ací avall. Si no ha trobat lo que buscava pot crear o editar una pàgina en el mateix nom que el text que ha buscat utilisant el botó corresponent.
+Pot vore els resultats de la busca ací avall.  @CREATEPAGEINFO@
 
 ===== Resultats =====

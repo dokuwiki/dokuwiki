@@ -215,7 +215,7 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
 function _ft_pageLookup(&$data){
     // split out original parameters
     $id = $data['id'];
-    if (preg_match('/(?:^| )@(\w+)/', $id, $matches)) {
+    if (preg_match('/(?:^| )(?:@|ns:)([\w:]+)/', $id, $matches)) {
         $ns = cleanID($matches[1]) . ':';
         $id = str_replace($matches[0], '', $id);
     }

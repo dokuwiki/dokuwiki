@@ -1,5 +1,5 @@
 ====== Cerca ======
 
-Heus ací els resultats de la cerca. Si no trobeu allò que buscàveu, podeu crear una pàgina nova per mitjà del botó ''Edita aquesta pàgina''.
+Heus ací els resultats de la cerca. @CREATEPAGEINFO@
 
 ===== Resultats =====

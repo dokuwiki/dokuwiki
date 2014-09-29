@@ -1,0 +1,3 @@
+====== Pomoćnik za povrat ======
+
+Pomaže vam pri povratku u slučaju spam napada. Da bi ste našli listu stranica koje su onečišćene spam-om unesite tekst za potragu (npr. spam URL), te potvrdite da su nađene stranice zaista spam i vratite na prethodno stanje.

@@ -1,0 +1,15 @@
+Pozdrav !
+
+Stranice u imeničkom prostoru @PAGE@ na @TITLE@ wiki-u su izmijenjene. Ovo su izmijenjene stranice:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite
+@SUBSCRIBE@
+i odjavite se s promjena na stranici i/ili imeničkom prostoru.
+
+-- 
+Ova poruka je generirana od strane DokuWiki dostupnog na
+@DOKUWIKIURL@

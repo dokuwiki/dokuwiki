@@ -17,8 +17,8 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  */
 $lang['admin_acl']             = '访问控制列表（ACL）管理器';
-$lang['acl_group']             = '组';
-$lang['acl_user']              = '用户';
+$lang['acl_group']             = '组:';
+$lang['acl_user']              = '用户:';
 $lang['acl_perms']             = '许可给';
 $lang['page']                  = '页面';
 $lang['namespace']             = '命名空间';

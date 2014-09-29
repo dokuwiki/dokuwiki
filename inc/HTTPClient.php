@@ -35,6 +35,19 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
         $this->proxy_ssl    = $conf['proxy']['ssl'];
         $this->proxy_except = $conf['proxy']['except'];
+
+        // allow enabling debugging via URL parameter (if debugging allowed)
+        if($conf['allowdebug']) {
+            if(
+                isset($_REQUEST['httpdebug']) ||
+                (
+                    isset($_SERVER['HTTP_REFERER']) &&
+                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                )
+            ) {
+                $this->debug = true;
+            }
+        }
     }
 
 
@@ -61,6 +74,9 @@ class DokuHTTPClient extends HTTPClient {
 
 }
 
+/**
+ * Class HTTPClientException
+ */
 class HTTPClientException extends Exception { }
 
 /**
@@ -249,7 +265,6 @@ class HTTPClient {
             if (empty($port)) $port = 8080;
         }else{
             $request_url = $path;
-            $server      = $server;
             if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
         }
 
@@ -280,7 +295,6 @@ class HTTPClient {
                 }
             }
             $headers['Content-Length'] = strlen($data);
-            $rmethod = 'POST';
         }elseif($method == 'GET'){
             $data = ''; //no data allowed on GET requests
         }
@@ -343,7 +357,7 @@ class HTTPClient {
 
         try {
             //set non-blocking
-            stream_set_blocking($socket, false);
+            stream_set_blocking($socket, 0);
 
             // build request
             $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -458,7 +472,7 @@ class HTTPClient {
 
                     if ($chunk_size > 0) {
                         $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
-                        $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
+                        $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
             }elseif(isset($this->resp_headers['content-length']) && !isset($this->resp_headers['transfer-encoding'])){
@@ -480,7 +494,6 @@ class HTTPClient {
                 $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
             }else{
                 // read entire socket
-                $r_size = 0;
                 while (!feof($socket)) {
                     $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
                 }
@@ -509,7 +522,6 @@ class HTTPClient {
         if (!$this->keep_alive ||
                 (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')) {
             // close socket
-            $status = socket_get_status($socket);
             fclose($socket);
             unset(self::$connections[$connectionId]);
         }
@@ -796,7 +808,7 @@ class HTTPClient {
     function _buildHeaders($headers){
         $string = '';
         foreach($headers as $key => $value){
-            if(empty($value)) continue;
+            if($value === '') continue;
             $string .= $key.': '.$value.HTTP_NL;
         }
         return $string;

@@ -350,6 +350,16 @@ function store_data($d){
  */
 
 EOT;
+    // add any config options set by a previous installer
+    $preset = __DIR__.'/install.conf';
+    if(file_exists($preset)){
+        $output .= "# preset config options\n";
+        $output .= file_get_contents($preset);
+        $output .= "\n\n";
+        $output .= "# options selected in installer\n";
+        @unlink($preset);
+    }
+
     $output .= '$conf[\'title\'] = \''.addslashes($d['title'])."';\n";
     $output .= '$conf[\'lang\'] = \''.addslashes($LC)."';\n";
     $output .= '$conf[\'license\'] = \''.addslashes($d['license'])."';\n";
@@ -530,6 +540,11 @@ function check_functions(){
 
     if(version_compare(phpversion(),'5.2.0','<')){
         $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
+        $ok = false;
+    }
+
+    if(ini_get('mbstring.func_overload') != 0){
+        $error[] = $lang['i_mbfuncoverload'];
         $ok = false;
     }
 

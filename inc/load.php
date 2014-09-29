@@ -102,6 +102,10 @@ function load_autoload($name){
         'Doku_Renderer_xhtmlsummary' => DOKU_INC.'inc/parser/xhtmlsummary.php',
         'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php',
 
+        'DokuCLI'                => DOKU_INC.'inc/cli.php',
+        'DokuCLI_Options'        => DOKU_INC.'inc/cli.php',
+        'DokuCLI_Colors'         => DOKU_INC.'inc/cli.php',
+
     );
 
     if(isset($classes[$name])){
