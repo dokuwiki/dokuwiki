@@ -367,6 +367,6 @@ $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
-$lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently created at %s.';
-$lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s" with format "%s".';
+$lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently created at <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s".';
 //Setup VIM: ex: et ts=2 :

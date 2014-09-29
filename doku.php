@@ -50,13 +50,16 @@ $SUM = $INPUT->post->str('summary');
 
 
 //parse DATE_AT
-if($DATE_AT && $conf['date_at_format']) {
-    $date_o = DateTime::createFromFormat($conf['date_at_format'],$DATE_AT);
-    if(!$date_o) {
-        msg(sprintf($lang['unable_to_parse_date'], $DATE_AT,$conf['date_at_format']));
-        $DATE_AT = null;
-    } else {
-        $DATE_AT = $date_o->getTimestamp();
+if($DATE_AT) {
+    $date_parse = strtotime($DATE_AT);
+    if($date_parse) {
+        $DATE_AT = $date_parse;
+    } else { // check for UNIX Timestamp
+        $date_parse = @date('Ymd',$DATE_AT);
+        if(!$date_parse || $date_parse === '19700101') {
+            msg(sprintf($lang['unable_to_parse_date'], $DATE_AT));
+            $DATE_AT = null;
+        }
     }
 }
 
@@ -64,16 +67,16 @@ if($DATE_AT && $conf['date_at_format']) {
 if($DATE_AT) {
     $pagelog = new PageChangeLog($ID);
     $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
-    if($rev_t === '') {
-        $REV = '';
-    } else if ($rev_t === false) {
+    if($rev_t === '') { //current revision
+        $REV = null;
+        $DATE_AT = null;
+    } else if ($rev_t === false) { //page did not exist
         $rev_n = $pagelog->getRelativeRevision($DATE_AT,+1);
-        if($conf['date_at_format']) {
-            msg(sprintf($lang['page_nonexist_rev'], date($conf['date_at_format'],$DATE_AT),date($conf['date_at_format'],$rev_n)));
-        } else {
-            msg(sprintf($lang['page_nonexist_rev'], $DATE_AT,$rev_n));
-        }
-        $REV = $DATE_AT;
+        msg(sprintf($lang['page_nonexist_rev'], 
+            strftime($conf['dformat'],$DATE_AT),
+            wl($ID, array('rev' => $rev_n)),
+            strftime($conf['dformat'],$rev_n)));
+        $REV = $DATE_AT; //will result in a page not exists message
     } else {
         $REV = $rev_t;
     }
