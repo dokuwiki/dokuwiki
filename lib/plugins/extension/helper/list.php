@@ -333,7 +333,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * Shortens the URL for display
      *
      * @param string $url
-     *
      * @return string  HTML link
      */
     function shortlink($url){

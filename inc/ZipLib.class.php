@@ -16,6 +16,10 @@ class ZipLib {
     var $old_offset = 0;
     var $dirs = Array(".");
 
+    /**
+     * @param string $zip_name filename path to file
+     * @return array|int
+     */
     function get_List($zip_name) {
         $zip = @fopen($zip_name, 'rb');
         if(!$zip) return(0);
@@ -47,6 +51,11 @@ class ZipLib {
         return $ret;
     }
 
+    /**
+     * @param array $files   array filled with array(string filename, string data)
+     * @param bool  $compact
+     * @return array
+     */
     function Add($files,$compact) {
         if(!is_array($files[0])) $files=Array($files);
 
@@ -63,6 +72,10 @@ class ZipLib {
 
     /**
      * Zips recursively the $folder directory, from the $basedir directory
+     *
+     * @param string $folder filename path to file
+     * @param string|null $basedir
+     * @param string|null $parent
      */
     function Compress($folder, $basedir=null, $parent=null) {
         $full_path = $basedir."/".$parent.$folder;
@@ -73,6 +86,7 @@ class ZipLib {
         }
         $dir = new DirectoryIterator($full_path);
         foreach($dir as $file) {
+            /** @var DirectoryIterator $file */
             if(!$file->isDot()) {
                 $filename = $file->getFilename();
                 if($file->isDir()) {
@@ -87,6 +101,8 @@ class ZipLib {
 
     /**
      * Returns the Zip file
+     *
+     * @return string
      */
     function get_file() {
         $data = implode('', $this -> datasec);
@@ -97,6 +113,9 @@ class ZipLib {
             pack('V', strlen($ctrldir)) . pack('V', strlen($data)) . "\x00\x00";
     }
 
+    /**
+     * @param string $name the name of the directory
+     */
     function add_dir($name) {
         $name = str_replace("\\", "/", $name);
         $fr = "\x50\x4b\x03\x04\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00";
@@ -120,6 +139,11 @@ class ZipLib {
 
     /**
      * Add a file named $name from a string $data
+     *
+     * @param string $data
+     * @param string $name filename
+     * @param int $compact
+     * @return bool
      */
     function add_File($data, $name, $compact = 1) {
         $name     = str_replace('\\', '/', $name);
@@ -169,6 +193,9 @@ class ZipLib {
         return true;
     }
 
+    /**
+     * @return int
+     */
     function DosTime() {
         $timearray = getdate();
         if ($timearray['year'] < 1980) {
@@ -189,6 +216,11 @@ class ZipLib {
 
     /**
      * Extract a zip file $zn to the $to directory
+     *
+     * @param string $zn filename
+     * @param string $to filename path to file
+     * @param array $index
+     * @return array|int
      */
     function Extract ( $zn, $to, $index = Array(-1) ) {
         if(!@is_dir($to)) $this->_mkdir($to);
@@ -221,6 +253,11 @@ class ZipLib {
         return $stat;
     }
 
+    /**
+     * @param resource $zip
+     * @param array $header
+     * @return array
+     */
     function ReadFileHeader($zip, $header) {
         $binary_data = fread($zip, 30);
         $data = unpack('vchk/vid/vversion/vflag/vcompression/vmtime/vmdate/Vcrc/Vcompressed_size/Vsize/vfilename_len/vextra_len', $binary_data);
@@ -257,6 +294,10 @@ class ZipLib {
         return $header;
     }
 
+    /**
+     * @param resource $zip
+     * @return array
+     */
     function ReadCentralFileHeaders($zip){
         $binary_data = fread($zip, 46);
         $header = unpack('vchkid/vid/vversion/vversion_extracted/vflag/vcompression/vmtime/vmdate/Vcrc/Vcompressed_size/Vsize/vfilename_len/vextra_len/vcomment_len/vdisk/vinternal/Vexternal/Voffset', $binary_data);
@@ -298,6 +339,11 @@ class ZipLib {
         return $header;
     }
 
+    /**
+     * @param resource $zip
+     * @param string   $zip_name filename path to file
+     * @return array
+     */
     function ReadCentralDir($zip,$zip_name) {
         $size = filesize($zip_name);
         if ($size < 277){
@@ -338,6 +384,12 @@ class ZipLib {
         return $centd;
     }
 
+    /**
+     * @param array    $header
+     * @param string   $to     filename path to file
+     * @param resource $zip
+     * @return bool|int
+     */
     function ExtractFile($header,$to,$zip) {
         $header = $this->readfileheader($zip, $header);
 
@@ -418,12 +470,19 @@ class ZipLib {
      * centralize mkdir calls and use dokuwiki io functions
      *
      * @author Christopher Smith <chris@jalakai.co.uk>
+     *
+     * @param string $d filename path to file
+     * @return bool|int|string
      */
     function _mkdir($d) {
         return io_mkdir_p($d);
     }
 
-
+    /**
+     * @param string $zn
+     * @param string $name
+     * @return null|string
+     */
     function ExtractStr($zn, $name) {
         $zip = @fopen($zn,'rb');
         if(!$zip) return(null);
@@ -448,8 +507,13 @@ class ZipLib {
         return null;
     }
 
+    /**
+     * @param array $header
+     * @param resource $zip
+     * @return null|string
+     */
     function ExtractStrFile($header,$zip) {
-        $hdr = $this->readfileheader($zip);
+        $hdr = $this->readfileheader($zip, $header);
         $binary_data = '';
         if (!($header['external']==0x41FF0010) && !($header['external']==16)) {
             if ($header['compression']==0) {
@@ -487,6 +551,10 @@ class ZipLib {
         return null;
     }
 
+    /**
+     * @param string $val
+     * @return int|string
+     */
     function _ret_bytes($val) {
         $val = trim($val);
         $last = $val{strlen($val)-1};

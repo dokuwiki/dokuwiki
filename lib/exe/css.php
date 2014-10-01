@@ -162,7 +162,7 @@ function css_out(){
  * most of this function is error handling to show a nice useful error when
  * LESS compilation fails
  *
- * @param $css
+ * @param string $css
  * @return string
  */
 function css_parseless($css) {
@@ -222,6 +222,10 @@ function css_parseless($css) {
  * (sans the surrounding __ and with a ini_ prefix)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @param array $replacements  array(placeholder => value)
+ * @return string
  */
 function css_applystyle($css, $replacements) {
     // we convert ini replacements to LESS variable names
@@ -250,6 +254,7 @@ function css_applystyle($css, $replacements) {
  * the stylesheet modes
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $tpl the used template
  * @return array with keys 'stylesheets' and 'replacements'
  */
@@ -320,6 +325,10 @@ function css_styleini($tpl) {
  * Amend paths used in replacement relative urls, refer FS#2879
  *
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param array $replacements with key-value pairs
+ * @param string $location
+ * @return array
  */
 function css_fixreplacementurls($replacements, $location) {
     foreach($replacements as $key => $value) {
@@ -403,6 +412,10 @@ function css_filetypes(){
 /**
  * Loads a given file and fixes relative URLs with the
  * given location prefix
+ *
+ * @param string $file file system path
+ * @param string $location
+ * @return string
  */
 function css_loadfile($file,$location=''){
     $css_file = new DokuCssFile($file);
@@ -501,6 +514,9 @@ class DokuCssFile {
  * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
+ *
+ * @param array $match
+ * @return string
  */
 function css_datauri($match){
     global $conf;
@@ -528,9 +544,11 @@ function css_datauri($match){
  * Returns a list of possible Plugin Styles (no existance check here)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $mediatype
+ * @return array
  */
 function css_pluginstyles($mediatype='screen'){
-    global $lang;
     $list = array();
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -549,6 +567,9 @@ function css_pluginstyles($mediatype='screen'){
  * Very simple CSS optimizer
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @return string
  */
 function css_compress($css){
     //strip comments through a callback
@@ -585,6 +606,9 @@ function css_compress($css){
  * Keeps short comments (< 5 chars) to maintain typical browser hacks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $matches
+ * @return string
  */
 function css_comment_cb($matches){
     if(strlen($matches[2]) > 4) return '';
@@ -596,7 +620,7 @@ function css_comment_cb($matches){
  *
  * Strips one line comments but makes sure it will not destroy url() constructs with slashes
  *
- * @param $matches
+ * @param array $matches
  * @return string
  */
 function css_onelinecomment_cb($matches) {

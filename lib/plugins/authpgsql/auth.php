@@ -104,7 +104,7 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
      *
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
-     * @param   array $keys
+     * @param   string[] $keys
      * @param   bool  $wop
      * @return  bool
      */
@@ -340,7 +340,7 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param  string $query  SQL string that contains the query
-     * @return array the result table
+     * @return array|false the result table
      */
     protected function _queryDB($query) {
         $resultarray = array();
@@ -363,6 +363,9 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
      * MySQL one because it does NOT return the last insertID
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $query
+     * @return bool
      */
     protected function _modifyDB($query) {
         if($this->dbcon) {
@@ -396,6 +399,8 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
      * Commit a transaction
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @return bool
      */
     protected function _unlockTables() {
         if($this->dbcon) {

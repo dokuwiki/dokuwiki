@@ -799,7 +799,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      *
      * The directory is registered for cleanup when the class is destroyed
      *
-     * @return bool|string
+     * @return false|string
      */
     protected function mkTmpDir(){
         $dir = io_mktmpdir();
@@ -1079,7 +1079,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @param string $file The file to analyze
-     * @return string|bool false if the file can't be read, otherwise an "extension"
+     * @return string|false false if the file can't be read, otherwise an "extension"
      */
     private function guess_archive($file) {
         $fh = fopen($file, 'rb');
@@ -1095,6 +1095,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
     /**
      * Copy with recursive sub-directory support
+     *
+     * @param string $src filename path to file
+     * @param string $dst filename path to file
+     * @return bool|int|string
      */
     private function dircopy($src, $dst) {
         global $conf;

@@ -115,7 +115,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * Check if the given config strings are set
      *
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
-     * @param   array $keys
+     *
+     * @param   string[] $keys
      * @param   bool  $wop is this a check for a write operation?
      * @return  bool
      */
@@ -668,7 +669,6 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @param  string  $user username of the user whose data is to be removed from the cache
      *                       if null, empty the whole cache
-     * @return none
      */
     protected function _flushUserInfoCache($user=null) {
         if (is_null($user)) {
@@ -750,7 +750,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param  string $user  user's nick to get data for
-     * @return bool|array false on error, user info on success
+     * @return false|array false on error, user info on success
      */
     protected function _retrieveUserInfo($user) {
         $sql    = str_replace('%{user}', $this->_escape($user), $this->getConf('getUserInfo'));
@@ -837,7 +837,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param  string $group   group name which id is desired
-     * @return mixed group id
+     * @return false|string group id
      */
     protected function _getGroupID($group) {
         if($this->dbcon) {
@@ -910,7 +910,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param string $query  SQL string that contains the query
-     * @return array with the result table
+     * @return array|false with the result table
      */
     protected function _queryDB($query) {
         if($this->getConf('debug') >= 2) {
@@ -1001,6 +1001,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * abrogated.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @return bool
      */
     protected function _unlockTables() {
         if($this->dbcon) {

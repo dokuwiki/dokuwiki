@@ -58,9 +58,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
     }
 
-     /**
-      * Return prompt for admin menu
-      */
+    /**
+     * Return prompt for admin menu
+     *
+     * @param string $language
+     * @return string
+     */
     public function getMenuText($language) {
 
         if (!is_null($this->_auth))
@@ -71,6 +74,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * return sort order for position in admin menu
+     *
+     * @return int
      */
     public function getMenuSort() {
         return 2;
@@ -78,6 +83,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * Handle user request
+     *
+     * @return bool
      */
     public function handle() {
         global $INPUT;
@@ -128,6 +135,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * Output appropriate html
+     *
+     * @return bool
      */
     public function html() {
         global $ID;
@@ -939,8 +948,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Returns cleaned user data
      *
      * @param array $candidate raw values of line from input file
-     * @param $error
-     * @return array|bool cleaned data or false
+     * @param string $error
+     * @return array|false cleaned data or false
      */
     protected function _cleanImportUser($candidate, & $error){
         global $INPUT;
@@ -1023,6 +1032,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * wrapper for is_uploaded_file to facilitate overriding by test suite
+     *
+     * @param string $file filename
+     * @return bool
      */
     protected function _isUploadedFile($file) {
         return is_uploaded_file($file);
@@ -1033,6 +1045,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @deprecated    remove when dokuwiki php requirement increases to 5.3+
      *                also associated unit test & mock access method
+     *
+     * @param string $csv string to parse
+     * @return array
      */
     protected function _getcsv($csv) {
         return function_exists('str_getcsv') ? str_getcsv($csv) : $this->str_getcsv($csv);
@@ -1043,6 +1058,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * loosely based on www.php.net/str_getcsv#88311
      *
      * @deprecated    remove when dokuwiki php requirement increases to 5.3+
+     *
+     * @param string $str string to parse
+     * @return array
      */
     protected function str_getcsv($str) {
         $fp = fopen("php://temp/maxmemory:1048576", 'r+');    // 1MiB
