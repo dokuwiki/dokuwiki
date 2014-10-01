@@ -337,7 +337,7 @@ function buildAttributes($params, $skipempty = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @return string[string] with the data: array(pageid=>name, ... )
+ * @return string[] with the data: array(pageid=>name, ... )
  */
 function breadcrumbs() {
     // we prepare the breadcrumbs early for quick session closing

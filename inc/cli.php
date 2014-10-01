@@ -471,7 +471,7 @@ class DokuCLI_Options {
      *
      * @param string $option
      * @param bool|string $default what to return if the option was not set
-     * @return false|string
+     * @return bool|string
      */
     public function getOpt($option, $default = false) {
         if(isset($this->options[$option])) return $this->options[$option];

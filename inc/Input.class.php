@@ -131,7 +131,7 @@ class Input {
      * @param string    $name Parameter name
      * @param mixed     $default If parameter is not set, initialize with this value
      * @param bool      $nonempty Init with $default if parameter is set but empty()
-     * @return &mixed
+     * @return mixed (reference)
      */
     public function &ref($name, $default = '', $nonempty = false) {
         if(!isset($this->access[$name]) || ($nonempty && empty($this->access[$name]))) {

@@ -1248,7 +1248,7 @@ class Doku_Indexer {
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
      * @param string $line
-     * @param string $id
+     * @param string|int $id
      * @param int    $count
      * @return string
      */

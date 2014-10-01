@@ -177,7 +177,7 @@ function html_topbtn(){
  * @param string         $name
  * @param string         $id
  * @param string         $akey   access key
- * @param string[string] $params key-value pairs added as hidden inputs
+ * @param string[] $params key-value pairs added as hidden inputs
  * @param string         $method
  * @param string         $tooltip
  * @param bool|string    $label  label text, false: lookup btn_$name in localization

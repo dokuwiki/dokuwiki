@@ -78,7 +78,7 @@ class Doku_Cli_Opts {
      * @param string $bin_file      executing file name - this MUST be passed the __FILE__ constant
      * @param string $short_options short options
      * @param array  $long_options  (optional) long options
-     * @return Doku_Cli_Opts_Container or Doku_Cli_Opts_Error
+     * @return Doku_Cli_Opts_Container|Doku_Cli_Opts_Error
      */
     function & getOptions($bin_file, $short_options, $long_options = null) {
         $args = Doku_Cli_Opts::readPHPArgv();

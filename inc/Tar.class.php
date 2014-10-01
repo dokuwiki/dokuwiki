@@ -530,7 +530,7 @@ class Tar {
      * Decode the given tar file header
      *
      * @param string $block a 512 byte block containign the header data
-     * @return array|bool
+     * @return array|false
      */
     protected function parseHeader($block) {
         if(!$block || strlen($block) != 512) return false;

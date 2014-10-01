@@ -616,12 +616,13 @@ function p_sort_modes($a, $b){
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $mode
- * @param array  $instructions
+ * @param array|null|false  $instructions
  * @param array  $info returns render info like enabled toc and cache
  * @return null|string rendered output
  */
 function p_render($mode,$instructions,&$info){
     if(is_null($instructions)) return '';
+    if($instructions === false) return '';
 
     $Renderer = p_get_renderer($mode);
     if (is_null($Renderer)) return null;

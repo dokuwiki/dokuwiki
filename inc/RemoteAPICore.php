@@ -318,7 +318,7 @@ class RemoteAPICore {
      * @return array
      */
     function search($query){
-        $regex = '';
+        $regex = array();
         $data  = ft_pageSearch($query,$regex);
         $pages = array();
 
