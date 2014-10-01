@@ -40,10 +40,18 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
         }
     }
 
+    /**
+     * @param string|int $data iso date(yyyy[-]mm[-]dd[ hh:mm[:ss]]) or timestamp
+     * @return IXR_Date
+     */
     function toDate($data) {
         return new IXR_Date($data);
     }
 
+    /**
+     * @param string $data
+     * @return IXR_Base64
+     */
     function toFile($data) {
         return new IXR_Base64($data);
     }

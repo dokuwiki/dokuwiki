@@ -68,6 +68,7 @@ function tpl_basedir($tpl='') {
  * handled by this function. ACL stuff is not done here either.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @triggers TPL_ACT_RENDER
  * @triggers TPL_CONTENT_DISPLAY
  * @param bool $prependTOC should the TOC be displayed here?
@@ -186,6 +187,7 @@ function tpl_content_core() {
  * a false argument
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $return Should the TOC be returned instead to be printed?
  * @return string
  */
@@ -243,6 +245,8 @@ function tpl_toc($return = false) {
  * Handle the admin page contents
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return bool
  */
 function tpl_admin() {
     global $INFO;
@@ -277,6 +281,7 @@ function tpl_admin() {
  * This has to go into the head section of your template.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @triggers TPL_METAHEADER_OUTPUT
  * @param  bool $alt Should feeds and alternative format links be added?
  * @return bool
@@ -426,10 +431,12 @@ function tpl_metaheaders($alt = true) {
  * instances. Attributes are given as key value pairs. Values will be HTML
  * encoded automatically so they should be provided as is in the $data array.
  *
- * For tags having a body attribute specify the the body data in the special
+ * For tags having a body attribute specify the body data in the special
  * attribute '_data'. This field will NOT BE ESCAPED automatically.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
  */
 function _tpl_metaheaders_action($data) {
     foreach($data as $tag => $inst) {
@@ -456,6 +463,12 @@ function _tpl_metaheaders_action($data) {
  * Just builds a link.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $url
+ * @param string $name
+ * @param string $more
+ * @param bool $return return html
+ * @return bool|string html or true
  */
 function tpl_link($url, $name, $more = '', $return = false) {
     $out = '<a href="'.$url.'" ';
@@ -472,6 +485,10 @@ function tpl_link($url, $name, $more = '', $return = false) {
  * Wrapper around html_wikilink
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string      $id   page id
+ * @param string|null $name the name of the link
+ * @return bool
  */
 function tpl_pagelink($id, $name = null) {
     print '<bdi>'.html_wikilink($id, $name).'</bdi>';
@@ -485,6 +502,9 @@ function tpl_pagelink($id, $name = null) {
  * returns false if none is available
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id page id
+ * @return false|string
  */
 function tpl_getparent($id) {
     $parent = getNS($id).':';
@@ -539,7 +559,7 @@ function tpl_button($type, $return = false) {
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
  *
- * @param string $type
+ * @param string $type action command
  * @param string $pre prefix of link
  * @param string $suf suffix of link
  * @param string $inner innerHML of link
@@ -767,7 +787,8 @@ function tpl_get_action($type) {
  * Wrapper around tpl_button() and tpl_actionlink()
  *
  * @author Anika Henke <anika@selfthinker.org>
- * @param
+ *
+ * @param string        $type action command
  * @param bool          $link link or form button?
  * @param string|bool   $wrapper HTML element wrapper
  * @param bool          $return return or print
@@ -801,6 +822,7 @@ function tpl_action($type, $link = false, $wrapper = false, $return = false, $pr
  * autocompletion feature (MSIE and Firefox)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $ajax
  * @param bool $autocomplete
  * @return bool
@@ -829,6 +851,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * Print the breadcrumbs trace
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $sep Separator between entries
  * @return bool
  */
@@ -870,6 +893,7 @@ function tpl_breadcrumbs($sep = '•') {
  * @author Sean Coates <sean@caedmon.net>
  * @author <fredrik@averpil.com>
  * @todo   May behave strangely in RTL languages
+ *
  * @param string $sep Separator between entries
  * @return bool
  */
@@ -920,6 +944,7 @@ function tpl_youarehere($sep = ' » ') {
  * Could be enhanced with a profile link in future?
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @return bool
  */
 function tpl_userinfo() {
@@ -938,6 +963,7 @@ function tpl_userinfo() {
  * Print some info about the current page
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $ret return content instead of printing it
  * @return bool|string
  */
@@ -1001,6 +1027,7 @@ function tpl_pageinfo($ret = false) {
  * the given ID is used.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $id page id
  * @param bool   $ret return content instead of printing
  * @return bool|string
@@ -1038,6 +1065,7 @@ function tpl_pagetitle($id = null, $ret = false) {
  * Only allowed in: detail.php
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param array  $tags tags to try
  * @param string $alt alternative output if no data was found
  * @param null|string   $src the image src, uses global $SRC if not given
@@ -1128,7 +1156,7 @@ function tpl_get_img_meta() {
  * @param $maxheight int - maximal height of the image
  * @param $link bool     - link to the orginal size?
  * @param $params array  - additional image attributes
- * @return mixed Result of TPL_IMG_DISPLAY
+ * @return bool Result of TPL_IMG_DISPLAY
  */
 function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
@@ -1280,6 +1308,9 @@ function tpl_loadConfig() {
  * tpl_getLang($id)
  *
  * use this function to access template language variables
+ *
+ * @param string $id key of language string
+ * @return string
  */
 function tpl_getLang($id) {
     static $lang = array();
@@ -1311,6 +1342,9 @@ function tpl_locale_xhtml($id) {
 
 /**
  * Prepends appropriate path for a language dependent filename
+ *
+ * @param string $id id of localized text
+ * @return string wiki text
  */
 function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
@@ -1337,6 +1371,8 @@ function tpl_localeFN($id) {
  *
  * @triggers MEDIAMANAGER_CONTENT_OUTPUT
  * @param bool $fromajax - set true when calling this function via ajax
+ * @param string $sort
+
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_mediaContent($fromajax = false, $sort='natural') {
@@ -1511,6 +1547,9 @@ function tpl_mediaTree() {
  * Note: this will not use any pretty URLs
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $empty empty option label
+ * @param string $button submit button label
  */
 function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $ID;
@@ -1737,10 +1776,11 @@ function tpl_flush() {
  * If a given location starts with a colon it is assumed to be a media
  * file, otherwise it is assumed to be relative to the current template
  *
- * @param  array $search       locations to look at
- * @param  bool  $abs           if to use absolute URL
- * @param  array &$imginfo   filled with getimagesize()
+ * @param  string[] $search       locations to look at
+ * @param  bool     $abs           if to use absolute URL
+ * @param  array   &$imginfo   filled with getimagesize()
  * @return string
+ *
  * @author Andreas  Gohr <andi@splitbrain.org>
  */
 function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
@@ -1791,6 +1831,8 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
  *
  * @author Anika Henke <anika@selfthinker.org>
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file
  */
 function tpl_includeFile($file) {
     global $config_cascade;
@@ -1816,6 +1858,7 @@ function tpl_includeFile($file) {
  * Returns <link> tag for various icon types (favicon|mobile|generic)
  *
  * @author Anika Henke <anika@selfthinker.org>
+ *
  * @param  array $types - list of icon types to display (favicon|mobile|generic)
  * @return string
  */
@@ -1891,6 +1934,8 @@ function tpl_media() {
  * Return useful layout classes
  *
  * @author Anika Henke <anika@selfthinker.org>
+ *
+ * @return string
  */
 function tpl_classes() {
     global $ACT, $conf, $ID, $INFO;

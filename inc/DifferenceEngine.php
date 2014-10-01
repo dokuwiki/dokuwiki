@@ -14,6 +14,9 @@ class _DiffOp {
     var $orig;
     var $closing;
 
+    /**
+     * @return _DiffOp
+     */
     function reverse() {
         trigger_error("pure virtual", E_USER_ERROR);
     }
@@ -104,6 +107,21 @@ class _DiffOp_Change extends _DiffOp {
  */
 class _DiffEngine {
 
+    var $xchanged = array();
+    var $ychanged = array();
+    var $xv = array();
+    var $yv = array();
+    var $xind = array();
+    var $yind = array();
+    var $seq;
+    var $in_seq;
+    var $lcs;
+
+    /**
+     * @param array $from_lines
+     * @param array $to_lines
+     * @return _DiffOp[]
+     */
     function diff($from_lines, $to_lines) {
         $n_from = count($from_lines);
         $n_to = count($to_lines);
@@ -495,9 +513,9 @@ class Diff {
      * Constructor.
      * Computes diff between sequences of strings.
      *
-     * @param $from_lines array An array of strings.
-     *      (Typically these are lines from a file.)
-     * @param $to_lines array An array of strings.
+     * @param array $from_lines An array of strings.
+     *                          (Typically these are lines from a file.)
+     * @param array $to_lines   An array of strings.
      */
     function __construct($from_lines, $to_lines) {
         $eng = new _DiffEngine;
@@ -512,8 +530,9 @@ class Diff {
      *
      *  $diff = new Diff($lines1, $lines2);
      *  $rev = $diff->reverse();
-     * @return object A Diff object representing the inverse of the
-     *          original diff.
+     *
+     * @return Diff  A Diff object representing the inverse of the
+     *               original diff.
      */
     function reverse() {
         $rev = $this;
@@ -631,19 +650,19 @@ class MappedDiff extends Diff {
      * case-insensitve diffs, or diffs which ignore
      * changes in white-space.
      *
-     * @param $from_lines array An array of strings.
-     *  (Typically these are lines from a file.)
+     * @param string[] $from_lines         An array of strings.
+     *                                     (Typically these are lines from a file.)
      *
-     * @param $to_lines array An array of strings.
+     * @param string[] $to_lines           An array of strings.
      *
-     * @param $mapped_from_lines array This array should
-     *  have the same size number of elements as $from_lines.
-     *  The elements in $mapped_from_lines and
-     *  $mapped_to_lines are what is actually compared
-     *  when computing the diff.
+     * @param string[] $mapped_from_lines  This array should
+     *                                     have the same size number of elements as $from_lines.
+     *                                     The elements in $mapped_from_lines and
+     *                                     $mapped_to_lines are what is actually compared
+     *                                     when computing the diff.
      *
-     * @param $mapped_to_lines array This array should
-     *  have the same number of elements as $to_lines.
+     * @param string[] $mapped_to_lines    This array should
+     *                                     have the same number of elements as $to_lines.
      */
     function __construct($from_lines, $to_lines, $mapped_from_lines, $mapped_to_lines) {
 
@@ -697,12 +716,13 @@ class DiffFormatter {
     /**
      * Format a diff.
      *
-     * @param $diff object A Diff object.
+     * @param Diff $diff A Diff object.
      * @return string The formatted output.
      */
     function format($diff) {
 
         $xi = $yi = 1;
+        $x0 = $y0 = 0;
         $block = false;
         $context = array();
 
@@ -752,6 +772,13 @@ class DiffFormatter {
         return $this->_end_diff();
     }
 
+    /**
+     * @param int $xbeg
+     * @param int $xlen
+     * @param int $ybeg
+     * @param int $ylen
+     * @param array $edits
+     */
     function _block($xbeg, $xlen, $ybeg, $ylen, &$edits) {
         $this->_start_block($this->_block_header($xbeg, $xlen, $ybeg, $ylen));
         foreach ($edits as $edit) {
@@ -779,6 +806,13 @@ class DiffFormatter {
         return $val;
     }
 
+    /**
+     * @param int $xbeg
+     * @param int $xlen
+     * @param int $ybeg
+     * @param int $ylen
+     * @return string
+     */
     function _block_header($xbeg, $xlen, $ybeg, $ylen) {
         if ($xlen > 1)
             $xbeg .= "," . ($xbeg + $xlen - 1);
@@ -788,6 +822,9 @@ class DiffFormatter {
         return $xbeg . ($xlen ? ($ylen ? 'c' : 'd') : 'a') . $ybeg;
     }
 
+    /**
+     * @param string $header
+     */
     function _start_block($header) {
         echo $header;
     }
@@ -896,6 +933,9 @@ class _HWLDF_WordAccumulator {
         $this->_tag = $new_tag;
     }
 
+    /**
+     * @param string $new_tag
+     */
     function _flushLine($new_tag) {
         $this->_flushGroup($new_tag);
         if ($this->_line != '')
@@ -1055,6 +1095,10 @@ class TableDiffFormatter extends DiffFormatter {
         $this->trailing_context_lines = 2;
     }
 
+    /**
+     * @param Diff $diff
+     * @return string
+     */
     function format($diff) {
         // Preserve whitespaces by converting some to non-breaking spaces.
         // Do not convert all of them to allow word-wrap.
@@ -1165,6 +1209,10 @@ class InlineDiffFormatter extends DiffFormatter {
         $this->trailing_context_lines = 2;
     }
 
+    /**
+     * @param Diff $diff
+     * @return string
+     */
     function format($diff) {
         // Preserve whitespaces by converting some to non-breaking spaces.
         // Do not convert all of them to allow word-wrap.

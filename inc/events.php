@@ -165,13 +165,13 @@ class Doku_Event_Handler {
      *
      * register a hook for an event
      *
-     * @param  $event   string   name used by the event, (incl '_before' or '_after' for triggers)
-     * @param  $advise  string
-     * @param  $obj     object   object in whose scope method is to be executed,
+     * @param  string   $event   string   name used by the event, (incl '_before' or '_after' for triggers)
+     * @param  string   $advise
+     * @param  object   $obj     object in whose scope method is to be executed,
      *                             if NULL, method is assumed to be a globally available function
-     * @param  $method  string   event handler function
-     * @param  $param   mixed    data passed to the event handler
-     * @param  $seq     int      sequence number for ordering hook execution (ascending)
+     * @param  string   $method  event handler function
+     * @param  mixed    $param   data passed to the event handler
+     * @param  int      $seq     sequence number for ordering hook execution (ascending)
      */
     function register_hook($event, $advise, $obj, $method, $param=null, $seq=0) {
         $seq = (int)$seq;
@@ -216,14 +216,14 @@ class Doku_Event_Handler {
  *
  * function wrapper to process (create, trigger and destroy) an event
  *
- * @param  $name               string   name for the event
- * @param  $data               mixed    event data
- * @param  $action             callback (optional, default=NULL) default action, a php callback function
- * @param  $canPreventDefault  bool     (optional, default=true) can hooks prevent the default action
+ * @param  string   $name               name for the event
+ * @param  mixed    $data               event data
+ * @param  callback $action             (optional, default=NULL) default action, a php callback function
+ * @param  bool     $canPreventDefault  (optional, default=true) can hooks prevent the default action
  *
  * @return mixed                        the event results value after all event processing is complete
- *                                         by default this is the return value of the default action however
- *                                         it can be set or modified by event handler hooks
+ *                                      by default this is the return value of the default action however
+ *                                      it can be set or modified by event handler hooks
  */
 function trigger_event($name, &$data, $action=null, $canPreventDefault=true) {
 

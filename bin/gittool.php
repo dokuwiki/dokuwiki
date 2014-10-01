@@ -101,7 +101,7 @@ class GitToolCLI extends DokuCLI {
     /**
      * Tries to install the given extensions using git clone
      *
-     * @param       $extensions
+     * @param array      $extensions
      */
     public function cmd_clone($extensions) {
         $errors    = array();
@@ -130,7 +130,7 @@ class GitToolCLI extends DokuCLI {
     /**
      * Tries to install the given extensions using git clone with fallback to install
      *
-     * @param       $extensions
+     * @param array      $extensions
      */
     public function cmd_install($extensions) {
         $errors    = array();
@@ -291,7 +291,7 @@ class GitToolCLI extends DokuCLI {
      * Returns the repository for the given extension
      *
      * @param $extension
-     * @return bool|string
+     * @return false|string
      */
     private function getSourceRepo($extension) {
         /** @var helper_plugin_extension_extension $ext */

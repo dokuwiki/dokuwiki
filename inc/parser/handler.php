@@ -711,6 +711,9 @@ class Doku_Handler_CallWriter {
 
     var $Handler;
 
+    /**
+     * @param Doku_Handler $Handler
+     */
     function Doku_Handler_CallWriter(& $Handler) {
         $this->Handler = & $Handler;
     }
@@ -747,7 +750,7 @@ class Doku_Handler_Nest {
     /**
      * constructor
      *
-     * @param  object     $CallWriter     the renderers current call writer
+     * @param  Doku_Handler_CallWriter $CallWriter     the renderers current call writer
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */

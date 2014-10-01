@@ -108,6 +108,9 @@ class Mailer {
 
     /**
      * Callback function to automatically embed images referenced in HTML templates
+     *
+     * @param array $matches
+     * @return string placeholder
      */
     protected function autoembed_cb($matches) {
         static $embeds = 0;
@@ -160,6 +163,8 @@ class Mailer {
      *
      * Whatever is set here is directly passed to PHP's mail() command as last
      * parameter. Depending on the PHP setup this might break mailing alltogether
+     *
+     * @param string $param
      */
     public function setParameters($param) {
         $this->sendparam = $param;
@@ -265,6 +270,8 @@ class Mailer {
      * Placeholders can be used to reference embedded attachments
      *
      * You probably want to use setBody() instead
+     *
+     * @param string $html
      */
     public function setHTML($html) {
         $this->html = $html;
@@ -274,6 +281,8 @@ class Mailer {
      * Set the plain text part of the mail
      *
      * You probably want to use setBody() instead
+     *
+     * @param string $text
      */
     public function setText($text) {
         $this->text = $text;
@@ -340,8 +349,8 @@ class Mailer {
      * Example:
      *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string|array  $addresses Multiple adresses separated by commas or as array
-     * @return bool|string  the prepared header (can contain multiple lines)
+     * @param string|string[]  $addresses Multiple adresses separated by commas or as array
+     * @return false|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
         // No named recipients for To: in Windows (see FS#652)
@@ -418,6 +427,8 @@ class Mailer {
      * Prepare the mime multiparts for all attachments
      *
      * Replaces placeholders in the HTML with the correct CIDs
+     *
+     * @return string mime multiparts
      */
     protected function prepareAttachments() {
         $mime = '';
@@ -565,9 +576,9 @@ class Mailer {
     /**
      * Returns a complete, EOL terminated header line, wraps it if necessary
      *
-     * @param $key
-     * @param $val
-     * @return string
+     * @param string $key
+     * @param string $val
+     * @return string line
      */
     protected function wrappedHeaderLine($key, $val){
         return wordwrap("$key: $val", 78, MAILHEADER_EOL.'  ').MAILHEADER_EOL;

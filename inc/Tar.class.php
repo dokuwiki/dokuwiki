@@ -105,6 +105,9 @@ class Tar {
      *
      * The archive is closed afer reading the contents, because rewinding is not possible in bzip2 streams.
      * Reopen the file with open() again if you want to do additional operations
+     *
+     * @return array
+     * @throws TarIOException
      */
     public function contents() {
         if($this->closed || !$this->file) throw new TarIOException('Can not read from a closed archive');
@@ -270,6 +273,7 @@ class Tar {
      * Add a file to the current TAR archive using an existing file in the filesystem
      *
      * @todo handle directory adding
+     *
      * @param string $file the original file
      * @param string $name the name to use for the file in the archive
      * @throws TarIOException
@@ -377,6 +381,10 @@ class Tar {
      * Returns the created in-memory archive data
      *
      * This implicitly calls close() on the Archive
+     *
+     * @param int $comptype
+     * @param int $complevel
+     * @return mixed|string
      */
     public function getArchive($comptype = Tar::COMPRESS_AUTO, $complevel = 9) {
         $this->close();
@@ -395,7 +403,7 @@ class Tar {
      * Note: It more memory effective to specify the filename in the create() function and
      * let the library work on the new file directly.
      *
-     * @param     $file
+     * @param string $file
      * @param int $comptype
      * @param int $complevel
      * @throws TarIOException
@@ -571,7 +579,7 @@ class Tar {
     /**
      * Cleans up a path and removes relative parts, also strips leading slashes
      *
-     * @param string $p_dir
+     * @param string $path
      * @return string
      */
     public function cleanPath($path) {
@@ -591,7 +599,7 @@ class Tar {
     /**
      * Checks if the given compression type is available and throws an exception if not
      *
-     * @param $comptype
+     * @param int $comptype
      * @throws TarIllegalCompressionException
      */
     protected function compressioncheck($comptype) {

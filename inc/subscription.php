@@ -444,11 +444,11 @@ class Subscription {
      * Send the diff for some media change
      *
      * @fixme this should embed thumbnails of images in HTML version
+     *
      * @param string   $subscriber_mail The target mail address
      * @param string   $template        Mail template ('uploadmail', ...)
      * @param string   $id              Media file for which the notification is
      * @param int|bool $rev             Old revision if any
-     * @return bool                     true if successfully sent
      */
     public function send_media_diff($subscriber_mail, $template, $id, $rev = false) {
         global $conf;
@@ -619,6 +619,7 @@ class Subscription {
 
     /**
      * Get a valid message id for a certain $id and revision (or the current revision)
+     *
      * @param string $id  The id of the page (or media file) the message id should be for
      * @param string $rev The revision of the page, set to the current revision of the page $id if not set
      * @return string

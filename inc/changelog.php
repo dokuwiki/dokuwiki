@@ -725,8 +725,10 @@ abstract class ChangeLog {
      * If file larger than $chuncksize, only chunck is read that could contain $rev.
      *
      * @param int $rev   revision timestamp
-     * @return array(fp, array(changeloglines), $head, $tail, $eof)|bool
-     *     returns false when not succeed. fp only defined for chuck reading, needs closing.
+     * @return array|false
+     *     if success returns array(fp, array(changeloglines), $head, $tail, $eof)
+     *     where fp only defined for chuck reading, needs closing.
+     *     otherwise false
      */
     protected function readloglines($rev) {
         $file = $this->getChangelogFilename();

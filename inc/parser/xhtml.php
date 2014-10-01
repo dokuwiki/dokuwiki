@@ -58,10 +58,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Register a new edit section range
      *
-     * @param $type  string The section type identifier
-     * @param $title string The section title
-     * @param $start int    The byte position for the edit start
-     * @return string A marker class for the starting HTML element
+     * @param string $type   The section type identifier
+     * @param string $title  The section title
+     * @param int    $start  The byte position for the edit start
+     * @return string  A marker class for the starting HTML element
+     *
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function startSectionEdit($start, $type, $title = null) {
@@ -72,8 +73,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Finish an edit section range
      *
-     * @param $end     int The byte position for the edit end; null for the rest of
-     *                 the page
+     * @param int  $end     The byte position for the edit end; null for the rest of the page
+     *
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function finishSectionEdit($end = null) {

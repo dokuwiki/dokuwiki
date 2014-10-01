@@ -134,6 +134,11 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
 
 /**
  * List all mediafiles in a namespace
+ *   $opts['depth']     recursion level, 0 for all
+ *   $opts['showmsg']   shows message if invalid media id is used
+ *   $opts['skipacl']   skip acl checking
+ *   $opts['pattern']   check given pattern
+ *   $opts['hash']      add hashes to result list
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  */

@@ -140,6 +140,10 @@ class IXR_Message {
     var $_lastseen;
     // The XML parser
     var $_parser;
+
+    /**
+     * @param string $message
+     */
     function IXR_Message ($message) {
         $this->message = $message;
     }
@@ -684,6 +688,13 @@ class IXR_IntrospectionServer extends IXR_Server {
             'Returns a documentation string for the specified method'
         );
     }
+
+    /**
+     * @param string   $method
+     * @param string   $callback
+     * @param string[] $args
+     * @param string   $help
+     */
     function addCallback($method, $callback, $args, $help) {
         $this->callbacks[$method] = $callback;
         $this->signatures[$method] = $args;

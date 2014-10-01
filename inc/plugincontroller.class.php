@@ -114,7 +114,7 @@ class Doku_Plugin_Controller {
      * Whether plugin is disabled
      *
      * @param string $plugin name of plugin
-     * @return bool; true disabled, false enabled
+     * @return bool  true disabled, false enabled
      */
     public function isdisabled($plugin) {
         return empty($this->tmp_plugins[$plugin]);
@@ -124,7 +124,7 @@ class Doku_Plugin_Controller {
      * Disable the plugin
      *
      * @param string $plugin name of plugin
-     * @return bool; true saving succeed, false saving failed
+     * @return bool  true saving succeed, false saving failed
      */
     public function disable($plugin) {
         if(array_key_exists($plugin,$this->plugin_cascade['protected'])) return false;
@@ -136,7 +136,7 @@ class Doku_Plugin_Controller {
      * Enable the plugin
      *
      * @param string $plugin name of plugin
-     * @return bool; true saving succeed, false saving failed
+     * @return bool  true saving succeed, false saving failed
      */
     public function enable($plugin) {
         if(array_key_exists($plugin,$this->plugin_cascade['protected'])) return false;
@@ -227,7 +227,7 @@ class Doku_Plugin_Controller {
      * @param bool $forceSave;
      *              false to save only when config changed
      *              true to always save
-     * @return bool; true saving succeed, false saving failed
+     * @return bool  true saving succeed, false saving failed
      */
     protected function saveList($forceSave = false) {
         global $conf;
@@ -300,12 +300,9 @@ class Doku_Plugin_Controller {
     /**
      * Returns a list of available plugin components of given type
      *
-     * @param string $type, plugin_type name;
-     *                      the type of plugin to return,
-     * @param bool   $enabled;
-     *                      true to return enabled plugins,
-     *                      false to return disabled plugins
-     *
+     * @param string $type      plugin_type name; the type of plugin to return,
+     * @param bool   $enabled   true to return enabled plugins,
+     *                          false to return disabled plugins
      * @return array of plugin components of requested type
      */
     protected function _getListByType($type, $enabled) {
