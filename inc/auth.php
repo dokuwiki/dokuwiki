@@ -283,7 +283,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param  string $token The authentication token
- * @return boolean true (or will exit on failure)
+ * @return boolean|null true (or will exit on failure)
  */
 function auth_validateToken($token) {
     if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {

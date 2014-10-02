@@ -655,7 +655,7 @@ function p_render($mode,$instructions,&$info){
  * Figure out the correct renderer class to use for $mode,
  * instantiate and return it
  *
- * @param $mode string Mode of the renderer to get
+ * @param string $mode Mode of the renderer to get
  * @return null|Doku_Renderer The renderer
  *
  * @author Christopher Smith <chris@jalakai.co.uk>

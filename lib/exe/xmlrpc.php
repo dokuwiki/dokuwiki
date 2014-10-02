@@ -23,6 +23,11 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
         $this->IXR_Server();
     }
 
+    /**
+     * @param string $methodname
+     * @param array $args
+     * @return IXR_Error|mixed
+     */
     function call($methodname, $args){
         try {
             $result = $this->remote->call($methodname, $args);

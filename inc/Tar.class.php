@@ -53,6 +53,7 @@ class Tar {
 
     protected $file = '';
     protected $comptype = Tar::COMPRESS_AUTO;
+    /** @var  resource|int */
     protected $fh;
     protected $memory = '';
     protected $closed = true;
@@ -530,7 +531,7 @@ class Tar {
      * Decode the given tar file header
      *
      * @param string $block a 512 byte block containign the header data
-     * @return array|false
+     * @return false|array
      */
     protected function parseHeader($block) {
         if(!$block || strlen($block) != 512) return false;
@@ -633,8 +634,14 @@ class Tar {
     }
 }
 
+/**
+ * Class TarIOException
+ */
 class TarIOException extends Exception {
 }
 
+/**
+ * Class TarIllegalCompressionException
+ */
 class TarIllegalCompressionException extends Exception {
 }

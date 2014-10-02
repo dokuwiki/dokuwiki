@@ -60,7 +60,7 @@ class DokuWiki_Plugin {
      * @return string  plugin name
      */
     function getPluginName() {
-        list($t, $p, $n) = explode('_', get_class($this), 4);
+        list(/* $t */, /* $p */, $n) = explode('_', get_class($this), 4);
         return $n;
     }
 
@@ -68,7 +68,7 @@ class DokuWiki_Plugin {
      * @return string  component name
      */
     function getPluginComponent() {
-        list($t, $p, $n, $c) = explode('_', get_class($this), 4);
+        list(/* $t */, /* $p */, /* $n */, $c) = explode('_', get_class($this), 4);
         return (isset($c)?$c:'');
     }
 

@@ -27,6 +27,9 @@ class Doku_Event {
 
     /**
      * event constructor
+     *
+     * @param string $name
+     * @param mixed $data
      */
     function Doku_Event($name, &$data) {
 
@@ -120,14 +123,18 @@ class Doku_Event {
      * stop any further processing of the event by event handlers
      * this function does not prevent the default action taking place
      */
-    function stopPropagation() { $this->_continue = false;  }
+    function stopPropagation() {
+        $this->_continue = false;
+    }
 
     /**
      * preventDefault
      *
      * prevent the default action taking place
      */
-    function preventDefault() { $this->_default = false;  }
+    function preventDefault() {
+        $this->_default = false;
+    }
 }
 
 /**

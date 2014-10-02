@@ -611,7 +611,7 @@ if(!function_exists('utf8_decode_numeric')){
      * Decodes numeric HTML entities to their correct UTF-8 characters
      *
      * @param $ent string A numeric entity
-     * @return string
+     * @return string|false
      */
     function utf8_decode_numeric($ent) {
         switch ($ent[2]) {
@@ -657,7 +657,7 @@ if(!class_exists('utf8_entity_decoder')){
          * Decodes any HTML entity to it's correct UTF-8 char equivalent
          *
          * @param string $ent An entity
-         * @return string
+         * @return string|false
          */
         function decode($ent) {
             if ($ent[1] == '#') {

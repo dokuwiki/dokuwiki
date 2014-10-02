@@ -14,6 +14,10 @@ if(!defined('DOKU_INC')) die();
  */
 class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
 
+    /**
+     * @param string $language language code
+     * @return string
+     */
     function getMenuText($language) {
         $menutext = $this->getLang('menu');
         if (!$menutext) {
@@ -23,9 +27,13 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         return $menutext;
     }
 
+    /**
+     * @return int
+     */
     function getMenuSort() {
         return 1000;
     }
+
 
     function handle() {
         trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
@@ -35,10 +43,16 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         trigger_error('html() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
+    /**
+     * @return bool
+     */
     function forAdminOnly() {
         return true;
     }
 
+    /**
+     * @return array
+     */
     function getTOC(){
         return array();
     }

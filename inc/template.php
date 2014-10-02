@@ -1066,8 +1066,8 @@ function tpl_pagetitle($id = null, $ret = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param array  $tags tags to try
- * @param string $alt alternative output if no data was found
+ * @param array|string $tags tags to try
+ * @param string       $alt  alternative output if no data was found
  * @param null|string   $src the image src, uses global $SRC if not given
  * @return string
  */

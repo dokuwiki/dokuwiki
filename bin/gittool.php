@@ -206,12 +206,13 @@ class GitToolCLI extends DokuCLI {
      * Install extension from the given download URL
      *
      * @param string $ext
-     * @return bool
+     * @return bool|null
      */
     private function downloadExtension($ext) {
         /** @var helper_plugin_extension_extension $plugin */
         $plugin = plugin_load('helper', 'extension_extension');
         if(!$ext) die("extension plugin not available, can't continue");
+
         $plugin->setExtension($ext);
 
         $url = $plugin->getDownloadURL();
@@ -297,6 +298,7 @@ class GitToolCLI extends DokuCLI {
         /** @var helper_plugin_extension_extension $ext */
         $ext = plugin_load('helper', 'extension_extension');
         if(!$ext) die("extension plugin not available, can't continue");
+
         $ext->setExtension($extension);
 
         $repourl = $ext->getSourcerepoURL();

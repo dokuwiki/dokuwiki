@@ -142,10 +142,10 @@ class ZipLib {
      *
      * @param string $data
      * @param string $name filename
-     * @param int $compact
+     * @param bool $compact
      * @return bool
      */
-    function add_File($data, $name, $compact = 1) {
+    function add_File($data, $name, $compact = true) {
         $name     = str_replace('\\', '/', $name);
         $dtime    = dechex($this->DosTime());
 

@@ -1461,7 +1461,7 @@ function dformat($dt = null, $format = '') {
  * @author <ungu at terong dot com>
  * @link http://www.php.net/manual/en/function.date.php#54072
  *
- * @param int $int_date: current date in UNIX timestamp
+ * @param int $int_date current date in UNIX timestamp
  * @return string
  */
 function date_iso8601($int_date) {

@@ -570,7 +570,7 @@ if (!class_exists('setting')) {
         /**
          * Returns caution
          *
-         * @return bool|string caution string, otherwise false for invalid caution
+         * @return false|string caution string, otherwise false for invalid caution
          */
         public function caution() {
             if (!empty($this->_caution)) {
