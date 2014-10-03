@@ -200,6 +200,7 @@ function act_dispatch(){
     global $license;
 
     //call template FIXME: all needed vars available?
+    $headers = array();
     $headers[] = 'Content-Type: text/html; charset=utf-8';
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 

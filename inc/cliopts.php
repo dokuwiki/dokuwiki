@@ -36,9 +36,9 @@ if (version_compare(phpversion(), '4.3.0', '<') || php_sapi_name() == 'cgi') {
 
     // PHP ini settings
     set_time_limit(0);
-    ini_set('track_errors', true);
-    ini_set('html_errors', false);
-    ini_set('magic_quotes_runtime', false);
+    ini_set('track_errors', "1");
+    ini_set('html_errors', "0");
+    ini_set('magic_quotes_runtime', "0");
 
     // Define stream constants
     define('STDIN', fopen('php://stdin', 'r'));
