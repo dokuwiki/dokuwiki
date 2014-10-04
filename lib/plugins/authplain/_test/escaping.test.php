@@ -97,7 +97,7 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
             $test_line = $userpass.$escaped.$other_user_data;
             $result = $this->auth->splitUserData($test_line);
 
-            $this->assertEquals($testname, $result[2]);
+            $this->assertEquals($escaped, $result[2]);
         }
     }
     

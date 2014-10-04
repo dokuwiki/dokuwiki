@@ -356,9 +356,12 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
 
         $row = array();
         $piece = '';
-        for($i=0; $i<strlen($line); $i++){
+        $len = strlen($line);
+        for($i=0; $i<$len; $i++){
             if ($line[$i]=='\\'){
+                $piece .= $line[$i];
                 $i++;
+                if ($i>=$len) break;
             } else if ($line[$i]==':'){
                 $row[] = $piece;
                 $piece = '';
