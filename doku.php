@@ -9,7 +9,7 @@
  */
 
 // update message version
-$updateVersion = 46;
+$updateVersion = 46.1;
 
 //  xdebug_start_profiling();
 
