@@ -29,18 +29,19 @@ function checkUpdateMessages(){
         dbglog("checkUpdateMessages(): downloading messages.txt");
         $http = new DokuHTTPClient();
         $http->timeout = 12;
-        $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
-        if(substr(trim($data), -1) != '%') {
-            // this doesn't look like one of our messages, maybe some WiFi login interferred
-            $data = '';
-        }else {
-            io_saveFile($cf,$data);
+        $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
+        if(is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
+            // basic sanity check that this is either an empty string response (ie "no messages")
+            // or it looks like one of our messages, not WiFi login or other interposed response
+            io_saveFile($cf,$resp);
+        } else {
+            dbglog("checkUpdateMessages(): unexpected HTTP response received");
         }
     }else{
         dbglog("checkUpdateMessages(): messages.txt up to date");
-        $data = io_readFile($cf);
     }
 
+    $data = io_readFile($cf);
     // show messages through the usual message mechanism
     $msgs = explode("\n%\n",$data);
     foreach($msgs as $msg){
