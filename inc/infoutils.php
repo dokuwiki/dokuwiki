@@ -20,13 +20,13 @@ function checkUpdateMessages(){
     if(!$conf['updatecheck']) return;
     if($conf['useacl'] && !$INFO['ismanager']) return;
 
-    $cf = $conf['cachedir'].'/messages.txt';
+    $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages.txt");
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
         $http = new DokuHTTPClient();
         $http->timeout = 12;
         $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
@@ -38,7 +38,7 @@ function checkUpdateMessages(){
             dbglog("checkUpdateMessages(): unexpected HTTP response received");
         }
     }else{
-        dbglog("checkUpdateMessages(): messages.txt up to date");
+        dbglog("checkUpdateMessages(): messages up to date");
     }
 
     $data = io_readFile($cf);
