@@ -145,6 +145,66 @@ EOF;
         $this->assertEquals($out, js_compress($text));
     }
 
+    function test_plusplus1(){
+        $text = 'a = 5 + ++b;';
+        $this->assertEquals('a=5+ ++b;',js_compress($text));
+    }
+
+    function test_plusplus2(){
+        $text = 'a = 5+ ++b;';
+        $this->assertEquals('a=5+ ++b;',js_compress($text));
+    }
+
+    function test_plusplus3(){
+        $text = 'a = 5++ + b;';
+        $this->assertEquals('a=5++ +b;',js_compress($text));
+    }
+
+    function test_plusplus4(){
+        $text = 'a = 5++ +b;';
+        $this->assertEquals('a=5++ +b;',js_compress($text));
+    }
+
+    function test_minusminus1(){
+        $text = 'a = 5 - --b;';
+        $this->assertEquals('a=5- --b;',js_compress($text));
+    }
+
+    function test_minusminus2(){
+        $text = 'a = 5- --b;';
+        $this->assertEquals('a=5- --b;',js_compress($text));
+    }
+
+    function test_minusminus3(){
+        $text = 'a = 5-- - b;';
+        $this->assertEquals('a=5-- -b;',js_compress($text));
+    }
+
+    function test_minusminus4(){
+        $text = 'a = 5-- -b;';
+        $this->assertEquals('a=5-- -b;',js_compress($text));
+    }
+
+    function test_minusplus1(){
+        $text = 'a = 5-- +b;';
+        $this->assertEquals('a=5--+b;',js_compress($text));
+    }
+
+    function test_minusplus2(){
+        $text = 'a = 5-- + b;';
+        $this->assertEquals('a=5--+b;',js_compress($text));
+    }
+
+    function test_plusminus1(){
+        $text = 'a = 5++ - b;';
+        $this->assertEquals('a=5++-b;',js_compress($text));
+    }
+
+    function test_plusminus2(){
+        $text = 'a = 5++ -b;';
+        $this->assertEquals('a=5++-b;',js_compress($text));
+    }
+
     /**
      * Test the files provided with the original JsStrip
      */
