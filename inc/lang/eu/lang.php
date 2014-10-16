@@ -1,11 +1,12 @@
 <?php
+
 /**
- * Basque language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Xabi Ezpeleta <xezpeleta@mendikute.com>
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
+ * @author Yadav Gowda <yadav.gowda@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -49,6 +50,9 @@ $lang['btn_revert']            = 'Berrezarri';
 $lang['btn_register']          = 'Erregistratu';
 $lang['btn_apply']             = 'Baieztatu';
 $lang['btn_media']             = 'Media Kudeatzailea';
+$lang['btn_deleteuser']        = 'Nire kontua kendu';
+$lang['btn_img_backto']        = 'Atzera hona %s';
+$lang['btn_mediaManager']      = 'Media kudeatzailean ikusi';
 $lang['loggedinas']            = 'Erabiltzailea:';
 $lang['user']                  = 'Erabiltzailea';
 $lang['pass']                  = 'Pasahitza';
@@ -63,7 +67,7 @@ $lang['badlogin']              = 'Barkatu, prozesuak huts egin du; saiatu berriz
 $lang['minoredit']             = 'Aldaketa Txikiak';
 $lang['draftdate']             = 'Zirriborroa automatikoki gorde da hemen:';
 $lang['nosecedit']             = 'Orria aldatua izan da bitartean, info atala zaharkituta geratu da, orri osoa kargatu da horren ordez.';
-$lang['searchcreatepage']      = "Bilatzen zabiltzana aurkitu ez baduzu, zuk zeuk sortu dezakezu orri berri bat bilaketa ostean ''Sortu orri hau'' erabiliz.";
+$lang['searchcreatepage']      = 'Bilatzen zabiltzana aurkitu ez baduzu, zuk zeuk sortu dezakezu orri berri bat bilaketa ostean \'\'Sortu orri hau\'\' erabiliz.';
 $lang['regmissing']            = 'Barkatu, hutsune guztiak bete behar dituzu.';
 $lang['reguexists']            = 'Barkatu, izen bereko erabiltzailea existitzen da.';
 $lang['regsuccess']            = 'Erabiltzailea sortu da. Pasahitza mailez bidaliko zaizu.';
@@ -77,6 +81,7 @@ $lang['profna']                = 'Wiki honek ez du profilaren aldaketa ahalbidet
 $lang['profnochange']          = 'Aldaketarik ez, ez dago egiteko ezer.';
 $lang['profnoempty']           = 'Izen edota e-posta hutsa ez dago onartua.';
 $lang['profchanged']           = 'Erabiltzaile profila arrakastaz eguneratua.';
+$lang['profdeleteuser']        = 'Kontua ezabatu';
 $lang['pwdforget']             = 'Pasahitza ahaztu duzu? Eskuratu berri bat';
 $lang['resendna']              = 'Wiki honek ez du pasahitz berbidalketa onartzen.';
 $lang['resendpwd']             = '-entzat pasahitza berria ezarri';
@@ -228,7 +233,6 @@ $lang['admin_register']        = 'Erabiltzaile berria gehitu';
 $lang['metaedit']              = 'Metadatua Aldatu';
 $lang['metasaveerr']           = 'Metadatuaren idazketak huts egin du';
 $lang['metasaveok']            = 'Metadatua gordea';
-$lang['btn_img_backto']            = 'Atzera hona %s';
 $lang['img_title']             = 'Izenburua:';
 $lang['img_caption']           = 'Epigrafea:';
 $lang['img_date']              = 'Data:';
@@ -241,7 +245,6 @@ $lang['img_camera']            = 'Kamera:';
 $lang['img_keywords']          = 'Hitz-gakoak:';
 $lang['img_width']             = 'Zabalera:';
 $lang['img_height']            = 'Altuera:';
-$lang['btn_mediaManager']           = 'Media kudeatzailean ikusi';
 $lang['subscr_subscribe_success'] = '%s gehitua %s-ren harpidetza zerrendara';
 $lang['subscr_subscribe_error'] = 'Errorea %s gehitzen %s-ren harpidetza zerrendara';
 $lang['subscr_subscribe_noaddress'] = 'Ez dago helbiderik zure login-arekin lotuta, ezin zara harpidetza zerrendara gehitua izan.';
