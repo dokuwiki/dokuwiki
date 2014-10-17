@@ -58,6 +58,18 @@ class js_js_compress_test extends DokuWikiTest {
         $this->assertEquals(js_compress($text), 'text.replace(/"/,"//")');
     }
 
+    function test_regex_after_and_with_slashes_outside_string(){
+        $text = 'if ( peng == bla && /pattern\//.test(url)) request = new Something();';
+        $this->assertEquals(js_compress($text),
+                            'if(peng==bla&&/pattern\//.test(url))request=new Something();');
+    }
+
+    function test_regex_after_or_with_slashes_outside_string(){
+        $text = 'if ( peng == bla || /pattern\//.test(url)) request = new Something();';
+        $this->assertEquals(js_compress($text),
+                            'if(peng==bla||/pattern\//.test(url))request=new Something();');
+    }
+
     function test_dquot1(){
         $text = 'var foo="Now what \\" \'do we//get /*here*/ ?";';
         $this->assertEquals(js_compress($text), $text);
@@ -203,6 +215,12 @@ EOF;
     function test_plusminus2(){
         $text = 'a = 5++ -b;';
         $this->assertEquals('a=5++-b;',js_compress($text));
+    }
+
+    function test_unusual_signs(){
+        $text='var π = Math.PI, τ = 2 * π, halfπ = π / 2, ε = 1e-6, ε2 = ε * ε, radians = π / 180, degrees = 180 / π;';
+        $this->assertEquals(js_compress($text),
+                            'var π=Math.PI,τ=2*π,halfπ=π/2,ε=1e-6,ε2=ε*ε,radians=π/180,degrees=180/π;');
     }
 
     /**

@@ -293,7 +293,7 @@ function js_compress($s){
     // E.g. '+ ++' may not be compressed to '+++' --> syntax error.
     $ops = "+-";
 
-    $regex_starters = array("(", "=", "[", "," , ":", "!");
+    $regex_starters = array("(", "=", "[", "," , ":", "!", "&", "|");
 
     $whitespaces_chars = array(" ", "\t", "\n", "\r", "\0", "\x0B");
 
