@@ -8,8 +8,9 @@
  * @author Artur <ncuxxx@gmail.com>
  * @author Erli Moen <evseev.jr@gmail.com>
  * @author Владимир <id37736@yandex.ru>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
-$lang['account_suffix']        = 'Суффикс вашего аккаунта типа  <code>@my.domain.org</code>';
+$lang['account_suffix']        = 'Суффикс вашего аккаунта. Например, <code>@my.domain.org</code>';
 $lang['domain_controllers']    = 'Список DNS-серверов, разделенных запятой. Например:<code>srv1.domain.org,srv2.domain.org</code>';
 $lang['admin_password']        = 'Пароль для указанного пользователя.';
 $lang['sso']                   = 'Использовать SSO (Single-Sign-On) через Kerberos или NTLM?';
