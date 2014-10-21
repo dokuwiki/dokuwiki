@@ -178,8 +178,10 @@ class Doku_Plugin_Controller {
                     // to keep everything simple we just skip the plugin completely
                     continue;
                 } elseif (@file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
-                    // treat this as a default disabled plugin(over-rideable by the plugin manager)
-                    // deprecated 2011-09-10 (usage of disabled files)
+                    /**
+                     * treat this as a default disabled plugin(over-rideable by the plugin manager)
+                     * @deprecated 2011-09-10 (usage of disabled files)
+                     */
                     if (empty($this->plugin_cascade['local'][$plugin])) {
                         $all_plugins[$plugin] = 0;
                     } else {
