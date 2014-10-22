@@ -55,3 +55,5 @@ $lang['status_unmodifiable']   = 'neměnný';
 $lang['status_plugin']         = 'zásuvný modul';
 $lang['status_template']       = 'šablona';
 $lang['msg_delete_success']    = 'Rozšíření odinstalováno';
+$lang['msg_plugin_install_success'] = 'Zásuvný modul %s úspěšně nainstalován.';
+$lang['msg_plugin_update_success'] = 'Zásuvný modul %s úspěšně aktualizován.';
