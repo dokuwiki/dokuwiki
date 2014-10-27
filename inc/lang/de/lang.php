@@ -27,6 +27,7 @@
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
+ * @author Pascal Schröder <Pascal1802@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -88,7 +89,7 @@ $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, Sektionsinfo ist veraltet, lade stattdessen volle Seite.';
-$lang['searchcreatepage']      = "Falls der gesuchte Begriff nicht gefunden wurde, können Sie direkt eine neue Seite für den Suchbegriff anlegen, indem Sie auf den **''[Seite anlegen]''** Knopf drücken.";
+$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, können Sie direkt eine neue Seite für den Suchbegriff anlegen, indem Sie auf den **\'\'[Seite anlegen]\'\'** Knopf drücken.';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden.';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
@@ -206,6 +207,8 @@ $lang['diff_side']             = 'Side by Side';
 $lang['diffprevrev']           = 'Vorhergehende Überarbeitung';
 $lang['diffnextrev']           = 'Nächste  Überarbeitung';
 $lang['difflastrev']           = 'Letzte  Überarbeitung';
+$lang['diffbothprevrev']       = 'Beide Seiten der vorigen Revision';
+$lang['diffbothnextrev']       = 'Beide Seiten der Revision';
 $lang['line']                  = 'Zeile';
 $lang['breadcrumb']            = 'Zuletzt angesehen:';
 $lang['youarehere']            = 'Sie befinden sich hier:';
@@ -355,3 +358,5 @@ $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
+$lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
+$lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
