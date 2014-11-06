@@ -83,17 +83,19 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
             'extra' => str_replace($strip, '', $extra)
             );
 
+    $wasCreated = ($type===DOKU_CHANGE_TYPE_CREATE);
+    $wasReverted = ($type===DOKU_CHANGE_TYPE_REVERT);
     // update metadata
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id);
         $meta    = array();
-        if (!$INFO['exists'] && empty($oldmeta['persistent']['date']['created'])){ // newly created
+        if ($wasCreated && empty($oldmeta['persistent']['date']['created'])){ // newly created
             $meta['date']['created'] = $created;
             if ($user){
                 $meta['creator'] = $INFO['userinfo']['name'];
                 $meta['user']    = $user;
             }
-        } elseif (!$INFO['exists'] && !empty($oldmeta['persistent']['date']['created'])) { // re-created / restored
+        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) { // re-created / restored
             $meta['date']['created']  = $oldmeta['persistent']['date']['created'];
             $meta['date']['modified'] = $created; // use the files ctime here
             $meta['creator'] = $oldmeta['persistent']['creator'];
