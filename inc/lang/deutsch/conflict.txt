@@ -1,0 +1,3 @@
+====== Eine neuere Version existiert ======
+
+Es gibt eine neuere Version der überarbeiteten Seite. Dies passiert wenn ein anderer Benutzer gerade auch an diesem Dokument arbeitet. Prüfen Sie die Unterschiede der unten aufgezeichneten Dokumente, entscheiden Sie sich für die Version die Sie behalten möchten. Wenn Sie "sspeichern" wählen wird Ihre Version gespeichert. Drücken Sie "abbrechen" wenn sie die aktuelle Version behalten möchten.

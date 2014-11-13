@@ -1,0 +1,1 @@
+Bearbeite diese Seite und drücke "speichern". Besuche [[wiki:syntax]] für die verfügbaren Wiki Formattierungsoptionen. Diese Seite sollte nur überarbeitet werden, wenn sie etwas verbessern wollen. Wenn etwas getestet werden soll, sollten sie dies [[playground:playground|playground]] anschauen. 
