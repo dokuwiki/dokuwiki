@@ -35,6 +35,7 @@
  * @author Caillot <remicaillot5@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author YoBoY <yoboy@ubuntu-fr.org>
+ * @author james <j.mccann@celcat.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -77,7 +78,7 @@ $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
 $lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
-$lang['btn_media']             = 'Gestionnaire de médias';
+$lang['btn_media']             = 'Gestionnaire Multimédia';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
 $lang['btn_img_backto']        = 'Retour vers %s';
 $lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
