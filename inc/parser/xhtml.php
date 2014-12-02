@@ -456,9 +456,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Open a list item
      *
      * @param int $level the nesting level
+     * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level) {
-        $this->doc .= '<li class="level'.$level.'">';
+    function listitem_open($level, $node=false) {
+        $branching = $node ? ' node' : '';
+        $this->doc .= '<li class="level'.$level.$branching.'">';
     }
 
     /**
