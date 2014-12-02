@@ -170,8 +170,9 @@ function tpl_content_core() {
             break;
         default:
             $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before())
+            if($evt->advise_before()) {
                 msg("Failed to handle command: ".hsc($ACT), -1);
+            }
             $evt->advise_after();
             unset($evt);
             return false;
