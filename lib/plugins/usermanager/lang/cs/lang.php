@@ -15,6 +15,7 @@
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';
@@ -62,6 +63,8 @@ $lang['add_ok']                = 'Uživatel úspěšně vytvořen';
 $lang['add_fail']              = 'Vytvoření uživatele selhalo';
 $lang['notify_ok']             = 'Odeslán mail s upozorněním';
 $lang['notify_fail']           = 'Mail s upozorněním nebylo možno odeslat';
+$lang['import_userlistcsv']    = 'Seznam uživatelů (CSV):';
+$lang['import_header']         = 'Poslední selhání importu';
 $lang['import_success_count']  = 'Import uživatelů: nalezeno %d uživatelů, %d úspěšně importováno.';
 $lang['import_failure_count']  = 'Import uživatelů: %d selhalo. Seznam chybných je níže.';
 $lang['import_error_fields']   = 'Nedostatek položek, nalezena/y %d, požadovány 4.';

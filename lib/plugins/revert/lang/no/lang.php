@@ -19,6 +19,7 @@
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
  * @author Boris <boris@newton-media.no>
  * @author Christopher Schive <chschive@frisurf.no>
+ * @author Patrick <spill.p@hotmail.com>
  */
 $lang['menu']                  = 'Tilbakestillingsbehandler';
 $lang['filter']                = 'Søk etter søppelmeldinger';

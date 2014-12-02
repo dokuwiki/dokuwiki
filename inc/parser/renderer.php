@@ -343,8 +343,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * Open a list item
      *
      * @param int $level the nesting level
+     * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level) {
+    function listitem_open($level,$node=false) {
     }
 
     /**
