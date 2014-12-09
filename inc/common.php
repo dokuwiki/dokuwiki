@@ -49,7 +49,7 @@ function ptln($string, $indent = 0) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param $string string being stripped
+ * @param string $string being stripped
  * @return string
  */
 function stripctl($string) {
@@ -62,6 +62,7 @@ function stripctl($string) {
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @link    http://en.wikipedia.org/wiki/Cross-site_request_forgery
  * @link    http://christ1an.blogspot.com/2007/04/preventing-csrf-efficiently.html
+ *
  * @return  string
  */
 function getSecurityToken() {
@@ -95,7 +96,7 @@ function checkSecurityToken($token = null) {
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param bool $print  if true print the field, otherwise html of the field is returned
- * @return void|string html of hidden form field
+ * @return string html of hidden form field
  */
 function formSecurityToken($print = true) {
     $ret = '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" /></div>'."\n";
@@ -120,6 +121,7 @@ function basicinfo($id, $htmlClient=true){
     global $INPUT;
 
     // set info about manager/admin status.
+    $info = array();
     $info['isadmin']   = false;
     $info['ismanager'] = false;
     if($INPUT->server->has('REMOTE_USER')) {
@@ -335,7 +337,7 @@ function buildAttributes($params, $skipempty = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @return array(pageid=>name, ... )
+ * @return string[] with the data: array(pageid=>name, ... )
  */
 function breadcrumbs() {
     // we prepare the breadcrumbs early for quick session closing
@@ -688,6 +690,7 @@ function checkwordblock($text = '') {
         }
         if(count($re) && preg_match('#('.join('|', $re).')#si', $text, $matches)) {
             // prepare event data
+            $data = array();
             $data['matches']        = $matches;
             $data['userinfo']['ip'] = $INPUT->server->str('REMOTE_ADDR');
             if($INPUT->server->str('REMOTE_USER')) {
@@ -971,7 +974,7 @@ function rawLocale($id, $ext = 'txt') {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id   page id
- * @param string $rev  timestamp when a revision of wikitext is desired
+ * @param string|int $rev  timestamp when a revision of wikitext is desired
  * @return string
  */
 function rawWiki($id, $rev = '') {
@@ -1111,7 +1114,7 @@ function parsePageTemplate(&$data) {
  * @param string $range in form "from-to"
  * @param string $id    page id
  * @param string $rev   optional, the revision timestamp
- * @return array with three slices
+ * @return string[] with three slices
  */
 function rawWikiSlices($range, $id, $rev = '') {
     $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
@@ -1122,6 +1125,7 @@ function rawWikiSlices($range, $id, $rev = '') {
     $from = !$from ? 0 : ($from - 1);
     $to   = !$to ? strlen($text) : ($to - 1);
 
+    $slices = array();
     $slices[0] = substr($text, 0, $from);
     $slices[1] = substr($text, $from, $to - $from);
     $slices[2] = substr($text, $to);
@@ -1296,7 +1300,7 @@ function saveOldRevision($id) {
  * @param int|string $rev Old page revision
  * @param string     $summary  What changed
  * @param boolean    $minor    Is this a minor edit?
- * @param array      $replace  Additional string substitutions, @KEY@ to be replaced by value
+ * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
  * @return bool
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -1376,8 +1380,8 @@ function getGoogleQuery() {
 /**
  * Return the human readable size of a file
  *
- * @param       int $size A file size
- * @param       int $dec A number of decimal places
+ * @param int $size A file size
+ * @param int $dec A number of decimal places
  * @return string human readable size
  *
  * @author      Martin Benjamin <b.martin@cybernet.ch>
@@ -1460,7 +1464,7 @@ function dformat($dt = null, $format = '') {
  * @author <ungu at terong dot com>
  * @link http://www.php.net/manual/en/function.date.php#54072
  *
- * @param int $int_date: current date in UNIX timestamp
+ * @param int $int_date current date in UNIX timestamp
  * @return string
  */
 function date_iso8601($int_date) {
@@ -1914,7 +1918,7 @@ function set_doku_pref($pref, $val) {
 /**
  * Strips source mapping declarations from given text #601
  *
- * @param &string $text reference to the CSS or JavaScript code to clean
+ * @param string &$text reference to the CSS or JavaScript code to clean
  */
 function stripsourcemaps(&$text){
     $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);

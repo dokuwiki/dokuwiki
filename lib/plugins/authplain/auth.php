@@ -82,7 +82,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param string $user
      * @param bool $requireGroups  (optional) ignored by this plugin, grps info always supplied
-     * @return array|bool
+     * @return array|false
      */
     public function getUserData($user, $requireGroups=true) {
         if($this->users === null) $this->_loadUserData();

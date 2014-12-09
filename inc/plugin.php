@@ -48,14 +48,25 @@ class DokuWiki_Plugin {
 
     // plugin introspection methods
     // extract from class name, format = <plugin type>_plugin_<name>[_<component name>]
+    /**
+     * @return string  plugin type
+     */
     public function getPluginType() {
         list($t) = explode('_', get_class($this), 2);
         return $t;
     }
+
+    /**
+     * @return string  plugin name
+     */
     public function getPluginName() {
         list(/* $t */, /* $p */, $n) = explode('_', get_class($this), 4);
         return $n;
     }
+
+    /**
+     * @return string  component name
+     */
     public function getPluginComponent() {
         list(/* $t */, /* $p */, /* $n */, $c) = explode('_', get_class($this), 4);
         return (isset($c)?$c:'');
@@ -91,9 +102,11 @@ class DokuWiki_Plugin {
     }
 
     /**
-     * localFN($id)
-     * prepends appropriate path for a language dependent filename
+     * Prepends appropriate path for a language dependent filename
      * plugin equivalent of localFN()
+     *
+     * @param string $id id of localization file
+     * @return string wiki text
      */
     public function localFN($id) {
         global $conf;
@@ -110,9 +123,8 @@ class DokuWiki_Plugin {
     }
 
     /**
-     *  setupLocale()
-     *  reads all the plugins language dependent strings into $this->lang
-     *  this function is automatically called by getLang()
+     * Reads all the plugins language dependent strings into $this->lang
+     * this function is automatically called by getLang()
      */
     function setupLocale() {
         if($this->localised) return;
@@ -209,8 +221,7 @@ class DokuWiki_Plugin {
      *
      * @param   string $name   name of plugin to load
      * @param   bool   $msg    if a message should be displayed in case the plugin is not available
-     *
-     * @return  object  helper plugin object
+     * @return  DokuWiki_Plugin|null helper plugin object
      */
     public function loadHelper($name, $msg = true){
         $obj = plugin_load('helper',$name);
@@ -224,6 +235,12 @@ class DokuWiki_Plugin {
     /**
      * email
      * standardised function to generate an email link according to obfuscation settings
+     *
+     * @param string $email
+     * @param string $name
+     * @param string $class
+     * @param string $more
+     * @return string html
      */
     public function email($email, $name='', $class='', $more='') {
         if (!$email) return $name;
@@ -236,6 +253,13 @@ class DokuWiki_Plugin {
     /**
      * external_link
      * standardised function to generate an external link according to conf settings
+     *
+     * @param string $link
+     * @param string $title
+     * @param string $class
+     * @param string $target
+     * @param string $more
+     * @return string
      */
     public function external_link($link, $title='', $class='', $target='', $more='') {
         global $conf;
@@ -260,8 +284,9 @@ class DokuWiki_Plugin {
      * Instead use render_text()
      *
      * @deprecated 2014-01-22
-     * @param $name
-     * @param $arguments
+     *
+     * @param string $name
+     * @param array  $arguments
      * @return null|string
      */
     public function __call($name, $arguments) {
@@ -278,7 +303,7 @@ class DokuWiki_Plugin {
      * output text string through the parser, allows dokuwiki markup to be used
      * very ineffecient for small pieces of data - try not to use
      *
-     * @param string $text wiki markup to parse
+     * @param string $text   wiki markup to parse
      * @param string $format output format
      * @return null|string
      */

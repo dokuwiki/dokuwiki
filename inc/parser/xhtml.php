@@ -59,10 +59,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Register a new edit section range
      *
-     * @param $type  string The section type identifier
-     * @param $title string The section title
-     * @param $start int    The byte position for the edit start
-     * @return string A marker class for the starting HTML element
+     * @param string $type   The section type identifier
+     * @param string $title  The section title
+     * @param int    $start  The byte position for the edit start
+     * @return string  A marker class for the starting HTML element
+     *
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function startSectionEdit($start, $type, $title = null) {
@@ -73,8 +74,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Finish an edit section range
      *
-     * @param $end     int The byte position for the edit end; null for the rest of
-     *                 the page
+     * @param int  $end     The byte position for the edit end; null for the rest of the page
+     *
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function finishSectionEdit($end = null) {
@@ -823,6 +824,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // now first resolve and clean up the $id
         resolve_pageid(getNS($ID), $id, $exists, $this->date_at, true);
 
+        $link = array();
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if(!$isImage) {
             if($exists) {
@@ -910,6 +912,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //prepare for formating
+        $link = array();
         $link['target'] = $conf['target']['extern'];
         $link['style']  = '';
         $link['pre']    = '';
@@ -987,6 +990,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $conf;
 
         //simple setup
+        $link = array();
         $link['target'] = $conf['target']['windows'];
         $link['pre']    = '';
         $link['suf']    = '';
@@ -1578,7 +1582,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Returns HTML code for images used in link titles
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @param string $img
+     * @param array $img
      * @return string HTML img tag or similar
      */
     function _imageTitle($img) {
@@ -1663,7 +1667,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // prepare alternative formats
             $extensions   = array('webm', 'ogv', 'mp4');
             $files        = media_alternativefiles($src, $extensions);
-            $poster       = media_alternativefiles($src, array('jpg', 'png'), true);
+            $poster       = media_alternativefiles($src, array('jpg', 'png'));
             if(!empty($poster)) {
                 $posterUrl = ml(reset($poster), '', true, '&');
             }
@@ -1707,7 +1711,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param array  $atts      - additional attributes for the <audio> tag
      * @return string
      */
-    function _audio($src, $atts = null) {
+    function _audio($src, $atts = array()) {
         $files = array();
         $isExternal = media_isexternal($src);
 

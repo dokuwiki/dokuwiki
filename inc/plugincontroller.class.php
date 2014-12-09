@@ -66,14 +66,14 @@ class Doku_Plugin_Controller {
      * @param  $name     string name of the plugin to load
      * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
      * @param  $disabled bool   true to load even disabled plugins
-     * @return DokuWiki_Plugin|DokuWiki_Syntax_Plugin|null  the plugin object or null on failure
+     * @return DokuWiki_Plugin|DokuWiki_Syntax_Plugin|DokuWiki_Auth_Plugin|DokuWiki_Admin_Plugin|DokuWiki_Action_Plugin|DokuWiki_Remote_Plugin|null  the plugin object or null on failure
      */
     public function load($type,$name,$new=false,$disabled=false){
 
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
 
-        list($plugin,$component) = $this->_splitName($name);
+        list($plugin, /* $component */) = $this->_splitName($name);
 
         // check if disabled
         if(!$disabled && $this->isdisabled($plugin)){
@@ -114,7 +114,7 @@ class Doku_Plugin_Controller {
      * Whether plugin is disabled
      *
      * @param string $plugin name of plugin
-     * @return bool; true disabled, false enabled
+     * @return bool  true disabled, false enabled
      */
     public function isdisabled($plugin) {
         return empty($this->tmp_plugins[$plugin]);
@@ -124,7 +124,7 @@ class Doku_Plugin_Controller {
      * Disable the plugin
      *
      * @param string $plugin name of plugin
-     * @return bool; true saving succeed, false saving failed
+     * @return bool  true saving succeed, false saving failed
      */
     public function disable($plugin) {
         if(array_key_exists($plugin,$this->plugin_cascade['protected'])) return false;
@@ -136,7 +136,7 @@ class Doku_Plugin_Controller {
      * Enable the plugin
      *
      * @param string $plugin name of plugin
-     * @return bool; true saving succeed, false saving failed
+     * @return bool  true saving succeed, false saving failed
      */
     public function enable($plugin) {
         if(array_key_exists($plugin,$this->plugin_cascade['protected'])) return false;
@@ -229,7 +229,7 @@ class Doku_Plugin_Controller {
      * @param bool $forceSave;
      *              false to save only when config changed
      *              true to always save
-     * @return bool; true saving succeed, false saving failed
+     * @return bool  true saving succeed, false saving failed
      */
     protected function saveList($forceSave = false) {
         global $conf;
@@ -302,12 +302,9 @@ class Doku_Plugin_Controller {
     /**
      * Returns a list of available plugin components of given type
      *
-     * @param string $type, plugin_type name;
-     *                      the type of plugin to return,
-     * @param bool   $enabled;
-     *                      true to return enabled plugins,
-     *                      false to return disabled plugins
-     *
+     * @param string $type      plugin_type name; the type of plugin to return,
+     * @param bool   $enabled   true to return enabled plugins,
+     *                          false to return disabled plugins
      * @return array of plugin components of requested type
      */
     protected function _getListByType($type, $enabled) {

@@ -20,9 +20,13 @@ if(!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER',15);
  *
  * refactored into ft_pageSearch(), _ft_pageSearch() and trigger_event()
  *
+ * @param string $query
+ * @param array $highlight
+ * @return array
  */
 function ft_pageSearch($query,&$highlight){
 
+    $data = array();
     $data['query'] = $query;
     $data['highlight'] =& $highlight;
 
@@ -34,6 +38,9 @@ function ft_pageSearch($query,&$highlight){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ *
+ * @param array $data event data
+ * @return array matching documents
  */
 function _ft_pageSearch(&$data) {
     $Indexer = idx_get_indexer();
@@ -205,6 +212,11 @@ function ft_mediause($id, $ignore_perms = false){
  * @triggers SEARCH_QUERY_PAGELOOKUP
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Adrian Lang <lang@cosmocode.de>
+ *
+ * @param string $id        page id
+ * @param bool   $in_ns     match against namespace as well?
+ * @param bool   $in_title  search in title?
+ * @return string[]
  */
 function ft_pageLookup($id, $in_ns=false, $in_title=false){
     $data = compact('id', 'in_ns', 'in_title');
@@ -212,6 +224,12 @@ function ft_pageLookup($id, $in_ns=false, $in_title=false){
     return trigger_event('SEARCH_QUERY_PAGELOOKUP', $data, '_ft_pageLookup');
 }
 
+/**
+ * Returns list of pages as array(pageid => First Heading)
+ *
+ * @param array &$data event data
+ * @return string[]
+ */
 function _ft_pageLookup(&$data){
     // split out original parameters
     $id = $data['id'];
@@ -269,6 +287,10 @@ function _ft_pageLookup(&$data){
  * Tiny helper function for comparing the searched title with the title
  * from the search index. This function is a wrapper around stripos with
  * adapted argument order and return value.
+ *
+ * @param string $search searched title
+ * @param string $title  title from index
+ * @return bool
  */
 function _ft_pageLookupTitleCompare($search, $title) {
     return stripos($title, $search) !== false;
@@ -278,6 +300,10 @@ function _ft_pageLookupTitleCompare($search, $title) {
  * Sort pages based on their namespace level first, then on their string
  * values. This makes higher hierarchy pages rank higher than lower hierarchy
  * pages.
+ *
+ * @param string $a
+ * @param string $b
+ * @return int Returns < 0 if $a is less than $b; > 0 if $a is greater than $b, and 0 if they are equal.
  */
 function ft_pagesorter($a, $b){
     $ac = count(explode(':',$a));
@@ -295,6 +321,10 @@ function ft_pagesorter($a, $b){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @triggers FULLTEXT_SNIPPET_CREATE
+ *
+ * @param string $id page id
+ * @param array $highlight
+ * @return mixed
  */
 function ft_snippet($id,$highlight){
     $text = rawWiki($id);
@@ -389,6 +419,9 @@ function ft_snippet($id,$highlight){
 
 /**
  * Wraps a search term in regex boundary checks.
+ *
+ * @param string $term
+ * @return string
  */
 function ft_snippet_re_preprocess($term) {
     // do not process asian terms where word boundaries are not explicit
@@ -432,6 +465,7 @@ function ft_snippet_re_preprocess($term) {
  * based upon PEAR's PHP_Compat function for array_intersect_key()
  *
  * @param array $args An array of page arrays
+ * @return array
  */
 function ft_resultCombine($args){
     $array_count = count($args);
@@ -461,6 +495,8 @@ function ft_resultCombine($args){
  * based upon ft_resultCombine() function
  *
  * @param array $args An array of page arrays
+ * @return array
+ *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  */
 function ft_resultUnite($args) {
@@ -484,6 +520,8 @@ function ft_resultUnite($args) {
  * nearly identical to PHP5's array_diff_key()
  *
  * @param array $args An array of page arrays
+ * @return array
+ *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  */
 function ft_resultComplement($args) {
@@ -506,6 +544,10 @@ function ft_resultComplement($args) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ *
+ * @param Doku_Indexer $Indexer
+ * @param string $query search query
+ * @return array of search formulas
  */
 function ft_queryParser($Indexer, $query){
     /**
@@ -736,6 +778,12 @@ function ft_queryParser($Indexer, $query){
  * This function is used in ft_queryParser() and not for general purpose use.
  *
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
+ *
+ * @param Doku_Indexer $Indexer
+ * @param string       $term
+ * @param bool         $consider_asian
+ * @param bool         $phrase_mode
+ * @return string
  */
 function ft_termParser($Indexer, $term, $consider_asian = true, $phrase_mode = false) {
     $parsed = '';

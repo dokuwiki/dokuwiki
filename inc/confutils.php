@@ -14,6 +14,10 @@
  * are returned.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file file name
+ * @param bool   $knownonly
+ * @return array with extension, mimetype and if it should be downloaded
  */
 function mimetype($file, $knownonly=true){
     $mtypes = getMimeTypes();     // known mimetypes

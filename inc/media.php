@@ -16,6 +16,9 @@ if(!defined('NL')) define('NL',"\n");
  * their CSS tags except pagenames won't be links.
  *
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+ *
+ * @param array $data
+ * @param string $id
  */
 function media_filesinuse($data,$id){
     global $lang;
@@ -41,6 +44,11 @@ function media_filesinuse($data,$id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id media id
+ * @param int $auth permission level
+ * @param array $data
+ * @return false|string
  */
 function media_metasave($id,$auth,$data){
     if($auth < AUTH_UPLOAD) return false;
@@ -86,6 +94,7 @@ function media_metasave($id,$auth,$data){
  * check if a media is external source
  *
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ *
  * @param string $id the media ID or URL
  * @return bool
  */
@@ -98,6 +107,7 @@ function media_isexternal($id){
  * Check if a media item is public (eg, external URL or readable by @ALL)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $id  the media ID or URL
  * @return bool
  */
@@ -113,6 +123,10 @@ function media_ispublic($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id media id
+ * @param int $auth permission level
+ * @return bool
  */
 function media_metaform($id,$auth){
     global $lang;
@@ -175,6 +189,9 @@ function media_metaform($id,$auth){
  * Convenience function to check if a media file is still in use
  *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @param string $id media id
+ * @return array|bool
  */
 function media_inuse($id) {
     global $conf;
@@ -202,6 +219,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  * If configured, checks for media references before deletion
  *
  * @author             Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $id media id
  * @param int $auth no longer used
  * @return int One of: 0,
@@ -219,6 +237,7 @@ function media_delete($id,$auth){
     $file = mediaFN($id);
 
     // trigger an event - MEDIA_DELETE_FILE
+    $data = array();
     $data['id']   = $id;
     $data['name'] = utf8_basename($file);
     $data['path'] = $file;
@@ -253,9 +272,9 @@ function media_delete($id,$auth){
 /**
  * Handle file uploads via XMLHttpRequest
  *
- * @param string $ns target namespace
- * @param int $auth current auth check result
- * @return mixed false on error, id of the new file on success
+ * @param string $ns   target namespace
+ * @param int    $auth current auth check result
+ * @return false|string false on error, id of the new file on success
  */
 function media_upload_xhr($ns,$auth){
     if(!checkSecurityToken()) return false;
@@ -298,10 +317,11 @@ function media_upload_xhr($ns,$auth){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
- * @param string $ns target namespace
- * @param int $auth current auth check result
- * @param bool|array $file $_FILES member, $_FILES['upload'] if false
- * @return mixed false on error, id of the new file on success
+ *
+ * @param string     $ns    target namespace
+ * @param int        $auth  current auth check result
+ * @param bool|array $file  $_FILES member, $_FILES['upload'] if false
+ * @return false|string false on error, id of the new file on success
  */
 function media_upload($ns,$auth,$file=false){
     if(!checkSecurityToken()) return false;
@@ -345,6 +365,7 @@ function media_upload($ns,$auth,$file=false){
  * Using copy, makes sure any setgid bits on the media directory are honored
  *
  * @see   move_uploaded_file()
+ *
  * @param string $from
  * @param string $to
  * @return bool
@@ -367,8 +388,16 @@ function copy_uploaded_file($from, $to){
  * $data[2]     id: the future directory id of the uploaded file
  * $data[3]     imime: the mimetype of the uploaded file
  * $data[4]     overwrite: if an existing file is going to be overwritten
+ * $data[5]     move:
  *
  * @triggers MEDIA_UPLOAD_FINISH
+ *
+ * @param array  $file
+ * @param string $id
+ * @param bool   $ow   overwrite?
+ * @param int    $auth permission level
+ * @param string $move function name
+ * @return false|array|string
  */
 function media_save($file, $id, $ow, $auth, $move) {
     if($auth < AUTH_UPLOAD) {
@@ -418,6 +447,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     }
 
     // prepare event data
+    $data = array();
     $data[0] = $file['name'];
     $data[1] = $fn;
     $data[2] = $id;
@@ -430,8 +460,12 @@ function media_save($file, $id, $ow, $auth, $move) {
 }
 
 /**
- * Callback adapter for media_upload_finish()
+ * Callback adapter for media_upload_finish() triggered by MEDIA_UPLOAD_FINISH
+ *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @param array $data event data
+ * @return false|array|string
  */
 function _media_upload_action($data) {
     // fixme do further sanity tests of given data?
@@ -448,6 +482,14 @@ function _media_upload_action($data) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $fn_tmp
+ * @param string $fn
+ * @param string $id        media id
+ * @param string $imime     mime type
+ * @param bool   $overwrite overwrite existing?
+ * @param string $move      function name
+ * @return array|string
  */
 function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file') {
     global $conf;
@@ -491,6 +533,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
  * directory
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  * @param string $id
  * @return int - revision date
  */
@@ -534,6 +577,10 @@ function media_saveOldRevision($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @link   http://www.splitbrain.org/blog/2007-02/12-internet_explorer_facilitates_cross_site_scripting
  * @fixme  check all 26 magic IE filetypes here?
+ *
+ * @param string $file path to file
+ * @param string $mime mimetype
+ * @return int
  */
 function media_contentcheck($file,$mime){
     global $conf;
@@ -543,14 +590,14 @@ function media_contentcheck($file,$mime){
             $bytes = fread($fh, 256);
             fclose($fh);
             if(preg_match('/<(script|a|img|html|body|iframe)[\s>]/i',$bytes)){
-                return -3;
+                return -3; //XSS: possibly malicious content
             }
         }
     }
     if(substr($mime,0,6) == 'image/'){
         $info = @getimagesize($file);
         if($mime == 'image/gif' && $info[2] != 1){
-            return -1;
+            return -1; // uploaded content did not match the file extension
         }elseif($mime == 'image/jpeg' && $info[2] != 2){
             return -1;
         }elseif($mime == 'image/png' && $info[2] != 3){
@@ -561,7 +608,7 @@ function media_contentcheck($file,$mime){
         global $TEXT;
         $TEXT = io_readFile($file);
         if(checkwordblock()){
-            return -2;
+            return -2; //blocked by the spam blacklist
         }
     }
     return 0;
@@ -571,6 +618,12 @@ function media_contentcheck($file,$mime){
  * Send a notify mail on uploads
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string   $id      media id
+ * @param string   $file    path to file
+ * @param string   $mime    mime type
+ * @param bool|int $old_rev revision timestamp or false
+ * @return bool
  */
 function media_notify($id,$file,$mime,$old_rev=false){
     global $conf;
@@ -583,11 +636,11 @@ function media_notify($id,$file,$mime,$old_rev=false){
 /**
  * List all files in a given Media namespace
  *
- * @param string        $ns             namespace
- * @param null|int      $auth           permission level
- * @param string        $jump
- * @param bool          $fullscreenview
- * @param bool|string   $sort           sorting, false skips sorting
+ * @param string      $ns             namespace
+ * @param null|int    $auth           permission level
+ * @param string      $jump           id
+ * @param bool        $fullscreenview
+ * @param bool|string $sort           sorting order, false skips sorting
  */
 function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
     global $conf;
@@ -730,6 +783,7 @@ function media_tab_files_options(){
  * Returns type of sorting for the list of files in media manager
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  * @return string - sort type
  */
 function _media_get_sort_type() {
@@ -740,6 +794,7 @@ function _media_get_sort_type() {
  * Returns type of listing for the list of files in media manager
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  * @return string - list type
  */
 function _media_get_list_type() {
@@ -771,6 +826,10 @@ function _media_get_display_param($param, $values) {
  * Prints tab that displays a list of all files
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string    $ns
+ * @param null|int  $auth permission level
+ * @param string    $jump item id
  */
 function media_tab_files($ns,$auth=null,$jump='') {
     global $lang;
@@ -787,6 +846,10 @@ function media_tab_files($ns,$auth=null,$jump='') {
  * Prints tab that displays uploading form
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string   $ns
+ * @param null|int $auth permission level
+ * @param string   $jump item id
  */
 function media_tab_upload($ns,$auth=null,$jump='') {
     global $lang;
@@ -804,6 +867,9 @@ function media_tab_upload($ns,$auth=null,$jump='') {
  * Prints tab that displays search form
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $ns
+ * @param null|int $auth permission level
  */
 function media_tab_search($ns,$auth=null) {
     global $INPUT;
@@ -823,8 +889,13 @@ function media_tab_search($ns,$auth=null) {
  * Prints tab that displays mediafile details
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param string     $ns
+ * @param null|int   $auth  permission level
+ * @param string|int $rev   revision timestamp or empty string
  */
-function media_tab_view($image, $ns, $auth=null, $rev=false) {
+function media_tab_view($image, $ns, $auth=null, $rev='') {
     global $lang;
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
@@ -843,6 +914,10 @@ function media_tab_view($image, $ns, $auth=null, $rev=false) {
  * Prints tab that displays form for editing mediafile metadata
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param string     $ns
+ * @param null|int   $auth permission level
  */
 function media_tab_edit($image, $ns, $auth=null) {
     if(is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
@@ -857,6 +932,10 @@ function media_tab_edit($image, $ns, $auth=null) {
  * Prints tab that displays mediafile revisions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param string     $ns
+ * @param null|int   $auth permission level
  */
 function media_tab_history($image, $ns, $auth=null) {
     global $lang;
@@ -880,13 +959,14 @@ function media_tab_history($image, $ns, $auth=null) {
 /**
  * Prints mediafile details
  *
- * @param string        $image media id
- * @param               $auth
- * @param int|bool      $rev
- * @param JpegMeta|bool $meta
+ * @param string         $image media id
+ * @param int            $auth permission level
+ * @param int|string     $rev revision timestamp or empty string
+ * @param JpegMeta|bool  $meta
+ *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_preview($image, $auth, $rev=false, $meta=false) {
+function media_preview($image, $auth, $rev='', $meta=false) {
 
     $size = media_image_preview_size($image, $rev, $meta);
 
@@ -918,8 +998,12 @@ function media_preview($image, $auth, $rev=false, $meta=false) {
  * Prints mediafile action buttons
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $image media id
+ * @param int        $auth  permission level
+ * @param string|int $rev   revision timestamp, or empty string
  */
-function media_preview_buttons($image, $auth, $rev=false) {
+function media_preview_buttons($image, $auth, $rev='') {
     global $lang, $conf;
 
     echo '<ul class="actions">'.NL;
@@ -967,11 +1051,11 @@ function media_preview_buttons($image, $auth, $rev=false) {
  * Returns image width and height for mediamanager preview panel
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string   $image
- * @param int      $rev
- * @param JpegMeta $meta
- * @param int      $size
- * @return array
+ * @param string         $image
+ * @param int|string     $rev
+ * @param JpegMeta|bool  $meta
+ * @param int            $size
+ * @return array|false
  */
 function media_image_preview_size($image, $rev, $meta, $size = 500) {
     if (!preg_match("/\.(jpe?g|gif|png)$/", $image) || !file_exists(mediaFN($image, $rev))) return false;
@@ -992,9 +1076,10 @@ function media_image_preview_size($image, $rev, $meta, $size = 500) {
  * Returns the requested EXIF/IPTC tag from the image meta
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param array $tags
+ *
+ * @param array    $tags array with tags, first existing is returned
  * @param JpegMeta $meta
- * @param string $alt
+ * @param string   $alt  alternative value
  * @return string
  */
 function media_getTag($tags,$meta,$alt=''){
@@ -1008,8 +1093,9 @@ function media_getTag($tags,$meta,$alt=''){
  * Returns mediafile tags
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  * @param JpegMeta $meta
- * @return array
+ * @return array list of tags of the mediafile
  */
 function media_file_tags($meta) {
     // load the field descriptions
@@ -1038,8 +1124,13 @@ function media_file_tags($meta) {
  * Prints mediafile tags
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string        $image image id
+ * @param int           $auth  permission level
+ * @param string|int    $rev   revision timestamp, or empty string
+ * @param bool|JpegMeta $meta  image object, or create one if false
  */
-function media_details($image, $auth, $rev=false, $meta=false) {
+function media_details($image, $auth, $rev='', $meta=false) {
     global $lang;
 
     if (!$meta) $meta = new JpegMeta(mediaFN($image, $rev));
@@ -1062,6 +1153,12 @@ function media_details($image, $auth, $rev=false, $meta=false) {
  * Shows difference between two revisions of file
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $image  image id
+ * @param string $ns
+ * @param int $auth permission level
+ * @param bool $fromajax
+ * @return false|null|string
  */
 function media_diff($image, $ns, $auth, $fromajax = false) {
     global $conf;
@@ -1111,6 +1208,7 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
     }
 
     // prepare event data
+    $data = array();
     $data[0] = $image;
     $data[1] = $l_rev;
     $data[2] = $r_rev;
@@ -1120,14 +1218,13 @@ function media_diff($image, $ns, $auth, $fromajax = false) {
 
     // trigger event
     return trigger_event('MEDIA_DIFF', $data, '_media_file_diff', true);
-
 }
 
 /**
  * Callback for media file diff
  *
- * @param $data
- * @return bool|void
+ * @param array $data event data
+ * @return false|null
  */
 function _media_file_diff($data) {
     if(is_array($data) && count($data)===6) {
@@ -1141,6 +1238,13 @@ function _media_file_diff($data) {
  * Shows difference between two revisions of image
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $image
+ * @param string|int $l_rev revision timestamp, or empty string
+ * @param string|int $r_rev revision timestamp, or empty string
+ * @param string $ns
+ * @param int $auth permission level
+ * @param bool $fromajax
  */
 function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
     global $lang;
@@ -1261,11 +1365,12 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
  * and slider
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string $image
- * @param int $l_rev
- * @param int $r_rev
- * @param array $l_size
- * @param array $r_size
+ *
+ * @param string $image   image id
+ * @param int    $l_rev   revision timestamp, or empty string
+ * @param int    $r_rev   revision timestamp, or empty string
+ * @param array  $l_size  array with width and height
+ * @param array  $r_size  array with width and height
  * @param string $type
  */
 function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
@@ -1298,10 +1403,11 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type) {
 /**
  * Restores an old revision of a media file
  *
- * @param string $image
- * @param int $rev
- * @param int $auth
+ * @param string $image media id
+ * @param int    $rev   revision timestamp or empty string
+ * @param int    $auth
  * @return string - file's id
+ *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function media_restore($image, $rev, $auth){
@@ -1331,19 +1437,24 @@ function media_restore($image, $rev, $auth){
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @author Kate Arzamastseva <pshns@ukr.net>
  * @triggers MEDIA_SEARCH
+ *
+ * @param string $query
+ * @param string $ns
+ * @param null|int $auth
+ * @param bool $fullscreen
+ * @param string $sort
  */
 function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural'){
     global $conf;
     global $lang;
 
     $ns = cleanID($ns);
-
+    $evdata = array(
+        'ns'    => $ns,
+        'data'  => array(),
+        'query' => $query
+    );
     if ($query) {
-        $evdata = array(
-                'ns'    => $ns,
-                'data'  => array(),
-                'query' => $query
-                );
         $evt = new Doku_Event('MEDIA_SEARCH', $evdata);
         if ($evt->advise_before()) {
             $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
@@ -1381,10 +1492,14 @@ function media_searchlist($query,$ns,$auth=null,$fullscreen=false,$sort='natural
 
 /**
  * Formats and prints one file in the list
+ *
+ * @param array     $item
+ * @param int       $auth              permission level
+ * @param string    $jump              item id
+ * @param bool      $display_namespace
  */
 function media_printfile($item,$auth,$jump,$display_namespace=false){
     global $lang;
-    global $conf;
 
     // Prepare zebra coloring
     // I always wanted to use this variable name :-D
@@ -1458,9 +1573,9 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
 /**
  * Display a media icon
  *
- * @param $filename
- * @param string $size the size subfolder, if not specified 16x16 is used
- * @return string
+ * @param string $filename media id
+ * @param string $size     the size subfolder, if not specified 16x16 is used
+ * @return string html
  */
 function media_printicon($filename, $size=''){
     list($ext) = mimetype(mediaFN($filename),false);
@@ -1478,6 +1593,11 @@ function media_printicon($filename, $size=''){
  * Formats and prints one file in the list in the thumbnails view
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param array       $item
+ * @param int         $auth              permission level
+ * @param bool|string $jump              item id
+ * @param bool        $display_namespace
  */
 function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false){
 
@@ -1525,6 +1645,9 @@ function media_printfile_thumbs($item,$auth,$jump=false,$display_namespace=false
 
 /**
  * Prints a thumbnail and metainfo
+ *
+ * @param array $item
+ * @param bool  $fullscreen
  */
 function media_printimgdetail($item, $fullscreen=false){
     // prepare thumbnail
@@ -1588,15 +1711,15 @@ function media_printimgdetail($item, $fullscreen=false){
 }
 
 /**
- * Build link based on the current, adding/rewriting
- * parameters
+ * Build link based on the current, adding/rewriting parameters
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  * @param array|bool $params
- * @param string     $amp - separator
- * @param bool       $abs
- * @param bool       $params_array
- * @return string|array - link
+ * @param string     $amp           separator
+ * @param bool       $abs           absolute url?
+ * @param bool       $params_array  return the parmeters array?
+ * @return string|array - link or link parameters
  */
 function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array=false) {
     global $ID;
@@ -1627,6 +1750,10 @@ function media_managerURL($params=false, $amp='&amp;', $abs=false, $params_array
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $ns
+ * @param int    $auth permission level
+ * @param bool  $fullscreen
  */
 function media_uploadform($ns, $auth, $fullscreen = false){
     global $lang;
@@ -1714,6 +1841,10 @@ function media_getuploadsize(){
  *
  * @author Tobias Sarnowski <sarnowski@cosmocode.de>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $ns
+ * @param string $query
+ * @param bool $fullscreen
  */
 function media_searchform($ns,$query='',$fullscreen=false){
     global $lang;
@@ -1741,6 +1872,8 @@ function media_searchform($ns,$query='',$fullscreen=false){
  * Build a tree outline of available media namespaces
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $ns
  */
 function media_nstree($ns){
     global $conf;
@@ -1789,6 +1922,9 @@ function media_nstree($ns){
  * Prints a media namespace tree item
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $item
+ * @return string html
  */
 function media_nstree_item($item){
     global $INPUT;
@@ -1812,6 +1948,9 @@ function media_nstree_item($item){
  * Prints a media namespace tree item opener
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $item
+ * @return string html
  */
 function media_nstree_li($item){
     $class='media level'.$item['level'];
@@ -1833,6 +1972,12 @@ function media_nstree_li($item){
  * Resizes the given image to the given size
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename, path to file
+ * @param string $ext  extension
+ * @param int    $w    desired width
+ * @param int    $h    desired height
+ * @return string path to resized or original size if failed
  */
 function media_resize_image($file, $ext, $w, $h=0){
     global $conf;
@@ -1853,9 +1998,10 @@ function media_resize_image($file, $ext, $w, $h=0){
     $local = getCacheName($file,'.media.'.$w.'x'.$h.'.'.$ext);
     $mtime = @filemtime($local); // 0 if not exists
 
-    if( $mtime > filemtime($file) ||
-            media_resize_imageIM($ext,$file,$info[0],$info[1],$local,$w,$h) ||
-            media_resize_imageGD($ext,$file,$info[0],$info[1],$local,$w,$h) ){
+    if($mtime > filemtime($file) ||
+        media_resize_imageIM($ext, $file, $info[0], $info[1], $local, $w, $h) ||
+        media_resize_imageGD($ext, $file, $info[0], $info[1], $local, $w, $h)
+    ) {
         if(!empty($conf['fperm'])) @chmod($local, $conf['fperm']);
         return $local;
     }
@@ -1871,6 +2017,12 @@ function media_resize_image($file, $ext, $w, $h=0){
  * image because most pics are more interesting in that area (rule of thirds)
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename, path to file
+ * @param string $ext  extension
+ * @param int    $w    desired width
+ * @param int    $h    desired height
+ * @return string path to resized or original size if failed
  */
 function media_crop_image($file, $ext, $w, $h=0){
     global $conf;
@@ -1935,7 +2087,7 @@ function media_crop_image($file, $ext, $w, $h=0){
  * @param string  $id    id of the image
  * @param int     $w     resize/crop width
  * @param int     $h     resize/crop height
- * @return string
+ * @return string token or empty string if no token required
  */
 function media_get_token($id,$w,$h){
     // token is only required for modified images
@@ -1958,6 +2110,11 @@ function media_get_token($id,$w,$h){
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Pavel Vitis <Pavel.Vitis@seznam.cz>
+ *
+ * @param string $url
+ * @param string $ext   extension
+ * @param int    $cache cachetime in seconds
+ * @return false|string path to cached file
  */
 function media_get_from_URL($url,$ext,$cache){
     global $conf;
@@ -1970,12 +2127,12 @@ function media_get_from_URL($url,$ext,$cache){
     $mtime = @filemtime($local); // 0 if not exists
 
     //decide if download needed:
-    if( ($mtime == 0) ||                           // cache does not exist
-            ($cache != -1 && $mtime < time()-$cache)   // 'recache' and cache has expired
-      ){
-        if(media_image_download($url,$local)){
+    if(($mtime == 0) || // cache does not exist
+        ($cache != -1 && $mtime < time() - $cache) // 'recache' and cache has expired
+    ) {
+        if(media_image_download($url, $local)) {
             return $local;
-        }else{
+        } else {
             return false;
         }
     }
@@ -1991,6 +2148,10 @@ function media_get_from_URL($url,$ext,$cache){
  * Download image files
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $url
+ * @param string $file path to file in which to put the downloaded content
+ * @return bool
  */
 function media_image_download($url,$file){
     global $conf;
@@ -2026,6 +2187,15 @@ function media_image_download($url,$file){
  *
  * @author Pavel Vitis <Pavel.Vitis@seznam.cz>
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $ext     extension
+ * @param string $from    filename path to file
+ * @param int    $from_w  original width
+ * @param int    $from_h  original height
+ * @param string $to      path to resized file
+ * @param int    $to_w    desired width
+ * @param int    $to_h    desired height
+ * @return bool
  */
 function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
     global $conf;
@@ -2050,6 +2220,17 @@ function media_resize_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
  * crop images using external ImageMagick convert program
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $ext     extension
+ * @param string $from    filename path to file
+ * @param int    $from_w  original width
+ * @param int    $from_h  original height
+ * @param string $to      path to resized file
+ * @param int    $to_w    desired width
+ * @param int    $to_h    desired height
+ * @param int    $ofs_x   offset of crop centre
+ * @param int    $ofs_y   offset of crop centre
+ * @return bool
  */
 function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$ofs_y){
     global $conf;
@@ -2075,6 +2256,17 @@ function media_crop_imageIM($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x,$o
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Sebastian Wienecke <s_wienecke@web.de>
+ *
+ * @param string $ext     extension
+ * @param string $from    filename path to file
+ * @param int    $from_w  original width
+ * @param int    $from_h  original height
+ * @param string $to      path to resized file
+ * @param int    $to_w    desired width
+ * @param int    $to_h    desired height
+ * @param int    $ofs_x   offset of crop centre
+ * @param int    $ofs_y   offset of crop centre
+ * @return bool
  */
 function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=0,$ofs_y=0){
     global $conf;
@@ -2087,6 +2279,7 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     }
 
     // create an image of the given filetype
+    $image = false;
     if ($ext == 'jpg' || $ext == 'jpeg'){
         if(!function_exists("imagecreatefromjpeg")) return false;
         $image = @imagecreatefromjpeg($from);
@@ -2100,6 +2293,7 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
     }
     if(!$image) return false;
 
+    $newimg = false;
     if(($conf['gdlib']>1) && function_exists("imagecreatetruecolor") && $ext != 'gif'){
         $newimg = @imagecreatetruecolor ($to_w, $to_h);
     }
@@ -2175,23 +2369,23 @@ function media_resize_imageGD($ext,$from,$from_w,$from_h,$to,$to_w,$to_h,$ofs_x=
  * Return other media files with the same base name
  * but different extensions.
  *
- * @param string $src       - ID of media file
- * @param array $exts       - alternative extensions to find other files for
- * @return array            - mime type => file ID
+ * @param string   $src     - ID of media file
+ * @param string[] $exts    - alternative extensions to find other files for
+ * @return array            - array(mime type => file ID)
  *
  * @author Anika Henke <anika@selfthinker.org>
  */
 function media_alternativefiles($src, $exts){
 
     $files = array();
-    list($srcExt, $srcMime) = mimetype($src);
+    list($srcExt, /* $srcMime */) = mimetype($src);
     $filebase = substr($src, 0, -1 * (strlen($srcExt)+1));
 
     foreach($exts as $ext) {
         $fileid = $filebase.'.'.$ext;
         $file = mediaFN($fileid);
         if(file_exists($file)) {
-            list($fileExt, $fileMime) = mimetype($file);
+            list(/* $fileExt */, $fileMime) = mimetype($file);
             $files[$fileMime] = $fileid;
         }
     }
@@ -2202,7 +2396,7 @@ function media_alternativefiles($src, $exts){
  * Check if video/audio is supported to be embedded.
  *
  * @param string $mime      - mimetype of media file
- * @param string $type      - type of media files to check ('video', 'audio', or none)
+ * @param string $type      - type of media files to check ('video', 'audio', or null for all)
  * @return boolean
  *
  * @author Anika Henke <anika@selfthinker.org>

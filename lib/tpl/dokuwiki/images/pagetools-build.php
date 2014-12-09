@@ -92,7 +92,7 @@ function hex2rgb($hex) {
 /**
  * Scale (darken/lighten) a given image
  *
- * @param ressource $img    The truetype GD image to work on
+ * @param resource $img    The truetype GD image to work on
  * @param float     $scale  Scale the colors by this value ( <1 darkens, >1 lightens)
  */
 function imagecolorscale(&$img, $scale){

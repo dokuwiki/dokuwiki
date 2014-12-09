@@ -57,6 +57,12 @@ class DokuHTTPClient extends HTTPClient {
      * @triggers HTTPCLIENT_REQUEST_SEND
      * @author   Andreas Gohr <andi@splitbrain.org>
      */
+    /**
+     * @param string $url
+     * @param string|array $data the post data either as array or raw data
+     * @param string $method
+     * @return bool
+     */
     function sendRequest($url,$data='',$method='GET'){
         $httpdata = array('url'    => $url,
                           'data'   => $data,
@@ -104,7 +110,7 @@ class HTTPClient {
     var $header_regexp; // if set this RE must match against the headers, else abort
     var $headers;
     var $debug;
-    var $start = 0; // for timings
+    var $start = 0.0; // for timings
     var $keep_alive = true; // keep alive rocks
 
     // don't set these, read on error
@@ -166,7 +172,8 @@ class HTTPClient {
      *
      * @param  string $url       The URL to fetch
      * @param  bool   $sloppy304 Return body on 304 not modified
-     * @return bool|string  response body, false on error
+     * @return false|string  response body, false on error
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function get($url,$sloppy304=false){
@@ -187,7 +194,8 @@ class HTTPClient {
      * @param  string $url       The URL to fetch
      * @param  array  $data      Associative array of parameters
      * @param  bool   $sloppy304 Return body on 304 not modified
-     * @return bool|string  response body, false on error
+     * @return false|string  response body, false on error
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function dget($url,$data,$sloppy304=false){
@@ -207,7 +215,7 @@ class HTTPClient {
      *
      * @param  string $url       The URL to fetch
      * @param  array  $data      Associative array of parameters
-     * @return bool|string  response body, false on error
+     * @return false|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function post($url,$data){
@@ -229,6 +237,7 @@ class HTTPClient {
      * @param  mixed  $data   - the post data either as array or raw data
      * @param  string $method - HTTP Method usually GET or POST.
      * @return bool - true on success
+     *
      * @author Andreas Goetz <cpuidle@gmx.de>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -596,6 +605,7 @@ class HTTPClient {
      * @param  string   $data       The data to write
      * @param  string   $message    Description of what is being read
      * @throws HTTPClientException
+     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _sendData($socket, $data, $message) {
@@ -640,6 +650,7 @@ class HTTPClient {
      * @param  bool     $ignore_eof End-of-file is not an error if this is set
      * @throws HTTPClientException
      * @return string
+     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readData($socket, $nbytes, $message, $ignore_eof = false) {
@@ -689,6 +700,7 @@ class HTTPClient {
      * @param  string   $message    Description of what is being read
      * @throws HTTPClientException
      * @return string
+     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readLine($socket, $message) {
@@ -723,6 +735,9 @@ class HTTPClient {
      * Uses _debug_text or _debug_html depending on the SAPI name
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $info
+     * @param mixed  $var
      */
     function _debug($info,$var=null){
         if(!$this->debug) return;
@@ -736,8 +751,8 @@ class HTTPClient {
     /**
      * print debug info as HTML
      *
-     * @param      $info
-     * @param null $var
+     * @param string $info
+     * @param mixed  $var
      */
     function _debug_html($info, $var=null){
         print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
@@ -753,8 +768,8 @@ class HTTPClient {
     /**
      * prints debug info as plain text
      *
-     * @param      $info
-     * @param null $var
+     * @param string $info
+     * @param mixed  $var
      */
     function _debug_text($info, $var=null){
         print '*'.$info.'* '.($this->_time() - $this->start)."s\n";
@@ -764,6 +779,8 @@ class HTTPClient {
 
     /**
      * Return current timestamp in microsecond resolution
+     *
+     * @return float
      */
     static function _time(){
         list($usec, $sec) = explode(" ", microtime());
@@ -776,6 +793,9 @@ class HTTPClient {
      * All Keys are lowercased.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $string
+     * @return array
      */
     function _parseHeaders($string){
         $headers = array();
@@ -804,6 +824,9 @@ class HTTPClient {
      * convert given header array to header string
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $headers
+     * @return string
      */
     function _buildHeaders($headers){
         $string = '';
@@ -818,6 +841,8 @@ class HTTPClient {
      * get cookies as http header string
      *
      * @author Andreas Goetz <cpuidle@gmx.de>
+     *
+     * @return string
      */
     function _getCookies(){
         $headers = '';
@@ -833,6 +858,9 @@ class HTTPClient {
      * Encode data for posting
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $data
+     * @return string
      */
     function _postEncode($data){
         return http_build_query($data,'','&');
@@ -843,6 +871,9 @@ class HTTPClient {
      *
      * @fixme use of urlencode might be wrong here
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $data
+     * @return string
      */
     function _postMultipartEncode($data){
         $boundary = '--'.$this->boundary;

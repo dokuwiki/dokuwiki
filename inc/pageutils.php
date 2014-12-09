@@ -20,7 +20,7 @@
  *
  * @param string $param  the $_REQUEST variable name, default 'id'
  * @param bool   $clean  if true, ID is cleaned
- * @return mixed|string
+ * @return string
  */
 function getID($param='id',$clean=true){
     /** @var Input $INPUT */
@@ -97,6 +97,7 @@ function getID($param='id',$clean=true){
  * converted to unaccented ones
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
  * @return string cleaned id
@@ -152,7 +153,7 @@ function cleanID($raw_id,$ascii=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id
- * @return string|bool the namespace part or false if the given ID has no namespace (root)
+ * @return string|false the namespace part or false if the given ID has no namespace (root)
  */
 function getNS($id){
     $pos = strrpos((string)$id,':');
@@ -271,7 +272,7 @@ function page_exists($id,$rev='',$clean=true, $date_at=false) {
  * The filename is URL encoded to protect Unicode chars
  *
  * @param  $raw_id  string   id of wikipage
- * @param  $rev     string   page revision, empty string for current
+ * @param  $rev     int|string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
  * @return string full path
@@ -441,7 +442,7 @@ function localeFN($id,$ext='txt'){
  * @param string $ns     namespace which is context of id
  * @param string $id     relative id
  * @param bool   $clean  flag indicating that id should be cleaned
- * @return mixed|string
+ * @return string
  */
 function resolve_id($ns,$id,$clean=true){
     global $conf;
@@ -738,6 +739,7 @@ function utf8_decodeFN($file){
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
+ *
  * @param  string $page the pagename you're looking for
  * @return string|false the full page id of the found page, false if any
  */

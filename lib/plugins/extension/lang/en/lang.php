@@ -69,7 +69,8 @@ $lang['status_bundled']               = 'bundled';
 
 $lang['msg_enabled']                  = 'Plugin %s enabled';
 $lang['msg_disabled']                 = 'Plugin %s disabled';
-$lang['msg_delete_success']           = 'Extension uninstalled';
+$lang['msg_delete_success']           = 'Extension %s uninstalled';
+$lang['msg_delete_failed']            = 'Uninstalling Extension %s failed';
 $lang['msg_template_install_success'] = 'Template %s installed successfully';
 $lang['msg_template_update_success']  = 'Template %s updated successfully';
 $lang['msg_plugin_install_success']   = 'Plugin %s installed successfully';

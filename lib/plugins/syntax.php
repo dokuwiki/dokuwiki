@@ -52,6 +52,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
      * @see Doku_Handler_Block
+     *
      * @return string
      */
     function getPType(){
@@ -94,9 +95,9 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * The contents of the $data array depends on what the handler() function above
      * created
      *
-     * @param   $format   string        output format being rendered
-     * @param   $renderer Doku_Renderer the current renderer object
-     * @param   $data     array         data created by handler()
+     * @param string          $format   output format being rendered
+     * @param Doku_Renderer   $renderer the current renderer object
+     * @param array           $data     data created by handler()
      * @return  boolean                 rendered correctly? (however, returned value is not used at the moment)
      */
     function render($format, Doku_Renderer $renderer, $data) {

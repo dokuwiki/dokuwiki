@@ -12,10 +12,11 @@
  * @group plugins
  */
 class helper_plugin_authplain_escaping_test extends DokuWikiTest {
- 
+
     protected $pluginsEnabled = array('authplainharness');
+    /** @var  auth_plugin_authplain|auth_plugin_authplainharness */
     protected $auth;
- 
+
     protected function reloadUsers() {
         /* auth caches data loaded from file, but recreated object forces reload */
         $this->auth = new auth_plugin_authplainharness();

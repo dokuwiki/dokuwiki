@@ -127,6 +127,7 @@ function auth_setup() {
  * Loads the ACL setup and handle user wildcards
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @return array
  */
 function auth_loadACL() {
@@ -173,7 +174,7 @@ function auth_loadACL() {
 /**
  * Event hook callback for AUTH_LOGIN_CHECK
  *
- * @param $evdata
+ * @param array $evdata
  * @return bool
  */
 function auth_login_wrapper($evdata) {
@@ -280,8 +281,9 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
  * token is correct. Will exit with a 401 Status if not.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param  string $token The authentication token
- * @return boolean true (or will exit on failure)
+ * @return boolean|null true (or will exit on failure)
  */
 function auth_validateToken($token) {
     if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {
@@ -307,6 +309,7 @@ function auth_validateToken($token) {
  * NOTE: this is completely unrelated to the getSecurityToken() function
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @return string The auth token
  */
 function auth_createToken() {
@@ -350,6 +353,7 @@ function auth_browseruid() {
  * and stored in this file.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @param   bool $addsession if true, the sessionid is added to the salt
  * @param   bool $secure     if security is more important than keeping the old value
  * @return  string
@@ -377,6 +381,7 @@ function auth_cookiesalt($addsession = false, $secure = false) {
  * @author Mark Seecof
  * @author Michael Hamann <michael@content-space.de>
  * @link   http://www.php.net/manual/de/function.mt-rand.php#83655
+ *
  * @param int $length number of bytes to get
  * @return string binary random strings
  */
@@ -443,6 +448,7 @@ function auth_randombytes($length) {
  *
  * @author Michael Samuel
  * @author Michael Hamann <michael@content-space.de>
+ *
  * @param int $min
  * @param int $max
  * @return int
@@ -514,6 +520,7 @@ function auth_decrypt($ciphertext, $secret) {
  * off. It also clears session data.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $keepbc - when true, the breadcrumb data is not cleared
  */
 function auth_logoff($keepbc = false) {
@@ -554,6 +561,7 @@ function auth_logoff($keepbc = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    auth_isadmin
+ *
  * @param  string $user       Username
  * @param  array  $groups     List of groups the user is in
  * @param  bool   $adminonly  when true checks if user is admin
@@ -598,6 +606,7 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see auth_ismanager()
+ *
  * @param  string $user       Username
  * @param  array  $groups     List of groups the user is in
  * @return bool
@@ -612,9 +621,9 @@ function auth_isadmin($user = null, $groups = null) {
  *
  * Note: all input should NOT be nameencoded.
  *
- * @param $memberlist string commaseparated list of allowed users and groups
- * @param $user       string user to match against
- * @param $groups     array  groups the user is member of
+ * @param string $memberlist commaseparated list of allowed users and groups
+ * @param string $user       user to match against
+ * @param array  $groups     groups the user is member of
  * @return bool       true for membership acknowledged
  */
 function auth_isMember($memberlist, $user, array $groups) {
@@ -677,6 +686,7 @@ function auth_quickaclcheck($id) {
  * Returns the maximum rights a user has for the given ID or its namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @triggers AUTH_ACL_CHECK
  * @param  string       $id     page ID (needs to be resolved and cleaned)
  * @param  string       $user   Username
@@ -699,6 +709,7 @@ function auth_aclcheck($id, $user, $groups) {
  * DO NOT CALL DIRECTLY, use auth_aclcheck() instead
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @param  array $data event data
  * @return int   permission level
  */
@@ -831,6 +842,10 @@ function auth_aclcheck_cb($data) {
  *
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @see rawurldecode()
+ *
+ * @param string $name
+ * @param bool $skip_group
+ * @return string
  */
 function auth_nameencode($name, $skip_group = false) {
     global $cache_authname;
@@ -912,6 +927,7 @@ function auth_pwgen($foruser = '') {
  * Sends a password to the given user
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $user Login name of the user
  * @param string $password The new password in clear text
  * @return bool  true on success
@@ -947,6 +963,7 @@ function auth_sendPassword($user, $password) {
  * This registers a new user - Data is read directly from $_POST
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @return bool  true on success, false on any error
  */
 function register() {
@@ -1128,6 +1145,7 @@ function auth_deleteprofile(){
         }
     }
 
+    $deleted = array();
     $deleted[] = $INPUT->server->str('REMOTE_USER');
     if($auth->triggerUserMod('delete', array($deleted))) {
         // force and immediate logout including removing the sticky cookie
@@ -1278,6 +1296,7 @@ function act_resendpwd() {
  * is chosen.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $clear The clear text password
  * @param string $method The hashing method
  * @param string $salt A salt, null for random
@@ -1302,6 +1321,7 @@ function auth_cryptPassword($clear, $method = '', $salt = null) {
  * Verifies a cleartext password against a crypted hash
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param  string $clear The clear text password
  * @param  string $crypt The hash to compare with
  * @return bool true if both match

@@ -181,6 +181,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             }
         }
 
+        $info = array();
         $info['user']   = $user;
         $info['server'] = $this->getConf('server');
 
@@ -564,15 +565,13 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * Wraps around ldap_search, ldap_list or ldap_read depending on $scope
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @param resource $link_identifier
-     * @param string   $base_dn
-     * @param string   $filter
-     * @param string   $scope can be 'base', 'one' or 'sub'
-     * @param null     $attributes
-     * @param int      $attrsonly
-     * @param int      $sizelimit
-     * @param int      $timelimit
-     * @param int      $deref
+     * @param resource   $link_identifier
+     * @param string     $base_dn
+     * @param string     $filter
+     * @param string     $scope can be 'base', 'one' or 'sub'
+     * @param null|array $attributes
+     * @param int        $attrsonly
+     * @param int        $sizelimit
      * @return resource
      */
     protected function _ldapsearch($link_identifier, $base_dn, $filter, $scope = 'sub', $attributes = null,

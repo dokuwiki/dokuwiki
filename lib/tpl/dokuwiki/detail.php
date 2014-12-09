@@ -82,8 +82,8 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                                 $data = array(
                                     'view' => 'detail',
                                     'items' => array(
-                                        'mediaManager' => tpl_action('mediaManager', 1, 'li', 1, '<span>', '</span>'),
-                                        'img_backto' =>   tpl_action('img_backto',   1, 'li', 1, '<span>', '</span>'),
+                                        'mediaManager' => tpl_action('mediaManager', true, 'li', true, '<span>', '</span>'),
+                                        'img_backto' =>   tpl_action('img_backto',   true, 'li', true, '<span>', '</span>'),
                                     )
                                 );
 

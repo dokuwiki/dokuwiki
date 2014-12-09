@@ -115,7 +115,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * Check if the given config strings are set
      *
      * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
-     * @param   array $keys
+     *
+     * @param   string[] $keys
      * @param   bool  $wop is this a check for a write operation?
      * @return  bool
      */
@@ -284,7 +285,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                 $grpdel = array_diff($groups, $changes['grps']);
 
                 foreach($grpadd as $group) {
-                    if(($this->_addUserToGroup($user, $group, 1)) == false) {
+                    if(($this->_addUserToGroup($user, $group, true)) == false) {
                         $rc = false;
                     }
                 }
@@ -366,7 +367,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @param  int          $first  index of first user to be returned
      * @param  int          $limit  max number of users to be returned
-     * @param  array|string $filter array of field/pattern pairs
+     * @param  array $filter array of field/pattern pairs
      * @return  array userinfo (refer getUserData for internal userinfo details)
      */
     public function retrieveUsers($first = 0, $limit = 0, $filter = array()) {
@@ -612,7 +613,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
 
             if($uid) {
                 foreach($grps as $group) {
-                    $gid = $this->_addUserToGroup($user, $group, 1);
+                    $gid = $this->_addUserToGroup($user, $group, true);
                     if($gid === false) break;
                 }
 
@@ -668,7 +669,6 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @param  string  $user username of the user whose data is to be removed from the cache
      *                       if null, empty the whole cache
-     * @return none
      */
     protected function _flushUserInfoCache($user=null) {
         if (is_null($user)) {
@@ -750,7 +750,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param  string $user  user's nick to get data for
-     * @return bool|array false on error, user info on success
+     * @return false|array false on error, user info on success
      */
     protected function _retrieveUserInfo($user) {
         $sql    = str_replace('%{user}', $this->_escape($user), $this->getConf('getUserInfo'));
@@ -777,7 +777,6 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      *
      * @param  string $user    user's nick being updated
      * @param  array $changes  array of items to change as pairs of item and value
-     * @param  mixed $uid      user id of dataset to change, must be unique in DB
      * @return bool true on success or false on error
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -838,7 +837,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param  string $group   group name which id is desired
-     * @return mixed group id
+     * @return false|string group id
      */
     protected function _getGroupID($group) {
         if($this->dbcon) {
@@ -911,7 +910,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      *
      * @param string $query  SQL string that contains the query
-     * @return array with the result table
+     * @return array|false with the result table
      */
     protected function _queryDB($query) {
         if($this->getConf('debug') >= 2) {
@@ -1002,6 +1001,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      * abrogated.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @return bool
      */
     protected function _unlockTables() {
         if($this->dbcon) {
