@@ -159,9 +159,11 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
             if($first) $sql .= " OFFSET $first";
             $result = $this->_queryDB($sql);
 
-            foreach($result as $user)
-                if(($info = $this->_getCachedUserInfo($user['user'])))
+            foreach($result as $user) {
+                if(($info = $this->_getUserInfo($user['user']))) {
                     $out[$user['user']] = $info;
+                }
+            }
 
             $this->_unlockTables();
             $this->_closeDB();

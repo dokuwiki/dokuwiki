@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <title>simleys</title>
+    <title>smileys</title>
 
     <style type="text/css">
         body {

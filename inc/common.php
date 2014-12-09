@@ -440,6 +440,8 @@ function idfilter($id, $ue = true) {
 function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;') {
     global $conf;
     if(is_array($urlParameters)) {
+        if(isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
+        if(isset($urlParameters['at']) && $conf['date_at_format']) $urlParameters['at'] = date($conf['date_at_format'],$urlParameters['at']);
         $urlParameters = buildURLparams($urlParameters, $separator);
     } else {
         $urlParameters = str_replace(',', $separator, $urlParameters);
@@ -546,6 +548,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         if(empty($more['w'])) unset($more['w']);
         if(empty($more['h'])) unset($more['h']);
         if(isset($more['id']) && $direct) unset($more['id']);
+        if(isset($more['rev']) && !$more['rev']) unset($more['rev']);
         $more = buildURLparams($more, $sep);
     } else {
         $matches = array();

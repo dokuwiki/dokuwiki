@@ -460,6 +460,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @return string The HTML code
      */
     function make_actions(helper_plugin_extension_extension $extension) {
+        global $conf;
         $return = '';
         $errors = '';
 
@@ -489,6 +490,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
             if ($extension->isGitControlled()){
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
+            }
+
+            if ($extension->isEnabled() && in_array('Auth', $extension->getTypes()) && $conf['auth'] != $extension->getID()) {
+                $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
             }
 
         }else{

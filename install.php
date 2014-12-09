@@ -58,7 +58,6 @@ $dokuwiki_hash = array(
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    'devel'        => 'b3ddc3f793eac8c135176e535054c00a',
 );
 
 
@@ -557,8 +556,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.2.0','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
+    if(version_compare(phpversion(),'5.3.3','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
         $ok = false;
     }
 

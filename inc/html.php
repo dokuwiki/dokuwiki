@@ -245,6 +245,7 @@ function html_show($txt=null){
     global $REV;
     global $HIGH;
     global $INFO;
+    global $DATE_AT;
     //disable section editing for old revisions or in preview
     if($txt || $REV){
         $secedit = false;
@@ -264,8 +265,8 @@ function html_show($txt=null){
         echo '</div></div>';
 
     }else{
-        if ($REV) print p_locale_xhtml('showrev');
-        $html = p_wiki_xhtml($ID,$REV,true);
+        if ($REV||$DATE_AT) print p_locale_xhtml('showrev');
+        $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         $html = html_hilight($html,$HIGH);
@@ -344,15 +345,17 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    global $QUERY;
+    global $QUERY, $ID;
     global $lang;
 
     $intro = p_locale_xhtml('searchpage');
     // allow use of placeholder in search intro
+    $pagecreateinfo = (auth_quickaclcheck($ID) >= AUTH_CREATE) ? $lang['searchcreatepage'] : '';
     $intro = str_replace(
-                array('@QUERY@','@SEARCH@'),
-                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
-                $intro);
+        array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
+        array(hsc(rawurlencode($QUERY)), hsc($QUERY), $pagecreateinfo),
+        $intro
+    );
     echo $intro;
     flush();
 

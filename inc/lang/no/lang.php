@@ -21,6 +21,7 @@
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
  * @author Boris <boris@newton-media.no>
  * @author Christopher Schive <chschive@frisurf.no>
+ * @author Patrick <spill.p@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -82,6 +83,7 @@ $lang['badpassconfirm']        = 'Beklager, passordet var feil';
 $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
 $lang['nosecedit']             = 'Siden ble endret i mellomtiden, seksjonsinfo har blitt foreldet - lastet full side istedet.';
+$lang['searchcreatepage']      = 'Hvis du ikke finner det du leter etter, så kan du skape en ny side med samme navn som ditt søk ved å klikke på \'\'**Lag denne siden**\'\'-knappen.';
 $lang['regmissing']            = 'Vennligst fyll ut alle felt.';
 $lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
 $lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';
@@ -115,7 +117,7 @@ $lang['searchmedia_in']        = 'Søk i %s';
 $lang['txt_upload']            = 'Velg fil som skal lastes opp:';
 $lang['txt_filename']          = 'Skriv inn wikinavn (alternativt):';
 $lang['txt_overwrt']           = 'Overskriv eksisterende fil';
-$lang['maxuploadsize']         = 'Opplast maks % per fil.';
+$lang['maxuploadsize']         = 'Opplast maks %s per fil.';
 $lang['lockedby']              = 'Låst av:';
 $lang['lockexpire']            = 'Låsingen utløper:';
 $lang['js']['willexpire']      = 'Din redigeringslås for dette dokumentet kommer snart til å utløpe.\nFor å unngå versjonskonflikter bør du forhåndsvise dokumentet ditt for å forlenge redigeringslåsen.';
@@ -355,3 +357,4 @@ $lang['currentns']             = 'gjeldende navnemellomrom';
 $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
 $lang['wikimarkup']            = 'wiki-format';
+$lang['page_nonexist_rev']     = 'Finnes ingen side på %s. Den er derfor laget på <a href="%s">%s</a>';

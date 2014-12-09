@@ -171,8 +171,9 @@ function tpl_content_core() {
             break;
         default:
             $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before())
+            if($evt->advise_before()) {
                 msg("Failed to handle command: ".hsc($ACT), -1);
+            }
             $evt->advise_after();
             unset($evt);
             return false;
@@ -467,8 +468,8 @@ function _tpl_metaheaders_action($data) {
  * @param string $url
  * @param string $name
  * @param string $more
- * @param bool $return return html
- * @return bool|string html or true
+ * @param bool $return if true return the link html, otherwise print
+ * @return bool|string html of the link, or true if printed
  */
 function tpl_link($url, $name, $more = '', $return = false) {
     $out = '<a href="'.$url.'" ';
@@ -488,7 +489,7 @@ function tpl_link($url, $name, $more = '', $return = false) {
  *
  * @param string      $id   page id
  * @param string|null $name the name of the link
- * @return bool
+ * @return bool true
  */
 function tpl_pagelink($id, $name = null) {
     print '<bdi>'.html_wikilink($id, $name).'</bdi>';
@@ -559,11 +560,11 @@ function tpl_button($type, $return = false) {
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
  *
- * @param string $type action command
- * @param string $pre prefix of link
- * @param string $suf suffix of link
- * @param string $inner innerHML of link
- * @param bool $return
+ * @param string $type    action command
+ * @param string $pre     prefix of link
+ * @param string $suf     suffix of link
+ * @param string $inner   innerHML of link
+ * @param bool   $return  if true it returns html, otherwise prints
  * @return bool|string html or false if no data, true if printed
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
@@ -1066,9 +1067,9 @@ function tpl_pagetitle($id = null, $ret = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param array|string $tags tags to try
+ * @param array|string $tags tag or array of tags to try
  * @param string       $alt  alternative output if no data was found
- * @param null|string   $src the image src, uses global $SRC if not given
+ * @param null|string  $src  the image src, uses global $SRC if not given
  * @return string
  */
 function tpl_img_getTag($tags, $alt = '', $src = null) {
@@ -1162,6 +1163,7 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
     /** @var Input $INPUT */
     global $INPUT;
+    global $REV;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
 
@@ -1186,8 +1188,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     }
 
     //prepare URLs
-    $url = ml($IMG, array('cache'=> $INPUT->str('cache')), true, '&');
-    $src = ml($IMG, array('cache'=> $INPUT->str('cache'), 'w'=> $w, 'h'=> $h), true, '&');
+    $url = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV), true, '&');
+    $src = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV, 'w'=> $w, 'h'=> $h), true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');
@@ -1316,16 +1318,29 @@ function tpl_getLang($id) {
     static $lang = array();
 
     if(count($lang) === 0) {
-        $path = tpl_incdir().'lang/';
+        global $conf, $config_cascade; // definitely don't invoke "global $lang"
+
+        $path = tpl_incdir() . 'lang/';
 
         $lang = array();
 
-        global $conf; // definitely don't invoke "global $lang"
         // don't include once
-        @include($path.'en/lang.php');
-        if($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-    }
+        @include($path . 'en/lang.php');
+        foreach($config_cascade['lang']['template'] as $config_file) {
+            if(@file_exists($config_file . $conf['template'] . '/en/lang.php')) {
+                include($config_file . $conf['template'] . '/en/lang.php');
+            }
+        }
 
+        if($conf['lang'] != 'en') {
+            @include($path . $conf['lang'] . '/lang.php');
+            foreach($config_cascade['lang']['template'] as $config_file) {
+                if(@file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
+                    include($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php');
+                }
+            }
+        }
+    }
     return $lang[$id];
 }
 
@@ -1349,7 +1364,7 @@ function tpl_locale_xhtml($id) {
 function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
     global $conf;
-    $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
+    $file = DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
     if (!@file_exists($file)){
         $file = $path.$conf['lang'].'/'.$id.'.txt';
         if(!@file_exists($file)){
@@ -1372,7 +1387,7 @@ function tpl_localeFN($id) {
  * @triggers MEDIAMANAGER_CONTENT_OUTPUT
  * @param bool $fromajax - set true when calling this function via ajax
  * @param string $sort
-
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_mediaContent($fromajax = false, $sort='natural') {

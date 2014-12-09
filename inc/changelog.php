@@ -847,6 +847,25 @@ abstract class ChangeLog {
     public function isCurrentRevision($rev) {
         return $rev == @filemtime($this->getFilename());
     }
+    
+    /**
+    * Return an existing revision for a specific date which is 
+    * the current one or younger or equal then the date
+    *
+    * @param string $id 
+    * @param number $date_at timestamp
+    * @return string revision ('' for current)
+    */
+    function getLastRevisionAt($date_at){
+        //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
+        if($date_at >= @filemtime($this->getFilename())) { 
+            return '';
+        } else if ($rev = $this->getRelativeRevision($date_at+1, -1)) { //+1 to get also the requested date revision
+            return $rev;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Returns the next lines of the changelog  of the chunck before head or after tail
@@ -1074,3 +1093,4 @@ function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
     }
     return $changelog->getRevisions($first, $num);
 }
+

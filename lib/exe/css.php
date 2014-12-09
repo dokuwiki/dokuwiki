@@ -166,8 +166,11 @@ function css_out(){
  * @return string
  */
 function css_parseless($css) {
+    global $conf;
+
     $less = new lessc();
     $less->importDir[] = DOKU_INC;
+    $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')){
         $less->importDir[] = TMP_DIR;
@@ -431,7 +434,7 @@ class DokuCssFile {
 
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
-    private   $relative_path = null;
+    protected $relative_path = null;
 
     public function __construct($file) {
         $this->filepath = $file;
@@ -464,7 +467,7 @@ class DokuCssFile {
      *
      * @return string   relative file system path
      */
-    private function getRelativePath(){
+    protected function getRelativePath(){
 
         if (is_null($this->relative_path)) {
             $basedir = array(DOKU_INC);

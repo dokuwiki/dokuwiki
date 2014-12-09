@@ -15,6 +15,7 @@
  * @author Danny Lin <danny0838@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
+ * @author lioujheyu <lioujheyu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -76,6 +77,7 @@ $lang['badpassconfirm']        = '抱歉，這密碼是錯的';
 $lang['minoredit']             = '小修改';
 $lang['draftdate']             = '草稿已自動存檔於';
 $lang['nosecedit']             = '在您編輯期間，其他使用者修改過本頁面。區段資料已逾時，因此系統載入了全頁，以取代之。';
+$lang['searchcreatepage']      = '若沒找到您想要的，可按下按鈕建立或編輯和查詢關鍵字同名的頁面。';
 $lang['regmissing']            = '很抱歉，所有欄位都要填寫。';
 $lang['reguexists']            = '很抱歉，有人已使用了這個帳號。';
 $lang['regsuccess']            = '使用者帳號已建立，密碼已寄發至該電郵。';

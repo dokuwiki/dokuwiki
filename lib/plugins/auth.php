@@ -132,7 +132,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
         $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
         $evt       = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
         if($evt->advise_before(true)) {
-            $result                           = call_user_func_array(array($this, $validTypes[$type]), $params);
+            $result                           = call_user_func_array(array($this, $validTypes[$type]), $evt->data['params']);
             $evt->data['modification_result'] = $result;
         }
         $evt->advise_after();

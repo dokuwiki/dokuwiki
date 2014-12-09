@@ -117,5 +117,5 @@ $lang['qb_sig']     = 'Manisy sonia';
 $lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 
 $lang['admin_register']= 'Ampio mpampiasa vaovao...';
-
+$lang['searchcreatepage']      = "Raha tsy nahita izay notadiavinao ianao, dia afaka mamorona pejy vaovao avy amin'ny teny nanaovanao fikarohana; Ampiasao ny bokotra ''Hanova ny pejy''.";
 //Setup VIM: ex: et ts=2 :

@@ -338,7 +338,6 @@ function auth_browseruid() {
     $ip  = clientIP(true);
     $uid = '';
     $uid .= $INPUT->server->str('HTTP_USER_AGENT');
-    $uid .= $INPUT->server->str('HTTP_ACCEPT_ENCODING');
     $uid .= $INPUT->server->str('HTTP_ACCEPT_CHARSET');
     $uid .= substr($ip, 0, strpos($ip, '.'));
     $uid = strtolower($uid);
