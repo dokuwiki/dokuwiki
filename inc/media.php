@@ -383,20 +383,20 @@ function copy_uploaded_file($from, $to){
  * (The triggered event is preventable.)
  *
  * Event data:
- * $data[0]     fn_tmp: the temporary file name (read from $_FILES)
- * $data[1]     fn: the file name of the uploaded file
- * $data[2]     id: the future directory id of the uploaded file
- * $data[3]     imime: the mimetype of the uploaded file
+ * $data[0]     fn_tmp:    the temporary file name (read from $_FILES)
+ * $data[1]     fn:        the file name of the uploaded file
+ * $data[2]     id:        the future directory id of the uploaded file
+ * $data[3]     imime:     the mimetype of the uploaded file
  * $data[4]     overwrite: if an existing file is going to be overwritten
- * $data[5]     move:
+ * $data[5]     move:      name of function that performs move/copy/..
  *
  * @triggers MEDIA_UPLOAD_FINISH
  *
  * @param array  $file
- * @param string $id
+ * @param string $id   media id
  * @param bool   $ow   overwrite?
  * @param int    $auth permission level
- * @param string $move function name
+ * @param string $move name of functions that performs move/copy/..
  * @return false|array|string
  */
 function media_save($file, $id, $ow, $auth, $move) {
