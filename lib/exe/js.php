@@ -72,8 +72,10 @@ function js_out(){
 
     // add possible plugin scripts and userscript
     $files   = array_merge($files,js_pluginscripts());
-    if(isset($config_cascade['userscript']['default'])){
-        $files[] = $config_cascade['userscript']['default'];
+    if(!empty($config_cascade['userscript']['default'])) {
+        foreach($config_cascade['userscript']['default'] as $userscript) {
+            $files[] = $userscript;
+        }
     }
 
     $cache_files = array_merge($files, getConfigFiles('main'));
