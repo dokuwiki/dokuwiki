@@ -28,7 +28,6 @@
 </head>
 <body>
 
-<div class="white box">
 <?php
 foreach (glob('*.gif') as $img) {
     $list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
@@ -39,15 +38,13 @@ if(is_dir('local')) {
         $list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
     }
 }
-echo $list;
-?>
+echo '<div class="white box">
+'.$list.'
 </div>
 
 <div class="black box">
-<?php
-echo $list;
-?>
-</div>
+'.$list.'
+</div>';?>
 
 </body>
 </html>
