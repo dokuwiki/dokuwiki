@@ -10,4 +10,4 @@ notifications:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-script: cd _test && phpunit --debug --stderr
+script: cd _test && phpunit --log-tap php://stdout --stderr
