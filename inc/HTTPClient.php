@@ -589,7 +589,13 @@ class HTTPClient {
 
         $this->_debug('SSL Tunnel Response',$r_headers);
         if(preg_match('/^HTTP\/1\.[01] 200/i',$r_headers)){
-            if (stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+            // Try a TLS connection first
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+                $requesturl = $requestinfo['path'];
+                return true;
+            }
+            // Fall back to SSLv3
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
                 $requesturl = $requestinfo['path'];
                 return true;
             }
