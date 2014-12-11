@@ -939,12 +939,16 @@ function html_list_index($item){
 function html_li_index($item){
     global $INFO;
 
+    $class = '';
+    $id = '';
+
     if($item['type'] == "f"){
         // scroll to the current item
         if($item['id'] == $INFO['id']) {
             $id = ' id="scroll__here"';
+            $class = ' bounce';
         }
-        return '<li class="level'.$item['level'].'" '.$id.'>';
+        return '<li class="level'.$item['level'].$class.'" '.$id.'>';
     }elseif($item['open']){
         return '<li class="open">';
     }else{
