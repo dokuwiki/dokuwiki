@@ -14,4 +14,7 @@ notifications:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-script: cd _test && phpunit --verbose --stderr
+install:
+  - wget https://phar.phpunit.de/phpunit-4.3.5.phar -O _test/phpunit
+  - chmod 755 _test/phpunit
+script: cd _test && ./phpunit --verbose --stderr
