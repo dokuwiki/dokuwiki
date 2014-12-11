@@ -589,6 +589,9 @@ class HTTPClient {
 
         $this->_debug('SSL Tunnel Response',$r_headers);
         if(preg_match('/^HTTP\/1\.[01] 200/i',$r_headers)){
+            // set correct peer name for verification (enabled since PHP 5.6)
+            stream_context_set_option($socket, 'ssl', 'peer_name', $requestinfo['host']);
+
             // Try a TLS connection first
             if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
                 $requesturl = $requestinfo['path'];
