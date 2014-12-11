@@ -1,0 +1,1 @@
+Dette faneblad giver dig adgang til alle tilgængelige 3-parts plugins og skabeloner til DokuWiki. Vær venligst opmærksom på at installation af 3-parts kode kan udgøre en **sikkerhedsrisiko** - du vil muligvis læse omkring [[doku>security#plugin_security|plugin sikkerhed]] først.
