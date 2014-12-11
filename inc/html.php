@@ -937,8 +937,14 @@ function html_list_index($item){
  * @return string html
  */
 function html_li_index($item){
+    global $INFO;
+
     if($item['type'] == "f"){
-        return '<li class="level'.$item['level'].'">';
+        // scroll to the current item
+        if($item['id'] == $INFO['id']) {
+            $id = ' id="scroll__here"';
+        }
+        return '<li class="level'.$item['level'].'" '.$id.'>';
     }elseif($item['open']){
         return '<li class="open">';
     }else{
