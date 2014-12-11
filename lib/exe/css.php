@@ -52,7 +52,7 @@ function css_out(){
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
     }
 
     // cache influencers
@@ -82,8 +82,10 @@ function css_out(){
             $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(isset($config_cascade['userstyle'][$mediatype])){
-            $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+        if(!empty($config_cascade['userstyle'][$mediatype])) {
+            foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
+                $files[$mediatype][$userstyle] = DOKU_BASE;
+            }
         }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
