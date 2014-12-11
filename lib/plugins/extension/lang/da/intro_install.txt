@@ -1,0 +1,1 @@
+Her kan du manuelt installere plugins og skabeloner ved at uploade dem, eller angive en direkte download-URL.

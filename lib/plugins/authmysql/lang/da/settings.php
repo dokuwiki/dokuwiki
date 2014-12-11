@@ -5,6 +5,7 @@
  * 
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
  * @author soer9648 <soer9648@eucl.dk>
+ * @author Søren Birk <soer9648@eucl.dk>
  */
 $lang['server']                = 'Din MySQL server';
 $lang['user']                  = 'MySQL brugernavn';
@@ -22,6 +23,9 @@ $lang['delGroup']              = 'SQL-sætning til at fjerne en gruppe';
 $lang['delUser']               = 'SQL-sætning til at slette en bruger';
 $lang['delUserRefs']           = 'SQL-sætning til at fjerne en bruger fra alle grupper';
 $lang['updateUser']            = 'SQL-sætning til at opdatere en brugerprofil';
+$lang['UpdateTarget']          = 'Begræns klausul, for at identificere brugeren under opdatering';
+$lang['delUserGroup']          = 'SQL-sætning til at fjerne en bruger fra en given gruppe';
+$lang['getGroupID']            = 'SQL-sætning til at hente den primære nøgle for en given gruppe';
 $lang['debug_o_0']             = 'ingen';
 $lang['debug_o_1']             = 'kun ved fejl';
 $lang['debug_o_2']             = 'alle SQL forespørgsler';

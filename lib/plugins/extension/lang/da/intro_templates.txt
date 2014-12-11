@@ -1,0 +1,1 @@
+Dette er de skabeloner, som i øjeblikket er installeret i din DokuWiki. Du kan vælge skabelonen, som skal bruges, i [[?do=admin&page=config|Konfigurationsmanageren]].
