@@ -344,3 +344,5 @@ $lang['currentns']             = '現在の名前空間';
 $lang['searchresult']          = '検索結果';
 $lang['plainhtml']             = 'プレーンHTML';
 $lang['wikimarkup']            = 'Wikiマークアップ';
+$lang['page_nonexist_rev']     = '指定ページ %s はありません。このリンク <a href="%s">%s</a> から作成できます。';
+$lang['unable_to_parse_date']  = 'パラメータ "%s" を処理できません。';
