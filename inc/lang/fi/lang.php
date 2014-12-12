@@ -9,6 +9,7 @@
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
  * @author Rami Lehti <rammer@ipi.fi>
+ * @author Jussi Takala <jussi.takala@live.fi>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -53,6 +54,8 @@ $lang['btn_register']          = 'Rekisteröidy';
 $lang['btn_apply']             = 'Toteuta';
 $lang['btn_media']             = 'Media manager';
 $lang['btn_deleteuser']        = 'Poista tilini';
+$lang['btn_img_backto']        = 'Takaisin %s';
+$lang['btn_mediaManager']      = 'Näytä mediamanagerissa';
 $lang['loggedinas']            = 'Kirjautunut nimellä:';
 $lang['user']                  = 'Käyttäjänimi';
 $lang['pass']                  = 'Salasana';
@@ -68,7 +71,7 @@ $lang['badpassconfirm']        = 'Valitan. Salasana oli väärin';
 $lang['minoredit']             = 'Pieni muutos';
 $lang['draftdate']             = 'Luonnos tallennettu automaattisesti';
 $lang['nosecedit']             = 'Sivu on muuttunut välillä ja kappaleen tiedot olivat vanhentuneet. Koko sivu ladattu.';
-$lang['searchcreatepage']      = "Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä ''Muokkaa tätä sivua'' -napilla.";
+$lang['searchcreatepage']      = 'Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä \'\'Muokkaa tätä sivua\'\' -napilla.';
 $lang['regmissing']            = 'Kaikki kentät tulee täyttää.';
 $lang['reguexists']            = 'Käyttäjä tällä käyttäjänimellä on jo olemassa.';
 $lang['regsuccess']            = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla.';
@@ -241,7 +244,6 @@ $lang['admin_register']        = 'Lisää uusi käyttäjä';
 $lang['metaedit']              = 'Muokkaa metadataa';
 $lang['metasaveerr']           = 'Metadatan kirjoittaminen epäonnistui';
 $lang['metasaveok']            = 'Metadata tallennettu';
-$lang['btn_img_backto']            = 'Takaisin %s';
 $lang['img_title']             = 'Otsikko:';
 $lang['img_caption']           = 'Kuvateksti:';
 $lang['img_date']              = 'Päivämäärä:';
@@ -254,7 +256,6 @@ $lang['img_camera']            = 'Kamera:';
 $lang['img_keywords']          = 'Avainsanat:';
 $lang['img_width']             = 'Leveys:';
 $lang['img_height']            = 'Korkeus:';
-$lang['btn_mediaManager']           = 'Näytä mediamanagerissa';
 $lang['subscr_subscribe_success'] = '%s lisätty %s tilauslistalle';
 $lang['subscr_subscribe_error'] = 'Virhe lisättäessä %s tilauslistalle %s';
 $lang['subscr_subscribe_noaddress'] = 'Login tiedoissasi ei ole sähköpostiosoitetta. Sinua ei voi lisätä tilaukseen';
