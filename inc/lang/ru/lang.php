@@ -27,6 +27,7 @@
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Владимир <id37736@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
+ * @author Type-kun <workwork-1@yandex.ru>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -197,7 +198,7 @@ $lang['quickhits']             = 'Соответствия в названиях
 $lang['toc']                   = 'Содержание';
 $lang['current']               = 'текущий';
 $lang['yours']                 = 'Ваша версия';
-$lang['diff']                  = 'показать отличия от текущей версии';
+$lang['diff']                  = 'Показать отличия от текущей версии';
 $lang['diff2']                 = 'Показать различия между ревизиями  ';
 $lang['difflink']              = 'Ссылка на это сравнение';
 $lang['diff_type']             = 'Посмотреть отличия';
@@ -206,6 +207,8 @@ $lang['diff_side']             = 'бок о бок';
 $lang['diffprevrev']           = 'Предыдущая версия';
 $lang['diffnextrev']           = 'Следующая версия';
 $lang['difflastrev']           = 'Последняя версия';
+$lang['diffbothprevrev']       = 'Предыдущая версия справа и слева';
+$lang['diffbothnextrev']       = 'Следующая версия справа и слева';
 $lang['line']                  = 'Строка';
 $lang['breadcrumb']            = 'Вы посетили:';
 $lang['youarehere']            = 'Вы находитесь здесь:';
@@ -213,7 +216,7 @@ $lang['lastmod']               = 'Последние изменения:';
 $lang['by']                    = ' —';
 $lang['deleted']               = 'удалено';
 $lang['created']               = 'создано';
-$lang['restored']              = 'старая ревизия восстановлена (%s)';
+$lang['restored']              = 'старая версия восстановлена (%s)';
 $lang['external_edit']         = 'внешнее изменение';
 $lang['summary']               = 'Сводка изменений';
 $lang['noflash']               = 'Для просмотра этого содержимого требуется <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
@@ -303,6 +306,7 @@ $lang['i_modified']            = 'Из соображений безопасно
                                   <a href="http://www.dokuwiki.org/install">инструкции по установке «Докувики»</a>';
 $lang['i_funcna']              = 'Функция PHP <code>%s</code> недоступна. Может быть, она по какой-то причине заблокирована вашим хостером?';
 $lang['i_phpver']              = 'Ваша версия PHP (<code>%s</code>) ниже требуемой (<code>%s</code>). Вам необходимо обновить установленную версию PHP.';
+$lang['i_mbfuncoverload']      = 'Для запуска "Докувики" необходимо отключить параметр mbstring.func_overload в php.ini';
 $lang['i_permfail']            = '<code>%s</code> недоступна для записи «Докувики». Вам необходимо исправить системные права доступа для этой директории!';
 $lang['i_confexists']          = '<code>%s</code> уже существует';
 $lang['i_writeerr']            = 'Не удалось создать <code>%s</code>. Вам необходимо проверить системные права доступа к файлу и директориям, и создать файл вручную. ';
