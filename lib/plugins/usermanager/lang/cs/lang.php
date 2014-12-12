@@ -75,3 +75,4 @@ $lang['import_error_upload']   = 'Import selhal. CSV soubor nemohl být nahrán 
 $lang['import_error_readfail'] = 'Import selhal. Nelze číst nahraný soubor.';
 $lang['import_error_create']   = 'Nelze vytvořit uživatele';
 $lang['import_notify_fail']    = 'Importovanému uživateli %s s emailem %s nemohlo být zasláno upozornění.';
+$lang['import_downloadfailures'] = 'Stáhnout chyby pro nápravu jako CVS';
