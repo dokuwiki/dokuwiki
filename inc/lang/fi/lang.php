@@ -9,6 +9,7 @@
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
  * @author Rami Lehti <rammer@ipi.fi>
+ * @author Jussi Takala <jussi.takala@live.fi>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -53,6 +54,8 @@ $lang['btn_register']          = 'Rekisteröidy';
 $lang['btn_apply']             = 'Toteuta';
 $lang['btn_media']             = 'Media manager';
 $lang['btn_deleteuser']        = 'Poista tilini';
+$lang['btn_img_backto']        = 'Takaisin %s';
+$lang['btn_mediaManager']      = 'Näytä mediamanagerissa';
 $lang['loggedinas']            = 'Kirjautunut nimellä:';
 $lang['user']                  = 'Käyttäjänimi';
 $lang['pass']                  = 'Salasana';
@@ -68,7 +71,7 @@ $lang['badpassconfirm']        = 'Valitan. Salasana oli väärin';
 $lang['minoredit']             = 'Pieni muutos';
 $lang['draftdate']             = 'Luonnos tallennettu automaattisesti';
 $lang['nosecedit']             = 'Sivu on muuttunut välillä ja kappaleen tiedot olivat vanhentuneet. Koko sivu ladattu.';
-$lang['searchcreatepage']      = "Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä ''Muokkaa tätä sivua'' -napilla.";
+$lang['searchcreatepage']      = 'Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä \'\'Muokkaa tätä sivua\'\' -napilla.';
 $lang['regmissing']            = 'Kaikki kentät tulee täyttää.';
 $lang['reguexists']            = 'Käyttäjä tällä käyttäjänimellä on jo olemassa.';
 $lang['regsuccess']            = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla.';
@@ -185,6 +188,9 @@ $lang['difflink']              = 'Linkki vertailunäkymään';
 $lang['diff_type']             = 'Näytä eroavaisuudet:';
 $lang['diff_inline']           = 'Sisäkkäin';
 $lang['diff_side']             = 'Vierekkäin';
+$lang['diffprevrev']           = 'Edellinen revisio';
+$lang['diffnextrev']           = 'Seuraava revisio';
+$lang['difflastrev']           = 'Viimeisin revisio';
 $lang['line']                  = 'Rivi';
 $lang['breadcrumb']            = 'Jäljet:';
 $lang['youarehere']            = 'Olet täällä:';
@@ -241,7 +247,6 @@ $lang['admin_register']        = 'Lisää uusi käyttäjä';
 $lang['metaedit']              = 'Muokkaa metadataa';
 $lang['metasaveerr']           = 'Metadatan kirjoittaminen epäonnistui';
 $lang['metasaveok']            = 'Metadata tallennettu';
-$lang['btn_img_backto']            = 'Takaisin %s';
 $lang['img_title']             = 'Otsikko:';
 $lang['img_caption']           = 'Kuvateksti:';
 $lang['img_date']              = 'Päivämäärä:';
@@ -254,7 +259,6 @@ $lang['img_camera']            = 'Kamera:';
 $lang['img_keywords']          = 'Avainsanat:';
 $lang['img_width']             = 'Leveys:';
 $lang['img_height']            = 'Korkeus:';
-$lang['btn_mediaManager']           = 'Näytä mediamanagerissa';
 $lang['subscr_subscribe_success'] = '%s lisätty %s tilauslistalle';
 $lang['subscr_subscribe_error'] = 'Virhe lisättäessä %s tilauslistalle %s';
 $lang['subscr_subscribe_noaddress'] = 'Login tiedoissasi ei ole sähköpostiosoitetta. Sinua ei voi lisätä tilaukseen';
@@ -282,6 +286,7 @@ $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia
 $lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
 $lang['i_funcna']              = 'PHP:n funktio <code>%s</code> ei ole käytettävissä. Palveluntarjoajasi on saattanut poistaa sen jostain syystä.';
 $lang['i_phpver']              = 'Käyttämäsi PHP-ohjelmiston versio <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP-asennuksesi pitää päivittää.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload pitää ottaa pois käytöstä php.ini -tiedostosta käyttääksesi DokuWikiä';
 $lang['i_permfail']            = '<code>%s</code> ei ole DokuWikin kirjoitettavissa. Muokkaa hakemiston oikeuksia!';
 $lang['i_confexists']          = '<code>%s</code> on jo olemassa';
 $lang['i_writeerr']            = '<code>%s</code>n luonti epäonnistui. Tarkista hakemiston/tiedoston oikeudet ja luo tiedosto käsin.';
@@ -335,3 +340,4 @@ $lang['currentns']             = 'Nykyinen nimiavaruus';
 $lang['searchresult']          = 'Haun tulokset';
 $lang['plainhtml']             = 'pelkkä HTML';
 $lang['wikimarkup']            = 'Wiki markup';
+$lang['unable_to_parse_date']  = 'Parametrin "%s" jäsennys ei onnistu.';
