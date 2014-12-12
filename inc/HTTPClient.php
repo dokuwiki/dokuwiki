@@ -592,13 +592,15 @@ class HTTPClient {
             // set correct peer name for verification (enabled since PHP 5.6)
             stream_context_set_option($socket, 'ssl', 'peer_name', $requestinfo['host']);
 
-            // Try a TLS connection first
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+            // Because of older PHP versions having trouble with TLS (enable_crypto returns true, but
+            // the conection still borks) we try SSLv3 first
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
                 $requesturl = $requestinfo['path'];
                 return true;
             }
-            // Fall back to SSLv3
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+
+            // If the proxy does not support SSLv3 we try TLS
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
                 $requesturl = $requestinfo['path'];
                 return true;
             }
