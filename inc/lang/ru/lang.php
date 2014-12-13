@@ -362,3 +362,4 @@ $lang['currentns']             = 'Текущее пространство имё
 $lang['searchresult']          = 'Результаты поиска';
 $lang['plainhtml']             = 'Простой HTML';
 $lang['wikimarkup']            = 'вики-разметка';
+$lang['page_nonexist_rev']     = 'Эта страница ещё не существовала %s. Она была создана <a href="%s">%s</a>.';
