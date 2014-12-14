@@ -13,7 +13,7 @@
  * @author Garam <rowain8@gmail.com>
  */
 $lang['menu']                  = '사용자 관리자';
-$lang['noauth']                = '(사용자 인증이 불가능합니다)';
+$lang['noauth']                = '(사용자 인증을 사용할 수 없습니다)';
 $lang['nosupport']             = '(사용자 관리가 지원되지 않습니다)';
 $lang['badauth']               = '인증 메커니즘이 잘못되었습니다';
 $lang['user_id']               = '사용자';
@@ -35,10 +35,10 @@ $lang['clear']                 = '검색 필터 재설정';
 $lang['filter']                = '필터';
 $lang['export_all']            = '모든 사용자 목록 내보내기 (CSV)';
 $lang['export_filtered']       = '필터된 사용자 목록 내보내기 (CSV)';
-$lang['import']                = '새 사용자 목록 가져오기';
+$lang['import']                = '새 사용자 가져오기';
 $lang['line']                  = '줄 번호';
 $lang['error']                 = '오류 메시지';
-$lang['summary']               = '찾은 사용자 %3$d 중 %1$d-%2$d을(를) 봅니다. 전체 사용자는 %4$d명입니다.';
+$lang['summary']               = '찾은 사용자 %3$d명 중 %1$d-%2$d을(를) 봅니다. 전체 사용자는 %4$d명입니다.';
 $lang['nonefound']             = '찾은 사용자가 없습니다. 전체 사용자는 %d명입니다.';
 $lang['delete_ok']             = '사용자 %d명이 삭제되었습니다';
 $lang['delete_fail']           = '사용자 %d명을 삭제하는 데 실패했습니다.';
@@ -68,6 +68,6 @@ $lang['import_error_badname']  = '잘못된 이름';
 $lang['import_error_badmail']  = '잘못된 이메일 주소';
 $lang['import_error_upload']   = '가져오기를 실패했습니다. csv 파일을 올릴 수 없거나 비어 있습니다.';
 $lang['import_error_readfail'] = '가져오기를 실패했습니다. 올린 파일을 읽을 수 없습니다.';
-$lang['import_error_create']   = '사용자를 만들 수 없습니다.';
+$lang['import_error_create']   = '사용자를 만들 수 없습니다';
 $lang['import_notify_fail']    = '알림 메시지를 가져온 %s (이메일: %s) 사용자에게 보낼 수 없습니다.';
 $lang['import_downloadfailures'] = '교정을 위한 CSV로 다운로드 실패';
