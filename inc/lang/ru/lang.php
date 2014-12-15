@@ -28,6 +28,7 @@
  * @author Владимир <id37736@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
+ * @author Vitaly Filatenko <kot@hacktest.net>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
@@ -363,3 +364,4 @@ $lang['searchresult']          = 'Результаты поиска';
 $lang['plainhtml']             = 'Простой HTML';
 $lang['wikimarkup']            = 'вики-разметка';
 $lang['page_nonexist_rev']     = 'Эта страница ещё не существовала %s. Она была создана <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Невозможно обработать параметр "%s".';
