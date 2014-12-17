@@ -1828,6 +1828,8 @@ function send_redirect($url) {
     } else {
         header('Location: '.$url);
     }
+
+    if(defined('DOKU_UNITTEST')) return; // no exits during unit tests
     exit;
 }
 
