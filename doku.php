@@ -15,6 +15,11 @@ $updateVersion = 47;
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
 
+// define all DokuWiki globals here (needed within test requests but also helps to keep track)
+global  $ACT,  $INPUT, $QUERY, $ID, $REV, $DATE_AT, $IDX,
+        $DATE, $RANGE, $HIGH, $TEXT, $PRE, $SUF, $SUM, $INFO, $JSINFO;
+
+
 if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
 } elseif(!empty($_REQUEST['idx'])) {
