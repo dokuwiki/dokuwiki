@@ -11,6 +11,7 @@
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Murilo <muriloricci@hotmail.com>
  * @author Paulo Silva <paulotsilva@yahoo.com>
+ * @author Guido Salatino <guidorafael23@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -24,12 +25,12 @@ $lang['btn_source']            = 'Ver fonte';
 $lang['btn_show']              = 'Ver página';
 $lang['btn_create']            = 'Criar página';
 $lang['btn_search']            = 'Pesquisar';
-$lang['btn_save']              = 'Gravar';
+$lang['btn_save']              = 'Salvar';
 $lang['btn_preview']           = 'Prever';
 $lang['btn_top']               = 'Voltar ao topo';
 $lang['btn_newer']             = '<< mais recente';
 $lang['btn_older']             = 'menos recente >>';
-$lang['btn_revs']              = 'Revisões';
+$lang['btn_revs']              = 'Revisões antigas';
 $lang['btn_recent']            = 'Alt. Recentes';
 $lang['btn_upload']            = 'Carregar';
 $lang['btn_cancel']            = 'Cancelar';
@@ -106,6 +107,7 @@ $lang['searchmedia_in']        = 'Procurar em %s';
 $lang['txt_upload']            = 'Escolha ficheiro para carregar:';
 $lang['txt_filename']          = 'Carregar como (opcional):';
 $lang['txt_overwrt']           = 'Escrever por cima do ficheiro já existente';
+$lang['maxuploadsize']         = 'Publique max. %s por arquivo.';
 $lang['lockedby']              = 'Bloqueado por:';
 $lang['lockexpire']            = 'Expira em:';
 $lang['js']['willexpire']      = 'O bloqueio de edição para este documento irá expirar num minuto.\nPara evitar conflitos use o botão Prever para re-iniciar o temporizador de bloqueio.';
@@ -190,6 +192,8 @@ $lang['diff_side']             = 'Lado a lado';
 $lang['diffprevrev']           = 'Revisão anterior';
 $lang['diffnextrev']           = 'Próxima revisão';
 $lang['difflastrev']           = 'Última revisão';
+$lang['diffbothprevrev']       = 'Ambos os lados da revisão anterior';
+$lang['diffbothnextrev']       = 'Ambos os lados da próxima revisão';
 $lang['line']                  = 'Linha';
 $lang['breadcrumb']            = 'Está em:';
 $lang['youarehere']            = 'Está aqui:';
@@ -285,6 +289,7 @@ $lang['i_problems']            = 'O instalador encontrou alguns problemas, indic
 $lang['i_modified']            = 'Por razões de segurança, este script só funciona em novas e não-modificadas instalações do Dokuwiki. Deve por isso re-extrair os ficheiros do pacote que descarregou ou então deve consultar as completas <a href="http://dokuwiki.org/install">instruções de instalação do Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. Terá o serviço de alojamento desactivado-a por alguma razão?';
 $lang['i_phpver']              = 'A versão de PHP actual <code>%s</code> é inferior à versão mínima <code>%s</code>. É preciso actualizar a instalação PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload deve ser desabilitada no php.ini para executar DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> não permite que o DokuWiki escreva nela. É preciso corrigir as permissões desta pasta!';
 $lang['i_confexists']          = '<code>%s</code> já existe';
 $lang['i_writeerr']            = 'Não foi possível criar <code>%s</code>. É preciso verificar as permissões e criar o ficheiro manualmente.';
@@ -326,6 +331,7 @@ $lang['media_files']           = 'Ficheiros em %s';
 $lang['media_upload']          = 'Enviar para o grupo <strong>%s</strong>.';
 $lang['media_search']          = 'Procurar no grupo <strong>%s</strong>.';
 $lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s em %s';
 $lang['media_edit']            = 'Editar %s';
 $lang['media_history']         = 'Histórico do %s';
 $lang['media_meta_edited']     = 'metadata editada';
@@ -337,3 +343,5 @@ $lang['currentns']             = 'Namespace actual';
 $lang['searchresult']          = 'Resultado da pesquisa';
 $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Markup de Wiki';
+$lang['page_nonexist_rev']     = 'Página não existia no %s. Posteriormente, foi criado em <a href="%s">% s </a>.';
+$lang['unable_to_parse_date']  = 'Não é possível analisar o parâmetro "%s".';
