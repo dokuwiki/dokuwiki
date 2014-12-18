@@ -101,13 +101,3 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $this->assertEquals(substr($url,644),$rest);
     }
 }
-
-/**
- * .oga:
- * http://upload.wikimedia.org/wikipedia/commons/6/6b/Meow_of_a_pleading_cat.oga
- *
- * .wav:
- * http://upload.wikimedia.org/wikipedia/commons/8/81/Meow_of_a_Siamese_cat_-_freemaster2.wav
- *
- *
- */
