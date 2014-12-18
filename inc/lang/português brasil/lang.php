@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
+ * @author Guido Salatino <guidorafael23@gmail.com>
+ */
+$lang['encoding']              = 'utf-8';
+$lang['direction']             = 'ltr';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
+$lang['btn_edit']              = 'Editar esta página';
+$lang['btn_source']            = 'Mostrar a página fonte';
+$lang['btn_show']              = 'Mostrar a página';
+$lang['btn_create']            = 'Criar esta página';
+$lang['btn_search']            = 'Pesquisar';
+$lang['btn_save']              = 'Salvar';
+$lang['btn_preview']           = 'Visualizar';
+$lang['btn_top']               = 'Ir para o início';
+$lang['btn_newer']             = '<< mais recente';
+$lang['btn_older']             = 'menos recente >>';
+$lang['btn_revs']              = 'Revisões antigas';
+$lang['btn_recent']            = 'Alterações recentes';
+$lang['btn_upload']            = 'Upload';
+$lang['btn_cancel']            = 'Cancelar';
+$lang['btn_index']             = 'Mapa do site';
+$lang['btn_secedit']           = 'Editar';
+$lang['btn_login']             = 'Identificar-se';
+$lang['btn_logout']            = 'Sair';
+$lang['btn_admin']             = 'Administrador';
+$lang['btn_update']            = 'Atualizar';
+$lang['btn_delete']            = 'Apagar';
+$lang['btn_back']              = 'Voltar';
+$lang['btn_backlink']          = 'Backlinks';
+$lang['btn_backtomedia']       = 'Voltar à Seleção do Mediafile';
+$lang['btn_subscribe']         = 'Gerenciar Assinaturas';
+$lang['btn_profile']           = 'Atualizar o seu Perfil';
+$lang['btn_reset']             = 'Restabelecer';
+$lang['btn_resendpwd']         = 'Definir nova senha';
+$lang['btn_draft']             = 'Editar o rascunho';
+$lang['btn_recover']           = 'Recuperar o rascunho';
+$lang['btn_draftdel']          = 'Apagar o rascunho';
+$lang['btn_revert']            = 'Restaurar';
+$lang['btn_register']          = 'Registrar';
+$lang['btn_apply']             = 'Aplicar';
+$lang['btn_media']             = 'Gerenciador de Media';
+$lang['btn_deleteuser']        = 'Eliminar Minha Conta';
+$lang['btn_img_backto']        = 'Voltar a %s';
+$lang['btn_mediaManager']      = 'Ver em gerenciamento de mídia';
+$lang['loggedinas']            = 'Identificado como:';
+$lang['user']                  = 'Nome de usuário';
+$lang['pass']                  = 'Senha';
+$lang['newpass']               = 'Nova senha';
+$lang['oldpass']               = 'Confirmar a senha';
+$lang['passchk']               = 'mais uma vez';
+$lang['remember']              = 'Lembrar-me';
+$lang['fullname']              = 'Nome verdadeiro';
+$lang['email']                 = 'E-Mail';
+$lang['profile']               = 'Perfil de Usuário';
+$lang['badlogin']              = 'Desculpe, nome de usuário ou senha esta errada.';
+$lang['badpassconfirm']        = 'Desculpe, a senha esta errada';
+$lang['minoredit']             = 'Pequenas Mudanças';
+$lang['draftdate']             = 'Salva automática do rascunho ativada';
+$lang['nosecedit']             = 'A página foi alterada neste ínterim, as informações da seção estavam desatualizadas e a página inteira foi carregada em seu lugar.';
+$lang['searchcreatepage']      = 'Se você não encontrou o que você estava procurando, você pode criar ou editar a página nomeada após sua consulta com a ferramenta adequada.';
+$lang['regmissing']            = 'Desculpe, você deve preencher todos os campos.';
+$lang['reguexists']            = 'Desculpe, um usuário com esta identificação já existe.';
+$lang['regsuccess']            = 'O usuário foi criado e a senha foi enviada por e-mail.';
+$lang['regsuccess2']           = 'O usuário foi criado.';
+$lang['regmailfail']           = 'Parece que houve um erro no envio da senha através do e-mail fornecido. Entre em contato com o administrador!';
+$lang['regbadmail']            = 'O endereço de e-mail fornecido parece inválido - se você acha que isso é um erro, entre em contato com o administrador';
+$lang['regbadpass']            = 'As duas senhas não são idênticas, por favor, tente novamente.';
+$lang['regpwmail']             = 'Sua senha DokuWiki';
+$lang['reghere']               = 'Você ainda não tem uma conta? Basta obter uma';
+$lang['profna']                = 'Sem alterações, nada para fazer.';
+$lang['profnochange']          = 'Sem alterações, nada para fazer.';
+$lang['profnoempty']           = 'Não é permitido nome ou endereço de email vazios.';
+$lang['profchanged']           = 'Perfil do usuário atualizado com sucesso.';
+$lang['profnodelete']          = 'Esta wiki não realiza exclusão de usuários';
+$lang['profdeleteuser']        = 'Excluir Conta';
+$lang['profdeleted']           = 'Sua conta de usuário foi excluída desta wiki';
+$lang['profconfdelete']        = 'Eu gostaria de excluir a minha conta desta wiki. <br/> Esta ação não poderá ser desfeita.';
+$lang['profconfdeletemissing'] = 'A caixa de seleção de confirmação não foi assinalada';
+$lang['pwdforget']             = 'Esqueceu a sua senha? Obtenha uma nova';
