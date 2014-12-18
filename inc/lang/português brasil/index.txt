@@ -1,0 +1,3 @@
+====== Mapa do site ======
+
+Este é um mapa do site com todas as páginas disponíveis, ordenadas por [[Doku>namespaces | namespaces]].
