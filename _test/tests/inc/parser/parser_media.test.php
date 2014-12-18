@@ -92,7 +92,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $source_ogv = '<source src="/./lib/exe/fetch.php?media=wiki:kind_zu_katze.ogv" type="video/ogg" />';
         $this->assertEquals(substr($url,212,83),$source_ogv);
 
-        $a_webm = '<a href="/./lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.2 KB)">kind_zu_katze.webm</a>';
+        $a_webm = '<a href="/./lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1 KB)">kind_zu_katze.webm</a>';
         $a_ogv = '<a href="/./lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8 KB)">kind_zu_katze.ogv</a>';
         $this->assertEquals(substr($url,296,176),$a_webm);
         $this->assertEquals(substr($url,472,172),$a_ogv);
