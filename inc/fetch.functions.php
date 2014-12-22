@@ -16,6 +16,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
+ *
  * @param string $file   local file to send
  * @param string $mime   mime type of the file
  * @param bool   $dl     set to true to force a browser download
@@ -121,12 +122,13 @@ function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
  * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
  *
  * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ *
  * @param string $media  reference to the media id
  * @param string $file   reference to the file variable
  * @param string $rev
  * @param int    $width
  * @param int    $height
- * @return array(STATUS, STATUSMESSAGE)
+ * @return array as array(STATUS, STATUSMESSAGE)
  */
 function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     global $MIME, $EXT, $CACHE, $INPUT;
@@ -174,6 +176,9 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
  * Resolves named constants
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $cache
+ * @return int cachetime in seconds
  */
 function calc_cache($cache) {
     global $conf;

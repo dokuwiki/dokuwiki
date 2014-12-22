@@ -1,1 +1,1 @@
-Nakon što ste napravili sve potrebne promjene - odaberite ''Snimi'' za snimanje dokumenta.
+Uredite stranicu i pritisnite "Snimi". Pogledajte [[wiki:syntax]] za Wiki sintaksu. Molimo izmijenite samo ako možete unaprijediti sadržaj. Ako trebate testirati ili naučiti kako se nešto radi, molimo koristite za to namijenjene stranice kao što je [[playground:playground|igraonica]].

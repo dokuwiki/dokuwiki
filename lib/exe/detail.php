@@ -5,6 +5,7 @@ require_once(DOKU_INC.'inc/init.php');
 
 $IMG  = getID('media');
 $ID   = cleanID($INPUT->str('id'));
+$REV  = $INPUT->int('rev');
 
 // this makes some general info available as well as the info about the
 // "parent" page
@@ -35,7 +36,7 @@ $ERROR = false;
 $AUTH = auth_quickaclcheck($IMG);
 if($AUTH >= AUTH_READ){
     // check if image exists
-    $SRC = mediaFN($IMG);
+    $SRC = mediaFN($IMG,$REV); 
     if(!@file_exists($SRC)){
         //doesn't exist!
         http_status(404);

@@ -56,7 +56,7 @@ $conf['plugin']['authmysql']['TablesToLock']= array("users", "users AS u","group
  * of the user. If the result table is empty or contains more than one
  * row, access will be denied.
  *
- * The plugin accesses the password as 'pass' so a alias might be necessary.
+ * The plugin accesses the password as 'pass' so an alias might be necessary.
  *
  * Following patters will be replaced:
  *   %{user}    user name
@@ -107,10 +107,10 @@ $conf['plugin']['authmysql']['getGroups']   = "SELECT name as `group`
 /* This statement should return a table containing all user login names
  * that meet certain filter criteria. The filter expressions will be added
  * case dependend by the plugin. At the end a sort expression will be added.
- * Important is that this list contains no double entries fo a user. Each
+ * Important is that this list contains no double entries for a user. Each
  * user name is only allowed once in the table.
  *
- * The login name will be accessed as 'user' to a alias might be neseccary.
+ * The login name will be accessed as 'user' to an alias might be neseccary.
  * No patterns will be replaced in this statement but following patters
  * will be replaced in the filter expressions:
  *   %{user}    in FilterLogin  user's login name
@@ -174,7 +174,7 @@ $conf['plugin']['authmysql']['delGroup']    = "DELETE FROM groups
                                                WHERE gid='%{gid}'";
 
 /* This statement should return the database index of a given user name.
- * The plugin will access the index with the name 'id' so a alias might be
+ * The plugin will access the index with the name 'id' so an alias might be
  * necessary.
  * following patters will be replaced:
  *   %{user}    user name
@@ -240,7 +240,7 @@ $conf['plugin']['authmysql']['delUserGroup']= "DELETE FROM usergroup
                                                AND gid='%{gid}'";
 
 /* This statement should return the database index of a given group name.
- * The plugin will access the index with the name 'id' so a alias might
+ * The plugin will access the index with the name 'id' so an alias might
  * be necessary.
  *
  * Following patters will be replaced:

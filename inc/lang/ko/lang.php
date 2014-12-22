@@ -74,6 +74,7 @@ $lang['badpassconfirm']        = '죄송하지만 비밀번호가 잘못되었�
 $lang['minoredit']             = '사소한 바뀜';
 $lang['draftdate']             = '초안 자동 저장 시간';
 $lang['nosecedit']             = '한 동안 문서가 바뀌었으며, 문단 정보가 오래되어 문서 전체를 대신 열었습니다.';
+$lang['searchcreatepage']      = '만약 원하는 문서를 찾지 못했다면, \'\'문서 만들기\'\'나 \'\'문서 편집\'\'을 사용해 검색어와 같은 이름의 문서를 만들거나 편집할 수 있습니다.';
 $lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합니다.';
 $lang['reguexists']            = '죄송하지만 같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자를 만들었으며 비밀번호는 이메일로 보냈습니다.';
@@ -136,7 +137,7 @@ $lang['js']['medialeft']       = '왼쪽으로 그림 배치';
 $lang['js']['mediaright']      = '오른쪽으로 그림 배치';
 $lang['js']['mediacenter']     = '가운데으로 그림 배치';
 $lang['js']['medianoalign']    = '배치하지 않음';
-$lang['js']['nosmblinks']      = '윈도우 공유 파일과의 연결은 마이크로소프트 인터넷 익스플로러에서만 동작합니다.\n그러나 링크를 복사하거나 붙여넣기를 할 수 있습니다.';
+$lang['js']['nosmblinks']      = 'Windows 공유 파일과의 연결은 Microsoft Internet Explorer에서만 동작합니다.\n그러나 링크를 복사하거나 붙여넣기를 할 수 있습니다.';
 $lang['js']['linkwiz']         = '링크 마법사';
 $lang['js']['linkto']          = '다음으로 연결:';
 $lang['js']['del_confirm']     = '정말 선택된 항목을 삭제하겠습니까?';
@@ -280,11 +281,11 @@ $lang['subscr_style_list']     = '마지막 이메일 이후 바뀐 문서의 �
 $lang['authtempfail']          = '사용자 인증을 일시적으로 사용할 수 없습니다. 만약 계속해서 문제가 발생한다면 위키 관리자에게 문의하시기 바랍니다.';
 $lang['authpwdexpire']         = '비밀번호를 바꾼지 %d일이 지났으며, 비밀번호를 곧 바꿔야 합니다.';
 $lang['i_chooselang']          = '사용할 언어를 선택하세요';
-$lang['i_installer']           = '도쿠위키 설치';
+$lang['i_installer']           = '도쿠위키 설치 관리자';
 $lang['i_wikiname']            = '위키 이름';
 $lang['i_enableacl']           = 'ACL 활성화 (권장)';
 $lang['i_superuser']           = '슈퍼 사용자';
-$lang['i_problems']            = '설치하는 동안 아래와 같은 문제가 발생했습니다. 문제를 해결한 후 설치를 계속할 수 있습니다.';
+$lang['i_problems']            = '설치 관리자가 아래에 나와 있는 몇 가지 문제를 찾았습니다. 문제를 해결하지 전까지 설치를 계속할 수 없습니다.';
 $lang['i_modified']            = '보안 상의 이유로 이 스크립트는 수정되지 않은 새 도쿠위키 설치에서만 동작됩니다.
 다운로드한 압축 패키지를 다시 설치하거나 <a href="http://dokuwiki.org/ko:install">도쿠위키 설치 과정</a>을 참고해서 설치하세요.';
 $lang['i_funcna']              = '<code>%s</code> PHP 함수를 사용할 수 없습니다. 호스트 제공자가 어떤 이유에서인지 막아 놓았을지 모릅니다.';
@@ -295,8 +296,10 @@ $lang['i_confexists']          = '<code>%s</code>(은)는 이미 존재합니다
 $lang['i_writeerr']            = '<code>%s</code>(을)를 만들 수 없습니다. 먼저 디렉터리/파일 권한을 확인하고 파일을 수동으로 만드세요.';
 $lang['i_badhash']             = 'dokuwiki.php를 인식할 수 없거나 원본 파일이 아닙니다 (해시=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - 잘못되었거나 빈 값입니다';
-$lang['i_success']             = '환경 설정이 성공적으로 끝났습니다. 지금 install.php를 지워도 상관없습니다. <a href="doku.php?id=wiki:welcome">새 도쿠위키</a>로 들어가세요.';
-$lang['i_failure']             = '환경 설정 파일에 쓰는 도중에 오류가 발생했습니다. <a href="doku.php?id=wiki:welcome">새 도쿠위키</a>를 사용하기 전에 수동으로 문제를 해결해야 합니다.';
+$lang['i_success']             = '환경 설정이 성공적으로 끝났습니다. 지금 install.php를 지워도 상관없습니다.
+<a href="doku.php?id=wiki:welcome">새 도쿠위키</a>로 들어가세요.';
+$lang['i_failure']             = '환경 설정 파일에 쓰는 도중에 오류가 발생했습니다.
+<a href="doku.php?id=wiki:welcome">새 도쿠위키</a>를 사용하기 전에 수동으로 문제를 해결해야 합니다.';
 $lang['i_policy']              = '초기 ACL 정책';
 $lang['i_pol0']                = '열린 위키 (누구나 읽기, 쓰기, 올리기가 가능합니다)';
 $lang['i_pol1']                = '공개 위키 (누구나 읽을 수 있지만, 등록된 사용자만 쓰기와 올리기가 가능합니다)';
@@ -343,3 +346,5 @@ $lang['currentns']             = '현재 이름공간';
 $lang['searchresult']          = '검색 결과';
 $lang['plainhtml']             = '일반 HTML';
 $lang['wikimarkup']            = '위키 문법';
+$lang['page_nonexist_rev']     = '문서가 %s에 존재하지 않았습니다. 그 뒤로 <a href="%s">%s</a>에 만들어졌습니다.';
+$lang['unable_to_parse_date']  = '"%s" 변수에서 구문 분석할 수 없습니다.';

@@ -6,11 +6,12 @@
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Vitaly Filatenko <kot@hacktest.net>
  */
 $lang['server']                = 'Ваш PostgreSQL-сервер';
 $lang['port']                  = 'Порт вашего PostgreSQL-сервера';
 $lang['user']                  = 'Имя пользователя PostgreSQL';
-$lang['password']              = 'Пароль для указанного пользователя.';
+$lang['password']              = 'Пароль для указанного пользователя';
 $lang['database']              = 'Имя базы данных';
 $lang['debug']                 = 'Отображать дополнительную отладочную информацию';
 $lang['checkPass']             = 'Выражение SQL, осуществляющее проверку пароля';
@@ -30,5 +31,8 @@ $lang['getUserID']             = 'Выражение SQL, обеспечиваю
 $lang['delUser']               = 'Выражение SQL, осуществляющее удаление пользователя';
 $lang['delUserRefs']           = 'Выражение SQL, осуществляющее удаление пользователя из всех группы';
 $lang['updateUser']            = 'Выражение SQL, осуществляющее обновление профиля пользователя';
+$lang['UpdateLogin']           = 'Измените условие для обновления логина';
+$lang['UpdatePass']            = 'Измените условие для обновления пароля';
+$lang['UpdateEmail']           = 'Измените условие для обновления email';
 $lang['delUserGroup']          = 'Выражение SQL, осуществляющее удаление пользователя из указанной группы';
 $lang['getGroupID']            = 'Выражение SQL, обеспечивающее получение первичного ключа указанной группы';

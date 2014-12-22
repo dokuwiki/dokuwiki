@@ -71,6 +71,7 @@ class Doku_Handler {
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
+        /** @var DokuWiki_Syntax_Plugin $plugin */
         $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
@@ -711,6 +712,9 @@ class Doku_Handler_CallWriter {
 
     var $Handler;
 
+    /**
+     * @param Doku_Handler $Handler
+     */
     function Doku_Handler_CallWriter(& $Handler) {
         $this->Handler = & $Handler;
     }
@@ -747,7 +751,7 @@ class Doku_Handler_Nest {
     /**
      * constructor
      *
-     * @param  object     $CallWriter     the renderers current call writer
+     * @param  Doku_Handler_CallWriter $CallWriter     the renderers current call writer
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
@@ -805,6 +809,8 @@ class Doku_Handler_List {
     var $listCalls = array();
     var $listStack = array();
 
+    const NODE = 1;
+
     function Doku_Handler_List(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
     }
@@ -856,7 +862,8 @@ class Doku_Handler_List {
         $depth = $this->interpretSyntax($call[1][0], $listType);
 
         $this->initialDepth = $depth;
-        $this->listStack[] = array($listType, $depth);
+        //                   array(list type, current depth, index of current listitem_open)
+        $this->listStack[] = array($listType, $depth, 1);
 
         $this->listCalls[] = array('list'.$listType.'_open',array(),$call[2]);
         $this->listCalls[] = array('listitem_open',array(1),$call[2]);
@@ -881,6 +888,7 @@ class Doku_Handler_List {
     function listOpen($call) {
         $depth = $this->interpretSyntax($call[1][0], $listType);
         $end = end($this->listStack);
+        $key = key($this->listStack);
 
         // Not allowed to be shallower than initialDepth
         if ( $depth < $this->initialDepth ) {
@@ -897,6 +905,9 @@ class Doku_Handler_List {
                 $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
                 $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
+                // new list item, update list stack's index into current listitem_open
+                $this->listStack[$key][2] = count($this->listCalls) - 2;
+
             // Switched list type...
             } else {
 
@@ -908,7 +919,7 @@ class Doku_Handler_List {
                 $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
                 array_pop($this->listStack);
-                $this->listStack[] = array($listType, $depth);
+                $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
             }
 
         //------------------------------------------------------------------------
@@ -920,7 +931,10 @@ class Doku_Handler_List {
             $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
             $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
-            $this->listStack[] = array($listType, $depth);
+            // set the node/leaf state of this item's parent listitem_open to NODE
+            $this->listCalls[$this->listStack[$key][2]][1][1] = self::NODE;
+
+            $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
 
         //------------------------------------------------------------------------
         // Getting shallower ( $depth < $end[1] )
@@ -934,6 +948,7 @@ class Doku_Handler_List {
 
             while (1) {
                 $end = end($this->listStack);
+                $key = key($this->listStack);
 
                 if ( $end[1] <= $depth ) {
 
@@ -946,6 +961,9 @@ class Doku_Handler_List {
                         $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
                         $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
+                        // new list item, update list stack's index into current listitem_open
+                        $this->listStack[$key][2] = count($this->listCalls) - 2;
+
                     } else {
                         // Switching list type...
                         $this->listCalls[] = array('list'.$end[0].'_close', array(), $call[2]);
@@ -954,7 +972,7 @@ class Doku_Handler_List {
                         $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
                         array_pop($this->listStack);
-                        $this->listStack[] = array($listType, $depth);
+                        $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
                     }
 
                     break;

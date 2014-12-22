@@ -762,6 +762,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      */
     function _html_select(){
         $inlist = false;
+        $usel = '';
+        $gsel = '';
 
         if($this->who &&
            !in_array($this->who,$this->usersgroups) &&
@@ -770,11 +772,9 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
             if($this->who{0} == '@'){
                 $gsel = ' selected="selected"';
             }else{
-                $usel   = ' selected="selected"';
+                $usel = ' selected="selected"';
             }
         }else{
-            $usel = '';
-            $gsel = '';
             $inlist = true;
         }
 

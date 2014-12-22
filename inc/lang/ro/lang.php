@@ -67,6 +67,7 @@ $lang['badlogin']              = 'Ne pare rău, utilizatorul și/sau parola au f
 $lang['minoredit']             = 'Modificare minoră';
 $lang['draftdate']             = 'Schiță salvată automat la';
 $lang['nosecedit']             = 'Pagina s-a modificat între timp, secțiunea info a expirat, s-a încărcat pagina întreagă în loc.';
+$lang['searchcreatepage']      = "Dacă nu ai găsit ce ai căutat, poți crea o pagină nouă prin folosirea butonului ''Editează această pagină''.";
 $lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cîmpurile.';
 $lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
 $lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';

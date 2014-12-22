@@ -1,4 +1,5 @@
 ====== Meklēšana ======
 
-Te vari redzēt meklēšanas rezultātus. Ja neatradi meklēto, nospiežot pogu "Labot lapu", vari izveidot jaunu lapu ar tevis meklētajiem atslēgvārdiem nosaukumā.
+Te vari redzēt meklēšanas rezultātus. @CREATEPAGEINFO@
+
 ===== Atrasts =====

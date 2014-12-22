@@ -72,8 +72,10 @@ function js_out(){
 
     // add possible plugin scripts and userscript
     $files   = array_merge($files,js_pluginscripts());
-    if(isset($config_cascade['userscript']['default'])){
-        $files[] = $config_cascade['userscript']['default'];
+    if(!empty($config_cascade['userscript']['default'])) {
+        foreach($config_cascade['userscript']['default'] as $userscript) {
+            $files[] = $userscript;
+        }
     }
 
     $cache_files = array_merge($files, getConfigFiles('main'));
@@ -154,6 +156,8 @@ function js_out(){
  * Load the given file, handle include calls and print it
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename path to file
  */
 function js_load($file){
     if(!@file_exists($file)) return;
@@ -189,6 +193,8 @@ function js_load($file){
  * Returns a list of possible Plugin Scripts (no existance check here)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return array
  */
 function js_pluginscripts(){
     $list = array();
@@ -206,6 +212,8 @@ function js_pluginscripts(){
  * - Nothing is returned for plugins without an entry for $lang['js']
  *
  * @author Gabriel Birke <birke@d-scribe.de>
+ *
+ * @return array
  */
 function js_pluginstrings() {
     global $conf;
@@ -231,6 +239,8 @@ function js_pluginstrings() {
  *
  * - $lang['js'] must be an array.
  * - Nothing is returned for template without an entry for $lang['js']
+ *
+ * @return array
  */
 function js_templatestrings() {
     global $conf;
@@ -252,6 +262,9 @@ function js_templatestrings() {
  * as newline
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $string
+ * @return string
  */
 function js_escape($string){
     return str_replace('\\\\n','\\n',addslashes($string));
@@ -261,6 +274,8 @@ function js_escape($string){
  * Adds the given JavaScript code to the window.onload() event
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $func
  */
 function js_runonstart($func){
     echo "jQuery(function(){ $func; });".NL;
@@ -275,6 +290,9 @@ function js_runonstart($func){
  * @author Nick Galbreath <nickg@modp.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @link   http://code.google.com/p/jsstrip/
+ *
+ * @param string $s
+ * @return string
  */
 function js_compress($s){
     $s = ltrim($s);     // strip all initial whitespace
@@ -289,7 +307,11 @@ function js_compress($s){
     // items that don't need spaces next to them
     $chars = "^&|!+\-*\/%=\?:;,{}()<>% \t\n\r'\"[]";
 
-    $regex_starters = array("(", "=", "[", "," , ":", "!");
+    // items which need a space if the sign before and after whitespace is equal.
+    // E.g. '+ ++' may not be compressed to '+++' --> syntax error.
+    $ops = "+-";
+
+    $regex_starters = array("(", "=", "[", "," , ":", "!", "&", "|");
 
     $whitespaces_chars = array(" ", "\t", "\n", "\r", "\0", "\x0B");
 
@@ -389,19 +411,27 @@ function js_compress($s){
 
         // whitespaces
         if( $ch == ' ' || $ch == "\r" || $ch == "\n" || $ch == "\t" ){
-            // leading spaces
-            if($i+1 < $slen && (strpos($chars,$s[$i+1]) !== false)){
-                $i = $i + 1;
-                continue;
-            }
-            // trailing spaces
-            //  if this ch is space AND the last char processed
-            //  is special, then skip the space
             $lch = substr($result,-1);
-            if($lch && (strpos($chars,$lch) !== false)){
-                $i = $i + 1;
-                continue;
+
+            // Only consider deleting whitespace if the signs before and after
+            // are not equal and are not an operator which may not follow itself.
+            if ((!$lch || $s[$i+1] == ' ')
+                || $lch != $s[$i+1]
+                || strpos($ops,$s[$i+1]) === false) {
+                // leading spaces
+                if($i+1 < $slen && (strpos($chars,$s[$i+1]) !== false)){
+                    $i = $i + 1;
+                    continue;
+                }
+                // trailing spaces
+                //  if this ch is space AND the last char processed
+                //  is special, then skip the space
+                if($lch && (strpos($chars,$lch) !== false)){
+                    $i = $i + 1;
+                    continue;
+                }
             }
+
             // else after all of this convert the "whitespace" to
             // a single space.  It will get appended below
             $ch = ' ';

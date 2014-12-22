@@ -6,6 +6,6 @@ Le panneau de gauche liste toutes les catégories et les pages disponibles.
 
 Le formulaire ci-dessus permet d'afficher et de modifier les autorisations d'un utilisateur ou d'un groupe sélectionné.
 
-Dans le tableau ci-dessous, toutes les listes de contrôle d'accès (ACL) actuelles sont affichées. Vous pouvez l'utiliser pour supprimer ou modifier rapidement plusieurs contrôles d'accès.
+Le tableau ci-dessous présente toutes les listes de contrôle d'accès (ACL) actuelles. Vous pouvez l'utiliser pour supprimer ou modifier rapidement plusieurs contrôles d'accès.
 
 La lecture de [[doku>fr:acl|la documentation officielle des contrôles d'accès]] pourra vous permettre de mieux comprendre le fonctionnement du contrôle d'accès dans DokuWiki.

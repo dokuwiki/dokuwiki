@@ -49,7 +49,7 @@ function plugin_load($type,$name,$new=false,$disabled=false) {
  * Whether plugin is disabled
  *
  * @param string $plugin name of plugin
- * @return bool; true disabled, false enabled
+ * @return bool true disabled, false enabled
  */
 function plugin_isdisabled($plugin) {
     /** @var $plugin_controller Doku_Plugin_Controller */
@@ -61,7 +61,7 @@ function plugin_isdisabled($plugin) {
  * Enable the plugin
  *
  * @param string $plugin name of plugin
- * @return bool; true saving succeed, false saving failed
+ * @return bool true saving succeed, false saving failed
  */
 function plugin_enable($plugin) {
     /** @var $plugin_controller Doku_Plugin_Controller */
@@ -73,7 +73,7 @@ function plugin_enable($plugin) {
  * Disable the plugin
  *
  * @param string $plugin name of plugin
- * @return bool; true saving succeed, false saving failed
+ * @return bool  true saving succeed, false saving failed
  */
 function plugin_disable($plugin) {
     /** @var $plugin_controller Doku_Plugin_Controller */

@@ -1,0 +1,7 @@
+====== Povratna informacija o popularnosti ======
+
+Ovaj [[doku>popularity|alat]] prikupla anonimne podatke o Vašem wiki i omogućava Vam da ih pošaljete DokuWiki razvojnom timu. To im pomaže da bolje razumiju kako korisnici koriste DokuWiki i osigurava kvalitetnije odluke o budućem razvoju u skladu s stvarnim korištenjem.
+
+Pozivamo Vas da ponavljate ovaj korak s vremena na vrijeme kako bi razvojni tim bio obaviješten o razvoju Vašeg wiki-a. Vaši novi podaci biti će identificirani putem anonimne oznake.
+
+Prikupljeni podatci sadrže informacije kako što je DokuWiki inačica, broj i veličina vaših stranica i datoteka, ugrađeni dodatci i PHP-u koji se koristi. Sirovi podatci koji će biti poslani su prikazani niže. Molim koristite gumb "Pošalji podatke" da bi ste poslali ove informacije.

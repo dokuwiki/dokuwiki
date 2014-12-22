@@ -50,7 +50,7 @@ class cache {
         $this->_addDependencies();
 
         if ($this->_event) {
-            return $this->_stats(trigger_event($this->_event,$this,array($this,'_useCache')));
+            return $this->_stats(trigger_event($this->_event, $this, array($this,'_useCache')));
         } else {
             return $this->_stats($this->_useCache());
         }
@@ -316,7 +316,7 @@ class cache_instructions extends cache_parser {
      * retrieve the cached data
      *
      * @param   bool   $clean   true to clean line endings, false to leave line endings alone
-     * @return  string          cache contents
+     * @return  array          cache contents
      */
     public function retrieveCache($clean=true) {
         $contents = io_readFile($this->cache, false);
@@ -326,7 +326,7 @@ class cache_instructions extends cache_parser {
     /**
      * cache $instructions
      *
-     * @param   string $instructions  the instruction to be cached
+     * @param   array $instructions  the instruction to be cached
      * @return  bool                  true on success, false otherwise
      */
     public function storeCache($instructions) {

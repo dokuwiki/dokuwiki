@@ -101,7 +101,7 @@ class GitToolCLI extends DokuCLI {
     /**
      * Tries to install the given extensions using git clone
      *
-     * @param       $extensions
+     * @param array      $extensions
      */
     public function cmd_clone($extensions) {
         $errors    = array();
@@ -130,7 +130,7 @@ class GitToolCLI extends DokuCLI {
     /**
      * Tries to install the given extensions using git clone with fallback to install
      *
-     * @param       $extensions
+     * @param array      $extensions
      */
     public function cmd_install($extensions) {
         $errors    = array();
@@ -206,12 +206,13 @@ class GitToolCLI extends DokuCLI {
      * Install extension from the given download URL
      *
      * @param string $ext
-     * @return bool
+     * @return bool|null
      */
     private function downloadExtension($ext) {
         /** @var helper_plugin_extension_extension $plugin */
         $plugin = plugin_load('helper', 'extension_extension');
         if(!$ext) die("extension plugin not available, can't continue");
+
         $plugin->setExtension($ext);
 
         $url = $plugin->getDownloadURL();
@@ -291,12 +292,13 @@ class GitToolCLI extends DokuCLI {
      * Returns the repository for the given extension
      *
      * @param $extension
-     * @return bool|string
+     * @return false|string
      */
     private function getSourceRepo($extension) {
         /** @var helper_plugin_extension_extension $ext */
         $ext = plugin_load('helper', 'extension_extension');
         if(!$ext) die("extension plugin not available, can't continue");
+
         $ext->setExtension($extension);
 
         $repourl = $ext->getSourcerepoURL();

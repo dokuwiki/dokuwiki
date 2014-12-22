@@ -51,8 +51,9 @@ exit;
 /**
  * Trims the recent changes cache (or imports the old changelog) as needed.
  *
- * @param media_changes If the media changelog shall be trimmed instead of
- * the page changelog
+ * @param bool $media_changes If the media changelog shall be trimmed instead of
+ *                              the page changelog
+ * @return bool
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
@@ -83,7 +84,7 @@ function runTrimRecentChanges($media_changes = false) {
             io_saveFile($fn.'_tmp', '');          // presave tmp as 2nd lock
             $trim_time = time() - $conf['recent_days']*86400;
             $out_lines = array();
-
+            $old_lines = array();
             for ($i=0; $i<count($lines); $i++) {
                 $log = parseChangelogLine($lines[$i]);
                 if ($log === false) continue;                      // discard junk

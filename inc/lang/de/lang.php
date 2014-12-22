@@ -26,6 +26,8 @@
  * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
+ * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
+ * @author Pascal Schröder <Pascal1802@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -87,6 +89,7 @@ $lang['badpassconfirm']        = 'Das Passwort war falsch.';
 $lang['minoredit']             = 'kleine Änderung';
 $lang['draftdate']             = 'Entwurf gespeichert am';
 $lang['nosecedit']             = 'Diese Seite wurde in der Zwischenzeit geändert, Sektionsinfo ist veraltet, lade stattdessen volle Seite.';
+$lang['searchcreatepage']      = 'Falls der gesuchte Begriff nicht gefunden wurde, können Sie direkt eine neue Seite für den Suchbegriff anlegen, indem Sie auf den **\'\'[Seite anlegen]\'\'** Knopf drücken.';
 $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden.';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
@@ -204,6 +207,8 @@ $lang['diff_side']             = 'Side by Side';
 $lang['diffprevrev']           = 'Vorhergehende Überarbeitung';
 $lang['diffnextrev']           = 'Nächste  Überarbeitung';
 $lang['difflastrev']           = 'Letzte  Überarbeitung';
+$lang['diffbothprevrev']       = 'Beide Seiten der vorigen Revision';
+$lang['diffbothnextrev']       = 'Beide Seiten der Revision';
 $lang['line']                  = 'Zeile';
 $lang['breadcrumb']            = 'Zuletzt angesehen:';
 $lang['youarehere']            = 'Sie befinden sich hier:';
@@ -299,6 +304,7 @@ $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführ
 $lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
 $lang['i_phpver']              = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP-Installation.';
+$lang['i_mbfuncoverload']      = 'Um DokuWiki zu starten muss mbstring.func_overload in php.ini ausgeschaltet sein.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Sie sollten die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
@@ -352,3 +358,5 @@ $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
+$lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
+$lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';

@@ -178,14 +178,6 @@ $_REQUEST = array_merge($_GET,$_POST);
 // we don't want a purge URL to be digged
 if(isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
-// disable gzip if not available
-if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
-    $conf['compression'] = 'gz';
-}
-if($conf['compression'] == 'gz' && !function_exists('gzopen')){
-    $conf['compression'] = 0;
-}
-
 // precalculate file creation modes
 init_creationmodes();
 
@@ -200,6 +192,14 @@ if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Con
 
 // load libraries
 require_once(DOKU_INC.'inc/load.php');
+
+// disable gzip if not available
+if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
+    $conf['compression'] = 'gz';
+}
+if($conf['compression'] == 'gz' && !function_exists('gzopen')){
+    $conf['compression'] = 0;
+}
 
 // input handle class
 global $INPUT;
@@ -259,16 +259,32 @@ function init_paths(){
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
 }
 
+/**
+ * Load the language strings
+ *
+ * @param string $langCode language code, as passed by event handler
+ */
 function init_lang($langCode) {
     //prepare language array
-    global $lang;
+    global $lang, $config_cascade;
     $lang = array();
 
     //load the language files
     require(DOKU_INC.'inc/lang/en/lang.php');
+    foreach ($config_cascade['lang']['core'] as $config_file) {
+        if (@file_exists($config_file . 'en/lang.php')) {
+            include($config_file . 'en/lang.php');
+        }
+    }
+
     if ($langCode && $langCode != 'en') {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
             require(DOKU_INC."inc/lang/$langCode/lang.php");
+        }
+        foreach ($config_cascade['lang']['core'] as $config_file) {
+            if (@file_exists($config_file . "$langCode/lang.php")) {
+                include($config_file . "$langCode/lang.php");
+            }
         }
     }
 }
@@ -456,10 +472,6 @@ function getBaseURL($abs=null){
         $port = '';
     }
 
-    if(!$port && isset($_SERVER['SERVER_PORT'])) {
-        $port = $_SERVER['SERVER_PORT'];
-    }
-
     if(is_null($port)){
         $port = '';
     }
@@ -490,6 +502,14 @@ function getBaseURL($abs=null){
  * @returns bool true when SSL is active
  */
 function is_ssl(){
+    // check if we are behind a reverse proxy
+    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
     if (!isset($_SERVER['HTTPS']) ||
         preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
         return false;

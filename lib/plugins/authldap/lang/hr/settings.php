@@ -21,3 +21,7 @@ $lang['userscope']             = 'Ograniči područje za pretragu korisnika';
 $lang['groupscope']            = 'Ograniči područje za pretragu grupa';
 $lang['groupkey']              = 'Članstvo grupa iz svih atributa korisnika (umjesto standardnih AD grupa) npr. grupa iz odjela ili telefonskog broja';
 $lang['debug']                 = 'Prikaži dodatne informacije u slučaju greške';
+$lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
+$lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
+$lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
+$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';

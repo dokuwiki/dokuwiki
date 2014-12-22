@@ -58,7 +58,6 @@ $dokuwiki_hash = array(
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    'devel'        => 'b3ddc3f793eac8c135176e535054c00a',
 );
 
 
@@ -160,6 +159,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 /**
  * Print the input form
+ *
+ * @param array $d submitted entry 'd' of request data
  */
 function print_form($d){
     global $lang;
@@ -265,6 +266,9 @@ function print_retry() {
  * Check validity of data
  *
  * @author Andreas Gohr
+ *
+ * @param array $d
+ * @return bool ok?
  */
 function check_data(&$d){
     static $form_default = array(
@@ -334,6 +338,9 @@ function check_data(&$d){
  * Writes the data to the config files
  *
  * @author  Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param array $d
+ * @return bool
  */
 function store_data($d){
     global $LC;
@@ -438,6 +445,10 @@ EOT;
  * Write the given content to a file
  *
  * @author  Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string $filename
+ * @param string $data
+ * @return bool
  */
 function fileWrite($filename, $data) {
     global $error;
@@ -460,6 +471,8 @@ function fileWrite($filename, $data) {
  * unmodified main config file
  *
  * @author      Chris Smith <chris@jalakai.co.uk>
+ *
+ * @return bool
  */
 function check_configs(){
     global $error;
@@ -498,6 +511,8 @@ function check_configs(){
  * Check other installation dir/file permission requirements
  *
  * @author      Chris Smith <chris@jalakai.co.uk>
+ *
+ * @return bool
  */
 function check_permissions(){
     global $error;
@@ -533,14 +548,16 @@ function check_permissions(){
  * Check the availability of functions used in DokuWiki and the PHP version
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return bool
  */
 function check_functions(){
     global $error;
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.2.0','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
+    if(version_compare(phpversion(),'5.3.3','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
         $ok = false;
     }
 
@@ -626,6 +643,8 @@ function print_errors(){
  * remove magic quotes recursivly
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $array
  */
 function remove_magic_quotes(&$array) {
     foreach (array_keys($array) as $key) {

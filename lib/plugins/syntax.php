@@ -52,6 +52,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
      * @see Doku_Handler_Block
+     *
      * @return string
      */
     function getPType(){
@@ -70,7 +71,7 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * @param   int          $state   The lexer state for the match
      * @param   int          $pos     The character position of the matched text
      * @param   Doku_Handler $handler The Doku_Handler object
-     * @return  array Return an array with all data you want to use in render
+     * @return  bool|array Return an array with all data you want to use in render, false don't add an instruction
      */
     function handle($match, $state, $pos, Doku_Handler $handler){
         trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
@@ -94,10 +95,10 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode_Plugin {
      * The contents of the $data array depends on what the handler() function above
      * created
      *
-     * @param   $format   string        output format being rendered
-     * @param   $renderer Doku_Renderer the current renderer object
-     * @param   $data     array         data created by handler()
-     * @return  boolean                 rendered correctly?
+     * @param string          $format   output format being rendered
+     * @param Doku_Renderer   $renderer the current renderer object
+     * @param array           $data     data created by handler()
+     * @return  boolean                 rendered correctly? (however, returned value is not used at the moment)
      */
     function render($format, Doku_Renderer $renderer, $data) {
         trigger_error('render() not implemented in '.get_class($this), E_USER_WARNING);

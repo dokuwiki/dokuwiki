@@ -83,6 +83,10 @@ function html_denied() {
  * inserts section edit buttons if wanted or removes the markers
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $text
+ * @param bool   $show show section edit buttons?
+ * @return string
  */
 function html_secedit($text,$show=true){
     global $INFO;
@@ -101,8 +105,11 @@ function html_secedit($text,$show=true){
  * prepares section edit button data for event triggering
  * used as a callback in html_secedit
  *
- * @triggers HTML_SECEDIT_BUTTON
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $matches matches with regexp
+ * @return string
+ * @triggers HTML_SECEDIT_BUTTON
  */
 function html_secedit_button($matches){
     $data = array('secid'  => $matches[1],
@@ -121,6 +128,9 @@ function html_secedit_button($matches){
  * used as default action form HTML_SECEDIT_BUTTON
  *
  * @author Adrian Lang <lang@cosmocode.de>
+ *
+ * @param array $data name, section id and target
+ * @return string html
  */
 function html_secedit_get_button($data) {
     global $ID;
@@ -147,6 +157,8 @@ function html_secedit_get_button($data) {
  * Just the back to top button (in its own form)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return string html
  */
 function html_topbtn(){
     global $lang;
@@ -161,6 +173,15 @@ function html_topbtn(){
  * If tooltip exists, the access key tooltip is replaced.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string         $name
+ * @param string         $id
+ * @param string         $akey   access key
+ * @param string[] $params key-value pairs added as hidden inputs
+ * @param string         $method
+ * @param string         $tooltip
+ * @param bool|string    $label  label text, false: lookup btn_$name in localization
+ * @return string
  */
 function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false){
     global $conf;
@@ -213,15 +234,18 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
 }
 
 /**
- * show a wiki page
+ * Show a wiki page
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param null|string $txt wiki text or null for showing $ID
  */
 function html_show($txt=null){
     global $ID;
     global $REV;
     global $HIGH;
     global $INFO;
+    global $DATE_AT;
     //disable section editing for old revisions or in preview
     if($txt || $REV){
         $secedit = false;
@@ -241,8 +265,8 @@ function html_show($txt=null){
         echo '</div></div>';
 
     }else{
-        if ($REV) print p_locale_xhtml('showrev');
-        $html = p_wiki_xhtml($ID,$REV,true);
+        if ($REV||$DATE_AT) print p_locale_xhtml('showrev');
+        $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         $html = html_hilight($html,$HIGH);
@@ -281,6 +305,10 @@ function html_draft(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Harry Fuecks <hfuecks@gmail.com>
+ *
+ * @param string $html
+ * @param array|string $phrases
+ * @return string html
  */
 function html_hilight($html,$phrases){
     $phrases = (array) $phrases;
@@ -299,6 +327,9 @@ function html_hilight($html,$phrases){
  * Callback used by html_hilight()
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
+ *
+ * @param array $m matches
+ * @return string html
  */
 function html_hilight_callback($m) {
     $hlight = unslash($m[0]);
@@ -314,15 +345,17 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    global $QUERY;
+    global $QUERY, $ID;
     global $lang;
 
     $intro = p_locale_xhtml('searchpage');
     // allow use of placeholder in search intro
+    $pagecreateinfo = (auth_quickaclcheck($ID) >= AUTH_CREATE) ? $lang['searchcreatepage'] : '';
     $intro = str_replace(
-                array('@QUERY@','@SEARCH@'),
-                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
-                $intro);
+        array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
+        array(hsc(rawurlencode($QUERY)), hsc($QUERY), $pagecreateinfo),
+        $intro
+    );
     echo $intro;
     flush();
 
@@ -422,6 +455,9 @@ function html_locked(){
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param int $first skip the first n changelog lines
+ * @param bool|string $media_id id of media, or false for current page
  */
 function html_revisions($first=0, $media_id = false){
     global $ID;
@@ -643,6 +679,9 @@ function html_revisions($first=0, $media_id = false){
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param int $first
+ * @param string $show_changes
  */
 function html_recent($first=0, $show_changes='both'){
     global $conf;
@@ -830,6 +869,8 @@ function html_recent($first=0, $show_changes='both'){
  * Display page index
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $ns
  */
 function html_index($ns){
     global $conf;
@@ -858,6 +899,9 @@ function html_index($ns){
  * User function for html_buildlist()
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $item
+ * @return string
  */
 function html_list_index($item){
     global $ID, $conf;
@@ -888,10 +932,23 @@ function html_list_index($item){
  * it gives different classes to opened or closed "folders"
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $item
+ * @return string html
  */
 function html_li_index($item){
+    global $INFO;
+
+    $class = '';
+    $id = '';
+
     if($item['type'] == "f"){
-        return '<li class="level'.$item['level'].'">';
+        // scroll to the current item
+        if($item['id'] == $INFO['id']) {
+            $id = ' id="scroll__here"';
+            $class = ' bounce';
+        }
+        return '<li class="level'.$item['level'].$class.'" '.$id.'>';
     }elseif($item['open']){
         return '<li class="open">';
     }else{
@@ -903,6 +960,9 @@ function html_li_index($item){
  * Default List item
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $item
+ * @return string html
  */
 function html_li_default($item){
     return '<li class="level'.$item['level'].'">';
@@ -926,7 +986,7 @@ function html_li_default($item){
  * @param array    $data  array with item arrays
  * @param string   $class class of ul wrapper
  * @param callable $func  callback to print an list item
- * @param string   $lifunc callback to the opening li tag
+ * @param callable $lifunc callback to the opening li tag
  * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
                                  0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
@@ -1018,12 +1078,13 @@ function html_backlinks(){
 
 /**
  * Get header of diff HTML
+ *
  * @param string $l_rev   Left revisions
  * @param string $r_rev   Right revision
  * @param string $id      Page id, if null $ID is used
  * @param bool   $media   If it is for media files
  * @param bool   $inline  Return the header on a single line
- * @return array HTML snippets for diff header
+ * @return string[] HTML snippets for diff header
  */
 function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
     global $lang;
@@ -1479,7 +1540,7 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
 /**
  * Insert soft breaks in diff html
  *
- * @param $diffhtml
+ * @param string $diffhtml
  * @return string
  */
 function html_insert_softbreaks($diffhtml) {
@@ -1518,6 +1579,9 @@ REGEX;
  * show warning on conflict detection
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $text
+ * @param string $summary
  */
 function html_conflict($text,$summary){
     global $ID;
@@ -1678,7 +1742,6 @@ function html_edit(){
     global $lang;
     global $conf;
     global $TEXT;
-    global $RANGE;
 
     if ($INPUT->has('changecheck')) {
         $check = $INPUT->str('changecheck');
@@ -1780,6 +1843,7 @@ function html_edit(){
  * Display the default edit form
  *
  * Is the default action for HTML_EDIT_FORMSELECTION.
+ *
  * @param mixed[] $param
  */
 function html_edit_form($param) {
@@ -1799,6 +1863,8 @@ function html_edit_form($param) {
  * Adds a checkbox for minor edits for logged in users
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return array|bool
  */
 function html_minoredit(){
     global $conf;
@@ -1899,6 +1965,7 @@ function html_debug(){
     print '</pre>';
 
     if (function_exists('apache_get_version')) {
+        $apache = array();
         $apache['version'] = apache_get_version();
 
         if (function_exists('apache_get_modules')) {
@@ -2077,6 +2144,9 @@ function html_resendpwd() {
  * Return the TOC rendered to XHTML
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $toc
+ * @return string html
  */
 function html_TOC($toc){
     if(!count($toc)) return '';
@@ -2095,6 +2165,9 @@ function html_TOC($toc){
 
 /**
  * Callback for html_buildlist
+ *
+ * @param array $item
+ * @return string html
  */
 function html_list_toc($item){
     if(isset($item['hid'])){
@@ -2129,6 +2202,7 @@ function html_mktocitem($link, $text, $level, $hash='#'){
  * Triggers an event with the form name: HTML_{$name}FORM_OUTPUT
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
+ *
  * @param string     $name The name of the form
  * @param Doku_Form  $form The form
  */
@@ -2141,6 +2215,7 @@ function html_form($name, &$form) {
 /**
  * Form print function.
  * Just calls printForm() on the data object.
+ *
  * @param Doku_Form $data The form
  */
 function html_form_output($data) {
