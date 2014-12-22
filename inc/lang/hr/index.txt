@@ -1,1 +1,3 @@
-====== Indeks ======
+====== Mapa stranica ======
+
+Ovo je mapa svih dostupnih stranica poredanih po [[doku>namespaces|imenskom prostoru]].

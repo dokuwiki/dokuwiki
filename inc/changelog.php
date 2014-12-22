@@ -83,17 +83,19 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
             'extra' => str_replace($strip, '', $extra)
             );
 
+    $wasCreated = ($type===DOKU_CHANGE_TYPE_CREATE);
+    $wasReverted = ($type===DOKU_CHANGE_TYPE_REVERT);
     // update metadata
     if (!$wasRemoved) {
         $oldmeta = p_read_metadata($id);
         $meta    = array();
-        if (!$INFO['exists'] && empty($oldmeta['persistent']['date']['created'])){ // newly created
+        if ($wasCreated && empty($oldmeta['persistent']['date']['created'])){ // newly created
             $meta['date']['created'] = $created;
             if ($user){
                 $meta['creator'] = $INFO['userinfo']['name'];
                 $meta['user']    = $user;
             }
-        } elseif (!$INFO['exists'] && !empty($oldmeta['persistent']['date']['created'])) { // re-created / restored
+        } elseif (($wasCreated || $wasReverted) && !empty($oldmeta['persistent']['date']['created'])) { // re-created / restored
             $meta['date']['created']  = $oldmeta['persistent']['date']['created'];
             $meta['date']['modified'] = $created; // use the files ctime here
             $meta['creator'] = $oldmeta['persistent']['creator'];
@@ -725,8 +727,10 @@ abstract class ChangeLog {
      * If file larger than $chuncksize, only chunck is read that could contain $rev.
      *
      * @param int $rev   revision timestamp
-     * @return array(fp, array(changeloglines), $head, $tail, $eof)|bool
-     *     returns false when not succeed. fp only defined for chuck reading, needs closing.
+     * @return array|false
+     *     if success returns array(fp, array(changeloglines), $head, $tail, $eof)
+     *     where fp only defined for chuck reading, needs closing.
+     *     otherwise false
      */
     protected function readloglines($rev) {
         $file = $this->getChangelogFilename();
@@ -844,6 +848,25 @@ abstract class ChangeLog {
      */
     public function isCurrentRevision($rev) {
         return $rev == @filemtime($this->getFilename());
+    }
+    
+    /**
+    * Return an existing revision for a specific date which is 
+    * the current one or younger or equal then the date
+    *
+    * @param string $id 
+    * @param number $date_at timestamp
+    * @return string revision ('' for current)
+    */
+    function getLastRevisionAt($date_at){
+        //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
+        if($date_at >= @filemtime($this->getFilename())) { 
+            return '';
+        } else if ($rev = $this->getRelativeRevision($date_at+1, -1)) { //+1 to get also the requested date revision
+            return $rev;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1072,3 +1095,4 @@ function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
     }
     return $changelog->getRevisions($first, $num);
 }
+

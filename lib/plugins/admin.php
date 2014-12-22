@@ -14,7 +14,14 @@ if(!defined('DOKU_INC')) die();
  */
 class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
 
-    function getMenuText($language) {
+    /**
+     * Return the text that is displayed at the main admin menu
+     * (Default localized language string 'menu' is returned, override this function for setting another name)
+     *
+     * @param string $language language code
+     * @return string menu string
+     */
+    public function getMenuText($language) {
         $menutext = $this->getLang('menu');
         if (!$menutext) {
             $info = $this->getInfo();
@@ -23,23 +30,48 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         return $menutext;
     }
 
-    function getMenuSort() {
+    /**
+     * Determine position in list in admin window
+     * Lower values are sorted up
+     *
+     * @return int
+     */
+    public function getMenuSort() {
         return 1000;
     }
 
-    function handle() {
+    /**
+     * Carry out required processing
+     */
+    public function handle() {
         trigger_error('handle() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
-    function html() {
+    /**
+     * Output html of the admin page
+     */
+    public function html() {
         trigger_error('html() not implemented in '.get_class($this), E_USER_WARNING);
     }
 
-    function forAdminOnly() {
+    /**
+     * Return true for access only by admins (config:superuser) or false if managers are allowed as well
+     *
+     * @return bool
+     */
+    public function forAdminOnly() {
         return true;
     }
 
-    function getTOC(){
+    /**
+     * Return array with ToC items. Items can be created with the html_mktocitem()
+     *
+     * @see html_mktocitem()
+     * @see tpl_toc()
+     *
+     * @return array
+     */
+    public function getTOC(){
         return array();
     }
 }

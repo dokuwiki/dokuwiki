@@ -14,6 +14,8 @@
  * @author tsangho <ou4222@gmail.com>
  * @author Danny Lin <danny0838@gmail.com>
  * @author Stan <talktostan@gmail.com>
+ * @author June-Hao Hou <junehao@gmail.com>
+ * @author lioujheyu <lioujheyu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -75,6 +77,7 @@ $lang['badpassconfirm']        = '抱歉，這密碼是錯的';
 $lang['minoredit']             = '小修改';
 $lang['draftdate']             = '草稿已自動存檔於';
 $lang['nosecedit']             = '在您編輯期間，其他使用者修改過本頁面。區段資料已逾時，因此系統載入了全頁，以取代之。';
+$lang['searchcreatepage']      = '若沒找到您想要的，可按下按鈕建立或編輯和查詢關鍵字同名的頁面。';
 $lang['regmissing']            = '很抱歉，所有欄位都要填寫。';
 $lang['reguexists']            = '很抱歉，有人已使用了這個帳號。';
 $lang['regsuccess']            = '使用者帳號已建立，密碼已寄發至該電郵。';
@@ -303,6 +306,7 @@ $lang['i_policy']              = '初步的 ACL 政策';
 $lang['i_pol0']                = '開放的 wiki (任何人可讀取、寫入、上傳)';
 $lang['i_pol1']                = '公開的 wiki (任何人可讀取，註冊使用者可寫入與上傳)';
 $lang['i_pol2']                = '封閉的 wiki (只有註冊使用者可讀取、寫入、上傳)';
+$lang['i_allowreg']            = '允許使用者自行註冊';
 $lang['i_retry']               = '重試';
 $lang['i_license']             = '請選擇您想要的內容發佈授權方式：';
 $lang['i_license_none']        = '不要顯示任何關於授權方式的訊息';

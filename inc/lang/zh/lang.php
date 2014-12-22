@@ -23,6 +23,7 @@
  * @author Cupen <Cupenoruler@foxmail.com>
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
  * @author qinghao <qingxianhao@gmail.com>
+ * @author Yuwei Sun <yuwei@hrz.tu-chemnitz.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -84,6 +85,7 @@ $lang['badpassconfirm']        = '对不起，密码错误';
 $lang['minoredit']             = '细微修改';
 $lang['draftdate']             = '草稿自动保存于';
 $lang['nosecedit']             = '在您编辑期间本页刚被他人修改过，局部信息已过期，故载入全页。';
+$lang['searchcreatepage']      = '如果没有找到您想要的东西，您可以使用相应的按钮来创建或编辑该页面。';
 $lang['regmissing']            = '对不起，您必须填写所有的字段。';
 $lang['reguexists']            = '对不起，该用户名已经存在。';
 $lang['regsuccess']            = '新用户已建立，密码将通过电子邮件发送给您。';
@@ -302,6 +304,7 @@ $lang['i_modified']            = '由于安全上的考虑，该脚本只能用�
                          <a href="http://dokuwiki.org/install">Dokuwiki 安装指南</a>';
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
+$lang['i_mbfuncoverload']      = '为了运行DocuWiki，您必须在php.ini中禁用mbstring.func_overload。';
 $lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
 $lang['i_confexists']          = '<code>%s</code> 已经存在';
 $lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查该路径/文件的权限设定并手动创建该文件。';

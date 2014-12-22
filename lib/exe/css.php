@@ -52,7 +52,7 @@ function css_out(){
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
     }
 
     // cache influencers
@@ -82,8 +82,10 @@ function css_out(){
             $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(isset($config_cascade['userstyle'][$mediatype])){
-            $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+        if(!empty($config_cascade['userstyle'][$mediatype])) {
+            foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
+                $files[$mediatype][$userstyle] = DOKU_BASE;
+            }
         }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
@@ -162,12 +164,15 @@ function css_out(){
  * most of this function is error handling to show a nice useful error when
  * LESS compilation fails
  *
- * @param $css
+ * @param string $css
  * @return string
  */
 function css_parseless($css) {
+    global $conf;
+
     $less = new lessc();
     $less->importDir[] = DOKU_INC;
+    $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')){
         $less->importDir[] = TMP_DIR;
@@ -222,6 +227,10 @@ function css_parseless($css) {
  * (sans the surrounding __ and with a ini_ prefix)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @param array $replacements  array(placeholder => value)
+ * @return string
  */
 function css_applystyle($css, $replacements) {
     // we convert ini replacements to LESS variable names
@@ -250,6 +259,7 @@ function css_applystyle($css, $replacements) {
  * the stylesheet modes
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $tpl the used template
  * @return array with keys 'stylesheets' and 'replacements'
  */
@@ -320,6 +330,10 @@ function css_styleini($tpl) {
  * Amend paths used in replacement relative urls, refer FS#2879
  *
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param array $replacements with key-value pairs
+ * @param string $location
+ * @return array
  */
 function css_fixreplacementurls($replacements, $location) {
     foreach($replacements as $key => $value) {
@@ -403,6 +417,10 @@ function css_filetypes(){
 /**
  * Loads a given file and fixes relative URLs with the
  * given location prefix
+ *
+ * @param string $file file system path
+ * @param string $location
+ * @return string
  */
 function css_loadfile($file,$location=''){
     $css_file = new DokuCssFile($file);
@@ -418,7 +436,7 @@ class DokuCssFile {
 
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
-    private   $relative_path = null;
+    protected $relative_path = null;
 
     public function __construct($file) {
         $this->filepath = $file;
@@ -451,7 +469,7 @@ class DokuCssFile {
      *
      * @return string   relative file system path
      */
-    private function getRelativePath(){
+    protected function getRelativePath(){
 
         if (is_null($this->relative_path)) {
             $basedir = array(DOKU_INC);
@@ -501,6 +519,9 @@ class DokuCssFile {
  * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
+ *
+ * @param array $match
+ * @return string
  */
 function css_datauri($match){
     global $conf;
@@ -528,9 +549,11 @@ function css_datauri($match){
  * Returns a list of possible Plugin Styles (no existance check here)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $mediatype
+ * @return array
  */
 function css_pluginstyles($mediatype='screen'){
-    global $lang;
     $list = array();
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -549,6 +572,9 @@ function css_pluginstyles($mediatype='screen'){
  * Very simple CSS optimizer
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @return string
  */
 function css_compress($css){
     //strip comments through a callback
@@ -585,6 +611,9 @@ function css_compress($css){
  * Keeps short comments (< 5 chars) to maintain typical browser hacks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $matches
+ * @return string
  */
 function css_comment_cb($matches){
     if(strlen($matches[2]) > 4) return '';
@@ -596,7 +625,7 @@ function css_comment_cb($matches){
  *
  * Strips one line comments but makes sure it will not destroy url() constructs with slashes
  *
- * @param $matches
+ * @param array $matches
  * @return string
  */
 function css_onelinecomment_cb($matches) {

@@ -177,9 +177,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      *
      * @author  James Van Lommel <james@nosq.com>
      * @param string $user
+     * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
      * @return array
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         global $conf;
         global $lang;
         global $ID;
@@ -202,6 +203,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         //general user info
+        $info = array();
         $info['name'] = $result[0]['displayname'][0];
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];
@@ -327,6 +329,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * Bulk retrieval of user data
      *
      * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
+     *
      * @param   int   $start     index of first user to be returned
      * @param   int   $limit     max number of users to be returned
      * @param   array $filter    array of field/pattern pairs, null for no filter
@@ -445,7 +448,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**
      * Get the domain part from a user
      *
-     * @param $user
+     * @param string $user
      * @return string
      */
     public function _userDomain($user) {
@@ -456,7 +459,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**
      * Get the user part from a user
      *
-     * @param $user
+     * @param string $user
      * @return string
      */
     public function _userName($user) {
@@ -542,6 +545,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * The patterns are set up with $this->_constructPattern()
      *
      * @author Chris Smith <chris@jalakai.co.uk>
+     *
      * @param string $user
      * @param array  $info
      * @return bool
@@ -563,6 +567,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * Create a pattern for $this->_filter()
      *
      * @author Chris Smith <chris@jalakai.co.uk>
+     *
      * @param array $filter
      */
     protected function _constructPattern($filter) {

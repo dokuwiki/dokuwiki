@@ -74,6 +74,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Check if autosubmit is enabled
+     *
      * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
     function isAutoSubmitEnabled(){
@@ -82,6 +83,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Send the data, to the submit url
+     *
      * @param string $data The popularity data
      * @return string An empty string if everything worked fine, a string describing the error otherwise
      */
@@ -97,6 +99,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Compute the last time the data was sent. If it has never been sent, we return 0.
+     *
+     * @return int
      */
     function lastSentTime(){
         $manualSubmission = @filemtime($this->popularityLastSubmitFile);
@@ -107,6 +111,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Gather all information
+     *
      * @return string The popularity data as a string
      */
     function gatherAsString(){
@@ -124,6 +129,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Gather all information
+     *
      * @return array The popularity data as an array
      */
     function _gather(){
@@ -288,17 +294,24 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @author <gilthans dot NO dot SPAM at gmail dot com>
      * @link   http://de3.php.net/manual/en/ini.core.php#79564
+     *
+     * @param string $v
+     * @return int|string
      */
     function _to_byte($v){
         $l = substr($v, -1);
         $ret = substr($v, 0, -1);
         switch(strtoupper($l)){
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'P':
                 $ret *= 1024;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'T':
                 $ret *= 1024;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'G':
                 $ret *= 1024;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'M':
                 $ret *= 1024;
             case 'K':

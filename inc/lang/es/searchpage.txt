@@ -1,5 +1,5 @@
 ====== Búsqueda ======
 
-Puedes encontrar los resultados de tu búsqueda abajo. Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  ''Crea esta página''.
+Puedes encontrar los resultados de tu búsqueda abajo. @CREATEPAGEINFO@
 
 ===== Resultados =====

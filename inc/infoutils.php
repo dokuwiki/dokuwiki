@@ -20,27 +20,28 @@ function checkUpdateMessages(){
     if(!$conf['updatecheck']) return;
     if($conf['useacl'] && !$INFO['ismanager']) return;
 
-    $cf = $conf['cachedir'].'/messages.txt';
+    $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
 
     // check if new messages needs to be fetched
     if($lm < time()-(60*60*24) || $lm < @filemtime(DOKU_INC.DOKU_SCRIPT)){
         @touch($cf);
-        dbglog("checkUpdateMessages(): downloading messages.txt");
+        dbglog("checkUpdateMessages(): downloading messages to ".$cf);
         $http = new DokuHTTPClient();
         $http->timeout = 12;
-        $data = $http->get(DOKU_MESSAGEURL.$updateVersion);
-        if(substr(trim($data), -1) != '%') {
-            // this doesn't look like one of our messages, maybe some WiFi login interferred
-            $data = '';
-        }else {
-            io_saveFile($cf,$data);
+        $resp = $http->get(DOKU_MESSAGEURL.$updateVersion);
+        if(is_string($resp) && ($resp == "" || substr(trim($resp), -1) == '%')) {
+            // basic sanity check that this is either an empty string response (ie "no messages")
+            // or it looks like one of our messages, not WiFi login or other interposed response
+            io_saveFile($cf,$resp);
+        } else {
+            dbglog("checkUpdateMessages(): unexpected HTTP response received");
         }
     }else{
-        dbglog("checkUpdateMessages(): messages.txt up to date");
-        $data = io_readFile($cf);
+        dbglog("checkUpdateMessages(): messages up to date");
     }
 
+    $data = io_readFile($cf);
     // show messages through the usual message mechanism
     $msgs = explode("\n%\n",$data);
     foreach($msgs as $msg){
@@ -113,13 +114,13 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.2.0','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.2.0+ needed)',-1);
+        if(version_compare(phpversion(),'5.3.3','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 5.3.3+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.2.0','<')){
+        if(version_compare(phpversion(),'5.3.3','<')){
             msg('Your PHP version is too old',-1);
         }
     }
@@ -296,6 +297,7 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
+    $errors = array();
     $errors[-1] = 'error';
     $errors[0]  = 'info';
     $errors[1]  = 'success';
@@ -452,7 +454,7 @@ function dbg_backtrace(){
                 }elseif(is_array($arg)){
                     $params[] = '[Array]';
                 }elseif(is_null($arg)){
-                    $param[] = '[NULL]';
+                    $params[] = '[NULL]';
                 }else{
                     $params[] = (string) '"'.$arg.'"';
                 }

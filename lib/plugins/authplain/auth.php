@@ -17,6 +17,9 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
     /** @var array filter pattern */
     protected $_pattern = array();
 
+    /** @var bool safe version of preg_split */
+    protected $_pregsplit_safe = false;
+
     /**
      * Constructor
      *
@@ -44,6 +47,8 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             $this->cando['getUsers']     = true;
             $this->cando['getUserCount'] = true;
         }
+
+        $this->_pregsplit_safe = version_compare(PCRE_VERSION,'6.7','>=');
     }
 
     /**
@@ -76,9 +81,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param string $user
-     * @return array|bool
+     * @param bool $requireGroups  (optional) ignored by this plugin, grps info always supplied
+     * @return array|false
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         if($this->users === null) $this->_loadUserData();
         return isset($this->users[$user]) ? $this->users[$user] : false;
     }
@@ -328,7 +334,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             if(empty($line)) continue;
 
             /* NB: preg_split can be deprecated/replaced with str_getcsv once dokuwiki is min php 5.3 */
-            $row = preg_split('/(?<![^\\\\]\\\\)\:/', $line, 5); // allow for : escaped as \:
+            $row = $this->_splitUserData($line);
             $row = str_replace('\\:', ':', $row);
             $row = str_replace('\\\\', '\\', $row);
 
@@ -339,6 +345,33 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             $this->users[$row[0]]['mail'] = $row[3];
             $this->users[$row[0]]['grps'] = $groups;
         }
+    }
+
+    protected function _splitUserData($line){
+        // due to a bug in PCRE 6.6, preg_split will fail with the regex we use here
+        // refer github issues 877 & 885
+        if ($this->_pregsplit_safe){
+            return preg_split('/(?<![^\\\\]\\\\)\:/', $line, 5);       // allow for : escaped as \:
+        }
+
+        $row = array();
+        $piece = '';
+        $len = strlen($line);
+        for($i=0; $i<$len; $i++){
+            if ($line[$i]=='\\'){
+                $piece .= $line[$i];
+                $i++;
+                if ($i>=$len) break;
+            } else if ($line[$i]==':'){
+                $row[] = $piece;
+                $piece = '';
+                continue;
+            }
+            $piece .= $line[$i];
+        }
+        $row[] = $piece;
+
+        return $row;
     }
 
     /**

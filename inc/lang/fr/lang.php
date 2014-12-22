@@ -35,6 +35,7 @@
  * @author Caillot <remicaillot5@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author YoBoY <yoboy@ubuntu-fr.org>
+ * @author james <j.mccann@celcat.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -77,7 +78,7 @@ $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
 $lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
-$lang['btn_media']             = 'Gestionnaire de médias';
+$lang['btn_media']             = 'Gestionnaire Multimédia';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
 $lang['btn_img_backto']        = 'Retour vers %s';
 $lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
@@ -96,6 +97,7 @@ $lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
 $lang['draftdate']             = 'Brouillon enregistré automatiquement le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
+$lang['searchcreatepage']      = 'Si vous n\'avez pas trouvé ce que vous cherchiez, vous pouvez créer ou modifier la page correspondante à votre requête en cliquant sur le bouton approprié.';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
@@ -360,7 +362,7 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas l\'autorisation de 
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas l\'autorisation d\'envoyer des fichiers.';
 $lang['media_update']          = 'Envoyer une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
-$lang['currentns']             = 'Namespace actuel';
+$lang['currentns']             = 'Catégorie courante';
 $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';

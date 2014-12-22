@@ -1,5 +1,5 @@
 ====== Recerca ======
 
-Le resultatos de tu recerca se trova hic infra. Si tu non ha trovate lo que tu cerca, tu pote crear o modificar le pagina nominate secundo tu consulta con le button appropriate.
+Le resultatos de tu recerca se trova hic infra. @CREATEPAGEINFO@
 
 ===== Resultatos =====

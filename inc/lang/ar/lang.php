@@ -9,6 +9,7 @@
  * @author uahello@gmail.com
  * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
  * @author alhajr <alhajr300@gmail.com>
+ * @author Mohamed Belhsine <b.mohamed897@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -53,6 +54,8 @@ $lang['btn_register']          = 'سجّل';
 $lang['btn_apply']             = 'طبق';
 $lang['btn_media']             = 'مدير الوسائط';
 $lang['btn_deleteuser']        = 'احذف حسابي الخاص';
+$lang['btn_img_backto']        = 'عودة إلى %s';
+$lang['btn_mediaManager']      = 'اعرض في مدير الوسائط';
 $lang['loggedinas']            = 'داخل باسم:';
 $lang['user']                  = 'اسم المستخدم';
 $lang['pass']                  = 'كلمة السر';
@@ -68,6 +71,7 @@ $lang['badpassconfirm']        = 'عذراً,كلمة السر غير صحيحة
 $lang['minoredit']             = 'تعديلات طفيفة';
 $lang['draftdate']             = 'حفظ المسودات آليا مفعّل';
 $lang['nosecedit']             = 'غُيرت الصفحة في هذه الأثناء، معلومات الجزء اصبحت قديمة. حُمُلت كل الصفحة بدلا.';
+$lang['searchcreatepage']      = 'إن لم تجد ما تبحث عنه، يمكنك إنشاء صفحة جديدة بعنوان ما تبحث عنة بالضغط على زر "حرر هذه الصفحة".';
 $lang['regmissing']            = 'عذرا، عليك ملء جميع الحقول.';
 $lang['reguexists']            = 'عذرا، يوجد مشترك بنفس الاسم.';
 $lang['regsuccess']            = 'أنشئ المستخدم و ارسلت كلمة السر بالبريد.';
@@ -86,6 +90,7 @@ $lang['profdeleteuser']        = 'احذف حساب';
 $lang['profdeleted']           = 'حسابك الخاص تم حذفه من هذه الموسوعة';
 $lang['profconfdelete']        = 'أنا أرغب في حذف حسابي من هذه الموسوعة.<br/> 
 هذا الحدث غير ممكن.';
+$lang['profconfdeletemissing'] = 'لم تقم بوضع علامة في مربع التأكيد';
 $lang['pwdforget']             = 'أنسيت كلمة السر؟ احصل على واحدة جديدة';
 $lang['resendna']              = 'هذه الويكي لا تدعم إعادة إرسال كلمة المرور.';
 $lang['resendpwd']             = 'اضبط كلمة سر جديدة لـ';
@@ -183,6 +188,11 @@ $lang['difflink']              = 'رابط إلى هذه المقارنة';
 $lang['diff_type']             = 'أظهر الفروق:';
 $lang['diff_inline']           = 'ضمنا';
 $lang['diff_side']             = 'جنبا إلى جنب';
+$lang['diffprevrev']           = 'المراجعة السابقة';
+$lang['diffnextrev']           = 'المراجعة التالية';
+$lang['difflastrev']           = 'المراجعة الأخيرة';
+$lang['diffbothprevrev']       = 'جانبي المراجعة السابقة';
+$lang['diffbothnextrev']       = 'جانبي المراجعة التالية';
 $lang['line']                  = 'سطر';
 $lang['breadcrumb']            = 'أثر:';
 $lang['youarehere']            = 'أنت هنا:';
@@ -239,7 +249,6 @@ $lang['admin_register']        = 'أضف مستخدما جديدا';
 $lang['metaedit']              = 'تحرير البيانات الشمولية ';
 $lang['metasaveerr']           = 'فشلت كتابة البيانات الشمولية';
 $lang['metasaveok']            = 'حُفظت البيانات الشمولية';
-$lang['btn_img_backto']        = 'عودة إلى %s';
 $lang['img_title']             = 'العنوان:';
 $lang['img_caption']           = 'وصف:';
 $lang['img_date']              = 'التاريخ:';
@@ -252,7 +261,6 @@ $lang['img_camera']            = 'الكمرا:';
 $lang['img_keywords']          = 'كلمات مفتاحية:';
 $lang['img_width']             = 'العرض:';
 $lang['img_height']            = 'الإرتفاع:';
-$lang['btn_mediaManager']           = 'اعرض في مدير الوسائط';
 $lang['subscr_subscribe_success'] = 'اضيف %s لقائمة اشتراك %s';
 $lang['subscr_subscribe_error'] = 'خطأ في إضافة %s لقائمة اشتراك %s';
 $lang['subscr_subscribe_noaddress'] = 'ليس هناك عنوان مرتبط بولوجك، لا يمكن اضافتك لقائمة الاشتراك';
@@ -287,6 +295,7 @@ $lang['i_phpver']              = 'نسخة PHP التي لديك هي
 وهي أقل من النسخة المطلوبة
 <code>%s</code>
 عليك تحديث نسخة PHP';
+$lang['i_mbfuncoverload']      = 'يجب ايقاف تشغيل mbstring.func_overload في ملف php.ini لتشغيل دوكوويكي.';
 $lang['i_permfail']            = 'إن <code>%s</code> غير قابل للكتابة بواسطة دوكو ويكي، عليك تعديل إعدادات الصلاحيات لهذا المجلد!';
 $lang['i_confexists']          = 'إن <code>%s</code> موجود أصلاً';
 $lang['i_writeerr']            = 'لا يمكن إنشاء <code>%s</code>، عليك التأكد من صلاحيات الملف أو المجلد وإنشاء الملف يدوياً.';
@@ -340,4 +349,5 @@ $lang['media_update']          = 'ارفع إصدارا أحدث';
 $lang['media_restore']         = 'استرجع هذه النسخة';
 $lang['currentns']             = 'مساحة الاسم الحالية';
 $lang['searchresult']          = 'نتيجة البحث';
+$lang['plainhtml']             = 'نص HTML غير منسق';
 $lang['wikimarkup']            = 'علامات الوكي';

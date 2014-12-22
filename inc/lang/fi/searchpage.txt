@@ -1,5 +1,5 @@
 ====== Etsi ======
 
-Löydät etsinnän tulokset alta. Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä ''Muokkaa tätä sivua'' -napilla.
+Löydät etsinnän tulokset alta. @CREATEPAGEINFO@
 
 ===== Tulokset =====

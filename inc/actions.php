@@ -200,6 +200,7 @@ function act_dispatch(){
     global $license;
 
     //call template FIXME: all needed vars available?
+    $headers = array();
     $headers[] = 'Content-Type: text/html; charset=utf-8';
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 
@@ -221,6 +222,9 @@ function act_sendheaders($headers) {
  * Sanitize the action command
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array|string $act
+ * @return string
  */
 function act_clean($act){
     // check if the action was given as array key
@@ -245,6 +249,9 @@ function act_clean($act){
  * Add all allowed commands here.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array|string $act
+ * @return string
  */
 function act_validate($act) {
     global $conf;
@@ -284,10 +291,12 @@ function act_validate($act) {
  * Run permissionchecks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_permcheck($act){
     global $INFO;
-    global $conf;
 
     if(in_array($act,array('save','preview','edit','recover'))){
         if($INFO['exists']){
@@ -330,6 +339,9 @@ function act_permcheck($act){
  * Handle 'draftdel'
  *
  * Deletes the draft for the current page and user
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_draftdel($act){
     global $INFO;
@@ -342,6 +354,9 @@ function act_draftdel($act){
  * Saves a draft on preview
  *
  * @todo this currently duplicates code from ajax.php :-/
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_draftsave($act){
     global $INFO;
@@ -372,6 +387,9 @@ function act_draftsave($act){
  * returns a new action.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_save($act){
     global $ID;
@@ -394,7 +412,7 @@ function act_save($act){
         return 'conflict';
 
     //save it
-    saveWikiText($ID,con($PRE,$TEXT,$SUF,1),$SUM,$INPUT->bool('minor')); //use pretty mode for con
+    saveWikiText($ID,con($PRE,$TEXT,$SUF,true),$SUM,$INPUT->bool('minor')); //use pretty mode for con
     //unlock it
     unlock($ID);
 
@@ -410,6 +428,9 @@ function act_save($act){
  * Revert to a certain revision
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_revert($act){
     global $ID;
@@ -457,6 +478,9 @@ function act_revert($act){
  * Do a redirect after receiving post data
  *
  * Tries to add the section id as hash mark after section editing
+ *
+ * @param string $id page id
+ * @param string $preact action command before redirect
  */
 function act_redirect($id,$preact){
     global $PRE;
@@ -478,7 +502,7 @@ function act_redirect($id,$preact){
 /**
  * Execute the redirect
  *
- * @param array $opts id and fragment for the redirect
+ * @param array $opts id and fragment for the redirect and the preact
  */
 function act_redirect_execute($opts){
     $go = wl($opts['id'],'',true);
@@ -492,6 +516,9 @@ function act_redirect_execute($opts){
  * Handle 'login', 'logout'
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_auth($act){
     global $ID;
@@ -527,6 +554,9 @@ function act_auth($act){
  * Handle 'edit', 'preview', 'recover'
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_edit($act){
     global $ID;
@@ -591,6 +621,9 @@ function act_edit($act){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @param string $act action command
+ * @return string action command
  */
 function act_export($act){
     global $ID;
@@ -600,7 +633,6 @@ function act_export($act){
 
     $pre = '';
     $post = '';
-    $output = '';
     $headers = array();
 
     // search engines: never cache exported docs! (Google only currently)
@@ -644,7 +676,7 @@ function act_export($act){
             $output = p_wiki_xhtml($ID,$REV,false);
             break;
         default:
-            $output = p_cached_output(wikiFN($ID,$REV), $mode);
+            $output = p_cached_output(wikiFN($ID,$REV), $mode, $ID);
             $headers = p_get_metadata($ID,"format $mode");
             break;
     }
@@ -672,6 +704,8 @@ function act_export($act){
  * Handle sitemap delivery
  *
  * @author Michael Hamann <michael@content-space.de>
+ *
+ * @param string $act action command
  */
 function act_sitemap($act) {
     global $conf;
@@ -720,6 +754,10 @@ function act_sitemap($act) {
  * Throws exception on error.
  *
  * @author Adrian Lang <lang@cosmocode.de>
+ *
+ * @param string $act action command
+ * @return string action command
+ * @throws Exception if (un)subscribing fails
  */
 function act_subscription($act){
     global $lang;
@@ -779,6 +817,9 @@ function act_subscription($act){
  * default action for the event ACTION_HANDLE_SUBSCRIBE.
  *
  * @author Adrian Lang <lang@cosmocode.de>
+ *
+ * @param array &$params the parameters: target, style and action
+ * @throws Exception
  */
 function subscription_handle_post(&$params) {
     global $INFO;
