@@ -7,6 +7,7 @@
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
+ * @author Type-kun <workwork-1@yandex.ru>
  */
 $lang['server']                = 'Ваш PostgreSQL-сервер';
 $lang['port']                  = 'Порт вашего PostgreSQL-сервера';
@@ -34,5 +35,7 @@ $lang['updateUser']            = 'Выражение SQL, осуществляю
 $lang['UpdateLogin']           = 'Измените условие для обновления логина';
 $lang['UpdatePass']            = 'Измените условие для обновления пароля';
 $lang['UpdateEmail']           = 'Измените условие для обновления email';
+$lang['UpdateName']            = 'Условие для обновления полного имени пользователя';
+$lang['UpdateTarget']          = 'Выражение \'LIMIT\' для идентификации пользователя при обновлении';
 $lang['delUserGroup']          = 'Выражение SQL, осуществляющее удаление пользователя из указанной группы';
 $lang['getGroupID']            = 'Выражение SQL, обеспечивающее получение первичного ключа указанной группы';
