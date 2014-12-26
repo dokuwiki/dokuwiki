@@ -24,6 +24,7 @@
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
  * @author qinghao <qingxianhao@gmail.com>
  * @author Yuwei Sun <yuwei@hrz.tu-chemnitz.de>
+ * @author suneiko@hotmail.com <suneiko@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
