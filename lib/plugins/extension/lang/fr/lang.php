@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  */
 $lang['menu']                  = 'Gestionnaire d\'extension';
 $lang['tab_plugins']           = 'Greffons installés';
@@ -62,6 +63,7 @@ $lang['status_bundled']        = 'fourni';
 $lang['msg_enabled']           = 'Greffon %s activé';
 $lang['msg_disabled']          = 'Greffon %s désactivé';
 $lang['msg_delete_success']    = 'Extension désinstallée';
+$lang['msg_delete_failed']     = 'Echec de la désinstallation de l\'extension %s';
 $lang['msg_template_install_success'] = 'Thème %s installée avec succès';
 $lang['msg_template_update_success'] = 'Thème %s mis à jour avec succès';
 $lang['msg_plugin_install_success'] = 'Greffon %s installé avec succès';
