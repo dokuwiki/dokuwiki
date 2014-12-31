@@ -8,6 +8,7 @@
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Dominik Mahr <drache.mahr@gmx.de>
+ * @author Horstwilli <horstwilli@yahoo.com>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -66,6 +67,7 @@ $lang['status_bundled']        = 'gebündelt';
 $lang['msg_enabled']           = 'Plugin %s ist aktiviert';
 $lang['msg_disabled']          = 'Erweiterung %s ist deaktiviert';
 $lang['msg_delete_success']    = 'Erweiterung wurde entfernt';
+$lang['msg_delete_failed']     = 'Die Deinstallation der Erweiterung %en schlug fehl.';
 $lang['msg_template_install_success'] = 'Das Template %s wurde erfolgreich installiert';
 $lang['msg_template_update_success'] = 'Das Update des Templates %s war erfolgreich ';
 $lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installiert';
@@ -87,6 +89,8 @@ $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgesch�
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';
 $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
 $lang['git']                   = 'Diese Erweiterung wurde über git installiert und sollte daher nicht hier aktualisiert werden.';
+$lang['auth']                  = 'Dieses auth-Plugin wurde in der Konfiguration nicht berücksichtigt. Bitte sorgen Sie dafür, dass es deaktiviert ist. ';
 $lang['install_url']           = 'Von Webadresse (URL) installieren';
 $lang['install_upload']        = 'Erweiterung hochladen:';
 $lang['repo_error']            = 'Es konnte keine Verbindung zum Plugin-Verzeichnis hergestellt werden. Stellen sie sicher das der Server Verbindung mit www.dokuwiki.org aufnehmen darf und überprüfen sie ihre Proxy Einstellungen.';
+$lang['nossl']                 = 'Ihr PHP scheint nicht über SSL-Unterstützung zu verfügen. Viele DokuWiki-Erweiterungen werden nicht herunterzuladen sein. ';
