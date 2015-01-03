@@ -309,25 +309,30 @@ class Doku_Plugin_Controller {
      */
     protected function _getListByType($type, $enabled) {
         $master_list = $enabled ? array_keys(array_filter($this->tmp_plugins)) : array_keys(array_filter($this->tmp_plugins,array($this,'negate')));
-
         $plugins = array();
+        
         foreach ($master_list as $plugin) {
+        	
             $dir = $this->get_directory($plugin);
-
             if (@file_exists(DOKU_PLUGIN."$dir/$type.php")){
                 $plugins[] = $plugin;
-            } else {
-                if ($dp = @opendir(DOKU_PLUGIN."$dir/$type/")) {
+                continue;
+            }
+            
+            $dir2 = DOKU_PLUGIN."$dir/$type/";
+            if (is_dir($dir2)) {
+                if ($dp = opendir($dir2)) {
                     while (false !== ($component = readdir($dp))) {
                         if (substr($component,0,1) == '.' || strtolower(substr($component, -4)) != ".php") continue;
-                        if (is_file(DOKU_PLUGIN."$dir/$type/$component")) {
+                        if (is_file($dir2.$component)) {
                             $plugins[] = $plugin.'_'.substr($component, 0, -4);
                         }
                     }
                     closedir($dp);
                 }
             }
-        }
+            
+        }//foreach
 
         return $plugins;
     }
