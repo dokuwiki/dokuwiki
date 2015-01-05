@@ -17,6 +17,7 @@
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
  * @author Paweł Jan Czochański <czochanski@gmail.com>
  * @author Mati <mackosa@wp.pl>
+ * @author Maciej Helt <geraldziu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -294,6 +295,7 @@ $lang['i_modified']            = 'Ze względów bezpieczeństwa, ten skrypt dzia
 Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="http://dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload musi zostać wyłączone w pliku php.ini aby móc uruchomić DokuWiki.';
 $lang['i_permfail']            = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
 $lang['i_confexists']          = '<code>%s</code> już istnieje';
 $lang['i_writeerr']            = 'Nie można utworzyć <code>%s</code>. Sprawdź uprawnienia do katalogu lub pliku i stwórz plik ręcznie.';
