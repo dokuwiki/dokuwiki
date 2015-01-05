@@ -6,7 +6,7 @@
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  */
-$lang['menu']                  = 'Gestionnaire d\'extension';
+$lang['menu']                  = 'Gestionnaire d\'extensions';
 $lang['tab_plugins']           = 'Greffons installés';
 $lang['tab_templates']         = 'Thèmes installés';
 $lang['tab_search']            = 'Rechercher et installer';
@@ -62,7 +62,7 @@ $lang['status_template']       = 'thème';
 $lang['status_bundled']        = 'fourni';
 $lang['msg_enabled']           = 'Greffon %s activé';
 $lang['msg_disabled']          = 'Greffon %s désactivé';
-$lang['msg_delete_success']    = 'Extension désinstallée';
+$lang['msg_delete_success']    = 'Extension %s désinstallée.';
 $lang['msg_delete_failed']     = 'Echec de la désinstallation de l\'extension %s';
 $lang['msg_template_install_success'] = 'Thème %s installée avec succès';
 $lang['msg_template_update_success'] = 'Thème %s mis à jour avec succès';
@@ -85,6 +85,8 @@ $lang['noperms']               = 'Impossible d\'écrire dans le dossier des exte
 $lang['notplperms']            = 'Impossible d\'écrire dans le dossier des thèmes.';
 $lang['nopluginperms']         = 'Impossible d\'écrire dans le dossier des greffons.';
 $lang['git']                   = 'Cette extension a été installé via git, vous voudrez peut-être ne pas la mettre à jour ici.';
+$lang['auth']                  = 'Votre configuration n\'utilise pas ce greffon d\'authentification. Vous devriez songer à le désactiver.';
 $lang['install_url']           = 'Installez depuis l\'URL :';
 $lang['install_upload']        = 'Téléversez l\'extension :';
 $lang['repo_error']            = 'L\'entrepôt d\'extensions est injoignable. Veuillez vous assurer que le server web est autorisé à contacter www.dokuwiki.org et vérifier les réglages de proxy.';
+$lang['nossl']                 = 'Votre version de PHP semble ne pas prendre en charge SSL. Le téléchargement de nombreuses extensions va échouer.';
