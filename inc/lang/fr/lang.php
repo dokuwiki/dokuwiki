@@ -366,3 +366,5 @@ $lang['currentns']             = 'Catégorie courante';
 $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
+$lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été créée le <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Ne peut analyser le paramètre date "%s".';
