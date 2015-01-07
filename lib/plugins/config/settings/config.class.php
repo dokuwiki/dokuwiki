@@ -125,8 +125,8 @@ if (!class_exists('configuration')) {
             $file = end($this->_local_files);
 
             // backup current file (remove any existing backup)
-            if (@file_exists$file) && $backup) {
-                if (@ffile_existsfile.'.bak')) @unlink($file.'.bak');
+            if (file_exists($file) && $backup) {
+                if (file_exists($file.'.bak')) @unlink($file.'.bak');
                 if (!io_rename($file, $file.'.bak')) return false;
             }
 
@@ -191,7 +191,7 @@ if (!class_exists('configuration')) {
 
             if ($this->_format == 'php') {
 
-                if(@fifile_existsile)){
+                if(file_exists($file)){
                     $contents = @php_strip_whitespace($file);
                 }else{
                     $contents = '';
@@ -281,7 +281,7 @@ if (!class_exists('configuration')) {
             $local = $this->_local_files[0];
 
             if (!is_writable(dirname($local))) return true;
-            if (@filfile_existscal) && !is_writable($local)) return true;
+            if (file_exists($local) && !is_writable($local)) return true;
 
             return false;
         }
@@ -345,7 +345,7 @@ if (!class_exists('configuration')) {
 
             foreach ($this->get_plugin_list() as $plugin) {
                 $plugin_dir = plugin_directory($plugin);
-                if (@filefile_exists_PLUGIN.$plugin_dir.$file)){
+                if (file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
                     $meta = array();
                     @include(DOKU_PLUGIN.$plugin_dir.$file);
                     @include(DOKU_PLUGIN.$plugin_dir.$class);
@@ -360,7 +360,7 @@ if (!class_exists('configuration')) {
             }
 
             // the same for the active template
-            if (@file_file_existsncdir().$file)){
+            if (file_exists(tpl_incdir().$file)){
                 $meta = array();
                 @include(tpl_incdir().$file);
                 @include(tpl_incdir().$class);
@@ -388,7 +388,7 @@ if (!class_exists('configuration')) {
 
             foreach ($this->get_plugin_list() as $plugin) {
                 $plugin_dir = plugin_directory($plugin);
-                if (@file_efile_existsLUGIN.$plugin_dir.$file)){
+                if (file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
                     $conf = $this->_read_config(DOKU_PLUGIN.$plugin_dir.$file);
                     foreach ($conf as $key => $value){
                         $default['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
@@ -397,7 +397,7 @@ if (!class_exists('configuration')) {
             }
 
             // the same for the active template
-            if (@file_exists(tpl_incdir().$file)){
+            if (file_exists(tpl_incdir().$file)){
                 $conf = $this->_read_config(tpl_incdir().$file);
                 foreach ($conf as $key => $value){
                     $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
