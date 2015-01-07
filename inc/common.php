@@ -1807,17 +1807,6 @@ function send_redirect($url) {
     // always close the session
     session_write_close();
 
-    // work around IE bug
-    // http://www.ianhoar.com/2008/11/16/internet-explorer-6-and-redirected-anchor-links/
-    @list($url, $hash) = explode('#', $url);
-    if($hash) {
-        if(strpos($url, '?')) {
-            $url = $url.'&#'.$hash;
-        } else {
-            $url = $url.'?&#'.$hash;
-        }
-    }
-
     // check if running on IIS < 6 with CGI-PHP
     if($INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
         (strpos($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI') !== false) &&
