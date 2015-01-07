@@ -218,7 +218,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $date = $ditem['date'];
             } elseif ($ditem['media']) {
                 $date = @filemtime(mediaFN($id));
-            } elseif (@file_exists(wikiFN($id))) {
+            } elseif (file_exists(wikiFN($id))) {
                 $date = @filemtime(wikiFN($id));
             } elseif($meta['date']['modified']) {
                 $date = $meta['date']['modified'];

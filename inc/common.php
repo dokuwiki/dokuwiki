@@ -188,7 +188,7 @@ function pageinfo() {
 
     $info['locked']     = checklock($ID);
     $info['filepath']   = fullpath(wikiFN($ID));
-    $info['exists']     = @file_exists($info['filepath']);
+    $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
         //check if current revision was meant
@@ -202,7 +202,7 @@ function pageinfo() {
         } else {
             //really use old revision
             $info['filepath'] = fullpath(wikiFN($ID, $REV));
-            $info['exists']   = @file_exists($info['filepath']);
+            $info['exists']   = file_exists($info['filepath']);
         }
     }
     $info['rev'] = $REV;
@@ -256,7 +256,7 @@ function pageinfo() {
 
     // draft
     $draft = getCacheName($info['client'].$ID, '.draft');
-    if(@file_exists($draft)) {
+    if(file_exists($draft)) {
         if(@filemtime($draft) < @filemtime(wikiFN($ID))) {
             // remove stale draft
             @unlink($draft);
@@ -352,7 +352,7 @@ function breadcrumbs() {
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
     //we only save on show and existing wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || !@file_exists($file)) {
+    if($ACT != 'show' || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
@@ -853,7 +853,7 @@ function checklock($id) {
     $lock = wikiLockFN($id);
 
     //no lockfile
-    if(!@file_exists($lock)) return false;
+    if(!file_exists($lock)) return false;
 
     //lockfile expired
     if((time() - filemtime($lock)) > $conf['locktime']) {
@@ -907,7 +907,7 @@ function unlock($id) {
     global $INPUT;
 
     $lock = wikiLockFN($id);
-    if(@file_exists($lock)) {
+    if(file_exists($lock)) {
         @list($ip, $session) = explode("\n", io_readFile($lock));
         if($ip == $INPUT->server->str('REMOTE_USER') || $ip == clientIP() || $session == session_id()) {
             @unlink($lock);
@@ -1010,13 +1010,13 @@ function pageTemplate($id) {
             // if the before event did not set a template file, try to find one
             if(empty($data['tplfile'])) {
                 $path = dirname(wikiFN($id));
-                if(@file_exists($path.'/_template.txt')) {
+                if(file_exists($path.'/_template.txt')) {
                     $data['tplfile'] = $path.'/_template.txt';
                 } else {
                     // search upper namespaces for templates
                     $len = strlen(rtrim($conf['datadir'], '/'));
                     while(strlen($path) >= $len) {
-                        if(@file_exists($path.'/__template.txt')) {
+                        if(file_exists($path.'/__template.txt')) {
                             $data['tplfile'] = $path.'/__template.txt';
                             break;
                         }
@@ -1197,13 +1197,13 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $file        = wikiFN($id);
     $old         = @filemtime($file); // from page
     $wasRemoved  = (trim($text) == ''); // check for empty or whitespace only
-    $wasCreated  = !@file_exists($file);
+    $wasCreated  = !file_exists($file);
     $wasReverted = ($REV == true);
     $pagelog     = new PageChangeLog($id, 1024);
     $newRev      = false;
     $oldRev      = $pagelog->getRevisions(-1, 1); // from changelog
     $oldRev      = (int) (empty($oldRev) ? 0 : $oldRev[0]);
-    if(!@file_exists(wikiFN($id, $old)) && @file_exists($file) && $old >= $oldRev) {
+    if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
         // add old revision to the attic if missing
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
@@ -1285,7 +1285,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  */
 function saveOldRevision($id) {
     $oldf = wikiFN($id);
-    if(!@file_exists($oldf)) return '';
+    if(!file_exists($oldf)) return '';
     $date = filemtime($oldf);
     $newf = wikiFN($id, $date);
     io_writeWikiPage($newf, rawWiki($id), $id, $date);
@@ -1743,7 +1743,7 @@ function license_img($type) {
         $try[] = 'lib/images/license/'.$type.'/cc.png';
     }
     foreach($try as $src) {
-        if(@file_exists(DOKU_INC.$src)) return $src;
+        if(file_exists(DOKU_INC.$src)) return $src;
     }
     return '';
 }

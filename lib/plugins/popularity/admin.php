@@ -87,7 +87,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
 
             //If there was an error the last time we tried to autosubmit, warn the user
             if ( $this->helper->isAutoSubmitEnabled() ){
-                if ( @file_exists($this->helper->autosubmitErrorFile) ){
+                if ( file_exists($this->helper->autosubmitErrorFile) ){
                     echo $this->getLang('autosubmitError');
                     echo io_readFile( $this->helper->autosubmitErrorFile );
                 }

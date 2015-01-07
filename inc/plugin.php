@@ -33,7 +33,7 @@ class DokuWiki_Plugin {
     public function getInfo(){
         $parts = explode('_', get_class($this));
         $info = DOKU_PLUGIN . '/' . $parts[2] . '/plugin.info.txt';
-        if(@file_exists($info)) return confToHash($info);
+        if(file_exists($info)) return confToHash($info);
 
         msg(
             'getInfo() not implemented in ' . get_class($this) . ' and ' . $info . ' not found.<br />' .
@@ -112,9 +112,9 @@ class DokuWiki_Plugin {
         global $conf;
         $plugin = $this->getPluginName();
         $file = DOKU_CONF.'plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
-        if (!@file_exists($file)){
+        if (!file_exists($file)){
             $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
-            if(!@file_exists($file)){
+            if(!file_exists($file)){
                 //fall back to english
                 $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
             }
@@ -137,7 +137,7 @@ class DokuWiki_Plugin {
         // don't include once, in case several plugin components require the same language file
         @include($path . 'en/lang.php');
         foreach($config_cascade['lang']['plugin'] as $config_file) {
-            if(@file_exists($config_file . $this->getPluginName() . '/en/lang.php')) {
+            if(file_exists($config_file . $this->getPluginName() . '/en/lang.php')) {
                 include($config_file . $this->getPluginName() . '/en/lang.php');
             }
         }
@@ -145,7 +145,7 @@ class DokuWiki_Plugin {
         if($conf['lang'] != 'en') {
             @include($path . $conf['lang'] . '/lang.php');
             foreach($config_cascade['lang']['plugin'] as $config_file) {
-                if(@file_exists($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php')) {
+                if(file_exists($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php')) {
                     include($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php');
                 }
             }
@@ -207,7 +207,7 @@ class DokuWiki_Plugin {
         $path = DOKU_PLUGIN.$this->getPluginName().'/conf/';
         $conf = array();
 
-        if (@file_exists($path.'default.php')) {
+        if (file_exists($path.'default.php')) {
             include($path.'default.php');
         }
 

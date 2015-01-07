@@ -16,7 +16,7 @@ $config_cascade = array();
 
 // if available load a preload config file
 $preload = fullpath(dirname(__FILE__)).'/preload.php';
-if (@file_exists($preload)) include($preload);
+if (file_exists($preload)) include($preload);
 
 // define the include path
 if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
@@ -28,7 +28,7 @@ if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
 // check for error reporting override or set error reporting to sane values
-if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
+if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
@@ -65,7 +65,7 @@ $conf = array();
 foreach (array('default','local','protected') as $config_group) {
     if (empty($config_cascade['main'][$config_group])) continue;
     foreach ($config_cascade['main'][$config_group] as $config_file) {
-        if (@file_exists($config_file)) {
+        if (file_exists($config_file)) {
             include($config_file);
         }
     }
@@ -79,7 +79,7 @@ $license = array();
 foreach (array('default','local') as $config_group) {
     if (empty($config_cascade['license'][$config_group])) continue;
     foreach ($config_cascade['license'][$config_group] as $config_file) {
-        if(@file_exists($config_file)){
+        if(file_exists($config_file)){
             include($config_file);
         }
     }
@@ -272,7 +272,7 @@ function init_lang($langCode) {
     //load the language files
     require(DOKU_INC.'inc/lang/en/lang.php');
     foreach ($config_cascade['lang']['core'] as $config_file) {
-        if (@file_exists($config_file . 'en/lang.php')) {
+        if (file_exists($config_file . 'en/lang.php')) {
             include($config_file . 'en/lang.php');
         }
     }
@@ -282,7 +282,7 @@ function init_lang($langCode) {
             require(DOKU_INC."inc/lang/$langCode/lang.php");
         }
         foreach ($config_cascade['lang']['core'] as $config_file) {
-            if (@file_exists($config_file . "$langCode/lang.php")) {
+            if (file_exists($config_file . "$langCode/lang.php")) {
                 include($config_file . "$langCode/lang.php");
             }
         }
@@ -298,7 +298,7 @@ function init_files(){
     $files = array($conf['indexdir'].'/page.idx');
 
     foreach($files as $file){
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             $fh = @fopen($file,'a');
             if($fh){
                 fclose($fh);
@@ -312,7 +312,7 @@ function init_files(){
     # create title index (needs to have same length as page.idx)
     /*
     $file = $conf['indexdir'].'/title.idx';
-    if(!@file_exists($file)){
+    if(!file_exists($file)){
         $pages = file($conf['indexdir'].'/page.idx');
         $pages = count($pages);
         $fh = @fopen($file,'a');
@@ -339,9 +339,9 @@ function init_files(){
 function init_path($path){
     // check existence
     $p = fullpath($path);
-    if(!@file_exists($p)){
+    if(!file_exists($p)){
         $p = fullpath(DOKU_INC.$path);
-        if(!@file_exists($p)){
+        if(!file_exists($p)){
             return '';
         }
     }
@@ -352,7 +352,7 @@ function init_path($path){
     }
 
     // check accessability (execute bit) for directories
-    if(@is_dir($p) && !@file_exists("$p/.")){
+    if(@is_dir($p) && !file_exists("$p/.")){
         return '';
     }
 
@@ -593,7 +593,7 @@ function fullpath($path,$exists=false){
     $finalpath = $root.implode('/', $newpath);
 
     // check for existence when needed (except when unit testing)
-    if($exists && !defined('DOKU_UNITTEST') && !@file_exists($finalpath)) {
+    if($exists && !defined('DOKU_UNITTEST') && !file_exists($finalpath)) {
         return false;
     }
     return $finalpath;

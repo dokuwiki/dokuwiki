@@ -151,7 +151,7 @@ if (!class_exists('setting_im_convert')) {
             $value = is_null($this->_local) ? $this->_default : $this->_local;
             if ($value == $input) return false;
 
-            if ($input && !@file_exists($input)) {
+            if ($input && !file_exists($input)) {
                 $this->_error = true;
                 $this->_input = $input;
                 return false;

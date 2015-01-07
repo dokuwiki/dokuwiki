@@ -71,13 +71,13 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
     $ID   = $id;
 
     if($rev || $date_at){
-        if(@file_exists($file)){
+        if(file_exists($file)){
             $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
     }else{
-        if(@file_exists($file)){
+        if(file_exists($file)){
             $ret = p_cached_output($file,'xhtml',$id);
         }elseif($excuse){
             $ret = p_locale_xhtml('newpage');
@@ -156,7 +156,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
-    } else if (@file_exists($file)) {
+    } else if (file_exists($file)) {
         // no cache - do some work
         $ins = p_get_instructions(io_readWikiPage($file,$id));
         if ($cache->storeCache($ins)) {
@@ -248,7 +248,7 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
             if ($render & METADATA_RENDER_USING_SIMPLE_CACHE) {
                 $pagefn = wikiFN($id);
                 $metafn = metaFN($id, '.meta');
-                if (!@file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
+                if (!file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
                     $do_render = true;
                 }
             } elseif (!$cachefile->useCache()){
@@ -414,7 +414,7 @@ function p_read_metadata($id,$cache=false) {
     if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
 
     $file = metaFN($id, '.meta');
-    $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
+    $meta = file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
 
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;

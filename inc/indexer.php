@@ -1076,7 +1076,7 @@ class Doku_Indexer {
     protected function getIndex($idx, $suffix) {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-        if (!@file_exists($fn)) return array();
+        if (!file_exists($fn)) return array();
         return file($fn, FILE_IGNORE_NEW_LINES);
     }
 
@@ -1118,7 +1118,7 @@ class Doku_Indexer {
     protected function getIndexKey($idx, $suffix, $id) {
         global $conf;
         $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-        if (!@file_exists($fn)) return '';
+        if (!file_exists($fn)) return '';
         $fh = @fopen($fn, 'r');
         if (!$fh) return '';
         $ln = -1;
@@ -1228,7 +1228,7 @@ class Doku_Indexer {
             // testing if index files exist only
             $path = $conf['indexdir']."/i";
             foreach ($filter as $key => $value) {
-                if (@file_exists($path.$key.'.idx'))
+                if (file_exists($path.$key.'.idx'))
                     $idx[] = $key;
             }
         } else {
@@ -1339,7 +1339,7 @@ function & idx_get_stopwords() {
     if (is_null($stopwords)) {
         global $conf;
         $swfile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
-        if(@file_exists($swfile)){
+        if(file_exists($swfile)){
             $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
         }else{
             $stopwords = array();
@@ -1364,7 +1364,7 @@ function idx_addPage($page, $verbose=false, $force=false) {
     $idxtag = metaFN($page,'.indexed');
     // check if page was deleted but is still in the index
     if (!page_exists($page)) {
-        if (!@file_exists($idxtag)) {
+        if (!file_exists($idxtag)) {
             if ($verbose) print("Indexer: $page does not exist, ignoring".DOKU_LF);
             return false;
         }
@@ -1379,7 +1379,7 @@ function idx_addPage($page, $verbose=false, $force=false) {
     }
 
     // check if indexing needed
-    if(!$force && @file_exists($idxtag)){
+    if(!$force && file_exists($idxtag)){
         if(trim(io_readFile($idxtag)) == idx_get_version()){
             $last = @filemtime($idxtag);
             if($last > @filemtime(wikiFN($page))){
@@ -1392,7 +1392,7 @@ function idx_addPage($page, $verbose=false, $force=false) {
     $indexenabled = p_get_metadata($page, 'internal index', METADATA_RENDER_UNLIMITED);
     if ($indexenabled === false) {
         $result = false;
-        if (@file_exists($idxtag)) {
+        if (file_exists($idxtag)) {
             $Indexer = idx_get_indexer();
             $result = $Indexer->deletePage($page);
             if ($result === "locked") {
@@ -1494,7 +1494,7 @@ function idx_tokenizer($string, $wc=false) {
 function idx_getIndex($idx, $suffix) {
     global $conf;
     $fn = $conf['indexdir'].'/'.$idx.$suffix.'.idx';
-    if (!@file_exists($fn)) return array();
+    if (!file_exists($fn)) return array();
     return file($fn);
 }
 
@@ -1515,7 +1515,7 @@ function idx_listIndexLengths() {
         $docache = false;
     } else {
         clearstatcache();
-        if (@file_exists($conf['indexdir'].'/lengths.idx')
+        if (file_exists($conf['indexdir'].'/lengths.idx')
         && (time() < @filemtime($conf['indexdir'].'/lengths.idx') + $conf['readdircache'])) {
             if (($lengths = @file($conf['indexdir'].'/lengths.idx', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) !== false) {
                 $idx = array();
@@ -1572,7 +1572,7 @@ function idx_indexLengths($filter) {
         // testing if index files exist only
         $path = $conf['indexdir']."/i";
         foreach ($filter as $key => $value) {
-            if (@file_exists($path.$key.'.idx'))
+            if (file_exists($path.$key.'.idx'))
                 $idx[] = $key;
         }
     } else {

@@ -365,11 +365,11 @@ function css_interwiki(){
     $iwlinks = getInterwiki();
     foreach(array_keys($iwlinks) as $iw){
         $class = preg_replace('/[^_\-a-z0-9]+/i','_',$iw);
-        if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
+        if(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
             echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
             echo '}';
-        }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
+        }elseif(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
             echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
             echo '}';
@@ -451,7 +451,7 @@ class DokuCssFile {
      * @return  string               the CSS/Less contents of the file
      */
     public function load($location='') {
-        if (!@file_exists($this->filepath)) return '';
+        if (!file_exists($this->filepath)) return '';
 
         $css = io_readFile($this->filepath);
         if (!$location) return $css;

@@ -501,7 +501,7 @@ function html_revisions($first=0, $media_id = false){
     $form->addElement(form_makeOpenTag('ul'));
 
     if (!$media_id) $exists = $INFO['exists'];
-    else $exists = @file_exists(mediaFN($id));
+    else $exists = file_exists(mediaFN($id));
 
     $display_name = (!$media_id && useHeading('navigation')) ? hsc(p_get_first_heading($id)) : $id;
     if (!$display_name) $display_name = $id;
@@ -568,7 +568,7 @@ function html_revisions($first=0, $media_id = false){
         $date = dformat($rev);
         $info = $changelog->getRevisionInfo($rev);
         if($media_id) {
-            $exists = @file_exists(mediaFN($id, $rev));
+            $exists = file_exists(mediaFN($id, $rev));
         } else {
             $exists = page_exists($id, $rev);
         }
@@ -765,7 +765,7 @@ function html_recent($first=0, $show_changes='both'){
         $href = '';
 
         if (!empty($recent['media'])) {
-            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && @file_exists(mediaFN($recent['id'])));
+            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && file_exists(mediaFN($recent['id'])));
             if ($diff) {
                 $href = media_managerURL(array('tab_details' => 'history',
                     'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');

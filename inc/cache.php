@@ -203,7 +203,7 @@ class cache_parser extends cache {
      */
     public function _useCache() {
 
-        if (!@file_exists($this->file)) return false;                   // source exists?
+        if (!file_exists($this->file)) return false;                   // source exists?
         return parent::_useCache();
     }
 

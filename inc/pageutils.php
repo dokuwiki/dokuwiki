@@ -263,7 +263,7 @@ function page_exists($id,$rev='',$clean=true, $date_at=false) {
         if($pagelog_rev !== false)
             $rev = $pagelog_rev;
     }
-    return @file_exists(wikiFN($id,$rev,$clean));
+    return file_exists(wikiFN($id,$rev,$clean));
 }
 
 /**
@@ -299,9 +299,9 @@ function wikiFN($raw_id,$rev='',$clean=true){
         $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
         if($conf['compression']){
             //test for extensions here, we want to read both compressions
-            if (@file_exists($fn . '.gz')){
+            if (file_exists($fn . '.gz')){
                 $fn .= '.gz';
-            }else if(@file_exists($fn . '.bz2')){
+            }else if(file_exists($fn . '.bz2')){
                 $fn .= '.bz2';
             }else{
                 //file doesnt exist yet, so we take the configured extension
@@ -418,9 +418,9 @@ function mediaFN($id, $rev=''){
 function localeFN($id,$ext='txt'){
     global $conf;
     $file = DOKU_CONF.'lang/'.$conf['lang'].'/'.$id.'.'.$ext;
-    if(!@file_exists($file)){
+    if(!file_exists($file)){
         $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             //fall back to english
             $file = DOKU_INC.'inc/lang/en/'.$id.'.'.$ext;
         }
@@ -504,7 +504,7 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
     }
     
     $file   = mediaFN($page,$rev);
-    $exists = @file_exists($file);
+    $exists = file_exists($file);
 }
 
 /**
@@ -565,7 +565,7 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
         }
     }else{
         //check alternative plural/nonplural form
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             if( $conf['autoplural'] ){
                 if(substr($page,-1) == 's'){
                     $try = substr($page,0,-1);

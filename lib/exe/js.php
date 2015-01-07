@@ -160,7 +160,7 @@ function js_out(){
  * @param string $file filename path to file
  */
 function js_load($file){
-    if(!@file_exists($file)) return;
+    if(!file_exists($file)) return;
     static $loaded = array();
 
     $data = io_readFile($file);
@@ -179,7 +179,7 @@ function js_load($file){
 
         if($ifile{0} != '/') $ifile = dirname($file).'/'.$ifile;
 
-        if(@file_exists($ifile)){
+        if(file_exists($ifile)){
             $idata = io_readFile($ifile);
         }else{
             $idata = '';
@@ -221,10 +221,10 @@ function js_pluginstrings() {
     $plugins = plugin_list();
     foreach ($plugins as $p){
         if (isset($lang)) unset($lang);
-        if (@file_exists(DOKU_PLUGIN."$p/lang/en/lang.php")) {
+        if (file_exists(DOKU_PLUGIN."$p/lang/en/lang.php")) {
             include DOKU_PLUGIN."$p/lang/en/lang.php";
         }
-        if (isset($conf['lang']) && $conf['lang']!='en' && @file_exists(DOKU_PLUGIN."$p/lang/".$conf['lang']."/lang.php")) {
+        if (isset($conf['lang']) && $conf['lang']!='en' && file_exists(DOKU_PLUGIN."$p/lang/".$conf['lang']."/lang.php")) {
             include DOKU_PLUGIN."$p/lang/".$conf['lang']."/lang.php";
         }
         if (isset($lang['js'])) {
@@ -245,10 +245,10 @@ function js_pluginstrings() {
 function js_templatestrings() {
     global $conf;
     $templatestrings = array();
-    if (@file_exists(tpl_incdir()."lang/en/lang.php")) {
+    if (file_exists(tpl_incdir()."lang/en/lang.php")) {
         include tpl_incdir()."lang/en/lang.php";
     }
-    if (isset($conf['lang']) && $conf['lang']!='en' && @file_exists(tpl_incdir()."lang/".$conf['lang']."/lang.php")) {
+    if (isset($conf['lang']) && $conf['lang']!='en' && file_exists(tpl_incdir()."lang/".$conf['lang']."/lang.php")) {
         include tpl_incdir()."lang/".$conf['lang']."/lang.php";
     }
     if (isset($lang['js'])) {

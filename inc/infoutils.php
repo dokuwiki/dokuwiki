@@ -58,7 +58,7 @@ function checkUpdateMessages(){
 function getVersionData(){
     $version = array();
     //import version string
-    if(@file_exists(DOKU_INC.'VERSION')){
+    if(file_exists(DOKU_INC.'VERSION')){
         //official release
         $version['date'] = trim(io_readfile(DOKU_INC.'VERSION'));
         $version['type'] = 'Release';
@@ -141,20 +141,20 @@ function check(){
     if(is_writable($conf['changelog'])){
         msg('Changelog is writable',1);
     }else{
-        if (@file_exists($conf['changelog'])) {
+        if (file_exists($conf['changelog'])) {
             msg('Changelog is not writable',-1);
         }
     }
 
-    if (isset($conf['changelog_old']) && @file_exists($conf['changelog_old'])) {
+    if (isset($conf['changelog_old']) && file_exists($conf['changelog_old'])) {
         msg('Old changelog exists', 0);
     }
 
-    if (@file_exists($conf['changelog'].'_failed')) {
+    if (file_exists($conf['changelog'].'_failed')) {
         msg('Importing old changelog failed', -1);
-    } else if (@file_exists($conf['changelog'].'_importing')) {
+    } else if (file_exists($conf['changelog'].'_importing')) {
         msg('Importing old changelog now.', 0);
-    } else if (@file_exists($conf['changelog'].'_import_ok')) {
+    } else if (file_exists($conf['changelog'].'_import_ok')) {
         msg('Old changelog imported', 1);
         if (!plugin_isdisabled('importoldchangelog')) {
             msg('Importoldchangelog plugin not disabled after import', -1);

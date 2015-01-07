@@ -119,7 +119,7 @@ function load_autoload($name){
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
-        if(@file_exists($plg)){
+        if(file_exists($plg)){
             include_once DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         }
         return;

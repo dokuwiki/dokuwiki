@@ -707,7 +707,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $plugin     = null;
 
             foreach($plugin_types as $type) {
-                if(@file_exists($path.$type.'.php')) {
+                if(file_exists($path.$type.'.php')) {
                     $plugin = plugin_load($type, $this->base);
                     if ($plugin) break;
                 }
@@ -907,12 +907,12 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
             // check to make sure we aren't overwriting anything
             $target = $target_base_dir.$item['base'];
-            if(!$overwrite && @file_exists($target)) {
+            if(!$overwrite && file_exists($target)) {
                 // TODO remember our settings, ask the user to confirm overwrite
                 continue;
             }
 
-            $action = @file_exists($target) ? 'update' : 'install';
+            $action = file_exists($target) ? 'update' : 'install';
 
             // copy action
             if($this->dircopy($item['tmp'], $target)) {
@@ -1117,7 +1117,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             return $ok;
 
         } else {
-            $exists = @file_exists($dst);
+            $exists = file_exists($dst);
 
             if(!@copy($src, $dst)) return false;
             if(!$exists && !empty($conf['fperm'])) chmod($dst, $conf['fperm']);

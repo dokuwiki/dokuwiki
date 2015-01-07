@@ -351,7 +351,7 @@ function _handleRecent($line,$ns,$flags,&$seen){
     // check existance
     if($flags & RECENTS_SKIP_DELETED){
         $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
-        if(!@file_exists($fn)) return false;
+        if(!file_exists($fn)) return false;
     }
 
     return $recent;
@@ -498,14 +498,14 @@ abstract class ChangeLog {
 
         if($first < 0) {
             $first = 0;
-        } else if(@file_exists($this->getFilename())) {
+        } else if(file_exists($this->getFilename())) {
             // skip current revision if the page exists
             $first = max($first + 1, 0);
         }
 
         $file = $this->getChangelogFilename();
 
-        if(!@file_exists($file)) {
+        if(!file_exists($file)) {
             return $revs;
         }
         if(filesize($file) < $this->chunk_size || $this->chunk_size == 0) {
@@ -735,7 +735,7 @@ abstract class ChangeLog {
     protected function readloglines($rev) {
         $file = $this->getChangelogFilename();
 
-        if(!@file_exists($file)) {
+        if(!file_exists($file)) {
             return false;
         }
 

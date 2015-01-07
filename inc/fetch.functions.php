@@ -163,7 +163,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     }
 
     //check file existance
-    if(!@file_exists($file)) {
+    if(!file_exists($file)) {
         return array(404, 'Not Found');
     }
 

@@ -70,7 +70,7 @@ function media_metasave($id,$auth,$data){
     }
 
     $old = @filemtime($src);
-    if(!@file_exists(mediaFN($id, $old)) && @file_exists($src)) {
+    if(!file_exists(mediaFN($id, $old)) && file_exists($src)) {
         // add old revision to the attic
         media_saveOldRevision($id);
     }
@@ -141,7 +141,7 @@ function media_metaform($id,$auth){
     if(is_null($fields)){
         $config_files = getConfigFiles('mediameta');
         foreach ($config_files as $config_file) {
-            if(@file_exists($config_file)) include($config_file);
+            if(file_exists($config_file)) include($config_file);
         }
     }
 
@@ -241,14 +241,14 @@ function media_delete($id,$auth){
     $data['id']   = $id;
     $data['name'] = utf8_basename($file);
     $data['path'] = $file;
-    $data['size'] = (@file_exists($file)) ? filesize($file) : 0;
+    $data['size'] = (file_exists($file)) ? filesize($file) : 0;
 
     $data['unl'] = false;
     $data['del'] = false;
     $evt = new Doku_Event('MEDIA_DELETE_FILE',$data);
     if ($evt->advise_before()) {
         $old = @filemtime($file);
-        if(!@file_exists(mediaFN($id, $old)) && @file_exists($file)) {
+        if(!file_exists(mediaFN($id, $old)) && file_exists($file)) {
             // add old revision to the attic
             media_saveOldRevision($id);
         }
@@ -431,7 +431,7 @@ function media_save($file, $id, $ow, $auth, $move) {
     }
 
     //check for overwrite
-    $overwrite = @file_exists($fn);
+    $overwrite = file_exists($fn);
     $auth_ow = (($conf['mediarevisions']) ? AUTH_UPLOAD : AUTH_DELETE);
     if($overwrite && (!$ow || $auth < $auth_ow)) {
         return array($lang['uploadexist'], 0);
@@ -497,7 +497,7 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     global $REV;
 
     $old = @filemtime($fn);
-    if(!@file_exists(mediaFN($id, $old)) && @file_exists($fn)) {
+    if(!file_exists(mediaFN($id, $old)) && file_exists($fn)) {
         // add old revision to the attic if missing
         media_saveOldRevision($id);
     }
@@ -541,7 +541,7 @@ function media_saveOldRevision($id){
     global $conf, $lang;
 
     $oldf = mediaFN($id);
-    if(!@file_exists($oldf)) return '';
+    if(!file_exists($oldf)) return '';
     $date = filemtime($oldf);
     if (!$conf['mediarevisions']) return $date;
 
@@ -549,7 +549,7 @@ function media_saveOldRevision($id){
     if (!$medialog->getRevisionInfo($date)) {
         // there was an external edit,
         // there is no log entry for current version of file
-        if (!@file_exists(mediaMetaFN($id,'.changes'))) {
+        if (!file_exists(mediaMetaFN($id,'.changes'))) {
             addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
         } else {
             addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_EDIT);
@@ -721,7 +721,7 @@ function media_tabs_details($image, $selected_tab = ''){
                           'caption' => $lang['media_viewtab']);
 
     list(, $mime) = mimetype($image);
-    if ($mime == 'image/jpeg' && @file_exists(mediaFN($image))) {
+    if ($mime == 'image/jpeg' && file_exists(mediaFN($image))) {
         $tabs['edit'] = array('href'    => media_managerURL(array('tab_details' => 'edit'), '&'),
                               'caption' => $lang['media_edittab']);
     }
@@ -1008,7 +1008,7 @@ function media_preview_buttons($image, $auth, $rev='') {
 
     echo '<ul class="actions">'.NL;
 
-    if($auth >= AUTH_DELETE && !$rev && @file_exists(mediaFN($image))){
+    if($auth >= AUTH_DELETE && !$rev && file_exists(mediaFN($image))){
 
         // delete button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_delete',
@@ -1031,7 +1031,7 @@ function media_preview_buttons($image, $auth, $rev='') {
         echo '</li>'.NL;
     }
 
-    if($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && @file_exists(mediaFN($image, $rev))){
+    if($auth >= AUTH_UPLOAD && $rev && $conf['mediarevisions'] && file_exists(mediaFN($image, $rev))){
 
         // restore button
         $form = new Doku_Form(array('id' => 'mediamanager__btn_restore',
@@ -1103,7 +1103,7 @@ function media_file_tags($meta) {
     if(is_null($fields)){
         $config_files = getConfigFiles('mediameta');
         foreach ($config_files as $config_file) {
-            if(@file_exists($config_file)) include($config_file);
+            if(file_exists($config_file)) include($config_file);
         }
     }
 
@@ -1580,7 +1580,7 @@ function media_printfile($item,$auth,$jump,$display_namespace=false){
 function media_printicon($filename, $size=''){
     list($ext) = mimetype(mediaFN($filename),false);
 
-    if (@file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$ext.'.png')) {
+    if (file_exists(DOKU_INC.'lib/images/fileicons/'.$size.'/'.$ext.'.png')) {
         $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/'.$ext.'.png';
     } else {
         $icon = DOKU_BASE.'lib/images/fileicons/'.$size.'/file.png';
@@ -2165,7 +2165,7 @@ function media_image_download($url,$file){
     $data = $http->get($url);
     if(!$data) return false;
 
-    $fileexists = @file_exists($file);
+    $fileexists = file_exists($file);
     $fp = @fopen($file,"w");
     if(!$fp) return false;
     fwrite($fp,$data);

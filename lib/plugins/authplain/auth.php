@@ -325,7 +325,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
 
         $this->users = array();
 
-        if(!@file_exists($config_cascade['plainauth.users']['default'])) return;
+        if(!file_exists($config_cascade['plainauth.users']['default'])) return;
 
         $lines = file($config_cascade['plainauth.users']['default']);
         foreach($lines as $line) {

@@ -282,7 +282,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
                 if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
-                if (@file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
+                if (file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
                     $lang = array();
                     @include(DOKU_PLUGIN.$plugin.$enlangfile);
                     if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
@@ -303,7 +303,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         // the same for the active template
         $tpl = $conf['template'];
 
-        if (@file_exists(tpl_incdir().$enlangfile)){
+        if (file_exists(tpl_incdir().$enlangfile)){
             $lang = array();
             @include(tpl_incdir().$enlangfile);
             if ($conf['lang'] != 'en') @include(tpl_incdir().$langfile);

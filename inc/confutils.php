@@ -206,7 +206,7 @@ function retrieveConfig($type,$fn,$params=null) {
     foreach (array('default','local','protected') as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         foreach ($config_cascade[$type][$config_group] as $file) {
-            if (@file_exists($file)) {
+            if (file_exists($file)) {
                 $config = call_user_func_array($fn,array_merge(array($file),$params));
                 $combined = array_merge($combined, $config);
             }

@@ -166,7 +166,7 @@ class Subscription {
         // Handle files.
         $result = array();
         foreach($files as $target => $file) {
-            if(!@file_exists($file)) continue;
+            if(!file_exists($file)) continue;
 
             $lines = file($file);
             foreach($lines as $line) {

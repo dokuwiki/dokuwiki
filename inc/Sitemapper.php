@@ -33,7 +33,7 @@ class Sitemapper {
 
         $sitemap = Sitemapper::getFilePath();
 
-        if(@file_exists($sitemap)){
+        if(file_exists($sitemap)){
             if(!is_writable($sitemap)) return false;
         }else{
             if(!is_writable(dirname($sitemap))) return false;

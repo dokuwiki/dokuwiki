@@ -177,7 +177,7 @@ class Doku_Plugin_Controller {
                     // disabling mechanism was changed back very soon again
                     // to keep everything simple we just skip the plugin completely
                     continue;
-                } elseif (@file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
+                } elseif (file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
                     /**
                      * treat this as a default disabled plugin(over-rideable by the plugin manager)
                      * @deprecated 2011-09-10 (usage of disabled files)
@@ -247,9 +247,9 @@ class Doku_Plugin_Controller {
                 $out .= "\$plugins['$plugin'] = $value;\n";
             }
             // backup current file (remove any existing backup)
-            if (@file_exists($file)) {
+            if (file_exists($file)) {
                 $backup = $file.'.bak';
-                if (@file_exists($backup)) @unlink($backup);
+                if (file_exists($backup)) @unlink($backup);
                 if (!@copy($file,$backup)) return false;
                 if (!empty($conf['fperm'])) chmod($backup, $conf['fperm']);
             }
@@ -314,7 +314,7 @@ class Doku_Plugin_Controller {
         foreach ($master_list as $plugin) {
             $dir = $this->get_directory($plugin);
 
-            if (@file_exists(DOKU_PLUGIN."$dir/$type.php")){
+            if (file_exists(DOKU_PLUGIN."$dir/$type.php")){
                 $plugins[] = $plugin;
             } else {
                 if ($dp = @opendir(DOKU_PLUGIN."$dir/$type/")) {

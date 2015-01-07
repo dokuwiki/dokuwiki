@@ -105,7 +105,7 @@ function _io_readWikiPage_action($data) {
  */
 function io_readFile($file,$clean=true){
     $ret = '';
-    if(@file_exists($file)){
+    if(file_exists($file)){
         if(substr($file,-3) == '.gz'){
             $ret = join('',gzfile($file));
         }else if(substr($file,-4) == '.bz2'){
@@ -204,7 +204,7 @@ function io_saveFile($file,$content,$append=false){
     global $conf;
     $mode = ($append) ? 'ab' : 'wb';
 
-    $fileexists = @file_exists($file);
+    $fileexists = file_exists($file);
     io_makeFileDir($file);
     io_lock($file);
     if(substr($file,-3) == '.gz'){
@@ -258,7 +258,7 @@ function io_saveFile($file,$content,$append=false){
  * @return bool true on success
  */
 function io_deleteFromFile($file,$badline,$regex=false){
-    if (!@file_exists($file)) return true;
+    if (!file_exists($file)) return true;
 
     io_lock($file);
 
@@ -385,7 +385,7 @@ function io_createNamespace($id, $ns_type='pages') {
     $ns_stack = explode(':', $id);
     $ns = $id;
     $tmp = dirname( $file = call_user_func($types[$ns_type], $ns) );
-    while (!@is_dir($tmp) && !(@file_exists($tmp) && !is_dir($tmp))) {
+    while (!@is_dir($tmp) && !(file_exists($tmp) && !is_dir($tmp))) {
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);
         if (strlen($ns)==0) { break; }
@@ -429,7 +429,7 @@ function io_makeFileDir($file){
 function io_mkdir_p($target){
     global $conf;
     if (@is_dir($target)||empty($target)) return 1; // best case check first
-    if (@file_exists($target) && !is_dir($target)) return 0;
+    if (file_exists($target) && !is_dir($target)) return 0;
     //recursion
     if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
         if($conf['safemodehack']){
@@ -606,7 +606,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
         $file = $file.$name;
     }
 
-    $fileexists = @file_exists($file);
+    $fileexists = file_exists($file);
     $fp = @fopen($file,"w");
     if(!$fp) return false;
     fwrite($fp,$data);

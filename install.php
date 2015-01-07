@@ -110,7 +110,7 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div style="float: right; width: 34%;">
         <?php
-            if(@file_exists(DOKU_INC.'inc/lang/'.$LC.'/install.html')){
+            if(file_exists(DOKU_INC.'inc/lang/'.$LC.'/install.html')){
                 include(DOKU_INC.'inc/lang/'.$LC.'/install.html');
             }else{
                 print "<div lang=\"en\" dir=\"ltr\">\n";
@@ -497,7 +497,7 @@ function check_configs(){
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
-        if (@file_exists($file) && filesize($file)) {
+        if (file_exists($file) && filesize($file)) {
             $file    = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}/', $file);
             $error[] = sprintf($lang['i_confexists'],$file);
             $ok      = false;
@@ -535,7 +535,7 @@ function check_permissions(){
 
     $ok = true;
     foreach($dirs as $dir){
-        if(!@file_exists("$dir/.") || !@is_writable($dir)){
+        if(!file_exists("$dir/.") || !is_writable($dir)){
             $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'],$dir);
             $ok      = false;
@@ -604,7 +604,7 @@ function langsel(){
     $langs = array();
     while (($file = readdir($dh)) !== false) {
         if(preg_match('/^[\._]/',$file)) continue;
-        if(is_dir($dir.'/'.$file) && @file_exists($dir.'/'.$file.'/lang.php')){
+        if(is_dir($dir.'/'.$file) && file_exists($dir.'/'.$file.'/lang.php')){
             $langs[] = $file;
         }
     }

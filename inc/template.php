@@ -1124,7 +1124,7 @@ function tpl_get_img_meta() {
 
     $config_files = getConfigFiles('mediameta');
     foreach ($config_files as $config_file) {
-        if(@file_exists($config_file)) {
+        if(file_exists($config_file)) {
             include($config_file);
         }
     }
@@ -1297,7 +1297,7 @@ function tpl_loadConfig() {
     $file = tpl_incdir().'/conf/default.php';
     $conf = array();
 
-    if(!@file_exists($file)) return false;
+    if(!file_exists($file)) return false;
 
     // load default config file
     include($file);
@@ -1327,7 +1327,7 @@ function tpl_getLang($id) {
         // don't include once
         @include($path . 'en/lang.php');
         foreach($config_cascade['lang']['template'] as $config_file) {
-            if(@file_exists($config_file . $conf['template'] . '/en/lang.php')) {
+            if(file_exists($config_file . $conf['template'] . '/en/lang.php')) {
                 include($config_file . $conf['template'] . '/en/lang.php');
             }
         }
@@ -1335,7 +1335,7 @@ function tpl_getLang($id) {
         if($conf['lang'] != 'en') {
             @include($path . $conf['lang'] . '/lang.php');
             foreach($config_cascade['lang']['template'] as $config_file) {
-                if(@file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
+                if(file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
                     include($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php');
                 }
             }
@@ -1365,9 +1365,9 @@ function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
     global $conf;
     $file = DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
-    if (!@file_exists($file)){
+    if (!file_exists($file)){
         $file = $path.$conf['lang'].'/'.$id.'.txt';
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             //fall back to english
             $file = $path.'en/'.$id.'.txt';
         }

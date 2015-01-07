@@ -78,7 +78,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
     function isAutoSubmitEnabled(){
-        return @file_exists($this->autosubmitFile);
+        return file_exists($this->autosubmitFile);
     }
 
     /**
