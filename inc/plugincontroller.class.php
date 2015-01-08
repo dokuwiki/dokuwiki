@@ -282,7 +282,7 @@ class Doku_Plugin_Controller {
 
     /**
      * Build the list of plugins and cascade
-     * 
+     *
      */
     protected function loadConfig() {
         global $config_cascade;
@@ -309,25 +309,30 @@ class Doku_Plugin_Controller {
      */
     protected function _getListByType($type, $enabled) {
         $master_list = $enabled ? array_keys(array_filter($this->tmp_plugins)) : array_keys(array_filter($this->tmp_plugins,array($this,'negate')));
-
         $plugins = array();
-        foreach ($master_list as $plugin) {
-            $dir = $this->get_directory($plugin);
 
-            if (file_exists(DOKU_PLUGIN."$dir/$type.php")){
+        foreach ($master_list as $plugin) {
+
+            $basedir = $this->get_directory($plugin);
+            if (file_exists(DOKU_PLUGIN."$basedir/$type.php")){
                 $plugins[] = $plugin;
-            } else {
-                if ($dp = @opendir(DOKU_PLUGIN."$dir/$type/")) {
+                continue;
+            }
+
+            $typedir = DOKU_PLUGIN."$basedir/$type/";
+            if (is_dir($typedir)) {
+                if ($dp = opendir($typedir)) {
                     while (false !== ($component = readdir($dp))) {
                         if (substr($component,0,1) == '.' || strtolower(substr($component, -4)) != ".php") continue;
-                        if (is_file(DOKU_PLUGIN."$dir/$type/$component")) {
+                        if (is_file($typedir.$component)) {
                             $plugins[] = $plugin.'_'.substr($component, 0, -4);
                         }
                     }
                     closedir($dp);
                 }
             }
-        }
+
+        }//foreach
 
         return $plugins;
     }
