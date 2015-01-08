@@ -24,6 +24,7 @@
  * @author gicalle <gicalle@hotmail.com>
  * @author Rene <wllywlnt@yahoo.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
+ * @author Mijndert <mijndert@mijndertstuij.nl>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -85,7 +86,7 @@ $lang['badpassconfirm']        = 'Sorry, het wachtwoord was onjuist';
 $lang['minoredit']             = 'Kleine wijziging';
 $lang['draftdate']             = 'Concept automatisch opgeslagen op';
 $lang['nosecedit']             = 'De pagina is tussentijds veranderd, sectie-informatie was verouderd, volledige pagina geladen.';
-$lang['searchcreatepage']      = "Niks gevonden? Maak een nieuwe pagina met als naam je zoekopdracht. Klik hiervoor op ''Maak deze pagina aan''.";
+$lang['searchcreatepage']      = 'Niks gevonden? Maak een nieuwe pagina met als naam je zoekopdracht. Klik hiervoor op \'\'Maak deze pagina aan\'\'.';
 $lang['regmissing']            = 'Vul alle velden in';
 $lang['reguexists']            = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess']            = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';
@@ -302,6 +303,7 @@ $lang['i_problems']            = 'De installer vond problemen, hieronder aangege
 $lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
+$lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
 $lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. Pas de permissie-instellingen van deze directory aan.';
 $lang['i_confexists']          = '<code>%s</code> bestaat reeds';
 $lang['i_writeerr']            = 'Niet mogelijk om <code>%s</code> aan te maken. Controleer de directory/bestandspermissies en maak het bestand handmatig aan.';

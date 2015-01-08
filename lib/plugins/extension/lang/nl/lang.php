@@ -6,6 +6,7 @@
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
+ * @author Mijndert <mijndert@mijndertstuij.nl>
  */
 $lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -64,6 +65,7 @@ $lang['status_bundled']        = 'Gebundeld';
 $lang['msg_enabled']           = 'Plugin %s ingeschakeld';
 $lang['msg_disabled']          = 'Plugin %s uitgeschakeld';
 $lang['msg_delete_success']    = 'Uitbreiding %s gedeinstalleerd';
+$lang['msg_delete_failed']     = 'Het deïnstalleren van de extensie %s is mislukt.';
 $lang['msg_template_install_success'] = 'Template %s werd succesvol geïnstalleerd';
 $lang['msg_template_update_success'] = 'Template %s werd succesvol geüpdatet';
 $lang['msg_plugin_install_success'] = 'Plugin %s werd succesvol geïnstalleerd';
