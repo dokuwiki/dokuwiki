@@ -526,6 +526,7 @@ class Doku_Handler {
         $p['author']  = (preg_match('/\b(by|author)/',$params));
         $p['date']    = (preg_match('/\b(date)/',$params));
         $p['details'] = (preg_match('/\b(desc|detail)/',$params));
+        $p['nosort']  = (preg_match('/\b(nosort)\b/',$params));
 
         if (preg_match('/\b(\d+)([dhm])\b/',$params,$match)) {
             $period = array('d' => 86400, 'h' => 3600, 'm' => 60);

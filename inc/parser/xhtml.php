@@ -1178,6 +1178,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             error_reporting($elvl);
         }
 
+        if($params['nosort']) $feed->enable_order_by_date(false);
+
         //decide on start and end
         if($params['reverse']) {
             $mod   = -1;
