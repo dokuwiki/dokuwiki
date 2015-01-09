@@ -481,9 +481,12 @@ echo '</tr></table>';
 | author     | show item authors names |
 | date       | show item dates |
 | description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
+| nosort     | do not sort the items in the feed |
 | //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 
 The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+
+By default, SimplePie if all of the items in the feed contain dates, SimplePie will sort the items in the feed so that the newest are displayed first. You can reverse this with the ''reverse'' parameter, or disable it entirely with ''nosort''.
 
 **Example:**
 
