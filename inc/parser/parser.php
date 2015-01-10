@@ -61,6 +61,9 @@ class Doku_Parser {
 
     var $connected = false;
 
+    /**
+     * @param Doku_Parser_Mode_base $BaseMode
+     */
     function addBaseMode(& $BaseMode) {
         $this->modes['base'] =& $BaseMode;
         if ( !$this->Lexer ) {
@@ -139,6 +142,7 @@ interface Doku_Parser_Mode_Interface {
 
     /**
      * Called before any calls to connectTo
+     * @return void
      */
     function preConnect();
 
@@ -146,11 +150,13 @@ interface Doku_Parser_Mode_Interface {
      * Connects the mode
      *
      * @param string $mode
+     * @return void
      */
     function connectTo($mode);
 
     /**
      * Called after all calls to connectTo
+     * @return void
      */
     function postConnect();
 
@@ -407,6 +413,9 @@ class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
             ),
         );
 
+    /**
+     * @param string $type
+     */
     function Doku_Parser_Mode_formatting($type) {
         global $PARSER_MODES;
 

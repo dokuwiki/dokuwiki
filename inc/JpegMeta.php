@@ -1106,6 +1106,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param string $outputName
+     */
     function _writeJPEG($outputName) {
         $this->_parseAll();
 
@@ -1238,6 +1242,12 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $marker
+     * @param integer $length
+     * @param integer $origLength
+     */
     function _writeJPEGMarker($marker, $length, &$data, $origLength) {
         if ($length <= 0) {
             return false;
@@ -1565,6 +1575,7 @@ class JpegMeta {
      * Parses XMP nodes by recursion
      *
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
+     * @param integer $count
      */
     function _parseXmpNode($values, &$i, &$meta, $count) {
         if ($values[$i]['type'] == 'close') return;
@@ -1668,6 +1679,12 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $base
+     * @param boolean $isBigEndian
+     * @param string $mode
+     */
     function _readIFD($data, $base, $offset, $isBigEndian, $mode) {
         $EXIFTags = $this->_exifTagNames($mode);
 
@@ -1923,6 +1940,12 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $offsetBase
+     * @param boolean $isBigEndian
+     * @param boolean $hasNext
+     */
     function _writeIFD(&$data, $pos, $offsetBase, &$entries, $isBigEndian, $hasNext) {
         $tiffData = null;
         $tiffDataOffsetPos = -1;
@@ -1979,6 +2002,11 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param boolean $isBigEndian
+     * @param string $mode
+     */
     function & _getIFDEntries($isBigEndian, $mode) {
         $EXIFNames = $this->_exifTagNames($mode);
         $EXIFTags = $this->_exifNameTags($mode);
@@ -2487,6 +2515,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _write8BIM(&$data, $pos, $type, $header, &$value) {
         $signature = "8BIM";
 
@@ -2547,6 +2579,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _writeIPTCEntry(&$data, $pos, $type, &$value) {
         $pos = $this->_putShort($data, $pos, 0x1C02);
         $pos = $this->_putByte($data, $pos, $type);
@@ -2907,11 +2943,19 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _getByte(&$data, $pos) {
         return ord($data{$pos});
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _putByte(&$data, $pos, $val) {
         $val = intval($val);
 
@@ -2947,6 +2991,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _getLong(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
             return (ord($data{$pos}) << 24)
@@ -2962,6 +3010,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _putLong(&$data, $pos, $val, $bigEndian = true) {
         $val = intval($val);
 

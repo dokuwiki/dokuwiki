@@ -21,6 +21,9 @@ class Doku_Handler {
         $this->CallWriter = new Doku_Handler_CallWriter($this);
     }
 
+    /**
+     * @param string $handler
+     */
     function _addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
         $this->CallWriter->writeCall($call);
@@ -133,6 +136,9 @@ class Doku_Handler {
         return true;
     }
 
+    /**
+     * @param string $name
+     */
     function _nestingTag($match, $state, $pos, $name) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
