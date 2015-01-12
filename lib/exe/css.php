@@ -50,6 +50,7 @@ function css_out(){
 
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
+    $cache->_event = 'CSS_CACHE_USE';
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
@@ -94,8 +95,8 @@ function css_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    http_cached($cache->cache,
-                $cache->useCache(array('files' => $cache_files)));
+    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    http_cached($cache->cache, $cache_ok);
 
     // start output buffering
     ob_start();
