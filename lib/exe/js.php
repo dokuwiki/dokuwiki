@@ -77,6 +77,9 @@ function js_out(){
             $files[] = $userscript;
         }
     }
+    
+    // Let plugins decide to either put more scripts here or to remove some
+	trigger_event('JS_SCRIPT_LIST', $files);
 
     $cache_files = array_merge($files, getConfigFiles('main'));
     $cache_files[] = __FILE__;
