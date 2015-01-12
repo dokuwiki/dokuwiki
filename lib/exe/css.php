@@ -127,20 +127,17 @@ function css_out(){
             $css_content .= "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             $css_content .= css_loadfile($file, $location);
         }
-        switch ($mediatype) {
-            case 'screen':
-                print NL.'@media screen { /* START screen styles */'.NL.$css_content.NL.'} /* /@media END screen styles */'.NL;
-                break;
-            case 'print':
-                print NL.'@media print { /* START print styles */'.NL.$css_content.NL.'} /* /@media END print styles */'.NL;
-                break;
-            case 'all':
-            case 'feed':
-            default:
-                print NL.'/* START rest styles */ '.NL.$css_content.NL.'/* END rest styles */'.NL;
-                break;
-        }
+        
+        $encapsulateData = array(
+	        'mediatype'             => $mediatype,
+	        'content'               => $css_content,
+	        'encapsulate'           => in_array($mediatype, array('screen', 'print')),
+	        'encapsulationPrefix'   => '@media '.$mediatype
+        );
+        
+        trigger_event('CSS_ENCAPSULATE_WITH_MEDIA', $encapsulateData, 'css_encapsulateWithMedia');
     }
+
     // end output buffering and get contents
     $css = ob_get_contents();
     ob_end_clean();
@@ -350,6 +347,25 @@ function css_fixreplacementurls($replacements, $location) {
         $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
     }
     return $replacements;
+}
+
+/**
+ * Print the styles
+ *
+ * This method is being called from the event CSS_ENCAPSULATE_WITH_MEDIA
+ * It will be called for every mediatype that is registered
+ * Plugins can decide whether a style should be encapsulated or not.
+ * They could even decide to not print a mediatype style at all
+ * by preventing the default action (this method)
+ */
+function css_encapsulateWithMedia($cssData){
+	
+	print NL;
+	if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
+	print '/* START '.$cssData['mediatype'].' styles */'.NL.$cssData['content'].NL;
+	if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
+	else print '/*';
+	print ' END '.$cssData['mediatype'].' styles */'NL;
 }
 
 /**
