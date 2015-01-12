@@ -277,7 +277,9 @@ function css_styleini($tpl) {
 
         // stylesheets
         if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
+            foreach(explode(',', $mode) as $innerMode) {
+                $stylesheets[$innerMode][$incbase.$file] = $webbase;
+            }
         }
 
         // replacements
