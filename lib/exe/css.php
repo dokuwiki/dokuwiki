@@ -92,7 +92,15 @@ function css_out(){
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
     }
-
+    
+    // Let plugins decide to either put more styles here or to remove some
+    // The event allows to prevent printing the default DokuWiki styles.
+	$CSSEvt = new Doku_Event('CSS_INCLUDED_STYLES', $files);
+	
+	// Remember the state: should the default style be printed or not?
+	// This might be superceeded by the useCache event
+	$shouldCarryOutDefault = $CSSEvt->advise_before();
+	
     // check cache age & handle conditional request
     // This may exit if a cache can be used
     $cache_ok = $cache->useCache(array('files' => $cache_files));
@@ -101,16 +109,16 @@ function css_out(){
     // start output buffering
     ob_start();
 
+	// Now print the default styles if not prevented.
+	if ( $shouldCarryOutDefault ) {
+		css_defaultstyles();
+	}
+
+	// Finish the Event
+	$CSSEvt->advise_after();
+
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
-
-        // print the default classes for interwiki links and file downloads
-        if ($mediatype == 'screen') {
-            print '@media screen {';
-            css_interwiki();
-            css_filetypes();
-            print '}';
-        }
 
         // load files
         $css_content = '';
@@ -342,6 +350,22 @@ function css_fixreplacementurls($replacements, $location) {
         $replacements[$key] = preg_replace('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#','\\1'.$location,$value);
     }
     return $replacements;
+}
+
+/**
+ * Prints the @media encapsulated default styles of DokuWiki
+ *
+ * This function is being called by the CSS_FILE_LIST event
+ * which is triggered before printing any CSS styles. The default
+ * action of the event, and therefore the call of this function
+ * can be prevented.
+ */
+function css_defaultstyles(){
+	// print the default classes for interwiki links and file downloads
+    print '@media screen {';
+    css_interwiki();
+    css_filetypes();
+    print '}';
 }
 
 /**
