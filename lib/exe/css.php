@@ -365,7 +365,7 @@ function css_encapsulateWithMedia($cssData){
 	print '/* START '.$cssData['mediatype'].' styles */'.NL.$cssData['content'].NL;
 	if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
 	else print '/*';
-	print ' END '.$cssData['mediatype'].' styles */'NL;
+	print ' END '.$cssData['mediatype'].' styles */'.NL;
 }
 
 /**
