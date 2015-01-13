@@ -63,39 +63,44 @@ function css_out(){
 
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
-    $files = array();
+    $media_files = array();
     foreach($mediatypes as $mediatype) {
-        $files[$mediatype] = array();
+        $files = array();
         // load core styles
-        $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+        $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
 
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
-            $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
+            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
         }
         // load plugin styles
-        $files[$mediatype] = array_merge($files[$mediatype], css_pluginstyles($mediatype));
+        $files = array_merge($files, css_pluginstyles($mediatype));
         // load template styles
         if (isset($styleini['stylesheets'][$mediatype])) {
-            $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
+            $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
         if(!empty($config_cascade['userstyle'][$mediatype])) {
             foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
-                $files[$mediatype][$userstyle] = DOKU_BASE;
+                $files[$userstyle] = DOKU_BASE;
             }
         }
 
-        $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
+        // Let plugins decide to either put more styles here or to remove some
+        $media_files[$mediatype] = css_filewrapper($mediatype, $files);
+    	$CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
+
+        // Make it preventable.
+    	if ( $CSSEvt->advise_before() ) {
+            $cache_files = array_merge($cache_files, array_keys($media_files[$mediatype]['files']));
+    	} else {
+        	// unset if prevented. Nothing will be printed for this mediatype.
+        	unset($media_files[$mediatype]);
+    	}
+    	
+    	// finish event.
+    	$CSSEvt->advise_after();
     }
-    
-    // Let plugins decide to either put more styles here or to remove some
-    // The event allows to prevent printing the default DokuWiki styles.
-	$CSSEvt = new Doku_Event('CSS_INCLUDED_STYLES', $files);
-	
-	// Remember the state: should the default style be printed or not?
-	// This might be superceeded by the useCache event
-	$shouldCarryOutDefault = $CSSEvt->advise_before();
 	
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type.md5(serialize($cache_files)),'.css');
@@ -108,34 +113,38 @@ function css_out(){
 
     // start output buffering
     ob_start();
-
-	// Now print the default styles if not prevented.
-	if ( $shouldCarryOutDefault ) {
-		css_defaultstyles();
-	}
-
-	// Finish the Event
-	$CSSEvt->advise_after();
+    
+    // Fire CSS_STYLES_INCLUDED for one last time to let the
+    // plugins decide whether to include the DW default styles.
+    // This can be done by preventing the Default.
+    trigger_event('CSS_STYLES_INCLUDED', css_filewrapper('DW_DEFAULT'), 'css_defaultstyles');
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
 
+        // Check if there is a wrapper set for this type.
+        if ( !isset($media_files[$mediatype]) ) {
+            continue;
+        }
+
+        $cssData = $media_files[$mediatype];
+        
+        // Print the styles.
+    	print NL;
+    	if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
+    	print '/* START '.$cssData['mediatype'].' styles */'.NL;
+    
         // load files
-        $css_content = '';
-        foreach($files[$mediatype] as $file => $location){
+        foreach($cssData['files'] as $file => $location){
             $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
-            $css_content .= "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
-            $css_content .= css_loadfile($file, $location);
+            print "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
+            print css_loadfile($file, $location);
         }
         
-        $encapsulateData = array(
-	        'mediatype'             => $mediatype,
-	        'content'               => $css_content,
-	        'encapsulate'           => in_array($mediatype, array('screen', 'print')),
-	        'encapsulationPrefix'   => '@media '.$mediatype
-        );
-        
-        trigger_event('CSS_ENCAPSULATE_WITH_MEDIA', $encapsulateData, 'css_encapsulateWithMedia');
+    	print NL;
+    	if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
+    	else print '/*';
+    	print ' END '.$cssData['mediatype'].' styles */'.NL;
     }
 
     // end output buffering and get contents
@@ -350,31 +359,27 @@ function css_fixreplacementurls($replacements, $location) {
 }
 
 /**
- * Print the styles
+ * Wrapper for the files, content and mediatype for the event CSS_STYLES_INCLUDED
  *
- * This method is being called from the event CSS_ENCAPSULATE_WITH_MEDIA
- * It will be called for every mediatype that is registered
- * Plugins can decide whether a style should be encapsulated or not.
- * They could even decide to not print a mediatype style at all
- * by preventing the default action (this method)
+ * @param string $mediatype type ofthe current media files/content set
+ * @param array $files set of files that define the current mediatype
+ * @return array
  */
-function css_encapsulateWithMedia($cssData){
-	
-	print NL;
-	if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
-	print '/* START '.$cssData['mediatype'].' styles */'.NL.$cssData['content'].NL;
-	if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
-	else print '/*';
-	print ' END '.$cssData['mediatype'].' styles */'.NL;
+function css_filewrapper($mediatype, $files=array()){
+    return array(
+            'files'                 => $files,
+	        'mediatype'             => $mediatype,
+	        'encapsulate'           => in_array($mediatype, array('screen', 'print')),
+	        'encapsulationPrefix'   => '@media '.$mediatype
+        );
 }
 
 /**
  * Prints the @media encapsulated default styles of DokuWiki
  *
- * This function is being called by the CSS_FILE_LIST event
- * which is triggered before printing any CSS styles. The default
- * action of the event, and therefore the call of this function
- * can be prevented.
+ * This function is being called by a CSS_STYLES_INCLUDED event
+ * The event can be distinguished by the mediatype which is:
+ *   DW_DEFAULT
  */
 function css_defaultstyles(){
 	// print the default classes for interwiki links and file downloads
