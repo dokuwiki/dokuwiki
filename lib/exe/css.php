@@ -117,7 +117,8 @@ function css_out(){
     // Fire CSS_STYLES_INCLUDED for one last time to let the
     // plugins decide whether to include the DW default styles.
     // This can be done by preventing the Default.
-    trigger_event('CSS_STYLES_INCLUDED', css_filewrapper('DW_DEFAULT'), 'css_defaultstyles');
+    $media_files['DW_DEFAULT'] = css_filewrapper('DW_DEFAULT');
+    trigger_event('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
