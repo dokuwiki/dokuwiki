@@ -492,7 +492,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
             }
 
-            if ($extension->isEnabled() && in_array('Auth', $extension->getTypes()) && $conf['auth'] != $extension->getID()) {
+            if ($extension->isEnabled() && in_array('Auth', $extension->getTypes()) && $conf['authtype'] == $extension->getID()) {
                 $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
             }
 
