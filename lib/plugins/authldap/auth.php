@@ -516,13 +516,13 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                         }
                     }
                     // needs version 3
-                    if($this->getConf('referrals')) {
+                    if($this->getConf('referrals') > -1) {
                         if(!@ldap_set_option(
                             $this->con, LDAP_OPT_REFERRALS,
                             $this->getConf('referrals')
                         )
                         ) {
-                            msg('Setting LDAP referrals to off failed', -1);
+                            msg('Setting LDAP referrals failed', -1);
                             $this->_debug('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                         }
                     }
