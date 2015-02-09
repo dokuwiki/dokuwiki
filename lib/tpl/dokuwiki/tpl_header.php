@@ -85,7 +85,7 @@ if (!defined('DOKU_INC')) die();
         </div>
     <?php endif ?>
 
-    <?php html_msgarea() ?>
+
 
     <hr class="a11y" />
 </div></div><!-- /header -->
