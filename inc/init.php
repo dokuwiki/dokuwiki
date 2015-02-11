@@ -535,7 +535,7 @@ function nice_die($msg){
 </body>
 </html>
 EOT;
-    exit;
+    exit(1);
 }
 
 /**
