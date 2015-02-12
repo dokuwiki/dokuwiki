@@ -41,12 +41,12 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         echo '</div>';
 
         $pluginlist = $plugin_controller->getList('', true);
-        sort($pluginlist);
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
         $list->start_form();
+        $pluginlist = $list->sortDisplayName($pluginlist);
         foreach($pluginlist as $name) {
             $extension->setExtension($name);
             $list->add_row($extension, $extension->getID() == $this->infoFor);
@@ -66,13 +66,13 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         // FIXME do we have a real way?
         $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
         $tpllist = array_map('basename', $tpllist);
-        sort($tpllist);
 
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
         /* @var helper_plugin_extension_list $list */
         $list = $this->loadHelper('extension_list');
         $list->start_form();
+        $tpllist = $list->sortDisplayName($tpllist);
         foreach($tpllist as $name) {
             $extension->setExtension("template:$name");
             $list->add_row($extension, $extension->getID() == $this->infoFor);
