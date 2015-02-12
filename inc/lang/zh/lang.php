@@ -360,3 +360,5 @@ $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
 $lang['plainhtml']             = '纯HTML';
 $lang['wikimarkup']            = 'Wiki Markup 语言';
+$lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a href="%s">%s</a>。';
+$lang['unable_to_parse_date']  = '无法解析参数 "%s"。';
