@@ -562,5 +562,24 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $status[] = $extension->isTemplate() ? $this->getLang('status_template') : $this->getLang('status_plugin');
         return join(', ', $status);
     }
+    
+    /**
+     * Sort a Plugin-Array by DisplayName
+     *
+     * @param array $array The Plugin-Array
+     * @return array The sorted Plugin-Array
+     */
+	 function sortDisplayName(array $array) {
+		$extension = $this->loadHelper('extension_extension');
+		$sortedArray = array();
+		
+	    foreach($array as $name) {
+            $extension->setExtension($name);
+			$sortedArray[strtoupper($extension->getDisplayName())] = $name;
+        }
+		
+		ksort($sortedArray);
+		return $sortedArray;
+	 }
 
 }
