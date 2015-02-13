@@ -37,6 +37,7 @@
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
  * @author pokesakura <pokesakura@gmail.com>
+ * @author Álvaro Iradier <airadier@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -98,7 +99,7 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = "Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  ''Crea esta página''.";
+$lang['searchcreatepage']      = 'Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  \'\'Crea esta página\'\'.';
 $lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
 $lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
 $lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';
@@ -369,3 +370,4 @@ $lang['currentns']             = 'Espacio de nombres actual';
 $lang['searchresult']          = 'Resultado de la búsqueda';
 $lang['plainhtml']             = 'HTML sencillo';
 $lang['wikimarkup']            = 'Etiquetado Wiki';
+$lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue creada en <a href="%s">%s</a>.';
