@@ -1,0 +1,1 @@
+A DokuWiki rendszerben telepített modulok az alábbiak. Engedélyezheted, letilthatod vagy teljesen le is törölheted ezeket. A modulokhoz tartozó frissítések is itt láthatók, viszont frissítés előtt mindenképp olvasd el az utasításokat a modul dokumentációjában is!

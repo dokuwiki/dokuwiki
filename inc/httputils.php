@@ -15,6 +15,7 @@ define('HTTP_CHUNK_SIZE',16*1024);
  *
  * @author   Simon Willison <swillison@gmail.com>
  * @link     http://simonwillison.net/2003/Apr/23/conditionalGet/
+ *
  * @param    int $timestamp lastmodified time of the cache file
  * @returns  void or exits with previously header() commands executed
  */
@@ -64,12 +65,14 @@ function http_conditionalRequest($timestamp){
  * Let the webserver send the given file via x-sendfile method
  *
  * @author Chris Smith <chris@jalakai.co.uk>
- * @returns  void or exits with previously header() commands executed
+ *
+ * @param string $file absolute path of file to send
+ * @returns  void or exits with previous header() commands executed
  */
 function http_sendfile($file) {
     global $conf;
 
-    //use x-sendfile header to pass the delivery to compatible webservers
+    //use x-sendfile header to pass the delivery to compatible web servers
     if($conf['xsendfile'] == 1){
         header("X-LIGHTTPD-send-file: $file");
         ob_end_clean();
@@ -79,12 +82,12 @@ function http_sendfile($file) {
         ob_end_clean();
         exit;
     }elseif($conf['xsendfile'] == 3){
+        // FS#2388 nginx just needs the relative path.
+        $file = DOKU_REL.substr($file, strlen(fullpath(DOKU_INC)) + 1);
         header("X-Accel-Redirect: $file");
         ob_end_clean();
         exit;
     }
-
-    return false;
 }
 
 /**
@@ -92,7 +95,7 @@ function http_sendfile($file) {
  *
  * This function exits the running script
  *
- * @param ressource $fh - file handle for an already open file
+ * @param resource $fh - file handle for an already open file
  * @param int $size     - size of the whole file
  * @param int $mime     - MIME type of the file
  *
@@ -189,6 +192,9 @@ function http_rangeRequest($fh,$size,$mime){
  * (samepath/samefilename.sameext.gz) created after the uncompressed file
  *
  * @author Chris Smith <chris.eureka@jalakai.co.uk>
+ *
+ * @param string $uncompressed_file
+ * @return bool
  */
 function http_gzip_valid($uncompressed_file) {
     $gzip = $uncompressed_file.'.gz';
@@ -204,7 +210,10 @@ function http_gzip_valid($uncompressed_file) {
  *
  * This function handles output of cacheable resource files. It ses the needed
  * HTTP headers. If a useable cache is present, it is passed to the web server
- * and the scrpt is terminated.
+ * and the script is terminated.
+ *
+ * @param string $cache cache file name
+ * @param bool   $cache_ok    if cache can be used
  */
 function http_cached($cache, $cache_ok) {
     global $conf;
@@ -223,7 +232,8 @@ function http_cached($cache, $cache_ok) {
             header('Content-Encoding: gzip');
             readfile($cache.".gz");
         } else {
-            if (!http_sendfile($cache)) readfile($cache);
+            http_sendfile($cache);
+            readfile($cache);
         }
         exit;
     }
@@ -233,6 +243,9 @@ function http_cached($cache, $cache_ok) {
 
 /**
  * Cache content and print it
+ *
+ * @param string $file file name
+ * @param string $content
  */
 function http_cached_finish($file, $content) {
     global $conf;

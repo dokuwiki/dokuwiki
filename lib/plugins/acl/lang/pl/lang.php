@@ -16,8 +16,8 @@
  * @author Aoi Karasu <aoikarasu@gmail.com>
  */
 $lang['admin_acl']             = 'Zarządzanie uprawnieniami';
-$lang['acl_group']             = 'Grupa';
-$lang['acl_user']              = 'Użytkownik';
+$lang['acl_group']             = 'Grupa:';
+$lang['acl_user']              = 'Użytkownik:';
 $lang['acl_perms']             = 'Uprawnienia użytkownika';
 $lang['page']                  = 'Strona';
 $lang['namespace']             = 'Katalog';

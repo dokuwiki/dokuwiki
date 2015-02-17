@@ -26,8 +26,8 @@
  * @author Mercè López mercelz@gmail.com
  */
 $lang['admin_acl']             = 'Administración de lista de control de acceso';
-$lang['acl_group']             = 'Grupo';
-$lang['acl_user']              = 'Usuario';
+$lang['acl_group']             = 'Grupo:';
+$lang['acl_user']              = 'Usuario:';
 $lang['acl_perms']             = 'Permiso para';
 $lang['page']                  = 'Página';
 $lang['namespace']             = 'Espacio de nombres';

@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Romanian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>

@@ -1,3 +1,4 @@
 ====== Autorisation refusée ======
 
-Désolé, vous n'avez pas les droits pour continuer. Peut-être avez-vous oublié de vous identifier ?
+Désolé, vous n'avez pas suffisamment d'autorisations pour poursuivre votre demande.
+

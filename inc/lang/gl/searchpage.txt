@@ -1,5 +1,5 @@
 ====== Procura ======
 
-Podes atopar os resultados da túa procura a continuación. Se non atopaches o que estabas a procurar, podes crear ou editar a páxina co nome relacionado coa túa procura empregando o botón axeitado.
+Podes atopar os resultados da túa procura a continuación. @CREATEPAGEINFO@
 
 ===== Resultados =====

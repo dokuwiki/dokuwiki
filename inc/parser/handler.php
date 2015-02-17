@@ -12,6 +12,7 @@ class Doku_Handler {
 
     var $status = array(
         'section' => false,
+        'doublequote' => 0,
     );
 
     var $rewriteBlocks = true;
@@ -20,6 +21,9 @@ class Doku_Handler {
         $this->CallWriter = new Doku_Handler_CallWriter($this);
     }
 
+    /**
+     * @param string $handler
+     */
     function _addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
         $this->CallWriter->writeCall($call);
@@ -70,6 +74,7 @@ class Doku_Handler {
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
+        /** @var DokuWiki_Syntax_Plugin $plugin */
         $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
@@ -131,6 +136,9 @@ class Doku_Handler {
         return true;
     }
 
+    /**
+     * @param string $name
+     */
     function _nestingTag($match, $state, $pos, $name) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
@@ -401,11 +409,17 @@ class Doku_Handler {
 
     function doublequoteopening($match, $state, $pos) {
         $this->_addCall('doublequoteopening',array(), $pos);
+        $this->status['doublequote']++;
         return true;
     }
 
     function doublequoteclosing($match, $state, $pos) {
-        $this->_addCall('doublequoteclosing',array(), $pos);
+        if ($this->status['doublequote'] <= 0) {
+            $this->doublequoteopening($match, $state, $pos);
+        } else {
+            $this->_addCall('doublequoteclosing',array(), $pos);
+            $this->status['doublequote'] = max(0, --$this->status['doublequote']);
+        }
         return true;
     }
 
@@ -518,6 +532,7 @@ class Doku_Handler {
         $p['author']  = (preg_match('/\b(by|author)/',$params));
         $p['date']    = (preg_match('/\b(date)/',$params));
         $p['details'] = (preg_match('/\b(desc|detail)/',$params));
+        $p['nosort']  = (preg_match('/\b(nosort)\b/',$params));
 
         if (preg_match('/\b(\d+)([dhm])\b/',$params,$match)) {
             $period = array('d' => 86400, 'h' => 3600, 'm' => 60);
@@ -704,6 +719,9 @@ class Doku_Handler_CallWriter {
 
     var $Handler;
 
+    /**
+     * @param Doku_Handler $Handler
+     */
     function Doku_Handler_CallWriter(& $Handler) {
         $this->Handler = & $Handler;
     }
@@ -740,7 +758,7 @@ class Doku_Handler_Nest {
     /**
      * constructor
      *
-     * @param  object     $CallWriter     the renderers current call writer
+     * @param  Doku_Handler_CallWriter $CallWriter     the renderers current call writer
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
@@ -798,6 +816,8 @@ class Doku_Handler_List {
     var $listCalls = array();
     var $listStack = array();
 
+    const NODE = 1;
+
     function Doku_Handler_List(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
     }
@@ -849,7 +869,8 @@ class Doku_Handler_List {
         $depth = $this->interpretSyntax($call[1][0], $listType);
 
         $this->initialDepth = $depth;
-        $this->listStack[] = array($listType, $depth);
+        //                   array(list type, current depth, index of current listitem_open)
+        $this->listStack[] = array($listType, $depth, 1);
 
         $this->listCalls[] = array('list'.$listType.'_open',array(),$call[2]);
         $this->listCalls[] = array('listitem_open',array(1),$call[2]);
@@ -874,6 +895,7 @@ class Doku_Handler_List {
     function listOpen($call) {
         $depth = $this->interpretSyntax($call[1][0], $listType);
         $end = end($this->listStack);
+        $key = key($this->listStack);
 
         // Not allowed to be shallower than initialDepth
         if ( $depth < $this->initialDepth ) {
@@ -890,6 +912,9 @@ class Doku_Handler_List {
                 $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
                 $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
+                // new list item, update list stack's index into current listitem_open
+                $this->listStack[$key][2] = count($this->listCalls) - 2;
+
             // Switched list type...
             } else {
 
@@ -901,7 +926,7 @@ class Doku_Handler_List {
                 $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
                 array_pop($this->listStack);
-                $this->listStack[] = array($listType, $depth);
+                $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
             }
 
         //------------------------------------------------------------------------
@@ -913,7 +938,10 @@ class Doku_Handler_List {
             $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
             $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
-            $this->listStack[] = array($listType, $depth);
+            // set the node/leaf state of this item's parent listitem_open to NODE
+            $this->listCalls[$this->listStack[$key][2]][1][1] = self::NODE;
+
+            $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
 
         //------------------------------------------------------------------------
         // Getting shallower ( $depth < $end[1] )
@@ -927,6 +955,7 @@ class Doku_Handler_List {
 
             while (1) {
                 $end = end($this->listStack);
+                $key = key($this->listStack);
 
                 if ( $end[1] <= $depth ) {
 
@@ -939,6 +968,9 @@ class Doku_Handler_List {
                         $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
                         $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
+                        // new list item, update list stack's index into current listitem_open
+                        $this->listStack[$key][2] = count($this->listCalls) - 2;
+
                     } else {
                         // Switching list type...
                         $this->listCalls[] = array('list'.$end[0].'_close', array(), $call[2]);
@@ -947,7 +979,7 @@ class Doku_Handler_List {
                         $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
                         array_pop($this->listStack);
-                        $this->listStack[] = array($listType, $depth);
+                        $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
                     }
 
                     break;
@@ -1149,6 +1181,9 @@ class Doku_Handler_Table {
     var $currentCols = 0;
     var $firstCell = false;
     var $lastCellType = 'tablecell';
+    var $inTableHead = true;
+    var $currentRow = array('tableheader' => 0, 'tablecell' => 0);
+    var $countTableHeadRows = 0;
 
     function Doku_Handler_Table(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
@@ -1216,14 +1251,23 @@ class Doku_Handler_Table {
         $this->firstCell = true;
         $this->lastCellType = 'tablecell';
         $this->maxRows++;
+        if ($this->inTableHead) {
+            $this->currentRow = array('tablecell' => 0, 'tableheader' => 0);
+        }
     }
 
     function tableRowClose($call) {
+        if ($this->inTableHead && ($this->inTableHead = $this->isTableHeadRow())) {
+            $this->countTableHeadRows++;
+        }
         // Strip off final cell opening and anything after it
         while ( $discard = array_pop($this->tableCalls ) ) {
 
             if ( $discard[0] == 'tablecell_open' || $discard[0] == 'tableheader_open') {
                 break;
+            }
+            if (!empty($this->currentRow[$discard[0]])) {
+                $this->currentRow[$discard[0]]--;
             }
         }
         $this->tableCalls[] = array('tablerow_close', array(), $call[2]);
@@ -1233,7 +1277,20 @@ class Doku_Handler_Table {
         }
     }
 
+    function isTableHeadRow() {
+        $td = $this->currentRow['tablecell'];
+        $th = $this->currentRow['tableheader'];
+
+        if (!$th || $td > 2) return false;
+        if (2*$td > $th) return false;
+
+        return true;
+    }
+
     function tableCell($call) {
+        if ($this->inTableHead) {
+            $this->currentRow[$call[0]]++;
+        }
         if ( !$this->firstCell ) {
 
             // Increase the span
@@ -1281,6 +1338,13 @@ class Doku_Handler_Table {
         $cellKey = array();
         $toDelete = array();
 
+        // if still in tableheader, then there can be no table header
+        // as all rows can't be within <THEAD>
+        if ($this->inTableHead) {
+            $this->inTableHead = false;
+            $this->countTableHeadRows = 0;
+        }
+
         // Look for the colspan elements and increment the colspan on the
         // previous non-empty opening cell. Once done, delete all the cells
         // that contain colspans
@@ -1288,6 +1352,14 @@ class Doku_Handler_Table {
             $call = $this->tableCalls[$key];
 
             switch ($call[0]) {
+                case 'table_open' :
+                    if($this->countTableHeadRows) {
+                        array_splice($this->tableCalls, $key+1, 0, array(
+                              array('tablethead_open', array(), $call[2]))
+                        );
+                    }
+                    break;
+
                 case 'tablerow_open':
 
                     $lastRow++;
@@ -1357,15 +1429,19 @@ class Doku_Handler_Table {
                     } else {
 
                         $spanning_cell = null;
-                        for($i = $lastRow-1; $i > 0; $i--) {
 
-                            if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+                        // can't cross thead/tbody boundary
+                        if (!$this->countTableHeadRows || ($lastRow-1 != $this->countTableHeadRows)) {
+                            for($i = $lastRow-1; $i > 0; $i--) {
 
-                                if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
-                                    $spanning_cell = $i;
-                                    break;
+                                if ( $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' || $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open' ) {
+
+                                    if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
+                                        $spanning_cell = $i;
+                                        break;
+                                    }
+
                                 }
-
                             }
                         }
                         if (is_null($spanning_cell)) {
@@ -1396,6 +1472,10 @@ class Doku_Handler_Table {
                         $key += 3;
                     }
 
+                    if($this->countTableHeadRows == $lastRow) {
+                        array_splice($this->tableCalls, $key+1, 0, array(
+                              array('tablethead_close', array(), $call[2])));
+                    }
                     break;
 
             }
@@ -1438,7 +1518,7 @@ class Doku_Handler_Block {
     var $blockOpen = array(
             'header',
             'listu_open','listo_open','listitem_open','listcontent_open',
-            'table_open','tablerow_open','tablecell_open','tableheader_open',
+            'table_open','tablerow_open','tablecell_open','tableheader_open','tablethead_open',
             'quote_open',
             'code','file','hr','preformatted','rss',
             'htmlblock','phpblock',
@@ -1448,7 +1528,7 @@ class Doku_Handler_Block {
     var $blockClose = array(
             'header',
             'listu_close','listo_close','listitem_close','listcontent_close',
-            'table_close','tablerow_close','tablecell_close','tableheader_close',
+            'table_close','tablerow_close','tablecell_close','tableheader_close','tablethead_close',
             'quote_close',
             'code','file','hr','preformatted','rss',
             'htmlblock','phpblock',

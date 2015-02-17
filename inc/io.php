@@ -20,6 +20,7 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param string $id      - a pageid, the namespace of that id will be tried to deleted
  * @param string $basedir - the config name of the type to delete (datadir or mediadir usally)
  * @return bool - true if at least one namespace was deleted
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
@@ -60,6 +61,11 @@ function io_sweepNS($id,$basedir='datadir'){
  * $data[3]    rev: The page revision, false for current wiki pages.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string   $file filename
+ * @param string   $id page id
+ * @param bool|int $rev revision timestamp
+ * @return string
  */
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
@@ -69,7 +75,11 @@ function io_readWikiPage($file, $id, $rev=false) {
 
 /**
  * Callback adapter for io_readFile().
+ *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param array $data event data
+ * @return string
  */
 function _io_readWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
@@ -88,10 +98,14 @@ function _io_readWikiPage_action($data) {
  * be sure to set $clean to false!
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file  filename
+ * @param bool   $clean
+ * @return string
  */
 function io_readFile($file,$clean=true){
     $ret = '';
-    if(@file_exists($file)){
+    if(file_exists($file)){
         if(substr($file,-3) == '.gz'){
             $ret = join('',gzfile($file));
         }else if(substr($file,-4) == '.bz2'){
@@ -108,9 +122,12 @@ function io_readFile($file,$clean=true){
 }
 /**
  * Returns the content of a .bz2 compressed file as string
+ *
  * @author marcel senf <marcel@rucksackreinigung.de>
+ *
+ * @param string $file filename
+ * @return string content
  */
-
 function bzfile($file){
     $bz = bzopen($file,"r");
     $str = '';
@@ -138,6 +155,12 @@ function bzfile($file){
  * $data[3]    rev: The page revision, false for current wiki pages.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $file      filename
+ * @param string $content
+ * @param string $id        page id
+ * @param int|bool $rev timestamp of revision
+ * @return bool
  */
 function io_writeWikiPage($file, $content, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
@@ -149,6 +172,9 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
 /**
  * Callback adapter for io_saveFile().
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param array $data event data
+ * @return bool
  */
 function _io_writeWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
@@ -168,13 +194,17 @@ function _io_writeWikiPage_action($data) {
  * and bz2 if extension is .bz2
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- * @return bool true on success
+ *
+ * @param string $file filename path to file
+ * @param string $content
+ * @param bool   $append
+ * @return bool true on success, otherwise false
  */
 function io_saveFile($file,$content,$append=false){
     global $conf;
     $mode = ($append) ? 'ab' : 'wb';
 
-    $fileexists = @file_exists($file);
+    $fileexists = file_exists($file);
     io_makeFileDir($file);
     io_lock($file);
     if(substr($file,-3) == '.gz'){
@@ -221,10 +251,14 @@ function io_saveFile($file,$content,$append=false){
  * 2005-10-14 : added regex option -- Christopher Smith <chris@jalakai.co.uk>
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
+ *
+ * @param string $file    filename
+ * @param string $badline exact linematch to remove
+ * @param bool   $regex   use regexp?
  * @return bool true on success
  */
 function io_deleteFromFile($file,$badline,$regex=false){
-    if (!@file_exists($file)) return true;
+    if (!file_exists($file)) return true;
 
     io_lock($file);
 
@@ -285,6 +319,8 @@ function io_deleteFromFile($file,$badline,$regex=false){
  * the lock is assumed to be stale and the function goes on
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename
  */
 function io_lock($file){
     global $conf;
@@ -311,6 +347,8 @@ function io_lock($file){
  * Unlocks a file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename
  */
 function io_unlock($file){
     global $conf;
@@ -331,6 +369,9 @@ function io_unlock($file){
  * $data[1]    ns_type: 'pages' or 'media' namespace tree.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $id page id
+ * @param string $ns_type 'pages' or 'media'
  */
 function io_createNamespace($id, $ns_type='pages') {
     // verify ns_type
@@ -344,7 +385,7 @@ function io_createNamespace($id, $ns_type='pages') {
     $ns_stack = explode(':', $id);
     $ns = $id;
     $tmp = dirname( $file = call_user_func($types[$ns_type], $ns) );
-    while (!@is_dir($tmp) && !(@file_exists($tmp) && !is_dir($tmp))) {
+    while (!@is_dir($tmp) && !(file_exists($tmp) && !is_dir($tmp))) {
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);
         if (strlen($ns)==0) { break; }
@@ -365,10 +406,10 @@ function io_createNamespace($id, $ns_type='pages') {
  * Create the directory needed for the given file
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file file name
  */
 function io_makeFileDir($file){
-    global $conf;
-
     $dir = dirname($file);
     if(!@is_dir($dir)){
         io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
@@ -381,11 +422,14 @@ function io_makeFileDir($file){
  * @link    http://www.php.net/manual/en/function.mkdir.php
  * @author  <saint@corenova.com>
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $target filename
+ * @return bool|int|string
  */
 function io_mkdir_p($target){
     global $conf;
     if (@is_dir($target)||empty($target)) return 1; // best case check first
-    if (@file_exists($target) && !is_dir($target)) return 0;
+    if (file_exists($target) && !is_dir($target)) return 0;
     //recursion
     if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
         if($conf['safemodehack']){
@@ -401,11 +445,64 @@ function io_mkdir_p($target){
 }
 
 /**
+ * Recursively delete a directory
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $path
+ * @param bool   $removefiles defaults to false which will delete empty directories only
+ * @return bool
+ */
+function io_rmdir($path, $removefiles = false) {
+    if(!is_string($path) || $path == "") return false;
+    if(!file_exists($path)) return true; // it's already gone or was never there, count as success
+
+    if(is_dir($path) && !is_link($path)) {
+        $dirs  = array();
+        $files = array();
+
+        if(!$dh = @opendir($path)) return false;
+        while(false !== ($f = readdir($dh))) {
+            if($f == '..' || $f == '.') continue;
+
+            // collect dirs and files first
+            if(is_dir("$path/$f") && !is_link("$path/$f")) {
+                $dirs[] = "$path/$f";
+            } else if($removefiles) {
+                $files[] = "$path/$f";
+            } else {
+                return false; // abort when non empty
+            }
+
+        }
+        closedir($dh);
+
+        // now traverse into  directories first
+        foreach($dirs as $dir) {
+            if(!io_rmdir($dir, $removefiles)) return false; // abort on any error
+        }
+
+        // now delete files
+        foreach($files as $file) {
+            if(!@unlink($file)) return false; //abort on any error
+        }
+
+        // remove self
+        return @rmdir($path);
+    } else if($removefiles) {
+        return @unlink($path);
+    }
+    return false;
+}
+
+/**
  * Creates a directory using FTP
  *
  * This is used when the safemode workaround is enabled
  *
  * @author <andi@splitbrain.org>
+ *
+ * @param string $dir name of the new directory
+ * @return false|string
  */
 function io_mkdir_ftp($dir){
     global $conf;
@@ -440,6 +537,8 @@ function io_mkdir_ftp($dir){
  * its path.
  *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @return false|string path to new directory or false
  */
 function io_mktmpdir() {
     global $conf;
@@ -468,6 +567,13 @@ function io_mktmpdir() {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string $url           url to download
+ * @param string $file          path to file or directory where to save
+ * @param bool   $useAttachment if true: try to use name of download, uses otherwise $defaultName, false: uses $file as path to file
+ * @param string $defaultName   fallback for if using $useAttachment
+ * @param int    $maxSize       maximum file size
+ * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
  */
 function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2097152){
     global $conf;
@@ -500,7 +606,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
         $file = $file.$name;
     }
 
-    $fileexists = @file_exists($file);
+    $fileexists = file_exists($file);
     $fp = @fopen($file,"w");
     if(!$fp) return false;
     fwrite($fp,$data);
@@ -515,6 +621,10 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
  *
  * rename() can not overwrite existing files on Windows
  * this function will use copy/unlink instead
+ *
+ * @param string $from
+ * @param string $to
+ * @return bool succes or fail
  */
 function io_rename($from,$to){
     global $conf;
@@ -534,6 +644,11 @@ function io_rename($from,$to){
  * Returns the exit code from the process.
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $cmd
+ * @param string $input  input pipe
+ * @param string $output output pipe
+ * @return int exit code from process
  */
 function io_exec($cmd, $input, &$output){
     $descspec = array(

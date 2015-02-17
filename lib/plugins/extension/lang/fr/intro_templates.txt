@@ -1,0 +1,1 @@
+Voici la liste des thèmes actuellement installés. Le [[?do=admin&page=config|gestionnaire de configuration]] vous permet de choisir le thème à utiliser.

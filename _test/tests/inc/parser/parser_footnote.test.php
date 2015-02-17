@@ -303,7 +303,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
             array('nest', array ( array (
               array('footnote_open',array()),
               array('listu_open',array()),
-              array('listitem_open',array(1)),
+              array('listitem_open',array(1,Doku_Handler_List::NODE)),
               array('listcontent_open',array()),
               array('cdata',array("A")),
               array('listcontent_close',array()),

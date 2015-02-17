@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     bootstrap="bootstrap.php"
-    convertNoticesToExceptions="false">
+    convertNoticesToExceptions="false"
+    colors="true"
+    stderr="true"
+    >
 
     <testsuites>
         <testsuite name="DokuWiki Tests">

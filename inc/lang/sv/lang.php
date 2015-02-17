@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -19,6 +19,8 @@
  * @author Smorkster Andersson smorkster@gmail.com
  * @author Henrik <henrik@idealis.se>
  * @author Tor Härnqvist <tor.harnqvist@gmail.com>
+ * @author Hans Iwan Bratt <hibratt@gmail.com>
+ * @author Mikael Bergström <krank23@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,9 +63,11 @@ $lang['btn_draftdel']          = 'Radera utkast';
 $lang['btn_revert']            = 'Återställ';
 $lang['btn_register']          = 'Registrera';
 $lang['btn_apply']             = 'Verkställ';
-$lang['btn_media']             = 'Media Hanteraren';
+$lang['btn_media']             = 'Mediahanteraren';
 $lang['btn_deleteuser']        = 'Ta bort Mitt Konto';
-$lang['loggedinas']            = 'Inloggad som';
+$lang['btn_img_backto']        = 'Tillbaka till %s';
+$lang['btn_mediaManager']      = 'Se mediahanteraren';
+$lang['loggedinas']            = 'Inloggad som:';
 $lang['user']                  = 'Användarnamn';
 $lang['pass']                  = 'Lösenord';
 $lang['newpass']               = 'Nytt lösenord';
@@ -78,6 +82,7 @@ $lang['badpassconfirm']        = 'Ledsen, lösenordet var felaktigt';
 $lang['minoredit']             = 'Små ändringar';
 $lang['draftdate']             = 'Utkast automatiskt sparat';
 $lang['nosecedit']             = 'Sidan ändrades medan du skrev, sektionsinformationen var inte uppdaterad. Laddar hela sidan istället.';
+$lang['searchcreatepage']      = 'Om du inte hittar det du letar efter, så kan du skapa eller redigera sidan med någon av knapparna.';
 $lang['regmissing']            = 'Du måste fylla i alla fälten.';
 $lang['reguexists']            = 'Det finns redan en användare med det användarnamnet.';
 $lang['regsuccess']            = 'Användarkontot skapat, lösenordet har skickats via e-post.';
@@ -108,12 +113,12 @@ $lang['license']               = 'Om inte annat angivet, innehållet i denna wik
 $lang['licenseok']             = 'Notera: Genom att ändra i denna sidan så accepterar du att licensiera ditt bidrag under följande licenser:';
 $lang['searchmedia']           = 'Sök efter filnamn:';
 $lang['searchmedia_in']        = 'Sök i %s';
-$lang['txt_upload']            = 'Välj fil att ladda upp';
-$lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt)';
+$lang['txt_upload']            = 'Välj fil att ladda upp:';
+$lang['txt_filename']          = 'Ladda upp som (ej obligatoriskt):';
 $lang['txt_overwrt']           = 'Skriv över befintlig fil';
 $lang['maxuploadsize']         = 'Max %s per uppladdad fil.';
-$lang['lockedby']              = 'Låst av';
-$lang['lockexpire']            = 'Lås upphör att gälla';
+$lang['lockedby']              = 'Låst av:';
+$lang['lockexpire']            = 'Lås upphör att gälla:';
 $lang['js']['willexpire']      = 'Ditt redigeringslås för detta dokument kommer snart att upphöra.\nFör att undvika versionskonflikter bör du förhandsgranska ditt dokument för att förlänga redigeringslåset.';
 $lang['js']['notsavedyet']     = 'Det finns ändringar som inte är sparade.
 Är du säker på att du vill fortsätta?';
@@ -148,6 +153,8 @@ $lang['js']['del_confirm']     = 'Vill du verkligen radera?';
 $lang['js']['restore_confirm'] = 'Återställa denna version?';
 $lang['js']['media_diff']      = 'Se skillnader:';
 $lang['js']['media_diff_both'] = 'Sida vid sida';
+$lang['js']['media_diff_opacity'] = 'Genomskinlig';
+$lang['js']['media_diff_portions'] = 'Svep';
 $lang['js']['media_select']    = 'Välj filer...';
 $lang['js']['media_upload_btn'] = 'Ladda upp';
 $lang['js']['media_done_btn']  = 'Färdig';
@@ -191,9 +198,9 @@ $lang['difflink']              = 'Länk till den här jämförelsesidan';
 $lang['diff_type']             = 'Visa skillnader:';
 $lang['diff_side']             = 'Sida vid sida';
 $lang['line']                  = 'Rad';
-$lang['breadcrumb']            = 'Spår';
-$lang['youarehere']            = 'Här är du';
-$lang['lastmod']               = 'Senast uppdaterad';
+$lang['breadcrumb']            = 'Spår:';
+$lang['youarehere']            = 'Här är du:';
+$lang['lastmod']               = 'Senast uppdaterad:';
 $lang['by']                    = 'av';
 $lang['deleted']               = 'raderad';
 $lang['created']               = 'skapad';
@@ -204,8 +211,10 @@ $lang['noflash']               = '<a href="http://www.adobe.com/products/flashpl
 $lang['download']              = 'Ladda ner kodfragmentet';
 $lang['tools']                 = 'Verktyg';
 $lang['user_tools']            = 'Användarverktyg';
+$lang['site_tools']            = 'Webbverktyg';
 $lang['page_tools']            = 'Sidverktyg';
 $lang['skip_to_content']       = 'hoppa till innehåll';
+$lang['sidebar']               = 'Sidmeny';
 $lang['mail_newpage']          = 'sida tillagd:';
 $lang['mail_changed']          = 'sida ändrad:';
 $lang['mail_subscribe_list']   = 'sidor ändrade i namnrymd:';
@@ -244,20 +253,18 @@ $lang['admin_register']        = 'Lägg till ny användare';
 $lang['metaedit']              = 'Redigera metadata';
 $lang['metasaveerr']           = 'Skrivning av metadata misslyckades';
 $lang['metasaveok']            = 'Metadata sparad';
-$lang['img_backto']            = 'Tillbaka till';
-$lang['img_title']             = 'Rubrik';
-$lang['img_caption']           = 'Bildtext';
-$lang['img_date']              = 'Datum';
-$lang['img_fname']             = 'Filnamn';
-$lang['img_fsize']             = 'Storlek';
-$lang['img_artist']            = 'Fotograf';
-$lang['img_copyr']             = 'Copyright';
-$lang['img_format']            = 'Format';
-$lang['img_camera']            = 'Kamera';
-$lang['img_keywords']          = 'Nyckelord';
-$lang['img_width']             = 'Bredd';
-$lang['img_height']            = 'Höjd';
-$lang['img_manager']           = 'Se mediahanteraren';
+$lang['img_title']             = 'Rubrik:';
+$lang['img_caption']           = 'Bildtext:';
+$lang['img_date']              = 'Datum:';
+$lang['img_fname']             = 'Filnamn:';
+$lang['img_fsize']             = 'Storlek:';
+$lang['img_artist']            = 'Fotograf:';
+$lang['img_copyr']             = 'Copyright:';
+$lang['img_format']            = 'Format:';
+$lang['img_camera']            = 'Kamera:';
+$lang['img_keywords']          = 'Nyckelord:';
+$lang['img_width']             = 'Bredd:';
+$lang['img_height']            = 'Höjd:';
 $lang['subscr_subscribe_success'] = 'La till %s till prenumerationslista %s';
 $lang['subscr_subscribe_noaddress'] = 'Det finns ingen adress associerad med din inloggning, du kan inte bli tillagd i prenumerationslistan';
 $lang['subscr_unsubscribe_success'] = '%s borttagen från prenumerationslistan för %s';
@@ -298,6 +305,7 @@ $lang['i_policy']              = 'Initial ACL-policy';
 $lang['i_pol0']                = 'Öppen wiki (alla får läsa, skriva och ladda upp filer)';
 $lang['i_pol1']                = 'Publik wiki (alla får läsa, registrerade användare för skriva och ladda upp filer)';
 $lang['i_pol2']                = 'Sluten wiki (endast registrerade användare får läsa, skriva och ladda upp filer)';
+$lang['i_allowreg']            = 'Tillåt användare att registrera sig själva';
 $lang['i_retry']               = 'Försök igen';
 $lang['i_license']             = 'Vänligen välj licens du vill använda för ditt innehåll:';
 $lang['i_license_none']        = 'Visa ingen licensinformation';
@@ -335,3 +343,5 @@ $lang['media_perm_read']       = 'Du har tyvärr inte tillräckliga behörighete
 $lang['media_perm_upload']     = 'Du har tyvärr inte tillräckliga behörigheter för att ladda upp filer.';
 $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
+$lang['searchresult']          = 'Sökresultat';
+$lang['plainhtml']             = 'Ren HTML';

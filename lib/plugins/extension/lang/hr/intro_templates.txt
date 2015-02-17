@@ -1,0 +1,1 @@
+Ovo su predlošci trenutno instalirani na Vašem DokuWiki-u. Možete odabrati koji se predložak koristi na [[?do=admin&page=config|Upravitelju postavki]].

@@ -35,6 +35,19 @@ class DokuHTTPClient extends HTTPClient {
         $this->proxy_pass   = conf_decodeString($conf['proxy']['pass']);
         $this->proxy_ssl    = $conf['proxy']['ssl'];
         $this->proxy_except = $conf['proxy']['except'];
+
+        // allow enabling debugging via URL parameter (if debugging allowed)
+        if($conf['allowdebug']) {
+            if(
+                isset($_REQUEST['httpdebug']) ||
+                (
+                    isset($_SERVER['HTTP_REFERER']) &&
+                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                )
+            ) {
+                $this->debug = true;
+            }
+        }
     }
 
 
@@ -43,6 +56,12 @@ class DokuHTTPClient extends HTTPClient {
      *
      * @triggers HTTPCLIENT_REQUEST_SEND
      * @author   Andreas Gohr <andi@splitbrain.org>
+     */
+    /**
+     * @param string $url
+     * @param string|array $data the post data either as array or raw data
+     * @param string $method
+     * @return bool
      */
     function sendRequest($url,$data='',$method='GET'){
         $httpdata = array('url'    => $url,
@@ -61,6 +80,9 @@ class DokuHTTPClient extends HTTPClient {
 
 }
 
+/**
+ * Class HTTPClientException
+ */
 class HTTPClientException extends Exception { }
 
 /**
@@ -88,7 +110,7 @@ class HTTPClient {
     var $header_regexp; // if set this RE must match against the headers, else abort
     var $headers;
     var $debug;
-    var $start = 0; // for timings
+    var $start = 0.0; // for timings
     var $keep_alive = true; // keep alive rocks
 
     // don't set these, read on error
@@ -150,7 +172,8 @@ class HTTPClient {
      *
      * @param  string $url       The URL to fetch
      * @param  bool   $sloppy304 Return body on 304 not modified
-     * @return bool|string  response body, false on error
+     * @return false|string  response body, false on error
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function get($url,$sloppy304=false){
@@ -171,7 +194,8 @@ class HTTPClient {
      * @param  string $url       The URL to fetch
      * @param  array  $data      Associative array of parameters
      * @param  bool   $sloppy304 Return body on 304 not modified
-     * @return bool|string  response body, false on error
+     * @return false|string  response body, false on error
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function dget($url,$data,$sloppy304=false){
@@ -191,7 +215,7 @@ class HTTPClient {
      *
      * @param  string $url       The URL to fetch
      * @param  array  $data      Associative array of parameters
-     * @return bool|string  response body, false on error
+     * @return false|string  response body, false on error
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function post($url,$data){
@@ -213,6 +237,7 @@ class HTTPClient {
      * @param  mixed  $data   - the post data either as array or raw data
      * @param  string $method - HTTP Method usually GET or POST.
      * @return bool - true on success
+     *
      * @author Andreas Goetz <cpuidle@gmx.de>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
@@ -249,12 +274,17 @@ class HTTPClient {
             if (empty($port)) $port = 8080;
         }else{
             $request_url = $path;
-            $server      = $server;
             if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
         }
 
         // add SSL stream prefix if needed - needs SSL support in PHP
-        if($port == 443 || $this->proxy_ssl) $server = 'ssl://'.$server;
+        if($port == 443 || $this->proxy_ssl) {
+            if(!in_array('ssl', stream_get_transports())) {
+                $this->status = -200;
+                $this->error = 'This PHP version does not support SSL - cannot connect to server';
+            }
+            $server = 'ssl://'.$server;
+        }
 
         // prepare headers
         $headers               = $this->headers;
@@ -274,7 +304,6 @@ class HTTPClient {
                 }
             }
             $headers['Content-Length'] = strlen($data);
-            $rmethod = 'POST';
         }elseif($method == 'GET'){
             $data = ''; //no data allowed on GET requests
         }
@@ -304,11 +333,18 @@ class HTTPClient {
             }
 
             // try establish a CONNECT tunnel for SSL
-            if($this->_ssltunnel($socket, $request_url)){
-                // no keep alive for tunnels
-                $this->keep_alive = false;
-                // tunnel is authed already
-                if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+            try {
+                if($this->_ssltunnel($socket, $request_url)){
+                    // no keep alive for tunnels
+                    $this->keep_alive = false;
+                    // tunnel is authed already
+                    if(isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+                }
+            } catch (HTTPClientException $e) {
+                $this->status = $e->getCode();
+                $this->error = $e->getMessage();
+                fclose($socket);
+                return false;
             }
 
             // keep alive?
@@ -330,7 +366,7 @@ class HTTPClient {
 
         try {
             //set non-blocking
-            stream_set_blocking($socket, false);
+            stream_set_blocking($socket, 0);
 
             // build request
             $request  = "$method $request_url HTTP/".$this->http.HTTP_NL;
@@ -363,7 +399,7 @@ class HTTPClient {
 
             // get Status
             if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/', $r_headers, $m))
-                throw new HTTPClientException('Server returned bad answer');
+                throw new HTTPClientException('Server returned bad answer '.$r_headers);
 
             $this->status = $m[2];
 
@@ -445,7 +481,7 @@ class HTTPClient {
 
                     if ($chunk_size > 0) {
                         $r_body .= $this->_readData($socket, $chunk_size, 'chunk');
-                        $byte = $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
+                        $this->_readData($socket, 2, 'chunk'); // read trailing \r\n
                     }
                 } while ($chunk_size && !$abort);
             }elseif(isset($this->resp_headers['content-length']) && !isset($this->resp_headers['transfer-encoding'])){
@@ -467,7 +503,6 @@ class HTTPClient {
                 $r_body = $this->_readData($socket, $this->max_bodysize, 'response (content-length limited)', true);
             }else{
                 // read entire socket
-                $r_size = 0;
                 while (!feof($socket)) {
                     $r_body .= $this->_readData($socket, 4096, 'response (unlimited)', true);
                 }
@@ -496,7 +531,6 @@ class HTTPClient {
         if (!$this->keep_alive ||
                 (isset($this->resp_headers['connection']) && $this->resp_headers['connection'] == 'Close')) {
             // close socket
-            $status = socket_get_status($socket);
             fclose($socket);
             unset(self::$connections[$connectionId]);
         }
@@ -526,6 +560,7 @@ class HTTPClient {
      *
      * @param resource &$socket
      * @param string   &$requesturl
+     * @throws HTTPClientException when a tunnel is needed but could not be established
      * @return bool true if a tunnel was established
      */
     function _ssltunnel(&$socket, &$requesturl){
@@ -538,7 +573,7 @@ class HTTPClient {
         $request  = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0".HTTP_NL;
         $request .= "Host: {$requestinfo['host']}".HTTP_NL;
         if($this->proxy_user) {
-                'Proxy-Authorization Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
+            $request .= 'Proxy-Authorization: Basic '.base64_encode($this->proxy_user.':'.$this->proxy_pass).HTTP_NL;
         }
         $request .= HTTP_NL;
 
@@ -554,12 +589,24 @@ class HTTPClient {
 
         $this->_debug('SSL Tunnel Response',$r_headers);
         if(preg_match('/^HTTP\/1\.[01] 200/i',$r_headers)){
-            if (stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+            // set correct peer name for verification (enabled since PHP 5.6)
+            stream_context_set_option($socket, 'ssl', 'peer_name', $requestinfo['host']);
+
+            // Because of older PHP versions having trouble with TLS (enable_crypto returns true, but
+            // the conection still borks) we try SSLv3 first
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+                $requesturl = $requestinfo['path'];
+                return true;
+            }
+
+            // If the proxy does not support SSLv3 we try TLS
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
                 $requesturl = $requestinfo['path'];
                 return true;
             }
         }
-        return false;
+
+        throw new HTTPClientException('Failed to establish secure proxy connection', -150);
     }
 
     /**
@@ -569,6 +616,7 @@ class HTTPClient {
      * @param  string   $data       The data to write
      * @param  string   $message    Description of what is being read
      * @throws HTTPClientException
+     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _sendData($socket, $data, $message) {
@@ -613,6 +661,7 @@ class HTTPClient {
      * @param  bool     $ignore_eof End-of-file is not an error if this is set
      * @throws HTTPClientException
      * @return string
+     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readData($socket, $nbytes, $message, $ignore_eof = false) {
@@ -662,6 +711,7 @@ class HTTPClient {
      * @param  string   $message    Description of what is being read
      * @throws HTTPClientException
      * @return string
+     *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
     function _readLine($socket, $message) {
@@ -696,6 +746,9 @@ class HTTPClient {
      * Uses _debug_text or _debug_html depending on the SAPI name
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $info
+     * @param mixed  $var
      */
     function _debug($info,$var=null){
         if(!$this->debug) return;
@@ -709,8 +762,8 @@ class HTTPClient {
     /**
      * print debug info as HTML
      *
-     * @param      $info
-     * @param null $var
+     * @param string $info
+     * @param mixed  $var
      */
     function _debug_html($info, $var=null){
         print '<b>'.$info.'</b> '.($this->_time() - $this->start).'s<br />';
@@ -726,8 +779,8 @@ class HTTPClient {
     /**
      * prints debug info as plain text
      *
-     * @param      $info
-     * @param null $var
+     * @param string $info
+     * @param mixed  $var
      */
     function _debug_text($info, $var=null){
         print '*'.$info.'* '.($this->_time() - $this->start)."s\n";
@@ -737,6 +790,8 @@ class HTTPClient {
 
     /**
      * Return current timestamp in microsecond resolution
+     *
+     * @return float
      */
     static function _time(){
         list($usec, $sec) = explode(" ", microtime());
@@ -749,6 +804,9 @@ class HTTPClient {
      * All Keys are lowercased.
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $string
+     * @return array
      */
     function _parseHeaders($string){
         $headers = array();
@@ -777,11 +835,14 @@ class HTTPClient {
      * convert given header array to header string
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $headers
+     * @return string
      */
     function _buildHeaders($headers){
         $string = '';
         foreach($headers as $key => $value){
-            if(empty($value)) continue;
+            if($value === '') continue;
             $string .= $key.': '.$value.HTTP_NL;
         }
         return $string;
@@ -791,6 +852,8 @@ class HTTPClient {
      * get cookies as http header string
      *
      * @author Andreas Goetz <cpuidle@gmx.de>
+     *
+     * @return string
      */
     function _getCookies(){
         $headers = '';
@@ -806,6 +869,9 @@ class HTTPClient {
      * Encode data for posting
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $data
+     * @return string
      */
     function _postEncode($data){
         return http_build_query($data,'','&');
@@ -816,6 +882,9 @@ class HTTPClient {
      *
      * @fixme use of urlencode might be wrong here
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $data
+     * @return string
      */
     function _postMultipartEncode($data){
         $boundary = '--'.$this->boundary;

@@ -1,15 +1,15 @@
 <?php
+
 /**
- * bulgarian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Viktor Usunov <usun0v@mail.bg>
  * @author Kiril <neohidra@gmail.com>
  */
 $lang['admin_acl']             = 'Управление на списъците за достъп';
-$lang['acl_group']             = 'Група';
-$lang['acl_user']              = 'Потребител';
+$lang['acl_group']             = 'Група:';
+$lang['acl_user']              = 'Потребител:';
 $lang['acl_perms']             = 'Права за';
 $lang['page']                  = 'Страница';
 $lang['namespace']             = 'Именно пространство';

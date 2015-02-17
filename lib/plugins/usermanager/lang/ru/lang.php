@@ -19,6 +19,9 @@
  * @author Johnny Utah <pcpa@cyberpunk.su>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Pavel <ivanovtsk@mail.ru>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Igor Degraf <igordegraf@gmail.com>
+ * @author Vitaly Filatenko <kot@hacktest.net>
  */
 $lang['menu']                  = 'Управление пользователями';
 $lang['noauth']                = '(авторизация пользователей недоступна)';
@@ -66,13 +69,16 @@ $lang['add_ok']                = 'Пользователь успешно доб
 $lang['add_fail']              = 'Не удалось добавить пользователя';
 $lang['notify_ok']             = 'Письмо с уведомлением отправлено';
 $lang['notify_fail']           = 'Не удалось отправить письмо с уведомлением';
+$lang['import_userlistcsv']    = 'Файл со списком пользователей (CSV):';
+$lang['import_header']         = 'Последний импорт — список ошибок';
 $lang['import_success_count']  = 'Импорт пользователей: %d пользователей найдено, %d импортировано успешно.';
 $lang['import_failure_count']  = 'Импорт пользователей: %d не удалось. Список ошибок прочтите ниже.';
-$lang['import_error_fields']   = 'Не все поля заполнены. Найдено %d, а нужно 4.';
+$lang['import_error_fields']   = 'Не все поля заполнены. Найдено %d, а нужно: 4.';
 $lang['import_error_baduserid'] = 'Отсутствует идентификатор пользователя';
 $lang['import_error_badname']  = 'Имя не годится';
 $lang['import_error_badmail']  = 'Адрес электронной почты не годится';
-$lang['import_error_upload']   = 'Импорт не удался. CSV файл не загружен или пуст.';
+$lang['import_error_upload']   = 'Импорт не удался. CSV-файл не загружен или пуст.';
 $lang['import_error_readfail'] = 'Импорт не удался. Невозможно прочесть загруженный файл.';
 $lang['import_error_create']   = 'Невозможно создать пользователя';
 $lang['import_notify_fail']    = 'Оповещение не может быть отправлено импортированному пользователю %s по электронной почте %s.';
+$lang['import_downloadfailures'] = 'Скачать ошибки в формате CSV для исправления';

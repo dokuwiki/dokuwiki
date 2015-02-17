@@ -39,6 +39,8 @@ class Mailer {
      */
     public function __construct() {
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
         if(strpos($server,'.') === false) $server = $server.'.localhost';
@@ -53,7 +55,7 @@ class Mailer {
 
         // add some default headers for mailfiltering FS#2247
         $this->setHeader('X-Mailer', 'DokuWiki');
-        $this->setHeader('X-DokuWiki-User', $_SERVER['REMOTE_USER']);
+        $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
         $this->setHeader('X-DokuWiki-Title', $conf['title']);
         $this->setHeader('X-DokuWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
@@ -106,6 +108,9 @@ class Mailer {
 
     /**
      * Callback function to automatically embed images referenced in HTML templates
+     *
+     * @param array $matches
+     * @return string placeholder
      */
     protected function autoembed_cb($matches) {
         static $embeds = 0;
@@ -128,7 +133,7 @@ class Mailer {
      * If an empy value is passed, the header is removed
      *
      * @param string $header the header name (no trailing colon!)
-     * @param string $value  the value of the header
+     * @param string|string[] $value  the value of the header
      * @param bool   $clean  remove all non-ASCII chars and line feeds?
      */
     public function setHeader($header, $value, $clean = true) {
@@ -158,6 +163,8 @@ class Mailer {
      *
      * Whatever is set here is directly passed to PHP's mail() command as last
      * parameter. Depending on the PHP setup this might break mailing alltogether
+     *
+     * @param string $param
      */
     public function setParameters($param) {
         $this->sendparam = $param;
@@ -175,12 +182,15 @@ class Mailer {
      * @param string $text     plain text body
      * @param array  $textrep  replacements to apply on the text part
      * @param array  $htmlrep  replacements to apply on the HTML part, leave null to use $textrep
-     * @param array  $html     the HTML body, leave null to create it from $text
+     * @param string $html     the HTML body, leave null to create it from $text
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
         global $INFO;
         global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
+
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
 
@@ -218,24 +228,24 @@ class Mailer {
         $cip  = gethostsbyaddrs($ip);
         $trep = array(
             'DATE'        => dformat(),
-            'BROWSER'     => $_SERVER['HTTP_USER_AGENT'],
+            'BROWSER'     => $INPUT->server->str('HTTP_USER_AGENT'),
             'IPADDRESS'   => $ip,
             'HOSTNAME'    => $cip,
             'TITLE'       => $conf['title'],
             'DOKUWIKIURL' => DOKU_URL,
-            'USER'        => $_SERVER['REMOTE_USER'],
+            'USER'        => $INPUT->server->str('REMOTE_USER'),
             'NAME'        => $INFO['userinfo']['name'],
             'MAIL'        => $INFO['userinfo']['mail'],
         );
         $trep = array_merge($trep, (array)$textrep);
         $hrep = array(
             'DATE'        => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'     => hsc($_SERVER['HTTP_USER_AGENT']),
+            'BROWSER'     => hsc($INPUT->server->str('HTTP_USER_AGENT')),
             'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
             'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
             'TITLE'       => hsc($conf['title']),
             'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'        => hsc($_SERVER['REMOTE_USER']),
+            'USER'        => hsc($INPUT->server->str('REMOTE_USER')),
             'NAME'        => hsc($INFO['userinfo']['name']),
             'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
                 hsc($INFO['userinfo']['mail']).'</a>',
@@ -260,6 +270,8 @@ class Mailer {
      * Placeholders can be used to reference embedded attachments
      *
      * You probably want to use setBody() instead
+     *
+     * @param string $html
      */
     public function setHTML($html) {
         $this->html = $html;
@@ -269,6 +281,8 @@ class Mailer {
      * Set the plain text part of the mail
      *
      * You probably want to use setBody() instead
+     *
+     * @param string $text
      */
     public function setText($text) {
         $this->text = $text;
@@ -277,8 +291,8 @@ class Mailer {
     /**
      * Add the To: recipients
      *
-     * @see setAddress
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @see cleanAddress
+     * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
     public function to($address) {
         $this->setHeader('To', $address, false);
@@ -287,8 +301,8 @@ class Mailer {
     /**
      * Add the Cc: recipients
      *
-     * @see setAddress
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @see cleanAddress
+     * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
     public function cc($address) {
         $this->setHeader('Cc', $address, false);
@@ -297,8 +311,8 @@ class Mailer {
     /**
      * Add the Bcc: recipients
      *
-     * @see setAddress
-     * @param string|array  $address Multiple adresses separated by commas or as array
+     * @see cleanAddress
+     * @param string|string[]  $address Multiple adresses separated by commas or as array
      */
     public function bcc($address) {
         $this->setHeader('Bcc', $address, false);
@@ -310,7 +324,7 @@ class Mailer {
      * This is set to $conf['mailfrom'] when not specified so you shouldn't need
      * to call this function
      *
-     * @see setAddress
+     * @see cleanAddress
      * @param string  $address from address
      */
     public function from($address) {
@@ -333,10 +347,10 @@ class Mailer {
      * for headers. Addresses may not contain Non-ASCII data!
      *
      * Example:
-     *   setAddress("föö <foo@bar.com>, me@somewhere.com","TBcc");
+     *   cc("föö <foo@bar.com>, me@somewhere.com","TBcc");
      *
-     * @param string|array  $address Multiple adresses separated by commas or as array
-     * @return bool|string  the prepared header (can contain multiple lines)
+     * @param string|string[]  $addresses Multiple adresses separated by commas or as array
+     * @return false|string  the prepared header (can contain multiple lines)
      */
     public function cleanAddress($addresses) {
         // No named recipients for To: in Windows (see FS#652)
@@ -413,6 +427,8 @@ class Mailer {
      * Prepare the mime multiparts for all attachments
      *
      * Replaces placeholders in the HTML with the correct CIDs
+     *
+     * @return string mime multiparts
      */
     protected function prepareAttachments() {
         $mime = '';
@@ -522,7 +538,7 @@ class Mailer {
 
         // clean up addresses
         if(empty($this->headers['From'])) $this->from($conf['mailfrom']);
-        $addrs = array('To', 'From', 'Cc', 'Bcc');
+        $addrs = array('To', 'From', 'Cc', 'Bcc', 'Reply-To', 'Sender');
         foreach($addrs as $addr) {
             if(isset($this->headers[$addr])) {
                 $this->headers[$addr] = $this->cleanAddress($this->headers[$addr]);
@@ -560,9 +576,9 @@ class Mailer {
     /**
      * Returns a complete, EOL terminated header line, wraps it if necessary
      *
-     * @param $key
-     * @param $val
-     * @return string
+     * @param string $key
+     * @param string $val
+     * @return string line
      */
     protected function wrappedHeaderLine($key, $val){
         return wordwrap("$key: $val", 78, MAILHEADER_EOL.'  ').MAILHEADER_EOL;

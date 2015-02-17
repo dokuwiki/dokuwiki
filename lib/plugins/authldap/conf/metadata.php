@@ -7,7 +7,7 @@ $meta['userfilter']  = array('string','_caution' => 'danger');
 $meta['groupfilter'] = array('string','_caution' => 'danger');
 $meta['version']     = array('numeric','_caution' => 'danger');
 $meta['starttls']    = array('onoff','_caution' => 'danger');
-$meta['referrals']   = array('onoff','_caution' => 'danger');
+$meta['referrals']   = array('multichoice','_choices' => array(-1,0,1),'_caution' => 'danger');
 $meta['deref']       = array('multichoice','_choices' => array(0,1,2,3),'_caution' => 'danger');
 $meta['binddn']      = array('string','_caution' => 'danger');
 $meta['bindpw']      = array('password','_caution' => 'danger');

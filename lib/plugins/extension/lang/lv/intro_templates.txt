@@ -1,0 +1,1 @@
+DokuWiki ir instalēti šādi šabloni. Lietojamo šablonu var norādīt  [[?do=admin&page=config|Konfigurācijas lapā]].

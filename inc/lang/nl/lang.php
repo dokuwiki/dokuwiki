@@ -21,14 +21,18 @@
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Klap-in <klapinklapin@gmail.com>
  * @author Remon <no@email.local>
+ * @author gicalle <gicalle@hotmail.com>
+ * @author Rene <wllywlnt@yahoo.com>
+ * @author Johan Vervloet <johan.vervloet@gmail.com>
+ * @author Mijndert <mijndert@mijndertstuij.nl>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '„';
+$lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‚';
+$lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Pagina aanpassen';
 $lang['btn_source']            = 'Toon broncode';
 $lang['btn_show']              = 'Toon pagina';
@@ -65,7 +69,9 @@ $lang['btn_register']          = 'Registreren';
 $lang['btn_apply']             = 'Toepassen';
 $lang['btn_media']             = 'Mediabeheerder';
 $lang['btn_deleteuser']        = 'Verwijder mijn account';
-$lang['loggedinas']            = 'Ingelogd als';
+$lang['btn_img_backto']        = 'Terug naar %s';
+$lang['btn_mediaManager']      = 'In mediabeheerder bekijken';
+$lang['loggedinas']            = 'Ingelogd als:';
 $lang['user']                  = 'Gebruikersnaam';
 $lang['pass']                  = 'Wachtwoord';
 $lang['newpass']               = 'Nieuw wachtwoord';
@@ -80,6 +86,7 @@ $lang['badpassconfirm']        = 'Sorry, het wachtwoord was onjuist';
 $lang['minoredit']             = 'Kleine wijziging';
 $lang['draftdate']             = 'Concept automatisch opgeslagen op';
 $lang['nosecedit']             = 'De pagina is tussentijds veranderd, sectie-informatie was verouderd, volledige pagina geladen.';
+$lang['searchcreatepage']      = 'Niks gevonden? Maak een nieuwe pagina met als naam je zoekopdracht. Klik hiervoor op \'\'Maak deze pagina aan\'\'.';
 $lang['regmissing']            = 'Vul alle velden in';
 $lang['reguexists']            = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess']            = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';
@@ -110,12 +117,12 @@ $lang['license']               = 'Tenzij anders vermeld valt de inhoud van deze 
 $lang['licenseok']             = 'Let op: Door deze pagina aan te passen geef je de inhoud vrij onder de volgende licentie:';
 $lang['searchmedia']           = 'Bestandsnaam zoeken:';
 $lang['searchmedia_in']        = 'Zoek in %s';
-$lang['txt_upload']            = 'Selecteer een bestand om te uploaden';
-$lang['txt_filename']          = 'Vul nieuwe naam in (optioneel)';
+$lang['txt_upload']            = 'Selecteer een bestand om te uploaden:';
+$lang['txt_filename']          = 'Vul nieuwe naam in (optioneel):';
 $lang['txt_overwrt']           = 'Overschrijf bestaand bestand';
 $lang['maxuploadsize']         = 'Max %s per bestand';
-$lang['lockedby']              = 'Momenteel in gebruik door';
-$lang['lockexpire']            = 'Exclusief gebruiksrecht vervalt op';
+$lang['lockedby']              = 'Momenteel in gebruik door:';
+$lang['lockexpire']            = 'Exclusief gebruiksrecht vervalt op:';
 $lang['js']['willexpire']      = 'Je exclusieve gebruiksrecht voor het aanpassen van deze pagina verloopt over een minuut.\nKlik op de Voorbeeld-knop om het exclusieve gebruiksrecht te verlengen.';
 $lang['js']['notsavedyet']     = 'Nog niet bewaarde wijzigingen zullen verloren gaan.
 Weet je zeker dat je wilt doorgaan?';
@@ -196,10 +203,15 @@ $lang['difflink']              = 'Link naar deze vergelijking';
 $lang['diff_type']             = 'Bekijk verschillen:';
 $lang['diff_inline']           = 'Inline';
 $lang['diff_side']             = 'Zij aan zij';
+$lang['diffprevrev']           = 'Vorige revisie';
+$lang['diffnextrev']           = 'Volgende revisie';
+$lang['difflastrev']           = 'Laatste revisie';
+$lang['diffbothprevrev']       = 'Beide kanten vorige revisie';
+$lang['diffbothnextrev']       = 'Beide kanten volgende revisie';
 $lang['line']                  = 'Regel';
-$lang['breadcrumb']            = 'Spoor';
-$lang['youarehere']            = 'Je bent hier';
-$lang['lastmod']               = 'Laatst gewijzigd';
+$lang['breadcrumb']            = 'Spoor:';
+$lang['youarehere']            = 'Je bent hier:';
+$lang['lastmod']               = 'Laatst gewijzigd:';
 $lang['by']                    = 'door';
 $lang['deleted']               = 'verwijderd';
 $lang['created']               = 'aangemaakt';
@@ -252,20 +264,18 @@ $lang['admin_register']        = 'Nieuwe gebruiker toevoegen';
 $lang['metaedit']              = 'Metadata wijzigen';
 $lang['metasaveerr']           = 'Schrijven van metadata mislukt';
 $lang['metasaveok']            = 'Metadata bewaard';
-$lang['img_backto']            = 'Terug naar';
-$lang['img_title']             = 'Titel';
-$lang['img_caption']           = 'Bijschrift';
-$lang['img_date']              = 'Datum';
-$lang['img_fname']             = 'Bestandsnaam';
-$lang['img_fsize']             = 'Grootte';
-$lang['img_artist']            = 'Fotograaf';
-$lang['img_copyr']             = 'Copyright';
-$lang['img_format']            = 'Formaat';
-$lang['img_camera']            = 'Camera';
-$lang['img_keywords']          = 'Trefwoorden';
-$lang['img_width']             = 'Breedte';
-$lang['img_height']            = 'Hoogte';
-$lang['img_manager']           = 'In mediabeheerder bekijken';
+$lang['img_title']             = 'Titel:';
+$lang['img_caption']           = 'Bijschrift:';
+$lang['img_date']              = 'Datum:';
+$lang['img_fname']             = 'Bestandsnaam:';
+$lang['img_fsize']             = 'Grootte:';
+$lang['img_artist']            = 'Fotograaf:';
+$lang['img_copyr']             = 'Copyright:';
+$lang['img_format']            = 'Formaat:';
+$lang['img_camera']            = 'Camera:';
+$lang['img_keywords']          = 'Trefwoorden:';
+$lang['img_width']             = 'Breedte:';
+$lang['img_height']            = 'Hoogte:';
 $lang['subscr_subscribe_success'] = '%s is ingeschreven voor %s';
 $lang['subscr_subscribe_error'] = 'Fout bij inschrijven van %s voor %s';
 $lang['subscr_subscribe_noaddress'] = 'Er is geen e-mailadres gekoppeld aan uw account, u kunt daardoor niet worden ingeschreven.';
@@ -293,6 +303,7 @@ $lang['i_problems']            = 'De installer vond problemen, hieronder aangege
 $lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="http://dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
+$lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
 $lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. Pas de permissie-instellingen van deze directory aan.';
 $lang['i_confexists']          = '<code>%s</code> bestaat reeds';
 $lang['i_writeerr']            = 'Niet mogelijk om <code>%s</code> aan te maken. Controleer de directory/bestandspermissies en maak het bestand handmatig aan.';

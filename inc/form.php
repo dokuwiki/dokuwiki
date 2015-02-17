@@ -47,15 +47,12 @@ class Doku_Form {
      * with up to four parameters is deprecated, instead the first parameter
      * should be an array with parameters.
      *
-     * @param   mixed   $params  Parameters for the HTML form element; Using the
-     *                           deprecated calling convention this is the ID
-     *                           attribute of the form
-     * @param   string  $action  (optional, deprecated) submit URL, defaults to
-     *                                                  current page
-     * @param   string  $method  (optional, deprecated) 'POST' or 'GET', default
-     *                                                  is POST
-     * @param   string  $enctype (optional, deprecated) Encoding type of the
-     *                                                  data
+     * @param mixed       $params  Parameters for the HTML form element; Using the deprecated
+     *                             calling convention this is the ID attribute of the form
+     * @param bool|string $action  (optional, deprecated) submit URL, defaults to current page
+     * @param bool|string $method  (optional, deprecated) 'POST' or 'GET', default is POST
+     * @param bool|string $enctype (optional, deprecated) Encoding type of the data
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function Doku_Form($params, $action=false, $method=false, $enctype=false) {
@@ -88,6 +85,7 @@ class Doku_Form {
      * Usually results in a border drawn around the form.
      *
      * @param   string  $legend Label that will be printed with the border.
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function startFieldset($legend) {
@@ -119,6 +117,7 @@ class Doku_Form {
      *
      * @param   string  $name   Field name.
      * @param   string  $value  Field value. If null, remove a previously added field.
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function addHidden($name, $value) {
@@ -135,7 +134,8 @@ class Doku_Form {
      * The element can be either a pseudo-tag or string.
      * If string, it is printed without escaping special chars.   *
      *
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   string|array  $elem   Pseudo-tag or string to add to the form.
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function addElement($elem) {
@@ -147,8 +147,9 @@ class Doku_Form {
      *
      * Inserts a content element at a position.
      *
-     * @param   string  $pos    0-based index where the element will be inserted.
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   string       $pos  0-based index where the element will be inserted.
+     * @param   string|array $elem Pseudo-tag or string to add to the form.
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function insertElement($pos, $elem) {
@@ -160,8 +161,9 @@ class Doku_Form {
      *
      * Replace with NULL to remove an element.
      *
-     * @param   int     $pos    0-based index the element will be placed at.
-     * @param   string  $elem   Pseudo-tag or string to add to the form.
+     * @param   int          $pos  0-based index the element will be placed at.
+     * @param   string|array $elem Pseudo-tag or string to add to the form.
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function replaceElement($pos, $elem) {
@@ -176,7 +178,8 @@ class Doku_Form {
      * Gets the position of the first of a type of element.
      *
      * @param   string  $type   Element type to look for.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int|false     position of element if found, otherwise false
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByType($type) {
@@ -193,7 +196,8 @@ class Doku_Form {
      * Gets the position of the element with an ID attribute.
      *
      * @param   string  $id     ID of the element to find.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int|false     position of element if found, otherwise false
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementById($id) {
@@ -211,7 +215,8 @@ class Doku_Form {
      *
      * @param   string  $name   Attribute name.
      * @param   string  $value  Attribute value.
-     * @return  array   pseudo-element if found, false otherwise
+     * @return  int|false     position of element if found, otherwise false
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function findElementByAttribute($name, $value) {
@@ -230,7 +235,8 @@ class Doku_Form {
      * first (underflow) or last (overflow) element.
      *
      * @param   int     $pos    0-based index
-     * @return  arrayreference  pseudo-element
+     * @return  array reference  pseudo-element
+     *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
     function &getElementAt($pos) {
@@ -247,6 +253,8 @@ class Doku_Form {
      * 'form_$type'. The function should return the HTML to be printed.
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
+     *
+     * @return string html of the form
      */
     function getForm() {
         global $lang;
@@ -314,6 +322,7 @@ class Doku_Form {
  * @param   string  $tag    Tag name.
  * @param   array   $attrs  Optional attributes.
  * @return  array   pseudo-tag
+ *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeTag($tag, $attrs=array()) {
@@ -330,6 +339,7 @@ function form_makeTag($tag, $attrs=array()) {
  * @param   string  $tag    Tag name.
  * @param   array   $attrs  Optional attributes.
  * @return  array   pseudo-tag
+ *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeOpenTag($tag, $attrs=array()) {
@@ -345,6 +355,7 @@ function form_makeOpenTag($tag, $attrs=array()) {
  *
  * @param   string  $tag    Tag name.
  * @return  array   pseudo-tag
+ *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeCloseTag($tag) {
@@ -362,6 +373,7 @@ function form_makeCloseTag($tag) {
  * @param   string  $text   Text to fill the field with.
  * @param   array   $attrs  Optional attributes.
  * @return  array   pseudo-tag
+ *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeWikiText($text, $attrs=array()) {
@@ -382,6 +394,7 @@ function form_makeWikiText($text, $attrs=array()) {
  * @param   string  $value  (optional) Displayed label. Uses $act if not provided.
  * @param   array   $attrs  Optional attributes.
  * @return  array   pseudo-tag
+ *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeButton($type, $act, $value='', $attrs=array()) {
@@ -410,6 +423,7 @@ function form_makeButton($type, $act, $value='', $attrs=array()) {
  *                          reference it with a 'for' attribute.
  * @param   array   $attrs  Optional attributes.
  * @return  array   pseudo-tag
+ *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
  */
 function form_makeField($type, $name, $value='', $label=null, $id='', $class='', $attrs=array()) {
@@ -526,6 +540,18 @@ function form_makeRadioField($name, $value='1', $label=null, $id='', $class='', 
  * a string.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string           $name     Name attribute of the input.
+ * @param string[]|array[] $values   The list of values can be strings, arrays of (value,text),
+ *                                   or an associative array with the values as keys and labels as values.
+ * @param string|int       $selected default selected value, string or index number
+ * @param string           $class    Class attribute of the label. If this is 'block',
+ *                                   then a line break will be added after the field.
+ * @param string           $label    Label that will be printed before the input.
+ * @param string           $id       ID attribute of the input. If set, the label will
+ *                                   reference it with a 'for' attribute.
+ * @param array            $attrs    Optional attributes.
+ * @return array   pseudo-tag
  */
 function form_makeMenuField($name, $values, $selected='', $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
@@ -560,15 +586,28 @@ function form_makeMenuField($name, $values, $selected='', $label=null, $id='', $
  * Items are selected by supplying its value or an array of values.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string           $name     Name attribute of the input.
+ * @param string[]|array[] $values   The list of values can be strings, arrays of (value,text),
+ *                                   or an associative array with the values as keys and labels as values.
+ * @param array|string     $selected value or array of values of the items that need to be selected
+ * @param string           $class    Class attribute of the label. If this is 'block',
+ *                                   then a line break will be added after the field.
+ * @param string           $label    Label that will be printed before the input.
+ * @param string           $id       ID attribute of the input. If set, the label will
+ *                                   reference it with a 'for' attribute.
+ * @param array            $attrs    Optional attributes.
+ * @return array   pseudo-tag
  */
 function form_makeListboxField($name, $values, $selected='', $label=null, $id='', $class='', $attrs=array()) {
     if (is_null($label)) $label = $name;
     $options = array();
     reset($values);
-    if (is_null($selected) || $selected == '')
+    if (is_null($selected) || $selected == '') {
         $selected = array();
-    elseif (!is_array($selected))
+    } elseif (!is_array($selected)) {
         $selected = array($selected);
+    }
     // FIXME: php doesn't know the difference between a string and an integer
     if (is_string(key($values))) {
         foreach ($values as $val=>$text) {
@@ -576,11 +615,13 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
         }
     } else {
         foreach ($values as $val) {
-            if (is_array($val))
-                @list($val,$text) = $val;
-            else
+            $disabled = false;
+            if (is_array($val)) {
+                @list($val,$text,$disabled) = $val;
+            } else {
                 $text = null;
-            $options[] = array($val,$text,in_array($val,$selected));
+            }
+            $options[] = array($val,$text,in_array($val,$selected),$disabled);
         }
     }
     $elem = array('_elem'=>'listboxfield', '_options'=>$options, '_text'=>$label, '_class'=>$class,
@@ -596,6 +637,9 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
  * Attributes are passed to buildAttributes()
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html of tag
  */
 function form_tag($attrs) {
     return '<'.$attrs['_tag'].' '.buildAttributes($attrs,true).'/>';
@@ -609,6 +653,9 @@ function form_tag($attrs) {
  * Attributes are passed to buildAttributes()
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html of tag
  */
 function form_opentag($attrs) {
     return '<'.$attrs['_tag'].' '.buildAttributes($attrs,true).'>';
@@ -622,6 +669,9 @@ function form_opentag($attrs) {
  * There are no attributes.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html of tag
  */
 function form_closetag($attrs) {
     return '</'.$attrs['_tag'].'>';
@@ -635,6 +685,9 @@ function form_closetag($attrs) {
  * Attributes are passed to buildAttributes()
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_openfieldset($attrs) {
     $s = '<fieldset '.buildAttributes($attrs,true).'>';
@@ -649,6 +702,8 @@ function form_openfieldset($attrs) {
  * There are no attributes.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @return string html
  */
 function form_closefieldset() {
     return '</fieldset>';
@@ -662,6 +717,9 @@ function form_closefieldset() {
  * Value is passed to formText()
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_hidden($attrs) {
     return '<input type="hidden" name="'.$attrs['name'].'" value="'.formText($attrs['value']).'" />';
@@ -675,6 +733,9 @@ function form_hidden($attrs) {
  * Text will be passed to formText(), attributes to buildAttributes()
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_wikitext($attrs) {
     // mandatory attributes
@@ -694,6 +755,9 @@ function form_wikitext($attrs) {
  * Other attributes are passed to buildAttributes()
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_button($attrs) {
     $p = (!empty($attrs['_action'])) ? 'name="do['.$attrs['_action'].']" ' : '';
@@ -709,6 +773,9 @@ function form_button($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_field($attrs) {
     $s = '<label';
@@ -730,6 +797,9 @@ function form_field($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_fieldright($attrs) {
     $s = '<label';
@@ -751,6 +821,9 @@ function form_fieldright($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_textfield($attrs) {
     // mandatory attributes
@@ -774,6 +847,9 @@ function form_textfield($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_passwordfield($attrs) {
     // mandatory attributes
@@ -799,6 +875,9 @@ function form_passwordfield($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag
  *
  * @author  Michael Klier <chi@chimeric.de>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_filefield($attrs) {
     $s = '<label';
@@ -825,6 +904,9 @@ function form_filefield($attrs) {
  * $attrs['value'][1] is constructed as well.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_checkboxfield($attrs) {
     // mandatory attributes
@@ -854,6 +936,9 @@ function form_checkboxfield($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_radiofield($attrs) {
     // mandatory attributes
@@ -880,6 +965,9 @@ function form_radiofield($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_menufield($attrs) {
     $attrs['size'] = '1';
@@ -925,6 +1013,9 @@ function form_menufield($attrs) {
  * Other attributes are passed to buildAttributes() for the input tag.
  *
  * @author  Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param array $attrs attributes
+ * @return string html
  */
 function form_listboxfield($attrs) {
     $s = '<label';
@@ -934,11 +1025,12 @@ function form_listboxfield($attrs) {
     $s .= '<select '.buildAttributes($attrs,true).'>'.DOKU_LF;
     if (!empty($attrs['_options'])) {
         foreach ($attrs['_options'] as $opt) {
-            @list($value,$text,$select) = $opt;
+            @list($value,$text,$select,$disabled) = $opt;
             $p = '';
             if(is_null($text)) $text = $value;
             $p .= ' value="'.formText($value).'"';
             if (!empty($select)) $p .= ' selected="selected"';
+            if ($disabled) $p .= ' disabled="disabled"';
             $s .= '<option'.$p.'>'.formText($text).'</option>';
         }
     } else {

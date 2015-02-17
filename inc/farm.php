@@ -135,12 +135,12 @@ $config_cascade = array(
         ),
     ),
     'userstyle' => array(
-        'screen'  => DOKU_CONF.'userstyle.css',
-        'print'   => DOKU_CONF.'userprint.css',
-        'feed'    => DOKU_CONF.'userfeed.css',
-        'all'     => DOKU_CONF.'userall.css',
+        'screen'    => array(DOKU_CONF . 'userstyle.css', DOKU_CONF . 'userstyle.less'),
+        'print'     => array(DOKU_CONF . 'userprint.css', DOKU_CONF . 'userprint.less'),
+        'feed'      => array(DOKU_CONF . 'userfeed.css', DOKU_CONF . 'userfeed.less'),
+        'all'       => array(DOKU_CONF . 'userall.css', DOKU_CONF . 'userall.less')
     ),
     'userscript' => array(
-        'default' => DOKU_CONF.'userscript.js'
+        'default'   => array(DOKU_CONF . 'userscript.js')
     ),
 );

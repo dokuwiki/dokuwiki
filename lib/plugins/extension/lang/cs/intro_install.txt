@@ -1,0 +1,1 @@
+Zde můžete ručně instalovat zásuvné moduly a šablony vzhledu, buď nahráním, nebo zadáním přímé URL pro stažení.

@@ -1,0 +1,1 @@
+Deze tab verschaft u toegang tot alle plugins en templates vervaardigd door derden en bestemd voor Dokuwiki. Houdt er rekening mee dat indien u Plugins van derden installeert deze een **veiligheids risico ** kunnen bevatten, geadviseerd wordt om eerst te lezen [[doku>security#plugin_security|plugin security]].

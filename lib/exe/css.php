@@ -32,31 +32,32 @@ function css_out(){
     global $config_cascade;
     global $INPUT;
 
-    if ($INPUT->str('s') == 'feed') {
-        $mediatypes = array('feed');
-        $type = 'feed';
-    } else {
-        $mediatypes = array('screen', 'all', 'print');
-        $type = '';
-    }
-
     // decide from where to get the template
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
+    // load style.ini
+    $styleini = css_styleini($tpl);
+    
+    // find mediatypes
+    if ($INPUT->str('s') == 'feed') {
+        $mediatypes = array('feed');
+        $type = 'feed';
+    } else {
+        $mediatypes = array_unique(array_merge(array('screen', 'all', 'print'), array_keys($styleini['stylesheets'])));
+        $type = '';
+    }
+
     // The generated script depends on some dynamic options
     $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
 
-    // load styl.ini
-    $styleini = css_styleini($tpl);
-
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
     }
 
     // cache influencers
-    $tplinc = tpl_basedir($tpl);
+    $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
     $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
@@ -70,6 +71,7 @@ function css_out(){
         $files[$mediatype] = array();
         // load core styles
         $files[$mediatype][DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
             $files[$mediatype][DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
@@ -81,8 +83,10 @@ function css_out(){
             $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(isset($config_cascade['userstyle'][$mediatype])){
-            $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+        if(!empty($config_cascade['userstyle'][$mediatype])) {
+            foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
+                $files[$mediatype][$userstyle] = DOKU_BASE;
+            }
         }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
@@ -132,6 +136,9 @@ function css_out(){
     $css = ob_get_contents();
     ob_end_clean();
 
+    // strip any source maps
+    stripsourcemaps($css);
+
     // apply style replacements
     $css = css_applystyle($css, $styleini['replacements']);
 
@@ -158,12 +165,15 @@ function css_out(){
  * most of this function is error handling to show a nice useful error when
  * LESS compilation fails
  *
- * @param $css
+ * @param string $css
  * @return string
  */
 function css_parseless($css) {
+    global $conf;
+
     $less = new lessc();
     $less->importDir[] = DOKU_INC;
+    $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')){
         $less->importDir[] = TMP_DIR;
@@ -218,6 +228,10 @@ function css_parseless($css) {
  * (sans the surrounding __ and with a ini_ prefix)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @param array $replacements  array(placeholder => value)
+ * @return string
  */
 function css_applystyle($css, $replacements) {
     // we convert ini replacements to LESS variable names
@@ -246,6 +260,7 @@ function css_applystyle($css, $replacements) {
  * the stylesheet modes
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $tpl the used template
  * @return array with keys 'stylesheets' and 'replacements'
  */
@@ -316,6 +331,10 @@ function css_styleini($tpl) {
  * Amend paths used in replacement relative urls, refer FS#2879
  *
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param array $replacements with key-value pairs
+ * @param string $location
+ * @return array
  */
 function css_fixreplacementurls($replacements, $location) {
     foreach($replacements as $key => $value) {
@@ -347,11 +366,11 @@ function css_interwiki(){
     $iwlinks = getInterwiki();
     foreach(array_keys($iwlinks) as $iw){
         $class = preg_replace('/[^_\-a-z0-9]+/i','_',$iw);
-        if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
+        if(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
             echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
             echo '}';
-        }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
+        }elseif(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
             echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
             echo '}';
@@ -399,6 +418,10 @@ function css_filetypes(){
 /**
  * Loads a given file and fixes relative URLs with the
  * given location prefix
+ *
+ * @param string $file file system path
+ * @param string $location
+ * @return string
  */
 function css_loadfile($file,$location=''){
     $css_file = new DokuCssFile($file);
@@ -414,7 +437,7 @@ class DokuCssFile {
 
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
-    private   $relative_path = null;
+    protected $relative_path = null;
 
     public function __construct($file) {
         $this->filepath = $file;
@@ -429,7 +452,7 @@ class DokuCssFile {
      * @return  string               the CSS/Less contents of the file
      */
     public function load($location='') {
-        if (!@file_exists($this->filepath)) return '';
+        if (!file_exists($this->filepath)) return '';
 
         $css = io_readFile($this->filepath);
         if (!$location) return $css;
@@ -447,7 +470,7 @@ class DokuCssFile {
      *
      * @return string   relative file system path
      */
-    private function getRelativePath(){
+    protected function getRelativePath(){
 
         if (is_null($this->relative_path)) {
             $basedir = array(DOKU_INC);
@@ -456,8 +479,9 @@ class DokuCssFile {
             if (defined('DOKU_UNITTEST')) {
                 $basedir[] = realpath(TMP_DIR);
             }
-            $regex = '#^('.join('|',$basedir).')#';
 
+            $basedir = array_map('preg_quote_cb', $basedir);
+            $regex = '/^('.join('|',$basedir).')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
 
@@ -496,6 +520,9 @@ class DokuCssFile {
  * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
+ *
+ * @param array $match
+ * @return string
  */
 function css_datauri($match){
     global $conf;
@@ -523,9 +550,11 @@ function css_datauri($match){
  * Returns a list of possible Plugin Styles (no existance check here)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $mediatype
+ * @return array
  */
 function css_pluginstyles($mediatype='screen'){
-    global $lang;
     $list = array();
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -544,13 +573,16 @@ function css_pluginstyles($mediatype='screen'){
  * Very simple CSS optimizer
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @return string
  */
 function css_compress($css){
     //strip comments through a callback
     $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s','css_comment_cb',$css);
 
     //strip (incorrect but common) one line comments
-    $css = preg_replace('/(?<!:)\/\/.*$/m','',$css);
+    $css = preg_replace_callback('/^.*\/\/.*$/m','css_onelinecomment_cb',$css);
 
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!',' ',$css);
@@ -580,10 +612,67 @@ function css_compress($css){
  * Keeps short comments (< 5 chars) to maintain typical browser hacks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $matches
+ * @return string
  */
 function css_comment_cb($matches){
     if(strlen($matches[2]) > 4) return '';
     return $matches[0];
+}
+
+/**
+ * Callback for css_compress()
+ *
+ * Strips one line comments but makes sure it will not destroy url() constructs with slashes
+ *
+ * @param array $matches
+ * @return string
+ */
+function css_onelinecomment_cb($matches) {
+    $line = $matches[0];
+
+    $i = 0;
+    $len = strlen($line);
+
+    while ($i< $len){
+        $nextcom = strpos($line, '//', $i);
+        $nexturl = stripos($line, 'url(', $i);
+
+        if($nextcom === false) {
+            // no more comments, we're done
+            $i = $len;
+            break;
+        }
+
+        // keep any quoted string that starts before a comment
+        $nextsqt = strpos($line, "'", $i);
+        $nextdqt = strpos($line, '"', $i);
+        if(min($nextsqt, $nextdqt) < $nextcom) {
+            $skipto = false;
+            if($nextsqt !== false && ($nextdqt === false || $nextsqt < $nextdqt)) {
+                $skipto = strpos($line, "'", $nextsqt+1) +1;
+            } else if ($nextdqt !== false) {
+                $skipto = strpos($line, '"', $nextdqt+1) +1;
+            }
+
+            if($skipto !== false) {
+                $i = $skipto;
+                continue;
+            }
+        }
+
+        if($nexturl === false || $nextcom < $nexturl) {
+            // no url anymore, strip comment and be done
+            $i = $nextcom;
+            break;
+        }
+
+        // we have an upcoming url
+        $i = strpos($line, ')', $nexturl);
+    }
+
+    return substr($line, 0, $i);
 }
 
 //Setup VIM: ex: et ts=4 :

@@ -8,8 +8,8 @@
  * @author Arunas Vaitekunas <aras@fan.lt>
  */
 $lang['admin_acl']             = 'Priėjimo Kontrolės Sąrašų valdymas';
-$lang['acl_group']             = 'Grupė';
-$lang['acl_user']              = 'Vartotojas';
+$lang['acl_group']             = 'Grupė:';
+$lang['acl_user']              = 'Vartotojas:';
 $lang['acl_perms']             = 'Leidimai';
 $lang['page']                  = 'Puslapis';
 $lang['namespace']             = 'Pavadinimas';

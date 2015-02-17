@@ -55,8 +55,13 @@ define('METADATA_RENDER_UNLIMITED', 4);
  * wasn't found
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id page id
+ * @param string|int $rev revision timestamp or empty string
+ * @param bool $excuse
+ * @return null|string
  */
-function p_wiki_xhtml($id, $rev='', $excuse=true){
+function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
     $file = wikiFN($id,$rev);
     $ret  = '';
 
@@ -65,14 +70,14 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
     $keep = $ID;
     $ID   = $id;
 
-    if($rev){
-        if(@file_exists($file)){
-            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info); //no caching on old revisions
+    if($rev || $date_at){
+        if(file_exists($file)){
+            $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
     }else{
-        if(@file_exists($file)){
+        if(file_exists($file)){
             $ret = p_cached_output($file,'xhtml',$id);
         }elseif($excuse){
             $ret = p_locale_xhtml('newpage');
@@ -89,6 +94,9 @@ function p_wiki_xhtml($id, $rev='', $excuse=true){
  * Returns the specified local text in parsed format
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id page id
+ * @return null|string
  */
 function p_locale_xhtml($id){
     //fetch parsed locale
@@ -101,6 +109,11 @@ function p_locale_xhtml($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string $file filename, path to file
+ * @param string $format
+ * @param string $id page id
+ * @return null|string
  */
 function p_cached_output($file, $format='xhtml', $id='') {
     global $conf;
@@ -112,8 +125,7 @@ function p_cached_output($file, $format='xhtml', $id='') {
     } else {
         $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
-        if ($info['cache']) {
-            $cache->storeCache($parsed);               //save cachefile
+        if ($info['cache'] && $cache->storeCache($parsed)) {              // storeCache() attempts to save cachefile
             if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
         }else{
             $cache->removeCache();                     //try to delete cachefile
@@ -130,6 +142,11 @@ function p_cached_output($file, $format='xhtml', $id='') {
  * Uses and creates a serialized cache file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file      filename, path to file
+ * @param bool   $cacheonly
+ * @param string $id        page id
+ * @return array|null
  */
 function p_cached_instructions($file,$cacheonly=false,$id='') {
     static $run = null;
@@ -139,7 +156,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
-    } else if (@file_exists($file)) {
+    } else if (file_exists($file)) {
         // no cache - do some work
         $ins = p_get_instructions(io_readWikiPage($file,$id));
         if ($cache->storeCache($ins)) {
@@ -158,6 +175,9 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $text  raw wiki syntax text
+ * @return array a list of instruction arrays
  */
 function p_get_instructions($text){
 
@@ -184,9 +204,9 @@ function p_get_instructions($text){
 /**
  * returns the metadata of a page
  *
- * @param string $id The id of the page the metadata should be returned from
- * @param string $key The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
- * @param int $render If the page should be rendererd - possible values:
+ * @param string $id      The id of the page the metadata should be returned from
+ * @param string $key     The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param int    $render  If the page should be rendererd - possible values:
  *     METADATA_DONT_RENDER, METADATA_RENDER_USING_SIMPLE_CACHE, METADATA_RENDER_USING_CACHE
  *     METADATA_RENDER_UNLIMITED (also combined with the previous two options),
  *     default: METADATA_RENDER_USING_CACHE
@@ -228,7 +248,7 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
             if ($render & METADATA_RENDER_USING_SIMPLE_CACHE) {
                 $pagefn = wikiFN($id);
                 $metafn = metaFN($id, '.meta');
-                if (!@file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
+                if (!file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
                     $do_render = true;
                 }
             } elseif (!$cachefile->useCache()){
@@ -359,6 +379,9 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
  * used on page deletion
  *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @param string $id page id
+ * @return bool  success / fail
  */
 function p_purge_metadata($id) {
     $meta = p_read_metadata($id);
@@ -391,7 +414,7 @@ function p_read_metadata($id,$cache=false) {
     if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
 
     $file = metaFN($id, '.meta');
-    $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
+    $meta = file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
 
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;
@@ -422,14 +445,19 @@ function p_save_metadata($id, $meta) {
  * renders the metadata of a page
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ *
+ * @param string $id    page id
+ * @param array  $orig  the original metadata
+ * @return array|null array('current'=> array,'persistent'=> array);
  */
 function p_render_metadata($id, $orig){
     // make sure the correct ID is in global ID
     global $ID, $METADATA_RENDERERS;
 
     // avoid recursive rendering processes for the same id
-    if (isset($METADATA_RENDERERS[$id]))
+    if (isset($METADATA_RENDERERS[$id])) {
         return $orig;
+    }
 
     // store the original metadata in the global $METADATA_RENDERERS so p_set_metadata can use it
     $METADATA_RENDERERS[$id] =& $orig;
@@ -441,8 +469,6 @@ function p_render_metadata($id, $orig){
     $orig['page'] = $id;
     $evt = new Doku_Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
-
-        require_once DOKU_INC."inc/parser/metadata.php";
 
         // get instructions
         $instructions = p_cached_instructions(wikiFN($id),false,$id);
@@ -477,6 +503,8 @@ function p_render_metadata($id, $orig){
  * returns all available parser syntax modes in correct order
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return array[] with for each plugin the array('sort' => sortnumber, 'mode' => mode string, 'obj'  => plugin object)
  */
 function p_get_parsermodes(){
     global $conf;
@@ -569,6 +597,10 @@ function p_get_parsermodes(){
  * Callback function for usort
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $a
+ * @param array $b
+ * @return int $a is lower/equal/higher than $b
  */
 function p_sort_modes($a, $b){
     if($a['sort'] == $b['sort']) return 0;
@@ -582,15 +614,25 @@ function p_sort_modes($a, $b){
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $mode
+ * @param array|null|false  $instructions
+ * @param array  $info returns render info like enabled toc and cache
+ * @return null|string rendered output
  */
-function p_render($mode,$instructions,&$info){
+function p_render($mode,$instructions,&$info,$date_at=''){
     if(is_null($instructions)) return '';
+    if($instructions === false) return '';
 
-    $Renderer =& p_get_renderer($mode);
+    $Renderer = p_get_renderer($mode);
     if (is_null($Renderer)) return null;
 
     $Renderer->reset();
 
+    if($date_at) {
+        $Renderer->date_at = $date_at;
+    }
+    
     $Renderer->smileys = getSmileys();
     $Renderer->entities = getEntities();
     $Renderer->acronyms = getAcronyms();
@@ -614,43 +656,54 @@ function p_render($mode,$instructions,&$info){
 }
 
 /**
- * @param $mode string Mode of the renderer to get
+ * Figure out the correct renderer class to use for $mode,
+ * instantiate and return it
+ *
+ * @param string $mode Mode of the renderer to get
  * @return null|Doku_Renderer The renderer
+ *
+ * @author Christopher Smith <chris@jalakai.co.uk>
  */
-function & p_get_renderer($mode) {
+function p_get_renderer($mode) {
     /** @var Doku_Plugin_Controller $plugin_controller */
     global $conf, $plugin_controller;
 
     $rname = !empty($conf['renderer_'.$mode]) ? $conf['renderer_'.$mode] : $mode;
     $rclass = "Doku_Renderer_$rname";
 
+    // if requested earlier or a bundled renderer
     if( class_exists($rclass) ) {
         $Renderer = new $rclass();
         return $Renderer;
     }
 
-    // try default renderer first:
-    $file = DOKU_INC."inc/parser/$rname.php";
-    if(@file_exists($file)){
-        require_once $file;
-
-        if ( !class_exists($rclass) ) {
-            trigger_error("Unable to resolve render class $rclass",E_USER_WARNING);
-            msg("Renderer '$rname' for $mode not valid",-1);
-            return null;
-        }
-        $Renderer = new $rclass();
-    }else{
-        // Maybe a plugin/component is available?
-        $Renderer = $plugin_controller->load('renderer',$rname);
-
-        if(!isset($Renderer) || is_null($Renderer)){
-            msg("No renderer '$rname' found for mode '$mode'",-1);
-            return null;
-        }
+    // not bundled, see if its an enabled renderer plugin & when $mode is 'xhtml', the renderer can supply that format.
+    /** @var Doku_Renderer $Renderer */
+    $Renderer = $plugin_controller->load('renderer',$rname);
+    if ($Renderer && is_a($Renderer, 'Doku_Renderer')  && ($mode != 'xhtml' || $mode == $Renderer->getFormat())) {
+        return $Renderer;
     }
 
-    return $Renderer;
+    // there is a configuration error!
+    // not bundled, not a valid enabled plugin, use $mode to try to fallback to a bundled renderer
+    $rclass = "Doku_Renderer_$mode";
+    if ( class_exists($rclass) ) {
+        // viewers should see renderered output, so restrict the warning to admins only
+        $msg = "No renderer '$rname' found for mode '$mode', check your plugins";
+        if ($mode == 'xhtml') {
+            $msg .= " and the 'renderer_xhtml' config setting";
+        }
+        $msg .= ".<br/>Attempting to fallback to the bundled renderer.";
+        msg($msg,-1,'','',MSG_ADMINS_ONLY);
+
+        $Renderer = new $rclass;
+        $Renderer->nocache();     // fallback only (and may include admin alerts), don't cache
+        return $Renderer;
+    }
+
+    // fallback failed, alert the world
+    msg("No renderer '$rname' found for mode '$mode'",-1);
+    return null;
 }
 
 /**
@@ -663,8 +716,8 @@ function & p_get_renderer($mode) {
  *                                              METADATA_RENDER_USING_SIMPLE_CACHE,
  *                                              METADATA_RENDER_USING_CACHE,
  *                                              METADATA_RENDER_UNLIMITED
- *
  * @return string|null The first heading
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Hamann <michael@content-space.de>
  */
@@ -678,8 +731,8 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @param  string   $code       source code to be highlighted
  * @param  string   $language   language to provide highlighting
  * @param  string   $wrapper    html element to wrap the returned highlighted text
- *
  * @return string xhtml code
+ *
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */

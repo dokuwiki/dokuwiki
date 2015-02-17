@@ -46,10 +46,10 @@ if (!defined('DOKU_INC')) die();
                             tpl_userinfo(); /* 'Logged in as ...' */
                             echo '</li>';
                         }
-                        tpl_action('admin', 1, 'li');
-                        tpl_action('profile', 1, 'li');
-                        tpl_action('register', 1, 'li');
-                        tpl_action('login', 1, 'li');
+                        tpl_action('admin', true, 'li');
+                        tpl_action('profile', true, 'li');
+                        tpl_action('register', true, 'li');
+                        tpl_action('login', true, 'li');
                     ?>
                 </ul>
             </div>
@@ -64,9 +64,9 @@ if (!defined('DOKU_INC')) die();
             </div>
             <ul>
                 <?php
-                    tpl_action('recent', 1, 'li');
-                    tpl_action('media', 1, 'li');
-                    tpl_action('index', 1, 'li');
+                    tpl_action('recent', true, 'li');
+                    tpl_action('media', true, 'li');
+                    tpl_action('index', true, 'li');
                 ?>
             </ul>
         </div>

@@ -1,0 +1,7 @@
+base     template4
+author   Andreas Gohr
+email    andi@splitbrain.org
+date     2013-05-02
+name     Dummy Template
+desc     Dummy template data
+url      http://example.com/template:template4

@@ -37,7 +37,7 @@ function plugin_list($type='',$all=false) {
  * @param  $name     string name of the plugin to load
  * @param  $new      bool   true to return a new instance of the plugin, false to use an already loaded instance
  * @param  $disabled bool   true to load even disabled plugins
- * @return DokuWiki_Plugin|DokuWiki_Syntax_Plugin|null  the plugin object or null on failure
+ * @return DokuWiki_Plugin|null  the plugin object or null on failure
  */
 function plugin_load($type,$name,$new=false,$disabled=false) {
     /** @var $plugin_controller Doku_Plugin_Controller */
@@ -49,7 +49,7 @@ function plugin_load($type,$name,$new=false,$disabled=false) {
  * Whether plugin is disabled
  *
  * @param string $plugin name of plugin
- * @return bool; true disabled, false enabled
+ * @return bool true disabled, false enabled
  */
 function plugin_isdisabled($plugin) {
     /** @var $plugin_controller Doku_Plugin_Controller */
@@ -61,7 +61,7 @@ function plugin_isdisabled($plugin) {
  * Enable the plugin
  *
  * @param string $plugin name of plugin
- * @return bool; true saving succeed, false saving failed
+ * @return bool true saving succeed, false saving failed
  */
 function plugin_enable($plugin) {
     /** @var $plugin_controller Doku_Plugin_Controller */
@@ -73,7 +73,7 @@ function plugin_enable($plugin) {
  * Disable the plugin
  *
  * @param string $plugin name of plugin
- * @return bool; true saving succeed, false saving failed
+ * @return bool  true saving succeed, false saving failed
  */
 function plugin_disable($plugin) {
     /** @var $plugin_controller Doku_Plugin_Controller */

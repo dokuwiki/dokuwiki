@@ -24,6 +24,8 @@ class Sitemapper {
      * @author Andreas Gohr
      * @link   https://www.google.com/webmasters/sitemaps/docs/en/about.html
      * @link   http://www.sitemaps.org/
+     *
+     * @return bool
      */
     public static function generate(){
         global $conf;
@@ -31,7 +33,7 @@ class Sitemapper {
 
         $sitemap = Sitemapper::getFilePath();
 
-        if(@file_exists($sitemap)){
+        if(file_exists($sitemap)){
             if(!is_writable($sitemap)) return false;
         }else{
             if(!is_writable(dirname($sitemap))) return false;
@@ -53,7 +55,7 @@ class Sitemapper {
         foreach($pages as $id){
             //skip hidden, non existing and restricted files
             if(isHiddenPage($id)) continue;
-            if(auth_aclcheck($id,'','') < AUTH_READ) continue;
+            if(auth_aclcheck($id,'',array()) < AUTH_READ) continue;
             $item = SitemapItem::createFromID($id);
             if ($item !== null)
                 $items[] = $item;
@@ -75,6 +77,7 @@ class Sitemapper {
      *
      * @param $items array The SitemapItems that shall be included in the sitemap.
      * @return string The sitemap XML.
+     *
      * @author Michael Hamann
      */
     private static function getXML($items) {
@@ -95,6 +98,7 @@ class Sitemapper {
      * Helper function for getting the path to the sitemap file.
      *
      * @return string The path to the sitemap file.
+     *
      * @author Michael Hamann
      */
     public static function getFilePath() {
@@ -123,6 +127,8 @@ class Sitemapper {
      * urls to ping using the SITEMAP_PING event.
      *
      * @author Michael Hamann
+     *
+     * @return bool
      */
     public static function pingSearchEngines() {
         //ping search engines...
@@ -131,9 +137,9 @@ class Sitemapper {
 
         $encoded_sitemap_url = urlencode(wl('', array('do' => 'sitemap'), true, '&'));
         $ping_urls = array(
-            'google' => 'http://www.google.com/webmasters/sitemaps/ping?sitemap='.$encoded_sitemap_url,
-            'yahoo' => 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=dokuwiki&url='.$encoded_sitemap_url,
+            'google'    => 'http://www.google.com/webmasters/sitemaps/ping?sitemap='.$encoded_sitemap_url,
             'microsoft' => 'http://www.bing.com/webmaster/ping.aspx?siteMap='.$encoded_sitemap_url,
+            'yandex'    => 'http://blogs.yandex.ru/pings/?status=success&url='.$encoded_sitemap_url
         );
 
         $data = array('ping_urls' => $ping_urls,
@@ -168,9 +174,9 @@ class SitemapItem {
     /**
      * Create a new item.
      *
-     * @param $url string The url of the item
-     * @param $lastmod int Timestamp of the last modification
-     * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
+     * @param string $url        The url of the item
+     * @param int    $lastmod    Timestamp of the last modification
+     * @param string $changefreq How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
      * @param $priority float|string The priority of the item relative to other URLs on your site. Valid values range from 0.0 to 1.0.
      */
     public function __construct($url, $lastmod, $changefreq = null, $priority = null) {
@@ -183,9 +189,9 @@ class SitemapItem {
     /**
      * Helper function for creating an item for a wikipage id.
      *
-     * @param $id string A wikipage id.
-     * @param $changefreq string How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
-     * @param $priority float|string The priority of the item relative to other URLs on your site. Valid values     range from 0.0 to 1.0.
+     * @param string       $id         A wikipage id.
+     * @param string       $changefreq How frequently the item is likely to change. Valid values: always, hourly, daily, weekly, monthly, yearly, never.
+     * @param float|string $priority   The priority of the item relative to other URLs on your site. Valid values     range from 0.0 to 1.0.
      * @return SitemapItem The sitemap item.
      */
     public static function createFromID($id, $changefreq = null, $priority = null) {

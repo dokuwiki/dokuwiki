@@ -33,7 +33,7 @@ class InttestsBasicTest extends DokuWikiTest {
         $response = $request->execute();
 
         $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') >= 0,
+            strpos($response->getContent(), 'DokuWiki') !== false,
             'DokuWiki was not a word in the output'
         );
     }
@@ -60,7 +60,7 @@ class InttestsBasicTest extends DokuWikiTest {
         $this->assertEquals('wiki:dokuwiki', $request->getPost('id'));
 
         // output check
-        $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') >= 0);
+        $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') !== false);
     }
 
     function testPostGet() {
@@ -84,7 +84,7 @@ class InttestsBasicTest extends DokuWikiTest {
         $this->assertEquals('wiki:dokuwiki', $request->getGet('id'));
 
         // output check
-        $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') >= 0);
+        $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') !== false);
     }
 
     function testGet() {
@@ -116,7 +116,7 @@ class InttestsBasicTest extends DokuWikiTest {
         $this->assertEquals('bar', $request->getGet('test'));
 
         // output check
-        $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') >= 0);
+        $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') !== false);
     }
 
     function testScripts() {
@@ -167,6 +167,14 @@ class InttestsBasicTest extends DokuWikiTest {
 
        $response = new TestResponse('',array_slice($this->some_headers,0,-2));  // slice off the last two headers to leave no status header
        $this->assertNull($response->getStatusCode());
+    }
+    
+    function testINPUT() {
+        $request = new TestRequest();
+        $response = $request->get(array('id' => 'mailinglist'), '/doku.php');
+
+        // output check
+        $this->assertTrue(strpos($response->getContent(), 'Netiquette') !== false);
     }
 
 }

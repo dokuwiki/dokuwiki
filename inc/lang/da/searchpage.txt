@@ -1,5 +1,5 @@
 ====== Søgning ======
 
-Du kan se resultaterne af din søgning nedenunder. Hvis resultaterne ikke indeholder det du søgte efter kan du oprette et nyt dokument med samme navn som søgningen ved at trykke på knappen **''[Opret dette dokument]''**.
+Du kan se resultaterne af din søgning nedenunder. @CREATEPAGEINFO@
 
 ===== Søgeresultater =====

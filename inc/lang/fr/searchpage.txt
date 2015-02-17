@@ -1,5 +1,5 @@
 ====== Recherche ======
 
-Voici les résultats de votre recherche. Si vous n'avez pas trouvé ce que vous cherchiez, vous pouvez créer ou modifier la page correspondante à votre requête en cliquant sur le bouton approprié.
+Voici les résultats de votre recherche. @CREATEPAGEINFO@
 
 ===== Résultats =====

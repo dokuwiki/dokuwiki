@@ -1,0 +1,1 @@
+Here you can manually install plugins and templates by either uploading them or providing a direct download URL.

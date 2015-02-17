@@ -14,6 +14,10 @@
  * are returned.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file file name
+ * @param bool   $knownonly
+ * @return array with extension, mimetype and if it should be downloaded
  */
 function mimetype($file, $knownonly=true){
     $mtypes = getMimeTypes();     // known mimetypes
@@ -202,7 +206,7 @@ function retrieveConfig($type,$fn,$params=null) {
     foreach (array('default','local','protected') as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         foreach ($config_cascade[$type][$config_group] as $file) {
-            if (@file_exists($file)) {
+            if (file_exists($file)) {
                 $config = call_user_func_array($fn,array_merge(array($file),$params));
                 $combined = array_merge($combined, $config);
             }
@@ -237,13 +241,14 @@ function getConfigFiles($type) {
  * check if the given action was disabled in config
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ * @param string $action
  * @returns boolean true if enabled, false if disabled
  */
 function actionOK($action){
     static $disabled = null;
     if(is_null($disabled) || defined('SIMPLE_TEST')){
         global $conf;
-        /** @var auth_basic $auth */
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
 
         // prepare disabled actions array and handle legacy options

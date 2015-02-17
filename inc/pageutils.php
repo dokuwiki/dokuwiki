@@ -17,8 +17,13 @@
  * If the second parameter is true (default) the ID is cleaned.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $param  the $_REQUEST variable name, default 'id'
+ * @param bool   $clean  if true, ID is cleaned
+ * @return string
  */
 function getID($param='id',$clean=true){
+    /** @var Input $INPUT */
     global $INPUT;
     global $conf;
     global $ACT;
@@ -27,7 +32,7 @@ function getID($param='id',$clean=true){
 
     //construct page id from request URI
     if(empty($id) && $conf['userewrite'] == 2){
-        $request = $_SERVER['REQUEST_URI'];
+        $request = $INPUT->server->str('REQUEST_URI');
         $script = '';
 
         //get the script URL
@@ -36,15 +41,15 @@ function getID($param='id',$clean=true){
             if($param != 'id') {
                 $relpath = 'lib/exe/';
             }
-            $script = $conf['basedir'].$relpath.utf8_basename($_SERVER['SCRIPT_FILENAME']);
+            $script = $conf['basedir'].$relpath.utf8_basename($INPUT->server->str('SCRIPT_FILENAME'));
 
-        }elseif($_SERVER['PATH_INFO']){
-            $request = $_SERVER['PATH_INFO'];
-        }elseif($_SERVER['SCRIPT_NAME']){
-            $script = $_SERVER['SCRIPT_NAME'];
-        }elseif($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']){
-            $script = preg_replace ('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',
-                    $_SERVER['SCRIPT_FILENAME']);
+        }elseif($INPUT->server->str('PATH_INFO')){
+            $request = $INPUT->server->str('PATH_INFO');
+        }elseif($INPUT->server->str('SCRIPT_NAME')){
+            $script = $INPUT->server->str('SCRIPT_NAME');
+        }elseif($INPUT->server->str('DOCUMENT_ROOT') && $INPUT->server->str('SCRIPT_FILENAME')){
+            $script = preg_replace ('/^'.preg_quote($INPUT->server->str('DOCUMENT_ROOT'),'/').'/','',
+                    $INPUT->server->str('SCRIPT_FILENAME'));
             $script = '/'.$script;
         }
 
@@ -92,8 +97,10 @@ function getID($param='id',$clean=true){
  * converted to unaccented ones
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
+ * @return string cleaned id
  */
 function cleanID($raw_id,$ascii=false){
     global $conf;
@@ -144,6 +151,9 @@ function cleanID($raw_id,$ascii=false){
  * Return namespacepart of a wiki ID
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id
+ * @return string|false the namespace part or false if the given ID has no namespace (root)
  */
 function getNS($id){
     $pos = strrpos((string)$id,':');
@@ -157,6 +167,9 @@ function getNS($id){
  * Returns the ID without the namespace
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id
+ * @return string
  */
 function noNS($id) {
     $pos = strrpos($id, ':');
@@ -171,6 +184,9 @@ function noNS($id) {
  * Returns the current namespace
  *
  * @author Nathan Fritz <fritzn@crown.edu>
+ *
+ * @param string $id
+ * @return string
  */
 function curNS($id) {
     return noNS(getNS($id));
@@ -180,6 +196,9 @@ function curNS($id) {
  * Returns the ID without the namespace or current namespace for 'start' pages
  *
  * @author Nathan Fritz <fritzn@crown.edu>
+ *
+ * @param string $id
+ * @return string
  */
 function noNSorNS($id) {
     global $conf;
@@ -200,6 +219,7 @@ function noNSorNS($id) {
  * @param string  $title   The headline title
  * @param array|bool   $check   Existing IDs (title => number)
  * @return string the title
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function sectionID($title,&$check) {
@@ -230,9 +250,20 @@ function sectionID($title,&$check) {
  * parameters as for wikiFN
  *
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string     $id     page id
+ * @param string|int $rev    empty or revision timestamp
+ * @param bool       $clean  flag indicating that $id should be cleaned (see wikiFN as well)
+ * @return bool exists?
  */
-function page_exists($id,$rev='',$clean=true) {
-    return @file_exists(wikiFN($id,$rev,$clean));
+function page_exists($id,$rev='',$clean=true, $date_at=false) {
+    if($rev !== '' && $date_at) {
+        $pagelog = new PageChangeLog($id);
+        $pagelog_rev = $pagelog->getLastRevisionAt($rev);
+        if($pagelog_rev !== false)
+            $rev = $pagelog_rev;
+    }
+    return file_exists(wikiFN($id,$rev,$clean));
 }
 
 /**
@@ -241,9 +272,10 @@ function page_exists($id,$rev='',$clean=true) {
  * The filename is URL encoded to protect Unicode chars
  *
  * @param  $raw_id  string   id of wikipage
- * @param  $rev     string   page revision, empty string for current
+ * @param  $rev     int|string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
+ * @return string full path
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -267,9 +299,9 @@ function wikiFN($raw_id,$rev='',$clean=true){
         $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
         if($conf['compression']){
             //test for extensions here, we want to read both compressions
-            if (@file_exists($fn . '.gz')){
+            if (file_exists($fn . '.gz')){
                 $fn .= '.gz';
-            }else if(@file_exists($fn . '.bz2')){
+            }else if(file_exists($fn . '.bz2')){
                 $fn .= '.bz2';
             }else{
                 //file doesnt exist yet, so we take the configured extension
@@ -287,6 +319,9 @@ function wikiFN($raw_id,$rev='',$clean=true){
  * Returns the full path to the file for locking the page while editing.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $id page id
+ * @return string full path
  */
 function wikiLockFN($id) {
     global $conf;
@@ -298,6 +333,10 @@ function wikiLockFN($id) {
  * returns the full path to the meta file specified by ID and extension
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
+ *
+ * @param string $id   page id
+ * @param string $ext  file extension
+ * @return string full path
  */
 function metaFN($id,$ext){
     global $conf;
@@ -311,6 +350,10 @@ function metaFN($id,$ext){
  * returns the full path to the media's meta file specified by ID and extension
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id   media id
+ * @param string $ext  extension of media
+ * @return string
  */
 function mediaMetaFN($id,$ext){
     global $conf;
@@ -325,6 +368,9 @@ function mediaMetaFN($id,$ext){
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
  * @author Michael Hamann <michael@content-space.de>
+ *
+ * @param string $id page id
+ * @return array
  */
 function metaFiles($id){
     $basename = metaFN($id, '');
@@ -340,6 +386,10 @@ function metaFiles($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string     $id  media id
+ * @param string|int $rev empty string or revision timestamp
+ * @return string full path
  */
 function mediaFN($id, $rev=''){
     global $conf;
@@ -361,14 +411,16 @@ function mediaFN($id, $rev=''){
  *
  * @param  string $id  The id of the local file
  * @param  string $ext The file extension (usually txt)
+ * @return string full filepath to localized file
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function localeFN($id,$ext='txt'){
     global $conf;
     $file = DOKU_CONF.'lang/'.$conf['lang'].'/'.$id.'.'.$ext;
-    if(!@file_exists($file)){
+    if(!file_exists($file)){
         $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             //fall back to english
             $file = DOKU_INC.'inc/lang/en/'.$id.'.'.$ext;
         }
@@ -386,6 +438,11 @@ function localeFN($id,$ext='txt'){
  * http://www.php.net/manual/en/function.realpath.php#57016
  *
  * @author <bart at mediawave dot nl>
+ *
+ * @param string $ns     namespace which is context of id
+ * @param string $id     relative id
+ * @param bool   $clean  flag indicating that id should be cleaned
+ * @return string
  */
 function resolve_id($ns,$id,$clean=true){
     global $conf;
@@ -431,19 +488,35 @@ function resolve_id($ns,$id,$clean=true){
  * Returns a full media id
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string  $ns     namespace which is context of id
+ * @param string &$page   (reference) relative media id, updated to resolved id
+ * @param bool   &$exists (reference) updated with existance of media
  */
-function resolve_mediaid($ns,&$page,&$exists){
+function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
     $page   = resolve_id($ns,$page);
-    $file   = mediaFN($page);
-    $exists = @file_exists($file);
+    if($rev !== '' &&  $date_at){
+        $medialog = new MediaChangeLog($page);
+        $medialog_rev = $medialog->getLastRevisionAt($rev);
+        if($medialog_rev !== false) {
+            $rev = $medialog_rev;
+        }
+    }
+    
+    $file   = mediaFN($page,$rev);
+    $exists = file_exists($file);
 }
 
 /**
  * Returns a full page id
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string  $ns     namespace which is context of id
+ * @param string &$page   (reference) relative page id, updated to resolved id
+ * @param bool   &$exists (reference) updated with existance of media
  */
-function resolve_pageid($ns,&$page,&$exists){
+function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     global $conf;
     global $ID;
     $exists = false;
@@ -463,20 +536,26 @@ function resolve_pageid($ns,&$page,&$exists){
     $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
 
     // get filename (calls clean itself)
-    $file = wikiFN($page);
+    if($rev !== '' && $date_at) {
+        $pagelog = new PageChangeLog($page);
+        $pagelog_rev = $pagelog->getLastRevisionAt($rev);
+        if($pagelog_rev !== false)//something found
+           $rev  = $pagelog_rev;
+    }
+    $file = wikiFN($page,$rev);
 
     // if ends with colon or slash we have a namespace link
     if(in_array(substr($page,-1), array(':', ';')) ||
        ($conf['useslash'] && substr($page,-1) == '/')){
-        if(page_exists($page.$conf['start'])){
+        if(page_exists($page.$conf['start'],$rev,true,$date_at)){
             // start page inside namespace
             $page = $page.$conf['start'];
             $exists = true;
-        }elseif(page_exists($page.noNS(cleanID($page)))){
+        }elseif(page_exists($page.noNS(cleanID($page)),$rev,true,$date_at)){
             // page named like the NS inside the NS
             $page = $page.noNS(cleanID($page));
             $exists = true;
-        }elseif(page_exists($page)){
+        }elseif(page_exists($page,$rev,true,$date_at)){
             // page like namespace exists
             $page = $page;
             $exists = true;
@@ -486,14 +565,14 @@ function resolve_pageid($ns,&$page,&$exists){
         }
     }else{
         //check alternative plural/nonplural form
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             if( $conf['autoplural'] ){
                 if(substr($page,-1) == 's'){
                     $try = substr($page,0,-1);
                 }else{
                     $try = $page.'s';
                 }
-                if(page_exists($try)){
+                if(page_exists($try,$rev,true,$date_at)){
                     $page   = $try;
                     $exists = true;
                 }
@@ -533,6 +612,9 @@ function getCacheName($data,$ext=''){
  * Checks a pageid against $conf['hidepages']
  *
  * @author Andreas Gohr <gohr@cosmocode.de>
+ *
+ * @param string $id page id
+ * @return bool
  */
 function isHiddenPage($id){
     $data = array(
@@ -543,6 +625,11 @@ function isHiddenPage($id){
     return $data['hidden'];
 }
 
+/**
+ * callback checks if page is hidden
+ *
+ * @param array $data event data    - see isHiddenPage()
+ */
 function _isHiddenPage(&$data) {
     global $conf;
     global $ACT;
@@ -560,6 +647,9 @@ function _isHiddenPage(&$data) {
  * Reverse of isHiddenPage
  *
  * @author Andreas Gohr <gohr@cosmocode.de>
+ *
+ * @param string $id page id
+ * @return bool
  */
 function isVisiblePage($id){
     return !isHiddenPage($id);
@@ -572,8 +662,10 @@ function isVisiblePage($id){
  * “*”. Output is escaped.
  *
  * @author Adrian Lang <lang@cosmocode.de>
+ *
+ * @param string $id page id
+ * @return string
  */
-
 function prettyprint_id($id) {
     if (!$id || $id === ':') {
         return '*';
@@ -596,6 +688,10 @@ function prettyprint_id($id) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    urlencode
+ *
+ * @param string $file file name
+ * @param bool   $safe if true, only encoded when non ASCII characters detected
+ * @return string
  */
 function utf8_encodeFN($file,$safe=true){
     global $conf;
@@ -621,6 +717,9 @@ function utf8_encodeFN($file,$safe=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    urldecode
+ *
+ * @param string $file file name
+ * @return string
  */
 function utf8_decodeFN($file){
     global $conf;
@@ -640,6 +739,7 @@ function utf8_decodeFN($file){
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
+ *
  * @param  string $page the pagename you're looking for
  * @return string|false the full page id of the found page, false if any
  */

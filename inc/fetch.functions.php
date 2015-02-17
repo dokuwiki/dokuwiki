@@ -15,13 +15,16 @@
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
+ *
  * @param string $file   local file to send
  * @param string $mime   mime type of the file
  * @param bool   $dl     set to true to force a browser download
  * @param int    $cache  remaining cache time in seconds (-1 for $conf['cache'], 0 for no-cache)
  * @param bool   $public is this a public ressource or a private one?
+ * @param string $orig   original file to send - the file name will be used for the Content-Disposition
  */
-function sendFile($file, $mime, $dl, $cache, $public = false) {
+function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
     global $conf;
     // send mime headers
     header("Content-Type: $mime");
@@ -62,15 +65,20 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
     $fmtime = @filemtime($file);
     http_conditionalRequest($fmtime);
 
+    // Use the current $file if is $orig is not set.
+    if ( $orig == null ) {
+        $orig = $file;
+    }
+
     //download or display?
     if($dl) {
-        header('Content-Disposition: attachment; filename="'.utf8_basename($file).'";');
+        header('Content-Disposition: attachment;'.rfc2231_encode('filename', utf8_basename($orig)).';');
     } else {
-        header('Content-Disposition: inline; filename="'.utf8_basename($file).'";');
+        header('Content-Disposition: inline;'.rfc2231_encode('filename', utf8_basename($orig)).';');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
-    if(http_sendfile($file)) exit;
+    http_sendfile($file);
 
     // send file contents
     $fp = @fopen($file, "rb");
@@ -83,18 +91,44 @@ function sendFile($file, $mime, $dl, $cache, $public = false) {
 }
 
 /**
+ * Try an rfc2231 compatible encoding. This ensures correct
+ * interpretation of filenames outside of the ASCII set.
+ * This seems to be needed for file names with e.g. umlauts that
+ * would otherwise decode wrongly in IE.
+ *
+ * There is no additional checking, just the encoding and setting the key=value for usage in headers
+ *
+ * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ * @param string $name      name of the field to be set in the header() call
+ * @param string $value     value of the field to be set in the header() call
+ * @param string $charset   used charset for the encoding of value
+ * @param string $lang      language used.
+ * @return string           in the format " name=value" for values WITHOUT special characters
+ * @return string           in the format " name*=charset'lang'value" for values WITH special characters
+ */
+function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
+    $internal = preg_replace_callback('/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/', function($match) { return rawurlencode($match[0]); }, $value);
+    if ( $value != $internal ) {
+        return ' '.$name.'*='.$charset."'".$lang."'".$internal;
+    } else {
+        return ' '.$name.'="'.$value.'"';
+    }
+}
+
+/**
  * Check for media for preconditions and return correct status code
  *
  * READ: MEDIA, MIME, EXT, CACHE
  * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
  *
  * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ *
  * @param string $media  reference to the media id
  * @param string $file   reference to the file variable
  * @param string $rev
  * @param int    $width
  * @param int    $height
- * @return array(STATUS, STATUSMESSAGE)
+ * @return array as array(STATUS, STATUSMESSAGE)
  */
 function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     global $MIME, $EXT, $CACHE, $INPUT;
@@ -129,7 +163,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     }
 
     //check file existance
-    if(!@file_exists($file)) {
+    if(!file_exists($file)) {
         return array(404, 'Not Found');
     }
 
@@ -142,6 +176,9 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
  * Resolves named constants
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $cache
+ * @return int cachetime in seconds
  */
 function calc_cache($cache) {
     global $conf;

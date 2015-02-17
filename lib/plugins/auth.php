@@ -116,7 +116,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * @author Gabriel Birke <birke@d-scribe.de>
      * @param string $type   Modification type ('create', 'modify', 'delete')
      * @param array  $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
-     * @return mixed Result from the modification function or false if an event handler has canceled the action
+     * @return bool|null|int Result from the modification function or false if an event handler has canceled the action
      */
     public function triggerUserMod($type, $params) {
         $validTypes = array(
@@ -124,12 +124,15 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
             'modify' => 'modifyUser',
             'delete' => 'deleteUsers'
         );
-        if(empty($validTypes[$type]))
+        if(empty($validTypes[$type])) {
             return false;
+        }
+
+        $result = false;
         $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
         $evt       = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
         if($evt->advise_before(true)) {
-            $result                           = call_user_func_array(array($this, $validTypes[$type]), $params);
+            $result                           = call_user_func_array(array($this, $validTypes[$type]), $evt->data['params']);
             $evt->data['modification_result'] = $result;
         }
         $evt->advise_after();
@@ -229,14 +232,15 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * at least these fields:
      *
      * name string  full name of the user
-     * mail string  email addres of the user
+     * mail string  email address of the user
      * grps array   list of groups the user is in
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param   string $user the user name
-     * @return  array containing user data or false
+     * @param   bool $requireGroups whether or not the returned data must include groups
+     * @return  false|array containing user data or false
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         if(!$this->cando['external']) msg("no valid authorisation system in use", -1);
         return false;
     }
@@ -316,11 +320,11 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      *
      * @author  Chris Smith <chris@jalakai.co.uk>
      * @param   int   $start     index of first user to be returned
-     * @param   int   $limit     max number of users to be returned
+     * @param   int   $limit     max number of users to be returned, 0 for unlimited
      * @param   array $filter    array of field/pattern pairs, null for no filter
      * @return  array list of userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = -1, $filter = null) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = null) {
         msg("authorisation method does not support mass retrieval of user data", -1);
         return array();
     }

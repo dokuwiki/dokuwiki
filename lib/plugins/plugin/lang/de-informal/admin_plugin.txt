@@ -1,3 +1,0 @@
-===== Erweiterungsmanagement =====
-
-Auf dieser Seite kannst du alles anpassen was mit den DokuWiki [[doku>plugins|Erweiterungen]] zu tun hat. Der Ordner der Erweiterungen muss für den Webserver beschreibbar sein, um Erweiterungen herunterladen und installieren zu können. 

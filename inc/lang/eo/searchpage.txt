@@ -1,5 +1,5 @@
 ====== Serĉo ======
 
-Sube estas rezultoj de serĉo en la retejo.\\ Se vi ne trovis tion, kion vi serĉis, vi povas krei novan paĝon kun necesa nomo per la koresponda butono.
+Sube estas rezultoj de serĉo en la retejo.\\ @CREATEPAGEINFO@
 
 ===== Rezultoj =====

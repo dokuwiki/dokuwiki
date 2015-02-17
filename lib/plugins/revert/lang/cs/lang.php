@@ -15,6 +15,10 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
+ * @author Petr Klíma <qaxi@seznam.cz>
+ * @author Radovan Buroň <radovan@buron.cz>
+ * @author Viktor Zavadil <vzavadil@newps.cz>
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
 $lang['menu']                  = 'Obnova zaspamovaných stránek';
 $lang['filter']                = 'Hledat zaspamované stránky';

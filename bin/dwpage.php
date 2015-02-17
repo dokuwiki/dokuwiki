@@ -1,378 +1,318 @@
 #!/usr/bin/php
 <?php
-#------------------------------------------------------------------------------
-if ('cli' != php_sapi_name()) die();
+if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../').'/');
+define('NOSESSION', 1);
+require_once(DOKU_INC.'inc/init.php');
 
-ini_set('memory_limit','128M');
-if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../').'/');
-require_once DOKU_INC.'inc/init.php';
-require_once DOKU_INC.'inc/common.php';
-require_once DOKU_INC.'inc/cliopts.php';
+/**
+ * Checkout and commit pages from the command line while maintaining the history
+ */
+class PageCLI extends DokuCLI {
 
-#------------------------------------------------------------------------------
-function usage($action) {
-    switch ( $action ) {
-        case 'checkout':
-            print "Usage: dwpage.php [opts] checkout <wiki:page> [working_file]
+    protected $force = false;
+    protected $username = '';
 
-    Checks out a file from the repository, using the wiki id and obtaining
-    a lock for the page.
-    If a working_file is specified, this is where the page is copied to.
-    Otherwise defaults to the same as the wiki page in the current
-    working directory.
+    /**
+     * Register options and arguments on the given $options object
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function setup(DokuCLI_Options $options) {
+        /* global */
+        $options->registerOption(
+            'force',
+            'force obtaining a lock for the page (generally bad idea)',
+            'f'
+        );
+        $options->registerOption(
+            'user',
+            'work as this user. defaults to current CLI user',
+            'u',
+            'username'
+        );
+        $options->setHelp(
+            'Utility to help command line Dokuwiki page editing, allow '.
+            'pages to be checked out for editing then committed after changes'
+        );
 
-    EXAMPLE
-    $ ./dwpage.php checkout wiki:syntax ./new_syntax.txt
+        /* checkout command */
+        $options->registerCommand(
+            'checkout',
+            'Checks out a file from the repository, using the wiki id and obtaining '.
+            'a lock for the page. '."\n".
+            'If a working_file is specified, this is where the page is copied to. '.
+            'Otherwise defaults to the same as the wiki page in the current '.
+            'working directory.'
+        );
+        $options->registerArgument(
+            'wikipage',
+            'The wiki page to checkout',
+            true,
+            'checkout'
+        );
+        $options->registerArgument(
+            'workingfile',
+            'How to name the local checkout',
+            false,
+            'checkout'
+        );
 
-    OPTIONS
-        -h, --help=<action>: get help
-        -f: force obtaining a lock for the page (generally bad idea)
-";
-        break;
-        case 'commit':
-            print "Usage: dwpage.php [opts] -m \"Msg\" commit <working_file> <wiki:page>
+        /* commit command */
+        $options->registerCommand(
+            'commit',
+            'Checks in the working_file into the repository using the specified '.
+            'wiki id, archiving the previous version.'
+        );
+        $options->registerArgument(
+            'workingfile',
+            'The local file to commit',
+            true,
+            'commit'
+        );
+        $options->registerArgument(
+            'wikipage',
+            'The wiki page to create or update',
+            true,
+            'commit'
+        );
+        $options->registerOption(
+            'message',
+            'Summary describing the change (required)',
+            'm',
+            'summary',
+            'commit'
+        );
+        $options->registerOption(
+            'trivial',
+            'minor change',
+            't',
+            false,
+            'commit'
+        );
 
-    Checks in the working_file into the repository using the specified
-    wiki id, archiving the previous version.
+        /* lock command */
+        $options->registerCommand(
+            'lock',
+            'Obtains or updates a lock for a wiki page'
+        );
+        $options->registerArgument(
+            'wikipage',
+            'The wiki page to lock',
+            true,
+            'lock'
+        );
 
-    EXAMPLE
-    $ ./dwpage.php -m \"Some message\" commit ./new_syntax.txt wiki:syntax
-
-    OPTIONS
-        -h, --help=<action>: get help
-        -f: force obtaining a lock for the page (generally bad idea)
-        -t, trivial: minor change
-        -m (required): Summary message describing the change
-";
-        break;
-        case 'lock':
-            print "Usage: dwpage.php [opts] lock <wiki:page>
-
-    Obtains or updates a lock for a wiki page
-
-    EXAMPLE
-    $ ./dwpage.php lock wiki:syntax
-
-    OPTIONS
-        -h, --help=<action>: get help
-        -f: force obtaining a lock for the page (generally bad idea)
-";
-        break;
-        case 'unlock':
-            print "Usage: dwpage.php [opts] unlock <wiki:page>
-
-    Removes a lock for a wiki page.
-
-    EXAMPLE
-    $ ./dwpage.php unlock wiki:syntax
-
-    OPTIONS
-        -h, --help=<action>: get help
-        -f: force obtaining a lock for the page (generally bad idea)
-";
-        break;
-        default:
-            print "Usage: dwpage.php [opts] <action>
-
-    Utility to help command line Dokuwiki page editing, allow
-    pages to be checked out for editing then committed after changes
-
-    Normal operation would be;
-
-
-
-    ACTIONS
-        checkout: see $ dwpage.php --help=checkout
-        commit: see $ dwpage.php --help=commit
-        lock: see $ dwpage.php --help=lock
-
-    OPTIONS
-        -h, --help=<action>: get help
-            e.g. $ ./dwpage.php -hcommit
-            e.g. $ ./dwpage.php --help=commit
-";
-        break;
+        /* unlock command */
+        $options->registerCommand(
+            'unlock',
+            'Removes a lock for a wiki page.'
+        );
+        $options->registerArgument(
+            'wikipage',
+            'The wiki page to unlock',
+            true,
+            'unlock'
+        );
     }
-}
 
-#------------------------------------------------------------------------------
-function getUser() {
-    $user = getenv('USER');
-    if (empty ($user)) {
-        $user = getenv('USERNAME');
-    } else {
+    /**
+     * Your main program
+     *
+     * Arguments and options have been parsed when this is run
+     *
+     * @param DokuCLI_Options $options
+     * @return void
+     */
+    protected function main(DokuCLI_Options $options) {
+        $this->force    = $options->getOpt('force', false);
+        $this->username = $options->getOpt('user', $this->getUser());
+
+        $command = $options->getCmd();
+        switch($command) {
+            case 'checkout':
+                $wiki_id   = array_shift($options->args);
+                $localfile = array_shift($options->args);
+                $this->commandCheckout($wiki_id, $localfile);
+                break;
+            case 'commit':
+                $localfile = array_shift($options->args);
+                $wiki_id   = array_shift($options->args);
+                $this->commandCommit(
+                    $localfile,
+                    $wiki_id,
+                    $options->getOpt('message', ''),
+                    $options->getOpt('trivial', false)
+                );
+                break;
+            case 'lock':
+                $wiki_id = array_shift($options->args);
+                $this->obtainLock($wiki_id);
+                $this->success("$wiki_id locked");
+                break;
+            case 'unlock':
+                $wiki_id = array_shift($options->args);
+                $this->clearLock($wiki_id);
+                $this->success("$wiki_id unlocked");
+                break;
+            default:
+                echo $options->help();
+        }
+    }
+
+    /**
+     * Check out a file
+     *
+     * @param string $wiki_id
+     * @param string $localfile
+     */
+    protected function commandCheckout($wiki_id, $localfile) {
+        global $conf;
+
+        $wiki_id = cleanID($wiki_id);
+        $wiki_fn = wikiFN($wiki_id);
+
+        if(!file_exists($wiki_fn)) {
+            $this->fatal("$wiki_id does not yet exist");
+        }
+
+        if(empty($localfile)) {
+            $localfile = getcwd().'/'.utf8_basename($wiki_fn);
+        }
+
+        if(!file_exists(dirname($localfile))) {
+            $this->fatal("Directory ".dirname($localfile)." does not exist");
+        }
+
+        if(stristr(realpath(dirname($localfile)), realpath($conf['datadir'])) !== false) {
+            $this->fatal("Attempt to check out file into data directory - not allowed");
+        }
+
+        $this->obtainLock($wiki_id);
+
+        if(!copy($wiki_fn, $localfile)) {
+            $this->clearLock($wiki_id);
+            $this->fatal("Unable to copy $wiki_fn to $localfile");
+        }
+
+        $this->success("$wiki_id > $localfile");
+    }
+
+    /**
+     * Save a file as a new page revision
+     *
+     * @param string $localfile
+     * @param string $wiki_id
+     * @param string $message
+     * @param bool   $minor
+     */
+    protected function commandCommit($localfile, $wiki_id, $message, $minor) {
+        $wiki_id = cleanID($wiki_id);
+        $message = trim($message);
+
+        if(!file_exists($localfile)) {
+            $this->fatal("$localfile does not exist");
+        }
+
+        if(!is_readable($localfile)) {
+            $this->fatal("Cannot read from $localfile");
+        }
+
+        if(!$message) {
+            $this->fatal("Summary message required");
+        }
+
+        $this->obtainLock($wiki_id);
+
+        saveWikiText($wiki_id, file_get_contents($localfile), $message, $minor);
+
+        $this->clearLock($wiki_id);
+
+        $this->success("$localfile > $wiki_id");
+    }
+
+    /**
+     * Lock the given page or exit
+     *
+     * @param string $wiki_id
+     */
+    protected function obtainLock($wiki_id) {
+        if($this->force) $this->deleteLock($wiki_id);
+
+        $_SERVER['REMOTE_USER'] = $this->username;
+
+        if(checklock($wiki_id)) {
+            $this->error("Page $wiki_id is already locked by another user");
+            exit(1);
+        }
+
+        lock($wiki_id);
+
+        if(checklock($wiki_id) != $this->username) {
+            $this->error("Unable to obtain lock for $wiki_id ");
+            var_dump(checklock($wiki_id));
+            exit(1);
+        }
+    }
+
+    /**
+     * Clear the lock on the given page
+     *
+     * @param string $wiki_id
+     */
+    protected function clearLock($wiki_id) {
+        if($this->force) $this->deleteLock($wiki_id);
+
+        $_SERVER['REMOTE_USER'] = $this->username;
+        if(checklock($wiki_id)) {
+            $this->error("Page $wiki_id is locked by another user");
+            exit(1);
+        }
+
+        unlock($wiki_id);
+
+        if(file_exists(wikiLockFN($wiki_id))) {
+            $this->error("Unable to clear lock for $wiki_id");
+            exit(1);
+        }
+    }
+
+    /**
+     * Forcefully remove a lock on the page given
+     *
+     * @param string $wiki_id
+     */
+    protected function deleteLock($wiki_id) {
+        $wikiLockFN = wikiLockFN($wiki_id);
+
+        if(file_exists($wikiLockFN)) {
+            if(!unlink($wikiLockFN)) {
+                $this->error("Unable to delete $wikiLockFN");
+                exit(1);
+            }
+        }
+    }
+
+    /**
+     * Get the current user's username from the environment
+     *
+     * @return string
+     */
+    protected function getUser() {
+        $user = getenv('USER');
+        if(empty ($user)) {
+            $user = getenv('USERNAME');
+        } else {
+            return $user;
+        }
+        if(empty ($user)) {
+            $user = 'admin';
+        }
         return $user;
     }
-    if (empty ($user)) {
-        $user = 'admin';
-    }
-    return $user;
 }
 
-#------------------------------------------------------------------------------
-function getSuppliedArgument($OPTS, $short, $long) {
-    $arg = $OPTS->get($short);
-    if ( is_null($arg) ) {
-        $arg = $OPTS->get($long);
-    }
-    return $arg;
-}
 
-#------------------------------------------------------------------------------
-function obtainLock($WIKI_ID) {
-
-    global $USERNAME;
-
-    if ( !file_exists(wikiFN($WIKI_ID)) ) {
-        fwrite( STDERR, "$WIKI_ID does not yet exist\n");
-    }
-
-    $_SERVER['REMOTE_USER'] = $USERNAME;
-    if ( checklock($WIKI_ID) ) {
-        fwrite( STDERR, "Page $WIKI_ID is already locked by another user\n");
-        exit(1);
-    }
-
-    lock($WIKI_ID);
-
-    $_SERVER['REMOTE_USER'] = '_'.$USERNAME.'_';
-
-    if ( checklock($WIKI_ID) != $USERNAME ) {
-
-        fwrite( STDERR, "Unable to obtain lock for $WIKI_ID\n" );
-        exit(1);
-
-    }
-}
-
-#------------------------------------------------------------------------------
-function clearLock($WIKI_ID) {
-
-    global $USERNAME ;
-
-    if ( !file_exists(wikiFN($WIKI_ID)) ) {
-        fwrite( STDERR, "$WIKI_ID does not yet exist\n");
-    }
-
-    $_SERVER['REMOTE_USER'] = $USERNAME;
-    if ( checklock($WIKI_ID) ) {
-        fwrite( STDERR, "Page $WIKI_ID is locked by another user\n");
-        exit(1);
-    }
-
-    unlock($WIKI_ID);
-
-    if ( file_exists(wikiLockFN($WIKI_ID)) ) {
-        fwrite( STDERR, "Unable to clear lock for $WIKI_ID\n" );
-        exit(1);
-    }
-
-}
-
-#------------------------------------------------------------------------------
-function deleteLock($WIKI_ID) {
-
-    $wikiLockFN = wikiLockFN($WIKI_ID);
-
-    if ( file_exists($wikiLockFN) ) {
-        if ( !unlink($wikiLockFN) ) {
-            fwrite( STDERR, "Unable to delete $wikiLockFN\n" );
-            exit(1);
-        }
-    }
-
-}
-
-#------------------------------------------------------------------------------
-$USERNAME = getUser();
-$CWD = getcwd();
-$SYSTEM_ID = '127.0.0.1';
-
-#------------------------------------------------------------------------------
-$OPTS = Doku_Cli_Opts::getOptions(
-    __FILE__,
-    'h::fm:u:s:t',
-    array(
-        'help==',
-        'user=',
-        'system=',
-        'trivial',
-        )
-);
-
-if ( $OPTS->isError() ) {
-    print $OPTS->getMessage()."\n";
-    exit(1);
-}
-
-if ( $OPTS->has('h') or $OPTS->has('help') or !$OPTS->hasArgs() ) {
-    usage(getSuppliedArgument($OPTS,'h','help'));
-    exit(0);
-}
-
-if ( $OPTS->has('u') or $OPTS->has('user') ) {
-    $USERNAME = getSuppliedArgument($OPTS,'u','user');
-}
-
-if ( $OPTS->has('s') or $OPTS->has('system') ) {
-    $SYSTEM_ID = getSuppliedArgument($OPTS,'s','system');
-}
-
-#------------------------------------------------------------------------------
-switch ( $OPTS->arg(0) ) {
-
-    #----------------------------------------------------------------------
-    case 'checkout':
-
-        $WIKI_ID = $OPTS->arg(1);
-
-        if ( !$WIKI_ID ) {
-            fwrite( STDERR, "Wiki page ID required\n");
-            exit(1);
-        }
-
-        $WIKI_FN = wikiFN($WIKI_ID);
-
-        if ( !file_exists($WIKI_FN) ) {
-            fwrite( STDERR, "$WIKI_ID does not yet exist\n");
-            exit(1);
-        }
-
-        $TARGET_FN = $OPTS->arg(2);
-
-        if ( empty($TARGET_FN) ) {
-            $TARGET_FN = getcwd().'/'.utf8_basename($WIKI_FN);
-        }
-
-        if ( !file_exists(dirname($TARGET_FN)) ) {
-            fwrite( STDERR, "Directory ".dirname($TARGET_FN)." does not exist\n");
-            exit(1);
-        }
-
-        if ( stristr( realpath(dirname($TARGET_FN)), realpath($conf['datadir']) ) !== false ) {
-            fwrite( STDERR, "Attempt to check out file into data directory - not allowed\n");
-            exit(1);
-        }
-
-        if ( $OPTS->has('f') ) {
-            deleteLock($WIKI_ID);
-        }
-
-        obtainLock($WIKI_ID);
-
-        # Need to lock the file first?
-        if ( !copy($WIKI_FN, $TARGET_FN) ) {
-            fwrite( STDERR, "Unable to copy $WIKI_FN to $TARGET_FN\n");
-            clearLock($WIKI_ID);
-            exit(1);
-        }
-
-        print "$WIKI_ID > $TARGET_FN\n";
-        exit(0);
-
-    break;
-
-    #----------------------------------------------------------------------
-    case 'commit':
-
-        $TARGET_FN = $OPTS->arg(1);
-
-        if ( !$TARGET_FN ) {
-            fwrite( STDERR, "Target filename required\n");
-            exit(1);
-        }
-
-        if ( !file_exists($TARGET_FN) ) {
-            fwrite( STDERR, "$TARGET_FN does not exist\n");
-            exit(1);
-        }
-
-        if ( !is_readable($TARGET_FN) ) {
-            fwrite( STDERR, "Cannot read from $TARGET_FN\n");
-            exit(1);
-        }
-
-        $WIKI_ID = $OPTS->arg(2);
-
-        if ( !$WIKI_ID ) {
-            fwrite( STDERR, "Wiki page ID required\n");
-            exit(1);
-        }
-
-        if ( !$OPTS->has('m') ) {
-            fwrite( STDERR, "Summary message required\n");
-            exit(1);
-        }
-
-        if ( $OPTS->has('f') ) {
-            deleteLock($WIKI_ID);
-        }
-
-        $_SERVER['REMOTE_USER'] = $USERNAME;
-        if ( checklock($WIKI_ID) ) {
-            fwrite( STDERR, "$WIKI_ID is locked by another user\n");
-            exit(1);
-        }
-
-        obtainLock($WIKI_ID);
-
-        saveWikiText($WIKI_ID, file_get_contents($TARGET_FN), $OPTS->get('m'), $OPTS->has('t'));
-
-        clearLock($WIKI_ID);
-
-        exit(0);
-
-    break;
-
-    #----------------------------------------------------------------------
-    case 'lock':
-
-        $WIKI_ID = $OPTS->arg(1);
-
-        if ( !$WIKI_ID ) {
-            fwrite( STDERR, "Wiki page ID required\n");
-            exit(1);
-        }
-
-        if ( $OPTS->has('f') ) {
-            deleteLock($WIKI_ID);
-        }
-
-        obtainLock($WIKI_ID);
-
-        print "Locked : $WIKI_ID\n";
-        exit(0);
-
-    break;
-
-    #----------------------------------------------------------------------
-    case 'unlock':
-
-        $WIKI_ID = $OPTS->arg(1);
-
-        if ( !$WIKI_ID ) {
-            fwrite( STDERR, "Wiki page ID required\n");
-            exit(1);
-        }
-
-        if ( $OPTS->has('f') ) {
-            deleteLock($WIKI_ID);
-        } else {
-            clearLock($WIKI_ID);
-        }
-
-        print "Unlocked : $WIKI_ID\n";
-        exit(0);
-
-    break;
-
-    #----------------------------------------------------------------------
-    default:
-
-        fwrite( STDERR, "Invalid action ".$OPTS->arg(0)."\n" );
-        exit(1);
-
-    break;
-
-}
-
+// Main
+$cli = new PageCLI();
+$cli->run();

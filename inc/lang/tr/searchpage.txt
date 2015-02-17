@@ -1,5 +1,5 @@
 ====== Arama ======
 
-Aşağıda aramanın sonuçları listelenmiştir. Aradığınız şeyi bulamadıysanız, ''Sayfayı değiştir'' tuşuna tıklayarak girdiğiniz sorgu adıyla yeni bir sayfa oluşturabilirsiniz .
+Aşağıda aramanın sonuçları listelenmiştir. @CREATEPAGEINFO@
 
 ===== Sonuçlar =====

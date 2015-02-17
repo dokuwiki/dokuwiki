@@ -3,7 +3,7 @@
 /**
  * Increased whenever the API is changed
  */
-define('DOKU_API_VERSION', 8);
+define('DOKU_API_VERSION', 9);
 
 class RemoteAPICore {
 
@@ -13,6 +13,11 @@ class RemoteAPICore {
         $this->api = $api;
     }
 
+    /**
+     * Returns details about the core methods
+     *
+     * @return array
+     */
     function __getRemoteInfo() {
         return array(
             'dokuwiki.getVersion' => array(
@@ -24,6 +29,10 @@ class RemoteAPICore {
                 'return' => 'int',
                 'doc' => 'Tries to login with the given credentials and sets auth cookies.',
                 'public' => '1'
+            ), 'dokuwiki.logoff' => array(
+                'args' => array(),
+                'return' => 'int',
+                'doc' => 'Tries to logoff by expiring auth cookies and the associated PHP session.'
             ), 'dokuwiki.getPagelist' => array(
                 'args' => array('string', 'array'),
                 'return' => 'array',
@@ -154,19 +163,27 @@ class RemoteAPICore {
         );
     }
 
+    /**
+     * @return string
+     */
     function getVersion() {
         return getVersion();
     }
 
+    /**
+     * @return int unix timestamp
+     */
     function getTime() {
         return time();
     }
 
     /**
      * Return a raw wiki page
+     *
      * @param string $id wiki page id
-     * @param string $rev revision number of the page
-     * @return page text.
+     * @param int|string $rev revision timestamp of the page or empty string
+     * @return string page text.
+     * @throws RemoteAccessDeniedException if no permission for page
      */
     function rawPage($id,$rev=''){
         $id = $this->resolvePageId($id);
@@ -185,8 +202,11 @@ class RemoteAPICore {
      * Return a media file
      *
      * @author Gina Haeussge <osd@foosel.net>
+     *
      * @param string $id file id
-     * @return media file
+     * @return mixed media file
+     * @throws RemoteAccessDeniedException no permission for media
+     * @throws RemoteException not exist
      */
     function getAttachment($id){
         $id = cleanID($id);
@@ -207,6 +227,9 @@ class RemoteAPICore {
      * Return info about a media file
      *
      * @author Gina Haeussge <osd@foosel.net>
+     *
+     * @param string $id page id
+     * @return array
      */
     function getAttachmentInfo($id){
         $id = cleanID($id);
@@ -226,6 +249,11 @@ class RemoteAPICore {
 
     /**
      * Return a wiki page rendered to html
+     *
+     * @param string     $id  page id
+     * @param string|int $rev revision timestamp or empty string
+     * @return null|string html
+     * @throws RemoteAccessDeniedException no access to page
      */
     function htmlPage($id,$rev=''){
         $id = $this->resolvePageId($id);
@@ -237,6 +265,8 @@ class RemoteAPICore {
 
     /**
      * List all pages - we use the indexer list here
+     *
+     * @return array
      */
     function listPages(){
         $list  = array();
@@ -261,6 +291,12 @@ class RemoteAPICore {
 
     /**
      * List all pages in the given namespace (and below)
+     *
+     * @param string $ns
+     * @param array  $opts
+     *    $opts['depth']   recursion level, 0 for all
+     *    $opts['hash']    do md5 sum of content?
+     * @return array
      */
     function readNamespace($ns,$opts){
         global $conf;
@@ -277,9 +313,12 @@ class RemoteAPICore {
 
     /**
      * List all pages in the given namespace (and below)
+     *
+     * @param string $query
+     * @return array
      */
     function search($query){
-        $regex = '';
+        $regex = array();
         $data  = ft_pageSearch($query,$regex);
         $pages = array();
 
@@ -310,6 +349,8 @@ class RemoteAPICore {
 
     /**
      * Returns the wiki title.
+     *
+     * @return string
      */
     function getTitle(){
         global $conf;
@@ -324,6 +365,15 @@ class RemoteAPICore {
      * a regular expression matching their name.
      *
      * @author Gina Haeussge <osd@foosel.net>
+     *
+     * @param string $ns
+     * @param array  $options
+     *   $options['depth']     recursion level, 0 for all
+     *   $options['showmsg']   shows message if invalid media id is used
+     *   $options['pattern']   check given pattern
+     *   $options['hash']      add hashes to result list
+     * @return array
+     * @throws RemoteAccessDeniedException no access to the media files
      */
     function listAttachments($ns, $options = array()) {
         global $conf;
@@ -355,6 +405,9 @@ class RemoteAPICore {
 
     /**
      * Return a list of backlinks
+     *
+     * @param string $id page id
+     * @return array
      */
     function listBackLinks($id){
         return ft_backlinks($this->resolvePageId($id));
@@ -362,6 +415,12 @@ class RemoteAPICore {
 
     /**
      * Return some basic data about a page
+     *
+     * @param string     $id page id
+     * @param string|int $rev revision timestamp or empty string
+     * @return array
+     * @throws RemoteAccessDeniedException no access for page
+     * @throws RemoteException page not exist
      */
     function pageInfo($id,$rev=''){
         $id = $this->resolvePageId($id);
@@ -374,7 +433,8 @@ class RemoteAPICore {
             throw new RemoteException('The requested page does not exist', 121);
         }
 
-        $info = getRevisionInfo($id, $time, 1024);
+        $pagelog = new PageChangeLog($id, 1024);
+        $info = $pagelog->getRevisionInfo($time);
 
         $data = array(
             'name'         => $id,
@@ -390,6 +450,13 @@ class RemoteAPICore {
      * Save a wiki page
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param string $id page id
+     * @param string $text wiki text
+     * @param array $params parameters: summary, minor edit
+     * @return bool
+     * @throws RemoteAccessDeniedException no write access for page
+     * @throws RemoteException no id, empty new page or locked
      */
     function putPage($id, $text, $params) {
         global $TEXT;
@@ -446,6 +513,11 @@ class RemoteAPICore {
 
     /**
      * Appends text to a wiki page.
+     *
+     * @param string $id page id
+     * @param string $text wiki text
+     * @param array $params such as summary,minor
+     * @return bool|string
      */
     function appendPage($id, $text, $params) {
         $currentpage = $this->rawPage($id);
@@ -459,6 +531,12 @@ class RemoteAPICore {
      * Uploads a file to the wiki.
      *
      * Michael Klier <chi@chimeric.de>
+     *
+     * @param string $id page id
+     * @param string $file
+     * @param array $params such as overwrite
+     * @return false|string
+     * @throws RemoteException
      */
     function putAttachment($id, $file, $params) {
         $id = cleanID($id);
@@ -488,6 +566,11 @@ class RemoteAPICore {
      * Deletes a file from the wiki.
      *
      * @author Gina Haeussge <osd@foosel.net>
+     *
+     * @param string $id page id
+     * @return int
+     * @throws RemoteAccessDeniedException no permissions
+     * @throws RemoteException file in use or not deleted
      */
     function deleteAttachment($id){
         $id = cleanID($id);
@@ -506,6 +589,9 @@ class RemoteAPICore {
 
     /**
      * Returns the permissions of a given wiki page
+     *
+     * @param string $id page id
+     * @return int permission level
      */
     function aclCheck($id) {
         $id = $this->resolvePageId($id);
@@ -516,6 +602,10 @@ class RemoteAPICore {
      * Lists all links contained in a wiki page
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param string $id page id
+     * @return array
+     * @throws RemoteAccessDeniedException  no read access for page
      */
     function listLinks($id) {
         $id = $this->resolvePageId($id);
@@ -566,6 +656,10 @@ class RemoteAPICore {
      *
      * @author Michael Hamann <michael@content-space.de>
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param int $timestamp unix timestamp
+     * @return array
+     * @throws RemoteException no valid timestamp
      */
     function getRecentChanges($timestamp) {
         if(strlen($timestamp) != 10) {
@@ -591,7 +685,7 @@ class RemoteAPICore {
             return $changes;
         } else {
             // in case we still have nothing at this point
-            return new RemoteException('There are no changes in the specified timeframe', 321);
+            throw new RemoteException('There are no changes in the specified timeframe', 321);
         }
     }
 
@@ -600,6 +694,10 @@ class RemoteAPICore {
      *
      * @author Michael Hamann <michael@content-space.de>
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param int $timestamp unix timestamp
+     * @return array
+     * @throws RemoteException no valid timestamp
      */
     function getRecentMediaChanges($timestamp) {
         if(strlen($timestamp) != 10)
@@ -632,6 +730,12 @@ class RemoteAPICore {
      * Returns a list of available revisions of a given wiki page
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param string $id    page id
+     * @param int    $first skip the first n changelog lines
+     * @return array
+     * @throws RemoteAccessDeniedException no read access for page
+     * @throws RemoteException empty id
      */
     function pageVersions($id, $first) {
         $id = $this->resolvePageId($id);
@@ -646,11 +750,12 @@ class RemoteAPICore {
             throw new RemoteException('Empty page ID', 131);
         }
 
-        $revisions = getRevisions($id, $first, $conf['recent']+1);
+        $pagelog = new PageChangeLog($id);
+        $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
 
         if(count($revisions)==0 && $first!=0) {
             $first=0;
-            $revisions = getRevisions($id, $first, $conf['recent']+1);
+            $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
         }
 
         if(count($revisions)>0 && $first==0) {
@@ -672,8 +777,10 @@ class RemoteAPICore {
                 // case this can lead to less pages being returned than
                 // specified via $conf['recent']
                 if($time){
-                    $info = getRevisionInfo($id, $time, 1024);
+                    $pagelog->setChunkSize(1024);
+                    $info = $pagelog->getRevisionInfo($time);
                     if(!empty($info)) {
+                        $data = array();
                         $data['user'] = $info['user'];
                         $data['ip']   = $info['ip'];
                         $data['type'] = $info['type'];
@@ -706,6 +813,9 @@ class RemoteAPICore {
      *
      * Returns an associative array with the keys locked, lockfail, unlocked and
      * unlockfail, each containing lists of pages.
+     *
+     * @param array[] $set list pages with array('lock' => array, 'unlock' => array)
+     * @return array
      */
     function setLocks($set){
         $locked     = array();
@@ -740,13 +850,27 @@ class RemoteAPICore {
         );
     }
 
+    /**
+     * Return API version
+     *
+     * @return int
+     */
     function getAPIVersion(){
         return DOKU_API_VERSION;
     }
 
+    /**
+     * Login
+     *
+     * @param string $user
+     * @param string $pass
+     * @return int
+     */
     function login($user,$pass){
         global $conf;
+        /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
+
         if(!$conf['useacl']) return 0;
         if(!$auth) return 0;
 
@@ -767,6 +891,28 @@ class RemoteAPICore {
         return $ok;
     }
 
+    /**
+     * Log off
+     *
+     * @return int
+     */
+    function logoff(){
+        global $conf;
+        global $auth;
+        if(!$conf['useacl']) return 0;
+        if(!$auth) return 0;
+        
+        auth_logoff();
+
+        return 1;
+    }
+
+    /**
+     * Resolve page id
+     *
+     * @param string $id page id
+     * @return string
+     */
     private function resolvePageId($id) {
         $id = cleanID($id);
         if(empty($id)) {

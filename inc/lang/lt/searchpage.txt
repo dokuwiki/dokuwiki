@@ -1,5 +1,5 @@
 ====== Paieška ======
 
-Žemiau matote Jūsų atliktos paieškos rezultatus. Jeigu neradote to, ko ieškojote, galite sukurti naują puslapį šiuo pavadinimu paspausdami "Redaguoti šį puslapį".
+Žemiau matote Jūsų atliktos paieškos rezultatus. @CREATEPAGEINFO@
 
 ===== Rezultatai =====
