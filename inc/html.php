@@ -232,6 +232,14 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
 
     return $ret;
 }
+/**
+ * show a revision warning
+ *
+ * @author Szymon Olewniczak <dokuwiki@imz.re>
+ */
+function html_showrev($data) {
+    print p_locale_xhtml($data);
+}
 
 /**
  * Show a wiki page
@@ -265,7 +273,10 @@ function html_show($txt=null){
         echo '</div></div>';
 
     }else{
-        if ($REV||$DATE_AT) print p_locale_xhtml('showrev');
+        if ($REV||$DATE_AT){
+            $data = 'showrev';
+            trigger_event('HTML_SHOWREV_OUTPUT', $data, 'html_showrev');
+        }
         $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
