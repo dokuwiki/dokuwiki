@@ -237,8 +237,8 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
  *
  * @author Szymon Olewniczak <dokuwiki@imz.re>
  */
-function html_showrev($data) {
-    print p_locale_xhtml($data);
+function html_showrev() {
+    print p_locale_xhtml('showrev');
 }
 
 /**
@@ -274,7 +274,7 @@ function html_show($txt=null){
 
     }else{
         if ($REV||$DATE_AT){
-            $data = 'showrev';
+            $data = array('rev' => &$REV, 'date_at' => &$DATE_AT);
             trigger_event('HTML_SHOWREV_OUTPUT', $data, 'html_showrev');
         }
         $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
