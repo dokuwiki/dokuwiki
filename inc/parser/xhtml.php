@@ -1290,6 +1290,20 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
+     * Open a table body
+     */
+    function tabletbody_open() {
+        $this->doc .= DOKU_TAB.'<tbody>'.DOKU_LF;
+    }
+
+    /**
+     * Close a table body
+     */
+    function tabletbody_close() {
+        $this->doc .= DOKU_TAB.'</tbody>'.DOKU_LF;
+    }
+
+    /**
      * Open a table row
      */
     function tablerow_open() {
@@ -1753,7 +1767,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out .= '</audio>'.NL;
         return $out;
     }
-    
+
     /**
      * _getLastMediaRevisionAt is a helperfunction to internalmedia() and _media()
      * which returns an existing media revision less or equal to rev or date_at

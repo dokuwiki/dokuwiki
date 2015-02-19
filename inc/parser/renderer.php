@@ -708,6 +708,18 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
+     * Open a table body
+     */
+    function tabletbody_open() {
+    }
+
+    /**
+     * Close a table body
+     */
+    function tabletbody_close() {
+    }
+
+    /**
      * Open a table row
      */
     function tablerow_open() {
