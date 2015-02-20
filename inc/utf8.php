@@ -356,8 +356,12 @@ if(!function_exists('utf8_strtolower')){
      * @return string
      */
     function utf8_strtolower($string){
-        if(UTF8_MBSTRING) return normalizer::normalize(mb_strtolower($string,'utf-8'));
-
+        if(UTF8_MBSTRING) {
+            if (class_exists("Normalizer", $autoload = false)) 
+                return normalizer::normalize(mb_strtolower($string,'utf-8'));
+            else
+                return (mb_strtolower($string,'utf-8'));
+        }
         global $UTF8_UPPER_TO_LOWER;
         return strtr($string,$UTF8_UPPER_TO_LOWER);
     }
