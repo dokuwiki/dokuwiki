@@ -228,7 +228,7 @@ $lang['restored']              = 'ancienne révision (%s) restaurée';
 $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'L\'<a href="http://www.adobe.com/products/flashplayer/">extension Adobe Flash</a> est nécessaire pour afficher ce contenu.';
-$lang['download']              = 'Télécharger un extrait';
+$lang['download']              = 'Télécharger cet extrait';
 $lang['tools']                 = 'Outils';
 $lang['user_tools']            = 'Outils pour utilisateurs';
 $lang['site_tools']            = 'Outils du site';
