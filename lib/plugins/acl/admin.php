@@ -675,7 +675,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * return an array of all ACLs
+     * Returns an array of all ACLs
      * (meant to be use by XMLRC API)
      * Mostly a copy of _init_acl_config, consider refactoring ?
      *
@@ -685,15 +685,14 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         global $AUTH_ACL;
         global $conf;
         $acl_config = array();
-        $usersgroups = array();
 
         // get special users and groups
         $this->specials[] = '@ALL';
         $this->specials[] = '@'.$conf['defaultgroup'];
         if($conf['manager'] != '!!not set!!'){
             $this->specials = array_merge($this->specials,
-                                          array_map('trim',
-                                                    explode(',',$conf['manager'])));
+                array_map('trim',
+                explode(',',$conf['manager'])));
         }
         $this->specials = array_filter($this->specials);
         $this->specials = array_unique($this->specials);
