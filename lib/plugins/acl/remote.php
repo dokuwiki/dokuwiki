@@ -34,12 +34,17 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
     /**
      * List all ACL config entries
      *
-     * @return array [{scope, user, permission}]
+     * @throws RemoteAccessDeniedException
+     * @return dictionary {Scope: ACL}, where ACL = dictionnary {user/group: permissions_int}
      */
     public function listAcls(){
+        if(!auth_isadmin()) {
+         throw new RemoteAccessDeniedException('You are not allowed to access ACLs, superuser permission is required', 114);
+        }
         /** @var admin_plugin_acl $apa */
         $apa = plugin_load('admin', 'acl');
-        return $apa->_acl_list();
+        $apa->_init_acl_config();
+        return $apa->acl;
     }
 
     /**

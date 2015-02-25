@@ -675,49 +675,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Returns an array of all ACLs
-     * (meant to be use by XMLRC API)
-     * Mostly a copy of _init_acl_config, consider refactoring ?
-     *
-     * @author Cyril Duchon-Doris <cyril.duchon-doris@telecom-paristech.org>
-     */
-    function _acl_list(){
-        global $AUTH_ACL;
-        global $conf;
-        $acl_config = array();
-
-        // get special users and groups
-        $this->specials[] = '@ALL';
-        $this->specials[] = '@'.$conf['defaultgroup'];
-        if($conf['manager'] != '!!not set!!'){
-            $this->specials = array_merge($this->specials,
-                array_map('trim',
-                explode(',',$conf['manager'])));
-        }
-        $this->specials = array_filter($this->specials);
-        $this->specials = array_unique($this->specials);
-        sort($this->specials);
-
-        foreach($AUTH_ACL as $line){
-            $line = trim(preg_replace('/#.*$/','',$line)); //ignore comments
-            if(!$line) continue;
-
-            $acl = preg_split('/[ \t]+/',$line);
-            //0 is pagename, 1 is user, 2 is acl
-
-            $acl[1] = rawurldecode($acl[1]);
-            $acl_config[$acl[0]][$acl[1]] = $acl[2];
-
-            // store non-special users and groups for later selection dialog
-            $ug = $acl[1];
-            if(in_array($ug,$this->specials)) continue;
-        }
-
-        ksort($acl_config);
-        return $acl_config;
-    }
-
-    /**
      * adds new acl-entry to conf/acl.auth.php
      *
      * @author  Frank Schubert <frank@schokilade.de>
