@@ -18,3 +18,4 @@ $meta['groupscope']  = array('multichoice','_choices' => array('sub','one','base
 $meta['userkey']     = array('string','_caution' => 'danger');
 $meta['groupkey']    = array('string','_caution' => 'danger');
 $meta['debug']       = array('onoff','_caution' => 'security');
+$meta['modPass']     = array('onoff');

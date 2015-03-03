@@ -37,7 +37,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         // Add the capabilities to change the password
-        $this->cando['modPass'] = true;
+        $this->cando['modPass'] = $this->getConf('modPass');
     }
 
     /**
