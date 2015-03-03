@@ -14,7 +14,7 @@ require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
-    header('Content-Type: text/javascript; charset=utf-8');
+    header('Content-Type: application/javascript; charset=utf-8');
     js_out();
 }
 
