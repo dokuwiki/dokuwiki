@@ -20,6 +20,7 @@ $lang['binddn']                = 'DN eines optionalen Benutzers, wenn der anonym
 $lang['bindpw']                = 'Passwort des angegebenen Benutzers.';
 $lang['userscope']             = 'Die Suchweite nach Benutzeraccounts.';
 $lang['groupscope']            = 'Die Suchweite nach Benutzergruppen.';
+$lang['userkey']               = 'Attribut, das den Benutzernamen enthält; muss konsistent zum userfilter sein.';
 $lang['groupkey']              = 'Gruppieren der Benutzeraccounts anhand eines beliebigen Benutzerattributes z. B. Telefonnummer oder Abteilung, anstelle der Standard-Gruppen).';
 $lang['debug']                 = 'Debug-Informationen beim Auftreten von Fehlern anzeigen?';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
