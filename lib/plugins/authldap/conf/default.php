@@ -16,5 +16,6 @@ $conf['bindpw']      = '';
 //$conf['mapping']['grps']  unsupported in config manager
 $conf['userscope']  = 'sub';
 $conf['groupscope'] = 'sub';
+$conf['userkey']    = 'uid';
 $conf['groupkey']   = 'cn';
 $conf['debug']      = 0;
