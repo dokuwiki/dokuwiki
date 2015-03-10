@@ -1060,17 +1060,16 @@ function media_preview_buttons($image, $auth, $rev='') {
 function media_image_preview_size($image, $rev, $meta, $size = 500) {
     if (!file_exists(mediaFN($image, $rev))) return false;
  
-       if (preg_match("/\.svg$/", $image) ) {
-               $xml = simplexml_load_file(mediaFN($image, $rev));
-               $attr = $xml->attributes();
-    $w = (int) $attr->width ;
-    $h = (int) $attr->height ;
-       //error_log("issize " . $attr->width . " x ". $attr->height); 
-       } else if (preg_match("/\.(jpe?g|gif|png)$/", $image)  ) {
-     $info = getimagesize(mediaFN($image, $rev));
-     $w = (int) $info[0];
-     $h = (int) $info[1];
-       } else return false;
+    if (preg_match("/\.svg$/", $image) ) {
+        $xml = simplexml_load_file(mediaFN($image, $rev));
+        $attr = $xml->attributes();
+        $w = (int) $attr->width ;
+        $h = (int) $attr->height ;
+    } else if (preg_match("/\.(jpe?g|gif|png)$/", $image)  ) {
+        $info = getimagesize(mediaFN($image, $rev));
+        $w = (int) $info[0];
+        $h = (int) $info[1];
+    } else return false;
 
     if($meta && ($w > $size || $h > $size)){
         $ratio = $meta->getResizeRatio($size, $size);
