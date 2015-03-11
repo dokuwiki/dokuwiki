@@ -116,6 +116,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // other can do's are changed in $this->_loadServerConfig() base on domain setup
         $this->cando['modName'] = true;
         $this->cando['modMail'] = true;
+        $this->cando['getUserCount'] = true;
     }
 
     /**
@@ -323,6 +324,26 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     public function isCaseSensitive() {
         return false;
+    }
+
+    /**
+     * @param array $filter
+     * @return int
+     */
+    public function getUserCount($filter = array()) {
+
+        $adldap = $this->_adldap(null);
+        if(!$adldap) {
+            dbglog("authad/auth.php: _adldap not set.");
+            return -1;
+        }
+
+        $result = $adldap->user()->all();
+        if (!$result) {
+            dbglog("authad/auth.php: getting all users failed.");
+            return -1;
+        }
+        return count($result);
     }
 
     /**
