@@ -3,6 +3,7 @@
 if(!defined('DOKU_INC')) die();
 
 require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
+require_once(DOKU_PLUGIN.'authad/adLDAP/classes/adLDAPUtils.php');
 
 /**
  * Active Directory authentication backend for DokuWiki
@@ -340,19 +341,20 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         if (!$filter){
             return '*';
         }
+        $adldapUtils = new adLDAPUtils($this->_adldap(null));
         $result = '*';
         if (isset($filter['name'])) {
-            $result .= ')(displayname=*' . $filter['name'] . '*';
+            $result .= ')(displayname=*' . $adldapUtils->ldapSlashes($filter['name']) . '*';
             unset($filter['name']);
         }
 
         if (isset($filter['user'])) {
-            $result .= ')(samAccountName=*' . $filter['user'] . '*';
+            $result .= ')(samAccountName=*' . $adldapUtils->ldapSlashes($filter['user']) . '*';
             unset($filter['user']);
         }
 
         if (isset($filter['mail'])) {
-            $result .= ')(mail=*' . $filter['mail'] . '*';
+            $result .= ')(mail=*' . $adldapUtils->ldapSlashes($filter['mail']) . '*';
             unset($filter['mail']);
         }
         return $result;
