@@ -387,12 +387,16 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             if (isset($filter['grps'])) {
                 $this->users = array_fill_keys($result, false);
                 $usermanager = plugin_load("admin", "usermanager", false);
+                $usermanager->setLastdisabled(true);
                 if (!isset($this->_grpsusers[$this->_filterToString($filter)])){
                     $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize());
                 } elseif (count($this->_grpsusers[$this->_filterToString($filter)]) < getStart() + 3*$usermanager->getPagesize()) {
                     $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize() - count($this->_grpsusers[$this->_filterToString($filter)]));
                 }
                 $result = $this->_grpsusers[$this->_filterToString($filter)];
+            } else {
+                $usermanager = plugin_load("admin", "usermanager", false);
+                $usermanager->setLastdisabled(false);
             }
 
         }
@@ -470,6 +474,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $result = array();
 
         if (!isset($filter['grps'])) {
+            $usermanager = plugin_load("admin", "usermanager", false);
+            $usermanager->setLastdisabled(false);
             foreach($this->users as $user => &$info) {
                 if($i++ < $start) {
                     continue;
@@ -483,6 +489,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 }
             }
         } else {
+            $usermanager = plugin_load("admin", "usermanager", false);
+            $usermanager->setLastdisabled(true);
             if (!isset($this->_grpsusers[$this->_filterToString($filter)]) || count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)) {
                 $this->_fillGroupUserArray($filter,$start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1);
             }

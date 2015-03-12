@@ -31,6 +31,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     protected $_edit_userdata = array();
     protected $_disabled = '';      // if disabled set to explanatory string
     protected $_import_failures = array();
+    protected $_lastdisabled = false; // set to true if last user is unknown and last button is hence buggy
 
     /**
      * Constructor
@@ -93,6 +94,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     public function getPagesize() {
         return $this->_pagesize;
+    }
+
+    /**
+     * @param boolean $lastdisabled
+     */
+    public function setLastdisabled($lastdisabled) {
+        $this->_lastdisabled = $lastdisabled;
     }
 
     /**
@@ -848,6 +856,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $buttons['next'] = '';
         } else {
             $buttons['last'] = $buttons['next'] = (($this->_start + $this->_pagesize) >= $this->_user_total) ? $disabled : '';
+        }
+
+        if ($this->_lastdisabled) {
+            $buttons['last'] = $disabled;
         }
 
         return $buttons;
