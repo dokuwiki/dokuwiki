@@ -37,7 +37,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         // Add the capabilities to change the password
-        $this->cando['modPass'] = true;
+        $this->cando['modPass'] = $this->getConf('modPass');
     }
 
     /**
@@ -359,8 +359,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $sr          = ldap_search($this->con, $this->getConf('usertree'), $all_filter);
             $entries     = ldap_get_entries($this->con, $sr);
             $users_array = array();
+            $userkey     = $this->getConf('userkey');
             for($i = 0; $i < $entries["count"]; $i++) {
-                array_push($users_array, $entries[$i]["uid"][0]);
+                array_push($users_array, $entries[$i][$userkey][0]);
             }
             asort($users_array);
             $result = $users_array;
