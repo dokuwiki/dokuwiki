@@ -57,6 +57,20 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
                         <div class="img_detail">
                             <?php tpl_img_meta(); ?>
+                            <dl>
+                            <?php
+                            echo '<dt>'.$lang['reference'].':</dt>';
+                            $media_usage = ft_mediause($IMG,true);
+                            if(count($media_usage) > 0){
+                                foreach($media_usage as $path){
+                                    echo '<dd>'.html_wikilink($path).'</a></dd>';
+                                }
+                            }else{
+                                echo '<dd>'.$lang['nothingfound'].'</dd>';
+                            }
+                            ?>
+                            </dl>
+                            <p><?php echo $lang['media_acl_warning']; ?></p>
                         </div>
                         <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
                     <?php endif; ?>
