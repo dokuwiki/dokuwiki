@@ -67,6 +67,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     protected $_pattern = array();
 
+    protected $_actualstart = 0;
+
+    protected $_grpsusers = array();
+
     /**
      * Constructor
      */
@@ -380,6 +384,16 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             dbglog($filter);
             $searchString = $this->_constructSearchString($filter);
             $result = $adldap->user()->all(false, $searchString);
+            if (isset($filter['grps'])) {
+                $this->users = array_fill_keys($result, false);
+                $usermanager = plugin_load("admin", "usermanager", false);
+                if (!isset($this->_grpsusers[$this->_filterToString($filter)])){
+                    $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize());
+                } elseif (count($this->_grpsusers[$this->_filterToString($filter)]) < getStart() + 3*$usermanager->getPagesize()) {
+                    $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize() - count($this->_grpsusers[$this->_filterToString($filter)]));
+                }
+                $result = $this->_grpsusers[$this->_filterToString($filter)];
+            }
 
         }
 
@@ -390,6 +404,44 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         return count($result);
     }
 
+    protected function _filterToString ($filter) {
+        $result = '';
+        if (isset($filter['user'])) {
+            $result .= 'user-' . $filter['user'];
+        }
+        if (isset($filter['name'])) {
+            $result .= 'name-' . $filter['name'];
+        }
+        if (isset($filter['mail'])) {
+            $result .= 'mail-' . $filter['mail'];
+        }
+        if (isset($filter['grps'])) {
+            $result .= 'grps-' . $filter['grps'];
+        }
+        return $result;
+    }
+
+    protected function _fillGroupUserArray($filter, $numberOfAdds){
+        $this->_grpsusers[$this->_filterToString($filter)];
+        $i = 0;
+        $count = 0;
+        $this->_constructPattern($filter);
+        foreach ($this->users as $user => &$info) {
+            if($i++ < $this->_actualstart) {
+                continue;
+            }
+            if($info === false) {
+                $info = $this->getUserData($user);
+            }
+            if($this->_filter($user, $info)) {
+                $this->_grpsusers[$this->_filterToString($filter)][$user] = $info;
+                if(($numberOfAdds > 0) && (++$count >= $numberOfAdds)) break;
+            }
+        }
+        $this->_actualstart = $i;
+        return $count;
+    }
+
     /**
      * Bulk retrieval of user data
      *
@@ -398,10 +450,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @param   int $start index of first user to be returned
      * @param   int $limit max number of users to be returned
      * @param   array $filter array of field/pattern pairs, null for no filter
-     * @param   bool $setStart
      * @return array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = 0, $filter = array(), $setStart = true) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         dbglog("start: " . $start . "; limit: " . $limit);
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
@@ -418,17 +469,32 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $this->_constructPattern($filter);
         $result = array();
 
-        foreach($this->users as $user => &$info) {
-            if($i++ < $start) {
-                continue;
+        if (!isset($filter['grps'])) {
+            foreach($this->users as $user => &$info) {
+                if($i++ < $start) {
+                    continue;
+                }
+                if($info === false) {
+                    $info = $this->getUserData($user);
+                }
+                if($this->_filter($user, $info)) {
+                    $result[$user] = $info;
+                    if(($limit > 0) && (++$count >= $limit)) break;
+                }
             }
-            if($info === false) {
-                $info = $this->getUserData($user);
+        } else {
+            if (!isset($this->_grpsusers[$this->_filterToString($filter)]) || count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)) {
+                $this->_fillGroupUserArray($filter,$start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1);
             }
-            if($this->_filter($user, $info)) {
+            foreach($this->_grpsusers[$this->_filterToString($filter)] as $user => &$info) {
+                dbglog($this->_grpsusers[$this->_filterToString($filter)]);
+                if($i++ < $start) {
+                    continue;
+                }
                 $result[$user] = $info;
                 if(($limit > 0) && (++$count >= $limit)) break;
             }
+
         }
         return $result;
     }
