@@ -331,6 +331,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Create a Search-String useable by adLDAPUsers::all($includeDescription = false, $search = "*", $sorted = true)
+     *
      * @param array $filter
      * @return string
      */
@@ -343,6 +345,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $result .= ')(displayname=*' . $filter['name'] . '*';
             unset($filter['name']);
         }
+
         if (isset($filter['user'])) {
             $result .= ')(samAccountName=*' . $filter['user'] . '*';
             unset($filter['user']);
@@ -356,8 +359,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * @param array $filter
-     * @return int
+     * Return a count of the number of user which meet $filter criteria
+     *
+     * @param array $filter  $filter array of field/pattern pairs, empty array for no filter
+     * @return int number of users
      */
     public function getUserCount($filter = array()) {
         $adldap = $this->_adldap(null);
@@ -418,6 +423,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Create an array of $numberOfAdds users passing a certain $filter, including belonging
+     * to a certain group and save them to a object-wide array. If the array
+     * already exists try to add $numberOfAdds further users to it.
+     *
      * @param array $filter
      * @param int $numberOfAdds additional number of users requested
      * @return int number of Users actually add to Array
