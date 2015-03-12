@@ -326,19 +326,63 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         return false;
     }
 
+    protected function _constructSearchString($filter){
+        if (!$filter){
+            return '*';
+        }
+        $result = '*';
+        if (isset($filter['name'])) {
+            $result .= ')(displayname=*' . $filter['name'] . '*';
+            unset($filter['name']);
+        }
+        if (isset($filter['user'])) {
+            $result .= ')(samAccountName=*' . $filter['user'] . '*';
+            unset($filter['user']);
+        }
+
+        if (isset($filter['mail'])) {
+            $result .= ')(mail=*' . $filter['mail'] . '*';
+            unset($filter['mail']);
+        }
+        dbglog($result);
+        return $result;
+    }
+
     /**
      * @param array $filter
      * @return int
      */
     public function getUserCount($filter = array()) {
+        if ($filter == array()) {
+            $adldap = $this->_adldap(null);
+            if(!$adldap) {
+                dbglog("authad/auth.php getUserCount(): _adldap not set.");
+                return -1;
+            }
+            $result = $adldap->user()->all();
+            $start = 0;
+        } else {/*
+            dbglog('_startcache: ' . $this->_startcache);
+            $usermanager = plugin_load("admin", "usermanager", false);
+            if ($this->_startcache < $usermanager->getStart()) {
+                $start = $usermanager->getStart();
+                $this->_startcache = $start;
+            } else {
+                $start = $this->_startcache;
+            }
+            $pagesize = $usermanager->getPagesize();
+            $result = $this->retrieveUsers($start, 3*$pagesize,$filter,false);*/
+            $adldap = $this->_adldap(null);
+            if(!$adldap) {
+                dbglog("authad/auth.php getUserCount(): _adldap not set.");
+                return -1;
+            }
+            dbglog($filter);
+            $searchString = $this->_constructSearchString($filter);
+            $result = $adldap->user()->all(false, $searchString);
 
-        $adldap = $this->_adldap(null);
-        if(!$adldap) {
-            dbglog("authad/auth.php: _adldap not set.");
-            return -1;
         }
 
-        $result = $adldap->user()->all();
         if (!$result) {
             dbglog("authad/auth.php: getting all users failed.");
             return -1;
@@ -351,18 +395,20 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      *
      * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
      *
-     * @param   int   $start     index of first user to be returned
-     * @param   int   $limit     max number of users to be returned
-     * @param   array $filter    array of field/pattern pairs, null for no filter
-     * @return  array userinfo (refer getUserData for internal userinfo details)
+     * @param   int $start index of first user to be returned
+     * @param   int $limit max number of users to be returned
+     * @param   array $filter array of field/pattern pairs, null for no filter
+     * @param   bool $setStart
+     * @return array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
+    public function retrieveUsers($start = 0, $limit = 0, $filter = array(), $setStart = true) {
+        dbglog("start: " . $start . "; limit: " . $limit);
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
         if(!$this->users) {
             //get info for given user
-            $result = $adldap->user()->all();
+            $result = $adldap->user()->all(false, $this->_constructSearchString($filter));
             if (!$result) return array();
             $this->users = array_fill_keys($result, false);
         }

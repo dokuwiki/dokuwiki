@@ -82,6 +82,20 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * @return int current start value for pageination
+     */
+    public function getStart() {
+        return $this->_start;
+    }
+
+    /**
+     * @return int number of users per page
+     */
+    public function getPagesize() {
+        return $this->_pagesize;
+    }
+
+    /**
      * Handle user request
      *
      * @return bool
