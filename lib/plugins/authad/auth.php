@@ -330,6 +330,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         return false;
     }
 
+    /**
+     * @param array $filter
+     * @return string
+     */
     protected function _constructSearchString($filter){
         if (!$filter){
             return '*';
@@ -348,7 +352,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $result .= ')(mail=*' . $filter['mail'] . '*';
             unset($filter['mail']);
         }
-        dbglog($result);
         return $result;
     }
 
@@ -357,31 +360,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @return int
      */
     public function getUserCount($filter = array()) {
+        $adldap = $this->_adldap(null);
+        if(!$adldap) {
+            dbglog("authad/auth.php getUserCount(): _adldap not set.");
+            return -1;
+        }
         if ($filter == array()) {
-            $adldap = $this->_adldap(null);
-            if(!$adldap) {
-                dbglog("authad/auth.php getUserCount(): _adldap not set.");
-                return -1;
-            }
             $result = $adldap->user()->all();
-            $start = 0;
-        } else {/*
-            dbglog('_startcache: ' . $this->_startcache);
-            $usermanager = plugin_load("admin", "usermanager", false);
-            if ($this->_startcache < $usermanager->getStart()) {
-                $start = $usermanager->getStart();
-                $this->_startcache = $start;
-            } else {
-                $start = $this->_startcache;
-            }
-            $pagesize = $usermanager->getPagesize();
-            $result = $this->retrieveUsers($start, 3*$pagesize,$filter,false);*/
-            $adldap = $this->_adldap(null);
-            if(!$adldap) {
-                dbglog("authad/auth.php getUserCount(): _adldap not set.");
-                return -1;
-            }
-            dbglog($filter);
+        } else {
             $searchString = $this->_constructSearchString($filter);
             $result = $adldap->user()->all(false, $searchString);
             if (isset($filter['grps'])) {
@@ -390,7 +376,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 $usermanager->setLastdisabled(true);
                 if (!isset($this->_grpsusers[$this->_filterToString($filter)])){
                     $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize());
-                } elseif (count($this->_grpsusers[$this->_filterToString($filter)]) < getStart() + 3*$usermanager->getPagesize()) {
+                } elseif (count($this->_grpsusers[$this->_filterToString($filter)]) < $usermanager->getStart() + 3*$usermanager->getPagesize()) {
                     $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize() - count($this->_grpsusers[$this->_filterToString($filter)]));
                 }
                 $result = $this->_grpsusers[$this->_filterToString($filter)];
@@ -402,12 +388,18 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         if (!$result) {
-            dbglog("authad/auth.php: getting all users failed.");
-            return -1;
+            return 0;
         }
         return count($result);
     }
 
+    /**
+     *
+     * create a unique string for each filter used with a group
+     *
+     * @param array $filter
+     * @return string
+     */
     protected function _filterToString ($filter) {
         $result = '';
         if (isset($filter['user'])) {
@@ -425,6 +417,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         return $result;
     }
 
+    /**
+     * @param array $filter
+     * @param int $numberOfAdds additional number of users requested
+     * @return int number of Users actually add to Array
+     */
     protected function _fillGroupUserArray($filter, $numberOfAdds){
         $this->_grpsusers[$this->_filterToString($filter)];
         $i = 0;
@@ -457,7 +454,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @return array userinfo (refer getUserData for internal userinfo details)
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
-        dbglog("start: " . $start . "; limit: " . $limit);
         $adldap = $this->_adldap(null);
         if(!$adldap) return false;
 
@@ -470,12 +466,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
         $i     = 0;
         $count = 0;
-        $this->_constructPattern($filter);
         $result = array();
 
         if (!isset($filter['grps'])) {
             $usermanager = plugin_load("admin", "usermanager", false);
             $usermanager->setLastdisabled(false);
+            $this->_constructPattern($filter);
             foreach($this->users as $user => &$info) {
                 if($i++ < $start) {
                     continue;
@@ -483,10 +479,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if($info === false) {
                     $info = $this->getUserData($user);
                 }
-                if($this->_filter($user, $info)) {
-                    $result[$user] = $info;
-                    if(($limit > 0) && (++$count >= $limit)) break;
-                }
+                $result[$user] = $info;
+                if(($limit > 0) && (++$count >= $limit)) break;
             }
         } else {
             $usermanager = plugin_load("admin", "usermanager", false);
@@ -494,8 +488,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             if (!isset($this->_grpsusers[$this->_filterToString($filter)]) || count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)) {
                 $this->_fillGroupUserArray($filter,$start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1);
             }
+            if (!$this->_grpsusers[$this->_filterToString($filter)]) return false;
             foreach($this->_grpsusers[$this->_filterToString($filter)] as $user => &$info) {
-                dbglog($this->_grpsusers[$this->_filterToString($filter)]);
                 if($i++ < $start) {
                     continue;
                 }
