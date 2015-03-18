@@ -191,9 +191,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                  */
                 $groups = join(', ',$grps);
                 ptln("    <tr class=\"user_info\">");
-                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".$user."]\" ".$delete_disable." /></td>");
+                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".hsc($user)."]\" ".$delete_disable." /></td>");
                 if ($editable) {
-                    ptln("    <td><a href=\"".wl($ID,array('fn[edit]['.hsc($user).']' => 1,
+                    ptln("    <td><a href=\"".wl($ID,array('fn[edit]['.$user.']' => 1,
                                                            'do' => 'admin',
                                                            'page' => 'usermanager',
                                                            'sectok' => getSecurityToken())).
@@ -325,7 +325,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         // save current $user, we need this to access details if the name is changed
         if ($user)
-          ptln("          <input type=\"hidden\" name=\"userid_old\"  value=\"".$user."\" />",$indent);
+          ptln("          <input type=\"hidden\" name=\"userid_old\"  value=\"".hsc($user)."\" />",$indent);
 
         $this->_htmlFilterSettings($indent+10);
 
@@ -370,6 +370,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $fieldtype = 'text';
             $autocomp  = '';
         }
+        $value = hsc($value);
 
         echo "<tr $class>";
         echo "<td><label for=\"$id\" >$label: </label></td>";
