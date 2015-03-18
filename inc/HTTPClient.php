@@ -604,6 +604,8 @@ class HTTPClient {
                 $requesturl = $requestinfo['path'];
                 return true;
             }
+
+            throw new HTTPClientException('Failed to set up crypto for secure proxy connection', -151);
         }
 
         throw new HTTPClientException('Failed to establish secure proxy connection', -150);
