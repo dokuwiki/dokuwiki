@@ -49,6 +49,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
+                <?php html_msgarea() ?>
 
                 <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
 

@@ -13,6 +13,7 @@
  * @author alex <ralexay@gmail.com>
  * @author matt carroll <matt.carroll@gmail.com>
  * @author tomer <tomercarolldergicz@gmail.com>
+ * @author itsho <itsho.itsho@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -57,6 +58,8 @@ $lang['btn_register']          = 'הרשמה';
 $lang['btn_apply']             = 'ליישם';
 $lang['btn_media']             = 'מנהל המדיה';
 $lang['btn_deleteuser']        = 'להסיר את החשבון שלי';
+$lang['btn_img_backto']        = 'חזרה אל %s';
+$lang['btn_mediaManager']      = 'צפה במנהל מדיה';
 $lang['loggedinas']            = 'נכנסת בשם:';
 $lang['user']                  = 'שם משתמש';
 $lang['pass']                  = 'ססמה';
@@ -188,6 +191,11 @@ $lang['difflink']              = 'קישור לתצוגה השוואה זו';
 $lang['diff_type']             = 'הצגת הבדלים:';
 $lang['diff_inline']           = 'באותה השורה';
 $lang['diff_side']             = 'זה לצד זה';
+$lang['diffprevrev']           = 'הגירסה הקודמת';
+$lang['diffnextrev']           = 'הגירסה הבאה';
+$lang['difflastrev']           = 'הגירסה האחרונה';
+$lang['diffbothprevrev']       = 'גירסה קודמת בשני הצדדים';
+$lang['diffbothnextrev']       = 'הגירסה הבאה בשני הצדדים';
 $lang['line']                  = 'שורה';
 $lang['breadcrumb']            = 'ביקורים אחרונים:';
 $lang['youarehere']            = 'זהו מיקומך:';
@@ -244,7 +252,6 @@ $lang['admin_register']        = 'הוספת משתמש חדש';
 $lang['metaedit']              = 'עריכת נתוני העל';
 $lang['metasaveerr']           = 'אירע כשל בשמירת נתוני העל';
 $lang['metasaveok']            = 'נתוני העל נשמרו';
-$lang['btn_img_backto']            = 'חזרה אל %s';
 $lang['img_title']             = 'שם:';
 $lang['img_caption']           = 'כותרת:';
 $lang['img_date']              = 'תאריך:';
@@ -257,7 +264,6 @@ $lang['img_camera']            = 'מצלמה:';
 $lang['img_keywords']          = 'מילות מפתח:';
 $lang['img_width']             = 'רוחב:';
 $lang['img_height']            = 'גובה:';
-$lang['btn_mediaManager']           = 'צפה במנהל מדיה';
 $lang['subscr_subscribe_success'] = '%s נוסף לרשימת המינויים לדף %s';
 $lang['subscr_subscribe_error'] = 'אירעה שגיאה בהוספת %s לרשימת המינויים לדף %s';
 $lang['subscr_subscribe_noaddress'] = 'אין כתובת המשויכת עם הכניסה שלך, נא ניתן להוסיף אותך לרשימת המינויים';
@@ -287,6 +293,7 @@ $lang['i_modified']            = 'משיקולי אבטחה סקריפט זה י
                          <a href="http://dokuwiki.org/install">Dokuwiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקציית ה-PHP&rlm; <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
 $lang['i_phpver']              = 'גרסת PHP שלך <code>%s</code> נמוכה מ <code>%s</code> הצורך. אתה צריך לשדרג PHP שלך להתקין.';
+$lang['i_mbfuncoverload']      = 'יש לבטל את mbstring.func_overload בphp.ini בכדי להריץ את DokuWiki';
 $lang['i_permfail']            = '<code>%s</code> אינה ניתנת לכתיבה על ידי DokuWiki. עליך לשנות הרשאות תיקייה זו!';
 $lang['i_confexists']          = '<code>%s</code> כבר קיים';
 $lang['i_writeerr']            = 'אין אפשרות ליצור את <code>%s</code>. נא לבדוק את הרשאות הקובץ/תיקייה וליצור את הקובץ ידנית.';
@@ -326,3 +333,18 @@ $lang['media_sort_date']       = 'תאריך';
 $lang['media_namespaces']      = 'בחר מרחב שמות';
 $lang['media_files']           = 'קבצים ב s%';
 $lang['media_upload']          = 'להעלות s%';
+$lang['media_search']          = 'חיפוש ב%s';
+$lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s ב %s';
+$lang['media_edit']            = 'ערוך %s';
+$lang['media_history']         = 'היסטוריה של %s';
+$lang['media_meta_edited']     = 'metadata נערך';
+$lang['media_perm_read']       = 'מצטערים, אין לך הרשאות לקרוא קבצים.';
+$lang['media_perm_upload']     = 'מצטערים, אין לך הרשאות להעלות קבצים.';
+$lang['media_update']          = 'העלה גירסה חדשה';
+$lang['media_restore']         = 'שחזר גירסה זו';
+$lang['currentns']             = 'שם מרחב נוכחי';
+$lang['searchresult']          = 'תוצאות חיפוש';
+$lang['plainhtml']             = 'HTML פשוט';
+$lang['page_nonexist_rev']     = 'העמוד לא קיים ב%s. העמוד נוצר במקום זאת ב<a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'לא ניתן לפענח פרמטר "%s".';

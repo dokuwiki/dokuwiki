@@ -36,6 +36,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
+                <?php html_msgarea() ?>
 
                 <?php if(!$ERROR): ?>
                     <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG)); ?></span></div>

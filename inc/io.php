@@ -101,7 +101,7 @@ function _io_readWikiPage_action($data) {
  *
  * @param string $file  filename
  * @param bool   $clean
- * @return string
+ * @return string|bool the file contents or false on error
  */
 function io_readFile($file,$clean=true){
     $ret = '';
@@ -114,7 +114,7 @@ function io_readFile($file,$clean=true){
             $ret = file_get_contents($file);
         }
     }
-    if($clean){
+    if($ret !== false && $clean){
         return cleanText($ret);
     }else{
         return $ret;
@@ -124,21 +124,27 @@ function io_readFile($file,$clean=true){
  * Returns the content of a .bz2 compressed file as string
  *
  * @author marcel senf <marcel@rucksackreinigung.de>
+ * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $file filename
- * @return string content
+ * @return string|bool content or false on error
  */
 function bzfile($file){
     $bz = bzopen($file,"r");
+    if($bz === false) return false;
+
     $str = '';
     while (!feof($bz)){
         //8192 seems to be the maximum buffersize?
-        $str = $str . bzread($bz,8192);
+        $buffer = bzread($bz,8192);
+        if(($buffer === false) || (bzerrno($bz) !== 0)) {
+            return false;
+        }
+        $str = $str . $buffer;
     }
     bzclose($bz);
     return $str;
 }
-
 
 /**
  * Used to write out a DokuWiki page to file, and send IO_WIKIPAGE_WRITE events.
