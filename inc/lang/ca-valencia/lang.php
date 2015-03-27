@@ -221,3 +221,4 @@ $lang['days']                  = 'fa %d dies';
 $lang['hours']                 = 'fa %d hores';
 $lang['minutes']               = 'fa %d minuts';
 $lang['seconds']               = 'fa %d segons';
+$lang['email_signature'] = 'Este correu ha segut generat per DokuWiki en';

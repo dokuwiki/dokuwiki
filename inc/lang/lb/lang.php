@@ -195,3 +195,4 @@ $lang['days']                  = 'virun %d Deeg';
 $lang['hours']                 = 'virun %d Stonnen';
 $lang['minutes']               = 'virun %d Minutten';
 $lang['seconds']               = 'virun %d Sekonnen';
+$lang['email_signature'] = 'Dës Mail gouf generéiert vun DokuWiki op';

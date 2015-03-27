@@ -7,7 +7,3 @@ Pokud jste o nové heslo nežádali, ignorujte prosím tento e-mail.
 Pro potvrzení, že jste tento požadavek poslali opravdu vy, prosím otevřete následující odkaz.
 
 @CONFIRM@
-
--- 
-Tento e-mail byl automaticky vygenerován systémem DokuWiki
-@DOKUWIKIURL@

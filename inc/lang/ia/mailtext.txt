@@ -10,8 +10,3 @@ Summario: @SUMMARY@
 Usator : @USER@
 
 @DIFF@
-
-
--- 
-Iste e-mail ha essite generate per DokuWiki a
-@DOKUWIKIURL@

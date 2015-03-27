@@ -10,7 +10,3 @@ Edit Summary: @SUMMARY@
 User        : @USER@
 
 @DIFF@
-
--- 
-Điện thư này tạo bởi DokuWiki ở
-@DOKUWIKIURL@

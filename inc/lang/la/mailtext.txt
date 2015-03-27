@@ -9,8 +9,3 @@ Summa recensere: @SUMMARY@
 Sodalis : @USER@
 
 @DIFF@
-
-
--- 
-Hic cursus generatus a(b)
-@DOKUWIKIURL@

@@ -10,8 +10,3 @@ Fiovana     : @SUMMARY@
 Novain'i    : @USER@
 
 @DIFF@
-
-
--- 
-Ity imailaka ity dia navoakan'ny wiki tao amin'ny
-@DOKUWIKIURL@

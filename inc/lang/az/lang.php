@@ -216,3 +216,4 @@ $lang['days']                  = '%d gün əvvəl';
 $lang['hours']                 = '%d saat əvvəl';
 $lang['minutes']               = '%d dəqiqə əvvəl';
 $lang['seconds']               = '%d saniyə əvvəl';
+$lang['email_signature'] = 'DokuWiki aşağıdakı adresdə yerləşir';

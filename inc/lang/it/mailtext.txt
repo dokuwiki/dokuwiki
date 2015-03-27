@@ -10,8 +10,3 @@ Oggetto della modifica : @SUMMARY@
 Utente : @USER@
 
 @DIFF@
-
-
--- 
-Questa email è stata generata dal DokuWiki all'indirizzo
-@DOKUWIKIURL@

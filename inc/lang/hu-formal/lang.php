@@ -25,3 +25,4 @@ $lang['btn_older']             = 'régebbi >>';
 $lang['btn_revs']              = 'Korábbi változatok';
 $lang['btn_recent']            = 'Legújabb változások';
 $lang['btn_upload']            = 'Feltöltés';
+$lang['email_signature'] = 'Ezt a levelet a DokuWiki generálta';

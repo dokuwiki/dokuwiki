@@ -11,7 +11,3 @@ Versiune curentă  : @NEWPAGE@
 Sumar editare: @SUMMARY@
 
 @DIFF@
-
---
-Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@

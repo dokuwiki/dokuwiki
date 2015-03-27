@@ -342,3 +342,4 @@ $lang['plainhtml']             = 'Čisti HTML';
 $lang['wikimarkup']            = 'Wiki kod';
 $lang['page_nonexist_rev']     = 'Stranica ne postoji na %s. Ona je naknadno napravljena na <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Ne mogu analizirati parametar "%s".';
+$lang['email_signature'] = 'Ovaj email je poslan na';

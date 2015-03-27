@@ -10,11 +10,7 @@ Queste sono le modifiche:
 Vecchia revisione: @OLDPAGE@
 Nuova revisione: @NEWPAGE@
 
-Per non ricevere più queste notifiche collegati al 
+Per non ricevere più queste notifiche collegati al
 wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
-e rimuovi la sottoscrizione alle modifiche delle 
+e rimuovi la sottoscrizione alle modifiche delle
 pagine e/o categorie.
-
---
-Questa email è stata generata dal DokuWiki all'indirizzo
-@DOKUWIKIURL@

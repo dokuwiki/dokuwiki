@@ -9,7 +9,3 @@ Per a confirmar que la petició ha segut feta realment per vosté
 utilise el següent víncul.
 
 @CONFIRM@
-
--- 
-Este correu l'ha generat DokuWiki en
-@DOKUWIKIURL@

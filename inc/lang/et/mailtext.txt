@@ -10,7 +10,3 @@ Toimeta kokkuvõtet: @SUMMARY@
 Kasutaja          : @USER@
 
 @DIFF@
-
-
--- 
-Selle e-posti tekitas Sulle DokuWiki @DOKUWIKIURL@

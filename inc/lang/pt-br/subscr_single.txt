@@ -17,6 +17,3 @@ Para cancelar as notificações de mudanças, entre em
 @DOKUWIKIURL@, vá até @NEWPAGE@
 e cancele o monitoramento da página e/ou do espaço de
 nomes.
---
-Este e-mail foi gerado pelo DokuWiki em
-@DOKUWIKIURL@

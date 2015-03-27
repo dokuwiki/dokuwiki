@@ -8,6 +8,3 @@ Dato: @DATE@
 Foliumilo: @BROWSER@
 IP-Adreso: @IPADDRESS@
 Provizanto: @HOSTNAME@
-
--- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@

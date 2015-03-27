@@ -9,6 +9,3 @@ Datum             : @DATE@
 Brskalnik         : @BROWSER@
 Naslov IP         : @IPADDRESS@
 Ime gostitelja    : @HOSTNAME@
-
--- 
-Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@

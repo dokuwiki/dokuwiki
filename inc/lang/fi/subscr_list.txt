@@ -11,8 +11,3 @@ Peruuttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
 @DOKUWIKIURL@ , jonka jälkeen katso
 @SUBSCRIBE@
 ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.
-
-
--- 
-Tämän postin loi DokuWiki osoitteessa
-@DOKUWIKIURL@

@@ -204,3 +204,4 @@ $lang['i_pol2']       = 'វីគីបិទជិត';
 $lang['i_retry']      = 'ម្តងទៀត';
 
 //Setup VIM: ex: et ts=2 :
+$lang['email_signature'] = 'អ៊ីមេលនេះបន្ចេអពីឌោគូវីគីនៅ';

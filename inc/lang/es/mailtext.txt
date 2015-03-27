@@ -10,8 +10,3 @@ Resumen de la edición: @SUMMARY@
 Usuario : @USER@
 
 @DIFF@
-
-
--- 
-Este correo ha sido generado por DokuWiki en
-@DOKUWIKIURL@

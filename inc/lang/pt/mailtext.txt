@@ -12,9 +12,3 @@ Edit Summary  : @SUMMARY@
 User          : @USER@
 
 @DIFF@
-
-
-
-----
-
-Esta mensagem foi gerada automaticamente pelo motor DokuWiki em @DOKUWIKIURL@

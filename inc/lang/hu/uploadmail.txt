@@ -8,6 +8,3 @@ Gépnév: @HOSTNAME@
 Méret: @SIZE@
 MIME-típus: @MIME@
 Felhasználó: @USER@
-
--- 
-Ezt a levelet @DOKUWIKIURL@ DokuWiki generálta.

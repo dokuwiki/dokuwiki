@@ -9,7 +9,3 @@ Pre potvrdenie, že požiadavka bola skutočne odoslaná vami,
 použite prosím nasledujúci odkaz.
 
 @CONFIRM@
-
--- 
-Táto správa bola zaslaná DokuWiki
-@DOKUWIKIURL@

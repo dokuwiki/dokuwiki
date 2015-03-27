@@ -335,3 +335,4 @@ $lang['currentns']             = 'Trenutni imenski prostor';
 $lang['searchresult']          = 'Rezultati iskanja';
 $lang['plainhtml']             = 'Zapis HTML';
 $lang['wikimarkup']            = 'Oblikovni jezik Wiki';
+$lang['email_signature'] = 'Sporočilo je samodejno ustvarjeno na spletišču';

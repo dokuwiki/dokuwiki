@@ -10,8 +10,3 @@
 Корисник             : @USER@
 
 @DIFF@
-
-
--- 
-Ову поруку је генерисао DokuWiki са
-@DOKUWIKIURL@

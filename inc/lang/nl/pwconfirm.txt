@@ -7,7 +7,3 @@ Als je geen nieuw wachtwoord hebt aangevraagd kun je deze e-mail negeren.
 Volg de volgende link om te bevestigen dat je inderdaad een nieuw wachtwoord wilt:
 
 @CONFIRM@
-
--- 
-Deze mail werd gegenereerd door DokuWiki op
-@DOKUWIKIURL@

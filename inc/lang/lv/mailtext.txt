@@ -10,9 +10,3 @@ Anotācija    : @SUMMARY@
 Lietotājs    : @USER@
 
 @DIFF@
-
-
--- 
-Vēstuli nosūtījusi DokuWiki programma no
-@DOKUWIKIURL@ datora
-

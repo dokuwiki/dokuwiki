@@ -190,22 +190,26 @@ class Mailer {
         global $conf;
         /* @var Input $INPUT */
         global $INPUT;
+        global $lang;
 
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
+
+        $text = trim($text);
 
         // create HTML from text if not given
         if(is_null($html)) {
             $html = $text;
             $html = hsc($html);
-            $html = preg_replace('/^-----*$/m', '<hr >', $html);
+            $html = preg_replace('/^----+$/m', '<hr >', $html);
             $html = nl2br($html);
+            $html .= '<br /><br /><br /><br /><hr /><small>' . $lang['email_signature'] . ':<br />@DOKUWIKIURL@</small>';
         }
         if($wrap) {
-            $wrap = rawLocale('mailwrap', 'html');
-            $html = preg_replace('/\n-- <br \/>.*$/s', '', $html); //strip signature
-            $html = str_replace('@HTMLBODY@', $html, $wrap);
+            $html = '<html><head><title>' . hsc($conf['title']) . '</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>' . $html . '</body></html>';
         }
+		
+        $text .= "\n\n\n\n-- \n" . $lang['email_signature'] . ":\n@DOKUWIKIURL@\n";
 
         // copy over all replacements missing for HTML (autolink URLs)
         foreach($textrep as $key => $value) {

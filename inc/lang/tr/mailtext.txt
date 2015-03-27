@@ -10,7 +10,3 @@ Değiştirme Özeti : @SUMMARY@
 Kullanıcı        : @USER@
 
 @DIFF@
-
-
--- 
-Bu e-posta @DOKUWIKIURL@ adresindeki DokuWiki tarafından hazırlandı.

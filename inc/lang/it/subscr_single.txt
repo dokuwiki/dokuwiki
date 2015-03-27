@@ -13,12 +13,8 @@ Sommario modifica: @SUMMARY@
 Vecchia revisione: @OLDPAGE@
 Nuova revisione: @NEWPAGE@
 
-Per non ricevere più queste notifiche, collegati al 
+Per non ricevere più queste notifiche, collegati al
 wiki all'indirizzo @DOKUWIKIURL@ e poi visita
 @SUBSCRIBE@
-e rimuovi la sottoscrizione alle modifiche della 
+e rimuovi la sottoscrizione alle modifiche della
 pagina o categoria.
-
---
-Questa email è stata generata dal DokuWiki all'indirizzo
-@DOKUWIKIURL@

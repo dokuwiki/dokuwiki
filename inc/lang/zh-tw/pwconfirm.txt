@@ -7,7 +7,3 @@
 若您真的要使用新密碼，請拜訪以下的連結。
 
 @CONFIRM@
-
---
-本信件由以下 DokuWiki 網站產生：
-@DOKUWIKIURL@

@@ -7,7 +7,3 @@
 आकार : @SIZE@
 MIME प्रकार : @MIME@
 प्रयोगकर्ता : @USER@
-
--- 
-यो पत्र  DokuWiki  ले
-@DOKUWIKIURL@मा स्वत: तयार पारेको हो।

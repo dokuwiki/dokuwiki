@@ -357,3 +357,4 @@ $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
 $lang['wikimarkup']            = 'Wiki Opmaak';
+$lang['email_signature'] = 'Deze mail werd gegenereerd door DokuWiki op';

@@ -8,6 +8,3 @@ Hostalari izena : @HOSTNAME@
 Tamaina : @SIZE@
 MIME Mota : @MIME@
 Erabiltzailea : @USER@
-
--- 
-Posta hau @DOKUWIKIURL@ gunean DokuWikik sortua izan da.

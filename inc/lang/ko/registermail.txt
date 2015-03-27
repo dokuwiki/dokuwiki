@@ -8,6 +8,3 @@
 브라우저: @BROWSER@
 IP 주소: @IPADDRESS@
 호스트 이름: @HOSTNAME@
-
--- 
-이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다

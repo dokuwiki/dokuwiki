@@ -345,3 +345,4 @@ $lang['currentns']             = 'Aktuális névtér';
 $lang['searchresult']          = 'Keresés eredménye';
 $lang['plainhtml']             = 'Sima HTML';
 $lang['wikimarkup']            = 'Wiki-jelölőnyelv';
+$lang['email_signature'] = 'Ezt a levelet a DokuWiki generálta';

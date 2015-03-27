@@ -8,7 +8,3 @@ Data	        : @DATE@
 Navegador     	: @BROWSER@
 Enderezo IP		: @IPADDRESS@
 Nome do Host	: @HOSTNAME@
-
--- 
-Este correo-e foi xerado polo DokuWiki de
-@DOKUWIKIURL@

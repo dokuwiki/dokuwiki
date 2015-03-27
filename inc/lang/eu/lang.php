@@ -310,3 +310,4 @@ $lang['media_viewold']         = '%s -n %s';
 $lang['media_edit']            = '%s editatu';
 $lang['media_update']          = 'Bertsio berria igo';
 $lang['media_restore']         = 'Bertsio hau berrezarri';
+$lang['email_signature'] = 'Email hau DokuWiki erabiliz sortu da';

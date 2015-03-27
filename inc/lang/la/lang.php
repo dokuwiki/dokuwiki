@@ -260,3 +260,4 @@ $lang['hours']                 = 'a horis %d';
 $lang['minutes']               = 'a minutis %d';
 $lang['seconds']               = 'a secundis %d';
 $lang['wordblock']             = 'Mutationes non seruantur, eo quod mala uerba contenit';
+$lang['email_signature'] = 'Hic cursus generatus a';

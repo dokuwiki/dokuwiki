@@ -10,8 +10,3 @@
 کاربر: @USER@
 
 @DIFF@
-
-
--- 
-این ایمیل توسط DokuWiki تولید شده است
-@DOKUWIKIURL@
