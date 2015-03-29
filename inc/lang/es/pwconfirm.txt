@@ -9,8 +9,3 @@ Para confirmar que la solicitud fue realizada realmente por usted,
 por favor use el siguiente enlace.
 
 @CONFIRM@
-
-
--- 
-Este mail ha sido generado por DokuWiki en
-@DOKUWIKIURL@

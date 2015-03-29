@@ -10,7 +10,3 @@ Nazwa DNS    : @HOSTNAME@
 Rozmiar      : @SIZE@
 Typ MIME     : @MIME@
 Użytkownik   : @USER@
-
--- 
-List został wygenerowany przez DokuWiki pod adresem
-@DOKUWIKIURL@

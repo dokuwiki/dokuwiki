@@ -10,8 +10,3 @@ Zesummefaassung: @SUMMARY@
 Benotzer       : @USER@
 
 @DIFF@
-
-
--- 
-Dës Mail gouf generéiert vum DokuWiki op
-@DOKUWIKIURL@

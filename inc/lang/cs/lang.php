@@ -353,3 +353,4 @@ $lang['plainhtml']             = 'Čisté HTML';
 $lang['wikimarkup']            = 'Wiki jazyk';
 $lang['page_nonexist_rev']     = 'Stránka neexistovala na %s. Byla vytvořena dodatečne na <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Nelze rozebrat parametr "%s".';
+$lang['email_signature'] = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki';

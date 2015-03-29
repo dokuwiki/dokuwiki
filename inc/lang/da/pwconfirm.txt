@@ -8,7 +8,3 @@ Hvis du ikke bad om dette, så ignorer venligst denne email.
 For at bekræfte at det var dig der bad om dette, benyt venligst det følgende henvisning.
 
 @CONFIRM@
-
--- 
-Denne e-mail blev genereret af DokuWiki på
-@DOKUWIKIURL@

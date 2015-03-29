@@ -9,7 +9,3 @@ Vertnavn : @HOSTNAME@
 Størrelse : @SIZE@
 MIME-type : @MIME@
 Bruker : @USER@
-
--- 
-Denne e-posten ble generert av DokuWiki på
-@DOKUWIKIURL@

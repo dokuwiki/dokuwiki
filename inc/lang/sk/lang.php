@@ -333,3 +333,4 @@ $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
+$lang['email_signature'] = 'Táto správa bola zaslaná DokuWiki';

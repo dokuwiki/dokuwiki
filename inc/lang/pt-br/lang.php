@@ -357,3 +357,4 @@ $lang['currentns']             = 'Domínio atual';
 $lang['searchresult']          = 'Resultado da Busca';
 $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Marcação wiki';
+$lang['email_signature'] = 'Essa mensagem foi gerada pelo DokuWiki em';

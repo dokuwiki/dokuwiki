@@ -8,6 +8,3 @@ A módosított oldalak a következők:
 --------------------------------------------------------
 
 Ha nem szeretnél értesítéseket kapni, jelentkezz be a wiki-be itt: @DOKUWIKIURL@, majd ezen az oldalon tudsz leiratkozni: @SUBSCRIBE@.
-
---
-Ezt a levelet a @DOKUWIKIURL@ DokuWiki generálta.

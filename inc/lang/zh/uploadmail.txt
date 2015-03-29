@@ -10,11 +10,3 @@ IP 地址 : @IPADDRESS@
 大小 : @SIZE@
 MIME 类型 : @MIME@
 用户 : @USER@
-
--- 
-本邮件由 DokuWiki 自动创建
-@DOKUWIKIURL@
-
-
-
-

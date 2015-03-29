@@ -8,7 +8,3 @@ e-mail          : @NEWEMAIL@
 Φυλλομετρητής   : @BROWSER@
 IP-Διεύθυνση    : @IPADDRESS@
 Όνομα υπολογιστή: @HOSTNAME@
-
--- 
-Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
-@DOKUWIKIURL@

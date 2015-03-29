@@ -17,8 +17,3 @@ Um das Abonnement für diese Seite aufzulösen, melden Sie sich im Wiki an
 @DOKUWIKIURL@, besuchen dann
 @SUBSCRIBE@
 und klicken auf die Taste 'Aboverwaltung'.
-
---
-Diese Mail kommt vom DokuWiki auf
-@DOKUWIKIURL@
-

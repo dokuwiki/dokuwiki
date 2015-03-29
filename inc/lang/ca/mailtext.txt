@@ -9,8 +9,3 @@ Resum d'edició : @SUMMARY@
 Usuari         : @USER@
 
 @DIFF@
-
-
--- 
-Missatge generat per DokuWiki en
-@DOKUWIKIURL@

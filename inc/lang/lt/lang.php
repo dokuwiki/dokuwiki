@@ -182,3 +182,4 @@ $lang['i_wikiname']            = 'Wiki vardas';
 $lang['i_enableacl']           = 'Įjungti ACL (rekomenduojama)';
 $lang['i_superuser']           = 'Supervartotojas';
 $lang['i_problems']            = 'Instaliavimo metu buvo klaidų, kurios pateiktos žemiau. Tęsti negalima, kol nebus pašalintos priežastys.';
+$lang['email_signature'] = 'Šis laiškas buvo sugeneruotas DokuWiki';

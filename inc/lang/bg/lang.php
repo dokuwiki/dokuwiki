@@ -331,3 +331,4 @@ $lang['media_update']          = 'Качване на нова версия';
 $lang['media_restore']         = 'Възстановяване на тази версия';
 $lang['searchresult']          = 'Резултати от търсенето';
 $lang['plainhtml']             = 'Обикновен HTML';
+$lang['email_signature'] = 'Писмото е генерирано от DokuWiki на адрес';

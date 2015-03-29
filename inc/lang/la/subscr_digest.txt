@@ -14,7 +14,3 @@ Ut paginae adnotationes deleas, in uicem ineas in
 @DOKUWIKIURL@, deinde uideas
 @SUBSCRIBE@
 et paginarum generum optiones mutes.
-
---
-Hic cursus a uicis generatus
-@DOKUWIKIURL@

@@ -348,3 +348,4 @@ $lang['currentns']             = '目前的命名空間';
 $lang['searchresult']          = '搜尋結果';
 $lang['plainhtml']             = '純 HTML';
 $lang['wikimarkup']            = 'Wiki 語法標記';
+$lang['email_signature'] = '本信件由以下 DokuWiki 網站產生';

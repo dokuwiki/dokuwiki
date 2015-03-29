@@ -9,7 +9,3 @@ Hostname : @HOSTNAME@
 Tamaño : @SIZE@
 MIME Type : @MIME@
 Usuario : @USER@
-
--- 
-Este correo fue generado por DokuWiki en
-@DOKUWIKIURL@

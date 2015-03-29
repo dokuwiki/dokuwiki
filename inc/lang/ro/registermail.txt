@@ -9,7 +9,3 @@ Dată : @DATE@
 Browser : @BROWSER@
 Adresă IP : @IPADDRESS@
 Hostname : @HOSTNAME@
-
---
-Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@

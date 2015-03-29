@@ -337,3 +337,4 @@ $lang['currentns']             = 'Pašreizējā sadaļa';
 $lang['searchresult']          = 'Meklēšanas rezultāti';
 $lang['plainhtml']             = 'Tīrs HTML';
 $lang['wikimarkup']            = 'Viki iezīmēšana valoda';
+$lang['email_signature'] = 'Vēstuli nosūtījusi DokuWiki programma no';

@@ -10,7 +10,3 @@ Lähemalt:
   Suurus            : @SIZE@
   MIME liik         : @MIME@
   Kasutaja          : @ USER@
-
--- 
-Selle e-kirja lõi DokuWiki aadressilt 
-@DOKUWIKIURL@ 

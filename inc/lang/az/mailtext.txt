@@ -10,9 +10,3 @@ Dəyişiklərin xülasəsi : @SUMMARY@
 İstifadəçi            : @USER@
 
 @DIFF@
-
-
--- 
-Bu məktub DokuWiki tərəfindən yaradıldı.
-DokuWiki aşağıdakı adresdə yerləşir:
-@DOKUWIKIURL@

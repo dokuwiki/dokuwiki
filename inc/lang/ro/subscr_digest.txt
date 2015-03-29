@@ -14,7 +14,3 @@ Pentru a anula notificarea paginii, autentifică-te pe wiki la
 @DOKUWIKIURL@ apoi accesează
 @SUBSCRIBE@
 și dezabonează-te de la pagină și/sau modificările spațiului de nume.
-
---
-Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@

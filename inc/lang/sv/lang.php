@@ -345,3 +345,4 @@ $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
 $lang['searchresult']          = 'Sökresultat';
 $lang['plainhtml']             = 'Ren HTML';
+$lang['email_signature'] = 'Detta meddelande har skapats av DokuWiki på';

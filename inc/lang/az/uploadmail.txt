@@ -8,8 +8,3 @@ Host        : @HOSTNAME@
 Həcm        : @SIZE@
 MIME Növ    : @MIME@
 İstifadəçi  : @USER@
-
--- 
-Bu məktub DokuWiki tərəfindən yaradıldı.
-DokuWiki aşağıdakı adresdə yerləşir:
-@DOKUWIKIURL@

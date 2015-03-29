@@ -9,7 +9,3 @@ Hostname : @HOSTNAME@
 Grootte  : @SIZE@
 MIME type: @MIME@
 Gebruiker: @USER@
-
--- 
-Dit bericht is gegenereerd door DokuWiki op
-@DOKUWIKIURL@

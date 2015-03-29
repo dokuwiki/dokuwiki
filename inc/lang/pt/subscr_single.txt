@@ -17,7 +17,3 @@ Para cancelar as notificações de página, inicie sessão no wiki em
 @DOKUWIKIURL@, visite
 @SUBSCRIBE@
 e des-subscreva às alterações de página e/ou espaço de nome.
-
---
-Este email foi gerado automaticamente por DokuWiki em
-@DOKUWIKIURL@

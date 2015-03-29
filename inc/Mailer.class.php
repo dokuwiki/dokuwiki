@@ -190,6 +190,7 @@ class Mailer {
         global $conf;
         /* @var Input $INPUT */
         global $INPUT;
+        global $lang;
 
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
@@ -198,13 +199,19 @@ class Mailer {
         if(is_null($html)) {
             $html = $text;
             $html = hsc($html);
-            $html = preg_replace('/^-----*$/m', '<hr >', $html);
+            $html = preg_replace('/^----+$/m', '<hr >', $html);
             $html = nl2br($html);
         }
         if($wrap) {
             $wrap = rawLocale('mailwrap', 'html');
             $html = preg_replace('/\n-- <br \/>.*$/s', '', $html); //strip signature
+            $html = str_replace('@EMAILSIGNATURE@', '', $html); //strip @EMAILSIGNATURE@
             $html = str_replace('@HTMLBODY@', $html, $wrap);
+        }
+
+        if(strpos($text, '@EMAILSIGNATURE@') === false) {
+            $text = rtrim($text);
+            $text .= "\n\n\n\n-- \n" . $lang['email_signature'] . ":\n@DOKUWIKIURL@\n";
         }
 
         // copy over all replacements missing for HTML (autolink URLs)
@@ -227,28 +234,31 @@ class Mailer {
         $ip   = clientIP();
         $cip  = gethostsbyaddrs($ip);
         $trep = array(
-            'DATE'        => dformat(),
-            'BROWSER'     => $INPUT->server->str('HTTP_USER_AGENT'),
-            'IPADDRESS'   => $ip,
-            'HOSTNAME'    => $cip,
-            'TITLE'       => $conf['title'],
-            'DOKUWIKIURL' => DOKU_URL,
-            'USER'        => $INPUT->server->str('REMOTE_USER'),
-            'NAME'        => $INFO['userinfo']['name'],
-            'MAIL'        => $INFO['userinfo']['mail'],
+            'DATE'           => dformat(),
+            'BROWSER'        => $INPUT->server->str('HTTP_USER_AGENT'),
+            'IPADDRESS'      => $ip,
+            'HOSTNAME'       => $cip,
+            'TITLE'          => $conf['title'],
+            'DOKUWIKIURL'    => DOKU_URL,
+            'USER'           => $INPUT->server->str('REMOTE_USER'),
+            'NAME'           => $INFO['userinfo']['name'],
+            'MAIL'           => $INFO['userinfo']['mail'],
+            'EMAILSIGNATURE' => "\n-- \n".$lang['email_signature'].":\n".DOKU_URL."\n",
         );
         $trep = array_merge($trep, (array)$textrep);
         $hrep = array(
-            'DATE'        => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'     => hsc($INPUT->server->str('HTTP_USER_AGENT')),
-            'IPADDRESS'   => '<code>'.hsc($ip).'</code>',
-            'HOSTNAME'    => '<code>'.hsc($cip).'</code>',
-            'TITLE'       => hsc($conf['title']),
-            'DOKUWIKIURL' => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'        => hsc($INPUT->server->str('REMOTE_USER')),
-            'NAME'        => hsc($INFO['userinfo']['name']),
-            'MAIL'        => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
+            'DATE'           => '<i>'.hsc(dformat()).'</i>',
+            'BROWSER'        => hsc($INPUT->server->str('HTTP_USER_AGENT')),
+            'IPADDRESS'      => '<code>'.hsc($ip).'</code>',
+            'HOSTNAME'       => '<code>'.hsc($cip).'</code>',
+            'TITLE'          => hsc($conf['title']),
+            'DOKUWIKIURL'    => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
+            'USER'           => hsc($INPUT->server->str('REMOTE_USER')),
+            'NAME'           => hsc($INFO['userinfo']['name']),
+            'MAIL'           => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
                 hsc($INFO['userinfo']['mail']).'</a>',
+            'EMAILSIGNATURE' => hsc($lang['email_signature']).':<br />' .
+                '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
         );
         $hrep = array_merge($hrep, (array)$htmlrep);
 

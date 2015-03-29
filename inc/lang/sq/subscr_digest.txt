@@ -14,7 +14,3 @@ Për të fshirë lajmërimet e faqes, mund të hyni tek wiki në
 @DOKUWIKIURL@ pastaj vizitoni
 @SUBSCRIBE@
 dhe ç'regjistro faqen dhe/ose ndryshimet e hapësirës së emrit.
-
---
-Ky eMail është gjeneruar nga DokuWiki në
-@DOKUWIKIURL@

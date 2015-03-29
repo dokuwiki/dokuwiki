@@ -8,6 +8,3 @@ Se ne vi petis tion, ignoru tiun ĉi mesaĝon.
 Por konfirmi, ke la peto estis vere via, bonvolu musklaki jenan ligilon:
 
 @CONFIRM@
-
--- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@

@@ -10,7 +10,3 @@ Hostname : @HOSTNAME@
 Dimensiune : @SIZE@
 MIME Type : @MIME@
 Utilizator : @USER@
-
--- 
-Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@

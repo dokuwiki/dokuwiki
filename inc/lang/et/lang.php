@@ -337,3 +337,4 @@ $lang['currentns']             = 'Hetke nimeruum';
 $lang['searchresult']          = 'Otsingu tulemus';
 $lang['plainhtml']             = 'Liht-HTML';
 $lang['wikimarkup']            = 'Wiki märgistus';
+$lang['email_signature'] = 'See meil on saadetud DokuWiki poolt';

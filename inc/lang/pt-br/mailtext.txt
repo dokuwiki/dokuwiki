@@ -10,8 +10,3 @@ Resumo da edição: @SUMMARY@
 Usuário: @USER@
 
 @DIFF@
-
-
--- 
-Essa mensagem foi gerada pelo DokuWiki em
-@DOKUWIKIURL@

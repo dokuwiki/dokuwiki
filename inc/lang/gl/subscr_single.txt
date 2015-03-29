@@ -17,7 +17,3 @@ Para cancelares as notificacións da páxina inicia sesión no wiki en
 @DOKUWIKIURL@ e logo visita
 @SUBSCRIBE@
 e desubscríbete do seguimento dos trocos da páxina e/ou nome de espazo.
-
---
-Este correo-e foi xerado polo DokuWiki de
-@DOKUWIKIURL@

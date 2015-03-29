@@ -10,10 +10,6 @@ Endine: @OLDPAGE@
 Uus: @NEWPAGE@
 
 Lehekülje teavituste katkestamiseks, sisene wiki-sse aadressil @DOKUWIKIURL@
-ja mine: 
+ja mine:
 @SUBSCRIBE@
 ning loobu lehekülje ja/või nimeruumi muudatuste teavitustest.
-
---
-Selle e-kirja lõi DokuWiki aadressilt
-@DOKUWIKIURL@

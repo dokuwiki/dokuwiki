@@ -8,7 +8,3 @@ Dacă nu ai solicitat o parolă nouă, ignoră acest e-mail.
 Pentru a confirma că cererea a fost într-adevăr trimisă de tine, folosește link-ul de mai jos.
 
 @CONFIRM@
-
--- 
-Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@

@@ -17,7 +17,3 @@ För att avsluta noteringar om sidor, logga in på wikin vid
 @DOKUWIKIURL@ gå sedan till
 @SUBSCRIBE@
 och avsluta prenumerationen av sida och/eller namnrymd ändringar.
-
---
-Denna e-post har genererats av DokuWiki vid
-@DOKUWIKIURL@

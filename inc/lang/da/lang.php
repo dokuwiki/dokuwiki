@@ -354,3 +354,4 @@ $lang['searchresult']          = 'Søgsresultat';
 $lang['plainhtml']             = 'Ren HTML';
 $lang['wikimarkup']            = 'Wiki Opmærkning';
 $lang['page_nonexist_rev']     = 'Siden blev ikke fundet ved %s. Den blev efterfølgende oprettet ved <a href="%s">%s</a>.';
+$lang['email_signature'] = 'Denne e-mail blev genereret af DokuWiki på';

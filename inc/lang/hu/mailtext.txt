@@ -10,7 +10,3 @@ Előző változat: @OLDPAGE@
 Felhasználó: @USER@
 
 @DIFF@
-
-
--- 
-Ezt a levelet a @DOKUWIKIURL@ DokuWiki generálta.

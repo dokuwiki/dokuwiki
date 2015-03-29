@@ -329,3 +329,4 @@ $lang['currentns']             = 'Geçerli isimalanı';
 $lang['searchresult']          = 'Arama Sonucu';
 $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
+$lang['email_signature'] = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur';

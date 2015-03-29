@@ -14,12 +14,8 @@ Stará revize: @OLDPAGE@
 Nová revize: @NEWPAGE@
 
 Pro odhlášení z odebírání změn na této webové stránce
-se prosím přihlašte do wiki na adrese 
-@DOKUWIKIURL@, pak navštivte 
-@SUBSCRIBE@ 
-a odhlaste se z odebírání změn na stránce či 
+se prosím přihlašte do wiki na adrese
+@DOKUWIKIURL@, pak navštivte
+@SUBSCRIBE@
+a odhlaste se z odebírání změn na stránce či
 ve jmenném prostoru.
-
--- 
-Tento e-mail byl automaticky vygenerován systémem DokuWiki
-@DOKUWIKIURL@

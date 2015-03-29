@@ -347,3 +347,4 @@ $lang['currentns']             = 'فضای نام جاری';
 $lang['searchresult']          = 'نتیجه‌ی جستجو';
 $lang['plainhtml']             = 'HTML ساده';
 $lang['wikimarkup']            = 'نشانه‌گذاری ویکی';
+$lang['email_signature'] = 'این ایمیل توسط DokuWiki تولید شده است';

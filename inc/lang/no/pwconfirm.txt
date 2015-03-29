@@ -9,7 +9,3 @@ For å bekrefte at forespørselen virkelig kom fra deg kan du bruke
 følgende lenke:
 
 @CONFIRM@
-
--- 
-Denne e-posten ble generert av DokuWiki på
-@DOKUWIKIURL@

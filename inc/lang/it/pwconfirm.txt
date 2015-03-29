@@ -9,7 +9,3 @@ Per confermare che la richiesta è stata realmente inviata da te usa il
 seguente collegamento.
 
 @CONFIRM@
-
--- 
-Questa email è stata generata dal DokuWiki all'indirizzo
-@DOKUWIKIURL@

@@ -8,7 +8,3 @@
 اندازه: @SIZE@
 MIME: @MIME@
 کاربر: @USER@
-
--- 
-این ایمیل توسط DokuWiki تولید شده است
-@DOKUWIKIURL@
