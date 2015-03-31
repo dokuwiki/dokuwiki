@@ -211,7 +211,7 @@ class Mailer {
 
         if(strpos($text, '@EMAILSIGNATURE@') === false) {
             $text = rtrim($text);
-            $text .= "\n\n\n\n-- \n" . $lang['email_signature'] . ":\n@DOKUWIKIURL@\n";
+            $text .= "\n\n\n@EMAILSIGNATURE@\n";
         }
 
         // copy over all replacements missing for HTML (autolink URLs)
