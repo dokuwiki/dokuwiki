@@ -9,6 +9,7 @@
  * @author André Neves <drakferion@gmail.com>
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Guido Salatino <guidorafael23@gmail.com>
+ * @author Romulo Pereira <romuloccomp@gmail.com>
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';

@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Guido Salatino <guidorafael23@gmail.com>
+ * @author Romulo Pereira <romuloccomp@gmail.com>
  */
 $lang['menu']                  = 'Gerenciador de Extensões';
 $lang['tab_plugins']           = 'Plugins Instalados';
