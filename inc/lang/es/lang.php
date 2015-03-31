@@ -38,6 +38,7 @@
  * @author Jonathan Hernández <me@jhalicea.com>
  * @author pokesakura <pokesakura@gmail.com>
  * @author Álvaro Iradier <airadier@gmail.com>
+ * @author Alejandro Nunez <nunez.alejandro@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -371,3 +372,4 @@ $lang['searchresult']          = 'Resultado de la búsqueda';
 $lang['plainhtml']             = 'HTML sencillo';
 $lang['wikimarkup']            = 'Etiquetado Wiki';
 $lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue creada en <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';
