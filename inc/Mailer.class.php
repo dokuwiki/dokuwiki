@@ -32,10 +32,12 @@ class Mailer {
     protected $validator = null;
     protected $allowhtml = true;
 
+    protected $replacements = array('text'=> array(), 'html' => array());
+
     /**
      * Constructor
      *
-     * Initializes the boundary strings and part counters
+     * Initializes the boundary strings, part counters and token replacements
      */
     public function __construct() {
         global $conf;
@@ -61,6 +63,8 @@ class Mailer {
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
         $this->setHeader('List-Id', $conf['title'].' <'.$listid.'>');
         $this->setHeader('Date', date('r'), false);
+
+        $this->prepareTokenReplacements();
     }
 
     /**
@@ -186,11 +190,6 @@ class Mailer {
      * @param bool   $wrap     wrap the HTML in the default header/Footer
      */
     public function setBody($text, $textrep = null, $htmlrep = null, $html = null, $wrap = true) {
-        global $INFO;
-        global $conf;
-        /* @var Input $INPUT */
-        global $INPUT;
-        global $lang;
 
         $htmlrep = (array)$htmlrep;
         $textrep = (array)$textrep;
@@ -210,8 +209,7 @@ class Mailer {
         }
 
         if(strpos($text, '@EMAILSIGNATURE@') === false) {
-            $text = rtrim($text);
-            $text .= "\n\n\n\n-- \n" . $lang['email_signature'] . ":\n@DOKUWIKIURL@\n";
+            $text .= '@EMAILSIGNATURE@';
         }
 
         // copy over all replacements missing for HTML (autolink URLs)
@@ -230,37 +228,9 @@ class Mailer {
             array($this, 'autoembed_cb'), $html
         );
 
-        // prepare default replacements
-        $ip   = clientIP();
-        $cip  = gethostsbyaddrs($ip);
-        $trep = array(
-            'DATE'           => dformat(),
-            'BROWSER'        => $INPUT->server->str('HTTP_USER_AGENT'),
-            'IPADDRESS'      => $ip,
-            'HOSTNAME'       => $cip,
-            'TITLE'          => $conf['title'],
-            'DOKUWIKIURL'    => DOKU_URL,
-            'USER'           => $INPUT->server->str('REMOTE_USER'),
-            'NAME'           => $INFO['userinfo']['name'],
-            'MAIL'           => $INFO['userinfo']['mail'],
-            'EMAILSIGNATURE' => "\n-- \n".$lang['email_signature'].":\n".DOKU_URL."\n",
-        );
-        $trep = array_merge($trep, (array)$textrep);
-        $hrep = array(
-            'DATE'           => '<i>'.hsc(dformat()).'</i>',
-            'BROWSER'        => hsc($INPUT->server->str('HTTP_USER_AGENT')),
-            'IPADDRESS'      => '<code>'.hsc($ip).'</code>',
-            'HOSTNAME'       => '<code>'.hsc($cip).'</code>',
-            'TITLE'          => hsc($conf['title']),
-            'DOKUWIKIURL'    => '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-            'USER'           => hsc($INPUT->server->str('REMOTE_USER')),
-            'NAME'           => hsc($INFO['userinfo']['name']),
-            'MAIL'           => '<a href="mailto:"'.hsc($INFO['userinfo']['mail']).'">'.
-                hsc($INFO['userinfo']['mail']).'</a>',
-            'EMAILSIGNATURE' => hsc($lang['email_signature']).':<br />' .
-                '<a href="'.DOKU_URL.'">'.DOKU_URL.'</a>',
-        );
-        $hrep = array_merge($hrep, (array)$htmlrep);
+        // add default token replacements
+        $trep = array_merge($this->replacements['text'], (array)$textrep);
+        $hrep = array_merge($this->replacements['html'], (array)$htmlrep);
 
         // Apply replacements
         foreach($trep as $key => $substitution) {
@@ -623,6 +593,52 @@ class Mailer {
         $headers = $this->prepareHeaders();
 
         return $headers.MAILHEADER_EOL.$body;
+    }
+
+    /**
+     * Prepare default token replacement strings
+     *
+     * Populates the '$replacements' property.
+     * Should be called by the class constructor
+     */
+    protected function prepareTokenReplacements() {
+        global $INFO;
+        global $conf;
+        /* @var Input $INPUT */
+        global $INPUT;
+        global $lang;
+
+        $ip   = clientIP();
+        $cip  = gethostsbyaddrs($ip);
+
+        $this->replacements['text'] = array(
+            'DATE' => dformat(),
+            'BROWSER' => $INPUT->server->str('HTTP_USER_AGENT'),
+            'IPADDRESS' => $ip,
+            'HOSTNAME' => $cip,
+            'TITLE' => $conf['title'],
+            'DOKUWIKIURL' => DOKU_URL,
+            'USER' => $INPUT->server->str('REMOTE_USER'),
+            'NAME' => $INFO['userinfo']['name'],
+            'MAIL' => $INFO['userinfo']['mail'],
+            // per RFC2045 6.8, "text line breaks must be converted into CRLF sequences prior to base64 encoding.", so we use \r\n
+            'EMAILSIGNATURE' => "\r\n-- \r\n" . $lang['email_signature'] . ":\r\n" . DOKU_URL . "\r\n",
+        );
+
+        $this->replacements['html'] = array(
+            'DATE' => '<i>' . hsc(dformat()) . '</i>',
+            'BROWSER' => hsc($INPUT->server->str('HTTP_USER_AGENT')),
+            'IPADDRESS' => '<code>' . hsc($ip) . '</code>',
+            'HOSTNAME' => '<code>' . hsc($cip) . '</code>',
+            'TITLE' => hsc($conf['title']),
+            'DOKUWIKIURL' => '<a href="' . DOKU_URL . '">' . DOKU_URL . '</a>',
+            'USER' => hsc($INPUT->server->str('REMOTE_USER')),
+            'NAME' => hsc($INFO['userinfo']['name']),
+            'MAIL' => '<a href="mailto:"' . hsc($INFO['userinfo']['mail']) . '">' .
+                hsc($INFO['userinfo']['mail']) . '</a>',
+            'EMAILSIGNATURE' => hsc($lang['email_signature']) . ':<br />' .
+                '<a href="' . DOKU_URL . '">' . DOKU_URL . '</a>',
+        );
     }
 
     /**

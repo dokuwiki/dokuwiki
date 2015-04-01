@@ -116,14 +116,21 @@ class mailer_test extends DokuWikiTest {
     function test_simplemail(){
         global $conf;
         $conf['htmlmail'] = 0;
+
+        $mailbody = 'A test mail in ASCII';
         $mail = new TestMailer();
         $mail->to('test@example.com');
-        $mail->setBody('A test mail in ASCII');
+        $mail->setBody($mailbody);
 
         $dump = $mail->dump();
+
+        // construct the expected mail body text - include the expected dokuwiki signature
+        $replacements = $mail->prop('replacements');
+        $expected_mail_body = chunk_split(base64_encode($mailbody.$replacements['text']['EMAILSIGNATURE']),72,MAILHEADER_EOL);
+
         $this->assertNotRegexp('/Content-Type: multipart/',$dump);
         $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#',$dump);
-        $this->assertRegexp('/'.base64_encode('A test mail in ASCII').'/',$dump);
+        $this->assertRegexp('/'.preg_quote($expected_mail_body,'/').'/',$dump);
 
         $conf['htmlmail'] = 1;
     }
