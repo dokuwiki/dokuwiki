@@ -138,7 +138,7 @@ class mailer_test extends DokuWikiTest {
     function test_replacements(){
         $mail = new TestMailer();
 
-        $replacements = array( '@DATE@','@BROWSER@','@IPADDRESS@','@HOSTNAME@',
+        $replacements = array( '@DATE@','@BROWSER@','@IPADDRESS@','@HOSTNAME@','@EMAILSIGNATURE@',
                                '@TITLE@','@DOKUWIKIURL@','@USER@','@NAME@','@MAIL@');
         $mail->setBody('A test mail in with replacements '.join(' ',$replacements));
 
