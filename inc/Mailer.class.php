@@ -178,7 +178,7 @@ class Mailer {
      * Set the text and HTML body and apply replacements
      *
      * This function applies a whole bunch of default replacements in addition
-     * to the ones specidifed as parameters
+     * to the ones specified as parameters
      *
      * If you pass the HTML part or HTML replacements yourself you have to make
      * sure you encode all HTML special chars correctly
