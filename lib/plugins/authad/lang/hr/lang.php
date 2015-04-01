@@ -6,3 +6,4 @@
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['domain']                = 'Domena za prijavu';
+$lang['authpwdexpire']         = 'Vaša lozinka će isteći za %d dana, trebate ju promijeniti.';
