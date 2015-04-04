@@ -266,7 +266,6 @@ $lang['subscr_style_every']    = 'ფოსტა ყოველ ცვლი�
 $lang['subscr_style_digest']   = 'ფოსტა ყოველი გვერდის შეცვლაზე ';
 $lang['subscr_style_list']     = 'ფოსტა ყოველი გვერდის შეცვლაზე ';
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
-$lang['authpwdexpire']         = 'თქვენს პაროლს ვადა გაუვა %d დღეში, მალე შეცვლა მოგიწევთ.';
 $lang['i_chooselang']          = 'ენსი არჩევა';
 $lang['i_installer']           = 'DokuWiki დამყენებელი';
 $lang['i_wikiname']            = 'Wiki სახელი';

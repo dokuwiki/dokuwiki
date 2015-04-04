@@ -291,7 +291,6 @@ $lang['subscr_style_every']    = 'E-Mail bei jeder Bearbeitung';
 $lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Admin.';
-$lang['authpwdexpire']         = 'Ihr Passwort läuft in %d Tag(en) ab. Sie sollten es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
 $lang['i_installer']           = 'DokuWiki Installation';
 $lang['i_wikiname']            = 'Wiki-Name';

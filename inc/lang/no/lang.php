@@ -287,7 +287,6 @@ $lang['subscr_style_every']    = 'e-post for alle endringer';
 $lang['subscr_style_digest']   = 'e-post med sammendrag av endringer for hver side (%.2f dager mellom hver)';
 $lang['subscr_style_list']     = 'liste med sider som er endra siden forrige e-post (%.2f dager mellom hver)';
 $lang['authtempfail']          = 'Brukerautorisasjon er midlertidig utilgjengelig. Om dette vedvarer, vennligst informer Wiki-admin.';
-$lang['authpwdexpire']         = 'Ditt passord går ut om %d dager, du bør endre det snarest.';
 $lang['i_chooselang']          = 'Velg språk';
 $lang['i_installer']           = 'DokuWiki-installasjon';
 $lang['i_wikiname']            = 'Wikinavn';

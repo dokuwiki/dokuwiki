@@ -275,7 +275,6 @@ $lang['subscr_style_every']    = '全ての変更にメールを送信';
 $lang['subscr_style_digest']   = 'それぞれのページへの変更の要約をメールする（%.2f 日毎）';
 $lang['subscr_style_list']     = '前回のメールから変更されたページをリスト（%.2f 日毎）';
 $lang['authtempfail']          = 'ユーザー認証が一時的に使用できなくなっています。この状態が続いているようであれば、Wikiの管理者に連絡して下さい。';
-$lang['authpwdexpire']         = 'あなたのパスワードは、あと%d日で有効期限が切れます。パスワードを変更してください。';
 $lang['i_chooselang']          = '使用言語を選択してください';
 $lang['i_installer']           = 'DokuWiki インストーラー';
 $lang['i_wikiname']            = 'Wiki名';

@@ -273,7 +273,6 @@ $lang['subscr_style_every']    = 'Sähköposti joka muutoksesta';
 $lang['subscr_style_digest']   = 'yhteenveto-sähköposti joka sivusta (joka %.2f. päivä)';
 $lang['subscr_style_list']     = 'lista muuttuneista sivuista edellisen sähköpostin jälkeen (joka %.2f. päivä)';
 $lang['authtempfail']          = 'Käyttäjien autentikointi ei tällä hetkellä onnistu. Jos ongelma jatkuu, ota yhteyttä wikin ylläpitäjään.';
-$lang['authpwdexpire']         = 'Salasanasi vanhenee %d pv:n päästä, vaihda salasanasi pikaisesti.';
 $lang['i_chooselang']          = 'Valitse kieli';
 $lang['i_installer']           = 'DokuWikin asentaja';
 $lang['i_wikiname']            = 'Wikin nimi';

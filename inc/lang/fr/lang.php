@@ -299,7 +299,6 @@ $lang['subscr_style_every']    = 'Recevoir un courriel à chaque modification';
 $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'en informer l\'administrateur du wiki.';
-$lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
 $lang['i_installer']           = 'Installateur DokuWiki';
 $lang['i_wikiname']            = 'Nom du wiki';

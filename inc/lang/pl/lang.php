@@ -281,7 +281,6 @@ $lang['subscr_style_every']    = 'email przy każdej zmianie';
 $lang['subscr_style_digest']   = 'e-mailowy wyciąg zmian dla każdej strony (co %.2f dni)';
 $lang['subscr_style_list']     = 'lista zmienionych stron od ostatniego e-maila (co %.2f dni)';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
-$lang['authpwdexpire']         = 'Twoje hasło wygaśnie za %d dni. Należy je zmienić w krótkim czasie.';
 $lang['i_chooselang']          = 'Wybierz język';
 $lang['i_installer']           = 'Instalator DokuWiki';
 $lang['i_wikiname']            = 'Nazwa Wiki';

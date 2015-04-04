@@ -256,7 +256,6 @@ $lang['subscr_style_every']    = 'Envia\'m un correu electrònic per a cada canv
 $lang['subscr_style_digest']   = 'Envia\'m un correu electrònic amb un resum dels canvis per a cada pàgina (cada %.2f dies)';
 $lang['subscr_style_list']     = 'llistat de pàgines canviades des de l\'últim correu electrònic  (cada %.2f dies)';
 $lang['authtempfail']          = 'L\'autenticació d\'usuaris no està disponible temporalment. Si aquesta situació persisteix, si us plau informeu els administradors del wiki.';
-$lang['authpwdexpire']         = 'La vostra contrasenya caducarà en %d dies, l\'hauríeu de canviar aviat.';
 $lang['i_chooselang']          = 'Trieu l\'idioma';
 $lang['i_installer']           = 'Instal·lador de DokuWiki';
 $lang['i_wikiname']            = 'Nom del wiki';

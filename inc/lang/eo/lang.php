@@ -274,7 +274,6 @@ $lang['subscr_style_every']    = 'retpoŝtaĵo pro ĉiu ŝanĝo';
 $lang['subscr_style_digest']   = 'resuma retpoŝtaĵo de ŝanĝoj por ĉiu paĝo (je %.2f tagoj)';
 $lang['subscr_style_list']     = 'listo de ŝanĝitaj paĝoj ekde la lasta retpoŝtaĵo (je %.2f tagoj)';
 $lang['authtempfail']          = 'La identigo de via uzantonomo estas intertempe maldisponebla. Se tiu ĉi situacio daŭros, bonvolu informi la adminstranton de la vikio.';
-$lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';
 $lang['i_chooselang']          = 'Elektu vian lingvon';
 $lang['i_installer']           = 'Instalilo de DokuWiki';
 $lang['i_wikiname']            = 'Nomo de la vikio';

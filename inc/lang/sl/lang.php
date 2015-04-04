@@ -269,7 +269,6 @@ $lang['subscr_style_every']    = 'elektronsko sporočilo ob vsaki spremembi';
 $lang['subscr_style_digest']   = 'strnjeno elektronsko sporočilo sprememb za vsako stran (vsakih %.2f dni)';
 $lang['subscr_style_list']     = 'seznam spremenjenih strani od zadnjega elektronskega sporočila (vsakih %.2f dni)';
 $lang['authtempfail']          = 'Potrditev uporabnika je trenutno nedostopna. Stopite v stik s skrbnikom sistema wiki.';
-$lang['authpwdexpire']         = 'Geslo bo poteklo v %d dneh. Priporočljivo ga je zamenjati.';
 $lang['i_chooselang']          = 'Izberite jezik';
 $lang['i_installer']           = 'DokuWiki namestitev';
 $lang['i_wikiname']            = 'Ime Wiki spletišča';

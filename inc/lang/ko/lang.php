@@ -276,7 +276,6 @@ $lang['subscr_style_every']    = '모든 바뀜을 이메일로 받기';
 $lang['subscr_style_digest']   = '각 문서의 바뀜을 요약 (매 %.2f일 마다)';
 $lang['subscr_style_list']     = '마지막 이메일 이후 바뀐 문서의 목록 (매 %.2f일 마다)';
 $lang['authtempfail']          = '사용자 인증을 일시적으로 사용할 수 없습니다. 만약 계속해서 문제가 발생한다면 위키 관리자에게 문의하시기 바랍니다.';
-$lang['authpwdexpire']         = '비밀번호를 바꾼지 %d일이 지났으며, 비밀번호를 곧 바꿔야 합니다.';
 $lang['i_chooselang']          = '사용할 언어를 선택하세요';
 $lang['i_installer']           = '도쿠위키 설치 관리자';
 $lang['i_wikiname']            = '위키 이름';

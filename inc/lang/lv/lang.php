@@ -269,7 +269,6 @@ $lang['subscr_style_every']    = 'vēstuli par katru izmaiņu';
 $lang['subscr_style_digest']   = 'kopsavilkumu par katru lapu (reizi %.2f dienās)';
 $lang['subscr_style_list']     = 'kopš pēdējās vēstules notikušo labojumu sarakstu (reizi %.2f dienās)';
 $lang['authtempfail']          = 'Lietotāju autentifikācija pašlaik nedarbojas. Ja tas turpinās ilgstoši, lūduz ziņo Wiki administratoram.';
-$lang['authpwdexpire']         = 'Tavai parolei pēc %d dienām biegsies termiņš, tā drīzumā jānomaina.';
 $lang['i_chooselang']          = 'Izvēlies valodu';
 $lang['i_installer']           = 'DokuWiki instalētājs';
 $lang['i_wikiname']            = 'Wiki vārds';

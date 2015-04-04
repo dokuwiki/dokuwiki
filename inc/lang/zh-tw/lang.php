@@ -280,7 +280,6 @@ $lang['subscr_style_every']    = '每次更改都發送信件';
 $lang['subscr_style_digest']   = '對每個頁面發送更改的摘要信件 (每 %.2f 天)';
 $lang['subscr_style_list']     = '自上次發信以來更改的頁面的列表 (每 %.2f 天)';
 $lang['authtempfail']          = '暫不提供帳號認證。若本狀況持續，請通知本 wiki 管理員。';
-$lang['authpwdexpire']         = '您的密碼將在 %d 天內到期，請馬上更換新密碼。';
 $lang['i_chooselang']          = '選擇您的語系';
 $lang['i_installer']           = 'DokuWiki 安裝工具';
 $lang['i_wikiname']            = '本 wiki 的名稱';

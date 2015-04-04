@@ -259,7 +259,6 @@ $lang['subscr_style_every']    = 'e-posta aldaketa bakoitzean';
 $lang['subscr_style_digest']   = 'e-posta laburbildua orri bakoitzeko aldaketentzat (%.2f egunero)';
 $lang['subscr_style_list']     = 'aldatutako orrien zerrenda azken e-postatik (%.2f egunero)';
 $lang['authtempfail']          = 'Erabiltzaile kautotzea denboraldi batez ez dago erabilgarri. Egoerak hala jarraitzen badu, mesedez, eman honen berri Wiki administratzaileari';
-$lang['authpwdexpire']         = 'Zure pasahitza %d egun barru iraungiko da, laster aldatu beharko zenuke.';
 $lang['i_chooselang']          = 'Hautatu zure hizkuntza';
 $lang['i_installer']           = 'DokuWiki instalatzailea';
 $lang['i_wikiname']            = 'Wiki Izena';

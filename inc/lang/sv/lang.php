@@ -277,7 +277,6 @@ $lang['subscr_m_receive']      = 'Ta emot';
 $lang['subscr_style_every']    = 'skicka epost vid varje ändring';
 $lang['subscr_style_list']     = 'lista över ändrade sidor sedan senaste e-post (varje %.2f dag)';
 $lang['authtempfail']          = 'Tillfälligt fel på användarautentisering. Om felet kvarstår, var vänlig meddela wikiadministratören.';
-$lang['authpwdexpire']         = 'Ditt lösenord kommer att bli ogiltigt om %d dagar, du bör ändra det snart.';
 $lang['i_chooselang']          = 'Välj språk';
 $lang['i_installer']           = 'Installation av DokuWiki';
 $lang['i_wikiname']            = 'Wikins namn';

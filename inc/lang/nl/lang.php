@@ -290,7 +290,6 @@ $lang['subscr_style_every']    = 'Email bij iedere wijziging';
 $lang['subscr_style_digest']   = 'Samenvattings-email met wijzigingen per pagina (elke %.2f dagen)';
 $lang['subscr_style_list']     = 'Lijst van veranderde pagina\'s sinds laatste email (elke %.2f dagen)';
 $lang['authtempfail']          = 'Gebruikersauthenticatie is tijdelijk niet beschikbaar. Als deze situatie zich blijft voordoen, informeer dan de wikibeheerder.';
-$lang['authpwdexpire']         = 'Je wachtwoord verloopt in %d dagen, je moet het binnenkort veranderen';
 $lang['i_chooselang']          = 'Kies je taal';
 $lang['i_installer']           = 'DokuWiki Installer';
 $lang['i_wikiname']            = 'Wikinaam';

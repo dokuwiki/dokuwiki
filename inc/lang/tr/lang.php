@@ -264,7 +264,6 @@ $lang['subscr_m_subscribe']    = 'Kayıt ol';
 $lang['subscr_m_receive']      = 'Al';
 $lang['subscr_style_every']    = 'her değişiklikte e-posta gönder';
 $lang['authtempfail']          = 'Kullanıcı doğrulama geçici olarak yapılamıyor. Eğer bu durum devam ederse lütfen Wiki yöneticine haber veriniz.';
-$lang['authpwdexpire']         = 'Şifreniz %d gün sonra geçersiz hale gelecek, yakın bir zamanda değiştirmelisiniz.';
 $lang['i_chooselang']          = 'Dili seçiniz';
 $lang['i_installer']           = 'Dokuwiki Kurulum Sihirbazı';
 $lang['i_wikiname']            = 'Wiki Adı';

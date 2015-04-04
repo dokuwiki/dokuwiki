@@ -270,7 +270,6 @@ $lang['subscr_style_every']    = 'igast toimetamisest teavitab ekiri';
 $lang['subscr_style_digest']   = 'kokkuvõte ekirjaga toimetamistest igal leheküljel (iga %.2f päeva järel)';
 $lang['subscr_style_list']     = 'Peale viimast ekirja (iga %.2f päeva järel) toimetaud lehekülgede loend.';
 $lang['authtempfail']          = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
-$lang['authpwdexpire']         = 'Sinu salasõna aegub %päeva pärast, võiksid seda peatselt muuta.';
 $lang['i_chooselang']          = 'Vali keel';
 $lang['i_installer']           = 'DokuWiki paigaldaja';
 $lang['i_wikiname']            = 'Wiki nimi';

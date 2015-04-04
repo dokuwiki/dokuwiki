@@ -284,7 +284,6 @@ $lang['subscr_style_every']    = 'e-mail pro každou změnu';
 $lang['subscr_style_digest']   = 'souhrnný e-mail změn pro každou stránku (každé %.2f dny/dní)';
 $lang['subscr_style_list']     = 'seznam změněných stránek od posledního e-mailu (každé %.2f dny/dní)';
 $lang['authtempfail']          = 'Autentizace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte prosím správce této wiki.';
-$lang['authpwdexpire']         = 'Platnost vašeho hesla vyprší za %d dní, měli byste ho změnit co nejdříve.';
 $lang['i_chooselang']          = 'Vyberte si jazyk';
 $lang['i_installer']           = 'Instalace DokuWiki';
 $lang['i_wikiname']            = 'Název wiki';

@@ -284,7 +284,6 @@ $lang['subscr_style_every']    = 'email på hver ændring';
 $lang['subscr_style_digest']   = 'opsummeringsmail med ændringer for hver side (hver %.2f dage)';
 $lang['subscr_style_list']     = 'list af ændrede sider siden sidste email (hver %.2f dage)';
 $lang['authtempfail']          = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
-$lang['authpwdexpire']         = 'Din adgangskode vil udløbe om %d dage, du bør ændre det snart.';
 $lang['i_chooselang']          = 'Vælg dit sprog';
 $lang['i_installer']           = 'DokuWiki Installer';
 $lang['i_wikiname']            = 'Wiki Navn';

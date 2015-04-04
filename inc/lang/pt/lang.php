@@ -277,7 +277,6 @@ $lang['subscr_style_every']    = 'email em qualquer alteração';
 $lang['subscr_style_digest']   = '"digest email" de alterações em cada página (cada %.2f dias)';
 $lang['subscr_style_list']     = 'lista de páginas alteradas desde o último email (cada %.2f dias)';
 $lang['authtempfail']          = 'Autenticação temporariamente indisponível. Se a situação persistir, por favor informe o Wiki Admin.';
-$lang['authpwdexpire']         = 'A sua senha expirará dentro de %d dias, deve mudá-la em breve.';
 $lang['i_chooselang']          = 'Escolha a linguagem';
 $lang['i_installer']           = 'Instalador do DokuWiki';
 $lang['i_wikiname']            = 'Nome Wiki';

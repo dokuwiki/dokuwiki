@@ -272,7 +272,6 @@ $lang['subscr_style_every']    = 'e-pošta za svaku promjenu';
 $lang['subscr_style_digest']   = 'e-pošta s kratakim prikazom promjena za svaku stranicu (svaka %.2f dana)';
 $lang['subscr_style_list']     = 'listu promijenjenih stranica od zadnje primljene e-pošte (svaka %.2f dana)';
 $lang['authtempfail']          = 'Autentifikacija korisnika je privremeno nedostupna. Molimo Vas da kontaktirate administratora.';
-$lang['authpwdexpire']         = 'Vaša lozinka će isteći za %d dana, trebate ju promijeniti.';
 $lang['i_chooselang']          = 'Izaberite vaš jezik';
 $lang['i_installer']           = 'DokuWiki postavljanje';
 $lang['i_wikiname']            = 'Naziv Wikija';

@@ -278,7 +278,6 @@ $lang['subscr_style_every']    = 'דוא״ל עם כל שינוי';
 $lang['subscr_style_digest']   = 'הודעת דוא״ל המציגה את כל השינויים בכל עמוד (בכל %.2f ימים)';
 $lang['subscr_style_list']     = 'רשימת השינויים בדפים מאז הודעת הדוא״ל האחרונה (בכל %.2f ימים)';
 $lang['authtempfail']          = 'אימות משתמשים אינו זמין כרגע. אם מצב זה נמשך נא ליידע את מנהל הוויקי.';
-$lang['authpwdexpire']         = 'הסיסמה שלך תפוג ב% d ימים, אתה צריך לשנות את זה בקרוב.';
 $lang['i_chooselang']          = 'נא לבחור שפה';
 $lang['i_installer']           = 'תכנית ההתקנה של DokuWiki';
 $lang['i_wikiname']            = 'שם הוויקי';

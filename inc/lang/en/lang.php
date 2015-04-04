@@ -290,7 +290,6 @@ $lang['subscr_style_list']          = 'list of changed pages since last email (e
 
 /* auth.class language support */
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
-$lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 
 /* installer strings */
 $lang['i_chooselang']          = 'Choose your language';

@@ -257,7 +257,6 @@ $lang['subscr_m_subscribe']    = 'Subscribir';
 $lang['subscr_m_receive']      = 'Recibir';
 $lang['subscr_style_every']    = 'correo-e en cada troco';
 $lang['authtempfail']          = 'A autenticación de usuario non está dispoñible de xeito temporal. De persistir esta situación, por favor, informa ao Administrador do teu Wiki.';
-$lang['authpwdexpire']         = 'A túa contrasinal expirará en %d días, deberías cambiala pronto.';
 $lang['i_chooselang']          = 'Escolle o teu idioma';
 $lang['i_installer']           = 'Instalador do DokuWiki';
 $lang['i_wikiname']            = 'Nome do Wiki';

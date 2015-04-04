@@ -278,7 +278,6 @@ $lang['subscr_style_every']    = 'e-mailt minden változásról';
 $lang['subscr_style_digest']   = 'összefoglaló e-mailt oldalanként (minden %.2f nap)';
 $lang['subscr_style_list']     = 'egy listát a módosított oldalakról a legutóbbi e-mail óta (minden %.2f nap)';
 $lang['authtempfail']          = 'A felhasználó azonosítás átmenetileg nem működik. Ha sokáig így lenne, légy szíves értesítsd az Adminisztrátorokat!';
-$lang['authpwdexpire']         = 'A jelszavad %d nap múlva lejár, hamarosan meg kell változtatnod.';
 $lang['i_chooselang']          = 'Válassz nyelvet';
 $lang['i_installer']           = 'DokuWiki Beállító Varázsló';
 $lang['i_wikiname']            = 'A Wiki neve';

@@ -266,7 +266,6 @@ $lang['subscr_style_every']    = 'e-mail la ficare schimbare';
 $lang['subscr_style_digest']   = 'e-mail cu sumar al modificărilor pentru fiecare pagină (la fiecare %.2f zile)';
 $lang['subscr_style_list']     = 'lista paginilor modificate de la ultimul e-mail (la fiecare %.2f zile)';
 $lang['authtempfail']          = 'Autentificarea utilizatorului este temporar indisponibilă. Contactează administratorul.';
-$lang['authpwdexpire']         = 'Parola va expira în %d zile, ar trebui să o schimbi în curând.';
 $lang['i_chooselang']          = 'Alege limba';
 $lang['i_installer']           = 'Installer DokuWiki';
 $lang['i_wikiname']            = 'Numele acestui wiki';
