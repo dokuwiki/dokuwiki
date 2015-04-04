@@ -34,7 +34,6 @@ $lang['btn_update']            = 'Жаңарту';
 $lang['btn_delete']            = 'Жою';
 $lang['btn_back']              = 'Артқа';
 $lang['btn_backlink']          = 'Кері сілтемелері';
-$lang['btn_backtomedia']       = 'Медиафайлды таңдауға қайту';
 $lang['btn_subscribe']         = 'Жазылуларды басқару';
 $lang['btn_profile']           = 'Профильді жаңарту';
 $lang['btn_reset']             = 'Түсіру';

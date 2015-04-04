@@ -39,7 +39,6 @@ $lang['btn_update']            = 'Update';
 $lang['btn_delete']            = 'Delete';
 $lang['btn_back']              = 'Back';
 $lang['btn_backlink']          = 'Backlinks';
-$lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
 $lang['btn_reset']             = 'Reset';
@@ -159,7 +158,6 @@ $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
 
 $lang['mediaselect']           = 'Media Files';
-$lang['fileupload']            = 'Media File Upload';
 $lang['uploadsucc']            = 'Upload successful';
 $lang['uploadfail']            = 'Upload failed. Maybe wrong permissions?';
 $lang['uploadwrong']           = 'Upload denied. This file extension is forbidden!';
@@ -255,8 +253,6 @@ $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Special Chars';
 
 $lang['upperns']               = 'jump to parent namespace';
-
-$lang['admin_register']        = 'Add new user';
 
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Writing metadata failed';
