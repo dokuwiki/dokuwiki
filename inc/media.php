@@ -1860,7 +1860,6 @@ function media_searchform($ns,$query='',$fullscreen=false){
     $form->addHidden('ns', $ns);
     $form->addHidden($fullscreen ? 'mediado' : 'do', 'searchlist');
 
-    if (!$fullscreen) $form->addElement('<div class="upload">' . $lang['mediasearch'] . '</div>'.NL);
     $form->addElement(form_makeOpenTag('p'));
     $form->addElement(form_makeTextField('q', $query,$lang['searchmedia'],'','',array('title'=>sprintf($lang['searchmedia_in'],hsc($ns).':*'))));
     $form->addElement(form_makeButton('submit', '', $lang['btn_search']));
