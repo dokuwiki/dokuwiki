@@ -886,6 +886,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         // now install all found items
+        $targets = array();
         foreach($install as $item) {
             // where to install?
             if($item['type'] == 'template') {
@@ -907,6 +908,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
             // check to make sure we aren't overwriting anything
             $target = $target_base_dir.$item['base'];
+            $targets[] = $target;
             if(!$overwrite && file_exists($target)) {
                 // TODO remember our settings, ask the user to confirm overwrite
                 continue;
@@ -928,6 +930,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, '<bdi>'.$item['base'].'</bdi>'));
             }
         }
+
+        $this->run_post_install($targets);
 
         // cleanup
         if($tmp) io_rmdir($tmp, true);
@@ -1125,6 +1129,13 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         return true;
+    }
+
+    private function run_post_install($targets){
+        $uniqueTargets = array_unique($targets);
+        foreach($uniqueTargets as $target){
+            @include $target . '/post_install.php';
+        }
     }
 }
 
