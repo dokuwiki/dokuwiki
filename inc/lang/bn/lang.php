@@ -6,6 +6,7 @@
  * @author Foysol <ragebot1125@gmail.com>
  * @author ninetailz <ninetailz1125@gmail.com>
  * @author Khan M. B. Asad <muhammad2017@gmail.com>
+ * @author Ninetailz <ninetailz1125@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'itr';
@@ -198,3 +199,31 @@ $lang['restored']              = 'পুরানো সংস্করণের
 $lang['external_edit']         = 'বাহ্যিক সম্পাদনা';
 $lang['summary']               = 'সম্পাদনা সারাংশ';
 $lang['noflash']               = 'এ href="http://www.adobe.com/products/flashplayer/"> অ্যাডোবি ফ্ল্যাশ প্লাগইন </ a> এই সামগ্রী প্রদর্শন করার জন্য প্রয়োজন হয়.';
+$lang['download']              = 'ডাউনলোড স্নিপেট ';
+$lang['tools']                 = 'সরঞ্জামসমূহ';
+$lang['user_tools']            = 'ব্যবহারকারীর সরঞ্জামসমূহ';
+$lang['site_tools']            = 'সাইটের সরঞ্জামসমূহ';
+$lang['page_tools']            = 'পৃষ্ঠার সরঞ্জামসমূহ';
+$lang['skip_to_content']       = 'বিষয়ে এড়িয়ে যান';
+$lang['sidebar']               = 'সাইডবার';
+$lang['mail_newpage']          = 'পৃষ্ঠা যোগ করা হয়েছে:';
+$lang['mail_changed']          = 'পৃষ্ঠা পরিবর্তন করা হয়েছে:';
+$lang['mail_subscribe_list']   = 'পৃষ্ঠাগুলির নামস্থান পরিবর্তন:';
+$lang['mail_new_user']         = 'নতুন ব্যবহারকারী:';
+$lang['mail_upload']           = 'ফাইল আপলোড করেছেন:';
+$lang['changes_type']          = 'দেখুন পরিবর্তনসমূহ';
+$lang['pages_changes']         = 'পৃষ্ঠাগুলি';
+$lang['media_changes']         = 'মিডিয়া ফাইলগুলি';
+$lang['both_changes']          = 'পেজ এবং মিডিয়া ফাইল উভয়েই';
+$lang['qb_bold']               = 'গাঢ় লেখা';
+$lang['qb_italic']             = 'বাঁকা লেখা';
+$lang['qb_underl']             = 'আন্ডারলাইন টেক্সট';
+$lang['qb_code']               = 'মোনোস্কেপ লেখা';
+$lang['qb_strike']             = 'স্ট্রাইক মাধ্যমে টেক্সট';
+$lang['qb_h1']                 = 'স্তর 1 শিরোনাম';
+$lang['qb_h2']                 = 'স্তর 2 শিরোনাম';
+$lang['qb_h3']                 = 'স্তর 3 শিরোনাম';
+$lang['qb_h4']                 = 'স্তর 4 শিরোনাম';
+$lang['qb_h5']                 = 'স্তর 5 শিরোনাম';
+$lang['qb_h']                  = 'শিরোনাম';
+$lang['qb_hs']                 = 'নির্বাচন করুন শিরোনাম';
