@@ -629,6 +629,43 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
     return array_merge($elem, $attrs);
 }
 
+
+/**
+ * form_makeDatalist
+ ** Create hidden datalist on values 
+ * To join wit textfield muss be to atributes add list=$id
+ * The list of values is arrays of (value,text),
+ * or an associative array with the values as keys and labels as values.
+ * 
+ * @var $id string id od dalist to contact with textfield
+ * @author  Michal Cervenak <miso@fykos.cz>
+ */
+
+function form_makeDatalist($id, $values, $attrs=array()) {
+    $options = array();
+    reset($values);
+    
+    // for ascociative array
+    if (is_string(key($values))) {
+        foreach ($values as $val=>$text) {
+            $options[] = array($val,$text);
+        }
+    } else {
+        foreach ($values as $val) {
+            
+            if (is_array($val)) {
+                @list($val,$text) = $val;
+            } else {
+                $text = $val;
+            }
+            $options[] = array($val,$text);
+        }
+    }
+    $elem = array('_elem'=>'datalist', '_options'=>$options,
+                        'id'=>$id);
+    return array_merge($elem, $attrs);
+}
+
 /**
  * form_tag
  *
@@ -1039,5 +1076,36 @@ function form_listboxfield($attrs) {
     $s .= DOKU_LF.'</select></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
+    return $s;
+}
+
+
+/**
+ * form_datalist
+ * 
+ * Print the HTML for a datalist.
+ * @var $attrs array ivt _optonst and id 
+ * 
+ * _options: array of  (value,text) for datalist
+ * @author  Michal Cervenak <miso@fykos.cz>
+ */
+function form_datalist($attrs) {
+
+    $s .= '<datalist ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
+    if (!empty($attrs['_options'])) {
+        foreach ($attrs['_options'] as $opt) {
+            @list($value, $text) = $opt;
+            $p = '';
+            if (is_null($text)) {
+                $text = $value;
+            }
+            $p .= ' value="' . formText($value) . '"';
+            $s .= '<option' . $p . '>' . formText($text) . '</option>';
+        }
+    } else {
+        $s .= '';
+    }
+    $s .= DOKU_LF . '</datalist>';
+
     return $s;
 }
