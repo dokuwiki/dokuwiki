@@ -632,12 +632,12 @@ function form_makeListboxField($name, $values, $selected='', $label=null, $id=''
 
 /**
  * form_makeDatalist
- ** Create hidden datalist on values 
- * To join wit textfield muss be to atributes add list=$id
+ * Creates hidden datalist of values 
+ * Attribute list=$id has to be used to join datalist with textfield
  * The list of values is arrays of (value,text),
- * or an associative array with the values as keys and labels as values.
+ * or an associative array with the values as keys and text as values.
  * 
- * @var $id string id od dalist to contact with textfield
+ * @var $id string id of datalist to contact with textfield
  * @author  Michal Cervenak <miso@fykos.cz>
  */
 
@@ -1083,7 +1083,7 @@ function form_listboxfield($attrs) {
 /**
  * form_datalist
  * 
- * Print the HTML for a datalist.
+ * Print the HTML datalist.
  * @var $attrs array ivt _optonst and id 
  * 
  * _options: array of  (value,text) for datalist
