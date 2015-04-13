@@ -1091,7 +1091,7 @@ function form_listboxfield($attrs) {
  */
 function form_datalist($attrs) {
 
-    $s .= '<datalist ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
+    $s = '<datalist ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
     if (!empty($attrs['_options'])) {
         foreach ($attrs['_options'] as $opt) {
             @list($value, $text) = $opt;
