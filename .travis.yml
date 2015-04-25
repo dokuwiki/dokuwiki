@@ -4,13 +4,17 @@ php:
   - "5.5"
   - "5.4"
   - "5.3"
+  - "hhvm"
+  - "nightly"
+matrix:
+  allow_failures:
+    - php:
+      - "hhvm"
+      - "nightly"
 notifications:
   irc:
     channels:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-install:
-  - wget https://phar.phpunit.de/phpunit-4.3.5.phar -O _test/phpunit
-  - chmod 755 _test/phpunit
-script: cd _test && ./phpunit --verbose --stderr
+script: cd _test && phpunit --verbose --stderr
