@@ -29,6 +29,7 @@
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
+ * @author Alex P <alexander@lanos.co.uk>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';
