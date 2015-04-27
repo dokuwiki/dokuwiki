@@ -38,15 +38,6 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
 
         echo '<div class="panelHeader">';
         echo $this->locale_xhtml('intro_plugins');
-
-        $options = new Doku_Form( "viewoptions" );
-        $options->addElement( form_makeOpenTag( "p" ) );
-        $options->addElement( $this->getLang('display_viewoptions') );
-        $options->addElement( form_makeCheckboxField( "enabled", 1, $this->getLang('display_enabled') ) );
-        $options->addElement( form_makeCheckboxField( "disabled", 1, $this->getLang('display_disabled') ) );
-        $options->addElement( form_makeCheckboxField( "updatable", 1, $this->getLang('display_updatable') ) );
-        $options->addElement( form_makeCloseTag( "p" ) );
-        $options->printForm();
         echo '</div>';
 
         $pluginlist = $plugin_controller->getList('', true);
