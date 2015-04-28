@@ -24,6 +24,7 @@
  * @author Dário Estevão <darioems@gmail.com>
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  * @author Ednei <leuloch@gmail.com>
+ * @author Hudson FAS <hudsonfas@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -357,3 +358,5 @@ $lang['currentns']             = 'Domínio atual';
 $lang['searchresult']          = 'Resultado da Busca';
 $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Marcação wiki';
+$lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada posteriormente em <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
