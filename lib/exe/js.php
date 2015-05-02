@@ -31,10 +31,6 @@ function js_out(){
     global $lang;
     global $config_cascade;
 
-    // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
-    $cache->_event = 'JS_CACHE_USE';
-
     // load minified version for some files
     $min = $conf['compress'] ? '.min' : '';
 
@@ -77,6 +73,13 @@ function js_out(){
             $files[] = $userscript;
         }
     }
+    
+    // Let plugins decide to either put more scripts here or to remove some
+	trigger_event('JS_SCRIPT_LIST', $files);
+
+    // The generated script depends on some dynamic options
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
+    $cache->_event = 'JS_CACHE_USE';
 
     $cache_files = array_merge($files, getConfigFiles('main'));
     $cache_files[] = __FILE__;
