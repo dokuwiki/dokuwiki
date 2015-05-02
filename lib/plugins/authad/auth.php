@@ -258,7 +258,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                     ($info['expiresin'] <= $this->conf['expirywarn']) &&
                     !$this->msgshown
                 ) {
-                    $msg = sprintf($lang['authpwdexpire'], $info['expiresin']);
+                    $msg = sprintf($this->getLang('authpwdexpire'), $info['expiresin']);
                     if($this->canDo('modPass')) {
                         $url = wl($ID, array('do'=> 'profile'));
                         $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
