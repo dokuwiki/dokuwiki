@@ -417,7 +417,7 @@ function tpl_metaheaders($alt = true) {
     // load external javascript
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?tseed='.$tseed
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.$conf['template'].'&tseed='.$tseed
     );
 
     // trigger event here
