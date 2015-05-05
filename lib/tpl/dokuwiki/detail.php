@@ -63,7 +63,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                             $media_usage = ft_mediause($IMG,true);
                             if(count($media_usage) > 0){
                                 foreach($media_usage as $path){
-                                    echo '<dd>'.html_wikilink($path).'</a></dd>';
+                                    echo '<dd>'.html_wikilink($path).'</dd>';
                                 }
                             }else{
                                 echo '<dd>'.$lang['nothingfound'].'</dd>';
