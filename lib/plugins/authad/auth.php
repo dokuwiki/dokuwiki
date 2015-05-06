@@ -522,7 +522,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function modifyUser($user, $changes) {
         $return = true;
         $adldap = $this->_adldap($this->_userDomain($user));
-        if(!$adldap) return false;
+        if(!$adldap) {
+            msg($this->getLang('connectfail'), -1);
+            return false;
+        }
 
         // password changing
         if(isset($changes['pass'])) {
@@ -532,7 +535,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
-            if(!$return) msg('AD Auth: failed to change the password. Maybe the password policy was not met?', -1);
+            if(!$return) msg($this->getLang('passchangefail'), -1);
         }
 
         // changing user data
@@ -554,6 +557,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
+            if(!$return) msg($this->getLang('userchangefail'), -1);
         }
 
         return $return;
