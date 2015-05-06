@@ -31,7 +31,6 @@ $lang['btn_update'] = 'Rojanekirin';
 $lang['btn_delete'] = 'Jê bibe';
 $lang['btn_back']   = 'Paş';
 $lang['btn_backlink']    = 'Girêdanên paş';
-$lang['btn_backtomedia'] = 'Back to Mediafile Selection';
 $lang['btn_subscribe']   = 'Subscribe Changes';
 $lang['btn_register'] = 'Register';
 
@@ -67,7 +66,6 @@ $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Tiştek nehat dîtin.';
 
 $lang['mediaselect'] = 'Mediafile Selection';
-$lang['fileupload']  = 'Mediafile Upload';
 $lang['uploadsucc']  = 'Upload successful';
 $lang['uploadfail']  = 'Upload failed. Maybe wrong permissions?';
 $lang['uploadwrong'] = 'Upload denied. This file extension is forbidden!';
@@ -121,8 +119,6 @@ $lang['qb_media']   = 'Add Images and other files';
 $lang['qb_sig']     = 'Insert Signature';
 
 $lang['js']['del_confirm']= 'Delete this entry?';
-
-$lang['admin_register']= 'Add new user...';
 
 $lang['metaedit']    = 'Edit Metadata';
 $lang['metasaveerr'] = 'Writing metadata failed';

@@ -35,7 +35,6 @@ $lang['btn_update']            = 'Bohouni';
 $lang['btn_delete']            = 'Heta';
 $lang['btn_back']              = 'Fulifuri';
 $lang['btn_backlink']          = 'Link fangawuli';
-$lang['btn_backtomedia']       = 'Angawuli ba filianö Mediafile';
 $lang['btn_profile']           = 'Famohouni pörofile';
 $lang['btn_reset']             = 'Fawu\'a';
 $lang['btn_draft']             = 'Fawu\'a wanura';
