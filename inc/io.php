@@ -223,7 +223,16 @@ function io_saveFile($file,$content,$append=false){
         gzwrite($fh, $content);
         gzclose($fh);
     }else if(substr($file,-4) == '.bz2'){
-        $fh = @bzopen($file,$mode{0});
+        if($append) {
+            $bzcontent = bzfile($file);
+            if($bzcontent === false) {
+                msg("Writing $file failed", -1);
+                io_unlock($file);
+                return false;
+            }
+            $content = $bzcontent.$content;
+        }
+        $fh = @bzopen($file,'w');
         if(!$fh){
             msg("Writing $file failed", -1);
             io_unlock($file);
