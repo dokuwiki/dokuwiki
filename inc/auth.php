@@ -1006,7 +1006,7 @@ function register() {
 
     //okay try to create the user
     if(!$auth->triggerUserMod('create', array($login, $pass, $fullname, $email))) {
-        msg($lang['reguexists'], -1);
+        msg($lang['regfail'], -1);
         return false;
     }
 
@@ -1098,17 +1098,18 @@ function updateprofile() {
         }
     }
 
-    if($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
-        // update cookie and session with the changed data
-        if($changes['pass']) {
-            list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
-            $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
-            auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
-        }
-        return true;
+    if(!($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes)))) {
+        msg($lang['proffail'], -1);
+        return false;
     }
 
-    return false;
+    // update cookie and session with the changed data
+    if($changes['pass']) {
+        list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
+        $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
+        auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
+    }
+    return true;
 }
 
 /**
@@ -1221,7 +1222,7 @@ function act_resendpwd() {
 
             // change it
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
-                msg('error modifying user data', -1);
+                msg($lang['proffail'], -1);
                 return false;
             }
 
@@ -1229,7 +1230,7 @@ function act_resendpwd() {
 
             $pass = auth_pwgen($user);
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
-                msg('error modifying user data', -1);
+                msg($lang['proffail'], -1);
                 return false;
             }
 
