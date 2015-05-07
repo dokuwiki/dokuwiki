@@ -75,6 +75,7 @@ $lang['regmissing']            = 'Sorry, you must fill in all fields.';
 $lang['reguexists']            = 'Sorry, a user with this login already exists.';
 $lang['regsuccess']            = 'The user has been created and the password was sent by email.';
 $lang['regsuccess2']           = 'The user has been created.';
+$lang['regfail']               = 'The user could not be created.';
 $lang['regmailfail']           = 'Looks like there was an error on sending the password mail. Please contact the admin!';
 $lang['regbadmail']            = 'The given email address looks invalid - if you think this is an error, contact the admin';
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
@@ -90,6 +91,7 @@ $lang['profdeleteuser']        = 'Delete Account';
 $lang['profdeleted']           = 'Your user account has been deleted from this wiki';
 $lang['profconfdelete']        = 'I wish to remove my account from this wiki. <br/> This action can not be undone.';
 $lang['profconfdeletemissing'] = 'Confirmation check box not ticked';
+$lang['proffail']              = 'User profile was not updated.';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';

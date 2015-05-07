@@ -6,7 +6,9 @@
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
 
-$lang['domain'] = 'Logon Domain';
-$lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
+$lang['domain']          = 'Logon Domain';
+$lang['authpwdexpire']   = 'Your password will expire in %d days, you should change it soon.';
+$lang['passchangefail']  = 'Failed to change the password. Maybe the password policy was not met?';
+$lang['connectfail']     = 'Failed to connect to Active Directory server.';
 
 //Setup VIM: ex: et ts=4 :
