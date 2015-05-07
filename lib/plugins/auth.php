@@ -295,7 +295,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      */
     public function deleteUsers($users) {
         msg("authorisation method does not allow deleting of users", -1);
-        return false;
+        return 0;
     }
 
     /**

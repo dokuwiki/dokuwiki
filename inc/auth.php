@@ -1098,7 +1098,7 @@ function updateprofile() {
         }
     }
 
-    if(!($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes)))) {
+    if(!$auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
         msg($lang['proffail'], -1);
         return false;
     }

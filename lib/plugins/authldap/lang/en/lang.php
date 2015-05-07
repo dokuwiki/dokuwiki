@@ -6,6 +6,6 @@
  */
 
 $lang['connectfail']     = 'LDAP cannot connect: %s';
-$lang['domainfail'       = 'LDAP cannot find your user dn';
+$lang['domainfail']       = 'LDAP cannot find your user dn';
 
 //Setup VIM: ex: et ts=4 :
