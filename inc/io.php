@@ -127,22 +127,36 @@ function io_readFile($file,$clean=true){
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $file filename
- * @return string|bool content or false on error
+ * @param bool   $array return array of lines
+ * @return string|array|bool content or false on error
  */
-function bzfile($file){
+function bzfile($file, $array=false) {
     $bz = bzopen($file,"r");
     if($bz === false) return false;
 
+    if($array) $lines = array();
     $str = '';
-    while (!feof($bz)){
+    while (!feof($bz)) {
         //8192 seems to be the maximum buffersize?
         $buffer = bzread($bz,8192);
         if(($buffer === false) || (bzerrno($bz) !== 0)) {
             return false;
         }
         $str = $str . $buffer;
+        if($array) {
+            $pos = strpos($str, "\n");
+            while($pos !== false) {
+                $lines[] = substr($str, 0, $pos+1);
+                $str = substr($str, $pos+1);
+                $pos = strpos($str, "\n");
+            }
+        }
     }
     bzclose($bz);
+    if($array) {
+        if($str !== '') $lines[] = $str;
+        return $lines;
+    }
     return $str;
 }
 
@@ -280,6 +294,8 @@ function io_deleteFromFile($file,$badline,$regex=false){
     // load into array
     if(substr($file,-3) == '.gz'){
         $lines = gzfile($file);
+    }else if(substr($file,-4) == '.bz2'){
+        $lines = bzfile($file, true);
     }else{
         $lines = file($file);
     }
@@ -306,6 +322,15 @@ function io_deleteFromFile($file,$badline,$regex=false){
             }
             gzwrite($fh, $content);
             gzclose($fh);
+        }else if(substr($file,-4) == '.bz2'){
+            $fh = @bzopen($file,'w');
+            if(!$fh){
+                msg("Removing content from $file failed",-1);
+                io_unlock($file);
+                return false;
+            }
+            bzwrite($fh, $content);
+            bzclose($fh);
         }else{
             $fh = @fopen($file,'wb');
             if(!$fh){

@@ -33,10 +33,18 @@ class io_deletefromfile_test extends DokuWikiTest {
         $this->_write(TMP_DIR.'/test.txt');
     }
 
-//    /**
-//     * @depends test_ext_zlib
-//     */
-//    function test_gzwrite(){
-//    }
+    /**
+     * @depends test_ext_zlib
+     */
+    function test_gzwrite(){
+        $this->_write(TMP_DIR.'/test.txt.gz');
+    }
+
+    /**
+     * @depends test_ext_bz2
+     */
+    function test_bzwrite(){
+        $this->_write(TMP_DIR.'/test.txt.bz2');
+    }
 
 }
