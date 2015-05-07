@@ -682,7 +682,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      */
     function _acl_add($acl_scope, $acl_user, $acl_level){
         global $config_cascade;
-        $acl_config = file_get_contents($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
         // max level for pagenames is edit
@@ -692,9 +691,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
 
-        $new_config = $acl_config.$new_acl;
-
-        return io_saveFile($config_cascade['acl']['default'], $new_config);
+        return io_saveFile($config_cascade['acl']['default'], $new_config, true);
     }
 
     /**
@@ -704,15 +701,11 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
      */
     function _acl_del($acl_scope, $acl_user){
         global $config_cascade;
-        $acl_config = file($config_cascade['acl']['default']);
         $acl_user = auth_nameencode($acl_user,true);
 
         $acl_pattern = '^'.preg_quote($acl_scope,'/').'[ \t]+'.$acl_user.'[ \t]+[0-8].*$';
 
-        // save all non!-matching
-        $new_config = preg_grep("/$acl_pattern/", $acl_config, PREG_GREP_INVERT);
-
-        return io_saveFile($config_cascade['acl']['default'], join('',$new_config));
+        return io_deleteFromFile($config_cascade['acl']['default'], "/$acl_pattern/", true);
     }
 
     /**

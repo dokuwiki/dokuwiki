@@ -185,14 +185,9 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
 
         $userline = $this->_createUserLine($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $userinfo['grps']);
 
-        if(!$this->deleteUsers(array($user))) {
-            msg('Unable to modify user data. Please inform the Wiki-Admin', -1);
-            return false;
-        }
-
-        if(!io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
-            msg('There was an error modifying your user data. You should register again.', -1);
-            // FIXME, user has been deleted but not recreated, should force a logout and redirect to login page
+        if(!io_replaceInFile($config_cascade['plainauth.users']['default'], '/^'.$user.':/', $userline, true)) {
+            msg('There was an error modifying your user data. You may need to register again.', -1);
+            // FIXME, io functions should be fail-safe so existing data isn't lost
             $ACT = 'register';
             return false;
         }
