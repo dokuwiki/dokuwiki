@@ -282,11 +282,14 @@
  */
 #extension__list {
     
-    .enabled, .disabled, .updatable {
+    .enabled, .disabled,
+    .updatable {
         display: none;
     }
     
-    &.enabled .enabled, &.disabled .disabled, &.updatable .updatable {
+    &.enabled .enabled,
+    &.disabled .disabled,
+    &.updatable .updatable {
         display: block;
     }
     
