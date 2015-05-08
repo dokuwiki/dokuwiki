@@ -691,7 +691,7 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
 
         $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
 
-        return io_saveFile($config_cascade['acl']['default'], $new_config, true);
+        return io_saveFile($config_cascade['acl']['default'], $new_acl, true);
     }
 
     /**
