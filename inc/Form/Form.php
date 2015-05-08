@@ -58,8 +58,8 @@ class Form extends Element {
     /**
      * Sets a hidden field
      *
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @return $this
      */
     public function setHiddenField($name, $value) {
@@ -137,7 +137,7 @@ class Form extends Element {
     /**
      * Adds a textarea field
      *
-     * @param $name
+     * @param string $name
      * @param $label
      * @param int $pos
      * @return TextareaElement
