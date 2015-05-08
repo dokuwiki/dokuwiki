@@ -18,6 +18,7 @@ class TextareaElement extends InputElement {
      */
     public function __construct($name, $label) {
         parent::__construct('textarea', $name, $label);
+        $this->attr('dir', 'auto');
     }
 
     /**

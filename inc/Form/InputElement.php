@@ -4,7 +4,8 @@ namespace dokuwiki\Form;
 /**
  * Class InputElement
  *
- * Base class for all input elements. Uses a wrapping label.
+ * Base class for all input elements. Uses a wrapping label when label
+ * text is given.
  *
  * @todo figure out how to make wrapping or related label configurable
  * @package dokuwiki\Form
@@ -13,7 +14,7 @@ class InputElement extends Element {
     /**
      * @var Label
      */
-    protected $label;
+    protected $label = null;
 
     /**
      * @var bool if the element should reflect posted values
@@ -25,10 +26,19 @@ class InputElement extends Element {
      * @param string $name The name of this form element
      * @param string $label The label text for this element
      */
-    public function __construct($type, $name, $label) {
+    public function __construct($type, $name, $label = '') {
         parent::__construct($type, array('name' => $name));
         $this->attr('name', $name);
-        $this->label = new Label($label);
+        if($label) $this->label = new Label($label);
+    }
+
+    /**
+     * Returns the label element if there's one set
+     *
+     * @return Label|null
+     */
+    public function getLabel() {
+        return $this->label;
     }
 
     /**
@@ -52,7 +62,7 @@ class InputElement extends Element {
      * @return string|$this
      */
     public function id($id = null) {
-        $this->label->attr('for', $id);
+        if($this->label) $this->label->attr('for', $id);
         return parent::id($id);
     }
 
@@ -65,7 +75,7 @@ class InputElement extends Element {
      * @return $this
      */
     public function addClass($class) {
-        $this->label->addClass($class);
+        if($this->label) $this->label->addClass($class);
         return parent::addClass($class);
     }
 
@@ -138,9 +148,13 @@ class InputElement extends Element {
      * @return string
      */
     public function toHTML() {
-        return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF .
-        '<span>' . hsc($this->label->label) . '</span>' . DOKU_LF .
-        $this->mainElementHTML() . DOKU_LF .
-        '</label>';
+        if($this->label) {
+            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF .
+            '<span>' . hsc($this->label->label) . '</span>' . DOKU_LF .
+            $this->mainElementHTML() . DOKU_LF .
+            '</label>';
+        } else {
+            return $this->mainElementHTML();
+        }
     }
 }

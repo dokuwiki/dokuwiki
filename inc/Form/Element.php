@@ -1,7 +1,6 @@
 <?php
 namespace dokuwiki\Form;
 
-
 /**
  * Class Element
  *
@@ -28,6 +27,15 @@ abstract class Element {
     public function __construct($type, $attributes = array()) {
         $this->type = $type;
         $this->attributes = $attributes;
+    }
+
+    /**
+     * Type of this element
+     *
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
     }
 
     /**

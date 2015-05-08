@@ -92,7 +92,7 @@ class Form extends Element {
      * @param int $pos
      * @return InputElement
      */
-    public function addTextInput($name, $label, $pos = -1) {
+    public function addTextInput($name, $label = '', $pos = -1) {
         return $this->addElement(new InputElement('text', $name, $label), $pos);
     }
 
@@ -104,7 +104,7 @@ class Form extends Element {
      * @param int $pos
      * @return InputElement
      */
-    public function addPasswordInput($name, $label, $pos = -1) {
+    public function addPasswordInput($name, $label = '', $pos = -1) {
         return $this->addElement(new InputElement('password', $name, $label), $pos);
     }
 
@@ -116,7 +116,7 @@ class Form extends Element {
      * @param int $pos
      * @return CheckableElement
      */
-    public function addRadioButton($name, $label, $pos = -1) {
+    public function addRadioButton($name, $label = '', $pos = -1) {
         return $this->addElement(new CheckableElement('radio', $name, $label), $pos);
     }
 
@@ -128,7 +128,7 @@ class Form extends Element {
      * @param int $pos
      * @return CheckableElement
      */
-    public function addCheckbox($name, $label, $pos = -1) {
+    public function addCheckbox($name, $label = '', $pos = -1) {
         return $this->addElement(new CheckableElement('checkbox', $name, $label), $pos);
     }
 
@@ -140,8 +140,23 @@ class Form extends Element {
      * @param int $pos
      * @return TextareaElement
      */
-    public function addTextarea($name, $label, $pos = -1) {
+    public function addTextarea($name, $label = '', $pos = -1) {
         return $this->addElement(new TextareaElement($name, $label), $pos);
+    }
+
+    /**
+     * Add fixed HTML to the form
+     *
+     * @param $html
+     * @param int $pos
+     * @return Element
+     */
+    public function addHTML($html, $pos = -1) {
+        return $this->addElement(new HTMLElement($html), $pos);
+    }
+
+    protected function balanceFieldsets() {
+        //todo implement!
     }
 
     /**
@@ -150,6 +165,8 @@ class Form extends Element {
      * @return string
      */
     public function toHTML() {
+        $this->balanceFieldsets();
+
         $html = '<form ' . buildAttributes($this->attrs()) . '>' . DOKU_LF;
 
         foreach($this->hidden as $name => $value) {
