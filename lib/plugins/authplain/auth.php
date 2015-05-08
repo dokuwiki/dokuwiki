@@ -134,7 +134,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         global $config_cascade;
 
         // user mustn't already exist
-        if($this->getUserData($user) !== false) return false;
+        if($this->getUserData($user) !== false) {
+            msg($this->getLang('userexists'), -1);
+            return false;
+        }
 
         $pass = auth_cryptPassword($pwd);
 
@@ -144,16 +147,13 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         // prepare user line
         $userline = $this->_createUserLine($user, $pass, $name, $mail, $grps);
 
-        if(io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
-            $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
-            return $pwd;
+        if(!io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
+            msg($this->getLang('writefail'), -1);
+            return null;
         }
 
-        msg(
-            'The '.$config_cascade['plainauth.users']['default'].
-                ' file is not writable. Please inform the Wiki-Admin', -1
-        );
-        return null;
+        $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
+        return $pwd;
     }
 
     /**
@@ -169,7 +169,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         global $config_cascade;
 
         // sanity checks, user must already exist and there must be something to change
-        if(($userinfo = $this->getUserData($user)) === false) return false;
+        if(($userinfo = $this->getUserData($user)) === false) {
+            msg($this->getLang('usernotexists'), -1);
+            return false;
+        }
         if(!is_array($changes) || !count($changes)) return true;
 
         // update userinfo with new data, remembering to encrypt any password
@@ -218,7 +221,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         if(empty($deleted)) return 0;
 
         $pattern = '/^('.join('|', $deleted).'):/';
-        io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true);
+        if (!io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true)) {
+            msg($this->getLang('writefail'), -1);
+            return 0;
+        }
 
         // reload the user list and count the difference
         $count = count($this->users);

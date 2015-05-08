@@ -7,6 +7,7 @@
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
  * @author Mijndert <mijndert@mijndertstuij.nl>
+ * @author Johan Wijnker <johan@wijnker.eu>
  */
 $lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -87,6 +88,8 @@ $lang['noperms']               = 'Uitbreidings directory is niet schrijfbaar';
 $lang['notplperms']            = 'Template directory is niet schrijfbaar';
 $lang['nopluginperms']         = 'Plugin directory is niet schrijfbaar';
 $lang['git']                   = 'De uitbreiding werd geïnstalleerd via git, u wilt deze hier wellicht niet aanpassen.';
+$lang['auth']                  = 'Deze auth plugin is niet geactiveerd in de configuratie, overweeg het om uit te schakelen.';
 $lang['install_url']           = 'Installeer vanaf URL:';
 $lang['install_upload']        = 'Upload Uitbreiding:';
 $lang['repo_error']            = 'Er kon geen verbinding worden gemaakt met de centrale plugin opslag. Controleer of de server verbinding mag maken met www.dokuwiki.org en controleer de proxy instellingen.';
+$lang['nossl']                 = 'Je PHP mist SSL ondersteuning. Downloaden werkt niet met veel DokuWiki extensies.';

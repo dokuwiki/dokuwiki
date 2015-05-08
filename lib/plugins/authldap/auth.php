@@ -281,14 +281,14 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         // open the connection to the ldap
         if(!$this->_openLDAP()){
-            msg('LDAP cannot connect: '. htmlspecialchars(ldap_error($this->con)));
+            $this->_debug('LDAP cannot connect: '. htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
             return false;
         }
 
         // find the information about the user, in particular the "dn"
         $info = $this->getUserData($user,true);
         if(empty($info['dn'])) {
-            msg('LDAP cannot find your user dn');
+            $this->_debug('LDAP cannot find your user dn', 0, __LINE__, __FILE__);
             return false;
         }
         $dn = $info['dn'];
@@ -301,7 +301,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
             // bind with the ldap
             if(!@ldap_bind($this->con, $dn, $pass)){
-                msg('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                $this->_debug('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
         } elseif ($this->getConf('binddn') && $this->getConf('bindpw')) {
@@ -322,7 +322,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         // change the password
         if(!@ldap_mod_replace($this->con, $dn,array('userpassword' => $hash))){
-            msg('LDAP mod replace failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)));
+            $this->_debug('LDAP mod replace failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
             return false;
         }
 
