@@ -313,10 +313,16 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
 
     // remove all matching lines
     if ($regex) {
-        if($maxlines == 0) {
-            $lines = preg_grep($oldline, $lines, PREG_GREP_INVERT);
+        if($maxlines > 0) {
+            $matches = preg_grep($oldline, $lines);
+            $count = 0;
+            foreach($matches as $ix=>$m) {
+                $lines[$ix] = preg_replace($oldline, $newline, $m);
+                if(++$count >= $maxlines) break;
+            }
         } else {
-            $lines = preg_replace($oldline, $newline, $lines, $maxlines);
+            $lines = ($maxlines == 0) ? preg_grep($oldline, $lines, PREG_GREP_INVERT)
+                                      : preg_replace($oldline, $newline, $lines, $maxlines);
         }
     } else {
         $count = 0;
