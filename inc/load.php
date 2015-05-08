@@ -113,6 +113,12 @@ function load_autoload($name){
         return;
     }
 
+    // our own namespace
+    $name = str_replace('\\', '/', $name);
+    if(substr($name, 0, 9) == 'dokuwiki/') {
+        require_once(substr($name, 9) . '.php');
+    }
+
     // Plugin loading
     if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
                   $name, $m)) {
