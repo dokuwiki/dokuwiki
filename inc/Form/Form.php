@@ -34,7 +34,7 @@ class Form extends Element {
         if(!$this->attr('action')) {
             $get = $_GET;
             if(isset($get['id'])) unset($get['id']);
-            $self = wl($ID, $get);
+            $self = wl($ID, $get, false, '&'); //attributes are escaped later
             $this->attr('action', $self);
         }
 
@@ -51,8 +51,8 @@ class Form extends Element {
         // add the security token by default
         $this->setHiddenField('sectok', getSecurityToken());
 
-        // identify this as a form2 based form in HTML
-        $this->addClass('doku_form2');
+        // identify this as a new form based form in HTML
+        $this->addClass('doku_form');
     }
 
     /**

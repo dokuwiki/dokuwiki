@@ -101,6 +101,7 @@ abstract class Element {
         $classes = explode(' ', $this->attr('class'));
         $classes[] = $class;
         $classes = array_unique($classes);
+        $classes = array_filter($classes);
         $this->attr('class', join(' ', $classes));
         return $this;
     }
