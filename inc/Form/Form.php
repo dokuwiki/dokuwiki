@@ -67,6 +67,8 @@ class Form extends Element {
         return $this;
     }
 
+    #region Element adding functions
+
     /**
      * Adds an element to the end of the form
      *
@@ -149,11 +151,72 @@ class Form extends Element {
      *
      * @param $html
      * @param int $pos
-     * @return Element
+     * @return HTMLElement
      */
     public function addHTML($html, $pos = -1) {
         return $this->addElement(new HTMLElement($html), $pos);
     }
+
+    /**
+     * Add a closed HTML tag to the form
+     *
+     * @param $tag
+     * @param int $pos
+     * @return TagElement
+     */
+    public function addTag($tag, $pos = -1) {
+        return $this->addElement(new TagElement($tag), $pos);
+    }
+
+    /**
+     * Add an open HTML tag to the form
+     *
+     * Be sure to close it again!
+     *
+     * @param $tag
+     * @param int $pos
+     * @return TagOpenElement
+     */
+    public function addTagOpen($tag, $pos = -1) {
+        return $this->addElement(new TagOpenElement($tag), $pos);
+    }
+
+    /**
+     * Add a closing HTML tag to the form
+     *
+     * Be sure it had been opened before
+     *
+     * @param $tag
+     * @param int $pos
+     * @return TagCloseElement
+     */
+    public function addTagClose($tag, $pos = -1) {
+        return $this->addElement(new TagCloseElement($tag), $pos);
+    }
+
+
+    /**
+     * Open a Fieldset
+     *
+     * @param $legend
+     * @param int $pos
+     * @return FieldsetOpenElement
+     */
+    public function addFieldsetOpen($legend='', $pos = -1) {
+        return $this->addElement(new FieldsetOpenElement($legend), $pos);
+    }
+
+    /**
+     * Close a fieldset
+     *
+     * @param int $pos
+     * @return TagCloseElement
+     */
+    public function addFieldsetClose($pos = -1) {
+        return $this->addElement(new FieldsetCloseElement(), $pos);
+    }
+
+    #endregion
 
     protected function balanceFieldsets() {
         //todo implement!

@@ -59,12 +59,33 @@ class LegacyForm extends Form {
                              ->id($ctl['id'])
                              ->addClass($ctl['class']);
                         break;
-
                     case 'tag':
+                        $this->addTag($ctl['tag'])
+                             ->attrs($attr)
+                             ->attr('name', $ctl['name'])
+                             ->id($ctl['id'])
+                             ->addClass($ctl['class']);
+                        break;
                     case 'opentag':
+                        $this->addTagOpen($ctl['tag'])
+                             ->attrs($attr)
+                             ->attr('name', $ctl['name'])
+                             ->id($ctl['id'])
+                             ->addClass($ctl['class']);
+                        break;
                     case 'closetag':
+                        $this->addTagClose($ctl['tag']);
+                        break;
                     case 'openfieldset':
+                        $this->addFieldsetOpen($ctl['legend'])
+                            ->attrs($attr)
+                            ->attr('name', $ctl['name'])
+                            ->id($ctl['id'])
+                            ->addClass($ctl['class']);
+                        break;
                     case 'closefieldset':
+                        $this->addFieldsetClose();
+                        break;
                     case 'button':
                     case 'field':
                     case 'fieldright':
@@ -121,6 +142,10 @@ class LegacyForm extends Form {
             'password' => 'passwordfield',
             'checkbox' => 'checkboxfield',
             'radio' => 'radiofield',
+            'tagopen' => 'opentag',
+            'tagclose' => 'closetag',
+            'fieldsetopen' => 'openfieldset',
+            'fieldsetclose' => 'closefieldset',
         );
         if(isset($types[$type])) return $types[$type];
         return $type;
