@@ -20,6 +20,51 @@ class TagCloseElement extends ValueElement {
     }
 
     /**
+     * do not call this
+     *
+     * @param $class
+     * @return void
+     * @throws \BadMethodCallException
+     */
+    public function addClass($class) {
+        throw new \BadMethodCallException('You can\t add classes to closing tag');
+    }
+
+    /**
+     * do not call this
+     *
+     * @param $id
+     * @return void
+     * @throws \BadMethodCallException
+     */
+    public function id($id = null) {
+        throw new \BadMethodCallException('You can\t add ID to closing tag');
+    }
+
+    /**
+     * do not call this
+     *
+     * @param $name
+     * @param $value
+     * @return void
+     * @throws \BadMethodCallException
+     */
+    public function attr($name, $value = null) {
+        throw new \BadMethodCallException('You can\t add attributes to closing tag');
+    }
+
+    /**
+     * do not call this
+     *
+     * @param $attributes
+     * @return void
+     * @throws \BadMethodCallException
+     */
+    public function attrs($attributes = null) {
+        throw new \BadMethodCallException('You can\t add attributes to closing tag');
+    }
+
+    /**
      * The HTML representation of this element
      *
      * @return string
@@ -27,4 +72,5 @@ class TagCloseElement extends ValueElement {
     public function toHTML() {
         return '</'.$this->val().'>';
     }
+
 }

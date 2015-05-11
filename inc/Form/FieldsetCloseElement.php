@@ -14,51 +14,17 @@ class FieldsetCloseElement extends TagCloseElement {
      * @param array $attributes
      */
     public function __construct($attributes = array()) {
-        parent::__construct('tagclose', $attributes);
+        parent::__construct('', $attributes);
+        $this->type = 'fieldsetclose';
     }
 
-    /**
-     * do not call this
-     *
-     * @param $class
-     * @return void
-     * @throws \BadMethodCallException
-     */
-    public function addClass($class) {
-        throw new \BadMethodCallException('You can\t add classes to closing tag');
-    }
 
     /**
-     * do not call this
+     * The HTML representation of this element
      *
-     * @param $id
-     * @return void
-     * @throws \BadMethodCallException
+     * @return string
      */
-    public function id($id = null) {
-        throw new \BadMethodCallException('You can\t add ID to closing tag');
-    }
-
-    /**
-     * do not call this
-     *
-     * @param $name
-     * @param $value
-     * @return void
-     * @throws \BadMethodCallException
-     */
-    public function attr($name, $value = null) {
-        throw new \BadMethodCallException('You can\t add attributes to closing tag');
-    }
-
-    /**
-     * do not call this
-     *
-     * @param $attributes
-     * @return void
-     * @throws \BadMethodCallException
-     */
-    public function attrs($attributes = null) {
-        throw new \BadMethodCallException('You can\t add attributes to closing tag');
+    public function toHTML() {
+        return '</fieldset>';
     }
 }

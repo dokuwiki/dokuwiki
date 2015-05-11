@@ -194,7 +194,6 @@ class Form extends Element {
         return $this->addElement(new TagCloseElement($tag), $pos);
     }
 
-
     /**
      * Open a Fieldset
      *
@@ -202,7 +201,7 @@ class Form extends Element {
      * @param int $pos
      * @return FieldsetOpenElement
      */
-    public function addFieldsetOpen($legend='', $pos = -1) {
+    public function addFieldsetOpen($legend = '', $pos = -1) {
         return $this->addElement(new FieldsetOpenElement($legend), $pos);
     }
 
@@ -218,8 +217,42 @@ class Form extends Element {
 
     #endregion
 
+    /**
+     * Adjust the elements so that fieldset open and closes are matching
+     */
     protected function balanceFieldsets() {
-        //todo implement!
+        $lastclose = 0;
+        $isopen = false;
+        $len = count($this->elements);
+
+        for($pos = 0; $pos < $len; $pos++) {
+            $type = $this->elements[$pos]->getType();
+            if($type == 'fieldsetopen') {
+                if($isopen) {
+                    //close previous feldset
+                    $this->addFieldsetClose($pos);
+                    $lastclose = $pos + 1;
+                    $pos++;
+                    $len++;
+                }
+                $isopen = true;
+            } else if($type == 'fieldsetclose') {
+                if(!$isopen) {
+                    // make sure there was a fieldsetopen
+                    // either right after the last close or at the begining
+                    $this->addFieldsetOpen('', $lastclose);
+                    $len++;
+                    $pos++;
+                }
+                $lastclose = $pos;
+                $isopen = false;
+            }
+        }
+
+        // close open fieldset at the end
+        if($isopen) {
+            $this->addFieldsetClose();
+        }
     }
 
     /**
