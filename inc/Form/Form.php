@@ -67,17 +67,80 @@ class Form extends Element {
         return $this;
     }
 
-    #region Element adding functions
+    #region element query function
 
     /**
-     * Adds an element to the end of the form
+     * Returns the numbers of elements in the form
+     *
+     * @return int
+     */
+    public function elementCount() {
+        return count($this->elements);
+    }
+
+    /**
+     * Returns a reference to the element at a position.
+     * A position out-of-bounds will return either the
+     * first (underflow) or last (overflow) element.
+     *
+     * @param $pos
+     * @return Element
+     */
+    public function getElementAt($pos) {
+        if($pos < 0) $pos = count($this->elements) + $pos;
+        if($pos < 0) $pos = 0;
+        if($pos >= count($this->elements)) $pos = count($this->elements) - 1;
+        return $this->elements[$pos];
+    }
+
+    /**
+     * Gets the position of the first of a type of element
+     *
+     * @param string $type Element type to look for.
+     * @param int $offset search from this position onward
+     * @return false|int position of element if found, otherwise false
+     */
+    public function findPositionByType($type, $offset = 0) {
+        $len = $this->elementCount();
+        for($pos = $offset; $pos < $len; $pos++) {
+            if($this->elements[$pos]->getType() == $type) {
+                return $pos;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Gets the position of the first element matching the attribute
+     *
+     * @param string $name Name of the attribute
+     * @param string $value Value the attribute should have
+     * @param int $offset search from this position onward
+     * @return false|int position of element if found, otherwise false
+     */
+    public function findPositionByAttribute($name, $value, $offset = 0) {
+        $len = $this->elementCount();
+        for($pos = $offset; $pos < $len; $pos++) {
+            if($this->elements[$pos]->attr($name) == $value) {
+                return $pos;
+            }
+        }
+        return false;
+    }
+
+    #endregion
+
+    #region Element positioning functions
+
+    /**
+     * Adds or inserts an element to the form
      *
      * @param Element $element
      * @param int $pos 0-based position in the form, -1 for at the end
      * @return Element
      */
     public function addElement(Element $element, $pos = -1) {
-        if(is_a($element, 'Doku_Form2')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
         if($pos < 0) {
             $this->elements[] = $element;
         } else {
@@ -85,6 +148,30 @@ class Form extends Element {
         }
         return $element;
     }
+
+    /**
+     * Replaces an existing element with a new one
+     *
+     * @param Element $element the new element
+     * @param $pos 0-based position of the element to replace
+     */
+    public function replaceElement(Element $element, $pos) {
+        if(is_a($element, '\dokuwiki\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        array_splice($this->elements, $pos, 1, array($element));
+    }
+
+    /**
+     * Remove an element from the form completely
+     *
+     * @param $pos 0-based position of the element to remove
+     */
+    public function removeElement($pos) {
+        array_splice($this->elements, $pos, 1);
+    }
+
+    #endregion
+
+    #region Element adding functions
 
     /**
      * Adds a text input field
