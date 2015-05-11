@@ -150,7 +150,7 @@ class InputElement extends Element {
     public function toHTML() {
         if($this->label) {
             return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF .
-            '<span>' . hsc($this->label->label) . '</span>' . DOKU_LF .
+            '<span>' . hsc($this->label->val()) . '</span>' . DOKU_LF .
             $this->mainElementHTML() . DOKU_LF .
             '</label>';
         } else {
