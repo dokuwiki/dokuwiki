@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Catalan language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author carles.bellver@gmail.com
  * @author carles.bellver@cent.uji.es
