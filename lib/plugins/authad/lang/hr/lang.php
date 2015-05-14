@@ -7,3 +7,5 @@
  */
 $lang['domain']                = 'Domena za prijavu';
 $lang['authpwdexpire']         = 'Vaša lozinka će isteći za %d dana, trebate ju promijeniti.';
+$lang['passchangefail']        = 'Ne mogu izmijeniti lozinku. Možda nije zadovoljen set pravila za lozinke?';
+$lang['connectfail']           = 'Ne mogu se povezati s Active Directory poslužiteljem.';

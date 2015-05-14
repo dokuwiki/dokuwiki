@@ -1,1 +1,1 @@
-Ovdje možete ručno instalirati dodatak (plugin) i predložak (template) bilo učitavanjem ili specificiranjem URL-a za direktno učitavanje.
+Ovdje možete ručno postaviti dodatak (plugin) i predložak (template) bilo učitavanjem ili navođenjem URL adrese za direktno učitavanje.
