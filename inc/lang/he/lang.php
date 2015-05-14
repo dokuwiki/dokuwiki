@@ -14,6 +14,7 @@
  * @author matt carroll <matt.carroll@gmail.com>
  * @author tomer <tomercarolldergicz@gmail.com>
  * @author itsho <itsho.itsho@gmail.com>
+ * @author Menashe Tomer <menashesite@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
