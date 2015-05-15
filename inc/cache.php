@@ -188,7 +188,7 @@ class cache_parser extends cache {
      * @param string $file source file for cache
      * @param string $mode input mode
      */
-    public function cache_parser($id, $file, $mode) {
+    public function __construct($id, $file, $mode) {
         if ($id) $this->page = $id;
         $this->file = $file;
         $this->mode = $mode;
