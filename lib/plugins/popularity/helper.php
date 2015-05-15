@@ -253,7 +253,24 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data['php_exectime'] = $phptime;
         $data['php_extension'] = get_loaded_extensions();
 
+        // plugin usage data
+        $this->_add_plugin_usage_data($data);
+
         return $data;
+    }
+
+    protected function _add_plugin_usage_data(&$data){
+        $pluginsData = array();
+        trigger_event('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
+        foreach($pluginsData as $plugin => $d){
+           if ( is_array($d) ) {
+               foreach($d as $key => $value){
+                   $data['plugin_' . $plugin . '_' . $key] = $value;
+               }
+           } else {
+               $data['plugin_' . $plugin] = $d;
+           }
+        }
     }
 
     /**
