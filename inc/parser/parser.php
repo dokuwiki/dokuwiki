@@ -64,24 +64,24 @@ class Doku_Parser {
     /**
      * @param Doku_Parser_Mode_base $BaseMode
      */
-    function addBaseMode(& $BaseMode) {
-        $this->modes['base'] =& $BaseMode;
+    function addBaseMode($BaseMode) {
+        $this->modes['base'] = $BaseMode;
         if ( !$this->Lexer ) {
             $this->Lexer = new Doku_Lexer($this->Handler,'base', true);
         }
-        $this->modes['base']->Lexer =& $this->Lexer;
+        $this->modes['base']->Lexer = $this->Lexer;
     }
 
     /**
      * PHP preserves order of associative elements
      * Mode sequence is important
      */
-    function addMode($name, & $Mode) {
+    function addMode($name, Doku_Parser_Mode_Interface $Mode) {
         if ( !isset($this->modes['base']) ) {
             $this->addBaseMode(new Doku_Parser_Mode_base());
         }
-        $Mode->Lexer = & $this->Lexer;
-        $this->modes[$name] =& $Mode;
+        $Mode->Lexer = $this->Lexer;
+        $this->modes[$name] = $Mode;
     }
 
     function connectModes() {

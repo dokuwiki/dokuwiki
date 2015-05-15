@@ -296,11 +296,11 @@ class Doku_Lexer {
      * @param boolean $case            True for case sensitive.
      * @access public
      */
-    function __construct(&$parser, $start = "accept", $case = false) {
+    function __construct($parser, $start = "accept", $case = false) {
         $this->_case = $case;
         /** @var Doku_LexerParallelRegex[] _regexes */
         $this->_regexes = array();
-        $this->_parser = &$parser;
+        $this->_parser = $parser;
         $this->_mode = new Doku_LexerStateStack($start);
         $this->_mode_handlers = array();
     }
