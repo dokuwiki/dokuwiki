@@ -308,7 +308,7 @@ class cache_instructions extends cache_parser {
      * @param string $id page id
      * @param string $file source file for cache
      */
-    public function cache_instructions($id, $file) {
+    public function __construct($id, $file) {
         parent::__construct($id, $file, 'i');
     }
 
