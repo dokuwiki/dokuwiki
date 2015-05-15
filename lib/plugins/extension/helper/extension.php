@@ -1035,33 +1035,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
         $ext = $this->guess_archive($file);
         if(in_array($ext, array('tar', 'bz', 'gz'))) {
-            switch($ext) {
-                case 'bz':
-                    $compress_type = Tar::COMPRESS_BZIP;
-                    break;
-                case 'gz':
-                    $compress_type = Tar::COMPRESS_GZIP;
-                    break;
-                default:
-                    $compress_type = Tar::COMPRESS_NONE;
-            }
 
-            $tar = new Tar();
             try {
-                $tar->open($file, $compress_type);
+                $tar = new \splitbrain\PHPArchive\Tar();
+                $tar->open($file);
                 $tar->extract($target);
-            } catch (Exception $e) {
+            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
                 throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;
         } elseif($ext == 'zip') {
 
-            $zip = new ZipLib();
-            $ok  = $zip->Extract($file, $target);
-
-            if($ok == -1){
-                throw new Exception($this->getLang('error_decompress').' Error extracting the zip archive');
+            try {
+                $zip = new \splitbrain\PHPArchive\Zip();
+                $zip->open($file);
+                $zip->extract($target);
+            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
+                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;

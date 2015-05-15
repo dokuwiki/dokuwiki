@@ -191,6 +191,7 @@ global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
 
 // load libraries
+require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
 // disable gzip if not available

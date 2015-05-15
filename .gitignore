@@ -56,3 +56,10 @@
 !/lib/plugins/remote.php
 !/lib/plugins/syntax.php
 lib/images/*/local/*
+
+# composer default ignores
+vendor/*/*/tests/*
+vendor/*/*/test/*
+vendor/*/*/doc/*
+vendor/*/*/docs/*
+
