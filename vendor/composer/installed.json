@@ -47,5 +47,53 @@
             "unzip",
             "zip"
         ]
+    },
+    {
+        "name": "easybook/geshi",
+        "version": "v1.0.8.14",
+        "version_normalized": "1.0.8.14",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/easybook/geshi.git",
+            "reference": "af589a67bf308791bb13e54bddd9aa3544b7dff8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/easybook/geshi/zipball/af589a67bf308791bb13e54bddd9aa3544b7dff8",
+            "reference": "af589a67bf308791bb13e54bddd9aa3544b7dff8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">4.3.0"
+        },
+        "time": "2015-04-15 13:21:45",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "./"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Nigel McNie",
+                "email": "nigel@geshi.org"
+            },
+            {
+                "name": "Benny Baumann",
+                "email": "BenBE@geshi.org"
+            }
+        ],
+        "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
+        "homepage": "http://qbnz.com/highlighter",
+        "keywords": [
+            "highlight",
+            "highlighter",
+            "syntax"
+        ]
     }
 ]

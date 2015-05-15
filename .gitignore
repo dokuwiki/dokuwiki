@@ -62,4 +62,4 @@ vendor/*/*/tests/*
 vendor/*/*/test/*
 vendor/*/*/doc/*
 vendor/*/*/docs/*
-
+vendor/*/*/contrib/*

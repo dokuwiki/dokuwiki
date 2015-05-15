@@ -4,8 +4,54 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "de1f49aad78674b8d56a7f93fb633f65",
+    "hash": "23ee0dd06136e2301c930e75055300d5",
     "packages": [
+        {
+            "name": "easybook/geshi",
+            "version": "v1.0.8.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easybook/geshi.git",
+                "reference": "af589a67bf308791bb13e54bddd9aa3544b7dff8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easybook/geshi/zipball/af589a67bf308791bb13e54bddd9aa3544b7dff8",
+                "reference": "af589a67bf308791bb13e54bddd9aa3544b7dff8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">4.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nigel McNie",
+                    "email": "nigel@geshi.org"
+                },
+                {
+                    "name": "Benny Baumann",
+                    "email": "BenBE@geshi.org"
+                }
+            ],
+            "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
+            "homepage": "http://qbnz.com/highlighter",
+            "keywords": [
+                "highlight",
+                "highlighter",
+                "syntax"
+            ],
+            "time": "2015-04-15 13:21:45"
+        },
         {
             "name": "splitbrain/php-archive",
             "version": "1.0.0",
