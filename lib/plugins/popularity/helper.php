@@ -30,7 +30,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     var $popularityLastSubmitFile;
 
 
-    function helper_plugin_popularity(){
+    function __construct(){
         global $conf;
         $this->autosubmitFile = $conf['cachedir'].'/autosubmit.txt';
         $this->autosubmitErrorFile = $conf['cachedir'].'/autosubmitError.txt';
