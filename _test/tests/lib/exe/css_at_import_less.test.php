@@ -34,8 +34,8 @@ class css_at_import_less_test extends DokuWikiTest {
         io_saveFile($this->file, $input);
         $css = css_loadfile($this->file, $location);
         $less = css_parseless($css);
-        $this->assertEquals($expected_css, $css);
-        $this->assertEquals($expected_less, $less);
+        $this->assertEquals(trim($expected_css), trim($css));
+        $this->assertEquals(trim($expected_less), trim($less));
     }
 
     public function test_basic() {
@@ -43,11 +43,15 @@ class css_at_import_less_test extends DokuWikiTest {
 
         $import = preg_replace('#(^.*[/])#','',$this->import);
         $in_css = '@import "'.$import.'";';
-        $in_less = '@foo: "bar";
-content: @foo;';
+        $in_less = 'div {
+                @foo: "bar";
+                content: @foo;
+                }';
 
         $expected_css = '@import "/'.$import.'";';
-        $expected_less = 'content: "bar";';
+        $expected_less = 'div {
+  content: "bar";
+}';
 
         io_saveFile($this->import, $in_less);
         $this->csstest($in_css, $expected_css, $expected_less);
@@ -58,12 +62,15 @@ content: @foo;';
 
         $import = preg_replace('#(^.*[/])#','',$this->import);
         $in_css = '@import "'.$import.'";';
-        $in_less = '@foo: "bar";
-content: @foo;';
+        $in_less = 'div {
+                @foo: "bar";
+                content: @foo;
+                }';
 
         $expected_css = '@import "/foo/bar/'.$import.'";';
-        $expected_less = 'content: "bar";';
-
+        $expected_less = 'div {
+  content: "bar";
+}';
         io_saveFile($this->import, $in_less);
         $this->csstest($in_css, $expected_css, $expected_less);
     }

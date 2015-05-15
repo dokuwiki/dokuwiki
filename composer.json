@@ -1,6 +1,7 @@
 {
     "require": {
         "splitbrain/php-archive": "~1.0",
-        "easybook/geshi": "~1.0"
+        "easybook/geshi": "~1.0",
+        "oyejorge/less.php": "~1.5"
     }
 }
