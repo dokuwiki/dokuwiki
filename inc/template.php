@@ -1035,6 +1035,8 @@ function tpl_pageinfo($ret = false) {
  * @return bool|string
  */
 function tpl_pagetitle($id = null, $ret = false) {
+    global $ACT, $INPUT, $lang;
+
     if(is_null($id)) {
         global $ID;
         $id = $ID;
@@ -1042,14 +1044,67 @@ function tpl_pagetitle($id = null, $ret = false) {
 
     $name = $id;
     if(useHeading('navigation')) {
-        $title = p_get_first_heading($id);
-        if($title) $name = $title;
+        $first_heading = p_get_first_heading($id);
+        if($first_heading) $name = $first_heading;
+    }
+
+    // default page title is the page name, modify with the current action
+    switch ($ACT) {
+        // admin functions
+        case 'admin' :
+            $page_title = $lang['btn_admin'];
+            // try to get the plugin name
+            // retrieve admin plugin name from $_REQUEST['page']
+            if (($page = $INPUT->str('page', '', true)) != '') {
+                $pluginlist = plugin_list('admin');
+                if (in_array($page, $pluginlist)) {
+                    // attempt to load the plugin
+
+                    if (($plugin = plugin_load('admin',$page)) !== null){
+                        $plugin_title = $plugin->getMenuText();
+                        $page_title = $plugin_title ? $plugin_title : $page;
+                    }
+                }
+            }
+            break;
+
+        // user functions
+        case 'login' :
+        case 'profile' :
+        case 'register' :
+        case 'resendpwd' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+         // wiki functions
+        case 'search' :
+        case 'index' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+        // page functions
+        case 'edit' :
+            $page_title = "✎ ".$name;
+            break;
+
+        case 'revisions' :
+            $page_title = $name . ' - ' . $lang['btn_revs'];
+            break;
+
+        case 'backlink' :
+        case 'recent' :
+        case 'subscribe' :
+            $page_title = $name . ' - ' . $lang['btn_'.$ACT];
+            break;
+
+        default : // SHOW and anything else not included
+            $page_title = $name;
     }
 
     if($ret) {
-        return hsc($name);
+        return hsc($page_title);
     } else {
-        print hsc($name);
+        print hsc($page_title);
         return true;
     }
 }
