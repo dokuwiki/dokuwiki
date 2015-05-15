@@ -26,7 +26,7 @@ class cache {
      * @param string $key primary identifier
      * @param string $ext file extension
      */
-    public function cache($key,$ext) {
+    public function __construct($key,$ext) {
         $this->key = $key;
         $this->ext = $ext;
         $this->cache = getCacheName($key,$ext);
