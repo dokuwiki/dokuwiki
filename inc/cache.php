@@ -193,7 +193,7 @@ class cache_parser extends cache {
         $this->file = $file;
         $this->mode = $mode;
 
-        parent::cache($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
+        parent::__construct($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
     }
 
     /**
@@ -309,7 +309,7 @@ class cache_instructions extends cache_parser {
      * @param string $file source file for cache
      */
     public function cache_instructions($id, $file) {
-        parent::cache_parser($id, $file, 'i');
+        parent::__construct($id, $file, 'i');
     }
 
     /**
