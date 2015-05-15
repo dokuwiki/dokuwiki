@@ -58,6 +58,9 @@
 lib/images/*/local/*
 
 # composer default ignores
+composer.phar
+vendor/bin/*
+vendor/*/*/bin/*
 vendor/*/*/tests/*
 vendor/*/*/test/*
 vendor/*/*/doc/*
