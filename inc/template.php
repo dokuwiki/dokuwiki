@@ -1035,7 +1035,7 @@ function tpl_pageinfo($ret = false) {
  * @return bool|string
  */
 function tpl_pagetitle($id = null, $ret = false) {
-    global $ACT, $INPUT, $lang;
+    global $ACT, $INPUT, $conf, $lang;
 
     if(is_null($id)) {
         global $ID;
@@ -1061,7 +1061,7 @@ function tpl_pagetitle($id = null, $ret = false) {
                     // attempt to load the plugin
 
                     if (($plugin = plugin_load('admin',$page)) !== null){
-                        $plugin_title = $plugin->getMenuText();
+                        $plugin_title = $plugin->getMenuText($conf['lang']);
                         $page_title = $plugin_title ? $plugin_title : $page;
                     }
                 }
