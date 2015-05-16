@@ -128,7 +128,7 @@ function css_out(){
             case 'all':
             case 'feed':
             default:
-                print NL.'/* START rest styles */ '.NL.$css_content.NL.'/* END rest styles */'.NL;
+                #print NL.'/* START rest styles */ '.NL.$css_content.NL.'/* END rest styles */'.NL;
                 break;
         }
     }
@@ -205,8 +205,7 @@ function css_parseless($css) {
         // something went wrong
         $error = 'A fatal error occured during compilation of the CSS files. '.
             'If you recently installed a new plugin or template it '.
-            'might be broken and you should try disabling it again. ['.$msg.']'
-            .$code;
+            'might be broken and you should try disabling it again. ['.$msg.']';
 
         if(defined('DOKU_UNITTEST')) return '[ERROR] '.$error;
 
