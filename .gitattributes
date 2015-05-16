@@ -9,6 +9,8 @@
 .gitignore export-ignore
 .editorconfig export-ignore
 .travis.yml export-ignore
+composer.json export-ignore
+composer.lock export-ignore
 _test export-ignore
 _cs export-ignore
 lib/plugins/testing export-ignore

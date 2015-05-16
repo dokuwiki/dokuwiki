@@ -746,14 +746,13 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
     $cache = getCacheName($language.$code,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
-            $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&                 // geshi changed
-            $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&  // language syntax definition changed
+            $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
 
     } else {
 
-        $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
+        $geshi = new GeSHi($code, $language);
         $geshi->set_encoding('utf-8');
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);
