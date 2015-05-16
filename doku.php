@@ -92,6 +92,7 @@ $INFO = pageinfo();
 
 //export minimal info to JS, plugins can add more
 $JSINFO['id']        = $ID;
+$JSINFO['lastmod']   = $INFO['lastmod'];
 $JSINFO['namespace'] = (string) $INFO['namespace'];
 
 // handle debugging
