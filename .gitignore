@@ -47,6 +47,7 @@
 !/lib/plugins/popularity
 !/lib/plugins/revert
 !/lib/plugins/safefnrecode
+!/lib/plugins/styler
 !/lib/plugins/testing
 !/lib/plugins/usermanager
 !/lib/plugins/action.php
