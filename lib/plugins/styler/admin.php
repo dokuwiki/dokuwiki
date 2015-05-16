@@ -29,13 +29,21 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
      * Should carry out any processing required by the plugin.
      */
     public function handle() {
-        set_doku_pref('styler_plugin', 1);
     }
 
     /**
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
+        echo '<div id="plugin__styler">';
+        $this->form();
+        echo '</div>';
+    }
+
+    /**
+     * Create the actual editing form
+     */
+    public function form() {
         global $conf;
         $tpl = $conf['template'];
         define('SIMPLE_TEST',1); // hack, ideally certain functions should be moved out of css.php
@@ -50,7 +58,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
         } else {
             echo '<p>Intro blah... for the currently active template ("'.$tpl.'")... not all variables preview...</p>';
 
-            echo '<form class="styler" id="plugin__styler" method="post">';
+            echo '<form class="styler" method="post">';
             echo '<h2>Template variables</h2>';
             echo '<table>';
             foreach($replacements as $key => $value){
@@ -66,11 +74,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
             echo '<input type="submit" name="do[styler_plugin_save]" value="save">';
             echo '</form>';
         }
-
-
-
     }
-
 
 }
 

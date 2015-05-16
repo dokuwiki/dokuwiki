@@ -9,6 +9,14 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+/**
+ * Class action_plugin_styler
+ *
+ * This handles all the save actions and loading the interface
+ *
+ * All this usually would be done within an admin plugin, but we want to have this available outside
+ * the admin interface using our floating dialog.
+ */
 class action_plugin_styler extends DokuWiki_Action_Plugin {
 
     /**
@@ -18,10 +26,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handle_ajax');
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action');
-
     }
 
     /**
@@ -33,6 +39,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function handle_action(Doku_Event &$event, $param) {
+        if(!auth_isadmin()) return;
+
         $event->data = act_clean($event->data);
         if($event->data === 'styler_plugin_preview') {
             $event->data = 'show';
@@ -47,6 +55,26 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
             $event->data = 'show';
             $this->save();
         }
+    }
+
+    /**
+     * [Custom event handler which performs action]
+     *
+     * @param Doku_Event $event  event object by reference
+     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return void
+     */
+
+    public function handle_ajax(Doku_Event &$event, $param) {
+        if(!auth_isadmin()) return;
+        if($event->data != 'plugin_styler') return;
+        $event->preventDefault();
+        $event->stopPropagation();
+
+        /** @var admin_plugin_styler $hlp */
+        $hlp = plugin_load('admin', 'styler');
+        $hlp->form();
     }
 
     /**
@@ -119,24 +147,6 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
         io_saveFile($ini, "$old\n\n$new");
     }
 
-    /**
-     * [Custom event handler which performs action]
-     *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
-     * @return void
-     */
-
-    public function handle_ajax(Doku_Event &$event, $param) {
-        if($event->data != 'plugin_styler') return;
-        $event->preventDefault();
-        $event->stopPropagation();
-
-        /** @var admin_plugin_styler $hlp */
-        $hlp = plugin_load('admin', 'styler');
-        $hlp->html();
-    }
 
 }
 
