@@ -129,6 +129,9 @@ class FeedItem extends HtmlDescribable {
     // var $source;
 }
 
+/**
+ * Class EnclosureItem
+ */
 class EnclosureItem extends HtmlDescribable {
     /*
     *
@@ -226,7 +229,7 @@ class FeedHtmlField {
      * Creates a new instance of FeedHtmlField.
      * @param string $parFieldContent: if given, sets the rawFieldContent property
      */
-    function FeedHtmlField($parFieldContent) {
+    function __construct($parFieldContent) {
         if ($parFieldContent) {
             $this->rawFieldContent = $parFieldContent;
         }
@@ -604,6 +607,8 @@ class FeedCreator extends HtmlDescribable {
     /**
      * @since 1.4
      * @access private
+     *
+     * @param string $filename
      */
     function _redirect($filename) {
         // attention, heavily-commented-out-area
@@ -697,7 +702,7 @@ class FeedDate {
      * Accepts RFC 822, ISO 8601 date formats as well as unix time stamps.
      * @param mixed $dateString optional the date this FeedDate will represent. If not specified, the current date and time is used.
      */
-    function FeedDate($dateString="") {
+    function __construct($dateString="") {
         if ($dateString=="") $dateString = date("r");
 
         if (is_numeric($dateString)) {
@@ -878,7 +883,10 @@ class RSSCreator091 extends FeedCreator {
      */
     var $RSSVersion;
 
-    function RSSCreator091() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         $this->_setRSSVersion("0.91");
         $this->contentType = "application/rss+xml";
     }
@@ -886,6 +894,8 @@ class RSSCreator091 extends FeedCreator {
     /**
      * Sets this RSS feed's version number.
      * @access private
+     *
+     * @param $version
      */
     function _setRSSVersion($version) {
         $this->RSSVersion = $version;
@@ -1034,7 +1044,10 @@ class RSSCreator091 extends FeedCreator {
  */
 class RSSCreator20 extends RSSCreator091 {
 
-    function RSSCreator20() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         parent::_setRSSVersion("2.0");
     }
 
@@ -1051,7 +1064,10 @@ class RSSCreator20 extends RSSCreator091 {
  */
 class PIECreator01 extends FeedCreator {
 
-    function PIECreator01() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         $this->encoding = "utf-8";
     }
 
@@ -1113,7 +1129,10 @@ class PIECreator01 extends FeedCreator {
  */
 class AtomCreator10 extends FeedCreator {
 
-    function AtomCreator10() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         $this->contentType = "application/atom+xml";
         $this->encoding = "utf-8";
     }
@@ -1200,7 +1219,10 @@ class AtomCreator10 extends FeedCreator {
  */
 class AtomCreator03 extends FeedCreator {
 
-    function AtomCreator03() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         $this->contentType = "application/atom+xml";
         $this->encoding = "utf-8";
     }
@@ -1272,12 +1294,19 @@ class AtomCreator03 extends FeedCreator {
  * @author Kai Blankenhorn <kaib@bitfolge.de>
  */
 class MBOXCreator extends FeedCreator {
-
-    function MBOXCreator() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         $this->contentType = "text/plain";
         $this->encoding = "utf-8";
     }
 
+    /**
+     * @param string $input
+     * @param int $line_max
+     * @return string
+     */
     function qp_enc($input = "", $line_max = 76) {
         $hex = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
         $lines = preg_split("/(?:\r\n|\r|\n)/", $input);
@@ -1363,7 +1392,10 @@ class MBOXCreator extends FeedCreator {
  */
 class OPMLCreator extends FeedCreator {
 
-    function OPMLCreator() {
+    /**
+     * Constructor
+     */
+    function __construct() {
         $this->encoding = "utf-8";
     }
 

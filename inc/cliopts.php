@@ -447,7 +447,7 @@ class Doku_Cli_Opts_Error {
     var $code;
     var $msg;
 
-    function Doku_Cli_Opts_Error($code, $msg) {
+    function __construct($code, $msg) {
         $this->code = $code;
         $this->msg = $msg;
     }
@@ -468,7 +468,7 @@ class Doku_Cli_Opts_Container {
     var $options = array();
     var $args = array();
 
-    function Doku_Cli_Opts_Container($options) {
+    function __construct($options) {
         foreach ( $options[0] as $option ) {
             if ( false !== ( strpos($option[0], '--') ) ) {
                 $opt_name = substr($option[0], 2);
