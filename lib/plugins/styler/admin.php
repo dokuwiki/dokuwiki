@@ -61,6 +61,9 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
             }
             echo '</table>';
             echo '<input type="submit" name="do[styler_plugin_preview]" value="preview">';
+            echo '<input type="submit" name="do[styler_plugin_reset]" value="reset current">'; #FIXME only if preview.ini exists
+            echo '<input type="submit" name="do[styler_plugin_revert]" value="revert to original">'; #FIXME only if local.ini exists
+            echo '<input type="submit" name="do[styler_plugin_save]" value="save">';
             echo '</form>';
         }
 
