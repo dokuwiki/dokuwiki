@@ -36,7 +36,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     /**
      * Constructor
      */
-    public function admin_plugin_usermanager(){
+    public function __construct(){
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
 

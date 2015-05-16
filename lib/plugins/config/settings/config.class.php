@@ -37,7 +37,7 @@ if (!class_exists('configuration')) {
          *
          * @param string $datafile path to config metadata file
          */
-        public function configuration($datafile) {
+        public function __construct($datafile) {
             global $conf, $config_cascade;
 
             if (!file_exists($datafile)) {
@@ -434,7 +434,7 @@ if (!class_exists('setting')) {
          * @param string $key
          * @param array|null $params array with metadata of setting
          */
-        public function setting($key, $params=null) {
+        public function __construct($key, $params=null) {
             $this->_key = $key;
 
             if (is_array($params)) {

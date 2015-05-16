@@ -54,7 +54,7 @@ class JpegMeta {
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function JpegMeta($fileName) {
+    function __construct($fileName) {
 
         $this->_fileName = $fileName;
 
