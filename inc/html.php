@@ -776,10 +776,16 @@ function html_recent($first=0, $show_changes='both'){
         $href = '';
 
         if (!empty($recent['media'])) {
-            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && file_exists(mediaFN($recent['id'])));
+            $changelog = new MediaChangeLog($recent['id']);
+            $revs = $changelog->getRevisions(0, 1);
+            $diff = (count($revs) && file_exists(mediaFN($recent['id'])));
             if ($diff) {
-                $href = media_managerURL(array('tab_details' => 'history',
-                    'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+                $href = media_managerURL(array(
+                                             'tab_details' => 'history',
+                                             'mediado' => 'diff',
+                                             'image' => $recent['id'],
+                                             'ns' => getNS($recent['id'])
+                                         ), '&');
             }
         } else {
             $href = wl($recent['id'],"do=diff", false, '&');
