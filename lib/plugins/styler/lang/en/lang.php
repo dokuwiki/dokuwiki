@@ -6,10 +6,15 @@
  */
 
 // menu entry for admin plugins
-// $lang['menu'] = 'Your menu entry';
+$lang['js']['menu'] = 'Template Style Settings';
 
 // custom language strings for the plugin
-// $lang['fixme'] = 'FIXME';
+$lang['error'] = 'Sorry, this template does not support this functionality.';
+
+$lang['btn_preview'] = 'Preview your changes';
+$lang['btn_save']    = 'Save your changes';
+$lang['btn_reset']   = 'Reset your current changes';
+$lang['btn_revert']  = 'Revert all styles back to the template\'s default';
 
 
 

@@ -26,6 +26,15 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * @param string $language
+     * @return string
+     */
+    public function getMenuText($language) {
+        $js = $this->getLang('js');
+        return $js['menu'];
+    }
+
+    /**
      * handle the different actions (also called from ajax)
      */
     public function handle() {
@@ -41,6 +50,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
      */
     public function html() {
         echo '<div id="plugin__styler">';
+        ptln('<h1>'.$this->getMenuText('').'</h1>');
         $this->form(false);
         echo '</div>';
     }
@@ -63,15 +73,13 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
             $target = wl($ID, array('do' => 'admin', 'page' => 'styler'));
         }
 
-        ptln('<h1>'.$this->getLang('menu').'</h1>');
-
         if(empty($replacements)) {
-            echo '<p class="error">Sorry, this template does not support this functionality.</p>';
+            echo '<p class="error">'.$this->getLang('error').'</p>';
         } else {
-            echo '<p>Intro blah... for the currently active template ("'.$tpl.'")... not all variables preview...</p>';
+            echo $this->locale_xhtml('intro');
 
             echo '<form class="styler" method="post" action="'.$target.'">';
-            echo '<h2>Template variables</h2>';
+
             echo '<table>';
             foreach($replacements as $key => $value) {
                 echo '<tr>';
@@ -80,11 +88,22 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
                 echo '</tr>';
             }
             echo '</table>';
-            echo '<input type="submit" name="run[preview]" value="preview">';
-            echo '<input type="submit" name="run[reset]" value="reset current">'; #FIXME only if preview.ini exists
-            echo '<input type="submit" name="run[revert]" value="revert to original">'; #FIXME only if local.ini exists
-            echo '<input type="submit" name="run[save]" value="save">';
+
+            echo '<p class="center">';
+            echo '<input type="submit" name="run[preview]" value="'.$this->getLang('btn_preview').'">';
+            echo '<input type="submit" name="run[reset]" value="'.$this->getLang('btn_reset').'">'; #FIXME only if preview.ini exists
+            echo '</p>';
+
+            echo '<p class="center">';
+            echo '<input type="submit" name="run[save]" value="'.$this->getLang('btn_save').'">';
+            echo '</p>';
+
+            echo '<p class="center">';
+            echo '<input type="submit" name="run[revert]" value="'.$this->getLang('btn_revert').'">'; #FIXME only if local.ini exists
+            echo '</p>';
+
             echo '</form>';
+
         }
     }
 
