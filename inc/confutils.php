@@ -120,7 +120,7 @@ function getInterwiki() {
 function getWordblocks() {
     static $wordblocks = null;
     if ( !$wordblocks ) {
-        $wordblocks = retrieveConfig('wordblock','file');
+        $wordblocks = retrieveConfig('wordblock','file',null,'array_merge_with_removal');
     }
     return $wordblocks;
 }
@@ -133,11 +133,11 @@ function getWordblocks() {
 function getSchemes() {
     static $schemes = null;
     if ( !$schemes ) {
-        $schemes = retrieveConfig('scheme','file');
+        $schemes = retrieveConfig('scheme','file',null,'array_merge_with_removal');
+        $schemes = array_map('trim', $schemes);
+        $schemes = preg_replace('/^#.*/', '', $schemes);
+        $schemes = array_filter($schemes);
     }
-    $schemes = array_map('trim', $schemes);
-    $schemes = preg_replace('/^#.*/', '', $schemes);
-    $schemes = array_filter($schemes);
     return $schemes;
 }
 
@@ -202,7 +202,7 @@ function confToHash($file,$lower=false) {
  * @param  array    $params   optional additional params to pass to the callback
  * @return array    configuration values
  */
-function retrieveConfig($type,$fn,$params=null) {
+function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
     global $config_cascade;
 
     if(!is_array($params)) $params = array();
@@ -214,7 +214,7 @@ function retrieveConfig($type,$fn,$params=null) {
         foreach ($config_cascade[$type][$config_group] as $file) {
             if (file_exists($file)) {
                 $config = call_user_func_array($fn,array_merge(array($file),$params));
-                $combined = array_merge($combined, $config);
+                $combined = $combine($combined, $config);
             }
         }
     }
@@ -352,5 +352,28 @@ function conf_decodeString($str) {
         default:  // not encode (or unknown)
                      return $str;
     }
+}
+
+/**
+ * array combination function to remove negated values (prefixed by !)
+ *
+ * @param  array $current
+ * @param  array $new
+ *
+ * @return array the combined array, numeric keys reset
+ */
+function array_merge_with_removal($current, $new) {
+    foreach ($new as $val) {
+        if (substr($val,0,1) == '!') {
+            $idx = array_search(substr($val,1),$current);
+            if ($idx !== false) {
+                unset($current[$idx]);
+            }
+        } else {
+            $current[] = $val;
+        }
+    }
+
+    return array_slice($current,0);
 }
 //Setup VIM: ex: et ts=4 :
