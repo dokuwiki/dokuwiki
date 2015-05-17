@@ -28,6 +28,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
     public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handle_ajax');
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action');
+
+        // FIXME load preview style when on admin page
     }
 
     /**
@@ -40,21 +42,12 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      */
     public function handle_action(Doku_Event &$event, $param) {
         if(!auth_isadmin()) return;
+        if($event->data != 'styler_plugin') return;
+        $event->data = 'show';
 
-        $event->data = act_clean($event->data);
-        if($event->data === 'styler_plugin_preview') {
-            $event->data = 'show';
-            $this->preview();
-        } elseif($event->data === 'styler_plugin_reset') {
-            $event->data = 'show';
-            $this->reset();
-        } elseif($event->data === 'styler_plugin_revert') {
-            $event->data = 'show';
-            $this->revert();
-        } elseif($event->data === 'styler_plugin_save') {
-            $event->data = 'show';
-            $this->save();
-        }
+        /** @var admin_plugin_styler $hlp */
+        $hlp = plugin_load('admin', 'styler');
+        $hlp->handle();
     }
 
     /**
@@ -74,79 +67,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
 
         /** @var admin_plugin_styler $hlp */
         $hlp = plugin_load('admin', 'styler');
-        $hlp->form();
+        $hlp->form(true);
     }
-
-    /**
-     * saves the preview.ini
-     */
-    protected function preview() {
-        global $conf;
-        $ini = $conf['cachedir'].'/preview.ini';
-        io_saveFile($ini, $this->makeini());
-    }
-
-    /**
-     * deletes the preview.ini
-     */
-    protected function reset() {
-        global $conf;
-        $ini = $conf['cachedir'].'/preview.ini';
-        io_saveFile($ini, '');
-    }
-
-    /**
-     * deletes the local style.ini replacements
-     */
-    protected function revert() {
-        $this->replaceini('');
-        $this->reset();
-    }
-
-    /**
-     * save the local style.ini replacements
-     */
-    protected function save() {
-        $this->replaceini($this->makeini());
-        $this->reset();
-    }
-
-    /**
-     * create the replacement part of a style.ini from submitted data
-     *
-     * @return string
-     */
-    protected function makeini() {
-        global $INPUT;
-
-        $ini = "[replacements]\n";
-        foreach($INPUT->arr('tpl') as $key => $val) {
-            $ini .= $key.' = "'.addslashes($val).'"'."\n";
-        }
-
-        return $ini;
-    }
-
-    /**
-     * replaces the replacement parts in the local ini
-     *
-     * @param string $new the new ini contents
-     */
-    protected function replaceini($new) {
-        global $conf;
-        $ini = DOKU_CONF."tpl/".$conf['template']."/style.ini";
-        if(file_exists($ini)) {
-            $old = io_readFile($ini);
-            $old = preg_replace('/\[replacements\]\n.*?(\n\[.*]|$)/s', '\\1', $old);
-            $old = trim($old);
-        } else {
-            $old = '';
-        }
-
-        io_makeFileDir($ini);
-        io_saveFile($ini, "$old\n\n$new");
-    }
-
 
 }
 
