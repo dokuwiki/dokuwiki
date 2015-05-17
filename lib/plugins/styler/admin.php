@@ -84,7 +84,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
             foreach($replacements as $key => $value) {
                 echo '<tr>';
                 echo '<td>'.$key.'</td>';
-                echo '<td><input name="tpl['.hsc($key).']" value="'.hsc($value).'" />';
+                echo '<td><input name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' />';
                 echo '</tr>';
             }
             echo '</table>';
@@ -104,6 +104,32 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
 
             echo '</form>';
 
+        }
+    }
+
+    /**
+     * set the color class attribute
+     */
+    protected function colorClass($key) {
+        static $colors = array(
+            'text',
+            'background',
+            'text_alt',
+            'background_alt',
+            'text_neu',
+            'background_neu',
+            'border',
+            'highlight',
+            'background_site',
+            'link',
+            'existing',
+            'missing',
+        );
+
+        if(preg_match('/colou?r/', $key) || in_array(trim($key,'_'), $colors)) {
+            return 'class="color"';
+        } else {
+            return '';
         }
     }
 
