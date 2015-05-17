@@ -91,11 +91,16 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
         $event->stopPropagation();
 
         global $ID;
+        global $INPUT;
         $ID = getID();
 
         /** @var admin_plugin_styler $hlp */
         $hlp = plugin_load('admin', 'styler');
-        $hlp->form(true);
+        if($INPUT->str('run') == 'preview') {
+            $hlp->run_preview();
+        } else {
+            $hlp->form(true);
+        }
     }
 
 }

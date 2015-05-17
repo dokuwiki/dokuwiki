@@ -87,13 +87,13 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
 
                 echo '<tr>';
                 echo '<td>'.$name.'</td>';
-                echo '<td><input name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' />';
+                echo '<td><input type="text" name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' />';
                 echo '</tr>';
             }
             echo '</table>';
 
             echo '<p class="center">';
-            echo '<input type="submit" name="run[preview]" value="'.$this->getLang('btn_preview').'">';
+            echo '<input type="submit" name="run[preview]" class="btn_preview" value="'.$this->getLang('btn_preview').'">';
             echo '<input type="submit" name="run[reset]" value="'.$this->getLang('btn_reset').'">'; #FIXME only if preview.ini exists
             echo '</p>';
 
@@ -139,9 +139,9 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * saves the preview.ini
+     * saves the preview.ini (alos called from ajax directly)
      */
-    protected function run_preview() {
+    public function run_preview() {
         global $conf;
         $ini = $conf['cachedir'].'/preview.ini';
         io_saveFile($ini, $this->makeini());
