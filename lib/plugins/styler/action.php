@@ -20,7 +20,7 @@ if(!defined('DOKU_INC')) die();
 class action_plugin_styler extends DokuWiki_Action_Plugin {
 
     /**
-     * Registers a callback function for a given event
+     * Registers a callback functions
      *
      * @param Doku_Event_Handler $controller DokuWiki's event controller object
      * @return void
@@ -28,12 +28,37 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
     public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handle_ajax');
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action');
-
-        // FIXME load preview style when on admin page
+        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'handle_header');
     }
 
     /**
-     * [Custom event handler which performs action]
+     * Adds the preview parameter to the stylesheet loading in non-js mode
+     *
+     * @param Doku_Event $event  event object by reference
+     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return void
+     */
+    public function handle_header(Doku_Event &$event, $param) {
+        global $ACT;
+        global $INPUT;
+        if($ACT != 'admin' || $INPUT->str('page') != 'styler') return;
+        if(!auth_isadmin()) return;
+
+        // set preview
+        $len = count($event->data['link']);
+        for($i = 0; $i < $len; $i++) {
+            if(
+                $event->data['link'][$i]['rel'] == 'stylesheet' &&
+                strpos($event->data['link'][$i]['href'], 'lib/exe/css.php') !== false
+            ) {
+                $event->data['link'][$i]['href'] .= '&preview=1&tseed='.time();
+            }
+        }
+    }
+
+    /**
+     * Updates the style.ini settings by passing it on to handle() of the admin component
      *
      * @param Doku_Event $event  event object by reference
      * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
@@ -41,8 +66,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function handle_action(Doku_Event &$event, $param) {
-        if(!auth_isadmin()) return;
         if($event->data != 'styler_plugin') return;
+        if(!auth_isadmin()) return;
         $event->data = 'show';
 
         /** @var admin_plugin_styler $hlp */
@@ -51,7 +76,7 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * [Custom event handler which performs action]
+     * Create the style form in the floating Dialog
      *
      * @param Doku_Event $event  event object by reference
      * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
@@ -60,8 +85,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      */
 
     public function handle_ajax(Doku_Event &$event, $param) {
-        if(!auth_isadmin()) return;
         if($event->data != 'plugin_styler') return;
+        if(!auth_isadmin()) return;
         $event->preventDefault();
         $event->stopPropagation();
 

@@ -26,7 +26,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
     }
 
     /**
-     * Should carry out any processing required by the plugin.
+     * handle the different actions (also called from ajax)
      */
     public function handle() {
         global $INPUT;
