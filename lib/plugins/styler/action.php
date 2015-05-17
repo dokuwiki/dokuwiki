@@ -90,6 +90,9 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
         $event->preventDefault();
         $event->stopPropagation();
 
+        global $ID;
+        $ID = getID();
+
         /** @var admin_plugin_styler $hlp */
         $hlp = plugin_load('admin', 'styler');
         $hlp->form(true);

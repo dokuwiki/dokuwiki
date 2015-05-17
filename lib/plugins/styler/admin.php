@@ -61,7 +61,6 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
     public function form($isajax) {
         global $conf;
         global $ID;
-        $tpl = $conf['template'];
         define('SIMPLE_TEST', 1); // hack, ideally certain functions should be moved out of css.php
         require_once(DOKU_INC.'lib/exe/css.php');
         $styleini     = css_styleini($conf['template'], true);
