@@ -1,6 +1,5 @@
-====== Draft file found ======
+====== খসড়া ফাইল ====== পাওয়া
 
-Your last edit session on this page was not completed correctly. DokuWiki automatically saved a draft during your work which you may now use to continue your editing. Below you can see the data that was saved from your last session.
+এই পৃষ্ঠাতে আপনার সর্বশেষ সম্পাদনা সময় সঠিকভাবে সম্পন্ন করা হয় নি. DokuWiki স্বয়ংক্রিয়ভাবে আপনি এখন আপনার সম্পাদনা চালিয়ে যেতে ব্যবহার করতে পারেন যা আপনার কাজ করার সময় একটি খসড়া সংরক্ষিত. আপনি আপনার শেষ সময় থেকে সংরক্ষিত ছিল যে তথ্য দেখতে পারেন নিচে.
 
-Please decide if you want to //recover// your lost edit session, //delete// the autosaved draft or //cancel// the editing process.
-
+আপনি / /ফিরাইয়া আনা / / আপনার হারিয়ে সম্পাদনা সময়, / / মুছে দিন / / স্বতঃসংরক্ষিত খসড়া অথবা / / বাতিল / / সম্পাদনা প্রক্রিয়া পুনরুদ্ধার করতে চান তা স্থির করুন.

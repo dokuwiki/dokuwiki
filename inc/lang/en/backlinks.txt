@@ -1,4 +1,3 @@
-====== Backlinks ======
+====== ব্যাকলিঙ্কগুলি ======
 
-This is a list of pages that seem to link back to the current page.
-
+এই বর্তমান পৃষ্ঠায় ফিরে সংযোগ আছে বলে মনে হচ্ছে যে পেজের একটি তালিকা.
