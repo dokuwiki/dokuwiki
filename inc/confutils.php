@@ -49,6 +49,7 @@ function getMimeTypes() {
     static $mime = null;
     if ( !$mime ) {
         $mime = retrieveConfig('mime','confToHash');
+        $mime = array_filter($mime);
     }
     return $mime;
 }
@@ -62,6 +63,7 @@ function getAcronyms() {
     static $acronyms = null;
     if ( !$acronyms ) {
         $acronyms = retrieveConfig('acronyms','confToHash');
+        $acronyms = array_filter($acronyms);
     }
     return $acronyms;
 }
@@ -75,6 +77,7 @@ function getSmileys() {
     static $smileys = null;
     if ( !$smileys ) {
         $smileys = retrieveConfig('smileys','confToHash');
+        $smileys = array_filter($smileys);
     }
     return $smileys;
 }
@@ -88,6 +91,7 @@ function getEntities() {
     static $entities = null;
     if ( !$entities ) {
         $entities = retrieveConfig('entities','confToHash');
+        $entities = array_filter($entities);
     }
     return $entities;
 }
@@ -101,9 +105,11 @@ function getInterwiki() {
     static $wikis = null;
     if ( !$wikis ) {
         $wikis = retrieveConfig('interwiki','confToHash',array(true));
+        $wikis = array_filter($wikis);
+
+        //add sepecial case 'this'
+        $wikis['this'] = DOKU_URL.'{NAME}';
     }
-    //add sepecial case 'this'
-    $wikis['this'] = DOKU_URL.'{NAME}';
     return $wikis;
 }
 
