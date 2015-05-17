@@ -82,8 +82,12 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
 
             echo '<table>';
             foreach($replacements as $key => $value) {
+                $name = tpl_getLang($key);
+                if(empty($name)) $name = $this->getLang($key);
+                if(empty($name)) $name = $key;
+
                 echo '<tr>';
-                echo '<td>'.$key.'</td>';
+                echo '<td>'.$name.'</td>';
                 echo '<td><input name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' />';
                 echo '</tr>';
             }
@@ -103,6 +107,8 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
             echo '</p>';
 
             echo '</form>';
+
+            echo tpl_locale_xhtml('style');
 
         }
     }
