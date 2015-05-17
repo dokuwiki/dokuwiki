@@ -1,4 +1,3 @@
-====== Permission Denied ======
+====== অনুমতি অস্বীকার =====
 
-Sorry, you don't have enough rights to continue.
-
+দুঃখিত, আপনি কি এগিয়ে যেতে যথেষ্ট অধিকার নেই.

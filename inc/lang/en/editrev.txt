@@ -1,2 +1,2 @@
-**You've loaded an old revision of the document!** If you save it, you will create a new version with this data.
+** আপনি নথির একটি পুরোনো সংস্করণ লোড করেছেন! ** যদি আপনি এটি সংরক্ষণ করেন, আপনি এই তথ্য দিয়ে একটি নতুন সংস্করণ তৈরি করবে.
 ----
