@@ -63,7 +63,7 @@ function getAcronyms() {
     static $acronyms = null;
     if ( !$acronyms ) {
         $acronyms = retrieveConfig('acronyms','confToHash');
-        $acronyms = array_filter($acronyms);
+        $acronyms = array_filter($acronyms, 'strlen');
     }
     return $acronyms;
 }
@@ -77,7 +77,7 @@ function getSmileys() {
     static $smileys = null;
     if ( !$smileys ) {
         $smileys = retrieveConfig('smileys','confToHash');
-        $smileys = array_filter($smileys);
+        $smileys = array_filter($smileys, 'strlen');
     }
     return $smileys;
 }
@@ -91,7 +91,7 @@ function getEntities() {
     static $entities = null;
     if ( !$entities ) {
         $entities = retrieveConfig('entities','confToHash');
-        $entities = array_filter($entities);
+        $entities = array_filter($entities, 'strlen');
     }
     return $entities;
 }
@@ -105,7 +105,7 @@ function getInterwiki() {
     static $wikis = null;
     if ( !$wikis ) {
         $wikis = retrieveConfig('interwiki','confToHash',array(true));
-        $wikis = array_filter($wikis);
+        $wikis = array_filter($wikis, 'strlen');
 
         //add sepecial case 'this'
         $wikis['this'] = DOKU_URL.'{NAME}';
