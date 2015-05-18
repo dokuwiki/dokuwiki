@@ -365,12 +365,12 @@ function conf_decodeString($str) {
 function array_merge_with_removal($current, $new) {
     foreach ($new as $val) {
         if (substr($val,0,1) == '!') {
-            $idx = array_search(substr($val,1),$current);
+            $idx = array_search(trim(substr($val,1)),$current);
             if ($idx !== false) {
                 unset($current[$idx]);
             }
         } else {
-            $current[] = $val;
+            $current[] = trim($val);
         }
     }
 
