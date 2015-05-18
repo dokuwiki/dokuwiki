@@ -6,6 +6,12 @@
  * @author     Harry Fuecks <hfuecks@gmail.com>
  */
 
+/*
+ * line prefix used to negate single value config items
+ * (scheme.conf & stopwords.conf), e.g.
+ * !gopher
+ */
+const DOKU_CONF_NEGATION = '!';
 
 /**
  * Returns the (known) extension and mimetype of a given filename
@@ -364,7 +370,7 @@ function conf_decodeString($str) {
  */
 function array_merge_with_removal($current, $new) {
     foreach ($new as $val) {
-        if (substr($val,0,1) == '!') {
+        if (substr($val,0,1) == DOKU_CONF_NEGATION) {
             $idx = array_search(trim(substr($val,1)),$current);
             if ($idx !== false) {
                 unset($current[$idx]);
