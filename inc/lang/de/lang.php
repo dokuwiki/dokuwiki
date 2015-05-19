@@ -350,10 +350,10 @@ $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
-$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
