@@ -218,18 +218,9 @@ function tpl_toc($return = false) {
             $toc = array();
         }
     } elseif($ACT == 'admin') {
-        // try to load admin plugin TOC FIXME: duplicates code from tpl_admin
-        $plugin = null;
-        $class  = $INPUT->str('page');
-        if(!empty($class)) {
-            $pluginlist = plugin_list('admin');
-            if(in_array($class, $pluginlist)) {
-                // attempt to load the plugin
-                /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin = plugin_load('admin', $class);
-            }
-        }
-        if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
+        // try to load admin plugin TOC
+        /** @var $plugin DokuWiki_Admin_Plugin */
+        if ($plugin = plugin_getRequestAdminPlugin()) {
             $toc = $plugin->getTOC();
             $TOC = $toc; // avoid later rebuild
         }
@@ -1054,17 +1045,10 @@ function tpl_pagetitle($id = null, $ret = false) {
         case 'admin' :
             $page_title = $lang['btn_admin'];
             // try to get the plugin name
-            // retrieve admin plugin name from $_REQUEST['page']
-            if (($page = $INPUT->str('page', '', true)) != '') {
-                $pluginlist = plugin_list('admin');
-                if (in_array($page, $pluginlist)) {
-                    // attempt to load the plugin
-
-                    if (($plugin = plugin_load('admin',$page)) !== null){
-                        $plugin_title = $plugin->getMenuText($conf['lang']);
-                        $page_title = $plugin_title ? $plugin_title : $page;
-                    }
-                }
+            /** @var $plugin DokuWiki_Admin_Plugin */
+            if ($plugin = plugin_getRequestAdminPlugin()){
+                $plugin_title = $plugin->getMenuText($conf['lang']);
+                $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
             }
             break;
 

@@ -34,17 +34,17 @@ class template_pagetitle_test extends DokuWikiTest {
     function test_adminPluginTitle() {
         global $ID,$ACT,$INPUT,$conf;
 
-        if (!plugin_load('admin','config')) {
-            $this->markTestSkipped('Plugin Config not found, unable to test admin plugin titles');
+        if (!plugin_load('admin','revert')) {
+            $this->markTestSkipped('Revert plugin not found, unable to test admin plugin titles');
             return;
         }
 
         $ID = 'foo:bar';
         $ACT = 'admin';
         $conf['lang'] = 'en';
-        $INPUT->set('page','config');
+        $INPUT->set('page','revert');
 
-        $this->assertEquals('Configuration Settings', tpl_pagetitle(null, true));
+        $this->assertEquals('Revert Manager', tpl_pagetitle(null, true));
     }
 
     function test_nonPageFunctionTitle() {

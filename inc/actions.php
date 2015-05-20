@@ -162,20 +162,9 @@ function act_dispatch(){
         if($ACT == 'admin'){
             // retrieve admin plugin name from $_REQUEST['page']
             if (($page = $INPUT->str('page', '', true)) != '') {
-                $pluginlist = plugin_list('admin');
-                if (in_array($page, $pluginlist)) {
-                    // attempt to load the plugin
-
-                    if (($plugin = plugin_load('admin',$page)) !== null){
-                        /** @var DokuWiki_Admin_Plugin $plugin */
-                        if($plugin->forAdminOnly() && !$INFO['isadmin']){
-                            // a manager tried to load a plugin that's for admins only
-                            $INPUT->remove('page');
-                            msg('For admins only',-1);
-                        }else{
-                            $plugin->handle();
-                        }
-                    }
+                /** @var $plugin DokuWiki_Admin_Plugin */
+                if ($plugin = plugin_getRequestAdminPlugin()){
+                    $plugin->handle();
                 }
             }
         }
