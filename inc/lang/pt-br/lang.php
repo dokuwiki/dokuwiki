@@ -25,6 +25,7 @@
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  * @author Ednei <leuloch@gmail.com>
  * @author Hudson FAS <hudsonfas@gmail.com>
+ * @author okereke matthew <matrixrex@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
