@@ -1,11 +1,11 @@
 <?php
 /**
- * General tests for the styler plugin
+ * General tests for the styling plugin
  *
- * @group plugin_styler
+ * @group plugin_styling
  * @group plugins
  */
-class general_plugin_styler_test extends DokuWikiTest {
+class general_plugin_styling_test extends DokuWikiTest {
 
     /**
      * Simple test to make sure the plugin.info.txt is in correct format
@@ -24,7 +24,7 @@ class general_plugin_styler_test extends DokuWikiTest {
         $this->assertArrayHasKey('desc', $info);
         $this->assertArrayHasKey('url', $info);
 
-        $this->assertEquals('styler', $info['base']);
+        $this->assertEquals('styling', $info['base']);
         $this->assertRegExp('/^https?:\/\//', $info['url']);
         $this->assertTrue(mail_isvalid($info['email']));
         $this->assertRegExp('/^\d\d\d\d-\d\d-\d\d$/', $info['date']);

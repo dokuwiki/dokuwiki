@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki Plugin styler (Admin Component)
+ * DokuWiki Plugin styling (Admin Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -9,7 +9,7 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-class admin_plugin_styler extends DokuWiki_Admin_Plugin {
+class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
     /**
      * @return int sort number in admin menu
@@ -49,7 +49,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
-        echo '<div id="plugin__styler">';
+        echo '<div id="plugin__styling">';
         ptln('<h1>'.$this->getMenuText('').'</h1>');
         $this->form(false);
         echo '</div>';
@@ -67,9 +67,9 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
         $replacements = $styleini['replacements'];
 
         if($isajax) {
-            $target = wl($ID, array('do' => 'styler_plugin'));
+            $target = wl($ID, array('do' => 'styling_plugin'));
         } else {
-            $target = wl($ID, array('do' => 'admin', 'page' => 'styler'));
+            $target = wl($ID, array('do' => 'admin', 'page' => 'styling'));
         }
 
         if(empty($replacements)) {
@@ -77,7 +77,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
         } else {
             echo $this->locale_xhtml('intro');
 
-            echo '<form class="styler" method="post" action="'.$target.'">';
+            echo '<form class="styling" method="post" action="'.$target.'">';
 
             echo '<table>';
             foreach($replacements as $key => $value) {
@@ -181,7 +181,7 @@ class admin_plugin_styler extends DokuWiki_Admin_Plugin {
         global $INPUT;
 
         $ini = "[replacements]\n";
-        $ini .= ";These overwrites have been generated from the Template Styler Admin interface\n";
+        $ini .= ";These overwrites have been generated from the Template styling Admin interface\n";
         $ini .= ";Any values in this section will be overwritten by that tool again\n";
         foreach($INPUT->arr('tpl') as $key => $val) {
             $ini .= $key.' = "'.addslashes($val).'"'."\n";

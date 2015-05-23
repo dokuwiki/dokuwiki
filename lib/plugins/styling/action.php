@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki Plugin styler (Action Component)
+ * DokuWiki Plugin styling (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -10,14 +10,14 @@
 if(!defined('DOKU_INC')) die();
 
 /**
- * Class action_plugin_styler
+ * Class action_plugin_styling
  *
  * This handles all the save actions and loading the interface
  *
  * All this usually would be done within an admin plugin, but we want to have this available outside
  * the admin interface using our floating dialog.
  */
-class action_plugin_styler extends DokuWiki_Action_Plugin {
+class action_plugin_styling extends DokuWiki_Action_Plugin {
 
     /**
      * Registers a callback functions
@@ -42,7 +42,7 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
     public function handle_header(Doku_Event &$event, $param) {
         global $ACT;
         global $INPUT;
-        if($ACT != 'admin' || $INPUT->str('page') != 'styler') return;
+        if($ACT != 'admin' || $INPUT->str('page') != 'styling') return;
         if(!auth_isadmin()) return;
 
         // set preview
@@ -66,12 +66,12 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function handle_action(Doku_Event &$event, $param) {
-        if($event->data != 'styler_plugin') return;
+        if($event->data != 'styling_plugin') return;
         if(!auth_isadmin()) return;
         $event->data = 'show';
 
-        /** @var admin_plugin_styler $hlp */
-        $hlp = plugin_load('admin', 'styler');
+        /** @var admin_plugin_styling $hlp */
+        $hlp = plugin_load('admin', 'styling');
         $hlp->handle();
     }
 
@@ -85,7 +85,7 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
      */
 
     public function handle_ajax(Doku_Event &$event, $param) {
-        if($event->data != 'plugin_styler') return;
+        if($event->data != 'plugin_styling') return;
         if(!auth_isadmin()) return;
         $event->preventDefault();
         $event->stopPropagation();
@@ -94,8 +94,8 @@ class action_plugin_styler extends DokuWiki_Action_Plugin {
         global $INPUT;
         $ID = getID();
 
-        /** @var admin_plugin_styler $hlp */
-        $hlp = plugin_load('admin', 'styler');
+        /** @var admin_plugin_styling $hlp */
+        $hlp = plugin_load('admin', 'styling');
         if($INPUT->str('run') == 'preview') {
             $hlp->run_preview();
         } else {

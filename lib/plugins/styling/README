@@ -1,12 +1,12 @@
-styler Plugin for DokuWiki
+styling Plugin for DokuWiki
 
 Allows to edit style.ini replacements
 
 All documentation for this plugin can be found at
-https://www.dokuwiki.org/plugin:styler
+https://www.dokuwiki.org/plugin:styling
 
 If you install this plugin manually, make sure it is installed in
-lib/plugins/styler/ - if the folder is called different it
+lib/plugins/styling/ - if the folder is called different it
 will not work!
 
 Please refer to http://www.dokuwiki.org/plugins for additional info

@@ -1,7 +1,7 @@
-base   styler
+base   styling
 author Andreas Gohr
 email  andi@splitbrain.org
 date   2015-05-16
-name   styler plugin
+name   styling plugin
 desc   Allows to edit style.ini replacements
-url    https://www.dokuwiki.org/plugin:styler
+url    https://www.dokuwiki.org/plugin:styling

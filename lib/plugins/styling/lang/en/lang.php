@@ -1,6 +1,6 @@
 <?php
 /**
- * English language file for styler plugin
+ * English language file for styling plugin
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
