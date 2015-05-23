@@ -57,6 +57,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
     /**
      * Create the actual editing form
+     * @param boolean $isajax
      */
     public function form($isajax) {
         global $conf;
