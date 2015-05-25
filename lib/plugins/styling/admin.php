@@ -93,16 +93,16 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
             }
             echo '</table>';
 
-            echo '<p class="center">';
+            echo '<p>';
             echo '<input type="submit" name="run[preview]" class="btn_preview" value="'.$this->getLang('btn_preview').'">';
             echo '<input type="submit" name="run[reset]" value="'.$this->getLang('btn_reset').'">'; #FIXME only if preview.ini exists
             echo '</p>';
 
-            echo '<p class="center">';
+            echo '<p>';
             echo '<input type="submit" name="run[save]" value="'.$this->getLang('btn_save').'">';
             echo '</p>';
 
-            echo '<p class="center">';
+            echo '<p>';
             echo '<input type="submit" name="run[revert]" value="'.$this->getLang('btn_revert').'">'; #FIXME only if local.ini exists
             echo '</p>';
 
