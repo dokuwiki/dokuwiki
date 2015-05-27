@@ -69,6 +69,7 @@ $lang['add_ok']                = 'Nutzer erfolgreich angelegt';
 $lang['add_fail']              = 'Nutzer konnte nicht angelegt werden';
 $lang['notify_ok']             = 'Benachrichtigungsmail wurde versandt';
 $lang['notify_fail']           = 'Benachrichtigungsmail konnte nicht versandt werden';
+$lang['enter_missing_fields']  = '. Bitte geben Sie einen Wert in folgende Felder ein: ';
 $lang['import_userlistcsv']    = 'Benutzerliste (CSV-Datei):';
 $lang['import_header']         = 'Letzte Fehler bei Import';
 $lang['import_success_count']  = 'User-Import: %d User gefunden, %d erfolgreich importiert.';
@@ -82,3 +83,4 @@ $lang['import_error_readfail'] = 'Import fehlgeschlagen. Die hochgeladene Datei 
 $lang['import_error_create']   = 'User konnte nicht angelegt werden';
 $lang['import_notify_fail']    = 'Notifikation konnte nicht an den importierten Benutzer %s (E-Mail: %s) gesendet werden.';
 $lang['import_downloadfailures'] = 'Fehler als CSV-Datei zur Korrektur herunterladen';
+

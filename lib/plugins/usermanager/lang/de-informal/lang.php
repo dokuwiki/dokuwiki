@@ -59,6 +59,7 @@ $lang['add_ok']                = 'Benutzer erfolgreich hinzugefügt';
 $lang['add_fail']              = 'Hinzufügen des Benutzers fehlgeschlagen';
 $lang['notify_ok']             = 'Benachrichtigungsmail wurde versendet';
 $lang['notify_fail']           = 'Benachrichtigungsemail konnte nicht gesendet werden';
+$lang['enter_missing_fields']  = '. Bitte geben Sie einen Wert in folgende Felder ein: ';
 $lang['import_success_count']  = 'Benutzerimport: %d Benutzer gefunden, %d erfolgreich importiert.';
 $lang['import_failure_count']  = 'Benutzerimport: %d Benutzerimporte fehlgeschalten. Alle Fehler werden unten angezeigt.';
 $lang['import_error_fields']   = 'Falsche Anzahl Felder. Gefunden: %d. Benötigt: 4.';
