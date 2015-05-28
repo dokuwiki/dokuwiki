@@ -127,22 +127,36 @@ function io_readFile($file,$clean=true){
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $file filename
- * @return string|bool content or false on error
+ * @param bool   $array return array of lines
+ * @return string|array|bool content or false on error
  */
-function bzfile($file){
+function bzfile($file, $array=false) {
     $bz = bzopen($file,"r");
     if($bz === false) return false;
 
+    if($array) $lines = array();
     $str = '';
-    while (!feof($bz)){
+    while (!feof($bz)) {
         //8192 seems to be the maximum buffersize?
         $buffer = bzread($bz,8192);
         if(($buffer === false) || (bzerrno($bz) !== 0)) {
             return false;
         }
         $str = $str . $buffer;
+        if($array) {
+            $pos = strpos($str, "\n");
+            while($pos !== false) {
+                $lines[] = substr($str, 0, $pos+1);
+                $str = substr($str, $pos+1);
+                $pos = strpos($str, "\n");
+            }
+        }
     }
     bzclose($bz);
+    if($array) {
+        if($str !== '') $lines[] = $str;
+        return $lines;
+    }
     return $str;
 }
 
@@ -191,6 +205,47 @@ function _io_writeWikiPage_action($data) {
 }
 
 /**
+ * Internal function to save contents to a file.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename path to file
+ * @param string $content
+ * @param bool   $append
+ * @return bool true on success, otherwise false
+ */
+function _io_saveFile($file, $content, $append) {
+    global $conf;
+    $mode = ($append) ? 'ab' : 'wb';
+    $fileexists = file_exists($file);
+
+    if(substr($file,-3) == '.gz'){
+        $fh = @gzopen($file,$mode.'9');
+        if(!$fh) return false;
+        gzwrite($fh, $content);
+        gzclose($fh);
+    }else if(substr($file,-4) == '.bz2'){
+        if($append) {
+            $bzcontent = bzfile($file);
+            if($bzcontent === false) return false;
+            $content = $bzcontent.$content;
+        }
+        $fh = @bzopen($file,'w');
+        if(!$fh) return false;
+        bzwrite($fh, $content);
+        bzclose($fh);
+    }else{
+        $fh = @fopen($file,$mode);
+        if(!$fh) return false;
+        fwrite($fh, $content);
+        fclose($fh);
+    }
+
+    if(!$fileexists and !empty($conf['fperm'])) chmod($file, $conf['fperm']);
+    return true;
+}
+
+/**
  * Saves $content to $file.
  *
  * If the third parameter is set to true the given content
@@ -206,64 +261,43 @@ function _io_writeWikiPage_action($data) {
  * @param bool   $append
  * @return bool true on success, otherwise false
  */
-function io_saveFile($file,$content,$append=false){
-    global $conf;
-    $mode = ($append) ? 'ab' : 'wb';
-
-    $fileexists = file_exists($file);
+function io_saveFile($file, $content, $append=false) {
     io_makeFileDir($file);
     io_lock($file);
-    if(substr($file,-3) == '.gz'){
-        $fh = @gzopen($file,$mode.'9');
-        if(!$fh){
-            msg("Writing $file failed",-1);
-            io_unlock($file);
-            return false;
-        }
-        gzwrite($fh, $content);
-        gzclose($fh);
-    }else if(substr($file,-4) == '.bz2'){
-        $fh = @bzopen($file,$mode{0});
-        if(!$fh){
-            msg("Writing $file failed", -1);
-            io_unlock($file);
-            return false;
-        }
-        bzwrite($fh, $content);
-        bzclose($fh);
-    }else{
-        $fh = @fopen($file,$mode);
-        if(!$fh){
-            msg("Writing $file failed",-1);
-            io_unlock($file);
-            return false;
-        }
-        fwrite($fh, $content);
-        fclose($fh);
+    if(!_io_saveFile($file, $content, $append)) {
+        msg("Writing $file failed",-1);
+        io_unlock($file);
+        return false;
     }
-
-    if(!$fileexists and !empty($conf['fperm'])) chmod($file, $conf['fperm']);
     io_unlock($file);
     return true;
 }
 
 /**
- * Delete exact linematch for $badline from $file.
+ * Replace one or more occurrences of a line in a file.
  *
- * Be sure to include the trailing newline in $badline
+ * The default, when $maxlines is 0 is to delete all matches then append a single line.
+ * If $maxlines is -1, then every $oldline will be replaced with $newline, and $regex is true
+ * then preg captures are used. If $maxlines is greater than 0 then the first $maxlines
+ * matches are replaced with $newline.
+ *
+ * Be sure to include the trailing newline in $oldline
  *
  * Uses gzip if extension is .gz
- *
- * 2005-10-14 : added regex option -- Christopher Smith <chris@jalakai.co.uk>
+ * and bz2 if extension is .bz2
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ * @author Patrick Brown <ptbrown@whoopdedo.org>
  *
- * @param string $file    filename
- * @param string $badline exact linematch to remove
- * @param bool   $regex   use regexp?
+ * @param string $file     filename
+ * @param string $oldline  exact linematch to remove
+ * @param string $newline  new line to insert
+ * @param bool   $regex    use regexp?
+ * @param int    $maxlines number of occurrences of the line to replace
  * @return bool true on success
  */
-function io_deleteFromFile($file,$badline,$regex=false){
+function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) {
     if (!file_exists($file)) return true;
 
     io_lock($file);
@@ -271,41 +305,45 @@ function io_deleteFromFile($file,$badline,$regex=false){
     // load into array
     if(substr($file,-3) == '.gz'){
         $lines = gzfile($file);
+    }else if(substr($file,-4) == '.bz2'){
+        $lines = bzfile($file, true);
     }else{
         $lines = file($file);
     }
 
     // remove all matching lines
     if ($regex) {
-        $lines = preg_grep($badline,$lines,PREG_GREP_INVERT);
+        if($maxlines > 0) {
+            $matches = preg_grep($oldline, $lines);
+            $count = 0;
+            foreach($matches as $ix=>$m) {
+                $lines[$ix] = preg_replace($oldline, $newline, $m);
+                if(++$count >= $maxlines) break;
+            }
+        } else {
+            $lines = ($maxlines == 0) ? preg_grep($oldline, $lines, PREG_GREP_INVERT)
+                                      : preg_replace($oldline, $newline, $lines, $maxlines);
+        }
     } else {
-        $pos = array_search($badline,$lines); //return null or false if not found
+        $count = 0;
+        $replaceline = $maxlines == 0 ? '' : $newline;
+        $pos = array_search($oldline,$lines); //return null or false if not found
         while(is_int($pos)){
-            unset($lines[$pos]);
-            $pos = array_search($badline,$lines);
+            $lines[$pos] = $replaceline;
+            if($maxlines > 0 && ++$count >= $maxlines) break;
+            $pos = array_search($oldline,$lines);
         }
     }
 
+    if($maxlines == 0 && ((string)$newline) !== '') {
+        $lines[] = $newline;
+    }
+
     if(count($lines)){
-        $content = join('',$lines);
-        if(substr($file,-3) == '.gz'){
-            $fh = @gzopen($file,'wb9');
-            if(!$fh){
-                msg("Removing content from $file failed",-1);
-                io_unlock($file);
-                return false;
-            }
-            gzwrite($fh, $content);
-            gzclose($fh);
-        }else{
-            $fh = @fopen($file,'wb');
-            if(!$fh){
-                msg("Removing content from $file failed",-1);
-                io_unlock($file);
-                return false;
-            }
-            fwrite($fh, $content);
-            fclose($fh);
+        if(!_io_saveFile($file, join('',$lines), false)) {
+            msg("Removing content from $file failed",-1);
+            io_unlock($file);
+            return false;
         }
     }else{
         @unlink($file);
@@ -313,6 +351,22 @@ function io_deleteFromFile($file,$badline,$regex=false){
 
     io_unlock($file);
     return true;
+}
+
+/**
+ * Delete lines that match $badline from $file.
+ *
+ * Be sure to include the trailing newline in $badline
+ *
+ * @author Patrick Brown <ptbrown@whoopdedo.org>
+ *
+ * @param string $file    filename
+ * @param string $badline exact linematch to remove
+ * @param bool   $regex   use regexp?
+ * @return bool true on success
+ */
+function io_deleteFromFile($file,$badline,$regex=false){
+    return io_replaceInFile($file,$badline,null,$regex,0);
 }
 
 /**
