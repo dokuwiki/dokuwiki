@@ -311,28 +311,23 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
         $lines = file($file);
     }
 
-    // remove all matching lines
-    if ($regex) {
-        if($maxlines > 0) {
-            $matches = preg_grep($oldline, $lines);
-            $count = 0;
-            foreach($matches as $ix=>$m) {
-                $lines[$ix] = preg_replace($oldline, $newline, $m);
-                if(++$count >= $maxlines) break;
-            }
-        } else {
-            $lines = ($maxlines == 0) ? preg_grep($oldline, $lines, PREG_GREP_INVERT)
-                                      : preg_replace($oldline, $newline, $lines, $maxlines);
+    // make non-regexes into regexes
+    $pattern = $regex ? $oldline : '/'.preg_quote($oldline,'/').'/';
+    $replace = $regex ? $newline : addcslashes($newline, '\$');
+
+    // remove matching lines
+    if ($maxlines > 0) {
+        $count = 0;
+        $matched = 0;
+        while (($count < $maxlines) && (list($i,$line) = each($lines))) {
+            // $matched will be set to 0|1 depending on whether pattern is matched and line replaced
+            $lines[$i] = preg_replace($pattern, $replace, $line, -1, $matched);
+            if ($matched) $count++;
         }
     } else {
-        $count = 0;
-        $replaceline = $maxlines == 0 ? '' : $newline;
-        $pos = array_search($oldline,$lines); //return null or false if not found
-        while(is_int($pos)){
-            $lines[$pos] = $replaceline;
-            if($maxlines > 0 && ++$count >= $maxlines) break;
-            $pos = array_search($oldline,$lines);
-        }
+        $lines = ($maxlines == 0) ?
+            preg_grep($pattern, $lines, PREG_GREP_INVERT) :
+            preg_replace($pattern, $replace, $lines);
     }
 
     if($maxlines == 0 && ((string)$newline) !== '') {
