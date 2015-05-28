@@ -1,11 +1,12 @@
 <?php
+
 /**
- * catalan language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author daniel@6temes.cat
+ * @author Eduard Díaz <edudiaz@scopia.es>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -47,6 +48,7 @@ $lang['btn_draftdel']          = 'Suprimeix esborrany';
 $lang['btn_revert']            = 'Restaura';
 $lang['btn_register']          = 'Registra\'m';
 $lang['btn_apply']             = 'Aplica';
+$lang['btn_img_backto']        = 'Torna a %s';
 $lang['loggedinas']            = 'Heu entrat com:';
 $lang['user']                  = 'Nom d\'usuari';
 $lang['pass']                  = 'Contrasenya';
@@ -61,7 +63,7 @@ $lang['badlogin']              = 'Nom d\'usuari o contrasenya incorrectes.';
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'L\'esborrany s\'ha desat automàticament';
 $lang['nosecedit']             = 'Mentrestant la pàgina ha estat modificada. La informació de seccions estava obsoleta i ha calgut carregar la pàgina sencera.';
-$lang['searchcreatepage']      = "Si no trobeu allò que buscàveu, podeu crear una pàgina nova per mitjà del botó ''Edita aquesta pàgina''.";
+$lang['searchcreatepage']      = 'Si no trobeu allò que buscàveu, podeu crear una pàgina nova per mitjà del botó \'\'Edita aquesta pàgina\'\'.';
 $lang['regmissing']            = 'Heu d\'omplir tots els camps.';
 $lang['reguexists']            = 'Ja existeix un altre usuari amb aquest nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari. La contrasenya s\'ha enviat per correu.';
@@ -226,7 +228,6 @@ $lang['upperns']               = 'Salta a l\'espai superior';
 $lang['metaedit']              = 'Edita metadades';
 $lang['metasaveerr']           = 'No s\'han pogut escriure les metadades';
 $lang['metasaveok']            = 'S\'han desat les metadades';
-$lang['btn_img_backto']        = 'Torna a %s';
 $lang['img_title']             = 'Títol:';
 $lang['img_caption']           = 'Peu d\'imatge:';
 $lang['img_date']              = 'Data:';

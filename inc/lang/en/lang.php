@@ -360,6 +360,7 @@ $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read f
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
+$lang['media_acl_warning']     = 'This list might not be complete due to ACL restrictions and hidden pages.';
 
 $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';

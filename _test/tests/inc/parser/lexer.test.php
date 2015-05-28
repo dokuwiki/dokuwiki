@@ -146,7 +146,7 @@ class TestOfLexerStateStack extends DokuWikiTest {
 }
 
 class TestParser {
-    function TestParser() {
+    function __construct() {
     }
     function accept() {
     }
@@ -364,7 +364,7 @@ class TestOfLexerHandlers extends DokuWikiTest {
 
 class TestParserByteIndex {
 
-    function TestParserByteIndex() {}
+    function __construct() {}
 
     function ignore() {}
 

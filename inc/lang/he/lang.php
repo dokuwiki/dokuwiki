@@ -14,6 +14,7 @@
  * @author matt carroll <matt.carroll@gmail.com>
  * @author tomer <tomercarolldergicz@gmail.com>
  * @author itsho <itsho.itsho@gmail.com>
+ * @author Menashe Tomer <menashesite@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -79,6 +80,7 @@ $lang['regmissing']            = 'עליך למלא את כל השדות, עמך
 $lang['reguexists']            = 'משתמש בשם זה כבר נרשם, עמך הסליחה.';
 $lang['regsuccess']            = 'ההרשמה הצליחה, המשתמש נרשם והודעה נשלחה בדוא״ל.';
 $lang['regsuccess2']           = 'ההרשמה הצליחה, המשתמש נוצר.';
+$lang['regfail']               = 'אין אפשרות ליצור את המשתמש';
 $lang['regmailfail']           = 'שליחת הודעת הדוא״ל כשלה, נא ליצור קשר עם מנהל האתר!';
 $lang['regbadmail']            = 'יתכן כי כתובת הדוא״ל אינה תקפה, אם לא כך הדבר ליצור קשר עם מנהל האתר';
 $lang['regbadpass']            = 'שתי הססמאות אינן זהות זו לזו, נא לנסות שוב.';

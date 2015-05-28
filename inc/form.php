@@ -55,7 +55,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function Doku_Form($params, $action=false, $method=false, $enctype=false) {
+    function __construct($params, $action=false, $method=false, $enctype=false) {
         if(!is_array($params)) {
             $this->params = array('id' => $params);
             if ($action !== false) $this->params['action'] = $action;

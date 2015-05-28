@@ -16,7 +16,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
     /**
      * Constructor
      */
-    function admin_plugin_revert(){
+    function __construct(){
         $this->setupLocale();
     }
 

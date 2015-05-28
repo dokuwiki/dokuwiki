@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Linas Valiukas <shirshegsm@gmail.com>
  * @author Edmondas Girkantas <eg@zemaitija.net>
  * @author Arūnas Vaitekūnas <aras@fan.lt>
@@ -160,7 +160,6 @@ $lang['qb_media']              = 'Paveikslėliai ir kitos bylos';
 $lang['qb_sig']                = 'Įterpti parašą';
 $lang['qb_smileys']            = 'Šypsenėlės';
 $lang['qb_chars']              = 'Specialūs simboliai';
-$lang['js']['del_confirm']           = 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
 $lang['metaedit']              = 'Redaguoti metaduomenis';
 $lang['metasaveerr']           = 'Nepavyko išsaugoti metaduomenų';
 $lang['metasaveok']            = 'Metaduomenys išsaugoti';
