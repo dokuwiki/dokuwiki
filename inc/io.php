@@ -276,12 +276,14 @@ function io_saveFile($file, $content, $append=false) {
 /**
  * Replace one or more occurrences of a line in a file.
  *
- * The default, when $maxlines is 0 is to delete all matches then append a single line.
- * If $maxlines is -1, then every $oldline will be replaced with $newline, and $regex is true
- * then preg captures are used. If $maxlines is greater than 0 then the first $maxlines
- * matches are replaced with $newline.
+ * The default, when $maxlines is 0 is to delete all matching lines then append a single line.
+ * A regex that matches any part of the line will remove the entire line in this mode.
+ * Captures in $newline are not available.
  *
- * Be sure to include the trailing newline in $oldline
+ * Otherwise each line is matched and replaced individually, up to the first $maxlines lines
+ * or all lines if $maxlines is -1. If $regex is true then captures can be used in $newline.
+ *
+ * Be sure to include the trailing newline in $oldline when replacing entire lines.
  *
  * Uses gzip if extension is .gz
  * and bz2 if extension is .bz2
