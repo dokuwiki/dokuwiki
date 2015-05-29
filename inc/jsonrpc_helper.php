@@ -110,19 +110,19 @@ abstract class rpc_protocol{
 
     protected function check($single_request){
         if($single_request==null){
-            throw new E_Parse_error("Your json is decoded to null | ".$this->json_encode_exp($single_request,"in throw"));
+            throw new E_Parse_error("Your json is decoded to null | This is you send: ".$this->json_encode_exp($single_request,"in throw"));
         }
 
         $rt=isset($single_request['method'])&&
             is_string($single_request['method'])&&
             preg_match("/[\w\.]+/",$single_request['method']);
         if($rt!=true){
-            throw new E_Invalid_Request("rpc_protocol.decode :invalid method | ".$this->json_encode_exp($single_request,"in throw"));
+            throw new E_Invalid_Request("rpc_protocol.check :invalid method | This is you send: ".$this->json_encode_exp($single_request,"in throw"));
         }
 
         if(isset($single_request['params'])){
             if( is_array($single_request['params'])==false ){
-                throw new E_Invalid_Request("rpc_protocol.decode :Bad params | ".$this->json_encode_exp($single_request,"in throw"));
+                throw new E_Invalid_Request("rpc_protocol.check :Bad params | This is you send: ".$this->json_encode_exp($single_request,"in throw"));
             }
         }else{
             $single_request['params']=array();
@@ -148,11 +148,11 @@ class rpc_protocol_1_1 extends rpc_protocol{
     }
 
 
-    function check($single_request){
+    protected function check($single_request){
         rpc_protocol::check($single_request);
         $rt= isset($single_request['version']) && ($single_request['version']=="1.1");
         if($rt!=true){
-            throw new E_Invalid_Request('v1.1 server Should set "version":"1.1", | '.$this->json_encode_exp($single_request,"in throw"));
+            throw new E_Invalid_Request('v1.1 server Should set "version":"1.1", | This is you send: '.$this->json_encode_exp($single_request,"in throw"));
         }
         return true;
     }
@@ -187,11 +187,11 @@ class rpc_protocol_2_0 extends rpc_protocol{
         return json_encode($error_object);
     }
 
-    function check($single_request){
+    protected function check($single_request){
         rpc_protocol::check($single_request);
         $rt = isset($single_request['jsonrpc']) && ($single_request['jsonrpc']=="2.0");
         if($rt!=true){
-            throw new E_Invalid_Request('Hello ,This v2.0 server,typecal request is {"jsonrpc": "2.0", "method": "subtract", "params": {}, "id": 3} | '
+            throw new E_Invalid_Request('Hello ,This v2.0 server,typecal request is {"jsonrpc": "2.0", "method": "subtract", "params": {}, "id": 3} | This is you send: '
                 .$this->json_encode_exp($single_request,"in throw"));
         }
         return true;
