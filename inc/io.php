@@ -298,6 +298,11 @@ function io_saveFile($file, $content, $append=false) {
  * @return bool true on success
  */
 function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) {
+    if ((string)$oldline === '') {
+        trigger_error('$oldline parameter cannot be empty in io_replaceInFile()', E_USER_WARNING);
+        return false;
+    }
+
     if (!file_exists($file)) return true;
 
     io_lock($file);

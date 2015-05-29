@@ -94,4 +94,15 @@ class io_replaceinfile_test extends DokuWikiTest {
         $this->assertTrue(io_replaceInFile($file, "Delete\012", "Replace\012", false, -1));
         $this->assertEquals("The\012Replace\01201Delete\01202Delete\012Test\012", io_readFile($file), "Edge case: old line is a match for parts of other lines");
     }
+
+    /**
+     * Test passing an invalid parameter.
+     *
+     * @expectedException PHPUnit_Framework_Error_Warning
+     */
+    function test_badparam()
+    {
+        /* The empty $oldline parameter should be caught before the file doesn't exist test. */
+        $this->assertFalse(io_replaceInFile(TMP_DIR.'/not_existing_file.txt', '', '', false, 0));
+    }
 }
