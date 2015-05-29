@@ -9,13 +9,17 @@
 # @link   http://code.jquery.com/
 
 # Adjust version for jQuery-UI here - there's no good latest link
-JQUI_VERSION='1.11.0'
+JQUI_VERSION='1.11.4'
 JQUI_HOST="https://code.jquery.com/ui/$JQUI_VERSION"
 JQUI_GIT="https://raw.githubusercontent.com/jquery/jquery-ui/$JQUI_VERSION/ui"
 
+# Adjust version for jQueryhere - latest updates slowly
+JQ_VERSION='1.11.3'
+
+
 # load jQuery
-wget -nv http://code.jquery.com/jquery-latest.min.js      -O jquery.min.js
-wget -nv http://code.jquery.com/jquery-latest.js          -O jquery.js
+wget -nv http://code.jquery.com/jquery-${JQ_VERSION}.min.js      -O jquery.min.js
+wget -nv http://code.jquery.com/jquery-${JQ_VERSION}.js          -O jquery.js
 
 # load jQuery-UI
 wget -nv "$JQUI_HOST/jquery-ui.min.js" -O jquery-ui.min.js
