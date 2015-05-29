@@ -79,4 +79,17 @@ class io_replaceinfile_test extends DokuWikiTest {
         $this->assertTrue(io_replaceInFile($file, "Delete\012", "Delete\012", false, -1));
         $this->assertEquals("The\012Delete\012Delete\012Delete01\012Delete02\012Delete\012DeleteX\012Test\012", io_readFile($file), "Edge case: new line the same as old line");
     }
+
+    /**
+     *
+     */
+    function test_edgecase3()
+    {
+        $file = TMP_DIR . '/test.txt';
+        $contents = "The\012Delete\01201Delete\01202Delete\012Test\012";
+        // Replace all, no regex, oldline exactly matches one line; matches part of other lines - only the exact match should be replaced
+        io_saveFile($file, $contents);
+        $this->assertTrue(io_replaceInFile($file, "Delete\012", "Replace\012", false, -1));
+        $this->assertEquals("The\012Replace\01201Delete\01202Delete\012Test\012", io_readFile($file), "Edge case: old line is a match for parts of other lines");
+    }
 }

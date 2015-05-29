@@ -312,7 +312,7 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
     }
 
     // make non-regexes into regexes
-    $pattern = $regex ? $oldline : '/'.preg_quote($oldline,'/').'/';
+    $pattern = $regex ? $oldline : '/^'.preg_quote($oldline,'/').'$/';
     $replace = $regex ? $newline : addcslashes($newline, '\$');
 
     // remove matching lines
