@@ -324,14 +324,14 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
             $lines[$i] = preg_replace($pattern, $replace, $line, -1, $matched);
             if ($matched) $count++;
         }
-    } else {
-        $lines = ($maxlines == 0) ?
-            preg_grep($pattern, $lines, PREG_GREP_INVERT) :
-            preg_replace($pattern, $replace, $lines);
-    }
+    } else if ($maxlines == 0) {
+        $lines = preg_grep($pattern, $lines, PREG_GREP_INVERT);
 
-    if($maxlines == 0 && ((string)$newline) !== '') {
-        $lines[] = $newline;
+        if ((string)$newline !== ''){
+            $lines[] = $newline;
+        }
+    } else {
+        $lines = preg_replace($pattern, $replace, $lines);
     }
 
     if(count($lines)){

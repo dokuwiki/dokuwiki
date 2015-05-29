@@ -59,35 +59,37 @@ class io_replaceinfile_test extends DokuWikiTest {
     }
 
     /**
-     *
+     * Test for a non-regex replacement where $newline contains a backreference like construct - it shouldn't affect the replacement
      */
     function test_edgecase1()
     {
         $file = TMP_DIR . '/test.txt';
-        // Replace all, no regex, backreference like construct in replacement line
+
         io_saveFile($file, $this->contents);
         $this->assertTrue(io_replaceInFile($file, "Delete\012", "Delete\\00\012", false, -1));
         $this->assertEquals("The\012Delete\\00\012Delete\\00\012Delete01\012Delete02\012Delete\\00\012DeleteX\012Test\012", io_readFile($file), "Edge case: backreference like construct in replacement line");
     }
     /**
+     * Test with replace all where replacement line == search line - must not timeout
+     *
      * @small
      */
     function test_edgecase2() {
         $file = TMP_DIR.'/test.txt';
-        // Replace all, no regex, replacement line == search line
+
         io_saveFile($file, $this->contents);
         $this->assertTrue(io_replaceInFile($file, "Delete\012", "Delete\012", false, -1));
         $this->assertEquals("The\012Delete\012Delete\012Delete01\012Delete02\012Delete\012DeleteX\012Test\012", io_readFile($file), "Edge case: new line the same as old line");
     }
 
     /**
-     *
+     *    Test where $oldline exactly matches one line and also matches part of other lines - only the exact match should be replaced
      */
     function test_edgecase3()
     {
         $file = TMP_DIR . '/test.txt';
         $contents = "The\012Delete\01201Delete\01202Delete\012Test\012";
-        // Replace all, no regex, oldline exactly matches one line; matches part of other lines - only the exact match should be replaced
+
         io_saveFile($file, $contents);
         $this->assertTrue(io_replaceInFile($file, "Delete\012", "Replace\012", false, -1));
         $this->assertEquals("The\012Replace\01201Delete\01202Delete\012Test\012", io_readFile($file), "Edge case: old line is a match for parts of other lines");
