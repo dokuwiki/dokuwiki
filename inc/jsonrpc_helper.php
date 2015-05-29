@@ -90,7 +90,7 @@ abstract class rpc_protocol{
         if( preg_match("/^[ ]*{/",$json_text)==true ){
             $is_batch=false;
         }else{
-            if(preg_match("/^[ ]*[/",$json_text)==true ){
+            if(preg_match("/^[ ]*\[/",$json_text)==true ){
                 $is_batch=true;
             }else{
                 throw new E_Invalid_Request("The request must be json | ".$json_text);
@@ -147,14 +147,14 @@ class rpc_protocol_1_1 extends rpc_protocol{
         return json_encode($error_object);
     }
 
-    function decode($json_text){
-        $json_array=rpc_protocol::decode($json_text);
 
-        $rt= isset($json_array['version']) && ($json_array['version']=="1.1");
+    function check($single_request){
+        rpc_protocol::check($single_request);
+        $rt= isset($single_request['version']) && ($single_request['version']=="1.1");
         if($rt!=true){
-            throw new E_Invalid_Request('v1.1 server Should set "version":"1.1", | '.$this->json_encode_exp($json_array,"in throw"));
+            throw new E_Invalid_Request('v1.1 server Should set "version":"1.1", | '.$this->json_encode_exp($single_request,"in throw"));
         }
-        return $json_array;
+        return true;
     }
 
     function encode_result($result,$id){
@@ -187,16 +187,14 @@ class rpc_protocol_2_0 extends rpc_protocol{
         return json_encode($error_object);
     }
 
-    function decode($json_text){
-        $json_array=rpc_protocol::decode($json_text);
-
-        $rt = isset($json_array['jsonrpc']) && ($json_array['jsonrpc']=="2.0");
+    function check($single_request){
+        rpc_protocol::check($single_request);
+        $rt = isset($single_request['jsonrpc']) && ($single_request['jsonrpc']=="2.0");
         if($rt!=true){
             throw new E_Invalid_Request('Hello ,This v2.0 server,typecal request is {"jsonrpc": "2.0", "method": "subtract", "params": {}, "id": 3} | '
-                .$this->json_encode_exp($json_array,"in throw"));
+                .$this->json_encode_exp($single_request,"in throw"));
         }
-
-        return $json_array;
+        return true;
     }
 
     function encode_result($result,$id){
