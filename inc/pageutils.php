@@ -129,7 +129,7 @@ function cleanID($raw_id,$ascii=false){
     }
 
     if($conf['deaccent'] == 2 || $ascii) $id = utf8_romanize($id);
-    if($conf['deaccent'] || $ascii) $id = utf8_deaccent($id,-1);
+    if($conf['deaccent'] || $ascii) $id = utf8_deaccent($id);
 
     //remove specials
     $id = utf8_stripspecials($id,$sepchar,'\*');
