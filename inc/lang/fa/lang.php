@@ -15,6 +15,7 @@
  * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
+ * @author Mehdi Yousefi <mehdi.you@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
