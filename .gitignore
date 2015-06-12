@@ -56,3 +56,4 @@
 !/lib/plugins/remote.php
 !/lib/plugins/syntax.php
 lib/images/*/local/*
+!/lib/tpl/dokuwiki_luh/
