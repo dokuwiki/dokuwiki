@@ -13,6 +13,7 @@
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Garam <rowain8@gmail.com>
  * @author Young gon Cha <garmede@gmail.com>
+ * @author hyeonsoft <hyeonsoft@live.co.kr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -44,7 +45,6 @@ $lang['btn_update']            = '바꾸기';
 $lang['btn_delete']            = '삭제';
 $lang['btn_back']              = '뒤로';
 $lang['btn_backlink']          = '백링크';
-$lang['btn_backtomedia']       = '미디어 파일 선택으로 돌아가기';
 $lang['btn_subscribe']         = '구독 관리';
 $lang['btn_profile']           = '프로필 바꾸기';
 $lang['btn_reset']             = '재설정';
@@ -79,6 +79,7 @@ $lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합
 $lang['reguexists']            = '죄송하지만 같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자를 만들었으며 비밀번호는 이메일로 보냈습니다.';
 $lang['regsuccess2']           = '사용자를 만들었습니다.';
+$lang['regfail']               = '사용자 계정이 만들어지지 않았습니다.';
 $lang['regmailfail']           = '비밀번호를 이메일로 보내는 동안 오류가 발생했습니다. 관리자에게 문의해주세요!';
 $lang['regbadmail']            = '주어진 이메일 주소가 잘못되었습니다 - 오류라고 생각하면 관리자에게 문의해주세요';
 $lang['regbadpass']            = '두 주어진 비밀번호가 같지 않습니다. 다시 입력하세요.';
@@ -93,6 +94,7 @@ $lang['profdeleteuser']        = '계정 삭제';
 $lang['profdeleted']           = '당신의 사용자 계정이 이 위키에서 삭제되었습니다';
 $lang['profconfdelete']        = '이 위키에서 내 계정을 제거하고 싶습니다. <br/> 이 행동은 되돌릴 수 없습니다.';
 $lang['profconfdeletemissing'] = '선택하지 않은 확인 상자를 확인';
+$lang['proffail']              = '사용자 설정이 업데이트되지 않았습니다.';
 $lang['pwdforget']             = '비밀번호를 잊으셨나요? 비밀번호를 재설정하세요';
 $lang['resendna']              = '이 위키는 비밀번호 재설정을 지원하지 않습니다.';
 $lang['resendpwd']             = '다음으로 새 비밀번호 보내기';
@@ -155,7 +157,6 @@ $lang['js']['media_overwrt']   = '기존 파일에 덮어쓰기';
 $lang['rssfailed']             = '이 피드를 가져오는 동안 오류가 발생했습니다:';
 $lang['nothingfound']          = '아무 것도 없습니다.';
 $lang['mediaselect']           = '미디어 파일';
-$lang['fileupload']            = '미디어 파일 올리기';
 $lang['uploadsucc']            = '올리기 성공';
 $lang['uploadfail']            = '올리기가 실패되었습니다. 잘못된 권한 때문일지도 모릅니다.';
 $lang['uploadwrong']           = '올리기가 거부되었습니다. 금지된 파일 확장자입니다!';
@@ -246,7 +247,6 @@ $lang['qb_sig']                = '서명 넣기';
 $lang['qb_smileys']            = '이모티콘';
 $lang['qb_chars']              = '특수 문자';
 $lang['upperns']               = '상위 이름공간으로 이동';
-$lang['admin_register']        = '새 사용자 추가';
 $lang['metaedit']              = '메타데이터 편집';
 $lang['metasaveerr']           = '메타데이터 쓰기 실패';
 $lang['metasaveok']            = '메타데이터 저장됨';
@@ -279,7 +279,6 @@ $lang['subscr_style_every']    = '모든 바뀜을 이메일로 받기';
 $lang['subscr_style_digest']   = '각 문서의 바뀜을 요약 (매 %.2f일 마다)';
 $lang['subscr_style_list']     = '마지막 이메일 이후 바뀐 문서의 목록 (매 %.2f일 마다)';
 $lang['authtempfail']          = '사용자 인증을 일시적으로 사용할 수 없습니다. 만약 계속해서 문제가 발생한다면 위키 관리자에게 문의하시기 바랍니다.';
-$lang['authpwdexpire']         = '비밀번호를 바꾼지 %d일이 지났으며, 비밀번호를 곧 바꿔야 합니다.';
 $lang['i_chooselang']          = '사용할 언어를 선택하세요';
 $lang['i_installer']           = '도쿠위키 설치 관리자';
 $lang['i_wikiname']            = '위키 이름';

@@ -56,4 +56,13 @@
 !/lib/plugins/remote.php
 !/lib/plugins/syntax.php
 lib/images/*/local/*
-!/lib/tpl/dokuwiki_luh/
+composer.phar
+vendor/bin/*
+vendor/*/*/phpunit.xml
+vendor/*/*/.travis.yml
+vendor/*/*/bin/*
+vendor/*/*/tests/*
+vendor/*/*/test/*
+vendor/*/*/doc/*
+vendor/*/*/docs/*
+vendor/*/*/contrib/*

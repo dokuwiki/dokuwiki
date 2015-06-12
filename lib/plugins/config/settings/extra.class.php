@@ -20,7 +20,7 @@ if (!class_exists('setting_sepchar')) {
             for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};
 
             // call foundation class constructor
-            $this->setting($key,$param);
+            parent::__construct($key,$param);
         }
     }
 }

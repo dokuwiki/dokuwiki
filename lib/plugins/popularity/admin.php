@@ -20,7 +20,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     var $helper;
     var $sentStatus = null;
 
-    function admin_plugin_popularity(){
+    function __construct(){
         $this->helper = $this->loadHelper('popularity', false);
     }
 

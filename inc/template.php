@@ -218,18 +218,9 @@ function tpl_toc($return = false) {
             $toc = array();
         }
     } elseif($ACT == 'admin') {
-        // try to load admin plugin TOC FIXME: duplicates code from tpl_admin
-        $plugin = null;
-        $class  = $INPUT->str('page');
-        if(!empty($class)) {
-            $pluginlist = plugin_list('admin');
-            if(in_array($class, $pluginlist)) {
-                // attempt to load the plugin
-                /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin = plugin_load('admin', $class);
-            }
-        }
-        if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
+        // try to load admin plugin TOC
+        /** @var $plugin DokuWiki_Admin_Plugin */
+        if ($plugin = plugin_getRequestAdminPlugin()) {
             $toc = $plugin->getTOC();
             $TOC = $toc; // avoid later rebuild
         }
@@ -402,7 +393,7 @@ function tpl_metaheaders($alt = true) {
     // load stylesheets
     $head['link'][] = array(
         'rel' => 'stylesheet', 'type'=> 'text/css',
-        'href'=> DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed
+        'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
     // make $INFO and other vars available to JavaScripts
@@ -417,7 +408,7 @@ function tpl_metaheaders($alt = true) {
     // load external javascript
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?tseed='.$tseed
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
     // trigger event here
@@ -894,12 +885,12 @@ function tpl_breadcrumbs($sep = '•') {
  * @author Nigel McNie <oracle.shinoda@gmail.com>
  * @author Sean Coates <sean@caedmon.net>
  * @author <fredrik@averpil.com>
- * @author Mark C. Prins <mprins@users.sf.net>
+ * @todo   May behave strangely in RTL languages
  *
  * @param string $sep Separator between entries
  * @return bool
  */
-function tpl_youarehere($sep = ' → ') {
+function tpl_youarehere($sep = ' » ') {
     global $conf;
     global $ID;
     global $lang;
@@ -910,15 +901,12 @@ function tpl_youarehere($sep = ' → ') {
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    echo '<nav><h2 class="bchead">'.$lang['youarehere'].': </h2>';
-    echo '<ul class="navlist">';
-    // always print the startpage
-    if ($count > 1) {
-        echo '<li class="home">'.html_wikilink(':'.$conf['start']).$sep.'</li>';
-    } else {
-        echo '<li class="home">'.$conf['start'].'</li>';
-    }
+    echo '<span class="bchead">'.$lang['youarehere'].' </span>';
 
+    // always print the startpage
+    echo '<span class="home">';
+    tpl_pagelink(':'.$conf['start']);
+    echo '</span>';
 
     // print intermediate namespace links
     $part = '';
@@ -927,28 +915,18 @@ function tpl_youarehere($sep = ' → ') {
         $page = $part;
         if($page == $conf['start']) continue; // Skip startpage
 
-        echo '<li>'.html_wikilink($page);
-        if ($i < $count - 2) {
-            echo $sep.'</li>';
-        } else {
-            echo '</li>';
-        }
+        // output
+        echo $sep;
+        tpl_pagelink($page);
     }
 
     // print current page, skipping start page, skipping for namespace index
     resolve_pageid('', $page, $exists);
-    if(isset($page) && $page == $part.$parts[$i]) {
-        echo '</li></ul></nav>';
-        return true;
-    }
-
+    if(isset($page) && $page == $part.$parts[$i]) return true;
     $page = $part.$parts[$i];
-    if($page == $conf['start']) {
-        echo '</li></ul></nav>';
-        return true;
-    }
-
-    echo $sep.'</li><li class="curid">'.noNSorNS($page).'</li></ul></nav>';
+    if($page == $conf['start']) return true;
+    echo $sep;
+    tpl_pagelink($page);
     return true;
 }
 
@@ -1048,6 +1026,8 @@ function tpl_pageinfo($ret = false) {
  * @return bool|string
  */
 function tpl_pagetitle($id = null, $ret = false) {
+    global $ACT, $INPUT, $conf, $lang;
+
     if(is_null($id)) {
         global $ID;
         $id = $ID;
@@ -1055,14 +1035,60 @@ function tpl_pagetitle($id = null, $ret = false) {
 
     $name = $id;
     if(useHeading('navigation')) {
-        $title = p_get_first_heading($id);
-        if($title) $name = $title;
+        $first_heading = p_get_first_heading($id);
+        if($first_heading) $name = $first_heading;
+    }
+
+    // default page title is the page name, modify with the current action
+    switch ($ACT) {
+        // admin functions
+        case 'admin' :
+            $page_title = $lang['btn_admin'];
+            // try to get the plugin name
+            /** @var $plugin DokuWiki_Admin_Plugin */
+            if ($plugin = plugin_getRequestAdminPlugin()){
+                $plugin_title = $plugin->getMenuText($conf['lang']);
+                $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
+            }
+            break;
+
+        // user functions
+        case 'login' :
+        case 'profile' :
+        case 'register' :
+        case 'resendpwd' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+         // wiki functions
+        case 'search' :
+        case 'index' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+        // page functions
+        case 'edit' :
+            $page_title = "✎ ".$name;
+            break;
+
+        case 'revisions' :
+            $page_title = $name . ' - ' . $lang['btn_revs'];
+            break;
+
+        case 'backlink' :
+        case 'recent' :
+        case 'subscribe' :
+            $page_title = $name . ' - ' . $lang['btn_'.$ACT];
+            break;
+
+        default : // SHOW and anything else not included
+            $page_title = $name;
     }
 
     if($ret) {
-        return hsc($name);
+        return hsc($page_title);
     } else {
-        print hsc($name);
+        print hsc($page_title);
         return true;
     }
 }

@@ -36,6 +36,7 @@
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author YoBoY <yoboy@ubuntu-fr.org>
  * @author james <j.mccann@celcat.com>
+ * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -67,7 +68,6 @@ $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens de retour';
-$lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
 $lang['btn_subscribe']         = 'Gérer souscriptions';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
@@ -102,6 +102,7 @@ $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.'
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
+$lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
 $lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
 $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
@@ -116,6 +117,7 @@ $lang['profdeleteuser']        = 'Supprimer le compte';
 $lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
 $lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
 $lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
+$lang['proffail']              = 'Le profil utilisateur n\'a pas été mis à jour.';
 $lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
@@ -178,7 +180,6 @@ $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
 $lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
 $lang['nothingfound']          = 'Pas de réponse.';
 $lang['mediaselect']           = 'Sélection de fichiers';
-$lang['fileupload']            = 'Envoi de fichier';
 $lang['uploadsucc']            = 'Envoi réussi';
 $lang['uploadfail']            = 'L\'envoi a échoué. Les autorisations sont-elles correctes ?';
 $lang['uploadwrong']           = 'Envoi refusé. Cette extension de fichier est interdite !';
@@ -269,7 +270,6 @@ $lang['qb_sig']                = 'Insérer une signature';
 $lang['qb_smileys']            = 'Émoticones';
 $lang['qb_chars']              = 'Caractères spéciaux';
 $lang['upperns']               = 'Aller à la catégorie parente';
-$lang['admin_register']        = 'Ajouter un nouvel utilisateur';
 $lang['metaedit']              = 'Modifier les métadonnées';
 $lang['metasaveerr']           = 'Erreur lors de l\'enregistrement des métadonnées';
 $lang['metasaveok']            = 'Métadonnées enregistrées';
@@ -302,7 +302,6 @@ $lang['subscr_style_every']    = 'Recevoir un courriel à chaque modification';
 $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'en informer l\'administrateur du wiki.';
-$lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
 $lang['i_installer']           = 'Installateur DokuWiki';
 $lang['i_wikiname']            = 'Nom du wiki';
@@ -362,6 +361,7 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas l\'autorisation de 
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas l\'autorisation d\'envoyer des fichiers.';
 $lang['media_update']          = 'Envoyer une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
+$lang['media_acl_warning']     = 'En raison des restrictions dans les ACL et de pages cachées, cette liste peut ne pas être complète.';
 $lang['currentns']             = 'Catégorie courante';
 $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';

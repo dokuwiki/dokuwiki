@@ -5,6 +5,7 @@
  * 
  * @author Young gon Cha <garmede@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
+ * @author hyeonsoft <hyeonsoft@live.co.kr>
  */
 $lang['menu']                  = '확장 기능 관리자';
 $lang['tab_plugins']           = '설치된 플러그인';
@@ -26,6 +27,9 @@ $lang['btn_disable']           = '비활성화';
 $lang['btn_install']           = '설치';
 $lang['btn_reinstall']         = '다시 설치';
 $lang['js']['reallydel']       = '정말 이 확장 기능을 제거하겠습니까?';
+$lang['js']['display_viewoptions'] = '보기 옵션:';
+$lang['js']['display_enabled'] = '켜짐';
+$lang['js']['display_disabled'] = '꺼짐';
 $lang['search_for']            = '확장 기능 검색:';
 $lang['search']                = '검색';
 $lang['extensionby']           = '<strong>%s</strong> (저자 %s)';

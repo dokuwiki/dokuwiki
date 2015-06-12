@@ -1875,6 +1875,7 @@ function get_doku_pref($pref, $default) {
 /**
  * Add a preference to the DokuWiki cookie
  * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
+ * Remove it by setting $val to false
  *
  * @param string $pref  preference key
  * @param string $val   preference value
@@ -1891,12 +1892,17 @@ function set_doku_pref($pref, $val) {
         $enc_pref = rawurlencode($pref);
         for($i = 0; $i < $cnt; $i += 2) {
             if($parts[$i] == $enc_pref) {
-                $parts[$i + 1] = rawurlencode($val);
+                if ($val !== false) {
+                    $parts[$i + 1] = rawurlencode($val);
+                } else {
+                    unset($parts[$i]);
+                    unset($parts[$i + 1]);
+                }
                 break;
             }
         }
         $cookieVal = implode('#', $parts);
-    } else if (!$orig) {
+    } else if (!$orig && $val !== false) {
         $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').rawurlencode($pref).'#'.rawurlencode($val);
     }
 

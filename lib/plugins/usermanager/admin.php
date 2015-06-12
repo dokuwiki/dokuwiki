@@ -31,11 +31,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     protected $_edit_userdata = array();
     protected $_disabled = '';      // if disabled set to explanatory string
     protected $_import_failures = array();
+    protected $_lastdisabled = false; // set to true if last user is unknown and last button is hence buggy
 
     /**
      * Constructor
      */
-    public function admin_plugin_usermanager(){
+    public function __construct(){
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
 
@@ -79,6 +80,27 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     public function getMenuSort() {
         return 2;
+    }
+
+    /**
+     * @return int current start value for pageination
+     */
+    public function getStart() {
+        return $this->_start;
+    }
+
+    /**
+     * @return int number of users per page
+     */
+    public function getPagesize() {
+        return $this->_pagesize;
+    }
+
+    /**
+     * @param boolean $lastdisabled
+     */
+    public function setLastdisabled($lastdisabled) {
+        $this->_lastdisabled = $lastdisabled;
     }
 
     /**
@@ -200,9 +222,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                  */
                 $groups = join(', ',$grps);
                 ptln("    <tr class=\"user_info\">");
-                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".$user."]\" ".$delete_disable." /></td>");
+                ptln("      <td class=\"centeralign\"><input type=\"checkbox\" name=\"delete[".hsc($user)."]\" ".$delete_disable." /></td>");
                 if ($editable) {
-                    ptln("    <td><a href=\"".wl($ID,array('fn[edit]['.hsc($user).']' => 1,
+                    ptln("    <td><a href=\"".wl($ID,array('fn[edit]['.$user.']' => 1,
                                                            'do' => 'admin',
                                                            'page' => 'usermanager',
                                                            'sectok' => getSecurityToken())).
@@ -334,7 +356,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         // save current $user, we need this to access details if the name is changed
         if ($user)
-          ptln("          <input type=\"hidden\" name=\"userid_old\"  value=\"".$user."\" />",$indent);
+          ptln("          <input type=\"hidden\" name=\"userid_old\"  value=\"".hsc($user)."\" />",$indent);
 
         $this->_htmlFilterSettings($indent+10);
 
@@ -379,6 +401,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $fieldtype = 'text';
             $autocomp  = '';
         }
+        $value = hsc($value);
 
         echo "<tr $class>";
         echo "<td><label for=\"$id\" >$label: </label></td>";
@@ -834,6 +857,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $buttons['next'] = '';
         } else {
             $buttons['last'] = $buttons['next'] = (($this->_start + $this->_pagesize) >= $this->_user_total) ? $disabled : '';
+        }
+
+        if ($this->_lastdisabled) {
+            $buttons['last'] = $disabled;
         }
 
         return $buttons;

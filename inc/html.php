@@ -776,10 +776,16 @@ function html_recent($first=0, $show_changes='both'){
         $href = '';
 
         if (!empty($recent['media'])) {
-            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && file_exists(mediaFN($recent['id'])));
+            $changelog = new MediaChangeLog($recent['id']);
+            $revs = $changelog->getRevisions(0, 1);
+            $diff = (count($revs) && file_exists(mediaFN($recent['id'])));
             if ($diff) {
-                $href = media_managerURL(array('tab_details' => 'history',
-                    'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+                $href = media_managerURL(array(
+                                             'tab_details' => 'history',
+                                             'mediado' => 'diff',
+                                             'image' => $recent['id'],
+                                             'ns' => getNS($recent['id'])
+                                         ), '&');
             }
         } else {
             $href = wl($recent['id'],"do=diff", false, '&');
@@ -1403,7 +1409,13 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
 
     // last timestamp is not in changelog, retrieve timestamp from metadata
     // note: when page is removed, the metadata timestamp is zero
-    $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
+    if(!$r_rev) {
+        if(isset($INFO['meta']['last_change']['date'])) {
+            $r_rev = $INFO['meta']['last_change']['date'];
+        } else {
+            $r_rev = 0;
+        }
+    }
 
     //retrieve revisions with additional info
     list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);

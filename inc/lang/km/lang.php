@@ -34,7 +34,6 @@ $lang['btn_update'] = 'កែឡើង';
 $lang['btn_delete'] = 'លុបចោល';
 $lang['btn_back']   = 'ត្រឡប់';
 $lang['btn_backlink']    = 'ខ្សែចំណងក្រោយ';
-$lang['btn_backtomedia'] = 'ទៅប្រព័នឯកសាវិញ';
 $lang['btn_subscribe']   = 'ដាក់ដំណឹងផ្លស់ប្តូរ';
 $lang['btn_profile']     = 'កែប្រវត្តិរូប';
 $lang['btn_reset']       = 'កមណត់ឡើងរិញ';
@@ -92,7 +91,6 @@ $lang['rssfailed']   = 'មានកំហុសពេលទៅ​ប្រម�
 $lang['nothingfound']= 'រកមិនឃើញអ្វីទេ។';
 
 $lang['mediaselect'] = 'ឯកសារមីឌៀ';
-$lang['fileupload']  = 'រុញឯកសារមីឌៀឡើង';
 $lang['uploadsucc']  = 'រុញចូលមានជ័យ';
 $lang['uploadfail']  = 'រុញឡើងបរាជ័យ។ ប្រហែលខុសសិទ្ឋានុញ្ញាត?';
 $lang['uploadwrong'] = 'រុញឡើងត្រូវ​បាន​បដិសេធ។ ឯកសារ';
@@ -160,7 +158,6 @@ $lang['qb_smileys'] = 'សញ្ញាអារម្មណ៍';
 $lang['qb_chars']   = 'អក្ខរៈពិសេស';
 
 $lang['js']['del_confirm']= 'លុប';
-$lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
 
 $lang['metaedit']    = 'កែទិន្នន័យអរូប';//'Edit Metadata';
 $lang['metasaveerr'] = 'ពំអាចកត់រទិន្នន័យអរូប';//'Writing metadata failed';

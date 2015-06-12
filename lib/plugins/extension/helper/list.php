@@ -151,6 +151,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if($extension->isInstalled()) {
             $class.=' installed';
             $class.= ($extension->isEnabled()) ? ' enabled':' disabled';
+            if($extension->updateAvailable()) $class .= ' updatable';
         }
         if(!$extension->canModify()) $class.= ' notselect';
         if($extension->isProtected()) $class.=  ' protected';

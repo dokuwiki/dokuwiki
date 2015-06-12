@@ -14,7 +14,7 @@ require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
 if(!defined('SIMPLE_TEST')){
-    header('Content-Type: text/javascript; charset=utf-8');
+    header('Content-Type: application/javascript; charset=utf-8');
     js_out();
 }
 
@@ -30,9 +30,14 @@ function js_out(){
     global $conf;
     global $lang;
     global $config_cascade;
+    global $INPUT;
+
+    // decide from where to get the template
+    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
+    if(!$tpl) $tpl = $conf['template'];
 
     // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.js');
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl,'.js');
     $cache->_event = 'JS_CACHE_USE';
 
     // load minified version for some files
@@ -67,7 +72,7 @@ function js_out(){
 # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
                 DOKU_INC.'lib/scripts/behaviour.js',
                 DOKU_INC.'lib/scripts/page.js',
-                tpl_incdir().'script.js',
+                tpl_incdir($tpl).'script.js',
             );
 
     // add possible plugin scripts and userscript
@@ -92,7 +97,7 @@ function js_out(){
     $json = new JSON();
     // add some global variables
     print "var DOKU_BASE   = '".DOKU_BASE."';";
-    print "var DOKU_TPL    = '".tpl_basedir()."';";
+    print "var DOKU_TPL    = '".tpl_basedir($tpl)."';";
     print "var DOKU_COOKIE_PARAM = " . $json->encode(
             array(
                  'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
@@ -104,7 +109,7 @@ function js_out(){
 
     // load JS specific translations
     $lang['js']['plugins'] = js_pluginstrings();
-    $templatestrings = js_templatestrings();
+    $templatestrings = js_templatestrings($tpl);
     if(!empty($templatestrings)) {
         $lang['js']['template'] = $templatestrings;
     }
@@ -240,19 +245,20 @@ function js_pluginstrings() {
  * - $lang['js'] must be an array.
  * - Nothing is returned for template without an entry for $lang['js']
  *
+ * @param string $tpl
  * @return array
  */
-function js_templatestrings() {
+function js_templatestrings($tpl) {
     global $conf;
     $templatestrings = array();
-    if (file_exists(tpl_incdir()."lang/en/lang.php")) {
-        include tpl_incdir()."lang/en/lang.php";
+    if (file_exists(tpl_incdir($tpl)."lang/en/lang.php")) {
+        include tpl_incdir($tpl)."lang/en/lang.php";
     }
-    if (isset($conf['lang']) && $conf['lang']!='en' && file_exists(tpl_incdir()."lang/".$conf['lang']."/lang.php")) {
-        include tpl_incdir()."lang/".$conf['lang']."/lang.php";
+    if (isset($conf['lang']) && $conf['lang']!='en' && file_exists(tpl_incdir($tpl)."lang/".$conf['lang']."/lang.php")) {
+        include tpl_incdir($tpl)."lang/".$conf['lang']."/lang.php";
     }
     if (isset($lang['js'])) {
-        $templatestrings[$conf['template']] = $lang['js'];
+        $templatestrings[$tpl] = $lang['js'];
     }
     return $templatestrings;
 }
