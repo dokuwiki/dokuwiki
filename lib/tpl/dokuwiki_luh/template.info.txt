@@ -1,0 +1,7 @@
+base     dokuwiki
+author   Anika Henke
+email    anika@selfthinker.org
+date     2014-06-04
+name     DokuWiki Template
+desc     DokuWiki's default template since 2012
+url      http://www.dokuwiki.org/template:dokuwiki

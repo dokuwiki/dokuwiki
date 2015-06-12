@@ -1,0 +1,107 @@
+/* TODO: this file is not up to the best standards and will be fixed after an overhaul of the form code */
+
+/**
+ * This file provides styles for forms in general and specifically
+ * for ?do=
+ *   - login
+ *   - resendpwd
+ *   - register
+ *   - profile
+ *   - subscribe
+ */
+
+/* ---------------- forms ------------------------ */
+
+.dokuwiki form {
+  border: none;
+  display: inline;
+}
+
+.dokuwiki label.block {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+}
+[dir=rtl] .dokuwiki label.block {
+    text-align: left;
+}
+
+.dokuwiki label.simple {
+  display: block;
+  text-align: left;
+  font-weight: normal;
+}
+[dir=rtl] .dokuwiki label.simple {
+    text-align: right;
+}
+
+.dokuwiki label.block select,
+.dokuwiki label.block input.edit {
+  width: 50%;
+}
+
+.dokuwiki label span {
+    vertical-align: middle;
+}
+
+.dokuwiki fieldset {
+  width: 400px;
+  text-align: center;
+  border: 1px solid @ini_border;
+  padding: 0.5em;
+  margin: auto;
+}
+
+
+.dokuwiki input.edit,
+.dokuwiki select.edit {
+  vertical-align: middle;
+}
+.dokuwiki select.edit {
+  padding: 0.1em 0;
+}
+
+
+.dokuwiki input.button,
+.dokuwiki button.button {
+    vertical-align: middle;
+}
+/**
+ * Styles for auth forms
+ */
+#dw__login label[for="remember__me"] {
+    margin-left: 50%;
+    margin-bottom: 1.4em;
+}
+#dw__login fieldset,
+#dw__resendpwd fieldset,
+#dw__register fieldset {
+    padding-bottom: 0.7em;
+}
+#dw__profiledelete {
+    display: block;
+    margin-top: 2.8em;
+}
+
+/**
+ * Styles for the subscription page
+ */
+
+#subscribe__form {
+    display: block;
+    width: 400px;
+    text-align: center;
+}
+
+#subscribe__form fieldset {
+    text-align: left;
+    margin: 0.5em 0;
+}
+[dir=rtl] #subscribe__form fieldset {
+    text-align: right;
+}
+
+#subscribe__form label {
+    display: block;
+    margin: 0 0.5em 0.5em;
+}
