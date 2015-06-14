@@ -21,6 +21,7 @@
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Torpedo <dgtorpedo@gmail.com>
+ * @author Maurizio <mcannavo@katamail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
