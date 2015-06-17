@@ -15,3 +15,4 @@ $conf['expirywarn']         = 0;
 $conf['additional']         = '';
 
 $conf['admin_features']              = '';
+$conf['doku_signin']              = 0;

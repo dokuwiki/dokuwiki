@@ -14,8 +14,10 @@ $lang['debug']              = 'Display additional debugging output on errors?';
 $lang['expirywarn']         = 'Days in advance to warn user about expiring password. 0 to disable.';
 $lang['additional']         = 'A comma separated list of additional AD attributes to fetch from user data. Used by some plugins.';
 
-$lang['admin_features']     = 'A comma separated list of administration feature overrides. Allowed settings: '.
+$lang['admin_features']     = 'A comma separated list of administration feature overrides.<br/> Allowed settings: '.
 	'<code>addUser (-**), delUser (-**), modLogin (-), modPass (+*), modName (+), modMail (+), modGroups (-*), getUsers (+**), getUserCount (+*), getGroups (+**), external (-*), logout (-*)</code>,'.
-	'all case sensitive (defaults as "+"/"-").'.
-	'Some settings should not be changed (marked with **) others depend on environment settings (marked with *).'.
+	'all case sensitive (defaults as "+"/"-").<br/>'.
+	'Some settings should not be changed (marked with **) others depend on environment settings (marked with *).<br/>'.
 	'Use "+" and "-" to enable/disable features e. g. <code>+modPass, -modName, -modMail</code>';
+
+$lang['doku_signin']		= 'Automatically sign in users authed by HTTP NTML/kerberos negotiation. Alternative to "sso".';

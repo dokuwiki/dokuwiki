@@ -123,6 +123,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
     }
 
+	
     /**
      * Load domain config on capability check
      *
@@ -785,9 +786,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 					($this->cando[$feature] && $override !== false)	// default value not explicitly disabled
 				);
 			case 'external': 
-				return false;	// authad does not use externals by default
+				return (bool)$opts['doku_signin'];	// external is used for auto-signin
 			case 'logout':
-				return !(bool)$opts['sso'];	// logout is disabled for sso
+				return !((bool)$opts['sso'] || (bool) $opts['doku_signin']);	// logout is disabled for sso or auto-signin
 			default:	// don't care for different stuff.
 				return parent::canDo($feature);
 		}
