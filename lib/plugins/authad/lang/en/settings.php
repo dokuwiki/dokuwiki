@@ -13,3 +13,9 @@ $lang['use_tls']            = 'Use TLS connection? If used, do not enable SSL ab
 $lang['debug']              = 'Display additional debugging output on errors?';
 $lang['expirywarn']         = 'Days in advance to warn user about expiring password. 0 to disable.';
 $lang['additional']         = 'A comma separated list of additional AD attributes to fetch from user data. Used by some plugins.';
+
+$lang['admin_features']     = 'A comma separated list of administration feature overrides. Allowed settings: '.
+	'<code>addUser (-**), delUser (-**), modLogin (-), modPass (+*), modName (+), modMail (+), modGroups (-*), getUsers (+**), getUserCount (+*), getGroups (+**), external (-*), logout (-*)</code>,'.
+	'all case sensitive (defaults as "+"/"-").'.
+	'Some settings should not be changed (marked with **) others depend on environment settings (marked with *).'.
+	'Use "+" and "-" to enable/disable features e. g. <code>+modPass, -modName, -modMail</code>';

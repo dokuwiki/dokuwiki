@@ -13,3 +13,5 @@ $meta['use_tls']            = array('onoff','_caution' => 'danger');
 $meta['debug']              = array('onoff','_caution' => 'security');
 $meta['expirywarn']         = array('numeric', '_min'=>0,'_caution' => 'danger');
 $meta['additional']         = array('string','_caution' => 'danger');
+
+$meta['admin_features'] = array('string','_caution' => 'danger');

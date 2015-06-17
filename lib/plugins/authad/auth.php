@@ -82,6 +82,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // we load the config early to modify it a bit here
         $this->loadConfig();
 
+		// sets auth features initially.
+		$this->_setFeatureArray();
         // additional information fields
         if(isset($this->conf['additional'])) {
             $this->conf['additional'] = str_replace(' ', '', $this->conf['additional']);
@@ -118,10 +120,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             }
         }
 
-        // other can do's are changed in $this->_loadServerConfig() base on domain setup
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
-        $this->cando['getUserCount'] = true;
+
     }
 
     /**
@@ -133,8 +132,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function canDo($cap) {
         //capabilities depend on config, which may change depending on domain
 		$domain = $this->_userDomain($_SERVER['REMOTE_USER']);
-        $this->_loadServerConfig($domain);
-        return parent::canDo($cap);
+        $opts = $this->_loadServerConfig($domain);
+		// recheck the feature, as domain may have different admin_feature settings
+		return $this->_checkFeatureStatus($cap,$opts);
     }
 
     /**
@@ -651,23 +651,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
         if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
 
-        // we can change the password if SSL is set
-        if($opts['use_ssl'] || $opts['use_tls']) {
-            $this->cando['modPass'] = true;
-        } else {
-            $this->cando['modPass'] = false;
-        }
 
         // adLDAP expects empty user/pass as NULL, we're less strict FS#2781
         if(empty($opts['admin_username'])) $opts['admin_username'] = null;
         if(empty($opts['admin_password'])) $opts['admin_password'] = null;
-
-        // user listing needs admin priviledges
-        if(!empty($opts['admin_username']) && !empty($opts['admin_password'])) {
-            $this->cando['getUsers'] = true;
-        } else {
-            $this->cando['getUsers'] = false;
-        }
 
         return $opts;
     }
@@ -734,4 +721,88 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->_pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
         }
     }
+	
+	/**
+	* Fetch auth feature override settings from config
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	* @param string $feature feature name as it should be in canDo (case sensitive)
+	* @param string $config config string that include specific domain options
+	* @return bool (override) or null (no override)
+	*/
+    protected function _checkFeatureOverride($feature,$config) {
+		// return null, if feature is not overridden
+		if (($pos = strpos($config,$feature)) === false) return null;
+		// return false if disabled
+		if (($sign = $config[max(0,$pos-1)]) == '-') return false;
+		// return true ('+' sign is optional)
+		return true;
+	}
+	
+	/**
+	* Fetch auth feature status
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	* @param string $feature feature name as it should be in canDo (case sensitive)
+	* @param string $opts config array that include specific domain options
+	* @return bool
+	*/
+    protected function _checkFeatureStatus($feature,$opts) {
+		$override = $this->_checkFeatureOverride($feature,$opts['admin_features']);
+		switch ($feature){
+			case 'modPass': 
+				// modPass available: when on secure channel and not explicitly disabled
+				return (($opts['use_ssl'] || $opts['use_tls']) && $override !== false);
+			case 'modName':
+			case 'modMail':
+				$orig_val = true; // modName and modMail was defaultly enabled in authad (code removed)
+			case 'modLogin':
+			case 'modGroups':
+				$orig_val = @$orig_val || @$this->cando[$feature];
+				return (
+					$override === true	// explicitly enabled
+					||
+					($orig_val && $override !== false)	// default value not explicitly disabled
+					);
+			case 'getUserCount':// getUserCount was defaultly enabled in authad when using admin login (code removed)
+				return (
+					(!empty($opts['admin_username']) && !empty($opts['admin_password']))	// requires admin login
+					&&
+					($override !== false)	// default value not explicitly disabled
+				);
+			case 'getUsers':
+			case 'getGroups':
+				return (
+					($this->cando[$feature] && $override !== false)	// default value not explicitly disabled
+				);
+			case 'addUser': 
+			case 'delUser':
+				return (
+					(!empty($opts['admin_username']) && !empty($opts['admin_password']))	// requires admin login
+					&&
+					($this->cando[$feature] && $override !== false)	// default value not explicitly disabled
+				);
+			case 'external': 
+				return false;	// authad does not use externals by default
+			case 'logout':
+				return !(bool)$opts['sso'];	// logout is disabled for sso
+			default:	// don't care for different stuff.
+				return parent::canDo($feature);
+		}
+	}
+
+	/**
+	* Sets all features to the default (no domain) options.
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	*/
+    protected function _setFeatureArray() {
+		foreach ($this->cando as $feature => &$value){
+			$value = $this->_checkFeatureStatus($feature,$this->conf);
+		}
+	}
+	
 }
