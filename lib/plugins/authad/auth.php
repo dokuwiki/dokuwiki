@@ -775,7 +775,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 			case 'getUsers':
 			case 'getGroups':
 				return (
-					($this->cando[$feature] && $override !== false)	// default value not explicitly disabled
+					($override !== false)	// default value not explicitly disabled
 				);
 			case 'addUser': 
 			case 'delUser':
