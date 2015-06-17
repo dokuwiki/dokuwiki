@@ -132,7 +132,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     public function canDo($cap) {
         //capabilities depend on config, which may change depending on domain
-        $domain = $this->_userDomain($_SERVER['REMOTE_USER']);
+		$domain = $this->_userDomain($_SERVER['REMOTE_USER']);
         $this->_loadServerConfig($domain);
         return parent::canDo($cap);
     }
@@ -158,7 +158,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $adldap = $this->_adldap($this->_userDomain($user));
         if(!$adldap) return false;
 
-        return $adldap->authenticate($this->_userName($user), $pass);
+		// FIX: authenticate both without and with domain.
+        return $adldap->authenticate($this->_userName($user), $pass) || $adldap->authenticate($user, $pass);
     }
 
     /**
@@ -300,7 +301,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     public function cleanUser($user) {
         $domain = '';
-
         // get NTLM or Kerberos domain part
         list($dom, $user) = explode('\\', $user, 2);
         if(!$user) $user = $dom;
@@ -318,7 +318,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // reattach domain
-        if($domain) $user = "$user@$domain";
+		if($domain) $user = "{$user}@{$domain}";
         return $user;
     }
 
@@ -577,7 +577,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         if(is_null($domain) && is_array($this->opts)) {
             $domain = $this->opts['domain'];
         }
-
         $this->opts = $this->_loadServerConfig((string) $domain);
         if(isset($this->adldap[$domain])) return $this->adldap[$domain];
 
@@ -592,6 +591,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->success         = false;
             $this->adldap[$domain] = null;
         }
+
         return false;
     }
 
@@ -602,7 +602,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @return string
      */
     public function _userDomain($user) {
-        list(, $domain) = explode('@', $user, 2);
+		// FIX: usable with both NTLM and reversedomain notation
+		if (strpos($user,"\\") !== false)
+			list($domain,$name) = explode("\\", $user, 2);
+		else
+			list($name,$domain) = explode("@", $user, 2);
         return $domain;
     }
 
@@ -613,7 +617,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @return string
      */
     public function _userName($user) {
-        list($name) = explode('@', $user, 2);
+		// FIX: usable with both NTLM and reversedomain notation
+        if (strpos($user,"\\") !== false)
+			list($domain,$name) = explode("\\", $user, 2);
+		else
+			list($name,$domain) = explode("@", $user, 2);
         return $name;
     }
 
