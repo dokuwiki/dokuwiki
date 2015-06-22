@@ -73,6 +73,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     protected $_grpsusers = array();
 
     /**
+     * @var object if user caching is enabled and the helper plugin is available, it is here.
+     */
+    protected $_cache = null;
+	
+    /**
      * Constructor
      */
     public function __construct() {
@@ -82,6 +87,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // we load the config early to modify it a bit here
         $this->loadConfig();
 
+		if ($this->conf['user_caching'])
+			$this->_cache = $this->loadHelper('memcache',false);	//loads the helper plugin if it is available.
+		
 		// sets auth features initially.
 		$this->_setFeatureArray();
         // additional information fields
@@ -122,6 +130,13 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
 
     }
+
+	public function trustExternal($user, $pass, $sticky = false) {
+		if (!($user = $this->cleanUser($_SERVER['REMOTE_USER']))) return false;
+		global $USERINFO;
+		$USERINFO = $this->getUserData($user);
+		return !empty($USERINFO);
+	}
 
 	
     /**
@@ -192,6 +207,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         global $conf;
         global $lang;
         global $ID;
+		// if caching is enabled, and user is in the cache, no need to do anything.
+		if ($this->_cache && ($info = $this->_cache->get('authad_users_'.$this->cleanUser($user)))){
+			return $info;
+		}
+
         $adldap = $this->_adldap($this->_userDomain($user));
         if(!$adldap) return false;
 
@@ -270,7 +290,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 }
             }
         }
-
+		// if caching is enabled and data is recieved, save data to cache.
+		if ($this->_cache && !empty($info)){
+			$this->_cache->set('authad_users_'.$this->cleanUser($user),$info,$this->conf['user_caching_ttl']);
+		}
         return $info;
     }
 

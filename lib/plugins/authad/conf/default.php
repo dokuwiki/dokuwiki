@@ -13,6 +13,7 @@ $conf['use_tls']            = 0;
 $conf['debug']              = 0;
 $conf['expirywarn']         = 0;
 $conf['additional']         = '';
-
-$conf['admin_features']              = '';
-$conf['doku_signin']              = 0;
+$conf['admin_features']     = '';
+$conf['doku_signin']        = 0;
+$conf['user_caching']       = 0;
+$conf['user_caching_ttl']   = 3600;
