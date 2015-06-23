@@ -18,3 +18,5 @@ $conf['doku_signin']        = 0;
 $conf['user_caching']       = 0;
 $conf['user_caching_ttl']   = 3600;
 $conf['user_map']			= '';
+$conf['try_controller']		= 0;
+$conf['random_controller']		= 1;
