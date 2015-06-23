@@ -19,5 +19,5 @@ $lang['admin_features']     = 'A comma separated list of administration feature 
 	'Some settings should not be changed (marked with **) others depend on environment settings (marked with *).<br/>'.
 	'Use "+" and "-" to enable/disable features e. g. <code>+modPass, -modName, -modMail</code>';
 $lang['doku_signin']		= 'Automatically sign in users authed by HTTP NTML/kerberos negotiation. Alternative to "sso".';
-$lang['user_caching']		= 'Enable user caching using cachewrapper plugin.'
-$lang['user_caching_ttl']	= 'Cache TTL in seconds.  Set to 0 to disable TTL (not recommended for AD).'
+$lang['user_caching']		= 'Enable user caching using cachewrapper plugin.';
+$lang['user_caching_ttl']	= 'Cache TTL in seconds.  Set to 0 to disable TTL (not recommended for AD).';
