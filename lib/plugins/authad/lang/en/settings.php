@@ -21,3 +21,4 @@ $lang['admin_features']     = 'A comma separated list of administration feature 
 $lang['doku_signin']		= 'Automatically sign in users authed by HTTP NTML/kerberos negotiation. Alternative to "sso".';
 $lang['user_caching']		= 'Enable user caching using cachewrapper plugin.';
 $lang['user_caching_ttl']	= 'Cache TTL in seconds.  Set to 0 to disable TTL (not recommended for AD).';
+$lang['user_map']			= 'Set users to be mapped to AD users. Coma separated list of arrow separated pairs: <code>{user} => {AD user}</code> E.g. <code>admin=>myuser@mydomain, olddomain\\oldtest => "test domain with spaces\\testuser" </code>';

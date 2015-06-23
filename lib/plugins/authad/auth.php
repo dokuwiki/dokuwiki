@@ -76,6 +76,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @var object if user caching is enabled and the helper plugin is available, it is here.
      */
     protected $_cache = null;
+
+    /**
+     * @var array parsed user to AD user mapping.
+     */
+    protected $_user_map = array();
 	
     /**
      * Constructor
@@ -90,6 +95,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 		if ($this->conf['user_caching'])
 			$this->_cache = $this->loadHelper('memcache',false);	//loads the helper plugin if it is available.
 		
+		// get user remapping
+		$this->_getUserMap();
 		// sets auth features initially.
 		$this->_setFeatureArray();
         // additional information fields
@@ -207,8 +214,16 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         global $conf;
         global $lang;
         global $ID;
+		// make sure $user is always in cleanUser format.
+		$user = $this->cleanUser($user);
+		
+		// see if a user is mapped to different user. (while loop to apply chained remapping)
+		while($nuser = @$this->_user_map[$user]){
+			$user = $nuser;
+		}
+		
 		// if caching is enabled, and user is in the cache, no need to do anything.
-		if ($this->_cache && ($info = $this->_cache->get('authad_users_'.$this->cleanUser($user)))){
+		if ($this->_cache && ($info = $this->_cache->get('authad_users_'.$user))){
 			return $info;
 		}
 
@@ -292,7 +307,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 		// if caching is enabled and data is recieved, save data to cache.
 		if ($this->_cache && !empty($info)){
-			$this->_cache->set('authad_users_'.$this->cleanUser($user),$info,$this->conf['user_caching_ttl']);
+			$this->_cache->set('authad_users_'.$user,$info,$this->conf['user_caching_ttl']);
 		}
         return $info;
     }
@@ -826,6 +841,20 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     protected function _setFeatureArray() {
 		foreach ($this->cando as $feature => &$value){
 			$value = $this->_checkFeatureStatus($feature,$this->conf);
+		}
+	}
+
+	/**
+	* Parses the user_map string to $this->_user_map array
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	*/
+    protected function _getUserMap() {
+		if (preg_match_all('~\s*([\'\"]?)([\w-\\\\/@\s]+)\\1\s*\=\>\s*([\'\"]?)([\w-\\\\/@\s]+)\\3\s*(?:$|,)~iU',@$this->conf['user_map'],$users,PREG_SET_ORDER)){
+			foreach ($users as $user){
+				$this->_user_map[$this->cleanUser($user[2])] = $this->cleanUser($user[4]);
+			}
 		}
 	}
 	
