@@ -20,3 +20,5 @@ $conf['user_caching_ttl']   = 3600;
 $conf['user_map']			= '';
 $conf['try_controller']		= 0;
 $conf['random_controller']		= 1;
+$conf['auto_domain']		= 0;
+$conf['auto_controller_lookup']		= 0;

@@ -352,7 +352,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $user   = utf8_strtolower(trim($user));
 
         // is this a known, valid domain? if not discard
-        if(!is_array($this->conf[$domain])) {
+		// FIX: This discarding breaks automatic domain or controller lookup
+        if(!($this->conf['auto_domain'] || $this->conf['auto_controller_lookup']) && !is_array($this->conf[$domain])) {
             $domain = '';
         }
 
@@ -624,7 +625,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->adldap[$domain] = new adLDAP($this->opts);
             return $this->adldap[$domain];
         } catch(adLDAPException $e) {
-            if($this->conf['debug']) {
+			if($this->conf['debug']) {
                 msg('AD Auth: '.$e->getMessage(), -1);
             }
             $this->success         = false;
@@ -675,7 +676,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts = $this->conf;
 
         $opts['domain'] = $domain;
-
+		
+		// Update: automatically add user's domain to base_dn. But for this, use the base config, without domain-specific arrays.
+		if ($domain && $this->conf['auto_domain']){
+			$opts['base_dn'] = "DC={$domain},".$this->conf['base_dn'];
+		}
+		
         // add possible domain specific configuration
         if($domain && is_array($this->conf[$domain])) foreach($this->conf[$domain] as $key => $val) {
             $opts[$key] = $val;
@@ -686,6 +692,22 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
+		// Update: automatically look up controllers
+		if (	$this->conf['auto_controller_lookup'] // feature is enabled
+			&&	empty($this->conf[$domain]['domain_controllers'])	// and controllers not set explicitly by domain-specific array
+			&&	preg_match_all('~DC=\s*(\w+)\s*(?:,|$)~iU',$opts['base_dn'],$parts)){ // and we can extract the parts from base_dn (preg_* patterns may fail)
+
+			//imploding the $parts now generate 'd1.company.net' from 'DC=d1,DC=company,DC=net'.
+			//Note: at this point the domain_controllers should be array not string.
+			
+			if ($this->conf['try_controller']){	// if try_controller is enabled, we look up the domain to have a list of ipaddresses
+				$opts['domain_controllers'] = gethostbynamel(implode('.',$parts[1]));
+			}
+			else{	// try_controller disabled: it's enough to pass the logical name of controller as openldap should be able to handle multiple addresses per domain name.
+				$opts['domain_controllers'] = array(implode('.',$parts[1]));
+			}
+		}
+
         // compatibility with old option name
         if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
         if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
@@ -694,7 +716,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // adLDAP expects empty user/pass as NULL, we're less strict FS#2781
         if(empty($opts['admin_username'])) $opts['admin_username'] = null;
         if(empty($opts['admin_password'])) $opts['admin_password'] = null;
-
         return $opts;
     }
 

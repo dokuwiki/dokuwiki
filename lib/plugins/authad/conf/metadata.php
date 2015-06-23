@@ -20,3 +20,5 @@ $meta['user_caching_ttl']   = array('numeric', '_min'=>0,'_caution' => 'danger')
 $meta['user_map']         	= array('string');
 $meta['try_controller']		= array('onoff');
 $meta['random_controller']	= array('onoff');
+$meta['auto_domain']		= array('onoff','_caution' => 'danger');
+$meta['auto_controller_lookup']		= array('onoff','_caution' => 'danger');

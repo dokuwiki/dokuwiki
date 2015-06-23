@@ -24,3 +24,5 @@ $lang['user_caching_ttl']	= 'Cache TTL in seconds.  Set to 0 to disable TTL (not
 $lang['user_map']			= 'Set users to be mapped to AD users. Coma separated list of arrow separated pairs: <code>{user} => {AD user}</code> E.g. <code>admin=>myuser@mydomain, olddomain\\oldtest => "test domain with spaces\\testuser" </code>';
 $lang['try_controller']		= 'Ping each controller to ensure they are alive (useful for dynamic AD forests)';
 $lang['random_controller']	= "Pick random controller. Disable this, if the controllers in the <code>domain_controllers</code> setting are ordered by priority (e.g. by latency).";
+$lang['auto_domain']		= "Automatically add user's domain to the base_dn.";
+$lang['auto_controller_lookup']		= "Automatically look up controllers for the user's domain: dns lookup to find domain controllers named according to base_dn.";
