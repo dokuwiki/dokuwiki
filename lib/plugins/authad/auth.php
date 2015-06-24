@@ -215,11 +215,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         global $lang;
         global $ID;
 		// make sure $user is always in cleanUser format.
-		$user = $this->cleanUser($user);
+		$orig_user = $user = $this->cleanUser($user);
 		
-		// see if a user is mapped to different user. (while loop to apply chained remapping)
-		while($nuser = @$this->_user_map[$user]){
-			$user = $nuser;
+		// see if a user is mapped to different user. (while loop to apply chained remapping, but don't allow circular remapping, so break if the mapped user is the original one)
+		while(($mapped_user = @$this->_user_map[$user]) && ($mapped_user != $orig_user)){
+			$user = $mapped_user;
 		}
 		
 		// if caching is enabled, and user is in the cache, no need to do anything.
@@ -228,9 +228,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 		}
 
         $adldap = $this->_adldap($this->_userDomain($user));
-        if(!$adldap) return false;
+        if(!$adldap || !$user) return array();
 
-        if($user == '') return array();
 
         $fields = array('mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol');
 
@@ -644,9 +643,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function _userDomain($user) {
 		// FIX: usable with both NTLM and reversedomain notation
 		if (strpos($user,"\\") !== false)
-			list($domain,$name) = explode("\\", $user, 2);
+			list($domain) = explode("\\", $user, 2);
 		else
-			list($name,$domain) = explode("@", $user, 2);
+			list(,$domain) = explode("@", $user, 2);
         return $domain;
     }
 
@@ -659,9 +658,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function _userName($user) {
 		// FIX: usable with both NTLM and reversedomain notation
         if (strpos($user,"\\") !== false)
-			list($domain,$name) = explode("\\", $user, 2);
+			list(,$name) = explode("\\", $user, 2);
 		else
-			list($name,$domain) = explode("@", $user, 2);
+			list($name) = explode("@", $user, 2);
         return $name;
     }
 
@@ -806,25 +805,25 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 	* @author János Fekete <jan@fjan.eu>
 	*
 	* @param string $feature feature name as it should be in canDo (case sensitive)
-	* @param string $opts config array that include specific domain options
+	* @param array $opts config array that include specific domain options
 	* @return bool
 	*/
     protected function _checkFeatureStatus($feature,$opts) {
 		$override = $this->_checkFeatureOverride($feature,$opts['admin_features']);
+		$orig_val = @$this->cando[$feature];
 		switch ($feature){
 			case 'modPass': 
 				// modPass available: when on secure channel and not explicitly disabled
-				return (($opts['use_ssl'] || $opts['use_tls']) && $override !== false);
+				return (($opts['use_ssl'] || $opts['use_tls']) && ($override !== false));
 			case 'modName':
 			case 'modMail':
 				$orig_val = true; // modName and modMail was defaultly enabled in authad (code removed)
 			case 'modLogin':
 			case 'modGroups':
-				$orig_val = @$orig_val || @$this->cando[$feature];
 				return (
 					$override === true	// explicitly enabled
 					||
-					($orig_val && $override !== false)	// default value not explicitly disabled
+					($orig_val && ($override !== false))	// default value not explicitly disabled
 					);
 			case 'getUserCount':// getUserCount was defaultly enabled in authad when using admin login (code removed)
 				return (
@@ -842,13 +841,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 				return (
 					(!empty($opts['admin_username']) && !empty($opts['admin_password']))	// requires admin login
 					&&
-					($this->cando[$feature] && $override !== false)	// default value not explicitly disabled
+					($this->cando[$feature] && ($override !== false))	// default value not explicitly disabled
 				);
 			case 'external': 
 				return (bool)$opts['doku_signin'];	// external is used for auto-signin
 			case 'logout':
 				return !((bool)$opts['sso'] || (bool) $opts['doku_signin']);	// logout is disabled for sso or auto-signin
 			default:	// don't care for different stuff.
+				// NOTE: using $this->canDo would cause circular dependence deadlock... This is false-positive issue by scrutinizer.
 				return parent::canDo($feature);
 		}
 	}
