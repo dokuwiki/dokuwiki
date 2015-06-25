@@ -39,6 +39,7 @@
  * @author pokesakura <pokesakura@gmail.com>
  * @author Álvaro Iradier <airadier@gmail.com>
  * @author Alejandro Nunez <nunez.alejandro@gmail.com>
+ * @author ramiro <ramiro.l.echenique@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
