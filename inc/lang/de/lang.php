@@ -28,6 +28,7 @@
  * @author Hoisl <hoisl@gmx.at>
  * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
  * @author Pascal Schröder <Pascal1802@gmail.com>
+ * @author Hendrik Diel <diel.hendrik@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -93,6 +94,7 @@ $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden.';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
 $lang['regsuccess2']           = 'Der neue Benutzer wurde angelegt.';
+$lang['regfail']               = 'Der Benutzer konnte nicht angelegt werden.';
 $lang['regmailfail']           = 'Offenbar ist ein Fehler beim Versenden der Passwort-E-Mail aufgetreten. Bitte wenden Sie sich an den Wiki-Admin.';
 $lang['regbadmail']            = 'Die angegebene E-Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden Sie sich bitte an den Wiki-Admin.';
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal.';
@@ -107,6 +109,7 @@ $lang['profdeleteuser']        = 'Benutzerprofil löschen';
 $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
 $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
 $lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.';
+$lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
@@ -350,10 +353,10 @@ $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
-$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';

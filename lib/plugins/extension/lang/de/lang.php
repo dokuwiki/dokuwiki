@@ -8,6 +8,7 @@
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Dominik Mahr <drache.mahr@gmx.de>
+ * @author Noel Tilliot <noeltilliot@byom.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -29,6 +30,9 @@ $lang['btn_disable']           = 'Deaktivieren';
 $lang['btn_install']           = 'Installieren';
 $lang['btn_reinstall']         = 'Neu installieren';
 $lang['js']['reallydel']       = 'Wollen Sie diese Erweiterung wirklich löschen?';
+$lang['js']['display_viewoptions'] = 'Optionen anzeigen';
+$lang['js']['display_enabled'] = 'aktiviert';
+$lang['js']['display_disabled'] = 'deaktiviert';
 $lang['search_for']            = 'Erweiterung suchen:';
 $lang['search']                = 'Suchen';
 $lang['extensionby']           = '<strong>%s</strong> von %s';
