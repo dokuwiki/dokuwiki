@@ -11,6 +11,8 @@ if(!defined('DOKU_INC')) die();
 
 class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
+    public $ispopup = false;
+
     /**
      * @return int sort number in admin menu
      */
@@ -23,15 +25,6 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
      */
     public function forAdminOnly() {
         return true;
-    }
-
-    /**
-     * @param string $language
-     * @return string
-     */
-    public function getMenuText($language) {
-        $js = $this->getLang('js');
-        return $js['menu'];
     }
 
     /**
@@ -49,17 +42,19 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
-        echo '<div id="plugin__styling">';
-        ptln('<h1>'.$this->getMenuText('').'</h1>');
-        $this->form(false);
+        $class = 'nopopup';
+        if($this->ispopup) $class = 'ispopup';
+
+        echo '<div id="plugin__styling" class="'.$class.'">';
+        ptln('<h1>'.$this->getLang('menu').'</h1>');
+        $this->form();
         echo '</div>';
     }
 
     /**
      * Create the actual editing form
-     * @param boolean $isajax
      */
-    public function form($isajax) {
+    public function form() {
         global $conf;
         global $ID;
         define('SIMPLE_TEST', 1); // hack, ideally certain functions should be moved out of css.php
@@ -67,8 +62,8 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
         $styleini     = css_styleini($conf['template'], true);
         $replacements = $styleini['replacements'];
 
-        if($isajax) {
-            $target = wl($ID, array('do' => 'styling_plugin'));
+        if($this->ispopup) {
+            $target = DOKU_BASE.'lib/plugins/styling/popup.php';
         } else {
             $target = wl($ID, array('do' => 'admin', 'page' => 'styling'));
         }

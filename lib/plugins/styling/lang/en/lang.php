@@ -6,7 +6,9 @@
  */
 
 // menu entry for admin plugins
-$lang['js']['menu'] = 'Template Style Settings';
+$lang['menu'] = 'Template Style Settings';
+
+
 $lang['js']['popup'] = 'Open as Popup';
 
 // custom language strings for the plugin
