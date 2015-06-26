@@ -26,8 +26,6 @@ class action_plugin_styling extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handle_ajax');
-        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_action');
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'handle_header');
     }
 
@@ -54,52 +52,6 @@ class action_plugin_styling extends DokuWiki_Action_Plugin {
             ) {
                 $event->data['link'][$i]['href'] .= '&preview=1&tseed='.time();
             }
-        }
-    }
-
-    /**
-     * Updates the style.ini settings by passing it on to handle() of the admin component
-     *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
-     * @return void
-     */
-    public function handle_action(Doku_Event &$event, $param) {
-        if($event->data != 'styling_plugin') return;
-        if(!auth_isadmin()) return;
-        $event->data = 'show';
-
-        /** @var admin_plugin_styling $hlp */
-        $hlp = plugin_load('admin', 'styling');
-        $hlp->handle();
-    }
-
-    /**
-     * Create the style form in the floating Dialog
-     *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
-     * @return void
-     */
-
-    public function handle_ajax(Doku_Event &$event, $param) {
-        if($event->data != 'plugin_styling') return;
-        if(!auth_isadmin()) return;
-        $event->preventDefault();
-        $event->stopPropagation();
-
-        global $ID;
-        global $INPUT;
-        $ID = getID();
-
-        /** @var admin_plugin_styling $hlp */
-        $hlp = plugin_load('admin', 'styling');
-        if($INPUT->str('run') == 'preview') {
-            $hlp->run_preview();
-        } else {
-            $hlp->form(true);
         }
     }
 
