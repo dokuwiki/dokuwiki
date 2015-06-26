@@ -8,7 +8,7 @@
 // menu entry for admin plugins
 $lang['menu'] = 'Template Style Settings';
 
-
+$lang['js']['loader'] = 'Preview is loading...<br>if this does not goes away, your values may be faulty';
 $lang['js']['popup'] = 'Open as Popup';
 
 // custom language strings for the plugin
