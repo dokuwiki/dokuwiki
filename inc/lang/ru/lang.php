@@ -31,6 +31,7 @@
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Alex P <alexander@lanos.co.uk>
  * @author Nolf <m.kopachovets@gmail.com>
+ * @author Takumo <9206984@mail.ru>
  */
 $lang['encoding']              = ' utf-8';
 $lang['direction']             = 'ltr';

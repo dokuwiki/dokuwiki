@@ -8,6 +8,7 @@
  * @author Type-kun <workwork-1@yandex.ru>
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Alex P <alexander@lanos.co.uk>
+ * @author Takumo <9206984@mail.ru>
  */
 $lang['menu']                  = 'Управление дополнениями';
 $lang['tab_plugins']           = 'Установленные плагины';
@@ -29,6 +30,10 @@ $lang['btn_disable']           = 'Отключить';
 $lang['btn_install']           = 'Установить';
 $lang['btn_reinstall']         = 'Переустановить';
 $lang['js']['reallydel']       = 'Действительно удалить это дополнение?';
+$lang['js']['display_viewoptions'] = 'Показать как:';
+$lang['js']['display_enabled'] = 'включено';
+$lang['js']['display_disabled'] = 'отключено';
+$lang['js']['display_updatable'] = 'обновление';
 $lang['search_for']            = 'Поиск дополнения:';
 $lang['search']                = 'Найти';
 $lang['extensionby']           = '<strong>%s</strong> — %s';
