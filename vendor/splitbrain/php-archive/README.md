@@ -18,24 +18,29 @@ Use composer:
 Usage
 -----
 
-The usage for the Zip and Tar classes are basically the same. Here are some examples for working with TARs to get
-you started. Check the source code comments for more info
+The usage for the Zip and Tar classes are basically the same. Here are some
+examples for working with TARs to get you started. Check the source code
+comments for more info
 
 ```php
+require_once 'vendor/autoload.php';
 use splitbrain\PHPArchive\Tar;
 
-// To list the contents of an existing TAR archive, open() it and use contents() on it:
+// To list the contents of an existing TAR archive, open() it and use
+// contents() on it:
 $tar = new Tar();
 $tar->open('myfile.tgz');
 $toc = $tar->contents();
 print_r($toc); // array of FileInfo objects
 
-// To extract the contents of an existing TAR archive, open() it and use extract() on it:
+// To extract the contents of an existing TAR archive, open() it and use
+// extract() on it:
 $tar = new Tar();
 $tar->open('myfile.tgz');
 $tar->extract('/tmp');
 
-// To create a new TAR archive directly on the filesystem (low memory requirements), create() it,
+// To create a new TAR archive directly on the filesystem (low memory
+// requirements), create() it:
 $tar = new Tar();
 $tar->create('myfile.tgz');
 $tar->addFile(...);
@@ -43,8 +48,8 @@ $tar->addData(...);
 ...
 $tar->close();
 
-// To create a TAR archive directly in memory, create() it, add*() files and then either save()
-// or getData() it:
+// To create a TAR archive directly in memory, create() it, add*()
+// files and then either save() or getArchive() it:
 $tar = new Tar();
 $tar->create();
 $tar->addFile(...);
@@ -54,8 +59,8 @@ $tar->save('myfile.tgz'); // compresses and saves it
 echo $tar->getArchive(Archive::COMPRESS_GZIP); // compresses and returns it
 ```
 
-Differences between Tar and Zip: Tars are compressed as a whole while Zips compress each file individually. Therefore
-you can call ```setCompression``` before each ```addFile()``` and ```addData()``` functions.
+Differences between Tar and Zip: Tars are compressed as a whole, while Zips compress each file individually. Therefore
+you can call ```setCompression``` before each ```addFile()``` and ```addData()``` function call.
 
 The FileInfo class can be used to specify additional info like ownership or permissions when adding a file to
 an archive. 
