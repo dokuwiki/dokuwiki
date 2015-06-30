@@ -297,6 +297,7 @@ class IXR_Message {
      * @param $tag
      */
     function tag_close($parser, $tag) {
+        $value = null;
         $valueFlag = false;
         switch($tag) {
             case 'int':
