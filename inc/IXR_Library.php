@@ -818,18 +818,14 @@ EOD;
  * @since 1.5
  */
 class IXR_Date {
-    var $year;
-    var $month;
-    var $day;
-    var $hour;
-    var $minute;
-    var $second;
-    var $timezone;
+
+    /** @var DateTime */
+    protected $date;
 
     /**
      * @param int|string $time
      */
-    function __construct($time) {
+    public function __construct($time) {
         // $time can be a PHP timestamp or an ISO one
         if(is_numeric($time)) {
             $this->parseTimestamp($time);
@@ -839,51 +835,48 @@ class IXR_Date {
     }
 
     /**
+     * Parse unix timestamp
+     *
      * @param int $timestamp
      */
-    function parseTimestamp($timestamp) {
-        $this->year = gmdate('Y', $timestamp);
-        $this->month = gmdate('m', $timestamp);
-        $this->day = gmdate('d', $timestamp);
-        $this->hour = gmdate('H', $timestamp);
-        $this->minute = gmdate('i', $timestamp);
-        $this->second = gmdate('s', $timestamp);
-        $this->timezone = '';
+    protected function parseTimestamp($timestamp) {
+        $this->date = new DateTime('@' . $timestamp);
     }
 
     /**
+     * Parses less or more complete iso dates and much more, if no timezone given assumes UTC
+     *
      * @param string $iso
      */
-    function parseIso($iso) {
-        if(preg_match('/^(\d\d\d\d)-?(\d\d)-?(\d\d)([T ](\d\d):(\d\d)(:(\d\d))?)?/', $iso, $match)) {
-            $this->year = (int) $match[1];
-            $this->month = (int) $match[2];
-            $this->day = (int) $match[3];
-            $this->hour = (int) $match[5];
-            $this->minute = (int) $match[6];
-            $this->second = (int) $match[8];
-        }
+    protected function parseIso($iso) {
+        $this->date = new DateTime($iso, new DateTimeZone("UTC"));
     }
 
     /**
+     * Returns date in ISO 8601 format
+     *
      * @return string
      */
-    function getIso() {
-        return $this->year . $this->month . $this->day . 'T' . $this->hour . ':' . $this->minute . ':' . $this->second . $this->timezone;
+    public function getIso() {
+        return $this->date->format(DateTime::ISO8601);
     }
 
     /**
+     * Returns date in valid xml
+     *
      * @return string
      */
-    function getXml() {
+    public function getXml() {
         return '<dateTime.iso8601>' . $this->getIso() . '</dateTime.iso8601>';
     }
 
     /**
+     * Returns Unix timestamp
+     *
      * @return int
      */
     function getTimestamp() {
-        return gmmktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year);
+        return $this->date->getTimestamp();
     }
 }
 
@@ -923,6 +916,9 @@ class IXR_IntrospectionServer extends IXR_Server {
     /** @var string[] */
     var $help;
 
+    /**
+     * Constructor
+     */
     function __construct() {
         $this->setCallbacks();
         $this->setCapabilities();
@@ -1107,7 +1103,7 @@ class IXR_ClientMulticall extends IXR_Client {
      * @param int $port
      */
     function __construct($server, $path = false, $port = 80) {
-        parent::IXR_Client($server, $path, $port);
+        parent::__construct($server, $path, $port);
         //$this->useragent = 'The Incutio XML-RPC PHP Library (multicall client)';
     }
 
