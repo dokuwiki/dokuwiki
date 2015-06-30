@@ -849,18 +849,17 @@ abstract class ChangeLog {
     public function isCurrentRevision($rev) {
         return $rev == @filemtime($this->getFilename());
     }
-    
+
     /**
-    * Return an existing revision for a specific date which is 
+    * Return an existing revision for a specific date which is
     * the current one or younger or equal then the date
     *
-    * @param string $id 
     * @param number $date_at timestamp
     * @return string revision ('' for current)
     */
     function getLastRevisionAt($date_at){
         //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
-        if($date_at >= @filemtime($this->getFilename())) { 
+        if($date_at >= @filemtime($this->getFilename())) {
             return '';
         } else if ($rev = $this->getRelativeRevision($date_at+1, -1)) { //+1 to get also the requested date revision
             return $rev;
@@ -1049,6 +1048,12 @@ class MediaChangelog extends ChangeLog {
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id
+ * @param int    $rev
+ * @param int    $chunk_size
+ * @param bool   $media
+ * @return array|bool
  */
 function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
     dbg_deprecated('class PageChangeLog or class MediaChangelog');
