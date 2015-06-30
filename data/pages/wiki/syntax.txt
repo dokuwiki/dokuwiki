@@ -170,6 +170,12 @@ DokuWiki can embed the following media formats directly.
 
 If you specify a filename that is not a supported media format, then it will be displayed as a link instead.
 
+By adding ''?linkonly'' you provide a link to the media without displaying it inline
+
+  {{wiki:dokuwiki-128.png?linkonly}}
+
+{{wiki:dokuwiki-128.png?linkonly}} This is just a link to the image.
+
 ==== Fallback Formats ====
 
 Unfortunately not all browsers understand all video and audio formats. To mitigate the problem, you can upload your file in different formats for maximum browser compatibility.
