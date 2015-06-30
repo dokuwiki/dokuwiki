@@ -261,17 +261,19 @@ There are three exceptions which do not come from that pattern file: multiplicat
 
 Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
 
-  I think we should do it
-  
-  > No we shouldn't
-  
-  >> Well, I say we should
-  
-  > Really?
-  
-  >> Yes!
-  
-  >>> Then lets do it!
+<code>
+I think we should do it
+
+> No we shouldn't
+
+>> Well, I say we should
+
+> Really?
+
+>> Yes!
+
+>>> Then lets do it!
+</code>
 
 I think we should do it
 
