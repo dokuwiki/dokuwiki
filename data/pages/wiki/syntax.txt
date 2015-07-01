@@ -170,6 +170,12 @@ DokuWiki can embed the following media formats directly.
 
 If you specify a filename that is not a supported media format, then it will be displayed as a link instead.
 
+By adding ''?linkonly'' you provide a link to the media without displaying it inline
+
+  {{wiki:dokuwiki-128.png?linkonly}}
+
+{{wiki:dokuwiki-128.png?linkonly}} This is just a link to the image.
+
 ==== Fallback Formats ====
 
 Unfortunately not all browsers understand all video and audio formats. To mitigate the problem, you can upload your file in different formats for maximum browser compatibility.
@@ -261,17 +267,19 @@ There are three exceptions which do not come from that pattern file: multiplicat
 
 Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
 
-  I think we should do it
-  
-  > No we shouldn't
-  
-  >> Well, I say we should
-  
-  > Really?
-  
-  >> Yes!
-  
-  >>> Then lets do it!
+<code>
+I think we should do it
+
+> No we shouldn't
+
+>> Well, I say we should
+
+> Really?
+
+>> Yes!
+
+>>> Then lets do it!
+</code>
 
 I think we should do it
 
@@ -317,7 +325,7 @@ As you can see, it's the cell separator before a cell which decides about the fo
   ^ Heading 4    | no colspan this time |                    |
   ^ Heading 5    | Row 2 Col 2          | Row 2 Col 3        |
 
-You can have rowspans (vertically connected cells) by adding '':::'' into the cells below the one to which they should connect.
+You can have rowspans (vertically connected cells) by adding ''%%:::%%'' into the cells below the one to which they should connect.
 
 ^ Heading 1      ^ Heading 2                  ^ Heading 3          ^
 | Row 1 Col 1    | this cell spans vertically | Row 1 Col 3        |
