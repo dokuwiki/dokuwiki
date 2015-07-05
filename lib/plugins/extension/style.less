@@ -281,18 +281,21 @@
  * Enabled/Disabled overrides
  */
 #extension__list {
-    
-    .enabled, .disabled,
-    .updatable {
-        display: none;
+
+    &.hasDisplayOptions {
+        .enabled,
+        .disabled,
+        .updatable {
+            display: none;
+        }
+
+        &.enabled .enabled,
+        &.disabled .disabled,
+        &.updatable .updatable {
+            display: block;
+        }
     }
-    
-    &.enabled .enabled,
-    &.disabled .disabled,
-    &.updatable .updatable {
-        display: block;
-    }
-    
+
     .enabled div.screenshot span {
         background: transparent url(images/enabled.png) no-repeat 2px 2px;
     }
