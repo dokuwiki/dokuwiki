@@ -43,7 +43,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
      */
     public function html() {
         $class = 'nopopup';
-        if($this->ispopup) $class = 'ispopup';
+        if($this->ispopup) $class = 'ispopup page';
 
         echo '<div id="plugin__styling" class="'.$class.'">';
         ptln('<h1>'.$this->getLang('menu').'</h1>');
@@ -75,7 +75,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
             echo '<form class="styling" method="post" action="'.$target.'">';
 
-            echo '<table>';
+            echo '<table><tbody>';
             foreach($replacements as $key => $value) {
                 $name = tpl_getLang($key);
                 if(empty($name)) $name = $this->getLang($key);
@@ -83,22 +83,22 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
                 echo '<tr>';
                 echo '<td>'.$name.'</td>';
-                echo '<td><input type="text" name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' />';
+                echo '<td><input type="text" name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' /></td>';
                 echo '</tr>';
             }
-            echo '</table>';
+            echo '</tbody></table>';
 
             echo '<p>';
-            echo '<input type="submit" name="run[preview]" class="btn_preview" value="'.$this->getLang('btn_preview').'">';
-            echo '<input type="submit" name="run[reset]" value="'.$this->getLang('btn_reset').'">'; #FIXME only if preview.ini exists
+            echo '<input type="submit" name="run[preview]" class="btn_preview primary" value="'.$this->getLang('btn_preview').'" /> ';
+            echo '<input type="submit" name="run[reset]" value="'.$this->getLang('btn_reset').'" />'; #FIXME only if preview.ini exists
             echo '</p>';
 
             echo '<p>';
-            echo '<input type="submit" name="run[save]" value="'.$this->getLang('btn_save').'">';
+            echo '<input type="submit" name="run[save]" class="primary" value="'.$this->getLang('btn_save').'" />';
             echo '</p>';
 
             echo '<p>';
-            echo '<input type="submit" name="run[revert]" value="'.$this->getLang('btn_revert').'">'; #FIXME only if local.ini exists
+            echo '<input type="submit" name="run[revert]" value="'.$this->getLang('btn_revert').'" />'; #FIXME only if local.ini exists
             echo '</p>';
 
             echo '</form>';

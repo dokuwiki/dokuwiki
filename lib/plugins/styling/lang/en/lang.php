@@ -8,15 +8,15 @@
 // menu entry for admin plugins
 $lang['menu'] = 'Template Style Settings';
 
-$lang['js']['loader'] = 'Preview is loading...<br>if this does not goes away, your values may be faulty';
-$lang['js']['popup'] = 'Open as Popup';
+$lang['js']['loader'] = 'Preview is loading...<br />if this does not goes away, your values may be faulty';
+$lang['js']['popup'] = 'Open as a popup';
 
 // custom language strings for the plugin
 $lang['error'] = 'Sorry, this template does not support this functionality.';
 
-$lang['btn_preview'] = 'Preview your changes';
-$lang['btn_save']    = 'Save your changes';
-$lang['btn_reset']   = 'Reset your current changes';
+$lang['btn_preview'] = 'Preview changes';
+$lang['btn_save']    = 'Save changes';
+$lang['btn_reset']   = 'Reset current changes';
 $lang['btn_revert']  = 'Revert all styles back to the template\'s default';
 
 // default guaranteed placeholders
