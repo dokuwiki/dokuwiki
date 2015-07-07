@@ -82,8 +82,8 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
                 if(empty($name)) $name = $key;
 
                 echo '<tr>';
-                echo '<td>'.$name.'</td>';
-                echo '<td><input type="text" name="tpl['.hsc($key).']" value="'.hsc($value).'" '.$this->colorClass($key).' /></td>';
+                echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
+                echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" value="'.hsc($value).'" '.$this->colorClass($key).' /></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
