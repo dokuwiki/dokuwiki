@@ -7,6 +7,7 @@
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
  * @author qinghao <qingxianhao@gmail.com>
  * @author lainme <lainme993@gmail.com>
+ * @author Errol <errol@hotmail.com>
  */
 $lang['menu']                  = '扩展管理器';
 $lang['tab_plugins']           = '安装插件';
@@ -28,6 +29,10 @@ $lang['btn_disable']           = '关闭';
 $lang['btn_install']           = '安装';
 $lang['btn_reinstall']         = '重新安装';
 $lang['js']['reallydel']       = '确定卸载这个扩展么？';
+$lang['js']['display_viewoptions'] = '查看选项:';
+$lang['js']['display_enabled'] = '启用';
+$lang['js']['display_disabled'] = '禁用';
+$lang['js']['display_updatable'] = '可更新';
 $lang['search_for']            = '搜索扩展';
 $lang['search']                = '搜索';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
