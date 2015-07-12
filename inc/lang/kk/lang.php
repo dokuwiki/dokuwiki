@@ -6,8 +6,8 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
+$lang['doublequoteopening']    = '&quot;';
+$lang['doublequoteclosing']    = '&quot;';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '\'';

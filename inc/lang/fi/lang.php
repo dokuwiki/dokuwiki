@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
@@ -17,7 +17,7 @@ $lang['doublequoteopening']    = '”';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '’';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Muokkaa tätä sivua';
 $lang['btn_source']            = 'Näytä sivun lähdekoodi';
 $lang['btn_show']              = 'Näytä sivu';

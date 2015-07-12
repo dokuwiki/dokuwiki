@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
@@ -17,7 +17,7 @@ $lang['doublequoteopening']    = '„';
 $lang['doublequoteclosing']    = '“';
 $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '‘';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Editează această pagină';
 $lang['btn_source']            = 'Arată sursa paginii';
 $lang['btn_show']              = 'Arată pagina';

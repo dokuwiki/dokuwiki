@@ -12,10 +12,10 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
-$lang['singlequoteopening']    = '\'';
-$lang['singlequoteclosing']    = '\'';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '\'';
 $lang['btn_edit']              = 'Edit halaman ini';
 $lang['btn_source']            = 'Lihat sumber halaman';

@@ -9,12 +9,12 @@
  * @author Ninetailz <ninetailz1125@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
-$lang['direction']             = 'itr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
-$lang['singlequoteopening']    = '\'';
-$lang['singlequoteclosing']    = '\'';
-$lang['apostrophe']            = '\'';
+$lang['direction']             = 'ltr';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'এই পৃষ্ঠা সম্পাদনা করুন';
 $lang['btn_source']            = 'দেখান পাতা উৎস';
 $lang['btn_show']              = 'দেখান পৃষ্ঠা';

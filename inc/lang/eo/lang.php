@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
@@ -17,7 +17,7 @@ $lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Redakti la paĝon';
 $lang['btn_source']            = 'Montri fontan tekston';
 $lang['btn_show']              = 'Montri paĝon';

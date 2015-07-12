@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
@@ -11,7 +11,7 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“	';
+$lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
