@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Foysol <ragebot1125@gmail.com>
  * @author ninetailz <ninetailz1125@gmail.com>
  * @author Khan M. B. Asad <muhammad2017@gmail.com>
@@ -20,7 +20,6 @@ $lang['btn_source']            = 'দেখান পাতা উৎস';
 $lang['btn_show']              = 'দেখান পৃষ্ঠা';
 $lang['btn_create']            = 'এই পৃষ্ঠা তৈরি করুন';
 $lang['btn_search']            = 'অনুসন্ধান';
-$lang['btn_save']              = 'Save';
 $lang['btn_preview']           = 'পূর্বরূপ';
 $lang['btn_top']               = 'উপরে ফিরে যান ';
 $lang['btn_newer']             = '<< আরো সাম্প্রতিক';
