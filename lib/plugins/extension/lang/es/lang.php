@@ -7,6 +7,7 @@
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
  * @author Álvaro Iradier <airadier@gmail.com>
+ * @author Mauricio Segura <maose38@yahoo.es>
  */
 $lang['menu']                  = 'Administrador de Extensiones ';
 $lang['tab_plugins']           = 'Plugins instalados';
@@ -28,6 +29,10 @@ $lang['btn_disable']           = 'Desactivar';
 $lang['btn_install']           = 'Instalar';
 $lang['btn_reinstall']         = 'Reinstalar';
 $lang['js']['reallydel']       = '¿Realmente quiere desinstalar esta extensión?';
+$lang['js']['display_viewoptions'] = 'Ver opciones:';
+$lang['js']['display_enabled'] = 'habilitado';
+$lang['js']['display_disabled'] = 'deshabilitado';
+$lang['js']['display_updatable'] = 'actualizable';
 $lang['search_for']            = 'Extensión de búsqueda :';
 $lang['search']                = 'Buscar';
 $lang['extensionby']           = '<strong>%s</strong> por %s';
