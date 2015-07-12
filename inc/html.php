@@ -183,7 +183,7 @@ function html_topbtn(){
  * @param bool|string    $label  label text, false: lookup btn_$name in localization
  * @return string
  */
-function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false){
+function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false){
     global $conf;
     global $lang;
 
@@ -221,13 +221,15 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
         $tip = htmlspecialchars($label);
     }
 
-    $ret .= '<input type="submit" value="'.hsc($label).'" class="button" ';
+    $ret .= '<button type="submit" ';
     if($akey){
         $tip .= ' ['.strtoupper($akey).']';
         $ret .= 'accesskey="'.$akey.'" ';
     }
     $ret .= 'title="'.$tip.'" ';
     $ret .= '/>';
+    $ret .= hsc($label);
+    $ret .= '</button>';
     $ret .= '</div></form>';
 
     return $ret;
@@ -856,26 +858,28 @@ function html_recent($first=0, $show_changes='both'){
         $first -= $conf['recent'];
         if ($first < 0) $first = 0;
         $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav-prev')));
-        $form->addElement(form_makeTag('input', array(
+        $form->addElement(form_makeOpenTag('button', array(
                     'type'  => 'submit',
                     'name'  => 'first['.$first.']',
-                    'value' => $lang['btn_newer'],
                     'accesskey' => 'n',
                     'title' => $lang['btn_newer'].' [N]',
                     'class' => 'button show'
                     )));
+        $form->addElement($lang['btn_newer']);
+        $form->addElement(form_makeCloseTag('button'));
         $form->addElement(form_makeCloseTag('div'));
     }
     if ($hasNext) {
         $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav-next')));
-        $form->addElement(form_makeTag('input', array(
+        $form->addElement(form_makeOpenTag('button', array(
                         'type'  => 'submit',
                         'name'  => 'first['.$last.']',
-                        'value' => $lang['btn_older'],
                         'accesskey' => 'p',
                         'title' => $lang['btn_older'].' [P]',
                         'class' => 'button show'
                         )));
+        $form->addElement($lang['btn_older']);
+        $form->addElement(form_makeCloseTag('button'));
         $form->addElement(form_makeCloseTag('div'));
     }
     $form->addElement(form_makeCloseTag('div'));
@@ -1005,7 +1009,7 @@ function html_li_default($item){
  * @param callable $func  callback to print an list item
  * @param callable $lifunc callback to the opening li tag
  * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
-                                 0 (we have a root object) or 1 (just the root content)
+ *                               0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){

@@ -834,7 +834,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
+    print '<button type="submit" title="'.$lang['btn_search'].'">'.$lang['btn_search'].'</button>';
     if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
     print '</div></form>';
     return true;
@@ -1667,7 +1667,7 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '</optgroup>';
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" />';
+    echo '<button type="submit">'.$button.'</button>';
     echo '</div>';
     echo '</form>';
 }

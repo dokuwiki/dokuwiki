@@ -535,7 +535,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $classes = 'button '.$action;
         $name    = 'fn['.$action.']['.hsc($extension->getID()).']';
 
-        return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
+        return '<button class="'.$classes.'" name="'.$name.'" type="submit" '.$title.'>'.$this->getLang('btn_'.$action).'</button> ';
     }
 
     /**
