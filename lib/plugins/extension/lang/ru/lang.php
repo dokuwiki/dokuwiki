@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
@@ -77,7 +77,7 @@ $lang['status_bundled']               = 'в комплекте';
 
 $lang['msg_enabled']                  = 'Плагин %s включён';
 $lang['msg_disabled']                 = 'Плагин %s отключён';
-$lang['msg_delete_success']           = 'Дополнение удалено';
+$lang['msg_delete_success']           = 'Дополнение %s удалено';
 $lang['msg_delete_failed']            = 'Не удалось удалить дополнение %s';
 $lang['msg_template_install_success'] = 'Шаблон %s успешно установлен';
 $lang['msg_template_update_success']  = 'Шаблон %s успешно обновлён';

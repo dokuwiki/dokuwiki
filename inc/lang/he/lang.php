@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author גיא שפר <guysoft@ort.org.il>
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Dotan Kamber <kamberd@yahoo.com>
@@ -110,7 +110,7 @@ $lang['searchmedia_in']        = 'חיפוש תחת %s';
 $lang['txt_upload']            = 'בחירת קובץ להעלות:';
 $lang['txt_filename']          = 'העלאה בשם (נתון לבחירה):';
 $lang['txt_overwrt']           = 'שכתוב על קובץ קיים';
-$lang['maxuploadsize']         = 'העלה מקסימום. s% לכל קובץ.';
+$lang['maxuploadsize']         = 'העלה מקסימום. %s לכל קובץ.';
 $lang['lockedby']              = 'נעול על ידי:';
 $lang['lockexpire']            = 'הנעילה פגה:';
 $lang['js']['willexpire']      = 'הנעילה תחלוף עוד זמן קצר. \nלמניעת התנגשויות יש להשתמש בכפתור הרענון מטה כדי לאפס את מד משך הנעילה.';
@@ -329,8 +329,8 @@ $lang['media_list_rows']       = 'שורות';
 $lang['media_sort_name']       = 'שם';
 $lang['media_sort_date']       = 'תאריך';
 $lang['media_namespaces']      = 'בחר מרחב שמות';
-$lang['media_files']           = 'קבצים ב s%';
-$lang['media_upload']          = 'להעלות s%';
+$lang['media_files']           = 'קבצים ב %s';
+$lang['media_upload']          = 'להעלות %s';
 $lang['media_search']          = 'חיפוש ב%s';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s ב %s';

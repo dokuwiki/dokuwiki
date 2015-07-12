@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
@@ -157,7 +157,7 @@ $lang['uploadexist']           = 'File telah ada. Tidak mengerjakan apa-apa.';
 $lang['uploadbadcontent']      = 'Isi file yang diupload tidak cocok dengan ekstensi file %s.';
 $lang['uploadspam']            = 'File yang diupload diblok oleh spam blacklist.';
 $lang['uploadxss']             = 'File yang diupload diblok karena kemungkinan isi yang berbahaya.';
-$lang['uploadsize']            = 'File yang diupload terlalu besar. (max.%)';
+$lang['uploadsize']            = 'File yang diupload terlalu besar. (max. %s)';
 $lang['deletesucc']            = 'File "%s" telah dihapus.';
 $lang['deletefail']            = '"%s" tidak dapat dihapus - cek hak aksesnya.';
 $lang['mediainuse']            = 'File "%s" belum dihapus - file ini sedang digunakan.';

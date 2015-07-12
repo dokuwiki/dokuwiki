@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Hudson FAS <hudsonfas@gmail.com>
  */
@@ -62,8 +62,8 @@ $lang['status_template']       = 'modelo';
 $lang['status_bundled']        = 'agrupado';
 $lang['msg_enabled']           = 'Extensão %s habilitada';
 $lang['msg_disabled']          = 'Extensão %s desabilitada';
-$lang['msg_delete_success']    = 'Extensão desinstalada';
-$lang['msg_delete_failed']     = 'Falha na desinstala&ccedil;&atilde;o da extens&atilde;o';
+$lang['msg_delete_success']    = 'Extensão %s desinstalada';
+$lang['msg_delete_failed']     = 'Falha na desinstala&ccedil;&atilde;o da extens&atilde;o %s';
 $lang['msg_template_install_success'] = 'Modelo %s instalado com sucesso';
 $lang['msg_template_update_success'] = 'Modelo %s atualizado com sucesso';
 $lang['msg_plugin_install_success'] = 'Extensão %s instalada com sucesso';

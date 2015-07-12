@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
@@ -69,7 +69,7 @@ $lang['status_template']       = 'plantilla';
 $lang['status_bundled']        = 'agrupado';
 $lang['msg_enabled']           = 'Plugin %s activado';
 $lang['msg_disabled']          = 'Plugin %s desactivado';
-$lang['msg_delete_success']    = 'Extensión desinstalada';
+$lang['msg_delete_success']    = 'Extensión %s desinstalada';
 $lang['msg_delete_failed']     = 'La desinstalación de la extensión %s ha fallado';
 $lang['msg_template_install_success'] = 'Plantilla %s instalada con éxito';
 $lang['msg_template_update_success'] = 'Plantilla %s actualizada con éxito';
