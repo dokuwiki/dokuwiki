@@ -318,7 +318,7 @@ $lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous dev
 $lang['i_badhash']             = 'dokuwiki.php non reconnu ou modifié (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valeur interdite ou vide';
 $lang['i_success']             = 'L\'installation s\'est terminée avec succès. Vous pouvez maintenant supprimer le fichier « install.php ». Continuer avec <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
-$lang['i_failure']             = 'Des erreurs sont survenues lors de l\'écriture des fichiers de configuration. Il vous faudra les corriger manuellement avant de pouvoir utiliser <a href="doku.php">votre nouveau DokuWiki</a>.';
+$lang['i_failure']             = 'Des erreurs sont survenues lors de l\'écriture des fichiers de configuration. Il vous faudra les corriger manuellement avant de pouvoir utiliser <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
 $lang['i_policy']              = 'Politique de contrôle d\'accès initiale';
 $lang['i_pol0']                = 'Wiki ouvert (lecture, écriture, envoi de fichiers pour tout le monde)';
 $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';

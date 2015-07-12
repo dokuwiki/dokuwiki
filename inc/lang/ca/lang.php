@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author daniel@6temes.cat
@@ -271,8 +271,8 @@ $lang['i_confexists']          = '<code>%s</code> ja existeix';
 $lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Comproveu els permisos del directori i/o del fitxer i creeu el fitxer manualment.';
 $lang['i_badhash']             = 'dokuwiki.php no reconegut o modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor il·legal o buit';
-$lang['i_success']             = 'La configuració s\'ha acabat amb èxit. Ara podeu suprimir el fitxer install.php. Aneu al vostre nou <a href="doku.php">DokuWiki</a>.';
-$lang['i_failure']             = 'S\'han produït alguns errors en escriure els fitxers de configuració. Potser caldrà que els arregleu manualment abans d\'utilitzar el vostre nou <a href="doku.php">DokuWiki</a>.';
+$lang['i_success']             = 'La configuració s\'ha acabat amb èxit. Ara podeu suprimir el fitxer install.php. Aneu al <a href="doku.php?id=wiki:welcome">vostre nou DokuWiki</a>.';
+$lang['i_failure']             = 'S\'han produït alguns errors en escriure els fitxers de configuració. Potser caldrà que els arregleu manualment abans d\'utilitzar el <a href="doku.php?id=wiki:welcome">vostre nou DokuWiki</a>.';
 $lang['i_policy']              = 'Política ACL inicial';
 $lang['i_pol0']                = 'Wiki obert (tothom pot llegir, escriure i penjar fitxers)';
 $lang['i_pol1']                = 'Wiki públic (tothom pot llegir, els usuaris registrats poden escriure i penjar fitxers)';
