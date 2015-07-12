@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -197,7 +197,7 @@ $lang['accessdenied']          = 'Vous n\'êtes pas autorisé à voir cette page
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Afficher le fichier original';
 $lang['mediaroot']             = 'racine';
-$lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag & drop)';
+$lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag &amp; drop)';
 $lang['mediaextchange']        = 'Extension du fichier modifiée de .%s en .%s !';
 $lang['reference']             = 'Références pour';
 $lang['ref_inuse']             = 'Le fichier ne peut être effacé car il est toujours utilisé par les pages suivantes :';
