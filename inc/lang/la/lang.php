@@ -12,11 +12,11 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
+$lang['doublequoteopening']    = '&quot;';
+$lang['doublequoteclosing']    = '&quot;';
 $lang['singlequoteopening']    = '`';
-$lang['singlequoteclosing']    = '\'';
-$lang['apostrophe']            = '´';
+$lang['singlequoteclosing']    = '´';
+$lang['apostrophe']            = '\'';
 $lang['btn_edit']              = 'Recensere hanc paginam';
 $lang['btn_source']            = 'Fontem uidere';
 $lang['btn_show']              = 'Ostendere paginam';

@@ -2,25 +2,24 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Foysol <ragebot1125@gmail.com>
  * @author ninetailz <ninetailz1125@gmail.com>
  * @author Khan M. B. Asad <muhammad2017@gmail.com>
  * @author Ninetailz <ninetailz1125@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
-$lang['direction']             = 'itr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
-$lang['singlequoteopening']    = '\'';
-$lang['singlequoteclosing']    = '\'';
-$lang['apostrophe']            = '\'';
+$lang['direction']             = 'ltr';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'এই পৃষ্ঠা সম্পাদনা করুন';
 $lang['btn_source']            = 'দেখান পাতা উৎস';
 $lang['btn_show']              = 'দেখান পৃষ্ঠা';
 $lang['btn_create']            = 'এই পৃষ্ঠা তৈরি করুন';
 $lang['btn_search']            = 'অনুসন্ধান';
-$lang['btn_save']              = 'Save';
 $lang['btn_preview']           = 'পূর্বরূপ';
 $lang['btn_top']               = 'উপরে ফিরে যান ';
 $lang['btn_newer']             = '<< আরো সাম্প্রতিক';
@@ -196,7 +195,7 @@ $lang['created']               = 'তৈরি করা';
 $lang['restored']              = 'পুরানো সংস্করণের পুনঃস্থাপন (%s)';
 $lang['external_edit']         = 'বাহ্যিক সম্পাদনা';
 $lang['summary']               = 'সম্পাদনা সারাংশ';
-$lang['noflash']               = 'এ href="http://www.adobe.com/products/flashplayer/"> অ্যাডোবি ফ্ল্যাশ প্লাগইন </ a> এই সামগ্রী প্রদর্শন করার জন্য প্রয়োজন হয়.';
+$lang['noflash']               = 'এ href="http://www.adobe.com/products/flashplayer/"> অ্যাডোবি ফ্ল্যাশ প্লাগইন </a> এই সামগ্রী প্রদর্শন করার জন্য প্রয়োজন হয়.';
 $lang['download']              = 'ডাউনলোড স্নিপেট ';
 $lang['tools']                 = 'সরঞ্জামসমূহ';
 $lang['user_tools']            = 'ব্যবহারকারীর সরঞ্জামসমূহ';

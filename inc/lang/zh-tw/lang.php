@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -296,8 +296,8 @@ $lang['i_writeerr']            = '無法建立 <code>%s</code>。您必須檢查
 $lang['i_badhash']             = '無法辨識或已遭修改的 dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> —— 非法或空白的值';
 $lang['i_success']             = '設定已完成。您現在可以刪除 install.php 檔案。繼續到
-<a href="doku.php">您的新 DokuWiki</a>.';
-$lang['i_failure']             = '寫入設定檔時發生了一些錯誤。您必須在使用<a href="doku.php">您的新 Dokuwiki</a> 之前手動修正它們。';
+<a href="doku.php?id=wiki:welcome">您的新 DokuWiki</a>.';
+$lang['i_failure']             = '寫入設定檔時發生了一些錯誤。您必須在使用<a href="doku.php?id=wiki:welcome">您的新 Dokuwiki</a> 之前手動修正它們。';
 $lang['i_policy']              = '初步的 ACL 政策';
 $lang['i_pol0']                = '開放的 wiki (任何人可讀取、寫入、上傳)';
 $lang['i_pol1']                = '公開的 wiki (任何人可讀取，註冊使用者可寫入與上傳)';

@@ -6,9 +6,9 @@
 
 תאריך      : @DATE@
 דפדפן      : @BROWSER@
-כתובת IP&rlm;  : @IPADDRESS@
+כתובת IP&#8207;  : @IPADDRESS@
 שם המארח   : @HOSTNAME@
 
--- 
+--
 הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
 @DOKUWIKIURL@

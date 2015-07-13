@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author H. Richard <wanderer379@t-online.de>
  * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
@@ -69,7 +69,7 @@ $lang['status_template']       = 'Template';
 $lang['status_bundled']        = 'gebündelt';
 $lang['msg_enabled']           = 'Plugin %s ist aktiviert';
 $lang['msg_disabled']          = 'Erweiterung %s ist deaktiviert';
-$lang['msg_delete_success']    = 'Erweiterung wurde entfernt';
+$lang['msg_delete_success']    = 'Erweiterung %s wurde entfernt';
 $lang['msg_template_install_success'] = 'Das Template %s wurde erfolgreich installiert';
 $lang['msg_template_update_success'] = 'Das Update des Templates %s war erfolgreich ';
 $lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installiert';

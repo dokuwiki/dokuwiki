@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
@@ -61,7 +61,7 @@ $lang['status_template']       = 'sablon';
 $lang['status_bundled']        = 'beépített';
 $lang['msg_enabled']           = 'A(z) %s modul engedélyezve';
 $lang['msg_disabled']          = 'A(z) %s modul letiltva';
-$lang['msg_delete_success']    = 'A bővítmény törölve';
+$lang['msg_delete_success']    = 'A bővítmény %s törölve';
 $lang['msg_template_install_success'] = 'A(z) %s sablon sikeresen telepítve';
 $lang['msg_template_update_success'] = 'A(z) %s sablon sikeresen frissítve';
 $lang['msg_plugin_install_success'] = 'A(z) %s modul sikeresen telepítve';
