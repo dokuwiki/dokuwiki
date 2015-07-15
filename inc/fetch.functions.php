@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Functions used by lib/exe/fetch.php
  * (not included by other parts of dokuwiki)
@@ -47,18 +47,15 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
             // cache publically
             header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
             header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.$maxage);
-            header('Pragma: public');
         } else {
             // cache in browser
             header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
             header('Cache-Control: private, no-transform, max-age='.$maxage);
-            header('Pragma: no-cache');
         }
     } else {
         // no cache at all
         header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
         header('Cache-Control: no-cache, no-transform');
-        header('Pragma: no-cache');
     }
 
     //send important headers first, script stops here if '304 Not Modified' response
