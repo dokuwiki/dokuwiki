@@ -28,6 +28,7 @@ $lang['btn_disable']           = '無効化';
 $lang['btn_install']           = 'インストール';
 $lang['btn_reinstall']         = '再インストール';
 $lang['js']['reallydel']       = 'この拡張機能を本当にアンインストールしますか？';
+$lang['js']['display_viewoptions'] = '表示オプション： ';
 $lang['js']['display_enabled'] = '有効';
 $lang['js']['display_disabled'] = '無効';
 $lang['js']['display_updatable'] = '更新可能';
