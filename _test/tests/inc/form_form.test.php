@@ -30,9 +30,9 @@ class form_test extends DokuWikiTest {
     $realoutput .= '<input type="checkbox" id="check__id" name="r" value="1" /> ';
     $realoutput .= '<span>Check</span></label>';
     $realoutput .= "\n";
-    $realoutput .= '<input name="do[save]" type="submit" value="Save" class="button" accesskey="s" title="Save [S]" />';
+    $realoutput .= '<button name="do[save]" type="submit" accesskey="s" title="Save [S]">Save</button>';
     $realoutput .= "\n";
-    $realoutput .= '<input name="do[cancel]" type="submit" value="Cancel" class="button" />';
+    $realoutput .= '<button name="do[cancel]" type="submit">Cancel</button>';
     $realoutput .= "\n";
     $realoutput .= "</fieldset>\n</div></form>\n";
     return $realoutput;
