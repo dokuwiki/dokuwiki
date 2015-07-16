@@ -578,6 +578,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         try {
             $installed = $this->installArchive("$tmp/upload.archive", true, $basename);
             $this->updateManagerData('', $installed);
+            $this->removeDeletedfiles($installed);
             // purge cache
             $this->purgeCache();
         }catch (Exception $e){
@@ -598,6 +599,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $path      = $this->download($url);
             $installed = $this->installArchive($path, true);
             $this->updateManagerData($url, $installed);
+            $this->removeDeletedfiles($installed);
 
             // purge cache
             $this->purgeCache();
@@ -623,6 +625,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if (!isset($installed[$this->getID()])) {
             throw new Exception('Error, the requested extension hasn\'t been installed or updated');
         }
+        $this->removeDeletedfiles($installed);
         $this->setExtension($this->getID());
         $this->purgeCache();
         return $installed;
@@ -918,7 +921,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             if($this->dircopy($item['tmp'], $target)) {
                 // return info
                 $id = $item['base'];
-                if($item['type'] == 'template') $id = 'template:'.$id;
+                if($item['type'] == 'template') {
+                    $id = 'template:'.$id;
+                }
                 $installed_extensions[$id] = array(
                     'base' => $item['base'],
                     'type' => $item['type'],
@@ -1116,6 +1121,40 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         return true;
+    }
+
+    /**
+     * Delete outdated files from updated plugins
+     *
+     * @param array $installed
+     */
+    private function removeDeletedfiles($installed) {
+        foreach($installed as $id => $extension) {
+            // only on update
+            if($extension['action'] == 'install') continue;
+
+            // get definition file
+            if($extension['type'] == 'template') {
+                $extensiondir = DOKU_TPLLIB;
+            }else{
+                $extensiondir = DOKU_PLUGIN;
+            }
+            $extensiondir = $extensiondir . $extension['base'] .'/';
+            $definitionfile = $extensiondir . 'deleted.files';
+            if(!file_exists($definitionfile)) continue;
+
+            // delete the old files
+            $list = file($definitionfile);
+
+            foreach($list as $line) {
+                $line = trim(preg_replace('/#.*$/', '', $line));
+                if(!$line) continue;
+                $file = $extensiondir . $line;
+                if(!file_exists($file)) continue;
+
+                io_rmdir($file, true);
+            }
+        }
     }
 }
 
