@@ -811,13 +811,21 @@ class Doku_Renderer extends DokuWiki_Plugin {
         }
 
         //split into hash and url part
-        @list($reference, $hash) = explode('#', $reference, 2);
+        $hash = strrchr($reference, '#');
+        if($hash) {
+            $reference = substr($reference, 0, -strlen($hash));
+            $hash = substr($hash, 1);
+        }
 
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
             //use placeholders
             $url    = str_replace('{URL}', rawurlencode($reference), $url);
-            $url    = str_replace('{NAME}', $reference, $url);
+            //wiki names will be cleaned next, otherwise urlencode unsafe chars
+            $url    = str_replace('{NAME}', ($url{0} === ':') ? $reference :
+                                  preg_replace_callback('/[[\\\\\]^`{|}#%]/', function($match) {
+                                    return rawurlencode($match[0]);
+                                  }, $reference), $url);
             $parsed = parse_url($reference);
             if(!$parsed['port']) $parsed['port'] = 80;
             $url = str_replace('{SCHEME}', $parsed['scheme'], $url);
