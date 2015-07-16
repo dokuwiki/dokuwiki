@@ -806,7 +806,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
             $url = $this->interwiki[$shortcut];
         } else {
             // Default to Google I'm feeling lucky
-            $url      = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
+            $url      = 'https://www.google.com/search?q={URL}&amp;btnI=lucky';
             $shortcut = 'go';
         }
 
