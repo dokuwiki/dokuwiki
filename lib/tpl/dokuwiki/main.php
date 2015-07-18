@@ -38,17 +38,18 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <!-- ********** ASIDE ********** -->
                 <div id="dokuwiki__aside"><div class="pad aside include group">
                     <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
-                    <div class="content">
+                    <div class="content"><div class="group">
                         <?php tpl_flush() ?>
                         <?php tpl_includeFile('sidebarheader.html') ?>
-                        <?php tpl_include_page($conf['sidebar'], 1, 1) ?>
+                        <?php tpl_include_page($conf['sidebar'], true, true) ?>
                         <?php tpl_includeFile('sidebarfooter.html') ?>
-                    </div>
+                    </div></div>
                 </div></div><!-- /aside -->
             <?php endif; ?>
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
+                <?php html_msgarea() ?>
 
                 <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
 
@@ -77,12 +78,12 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                             $data = array(
                                 'view'  => 'main',
                                 'items' => array(
-                                    'edit'      => tpl_action('edit',      1, 'li', 1, '<span>', '</span>'),
-                                    'revert'    => tpl_action('revert',    1, 'li', 1, '<span>', '</span>'),
-                                    'revisions' => tpl_action('revisions', 1, 'li', 1, '<span>', '</span>'),
-                                    'backlink'  => tpl_action('backlink',  1, 'li', 1, '<span>', '</span>'),
-                                    'subscribe' => tpl_action('subscribe', 1, 'li', 1, '<span>', '</span>'),
-                                    'top'       => tpl_action('top',       1, 'li', 1, '<span>', '</span>')
+                                    'edit'      => tpl_action('edit',      true, 'li', true, '<span>', '</span>'),
+                                    'revert'    => tpl_action('revert',    true, 'li', true, '<span>', '</span>'),
+                                    'revisions' => tpl_action('revisions', true, 'li', true, '<span>', '</span>'),
+                                    'backlink'  => tpl_action('backlink',  true, 'li', true, '<span>', '</span>'),
+                                    'subscribe' => tpl_action('subscribe', true, 'li', true, '<span>', '</span>'),
+                                    'top'       => tpl_action('top',       true, 'li', true, '<span>', '</span>')
                                 )
                             );
 

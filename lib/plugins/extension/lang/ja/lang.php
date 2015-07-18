@@ -5,6 +5,8 @@
  * 
  * @author Hideaki SAWADA <chuno@live.jp>
  * @author PzF_X <jp_minecraft@yahoo.co.jp>
+ * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['menu']                  = '拡張機能管理';
 $lang['tab_plugins']           = 'インストール済プラグイン';
@@ -26,6 +28,10 @@ $lang['btn_disable']           = '無効化';
 $lang['btn_install']           = 'インストール';
 $lang['btn_reinstall']         = '再インストール';
 $lang['js']['reallydel']       = 'この拡張機能を本当にアンインストールしますか？';
+$lang['js']['display_viewoptions'] = '表示オプション： ';
+$lang['js']['display_enabled'] = '有効';
+$lang['js']['display_disabled'] = '無効';
+$lang['js']['display_updatable'] = '更新可能';
 $lang['search_for']            = '拡張機能の検索：';
 $lang['search']                = '検索';
 $lang['extensionby']           = '<strong>%s</strong> 作者： %s';
@@ -62,7 +68,8 @@ $lang['status_template']       = 'テンプレート';
 $lang['status_bundled']        = '同梱';
 $lang['msg_enabled']           = '%s プラグインを有効化しました。';
 $lang['msg_disabled']          = '%s プラグインを無効化しました。';
-$lang['msg_delete_success']    = '拡張機能をアンインストールしました。';
+$lang['msg_delete_success']    = '拡張機能 %s をアンインストールしました。';
+$lang['msg_delete_failed']     = '拡張機能 %s のアンインストールに失敗しました。';
 $lang['msg_template_install_success'] = '%s テンプレートをインストールできました。';
 $lang['msg_template_update_success'] = '%s テンプレートを更新できました。';
 $lang['msg_plugin_install_success'] = '%s プラグインをインストールできました。';
@@ -84,6 +91,8 @@ $lang['noperms']               = '拡張機能ディレクトリが書き込み�
 $lang['notplperms']            = 'テンプレートディレクトリが書き込み不可です。';
 $lang['nopluginperms']         = 'プラグインディレクトリが書き込み不可です。';
 $lang['git']                   = 'この拡張機能は Git 経由でインストールされており、ここで更新すべきでないかもしれません。';
+$lang['auth']                  = 'この認証プラグインは設定管理画面で無効化されています。';
 $lang['install_url']           = 'URL からインストール：';
 $lang['install_upload']        = '拡張機能をアップロード：';
 $lang['repo_error']            = 'プラグインのリポジトリに接続できません。サーバーが www.dokuwiki.org に接続できることやプロキシの設定を確認して下さい。';
+$lang['nossl']                 = 'PHP機能がSSLをサポートしていないため、拡張機能のダウンロードが正常に動作しません。';

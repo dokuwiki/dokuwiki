@@ -83,9 +83,14 @@ Windows shares like [[\\server\share|this]] are recognized, too. Please note tha
 Notes:
 
   * For security reasons direct browsing of windows shares only works in Microsoft Internet Explorer per default (and only in the "local zone").
-  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_do_not_work|Mozilla Knowledge Base]]. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in ''conf/userscript.js'':
-
-  LANG.nosmblinks = '';
+  * For Mozilla and Firefox it can be enabled through different workaround mentioned in the [[http://kb.mozillazine.org/Links_to_local_pages_do_not_work|Mozilla Knowledge Base]]. However, there will still be a JavaScript warning about trying to open a Windows Share. To remove this warning (for all users), put the following line in ''conf/lang/en/lang.php'' (more details at [[doku>localization#changing_some_localized_texts_and_strings_in_your_installation|localization]]): <code - conf/lang/en/lang.php>
+<?php
+/**
+ * Customization of the english language file
+ * Copy only the strings that needs to be modified
+ */
+$lang['js']['nosmblinks'] = '';
+</code>
 
 ==== Image Links ====
 
@@ -169,6 +174,12 @@ DokuWiki can embed the following media formats directly.
 | Flash | ''swf''                    |
 
 If you specify a filename that is not a supported media format, then it will be displayed as a link instead.
+
+By adding ''?linkonly'' you provide a link to the media without displaying it inline
+
+  {{wiki:dokuwiki-128.png?linkonly}}
+
+{{wiki:dokuwiki-128.png?linkonly}} This is just a link to the image.
 
 ==== Fallback Formats ====
 
@@ -261,17 +272,19 @@ There are three exceptions which do not come from that pattern file: multiplicat
 
 Some times you want to mark some text to show it's a reply or comment. You can use the following syntax:
 
-  I think we should do it
-  
-  > No we shouldn't
-  
-  >> Well, I say we should
-  
-  > Really?
-  
-  >> Yes!
-  
-  >>> Then lets do it!
+<code>
+I think we should do it
+
+> No we shouldn't
+
+>> Well, I say we should
+
+> Really?
+
+>> Yes!
+
+>>> Then lets do it!
+</code>
 
 I think we should do it
 
@@ -317,7 +330,7 @@ As you can see, it's the cell separator before a cell which decides about the fo
   ^ Heading 4    | no colspan this time |                    |
   ^ Heading 5    | Row 2 Col 2          | Row 2 Col 3        |
 
-You can have rowspans (vertically connected cells) by adding '':::'' into the cells below the one to which they should connect.
+You can have rowspans (vertically connected cells) by adding ''%%:::%%'' into the cells below the one to which they should connect.
 
 ^ Heading 1      ^ Heading 2                  ^ Heading 3          ^
 | Row 1 Col 1    | this cell spans vertically | Row 1 Col 3        |
@@ -481,9 +494,12 @@ echo '</tr></table>';
 | author     | show item authors names |
 | date       | show item dates |
 | description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
+| nosort     | do not sort the items in the feed |
 | //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 
 The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+
+By default the feed will be sorted by date, newest items first. You can sort it by oldest first using the ''reverse'' parameter, or display the feed as is with ''nosort''.
 
 **Example:**
 

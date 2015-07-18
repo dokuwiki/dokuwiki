@@ -5,4 +5,3 @@ Brug denne side til at kontrollere indstillingerne for din Dokuwiki-opsætning. 
 Indstillinger vist med lys rød baggrund er beskyttede og kan ikke ændres med denne udvidelse. Indstillinger vist med blå baggrund er standardindstillinger og indstillinger vist med hvid baggrund er blevet sat lokalt denne konkrete opsætning.  Både blå og hvide indstillinger kan ændres.
 
 Husk at trykke på **Gem**-knappen før du forlader siden, for at du ikke mister dine ændringer.
-

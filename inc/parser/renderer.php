@@ -190,7 +190,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Render plain text data
      *
-     * @param $text
+     * @param string $text
      */
     function cdata($text) {
     }
@@ -343,8 +343,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * Open a list item
      *
      * @param int $level the nesting level
+     * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level) {
+    function listitem_open($level,$node=false) {
     }
 
     /**
@@ -707,6 +708,18 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
+     * Open a table body
+     */
+    function tabletbody_open() {
+    }
+
+    /**
+     * Close a table body
+     */
+    function tabletbody_close() {
+    }
+
+    /**
      * Open a table row
      */
     function tablerow_open() {
@@ -759,6 +772,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * casing and special chars
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $name
+     * @return string
      */
     function _simpleTitle($name) {
         global $conf;
@@ -778,6 +794,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     /**
      * Resolve an interwikilink
+     *
+     * @param string    $shortcut  identifier for the interwiki link
+     * @param string    $reference fragment that refers the content
+     * @param null|bool $exists    reference which returns if an internal page exists
+     * @return string interwikilink
      */
     function _resolveInterWiki(&$shortcut, $reference, &$exists = null) {
         //get interwiki URL

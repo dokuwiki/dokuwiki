@@ -2,10 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
+ * @author Álvaro Iradier <airadier@gmail.com>
+ * @author Mauricio Segura <maose38@yahoo.es>
  */
 $lang['menu']                  = 'Administrador de Extensiones ';
 $lang['tab_plugins']           = 'Plugins instalados';
@@ -27,6 +29,10 @@ $lang['btn_disable']           = 'Desactivar';
 $lang['btn_install']           = 'Instalar';
 $lang['btn_reinstall']         = 'Reinstalar';
 $lang['js']['reallydel']       = '¿Realmente quiere desinstalar esta extensión?';
+$lang['js']['display_viewoptions'] = 'Ver opciones:';
+$lang['js']['display_enabled'] = 'habilitado';
+$lang['js']['display_disabled'] = 'deshabilitado';
+$lang['js']['display_updatable'] = 'actualizable';
 $lang['search_for']            = 'Extensión de búsqueda :';
 $lang['search']                = 'Buscar';
 $lang['extensionby']           = '<strong>%s</strong> por %s';
@@ -63,7 +69,8 @@ $lang['status_template']       = 'plantilla';
 $lang['status_bundled']        = 'agrupado';
 $lang['msg_enabled']           = 'Plugin %s activado';
 $lang['msg_disabled']          = 'Plugin %s desactivado';
-$lang['msg_delete_success']    = 'Extensión desinstalada';
+$lang['msg_delete_success']    = 'Extensión %s desinstalada';
+$lang['msg_delete_failed']     = 'La desinstalación de la extensión %s ha fallado';
 $lang['msg_template_install_success'] = 'Plantilla %s instalada con éxito';
 $lang['msg_template_update_success'] = 'Plantilla %s actualizada con éxito';
 $lang['msg_plugin_install_success'] = 'Plugin %s instalado con éxito';
@@ -78,6 +85,9 @@ $lang['url_change']            = '<strong>URL actualizada:</strong> El Download 
 $lang['error_badurl']          = 'URLs deberían empezar con http o https';
 $lang['error_dircreate']       = 'No es posible de crear un directorio temporero para poder recibir el download';
 $lang['error_download']        = 'No es posible descargar el documento: %s';
+$lang['error_decompress']      = 'No se pudo descomprimir el fichero descargado. Puede ser a causa de una descarga incorrecta, en cuyo caso puedes intentarlo de nuevo; o puede que el formato de compresión sea desconocido, en cuyo caso necesitarás descargar e instalar manualmente.';
+$lang['noperms']               = 'El directorio de extensiones no tiene permiso de escritura.';
+$lang['notplperms']            = 'El directorio de plantillas no tiene permiso de escritura.';
 $lang['git']                   = 'Esta extensión fue instalada a través de git, quizás usted no quiera actualizarla aquí mismo.';
 $lang['install_url']           = 'Instalar desde URL:';
 $lang['install_upload']        = 'Subir Extensión:';

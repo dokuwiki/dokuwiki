@@ -68,6 +68,7 @@ function tpl_basedir($tpl='') {
  * handled by this function. ACL stuff is not done here either.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @triggers TPL_ACT_RENDER
  * @triggers TPL_CONTENT_DISPLAY
  * @param bool $prependTOC should the TOC be displayed here?
@@ -170,8 +171,9 @@ function tpl_content_core() {
             break;
         default:
             $evt = new Doku_Event('TPL_ACT_UNKNOWN', $ACT);
-            if($evt->advise_before())
+            if($evt->advise_before()) {
                 msg("Failed to handle command: ".hsc($ACT), -1);
+            }
             $evt->advise_after();
             unset($evt);
             return false;
@@ -186,6 +188,7 @@ function tpl_content_core() {
  * a false argument
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $return Should the TOC be returned instead to be printed?
  * @return string
  */
@@ -204,7 +207,7 @@ function tpl_toc($return = false) {
         $toc = $TOC;
     } elseif(($ACT == 'show' || substr($ACT, 0, 6) == 'export') && !$REV && $INFO['exists']) {
         // get TOC from metadata, render if neccessary
-        $meta = p_get_metadata($ID, false, METADATA_RENDER_USING_CACHE);
+        $meta = p_get_metadata($ID, '', METADATA_RENDER_USING_CACHE);
         if(isset($meta['internal']['toc'])) {
             $tocok = $meta['internal']['toc'];
         } else {
@@ -215,18 +218,9 @@ function tpl_toc($return = false) {
             $toc = array();
         }
     } elseif($ACT == 'admin') {
-        // try to load admin plugin TOC FIXME: duplicates code from tpl_admin
-        $plugin = null;
-        $class  = $INPUT->str('page');
-        if(!empty($class)) {
-            $pluginlist = plugin_list('admin');
-            if(in_array($class, $pluginlist)) {
-                // attempt to load the plugin
-                /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin = plugin_load('admin', $class);
-            }
-        }
-        if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
+        // try to load admin plugin TOC
+        /** @var $plugin DokuWiki_Admin_Plugin */
+        if ($plugin = plugin_getRequestAdminPlugin()) {
             $toc = $plugin->getTOC();
             $TOC = $toc; // avoid later rebuild
         }
@@ -243,6 +237,8 @@ function tpl_toc($return = false) {
  * Handle the admin page contents
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return bool
  */
 function tpl_admin() {
     global $INFO;
@@ -277,6 +273,7 @@ function tpl_admin() {
  * This has to go into the head section of your template.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @triggers TPL_METAHEADER_OUTPUT
  * @param  bool $alt Should feeds and alternative format links be added?
  * @return bool
@@ -369,7 +366,11 @@ function tpl_metaheaders($alt = true) {
             } else {
                 $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,nofollow');
             }
-            $head['link'][] = array('rel'=> 'canonical', 'href'=> wl($ID, '', true, '&'));
+            $canonicalUrl = wl($ID, '', true, '&');
+            if ($ID == $conf['start']) {
+                $canonicalUrl = DOKU_URL;
+            }
+            $head['link'][] = array('rel'=> 'canonical', 'href'=> $canonicalUrl);
         } else {
             $head['meta'][] = array('name'=> 'robots', 'content'=> 'noindex,follow');
         }
@@ -381,13 +382,6 @@ function tpl_metaheaders($alt = true) {
 
     // set metadata
     if($ACT == 'show' || $ACT == 'export_xhtml') {
-        // date of modification
-        if($REV) {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $REV));
-        } else {
-            $head['meta'][] = array('name'=> 'date', 'content'=> date('Y-m-d\TH:i:sO', $INFO['lastmod']));
-        }
-
         // keywords (explicit or implicit)
         if(!empty($INFO['meta']['subject'])) {
             $head['meta'][] = array('name'=> 'keywords', 'content'=> join(',', $INFO['meta']['subject']));
@@ -399,7 +393,7 @@ function tpl_metaheaders($alt = true) {
     // load stylesheets
     $head['link'][] = array(
         'rel' => 'stylesheet', 'type'=> 'text/css',
-        'href'=> DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed
+        'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
     // make $INFO and other vars available to JavaScripts
@@ -414,7 +408,7 @@ function tpl_metaheaders($alt = true) {
     // load external javascript
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?tseed='.$tseed
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
     // trigger event here
@@ -429,10 +423,12 @@ function tpl_metaheaders($alt = true) {
  * instances. Attributes are given as key value pairs. Values will be HTML
  * encoded automatically so they should be provided as is in the $data array.
  *
- * For tags having a body attribute specify the the body data in the special
+ * For tags having a body attribute specify the body data in the special
  * attribute '_data'. This field will NOT BE ESCAPED automatically.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
  */
 function _tpl_metaheaders_action($data) {
     foreach($data as $tag => $inst) {
@@ -459,6 +455,12 @@ function _tpl_metaheaders_action($data) {
  * Just builds a link.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $url
+ * @param string $name
+ * @param string $more
+ * @param bool $return if true return the link html, otherwise print
+ * @return bool|string html of the link, or true if printed
  */
 function tpl_link($url, $name, $more = '', $return = false) {
     $out = '<a href="'.$url.'" ';
@@ -475,6 +477,10 @@ function tpl_link($url, $name, $more = '', $return = false) {
  * Wrapper around html_wikilink
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string      $id   page id
+ * @param string|null $name the name of the link
+ * @return bool true
  */
 function tpl_pagelink($id, $name = null) {
     print '<bdi>'.html_wikilink($id, $name).'</bdi>';
@@ -488,6 +494,9 @@ function tpl_pagelink($id, $name = null) {
  * returns false if none is available
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id page id
+ * @return false|string
  */
 function tpl_getparent($id) {
     $parent = getNS($id).':';
@@ -506,6 +515,10 @@ function tpl_getparent($id) {
  *
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
+ *
+ * @param string $type
+ * @param bool $return
+ * @return bool|string html, or false if no data, true if printed
  */
 function tpl_button($type, $return = false) {
     $data = tpl_get_action($type);
@@ -537,6 +550,13 @@ function tpl_button($type, $return = false) {
  *
  * @author Adrian Lang <mail@adrianlang.de>
  * @see    tpl_get_action
+ *
+ * @param string $type    action command
+ * @param string $pre     prefix of link
+ * @param string $suf     suffix of link
+ * @param string $inner   innerHML of link
+ * @param bool   $return  if true it returns html, otherwise prints
+ * @return bool|string html or false if no data, true if printed
  */
 function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = false) {
     global $lang;
@@ -574,7 +594,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
             $linktarget, $pre.(($inner) ? $inner : $caption).$suf,
             'class="action '.$type.'" '.
                 $akey.$rel.
-                'title="'.hsc($caption).$addTitle.'"', 1
+                'title="'.hsc($caption).$addTitle.'"', true
         );
     }
     if($return) return $out;
@@ -602,6 +622,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Adrian Lang <mail@adrianlang.de>
+ *
  * @param string $type
  * @return array|bool|string
  */
@@ -750,7 +771,6 @@ function tpl_get_action($type) {
             break;
         default:
             return '[unknown %s type]';
-            break;
     }
     return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 }
@@ -759,21 +779,22 @@ function tpl_get_action($type) {
  * Wrapper around tpl_button() and tpl_actionlink()
  *
  * @author Anika Henke <anika@selfthinker.org>
- * @param
- * @param bool   $link link or form button?
- * @param bool   $wrapper HTML element wrapper
- * @param bool   $return return or print
- * @param string $pre prefix for links
- * @param string $suf suffix for links
- * @param string $inner inner HTML for links
+ *
+ * @param string        $type action command
+ * @param bool          $link link or form button?
+ * @param string|bool   $wrapper HTML element wrapper
+ * @param bool          $return return or print
+ * @param string        $pre prefix for links
+ * @param string        $suf suffix for links
+ * @param string        $inner inner HTML for links
  * @return bool|string
  */
 function tpl_action($type, $link = false, $wrapper = false, $return = false, $pre = '', $suf = '', $inner = '') {
     $out = '';
     if($link) {
-        $out .= tpl_actionlink($type, $pre, $suf, $inner, 1);
+        $out .= tpl_actionlink($type, $pre, $suf, $inner, true);
     } else {
-        $out .= tpl_button($type, 1);
+        $out .= tpl_button($type, true);
     }
     if($out && $wrapper) $out = "<$wrapper>$out</$wrapper>";
 
@@ -793,6 +814,7 @@ function tpl_action($type, $link = false, $wrapper = false, $return = false, $pr
  * autocompletion feature (MSIE and Firefox)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $ajax
  * @param bool $autocomplete
  * @return bool
@@ -809,9 +831,10 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
     if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
+    print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
+    print '<button type="submit" title="'.$lang['btn_search'].'">'.$lang['btn_search'].'</button>';
     if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
     print '</div></form>';
     return true;
@@ -821,6 +844,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
  * Print the breadcrumbs trace
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $sep Separator between entries
  * @return bool
  */
@@ -862,6 +886,7 @@ function tpl_breadcrumbs($sep = '•') {
  * @author Sean Coates <sean@caedmon.net>
  * @author <fredrik@averpil.com>
  * @todo   May behave strangely in RTL languages
+ *
  * @param string $sep Separator between entries
  * @return bool
  */
@@ -912,6 +937,7 @@ function tpl_youarehere($sep = ' » ') {
  * Could be enhanced with a profile link in future?
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @return bool
  */
 function tpl_userinfo() {
@@ -930,6 +956,7 @@ function tpl_userinfo() {
  * Print some info about the current page
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param bool $ret return content instead of printing it
  * @return bool|string
  */
@@ -993,11 +1020,14 @@ function tpl_pageinfo($ret = false) {
  * the given ID is used.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $id page id
  * @param bool   $ret return content instead of printing
  * @return bool|string
  */
 function tpl_pagetitle($id = null, $ret = false) {
+    global $ACT, $INPUT, $conf, $lang;
+
     if(is_null($id)) {
         global $ID;
         $id = $ID;
@@ -1005,14 +1035,60 @@ function tpl_pagetitle($id = null, $ret = false) {
 
     $name = $id;
     if(useHeading('navigation')) {
-        $title = p_get_first_heading($id);
-        if($title) $name = $title;
+        $first_heading = p_get_first_heading($id);
+        if($first_heading) $name = $first_heading;
+    }
+
+    // default page title is the page name, modify with the current action
+    switch ($ACT) {
+        // admin functions
+        case 'admin' :
+            $page_title = $lang['btn_admin'];
+            // try to get the plugin name
+            /** @var $plugin DokuWiki_Admin_Plugin */
+            if ($plugin = plugin_getRequestAdminPlugin()){
+                $plugin_title = $plugin->getMenuText($conf['lang']);
+                $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
+            }
+            break;
+
+        // user functions
+        case 'login' :
+        case 'profile' :
+        case 'register' :
+        case 'resendpwd' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+         // wiki functions
+        case 'search' :
+        case 'index' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+        // page functions
+        case 'edit' :
+            $page_title = "✎ ".$name;
+            break;
+
+        case 'revisions' :
+            $page_title = $name . ' - ' . $lang['btn_revs'];
+            break;
+
+        case 'backlink' :
+        case 'recent' :
+        case 'subscribe' :
+            $page_title = $name . ' - ' . $lang['btn_'.$ACT];
+            break;
+
+        default : // SHOW and anything else not included
+            $page_title = $name;
     }
 
     if($ret) {
-        return hsc($name);
+        return hsc($page_title);
     } else {
-        print hsc($name);
+        print hsc($page_title);
         return true;
     }
 }
@@ -1030,9 +1106,10 @@ function tpl_pagetitle($id = null, $ret = false) {
  * Only allowed in: detail.php
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param array  $tags tags to try
- * @param string $alt alternative output if no data was found
- * @param null   $src the image src, uses global $SRC if not given
+ *
+ * @param array|string $tags tag or array of tags to try
+ * @param string       $alt  alternative output if no data was found
+ * @param null|string  $src  the image src, uses global $SRC if not given
  * @return string
  */
 function tpl_img_getTag($tags, $alt = '', $src = null) {
@@ -1087,7 +1164,7 @@ function tpl_get_img_meta() {
 
     $config_files = getConfigFiles('mediameta');
     foreach ($config_files as $config_file) {
-        if(@file_exists($config_file)) {
+        if(file_exists($config_file)) {
             include($config_file);
         }
     }
@@ -1120,12 +1197,13 @@ function tpl_get_img_meta() {
  * @param $maxheight int - maximal height of the image
  * @param $link bool     - link to the orginal size?
  * @param $params array  - additional image attributes
- * @return mixed Result of TPL_IMG_DISPLAY
+ * @return bool Result of TPL_IMG_DISPLAY
  */
 function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     global $IMG;
     /** @var Input $INPUT */
     global $INPUT;
+    global $REV;
     $w = tpl_img_getTag('File.Width');
     $h = tpl_img_getTag('File.Height');
 
@@ -1150,8 +1228,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     }
 
     //prepare URLs
-    $url = ml($IMG, array('cache'=> $INPUT->str('cache')), true, '&');
-    $src = ml($IMG, array('cache'=> $INPUT->str('cache'), 'w'=> $w, 'h'=> $h), true, '&');
+    $url = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV), true, '&');
+    $src = ml($IMG, array('cache'=> $INPUT->str('cache'),'rev'=>$REV, 'w'=> $w, 'h'=> $h), true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');
@@ -1259,7 +1337,7 @@ function tpl_loadConfig() {
     $file = tpl_incdir().'/conf/default.php';
     $conf = array();
 
-    if(!@file_exists($file)) return false;
+    if(!file_exists($file)) return false;
 
     // load default config file
     include($file);
@@ -1272,21 +1350,37 @@ function tpl_loadConfig() {
  * tpl_getLang($id)
  *
  * use this function to access template language variables
+ *
+ * @param string $id key of language string
+ * @return string
  */
 function tpl_getLang($id) {
     static $lang = array();
 
     if(count($lang) === 0) {
-        $path = tpl_incdir().'lang/';
+        global $conf, $config_cascade; // definitely don't invoke "global $lang"
+
+        $path = tpl_incdir() . 'lang/';
 
         $lang = array();
 
-        global $conf; // definitely don't invoke "global $lang"
         // don't include once
-        @include($path.'en/lang.php');
-        if($conf['lang'] != 'en') @include($path.$conf['lang'].'/lang.php');
-    }
+        @include($path . 'en/lang.php');
+        foreach($config_cascade['lang']['template'] as $config_file) {
+            if(file_exists($config_file . $conf['template'] . '/en/lang.php')) {
+                include($config_file . $conf['template'] . '/en/lang.php');
+            }
+        }
 
+        if($conf['lang'] != 'en') {
+            @include($path . $conf['lang'] . '/lang.php');
+            foreach($config_cascade['lang']['template'] as $config_file) {
+                if(file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
+                    include($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php');
+                }
+            }
+        }
+    }
     return $lang[$id];
 }
 
@@ -1303,14 +1397,17 @@ function tpl_locale_xhtml($id) {
 
 /**
  * Prepends appropriate path for a language dependent filename
+ *
+ * @param string $id id of localized text
+ * @return string wiki text
  */
 function tpl_localeFN($id) {
     $path = tpl_incdir().'lang/';
     global $conf;
-    $file = DOKU_CONF.'/template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
-    if (!@file_exists($file)){
+    $file = DOKU_CONF.'template_lang/'.$conf['template'].'/'.$conf['lang'].'/'.$id.'.txt';
+    if (!file_exists($file)){
         $file = $path.$conf['lang'].'/'.$id.'.txt';
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             //fall back to english
             $file = $path.'en/'.$id.'.txt';
         }
@@ -1329,6 +1426,8 @@ function tpl_localeFN($id) {
  *
  * @triggers MEDIAMANAGER_CONTENT_OUTPUT
  * @param bool $fromajax - set true when calling this function via ajax
+ * @param string $sort
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function tpl_mediaContent($fromajax = false, $sort='natural') {
@@ -1503,6 +1602,9 @@ function tpl_mediaTree() {
  * Note: this will not use any pretty URLs
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $empty empty option label
+ * @param string $button submit button label
  */
 function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $ID;
@@ -1510,6 +1612,12 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     global $lang;
     /** @var Input $INPUT */
     global $INPUT;
+
+    $action_structure = array(
+        'page_tools' => array('edit', 'revert', 'revisions', 'backlink', 'subscribe'),
+        'site_tools' => array('recent', 'media', 'index'),
+        'user_tools' => array('login', 'register', 'profile', 'admin'),
+    );
 
     echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
@@ -1522,50 +1630,17 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
 
-    echo '<optgroup label="'.$lang['page_tools'].'">';
-    $act = tpl_get_action('edit');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revert');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revisions');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('backlink');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('subscribe');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['site_tools'].'">';
-    $act = tpl_get_action('recent');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('media');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('index');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['user_tools'].'">';
-    $act = tpl_get_action('login');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('register');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('profile');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('admin');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
+    foreach($action_structure as $tools => $actions) {
+        echo '<optgroup label="'.$lang[$tools].'">';
+        foreach($actions as $action) {
+            $act = tpl_get_action($action);
+            if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+        }
+        echo '</optgroup>';
+    }
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" />';
+    echo '<button type="submit">'.$button.'</button>';
     echo '</div>';
     echo '</form>';
 }
@@ -1616,6 +1691,11 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  *
  * This function is useful to populate sidebars or similar features in a
  * template
+ *
+ * @param string $pageid
+ * @param bool $print
+ * @param bool $propagate
+ * @return bool|null|string
  */
 function tpl_include_page($pageid, $print = true, $propagate = false) {
     if (!$pageid) return false;
@@ -1724,10 +1804,11 @@ function tpl_flush() {
  * If a given location starts with a colon it is assumed to be a media
  * file, otherwise it is assumed to be relative to the current template
  *
- * @param  array $search       locations to look at
- * @param  bool  $abs           if to use absolute URL
- * @param  array &$imginfo   filled with getimagesize()
+ * @param  string[] $search       locations to look at
+ * @param  bool     $abs           if to use absolute URL
+ * @param  array   &$imginfo   filled with getimagesize()
  * @return string
+ *
  * @author Andreas  Gohr <andi@splitbrain.org>
  */
 function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
@@ -1778,6 +1859,8 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null) {
  *
  * @author Anika Henke <anika@selfthinker.org>
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file
  */
 function tpl_includeFile($file) {
     global $config_cascade;
@@ -1803,6 +1886,7 @@ function tpl_includeFile($file) {
  * Returns <link> tag for various icon types (favicon|mobile|generic)
  *
  * @author Anika Henke <anika@selfthinker.org>
+ *
  * @param  array $types - list of icon types to display (favicon|mobile|generic)
  * @return string
  */
@@ -1878,6 +1962,8 @@ function tpl_media() {
  * Return useful layout classes
  *
  * @author Anika Henke <anika@selfthinker.org>
+ *
+ * @return string
  */
 function tpl_classes() {
     global $ACT, $conf, $ID, $INFO;

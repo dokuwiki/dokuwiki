@@ -8,6 +8,7 @@
     require_once(DOKU_INC.'inc/init.php');
 
     global $INPUT;
+    global $lang;
     // handle passed message
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);

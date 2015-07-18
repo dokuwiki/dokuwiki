@@ -5,5 +5,3 @@ Na tej stronie można zmienić ustawienia tej instalacji DokuWiki. W celu uzyska
 Ustawienia w kolorze jasnoczerwonym są chronione i nie mogą być zmienioną z użyciem tej wtyczki. Ustawienia w kolorze niebieskim mają domyślne wartości. Ustawienia w kolorze białym są specyficzne dla tej instalacji. Ustawienia w kolorach niebieskim i białym mogą być zmienione.
 
 W celu zapisania nowej konfiguracji naciśnij **zapisz** przed opuszczeniem tej strony.
-
-

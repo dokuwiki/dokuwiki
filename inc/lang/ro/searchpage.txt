@@ -1,5 +1,5 @@
 ====== Căutare ======
 
-Rezultatele căutării sunt afișate mai jos. Dacă nu ai găsit ce ai căutat, poți crea o pagină nouă prin folosirea butonului ''Editează această pagină''.
+Rezultatele căutării sunt afișate mai jos. @CREATEPAGEINFO@
 
 ===== Rezultate =====

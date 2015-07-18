@@ -36,6 +36,7 @@ header('X-UA-Compatible: IE=edge,chrome=1');
 
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
+                <?php html_msgarea() ?>
 
                 <?php if(!$ERROR): ?>
                     <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG)); ?></span></div>
@@ -49,13 +50,27 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                     if($ERROR):
                         echo '<h1>'.$ERROR.'</h1>';
                     else: ?>
-
+                        <?php if($REV) echo p_locale_xhtml('showrev');?>
                         <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
 
                         <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>
 
                         <div class="img_detail">
                             <?php tpl_img_meta(); ?>
+                            <dl>
+                            <?php
+                            echo '<dt>'.$lang['reference'].':</dt>';
+                            $media_usage = ft_mediause($IMG,true);
+                            if(count($media_usage) > 0){
+                                foreach($media_usage as $path){
+                                    echo '<dd>'.html_wikilink($path).'</dd>';
+                                }
+                            }else{
+                                echo '<dd>'.$lang['nothingfound'].'</dd>';
+                            }
+                            ?>
+                            </dl>
+                            <p><?php echo $lang['media_acl_warning']; ?></p>
                         </div>
                         <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
                     <?php endif; ?>
@@ -82,8 +97,8 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                                 $data = array(
                                     'view' => 'detail',
                                     'items' => array(
-                                        'mediaManager' => tpl_action('mediaManager', 1, 'li', 1, '<span>', '</span>'),
-                                        'img_backto' =>   tpl_action('img_backto',   1, 'li', 1, '<span>', '</span>'),
+                                        'mediaManager' => tpl_action('mediaManager', true, 'li', true, '<span>', '</span>'),
+                                        'img_backto' =>   tpl_action('img_backto',   true, 'li', true, '<span>', '</span>'),
                                     )
                                 );
 

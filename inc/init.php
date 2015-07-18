@@ -16,7 +16,7 @@ $config_cascade = array();
 
 // if available load a preload config file
 $preload = fullpath(dirname(__FILE__)).'/preload.php';
-if (@file_exists($preload)) include($preload);
+if (file_exists($preload)) include($preload);
 
 // define the include path
 if(!defined('DOKU_INC')) define('DOKU_INC',fullpath(dirname(__FILE__).'/../').'/');
@@ -28,7 +28,7 @@ if(!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 
 // check for error reporting override or set error reporting to sane values
-if (!defined('DOKU_E_LEVEL') && @file_exists(DOKU_CONF.'report_e_all')) {
+if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
@@ -65,7 +65,7 @@ $conf = array();
 foreach (array('default','local','protected') as $config_group) {
     if (empty($config_cascade['main'][$config_group])) continue;
     foreach ($config_cascade['main'][$config_group] as $config_file) {
-        if (@file_exists($config_file)) {
+        if (file_exists($config_file)) {
             include($config_file);
         }
     }
@@ -79,7 +79,7 @@ $license = array();
 foreach (array('default','local') as $config_group) {
     if (empty($config_cascade['license'][$config_group])) continue;
     foreach ($config_cascade['license'][$config_group] as $config_file) {
-        if(@file_exists($config_file)){
+        if(file_exists($config_file)){
             include($config_file);
         }
     }
@@ -178,14 +178,6 @@ $_REQUEST = array_merge($_GET,$_POST);
 // we don't want a purge URL to be digged
 if(isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
-// disable gzip if not available
-if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
-    $conf['compression'] = 'gz';
-}
-if($conf['compression'] == 'gz' && !function_exists('gzopen')){
-    $conf['compression'] = 0;
-}
-
 // precalculate file creation modes
 init_creationmodes();
 
@@ -199,7 +191,16 @@ global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
 
 // load libraries
+require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
+
+// disable gzip if not available
+if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
+    $conf['compression'] = 'gz';
+}
+if($conf['compression'] == 'gz' && !function_exists('gzopen')){
+    $conf['compression'] = 0;
+}
 
 // input handle class
 global $INPUT;
@@ -259,16 +260,32 @@ function init_paths(){
     $conf['media_changelog'] = $conf['metadir'].'/_media.changes';
 }
 
+/**
+ * Load the language strings
+ *
+ * @param string $langCode language code, as passed by event handler
+ */
 function init_lang($langCode) {
     //prepare language array
-    global $lang;
+    global $lang, $config_cascade;
     $lang = array();
 
     //load the language files
     require(DOKU_INC.'inc/lang/en/lang.php');
+    foreach ($config_cascade['lang']['core'] as $config_file) {
+        if (file_exists($config_file . 'en/lang.php')) {
+            include($config_file . 'en/lang.php');
+        }
+    }
+
     if ($langCode && $langCode != 'en') {
         if (file_exists(DOKU_INC."inc/lang/$langCode/lang.php")) {
             require(DOKU_INC."inc/lang/$langCode/lang.php");
+        }
+        foreach ($config_cascade['lang']['core'] as $config_file) {
+            if (file_exists($config_file . "$langCode/lang.php")) {
+                include($config_file . "$langCode/lang.php");
+            }
         }
     }
 }
@@ -282,7 +299,7 @@ function init_files(){
     $files = array($conf['indexdir'].'/page.idx');
 
     foreach($files as $file){
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             $fh = @fopen($file,'a');
             if($fh){
                 fclose($fh);
@@ -296,7 +313,7 @@ function init_files(){
     # create title index (needs to have same length as page.idx)
     /*
     $file = $conf['indexdir'].'/title.idx';
-    if(!@file_exists($file)){
+    if(!file_exists($file)){
         $pages = file($conf['indexdir'].'/page.idx');
         $pages = count($pages);
         $fh = @fopen($file,'a');
@@ -323,9 +340,9 @@ function init_files(){
 function init_path($path){
     // check existence
     $p = fullpath($path);
-    if(!@file_exists($p)){
+    if(!file_exists($p)){
         $p = fullpath(DOKU_INC.$path);
-        if(!@file_exists($p)){
+        if(!file_exists($p)){
             return '';
         }
     }
@@ -336,7 +353,7 @@ function init_path($path){
     }
 
     // check accessability (execute bit) for directories
-    if(@is_dir($p) && !@file_exists("$p/.")){
+    if(@is_dir($p) && !file_exists("$p/.")){
         return '';
     }
 
@@ -413,7 +430,7 @@ function getBaseURL($abs=null){
     //if canonical url enabled always return absolute
     if(is_null($abs)) $abs = $conf['canonical'];
 
-    if($conf['basedir']){
+    if(!empty($conf['basedir'])){
         $dir = $conf['basedir'];
     }elseif(substr($_SERVER['SCRIPT_NAME'],-4) == '.php'){
         $dir = dirname($_SERVER['SCRIPT_NAME']);
@@ -440,7 +457,7 @@ function getBaseURL($abs=null){
     if(!$abs) return $dir;
 
     //use config option if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
-    if($conf['baseurl']) return rtrim($conf['baseurl'],'/').$dir;
+    if(!empty($conf['baseurl'])) return rtrim($conf['baseurl'],'/').$dir;
 
     //split hostheader into host and port
     if(isset($_SERVER['HTTP_HOST'])){
@@ -454,10 +471,6 @@ function getBaseURL($abs=null){
     }else{
         $host = php_uname('n');
         $port = '';
-    }
-
-    if(!$port && isset($_SERVER['SERVER_PORT'])) {
-        $port = $_SERVER['SERVER_PORT'];
     }
 
     if(is_null($port)){
@@ -490,6 +503,14 @@ function getBaseURL($abs=null){
  * @returns bool true when SSL is active
  */
 function is_ssl(){
+    // check if we are behind a reverse proxy
+    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
     if (!isset($_SERVER['HTTPS']) ||
         preg_match('/^(|off|false|disabled)$/i',$_SERVER['HTTPS'])){
         return false;
@@ -515,7 +536,7 @@ function nice_die($msg){
 </body>
 </html>
 EOT;
-    exit;
+    exit(1);
 }
 
 /**
@@ -573,7 +594,7 @@ function fullpath($path,$exists=false){
     $finalpath = $root.implode('/', $newpath);
 
     // check for existence when needed (except when unit testing)
-    if($exists && !defined('DOKU_UNITTEST') && !@file_exists($finalpath)) {
+    if($exists && !defined('DOKU_UNITTEST') && !file_exists($finalpath)) {
         return false;
     }
     return $finalpath;

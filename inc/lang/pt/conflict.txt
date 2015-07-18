@@ -1,9 +1,5 @@
-====== Conflito de Edição ======
+====== Uma versão mais recente existe ======
 
-**Atenção**: Existe uma versão mais recente do que a versão usada no começo da sua edição. Isto acontece quando outra pessoa editou este documento entretanto e já gravou as alterações efectuadas.
+Existe uma versão mais recente do documento editado. Isso acontece quando um outro usuário alterou o documento enquanto você estava editando.
 
-Por favor, examine todas as diferenças mostradas abaixo com atenção, e decida qual a versão que deverá ser tornada a mais actual:   * Se escolher <Gravar> a sua versão será sobreposta à versão editada pela outra pessoa, que será perdida.   * Se escolher <Cancelar> a versão editada pela outra pessoa será a versão final, e a sua será perdida.
-
-**Nota**: Sem que efectue a consolidação das alterações de ambas as revisões ao documento irá sempre perder uma das versões.
-
-----
+Examine cuidadosamente as diferenças mostradas abaixo, em seguida, decida qual versão manter. Se você escolher ''salvar '', sua versão será salva. Clique ''cancelar '' para manter a versão atual.

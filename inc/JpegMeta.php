@@ -42,6 +42,7 @@
 class JpegMeta {
     var $_fileName;
     var $_fp = null;
+    var $_fpout = null;
     var $_type = 'unknown';
 
     var $_markers;
@@ -53,7 +54,7 @@ class JpegMeta {
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      */
-    function JpegMeta($fileName) {
+    function __construct($fileName) {
 
         $this->_fileName = $fileName;
 
@@ -132,6 +133,9 @@ class JpegMeta {
      * through one function
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array|string $fields field name or array with field names
+     * @return bool|string
      */
     function getField($fields) {
         if(!is_array($fields)) $fields = array($fields);
@@ -177,6 +181,10 @@ class JpegMeta {
      * through one function
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $field field name
+     * @param string $value
+     * @return bool success or fail
      */
     function setField($field, $value) {
         if(strtolower(substr($field,0,5)) == 'iptc.'){
@@ -193,6 +201,9 @@ class JpegMeta {
      * through one function
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $field field name
+     * @return bool
      */
     function deleteField($field) {
         if(strtolower(substr($field,0,5)) == 'iptc.'){
@@ -208,6 +219,9 @@ class JpegMeta {
      * Return a date field
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $field
+     * @return false|string
      */
     function getDateField($field) {
         if (!isset($this->_info['dates'])) {
@@ -225,6 +239,9 @@ class JpegMeta {
      * Return a file info field
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $field field name
+     * @return false|string
      */
     function getFileField($field) {
         if (!isset($this->_info['file'])) {
@@ -243,6 +260,8 @@ class JpegMeta {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @todo   handle makernotes
+     *
+     * @return false|string
      */
     function getCamera(){
         $make  = $this->getField(array('Exif.Make','Exif.TIFFMake'));
@@ -256,6 +275,8 @@ class JpegMeta {
      * Return shutter speed as a ratio
      *
      * @author Joe Lapp <joe.lapp@pobox.com>
+     *
+     * @return string
      */
     function getShutterSpeed() {
         if (!isset($this->_info['exif'])) {
@@ -274,6 +295,9 @@ class JpegMeta {
      * Return an EXIF field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @return false|string
      */
     function getExifField($field) {
         if (!isset($this->_info['exif'])) {
@@ -295,6 +319,9 @@ class JpegMeta {
      * Return an XMP field
      *
      * @author Hakan Sandell <hakan.sandell@mydata.se>
+     *
+     * @param string $field field name
+     * @return false|string
      */
     function getXmpField($field) {
         if (!isset($this->_info['xmp'])) {
@@ -316,6 +343,9 @@ class JpegMeta {
      * Return an Adobe Field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @return false|string
      */
     function getAdobeField($field) {
         if (!isset($this->_info['adobe'])) {
@@ -337,6 +367,9 @@ class JpegMeta {
      * Return an IPTC field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @return false|string
      */
     function getIPTCField($field) {
         if (!isset($this->_info['iptc'])) {
@@ -359,6 +392,10 @@ class JpegMeta {
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      * @author Joe Lapp <joe.lapp@pobox.com>
+     *
+     * @param string $field field name
+     * @param string $value
+     * @return bool
      */
     function setExifField($field, $value) {
         if (!isset($this->_info['exif'])) {
@@ -389,6 +426,10 @@ class JpegMeta {
      * Set an Adobe Field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @param string $value
+     * @return bool
      */
     function setAdobeField($field, $value) {
         if (!isset($this->_info['adobe'])) {
@@ -413,6 +454,10 @@ class JpegMeta {
      * dimensions
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param int $maxwidth
+     * @param int $maxheight
+     * @return float|int
      */
     function getResizeRatio($maxwidth,$maxheight=0){
         if(!$maxheight) $maxheight = $maxwidth;
@@ -442,6 +487,10 @@ class JpegMeta {
      * Set an IPTC field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @param string $value
+     * @return bool
      */
     function setIPTCField($field, $value) {
         if (!isset($this->_info['iptc'])) {
@@ -465,6 +514,9 @@ class JpegMeta {
      * Delete an EXIF field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @return bool
      */
     function deleteExifField($field) {
         if (!isset($this->_info['exif'])) {
@@ -486,6 +538,9 @@ class JpegMeta {
      * Delete an Adobe field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @return bool
      */
     function deleteAdobeField($field) {
         if (!isset($this->_info['adobe'])) {
@@ -507,6 +562,9 @@ class JpegMeta {
      * Delete an IPTC field
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $field field name
+     * @return bool
      */
     function deleteIPTCField($field) {
         if (!isset($this->_info['iptc'])) {
@@ -527,12 +585,12 @@ class JpegMeta {
     /**
      * Get the image's title, tries various fields
      *
-     * @param int $max  maximum number chars (keeps words)
+     * @param int $max maximum number chars (keeps words)
+     * @return false|string
+     *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function getTitle($max=80){
-        $cap = '';
-
         // try various fields
         $cap = $this->getField(array('Iptc.Headline',
                     'Iptc.Caption',
@@ -555,11 +613,14 @@ class JpegMeta {
      * Gather various date fields
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @return array|bool
      */
     function getDates() {
         $this->_parseAll();
         if ($this->_markers == null) {
             if (@isset($this->_info['file']['UnixTime'])) {
+                $dates = array();
                 $dates['FileModified'] = $this->_info['file']['UnixTime'];
                 $dates['Time'] = $this->_info['file']['UnixTime'];
                 $dates['TimeSource'] = 'FileModified';
@@ -690,6 +751,8 @@ class JpegMeta {
      * Get the image width, tries various fields
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @return false|string
      */
     function getWidth() {
         if (!isset($this->_info['sof'])) {
@@ -719,6 +782,8 @@ class JpegMeta {
      * Get the image height, tries various fields
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @return false|string
      */
     function getHeight() {
         if (!isset($this->_info['sof'])) {
@@ -748,6 +813,8 @@ class JpegMeta {
      * Get an dimension string for use in img tag
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @return false|string
      */
     function getDimStr() {
         if ($this->_markers == null) {
@@ -764,6 +831,9 @@ class JpegMeta {
      * Checks for an embedded thumbnail
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $which possible values: 'any', 'exif' or 'adobe'
+     * @return false|string
      */
     function hasThumbnail($which = 'any') {
         if (($which == 'any') || ($which == 'exif')) {
@@ -805,6 +875,9 @@ class JpegMeta {
      * Send embedded thumbnail to browser
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param string $which possible values: 'any', 'exif' or 'adobe'
+     * @return bool
      */
     function sendThumbnail($which = 'any') {
         $data = null;
@@ -855,12 +928,15 @@ class JpegMeta {
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $fileName file name or empty string for a random name
+     * @return bool
      */
     function save($fileName = "") {
         if ($fileName == "") {
             $tmpName = tempnam(dirname($this->_fileName),'_metatemp_');
             $this->_writeJPEG($tmpName);
-            if (@file_exists($tmpName)) {
+            if (file_exists($tmpName)) {
                 return io_rename($tmpName, $this->_fileName);
             }
         } else {
@@ -1030,6 +1106,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param string $outputName
+     */
     function _writeJPEG($outputName) {
         $this->_parseAll();
 
@@ -1162,6 +1242,12 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $marker
+     * @param integer $length
+     * @param integer $origLength
+     */
     function _writeJPEGMarker($marker, $length, &$data, $origLength) {
         if ($length <= 0) {
             return false;
@@ -1334,7 +1420,6 @@ class JpegMeta {
             return false;
         }
 
-        $pos = 0;
         $this->_info['jfif'] = array();
 
         $vmaj = $this->_getByte($data, 5);
@@ -1420,7 +1505,6 @@ class JpegMeta {
                 break;
             default:
                 return false;
-                break;
         }
 
         $this->_info['sof']['Format']          = $format;
@@ -1491,6 +1575,7 @@ class JpegMeta {
      * Parses XMP nodes by recursion
      *
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
+     * @param integer $count
      */
     function _parseXmpNode($values, &$i, &$meta, $count) {
         if ($values[$i]['type'] == 'close') return;
@@ -1594,6 +1679,12 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $base
+     * @param boolean $isBigEndian
+     * @param string $mode
+     */
     function _readIFD($data, $base, $offset, $isBigEndian, $mode) {
         $EXIFTags = $this->_exifTagNames($mode);
 
@@ -1849,6 +1940,12 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $offsetBase
+     * @param boolean $isBigEndian
+     * @param boolean $hasNext
+     */
     function _writeIFD(&$data, $pos, $offsetBase, &$entries, $isBigEndian, $hasNext) {
         $tiffData = null;
         $tiffDataOffsetPos = -1;
@@ -1905,6 +2002,11 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param boolean $isBigEndian
+     * @param string $mode
+     */
     function & _getIFDEntries($isBigEndian, $mode) {
         $EXIFNames = $this->_exifTagNames($mode);
         $EXIFTags = $this->_exifNameTags($mode);
@@ -2413,6 +2515,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _write8BIM(&$data, $pos, $type, $header, &$value) {
         $signature = "8BIM";
 
@@ -2473,6 +2579,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _writeIPTCEntry(&$data, $pos, $type, &$value) {
         $pos = $this->_putShort($data, $pos, 0x1C02);
         $pos = $this->_putByte($data, $pos, $type);
@@ -2833,11 +2943,19 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _getByte(&$data, $pos) {
         return ord($data{$pos});
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _putByte(&$data, $pos, $val) {
         $val = intval($val);
 
@@ -2873,6 +2991,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _getLong(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
             return (ord($data{$pos}) << 24)
@@ -2888,6 +3010,10 @@ class JpegMeta {
     }
 
     /*************************************************************/
+
+    /**
+     * @param integer $pos
+     */
     function _putLong(&$data, $pos, $val, $bigEndian = true) {
         $val = intval($val);
 

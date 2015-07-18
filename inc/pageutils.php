@@ -20,7 +20,7 @@
  *
  * @param string $param  the $_REQUEST variable name, default 'id'
  * @param bool   $clean  if true, ID is cleaned
- * @return mixed|string
+ * @return string
  */
 function getID($param='id',$clean=true){
     /** @var Input $INPUT */
@@ -97,6 +97,7 @@ function getID($param='id',$clean=true){
  * converted to unaccented ones
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param  string  $raw_id    The pageid to clean
  * @param  boolean $ascii     Force ASCII
  * @return string cleaned id
@@ -152,7 +153,7 @@ function cleanID($raw_id,$ascii=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id
- * @return string|bool the namespace part or false if the given ID has no namespace (root)
+ * @return string|false the namespace part or false if the given ID has no namespace (root)
  */
 function getNS($id){
     $pos = strrpos((string)$id,':');
@@ -242,7 +243,6 @@ function sectionID($title,&$check) {
     return $title;
 }
 
-
 /**
  * Wiki page existence check
  *
@@ -250,13 +250,20 @@ function sectionID($title,&$check) {
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  *
- * @param string     $id     page id
- * @param string|int $rev    empty or revision timestamp
- * @param bool       $clean  flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param string $id page id
+ * @param string|int $rev empty or revision timestamp
+ * @param bool $clean flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param bool $date_at
  * @return bool exists?
  */
-function page_exists($id,$rev='',$clean=true) {
-    return @file_exists(wikiFN($id,$rev,$clean));
+function page_exists($id,$rev='',$clean=true, $date_at=false) {
+    if($rev !== '' && $date_at) {
+        $pagelog = new PageChangeLog($id);
+        $pagelog_rev = $pagelog->getLastRevisionAt($rev);
+        if($pagelog_rev !== false)
+            $rev = $pagelog_rev;
+    }
+    return file_exists(wikiFN($id,$rev,$clean));
 }
 
 /**
@@ -265,7 +272,7 @@ function page_exists($id,$rev='',$clean=true) {
  * The filename is URL encoded to protect Unicode chars
  *
  * @param  $raw_id  string   id of wikipage
- * @param  $rev     string   page revision, empty string for current
+ * @param  $rev     int|string   page revision, empty string for current
  * @param  $clean   bool     flag indicating that $raw_id should be cleaned.  Only set to false
  *                           when $id is guaranteed to have been cleaned already.
  * @return string full path
@@ -292,9 +299,9 @@ function wikiFN($raw_id,$rev='',$clean=true){
         $fn = $conf['olddir'].'/'.utf8_encodeFN($id).'.'.$rev.'.txt';
         if($conf['compression']){
             //test for extensions here, we want to read both compressions
-            if (@file_exists($fn . '.gz')){
+            if (file_exists($fn . '.gz')){
                 $fn .= '.gz';
-            }else if(@file_exists($fn . '.bz2')){
+            }else if(file_exists($fn . '.bz2')){
                 $fn .= '.bz2';
             }else{
                 //file doesnt exist yet, so we take the configured extension
@@ -411,9 +418,9 @@ function mediaFN($id, $rev=''){
 function localeFN($id,$ext='txt'){
     global $conf;
     $file = DOKU_CONF.'lang/'.$conf['lang'].'/'.$id.'.'.$ext;
-    if(!@file_exists($file)){
+    if(!file_exists($file)){
         $file = DOKU_INC.'inc/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             //fall back to english
             $file = DOKU_INC.'inc/lang/en/'.$id.'.'.$ext;
         }
@@ -435,7 +442,7 @@ function localeFN($id,$ext='txt'){
  * @param string $ns     namespace which is context of id
  * @param string $id     relative id
  * @param bool   $clean  flag indicating that id should be cleaned
- * @return mixed|string
+ * @return string
  */
 function resolve_id($ns,$id,$clean=true){
     global $conf;
@@ -482,14 +489,24 @@ function resolve_id($ns,$id,$clean=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative media id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative media id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param int|string $rev
+ * @param bool $date_at
  */
-function resolve_mediaid($ns,&$page,&$exists){
+function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
     $page   = resolve_id($ns,$page);
-    $file   = mediaFN($page);
-    $exists = @file_exists($file);
+    if($rev !== '' &&  $date_at){
+        $medialog = new MediaChangeLog($page);
+        $medialog_rev = $medialog->getLastRevisionAt($rev);
+        if($medialog_rev !== false) {
+            $rev = $medialog_rev;
+        }
+    }
+
+    $file   = mediaFN($page,$rev);
+    $exists = file_exists($file);
 }
 
 /**
@@ -497,11 +514,13 @@ function resolve_mediaid($ns,&$page,&$exists){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative page id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative page id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param string $rev
+ * @param bool $date_at
  */
-function resolve_pageid($ns,&$page,&$exists){
+function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     global $conf;
     global $ID;
     $exists = false;
@@ -521,20 +540,26 @@ function resolve_pageid($ns,&$page,&$exists){
     $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
 
     // get filename (calls clean itself)
-    $file = wikiFN($page);
+    if($rev !== '' && $date_at) {
+        $pagelog = new PageChangeLog($page);
+        $pagelog_rev = $pagelog->getLastRevisionAt($rev);
+        if($pagelog_rev !== false)//something found
+           $rev  = $pagelog_rev;
+    }
+    $file = wikiFN($page,$rev);
 
     // if ends with colon or slash we have a namespace link
     if(in_array(substr($page,-1), array(':', ';')) ||
        ($conf['useslash'] && substr($page,-1) == '/')){
-        if(page_exists($page.$conf['start'])){
+        if(page_exists($page.$conf['start'],$rev,true,$date_at)){
             // start page inside namespace
             $page = $page.$conf['start'];
             $exists = true;
-        }elseif(page_exists($page.noNS(cleanID($page)))){
+        }elseif(page_exists($page.noNS(cleanID($page)),$rev,true,$date_at)){
             // page named like the NS inside the NS
             $page = $page.noNS(cleanID($page));
             $exists = true;
-        }elseif(page_exists($page)){
+        }elseif(page_exists($page,$rev,true,$date_at)){
             // page like namespace exists
             $page = $page;
             $exists = true;
@@ -544,14 +569,14 @@ function resolve_pageid($ns,&$page,&$exists){
         }
     }else{
         //check alternative plural/nonplural form
-        if(!@file_exists($file)){
+        if(!file_exists($file)){
             if( $conf['autoplural'] ){
                 if(substr($page,-1) == 's'){
                     $try = substr($page,0,-1);
                 }else{
                     $try = $page.'s';
                 }
-                if(page_exists($try)){
+                if(page_exists($try,$rev,true,$date_at)){
                     $page   = $try;
                     $exists = true;
                 }
@@ -718,6 +743,7 @@ function utf8_decodeFN($file){
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
+ *
  * @param  string $page the pagename you're looking for
  * @return string|false the full page id of the found page, false if any
  */

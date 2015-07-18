@@ -218,7 +218,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 $date = $ditem['date'];
             } elseif ($ditem['media']) {
                 $date = @filemtime(mediaFN($id));
-            } elseif (@file_exists(wikiFN($id))) {
+            } elseif (file_exists(wikiFN($id))) {
                 $date = @filemtime(wikiFN($id));
             } elseif($meta['date']['modified']) {
                 $date = $meta['date']['modified'];
@@ -306,7 +306,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                         $src_r = '';
                         $src_l = '';
 
-                        if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)), 300)) {
+                        if($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)), 300)) {
                             $more  = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
                             $src_r = ml($id, $more, true, '&amp;', true);
                         }
@@ -355,7 +355,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                     break;
                 case 'html':
                     if($ditem['media']) {
-                        if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
+                        if($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
                             $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
                             $src     = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';
@@ -386,7 +386,7 @@ function rss_buildItems(&$rss, &$data, $opt) {
                 case 'abstract':
                 default:
                     if($ditem['media']) {
-                        if($size = media_image_preview_size($id, false, new JpegMeta(mediaFN($id)))) {
+                        if($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
                             $more    = 'w='.$size[0].'&h='.$size[1].'&t='.@filemtime(mediaFN($id));
                             $src     = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="'.$src.'" alt="'.$id.'" />';

@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author mkucera66@seznam.cz
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
 $lang['server']                = 'Váš server LDAP. Buď jméno hosta (<code>localhost</code>) nebo plně kvalifikovaný popis URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Port serveru LDAP. Pokud není, bude využito URL výše';
@@ -14,9 +15,18 @@ $lang['groupfilter']           = 'Filter LDAPu pro vyhledávání uživatelskýc
 $lang['version']               = 'Verze použitého protokolu. Můžete potřebovat jej nastavit na <code>3</code>';
 $lang['starttls']              = 'Využít spojení TLS?';
 $lang['referrals']             = 'Přeposílat odkazy?';
+$lang['deref']                 = 'Jak rozlišovat aliasy?';
 $lang['binddn']                = 'Doménový název DN volitelně připojeného uživatele, pokus anonymní připojení není vyhovující, tj.  <code>cn=admin, dc=muj, dc=domov</code>';
 $lang['bindpw']                = 'Heslo uživatele výše';
 $lang['userscope']             = 'Omezení rozsahu vyhledávání uživatele';
 $lang['groupscope']            = 'Omezení rozsahu vyhledávání skupiny';
 $lang['groupkey']              = 'Atribut šlenství uživatele ve skupinách (namísto standardních AD skupin), tj. skupina z oddělení nebo telefonní číslo';
+$lang['modPass']               = 'Může být LDAP heslo změněno přes dokuwiki?';
 $lang['debug']                 = 'Zobrazit dodatečné debugovací informace';
+$lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
+$lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
+$lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
+$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
+$lang['referrals_o_-1']        = 'použít výchozí';
+$lang['referrals_o_0']         = 'nenásledovat odkazy';
+$lang['referrals_o_1']         = 'následovat odkazy';

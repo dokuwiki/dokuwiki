@@ -6,6 +6,12 @@
  * @author     Harry Fuecks <hfuecks@gmail.com>
  */
 
+/*
+ * line prefix used to negate single value config items
+ * (scheme.conf & stopwords.conf), e.g.
+ * !gopher
+ */
+const DOKU_CONF_NEGATION = '!';
 
 /**
  * Returns the (known) extension and mimetype of a given filename
@@ -14,6 +20,10 @@
  * are returned.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file file name
+ * @param bool   $knownonly
+ * @return array with extension, mimetype and if it should be downloaded
  */
 function mimetype($file, $knownonly=true){
     $mtypes = getMimeTypes();     // known mimetypes
@@ -45,6 +55,7 @@ function getMimeTypes() {
     static $mime = null;
     if ( !$mime ) {
         $mime = retrieveConfig('mime','confToHash');
+        $mime = array_filter($mime);
     }
     return $mime;
 }
@@ -58,6 +69,7 @@ function getAcronyms() {
     static $acronyms = null;
     if ( !$acronyms ) {
         $acronyms = retrieveConfig('acronyms','confToHash');
+        $acronyms = array_filter($acronyms, 'strlen');
     }
     return $acronyms;
 }
@@ -71,6 +83,7 @@ function getSmileys() {
     static $smileys = null;
     if ( !$smileys ) {
         $smileys = retrieveConfig('smileys','confToHash');
+        $smileys = array_filter($smileys, 'strlen');
     }
     return $smileys;
 }
@@ -84,6 +97,7 @@ function getEntities() {
     static $entities = null;
     if ( !$entities ) {
         $entities = retrieveConfig('entities','confToHash');
+        $entities = array_filter($entities, 'strlen');
     }
     return $entities;
 }
@@ -97,9 +111,11 @@ function getInterwiki() {
     static $wikis = null;
     if ( !$wikis ) {
         $wikis = retrieveConfig('interwiki','confToHash',array(true));
+        $wikis = array_filter($wikis, 'strlen');
+
+        //add sepecial case 'this'
+        $wikis['this'] = DOKU_URL.'{NAME}';
     }
-    //add sepecial case 'this'
-    $wikis['this'] = DOKU_URL.'{NAME}';
     return $wikis;
 }
 
@@ -110,7 +126,7 @@ function getInterwiki() {
 function getWordblocks() {
     static $wordblocks = null;
     if ( !$wordblocks ) {
-        $wordblocks = retrieveConfig('wordblock','file');
+        $wordblocks = retrieveConfig('wordblock','file',null,'array_merge_with_removal');
     }
     return $wordblocks;
 }
@@ -123,11 +139,11 @@ function getWordblocks() {
 function getSchemes() {
     static $schemes = null;
     if ( !$schemes ) {
-        $schemes = retrieveConfig('scheme','file');
+        $schemes = retrieveConfig('scheme','file',null,'array_merge_with_removal');
+        $schemes = array_map('trim', $schemes);
+        $schemes = preg_replace('/^#.*/', '', $schemes);
+        $schemes = array_filter($schemes);
     }
-    $schemes = array_map('trim', $schemes);
-    $schemes = preg_replace('/^#.*/', '', $schemes);
-    $schemes = array_filter($schemes);
     return $schemes;
 }
 
@@ -190,9 +206,14 @@ function confToHash($file,$lower=false) {
  * @param  string   $type     the configuration settings to be read, must correspond to a key/array in $config_cascade
  * @param  callback $fn       the function used to process the configuration file into an array
  * @param  array    $params   optional additional params to pass to the callback
+ * @param  callback $combine  the function used to combine arrays of values read from different configuration files;
+ *                            the function takes two parameters,
+ *                               $combined - the already read & merged configuration values
+ *                               $new - array of config values from the config cascade file being currently processed
+ *                            and returns an array of the merged configuration values.
  * @return array    configuration values
  */
-function retrieveConfig($type,$fn,$params=null) {
+function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {
     global $config_cascade;
 
     if(!is_array($params)) $params = array();
@@ -202,9 +223,9 @@ function retrieveConfig($type,$fn,$params=null) {
     foreach (array('default','local','protected') as $config_group) {
         if (empty($config_cascade[$type][$config_group])) continue;
         foreach ($config_cascade[$type][$config_group] as $file) {
-            if (@file_exists($file)) {
+            if (file_exists($file)) {
                 $config = call_user_func_array($fn,array_merge(array($file),$params));
-                $combined = array_merge($combined, $config);
+                $combined = $combine($combined, $config);
             }
         }
     }
@@ -342,5 +363,28 @@ function conf_decodeString($str) {
         default:  // not encode (or unknown)
                      return $str;
     }
+}
+
+/**
+ * array combination function to remove negated values (prefixed by !)
+ *
+ * @param  array $current
+ * @param  array $new
+ *
+ * @return array the combined array, numeric keys reset
+ */
+function array_merge_with_removal($current, $new) {
+    foreach ($new as $val) {
+        if (substr($val,0,1) == DOKU_CONF_NEGATION) {
+            $idx = array_search(trim(substr($val,1)),$current);
+            if ($idx !== false) {
+                unset($current[$idx]);
+            }
+        } else {
+            $current[] = trim($val);
+        }
+    }
+
+    return array_slice($current,0);
 }
 //Setup VIM: ex: et ts=4 :

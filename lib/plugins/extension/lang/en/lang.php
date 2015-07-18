@@ -69,7 +69,8 @@ $lang['status_bundled']               = 'bundled';
 
 $lang['msg_enabled']                  = 'Plugin %s enabled';
 $lang['msg_disabled']                 = 'Plugin %s disabled';
-$lang['msg_delete_success']           = 'Extension uninstalled';
+$lang['msg_delete_success']           = 'Extension %s uninstalled';
+$lang['msg_delete_failed']            = 'Uninstalling Extension %s failed';
 $lang['msg_template_install_success'] = 'Template %s installed successfully';
 $lang['msg_template_update_success']  = 'Template %s updated successfully';
 $lang['msg_plugin_install_success']   = 'Plugin %s installed successfully';
@@ -94,8 +95,15 @@ $lang['noperms']                      = 'Extension directory is not writable';
 $lang['notplperms']                   = 'Template directory is not writable';
 $lang['nopluginperms']                = 'Plugin directory is not writable';
 $lang['git']                          = 'This extension was installed via git, you may not want to update it here.';
+$lang['auth']                         = 'This auth plugin is not enabled in configuration, consider disabling it.';
 
 $lang['install_url']                  = 'Install from URL:';
 $lang['install_upload']               = 'Upload Extension:';
 
 $lang['repo_error']                   = 'The plugin repository could not be contacted. Make sure your server is allowed to contact www.dokuwiki.org and check your proxy settings.';
+$lang['nossl']                        = 'Your PHP seems to miss SSL support. Downloading will not work for many DokuWiki extensions.';
+
+$lang['js']['display_viewoptions']    = 'View Options:';
+$lang['js']['display_enabled']        = 'enabled';
+$lang['js']['display_disabled']       = 'disabled';
+$lang['js']['display_updatable']      = 'updatable';

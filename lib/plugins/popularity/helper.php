@@ -30,7 +30,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     var $popularityLastSubmitFile;
 
 
-    function helper_plugin_popularity(){
+    function __construct(){
         global $conf;
         $this->autosubmitFile = $conf['cachedir'].'/autosubmit.txt';
         $this->autosubmitErrorFile = $conf['cachedir'].'/autosubmitError.txt';
@@ -74,14 +74,16 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Check if autosubmit is enabled
+     *
      * @return boolean TRUE if we should send data once a month, FALSE otherwise
      */
     function isAutoSubmitEnabled(){
-        return @file_exists($this->autosubmitFile);
+        return file_exists($this->autosubmitFile);
     }
 
     /**
      * Send the data, to the submit url
+     *
      * @param string $data The popularity data
      * @return string An empty string if everything worked fine, a string describing the error otherwise
      */
@@ -97,6 +99,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Compute the last time the data was sent. If it has never been sent, we return 0.
+     *
+     * @return int
      */
     function lastSentTime(){
         $manualSubmission = @filemtime($this->popularityLastSubmitFile);
@@ -107,6 +111,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Gather all information
+     *
      * @return string The popularity data as a string
      */
     function gatherAsString(){
@@ -124,6 +129,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
 
     /**
      * Gather all information
+     *
      * @return array The popularity data as an array
      */
     function _gather(){
@@ -247,7 +253,24 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data['php_exectime'] = $phptime;
         $data['php_extension'] = get_loaded_extensions();
 
+        // plugin usage data
+        $this->_add_plugin_usage_data($data);
+
         return $data;
+    }
+
+    protected function _add_plugin_usage_data(&$data){
+        $pluginsData = array();
+        trigger_event('PLUGIN_POPULARITY_DATA_SETUP', $pluginsData);
+        foreach($pluginsData as $plugin => $d){
+           if ( is_array($d) ) {
+               foreach($d as $key => $value){
+                   $data['plugin_' . $plugin . '_' . $key] = $value;
+               }
+           } else {
+               $data['plugin_' . $plugin] = $d;
+           }
+        }
     }
 
     /**
@@ -288,17 +311,24 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      *
      * @author <gilthans dot NO dot SPAM at gmail dot com>
      * @link   http://de3.php.net/manual/en/ini.core.php#79564
+     *
+     * @param string $v
+     * @return int|string
      */
     function _to_byte($v){
         $l = substr($v, -1);
         $ret = substr($v, 0, -1);
         switch(strtoupper($l)){
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'P':
                 $ret *= 1024;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'T':
                 $ret *= 1024;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'G':
                 $ret *= 1024;
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'M':
                 $ret *= 1024;
             case 'K':

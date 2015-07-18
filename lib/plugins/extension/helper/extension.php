@@ -105,7 +105,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function isBundled() {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
-        return in_array($this->base,
+        return in_array($this->id,
                         array(
                             'authad', 'authldap', 'authmysql', 'authpgsql', 'authplain', 'acl', 'info', 'extension',
                             'revert', 'popularity', 'config', 'safefnrecode', 'testing', 'template:dokuwiki'
@@ -707,7 +707,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $plugin     = null;
 
             foreach($plugin_types as $type) {
-                if(@file_exists($path.$type.'.php')) {
+                if(file_exists($path.$type.'.php')) {
                     $plugin = plugin_load($type, $this->base);
                     if ($plugin) break;
                 }
@@ -799,7 +799,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      *
      * The directory is registered for cleanup when the class is destroyed
      *
-     * @return bool|string
+     * @return false|string
      */
     protected function mkTmpDir(){
         $dir = io_mktmpdir();
@@ -907,12 +907,12 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
             // check to make sure we aren't overwriting anything
             $target = $target_base_dir.$item['base'];
-            if(!$overwrite && @file_exists($target)) {
+            if(!$overwrite && file_exists($target)) {
                 // TODO remember our settings, ask the user to confirm overwrite
                 continue;
             }
 
-            $action = @file_exists($target) ? 'update' : 'install';
+            $action = file_exists($target) ? 'update' : 'install';
 
             // copy action
             if($this->dircopy($item['tmp'], $target)) {
@@ -1035,33 +1035,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
         $ext = $this->guess_archive($file);
         if(in_array($ext, array('tar', 'bz', 'gz'))) {
-            switch($ext) {
-                case 'bz':
-                    $compress_type = Tar::COMPRESS_BZIP;
-                    break;
-                case 'gz':
-                    $compress_type = Tar::COMPRESS_GZIP;
-                    break;
-                default:
-                    $compress_type = Tar::COMPRESS_NONE;
-            }
 
-            $tar = new Tar();
             try {
-                $tar->open($file, $compress_type);
+                $tar = new \splitbrain\PHPArchive\Tar();
+                $tar->open($file);
                 $tar->extract($target);
-            } catch (Exception $e) {
+            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
                 throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;
         } elseif($ext == 'zip') {
 
-            $zip = new ZipLib();
-            $ok  = $zip->Extract($file, $target);
-
-            if($ok == -1){
-                throw new Exception($this->getLang('error_decompress').' Error extracting the zip archive');
+            try {
+                $zip = new \splitbrain\PHPArchive\Zip();
+                $zip->open($file);
+                $zip->extract($target);
+            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
+                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;
@@ -1079,7 +1070,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @param string $file The file to analyze
-     * @return string|bool false if the file can't be read, otherwise an "extension"
+     * @return string|false false if the file can't be read, otherwise an "extension"
      */
     private function guess_archive($file) {
         $fh = fopen($file, 'rb');
@@ -1095,6 +1086,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
     /**
      * Copy with recursive sub-directory support
+     *
+     * @param string $src filename path to file
+     * @param string $dst filename path to file
+     * @return bool|int|string
      */
     private function dircopy($src, $dst) {
         global $conf;
@@ -1113,7 +1108,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             return $ok;
 
         } else {
-            $exists = @file_exists($dst);
+            $exists = file_exists($dst);
 
             if(!@copy($src, $dst)) return false;
             if(!$exists && !empty($conf['fperm'])) chmod($dst, $conf['fperm']);

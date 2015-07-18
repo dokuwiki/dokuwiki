@@ -70,7 +70,6 @@ function load_autoload($name){
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
-        'GeSHi'                 => DOKU_INC.'inc/geshi.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
         'TarLib'                => DOKU_INC.'inc/TarLib.class.php',
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
@@ -119,7 +118,7 @@ function load_autoload($name){
         // try to load the wanted plugin file
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
-        if(@file_exists($plg)){
+        if(file_exists($plg)){
             include_once DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         }
         return;

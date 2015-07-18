@@ -151,6 +151,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if($extension->isInstalled()) {
             $class.=' installed';
             $class.= ($extension->isEnabled()) ? ' enabled':' disabled';
+            if($extension->updateAvailable()) $class .= ' updatable';
         }
         if(!$extension->canModify()) $class.= ' notselect';
         if($extension->isProtected()) $class.=  ' protected';
@@ -333,7 +334,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * Shortens the URL for display
      *
      * @param string $url
-     *
      * @return string  HTML link
      */
     function shortlink($url){
@@ -387,7 +387,8 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
                 $return .= '<dd>';
                 $return .= hsc($extension->getInstalledVersion());
                 $return .= '</dd>';
-            } else {
+            }
+            if (!$extension->isBundled()) {
                 $return .= '<dt>'.$this->getLang('install_date').'</dt>';
                 $return .= '<dd>';
                 $return .= ($extension->getUpdateDate() ? hsc($extension->getUpdateDate()) : $this->getLang('unknown'));
@@ -398,13 +399,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
             $return .= '<dt>'.$this->getLang('available_version').'</dt>';
             $return .= '<dd>';
             $return .= ($extension->getLastUpdate() ? hsc($extension->getLastUpdate()) : $this->getLang('unknown'));
-            $return .= '</dd>';
-        }
-
-        if($extension->getInstallDate()) {
-            $return .= '<dt>'.$this->getLang('installed').'</dt>';
-            $return .= '<dd>';
-            $return .= hsc($extension->getInstallDate());
             $return .= '</dd>';
         }
 
@@ -467,6 +461,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @return string The HTML code
      */
     function make_actions(helper_plugin_extension_extension $extension) {
+        global $conf;
         $return = '';
         $errors = '';
 
@@ -496,6 +491,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
             if ($extension->isGitControlled()){
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
+            }
+
+            if ($extension->isEnabled() && in_array('Auth', $extension->getTypes()) && $conf['authtype'] != $extension->getID()) {
+                $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
             }
 
         }else{
@@ -536,7 +535,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $classes = 'button '.$action;
         $name    = 'fn['.$action.']['.hsc($extension->getID()).']';
 
-        return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
+        return '<button class="'.$classes.'" name="'.$name.'" type="submit" '.$title.'>'.$this->getLang('btn_'.$action).'</button> ';
     }
 
     /**

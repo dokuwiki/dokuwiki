@@ -1,6 +1,6 @@
 ====== Suche ======
 
-Unten sind die Ergebnisse Ihrer Suche gelistet. Falls der gesuchte Begriff nicht gefunden wurde, können Sie direkt eine neue Seite für den Suchbegriff anlegen, indem Sie auf den **''[Seite anlegen]''** Knopf drücken.
+Unten sind die Ergebnisse Ihrer Suche gelistet. @CREATEPAGEINFO@
 
 ===== Ergebnisse =====
 

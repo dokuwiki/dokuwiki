@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -35,6 +35,8 @@
  * @author Caillot <remicaillot5@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author YoBoY <yoboy@ubuntu-fr.org>
+ * @author james <j.mccann@celcat.com>
+ * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -66,7 +68,6 @@ $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens de retour';
-$lang['btn_backtomedia']       = 'Retour à la sélection du fichier média';
 $lang['btn_subscribe']         = 'Gérer souscriptions';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
@@ -77,7 +78,7 @@ $lang['btn_draftdel']          = 'Effacer le brouillon';
 $lang['btn_revert']            = 'Restaurer';
 $lang['btn_register']          = 'Créer un compte';
 $lang['btn_apply']             = 'Appliquer';
-$lang['btn_media']             = 'Gestionnaire de médias';
+$lang['btn_media']             = 'Gestionnaire Multimédia';
 $lang['btn_deleteuser']        = 'Supprimer mon compte';
 $lang['btn_img_backto']        = 'Retour vers %s';
 $lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
@@ -96,10 +97,12 @@ $lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
 $lang['draftdate']             = 'Brouillon enregistré automatiquement le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
+$lang['searchcreatepage']      = 'Si vous n\'avez pas trouvé ce que vous cherchiez, vous pouvez créer ou modifier la page correspondante à votre requête en cliquant sur le bouton approprié.';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
+$lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
 $lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
 $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
@@ -114,6 +117,7 @@ $lang['profdeleteuser']        = 'Supprimer le compte';
 $lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de ce wiki';
 $lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
 $lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
+$lang['proffail']              = 'Le profil utilisateur n\'a pas été mis à jour.';
 $lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
@@ -176,7 +180,6 @@ $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
 $lang['rssfailed']             = 'Une erreur s\'est produite en récupérant ce flux : ';
 $lang['nothingfound']          = 'Pas de réponse.';
 $lang['mediaselect']           = 'Sélection de fichiers';
-$lang['fileupload']            = 'Envoi de fichier';
 $lang['uploadsucc']            = 'Envoi réussi';
 $lang['uploadfail']            = 'L\'envoi a échoué. Les autorisations sont-elles correctes ?';
 $lang['uploadwrong']           = 'Envoi refusé. Cette extension de fichier est interdite !';
@@ -194,7 +197,7 @@ $lang['accessdenied']          = 'Vous n\'êtes pas autorisé à voir cette page
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Afficher le fichier original';
 $lang['mediaroot']             = 'racine';
-$lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag & drop)';
+$lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag &amp; drop)';
 $lang['mediaextchange']        = 'Extension du fichier modifiée de .%s en .%s !';
 $lang['reference']             = 'Références pour';
 $lang['ref_inuse']             = 'Le fichier ne peut être effacé car il est toujours utilisé par les pages suivantes :';
@@ -226,7 +229,7 @@ $lang['restored']              = 'ancienne révision (%s) restaurée';
 $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Résumé';
 $lang['noflash']               = 'L\'<a href="http://www.adobe.com/products/flashplayer/">extension Adobe Flash</a> est nécessaire pour afficher ce contenu.';
-$lang['download']              = 'Télécharger un extrait';
+$lang['download']              = 'Télécharger cet extrait';
 $lang['tools']                 = 'Outils';
 $lang['user_tools']            = 'Outils pour utilisateurs';
 $lang['site_tools']            = 'Outils du site';
@@ -267,7 +270,6 @@ $lang['qb_sig']                = 'Insérer une signature';
 $lang['qb_smileys']            = 'Émoticones';
 $lang['qb_chars']              = 'Caractères spéciaux';
 $lang['upperns']               = 'Aller à la catégorie parente';
-$lang['admin_register']        = 'Ajouter un nouvel utilisateur';
 $lang['metaedit']              = 'Modifier les métadonnées';
 $lang['metasaveerr']           = 'Erreur lors de l\'enregistrement des métadonnées';
 $lang['metasaveok']            = 'Métadonnées enregistrées';
@@ -300,7 +302,6 @@ $lang['subscr_style_every']    = 'Recevoir un courriel à chaque modification';
 $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
 $lang['subscr_style_list']     = 'Liste des pages modifiées depuis le dernier courriel (tous les %.2f jours)';
 $lang['authtempfail']          = 'L\'authentification est temporairement indisponible. Si cela perdure, merci d\'en informer l\'administrateur du wiki.';
-$lang['authpwdexpire']         = 'Votre mot de passe expirera dans %d jours, vous devriez le changer bientôt.';
 $lang['i_chooselang']          = 'Choisissez votre langue';
 $lang['i_installer']           = 'Installateur DokuWiki';
 $lang['i_wikiname']            = 'Nom du wiki';
@@ -317,7 +318,7 @@ $lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous dev
 $lang['i_badhash']             = 'dokuwiki.php non reconnu ou modifié (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valeur interdite ou vide';
 $lang['i_success']             = 'L\'installation s\'est terminée avec succès. Vous pouvez maintenant supprimer le fichier « install.php ». Continuer avec <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
-$lang['i_failure']             = 'Des erreurs sont survenues lors de l\'écriture des fichiers de configuration. Il vous faudra les corriger manuellement avant de pouvoir utiliser <a href="doku.php">votre nouveau DokuWiki</a>.';
+$lang['i_failure']             = 'Des erreurs sont survenues lors de l\'écriture des fichiers de configuration. Il vous faudra les corriger manuellement avant de pouvoir utiliser <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
 $lang['i_policy']              = 'Politique de contrôle d\'accès initiale';
 $lang['i_pol0']                = 'Wiki ouvert (lecture, écriture, envoi de fichiers pour tout le monde)';
 $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';
@@ -360,7 +361,10 @@ $lang['media_perm_read']       = 'Désolé, vous n\'avez pas l\'autorisation de 
 $lang['media_perm_upload']     = 'Désolé, vous n\'avez pas l\'autorisation d\'envoyer des fichiers.';
 $lang['media_update']          = 'Envoyer une nouvelle version';
 $lang['media_restore']         = 'Restaurer cette version';
-$lang['currentns']             = 'Namespace actuel';
+$lang['media_acl_warning']     = 'En raison des restrictions dans les ACL et de pages cachées, cette liste peut ne pas être complète.';
+$lang['currentns']             = 'Catégorie courante';
 $lang['searchresult']          = 'Résultat de la recherche';
 $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
+$lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été créée le <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Ne peut analyser le paramètre date "%s".';

@@ -27,19 +27,18 @@ $lang['btn_top']               = 'Back to top';
 $lang['btn_newer']             = '<< more recent';
 $lang['btn_older']             = 'less recent >>';
 $lang['btn_revs']              = 'Old revisions';
-$lang['btn_recent']            = 'Recent changes';
+$lang['btn_recent']            = 'Recent Changes';
 $lang['btn_upload']            = 'Upload';
 $lang['btn_cancel']            = 'Cancel';
 $lang['btn_index']             = 'Sitemap';
 $lang['btn_secedit']           = 'Edit';
-$lang['btn_login']             = 'Login';
-$lang['btn_logout']            = 'Logout';
+$lang['btn_login']             = 'Log In';
+$lang['btn_logout']            = 'Log Out';
 $lang['btn_admin']             = 'Admin';
 $lang['btn_update']            = 'Update';
 $lang['btn_delete']            = 'Delete';
 $lang['btn_back']              = 'Back';
 $lang['btn_backlink']          = 'Backlinks';
-$lang['btn_backtomedia']       = 'Back to Mediafile Selection';
 $lang['btn_subscribe']         = 'Manage Subscriptions';
 $lang['btn_profile']           = 'Update Profile';
 $lang['btn_reset']             = 'Reset';
@@ -70,11 +69,13 @@ $lang['badpassconfirm']        = 'Sorry, the password was wrong';
 $lang['minoredit']             = 'Minor Changes';
 $lang['draftdate']             = 'Draft autosaved on'; // full dformat date will be added
 $lang['nosecedit']             = 'The page was changed in the meantime, section info was out of date loaded full page instead.';
+$lang['searchcreatepage']      = 'If you didn\'t find what you were looking for, you can create or edit the page named after your query with the appropriate tool.';
 
 $lang['regmissing']            = 'Sorry, you must fill in all fields.';
 $lang['reguexists']            = 'Sorry, a user with this login already exists.';
 $lang['regsuccess']            = 'The user has been created and the password was sent by email.';
 $lang['regsuccess2']           = 'The user has been created.';
+$lang['regfail']               = 'The user could not be created.';
 $lang['regmailfail']           = 'Looks like there was an error on sending the password mail. Please contact the admin!';
 $lang['regbadmail']            = 'The given email address looks invalid - if you think this is an error, contact the admin';
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
@@ -90,6 +91,7 @@ $lang['profdeleteuser']        = 'Delete Account';
 $lang['profdeleted']           = 'Your user account has been deleted from this wiki';
 $lang['profconfdelete']        = 'I wish to remove my account from this wiki. <br/> This action can not be undone.';
 $lang['profconfdeletemissing'] = 'Confirmation check box not ticked';
+$lang['proffail']              = 'User profile was not updated.';
 
 $lang['pwdforget']             = 'Forgotten your password? Get a new one';
 $lang['resendna']              = 'This wiki does not support password resending.';
@@ -158,7 +160,6 @@ $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
 
 $lang['mediaselect']           = 'Media Files';
-$lang['fileupload']            = 'Media File Upload';
 $lang['uploadsucc']            = 'Upload successful';
 $lang['uploadfail']            = 'Upload failed. Maybe wrong permissions?';
 $lang['uploadwrong']           = 'Upload denied. This file extension is forbidden!';
@@ -255,8 +256,6 @@ $lang['qb_chars']              = 'Special Chars';
 
 $lang['upperns']               = 'jump to parent namespace';
 
-$lang['admin_register']        = 'Add new user';
-
 $lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Writing metadata failed';
 $lang['metasaveok']            = 'Metadata saved';
@@ -293,7 +292,6 @@ $lang['subscr_style_list']          = 'list of changed pages since last email (e
 
 /* auth.class language support */
 $lang['authtempfail']          = 'User authentication is temporarily unavailable. If this situation persists, please inform your Wiki Admin.';
-$lang['authpwdexpire']         = 'Your password will expire in %d days, you should change it soon.';
 
 /* installer strings */
 $lang['i_chooselang']          = 'Choose your language';
@@ -362,9 +360,12 @@ $lang['media_perm_read']       = 'Sorry, you don\'t have enough rights to read f
 $lang['media_perm_upload']     = 'Sorry, you don\'t have enough rights to upload files.';
 $lang['media_update']          = 'Upload new version';
 $lang['media_restore']         = 'Restore this version';
+$lang['media_acl_warning']     = 'This list might not be complete due to ACL restrictions and hidden pages.';
 
 $lang['currentns']             = 'Current namespace';
 $lang['searchresult']          = 'Search Result';
 $lang['plainhtml']             = 'Plain HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
+$lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently created at <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s".';
 //Setup VIM: ex: et ts=2 :
