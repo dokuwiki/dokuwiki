@@ -39,6 +39,9 @@
 .dokuwiki ul.admin_tasks li.admin_config {
     background-image: url(../../images/admin/config.png);
 }
+.dokuwiki ul.admin_tasks li.admin_styling {
+    background-image: url(../../images/admin/styling.png);
+}
 .dokuwiki ul.admin_tasks li.admin_revert {
     background-image: url(../../images/admin/revert.png);
 }
