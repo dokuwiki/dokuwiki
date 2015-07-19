@@ -1,13 +1,4 @@
-00_default_10051.png          CC BY 3.0 - Circle by Leinad Lehmko from The Noun Project         http://thenounproject.com/term/icon/10051/
-01_edit_1314.png              CC BY 3.0 - Pencil by John Caserta from The Noun Project          http://thenounproject.com/term/icon/1314/
-02_create_1314.png            CC BY 3.0 - Pencil by John Caserta from The Noun Project          http://thenounproject.com/term/icon/1314/
-03_draft_14415.png            CC BY 3.0 - Drafting Compass by Jon Testa from The Noun Project   http://thenounproject.com/term/icon/14415/
-04_show_4502.png              Public Domain                                                     http://thenounproject.com/term/icon/4502/
-05_source_14173.png           CC BY 3.0 - Search by Egor Culcea from The Noun Project           http://thenounproject.com/term/icon/14173/
-06_revert_31935.png           CC BY 3.0 - Arrow by Simple Icons from The Noun Project           http://thenounproject.com/term/icon/31935/
-07_revisions_5014.png         CC BY 3.0 - Clock by Dmitry Baranovskiy from The Noun Project     http://thenounproject.com/term/icon/5014/
-08_backlink_2339.png          CC BY 3.0 - Link by David Waschbüsch from The Noun Project        http://thenounproject.com/term/icon/2339/
-09_subscribe_90.png           Public Domain                                                     http://thenounproject.com/term/icon/90/
-10_top_18475.png              CC BY 3.0 - Arrow by Matheus Antúrio from The Noun Project        http://thenounproject.com/term/icon/18475/
-11_mediamanager_541.png       CC BY 3.0 - Picture by Edward Boatman from The Noun Project       http://thenounproject.com/term/icon/541/
-12_back_18475.png             CC BY 3.0 - Arrow by Matheus Antúrio from The Noun Project        http://thenounproject.com/term/icon/18475/
+All icons from https://materialdesignicons.com/
+
+Community Icons - SIL Open Font License 1.1
+Google Material Design Icons - Attribution 4.0 International

@@ -23,7 +23,7 @@ class PagetoolBuilder extends DokuCLI {
     /**
      * @var int border to use on each sprite in pixels
      */
-    protected $border = 3;
+    protected $border = 0;
 
     /**
      * @var int spacing between sprites in pixels
@@ -90,9 +90,21 @@ class PagetoolBuilder extends DokuCLI {
         );
         $options->registerOption(
             'optipng',
-            'Path to the optipng binary',
+            'Path to the optipng binary. Defaults to /usr/bin/optipng',
             '',
             'path'
+        );
+        $options->registerOption(
+            'size',
+            'Width and height of the indvidual images (square!). Defaults to 32',
+            'z',
+            'size'
+        );
+        $options->registerOption(
+            'border',
+            'Border to add around each image in pixels. Border is added within width. Defaults to 0',
+            'b',
+            'border'
         );
         $options->setHelp('Creates a sprite image to use in the floating page tools');
         $options->registerArgument(
@@ -116,6 +128,8 @@ class PagetoolBuilder extends DokuCLI {
         $this->secondary = $options->getOpt('secondary', $this->secondary);
         $this->optipng   = $options->getOpt('optipng', $this->optipng);
         $this->output    = $options->getOpt('output', $this->output);
+        $this->width     = $options->getOpt('size', $this->width);
+        $this->border    = $options->getOpt('border',$this->border);
 
         // first argument may be a directory
         $args = $options->args;
@@ -186,11 +200,12 @@ class PagetoolBuilder extends DokuCLI {
         $icon = imagecreatefrompng($iconfile);
         imagesavealpha($icon, true);
         imagefilter($icon, IMG_FILTER_COLORIZE, $color['r'], $color['g'], $color['b']);
+
         imagecopyresampled(
             $sprite, // dst_img
             $icon, // src_img
             $this->border, // dst_x
-            $offset + $this->border, // src_y
+            $offset + $this->border, // dst_y
             0, // src_x
             0, // src_y
             $this->width - $this->border * 2, // dst_w
@@ -198,6 +213,7 @@ class PagetoolBuilder extends DokuCLI {
             $icon_w, // src_w
             $icon_h // src_h
         );
+
         imagedestroy($icon);
     }
 
