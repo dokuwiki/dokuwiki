@@ -2,13 +2,14 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author H. Richard <wanderer379@t-online.de>
  * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Dominik Mahr <drache.mahr@gmx.de>
  * @author Noel Tilliot <noeltilliot@byom.de>
+ * @author Philip Knack <p.knack@stollfuss.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -33,6 +34,7 @@ $lang['js']['reallydel']       = 'Wollen Sie diese Erweiterung wirklich löschen
 $lang['js']['display_viewoptions'] = 'Optionen anzeigen';
 $lang['js']['display_enabled'] = 'aktiviert';
 $lang['js']['display_disabled'] = 'deaktiviert';
+$lang['js']['display_updatable'] = 'aktualisierbar';
 $lang['search_for']            = 'Erweiterung suchen:';
 $lang['search']                = 'Suchen';
 $lang['extensionby']           = '<strong>%s</strong> von %s';
@@ -70,6 +72,7 @@ $lang['status_bundled']        = 'gebündelt';
 $lang['msg_enabled']           = 'Plugin %s ist aktiviert';
 $lang['msg_disabled']          = 'Erweiterung %s ist deaktiviert';
 $lang['msg_delete_success']    = 'Erweiterung %s wurde entfernt';
+$lang['msg_delete_failed']     = 'Deinstallation der Erweiterung %s fehlgeschlagen';
 $lang['msg_template_install_success'] = 'Das Template %s wurde erfolgreich installiert';
 $lang['msg_template_update_success'] = 'Das Update des Templates %s war erfolgreich ';
 $lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installiert';
