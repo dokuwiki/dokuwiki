@@ -14,6 +14,8 @@ class Test_resolveInterwiki extends DokuWikiTest {
         $Renderer->interwiki['withslash'] = '/test';
         $Renderer->interwiki['onlytext'] = ':onlytext{NAME}'; //with {URL} double urlencoded
         $Renderer->interwiki['withquery'] = ':anyns:{NAME}?do=edit';
+        //this was the only link with host/port/path/query. Keep it here for regression
+        $Renderer->interwiki['coral'] = 'http://{HOST}.{PORT}.nyud.net:8090{PATH}?{QUERY}';
 
         $tests = array(
             // shortcut, reference and expected
