@@ -107,13 +107,15 @@ function io_readFile($file,$clean=true){
     $ret = '';
     if(file_exists($file)){
         if(substr($file,-3) == '.gz'){
-            $ret = join('',gzfile($file));
+            $ret = gzfile($file);
+            if(is_array($ret)) $ret = join('', $ret);
         }else if(substr($file,-4) == '.bz2'){
             $ret = bzfile($file);
         }else{
             $ret = file_get_contents($file);
         }
     }
+    if($ret === null) return false;
     if($ret !== false && $clean){
         return cleanText($ret);
     }else{
