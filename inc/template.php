@@ -297,6 +297,7 @@ function tpl_metaheaders($alt = true) {
     // prepare seed for js and css
     $tseed   = $updateVersion;
     $depends = getConfigFiles('main');
+    $depends[] = DOKU_CONF."tpl/".$conf['template']."/style.ini";
     foreach($depends as $f) $tseed .= @filemtime($f);
     $tseed   = md5($tseed);
 
