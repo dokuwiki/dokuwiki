@@ -223,6 +223,7 @@ class Zip extends Archive
                 }
                 fclose($fp);
                 gzclose($gzp);
+                unlink($extractto); // remove temporary gz file
             }
 
             touch($output, $fileinfo->getMtime());
