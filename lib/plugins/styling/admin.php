@@ -83,22 +83,22 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin {
 
                 echo '<tr>';
                 echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
-                echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" value="'.hsc($value).'" '.$this->colorClass($key).' /></td>';
+                echo '<td><input type="text" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'" value="'.hsc($value).'" '.$this->colorClass($key).' dir="ltr" /></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
 
             echo '<p>';
-            echo '<input type="submit" name="run[preview]" class="btn_preview primary" value="'.$this->getLang('btn_preview').'" /> ';
-            echo '<input type="submit" name="run[reset]" value="'.$this->getLang('btn_reset').'" />'; #FIXME only if preview.ini exists
+            echo '<button type="submit" name="run[preview]" class="btn_preview primary">'.$this->getLang('btn_preview').'</button> ';
+            echo '<button type="submit" name="run[reset]">'.$this->getLang('btn_reset').'</button>'; #FIXME only if preview.ini exists
             echo '</p>';
 
             echo '<p>';
-            echo '<input type="submit" name="run[save]" class="primary" value="'.$this->getLang('btn_save').'" />';
+            echo '<button type="submit" name="run[save]" class="primary">'.$this->getLang('btn_save').'</button>';
             echo '</p>';
 
             echo '<p>';
-            echo '<input type="submit" name="run[revert]" value="'.$this->getLang('btn_revert').'" />'; #FIXME only if local.ini exists
+            echo '<button type="submit" name="run[revert]">'.$this->getLang('btn_revert').'</button>'; #FIXME only if local.ini exists
             echo '</p>';
 
             echo '</form>';

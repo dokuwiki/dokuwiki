@@ -17,7 +17,7 @@ $lang['error'] = 'Sorry, this template does not support this functionality.';
 $lang['btn_preview'] = 'Preview changes';
 $lang['btn_save']    = 'Save changes';
 $lang['btn_reset']   = 'Reset current changes';
-$lang['btn_revert']  = 'Revert all styles back to the template\'s default';
+$lang['btn_revert']  = 'Revert styles back to template\'s default';
 
 // default guaranteed placeholders
 $lang['__text__']           = 'Main text color';
