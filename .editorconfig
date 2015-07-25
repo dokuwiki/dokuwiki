@@ -1,15 +1,19 @@
 ; http://editorconfig.org/
 
+root = true
+
 [*]
 indent_style = space
 indent_size = 4
+end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[inc/{geshi,phpseclib}/**]
+[{vendor,inc/phpseclib}/**]
 ; Use editor default (possible autodetection).
 indent_style =
 indent_size =
-trim_trailing_whitespace = false
-insert_final_newline = false
+end_of_line =
+trim_trailing_whitespace =
+insert_final_newline =
