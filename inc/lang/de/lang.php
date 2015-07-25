@@ -358,5 +358,5 @@ $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
-$lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
+$lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde aber unter <a href="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';

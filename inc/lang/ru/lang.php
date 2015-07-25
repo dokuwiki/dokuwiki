@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Yuri Pimenov <up@ftpsearch.lv>
  * @author Igor Tarasov <tigr@mail15.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -31,8 +31,9 @@
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author Alex P <alexander@lanos.co.uk>
  * @author Nolf <m.kopachovets@gmail.com>
+ * @author Takumo <9206984@mail.ru>
  */
-$lang['encoding']              = ' utf-8';
+$lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';

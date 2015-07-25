@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
  * @author Rune Rasmussen [http://www.syntaxerror.no/]
@@ -30,7 +30,7 @@ $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Rediger denne siden';
 $lang['btn_source']            = 'Vis kildekode';
 $lang['btn_show']              = 'Vis siden';
@@ -347,7 +347,7 @@ $lang['media_search']          = 'Søk i navnerommet <strong>%s</strong>.';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s på %s';
 $lang['media_edit']            = 'Rediger %s';
-$lang['media_history']         = '%vis historikk';
+$lang['media_history']         = '%s vis historikk';
 $lang['media_meta_edited']     = 'metadata er endra';
 $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese filer.';
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';

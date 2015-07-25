@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
@@ -25,7 +25,7 @@ $lang['doublequoteopening']    = '„';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Edytuj stronę';
 $lang['btn_source']            = 'Pokaż źródło strony';
 $lang['btn_show']              = 'Pokaż stronę';

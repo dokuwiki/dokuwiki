@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
  * @author Oleksandr Kunytsia <okunia@gmail.com>
@@ -189,7 +189,6 @@ $lang['line']                  = 'Рядок';
 $lang['breadcrumb']            = 'Відвідано:';
 $lang['youarehere']            = 'Ви тут:';
 $lang['lastmod']               = 'В останнє змінено:';
-$lang['by']                    = ' ';
 $lang['deleted']               = 'знищено';
 $lang['created']               = 'створено';
 $lang['restored']              = 'відновлено стару ревізію (%s)';

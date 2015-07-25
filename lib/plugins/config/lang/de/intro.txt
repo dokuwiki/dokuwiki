@@ -5,6 +5,3 @@ Dieses Plugin hilft Ihnen bei der Konfiguration von DokuWiki. Hilfe zu den einze
 Einstellungen mit einem hellroten Hintergrund sind gesichert und können nicht mit diesem Plugin verändert werden, Einstellungen mit hellblauem Hintergrund sind Voreinstellungen, weiß hinterlegte Felder zeigen lokal veränderte Werte an. Sowohl die blauen als auch die weißen Felder können verändert werden.
 
 Bitte vergessen Sie nicht **Speichern** zu drücken bevor Sie die Seite verlassen, andernfalls gehen Ihre Änderungen verloren.
-
-
-

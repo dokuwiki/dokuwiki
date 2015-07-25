@@ -835,7 +835,7 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
+    print '<button type="submit" title="'.$lang['btn_search'].'">'.$lang['btn_search'].'</button>';
     if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
     print '</div></form>';
     return true;
@@ -1614,6 +1614,12 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     /** @var Input $INPUT */
     global $INPUT;
 
+    $action_structure = array(
+        'page_tools' => array('edit', 'revert', 'revisions', 'backlink', 'subscribe'),
+        'site_tools' => array('recent', 'media', 'index'),
+        'user_tools' => array('login', 'register', 'profile', 'admin'),
+    );
+
     echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
@@ -1625,50 +1631,17 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
 
-    echo '<optgroup label="'.$lang['page_tools'].'">';
-    $act = tpl_get_action('edit');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revert');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revisions');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('backlink');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('subscribe');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['site_tools'].'">';
-    $act = tpl_get_action('recent');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('media');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('index');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['user_tools'].'">';
-    $act = tpl_get_action('login');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('register');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('profile');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('admin');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
+    foreach($action_structure as $tools => $actions) {
+        echo '<optgroup label="'.$lang[$tools].'">';
+        foreach($actions as $action) {
+            $act = tpl_get_action($action);
+            if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+        }
+        echo '</optgroup>';
+    }
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" />';
+    echo '<button type="submit">'.$button.'</button>';
     echo '</div>';
     echo '</form>';
 }

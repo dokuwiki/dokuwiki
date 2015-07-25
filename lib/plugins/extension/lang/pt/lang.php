@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
  */
@@ -41,7 +41,7 @@ $lang['downloadurl']           = 'Baixar URL:
 ';
 $lang['repository']            = 'Repositório:
 ';
-$lang['unknown']               = '<em> desconhecido </ em>
+$lang['unknown']               = '<em> desconhecido </em>
 ';
 $lang['installed_version']     = 'Versão instalada:';
 $lang['install_date']          = 'Sua última atualização:';

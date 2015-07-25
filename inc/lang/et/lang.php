@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Oliver S6ro <seem.iges@mail.ee>
  * @author Aari Juhanson <aari@vmg.vil.ee>
  * @author Kaiko Kaur <kaiko@kultuur.edu.ee>

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -197,7 +197,7 @@ $lang['accessdenied']          = 'Vous n\'êtes pas autorisé à voir cette page
 $lang['mediausage']            = 'Utilisez la syntaxe suivante pour faire référence à ce fichier :';
 $lang['mediaview']             = 'Afficher le fichier original';
 $lang['mediaroot']             = 'racine';
-$lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag & drop)';
+$lang['mediaupload']           = 'Envoyez un fichier dans la catégorie actuelle. Pour créer des sous-catégories, préfixez en le nom du fichier séparées par un double-point, après avoir choisis le(s) fichier(s). Le(s) fichier(s) peuvent également être envoyé(s) par glisser-déposer (drag &amp; drop)';
 $lang['mediaextchange']        = 'Extension du fichier modifiée de .%s en .%s !';
 $lang['reference']             = 'Références pour';
 $lang['ref_inuse']             = 'Le fichier ne peut être effacé car il est toujours utilisé par les pages suivantes :';
@@ -318,7 +318,7 @@ $lang['i_writeerr']            = 'Impossible de créer <code>%s</code>. Vous dev
 $lang['i_badhash']             = 'dokuwiki.php non reconnu ou modifié (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valeur interdite ou vide';
 $lang['i_success']             = 'L\'installation s\'est terminée avec succès. Vous pouvez maintenant supprimer le fichier « install.php ». Continuer avec <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
-$lang['i_failure']             = 'Des erreurs sont survenues lors de l\'écriture des fichiers de configuration. Il vous faudra les corriger manuellement avant de pouvoir utiliser <a href="doku.php">votre nouveau DokuWiki</a>.';
+$lang['i_failure']             = 'Des erreurs sont survenues lors de l\'écriture des fichiers de configuration. Il vous faudra les corriger manuellement avant de pouvoir utiliser <a href="doku.php?id=wiki:welcome">votre nouveau DokuWiki</a>.';
 $lang['i_policy']              = 'Politique de contrôle d\'accès initiale';
 $lang['i_pol0']                = 'Wiki ouvert (lecture, écriture, envoi de fichiers pour tout le monde)';
 $lang['i_pol1']                = 'Wiki public (lecture pour tout le monde, écriture et envoi de fichiers pour les utilisateurs enregistrés)';

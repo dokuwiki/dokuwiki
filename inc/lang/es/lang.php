@@ -39,6 +39,7 @@
  * @author pokesakura <pokesakura@gmail.com>
  * @author Álvaro Iradier <airadier@gmail.com>
  * @author Alejandro Nunez <nunez.alejandro@gmail.com>
+ * @author Mauricio Segura <maose38@yahoo.es>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -104,6 +105,7 @@ $lang['regmissing']            = 'Lo siento, tienes que completar todos los camp
 $lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
 $lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';
 $lang['regsuccess2']           = 'El usuario ha sido creado.';
+$lang['regfail']               = 'No se pudo crear el usuario.';
 $lang['regmailfail']           = 'Parece que ha habido un error al enviar el correo con la contraseña. ¡Por favor, contacta al administrador!';
 $lang['regbadmail']            = 'La dirección de correo no parece válida. Si piensas que esto es un error, contacta al administrador';
 $lang['regbadpass']            = 'Las dos contraseñas no son iguales, por favor inténtalo de nuevo.';
@@ -118,6 +120,7 @@ $lang['profdeleteuser']        = 'Eliminar Cuenta';
 $lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
 $lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
 $lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
+$lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
 $lang['resendpwd']             = 'Establecer nueva contraseña para';
@@ -363,6 +366,7 @@ $lang['media_perm_read']       = 'Disculpa, no tienes los permisos necesarios pa
 $lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios para cargar ficheros.';
 $lang['media_update']          = 'Actualizar nueva versión';
 $lang['media_restore']         = 'Restaurar esta versión';
+$lang['media_acl_warning']     = 'Puede que esta lista no esté completa debido a restricciones de la ACL y a las páginas ocultas.';
 $lang['currentns']             = 'Espacio de nombres actual';
 $lang['searchresult']          = 'Resultado de la búsqueda';
 $lang['plainhtml']             = 'HTML sencillo';

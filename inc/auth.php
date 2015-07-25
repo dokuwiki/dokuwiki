@@ -739,28 +739,23 @@ function auth_aclcheck_cb($data) {
         $user   = utf8_strtolower($user);
         $groups = array_map('utf8_strtolower', $groups);
     }
-    $user   = $auth->cleanUser($user);
+    $user   = auth_nameencode($auth->cleanUser($user));
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
-    $user   = auth_nameencode($user);
 
     //prepend groups with @ and nameencode
-    $cnt = count($groups);
-    for($i = 0; $i < $cnt; $i++) {
-        $groups[$i] = '@'.auth_nameencode($groups[$i]);
+    foreach($groups as &$group) {
+        $group = '@'.auth_nameencode($group);
     }
 
     $ns   = getNS($id);
     $perm = -1;
 
-    if($user || count($groups)) {
-        //add ALL group
-        $groups[] = '@ALL';
-        //add User
-        if($user) $groups[] = $user;
-    } else {
-        $groups[] = '@ALL';
-    }
-
+    //add ALL group
+    $groups[] = '@ALL';
+    
+    //add User
+    if($user) $groups[] = $user;
+    
     //check exact match first
     $matches = preg_grep('/^'.preg_quote($id, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
     if(count($matches)) {

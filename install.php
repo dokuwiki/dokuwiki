@@ -243,7 +243,7 @@ function print_form($d){
 
     </fieldset>
     <fieldset id="process">
-        <input class="button" type="submit" name="submit" value="<?php echo $lang['btn_save']?>" />
+        <button type="submit" name="submit"><?php echo $lang['btn_save']?></button>
     </fieldset>
     </form>
     <?php
@@ -256,7 +256,7 @@ function print_retry() {
     <form action="" method="get">
       <fieldset>
         <input type="hidden" name="l" value="<?php echo $LC ?>" />
-        <input class="button" type="submit" value="<?php echo $lang['i_retry'];?>" />
+        <button type="submit"><?php echo $lang['i_retry'];?></button>
       </fieldset>
     </form>
     <?php
@@ -619,7 +619,7 @@ function langsel(){
         echo '<option value="'.$l.'" '.$sel.'>'.$l.'</option>';
     }
     echo '</select> ';
-    echo '<input type="submit" value="'.$lang['btn_update'].'" />';
+    echo '<button type="submit">'.$lang['btn_update'].'</button>';
     echo '</form>';
 }
 

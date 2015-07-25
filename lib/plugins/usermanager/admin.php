@@ -241,18 +241,18 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    <tbody>");
         ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
         ptln("        <span class=\"medialeft\">");
-        ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." class=\"button\" value=\"".$this->lang['delete_selected']."\" id=\"usrmgr__del\" />");
-        ptln("        </span>");
+        ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".$this->lang['delete_selected']."</button>");
+        ptln("        ");
         ptln("        <span class=\"mediaright\">");
-        ptln("          <input type=\"submit\" name=\"fn[start]\" ".$page_buttons['start']." class=\"button\" value=\"".$this->lang['start']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev']." class=\"button\" value=\"".$this->lang['prev']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[next]\" ".$page_buttons['next']." class=\"button\" value=\"".$this->lang['next']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[last]\" ".$page_buttons['last']." class=\"button\" value=\"".$this->lang['last']."\" />");
+        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".$this->lang['start']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".$this->lang['prev']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".$this->lang['next']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".$this->lang['last']."</button>");
         ptln("        </span>");
         if (!empty($this->_filter)) {
-            ptln("    <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
+            ptln("    <button type=\"submit\" name=\"fn[search][clear]\">".$this->lang['clear']."</button>");
         }
-        ptln("        <input type=\"submit\" name=\"fn[export]\" class=\"button\" value=\"".$export_label."\" />");
+        ptln("        <button type=\"submit\" name=\"fn[export]\">".$export_label."</button>");
         ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
 
@@ -360,7 +360,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $this->_htmlFilterSettings($indent+10);
 
-        ptln("          <input type=\"submit\" name=\"fn[".$cmd."]\" class=\"button\" value=\"".$this->lang[$cmd]."\" />",$indent);
+        ptln("          <button type=\"submit\" name=\"fn[".$cmd."]\">".$this->lang[$cmd]."</button>",$indent);
         ptln("        </td>",$indent);
         ptln("      </tr>",$indent);
         ptln("    </tbody>",$indent);
@@ -369,7 +369,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($notes) {
             ptln("    <ul class=\"notes\">");
             foreach ($notes as $note) {
-                ptln("      <li><span class=\"li\">".$note."</span></li>",$indent);
+                ptln("      <li><span class=\"li\">".$note."</li>",$indent);
             }
             ptln("    </ul>");
         }
@@ -456,7 +456,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln('  <form action="'.wl($ID).'" method="post" enctype="multipart/form-data">',$indent);
         formSecurityToken();
         ptln('    <label>'.$this->lang['import_userlistcsv'].'<input type="file" name="import" /></label>',$indent);
-        ptln('    <input type="submit" name="fn[import]" value="'.$this->lang['import'].'" />',$indent);
+        ptln('    <button type="submit" name="fn[import]">'.$this->lang['import'].'</button>',$indent);
         ptln('    <input type="hidden" name="do"    value="admin" />',$indent);
         ptln('    <input type="hidden" name="page"  value="usermanager" />',$indent);
 

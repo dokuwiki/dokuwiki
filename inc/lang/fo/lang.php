@@ -8,11 +8,11 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = 'Vanligt gásareygað byrjan';
-$lang['doublequoteclosing']    = 'Vanligt gásareygað endi';
-$lang['singlequoteopening']    = 'Einstakt gásareygað byrjan';
-$lang['singlequoteclosing']    = 'Einstakt gásareygað endi';
-$lang['apostrophe']            = 'Apostroff';
+$lang['doublequoteopening']    = '&quot;';
+$lang['doublequoteclosing']    = '&quot;';
+$lang['singlequoteopening']    = '\'';
+$lang['singlequoteclosing']    = '\'';
+$lang['apostrophe']            = '\'';
 $lang['btn_edit']              = 'Rætta hetta skjal';
 $lang['btn_source']            = 'Vís keldu';
 $lang['btn_show']              = 'Vís skjal';

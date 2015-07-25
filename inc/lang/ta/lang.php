@@ -2,12 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Naveen Venugopal <naveen.venugopal.anu@gmail.com>
  * @author Sri Saravana <saravanamuthaly@gmail.com>
  */
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
+$lang['doublequoteopening']    = '&quot;';
+$lang['doublequoteclosing']    = '&quot;';
 $lang['singlequoteopening']    = '\'';
 $lang['singlequoteclosing']    = '\'';
 $lang['apostrophe']            = '\'';

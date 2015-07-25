@@ -48,6 +48,11 @@ class io_readfile_test extends DokuWikiTest {
         $this->assertEquals("The\015\012Test\015\012", io_readFile(__DIR__.'/io_readfile/test.txt.bz2', false));
         $this->assertEquals(false, io_readFile(__DIR__.'/io_readfile/nope.txt.bz2'));
         $this->assertEquals(false, io_readFile(__DIR__.'/io_readfile/corrupt.txt.bz2'));
+        // internal bzfile function
+        $this->assertEquals(array("The\015\012","Test\015\012"), bzfile(__DIR__.'/io_readfile/test.txt.bz2', true));
+        $this->assertEquals(array_fill(0, 120, str_repeat('a', 80)."\012"), bzfile(__DIR__.'/io_readfile/large.txt.bz2', true));
+        $line = str_repeat('a', 8888)."\012";
+        $this->assertEquals(array($line,"\012",$line,"!"), bzfile(__DIR__.'/io_readfile/long.txt.bz2', true));
     }
 
 }

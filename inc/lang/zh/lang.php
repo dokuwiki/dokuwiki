@@ -24,6 +24,7 @@
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
  * @author qinghao <qingxianhao@gmail.com>
  * @author Yuwei Sun <yuwei@hrz.tu-chemnitz.de>
+ * @author Errol <errol@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -89,6 +90,7 @@ $lang['regmissing']            = '对不起，您必须填写所有的字段。'
 $lang['reguexists']            = '对不起，该用户名已经存在。';
 $lang['regsuccess']            = '新用户已建立，密码将通过电子邮件发送给您。';
 $lang['regsuccess2']           = '新用户已建立';
+$lang['regfail']               = '用户不能被创建。';
 $lang['regmailfail']           = '发送密码邮件时产生错误。请联系管理员！';
 $lang['regbadmail']            = '您输入的邮件地址有问题——如果您认为这是系统错误，请联系管理员。';
 $lang['regbadpass']            = '您输入的密码与系统产生的不符，请重试。';
@@ -103,6 +105,7 @@ $lang['profdeleteuser']        = '删除账号';
 $lang['profdeleted']           = '你的用户已经从这个 wiki 中删除';
 $lang['profconfdelete']        = '我希望删除我的账户。<br/>这项操作无法撤销。';
 $lang['profconfdeletemissing'] = '确认框未勾选';
+$lang['proffail']              = '用户设置没有更新。';
 $lang['pwdforget']             = '忘记密码？立即获取新密码';
 $lang['resendna']              = '本维基不支持二次发送密码。';
 $lang['resendpwd']             = '设置新密码用于';
@@ -352,6 +355,7 @@ $lang['media_perm_read']       = '抱歉，您没有足够权限读取这些文�
 $lang['media_perm_upload']     = '抱歉，您没有足够权限来上传文件。';
 $lang['media_update']          = '上传新版本';
 $lang['media_restore']         = '恢复这个版本';
+$lang['media_acl_warning']     = '此列表可能不完全是由ACL限制和隐藏的页面。';
 $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
 $lang['plainhtml']             = '纯HTML';

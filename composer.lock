@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "23ee0dd06136e2301c930e75055300d5",
     "packages": [
         {
             "name": "easybook/geshi",
-            "version": "v1.0.8.14",
+            "version": "v1.0.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easybook/geshi.git",
-                "reference": "af589a67bf308791bb13e54bddd9aa3544b7dff8"
+                "reference": "54387de80bc7ee50397ffae39234626a48d2d45f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easybook/geshi/zipball/af589a67bf308791bb13e54bddd9aa3544b7dff8",
-                "reference": "af589a67bf308791bb13e54bddd9aa3544b7dff8",
+                "url": "https://api.github.com/repos/easybook/geshi/zipball/54387de80bc7ee50397ffae39234626a48d2d45f",
+                "reference": "54387de80bc7ee50397ffae39234626a48d2d45f",
                 "shasum": ""
             },
             "require": {
@@ -50,20 +50,20 @@
                 "highlighter",
                 "syntax"
             ],
-            "time": "2015-04-15 13:21:45"
+            "time": "2015-06-18 14:56:28"
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.0.0",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "a0fbfc2f85ed491f3d2af42cff48a9cb783a8549"
+                "reference": "6572e78ef9d064eeb5c74d4ffe61b473a4996b68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/a0fbfc2f85ed491f3d2af42cff48a9cb783a8549",
-                "reference": "a0fbfc2f85ed491f3d2af42cff48a9cb783a8549",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/6572e78ef9d064eeb5c74d4ffe61b473a4996b68",
+                "reference": "6572e78ef9d064eeb5c74d4ffe61b473a4996b68",
                 "shasum": ""
             },
             "require": {
@@ -97,7 +97,7 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2015-02-25 20:15:02"
+            "time": "2015-07-24 11:36:49"
         }
     ],
     "packages-dev": [],

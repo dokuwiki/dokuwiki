@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
@@ -62,7 +62,7 @@ $lang['status_template']       = 'šablona';
 $lang['status_bundled']        = 'svázaný';
 $lang['msg_enabled']           = 'Zásuvný modul %s povolen';
 $lang['msg_disabled']          = 'Zásuvný modul %s zakázán';
-$lang['msg_delete_success']    = 'Rozšíření odinstalováno';
+$lang['msg_delete_success']    = 'Rozšíření %s odinstalováno';
 $lang['msg_delete_failed']     = 'Odinstalování rozšíření %s selhalo';
 $lang['msg_template_install_success'] = 'Šablona %s úspěšně nainstalována';
 $lang['msg_template_update_success'] = 'Šablona %s úspěšně aktualizována';
