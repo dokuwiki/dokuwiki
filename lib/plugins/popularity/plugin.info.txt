@@ -1,7 +1,7 @@
 base    popularity
 author  Andreas Gohr
 email   andi@splitbrain.org
-date    2013-10-14
+date    2015-07-15
 name    Popularity Feedback Plugin
 desc    Send anonymous data about your wiki to the DokuWiki developers
 url     http://www.dokuwiki.org/plugin:popularity

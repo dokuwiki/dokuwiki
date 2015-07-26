@@ -1,7 +1,7 @@
 base   authplain
 author Andreas Gohr
 email  andi@splitbrain.org
-date   2014-07-01
+date   2015-07-18
 name   Plain Auth Plugin
 desc   Provides user authentication against DokuWiki's local password storage
 url    http://www.dokuwiki.org/plugin:authplain
