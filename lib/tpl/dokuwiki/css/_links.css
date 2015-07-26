@@ -66,5 +66,4 @@
 [dir=rtl] .dokuwiki a.mediafile {
     background-position: right center;
     padding: 0 18px 0 0;
-    display: inline-block; /* needed for IE7 */
 }
