@@ -266,7 +266,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return  = '<div class="linkbar">';
         $return .= $this->make_homepagelink($extension);
         if ($extension->getBugtrackerURL()) {
-            $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="interwiki iw_dokubug">'.$this->getLang('bugs_features').'</a> ';
+            $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="bugs">'.$this->getLang('bugs_features').'</a> ';
         }
         if ($extension->getTags()){
             $first = true;
