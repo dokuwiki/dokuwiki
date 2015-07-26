@@ -2080,6 +2080,13 @@ function html_admin(){
                     $menu['config']['prompt'].'</a></div></li>');
         }
         unset($menu['config']);
+
+        if($menu['styling']){
+            ptln('  <li class="admin_styling"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'styling')).'">'.
+                $menu['styling']['prompt'].'</a></div></li>');
+        }
+        unset($menu['styling']);
     }
     ptln('</ul>');
 
