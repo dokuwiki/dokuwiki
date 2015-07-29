@@ -1,8 +1,8 @@
 <?php
+
 /**
- * japanese language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -10,6 +10,7 @@
  * @author Kazutaka Miyasaka <kazmiya@gmail.com>
  * @author Taisuke Shimamoto <dentostar@gmail.com>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+ * @author Hideaki SAWADA <chuno@live.jp>
  */
 $lang['menu']                  = 'サイト設定';
 $lang['error']                 = '不正な値が存在するため、設定は更新されませんでした。入力値を確認してから、再度更新してください。
@@ -85,7 +86,9 @@ $lang['disableactions']        = 'DokuWiki の動作を無効にする';
 $lang['disableactions_check']  = 'チェック';
 $lang['disableactions_subscription'] = '登録 / 解除';
 $lang['disableactions_wikicode'] = 'ソース閲覧 / 生データ出力';
+$lang['disableactions_profile_delete'] = 'このアカウントを削除します。';
 $lang['disableactions_other']  = 'その他の動作（カンマ区切り）';
+$lang['disableactions_rss']    = 'XML 配信（RSS）';
 $lang['auth_security_timeout'] = '認証タイムアウト設定（秒）';
 $lang['securecookie']          = 'クッキーをHTTPSにてセットする場合は、ブラウザよりHTTPS経由で送信された場合にみに制限しますか？ログインのみをSSLで行う場合は、この機能を無効にしてください。';
 $lang['remote']                = 'リモートAPIを有効化します。有効化するとXML-RPCまたは他の手段でwikiにアプリケーションがアクセスすることを許可します。';
