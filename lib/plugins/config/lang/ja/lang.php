@@ -193,6 +193,7 @@ $lang['xsendfile_o_2']         = '標準 X-Sendfile ヘッダー';
 $lang['xsendfile_o_3']         = 'Nginx X-Accel-Redirect ヘッダー';
 $lang['showuseras_o_loginname'] = 'ログイン名';
 $lang['showuseras_o_username'] = 'ユーザーのフルネーム';
+$lang['showuseras_o_username_link'] = 'user という InterWiki リンクになったユーザーのフルネーム';
 $lang['showuseras_o_email']    = 'ユーザーのメールアドレス（メールガード設定による難読化）';
 $lang['showuseras_o_email_link'] = 'ユーザーのメールアドレスをリンクにする';
 $lang['useheading_o_0']        = '使用しない';
