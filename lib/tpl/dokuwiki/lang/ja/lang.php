@@ -5,6 +5,7 @@
  * 
  * @author Hideaki SAWADA <chuno@live.jp>
  */
+$lang['__background_site__']   = 'サイト全体の背景色（content box の背後）';
 $lang['__link__']              = '通常のリンク色';
 $lang['__existing__']          = '既存ページへのリンク色';
 $lang['__missing__']           = '存在しないページへのリンク色';
