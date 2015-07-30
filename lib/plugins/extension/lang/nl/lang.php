@@ -8,6 +8,7 @@
  * @author Johan Vervloet <johan.vervloet@gmail.com>
  * @author Mijndert <mijndert@mijndertstuij.nl>
  * @author Johan Wijnker <johan@wijnker.eu>
+ * @author Mark C. Prins <mprins@users.sf.net>
  */
 $lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -29,6 +30,8 @@ $lang['btn_disable']           = 'Schakel uit';
 $lang['btn_install']           = 'Installeer';
 $lang['btn_reinstall']         = 'Her-installeer';
 $lang['js']['reallydel']       = 'Wilt u deze uitbreiding deinstalleren?';
+$lang['js']['display_enabled'] = 'ingeschakeld';
+$lang['js']['display_disabled'] = 'uitgeschakeld';
 $lang['search_for']            = 'Zoek Uitbreiding:';
 $lang['search']                = 'Zoek';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
