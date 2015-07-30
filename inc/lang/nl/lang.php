@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -26,6 +26,7 @@
  * @author Johan Vervloet <johan.vervloet@gmail.com>
  * @author Mijndert <mijndert@mijndertstuij.nl>
  * @author Johan Wijnker <johan@wijnker.eu>
+ * @author Hugo Smet <hugo.smet@scarlet.be>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -91,6 +92,7 @@ $lang['regmissing']            = 'Vul alle velden in';
 $lang['reguexists']            = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['regsuccess']            = 'De gebruiker is aangemaakt. Het wachtwoord is per e-mail verzonden.';
 $lang['regsuccess2']           = 'De gebruiker is aangemaakt.';
+$lang['regfail']               = 'Gebruiker kon niet aangemaakt worden.';
 $lang['regmailfail']           = 'Het lijkt erop dat het sturen van de wachtwoordmail mislukt is. Neem contact op met de beheerder!';
 $lang['regbadmail']            = 'Het opgegeven e-mailadres lijkt ongeldig - als je denkt dat dit niet klopt neem dan contact op met de beheerder.';
 $lang['regbadpass']            = 'De twee ingevoerde wachtwoorden zijn niet identiek. Probeer het nog eens.';
@@ -105,6 +107,7 @@ $lang['profdeleteuser']        = 'Verwijder gebruiker';
 $lang['profdeleted']           = 'Uw gebruikersaccount is verwijderd van deze wiki';
 $lang['profconfdelete']        = 'Ik wil mijn gebruikersaccount verwijderen van deze wiki. <br/> Deze actie kan niet ongedaan gemaakt worden.';
 $lang['profconfdeletemissing'] = 'Bevestigingsvinkje niet gezet';
+$lang['proffail']              = 'Gebruikersprofiel werd niet bijgewerkt.';
 $lang['pwdforget']             = 'Je wachtwoord vergeten? Vraag een nieuw wachtwoord aan';
 $lang['resendna']              = 'Deze wiki ondersteunt het verzenden van wachtwoorden niet';
 $lang['resendpwd']             = 'Nieuw wachtwoord bepalen voor';
@@ -350,6 +353,7 @@ $lang['media_perm_read']       = 'Sorry, u heeft niet voldoende rechten om besta
 $lang['media_perm_upload']     = 'Sorry, u heeft niet voldoende rechten om bestanden te uploaden.';
 $lang['media_update']          = 'Upload nieuwe versie';
 $lang['media_restore']         = 'Deze versie terugzetten';
+$lang['media_acl_warning']     = 'De lijst is mogelijk niet compleet door ACL beperkingen en verborgen pagina\'s.';
 $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
