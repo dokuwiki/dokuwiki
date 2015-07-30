@@ -2,9 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
+ * @author Paulo Carmino <contato@paulocarmino.com>
  */
 $lang['menu']                  = 'Gerenciador de Extensões';
 $lang['tab_plugins']           = 'Plugins Instalados';
@@ -26,6 +27,7 @@ $lang['btn_disable']           = 'Desabilitar';
 $lang['btn_install']           = 'Instalar';
 $lang['btn_reinstall']         = 'Reinstalar';
 $lang['js']['reallydel']       = 'Confirma a desinstalação desta extensão?';
+$lang['js']['display_viewoptions'] = 'Ver Opções:';
 $lang['search_for']            = 'Pesquisar Extensão:';
 $lang['search']                = 'Pesquisar';
 $lang['extensionby']           = '<strong>%s</strong> by %s';

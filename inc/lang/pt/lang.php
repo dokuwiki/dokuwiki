@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
@@ -13,6 +13,7 @@
  * @author Paulo Silva <paulotsilva@yahoo.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
+ * @author Paulo Carmino <contato@paulocarmino.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -78,6 +79,7 @@ $lang['regmissing']            = 'Por favor, preencha todos os campos.';
 $lang['reguexists']            = 'Este utilizador já está inscrito. Por favor escolha outro nome de utilizador.';
 $lang['regsuccess']            = 'O utilizador foi criado e a senha foi enviada para o endereço de correio electrónico usado na inscrição.';
 $lang['regsuccess2']           = 'O utilizador foi criado.';
+$lang['regfail']               = 'O usuário não pode ser criado.';
 $lang['regmailfail']           = 'Houve um erro no envio da senha por e-mail. Por favor, contacte o administrador!';
 $lang['regbadmail']            = 'O endereço de correio electrónico é inválido. Se o endereço está correcto, e isto é um erro, por favor, contacte o administrador!';
 $lang['regbadpass']            = 'As duas senhas não são idênticas, por favor tente de novo.';
@@ -92,6 +94,7 @@ $lang['profdeleteuser']        = 'Apagar Conta';
 $lang['profdeleted']           = 'A sua conta de utilizador foi removida desta wiki';
 $lang['profconfdelete']        = 'Quero remover a minha conta desta wiki. <br/> Esta acção não pode ser anulada.';
 $lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
+$lang['proffail']              = 'O perfil do usuário não foi atualizado.';
 $lang['pwdforget']             = 'Esqueceu a sua senha? Pedir nova senha';
 $lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
 $lang['resendpwd']             = 'Definir nova senha para';
