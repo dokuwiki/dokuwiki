@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author daniel@6temes.cat
  * @author Eduard Díaz <edudiaz@scopia.es>
+ * @author controlonline.net <controlonline.net@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -48,7 +49,10 @@ $lang['btn_draftdel']          = 'Suprimeix esborrany';
 $lang['btn_revert']            = 'Restaura';
 $lang['btn_register']          = 'Registra\'m';
 $lang['btn_apply']             = 'Aplica';
+$lang['btn_media']             = 'Mànager Multimèdia';
+$lang['btn_deleteuser']        = 'Esborrar compte';
 $lang['btn_img_backto']        = 'Torna a %s';
+$lang['btn_mediaManager']      = 'Veure a multimèdia mànager ';
 $lang['loggedinas']            = 'Heu entrat com:';
 $lang['user']                  = 'Nom d\'usuari';
 $lang['pass']                  = 'Contrasenya';
@@ -60,6 +64,7 @@ $lang['fullname']              = 'Nom complet';
 $lang['email']                 = 'Correu electrònic';
 $lang['profile']               = 'Perfil d\'usuari';
 $lang['badlogin']              = 'Nom d\'usuari o contrasenya incorrectes.';
+$lang['badpassconfirm']        = 'Contrasenya incorrecta';
 $lang['minoredit']             = 'Canvis menors';
 $lang['draftdate']             = 'L\'esborrany s\'ha desat automàticament';
 $lang['nosecedit']             = 'Mentrestant la pàgina ha estat modificada. La informació de seccions estava obsoleta i ha calgut carregar la pàgina sencera.';
@@ -68,6 +73,7 @@ $lang['regmissing']            = 'Heu d\'omplir tots els camps.';
 $lang['reguexists']            = 'Ja existeix un altre usuari amb aquest nom.';
 $lang['regsuccess']            = 'S\'ha creat l\'usuari. La contrasenya s\'ha enviat per correu.';
 $lang['regsuccess2']           = 'S\'ha creat l\'usuari.';
+$lang['regfail']               = 'L\'usuari no pot ser creat';
 $lang['regmailfail']           = 'Sembla que un error ha impedit enviar la contrasenya per correu. Contacteu amb l\'administrador.';
 $lang['regbadmail']            = 'L\'adreça de correu que heu donat no sembla vàlida. Si creieu que això és un error, contacu amb l\'administrador.';
 $lang['regbadpass']            = 'Les dues contrasenyes no són iguals. Torneu a intentar-ho.';
@@ -77,6 +83,12 @@ $lang['profna']                = 'Aquest wiki no permet modificar el perfil';
 $lang['profnochange']          = 'No heu introduït cap canvi.';
 $lang['profnoempty']           = 'No es pot deixar en blanc el nom o l\'adreça de correu.';
 $lang['profchanged']           = 'El perfil d\'usuari s\'ha actualitzat correctament.';
+$lang['profnodelete']          = 'Aquesta wiki no permet esborrar usuaris';
+$lang['profdeleteuser']        = 'Esborrar compte';
+$lang['profdeleted']           = 'El vostre compte ha sigut esborrat d\'aquest compte';
+$lang['profconfdelete']        = 'Vull esmorrar el meu compte d\'aquesta wiki. </br> Aquesta acció no pot desfer-se.';
+$lang['profconfdeletemissing'] = 'Confirmació no acceptada';
+$lang['proffail']              = 'Perfil d\'usuari no actialitzat';
 $lang['pwdforget']             = 'Heu oblidat la contrasenya? Podeu obtenir-ne una de nova.';
 $lang['resendna']              = 'Aquest wiki no permet tornar a enviar la contrasenya.';
 $lang['resendpwd']             = 'Estableix una nova contrasenya per';
@@ -174,6 +186,9 @@ $lang['difflink']              = 'Enllaç a la visualització de la comparació'
 $lang['diff_type']             = 'Veieu les diferències:';
 $lang['diff_inline']           = 'En línia';
 $lang['diff_side']             = 'Un al costat de l\'altre';
+$lang['diffprevrev']           = 'Revisió prèvia';
+$lang['diffnextrev']           = 'Següent revisió';
+$lang['difflastrev']           = 'Ultima revisió';
 $lang['line']                  = 'Línia';
 $lang['breadcrumb']            = 'Camí:';
 $lang['youarehere']            = 'Sou aquí:';
@@ -194,6 +209,7 @@ $lang['skip_to_content']       = 'salta al contingut';
 $lang['sidebar']               = 'Barra lateral';
 $lang['mail_newpage']          = 'pàgina afegida:';
 $lang['mail_changed']          = 'pàgina modificada:';
+$lang['mail_subscribe_list']   = 'pagines canviades a l0espai de noms:';
 $lang['mail_new_user']         = 'nou usuari:';
 $lang['mail_upload']           = 'fitxer penjat:';
 $lang['changes_type']          = 'Veure els canvis de';
@@ -277,8 +293,12 @@ $lang['i_policy']              = 'Política ACL inicial';
 $lang['i_pol0']                = 'Wiki obert (tothom pot llegir, escriure i penjar fitxers)';
 $lang['i_pol1']                = 'Wiki públic (tothom pot llegir, els usuaris registrats poden escriure i penjar fitxers)';
 $lang['i_pol2']                = 'Wiki tancat (només els usuaris registrats poden llegir, escriure i penjar fitxers)';
+$lang['i_allowreg']            = 'Permet d\'autoinscripció d\'usuaris';
 $lang['i_retry']               = 'Reintenta';
 $lang['i_license']             = 'Escolliu el tipus de llicència que voleu fer servir per al vostre contingut:';
+$lang['i_license_none']        = 'No mostrar cap informació sobre llicencies';
+$lang['i_pop_field']           = 'Si us plau, ajuda\'ns a millorar la DokuWiki';
+$lang['i_pop_label']           = 'Una vegada al mes, enviar anònimament dades als programadors de la DokuWiki';
 $lang['recent_global']         = 'Esteu veient els canvis recents de l\'espai <strong>%s</strong>. També podeu veure els <a href="%s">canvis recents de tot el wiki</a>.';
 $lang['years']                 = 'fa %d anys';
 $lang['months']                = 'fa %d mesos';
@@ -311,3 +331,6 @@ $lang['media_perm_read']       = 'No teniu permisos suficients per a llegir arxi
 $lang['media_perm_upload']     = 'No teniu permisos suficients per a pujar arxius';
 $lang['media_update']          = 'Puja la nova versió';
 $lang['media_restore']         = 'Restaura aquesta versió';
+$lang['currentns']             = 'Espai de noms actual';
+$lang['searchresult']          = 'Resultats cerca';
+$lang['plainhtml']             = 'HTML pla';
