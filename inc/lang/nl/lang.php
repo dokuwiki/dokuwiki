@@ -27,6 +27,7 @@
  * @author Mijndert <mijndert@mijndertstuij.nl>
  * @author Johan Wijnker <johan@wijnker.eu>
  * @author Hugo Smet <hugo.smet@scarlet.be>
+ * @author Mark C. Prins <mprins@users.sf.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
