@@ -6,6 +6,7 @@
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  */
 $lang['menu']                  = 'Gestionnaire d\'extensions';
 $lang['tab_plugins']           = 'Greffons installés';
@@ -28,6 +29,8 @@ $lang['btn_install']           = 'Installer';
 $lang['btn_reinstall']         = 'Réinstaller';
 $lang['js']['reallydel']       = 'Vraiment désinstaller cette extension';
 $lang['js']['display_viewoptions'] = 'Voir les options:';
+$lang['js']['display_enabled'] = 'activé';
+$lang['js']['display_disabled'] = 'désactivé';
 $lang['js']['display_updatable'] = 'Mise à jour possible';
 $lang['search_for']            = 'Rechercher l\'extension :';
 $lang['search']                = 'Chercher';
