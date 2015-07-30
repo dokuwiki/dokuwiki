@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
@@ -13,6 +13,7 @@
  * @author huseyin can <huseyincan73@gmail.com>
  * @author ilker rifat kapaç <irifat@gmail.com>
  * @author İlker R. Kapaç <irifat@gmail.com>
+ * @author Mete Cuma <mcumax@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -274,6 +275,7 @@ $lang['subscr_m_unsubscribe']  = 'Üyelik iptali';
 $lang['subscr_m_subscribe']    = 'Kayıt ol';
 $lang['subscr_m_receive']      = 'Al';
 $lang['subscr_style_every']    = 'her değişiklikte e-posta gönder';
+$lang['subscr_style_list']     = 'Son e-postadan bu yana değiştirilen sayfaların listesi (her %.2f gün)';
 $lang['authtempfail']          = 'Kullanıcı doğrulama geçici olarak yapılamıyor. Eğer bu durum devam ederse lütfen Wiki yöneticine haber veriniz.';
 $lang['i_chooselang']          = 'Dili seçiniz';
 $lang['i_installer']           = 'Dokuwiki Kurulum Sihirbazı';
