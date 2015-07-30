@@ -5,5 +5,6 @@
  * 
  * @author Paulo Carmino <contato@paulocarmino.com>
  */
-$lang['userexists']            = 'Este utilizador já está inscrito. Por favor escolha outro nome de utilizador.';
+$lang['connectfail']           = 'Falha ao conectar com o banco de dados.';
+$lang['userexists']            = 'Desculpe, esse login já está sendo usado.';
 $lang['usernotexists']         = 'Desculpe, esse login não existe.';
