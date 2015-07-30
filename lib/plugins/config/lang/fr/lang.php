@@ -22,6 +22,7 @@
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -203,6 +204,7 @@ $lang['xsendfile_o_2']         = 'Entête standard X-Sendfile';
 $lang['xsendfile_o_3']         = 'En-tête propriétaire Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Identifiant de l\'utilisateur';
 $lang['showuseras_o_username'] = 'Nom de l\'utilisateur';
+$lang['showuseras_o_username_link'] = 'Nom complet de l\'utilisateur en tant que lien interwiki';
 $lang['showuseras_o_email']    = 'Courriel de l\'utilisateur (brouillé suivant les paramètres de brouillage sélectionnés)';
 $lang['showuseras_o_email_link'] = 'Courriel de l\'utilisateur en tant que lien mailto:';
 $lang['useheading_o_0']        = 'Jamais';
