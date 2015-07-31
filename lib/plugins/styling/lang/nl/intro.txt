@@ -1,0 +1,2 @@
+Deze tool laat u toe om bepaalde stijl instellingen van uw huidig geselecteerd sjabloon aan te passen.
+Alle aanpassingen worden in een lokaal configuratie bestand bewaard en zijn upgrade veilig.

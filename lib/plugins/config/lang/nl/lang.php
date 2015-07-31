@@ -17,6 +17,7 @@
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
  * @author Hugo Smet <hugo.smet@scarlet.be>
+ * @author hugo smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -92,6 +93,7 @@ $lang['disableactions_subscription'] = 'Inschrijven/opzeggen';
 $lang['disableactions_wikicode'] = 'Bron bekijken/exporteer rauw';
 $lang['disableactions_profile_delete'] = 'Schrap eigen account';
 $lang['disableactions_other']  = 'Andere akties (gescheiden door komma\'s)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Authenticatiebeveiligings-timeout (seconden)';
 $lang['securecookie']          = 'Moeten cookies die via HTTPS gezet zijn alleen via HTTPS verzonden worden door de browser? Zet deze optie uit als alleen het inloggen op de wiki beveiligd is, maar het gebruik verder niet.';
 $lang['remote']                = 'Activeer het remote API-systeem. Hiermee kunnen andere applicaties de wiki benaderen via XML-RPC of andere mechanismen.';
