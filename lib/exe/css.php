@@ -59,7 +59,6 @@ function css_out(){
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
     $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
     $cache_files[] = __FILE__;
     if($INPUT->bool('preview')) $cache_files[] = $conf['cachedir'].'/preview.ini';
@@ -275,23 +274,6 @@ function css_styleini($tpl, $preview=false) {
     $incbase = tpl_incdir($tpl);
     $webbase = tpl_basedir($tpl);
     $ini = $incbase.'style.ini';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // load template's style.local.ini
-    // @deprecated 2013-08-03
-    $ini = $incbase.'style.local.ini';
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
