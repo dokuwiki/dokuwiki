@@ -648,8 +648,6 @@ function tpl_get_action($type) {
     $nofollow    = true;
     $replacement = '';
 
-    $hook = 'TEMPLATE_ACTION_GET';
-
     $data['accesskey'] = &$accesskey;
     $data['type'] = &$type;
     $data['id'] = &$id;
@@ -658,7 +656,7 @@ function tpl_get_action($type) {
     $data['nofollow'] = &$nofollow;
     $data['replacement'] = &$replacement;
 
-    $evt = new Doku_Event($hook, $data);
+    $evt = new Doku_Event('TPL_ACTION_GET', $data);
 
     if($evt->advise_before()) {
         switch($type) {
