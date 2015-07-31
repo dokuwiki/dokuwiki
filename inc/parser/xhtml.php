@@ -914,7 +914,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // is there still an URL?
         if(!$url) {
-            $this->doc .= $name;
+            if($returnonly) {
+                return $name;
+            } else {
+                $this->doc .= $name;
+            }
             return;
         }
 
