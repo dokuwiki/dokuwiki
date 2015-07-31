@@ -5,7 +5,7 @@
  * 
  * @author hugo smet <hugo.smet@scarlet.be>
  */
-$lang['__background_site__']   = 'Kleur voor de echter ondergrond (achter de inhoud kader)';
+$lang['__background_site__']   = 'Kleur voor de onderste ondergrond (achter de inhoud kader)';
 $lang['__link__']              = 'Kleur voor algemene link';
 $lang['__existing__']          = 'Kleur voor link naar bestaande pagina\'s.';
 $lang['__missing__']           = 'Kleur voor link naar onbestaande pagina\'s';
