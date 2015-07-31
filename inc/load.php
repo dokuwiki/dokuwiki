@@ -71,7 +71,6 @@ function load_autoload($name){
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
-        'TarLib'                => DOKU_INC.'inc/TarLib.class.php',
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
         'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',

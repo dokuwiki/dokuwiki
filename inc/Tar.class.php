@@ -43,6 +43,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Bouchon <tarlib@bouchon.org> (Maxg)
  * @license GPL 2
+ * @deprecated 2015-05-15 - use splitbrain\PHPArchive\Tar instead
  */
 class Tar {
 
