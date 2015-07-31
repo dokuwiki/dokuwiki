@@ -656,6 +656,7 @@ function tpl_get_action($type) {
     $data['method'] = &$method;
     $data['params'] = &$params;
     $data['nofollow'] = &$nofollow;
+    $data['replacement'] = &$replacement;
 
     $evt = new Doku_Event($hook, $data);
 
