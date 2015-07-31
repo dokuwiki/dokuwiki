@@ -887,29 +887,6 @@ if (!class_exists('setting_email')) {
     }
 }
 
-/**
- * @deprecated 2013-02-16
- */
-if (!class_exists('setting_richemail')) {
-    /**
-     * Class setting_richemail
-     */
-    class setting_richemail extends setting_email {
-        /**
-         * update changed setting with user provided value $input
-         * - if changed value fails error check, save it
-         *
-         * @param  mixed   $input   the new value
-         * @return boolean          true if changed, false otherwise (also on error)
-         */
-        function update($input) {
-            $this->_placeholders = true;
-            return parent::update($input);
-        }
-    }
-}
-
-
 if (!class_exists('setting_numeric')) {
     /**
      * Class setting_numeric
