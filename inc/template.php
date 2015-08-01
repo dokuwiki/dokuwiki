@@ -647,6 +647,8 @@ function tpl_get_action($type) {
     $params      = array('do' => $type);
     $nofollow    = true;
     $replacement = '';
+
+    $unknown = false;
     switch($type) {
         case 'edit':
             // most complicated type - we need to decide on current action
@@ -771,9 +773,23 @@ function tpl_get_action($type) {
             //$type = 'media';
             break;
         default:
-            return '[unknown %s type]';
+            //unknown type
+            $unknown = true;
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
+
+    $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
+
+    $evt = new Doku_Event('TPL_ACTION_UNKNOWN', $data);
+    if($evt->advise_before()) {
+        //handle unknown types
+        if($unknown) {
+            $data = '[unknown %s type]'.$type;
+        }
+    }
+    $evt->advise_after();
+    unset($evt);
+
+    return $data;
 }
 
 /**
