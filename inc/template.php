@@ -783,7 +783,7 @@ function tpl_get_action($type) {
     if($evt->advise_before()) {
         //handle unknown types
         if($unknown) {
-            $data = '[unknown %s type]'.$type;
+            $data = '[unknown %s type]';
         }
     }
     $evt->advise_after();
