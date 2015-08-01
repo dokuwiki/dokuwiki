@@ -316,7 +316,7 @@ class Form extends Element {
             $type = $this->elements[$pos]->getType();
             if($type == 'fieldsetopen') {
                 if($isopen) {
-                    //close previous feldset
+                    //close previous fieldset
                     $this->addFieldsetClose($pos);
                     $lastclose = $pos + 1;
                     $pos++;
