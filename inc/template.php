@@ -779,7 +779,7 @@ function tpl_get_action($type) {
 
     $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 
-    $evt = new Doku_Event('TPL_ACTION_UNKNOWN', $data);
+    $evt = new Doku_Event('TPL_ACTION_GET', $data);
     if($evt->advise_before()) {
         //handle unknown types
         if($unknown) {
