@@ -37,6 +37,7 @@
  * @author YoBoY <yoboy@ubuntu-fr.org>
  * @author james <j.mccann@celcat.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
+ * @author Floriang <antispam@floriang.eu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -68,7 +69,7 @@ $lang['btn_update']            = 'Mettre à jour';
 $lang['btn_delete']            = 'Effacer';
 $lang['btn_back']              = 'Retour';
 $lang['btn_backlink']          = 'Liens de retour';
-$lang['btn_subscribe']         = 'Gérer souscriptions';
+$lang['btn_subscribe']         = 'Gérer les abonnements';
 $lang['btn_profile']           = 'Mettre à jour le profil';
 $lang['btn_reset']             = 'Réinitialiser';
 $lang['btn_resendpwd']         = 'Définir un nouveau mot de passe';
@@ -285,18 +286,18 @@ $lang['img_camera']            = 'Appareil photo:';
 $lang['img_keywords']          = 'Mots-clés:';
 $lang['img_width']             = 'Largeur:';
 $lang['img_height']            = 'Hauteur:';
-$lang['subscr_subscribe_success'] = '%s a été ajouté à la liste de souscription de %s';
-$lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste de souscription de %s';
-$lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste de souscription';
-$lang['subscr_unsubscribe_success'] = '%s a été supprimé de la liste de souscription de %s';
-$lang['subscr_unsubscribe_error'] = 'Erreur au retrait de %s de la liste de souscription de %s';
-$lang['subscr_already_subscribed'] = '%s est déjà souscrit à %s';
-$lang['subscr_not_subscribed'] = '%s n\'est pas souscrit à %s';
-$lang['subscr_m_not_subscribed'] = 'Vous n\'avez pas souscrit pour l\'instant à la page actuelle ou à la catégorie';
-$lang['subscr_m_new_header']   = 'Ajouter une souscription';
-$lang['subscr_m_current_header'] = 'Souscriptions actives';
-$lang['subscr_m_unsubscribe']  = 'Annuler la souscription';
-$lang['subscr_m_subscribe']    = 'Souscrire';
+$lang['subscr_subscribe_success'] = '%s a été ajouté à la liste des abonnés de %s';
+$lang['subscr_subscribe_error'] = 'Erreur à l\'ajout de %s à la liste des abonnés de %s';
+$lang['subscr_subscribe_noaddress'] = 'Il n\'y a pas d\'adresse associée à votre identifiant, vous ne pouvez pas être ajouté à la liste des abonnés.';
+$lang['subscr_unsubscribe_success'] = '%s a été supprimé de la liste des abonnés de %s';
+$lang['subscr_unsubscribe_error'] = 'Erreur au retrait de %s de la liste des abonnés de %s';
+$lang['subscr_already_subscribed'] = '%s est déjà abonné à %s';
+$lang['subscr_not_subscribed'] = '%s n\'est pas abonné à %s';
+$lang['subscr_m_not_subscribed'] = 'Vous n\'êtes pour l\'instant pas abonné à la page actuelle ou à la catégorie';
+$lang['subscr_m_new_header']   = 'Ajouter un abonnement';
+$lang['subscr_m_current_header'] = 'Abonnements actifs';
+$lang['subscr_m_unsubscribe']  = 'Annuler l\'abonnement';
+$lang['subscr_m_subscribe']    = 'S\'abonner';
 $lang['subscr_m_receive']      = 'Recevoir';
 $lang['subscr_style_every']    = 'Recevoir un courriel à chaque modification';
 $lang['subscr_style_digest']   = 'Courriel, tous les %.2f jours, résumant les modifications de chaque page';
