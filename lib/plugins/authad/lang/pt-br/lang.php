@@ -8,3 +8,5 @@
  */
 $lang['domain']                = 'Domínio de "Logon"';
 $lang['authpwdexpire']         = 'Sua senha vai expirar em %d dias. Você deve mudá-la assim que for possível.';
+$lang['passchangefail']        = 'Não foi possível alterar a senha. Pode ser algum conflito com a política de senhas.';
+$lang['connectfail']           = 'Não foi possível conectar ao servidor Active Directory.';
