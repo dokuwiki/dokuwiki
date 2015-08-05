@@ -1,0 +1,2 @@
+Essa ferramente permite a alteração de certas configurações do estilo do seu modelo atual.
+Todas as modificações são armazenadas em um arquivo de configuração local e estão protegidas contra atualizações.
