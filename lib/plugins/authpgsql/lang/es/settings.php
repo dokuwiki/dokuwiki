@@ -6,6 +6,7 @@
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author pokesakura <pokesakura@gmail.com>
+ * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['server']                = 'Su servidor PostgreSQL';
 $lang['port']                  = 'Puerto de su servidor PostgreSQL';
@@ -35,4 +36,6 @@ $lang['UpdateLogin']           = 'Sentencia de actualizacion para el login del u
 $lang['UpdatePass']            = 'Sentencia de actualizacion para el password del usuario';
 $lang['UpdateEmail']           = 'Sentencia de actualizacion del correo electrónico del usuario';
 $lang['UpdateName']            = 'Sentencia de actualizacion del nombre completo del usuario';
+$lang['UpdateTarget']          = 'Cláusula limite para identificar al usuario cuando se actualiza';
+$lang['delUserGroup']          = 'Sentencia SQL para eliminar un usuario de un grupo determinado';
 $lang['getGroupID']            = 'Sentencia SQL para obtener la clave principal de un grupo dado';

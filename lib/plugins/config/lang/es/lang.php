@@ -1,8 +1,8 @@
 <?php
+
 /**
- * spanish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Miguel Pagano <miguel.pagano@gmail.com>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
@@ -24,6 +24,7 @@
  * @author Ruben Figols <ruben.figols@gmail.com>
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López mercelz@gmail.com
+ * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['menu']                  = 'Parámetros de configuración';
 $lang['error']                 = 'Los parámetros no han sido actualizados a causa de un valor inválido, por favor revise los cambios y re-envíe el formulario. <br /> Los valores incorrectos se mostrarán con un marco rojo alrededor.';
@@ -97,7 +98,9 @@ $lang['disableactions']        = 'Deshabilitar acciones DokuWiki';
 $lang['disableactions_check']  = 'Controlar';
 $lang['disableactions_subscription'] = 'Suscribirse/Cancelar suscripción';
 $lang['disableactions_wikicode'] = 'Ver la fuente/Exportar en formato raw';
+$lang['disableactions_profile_delete'] = 'Borrar tu propia cuenta';
 $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
+$lang['disableactions_rss']    = 'Sindicación XML (RSS)';
 $lang['auth_security_timeout'] = 'Tiempo de Autenticación (en segundos), por motivos de seguridad';
 $lang['securecookie']          = 'Las cookies establecidas por HTTPS, ¿el naveagdor solo puede enviarlas por HTTPS? Inhabilite esta opción cuando solo se asegure con SSL la entrada, pero no la navegación de su wiki.';
 $lang['remote']                = 'Activar el sistema API remoto. Esto permite a otras aplicaciones acceder al wiki a traves de XML-RPC u otros mecanismos.';
@@ -202,6 +205,7 @@ $lang['xsendfile_o_2']         = 'Encabezado X-Sendfile estándar';
 $lang['xsendfile_o_3']         = 'Encabezado propietario Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Nombre de entrada';
 $lang['showuseras_o_username'] = 'Nombre completo del usuario';
+$lang['showuseras_o_username_link'] = 'Nombre completo del usuario como enlace de usuario interwiki';
 $lang['showuseras_o_email']    = 'Dirección de correo electrónico del usuario (ofuscada según la configuración de "mailguard")';
 $lang['showuseras_o_email_link'] = 'Dirección de correo de usuario como enlace de envío de correo';
 $lang['useheading_o_0']        = 'Nunca';
