@@ -5,6 +5,7 @@
  * 
  * @author Domingo Redal <docxml@gmail.com>
  */
-$lang['userexists']            = 'Lo siento, ya existe un usuario con este nombre.';
+$lang['connectfail']           = 'Error al conectar con la base de datos.';
+$lang['userexists']            = 'Lo sentimos, ya existe un usuario con ese inicio de sesión.';
 $lang['usernotexists']         = 'Lo sentimos, no existe ese usuario.';
 $lang['writefail']             = 'No es posible modificar los datos del usuario. Por favor, informa al Administrador del Wiki';
