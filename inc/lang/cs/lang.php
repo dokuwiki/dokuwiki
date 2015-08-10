@@ -15,8 +15,10 @@
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
- * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Petr Klíma <qaxi@seznam.cz>
+ * @author Radovan Buroň <radovan@buron.cz>
+ * @author Viktor Zavadil <vzavadil@newps.cz>
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -61,7 +63,9 @@ $lang['btn_register']          = 'Registrovat';
 $lang['btn_apply']             = 'Použít';
 $lang['btn_media']             = 'Správa médií';
 $lang['btn_deleteuser']        = 'Odstranit můj účet';
-$lang['loggedinas']            = 'Přihlášen(a) jako';
+$lang['btn_img_backto']        = 'Zpět na %s';
+$lang['btn_mediaManager']      = 'Zobrazit ve správě médií';
+$lang['loggedinas']            = 'Přihlášen(a) jako:';
 $lang['user']                  = 'Uživatelské jméno';
 $lang['pass']                  = 'Heslo';
 $lang['newpass']               = 'Nové heslo';
@@ -76,6 +80,7 @@ $lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
+$lang['searchcreatepage']      = "Pokud jste nenašli, co hledáte, zkuste požadovanou stránku sami vytvořit stisknutím tlačítka ''Vytvořit stránku''.";
 $lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
 $lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno mailem.';
@@ -106,8 +111,8 @@ $lang['license']               = 'Kromě míst, kde je explicitně uvedeno jinak
 $lang['licenseok']             = 'Poznámka: Tím, že editujete tuto stránku, souhlasíte, aby váš obsah byl licencován pod následující licencí:';
 $lang['searchmedia']           = 'Hledat jméno souboru:';
 $lang['searchmedia_in']        = 'Hledat v %s';
-$lang['txt_upload']            = 'Vyberte soubor jako přílohu';
-$lang['txt_filename']          = 'Wiki jméno (volitelné)';
+$lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
+$lang['txt_filename']          = 'Wiki jméno (volitelné):';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
 $lang['maxuploadsize']         = 'Max. velikost souboru %s';
 $lang['lockedby']              = 'Právě zamknuto:';
@@ -192,10 +197,13 @@ $lang['difflink']              = 'Odkaz na výstup diff';
 $lang['diff_type']             = 'Zobrazit rozdíly:';
 $lang['diff_inline']           = 'Vložené';
 $lang['diff_side']             = 'Přidané';
+$lang['diffprevrev']           = 'Předchozí verze';
+$lang['diffnextrev']           = 'Následující verze';
+$lang['difflastrev']           = 'Poslední revize';
 $lang['line']                  = 'Řádek';
-$lang['breadcrumb']            = 'Historie';
-$lang['youarehere']            = 'Umístění';
-$lang['lastmod']               = 'Poslední úprava';
+$lang['breadcrumb']            = 'Historie:';
+$lang['youarehere']            = 'Umístění:';
+$lang['lastmod']               = 'Poslední úprava:';
 $lang['by']                    = 'autor:';
 $lang['deleted']               = 'odstraněno';
 $lang['created']               = 'vytvořeno';
@@ -248,20 +256,18 @@ $lang['admin_register']        = 'Přidat nového uživatele';
 $lang['metaedit']              = 'Upravit Metadata';
 $lang['metasaveerr']           = 'Chyba při zápisu metadat';
 $lang['metasaveok']            = 'Metadata uložena';
-$lang['btn_img_backto']        = 'Zpět na %s';
-$lang['img_title']             = 'Titulek';
-$lang['img_caption']           = 'Popis';
-$lang['img_date']              = 'Datum';
-$lang['img_fname']             = 'Jméno souboru';
-$lang['img_fsize']             = 'Velikost';
-$lang['img_artist']            = 'Autor fotografie';
-$lang['img_copyr']             = 'Copyright';
-$lang['img_format']            = 'Formát';
-$lang['img_camera']            = 'Typ fotoaparátu';
-$lang['img_keywords']          = 'Klíčová slova';
-$lang['img_width']             = 'Šířka';
-$lang['img_height']            = 'Výška';
-$lang['btn_mediaManager']           = 'Zobrazit ve správě médií';
+$lang['img_title']             = 'Titulek:';
+$lang['img_caption']           = 'Popis:';
+$lang['img_date']              = 'Datum:';
+$lang['img_fname']             = 'Jméno souboru:';
+$lang['img_fsize']             = 'Velikost:';
+$lang['img_artist']            = 'Autor fotografie:';
+$lang['img_copyr']             = 'Copyright:';
+$lang['img_format']            = 'Formát:';
+$lang['img_camera']            = 'Typ fotoaparátu:';
+$lang['img_keywords']          = 'Klíčová slova:';
+$lang['img_width']             = 'Šířka:';
+$lang['img_height']            = 'Výška:';
 $lang['subscr_subscribe_success'] = '%s byl přihlášen do seznamu odběratelů %s';
 $lang['subscr_subscribe_error'] = 'Došlo k chybě při přihlašování %s do seznamu odběratelů %s';
 $lang['subscr_subscribe_noaddress'] = 'K Vašemu loginu neexistuje žádná adresa, nemohl jste být přihlášen do seznamu odběratelů.';

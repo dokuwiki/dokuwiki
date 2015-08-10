@@ -1,5 +1,5 @@
 ====== Bilaketa ======
 
-Emaitzak ondorengo aurkiketan bilatu ditzakezu. Bilatzen zabiltzana aurkitu ez baduzu, zuk zeuk sortu dezakezu orri berri bat bilaketa ostean ''Sortu orri hau'' erabiliz.
+Emaitzak ondorengo aurkiketan bilatu ditzakezu. @CREATEPAGEINFO@
 
 ===== Bilaketa emaitzak: =====

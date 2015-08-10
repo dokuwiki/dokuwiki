@@ -602,30 +602,47 @@ function css_comment_cb($matches){
 function css_onelinecomment_cb($matches) {
     $line = $matches[0];
 
-    $out = '';
     $i = 0;
     $len = strlen($line);
+
     while ($i< $len){
         $nextcom = strpos($line, '//', $i);
         $nexturl = stripos($line, 'url(', $i);
 
         if($nextcom === false) {
             // no more comments, we're done
-            $out .= substr($line, $i, $len-$i);
+            $i = $len;
             break;
         }
+
+        // keep any quoted string that starts before a comment
+        $nextsqt = strpos($line, "'", $i);
+        $nextdqt = strpos($line, '"', $i);
+        if(min($nextsqt, $nextdqt) < $nextcom) {
+            $skipto = false;
+            if($nextsqt !== false && ($nextdqt === false || $nextsqt < $nextdqt)) {
+                $skipto = strpos($line, "'", $nextsqt+1) +1;
+            } else if ($nextdqt !== false) {
+                $skipto = strpos($line, '"', $nextdqt+1) +1;
+            }
+
+            if($skipto !== false) {
+                $i = $skipto;
+                continue;
+            }
+        }
+
         if($nexturl === false || $nextcom < $nexturl) {
             // no url anymore, strip comment and be done
-            $out .= substr($line, $i, $nextcom-$i);
+            $i = $nextcom;
             break;
         }
+
         // we have an upcoming url
-        $urlclose = strpos($line, ')', $nexturl);
-        $out .= substr($line, $i, $urlclose-$i);
-        $i = $urlclose;
+        $i = strpos($line, ')', $nexturl);
     }
 
-    return $out;
+    return substr($line, 0, $i);
 }
 
 //Setup VIM: ex: et ts=4 :

@@ -23,8 +23,8 @@
  * @author Remon <no@email.local>
  */
 $lang['admin_acl']             = 'Toegangsrechten';
-$lang['acl_group']             = 'Groep';
-$lang['acl_user']              = 'Gebruiker';
+$lang['acl_group']             = 'Groep:';
+$lang['acl_user']              = 'Gebruiker:';
 $lang['acl_perms']             = 'Permissies voor';
 $lang['page']                  = 'Pagina';
 $lang['namespace']             = 'Namespace';

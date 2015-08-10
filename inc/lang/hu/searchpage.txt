@@ -1,5 +1,5 @@
 ====== Keresés ======
 
-A keresés eredményét lentebb láthatod. Ha nem találtad meg amit kerestél, akkor létrehozhatsz egy új oldalt a keresésed alapján ''Az oldal szerkesztése'' gombbal.
+A keresés eredményét lentebb láthatod. @CREATEPAGEINFO@
 
 ===== Eredmény(ek) =====

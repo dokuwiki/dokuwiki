@@ -229,14 +229,15 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * at least these fields:
      *
      * name string  full name of the user
-     * mail string  email addres of the user
+     * mail string  email address of the user
      * grps array   list of groups the user is in
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param   string $user the user name
+     * @param   bool $requireGroups whether or not the returned data must include groups
      * @return  array containing user data or false
      */
-    public function getUserData($user) {
+    public function getUserData($user, $requireGroups=true) {
         if(!$this->cando['external']) msg("no valid authorisation system in use", -1);
         return false;
     }

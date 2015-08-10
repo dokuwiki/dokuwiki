@@ -1,1 +1,5 @@
-====== Rezultati pretraživanja ======
+====== Pretraživanja ======
+
+Možete naći rezultat vaše pretrage u nastavku. @CREATEPAGEINFO@
+
+====== Rezultati ======

@@ -46,7 +46,7 @@ require_once(DOKU_INC.'inc/init.php');
 // get merged style.ini
 define('SIMPLE_TEST', true); // hack to prevent css output and headers
 require_once(DOKU_INC.'lib/exe/css.php');
-$ini = css_styleini(tpl_incdir());
+$ini = css_styleini($conf['template']);
 
 if ($ini) {
     echo '<table>';

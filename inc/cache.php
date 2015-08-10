@@ -178,6 +178,7 @@ class cache_parser extends cache {
 
     public $file = '';       // source file for cache
     public $mode = '';       // input mode (represents the processing the input file will undergo)
+    public $page = '';
 
     var $_event = 'PARSER_CACHE_USE';
 

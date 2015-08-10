@@ -1,5 +1,5 @@
 ====== Search ======
 
-You can find the results of your search below. If you didn't find what you were looking for, you can create or edit the page named after your query with the appropriate tool.
+You can find the results of your search below. @CREATEPAGEINFO@
 
 ===== Results =====

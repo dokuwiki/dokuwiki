@@ -779,8 +779,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         }
 
         echo '<select name="acl_t" class="edit">'.NL;
-        echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').':</option>'.NL;
-        echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').':</option>'.NL;
+        echo '  <option value="__g__" class="aclgroup"'.$gsel.'>'.$this->getLang('acl_group').'</option>'.NL;
+        echo '  <option value="__u__"  class="acluser"'.$usel.'>'.$this->getLang('acl_user').'</option>'.NL;
         if (!empty($this->specials)) {
             echo '  <optgroup label="&#160;">'.NL;
             foreach($this->specials as $ug){

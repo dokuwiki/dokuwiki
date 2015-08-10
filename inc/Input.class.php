@@ -21,6 +21,11 @@ class Input {
     protected $access;
 
     /**
+     * @var Callable
+     */
+    protected $filter;
+
+    /**
      * Intilizes the Input class and it subcomponents
      */
     function __construct() {
@@ -28,6 +33,32 @@ class Input {
         $this->post   = new PostInput();
         $this->get    = new GetInput();
         $this->server = new ServerInput();
+    }
+
+    /**
+     * Apply the set filter to the given value
+     *
+     * @param string $data
+     * @return string
+     */
+    protected function applyfilter($data){
+        if(!$this->filter) return $data;
+        return call_user_func($this->filter, $data);
+    }
+
+    /**
+     * Return a filtered copy of the input object
+     *
+     * Expects a callable that accepts one string parameter and returns a filtered string
+     *
+     * @param Callable|string $filter
+     * @return Input
+     */
+    public function filter($filter='stripctl'){
+        $this->filter = $filter;
+        $clone = clone $this;
+        $this->filter = '';
+        return $clone;
     }
 
     /**
@@ -77,8 +108,9 @@ class Input {
      */
     public function param($name, $default = null, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
-        if($nonempty && empty($this->access[$name])) return $default;
-        return $this->access[$name];
+        $value = $this->applyfilter($this->access[$name]);
+        if($nonempty && empty($value)) return $default;
+        return $value;
     }
 
     /**
@@ -121,10 +153,11 @@ class Input {
     public function int($name, $default = 0, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default;
-        if($this->access[$name] === '') return $default;
-        if($nonempty && empty($this->access[$name])) return $default;
+        $value = $this->applyfilter($this->access[$name]);
+        if($value === '') return $default;
+        if($nonempty && empty($value)) return $default;
 
-        return (int) $this->access[$name];
+        return (int) $value;
     }
 
     /**
@@ -138,9 +171,10 @@ class Input {
     public function str($name, $default = '', $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default;
-        if($nonempty && empty($this->access[$name])) return $default;
+        $value = $this->applyfilter($this->access[$name]);
+        if($nonempty && empty($value)) return $default;
 
-        return (string) $this->access[$name];
+        return (string) $value;
     }
 
     /**
@@ -158,7 +192,8 @@ class Input {
     public function valid($name, $valids, $default = null) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default; // we don't allow arrays
-        $found = array_search($this->access[$name], $valids);
+        $value = $this->applyfilter($this->access[$name]);
+        $found = array_search($value, $valids);
         if($found !== false) return $valids[$found]; // return the valid value for type safety
         return $default;
     }
@@ -176,10 +211,11 @@ class Input {
     public function bool($name, $default = false, $nonempty = false) {
         if(!isset($this->access[$name])) return $default;
         if(is_array($this->access[$name])) return $default;
-        if($this->access[$name] === '') return $default;
-        if($nonempty && empty($this->access[$name])) return $default;
+        $value = $this->applyfilter($this->access[$name]);
+        if($value === '') return $default;
+        if($nonempty && empty($value)) return $default;
 
-        return (bool) $this->access[$name];
+        return (bool) $value;
     }
 
     /**

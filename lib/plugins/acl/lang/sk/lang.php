@@ -9,8 +9,8 @@
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['admin_acl']             = 'Správa zoznamu prístupových práv';
-$lang['acl_group']             = 'Skupina';
-$lang['acl_user']              = 'Užívateľ';
+$lang['acl_group']             = 'Skupina:';
+$lang['acl_user']              = 'Užívateľ:';
 $lang['acl_perms']             = 'Práva pre';
 $lang['page']                  = 'Stránka';
 $lang['namespace']             = 'Menný priestor';

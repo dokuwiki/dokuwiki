@@ -203,7 +203,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  *
  * @author             Andreas Gohr <andi@splitbrain.org>
  * @param string $id media id
- * @param int $auth current auth check result
+ * @param int $auth no longer used
  * @return int One of: 0,
  *                     DOKU_MEDIA_DELETED,
  *                     DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS,
@@ -212,6 +212,7 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  */
 function media_delete($id,$auth){
     global $lang;
+    $auth = auth_quickaclcheck(ltrim(getNS($id).':*', ':'));
     if($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if(media_inuse($id)) return DOKU_MEDIA_INUSE;
 
@@ -581,6 +582,12 @@ function media_notify($id,$file,$mime,$old_rev=false){
 
 /**
  * List all files in a given Media namespace
+ *
+ * @param string        $ns             namespace
+ * @param null|int      $auth           permission level
+ * @param string        $jump
+ * @param bool          $fullscreenview
+ * @param bool|string   $sort           sorting, false skips sorting
  */
 function media_filelist($ns,$auth=null,$jump='',$fullscreenview=false,$sort=false){
     global $conf;
@@ -1042,7 +1049,7 @@ function media_details($image, $auth, $rev=false, $meta=false) {
     foreach($tags as $tag){
         if ($tag['value']) {
             $value = cleanText($tag['value']);
-            echo '<dt>'.$lang[$tag['tag'][1]].':</dt><dd>';
+            echo '<dt>'.$lang[$tag['tag'][1]].'</dt><dd>';
             if ($tag['tag'][2] == 'date') echo dformat($value);
             else echo hsc($value);
             echo '</dd>'.NL;
@@ -1225,7 +1232,7 @@ function media_file_diff($image, $l_rev, $r_rev, $ns, $auth, $fromajax){
         foreach($tags as $tag){
             $value = cleanText($tag['value']);
             if (!$value) $value = '-';
-            echo '<dt>'.$lang[$tag['tag'][1]].':</dt>';
+            echo '<dt>'.$lang[$tag['tag'][1]].'</dt>';
             echo '<dd>';
             if ($tag['highlighted']) {
                 echo '<strong>';
@@ -1654,10 +1661,10 @@ function media_uploadform($ns, $auth, $fullscreen = false){
     $form->addElement(formSecurityToken());
     $form->addHidden('ns', hsc($ns));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeFileField('upload', $lang['txt_upload'].':', 'upload__file'));
+    $form->addElement(form_makeFileField('upload', $lang['txt_upload'], 'upload__file'));
     $form->addElement(form_makeCloseTag('p'));
     $form->addElement(form_makeOpenTag('p'));
-    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'].':', 'upload__name'));
+    $form->addElement(form_makeTextField('mediaid', noNS($id), $lang['txt_filename'], 'upload__name'));
     $form->addElement(form_makeButton('submit', '', $lang['btn_upload']));
     $form->addElement(form_makeCloseTag('p'));
 

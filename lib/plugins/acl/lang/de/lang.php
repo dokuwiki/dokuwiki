@@ -23,8 +23,8 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  */
 $lang['admin_acl']             = 'Zugangsverwaltung';
-$lang['acl_group']             = 'Gruppe';
-$lang['acl_user']              = 'Benutzer';
+$lang['acl_group']             = 'Gruppe:';
+$lang['acl_user']              = 'Benutzer:';
 $lang['acl_perms']             = 'Berechtigungen für';
 $lang['page']                  = 'Seite';
 $lang['namespace']             = 'Namensraum';

@@ -1,1 +1,1 @@
-Dit zijn de momenteel in uw Dokuwiki geïnstalleerde plugins. U kunt deze hier aan of uitschakelen danwel geheel deïnstalleren. Plugin updates zijn hier ook opgenomen, lees de pluin documentatie voordat u update.
+Dit zijn de momenteel in uw Dokuwiki geïnstalleerde plugins. U kunt deze hier aan of uitschakelen danwel geheel deïnstalleren. Plugin updates zijn hier ook opgenomen, lees de plugin documentatie voordat u update.

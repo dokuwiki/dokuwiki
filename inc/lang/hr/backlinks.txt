@@ -1,3 +1,3 @@
-====== Linkovi na stranicu ======
+====== Veze na stranicu ======
 
-Slijedi spisak svih dokumenata koji imaju link na trenutni.
+Slijedi spisak svih stanica koje imaju vezu na trenutnu stranicu.

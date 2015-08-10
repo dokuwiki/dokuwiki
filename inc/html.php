@@ -222,6 +222,7 @@ function html_show($txt=null){
     global $REV;
     global $HIGH;
     global $INFO;
+    global $DATE_AT;
     //disable section editing for old revisions or in preview
     if($txt || $REV){
         $secedit = false;
@@ -241,8 +242,8 @@ function html_show($txt=null){
         echo '</div></div>';
 
     }else{
-        if ($REV) print p_locale_xhtml('showrev');
-        $html = p_wiki_xhtml($ID,$REV,true);
+        if ($REV||$DATE_AT) print p_locale_xhtml('showrev');
+        $html = p_wiki_xhtml($ID,$REV,true,$DATE_AT);
         $html = html_secedit($html,$secedit);
         if($INFO['prependTOC']) $html = tpl_toc(true).$html;
         $html = html_hilight($html,$HIGH);
@@ -314,15 +315,17 @@ function html_hilight_callback($m) {
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function html_search(){
-    global $QUERY;
+    global $QUERY, $ID;
     global $lang;
 
     $intro = p_locale_xhtml('searchpage');
     // allow use of placeholder in search intro
+    $pagecreateinfo = (auth_quickaclcheck($ID) >= AUTH_CREATE) ? $lang['searchcreatepage'] : '';
     $intro = str_replace(
-                array('@QUERY@','@SEARCH@'),
-                array(hsc(rawurlencode($QUERY)),hsc($QUERY)),
-                $intro);
+        array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
+        array(hsc(rawurlencode($QUERY)), hsc($QUERY), $pagecreateinfo),
+        $intro
+    );
     echo $intro;
     flush();
 
@@ -411,8 +414,8 @@ function html_locked(){
 
     print p_locale_xhtml('locked');
     print '<ul>';
-    print '<li><div class="li"><strong>'.$lang['lockedby'].':</strong> '.editorinfo($INFO['locked']).'</div></li>';
-    print '<li><div class="li"><strong>'.$lang['lockexpire'].':</strong> '.$expire.' ('.$min.' min)</div></li>';
+    print '<li><div class="li"><strong>'.$lang['lockedby'].'</strong> '.editorinfo($INFO['locked']).'</div></li>';
+    print '<li><div class="li"><strong>'.$lang['lockexpire'].'</strong> '.$expire.' ('.$min.' min)</div></li>';
     print '</ul>';
 }
 
@@ -922,6 +925,14 @@ function html_li_default($item){
  * a member of an object.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array    $data  array with item arrays
+ * @param string   $class class of ul wrapper
+ * @param callable $func  callback to print an list item
+ * @param string   $lifunc callback to the opening li tag
+ * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
+                                 0 (we have a root object) or 1 (just the root content)
+ * @return string html of an unordered list
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
     if (count($data) === 0) {

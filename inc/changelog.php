@@ -18,6 +18,9 @@ define('DOKU_CHANGE_TYPE_REVERT',       'R');
  * parses a changelog line into it's components
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $line changelog line
+ * @return array|bool parsed line or false
  */
 function parseChangelogLine($line) {
     $tmp = explode("\t", $line);
@@ -43,7 +46,7 @@ function parseChangelogLine($line) {
  * @param String $summary   Summary of the change
  * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
- *                             Availible flags:
+ *                             Available flags:
  *                             - ExternalEdit - mark as an external edit.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -116,6 +119,15 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param int    $date      Timestamp of the change
+ * @param String $id        Name of the affected page
+ * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
+ * @param String $summary   Summary of the change
+ * @param mixed  $extra     In case of a revert the revision (timestmp) of the reverted page
+ * @param array  $flags     Additional flags in a key value array.
+ *                             Available flags:
+ *                             - (none, so far)
  */
 function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
     global $conf;
@@ -294,6 +306,12 @@ function getRecentsSince($from,$to=null,$ns='',$flags=0){
  * @see getRecents()
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $line   changelog line
+ * @param string $ns     restrict to given namespace
+ * @param int    $flags  flags to control which changes are included
+ * @param array  $seen   listing of seen pages
+ * @return array|bool    false or array with info about a change
  */
 function _handleRecent($line,$ns,$flags,&$seen){
     if(empty($line)) return false;   //skip empty lines
@@ -778,9 +796,9 @@ abstract class ChangeLog {
      * Read chunk and return array with lines of given chunck.
      * Has no check if $head and $tail are really at a new line
      *
-     * @param $fp resource filepointer
-     * @param $head int start point chunck
-     * @param $tail int end point chunck
+     * @param resource $fp    resource filepointer
+     * @param int      $head  start point chunck
+     * @param int      $tail  end point chunck
      * @return array lines read from chunck
      */
     protected function readChunk($fp, $head, $tail) {
@@ -804,8 +822,8 @@ abstract class ChangeLog {
     /**
      * Set pointer to first new line after $finger and return its position
      *
-     * @param resource $fp filepointer
-     * @param $finger int a pointer
+     * @param resource $fp      filepointer
+     * @param int      $finger  a pointer
      * @return int pointer
      */
     protected function getNewlinepointer($fp, $finger) {
@@ -826,6 +844,25 @@ abstract class ChangeLog {
      */
     public function isCurrentRevision($rev) {
         return $rev == @filemtime($this->getFilename());
+    }
+    
+    /**
+    * Return an existing revision for a specific date which is 
+    * the current one or younger or equal then the date
+    *
+    * @param string $id 
+    * @param number $date_at timestamp
+    * @return string revision ('' for current)
+    */
+    function getLastRevisionAt($date_at){
+        //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
+        if($date_at >= @filemtime($this->getFilename())) { 
+            return '';
+        } else if ($rev = $this->getRelativeRevision($date_at+1, -1)) { //+1 to get also the requested date revision
+            return $rev;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -886,7 +923,7 @@ abstract class ChangeLog {
      */
     protected function retrieveRevisionsAround($rev, $max) {
         //get lines from changelog
-        list($fp, $lines, $starthead, $starttail, $eof) = $this->readloglines($rev);
+        list($fp, $lines, $starthead, $starttail, /* $eof */) = $this->readloglines($rev);
         if(empty($lines)) return false;
 
         //parse chunk containing $rev, and read forward more chunks until $max/2 is reached
@@ -1004,12 +1041,13 @@ class MediaChangelog extends ChangeLog {
  * changelog files, only the chunk containing the
  * requested changelog line is read.
  *
- * @deprecated 20-11-2013
+ * @deprecated 2013-11-20
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
 function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
+    dbg_deprecated('class PageChangeLog or class MediaChangelog');
     if($media) {
         $changelog = new MediaChangeLog($id, $chunk_size);
     } else {
@@ -1024,10 +1062,6 @@ function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
  * only that a line with the date exists in the changelog.
  * By default the current revision is skipped.
  *
- * id:    the page of interest
- * first: skip the first n changelog lines
- * num:   number of revisions to return
- *
  * The current revision is automatically skipped when the page exists.
  * See $INFO['meta']['last_change'] for the current revision.
  *
@@ -1036,12 +1070,20 @@ function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
  * backwards in chunks until the requested number of changelog
  * lines are recieved.
  *
- * @deprecated 20-11-2013
+ * @deprecated 2013-11-20
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $id          the page of interest
+ * @param int    $first       skip the first n changelog lines
+ * @param int    $num         number of revisions to return
+ * @param int    $chunk_size
+ * @param bool   $media
+ * @return array
  */
 function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
+    dbg_deprecated('class PageChangeLog or class MediaChangelog');
     if($media) {
         $changelog = new MediaChangeLog($id, $chunk_size);
     } else {
@@ -1049,3 +1091,4 @@ function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
     }
     return $changelog->getRevisions($first, $num);
 }
+
