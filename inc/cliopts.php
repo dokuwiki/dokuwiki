@@ -36,9 +36,9 @@ if (version_compare(phpversion(), '4.3.0', '<') || php_sapi_name() == 'cgi') {
 
     // PHP ini settings
     set_time_limit(0);
-    ini_set('track_errors', true);
-    ini_set('html_errors', false);
-    ini_set('magic_quotes_runtime', false);
+    ini_set('track_errors', "1");
+    ini_set('html_errors', "0");
+    ini_set('magic_quotes_runtime', "0");
 
     // Define stream constants
     define('STDIN', fopen('php://stdin', 'r'));
@@ -78,7 +78,7 @@ class Doku_Cli_Opts {
      * @param string $bin_file      executing file name - this MUST be passed the __FILE__ constant
      * @param string $short_options short options
      * @param array  $long_options  (optional) long options
-     * @return Doku_Cli_Opts_Container or Doku_Cli_Opts_Error
+     * @return Doku_Cli_Opts_Container|Doku_Cli_Opts_Error
      */
     function & getOptions($bin_file, $short_options, $long_options = null) {
         $args = Doku_Cli_Opts::readPHPArgv();
@@ -447,7 +447,7 @@ class Doku_Cli_Opts_Error {
     var $code;
     var $msg;
 
-    function Doku_Cli_Opts_Error($code, $msg) {
+    function __construct($code, $msg) {
         $this->code = $code;
         $this->msg = $msg;
     }
@@ -468,7 +468,7 @@ class Doku_Cli_Opts_Container {
     var $options = array();
     var $args = array();
 
-    function Doku_Cli_Opts_Container($options) {
+    function __construct($options) {
         foreach ( $options[0] as $option ) {
             if ( false !== ( strpos($option[0], '--') ) ) {
                 $opt_name = substr($option[0], 2);

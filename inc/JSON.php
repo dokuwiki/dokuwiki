@@ -119,7 +119,7 @@ class JSON {
      *                               JSON_LOOSE_TYPE - loose typing
      *                                                 "{...}" syntax creates associative arrays in decode.
      */
-    function JSON($use=JSON_STRICT_TYPE) {
+    function __construct($use=JSON_STRICT_TYPE) {
         $this->use = $use;
     }
 

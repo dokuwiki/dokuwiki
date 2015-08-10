@@ -23,6 +23,7 @@
 #dokuwiki__aside {
     width: 100%;
     float: none;
+    margin-bottom: 1.5em;
 }
 
 #dokuwiki__aside > .pad,
@@ -158,6 +159,11 @@ body {
         padding: 0 .5em;
     }
 }
+
+#dokuwiki__aside {
+    margin-bottom: 0;
+}
+
 #dokuwiki__header {
     padding: .5em 0;
 }
@@ -231,7 +237,7 @@ body {
     margin: 0 0 .2em .2em;
 }
 
-#dokuwiki__sitetools form.search input.edit {
+#dokuwiki__sitetools form.search input {
     width: 100% !important;
 }
 .dokuwiki form.search div.ajax_qsearch {
@@ -255,7 +261,7 @@ body {
 }
 
 /* force same height on search input and tools select */
-#dokuwiki__sitetools form.search input.edit,
+#dokuwiki__sitetools form.search input,
 #dokuwiki__header .mobileTools select {
     height: 2.1em;
     line-height: 2.1em;

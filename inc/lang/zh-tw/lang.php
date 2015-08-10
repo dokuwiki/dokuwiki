@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author chinsan <chinsan@mail2000.com.tw>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -15,6 +15,7 @@
  * @author Danny Lin <danny0838@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
+ * @author lioujheyu <lioujheyu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -46,7 +47,6 @@ $lang['btn_update']            = '更新設定';
 $lang['btn_delete']            = '刪除';
 $lang['btn_back']              = '回上一步';
 $lang['btn_backlink']          = '反向連結';
-$lang['btn_backtomedia']       = '重新選擇圖檔';
 $lang['btn_subscribe']         = '訂閱更動通知';
 $lang['btn_profile']           = '更新個人資料';
 $lang['btn_reset']             = '資料重設';
@@ -158,7 +158,6 @@ $lang['js']['media_overwrt']   = '覆蓋已存在的檔案';
 $lang['rssfailed']             = '擷取 RSS 饋送檔時發生錯誤：';
 $lang['nothingfound']          = '沒找到任何結果。';
 $lang['mediaselect']           = '媒體檔案';
-$lang['fileupload']            = '上傳媒體檔案';
 $lang['uploadsucc']            = '已上傳';
 $lang['uploadfail']            = '無法上傳。是否因權限錯誤？';
 $lang['uploadwrong']           = '拒絕上傳。這個副檔名被禁止了！';
@@ -249,7 +248,6 @@ $lang['qb_sig']                = '插入簽名';
 $lang['qb_smileys']            = '表情符號';
 $lang['qb_chars']              = '特殊字元';
 $lang['upperns']               = '前往父分類名稱';
-$lang['admin_register']        = '新增使用者';
 $lang['metaedit']              = '編輯後設資料';
 $lang['metasaveerr']           = '後設資料無法寫入';
 $lang['metasaveok']            = '後設資料已儲存';
@@ -282,7 +280,6 @@ $lang['subscr_style_every']    = '每次更改都發送信件';
 $lang['subscr_style_digest']   = '對每個頁面發送更改的摘要信件 (每 %.2f 天)';
 $lang['subscr_style_list']     = '自上次發信以來更改的頁面的列表 (每 %.2f 天)';
 $lang['authtempfail']          = '暫不提供帳號認證。若本狀況持續，請通知本 wiki 管理員。';
-$lang['authpwdexpire']         = '您的密碼將在 %d 天內到期，請馬上更換新密碼。';
 $lang['i_chooselang']          = '選擇您的語系';
 $lang['i_installer']           = 'DokuWiki 安裝工具';
 $lang['i_wikiname']            = '本 wiki 的名稱';
@@ -299,8 +296,8 @@ $lang['i_writeerr']            = '無法建立 <code>%s</code>。您必須檢查
 $lang['i_badhash']             = '無法辨識或已遭修改的 dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> —— 非法或空白的值';
 $lang['i_success']             = '設定已完成。您現在可以刪除 install.php 檔案。繼續到
-<a href="doku.php">您的新 DokuWiki</a>.';
-$lang['i_failure']             = '寫入設定檔時發生了一些錯誤。您必須在使用<a href="doku.php">您的新 Dokuwiki</a> 之前手動修正它們。';
+<a href="doku.php?id=wiki:welcome">您的新 DokuWiki</a>.';
+$lang['i_failure']             = '寫入設定檔時發生了一些錯誤。您必須在使用<a href="doku.php?id=wiki:welcome">您的新 Dokuwiki</a> 之前手動修正它們。';
 $lang['i_policy']              = '初步的 ACL 政策';
 $lang['i_pol0']                = '開放的 wiki (任何人可讀取、寫入、上傳)';
 $lang['i_pol1']                = '公開的 wiki (任何人可讀取，註冊使用者可寫入與上傳)';

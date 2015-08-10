@@ -1,7 +1,7 @@
 base   extension
 author Michael Hamann
 email  michael@content-space.de
-date   2014-06-15
+date   2015-07-26
 name   Extension Manager
 desc   Allows managing and installing plugins and templates
 url    https://www.dokuwiki.org/plugin:extension

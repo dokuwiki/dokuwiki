@@ -55,6 +55,11 @@ define('METADATA_RENDER_UNLIMITED', 4);
  * wasn't found
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id page id
+ * @param string|int $rev revision timestamp or empty string
+ * @param bool $excuse
+ * @return null|string
  */
 function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
     $file = wikiFN($id,$rev);
@@ -66,13 +71,13 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
     $ID   = $id;
 
     if($rev || $date_at){
-        if(@file_exists($file)){
+        if(file_exists($file)){
             $ret = p_render('xhtml',p_get_instructions(io_readWikiPage($file,$id,$rev)),$info,$date_at); //no caching on old revisions
         }elseif($excuse){
             $ret = p_locale_xhtml('norev');
         }
     }else{
-        if(@file_exists($file)){
+        if(file_exists($file)){
             $ret = p_cached_output($file,'xhtml',$id);
         }elseif($excuse){
             $ret = p_locale_xhtml('newpage');
@@ -89,6 +94,9 @@ function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){
  * Returns the specified local text in parsed format
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $id page id
+ * @return null|string
  */
 function p_locale_xhtml($id){
     //fetch parsed locale
@@ -101,6 +109,11 @@ function p_locale_xhtml($id){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string $file filename, path to file
+ * @param string $format
+ * @param string $id page id
+ * @return null|string
  */
 function p_cached_output($file, $format='xhtml', $id='') {
     global $conf;
@@ -108,15 +121,21 @@ function p_cached_output($file, $format='xhtml', $id='') {
     $cache = new cache_renderer($id, $file, $format);
     if ($cache->useCache()) {
         $parsed = $cache->retrieveCache(false);
-        if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
+        if($conf['allowdebug'] && $format=='xhtml') {
+            $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
+        }
     } else {
         $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
         if ($info['cache'] && $cache->storeCache($parsed)) {              // storeCache() attempts to save cachefile
-            if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
+            if($conf['allowdebug'] && $format=='xhtml') {
+                $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
+            }
         }else{
             $cache->removeCache();                     //try to delete cachefile
-            if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
+            if($conf['allowdebug'] && $format=='xhtml') {
+                $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
+            }
         }
     }
 
@@ -129,6 +148,11 @@ function p_cached_output($file, $format='xhtml', $id='') {
  * Uses and creates a serialized cache file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file      filename, path to file
+ * @param bool   $cacheonly
+ * @param string $id        page id
+ * @return array|null
  */
 function p_cached_instructions($file,$cacheonly=false,$id='') {
     static $run = null;
@@ -138,7 +162,7 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
-    } else if (@file_exists($file)) {
+    } else if (file_exists($file)) {
         // no cache - do some work
         $ins = p_get_instructions(io_readWikiPage($file,$id));
         if ($cache->storeCache($ins)) {
@@ -157,7 +181,8 @@ function p_cached_instructions($file,$cacheonly=false,$id='') {
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
- * @param string $text raw wiki syntax text
+ *
+ * @param string $text  raw wiki syntax text
  * @return array a list of instruction arrays
  */
 function p_get_instructions($text){
@@ -185,9 +210,9 @@ function p_get_instructions($text){
 /**
  * returns the metadata of a page
  *
- * @param string $id The id of the page the metadata should be returned from
- * @param string $key The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
- * @param int $render If the page should be rendererd - possible values:
+ * @param string $id      The id of the page the metadata should be returned from
+ * @param string $key     The key of the metdata value that shall be read (by default everything) - separate hierarchies by " " like "date created"
+ * @param int    $render  If the page should be rendererd - possible values:
  *     METADATA_DONT_RENDER, METADATA_RENDER_USING_SIMPLE_CACHE, METADATA_RENDER_USING_CACHE
  *     METADATA_RENDER_UNLIMITED (also combined with the previous two options),
  *     default: METADATA_RENDER_USING_CACHE
@@ -229,7 +254,7 @@ function p_get_metadata($id, $key='', $render=METADATA_RENDER_USING_CACHE){
             if ($render & METADATA_RENDER_USING_SIMPLE_CACHE) {
                 $pagefn = wikiFN($id);
                 $metafn = metaFN($id, '.meta');
-                if (!@file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
+                if (!file_exists($metafn) || @filemtime($pagefn) > @filemtime($cachefile->cache)) {
                     $do_render = true;
                 }
             } elseif (!$cachefile->useCache()){
@@ -360,6 +385,9 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
  * used on page deletion
  *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @param string $id page id
+ * @return bool  success / fail
  */
 function p_purge_metadata($id) {
     $meta = p_read_metadata($id);
@@ -392,7 +420,7 @@ function p_read_metadata($id,$cache=false) {
     if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
 
     $file = metaFN($id, '.meta');
-    $meta = @file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
+    $meta = file_exists($file) ? unserialize(io_readFile($file, false)) : array('current'=>array(),'persistent'=>array());
 
     if ($cache) {
         $cache_metadata[(string)$id] = $meta;
@@ -423,6 +451,10 @@ function p_save_metadata($id, $meta) {
  * renders the metadata of a page
  *
  * @author Esther Brunner <esther@kaffeehaus.ch>
+ *
+ * @param string $id    page id
+ * @param array  $orig  the original metadata
+ * @return array|null array('current'=> array,'persistent'=> array);
  */
 function p_render_metadata($id, $orig){
     // make sure the correct ID is in global ID
@@ -477,6 +509,8 @@ function p_render_metadata($id, $orig){
  * returns all available parser syntax modes in correct order
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return array[] with for each plugin the array('sort' => sortnumber, 'mode' => mode string, 'obj'  => plugin object)
  */
 function p_get_parsermodes(){
     global $conf;
@@ -569,6 +603,10 @@ function p_get_parsermodes(){
  * Callback function for usort
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $a
+ * @param array $b
+ * @return int $a is lower/equal/higher than $b
  */
 function p_sort_modes($a, $b){
     if($a['sort'] == $b['sort']) return 0;
@@ -582,9 +620,16 @@ function p_sort_modes($a, $b){
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $mode
+ * @param array|null|false $instructions
+ * @param array $info returns render info like enabled toc and cache
+ * @param string $date_at
+ * @return null|string rendered output
  */
 function p_render($mode,$instructions,&$info,$date_at=''){
     if(is_null($instructions)) return '';
+    if($instructions === false) return '';
 
     $Renderer = p_get_renderer($mode);
     if (is_null($Renderer)) return null;
@@ -594,7 +639,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
     if($date_at) {
         $Renderer->date_at = $date_at;
     }
-    
+
     $Renderer->smileys = getSmileys();
     $Renderer->entities = getEntities();
     $Renderer->acronyms = getAcronyms();
@@ -621,7 +666,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
  * Figure out the correct renderer class to use for $mode,
  * instantiate and return it
  *
- * @param $mode string Mode of the renderer to get
+ * @param string $mode Mode of the renderer to get
  * @return null|Doku_Renderer The renderer
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
@@ -678,8 +723,8 @@ function p_get_renderer($mode) {
  *                                              METADATA_RENDER_USING_SIMPLE_CACHE,
  *                                              METADATA_RENDER_USING_CACHE,
  *                                              METADATA_RENDER_UNLIMITED
- *
  * @return string|null The first heading
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Hamann <michael@content-space.de>
  */
@@ -693,8 +738,8 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @param  string   $code       source code to be highlighted
  * @param  string   $language   language to provide highlighting
  * @param  string   $wrapper    html element to wrap the returned highlighted text
- *
  * @return string xhtml code
+ *
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -708,14 +753,13 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
     $cache = getCacheName($language.$code,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
-            $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&                 // geshi changed
-            $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&  // language syntax definition changed
+            $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
 
     } else {
 
-        $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
+        $geshi = new GeSHi($code, $language);
         $geshi->set_encoding('utf-8');
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);

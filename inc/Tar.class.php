@@ -43,6 +43,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Bouchon <tarlib@bouchon.org> (Maxg)
  * @license GPL 2
+ * @deprecated 2015-05-15 - use splitbrain\PHPArchive\Tar instead
  */
 class Tar {
 
@@ -53,6 +54,7 @@ class Tar {
 
     protected $file = '';
     protected $comptype = Tar::COMPRESS_AUTO;
+    /** @var  resource|int */
     protected $fh;
     protected $memory = '';
     protected $closed = true;
@@ -105,6 +107,9 @@ class Tar {
      *
      * The archive is closed afer reading the contents, because rewinding is not possible in bzip2 streams.
      * Reopen the file with open() again if you want to do additional operations
+     *
+     * @return array
+     * @throws TarIOException
      */
     public function contents() {
         if($this->closed || !$this->file) throw new TarIOException('Can not read from a closed archive');
@@ -270,6 +275,7 @@ class Tar {
      * Add a file to the current TAR archive using an existing file in the filesystem
      *
      * @todo handle directory adding
+     *
      * @param string $file the original file
      * @param string $name the name to use for the file in the archive
      * @throws TarIOException
@@ -377,6 +383,10 @@ class Tar {
      * Returns the created in-memory archive data
      *
      * This implicitly calls close() on the Archive
+     *
+     * @param int $comptype
+     * @param int $complevel
+     * @return mixed|string
      */
     public function getArchive($comptype = Tar::COMPRESS_AUTO, $complevel = 9) {
         $this->close();
@@ -395,7 +405,7 @@ class Tar {
      * Note: It more memory effective to specify the filename in the create() function and
      * let the library work on the new file directly.
      *
-     * @param     $file
+     * @param string $file
      * @param int $comptype
      * @param int $complevel
      * @throws TarIOException
@@ -522,7 +532,7 @@ class Tar {
      * Decode the given tar file header
      *
      * @param string $block a 512 byte block containign the header data
-     * @return array|bool
+     * @return false|array
      */
     protected function parseHeader($block) {
         if(!$block || strlen($block) != 512) return false;
@@ -536,6 +546,7 @@ class Tar {
         $header = @unpack("a100filename/a8perm/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $block);
         if(!$header) return false;
 
+        $return = array();
         $return['checksum'] = OctDec(trim($header['checksum']));
         if($return['checksum'] != $chks) return false;
 
@@ -570,7 +581,7 @@ class Tar {
     /**
      * Cleans up a path and removes relative parts, also strips leading slashes
      *
-     * @param string $p_dir
+     * @param string $path
      * @return string
      */
     public function cleanPath($path) {
@@ -590,7 +601,7 @@ class Tar {
     /**
      * Checks if the given compression type is available and throws an exception if not
      *
-     * @param $comptype
+     * @param int $comptype
      * @throws TarIllegalCompressionException
      */
     protected function compressioncheck($comptype) {
@@ -624,8 +635,14 @@ class Tar {
     }
 }
 
+/**
+ * Class TarIOException
+ */
 class TarIOException extends Exception {
 }
 
+/**
+ * Class TarIllegalCompressionException
+ */
 class TarIllegalCompressionException extends Exception {
 }

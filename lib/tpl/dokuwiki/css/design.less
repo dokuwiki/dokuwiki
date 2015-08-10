@@ -117,10 +117,6 @@
     padding-right: 20px;
 }
 
-[dir=rtl] #IE7 #dokuwiki__usertools a.action {
-    display: inline-block;
-}
-
 #dokuwiki__header .mobileTools {
     display: none; /* hide mobile tools dropdown to only show in mobile view */
 }
@@ -207,12 +203,12 @@ form.search {
     position: relative;
     margin-bottom: 0.5em;
 
-    input.edit {
+    input {
         width: 18em;
         padding: .35em 22px .35em .1em;
     }
 
-    input.button {
+    button {
         background: transparent url(images/search.png) no-repeat 0 0;
         border-width: 0;
         width: 19px;
@@ -225,21 +221,16 @@ form.search {
 }
 
 [dir=rtl] form.search {
-    input.edit {
+    input {
         padding: .35em .1em .35em 22px;
     }
 
-    input.button {
+    button {
         background-position: 5px 0;
         margin-left: 0;
         margin-right: -20px;
         position: relative;
     }
-}
-
-#IE7 form.search {
-    min-height: 1px;
-    z-index: 21;
 }
 
 /*____________ breadcrumbs ____________*/
@@ -273,7 +264,6 @@ form.search {
     }
 }
 
-#IE7 .dokuwiki div.breadcrumbs div,
 #IE8 .dokuwiki div.breadcrumbs div {
     border-bottom: 1px solid @ini_border;
 }
@@ -349,11 +339,12 @@ form.search {
 ********************************************************************/
 
 .dokuwiki .pageId {
-    position: absolute;
-    top: -2.3em;
-    right: -1em;
+    float: right;
+    margin-right: -1em;
+    margin-bottom: -1px;
+    margin-top: -1.5em;
     overflow: hidden;
-    padding: 1em 1em 0;
+    padding: 0.5em 1em 0;
 
     span {
         font-size: 0.875em;
@@ -370,6 +361,7 @@ form.search {
 }
 
 .dokuwiki div.page {
+    clear: both;
     background: @ini_background;
     color: inherit;
     border: 1px solid @ini_background_alt;
@@ -396,8 +388,9 @@ form.search {
 }
 
 [dir=rtl] .dokuwiki .pageId {
-    right: auto;
-    left: -1em;
+    float: left;
+    margin-left: -1em;
+    margin-right: 0;
 }
 
 /* footer

@@ -59,10 +59,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Register a new edit section range
      *
-     * @param $type  string The section type identifier
-     * @param $title string The section title
-     * @param $start int    The byte position for the edit start
-     * @return string A marker class for the starting HTML element
+     * @param string $type   The section type identifier
+     * @param string $title  The section title
+     * @param int    $start  The byte position for the edit start
+     * @return string  A marker class for the starting HTML element
+     *
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function startSectionEdit($start, $type, $title = null) {
@@ -73,8 +74,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Finish an edit section range
      *
-     * @param $end     int The byte position for the edit end; null for the rest of
-     *                 the page
+     * @param int  $end     The byte position for the edit end; null for the rest of the page
+     *
      * @author Adrian Lang <lang@cosmocode.de>
      */
     public function finishSectionEdit($end = null) {
@@ -456,9 +457,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Open a list item
      *
      * @param int $level the nesting level
+     * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level) {
-        $this->doc .= '<li class="level'.$level.'">';
+    function listitem_open($level, $node=false) {
+        $branching = $node ? ' node' : '';
+        $this->doc .= '<li class="level'.$level.$branching.'">';
     }
 
     /**
@@ -758,27 +761,40 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Render a CamelCase link
      *
-     * @param string $link The link name
+     * @param string $link       The link name
+     * @param bool   $returnonly whether to return html or write to doc attribute
      * @see http://en.wikipedia.org/wiki/CamelCase
      */
-    function camelcaselink($link) {
-        $this->internallink($link, $link);
+    function camelcaselink($link, $returnonly = false) {
+        if($returnonly) {
+          return $this->internallink($link, $link, null, true);
+        } else {
+          $this->internallink($link, $link);
+        }
     }
 
     /**
      * Render a page local link
      *
-     * @param string $hash hash link identifier
-     * @param string $name name for the link
+     * @param string $hash       hash link identifier
+     * @param string $name       name for the link
+     * @param bool   $returnonly whether to return html or write to doc attribute
      */
-    function locallink($hash, $name = null) {
+    function locallink($hash, $name = null, $returnonly = false) {
         global $ID;
         $name  = $this->_getLinkTitle($name, $hash, $isImage);
         $hash  = $this->_headerToLink($hash);
         $title = $ID.' ↵';
-        $this->doc .= '<a href="#'.$hash.'" title="'.$title.'" class="wikilink1">';
-        $this->doc .= $name;
-        $this->doc .= '</a>';
+
+        $doc = '<a href="#'.$hash.'" title="'.$title.'" class="wikilink1">';
+        $doc .= $name;
+        $doc .= '</a>';
+
+        if($returnonly) {
+          return $doc;
+        } else {
+          $this->doc .= $doc;
+        }
     }
 
     /**
@@ -821,6 +837,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // now first resolve and clean up the $id
         resolve_pageid(getNS($ID), $id, $exists, $this->date_at, true);
 
+        $link = array();
         $name = $this->_getLinkTitle($name, $default, $isImage, $id, $linktype);
         if(!$isImage) {
             if($exists) {
@@ -880,10 +897,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Render an external link
      *
-     * @param string       $url  full URL with scheme
-     * @param string|array $name name for the link, array for media file
+     * @param string       $url        full URL with scheme
+     * @param string|array $name       name for the link, array for media file
+     * @param bool         $returnonly whether to return html or write to doc attribute
      */
-    function externallink($url, $name = null) {
+    function externallink($url, $name = null, $returnonly = false) {
         global $conf;
 
         $name = $this->_getLinkTitle($name, $url, $isImage);
@@ -896,7 +914,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         // is there still an URL?
         if(!$url) {
-            $this->doc .= $name;
+            if($returnonly) {
+                return $name;
+            } else {
+                $this->doc .= $name;
+            }
             return;
         }
 
@@ -908,6 +930,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //prepare for formating
+        $link = array();
         $link['target'] = $conf['target']['extern'];
         $link['style']  = '';
         $link['pre']    = '';
@@ -921,7 +944,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($conf['relnofollow']) $link['more'] .= ' rel="nofollow"';
 
         //output formatted
-        $this->doc .= $this->_formatLink($link);
+        if($returnonly) {
+            return $this->_formatLink($link);
+        } else {
+            $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
@@ -929,12 +956,13 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * You may want to use $this->_resolveInterWiki() here
      *
-     * @param string       $match     original link - probably not much use
-     * @param string|array $name      name for the link, array for media file
-     * @param string       $wikiName  indentifier (shortcut) for the remote wiki
-     * @param string       $wikiUri   the fragment parsed from the original link
+     * @param string       $match      original link - probably not much use
+     * @param string|array $name       name for the link, array for media file
+     * @param string       $wikiName   indentifier (shortcut) for the remote wiki
+     * @param string       $wikiUri    the fragment parsed from the original link
+     * @param bool         $returnonly whether to return html or write to doc attribute
      */
-    function interwikilink($match, $name = null, $wikiName, $wikiUri) {
+    function interwikilink($match, $name = null, $wikiName, $wikiUri, $returnonly = false) {
         global $conf;
 
         $link           = array();
@@ -972,19 +1000,25 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['title'] = htmlspecialchars($link['url']);
 
         //output formatted
-        $this->doc .= $this->_formatLink($link);
+        if($returnonly) {
+            return $this->_formatLink($link);
+        } else {
+            $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
      * Link to windows share
      *
-     * @param string       $url  the link
-     * @param string|array $name name for the link, array for media file
+     * @param string       $url        the link
+     * @param string|array $name       name for the link, array for media file
+     * @param bool         $returnonly whether to return html or write to doc attribute
      */
-    function windowssharelink($url, $name = null) {
+    function windowssharelink($url, $name = null, $returnonly = false) {
         global $conf;
 
         //simple setup
+        $link = array();
         $link['target'] = $conf['target']['windows'];
         $link['pre']    = '';
         $link['suf']    = '';
@@ -999,11 +1033,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['title'] = $this->_xmlEntities($url);
         $url           = str_replace('\\', '/', $url);
+        $url           = ltrim($url,'/');
         $url           = 'file:///'.$url;
         $link['url']   = $url;
 
         //output formatted
-        $this->doc .= $this->_formatLink($link);
+        if($returnonly) {
+            return $this->_formatLink($link);
+        } else {
+            $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
@@ -1011,10 +1050,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * Honors $conf['mailguard'] setting
      *
-     * @param string       $address Email-Address
-     * @param string|array $name    name for the link, array for media file
+     * @param string       $address    Email-Address
+     * @param string|array $name       name for the link, array for media file
+     * @param bool         $returnonly whether to return html or write to doc attribute
      */
-    function emaillink($address, $name = null) {
+    function emaillink($address, $name = null, $returnonly = false) {
         global $conf;
         //simple setup
         $link           = array();
@@ -1046,7 +1086,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['title'] = $title;
 
         //output formatted
-        $this->doc .= $this->_formatLink($link);
+        if($returnonly) {
+            return $this->_formatLink($link);
+        } else {
+            $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
@@ -1171,6 +1215,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             error_reporting($elvl);
         }
 
+        if($params['nosort']) $feed->enable_order_by_date(false);
+
         //decide on start and end
         if($params['reverse']) {
             $mod   = -1;
@@ -1278,6 +1324,20 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function tablethead_close() {
         $this->doc .= DOKU_TAB.'</thead>'.DOKU_LF;
+    }
+
+    /**
+     * Open a table body
+     */
+    function tabletbody_open() {
+        $this->doc .= DOKU_TAB.'<tbody>'.DOKU_LF;
+    }
+
+    /**
+     * Close a table body
+     */
+    function tabletbody_close() {
+        $this->doc .= DOKU_TAB.'</tbody>'.DOKU_LF;
     }
 
     /**
@@ -1575,7 +1635,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Returns HTML code for images used in link titles
      *
      * @author Andreas Gohr <andi@splitbrain.org>
-     * @param string $img
+     * @param array $img
      * @return string HTML img tag or similar
      */
     function _imageTitle($img) {
@@ -1660,7 +1720,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             // prepare alternative formats
             $extensions   = array('webm', 'ogv', 'mp4');
             $files        = media_alternativefiles($src, $extensions);
-            $poster       = media_alternativefiles($src, array('jpg', 'png'), true);
+            $poster       = media_alternativefiles($src, array('jpg', 'png'));
             if(!empty($poster)) {
                 $posterUrl = ml(reset($poster), '', true, '&');
             }
@@ -1704,7 +1764,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param array  $atts      - additional attributes for the <audio> tag
      * @return string
      */
-    function _audio($src, $atts = null) {
+    function _audio($src, $atts = array()) {
         $files = array();
         $isExternal = media_isexternal($src);
 
@@ -1744,7 +1804,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $out .= '</audio>'.NL;
         return $out;
     }
-    
+
     /**
      * _getLastMediaRevisionAt is a helperfunction to internalmedia() and _media()
      * which returns an existing media revision less or equal to rev or date_at

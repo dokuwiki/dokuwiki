@@ -164,9 +164,9 @@ class Crypt_AES extends Crypt_Rijndael {
      * @param optional Integer $mode
      * @access public
      */
-    function Crypt_AES($mode = CRYPT_AES_MODE_CBC)
+    function __construct($mode = CRYPT_AES_MODE_CBC)
     {
-        parent::Crypt_Rijndael($mode);
+        parent::__construct($mode);
     }
 
     /**

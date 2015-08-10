@@ -8,12 +8,17 @@
  * @global Input $INPUT
  */
 
-// update message version
-$updateVersion = 46.4;
+// update message version - always use a string to avoid localized floats!
+$updateVersion = "47";
 
 //  xdebug_start_profiling();
 
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
+
+// define all DokuWiki globals here (needed within test requests but also helps to keep track)
+global  $ACT,  $INPUT, $QUERY, $ID, $REV, $DATE_AT, $IDX,
+        $DATE, $RANGE, $HIGH, $TEXT, $PRE, $SUF, $SUM, $INFO, $JSINFO;
+
 
 if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
@@ -72,7 +77,7 @@ if($DATE_AT) {
         $DATE_AT = null;
     } else if ($rev_t === false) { //page did not exist
         $rev_n = $pagelog->getRelativeRevision($DATE_AT,+1);
-        msg(sprintf($lang['page_nonexist_rev'], 
+        msg(sprintf($lang['page_nonexist_rev'],
             strftime($conf['dformat'],$DATE_AT),
             wl($ID, array('rev' => $rev_n)),
             strftime($conf['dformat'],$rev_n)));

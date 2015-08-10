@@ -45,23 +45,23 @@ function css_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$INPUT->int('preview').DOKU_BASE.$tpl.$type,'.css');
 
     // load styl.ini
-    $styleini = css_styleini($tpl);
+    $styleini = css_styleini($tpl, $INPUT->bool('preview'));
 
     // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
     if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = $config_cascade['userstyle']['default'];
+        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
     }
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
     $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
     $cache_files[] = __FILE__;
+    if($INPUT->bool('preview')) $cache_files[] = $conf['cachedir'].'/preview.ini';
 
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
@@ -82,8 +82,10 @@ function css_out(){
             $files[$mediatype] = array_merge($files[$mediatype], $styleini['stylesheets'][$mediatype]);
         }
         // load user styles
-        if(isset($config_cascade['userstyle'][$mediatype])){
-            $files[$mediatype][$config_cascade['userstyle'][$mediatype]] = DOKU_BASE;
+        if(!empty($config_cascade['userstyle'][$mediatype])) {
+            foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
+                $files[$mediatype][$userstyle] = DOKU_BASE;
+            }
         }
 
         $cache_files = array_merge($cache_files, array_keys($files[$mediatype]));
@@ -162,12 +164,15 @@ function css_out(){
  * most of this function is error handling to show a nice useful error when
  * LESS compilation fails
  *
- * @param $css
+ * @param string $css
  * @return string
  */
 function css_parseless($css) {
+    global $conf;
+
     $less = new lessc();
     $less->importDir[] = DOKU_INC;
+    $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')){
         $less->importDir[] = TMP_DIR;
@@ -222,6 +227,10 @@ function css_parseless($css) {
  * (sans the surrounding __ and with a ini_ prefix)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @param array $replacements  array(placeholder => value)
+ * @return string
  */
 function css_applystyle($css, $replacements) {
     // we convert ini replacements to LESS variable names
@@ -250,10 +259,14 @@ function css_applystyle($css, $replacements) {
  * the stylesheet modes
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @param string $tpl the used template
+ * @param bool   $preview load preview replacements
  * @return array with keys 'stylesheets' and 'replacements'
  */
-function css_styleini($tpl) {
+function css_styleini($tpl, $preview=false) {
+    global $conf;
+
     $stylesheets = array(); // mode, file => base
     $replacements = array(); // placeholder => value
 
@@ -261,23 +274,6 @@ function css_styleini($tpl) {
     $incbase = tpl_incdir($tpl);
     $webbase = tpl_basedir($tpl);
     $ini = $incbase.'style.ini';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // load template's style.local.ini
-    // @deprecated 2013-08-03
-    $ini = $incbase.'style.local.ini';
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
@@ -310,6 +306,19 @@ function css_styleini($tpl) {
         }
     }
 
+    // allow replacement overwrites in preview mode
+    if($preview) {
+        $webbase = DOKU_BASE;
+        $ini     = $conf['cachedir'].'/preview.ini';
+        if(file_exists($ini)) {
+            $data = parse_ini_file($ini, true);
+            // replacements
+            if(is_array($data['replacements'])) {
+                $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'], $webbase));
+            }
+        }
+    }
+
     return array(
         'stylesheets' => $stylesheets,
         'replacements' => $replacements
@@ -320,6 +329,10 @@ function css_styleini($tpl) {
  * Amend paths used in replacement relative urls, refer FS#2879
  *
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param array $replacements with key-value pairs
+ * @param string $location
+ * @return array
  */
 function css_fixreplacementurls($replacements, $location) {
     foreach($replacements as $key => $value) {
@@ -351,11 +364,11 @@ function css_interwiki(){
     $iwlinks = getInterwiki();
     foreach(array_keys($iwlinks) as $iw){
         $class = preg_replace('/[^_\-a-z0-9]+/i','_',$iw);
-        if(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
+        if(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.png')){
             echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.png)';
             echo '}';
-        }elseif(@file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
+        }elseif(file_exists(DOKU_INC.'lib/images/interwiki/'.$iw.'.gif')){
             echo "a.iw_$class {";
             echo '  background-image: url('.DOKU_BASE.'lib/images/interwiki/'.$iw.'.gif)';
             echo '}';
@@ -403,6 +416,10 @@ function css_filetypes(){
 /**
  * Loads a given file and fixes relative URLs with the
  * given location prefix
+ *
+ * @param string $file file system path
+ * @param string $location
+ * @return string
  */
 function css_loadfile($file,$location=''){
     $css_file = new DokuCssFile($file);
@@ -418,7 +435,7 @@ class DokuCssFile {
 
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
-    private   $relative_path = null;
+    protected $relative_path = null;
 
     public function __construct($file) {
         $this->filepath = $file;
@@ -433,7 +450,7 @@ class DokuCssFile {
      * @return  string               the CSS/Less contents of the file
      */
     public function load($location='') {
-        if (!@file_exists($this->filepath)) return '';
+        if (!file_exists($this->filepath)) return '';
 
         $css = io_readFile($this->filepath);
         if (!$location) return $css;
@@ -451,7 +468,7 @@ class DokuCssFile {
      *
      * @return string   relative file system path
      */
-    private function getRelativePath(){
+    protected function getRelativePath(){
 
         if (is_null($this->relative_path)) {
             $basedir = array(DOKU_INC);
@@ -501,6 +518,9 @@ class DokuCssFile {
  * Convert local image URLs to data URLs if the filesize is small
  *
  * Callback for preg_replace_callback
+ *
+ * @param array $match
+ * @return string
  */
 function css_datauri($match){
     global $conf;
@@ -528,9 +548,11 @@ function css_datauri($match){
  * Returns a list of possible Plugin Styles (no existance check here)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $mediatype
+ * @return array
  */
 function css_pluginstyles($mediatype='screen'){
-    global $lang;
     $list = array();
     $plugins = plugin_list();
     foreach ($plugins as $p){
@@ -549,6 +571,9 @@ function css_pluginstyles($mediatype='screen'){
  * Very simple CSS optimizer
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $css
+ * @return string
  */
 function css_compress($css){
     //strip comments through a callback
@@ -585,6 +610,9 @@ function css_compress($css){
  * Keeps short comments (< 5 chars) to maintain typical browser hacks
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $matches
+ * @return string
  */
 function css_comment_cb($matches){
     if(strlen($matches[2]) > 4) return '';
@@ -596,7 +624,7 @@ function css_comment_cb($matches){
  *
  * Strips one line comments but makes sure it will not destroy url() constructs with slashes
  *
- * @param $matches
+ * @param array $matches
  * @return string
  */
 function css_onelinecomment_cb($matches) {

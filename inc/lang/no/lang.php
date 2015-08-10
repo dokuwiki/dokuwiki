@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Reidar Mosvold <Reidar.Mosvold@hit.no>
  * @author Jorge Barrera Grandon <jorge@digitalwolves.org>
  * @author Rune Rasmussen [http://www.syntaxerror.no/]
@@ -21,6 +21,8 @@
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
  * @author Boris <boris@newton-media.no>
  * @author Christopher Schive <chschive@frisurf.no>
+ * @author Patrick <spill.p@hotmail.com>
+ * @author Danny Buckhof <daniel.raknes@hotmail.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -28,7 +30,7 @@ $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Rediger denne siden';
 $lang['btn_source']            = 'Vis kildekode';
 $lang['btn_show']              = 'Vis siden';
@@ -52,7 +54,6 @@ $lang['btn_update']            = 'Oppdater';
 $lang['btn_delete']            = 'Slett';
 $lang['btn_back']              = 'Tilbake';
 $lang['btn_backlink']          = 'Tilbakelenker';
-$lang['btn_backtomedia']       = 'Tilbake til valg av mediafil';
 $lang['btn_subscribe']         = 'Abonnér på endringer';
 $lang['btn_profile']           = 'Oppdater profil';
 $lang['btn_reset']             = 'Tilbakestill';
@@ -82,11 +83,12 @@ $lang['badpassconfirm']        = 'Beklager, passordet var feil';
 $lang['minoredit']             = 'Mindre endringer';
 $lang['draftdate']             = 'Kladd autolagret';
 $lang['nosecedit']             = 'Siden ble endret i mellomtiden, seksjonsinfo har blitt foreldet - lastet full side istedet.';
-$lang['searchcreatepage']      = "Hvis du ikke finner det du leter etter, så kan du skape en ny side med samme navn som ditt søk ved å klikke på ''**Lag denne siden**''-knappen.";
+$lang['searchcreatepage']      = 'Hvis du ikke finner det du leter etter, så kan du skape en ny side med samme navn som ditt søk ved å klikke på \'\'**Lag denne siden**\'\'-knappen.';
 $lang['regmissing']            = 'Vennligst fyll ut alle felt.';
 $lang['reguexists']            = 'Det finnes allerede en konto med dette brukernavnet.';
 $lang['regsuccess']            = 'Brukerkonto har blitt laget og passord har blitt sendt via e-post.';
 $lang['regsuccess2']           = 'Brukeren har blitt laget.';
+$lang['regfail']               = 'Brukeren kan ikke opprettes';
 $lang['regmailfail']           = 'En feil oppstod da passordet ditt skulle sendes via e-post. Vennligst kontakt administratoren!';
 $lang['regbadmail']            = 'Den angitte e-post adressen ser ut til å være ugyldig. Vennligst kontakt administratoren om du anser dette som feilaktig.';
 $lang['regbadpass']            = 'De to angitte passordene er ikke like, vennligst forsøk igjen.';
@@ -101,6 +103,7 @@ $lang['profdeleteuser']        = 'Slett konto';
 $lang['profdeleted']           = 'Din brukerkonto har blitt slettet fra denne wikien';
 $lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke omgjøres.';
 $lang['profconfdeletemissing'] = 'Boks for bekreftelse ikke avkrysset';
+$lang['proffail']              = 'Brukerprofilen ble ikke oppdatert';
 $lang['pwdforget']             = 'Glemt passordet ditt? Få deg et nytt';
 $lang['resendna']              = 'Denne wikien støtter ikke nyutsending av passord.';
 $lang['resendpwd']             = 'Sett nytt passord for';
@@ -165,7 +168,6 @@ $lang['js']['media_overwrt']   = 'Erstatt eksisterende filer';
 $lang['rssfailed']             = 'En feil oppstod da denne kilden skulle hentes:';
 $lang['nothingfound']          = 'Ingen data funnet.';
 $lang['mediaselect']           = 'Valg av mediafil';
-$lang['fileupload']            = 'Mediafil Opplasting';
 $lang['uploadsucc']            = 'Opplastingen var vellykket';
 $lang['uploadfail']            = 'Opplastingen var mislykket. Kanskje feil rettigheter?';
 $lang['uploadwrong']           = 'Opplastingen ble nektet. Denne filendelsen er ikke tillatt!';
@@ -256,7 +258,6 @@ $lang['qb_sig']                = 'Føy til signatur';
 $lang['qb_smileys']            = 'Smilefjes';
 $lang['qb_chars']              = 'Spesialtegn';
 $lang['upperns']               = 'gå til overordnet navnerom';
-$lang['admin_register']        = 'Legg til ny bruker';
 $lang['metaedit']              = 'Rediger metadata';
 $lang['metasaveerr']           = 'Skriving av metadata feilet';
 $lang['metasaveok']            = 'Metadata lagret';
@@ -289,7 +290,6 @@ $lang['subscr_style_every']    = 'e-post for alle endringer';
 $lang['subscr_style_digest']   = 'e-post med sammendrag av endringer for hver side (%.2f dager mellom hver)';
 $lang['subscr_style_list']     = 'liste med sider som er endra siden forrige e-post (%.2f dager mellom hver)';
 $lang['authtempfail']          = 'Brukerautorisasjon er midlertidig utilgjengelig. Om dette vedvarer, vennligst informer Wiki-admin.';
-$lang['authpwdexpire']         = 'Ditt passord går ut om %d dager, du bør endre det snarest.';
 $lang['i_chooselang']          = 'Velg språk';
 $lang['i_installer']           = 'DokuWiki-installasjon';
 $lang['i_wikiname']            = 'Wikinavn';
@@ -301,6 +301,7 @@ $lang['i_modified']            = 'For sikkerhets skyld vil dette skriptet bare v
                          <a href="http://dokuwiki.org/install">Dokuwiki-installasjonsinstruksen</a>';
 $lang['i_funcna']              = 'PHP-funksjonen <code>%s</code> er ikke tilgjengelig. Kanskje din leverandør har deaktivert den av noen grunn?';
 $lang['i_phpver']              = 'Din PHP versjon <code>%s</code> er lavere enn kravet <code>%s</code>. Du må oppgradere PHP installasjonen. ';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload må deaktiveres i php.ini for å kjøre DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> er ikke skrivbar for DokuWiki. Du må fikse rettighetene for denne mappen!';
 $lang['i_confexists']          = '<code>%s</code> eksisterer allerede';
 $lang['i_writeerr']            = 'Kunne ikke opprette <code>%s</code>. Du må sjekke mappe-/filrettigheter og opprette filen manuelt.';
@@ -346,7 +347,7 @@ $lang['media_search']          = 'Søk i navnerommet <strong>%s</strong>.';
 $lang['media_view']            = '%s';
 $lang['media_viewold']         = '%s på %s';
 $lang['media_edit']            = 'Rediger %s';
-$lang['media_history']         = '%vis historikk';
+$lang['media_history']         = '%s vis historikk';
 $lang['media_meta_edited']     = 'metadata er endra';
 $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese filer.';
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';
@@ -356,3 +357,5 @@ $lang['currentns']             = 'gjeldende navnemellomrom';
 $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
 $lang['wikimarkup']            = 'wiki-format';
+$lang['page_nonexist_rev']     = 'Finnes ingen side på %s. Den er derfor laget på <a href="%s">%s</a>';
+$lang['unable_to_parse_date']  = 'Ikke mulig å tolke "%s".';

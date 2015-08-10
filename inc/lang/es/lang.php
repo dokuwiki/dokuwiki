@@ -37,6 +37,10 @@
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
  * @author pokesakura <pokesakura@gmail.com>
+ * @author Álvaro Iradier <airadier@gmail.com>
+ * @author Alejandro Nunez <nunez.alejandro@gmail.com>
+ * @author Mauricio Segura <maose38@yahoo.es>
+ * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -68,7 +72,6 @@ $lang['btn_update']            = 'Actualizar';
 $lang['btn_delete']            = 'Borrar';
 $lang['btn_back']              = 'Atrás';
 $lang['btn_backlink']          = 'Enlaces a esta página';
-$lang['btn_backtomedia']       = 'Volver a la selección de archivos multimedia';
 $lang['btn_subscribe']         = 'Suscribirse a cambios de la página';
 $lang['btn_profile']           = 'Actualizar perfil';
 $lang['btn_reset']             = 'Restablecer';
@@ -98,11 +101,12 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = "Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  ''Crea esta página''.";
+$lang['searchcreatepage']      = 'Si no has encontrado lo que buscabas, puedes crear una nueva página con tu consulta utilizando el botón  \'\'Crea esta página\'\'.';
 $lang['regmissing']            = 'Lo siento, tienes que completar todos los campos.';
 $lang['reguexists']            = 'Lo siento, ya existe un usuario con este nombre.';
 $lang['regsuccess']            = 'El usuario ha sido creado y la contraseña se ha enviado por correo.';
 $lang['regsuccess2']           = 'El usuario ha sido creado.';
+$lang['regfail']               = 'No se pudo crear el usuario.';
 $lang['regmailfail']           = 'Parece que ha habido un error al enviar el correo con la contraseña. ¡Por favor, contacta al administrador!';
 $lang['regbadmail']            = 'La dirección de correo no parece válida. Si piensas que esto es un error, contacta al administrador';
 $lang['regbadpass']            = 'Las dos contraseñas no son iguales, por favor inténtalo de nuevo.';
@@ -117,6 +121,7 @@ $lang['profdeleteuser']        = 'Eliminar Cuenta';
 $lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este wiki';
 $lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
 $lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
+$lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
 $lang['resendpwd']             = 'Establecer nueva contraseña para';
@@ -181,7 +186,6 @@ $lang['js']['media_overwrt']   = 'Sobreescribir ficheros exitentes';
 $lang['rssfailed']             = 'Se ha producido un error mientras se leían los datos de este feed: ';
 $lang['nothingfound']          = 'No se ha encontrado nada.';
 $lang['mediaselect']           = 'Archivos Multimedia';
-$lang['fileupload']            = 'Subida de archivos multimedia';
 $lang['uploadsucc']            = 'El archivo se ha subido satisfactoriamente';
 $lang['uploadfail']            = 'La subida del fichero ha fallado. ¿Permisos equivocados?';
 $lang['uploadwrong']           = 'Subida de fichero denegada. ¡Los ficheros con esta extensión están prohibidos!';
@@ -272,7 +276,6 @@ $lang['qb_sig']                = 'Insertar firma';
 $lang['qb_smileys']            = 'Sonrisas';
 $lang['qb_chars']              = 'Caracteres especiales';
 $lang['upperns']               = 'Saltar al espacio de nombres superior';
-$lang['admin_register']        = 'Añadir nuevo usuario';
 $lang['metaedit']              = 'Editar metadatos';
 $lang['metasaveerr']           = 'La escritura de los metadatos ha fallado';
 $lang['metasaveok']            = 'Los metadatos han sido guardados';
@@ -305,7 +308,6 @@ $lang['subscr_style_every']    = 'enviar correo en cada cambio';
 $lang['subscr_style_digest']   = 'Resumen de correo electrónico de cambios por cada página (cada %.2f días)';
 $lang['subscr_style_list']     = 'lista de páginas modificadas desde el último correo electrónico (cada %.2f días)';
 $lang['authtempfail']          = 'La autenticación de usuarios no está disponible temporalmente. Si esta situación persiste, por favor avisa al administrador del wiki.';
-$lang['authpwdexpire']         = 'Su contraseña caducara en %d días, debería cambiarla lo antes posible';
 $lang['i_chooselang']          = 'Elija su idioma';
 $lang['i_installer']           = 'Instalador de DokuWiki';
 $lang['i_wikiname']            = 'Nombre del wiki';
@@ -365,7 +367,10 @@ $lang['media_perm_read']       = 'Disculpa, no tienes los permisos necesarios pa
 $lang['media_perm_upload']     = 'Disculpa, no tienes los permisos necesarios para cargar ficheros.';
 $lang['media_update']          = 'Actualizar nueva versión';
 $lang['media_restore']         = 'Restaurar esta versión';
+$lang['media_acl_warning']     = 'Puede que esta lista no esté completa debido a restricciones de la ACL y a las páginas ocultas.';
 $lang['currentns']             = 'Espacio de nombres actual';
 $lang['searchresult']          = 'Resultado de la búsqueda';
 $lang['plainhtml']             = 'HTML sencillo';
 $lang['wikimarkup']            = 'Etiquetado Wiki';
+$lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue creada en <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';

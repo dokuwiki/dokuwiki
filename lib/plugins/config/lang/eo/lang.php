@@ -137,7 +137,7 @@ $lang['compress']              = 'Kompaktigi CSS-ajn kaj ĵavaskriptajn elmetojn
 $lang['cssdatauri']            = 'Grandeco en bitokoj, ĝis kiom en CSS-dosieroj referencitaj bildoj enmetiĝu rekte en la stilfolion por malgrandigi vanan HTTP-kapan trafikon. Tiu tekniko ne funkcias en IE 7 aŭ pli frua!
 <code>400</code> ĝis <code>600</code> bitokoj estas bona grandeco. Indiku <code>0</code> por malebligi enmeton.';
 $lang['send404']               = 'Sendi la mesaĝon "HTTP 404/Paĝo ne trovita" por ne ekzistantaj paĝoj';
-$lang['broken_iua']            = 'Ĉu la funkcio "ignore_user_abort" difektas en via sistemo? Tio povus misfunkciigi la serĉindekson. IIS+PHP/CGI estas konata kiel fuŝaĵo. Vidu <a href="http://bugs.splitbrain.org/?do=details&task_id=852&">Cimon 852</a> por pli da informoj.';
+$lang['broken_iua']            = 'Ĉu la funkcio "ignore_user_abort" difektas en via sistemo? Tio povus misfunkciigi la serĉindekson. IIS+PHP/CGI estas konata kiel fuŝaĵo. Vidu <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Cimon 852</a> por pli da informoj.';
 $lang['xsendfile']             = 'Ĉu uzi la kaplinion X-Sendfile por ebligi al la retservilo liveri fiksajn dosierojn? Via retservilo subtenu tion.';
 $lang['renderer_xhtml']        = 'Prezentilo por la ĉefa vikia rezulto (xhtml)';
 $lang['renderer__core']        = '%s (DokuWiki-a kerno)';

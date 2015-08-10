@@ -45,8 +45,6 @@ class TestRequest {
      */
     public function execute($uri='/doku.php') {
         global $INPUT;
-        global $ID;
-        global $INFO;
 
         // save old environment
         $server = $_SERVER;

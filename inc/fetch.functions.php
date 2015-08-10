@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Functions used by lib/exe/fetch.php
  * (not included by other parts of dokuwiki)
@@ -16,6 +16,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
+ *
  * @param string $file   local file to send
  * @param string $mime   mime type of the file
  * @param bool   $dl     set to true to force a browser download
@@ -46,18 +47,15 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
             // cache publically
             header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
             header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.$maxage);
-            header('Pragma: public');
         } else {
             // cache in browser
             header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
             header('Cache-Control: private, no-transform, max-age='.$maxage);
-            header('Pragma: no-cache');
         }
     } else {
         // no cache at all
         header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
         header('Cache-Control: no-cache, no-transform');
-        header('Pragma: no-cache');
     }
 
     //send important headers first, script stops here if '304 Not Modified' response
@@ -71,9 +69,9 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
 
     //download or display?
     if($dl) {
-        header('Content-Disposition: attachment; filename="'.utf8_basename($orig).'";');
+        header('Content-Disposition: attachment;'.rfc2231_encode('filename', utf8_basename($orig)).';');
     } else {
-        header('Content-Disposition: inline; filename="'.utf8_basename($orig).'";');
+        header('Content-Disposition: inline;'.rfc2231_encode('filename', utf8_basename($orig)).';');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
@@ -90,18 +88,44 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null) {
 }
 
 /**
+ * Try an rfc2231 compatible encoding. This ensures correct
+ * interpretation of filenames outside of the ASCII set.
+ * This seems to be needed for file names with e.g. umlauts that
+ * would otherwise decode wrongly in IE.
+ *
+ * There is no additional checking, just the encoding and setting the key=value for usage in headers
+ *
+ * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ * @param string $name      name of the field to be set in the header() call
+ * @param string $value     value of the field to be set in the header() call
+ * @param string $charset   used charset for the encoding of value
+ * @param string $lang      language used.
+ * @return string           in the format " name=value" for values WITHOUT special characters
+ * @return string           in the format " name*=charset'lang'value" for values WITH special characters
+ */
+function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
+    $internal = preg_replace_callback('/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/', function($match) { return rawurlencode($match[0]); }, $value);
+    if ( $value != $internal ) {
+        return ' '.$name.'*='.$charset."'".$lang."'".$internal;
+    } else {
+        return ' '.$name.'="'.$value.'"';
+    }
+}
+
+/**
  * Check for media for preconditions and return correct status code
  *
  * READ: MEDIA, MIME, EXT, CACHE
  * WRITE: MEDIA, FILE, array( STATUS, STATUSMESSAGE )
  *
  * @author Gerry Weissbach <gerry.w@gammaproduction.de>
+ *
  * @param string $media  reference to the media id
  * @param string $file   reference to the file variable
  * @param string $rev
  * @param int    $width
  * @param int    $height
- * @return array(STATUS, STATUSMESSAGE)
+ * @return array as array(STATUS, STATUSMESSAGE)
  */
 function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     global $MIME, $EXT, $CACHE, $INPUT;
@@ -136,7 +160,7 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
     }
 
     //check file existance
-    if(!@file_exists($file)) {
+    if(!file_exists($file)) {
         return array(404, 'Not Found');
     }
 
@@ -149,6 +173,9 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
  * Resolves named constants
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $cache
+ * @return int cachetime in seconds
  */
 function calc_cache($cache) {
     global $conf;

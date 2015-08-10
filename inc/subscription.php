@@ -166,7 +166,7 @@ class Subscription {
         // Handle files.
         $result = array();
         foreach($files as $target => $file) {
-            if(!@file_exists($file)) continue;
+            if(!file_exists($file)) continue;
 
             $lines = file($file);
             foreach($lines as $line) {
@@ -444,17 +444,17 @@ class Subscription {
      * Send the diff for some media change
      *
      * @fixme this should embed thumbnails of images in HTML version
+     *
      * @param string   $subscriber_mail The target mail address
      * @param string   $template        Mail template ('uploadmail', ...)
      * @param string   $id              Media file for which the notification is
      * @param int|bool $rev             Old revision if any
-     * @return bool                     true if successfully sent
      */
     public function send_media_diff($subscriber_mail, $template, $id, $rev = false) {
         global $conf;
 
         $file = mediaFN($id);
-        list($mime, $ext) = mimetype($id);
+        list($mime, /* $ext */) = mimetype($id);
 
         $trep = array(
             'MIME'  => $mime,
@@ -515,7 +515,7 @@ class Subscription {
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param string $subscriber_mail The target mail address
-     * @param array  $id              The ID
+     * @param string $id              The ID
      * @param int    $lastupdate      Time of the last notification
      * @return bool
      */
@@ -619,6 +619,7 @@ class Subscription {
 
     /**
      * Get a valid message id for a certain $id and revision (or the current revision)
+     *
      * @param string $id  The id of the page (or media file) the message id should be for
      * @param string $rev The revision of the page, set to the current revision of the page $id if not set
      * @return string
@@ -689,20 +690,4 @@ class Subscription {
         }
         $data['addresslist'] = trim($addresslist.','.implode(',', $result), ',');
     }
-}
-
-/**
- * Compatibility wrapper around Subscription:notifyaddresses
- *
- * for plugins emitting COMMON_NOTIFY_ADDRESSLIST themselves and relying on on this to
- * be the default handler
- *
- * @param array $data event data for
- *
- * @deprecated 2012-12-07
- */
-function subscription_addresslist(&$data) {
-    dbg_deprecated('class Subscription');
-    $sub = new Subscription();
-    $sub->notifyaddresses($data);
 }

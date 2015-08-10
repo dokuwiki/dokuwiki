@@ -699,9 +699,9 @@ class Crypt_Rijndael extends Crypt_Base {
      * @param optional Integer $mode
      * @access public
      */
-    function Crypt_Rijndael($mode = CRYPT_RIJNDAEL_MODE_CBC)
+    function __construct($mode = CRYPT_RIJNDAEL_MODE_CBC)
     {
-        parent::Crypt_Base($mode);
+        parent::__construct($mode);
     }
 
     /**

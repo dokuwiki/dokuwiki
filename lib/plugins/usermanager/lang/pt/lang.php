@@ -8,6 +8,9 @@
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
  * @author José Campos zecarlosdecampos@gmail.com
+ * @author Guido Salatino <guidorafael23@gmail.com>
+ * @author Romulo Pereira <romuloccomp@gmail.com>
+ * @author Paulo Carmino <contato@paulocarmino.com>
  */
 $lang['menu']                  = 'Gestor de Perfis';
 $lang['noauth']                = '(autenticação indisponível)';
@@ -33,6 +36,8 @@ $lang['filter']                = 'Filtro';
 $lang['export_all']            = 'Exportar Todos os Utilizadores (CSV)';
 $lang['export_filtered']       = 'Exportar a lista de utilizadores filtrada (CSV)';
 $lang['import']                = 'Importar Novos Utilizadores';
+$lang['line']                  = 'Linha nº
+';
 $lang['error']                 = 'Mensagem de erro';
 $lang['summary']               = 'Apresentar utilizadores %1$d-%2$d de %3$d encontrados. %4$d inscritos.';
 $lang['nonefound']             = 'Nenhum utilizador encontrado. %d inscritos.';
@@ -54,11 +59,17 @@ $lang['add_ok']                = 'Utilizador adicionado.';
 $lang['add_fail']              = 'Utilizador não adicionado.';
 $lang['notify_ok']             = 'Mensagem de notificação enviada.';
 $lang['notify_fail']           = 'Não foi possível enviar mensagem de notificação';
+$lang['import_userlistcsv']    = 'Arquivo de lista do usuário (CSV):
+';
+$lang['import_header']         = 'Mais Recentes Importações - Falhas';
 $lang['import_success_count']  = 'Importar Utilizadores: %d utiliyadores encontrados, %d importados com sucesso.';
 $lang['import_failure_count']  = 'Importar Utilizadores: %d falharam. As falhas estão listadas abaixo.';
 $lang['import_error_fields']   = 'Campos insuficientes, encontrados %d mas requeridos 4.';
 $lang['import_error_baduserid'] = 'Falta id de utilizador';
+$lang['import_error_badname']  = 'Nome inválido';
+$lang['import_error_badmail']  = 'E-Mail inválido';
 $lang['import_error_upload']   = 'Falhou a importação. O ficheiro csv não pôde ser importado ou está vazio.';
 $lang['import_error_readfail'] = 'Falhou a importação. Não foi possível ler o ficheiro submetido.';
 $lang['import_error_create']   = 'Não foi possível criar o utilizador.';
 $lang['import_notify_fail']    = 'A mensagem de notificação não pôde ser enviada para o utilizador importado, %s com email %s.';
+$lang['import_downloadfailures'] = 'Baixe Falhas como CSV para a correção';

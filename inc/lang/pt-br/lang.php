@@ -24,6 +24,7 @@
  * @author Dário Estevão <darioems@gmail.com>
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  * @author Ednei <leuloch@gmail.com>
+ * @author Hudson FAS <hudsonfas@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,7 +56,6 @@ $lang['btn_update']            = 'Atualizar';
 $lang['btn_delete']            = 'Excluir';
 $lang['btn_back']              = 'Voltar';
 $lang['btn_backlink']          = 'Links reversos';
-$lang['btn_backtomedia']       = 'Voltar à seleção do arquivo de mídia';
 $lang['btn_subscribe']         = 'Monitorar alterações';
 $lang['btn_profile']           = 'Atualizar o perfil';
 $lang['btn_reset']             = 'Limpar';
@@ -90,6 +90,7 @@ $lang['regmissing']            = 'Desculpe, mas você precisa preencher todos os
 $lang['reguexists']            = 'Desculpe, mas já existe um usuário com esse nome.';
 $lang['regsuccess']            = 'O usuário foi criado e a senha enviada para seu e-mail.';
 $lang['regsuccess2']           = 'O usuário foi criado.';
+$lang['regfail']               = 'Não foi possível criar esse usuário.';
 $lang['regmailfail']           = 'Aparentemente ocorreu um erro no envio da senha. Por favor, entre em contato com o administrador!';
 $lang['regbadmail']            = 'O endereço de e-mail fornecido é, aparentemente, inválido - se você acha que isso é um erro, entre em contato com o administrador';
 $lang['regbadpass']            = 'As senhas digitadas não são idênticas. Por favor, tente novamente.';
@@ -104,6 +105,7 @@ $lang['profdeleteuser']        = 'Excluir a conta';
 $lang['profdeleted']           = 'Sua conta de usuário foi excluída desse wiki';
 $lang['profconfdelete']        = 'Eu desejo remover minha conta dessa wiki. <br/> Essa ação não pode ser desfeita.';
 $lang['profconfdeletemissing'] = 'Caixa de confirmação não marcada';
+$lang['proffail']              = 'O perfil do usuário não foi atualizado.';
 $lang['pwdforget']             = 'Esqueceu sua senha? Solicite outra';
 $lang['resendna']              = 'Esse wiki não tem suporte para o reenvio de senhas.';
 $lang['resendpwd']             = 'Definir a nova senha para';
@@ -168,7 +170,6 @@ $lang['js']['media_overwrt']   = 'Sobrescrever arquivos existentes';
 $lang['rssfailed']             = 'Ocorreu um erro durante a atualização dessa fonte: ';
 $lang['nothingfound']          = 'Não foi encontrado nada.';
 $lang['mediaselect']           = 'Arquivos de mídia';
-$lang['fileupload']            = 'Envio de arquivo de mídia';
 $lang['uploadsucc']            = 'O envio foi efetuado com sucesso';
 $lang['uploadfail']            = 'Não foi possível enviar o arquivo. Será algum problema com as permissões?';
 $lang['uploadwrong']           = 'O envio foi bloqueado. Essa extensão de arquivo é proibida!';
@@ -259,7 +260,6 @@ $lang['qb_sig']                = 'Inserir assinatura';
 $lang['qb_smileys']            = 'Carinhas';
 $lang['qb_chars']              = 'Caracteres especiais';
 $lang['upperns']               = 'Pular para espaço de nomes acima';
-$lang['admin_register']        = 'Adicionar novo usuário';
 $lang['metaedit']              = 'Editar metadados';
 $lang['metasaveerr']           = 'Não foi possível escrever os metadados';
 $lang['metasaveok']            = 'Os metadados foram salvos';
@@ -292,7 +292,6 @@ $lang['subscr_style_every']    = 'um e-mail a cada modificação';
 $lang['subscr_style_digest']   = 'um agrupamento de e-mails com as mudanças para cada página (a cada %.2f dias)';
 $lang['subscr_style_list']     = 'uma lista de páginas modificadas desde o último e-mail (a cada %.2f dias)';
 $lang['authtempfail']          = 'A autenticação de usuários está temporariamente desabilitada. Se essa situação persistir, por favor, informe ao administrador do Wiki.';
-$lang['authpwdexpire']         = 'Sua senha vai expirar em %d dias. Você deve mudá-la assim que for possível.';
 $lang['i_chooselang']          = 'Selecione o seu idioma';
 $lang['i_installer']           = 'Instalador do DokuWiki';
 $lang['i_wikiname']            = 'Nome do Wiki';
@@ -353,7 +352,10 @@ $lang['media_perm_read']       = 'Desculpe, mas você não tem privilégios sufi
 $lang['media_perm_upload']     = 'Desculpe, mas você não tem privilégios suficientes para enviar arquivos.';
 $lang['media_update']          = 'Enviar uma nova versão';
 $lang['media_restore']         = 'Restaurar esta versão';
+$lang['media_acl_warning']     = 'Essa lista pode não estar completa devido a restrições de ACL e páginas ocultas.';
 $lang['currentns']             = 'Domínio atual';
 $lang['searchresult']          = 'Resultado da Busca';
 $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Marcação wiki';
+$lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada posteriormente em <a href="%s">%s</a>.';
+$lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';

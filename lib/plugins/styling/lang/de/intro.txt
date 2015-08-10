@@ -1,0 +1,2 @@
+Dieses Plugin ermöglicht es, bestimmte Designeinstellungen des ausgewählten Templates zu ändern.
+Alle Änderungen werden in einer lokalen Konfigurationsdatei gespeichert und sind upgrade-sicher.

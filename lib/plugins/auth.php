@@ -116,7 +116,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * @author Gabriel Birke <birke@d-scribe.de>
      * @param string $type   Modification type ('create', 'modify', 'delete')
      * @param array  $params Parameters for the createUser, modifyUser or deleteUsers method. The content of this array depends on the modification type
-     * @return mixed Result from the modification function or false if an event handler has canceled the action
+     * @return bool|null|int Result from the modification function or false if an event handler has canceled the action
      */
     public function triggerUserMod($type, $params) {
         $validTypes = array(
@@ -124,12 +124,15 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
             'modify' => 'modifyUser',
             'delete' => 'deleteUsers'
         );
-        if(empty($validTypes[$type]))
+        if(empty($validTypes[$type])) {
             return false;
+        }
+
+        $result = false;
         $eventdata = array('type' => $type, 'params' => $params, 'modification_result' => null);
         $evt       = new Doku_Event('AUTH_USER_CHANGE', $eventdata);
         if($evt->advise_before(true)) {
-            $result                           = call_user_func_array(array($this, $validTypes[$type]), $params);
+            $result                           = call_user_func_array(array($this, $validTypes[$type]), $evt->data['params']);
             $evt->data['modification_result'] = $result;
         }
         $evt->advise_after();
@@ -235,7 +238,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param   string $user the user name
      * @param   bool $requireGroups whether or not the returned data must include groups
-     * @return  array containing user data or false
+     * @return  false|array containing user data or false
      */
     public function getUserData($user, $requireGroups=true) {
         if(!$this->cando['external']) msg("no valid authorisation system in use", -1);
@@ -292,7 +295,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      */
     public function deleteUsers($users) {
         msg("authorisation method does not allow deleting of users", -1);
-        return false;
+        return 0;
     }
 
     /**

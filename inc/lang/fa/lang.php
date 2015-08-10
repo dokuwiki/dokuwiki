@@ -13,6 +13,8 @@
  * @author reza_khn <reza_khn@yahoo.com>
  * @author Hamid <zarrabi@sharif.edu>
  * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
+ * @author Mohammad Sadegh <msdn2013@gmail.com>
+ * @author Omid Hezaveh <hezpublic@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -44,7 +46,6 @@ $lang['btn_update']            = 'به‌روزرسانی';
 $lang['btn_delete']            = 'حذف';
 $lang['btn_back']              = 'عقب';
 $lang['btn_backlink']          = 'پیوندهای به این صفحه';
-$lang['btn_backtomedia']       = 'بازگشت به انتخاب فایل';
 $lang['btn_subscribe']         = 'عضویت در تغییرات صفحه';
 $lang['btn_profile']           = 'به‌روزرسانی پروفایل';
 $lang['btn_reset']             = 'بازنشاندن';
@@ -157,7 +158,6 @@ $lang['js']['media_overwrt']   = 'جاینوشت فایل های موجود';
 $lang['rssfailed']             = 'بروز خطا در هنگام واکشی';
 $lang['nothingfound']          = 'چیزی پیدا نشد';
 $lang['mediaselect']           = 'فایل‌ها';
-$lang['fileupload']            = 'ارسال پرونده';
 $lang['uploadsucc']            = 'ارسال با موفقیت انجام شد';
 $lang['uploadfail']            = 'خطا در ارسال';
 $lang['uploadwrong']           = 'ارسال متوقف شد. این توسعه‌ی فایل ممنوع می‌باشد.';
@@ -248,7 +248,6 @@ $lang['qb_sig']                = 'افزودن امضا';
 $lang['qb_smileys']            = 'شکلک';
 $lang['qb_chars']              = 'حروف ویژه';
 $lang['upperns']               = 'پرش به فضای‌نام بالا';
-$lang['admin_register']        = 'یک حساب جدید بسازید';
 $lang['metaedit']              = 'ویرایش داده‌های متا';
 $lang['metasaveerr']           = 'نوشتن داده‌نما با مشکل مواجه شد';
 $lang['metasaveok']            = 'داده‌نما ذخیره شد';
@@ -281,7 +280,6 @@ $lang['subscr_style_every']    = 'ارسال رای‌نامه در تمامی �
 $lang['subscr_style_digest']   = 'ایمیل خلاصه‌ی تغییرات هر روز (هر %.2f روز)';
 $lang['subscr_style_list']     = 'فهرست صفحات تغییریافته از آخرین ایمیل (هر %.2f روز)';
 $lang['authtempfail']          = 'معتبرسازی کابران موقتن مسدود می‌باشد. اگر این حالت پایدار بود، مدیر ویکی را باخبر سازید.';
-$lang['authpwdexpire']         = 'کلمه عبور شما در %d روز منقضی خواهد شد ، شما باید آن را زود تغییر دهید';
 $lang['i_chooselang']          = 'انتخاب زبان';
 $lang['i_installer']           = 'نصب کننده‌ی Dokuwiki';
 $lang['i_wikiname']            = 'نام ویکی';

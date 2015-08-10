@@ -6,6 +6,7 @@
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
+ * @author Maurizio <mcannavo@katamail.com>
  */
 $lang['server']                = 'Il tuo server MySQL';
 $lang['user']                  = 'User name di MySQL';
@@ -17,6 +18,7 @@ $lang['checkPass']             = 'Istruzione SQL per il controllo password';
 $lang['getUserInfo']           = 'Istruzione SQL per recuperare le informazioni utente';
 $lang['getUsers']              = 'Istruzione SQL per listare tutti gli utenti';
 $lang['FilterLogin']           = 'Istruzione SQL per per filtrare gli utenti in funzione del "login name"';
+$lang['FilterGroup']           = 'Clausola SQL per filtrare gli utenti in base all\'appartenenza al gruppo';
 $lang['SortOrder']             = 'Istruzione SQL per ordinare gli utenti';
 $lang['addUser']               = 'Istruzione SQL per aggiungere un nuovo utente';
 $lang['addGroup']              = 'Istruzione SQL per aggiungere un nuovo gruppo';

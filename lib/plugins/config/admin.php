@@ -32,6 +32,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     var $_session_started = false;
     var $_localised_prompts = false;
 
+    /**
+     * @return int
+     */
     function getMenuSort() { return 100; }
 
     /**
@@ -40,14 +43,20 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     function handle() {
         global $ID, $INPUT;
 
-        if (!$this->_restore_session()) return $this->_close_session();
-        if ($INPUT->int('save') != 1) return $this->_close_session();
-        if (!checkSecurityToken()) return $this->_close_session();
+        if(!$this->_restore_session() || $INPUT->int('save') != 1 || !checkSecurityToken()) {
+            $this->_close_session();
+            return;
+        }
 
-        if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
+        if(is_null($this->_config)) {
+            $this->_config = new configuration($this->_file);
+        }
 
         // don't go any further if the configuration is locked
-        if ($this->_config->_locked) return $this->_close_session();
+        if($this->_config->locked) {
+            $this->_close_session();
+            return;
+        }
 
         $this->_input = $INPUT->arr('config');
 
@@ -104,6 +113,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         formSecurityToken();
         $this->_print_h1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
+        /** @var setting[] $undefined_settings */
         $undefined_settings = array();
         $in_fieldset = false;
         $first_plugin_fieldset = true;
@@ -162,7 +172,17 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         // show undefined settings list
         if ($allow_debug && !empty($undefined_settings)) {
-            function _setting_natural_comparison($a, $b) { return strnatcmp($a->_key, $b->_key); }
+            /**
+             * Callback for sorting settings
+             *
+             * @param setting $a
+             * @param setting $b
+             * @return int if $a is lower/equal/higher than $b
+             */
+            function _setting_natural_comparison($a, $b) {
+                return strnatcmp($a->_key, $b->_key);
+            }
+
             usort($undefined_settings, '_setting_natural_comparison');
             $this->_print_h1('undefined_settings', $this->getLang('_header_undefined'));
             ptln('<fieldset>');
@@ -192,8 +212,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         if (!$this->_config->locked) {
             ptln('  <input type="hidden" name="save"   value="1" />');
-            ptln('  <input type="submit" name="submit" class="button" value="'.$lang['btn_save'].'" accesskey="s" />');
-            ptln('  <input type="reset" class="button" value="'.$lang['btn_reset'].'" />');
+            ptln('  <button type="submit" name="submit" accesskey="s">'.$lang['btn_save'].'</button>');
+            ptln('  <button type="reset">'.$lang['btn_reset'].'</button>');
         }
 
         ptln('</p>');
@@ -235,6 +255,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
       if ($this->_session_started) session_write_close();
     }
 
+    /**
+     * @param bool $prompts
+     */
     function setupLocale($prompts=false) {
 
         parent::setupLocale();
@@ -245,6 +268,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
     }
 
+    /**
+     * @return bool
+     */
     function _setup_localised_plugin_prompts() {
         global $conf;
 
@@ -256,7 +282,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 if ($plugin == '.' || $plugin == '..' || $plugin == 'tmp' || $plugin == 'config') continue;
                 if (is_file(DOKU_PLUGIN.$plugin)) continue;
 
-                if (@file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
+                if (file_exists(DOKU_PLUGIN.$plugin.$enlangfile)){
                     $lang = array();
                     @include(DOKU_PLUGIN.$plugin.$enlangfile);
                     if ($conf['lang'] != 'en') @include(DOKU_PLUGIN.$plugin.$langfile);
@@ -277,7 +303,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         // the same for the active template
         $tpl = $conf['template'];
 
-        if (@file_exists(tpl_incdir().$enlangfile)){
+        if (file_exists(tpl_incdir().$enlangfile)){
             $lang = array();
             @include(tpl_incdir().$enlangfile);
             if ($conf['lang'] != 'en') @include(tpl_incdir().$langfile);
@@ -299,6 +325,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * Generates a two-level table of contents for the config plugin.
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
+     *
+     * @return array
      */
     function getTOC() {
         if (is_null($this->_config)) { $this->_config = new configuration($this->_file); }
@@ -328,6 +356,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         $t[] = html_mktocitem('configuration_manager', $this->getLang('_configuration_manager'), 1);
         $t[] = html_mktocitem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
+        /** @var setting $setting */
         foreach($toc['conf'] as $setting) {
             $name = $setting->prompt($this);
             $t[] = html_mktocitem($setting->_key, $name, 2);
@@ -352,6 +381,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         return $t;
     }
 
+    /**
+     * @param string $id
+     * @param string $text
+     */
     function _print_h1($id, $text) {
         ptln('<h1 id="'.$id.'">'.$text.'</h1>');
     }

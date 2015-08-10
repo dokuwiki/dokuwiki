@@ -44,9 +44,14 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('~~INFO:\w+~~',$mode,'plugin_info');
     }
 
-
     /**
      * Handle the match
+     *
+     * @param   string       $match   The text matched by the patterns
+     * @param   int          $state   The lexer state for the match
+     * @param   int          $pos     The character position of the matched text
+     * @param   Doku_Handler $handler The Doku_Handler object
+     * @return  array Return an array with all data you want to use in render
      */
     function handle($match, $state, $pos, Doku_Handler $handler){
         $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
@@ -55,6 +60,11 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
      * Create output
+     *
+     * @param string $format   string     output format being rendered
+     * @param Doku_Renderer    $renderer  the current renderer object
+     * @param array            $data      data created by handler()
+     * @return  boolean                 rendered correctly?
      */
     function render($format, Doku_Renderer $renderer, $data) {
         if($format == 'xhtml'){
@@ -103,8 +113,11 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * list all installed plugins
      *
      * uses some of the original renderer methods
+     *
+     * @param string $type
+     * @param Doku_Renderer_xhtml $renderer
      */
-    function _plugins_xhtml($type, Doku_Renderer &$renderer){
+    function _plugins_xhtml($type, Doku_Renderer_xhtml $renderer){
         global $lang;
         $renderer->doc .= '<ul>';
 
@@ -114,7 +127,7 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
         // remove subparts
         foreach($plugins as $p){
             if (!$po = plugin_load($type,$p)) continue;
-            list($name,$part) = explode('_',$p,2);
+            list($name,/* $part */) = explode('_',$p,2);
             $plginfo[$name] = $po->getInfo();
         }
 
@@ -141,8 +154,10 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
      * list all installed plugins
      *
      * uses some of the original renderer methods
+     *
+     * @param Doku_Renderer_xhtml $renderer
      */
-    function _helpermethods_xhtml(Doku_Renderer &$renderer){
+    function _helpermethods_xhtml(Doku_Renderer_xhtml $renderer){
         $plugins = plugin_list('helper');
         foreach($plugins as $p){
             if (!$po = plugin_load('helper',$p)) continue;
@@ -189,6 +204,8 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
      * lists all known syntax types and their registered modes
+     *
+     * @return string
      */
     function _syntaxtypes_xhtml(){
         global $PARSER_MODES;
@@ -211,6 +228,8 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
      * lists all known syntax modes and their sorting value
+     *
+     * @return string
      */
     function _syntaxmodes_xhtml(){
         $modes = p_get_parsermodes();
@@ -249,13 +268,18 @@ class syntax_plugin_info extends DokuWiki_Syntax_Plugin {
 
     /**
      * Adds a TOC item
+     *
+     * @param string $text
+     * @param int $level
+     * @param Doku_Renderer_xhtml $renderer
+     * @return string
      */
-    function _addToTOC($text, $level, Doku_Renderer &$renderer){
+    protected function _addToTOC($text, $level, Doku_Renderer_xhtml $renderer){
         global $conf;
 
+        $hid = '';
         if (($level >= $conf['toptoclevel']) && ($level <= $conf['maxtoclevel'])){
-            /** @var $renderer Doku_Renderer_xhtml */
-            $hid  = $renderer->_headerToLink($text, 'true');
+            $hid  = $renderer->_headerToLink($text, true);
             $renderer->toc[] = array(
                 'hid'   => $hid,
                 'title' => $text,

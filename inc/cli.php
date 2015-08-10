@@ -108,7 +108,7 @@ abstract class DokuCLI {
     /**
      * Print an error message
      *
-     * @param $string
+     * @param string $string
      */
     public function error($string) {
         $this->colors->ptln("E: $string", 'red', STDERR);
@@ -117,7 +117,7 @@ abstract class DokuCLI {
     /**
      * Print a success message
      *
-     * @param $string
+     * @param string $string
      */
     public function success($string) {
         $this->colors->ptln("S: $string", 'green', STDERR);
@@ -126,7 +126,7 @@ abstract class DokuCLI {
     /**
      * Print an info message
      *
-     * @param $string
+     * @param string $string
      */
     public function info($string) {
         $this->colors->ptln("I: $string", 'cyan', STDERR);
@@ -199,8 +199,8 @@ class DokuCLI_Colors {
     /**
      * Convenience function to print a line in a given color
      *
-     * @param          $line
-     * @param          $color
+     * @param string   $line
+     * @param string   $color
      * @param resource $channel
      */
     public function ptln($line, $color, $channel = STDOUT) {
@@ -470,8 +470,8 @@ class DokuCLI_Options {
      * Can only be used after parseOptions() has been run
      *
      * @param string $option
-     * @param mixed  $default what to return if the option was not set
-     * @return mixed
+     * @param bool|string $default what to return if the option was not set
+     * @return bool|string
      */
     public function getOpt($option, $default = false) {
         if(isset($this->options[$option])) return $this->options[$option];
@@ -593,8 +593,8 @@ class DokuCLI_Options {
     /**
      * Displays text in multiple word wrapped columns
      *
-     * @param array $widths list of column widths (in characters)
-     * @param array $texts  list of texts for each column
+     * @param int[]    $widths list of column widths (in characters)
+     * @param string[] $texts  list of texts for each column
      * @return string
      */
     private function tableFormat($widths, $texts) {
@@ -640,6 +640,11 @@ class DokuCLI_Exception extends Exception {
     const E_OPT_ABIGUOUS = 4; //Option abiguous
     const E_ARG_READ = 5; //Could not read argv
 
+    /**
+     * @param string    $message     The Exception message to throw.
+     * @param int       $code        The Exception code
+     * @param Exception $previous    The previous exception used for the exception chaining.
+     */
     public function __construct($message = "", $code = 0, Exception $previous = null) {
         if(!$code) $code = DokuCLI_Exception::E_ANY;
         parent::__construct($message, $code, $previous);

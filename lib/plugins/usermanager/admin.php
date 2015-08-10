@@ -31,11 +31,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     protected $_edit_userdata = array();
     protected $_disabled = '';      // if disabled set to explanatory string
     protected $_import_failures = array();
+    protected $_lastdisabled = false; // set to true if last user is unknown and last button is hence buggy
 
     /**
      * Constructor
      */
-    public function admin_plugin_usermanager(){
+    public function __construct(){
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
 
@@ -58,9 +59,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         }
     }
 
-     /**
-      * Return prompt for admin menu
-      */
+    /**
+     * Return prompt for admin menu
+     *
+     * @param string $language
+     * @return string
+     */
     public function getMenuText($language) {
 
         if (!is_null($this->_auth))
@@ -71,13 +75,38 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * return sort order for position in admin menu
+     *
+     * @return int
      */
     public function getMenuSort() {
         return 2;
     }
 
     /**
+     * @return int current start value for pageination
+     */
+    public function getStart() {
+        return $this->_start;
+    }
+
+    /**
+     * @return int number of users per page
+     */
+    public function getPagesize() {
+        return $this->_pagesize;
+    }
+
+    /**
+     * @param boolean $lastdisabled
+     */
+    public function setLastdisabled($lastdisabled) {
+        $this->_lastdisabled = $lastdisabled;
+    }
+
+    /**
      * Handle user request
+     *
+     * @return bool
      */
     public function handle() {
         global $INPUT;
@@ -128,6 +157,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * Output appropriate html
+     *
+     * @return bool
      */
     public function html() {
         global $ID;
@@ -210,18 +241,18 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    <tbody>");
         ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
         ptln("        <span class=\"medialeft\">");
-        ptln("          <input type=\"submit\" name=\"fn[delete]\" ".$delete_disable." class=\"button\" value=\"".$this->lang['delete_selected']."\" id=\"usrmgr__del\" />");
-        ptln("        </span>");
+        ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".$this->lang['delete_selected']."</button>");
+        ptln("        ");
         ptln("        <span class=\"mediaright\">");
-        ptln("          <input type=\"submit\" name=\"fn[start]\" ".$page_buttons['start']." class=\"button\" value=\"".$this->lang['start']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev']." class=\"button\" value=\"".$this->lang['prev']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[next]\" ".$page_buttons['next']." class=\"button\" value=\"".$this->lang['next']."\" />");
-        ptln("          <input type=\"submit\" name=\"fn[last]\" ".$page_buttons['last']." class=\"button\" value=\"".$this->lang['last']."\" />");
+        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".$this->lang['start']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".$this->lang['prev']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".$this->lang['next']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".$this->lang['last']."</button>");
         ptln("        </span>");
         if (!empty($this->_filter)) {
-            ptln("    <input type=\"submit\" name=\"fn[search][clear]\" class=\"button\" value=\"".$this->lang['clear']."\" />");
+            ptln("    <button type=\"submit\" name=\"fn[search][clear]\">".$this->lang['clear']."</button>");
         }
-        ptln("        <input type=\"submit\" name=\"fn[export]\" class=\"button\" value=\"".$export_label."\" />");
+        ptln("        <button type=\"submit\" name=\"fn[export]\">".$export_label."</button>");
         ptln("        <input type=\"hidden\" name=\"do\"    value=\"admin\" />");
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
 
@@ -329,7 +360,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $this->_htmlFilterSettings($indent+10);
 
-        ptln("          <input type=\"submit\" name=\"fn[".$cmd."]\" class=\"button\" value=\"".$this->lang[$cmd]."\" />",$indent);
+        ptln("          <button type=\"submit\" name=\"fn[".$cmd."]\">".$this->lang[$cmd]."</button>",$indent);
         ptln("        </td>",$indent);
         ptln("      </tr>",$indent);
         ptln("    </tbody>",$indent);
@@ -338,7 +369,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($notes) {
             ptln("    <ul class=\"notes\">");
             foreach ($notes as $note) {
-                ptln("      <li><span class=\"li\">".$note."</span></li>",$indent);
+                ptln("      <li><span class=\"li\">".$note."</li>",$indent);
             }
             ptln("    </ul>");
         }
@@ -425,7 +456,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln('  <form action="'.wl($ID).'" method="post" enctype="multipart/form-data">',$indent);
         formSecurityToken();
         ptln('    <label>'.$this->lang['import_userlistcsv'].'<input type="file" name="import" /></label>',$indent);
-        ptln('    <input type="submit" name="fn[import]" value="'.$this->lang['import'].'" />',$indent);
+        ptln('    <button type="submit" name="fn[import]">'.$this->lang['import'].'</button>',$indent);
         ptln('    <input type="hidden" name="do"    value="admin" />',$indent);
         ptln('    <input type="hidden" name="page"  value="usermanager" />',$indent);
 
@@ -739,6 +770,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         global $auth;
         global $INPUT;
 
+        $user = array();
         $user[0] = ($clean) ? $auth->cleanUser($INPUT->str('userid')) : $INPUT->str('userid');
         $user[1] = $INPUT->str('userpass');
         $user[2] = $INPUT->str('username');
@@ -765,7 +797,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $this->_filter = array();
 
         if ($op == 'new') {
-            list($user,$pass,$name,$mail,$grps) = $this->_retrieveUser(false);
+            list($user,/* $pass */,$name,$mail,$grps) = $this->_retrieveUser(false);
 
             if (!empty($user)) $this->_filter['user'] = $user;
             if (!empty($name)) $this->_filter['name'] = $name;
@@ -817,6 +849,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         $disabled = 'disabled="disabled"';
 
+        $buttons = array();
         $buttons['start'] = $buttons['prev'] = ($this->_start == 0) ? $disabled : '';
 
         if ($this->_user_total == -1) {
@@ -824,6 +857,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             $buttons['next'] = '';
         } else {
             $buttons['last'] = $buttons['next'] = (($this->_start + $this->_pagesize) >= $this->_user_total) ? $disabled : '';
+        }
+
+        if ($this->_lastdisabled) {
+            $buttons['last'] = $disabled;
         }
 
         return $buttons;
@@ -938,8 +975,8 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * Returns cleaned user data
      *
      * @param array $candidate raw values of line from input file
-     * @param $error
-     * @return array|bool cleaned data or false
+     * @param string $error
+     * @return array|false cleaned data or false
      */
     protected function _cleanImportUser($candidate, & $error){
         global $INPUT;
@@ -952,7 +989,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $INPUT->set('usergroups', $candidate[4]);
 
         $cleaned = $this->_retrieveUser();
-        list($user,$pass,$name,$mail,$grps) = $cleaned;
+        list($user,/* $pass */,$name,$mail,/* $grps */) = $cleaned;
         if (empty($user)) {
             $error = $this->lang['import_error_baduserid'];
             return false;
@@ -1022,6 +1059,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
     /**
      * wrapper for is_uploaded_file to facilitate overriding by test suite
+     *
+     * @param string $file filename
+     * @return bool
      */
     protected function _isUploadedFile($file) {
         return is_uploaded_file($file);
@@ -1032,6 +1072,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      *
      * @deprecated    remove when dokuwiki php requirement increases to 5.3+
      *                also associated unit test & mock access method
+     *
+     * @param string $csv string to parse
+     * @return array
      */
     protected function _getcsv($csv) {
         return function_exists('str_getcsv') ? str_getcsv($csv) : $this->str_getcsv($csv);
@@ -1042,6 +1085,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * loosely based on www.php.net/str_getcsv#88311
      *
      * @deprecated    remove when dokuwiki php requirement increases to 5.3+
+     *
+     * @param string $str string to parse
+     * @return array
      */
     protected function str_getcsv($str) {
         $fp = fopen("php://temp/maxmemory:1048576", 'r+');    // 1MiB
