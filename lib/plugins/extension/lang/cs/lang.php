@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
@@ -26,6 +26,10 @@ $lang['btn_disable']           = 'Zakázat';
 $lang['btn_install']           = 'Instalovat';
 $lang['btn_reinstall']         = 'Přeinstalovat';
 $lang['js']['reallydel']       = 'Opravdu odinstalovat toto rozšíření?';
+$lang['js']['display_viewoptions'] = 'Zobrazit možnosti:';
+$lang['js']['display_enabled'] = 'povolit';
+$lang['js']['display_disabled'] = 'zakázat';
+$lang['js']['display_updatable'] = 'aktualizovatelné';
 $lang['search_for']            = 'Hledat rozšíření:';
 $lang['search']                = 'Hledat';
 $lang['extensionby']           = '<strong>%s</strong> od %s';
