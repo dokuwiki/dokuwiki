@@ -14,6 +14,7 @@
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
