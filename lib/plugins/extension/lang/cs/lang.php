@@ -5,8 +5,9 @@
  * 
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
  */
-$lang['menu']                  = 'Manager rozšíření';
+$lang['menu']                  = 'Správce rozšíření';
 $lang['tab_plugins']           = 'Instalované moduly';
 $lang['tab_templates']         = 'Instalované šablony';
 $lang['tab_search']            = 'Vyhledej a instaluj';
