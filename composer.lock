@@ -54,16 +54,16 @@
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.0.4",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "6572e78ef9d064eeb5c74d4ffe61b473a4996b68"
+                "reference": "c075304b44c4aadff0718af445e86bf730f331ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/6572e78ef9d064eeb5c74d4ffe61b473a4996b68",
-                "reference": "6572e78ef9d064eeb5c74d4ffe61b473a4996b68",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/c075304b44c4aadff0718af445e86bf730f331ff",
+                "reference": "c075304b44c4aadff0718af445e86bf730f331ff",
                 "shasum": ""
             },
             "require": {
@@ -97,7 +97,7 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2015-07-24 11:36:49"
+            "time": "2015-08-12 13:24:34"
         }
     ],
     "packages-dev": [],

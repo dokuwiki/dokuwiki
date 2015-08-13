@@ -61,6 +61,7 @@ class FileInfo
         $file->setMode(fileperms($path));
         $file->setOwner(fileowner($path));
         $file->setGroup(filegroup($path));
+        $file->setSize(filesize($path));
         $file->setUid($stat['uid']);
         $file->setGid($stat['gid']);
         $file->setMtime($stat['mtime']);
