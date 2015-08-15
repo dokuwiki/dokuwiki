@@ -61,6 +61,7 @@ $lang['savedir']     = 'Directory for saving data';
 $lang['basedir']     = 'Server path (eg. <code>/dokuwiki/</code>). Leave blank for autodetection.';
 $lang['baseurl']     = 'Server URL (eg. <code>http://www.yourserver.com</code>). Leave blank for autodetection.';
 $lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
+$lang['cdnurl']      = 'If not blank, the CloufFront CDN prefix.';
 $lang['dmode']       = 'Directory creation mode';
 $lang['fmode']       = 'File creation mode';
 $lang['allowdebug']  = 'Allow debug. <b>Disable if not needed!</b>';
