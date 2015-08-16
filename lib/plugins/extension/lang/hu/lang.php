@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
@@ -25,6 +25,10 @@ $lang['btn_disable']           = 'Letiltás';
 $lang['btn_install']           = 'Telepítés';
 $lang['btn_reinstall']         = 'Újratelepítés';
 $lang['js']['reallydel']       = 'Biztosan törlöd ezt a bővítményt?';
+$lang['js']['display_viewoptions'] = 'Nézet beállításai:';
+$lang['js']['display_enabled'] = 'engedélyezve';
+$lang['js']['display_disabled'] = 'letiltva';
+$lang['js']['display_updatable'] = 'frissíthető';
 $lang['search_for']            = 'Bővítmények keresése:';
 $lang['search']                = 'Keresés';
 $lang['extensionby']           = '<strong>%s</strong>, %s szerzőtől';
@@ -62,6 +66,7 @@ $lang['status_bundled']        = 'beépített';
 $lang['msg_enabled']           = 'A(z) %s modul engedélyezve';
 $lang['msg_disabled']          = 'A(z) %s modul letiltva';
 $lang['msg_delete_success']    = 'A bővítmény %s törölve';
+$lang['msg_delete_failed']     = 'A(z) %s bővítmény eltávolítása sikertelen';
 $lang['msg_template_install_success'] = 'A(z) %s sablon sikeresen telepítve';
 $lang['msg_template_update_success'] = 'A(z) %s sablon sikeresen frissítve';
 $lang['msg_plugin_install_success'] = 'A(z) %s modul sikeresen telepítve';
@@ -83,6 +88,8 @@ $lang['noperms']               = 'A bővítmény könyvtára nem írható';
 $lang['notplperms']            = 'A sablon könyvtára nem írható';
 $lang['nopluginperms']         = 'A modul könyvtára nem írható';
 $lang['git']                   = 'Ezt a bővítményt git-tel telepítették, lehet, hogy nem itt célszerű frissíteni';
+$lang['auth']                  = 'Ez az autentikációs modul nincs engedélyezve a beállításokban, érdemes lehet letiltani.';
 $lang['install_url']           = 'Telepítés erről az URL-ről:';
 $lang['install_upload']        = 'Bővítmény feltöltése:';
 $lang['repo_error']            = 'A modul repository-ja nem érhető el. Bizonyosodj meg róla, hogy a szervereden engedélyezett a www.dokuwiki.org cím elérése és ellenőrizd a proxy beállításaidat!';
+$lang['nossl']                 = 'Úgy tűnik, a PHP konfigurációd nem támogatja az SSL-t. Néhány DokuWiki bővítmény letöltése sikertelen lehet.';

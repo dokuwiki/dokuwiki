@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Hungarian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
@@ -84,7 +85,9 @@ $lang['disableactions']        = 'Bizonyos DokuWiki tevékenységek (action) til
 $lang['disableactions_check']  = 'Ellenőrzés';
 $lang['disableactions_subscription'] = 'Feliratkozás/Leiratkozás';
 $lang['disableactions_wikicode'] = 'Forrás megtekintése/Nyers adat exportja';
+$lang['disableactions_profile_delete'] = 'Saját felhasználó törlése';
 $lang['disableactions_other']  = 'Egyéb tevékenységek (vesszővel elválasztva)';
+$lang['disableactions_rss']    = 'XML hírfolyam (RSS)';
 $lang['auth_security_timeout'] = 'Authentikációs biztonsági időablak (másodperc)';
 $lang['securecookie']          = 'A böngészők a HTTPS felett beállított sütijüket csak HTTPS felett küldhetik? Kapcsoljuk ki ezt az opciót, ha csak a bejelentkezést védjük SSL-lel, a wiki tartalmának böngészése nyílt forgalommal történik.';
 $lang['remote']                = 'Távoli API engedélyezése. Ezzel más alkalmazások XML-RPC-n keresztül hozzáférhetnek a wikihez.';
@@ -189,6 +192,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile fejléc';
 $lang['xsendfile_o_3']         = 'Nginx saját X-Accel-Redirect fejléce';
 $lang['showuseras_o_loginname'] = 'Azonosító';
 $lang['showuseras_o_username'] = 'Teljes név';
+$lang['showuseras_o_username_link'] = 'A felhasználó teljes neve belső wiki-hivatkozásként';
 $lang['showuseras_o_email']    = 'E-mail cím (olvashatatlanná téve az e-mailcím védelem beállítása szerint)';
 $lang['showuseras_o_email_link'] = 'E-mail cím mailto: linkként';
 $lang['useheading_o_0']        = 'Soha';

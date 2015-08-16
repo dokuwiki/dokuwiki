@@ -1,0 +1,1 @@
+A logó megváltoztatásához tölts fel egy képet "logo.png" néven a "wiki" névtérbe vagy a kiindulási névtérbe. Ugyanígy feltöltheted ide az oldalhoz tartozó ikont is, "favicon.ico" néven. Ha zárt wikit használsz, javasoljuk, hogy állítsd be a "wiki" (vagy a kiindulási) névteret mindenki számára olvashatónak, különben a logót csak a bejelentkezett felhasználók fogják látni.
