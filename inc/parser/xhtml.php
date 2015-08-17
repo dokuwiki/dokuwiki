@@ -1033,7 +1033,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $link['title'] = $this->_xmlEntities($url);
         $url           = str_replace('\\', '/', $url);
-        $url           = ltrim($url,'/');
         $url           = 'file:///'.$url;
         $link['url']   = $url;
 
