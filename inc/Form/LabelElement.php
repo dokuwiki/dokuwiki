@@ -5,12 +5,12 @@ namespace dokuwiki\Form;
  * Class Label
  * @package dokuwiki\Form
  */
-class Label extends ValueElement {
+class LabelElement extends ValueElement {
 
     /**
      * Creates a new Label
      *
-     * @param string $label
+     * @param string $label This is is raw HTML and will not be escaped
      */
     public function __construct($label) {
         parent::__construct('label', $label);
@@ -22,6 +22,6 @@ class Label extends ValueElement {
      * @return string
      */
     public function toHTML() {
-        return '<label ' . buildAttributes($this->attrs()) . '>' . hsc($this->val()) . '</label>';
+        return '<label ' . buildAttributes($this->attrs()) . '>' . $this->val() . '</label>';
     }
 }

@@ -258,6 +258,41 @@ class Form extends Element {
     }
 
     /**
+     * Adds a label referencing another input element, escapes the label for you
+     *
+     * @param $label
+     * @param string $for
+     * @param int $pos
+     * @return Element
+     */
+    public function addLabel($label, $for='', $pos = -1) {
+        return $this->addLabelHTML(hsc($label), $for, $pos);
+    }
+
+    /**
+     * Adds a label referencing another input element, allows HTML for content
+     *
+     * @param string $content
+     * @param string|Element $for
+     * @param int $pos
+     * @return Element
+     */
+    public function addLabelHTML($content, $for='', $pos = -1) {
+        $element = new LabelElement(hsc($content));
+
+        if(is_a($for, '\dokuwiki\Form\Element')) {
+            /** @var Element $for */
+            $for = $for->id();
+        }
+        $for = (string) $for;
+        if($for !== '') {
+            $element->attr('for', $for);
+        }
+
+        return $this->addElement($element, $pos);
+    }
+
+    /**
      * Add fixed HTML to the form
      *
      * @param $html
