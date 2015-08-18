@@ -234,6 +234,30 @@ class Form extends Element {
     }
 
     /**
+     * Adds a simple button, escapes the content for you
+     *
+     * @param string $name
+     * @param string $content
+     * @param int $pos
+     * @return Element
+     */
+    public function addButton($name, $content, $pos = -1) {
+        return $this->addElement(new ButtonElement($name, hsc($content)), $pos);
+    }
+
+    /**
+     * Adds a simple button, allows HTML for content
+     *
+     * @param string $name
+     * @param string $html
+     * @param int $pos
+     * @return Element
+     */
+    public function addButtonHTML($name, $html, $pos = -1) {
+        return $this->addElement(new ButtonElement($name, $html), $pos);
+    }
+
+    /**
      * Add fixed HTML to the form
      *
      * @param $html
