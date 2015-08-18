@@ -140,7 +140,7 @@ class Form extends Element {
      * @return Element
      */
     public function addElement(Element $element, $pos = -1) {
-        if(is_a($element, '\dokuwiki\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
         if($pos < 0) {
             $this->elements[] = $element;
         } else {
@@ -156,7 +156,7 @@ class Form extends Element {
      * @param $pos 0-based position of the element to replace
      */
     public function replaceElement(Element $element, $pos) {
-        if(is_a($element, '\dokuwiki\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
         array_splice($this->elements, $pos, 1, array($element));
     }
 
