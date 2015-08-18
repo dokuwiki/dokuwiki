@@ -23,6 +23,7 @@ class form_checkableelement_test extends DokuWikiTest {
         $this->assertEquals('second', pq($inputs->elements[1])->val());
         $this->assertEquals('checked', pq($inputs->elements[0])->attr('checked'));
         $this->assertEquals('', pq($inputs->elements[1])->attr('checked'));
+        $this->assertEquals('radio', pq($inputs->elements[0])->attr('type'));
     }
 
     /**
@@ -45,5 +46,6 @@ class form_checkableelement_test extends DokuWikiTest {
         $this->assertEquals('second', pq($inputs->elements[1])->val());
         $this->assertEquals('', pq($inputs->elements[0])->attr('checked'));
         $this->assertEquals('checked', pq($inputs->elements[1])->attr('checked'));
+        $this->assertEquals('radio', pq($inputs->elements[0])->attr('type'));
     }
 }

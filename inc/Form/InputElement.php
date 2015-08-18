@@ -29,6 +29,7 @@ class InputElement extends Element {
     public function __construct($type, $name, $label = '') {
         parent::__construct($type, array('name' => $name));
         $this->attr('name', $name);
+        $this->attr('type', $type);
         if($label) $this->label = new Label($label);
     }
 
