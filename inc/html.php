@@ -959,13 +959,14 @@ function html_list_index($item){
  */
 function html_li_index($item){
     global $INFO;
+    global $ACT;
 
     $class = '';
     $id = '';
 
     if($item['type'] == "f"){
         // scroll to the current item
-        if($item['id'] == $INFO['id']) {
+        if($item['id'] == $INFO['id'] && $ACT == 'index') {
             $id = ' id="scroll__here"';
             $class = ' bounce';
         }
