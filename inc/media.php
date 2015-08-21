@@ -74,13 +74,16 @@ function media_metasave($id,$auth,$data){
         // add old revision to the attic
         media_saveOldRevision($id);
     }
-
+    $filesize_old = filesize($src);
     if($meta->save()){
         if($conf['fperm']) chmod($src, $conf['fperm']);
-
+        @clearstatcache(true, $src);
         $new = @filemtime($src);
+        $filesize_new = filesize($src);
+        $sizechange = $filesize_new - $filesize_old;
+
         // add a log entry to the media changelog
-        addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, $lang['media_meta_edited']);
+        addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, $lang['media_meta_edited'], '', null, $sizechange);
 
         msg($lang['metasaveok'],1);
         return $id;
@@ -254,9 +257,11 @@ function media_delete($id,$auth){
         }
 
         $data['unl'] = @unlink($file);
-        if($data['unl']){
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted']);
-            $data['del'] = io_sweepNS($id,'mediadir');
+        if($data['unl']) {
+            $sizechange = 0 - $data['size'];
+            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted'], '', null, $sizechange);
+
+            $data['del'] = io_sweepNS($id, 'mediadir');
         }
     }
     $evt->advise_after();
@@ -505,6 +510,8 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
     // prepare directory
     io_createNamespace($id, 'media');
 
+    $filesize_old = file_exists($fn) ? filesize($fn) : 0;
+
     if($move($fn_tmp, $fn)) {
         @clearstatcache(true,$fn);
         $new = @filemtime($fn);
@@ -515,12 +522,14 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
         msg($lang['uploadsucc'],1);
         media_notify($id,$fn,$imime,$old);
         // add a log entry to the media changelog
-        if ($REV){
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($REV)), $REV);
-        } elseif ($overwrite) {
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT);
+        $filesize_new = filesize($fn);
+        $sizechange = $filesize_new - $filesize_old;
+        if($REV) {
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_REVERT, sprintf($lang['restored'], dformat($REV)), $REV, null, $sizechange);
+        } elseif($overwrite) {
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
         } else {
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
+            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
         }
         return $id;
     }else{
@@ -549,10 +558,16 @@ function media_saveOldRevision($id){
     if (!$medialog->getRevisionInfo($date)) {
         // there was an external edit,
         // there is no log entry for current version of file
-        if (!file_exists(mediaMetaFN($id,'.changes'))) {
-            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created']);
+        $sizechange = filesize($oldf);
+        if(!file_exists(mediaMetaFN($id, '.changes'))) {
+            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
         } else {
-            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_EDIT);
+            $oldRev = $medialog->getRevisions(-1, 1); // from changelog
+            $oldRev = (int) (empty($oldRev) ? 0 : $oldRev[0]);
+            $filesize_old = filesize(mediaFN($id, $oldRev));
+            $sizechange = $sizechange - $filesize_old;
+
+            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
         }
     }
 

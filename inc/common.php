@@ -1206,13 +1206,24 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
         // add old revision to the attic if missing
         saveOldRevision($id);
+
         // add a changelog entry if this edit came from outside dokuwiki
+        $filesize_old = filesize(wikiFN($id, $oldRev));
+        $filesize_new = filesize($file);
+        $sizechange = $filesize_new - $filesize_old;
+
         if($old > $oldRev) {
-            addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true));
+            addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true), $sizechange);
             // remove soon to be stale instructions
             $cache = new cache_instructions($id, $file);
             $cache->removeCache();
         }
+    }
+
+    if($wasCreated) {
+        $filesize_old = 0;
+    } else {
+        $filesize_old = filesize($file);
     }
 
     if($wasRemoved) {
@@ -1225,6 +1236,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $newRev = saveOldRevision($id);
         // remove empty file
         @unlink($file);
+        $filesize_new = 0;
         // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
         // purge non-persistant meta data
         p_purge_metadata($id);
@@ -1240,6 +1252,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // pre-save the revision, to keep the attic in sync
         $newRev = saveOldRevision($id);
         $del    = false;
+        $filesize_new = filesize($file);
     }
 
     // select changelog line type
@@ -1256,7 +1269,10 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $type = DOKU_CHANGE_TYPE_MINOR_EDIT;
     } //minor edits only for logged in users
 
-    addLogEntry($newRev, $id, $type, $summary, $extra);
+    $sizechange = $filesize_new - $filesize_old;
+
+    addLogEntry($newRev, $id, $type, $summary, $extra, null, $sizechange);
+
     // send notify mails
     notify($id, 'admin', $old, $summary, $minor);
     notify($id, 'subscribers', $old, $summary, $minor);
