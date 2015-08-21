@@ -502,28 +502,61 @@ function html_revisions($first=0, $media_id = false){
         array_pop($revisions); // remove extra log entry
     }
 
-    if (!$media_id) $date = dformat($INFO['lastmod']);
-    else $date = dformat(@filemtime(mediaFN($id)));
-
     if (!$media_id) print p_locale_xhtml('revisions');
 
     $params = array('id' => 'page__revisions', 'class' => 'changes');
-    if ($media_id) $params['action'] = media_managerURL(array('image' => $media_id), '&');
+    if($media_id) {
+        $params['action'] = media_managerURL(array('image' => $media_id), '&');
+    }
+
+    if(!$media_id) {
+        $exists = $INFO['exists'];
+        $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
+        if(!$display_name) {
+            $display_name = $id;
+        }
+    } else {
+        $exists = file_exists(mediaFN($id));
+        $display_name = $id;
+    }
 
     $form = new Doku_Form($params);
     $form->addElement(form_makeOpenTag('ul'));
 
-    if (!$media_id) $exists = $INFO['exists'];
-    else $exists = file_exists(mediaFN($id));
+    if($exists && $first == 0) {
+        $minor = false;
+        if($media_id) {
+            $date = dformat(@filemtime(mediaFN($id)));
+            $href = media_managerURL(array('image' => $id, 'tab_details' => 'view'), '&');
 
-    $display_name = (!$media_id && useHeading('navigation')) ? hsc(p_get_first_heading($id)) : $id;
-    if (!$display_name) $display_name = $id;
+            $changelog->setChunkSize(1024);
+            $revinfo = $changelog->getRevisionInfo(@filemtime(fullpath(mediaFN($id))));
 
-    if($exists && $first==0){
-        if (!$media_id && isset($INFO['meta']) && isset($INFO['meta']['last_change']) && $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
-            $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
-        else
-            $form->addElement(form_makeOpenTag('li'));
+            $summary = $revinfo['sum'];
+            if($revinfo['user']) {
+                $editor = $revinfo['user'];
+            } else {
+                $editor = $revinfo['ip'];
+            }
+            $sizechange = $revinfo['sizechange'];
+        } else {
+            $date = dformat($INFO['lastmod']);
+            if(isset($INFO['meta']) && isset($INFO['meta']['last_change'])) {
+                if($INFO['meta']['last_change']['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) {
+                    $minor = true;
+                }
+                if(isset($INFO['meta']['last_change']['sizechange'])) {
+                    $sizechange = $INFO['meta']['last_change']['sizechange'];
+                } else {
+                    $sizechange = null;
+                }
+            }
+            $href = wl($id);
+            $summary = $INFO['sum'];
+            $editor = $INFO['editor'];
+        }
+
+        $form->addElement(form_makeOpenTag('li', array('class' => ($minor ? 'minor' : ''))));
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
         $form->addElement(form_makeTag('input', array(
                         'type' => 'checkbox',
@@ -536,8 +569,6 @@ function html_revisions($first=0, $media_id = false){
 
         $form->addElement('<img src="'.DOKU_BASE.'lib/images/blank.gif" width="15" height="11" alt="" />');
 
-        if (!$media_id) $href = wl($id);
-        else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view'), '&');
         $form->addElement(form_makeOpenTag('a', array(
                         'class' => 'wikilink1',
                         'href'  => $href)));
@@ -546,28 +577,31 @@ function html_revisions($first=0, $media_id = false){
 
         if ($media_id) $form->addElement(form_makeOpenTag('div'));
 
-        if (!$media_id) {
+        if($summary) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-            $form->addElement(' – ');
-            $form->addElement(htmlspecialchars($INFO['sum']));
+            if(!$media_id) $form->addElement(' – ');
+            $form->addElement('<bdi>' . htmlspecialchars($summary) . '</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
 
-        $changelog->setChunkSize(1024);
-
         $form->addElement(form_makeOpenTag('span', array('class' => 'user')));
-        if($media_id) {
-            $revinfo = $changelog->getRevisionInfo(@filemtime(fullpath(mediaFN($id))));
-            if($revinfo['user']) {
-                $editor = $revinfo['user'];
-            } else {
-                $editor = $revinfo['ip'];
-            }
-        } else {
-            $editor = $INFO['editor'];
-        }
-        $form->addElement((empty($editor))?('('.$lang['external_edit'].')'):editorinfo($editor));
+        $form->addElement((empty($editor))?('('.$lang['external_edit'].')'):'<bdi>'.editorinfo($editor).'</bdi>');
         $form->addElement(form_makeCloseTag('span'));
+
+        if(isset($sizechange)) {
+            $class = 'sizechange';
+            $value = filesize_h(abs($sizechange));
+            if($sizechange > 0) {
+                $class .= ' positive';
+                $value = '+' . $value;
+            } elseif($sizechange < 0) {
+                $class .= ' negative';
+                $value = '-' . $value;
+            }
+            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+            $form->addElement($value);
+            $form->addElement(form_makeCloseTag('span'));
+        }
 
         $form->addElement('('.$lang['current'].')');
 
@@ -577,7 +611,7 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeCloseTag('li'));
     }
 
-    foreach($revisions as $rev){
+    foreach($revisions as $rev) {
         $date = dformat($rev);
         $info = $changelog->getRevisionInfo($rev);
         if($media_id) {
@@ -586,10 +620,11 @@ function html_revisions($first=0, $media_id = false){
             $exists = page_exists($id, $rev);
         }
 
-        if ($info['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
-            $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
-        else
-            $form->addElement(form_makeOpenTag('li'));
+        $class = '';
+        if($info['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) {
+            $class = 'minor';
+        }
+        $form->addElement(form_makeOpenTag('li', array('class' => $class)));
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
         if($exists){
             $form->addElement(form_makeTag('input', array(
@@ -605,9 +640,14 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement(form_makeCloseTag('span'));
 
         if($exists){
-            if (!$media_id) $href = wl($id,"rev=$rev,do=diff", false, '&');
-            else $href = media_managerURL(array('image' => $id, 'rev' => $rev, 'mediado' => 'diff'), '&');
-            $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'diff_link')));
+            if (!$media_id) {
+                $href = wl($id,"rev=$rev,do=diff", false, '&');
+            } else {
+                $href = media_managerURL(array('image' => $id, 'rev' => $rev, 'mediado' => 'diff'), '&');
+            }
+            $form->addElement(form_makeOpenTag('a', array(
+                            'class' => 'diff_link',
+                            'href' => $href)));
             $form->addElement(form_makeTag('img', array(
                             'src'    => DOKU_BASE.'lib/images/diff.png',
                             'width'  => 15,
@@ -615,9 +655,15 @@ function html_revisions($first=0, $media_id = false){
                             'title'  => $lang['diff'],
                             'alt'    => $lang['diff'])));
             $form->addElement(form_makeCloseTag('a'));
-            if (!$media_id) $href = wl($id,"rev=$rev",false,'&');
-            else $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
-            $form->addElement(form_makeOpenTag('a', array('href' => $href, 'class' => 'wikilink1')));
+
+            if (!$media_id) {
+                $href = wl($id,"rev=$rev",false,'&');
+            } else {
+                $href = media_managerURL(array('image' => $id, 'tab_details' => 'view', 'rev' => $rev), '&');
+            }
+            $form->addElement(form_makeOpenTag('a', array(
+                            'class' => 'wikilink1',
+                            'href' => $href)));
             $form->addElement($display_name);
             $form->addElement(form_makeCloseTag('a'));
         }else{
@@ -629,7 +675,7 @@ function html_revisions($first=0, $media_id = false){
 
         if ($info['sum']) {
             $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
-            if (!$media_id) $form->addElement(' – ');
+            if(!$media_id) $form->addElement(' – ');
             $form->addElement('<bdi>'.htmlspecialchars($info['sum']).'</bdi>');
             $form->addElement(form_makeCloseTag('span'));
         }
@@ -644,6 +690,21 @@ function html_revisions($first=0, $media_id = false){
             $form->addElement('<bdo dir="ltr">'.$info['ip'].'</bdo>');
         }
         $form->addElement(form_makeCloseTag('span'));
+
+        if(isset($info['sizechange'])) {
+            $class = 'sizechange';
+            $value = filesize_h(abs($info['sizechange']));
+            if($info['sizechange'] > 0) {
+                $class .= ' positive';
+                $value = '+' . $value;
+            } elseif($info['sizechange'] < 0) {
+                $class .= ' negative';
+                $value = '-' . $value;
+            }
+            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+            $form->addElement($value);
+            $form->addElement(form_makeCloseTag('span'));
+        }
 
         if ($media_id) $form->addElement(form_makeCloseTag('div'));
 
