@@ -914,6 +914,21 @@ function html_recent($first = 0, $show_changes = 'both') {
         }
         $form->addElement(form_makeCloseTag('span'));
 
+        if(isset($recent['sizechange'])) {
+            $class = 'sizechange';
+            $value = filesize_h(abs($recent['sizechange']));
+            if($recent['sizechange'] > 0) {
+                $class .= ' positive';
+                $value = '+' . $value;
+            } elseif($recent['sizechange'] < 0) {
+                $class .= ' negative';
+                $value = '-' . $value;
+            }
+            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+            $form->addElement($value);
+            $form->addElement(form_makeCloseTag('span'));
+        }
+
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeCloseTag('li'));
     }
