@@ -7,9 +7,11 @@
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Maurizio <mcannavo@katamail.com>
+ * @author Torpedo <dgtorpedo@gmail.com>
  */
 $lang['server']                = 'Il tuo server MySQL';
 $lang['user']                  = 'User name di MySQL';
+$lang['password']              = 'Password per l\'utente di cui sopra';
 $lang['database']              = 'Database da usare';
 $lang['charset']               = 'Set di caratteri usato nel database';
 $lang['debug']                 = 'Mostra ulteriori informazioni di debug';
