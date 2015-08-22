@@ -788,8 +788,9 @@ function html_recent($first=0, $show_changes='both'){
 
     print p_locale_xhtml('recent');
 
-    if (getNS($ID) != '')
+    if (getNS($ID) != '') {
         print '<div class="level1"><p>' . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent')) . '</p></div>';
+    }
 
     $form = new Doku_Form(array('id' => 'dw__recent', 'method' => 'GET', 'class' => 'changes'));
     $form->addHidden('sectok', null);
@@ -815,13 +816,14 @@ function html_recent($first=0, $show_changes='both'){
 
     $form->addElement(form_makeOpenTag('ul'));
 
-    foreach($recents as $recent){
+    foreach($recents as $recent) {
         $date = dformat($recent['date']);
-        if ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT)
-            $form->addElement(form_makeOpenTag('li', array('class' => 'minor')));
-        else
-            $form->addElement(form_makeOpenTag('li'));
 
+        $class = '';
+        if($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) {
+            $class = 'minor';
+        }
+        $form->addElement(form_makeOpenTag('li', array('class' => $class)));
         $form->addElement(form_makeOpenTag('div', array('class' => 'li')));
 
         if (!empty($recent['media'])) {
@@ -869,12 +871,13 @@ function html_recent($first=0, $show_changes='both'){
         }
 
         if (!empty($recent['media'])) {
-            $href = media_managerURL(array('tab_details' => 'history',
-                'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+            $href = media_managerURL(array('tab_details' => 'history', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
         } else {
             $href = wl($recent['id'],"do=revisions",false,'&');
         }
-        $form->addElement(form_makeOpenTag('a', array('class' => 'revisions_link', 'href' => $href)));
+        $form->addElement(form_makeOpenTag('a', array(
+                        'class' => 'revisions_link',
+                        'href' => $href)));
         $form->addElement(form_makeTag('img', array(
                         'src'   => DOKU_BASE.'lib/images/history.png',
                         'width' => 12,
@@ -886,12 +889,14 @@ function html_recent($first=0, $show_changes='both'){
 
         if (!empty($recent['media'])) {
             $href = media_managerURL(array('tab_details' => 'view', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
-            $class = (file_exists(mediaFN($recent['id']))) ? 'wikilink1' : $class = 'wikilink2';
-            $form->addElement(form_makeOpenTag('a', array('class' => $class, 'href' => $href)));
+            $class = file_exists(mediaFN($recent['id'])) ? 'wikilink1' : 'wikilink2';
+            $form->addElement(form_makeOpenTag('a', array(
+                        'class' => $class,
+                        'href' => $href)));
             $form->addElement($recent['id']);
             $form->addElement(form_makeCloseTag('a'));
         } else {
-            $form->addElement(html_wikilink(':'.$recent['id'],useHeading('navigation')?null:$recent['id']));
+            $form->addElement(html_wikilink(':' . $recent['id'], useHeading('navigation') ? null : $recent['id']));
         }
         $form->addElement(form_makeOpenTag('span', array('class' => 'sum')));
         $form->addElement(' – '.htmlspecialchars($recent['sum']));
