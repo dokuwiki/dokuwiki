@@ -1,0 +1,2 @@
+Questo strumento ti permette di cambiare certe configurazioni di stile del tema attualmente in uso.
+Tutte le modifiche sono salvate in un file di configurazione locale e sono aggiornate in modo sicuro.
