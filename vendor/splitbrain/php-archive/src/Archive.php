@@ -126,3 +126,7 @@ class ArchiveIOException extends \Exception
 class ArchiveIllegalCompressionException extends \Exception
 {
 }
+
+class ArchiveCorruptedException extends \Exception
+{
+}

@@ -20,6 +20,7 @@ $lang['binddn']                = 'Doménový název DN volitelně připojeného 
 $lang['bindpw']                = 'Heslo uživatele výše';
 $lang['userscope']             = 'Omezení rozsahu vyhledávání uživatele';
 $lang['groupscope']            = 'Omezení rozsahu vyhledávání skupiny';
+$lang['userkey']               = 'Atribut označující uživatelské jméno; musí být konzistetní s uživatelským filtrem.';
 $lang['groupkey']              = 'Atribut šlenství uživatele ve skupinách (namísto standardních AD skupin), tj. skupina z oddělení nebo telefonní číslo';
 $lang['modPass']               = 'Může být LDAP heslo změněno přes dokuwiki?';
 $lang['debug']                 = 'Zobrazit dodatečné debugovací informace';

@@ -36,6 +36,8 @@ class Tar extends Archive
         $this->compressioncheck($type);
         $this->comptype  = $type;
         $this->complevel = $level;
+        if($level == 0) $this->comptype = Archive::COMPRESS_NONE;
+        if($type == Archive::COMPRESS_NONE) $this->complevel = 0;
     }
 
     /**
@@ -366,7 +368,7 @@ class Tar extends Archive
     public function save($file)
     {
         if ($this->comptype === Archive::COMPRESS_AUTO) {
-            $this->setCompression($this->filetype($this->complevel, $file));
+            $this->setCompression($this->complevel, $this->filetype($file));
         }
 
         if (!file_put_contents($file, $this->getArchive())) {
@@ -429,7 +431,12 @@ class Tar extends Archive
             @gzseek($this->fh, $bytes, SEEK_CUR);
         } elseif ($this->comptype === Archive::COMPRESS_BZIP) {
             // there is no seek in bzip2, we simply read on
-            @bzread($this->fh, $bytes);
+            // bzread allows to read a max of 8kb at once
+            while($bytes) {
+                $toread = min(8192, $bytes);
+                @bzread($this->fh, $toread);
+                $bytes -= $toread;
+            }
         } else {
             @fseek($this->fh, $bytes, SEEK_CUR);
         }
@@ -513,14 +520,18 @@ class Tar extends Archive
     /**
      * Decode the given tar file header
      *
-     * @param string $block a 512 byte block containign the header data
-     * @return array|bool
+     * @param string $block a 512 byte block containing the header data
+     * @return array|false returns false when this was a null block
+     * @throws ArchiveCorruptedException
      */
     protected function parseHeader($block)
     {
         if (!$block || strlen($block) != 512) {
-            return false;
+            throw new ArchiveCorruptedException('Unexpected length of header');
         }
+
+        // null byte blocks are ignored
+        if(trim($block) === '') return false;
 
         for ($i = 0, $chks = 0; $i < 148; $i++) {
             $chks += ord($block[$i]);
@@ -535,12 +546,12 @@ class Tar extends Archive
             $block
         );
         if (!$header) {
-            return false;
+            throw new ArchiveCorruptedException('Failed to parse header');
         }
 
         $return['checksum'] = OctDec(trim($header['checksum']));
         if ($return['checksum'] != $chks) {
-            return false;
+            throw new ArchiveCorruptedException('Header does not match it\'s checksum');
         }
 
         $return['filename'] = trim($header['filename']);
@@ -613,7 +624,9 @@ class Tar extends Archive
     }
 
     /**
-     * Guesses the wanted compression from the given filename extension
+     * Guesses the wanted compression from the given file
+     *
+     * Uses magic bytes for existing files, the file extension otherwise
      *
      * You don't need to call this yourself. It's used when you pass Archive::COMPRESS_AUTO somewhere
      *
@@ -622,14 +635,25 @@ class Tar extends Archive
      */
     public function filetype($file)
     {
+        // for existing files, try to read the magic bytes
+        if(file_exists($file) && is_readable($file) && filesize($file) > 5) {
+            $fh = fopen($file, 'rb');
+            if(!$fh) return false;
+            $magic = fread($fh, 5);
+            fclose($fh);
+
+            if(strpos($magic, "\x42\x5a") === 0) return Archive::COMPRESS_BZIP;
+            if(strpos($magic, "\x1f\x8b") === 0) return Archive::COMPRESS_GZIP;
+        }
+
+        // otherwise rely on file name
         $file = strtolower($file);
         if (substr($file, -3) == '.gz' || substr($file, -4) == '.tgz') {
-            $comptype = Archive::COMPRESS_GZIP;
+            return Archive::COMPRESS_GZIP;
         } elseif (substr($file, -4) == '.bz2' || substr($file, -4) == '.tbz') {
-            $comptype = Archive::COMPRESS_BZIP;
-        } else {
-            $comptype = Archive::COMPRESS_NONE;
+            return Archive::COMPRESS_BZIP;
         }
-        return $comptype;
+
+        return Archive::COMPRESS_NONE;
     }
 }

@@ -7,17 +7,23 @@
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Maurizio <mcannavo@katamail.com>
+ * @author Torpedo <dgtorpedo@gmail.com>
  */
 $lang['server']                = 'Il tuo server MySQL';
 $lang['user']                  = 'User name di MySQL';
+$lang['password']              = 'Password per l\'utente di cui sopra';
 $lang['database']              = 'Database da usare';
 $lang['charset']               = 'Set di caratteri usato nel database';
 $lang['debug']                 = 'Mostra ulteriori informazioni di debug';
+$lang['forwardClearPass']      = 'Fornisci le password utente come testo visibile alle istruzioni SQL qui sotto, invece che usare l\'opzione passcrypt';
 $lang['TablesToLock']          = 'Lista, separata da virgola, delle tabelle che devono essere bloccate in scrittura';
 $lang['checkPass']             = 'Istruzione SQL per il controllo password';
 $lang['getUserInfo']           = 'Istruzione SQL per recuperare le informazioni utente';
+$lang['getGroups']             = 'Istruzione SQL per recuperare il gruppo di appartenenza di un utente';
 $lang['getUsers']              = 'Istruzione SQL per listare tutti gli utenti';
 $lang['FilterLogin']           = 'Istruzione SQL per per filtrare gli utenti in funzione del "login name"';
+$lang['FilterName']            = 'Condizione SQL per filtrare gli utenti in base al nome completo';
+$lang['FilterEmail']           = 'Condizione SQL per filtrare gli utenti in base all\'indirizzo e-mail';
 $lang['FilterGroup']           = 'Clausola SQL per filtrare gli utenti in base all\'appartenenza al gruppo';
 $lang['SortOrder']             = 'Istruzione SQL per ordinare gli utenti';
 $lang['addUser']               = 'Istruzione SQL per aggiungere un nuovo utente';

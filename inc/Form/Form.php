@@ -140,7 +140,7 @@ class Form extends Element {
      * @return Element
      */
     public function addElement(Element $element, $pos = -1) {
-        if(is_a($element, '\dokuwiki\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
         if($pos < 0) {
             $this->elements[] = $element;
         } else {
@@ -156,7 +156,7 @@ class Form extends Element {
      * @param $pos 0-based position of the element to replace
      */
     public function replaceElement(Element $element, $pos) {
-        if(is_a($element, '\dokuwiki\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
+        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
         array_splice($this->elements, $pos, 1, array($element));
     }
 
@@ -231,6 +231,65 @@ class Form extends Element {
      */
     public function addTextarea($name, $label = '', $pos = -1) {
         return $this->addElement(new TextareaElement($name, $label), $pos);
+    }
+
+    /**
+     * Adds a simple button, escapes the content for you
+     *
+     * @param string $name
+     * @param string $content
+     * @param int $pos
+     * @return Element
+     */
+    public function addButton($name, $content, $pos = -1) {
+        return $this->addElement(new ButtonElement($name, hsc($content)), $pos);
+    }
+
+    /**
+     * Adds a simple button, allows HTML for content
+     *
+     * @param string $name
+     * @param string $html
+     * @param int $pos
+     * @return Element
+     */
+    public function addButtonHTML($name, $html, $pos = -1) {
+        return $this->addElement(new ButtonElement($name, $html), $pos);
+    }
+
+    /**
+     * Adds a label referencing another input element, escapes the label for you
+     *
+     * @param $label
+     * @param string $for
+     * @param int $pos
+     * @return Element
+     */
+    public function addLabel($label, $for='', $pos = -1) {
+        return $this->addLabelHTML(hsc($label), $for, $pos);
+    }
+
+    /**
+     * Adds a label referencing another input element, allows HTML for content
+     *
+     * @param string $content
+     * @param string|Element $for
+     * @param int $pos
+     * @return Element
+     */
+    public function addLabelHTML($content, $for='', $pos = -1) {
+        $element = new LabelElement(hsc($content));
+
+        if(is_a($for, '\dokuwiki\Form\Element')) {
+            /** @var Element $for */
+            $for = $for->id();
+        }
+        $for = (string) $for;
+        if($for !== '') {
+            $element->attr('for', $for);
+        }
+
+        return $this->addElement($element, $pos);
     }
 
     /**

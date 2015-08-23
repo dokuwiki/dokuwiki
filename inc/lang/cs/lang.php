@@ -19,6 +19,7 @@
  * @author Radovan Buroň <radovan@buron.cz>
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -84,6 +85,7 @@ $lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
 $lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
 $lang['regsuccess2']           = 'Uživatelský účet byl vytvořen.';
+$lang['regfail']               = 'Uživatelský profil nemohl být vytvořen.';
 $lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání mailu s heslem. Zkuste kontaktovat správce.';
 $lang['regbadmail']            = 'Zadaná e-mailová adresa není platná. Pokud si myslíte, že to je špatně, zkuste kontaktovat správce.';
 $lang['regbadpass']            = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím znovu.';
@@ -98,6 +100,7 @@ $lang['profdeleteuser']        = 'Smazat účet';
 $lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki smazán';
 $lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
 $lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
+$lang['proffail']              = 'Uživatelský profil nebyl aktualizován.';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
 $lang['resendpwd']             = 'Nastavit nové heslo pro';
@@ -343,6 +346,7 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
+$lang['media_acl_warning']     = 'Tento seznam nemusí být úplný z důvodu omezení práv ACL a skrytým stránkám.';
 $lang['currentns']             = 'Aktuální jmenný prostor';
 $lang['searchresult']          = 'Výsledek hledání';
 $lang['plainhtml']             = 'Čisté HTML';

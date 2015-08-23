@@ -69,3 +69,5 @@ vendor/*/*/test/*
 vendor/*/*/doc/*
 vendor/*/*/docs/*
 vendor/*/*/contrib/*
+vendor/splitbrain/php-archive/apigen.neon
+vendor/splitbrain/php-archive/generate-api.sh

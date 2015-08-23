@@ -12,7 +12,7 @@ namespace dokuwiki\Form;
  */
 class InputElement extends Element {
     /**
-     * @var Label
+     * @var LabelElement
      */
     protected $label = null;
 
@@ -24,18 +24,19 @@ class InputElement extends Element {
     /**
      * @param string $type The type of this element
      * @param string $name The name of this form element
-     * @param string $label The label text for this element
+     * @param string $label The label text for this element (will be autoescaped)
      */
     public function __construct($type, $name, $label = '') {
         parent::__construct($type, array('name' => $name));
         $this->attr('name', $name);
-        if($label) $this->label = new Label($label);
+        $this->attr('type', $type);
+        if($label) $this->label = new LabelElement($label);
     }
 
     /**
      * Returns the label element if there's one set
      *
-     * @return Label|null
+     * @return LabelElement|null
      */
     public function getLabel() {
         return $this->label;
