@@ -1,0 +1,9 @@
+===== Importazione Bulk di utente =====
+
+Richiesto un file CSV di utenti con almeno quattro colonne.
+Le colonne devono contenere, in ordine: ID utente, nome completo, indirizzo e-mail e gruppi.
+I campi CSV devono essere separati da una virgola (,) e le stringhe delimitate con apici (%%""%%). Il backslash (\) può essere usato come carattere di escape, cioè per indicare che il carattere successivo deve essere trattato in maniera speciale.
+Per un esempio di file tipo, prova la funzione "Esporta Utenti" che trovi qui sopra.
+Verranno ignorati gli ID utenti duplicati.
+
+Verrà generata una password ed inviata via e-mail ad ogni utente correttamente importato. 
