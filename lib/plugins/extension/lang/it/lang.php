@@ -91,6 +91,7 @@ $lang['noperms']               = 'La directory Extension non è scrivibile';
 $lang['notplperms']            = 'Il modello di cartella non è scrivibile';
 $lang['nopluginperms']         = 'La cartella plugin non è scrivibile';
 $lang['git']                   = 'Questa extension è stata installata da git, potreste non volerla aggiornare qui.';
+$lang['auth']                  = 'Questo plugin di autenticazione non è abilitato nella configurazione, considera di disabilitarlo.';
 $lang['install_url']           = 'Installa da URL:';
 $lang['install_upload']        = 'Caricamento Extension:';
 $lang['repo_error']            = 'Il repository dei plugin non può essere raggiunto. Assicuratevi che il vostro server sia abilitato a contattare l\'indirizzo www.dokuwiki.org e controllate le impostazioni del vostro proxy.';
