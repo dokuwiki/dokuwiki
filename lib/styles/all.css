@@ -72,12 +72,21 @@ em em.u {
     font-weight: normal;
     font-style: normal;
 }
-.mdi {
-    display: inline-block;
-    font: normal normal normal 24px/1 MaterialDesignIcons;
-    font-size: inherit;
+
+/* use when doing your own icon stuff */
+.mdi-setup {
+    font-family: MaterialDesignIcons;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transform: translate(0, 0);
+}
+
+/* use for stand alone icons */
+.mdi {
+    .mdi-setup;
+    font: normal normal normal 24px/1 MaterialDesignIcons;
+    display: inline-block;
+    font-family: MaterialDesignIcons;
+    font-size: inherit;
 }

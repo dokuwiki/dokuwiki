@@ -1,0 +1,81 @@
+/**
+ * This file provides styles for the Administration overview
+ * (?do=admin).
+ */
+
+.dokuwiki ul.admin_tasks {
+    float: left;
+    width: 40%;
+    list-style-type: none;
+    font-size: 1.125em;
+
+    li {
+        margin: 0 0 1em 0;
+        font-weight: bold;
+        list-style-type: none;
+        color: inherit;
+
+
+        div:before {
+            .mdi-setup;
+            font-size: 1.5em;
+            font-weight: normal;
+            margin-right: 0.5em;
+            text-shadow: 1px 1px 1px @ini_text;
+        }
+
+    }
+
+    li.admin_usermanager div:before {
+        content: "\f10a";
+        color: #98CDFF;
+    }
+
+    li.admin_acl div:before {
+        content: "\f3a7";
+        color: #F3E100;
+    }
+
+    li.admin_plugin div:before {
+        content: "\f4a8";
+        color: #118A11;
+    }
+
+    li.admin_config div:before {
+        content: "\f4f0";
+        color: #93191A;
+    }
+
+    li.admin_styling div:before {
+        content: "\f45f";
+        color: #685120;
+    }
+
+    li.admin_revert div:before {
+        content: "\f158";
+        color: #61E03A;
+    }
+
+    li.admin_popularity div:before {
+        content: "\f2ae";
+        color: #7173BE;
+    }
+}
+
+[dir=rtl] .dokuwiki ul.admin_tasks {
+    float: right;
+}
+
+
+
+/* DokuWiki version below */
+.dokuwiki #admin__version {
+    clear: left;
+    float: right;
+    color: @ini_text_neu;
+    background-color: inherit;
+}
+[dir=rtl] .dokuwiki #admin__version {
+    clear: right;
+    float: left;
+}
