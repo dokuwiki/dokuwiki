@@ -63,3 +63,21 @@ em.u {
 em em.u {
     font-style: italic;
 }
+
+/* icon font */
+@font-face {
+    font-family: 'MaterialDesignIcons';
+    src: url("../fonts/materialdesignicons-webfont.eot?v=1.2.64");
+    src: url("../fonts/materialdesignicons-webfont.eot?#iefix&v=1.2.64") format("embedded-opentype"), url("../fonts/materialdesignicons-webfont.woff2?v=1.2.64") format("woff2"), url("../fonts/materialdesignicons-webfont.woff?v=1.2.64") format("woff"), url("../fonts/materialdesignicons-webfont.ttf?v=1.2.64") format("truetype"), url("../fonts/materialdesignicons-webfont.svg?v=1.2.64#materialdesigniconsregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+.mdi {
+    display: inline-block;
+    font: normal normal normal 24px/1 MaterialDesignIcons;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}
