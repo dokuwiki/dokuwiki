@@ -242,7 +242,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
         ptln("        <span class=\"medialeft\">");
         ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".$this->lang['delete_selected']."</button>");
-        ptln("        ");
+        ptln("        </span>");
+        ptln("        <span class=\"mediaright\">");
+        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".$this->lang['start']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".$this->lang['prev']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".$this->lang['next']."</button>");
+        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".$this->lang['last']."</button>");
+        ptln("        </span>");
         if (!empty($this->_filter)) {
             ptln("    <button type=\"submit\" name=\"fn[search][clear]\">".$this->lang['clear']."</button>");
         }
@@ -251,13 +257,6 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("        <input type=\"hidden\" name=\"page\"  value=\"usermanager\" />");
 
         $this->_htmlFilterSettings(2);
-        ptln("        </span>");
-        ptln("        <span class=\"mediaright\">");
-        ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".$this->lang['start']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".$this->lang['prev']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[next]\" ".$page_buttons['next'].">".$this->lang['next']."</button>");
-        ptln("          <button type=\"submit\" name=\"fn[last]\" ".$page_buttons['last'].">".$this->lang['last']."</button>");
-        ptln("        </span>");
 
         ptln("      </td></tr>");
         ptln("    </tbody>");
