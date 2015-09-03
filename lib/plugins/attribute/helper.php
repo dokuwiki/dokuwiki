@@ -14,7 +14,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 	public function __construct() {		
 		$this->loadConfig(); 		
 		// Create the path used for attribute data.
-		$path = substr($this->conf['store'],0,1) == '/') ? $this->conf['store'] : DOKU_INC.$this->conf['store'];
+		$path = substr($this->conf['store'],0,1) == '/' ? $this->conf['store'] : DOKU_INC.$this->conf['store'];
 		$this->storepath = ($this->conf['store'] === '' || !is_dir($path)) ? null : $path;
         // A directory is needed.
         if(is_null($this->storepath)) {            
@@ -323,8 +323,8 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		// We need a special circumstance.  If a user is not logged in, but we 
 		// are performing a login, enable access to the attributes of the user
 		// being logged in IF DIRECTLY SPECIFIED.
-		global $INFO, $ACT, $USERINFO;
-		if ($ACT=='login' && !$USERINFO && $user) return $user;
+		global $INFO, $ACT, $USERINFO, $INPUT;
+		if ($ACT=='login' && !$USERINFO && $user == $INPUT->str('u')) return $user;
 		// This does not meet the special circumstance listed above.  
 		// Perform rights validation.		
 		// If no one is logged in, then return null.
