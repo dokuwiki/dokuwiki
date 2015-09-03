@@ -9,8 +9,11 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-class helper_plugin_attribute extends DokuWiki_Plugin {
-
+class helper_plugin_attribute extends DokuWiki_Plugin {	
+	public $success = false;
+	protected $storepath = null;
+	protected $cache = null;
+	
 	public function __construct() {		
 		$this->loadConfig(); 		
 		// Create the path used for attribute data.
@@ -18,8 +21,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		$this->storepath = ($this->conf['store'] === '' || !is_dir($path)) ? null : $path;
         // A directory is needed.
         if(is_null($this->storepath)) {            
-			msg("Attribute: Configuration item 'store' is not set to a writeable directory.", -1);
-            $this->success = false;
+			msg("Attribute: Configuration item 'store' is not set to a writeable directory.", -1);            
             return;
         }
 		$this->success = true;
@@ -30,7 +32,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 	/**
 	 * return some info
 	 */
-	function getInfo(){
+	public function getInfo(){
 		return array(
             'author' => 'Mike Wilmes',
             'email'  => 'mwilmes@avc.edu',
@@ -46,7 +48,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
      *
      * @return array of public methods
      */
-    function getMethods() {
+    public function getMethods() {
         $result = array();
         $result[] = array(
                 'name'   => 'enumerateAttributes',
@@ -119,7 +121,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
         return $result;
     }
 
-	function enumerateAttributes($namespace, $user = null){
+	public function enumerateAttributes($namespace, $user = null){
 		// Verify that this plugin is functional.
 		if (!$this->success) { return false; }
 		// Identify the user whose attributes will be accessed.		
@@ -141,7 +143,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		return array_keys($data);
 	}
 
-	function enumerateUsers($namespace){
+	public function enumerateUsers($namespace){
 		// Verify that this plugin is functional.
 		if (!$this->success) { return false; }
 		// Obtain the lock to ensure consistency.
@@ -165,7 +167,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		return $users;
 	}
 
-	function set($namespace, $attribute, $value, $user = null){
+	public function set($namespace, $attribute, $value, $user = null){
 		// Verify that this plugin is functional.
 		if (!$this->success) { return false; }
 		// Identify the user whose attributes will be accessed.		
@@ -180,10 +182,8 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		// Get this user's attributes.
 		$data = $this->loadAttributes($namespace, $user);
 		// If there was an error getting the attributes, then fail.
-		if ($data === null) { 
-			$result == false; 
-		}
-		else {
+		$result == false; 
+		if ($data !== null) { // Otherwise commit the change.
 			// Set the data in the array.
 			$data[$attribute] = $value;
 			// Store the changed data.
@@ -195,7 +195,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		return $result;
 	}
 	
-	function exists($namespace, $attribute, $user = null){
+	public function exists($namespace, $attribute, $user = null){
 		// Verify that this plugin is functional.
 		if (!$this->success) { return false; }
 		// Identify the user whose attributes will be accessed.		
@@ -217,7 +217,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		return array_key_exists($attribute, $data);				
 	}
 	
-	function del($namespace, $attribute, $user = null){
+	public function del($namespace, $attribute, $user = null){
 		// Verify that this plugin is functional.
 		if (!$this->success) { return false; }
 		// Identify the user whose attributes will be accessed.		
@@ -256,7 +256,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		return $result; 		
 	}	
 	
-	function purge($namespace, $user){
+	public function purge($namespace, $user){
 		// Verify that this plugin is functional.
 		if (!$this->success) { return false; }
 		// Ensure this user is an admin.
@@ -286,7 +286,7 @@ class helper_plugin_attribute extends DokuWiki_Plugin {
 		return $result; 		
 	}	
 	
-	function get($namespace, $attribute, &$success = false, $user = null){
+	public function get($namespace, $attribute, &$success = false, $user = null){
 		// Prepare the supplied success flag as false.  It will be changed to
 		// true on success.
 		$success = false;
