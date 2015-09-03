@@ -155,7 +155,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         $data['conf_template'] = $conf['template'];
 
         // number and size of pages
-        $list = array();
+        $list = array(
+            'file_count' => 0,
+            'file_size' => 0,
+            'file_max' => 0,
+            'file_min' => 0,
+            'dir_count' => 0,
+            'dir_nest' => 0
+        );
         search($list,$conf['datadir'],array($this,'_search_count'),array('all'=>false),'');
         $data['page_count']    = $list['file_count'];
         $data['page_size']     = $list['file_size'];
@@ -168,7 +175,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         unset($list);
 
         // number and size of media
-        $list = array();
+        $list = array(
+            'file_count' => 0,
+            'file_size' => 0,
+            'file_max' => 0,
+            'file_min' => 0,
+            'dir_count' => 0,
+            'dir_nest' => 0
+        );
         search($list,$conf['mediadir'],array($this,'_search_count'),array('all'=>true));
         $data['media_count']    = $list['file_count'];
         $data['media_size']     = $list['file_size'];
@@ -180,7 +194,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         unset($list);
 
         // number and size of cache
-        $list = array();
+        $list = array(
+            'file_count' => 0,
+            'file_size' => 0,
+            'file_max' => 0,
+            'file_min' => 0,
+            'dir_count' => 0,
+            'dir_nest' => 0
+        );
         search($list,$conf['cachedir'],array($this,'_search_count'),array('all'=>true));
         $data['cache_count']    = $list['file_count'];
         $data['cache_size']     = $list['file_size'];
@@ -190,7 +211,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         unset($list);
 
         // number and size of index
-        $list = array();
+        $list = array(
+            'file_count' => 0,
+            'file_size' => 0,
+            'file_max' => 0,
+            'file_min' => 0,
+            'dir_count' => 0,
+            'dir_nest' => 0
+        );
         search($list,$conf['indexdir'],array($this,'_search_count'),array('all'=>true));
         $data['index_count']    = $list['file_count'];
         $data['index_size']     = $list['file_size'];
@@ -200,7 +228,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         unset($list);
 
         // number and size of meta
-        $list = array();
+        $list = array(
+            'file_count' => 0,
+            'file_size' => 0,
+            'file_max' => 0,
+            'file_min' => 0,
+            'dir_count' => 0,
+            'dir_nest' => 0
+        );
         search($list,$conf['metadir'],array($this,'_search_count'),array('all'=>true));
         $data['meta_count']    = $list['file_count'];
         $data['meta_size']     = $list['file_size'];
@@ -210,7 +245,14 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         unset($list);
 
         // number and size of attic
-        $list = array();
+        $list = array(
+            'file_count' => 0,
+            'file_size' => 0,
+            'file_max' => 0,
+            'file_min' => 0,
+            'dir_count' => 0,
+            'dir_nest' => 0
+        );
         search($list,$conf['olddir'],array($this,'_search_count'),array('all'=>true));
         $data['attic_count']    = $list['file_count'];
         $data['attic_size']     = $list['file_size'];
@@ -287,8 +329,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
     function _search_count(&$data,$base,$file,$type,$lvl,$opts){
         // traverse
         if($type == 'd'){
-            if($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
-            $data['dir_count']++;
+            if(array_key_exists('dir_nest', $data) && $data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
+            array_key_exists('dir_count', $data) ? $data['dir_count']++ : $data['dir_count'] = 1;
             return true;
         }
 
@@ -296,10 +338,10 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         if($opts['all'] || substr($file,-4) == '.txt'){
             $size = filesize($base.'/'.$file);
             $date = filemtime($base.'/'.$file);
-            $data['file_count']++;
-            $data['file_size'] += $size;
+            array_key_exists('file_count', $data) ? $data['file_count']++ : $data['file_count'] = 1;
+            array_key_exists('file_size', $data) ? $data['file_size'] += $size : $data['file_size'] = $size;
             if(!isset($data['file_min']) || $data['file_min'] > $size) $data['file_min'] = $size;
-            if($data['file_max'] < $size) $data['file_max'] = $size;
+            if(array_key_exists('file_max', $data) && $data['file_max'] < $size) $data['file_max'] = $size;
             if(!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
         }
 
