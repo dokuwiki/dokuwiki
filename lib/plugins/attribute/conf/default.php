@@ -7,4 +7,3 @@
 
 $conf['store'] = '';
 $conf['compress'] = 0;
-?>

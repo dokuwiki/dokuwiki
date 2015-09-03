@@ -8,4 +8,3 @@
 
 $meta['store'] = array('string');
 $meta['compress'] = array('onoff');
-?>
