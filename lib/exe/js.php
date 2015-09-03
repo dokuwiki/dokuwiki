@@ -419,9 +419,9 @@ function js_compress($s){
 
             // Only consider deleting whitespace if the signs before and after
             // are not equal and are not an operator which may not follow itself.
-            if ((!$lch || $s[$i+1] == ' ')
+            if (is_array($s) && array_key_exists($i+1, $s) && ((!$lch || $s[$i+1] == ' ')
                 || $lch != $s[$i+1]
-                || strpos($ops,$s[$i+1]) === false) {
+                || strpos($ops,$s[$i+1]) === false)) {
                 // leading spaces
                 if($i+1 < $slen && (strpos($chars,$s[$i+1]) !== false)){
                     $i = $i + 1;
