@@ -1860,7 +1860,7 @@ function valid_input_set($param, $valid_values, $array, $exc = '') {
  */
 function get_doku_pref($pref, $default) {
     $enc_pref = urlencode($pref);
-    if(strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
+    if(isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
         $cnt   = count($parts);
         for($i = 0; $i < $cnt; $i += 2) {
