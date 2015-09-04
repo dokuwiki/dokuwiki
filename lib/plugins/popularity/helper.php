@@ -338,8 +338,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
         if($opts['all'] || substr($file,-4) == '.txt'){
             $size = filesize($base.'/'.$file);
             $date = filemtime($base.'/'.$file);
-            array_key_exists('file_count', $data) ? $data['file_count']++ : $data['file_count'] = 1;
-            array_key_exists('file_size', $data) ? $data['file_size'] += $size : $data['file_size'] = $size;
+            $data['file_count']++;
+            $data['file_size'] += $size;
             if(!isset($data['file_min']) || $data['file_min'] > $size) $data['file_min'] = $size;
             if(array_key_exists('file_max', $data) && $data['file_max'] < $size) $data['file_max'] = $size;
             if(!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
