@@ -14,23 +14,23 @@ $license['publicdomain'] = array(
     'url'  => 'http://creativecommons.org/licenses/publicdomain/',
 );
 $license['cc-by'] = array(
-    'name' => 'CC Attribution 3.0 Unported',
-    'url'  => 'http://creativecommons.org/licenses/by/3.0/',
+    'name' => 'CC Attribution 4.0 International',
+    'url'  => 'http://creativecommons.org/licenses/by/4.0/',
 );
 $license['cc-by-sa'] = array(
-    'name' => 'CC Attribution-Share Alike 3.0 Unported',
-    'url'  => 'http://creativecommons.org/licenses/by-sa/3.0/',
+    'name' => 'CC Attribution-Share Alike 4.0 International',
+    'url'  => 'http://creativecommons.org/licenses/by-sa/4.0/',
 );
 $license['gnufdl'] = array(
     'name' => 'GNU Free Documentation License 1.3',
     'url'  => 'http://www.gnu.org/licenses/fdl-1.3.html',
 );
 $license['cc-by-nc'] = array(
-    'name' => 'CC Attribution-Noncommercial 3.0 Unported',
-    'url'  => 'http://creativecommons.org/licenses/by-nc/3.0/',
+    'name' => 'CC Attribution-Noncommercial 4.0 International',
+    'url'  => 'http://creativecommons.org/licenses/by-nc/4.0/',
 );
 $license['cc-by-nc-sa'] = array(
-    'name' => 'CC Attribution-Noncommercial-Share Alike 3.0 Unported',
-    'url'  => 'http://creativecommons.org/licenses/by-nc-sa/3.0/',
+    'name' => 'CC Attribution-Noncommercial-Share Alike 4.0 International',
+    'url'  => 'http://creativecommons.org/licenses/by-nc-sa/4.0/',
 );
 
