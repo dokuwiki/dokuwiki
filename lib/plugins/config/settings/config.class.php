@@ -101,7 +101,10 @@ if (!class_exists('configuration')) {
                     }
 
                     $this->setting[$key] = new $class($key,$param);
-                    $this->setting[$key]->initialize($default[$key],$local[$key],$protected[$key]);
+                    $d = array_key_exists($key, $default) ? $default[$key] : null;
+                    $l = array_key_exists($key, $local) ? $local[$key] : null;
+                    $p = array_key_exists($key, $protected) ? $protected[$key] : null;
+                    $this->setting[$key]->initialize($d,$l,$p);
                 }
 
                 $this->_loaded = true;

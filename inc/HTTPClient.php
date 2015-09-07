@@ -295,7 +295,7 @@ class HTTPClient {
 
         if($method == 'POST'){
             if(is_array($data)){
-                if($headers['Content-Type'] == 'multipart/form-data'){
+                if(isset($headers['Content-Type']) && $headers['Content-Type'] == 'multipart/form-data'){
                     $headers['Content-Type']   = 'multipart/form-data; boundary='.$this->boundary;
                     $data = $this->_postMultipartEncode($data);
                 }else{
