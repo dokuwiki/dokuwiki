@@ -392,7 +392,7 @@ function p_set_metadata($id, $data, $render=false, $persistent=true){
 function p_purge_metadata($id) {
     $meta = p_read_metadata($id);
     foreach($meta['current'] as $key => $value) {
-        if(is_array($meta[$key])) {
+        if(array_key_exists($key, $meta) && is_array($meta[$key])) {
             $meta['current'][$key] = array();
         } else {
             $meta['current'][$key] = '';
@@ -778,4 +778,3 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
         return $highlighted_code;
     }
 }
-

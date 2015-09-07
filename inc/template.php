@@ -1398,7 +1398,7 @@ function tpl_getLang($id) {
             }
         }
     }
-    return $lang[$id];
+    return array_key_exists($id, $lang) ? $lang[$id] : '';
 }
 
 /**
@@ -2021,4 +2021,3 @@ function tpl_toolsevent($toolsname, $items, $view = 'main') {
 }
 
 //Setup VIM: ex: et ts=4 :
-
