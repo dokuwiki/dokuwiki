@@ -419,7 +419,7 @@ function js_compress($s){
 
             // Only consider deleting whitespace if the signs before and after
             // are not equal and are not an operator which may not follow itself.
-            if (isset($s[$i+1]) && ((!$lch || $s[$i+1] == ' ')
+            if ($i+1 < $slen && ((!$lch || $s[$i+1] == ' ')
                 || $lch != $s[$i+1]
                 || strpos($ops,$s[$i+1]) === false)) {
                 // leading spaces
