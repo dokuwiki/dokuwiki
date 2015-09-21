@@ -1186,6 +1186,7 @@ if (!class_exists('setting_multicheckbox')) {
 
         var $_choices = array();
         var $_combine = array();
+        var $_nostring = 'off';
 
         /**
          * update changed setting with user provided value $input
@@ -1269,16 +1270,17 @@ if (!class_exists('setting_multicheckbox')) {
             }
 
             // handle any remaining values
-            $other = join(',',$value);
-
-            $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
-                            " selectiondefault" : "";
-
-            $input .= '<div class="other'.$class.'">'."\n";
-            $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
-            $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
-            $input .= "</div>\n";
-
+            if ($this->_nostring == 'off') {
+                $other = join(',',$value);
+    
+                $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+                                " selectiondefault" : "";
+    
+                $input .= '<div class="other'.$class.'">'."\n";
+                $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
+                $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+                $input .= "</div>\n";
+            }
             $label = '<label>'.$this->prompt($plugin).'</label>';
             return array($label,$input);
         }
