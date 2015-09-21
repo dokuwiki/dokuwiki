@@ -1186,7 +1186,7 @@ if (!class_exists('setting_multicheckbox')) {
 
         var $_choices = array();
         var $_combine = array();
-        var $_nostring = 'off';
+        var $_nostring = '';
 
         /**
          * update changed setting with user provided value $input
@@ -1270,7 +1270,7 @@ if (!class_exists('setting_multicheckbox')) {
             }
 
             // handle any remaining values
-            if ($this->_nostring == 'off') {
+            if ($this->_nostring != 'on') {
                 $other = join(',',$value);
     
                 $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
