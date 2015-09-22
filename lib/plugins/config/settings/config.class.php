@@ -1186,7 +1186,7 @@ if (!class_exists('setting_multicheckbox')) {
 
         var $_choices = array();
         var $_combine = array();
-        var $_nostring = '';
+        var $_other = 'always';
 
         /**
          * update changed setting with user provided value $input
@@ -1270,16 +1270,20 @@ if (!class_exists('setting_multicheckbox')) {
             }
 
             // handle any remaining values
-            if ($this->_nostring != 'on') {
+            if ($this->_other != 'never'){
                 $other = join(',',$value);
-    
-                $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
-                                " selectiondefault" : "";
-    
-                $input .= '<div class="other'.$class.'">'."\n";
-                $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
-                $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
-                $input .= "</div>\n";
+                // test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
+                // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
+                if ($this->_other != 'exists' || $other) {
+
+                    $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+                                    " selectiondefault" : "";
+
+                    $input .= '<div class="other'.$class.'">'."\n";
+                    $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
+                    $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+                    $input .= "</div>\n";
+                }
             }
             $label = '<label>'.$this->prompt($plugin).'</label>';
             return array($label,$input);
