@@ -1251,14 +1251,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     if($author) {
                         $name = $author->get_name();
                         if(!$name) $name = $author->get_email();
-                        if($name) $this->doc .= '<span class="rss_item_author"> '.$lang['by'].' '.$name.'</span>';
+                        if($name) $this->doc .= '<span class="author">'.$lang['by'].' '.$name.'</span>';
                     }
                 }
                 if($params['date']) {
-                    $this->doc .= <span class="rss_item_date">('.$item->get_local_date($conf['dformat']).')</span>';
+                    $this->doc .= '<span class="date">('.$item->get_local_date($conf['dformat']).')</span>';
                 }
                 if($params['details']) {
-                    $this->doc .= '<div class="rss_item_detail">';
+                    $this->doc .= '<div class="detail">';
                     if($conf['htmlok']) {
                         $this->doc .= $item->get_description();
                     } else {
