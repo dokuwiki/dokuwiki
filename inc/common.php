@@ -31,6 +31,25 @@ function hsc($string) {
 }
 
 /**
+ * Checks if the given input is blank
+ *
+ * This is similar to empty() but will return false for "0".
+ *
+ * @param $in
+ * @param bool $trim Consider a string of whitespace to be blank
+ * @return bool
+ */
+function blank(&$in, $trim = false) {
+    if(!isset($in)) return true;
+    if(is_null($in)) return true;
+    if(is_array($in)) return empty($in);
+    if($in === "\0") return true;
+    if($trim && trim($in) === '') return true;
+    if(strlen($in) > 0) return false;
+    return empty($in);
+}
+
+/**
  * print a newline terminated string
  *
  * You can give an indention as optional parameter
