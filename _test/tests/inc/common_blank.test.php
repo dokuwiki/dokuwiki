@@ -36,15 +36,17 @@ class common_blank_test extends DokuWikiTest {
     }
 
     function test_trim() {
-        $blank = "   ";
-        $this->assertFalse(blank($blank));
-        $this->assertTrue(blank($blank, true));
+        $whitespace = " \t\r\n";
+        $this->assertFalse(blank($whitespace), "using default \$trim value");
+        $this->assertFalse(blank($whitespace, false), "using \$trim = false");
+        $this->assertTrue(blank($whitespace, true), "using \$trim = true");
     }
 
-    function test_undefindex() {
+    function test_undefined() {
         $undef = array();
-        $this->assertTrue(blank($undef['nope']));
-        $this->assertTrue(blank($this->nope));
+        $this->assertTrue(blank($var), "using undefined/unitialised variable");
+        $this->assertTrue(blank($undef['nope']), "using undefined array index");
+        $this->assertTrue(blank($this->nope), "using unset object property");
     }
 
 }
