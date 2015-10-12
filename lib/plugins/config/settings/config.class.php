@@ -1219,7 +1219,7 @@ if (!class_exists('setting_multicheckbox')) {
          * Build html for label and input of setting
          *
          * @param DokuWiki_Plugin $plugin object of config plugin
-         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @param bool            $echo   true: show input value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
         function html(&$plugin, $echo=false) {
