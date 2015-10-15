@@ -646,7 +646,7 @@ function _isHiddenPage(&$data) {
     foreach($hidepages as $hidepage) {
         if(preg_match('/' . $hidepage . ':/ui', ':' . $data['id'])) {
             $data['hidden'] = true;
-            break;
+            return;
         }
     }
 }
