@@ -463,9 +463,12 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return string
      */
     protected function _filterEscape($string) {
-        return preg_replace(
-            '/([\x00-\x1F\*\(\)\\\\])/e',
-            '"\\\\\".join("",unpack("H2","$1"))',
+        // see https://github.com/adldap/adLDAP/issues/22
+        return preg_replace_callback(
+            '/([\x00-\x1F\*\(\)\\\\])/',
+            function ($matches) {
+                return "\\".join("", unpack("H2", $matches[1]));
+            },
             $string
         );
     }
@@ -478,6 +481,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      */
     protected function _openLDAP() {
         if($this->con) return true; // connection already established
+
+        if($this->getConf('debug')) {
+            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+        }
 
         $this->bound = 0;
 
@@ -555,6 +562,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         if(!$bound) {
             msg("LDAP: couldn't connect to LDAP server", -1);
+            $this->_debug(ldap_error($this->con), 0, __LINE__, __FILE__);
             return false;
         }
 
