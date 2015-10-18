@@ -115,7 +115,7 @@ function load_autoload($name){
     $name = str_replace('\\', '/', $name);
     if(substr($name, 0, 9) == 'dokuwiki/') {
         require substr($name, 9) . '.php';
-        return true
+        return true;
     }
 
     // Plugin loading
