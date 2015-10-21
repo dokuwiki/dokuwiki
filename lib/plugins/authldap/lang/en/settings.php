@@ -16,7 +16,7 @@ $lang['groupscope']  = 'Limit search scope for group search';
 $lang['userkey']     = 'Attribute denoting the username; must be consistent to userfilter.';
 $lang['groupkey']    = 'Group membership from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
 $lang['sso']         = 'Should Single-Sign-On via Kerberos be used?';
-$lang['sso_charset'] = 'The charset your webserver will pass the Kerberos username in. Em    pty for UTF-8 or latin-1. Requires the iconv extension.';
+$lang['sso_charset'] = 'The charset your webserver will pass the Kerberos username in. Empty for UTF-8 or latin-1. Requires the iconv extension.';
 $lang['modPass']     = 'Can the LDAP password be changed via dokuwiki?';
 $lang['debug']       = 'Display additional debug information on errors';
 

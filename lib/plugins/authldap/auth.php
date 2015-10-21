@@ -42,7 +42,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
             // make sure the right encoding is used
             if($this->getConf('sso_charset')) {
-                $_SERVER['REMOTE_USER'] = iconv($this->getConf('sso_charset'), 'UTF-8', $    _SERVER['REMOTE_USER']);
+                $_SERVER['REMOTE_USER'] = iconv($this->getConf('sso_charset'), 'UTF-8', $_SERVER['REMOTE_USER']);
             } elseif(!utf8_check($_SERVER['REMOTE_USER'])) {
                 $_SERVER['REMOTE_USER'] = utf8_encode($_SERVER['REMOTE_USER']);
             }
