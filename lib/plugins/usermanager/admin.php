@@ -518,16 +518,20 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                     $pass = auth_pwgen($user);
                 } else {
                     msg($this->lang['add_fail'], -1);
+                    msg($this->lang['addUser_error_missing_pass'], -1);
                     return false;
                 }
             } else {
                 if (!$this->_verifyPassword($pass,$passconfirm)) {
+                    msg($this->lang['add_fail'], -1);
+                    msg($this->lang['addUser_error_pass_not_identical'], -1);
                     return false;
                 }
             }
         } else {
             if (!empty($pass)){
                 msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_modPass_disabled'], -1);
                 return false;
             }
         }
@@ -535,10 +539,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_auth->canDo('modName')){
             if (empty($name)){
                 msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_name_missing'], -1);
                 return false;
             }
         } else {
             if (!empty($name)){
+                msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_modName_disabled'], -1);
                 return false;
             }
         }
@@ -546,10 +553,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_auth->canDo('modMail')){
             if (empty($mail)){
                 msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_mail_missing'], -1);
                 return false;
             }
         } else {
             if (!empty($mail)){
+                msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_modMail_disabled'], -1);
                 return false;
             }
         }
@@ -563,6 +573,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             }
         } else {
             msg($this->lang['add_fail'], -1);
+            msg($this->lang['addUser_error_create_event_failed'], -1);
         }
 
         return $ok;
