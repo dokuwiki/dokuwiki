@@ -500,6 +500,43 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
     }
 
     /**
+     * Build detailed error message for missing fields
+     * for the add user function.
+     *
+     * @return string error message text
+     */
+    protected function _buildAddUserEmptyFieldsErrorMsg ($user,$pass,$name,$mail) {
+        $msg = $this->lang['add_fail'];
+        $fields = '';
+        if ( empty($user) === true ) {
+            $fields .= '"'.$this->lang['user_id'].'"';
+        }
+        if ( empty($pass) === true ) {
+            if ( empty($fields) === false ) {
+                $fields .= ', ';
+            }
+            $fields .= '"'.$this->lang['user_pass'].'"';
+        }
+        if ( empty($name) === true ) {
+            if ( empty($fields) === false ) {
+                $fields .= ', ';
+            }
+            $fields .= '"'.$this->lang['user_name'].'"';
+        }
+        if ( empty($mail) === true ) {
+            if ( empty($fields) === false ) {
+                $fields .= ', ';
+            }
+            $fields .= '"'.$this->lang['user_mail'].'"';
+        }
+        
+        if ( empty($fields) === false ) {
+            $msg .= $this->lang['enter_missing_fields'].$fields;
+        }
+        return $msg;
+    }
+
+    /**
      * Add an user to auth backend
      *
      * @return bool whether succesful
@@ -510,14 +547,17 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if (!$this->_auth->canDo('addUser')) return false;
 
         list($user,$pass,$name,$mail,$grps,$passconfirm) = $this->_retrieveUser();
-        if (empty($user)) return false;
+        if (empty($user)){
+            msg($this->_buildAddUserEmptyFieldsErrorMsg ($user,$pass,$name,$mail), -1);
+            return false;
+        }
 
         if ($this->_auth->canDo('modPass')){
             if (empty($pass)){
                 if($INPUT->has('usernotify')){
                     $pass = auth_pwgen($user);
                 } else {
-                    msg($this->lang['add_fail'], -1);
+                    msg($this->_buildAddUserEmptyFieldsErrorMsg ($user,$pass,$name,$mail), -1);
                     return false;
                 }
             } else {
@@ -534,7 +574,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         if ($this->_auth->canDo('modName')){
             if (empty($name)){
-                msg($this->lang['add_fail'], -1);
+                msg($this->_buildAddUserEmptyFieldsErrorMsg ($user,$pass,$name,$mail), -1);
                 return false;
             }
         } else {
@@ -545,7 +585,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
 
         if ($this->_auth->canDo('modMail')){
             if (empty($mail)){
-                msg($this->lang['add_fail'], -1);
+                msg($this->_buildAddUserEmptyFieldsErrorMsg ($user,$pass,$name,$mail), -1);
                 return false;
             }
         } else {

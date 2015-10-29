@@ -60,6 +60,7 @@ $lang['add_ok'] = 'User added successfully';
 $lang['add_fail'] = 'User addition failed';
 $lang['notify_ok'] = 'Notification email sent';
 $lang['notify_fail'] = 'Notification email could not be sent';
+$lang['enter_missing_fields'] = '. Please enter a value in the following fields: ';
 
 // import & errors
 $lang['import_userlistcsv'] = 'User list file (CSV):  ';
