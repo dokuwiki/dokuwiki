@@ -83,4 +83,4 @@ $lang['addUser_error_name_missing'] = 'Please enter a name for the new user.';
 $lang['addUser_error_modName_disabled'] = 'Modifing names is currently disabled.';
 $lang['addUser_error_mail_missing'] = 'Please enter an Email-Adress for the new user.';
 $lang['addUser_error_modMail_disabled'] = 'Modifing Email-Adresses is currently disabled.';
-$lang['addUser_error_create_event_failed'] = 'The create UserMod event failed.';
+$lang['addUser_error_create_event_failed'] = 'A plugin prevented the new user being added. Review possible other messages for more information.';
