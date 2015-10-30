@@ -76,3 +76,11 @@ $lang['import_error_create']  = 'Unable to create the user';
 $lang['import_notify_fail']   = 'Notification message could not be sent for imported user, %s with email %s.';
 $lang['import_downloadfailures'] = 'Download Failures as CSV for correction';
 
+$lang['addUser_error_missing_pass'] = 'Please either set a password or activate user notification to enable password generation.';
+$lang['addUser_error_pass_not_identical'] = 'The entered passwords were not identical.';
+$lang['addUser_error_modPass_disabled'] = 'Modifing passwords is currently disabled';
+$lang['addUser_error_name_missing'] = 'Please enter a name for the new user.';
+$lang['addUser_error_modName_disabled'] = 'Modifing names is currently disabled.';
+$lang['addUser_error_mail_missing'] = 'Please enter an Email-Adress for the new user.';
+$lang['addUser_error_modMail_disabled'] = 'Modifing Email-Adresses is currently disabled.';
+$lang['addUser_error_create_event_failed'] = 'A plugin prevented the new user being added. Review possible other messages for more information.';
