@@ -552,9 +552,7 @@ function check_permissions(){
 
     $ok = true;
     foreach($dirs as $dir){
-        if(!file_exists("$dir/.") || !iswritable($dir)){
-        	
-        	var_dump(is_writable($dir)); die;
+        if(!file_exists("$dir/.") || !is_writable($dir)){
             $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'],$dir);
             $ok      = false;
