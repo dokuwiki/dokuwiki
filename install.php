@@ -6,19 +6,12 @@
  */
 
 function iswritable($filename) {
-	//TODO: use original if PHP version is ok
-	//return is_writable($filename);
-
-	// check writability
 	$perms = fileperms($filename);
-	if (($perms & 0x0080) || // owner can write
-		($perms & 0x0010) || // group
-		($perms & 0x0002) // other
-	) {
-		return true;
+	//        owner                group               world
+	if (($perms & 0x0080) || ($perms & 0x0010) || ($perms & 0x0002)) {
+		return true; // can write
 	}
-
-	return false;
+	return false; // cannot write
 }
 
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
@@ -552,7 +545,7 @@ function check_permissions(){
 
     $ok = true;
     foreach($dirs as $dir){
-        if(!file_exists("$dir/.") || !is_writable($dir)){
+        if(!file_exists("$dir/.") || !iswritable($dir)){
             $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'],$dir);
             $ok      = false;
