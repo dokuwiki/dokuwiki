@@ -3395,7 +3395,7 @@ class SimplePie_Cache_File implements SimplePie_Cache_Base
 	 */
 	public function save($data)
 	{
-		if (file_exists($this->name) && is_writeable($this->name) || file_exists($this->location) && is_writeable($this->location))
+		if (file_exists($this->name) && iswritable($this->name) || file_exists($this->location) && iswritable($this->location))
 		{
 			if ($data instanceof SimplePie)
 			{
@@ -12394,7 +12394,7 @@ class SimplePie_Misc
 			}
 
 			$log_file = @ini_get('error_log');
-			if (!empty($log_file) && ('syslog' !== $log_file) && !@is_writable($log_file))
+			if (!empty($log_file) && ('syslog' !== $log_file) && !@iswritable($log_file))
 			{
 				$log_error = false;
 			}

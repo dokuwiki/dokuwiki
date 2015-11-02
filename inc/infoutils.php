@@ -138,7 +138,7 @@ function check(){
         }
     }
 
-    if(is_writable($conf['changelog'])){
+    if(iswritable($conf['changelog'])){
         msg('Changelog is writable',1);
     }else{
         if (file_exists($conf['changelog'])) {
@@ -161,7 +161,7 @@ function check(){
         }
     }
 
-    if(is_writable(DOKU_CONF)){
+    if(iswritable(DOKU_CONF)){
         msg('conf directory is writable',1);
     }else{
         msg('conf directory is not writable',-1);
@@ -169,7 +169,7 @@ function check(){
 
     if($conf['authtype'] == 'plain'){
         global $config_cascade;
-        if(is_writable($config_cascade['plainauth.users']['default'])){
+        if(iswritable($config_cascade['plainauth.users']['default'])){
             msg('conf/users.auth.php is writable',1);
         }else{
             msg('conf/users.auth.php is not writable',0);
@@ -220,7 +220,7 @@ function check(){
 
     msg('Your current permission for this page is '.$INFO['perm'],0);
 
-    if(is_writable($INFO['filepath'])){
+    if(iswritable($INFO['filepath'])){
         msg('The current page is writable by the webserver',0);
     }else{
         msg('The current page is not writable by the webserver',0);
