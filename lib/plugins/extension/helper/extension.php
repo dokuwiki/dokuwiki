@@ -537,15 +537,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function canModify() {
         if($this->isInstalled()) {
-            if(!is_writable($this->getInstallDir())) {
+            if(!iswritable($this->getInstallDir())) {
                 return 'noperms';
             }
         }
 
-        if($this->isTemplate() && !is_writable(DOKU_TPLLIB)) {
+        if($this->isTemplate() && !iswritable(DOKU_TPLLIB)) {
             return 'notplperms';
 
-        } elseif(!is_writable(DOKU_PLUGIN)) {
+        } elseif(!iswritable(DOKU_PLUGIN)) {
             return 'nopluginperms';
         }
         return true;
