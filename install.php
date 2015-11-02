@@ -6,7 +6,7 @@
  */
 
 function iswritable($filename) {
-	//echo PHP_VERSION_ID; die;
+	//TODO: use original if PHP version is ok
 	//return is_writable($filename);
 
 	// check writability
