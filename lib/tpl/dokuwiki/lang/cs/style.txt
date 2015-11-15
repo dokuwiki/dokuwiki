@@ -1,0 +1,2 @@
+Pokud chcete upravit logo, jednoduše použijte Media Manager pro nahrání obrázku "logo.png" do kořenového jmenného prostoru "wiki" a ten bude poté použit jako logo. Můžete nahrát také ikonu "favicon.ico".
+Pokud používáte neveřejnou wiki, doporučujeme udělit plná práva pro čtení prostoru "wiki" (nebo root) v nastavení ACL, jinak nebude vlastní logo zobrazeno nepřihlášeným uživatelům.
