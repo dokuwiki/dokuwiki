@@ -21,6 +21,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Michael Große <grosse@cosmocode.de>
  */
 $lang['admin_acl']             = 'Zugangsverwaltung';
 $lang['acl_group']             = 'Gruppe:';
@@ -36,7 +37,7 @@ $lang['p_group_ns']            = 'Mitglieder der Gruppe <b class="aclgroup">%s</
 $lang['p_choose_id']           = 'Bitte geben Sie in obigem Formular eine <b>einen Benutzer oder eine Gruppe</b> an, um die Berechtigungen für die Seite <b class="aclpage">%s</b> zu sehen oder zu ändern.';
 $lang['p_choose_ns']           = 'Bitte geben Sie in obigem Formular eine <b>einen Benutzer oder eine Gruppe</b> an, um die Berechtigungen für den Namensraum <b class="aclns">%s</b> zu sehen oder zu ändern.';
 $lang['p_inherited']           = 'Hinweis: Diese Berechtigungen wurden nicht explizit gesetzt, sondern von anderen Gruppen oder höher liegenden Namensräumen geerbt.';
-$lang['p_isadmin']             = 'Hinweis: Die ausgewählte Gruppe oder Benutzer haben immer alle Berechtigungen das sie als Superuser konfiguriert wurden.';
+$lang['p_isadmin']             = 'Hinweis: Die ausgewählte Gruppe oder Benutzer haben immer alle Berechtigungen, da sie als Superuser konfiguriert wurden.';
 $lang['p_include']             = 'Höhere Berechtigungen schließen niedrigere mit ein. Anlegen, Hochladen und Entfernen gilt nur für Namensräume, nicht für einzelne Seiten';
 $lang['current']               = 'Momentane Zugriffsregeln';
 $lang['where']                 = 'Seite/Namensraum';
