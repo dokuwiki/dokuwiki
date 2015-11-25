@@ -18,6 +18,7 @@
  * @author Rachel <rzhang0802@gmail.com>
  * @author Yangyu Huang <yangyu.huang@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
+ * @author Garfield <garfield_550@outlook.com>
  */
 $lang['menu']                  = '用户管理器';
 $lang['noauth']                = '（用户认证不可用）';
@@ -78,3 +79,5 @@ $lang['import_error_readfail'] = '导入失败。无法读取上传的文件。'
 $lang['import_error_create']   = '不能创建新用户';
 $lang['import_notify_fail']    = '通知消息无法发送到导入的用户 %s，电子邮件地址是 %s。';
 $lang['import_downloadfailures'] = '下载CSV的错误信息以修正。';
+$lang['addUser_error_name_missing'] = '请为新用户输入一个名字。';
+$lang['addUser_error_mail_missing'] = '请为新用户输入一个电子邮件地址。';
