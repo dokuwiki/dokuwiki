@@ -24,6 +24,7 @@
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
