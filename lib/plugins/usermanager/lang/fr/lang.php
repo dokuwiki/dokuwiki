@@ -15,16 +15,15 @@
  * @author Florian Gaub <floriang@floriang.net>
  * @author Samuel Dorsaz samuel.dorsaz@novelion.net
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author schplurtz@laposte.net
  * @author skimpax@gmail.com
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Antoine Turmel <geekshadow@gmail.com>
- * @author schplurtz <Schplurtz@laposte.net>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
@@ -87,7 +86,7 @@ $lang['import_notify_fail']    = 'Impossible d\'expédier une notification à l\
 $lang['import_downloadfailures'] = 'Télécharger les erreurs au format CSV pour correction';
 $lang['addUser_error_missing_pass'] = 'Veuillez saisir un mot de passe ou activer la notification à l\'utilisateur pour permettre la génération d\'un mot de passe.';
 $lang['addUser_error_pass_not_identical'] = 'Les mots de passe saisis diffèrent.';
-$lang['addUser_error_modPass_disabled'] = 'La modification des mot de passe est actuellement désactivée.';
+$lang['addUser_error_modPass_disabled'] = 'La modification des mots de passe est actuellement désactivée.';
 $lang['addUser_error_name_missing'] = 'Veuillez saisir un nom pour le nouvel utilisateur.';
 $lang['addUser_error_modName_disabled'] = 'La modification des noms est actuellement désactivée.';
 $lang['addUser_error_mail_missing'] = 'Veuillez saisir une adressse de courriel pour le nouvel utilisateur.';
