@@ -255,7 +255,7 @@ function http_cached_finish($file, $content) {
     if(function_exists('gzopen')) io_saveFile("$file.gz",$content);
 
     // finally send output
-    if ($conf['gzip_output']) {
+    if ($conf['gzip_output'] && function_exists('gzencode')) {
         header('Vary: Accept-Encoding');
         header('Content-Encoding: gzip');
         print gzencode($content,9,FORCE_GZIP);
