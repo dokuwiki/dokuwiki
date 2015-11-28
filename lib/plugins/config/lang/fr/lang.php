@@ -25,6 +25,7 @@
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Simon DELAGE <simon.geekitude@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -37,7 +38,7 @@ $lang['security']              = 'Avertissement de sécurité : modifier cette o
 $lang['_configuration_manager'] = 'Gestionnaire de configuration';
 $lang['_header_dokuwiki']      = 'Paramètres de DokuWiki';
 $lang['_header_plugin']        = 'Paramètres des extensions';
-$lang['_header_template']      = 'Paramètres des modèles';
+$lang['_header_template']      = 'Paramètres du modèle';
 $lang['_header_undefined']     = 'Paramètres indéfinis';
 $lang['_basic']                = 'Paramètres de base';
 $lang['_display']              = 'Paramètres d\'affichage';
