@@ -1,16 +1,15 @@
 language: php
 sudo: false
 php:
+  - "7.0"
   - "5.6"
   - "5.5"
   - "5.4"
   - "5.3"
   - "hhvm"
-  - "nightly"
 matrix:
   allow_failures:
     - php: "hhvm"
-    - php: "nightly"
 notifications:
   irc:
     channels:
