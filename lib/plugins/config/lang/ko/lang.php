@@ -9,6 +9,7 @@
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Erial <erial2@gmail.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다, 바뀜을 검토하고 다시 제출하세요.
