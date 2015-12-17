@@ -3,6 +3,14 @@ namespace plugin\struct\types;
 
 use dokuwiki\Form\Form;
 
+/**
+ * Class AbstractBaseType
+ *
+ * This class represents a basic type that can be configured to be used in a Schema. It is the main
+ * part of a column definition as defined in meta\Column
+ *
+ * @package plugin\struct\types
+ */
 abstract class AbstractBaseType {
 
     /**
@@ -20,21 +28,38 @@ abstract class AbstractBaseType {
      */
     protected $ismulti = false;
 
-    /** @var int sorting of fields */
-    protected $sort = 0;
-
     /**
      * AbstractBaseType constructor.
-     * @param int $sort This value is not stored with the type but adding it here, helps keeping things simple
      * @param array|null $config The configuration, might be null if nothing saved, yet
      * @param string $label The label for this field (empty for new definitions=
      * @param bool $ismulti Should this field accept multiple values?
      */
-    public function __construct($sort = 0, $config = null, $label = '', $ismulti = false) {
+    public function __construct($config = null, $label = '', $ismulti = false) {
         if(!is_null($config)) $this->config = array_merge($this->config, $config);
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
-        $this->sort = (int) $sort;
+    }
+
+    /**
+     * Returns data as associative array
+     *
+     * @return array
+     */
+    public function getAsEntry() {
+        return array(
+            'config' => json_encode($this->config),
+            'label' => $this->label,
+            'ismulti' => $this->ismulti,
+            'class' => $this->getClass()
+        );
+    }
+
+    /**
+     * The class name of this type (no namespace)
+     * @return string
+     */
+    public function getClass() {
+        return substr(get_class($this), 20);
     }
 
     /**
@@ -51,13 +76,6 @@ abstract class AbstractBaseType {
      */
     public function isMulti() {
         return $this->ismulti;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSort() {
-        return $this->sort;
     }
 
     /**

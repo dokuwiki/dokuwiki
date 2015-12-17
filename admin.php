@@ -7,6 +7,7 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\Form\Form;
 use plugin\struct\meta\Schema;
 
 if(!defined('DOKU_INC')) die();
@@ -31,6 +32,16 @@ class admin_plugin_struct extends DokuWiki_Admin_Plugin {
      * Should carry out any processing required by the plugin.
      */
     public function handle() {
+        global $INPUT;
+
+        $table = Schema::cleanTableName($INPUT->str('table'));
+        if($table && $INPUT->bool('save') && checkSecurityToken()) {
+            $builder = new \plugin\struct\meta\SchemaBuilder($table, $INPUT->arr('schema'));
+            if(!$builder->build()) {
+                msg('something went wrong while saving', -1);
+            }
+        }
+
     }
 
     /**
@@ -39,17 +50,14 @@ class admin_plugin_struct extends DokuWiki_Admin_Plugin {
     public function html() {
         global $INPUT;
 
-        ptln('<h1>'.$this->getLang('menu').'</h1>');
+        ptln('<h1>' . $this->getLang('menu') . '</h1>');
 
-
-        $table = Schema::cleanTableName($INPUT->str('schema'));
+        $table = Schema::cleanTableName($INPUT->str('table'));
         if($table) {
             $schema = new Schema($table);
             echo $schema->adminEditor();
         }
-
     }
-
 
 
 }

@@ -17,11 +17,16 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         /** @var helper_plugin_sqlite $sqlite */
         $this->sqlite = plugin_load('helper', 'sqlite');
         if(!$this->sqlite) {
-            msg('This plugin requires the sqlite plugin. Please install it', -1);
+            msg('The struct plugin requires the sqlite plugin. Please install it', -1);
             return;
-
-            //FIXME check that it is SQLite3 we won't support 2
         }
+
+        if($this->sqlite->getAdapter()->getName() != DOKU_EXT_PDO) {
+            msg('The struct plugin requires sqlite3 you\'re still using sqlite2');
+            $this->sqlite = null;
+            return;
+        }
+        $this->sqlite->getAdapter()->setUseNativeAlter(true);
 
         // initialize the database connection
         if(!$this->sqlite->init('struct', DOKU_PLUGIN . 'struct/db/')) {

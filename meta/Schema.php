@@ -2,6 +2,7 @@
 
 namespace plugin\struct\meta;
 
+use dokuwiki\Form\Form;
 use plugin\struct\types\AbstractBaseType;
 use plugin\struct\types\Text;
 
@@ -21,7 +22,7 @@ class Schema {
      */
     protected $chksum = '';
 
-    /** @var AbstractBaseType[] all the colums */
+    /** @var Column[] all the colums */
     protected $columns = array();
 
     /** @var int */
@@ -61,7 +62,7 @@ class Schema {
         }
         $res = $this->sqlite->query($sql, $opt);
         if($this->sqlite->res2count($res)) {
-            $result = $this->sqlite->res2arr($res);
+            $result = array_shift($this->sqlite->res2arr($res));
             $this->id = $result['id'];
             $this->chksum = $result['chksum'];
 
@@ -73,17 +74,25 @@ class Schema {
         $sql = "SELECT SC.*, T.*
                   FROM schema_cols SC,
                        types T
-                 WHERE SC.schema_id = ?
-                   AND SC.type_id = T.id
+                 WHERE SC.sid = ?
+                   AND SC.tid = T.id
               ORDER BY SC.sort";
-        $res = $this->sqlite->query($sql, $opt);
+        $res = $this->sqlite->query($sql, $this->id);
         $rows = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
 
         foreach($rows as $row) {
-            $class = 'plugin\\struct\\type\\' . $row['class'];
+            $class = 'plugin\\struct\\types\\' . $row['class'];
             $config = json_decode($row['config'], true);
-            $this->columns[$row['col']] = new $class($config, $row['label'], $row['ismulti']);
+            $this->columns[$row['colref']] =
+                new Column(
+                    $row['sort'],
+                    new $class($config, $row['label'], $row['ismulti']),
+                    $row['tid'],
+                    $row['colref'],
+                    $row['enabled']
+                );
+
             if($row['sort'] > $this->maxsort) $this->maxsort = $row['sort'];
         }
     }
@@ -102,68 +111,95 @@ class Schema {
     }
 
     /**
-     * Returns a table to edit the schema
-     *
-     * @todo should this include the form?
+     * Returns the Admin Form to edit the schema
      *
      * @return string
      */
     public function adminEditor() {
-        $html = '';
+        $form = new Form(array('method' => 'POST'));
+        $form->setHiddenField('do', 'admin');
+        $form->setHiddenField('page', 'struct');
+        $form->setHiddenField('table', $this->table);
+        $form->setHiddenField('schema[id]', $this->id);
 
-        $html .= '<input type="hidden" name="table" value="' . hsc($this->table) . '">';
+        $form->addHTML('<table class="inline">');
+        $form->addHTML('<tr><th>Sort</th><th>Label</th><th>Multi-Input?</th><th>Configuration</th><th>Type</th></tr>'); // FIXME localize
 
-        $html .= '<table class="inline">';
-        $html .= '<tr><th>Sort</th><th>Label</th><th>Multi-Input?</th><th>Configuration</th><th>Type</th></tr>'; // FIXME localize
         foreach($this->columns as $key => $obj) {
-            $html .= $this->adminColumn($key, $obj);
+            $form->addHTML($this->adminColumn($key, $obj));
         }
 
         // FIXME new one needs to be added dynamically, this is just for testing
-        $html .= $this->adminColumn('new1', new Text($this->maxsort+10));
+        $form->addHTML($this->adminColumn('new1', new Column($this->maxsort+10, new Text()), 'new'));
 
-        $html .= '</table>';
-        return $html;
+        $form->addHTML('</table>');
+        $form->addButton('save', 'Save')->attr('type','submit');
+        return $form->toHTML();
     }
 
     /**
      * Returns the HTML to edit a single column definition of the schema
      *
      * @param string $column_id
-     * @param AbstractBaseType $type
+     * @param Column $col
+     * @param string $key The key to use in the form
      * @return string
      * @todo this should probably be reused for adding new columns via AJAX later?
      */
-    protected function adminColumn($column_id, AbstractBaseType $type) {
-        $base = 'schema[' . $column_id . ']'; // base name for all fields
+    protected function adminColumn($column_id, Column $col, $key='cols') {
+        $base = 'schema['.$key.'][' . $column_id . ']'; // base name for all fields
 
         $html = '<tr>';
 
         $html .= '<td>';
-        $html .= '<input type="text" name="' . $base . '[sort]" value="' . hsc($type->getSort()) . '" size="3">';
+        $html .= '<input type="text" name="' . $base . '[sort]" value="' . hsc($col->getSort()) . '" size="3">';
         $html .= '</td>';
 
         $html .= '<td>';
-        $html .= '<input type="text" name="' . $base . '[label]" value="' . hsc($type->getLabel()) . '">';
+        $html .= '<input type="text" name="' . $base . '[label]" value="' . hsc($col->getType()->getLabel()) . '">';
         $html .= '</td>';
 
         $html .= '<td>';
-        $checked = $type->isMulti() ? 'checked="checked"' : '';
+        $checked = $col->getType()->isMulti() ? 'checked="checked"' : '';
         $html .= '<input type="checkbox" name="' . $base . '[ismulti]" value="1" ' . $checked . '>';
         $html .= '</td>';
 
         $html .= '<td>';
-        $config = json_encode($type->getConfig(), JSON_PRETTY_PRINT);
+        $config = json_encode($col->getType()->getConfig(), JSON_PRETTY_PRINT);
         $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10">' . hsc($config) . '</textarea>';
         $html .= '</td>';
 
         $html .= '<td>';
-        $html .= substr(get_class($type), 20); //FIXME this needs to be a dropdown
+        $html .= '<input type="text" name="' . $base . '[class]" value="' . hsc($col->getType()->getClass()) . '">'; //FIXME this needs to be a dropdown
         $html .= '</td>';
 
         $html .= '</tr>';
 
         return $html;
     }
+
+    /**
+     * @return string
+     */
+    public function getChksum() {
+        return $this->chksum;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @return \plugin\struct\meta\Column[]
+     */
+    public function getColumns() {
+        return $this->columns;
+    }
+
+
+
 
 }
