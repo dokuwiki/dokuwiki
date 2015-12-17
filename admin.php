@@ -7,6 +7,8 @@
  */
 
 // must be run within Dokuwiki
+use plugin\struct\meta\Schema;
+
 if(!defined('DOKU_INC')) die();
 
 class admin_plugin_struct extends DokuWiki_Admin_Plugin {
@@ -15,14 +17,14 @@ class admin_plugin_struct extends DokuWiki_Admin_Plugin {
      * @return int sort number in admin menu
      */
     public function getMenuSort() {
-        return FIXME;
+        return 500;
     }
 
     /**
      * @return bool true if only access for superuser, false is for superusers and moderators
      */
     public function forAdminOnly() {
-        return false;
+        return true;
     }
 
     /**
@@ -35,8 +37,21 @@ class admin_plugin_struct extends DokuWiki_Admin_Plugin {
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
+        global $INPUT;
+
         ptln('<h1>'.$this->getLang('menu').'</h1>');
+
+
+        $table = Schema::cleanTableName($INPUT->str('schema'));
+        if($table) {
+            $schema = new Schema($table);
+            echo $schema->adminEditor();
+        }
+
     }
+
+
+
 }
 
 // vim:ts=4:sw=4:et:

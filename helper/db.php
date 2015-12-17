@@ -10,27 +10,30 @@
 if(!defined('DOKU_INC')) die();
 
 class helper_plugin_struct_db extends DokuWiki_Plugin {
+    /** @var helper_plugin_sqlite */
+    protected $sqlite;
+
+    public function __construct() {
+        /** @var helper_plugin_sqlite $sqlite */
+        $this->sqlite = plugin_load('helper', 'sqlite');
+        if(!$this->sqlite) {
+            msg('This plugin requires the sqlite plugin. Please install it', -1);
+            return;
+
+            //FIXME check that it is SQLite3 we won't support 2
+        }
+
+        // initialize the database connection
+        if(!$this->sqlite->init('struct', DOKU_PLUGIN . 'struct/db/')) {
+            return;
+        }
+    }
 
     /**
-     * Return info about supported methods in this Helper Plugin
-     *
-     * @return array of public methods
+     * @return helper_plugin_sqlite|null
      */
-    public function getMethods() {
-        return array(
-            array(
-                'name'   => 'getThreads',
-                'desc'   => 'returns pages with discussion sections, sorted by recent comments',
-                'params' => array(
-                    'namespace'         => 'string',
-                    'number (optional)' => 'integer'
-                ),
-                'return' => array('pages' => 'array')
-            ),
-            array(
-                // and more supported methods...
-            )
-        );
+    public function getDB() {
+        return $this->sqlite;
     }
 
 }
