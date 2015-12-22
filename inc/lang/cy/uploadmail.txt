@@ -1,0 +1,15 @@
+Cafodd ffeil ei lanlwytho i'ch DokuWiki. Dyma'r manylion:
+
+Ffeil         : @MEDIA@
+Hen adolygiad : @OLD@
+Dyddiad       : @DATE@
+Porwr         : @BROWSER@
+Cyfeiriad-IP  : @IPADDRESS@
+Gwesteiwr     : @HOSTNAME@
+Maint         : @SIZE@
+Teip MIME     : @MIME@
+Defnyddiwr    : @USER@
+
+-- 
+Cafodd y neges hon ei generadu gan DokuWiki ar
+@DOKUWIKIURL@

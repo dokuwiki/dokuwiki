@@ -1,0 +1,20 @@
+Shw mae!
+
+Gwnaeth y dudalen @PAGE@ mewn wici @TITLE@ newid.
+Dyma'r newidiadau:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Hen Adolygiad: @OLDPAGE@
+Adolygiad Newydd: @NEWPAGE@
+
+I ganslo hysbysiadau tudalen, mewngofnodwch i'r wici ar
+@DOKUWIKIURL@ ac yna ewch i
+@SUBSCRIBE@
+a thanysgrifio o newidiadau tudalen a/neu namespace.
+
+-- 
+Cafodd y neges hon ei generadu gan DokuWiki ar
+@DOKUWIKIURL@
