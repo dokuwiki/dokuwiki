@@ -1,0 +1,17 @@
+Cafodd tudalen yn eich DokuWiki ei hychwanegu neu newid. Dyma'r manylion:
+
+Dyddiad         : @DATE@
+Porwr           : @BROWSER@
+Cyfeiriad-IP    : @IPADDRESS@
+Gwesteiwr       : @HOSTNAME@
+Hen Adolygiad   : @OLDPAGE@
+Adolygiad Newydd: @NEWPAGE@
+Crynodeb Golygu : @SUMMARY@
+Defnyddiwr      : @USER@
+
+@DIFF@
+
+
+-- 
+Cafodd y neges hon ei generadyu gan DokuWiki ar
+@DOKUWIKIURL@
