@@ -597,13 +597,15 @@ class HTTPClient {
             // setups with this solution before, but we have no usable test for that and TLS should be the more
             // common crypto by now
             if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-                $requesturl = $requestinfo['path'];
+                $requesturl = $requestinfo['path'].
+                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }
 
             // if the above failed, this will most probably not work either, but we can try
             if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
-                $requesturl = $requestinfo['path'];
+                $requesturl = $requestinfo['path'].
+                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }
 
