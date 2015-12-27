@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Persian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
@@ -9,6 +10,7 @@
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
+ * @author Mohmmad Razavi <sepent@gmail.com>
  */
 $lang['menu']                  = 'تنظیمات پیکر‌بندی';
 $lang['error']                 = 'به دلیل ایراد در مقادیر وارد شده، تنظیمات اعمال نشد، خواهشمندیم تغییرات را مجددن کنترل نمایید و دوباره ارسال کنید.<br/> مقادیر مشکل‌دار با کادر قرمز مشخص شده‌اند.';
