@@ -1,0 +1,7 @@
+====== Rheolwr Ffurfwedd ======
+
+Defnyddiwch y dudalen hon i reoli gosodiadau eich arsefydliad DokuWiki.  Am gymorth ar osodiadau unigol ewch i [[doku>config]]. Am wybodaeth bellach ar yr ategyn hwn ewch i [[doku>plugin:config]].
+
+Mae gosodiadau gyda chefndir coch golau wedi\'u hamddiffyn a \'sdim modd eu newid gyda\'r ategyn hwn. Mae gosodiaadau gyda chefndir glas yn dynodi gwerthoedd diofyn ac mae gosodiadau gyda chefndir gwyn wedi\'u gosod yn lleol ar gyfer yr arsefydliad penodol hwn.  Mae modd newid gosodiadau gwyn a glas.
+
+Cofiwch bwyso y botwm **Cadw** cyn gadael y dudalen neu caiff eich newidiadau eu colli.
