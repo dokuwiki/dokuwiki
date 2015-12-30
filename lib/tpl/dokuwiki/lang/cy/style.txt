@@ -1,0 +1,4 @@
+Os ydych chi am newid y logo, defnyddiwch y Rheolwr Cyfrwng i lanlwytho ''logo.png'' i ''wici'' neu wraidd y namespace
+a chaiff ei ddefnyddio'n awtomatig. Gallwch chi hefyd lanlwytho ''favicon.ico'' yna. Os ydych chi'n defnyddio
+wici caeedig, awgrymwyd eich bod chi'n gwneud y ''wici'' (new wraidd) y namespace yn ddarllenadwy i bawb yn y
+gosodiadau ACL neu na chaiff eich logo chi ei weld gan ddefnyddwyr sydd heb fewngofnodi.

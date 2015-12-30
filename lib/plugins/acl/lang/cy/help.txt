@@ -1,0 +1,10 @@
+=== Cymorth Byw: ===
+
+Ar y dudalen hon, gallwch chi ychwanegu a dileu hawliau ar gyfer namespaces a thudalennau yn eich wici.
+  * Mae'r panel ar y chwith yn dangos pob namespace a thudalen.
+  * Mae'r ffurflen uchod yn eich galluogi chi i weld a newid hawliau defnyddiwr neu grŵp a ddewiswyd.
+  * Yn y tabl isod, dengys pob rheol rheoli mynediad sydd wedi'u gosod yn bresennol. Gallwch chi ei ddefnyddio i ddileu neu newid sawl rheol ar y tro.
+
+Gall darllen [[doku>acl|dogfennaeth swyddogol ar ACL]] fod o fudd er mwyn eich helpu chi ddeall yn llawn sut mae rheolaeth mynediad yn gweithio mewn DokuWiki.
+
+
