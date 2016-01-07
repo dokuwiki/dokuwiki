@@ -33,6 +33,7 @@
  * @author Nolf <m.kopachovets@gmail.com>
  * @author Takumo <9206984@mail.ru>
  * @author RainbowSpike <1@2.ru>
+ * @author dimsharav <dimsharav@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

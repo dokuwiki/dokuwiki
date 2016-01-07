@@ -22,6 +22,7 @@
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Vitaly Filatenko <kot@hacktest.net>
+ * @author dimsharav <dimsharav@gmail.com>
  */
 $lang['menu']                  = 'Управление пользователями';
 $lang['noauth']                = '(авторизация пользователей недоступна)';
@@ -82,6 +83,10 @@ $lang['import_error_readfail'] = 'Импорт не удался. Невозмо
 $lang['import_error_create']   = 'Невозможно создать пользователя';
 $lang['import_notify_fail']    = 'Оповещение не может быть отправлено импортированному пользователю %s по электронной почте %s.';
 $lang['import_downloadfailures'] = 'Скачать ошибки в формате CSV для исправления';
+$lang['addUser_error_missing_pass'] = 'Для возможности генерации пароля, пожалуйста, установите пароль или активируйте оповещения.';
 $lang['addUser_error_pass_not_identical'] = 'Введённые ппароли не совпадают.';
+$lang['addUser_error_modPass_disabled'] = 'Изменение пароля в настоящее время невозможно.';
 $lang['addUser_error_name_missing'] = 'Укажите имя нового пользователя.';
+$lang['addUser_error_modName_disabled'] = 'Изменение имени в настоящее время невозможно.';
 $lang['addUser_error_mail_missing'] = 'Укажите адрес эл. почты нового пользователя.';
+$lang['addUser_error_modMail_disabled'] = 'Изменение e-mail в настоящее время невозможно.';
