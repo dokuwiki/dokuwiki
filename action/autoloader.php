@@ -22,7 +22,7 @@ class action_plugin_struct_autoloader extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * An SPL auto loader function to load our own type classes
+     * An SPL auto loader function to load our own classes
      *
      * @param string $name class to be loaded
      * @return bool

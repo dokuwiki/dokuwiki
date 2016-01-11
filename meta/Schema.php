@@ -6,6 +6,16 @@ use dokuwiki\Form\Form;
 use plugin\struct\types\AbstractBaseType;
 use plugin\struct\types\Text;
 
+/**
+ * Class Schema
+ *
+ * Represents the schema of a single data table and all its properties. It defines what can be stored in
+ * the represented data table and how those contents are formatted.
+ *
+ * It can be initialized with a timestamp to access the schema as it looked at that particular point in time.
+ *
+ * @package plugin\struct\meta
+ */
 class Schema {
 
     /** @var \helper_plugin_sqlite|null */
@@ -30,6 +40,7 @@ class Schema {
 
     /**
      * Schema constructor
+     *
      * @param string $table The table this schema is for
      * @param int $ts The timestamp for when this schema was valid, 0 for current
      */
@@ -113,7 +124,11 @@ class Schema {
     /**
      * Returns the Admin Form to edit the schema
      *
+     * This data is processed by the SchemaBuilder class
+     *
      * @return string
+     * @see SchemaBuilder
+     * @todo it could be discussed if this editor should be part of the schema class it self or if that should be in a SchemaEditor class
      */
     public function adminEditor() {
         $form = new Form(array('method' => 'POST'));
@@ -145,6 +160,7 @@ class Schema {
      * @param string $key The key to use in the form
      * @return string
      * @todo this should probably be reused for adding new columns via AJAX later?
+     * @todo as above this might be better fitted to a SchemaEditor class
      */
     protected function adminColumn($column_id, Column $col, $key='cols') {
         $base = 'schema['.$key.'][' . $column_id . ']'; // base name for all fields

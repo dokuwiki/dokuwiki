@@ -8,7 +8,10 @@ use plugin\struct\types\AbstractBaseType;
  * Class Column
  *
  * This represents a single column within a schema and contains the configured BaseType as well as the
- * column reference to the data table
+ * column reference to the data table.
+ *
+ * It basically combines the information how a column's content behaves (as defines in the BaseType and its
+ * configuration) with where to find that content and adds some basic meta data (like sort or enabled)
  *
  * @package plugin\struct\meta
  */

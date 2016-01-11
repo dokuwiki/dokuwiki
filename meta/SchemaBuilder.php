@@ -2,10 +2,24 @@
 
 namespace plugin\struct\meta;
 
+/**
+ * Class SchemaBuilder
+ *
+ * This class builds and updates the schema definitions for our tables. This includes CREATEing and ALTERing
+ * the actual data tables as well as updating the meta information in our meta data tables.
+ *
+ * To use, simply instantiate a new object of the Builder and run the build() method on it.
+ *
+ * Note: even though data tables use a data_ prefix in the database, this prefix is internal only and should
+ *       never be passed as $table anywhere!
+ *
+ * @package plugin\struct\meta
+ */
 class SchemaBuilder {
 
     /**
      * @var array The posted new data for the schema
+     * @see Schema::AdminEditor()
      */
     protected $data = array();
 
@@ -27,8 +41,10 @@ class SchemaBuilder {
 
     /**
      * SchemaBuilder constructor.
-     * @param string $table
-     * @param array $data
+     *
+     * @param string $table The table's name
+     * @param array $data The defining of the table (basically what get's posted in the schema editor form)
+     * @see Schema::AdminEditor()
      */
     public function __construct($table, $data) {
         $this->table = $table;
@@ -112,7 +128,7 @@ class SchemaBuilder {
                     $this->sqlite->res_close($res);
                 }
             } else {
-                $enabled = false; // no longer there FIXME this assumes we remove the entry from the from completely. We might not want to do that
+                $enabled = false; // no longer there FIXME this assumes we remove the entry from the form completely. We might not want to do that
             }
 
             // add this type to the schema columns

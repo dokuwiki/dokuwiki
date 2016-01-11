@@ -9,7 +9,10 @@ use dokuwiki\Form\Form;
  * This class represents a basic type that can be configured to be used in a Schema. It is the main
  * part of a column definition as defined in meta\Column
  *
+ * This defines also how the content of the coulmn will be entered and formatted.
+ *
  * @package plugin\struct\types
+ * @see Column
  */
 abstract class AbstractBaseType {
 
