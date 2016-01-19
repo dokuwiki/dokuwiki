@@ -50,15 +50,71 @@ class admin_plugin_struct extends DokuWiki_Admin_Plugin {
     public function html() {
         global $INPUT;
 
-        ptln('<h1>' . $this->getLang('menu') . '</h1>');
+        echo $this->locale_xhtml('intro');
 
         $table = Schema::cleanTableName($INPUT->str('table'));
         if($table) {
+            echo '<h2>'.sprintf($this->getLang('edithl'), hsc($table)).'</h2>';
+
             $schema = new Schema($table);
             echo $schema->adminEditor();
+        } else {
+            $this->html_newschema();
         }
     }
 
+    /**
+     * Form to add a new schema
+     */
+    protected function html_newschema() {
+        $form = new Form();
+        $form->addFieldsetOpen($this->getLang('create'));
+        $form->setHiddenField('do', 'admin');
+        $form->setHiddenField('page', 'struct');
+        $form->addTextInput('table', $this->getLang('schemaname'));
+        $form->addButton('', $this->getLang('save'));
+        $form->addHTML('<p>'.$this->getLang('createhint').'</p>'); // FIXME is that true? we probably could
+        $form->addFieldsetClose();
+        echo $form->toHTML();
+    }
+
+    /**
+     * Adds all available schemas to the Table of Contents
+     *
+     * @return array
+     */
+    public function getTOC() {
+        global $ID;
+
+        /** @var helper_plugin_struct_db $helper */
+        $helper = plugin_load('helper', 'struct_db');
+        $db = $helper->getDB();
+
+        parent::getTOC();
+        if(!$db) return parent::getTOC();
+
+        $res = $db->query("SELECT DISTINCT tbl FROM schemas ORDER BY tbl");
+        $tables = $db->res2arr($res);
+        $db->res_close($res);
+
+        $toc = array();
+        $link = wl($ID, array(
+            'do' => 'admin',
+            'page' => 'struct'
+        ));
+        $toc[] = html_mktocitem($link, $this->getLang('menu'), 0, '');
+
+        foreach($tables as $row) {
+            $link = wl($ID, array(
+                'do' => 'admin',
+                'page' => 'struct',
+                'table' => $row['tbl']
+            ));
+
+            $toc[] = html_mktocitem($link, hsc($row['tbl']), 1, '');
+        }
+        return $toc;
+    }
 
 }
 

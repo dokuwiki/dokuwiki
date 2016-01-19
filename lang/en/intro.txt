@@ -1,0 +1,5 @@
+====== Struct Schema Editor ======
+
+Schemas are the core of the Struct Plugin. A schema defines a template of structured data that shall be assigned to pages later.
+
+Pick an existing schema from the Table of Contents or a create a new one.
