@@ -16,9 +16,10 @@ class helper_plugin_struct_column extends DokuWiki_Plugin {
     /**
      * Returns a list of all available types
      *
+     * @fixme does that make sense in a helper plugin? Should it be a static method of Column?
      * @return array
      */
-    public function getTypes() {
+    static public function getTypes() {
         $types = array();
         $files = glob(DOKU_PLUGIN . 'struct/types/*.php');
         foreach($files as $file) {

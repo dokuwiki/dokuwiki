@@ -185,8 +185,14 @@ class Schema {
         $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10">' . hsc($config) . '</textarea>';
         $html .= '</td>';
 
+        $types = \helper_plugin_struct_column::getTypes();
         $html .= '<td>';
-        $html .= '<input type="text" name="' . $base . '[class]" value="' . hsc($col->getType()->getClass()) . '">'; //FIXME this needs to be a dropdown
+        $html .= '<select name="' . $base . '[class]">';
+        foreach($types as $type) {
+            $selected = ($col->getType()->getClass() == $type) ? 'selected="selected"' : '';
+            $html .= '<option value="' . hsc($type) . '" ' . $selected . '>' . hsc($type) . '</option>';
+        }
+        $html .= '</select>';
         $html .= '</td>';
 
         $html .= '</tr>';
