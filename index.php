@@ -52,7 +52,7 @@ if(preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
 
     # access limitiations
     if(preg_match('/\/([\._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) or
-        preg_match('/^\/(data\/|conf\/|bin\/|inc\/|install.php)/', $_SERVER['SCRIPT_NAME'])
+        preg_match('/^\/(data|conf|bin|inc)\//', $_SERVER['SCRIPT_NAME'])
     ) {
         die('Access denied');
     }
