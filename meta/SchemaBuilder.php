@@ -64,13 +64,11 @@ class SchemaBuilder {
     public function build() {
         $this->sqlite->query('BEGIN TRANSACTION');
 
-        // create or update the data table
-        if($this->oldschema->getId()) {
-            $ok = $this->updateDataTable();
-        } else {
+        // create the data table if new schema
+        if(!$this->oldschema->getId()) {
             $ok = $this->newDataTable();
+            if(!$ok) return false;
         }
-        if(!$ok) return false;
 
         // create a new schema
         if(!$this->newSchema()) return false;
@@ -165,6 +163,14 @@ class SchemaBuilder {
             $sort = $column['sort'];
             $enabled = true;
 
+            // only save if the column got a name
+            if(!$newEntry['label']) continue;
+
+            // add new column to the data table
+            if(!$this->addDataTableColumn($colref)) {
+                return false;
+            }
+
             // save the type
             $ok = $this->sqlite->storeEntry('types', $newEntry);
             if(!$ok) return false;
@@ -191,43 +197,35 @@ class SchemaBuilder {
     }
 
     /**
-     * Create a completely new data table
+     * Create a completely new data table with columns yet
      *
      * @todo how do we want to handle indexes?
      * @return bool
      */
     protected function newDataTable() {
         $tbl = 'data_' . $this->table;
-        $cols = count($this->data['new']); // number of columns in the schema
 
         $sql = "CREATE TABLE $tbl (
                     pid NOT NULL,
-                    rev INTEGER NOT NULL,\n";
-        for($i = 1; $i <= $cols; $i++) {
-            $sql .= "col$i DEFAULT '',\n";
-        }
-        $sql .= "PRIMARY KEY(pid, rev) )";
+                    rev INTEGER NOT NULL,
+                    PRIMARY KEY(pid, rev)
+                )";
 
         return (bool) $this->sqlite->query($sql);
     }
 
     /**
-     * Add additional columns to an existing data table
+     * Add an additional column to the existing data table
      *
+     * @param int $index the new column index to add
      * @return bool
      */
-    protected function updateDataTable() {
+    protected function addDataTableColumn($index) {
         $tbl = 'data_' . $this->table;
-        $oldcols = count($this->oldschema->getColumns()); // number of columns in the old schema
-        $newcols = count($this->data['new']); // number of *new* columns in the schema
-
-        for($i = $oldcols+1; $i <= $oldcols + $newcols; $i++) {
-            $sql = " ALTER TABLE $tbl ADD COLUMN col$i DEFAULT ''";
-            if(! $this->sqlite->query($sql)) {
-                return false;
-            }
+        $sql = " ALTER TABLE $tbl ADD COLUMN col$index DEFAULT ''";
+        if(! $this->sqlite->query($sql)) {
+            return false;
         }
-
         return true;
     }
 
