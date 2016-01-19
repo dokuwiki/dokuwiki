@@ -14,6 +14,7 @@
  * @author Guido Salatino <guidorafael23@gmail.com>
  * @author Romulo Pereira <romuloccomp@gmail.com>
  * @author Paulo Carmino <contato@paulocarmino.com>
+ * @author Alfredo Silva <alfredo.silva@sky.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -22,24 +23,24 @@ $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
-$lang['btn_edit']              = 'Editar página';
-$lang['btn_source']            = 'Ver fonte';
-$lang['btn_show']              = 'Ver página';
-$lang['btn_create']            = 'Criar página';
+$lang['btn_edit']              = 'Editar esta página';
+$lang['btn_source']            = 'Mostrar página fonte ';
+$lang['btn_show']              = 'Mostrar página';
+$lang['btn_create']            = 'Criar esta página';
 $lang['btn_search']            = 'Pesquisar';
-$lang['btn_save']              = 'Salvar';
-$lang['btn_preview']           = 'Prever';
+$lang['btn_save']              = 'Guardar';
+$lang['btn_preview']           = 'Pré-visualizar';
 $lang['btn_top']               = 'Voltar ao topo';
 $lang['btn_newer']             = '<< mais recente';
 $lang['btn_older']             = 'menos recente >>';
 $lang['btn_revs']              = 'Revisões antigas';
-$lang['btn_recent']            = 'Alt. Recentes';
-$lang['btn_upload']            = 'Carregar';
+$lang['btn_recent']            = 'Alterações Recentes';
+$lang['btn_upload']            = 'Enviar';
 $lang['btn_cancel']            = 'Cancelar';
 $lang['btn_index']             = 'Índice';
 $lang['btn_secedit']           = 'Editar';
-$lang['btn_login']             = 'Entrar';
-$lang['btn_logout']            = 'Sair';
+$lang['btn_login']             = 'Iniciar sessão';
+$lang['btn_logout']            = 'Terminar sessão';
 $lang['btn_admin']             = 'Administrar';
 $lang['btn_update']            = 'Actualizar';
 $lang['btn_delete']            = 'Apagar';

@@ -1,0 +1,11 @@
+====== Adborth Poblogrwydd ======
+
+Mae'r [[doku>popularity|teclyn]] hwn yn casglu data anhysbys am eich wici ac yn eich galluogi chi i'w anfon yn ôl i ddatblygwyr DokuWiki. Mae hwn yn eu helpu nhw i ddeall sut mae DokuWiki yn cael ei ddefnyddio gan ei ddefnyddwyr ac mae\'n sicrhau bod penderfyniadau datblygu yn y dyfodol yn cael eu cefnogi gan ystadegau defnydd go iawn.
+
+Cewch eich annog i ailadrodd y cam hwn o dro i dro er mwyn hysbysu datblygwyr wrth i'ch wici dyfu. Caiff eich setiau data eilfydd eu hadnabod gan ID anhysbys.
+
+Mae'r data sy'n cael ei gasglu yn cynnwys pethau fel fersiwn eich DokuWiki, nifer a maint eich tudalennau a'ch ffeiliau chi, ategion sydd wedi'u harsefydlu a gwybodaeth parthed eich arsefydliad PHP.
+
+Caiff y data crai i'w anfon ei ddangos isod. Pwyswch fotwm "Anfon Data" i drosglwyddo'r wybodaeth.
+
+

@@ -1,0 +1,23 @@
+Shw mae!
+
+Gwnaeth y dudalen @PAGE@ yn y wici @TITLE@ newid.
+Dyma'r newidiadau:
+
+--------------------------------------------------------
+@DIFF@
+--------------------------------------------------------
+
+Dyddiad          : @DATE@
+Defnyddiwr       : @USER@
+Crynodeb Golygu  : @SUMMARY@
+Hen Adolygiad    : @OLDPAGE@
+Adolygiad Newwydd: @NEWPAGE@
+
+I ganslo hysbysiadau'r dudalen, mewngofnodwch i'r wici ar
+@DOKUWIKIURL@ yna ewch i
+@SUBSCRIBE@
+a thanysgrifio o newidiadau tudalen a namespace.
+
+-- 
+Cafodd y neges hon ei generadu gan DokuWiki ar
+@DOKUWIKIURL@

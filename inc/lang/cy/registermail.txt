@@ -1,0 +1,14 @@
+Cofrestrodd defnyddiwr newydd. Dyma'r manylion:
+
+Defnyddair   : @NEWUSER@
+Enw llawn    : @NEWNAME@
+E-bost       : @NEWEMAIL@
+
+Dyddiad      : @DATE@
+Porwr        : @BROWSER@
+Cyfeiriad-IP : @IPADDRESS@
+Gwesteiwr    : @HOSTNAME@
+
+-- 
+Cafodd y neges hon ei generadu gan DokuWiki ar
+@DOKUWIKIURL@

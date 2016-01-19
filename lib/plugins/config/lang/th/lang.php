@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Thai language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Kittithat Arnontavilas mrtomyum@gmail.com
  * @author Arthit Suriyawongkul <arthit@gmail.com>
@@ -23,48 +24,48 @@ $lang['_links']                = 'การตั้งค่าลิงก์'
 $lang['_media']                = 'การตั้งค่าภาพ-เสียง';
 $lang['_advanced']             = 'การตั้งค่าขั้นสูง';
 $lang['_network']              = 'การตั้งค่าเครือข่าย';
+$lang['start']                 = 'ชื่อหน้าเริ่มต้น';
 $lang['lang']                  = 'ภาษา';
+$lang['savedir']               = 'ไดเรคทอรีที่บันทึกข้อมูล';
 $lang['basedir']               = 'ไดเรคทอรีพื้นฐาน';
 $lang['baseurl']               = 'URL พื้นฐาน';
-$lang['savedir']               = 'ไดเรคทอรีที่บันทึกข้อมูล';
-$lang['start']                 = 'ชื่อหน้าเริ่มต้น';
 $lang['recent']                = 'การเปลี่ยนแปลงล่าสุด';
-$lang['htmlok']                = 'อนุญาตให้ใช้ HTML';
-$lang['phpok']                 = 'อนุญาตให้ใช้ PHP';
+$lang['recent_days']           = 'จำนวนวันที่เก็บรายการที่ถูกแก้ไขล่าสุด';
 $lang['signature']             = 'ลายเซนต์';
-$lang['usewordblock']          = 'คำที่จะถือว่าเป็นสแปม';
-$lang['relnofollow']           = 'ใช้ rel="nofollow" สำหรับลิงก์ภายนอก';
+$lang['hidepages']             = 'ซ่อนหน้าที่เข้ากันได้ (regular expressions)';
 $lang['autopasswd']            = 'สร้างรหัสผ่านให้อัตโนมัติ';
 $lang['passcrypt']             = 'กระบวนการเข้ารหัส สำหรับเก็บบันทึกรหัสผ่าน';
 $lang['defaultgroup']          = 'กลุ่มมาตรฐาน';
 $lang['profileconfirm']        = 'ใส่รหัสผ่านเพื่อยืนยันการเปลี่ยนแปลงข้อมูล';
+$lang['rememberme']            = 'อนุญาตให้จดจำการ login แบบถาวร';
 $lang['disableactions_check']  = 'ตรวจสอบ';
 $lang['auth_security_timeout'] = 'ระยะเวลาที่จะตัดการเชื่อมต่อแบบการใช้งานด้วยสิทธิ์ผู้ใช้ (วินาที)';
-$lang['userewrite']            = 'แสดงที่อยู่เว็บ (URL) แบบอ่านเข้าใจง่าย';
-$lang['cachetime']             = 'ระยะเวลาสำหรับการเก็บแคช (วินาที)';
+$lang['usewordblock']          = 'คำที่จะถือว่าเป็นสแปม';
+$lang['relnofollow']           = 'ใช้ rel="nofollow" สำหรับลิงก์ภายนอก';
+$lang['htmlok']                = 'อนุญาตให้ใช้ HTML';
+$lang['phpok']                 = 'อนุญาตให้ใช้ PHP';
 $lang['locktime']              = 'ระยะเวลานานสุด ที่จะล็อคไม่ให้แก้ไขไฟล์ (วินาที)';
-$lang['fetchsize']             = 'ขนาดไฟล์ใหญ่สุด (bytes) fetch.php ที่จะดาวน์โหลดจากภายนอก';
-$lang['notify']                = 'ส่งการแจ้งเตือนไปยังที่อยู่อีเมลนี้';
-$lang['gzip_output']           = 'ใช้ gzip Content-Encoding สำหรับ xhtml';
-$lang['gdlib']                 = 'เลขรุ่นของ GD Library';
-$lang['compress']              = 'บีบย่อ CSS และ javascript (เพื่อให้แสดงหน้าเว็บเร็วขึ้น)';
-$lang['hidepages']             = 'ซ่อนหน้าที่เข้ากันได้ (regular expressions)';
-$lang['send404']               = 'ให้แสดง "HTTP 404/Page Not Found" เมื่อไม่พบข้อมูลหน้านั้น';
-$lang['sitemap']               = 'สร้าง กูเกิ้ล ไซต์แมพ (จำนวนวัน)';
-$lang['renderer__core']        = '%s (แกนหลักของ dokuwiki)';
-$lang['renderer__plugin']      = '%s (โปรแกรมเสริม - plugin)';
-$lang['rememberme']            = 'อนุญาตให้จดจำการ login แบบถาวร';
-$lang['rss_type']              = 'ชนิดของ XML feed';
-$lang['rss_linkto']            = 'ลิงก์เชื่อมโยงไปยัง XML feed';
-$lang['rss_content']           = 'ต้องการให้มีอะไรแสดงอยู่ใน XML feed บ้าง?';
-$lang['rss_update']            = 'ความถี่ในการอัพเดท XML feed (เป็นวินาที)';
-$lang['recent_days']           = 'จำนวนวันที่เก็บรายการที่ถูกแก้ไขล่าสุด';
-$lang['rss_show_summary']      = 'ไตเติ้ลของบทสรุปย่อของ XML feed';
+$lang['cachetime']             = 'ระยะเวลาสำหรับการเก็บแคช (วินาที)';
 $lang['target____wiki']        = 'เปิดแสดงลิงก์ภายใน ในหน้าเว็บแบบใด';
 $lang['target____interwiki']   = 'เปิดแสดงลิงก์ interwiki ในหน้าเว็บแบบใด';
 $lang['target____extern']      = 'เปิดแสดงลิงก์ภายนอก ในหน้าเว็บแบบใด';
 $lang['target____media']       = 'เปิดแสดงลิงก์ของมีเดีย ในหน้าเว็บแบบใด';
 $lang['target____windows']     = 'เปิดแสดงลิงก์ของวินโดวส์ ในหน้าเว็บแบบใด';
+$lang['gdlib']                 = 'เลขรุ่นของ GD Library';
+$lang['fetchsize']             = 'ขนาดไฟล์ใหญ่สุด (bytes) fetch.php ที่จะดาวน์โหลดจากภายนอก';
+$lang['notify']                = 'ส่งการแจ้งเตือนไปยังที่อยู่อีเมลนี้';
+$lang['sitemap']               = 'สร้าง กูเกิ้ล ไซต์แมพ (จำนวนวัน)';
+$lang['rss_type']              = 'ชนิดของ XML feed';
+$lang['rss_linkto']            = 'ลิงก์เชื่อมโยงไปยัง XML feed';
+$lang['rss_content']           = 'ต้องการให้มีอะไรแสดงอยู่ใน XML feed บ้าง?';
+$lang['rss_update']            = 'ความถี่ในการอัพเดท XML feed (เป็นวินาที)';
+$lang['rss_show_summary']      = 'ไตเติ้ลของบทสรุปย่อของ XML feed';
+$lang['userewrite']            = 'แสดงที่อยู่เว็บ (URL) แบบอ่านเข้าใจง่าย';
+$lang['gzip_output']           = 'ใช้ gzip Content-Encoding สำหรับ xhtml';
+$lang['compress']              = 'บีบย่อ CSS และ javascript (เพื่อให้แสดงหน้าเว็บเร็วขึ้น)';
+$lang['send404']               = 'ให้แสดง "HTTP 404/Page Not Found" เมื่อไม่พบข้อมูลหน้านั้น';
+$lang['renderer__core']        = '%s (แกนหลักของ dokuwiki)';
+$lang['renderer__plugin']      = '%s (โปรแกรมเสริม - plugin)';
 $lang['proxy____host']         = 'ชื่อ server ของ proxy';
 $lang['proxy____port']         = 'port ของ proxy';
 $lang['proxy____user']         = 'user name ของ proxy';

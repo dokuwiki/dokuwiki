@@ -15,6 +15,7 @@
  * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
+ * @author Mohmmad Razavi <sepent@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -80,6 +81,7 @@ $lang['regmissing']            = 'متاسفم، شما باید همه قسمت
 $lang['reguexists']            = 'نام کاربری‌ای که وارد کردید قبلن استفاده شده است. خواهشمندیم یک نام دیگر انتخاب کنید.';
 $lang['regsuccess']            = 'کاربر ساخته شد و گذرواژه به صورت ایمیل ارسال گردید.';
 $lang['regsuccess2']           = 'حساب ایجاد شد.';
+$lang['regfail']               = 'ایجاد کاربر ممکن نیست.';
 $lang['regmailfail']           = 'مشکلی در ارسال ایمیل پیش آمده است، با مدیر تماس بگیرید!';
 $lang['regbadmail']            = 'نشانی واردشده‌ی ایمیل قابل‌قبول نیست، چرا که دارای ساختار نامعتبری است. خواهشمندیم نشانی‌ای با ساختار صحیح وارد کنید و یا بخش مربوط را خالی بگذارید.';
 $lang['regbadpass']            = 'گذرواژه‌هایی که وارد کردید یکسان نیستند.';
@@ -94,6 +96,7 @@ $lang['profdeleteuser']        = 'حذف حساب کاربری';
 $lang['profdeleted']           = 'حساب کاربری شما حذف گردیده است.';
 $lang['profconfdelete']        = 'می‌خواهم حساب کاربری من از این ویکی حذف شود. <br/> این عمل قابل برگشت نیست.';
 $lang['profconfdeletemissing'] = 'جعبه‌ی تأیید تیک نخورده است';
+$lang['proffail']              = 'بروزرسانی پروفایل کاربری انجام نشد.';
 $lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ جدید دریافت کنید';
 $lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
 $lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
@@ -339,7 +342,10 @@ $lang['media_perm_read']       = 'متاسفانه شما حق خواندن ای
 $lang['media_perm_upload']     = 'متاسفانه شما حق آپلود این فایل‌ها را ندارید.';
 $lang['media_update']          = 'آپلود نسخه‌ی جدید';
 $lang['media_restore']         = 'بازیابی این نسخه';
+$lang['media_acl_warning']     = 'این لیست ممکن است به خاطر محدودیتهای دسترسیهای ACL و صفحات پنهان کامل نباشد.';
 $lang['currentns']             = 'فضای نام جاری';
 $lang['searchresult']          = 'نتیجه‌ی جستجو';
 $lang['plainhtml']             = 'HTML ساده';
 $lang['wikimarkup']            = 'نشانه‌گذاری ویکی';
+$lang['page_nonexist_rev']     = 'صفحه %s وجود نداشت. این صفحه معاقباً در<a href="%s">%s</a> ایجاد شد.';
+$lang['unable_to_parse_date']  = 'امکان تجزیه و تحلیل پارامتر «%s» وجود ندارد.';

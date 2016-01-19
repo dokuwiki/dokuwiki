@@ -5,6 +5,8 @@
  * 
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
+ * @author Mohmmad Razavi <sepent@gmail.com>
  */
 $lang['starttls']              = 'از تی‌ال‌اس (TLS) استفاده می‌کنید؟';
+$lang['deref']                 = 'نام‌های مستعار چطور ارجاع یابی شوند؟';
 $lang['bindpw']                = 'رمزعبور کاربر بالا';
