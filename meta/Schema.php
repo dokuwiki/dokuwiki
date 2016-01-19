@@ -115,6 +115,7 @@ class Schema {
      * @return string
      */
     static public function cleanTableName($table) {
+        $table = strtolower($table);
         $table = preg_replace('/[^a-z0-9_]+/', '', $table);
         $table = preg_replace('/^[0-9_]+/', '', $table);
         $table = trim($table);
