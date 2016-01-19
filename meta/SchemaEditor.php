@@ -34,7 +34,7 @@ class SchemaEditor {
      * @see SchemaBuilder
      */
     public function getEditor() {
-        $form = new Form(array('method' => 'POST'));
+        $form = new Form(array('method' => 'POST', 'id'=>'plugin__struct'));
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'struct');
         $form->setHiddenField('table', $this->schema->getTable());
@@ -52,7 +52,24 @@ class SchemaEditor {
 
         $form->addHTML('</table>');
         $form->addButton('save', 'Save')->attr('type','submit');
-        return $form->toHTML();
+        return $form->toHTML() . $this->initJSONEditor();
+    }
+
+    /**
+     * Gives the code to attach the JSON editor to the config field
+     *
+     * We do not use the "normal" way, because this is rarely used code and there's no need to always load it.
+     *
+     * @todo decide if that is really the way we want to go
+     * @return string
+     */
+    protected function initJSONEditor() {
+        $html = '';
+        $html .= '<link href="'.DOKU_BASE.'lib/plugins/struct/jsoneditor/jsoneditor.min.css" rel="stylesheet" type="text/css">';
+        $html .= '<link href="'.DOKU_BASE.'lib/plugins/struct/jsoneditor/setup.css" rel="stylesheet" type="text/css">';
+        $html .= '<script src="'.DOKU_BASE.'lib/plugins/struct/jsoneditor/jsoneditor-minimalist.min.js"></script>';
+        $html .= '<script src="'.DOKU_BASE.'lib/plugins/struct/jsoneditor/setup.js"></script>';
+        return $html;
     }
 
     /**
@@ -84,7 +101,7 @@ class SchemaEditor {
 
         $html .= '<td>';
         $config = json_encode($col->getType()->getConfig(), JSON_PRETTY_PRINT);
-        $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10">' . hsc($config) . '</textarea>';
+        $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10" class="config">' . hsc($config) . '</textarea>';
         $html .= '</td>';
 
         $types = Column::allTypes();
