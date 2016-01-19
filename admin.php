@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 use dokuwiki\Form\Form;
 use plugin\struct\meta\Schema;
+use plugin\struct\meta\SchemaEditor;
 
 if(!defined('DOKU_INC')) die();
 
@@ -56,8 +57,8 @@ class admin_plugin_struct extends DokuWiki_Admin_Plugin {
         if($table) {
             echo '<h2>'.sprintf($this->getLang('edithl'), hsc($table)).'</h2>';
 
-            $schema = new Schema($table);
-            echo $schema->adminEditor();
+            $editor = new SchemaEditor(new Schema($table));
+            echo $editor->getEditor();
         } else {
             $this->html_newschema();
         }
