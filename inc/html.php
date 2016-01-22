@@ -226,8 +226,7 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
         $tip .= ' ['.strtoupper($akey).']';
         $ret .= 'accesskey="'.$akey.'" ';
     }
-    $ret .= 'title="'.$tip.'" ';
-    $ret .= '/>';
+    $ret .= 'title="'.$tip.'">';
     $ret .= hsc($label);
     $ret .= '</button>';
     $ret .= '</div></form>';
