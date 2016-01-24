@@ -24,6 +24,9 @@ if(!defined('DOKU_INC')) die('meh.');
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
+    $rootpath=DOKU_INC.'data/pages/';    
+    if (substr($base,0,strlen($rootpath))<>$rootpath) $base=$rootpath;
+
     $dirs   = array();
     $files  = array();
     $filepaths = array();
