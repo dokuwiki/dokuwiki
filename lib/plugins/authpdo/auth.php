@@ -38,7 +38,8 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 $this->getConf('user'),
                 $this->getConf('pass'),
                 array(
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // always fetch as array
+                    PDO::ATTR_EMULATE_PREPARES => true, // emulating prepares allows us to reuse param names
                 )
             );
         } catch(PDOException $e) {
@@ -107,8 +108,11 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         $data = $this->_selectUser($user);
         if($data == false) return false;
 
-        if($requireGroups) {
+        if(isset($data['hash'])) unset($data['hash']);
+        if(isset($data['clean'])) unset($data['clean']);
 
+        if($requireGroups) {
+            $data['grps'] = $this->_selectUserGroups($data);
         }
 
         return $data;
@@ -304,20 +308,10 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     protected function _selectUser($user) {
         $sql = $this->getConf('select-user');
 
-        try {
-            $sth = $this->pdo->prepare($sql);
-            $sth->execute(array(':user' => $user));
-            $result = $sth->fetchAll();
-            $sth->closeCursor();
-            $sth = null;
-        } catch(PDOException $e) {
-            $this->_debug($e);
-            $result = array();
-        }
-        $found = count($result);
-        if($found == 0) return false;
+        $result = $this->query($sql, array(':user' => $user));
+        if(!$result) return false;
 
-        if($found > 1) {
+        if(count($result) > 1) {
             $this->_debug('Found more than one matching user', -1, __LINE__);
             return false;
         }
@@ -345,6 +339,65 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if(!$dataok) return false;
         return $data;
     }
+
+    /**
+     * Select all groups of a user
+     *
+     * @param array $userdata The userdata as returned by _selectUser()
+     * @return array
+     */
+    protected function _selectUserGroups($userdata) {
+        global $conf;
+        $sql = $this->getConf('select-user-groups');
+
+        $result = $this->query($sql, $userdata);
+
+        $groups = array($conf['defaultgroup']); // always add default config
+        if($result) foreach($result as $row) {
+            if(!isset($row['group'])) continue;
+            $groups[] = $row['group'];
+        }
+
+        $groups = array_unique($groups);
+        sort($groups);
+        return $groups;
+    }
+
+    /**
+     * Executes a query
+     *
+     * @param string $sql The SQL statement to execute
+     * @param array $arguments Named parameters to be used in the statement
+     * @return array|bool The result as associative array
+     */
+    protected function query($sql, $arguments) {
+        // prepare parameters - we only use those that exist in the SQL
+        $params = array();
+        foreach($arguments as $key => $value) {
+            if(is_array($value)) continue;
+            if(is_object($value)) continue;
+            if($key[0] != ':') $key = ":$key"; // prefix with colon if needed
+            if(strpos($sql, $key) !== false) $params[$key] = $value;
+        }
+
+        // execute
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute($params);
+            $result = $sth->fetchAll();
+            if((int) $sth->errorCode()) {
+                $this->_debug(join(' ',$sth->errorInfo()), -1, __LINE__);
+                $result = false;
+            }
+            $sth->closeCursor();
+            $sth = null;
+        } catch(PDOException $e) {
+            $this->_debug($e);
+            $result = false;
+        }
+        return $result;
+    }
+
 
     /**
      * Wrapper around msg() but outputs only when debug is enabled

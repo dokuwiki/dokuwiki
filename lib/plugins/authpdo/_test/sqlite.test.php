@@ -24,6 +24,8 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
 
 
         $conf['plugin']['authpdo']['select-user'] = 'SELECT id as uid, login as user, name, pass as clear, mail FROM user WHERE login = :user';
+        $conf['plugin']['authpdo']['select-user-groups'] = 'SELECT * FROM member AS m, "group" AS g  WHERE m.gid = g.id AND  m.uid = :uid';
+
     }
 
     public function tearDown() {
@@ -45,5 +47,11 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertFalse($auth->checkPass('admin', 'password'));
         $this->assertFalse($auth->checkPass('user', md5('password')));
 
+        // access user data
+        $info = $auth->getUserData('admin');
+        $this->assertEquals('admin', $info['user']);
+        $this->assertEquals('The Admin', $info['name']);
+        $this->assertEquals('admin@example.com', $info['mail']);
+        $this->assertEquals(array('admin','user'), $info['grps']);
     }
 }

@@ -13,9 +13,17 @@ $conf['user'] = '';
 $conf['pass'] = '';
 
 /**
- * statement to select a single user identified by its login name given as :user
+ * statement to select a single user identified by its login name
  *
- * return; user, name, mail, (clear|hash), [uid]
- * other fields are returned but not used
+ * input: :user
+ * return: user, name, mail, (clear|hash), [uid], [*]
  */
 $conf['select-user'] = '';
+
+/**
+ * Select all the group names a user is member of
+ *
+ * input: :user, [:uid], [*]
+ * return: group
+ */
+$conf['select-user-group'] = '';
