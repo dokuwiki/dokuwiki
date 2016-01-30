@@ -29,6 +29,12 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
 
     protected $dbfile;
 
+    public function test_pdo_sqlite_support() {
+        if(!class_exists('PDO') || !in_array('sqlite',PDO::getAvailableDrivers())) {
+            $this->markTestSkipped('skipping all authpdo tests for sqlite.  Need PDO_sqlite extension');
+        }
+    }
+
     public function setUp() {
         parent::setUp();
         $this->dbfile = tempnam('/tmp/', 'pluginpdo_test_');
@@ -83,6 +89,9 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         unlink($this->dbfile);
     }
 
+    /**
+     * @depends test_pdo_sqlite_support
+     */
     public function test_internals() {
         $auth = new testable_auth_plugin_authpdo();
 
@@ -99,6 +108,9 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals(3, $groups['test']['gid']);
     }
 
+    /**
+     * @depends test_pdo_sqlite_support
+     */
     public function test_userinfo() {
         global $conf;
         $auth = new auth_plugin_authpdo();
