@@ -48,6 +48,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             );
         } catch(PDOException $e) {
             $this->_debug($e);
+            msg($this->getLang('connectfail'), -1);
             $this->success = false;
             return;
         }
@@ -253,6 +254,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         FAIL:
         $this->pdo->rollBack();
         $this->_debug('Transaction rolled back', 0, __LINE__);
+        msg($this->getLang('writefail'), -1);
         return null; // return error
     }
 
@@ -342,6 +344,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         FAIL:
         $this->pdo->rollBack();
         $this->_debug('Transaction rolled back', 0, __LINE__);
+        msg($this->getLang('writefail'), -1);
         return false; // return error
     }
 

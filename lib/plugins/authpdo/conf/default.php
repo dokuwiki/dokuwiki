@@ -5,7 +5,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-
 $conf['debug'] = 0;
 $conf['dsn'] = '';
 $conf['user'] = '';
@@ -20,11 +19,19 @@ $conf['pass'] = '';
 $conf['select-user'] = '';
 
 /**
+ * statement to select a single user identified by its login name
+ *
+ * input: :user, [uid]
+ * return: group
+ */
+$conf['select-user-groups'] = '';
+
+/**
  * Select all the existing group names
  *
  * return: group, [gid], [*]
  */
-$conf['select-group'] = '';
+$conf['select-groups'] = '';
 
 /**
  * Create a new user
@@ -58,8 +65,7 @@ $conf['list-users'] = '';
  * input: :user, :name, :mail, :group
  * out: count
  */
-$conf['list-users'] = '';
-
+$conf['count-users'] = '';
 
 /**
  * Update user data (except password and user name)
