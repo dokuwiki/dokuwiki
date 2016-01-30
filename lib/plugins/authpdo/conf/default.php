@@ -41,6 +41,27 @@ $conf['insert-user'] = '';
 $conf['delete-user'] = '';
 
 /**
+ * list user names matching the given criteria
+ *
+ * Make sure the list is distinct and sorted by user name. Apply the given limit and offset
+ *
+ * input: :user, :name, :mail, :group, :start, :end, :limit
+ * out: user
+ */
+$conf['list-users'] = '';
+
+/**
+ * count user names matching the given criteria
+ *
+ * Make sure the counted list is distinct
+ *
+ * input: :user, :name, :mail, :group
+ * out: count
+ */
+$conf['list-users'] = '';
+
+
+/**
  * Update user data (except password and user name)
  *
  * input: :user, :name, :mail, [:uid], [*]

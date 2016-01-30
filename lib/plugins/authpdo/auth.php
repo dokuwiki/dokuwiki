@@ -165,7 +165,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             $allgroups = $this->_selectGroups();
             foreach($grps as $group) {
                 if(!isset($allgroups[$group])) {
-                    $ok = $this->_insertGroup($group);
+                    $ok = $this->addGroup($group);
                     if($ok === false) goto FAIL;
                 }
             }
@@ -248,7 +248,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 $added = 0;
                 foreach($changes['grps'] as $group) {
                     if(!isset($allgroups[$group])) {
-                        $ok = $this->_insertGroup($group);
+                        $ok = $this->addGroup($group);
                         if($ok === false) goto FAIL;
                         $added++;
                     }
@@ -302,37 +302,71 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      * @param   array $filter array of field/pattern pairs, null for no filter
      * @return  array list of userinfo (refer getUserData for internal userinfo details)
      */
-    //public function retrieveUsers($start = 0, $limit = -1, $filter = null) {
-    // FIXME implement
-    //    return array();
-    //}
+    public function retrieveUsers($start = 0, $limit = -1, $filter = null) {
+        if($limit < 0) $limit = 10000; // we don't support no limit
+        if(is_null($filter)) $filter = array();
+
+        foreach(array('user','name','mail','group') as $key) {
+            if(!isset($filter[$key])) {
+                $filter[$key] = '%';
+            } else {
+                $filter[$key] = '%'.$filter[$key].'%';
+            }
+        }
+        $filter['start'] = $start;
+        $filter['end']   = $start + $limit;
+        $filter['limit'] = $limit;
+
+        $result = $this->_query($this->getConf('list-users'), $filter);
+        if(!$result) return array();
+        $users = array();
+        foreach($result as $row) {
+            if(!isset($row['user'])) {
+                $this->_debug("Statement did not return 'user' attribute", -1, __LINE__);
+                return array();
+            }
+            $users[] = $row['user'];
+        }
+        return $users;
+    }
 
     /**
      * Return a count of the number of user which meet $filter criteria
-     * [should be implemented whenever retrieveUsers is implemented]
-     *
-     * Set getUserCount capability when implemented
      *
      * @param  array $filter array of field/pattern pairs, empty array for no filter
      * @return int
      */
-    //public function getUserCount($filter = array()) {
-    // FIXME implement
-    //    return 0;
-    //}
+    public function getUserCount($filter = array()) {
+        if(is_null($filter)) $filter = array();
+
+        foreach(array('user','name','mail','group') as $key) {
+            if(!isset($filter[$key])) {
+                $filter[$key] = '%';
+            } else {
+                $filter[$key] = '%'.$filter[$key].'%';
+            }
+        }
+
+        $result = $this->_query($this->getConf('count-users'), $filter);
+        if(!$result || !isset($result[0]['count'])) {
+            $this->_debug("Statement did not return 'count' attribute", -1, __LINE__);
+        }
+        return isset($result[0]['count']);
+    }
 
     /**
-     * Define a group [implement only where required/possible]
+     * Create a new group with the given name
      *
-     * Set addGroup capability when implemented
-     *
-     * @param   string $group
-     * @return  bool
+     * @param string $group
+     * @return bool
      */
-    //public function addGroup($group) {
-    // FIXME implement
-    //    return false;
-    //}
+    public function addGroup($group) {
+        $sql = $this->getConf('insert-group');
+
+        $result = $this->_query($sql, array(':group' => $group));
+        if($result === false) return false;
+        return true;
+    }
 
     /**
      * Retrieve groups
@@ -477,19 +511,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         return $groups;
     }
 
-    /**
-     * Create a new group with the given name
-     *
-     * @param string $group
-     * @return bool
-     */
-    protected function _insertGroup($group) {
-        $sql = $this->getConf('insert-group');
-
-        $result = $this->_query($sql, array(':group' => $group));
-        if($result === false) return false;
-        return true;
-    }
 
     /**
      * Adds the user to the group

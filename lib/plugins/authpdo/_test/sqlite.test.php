@@ -14,8 +14,8 @@ class testable_auth_plugin_authpdo extends auth_plugin_authpdo {
         return parent::_selectGroups();
     }
 
-    public function _insertGroup($group) {
-        return parent::_insertGroup($group);
+    public function addGroup($group) {
+        return parent::addGroup($group);
     }
 }
 
@@ -48,6 +48,27 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $conf['plugin']['authpdo']['insert-user'] = 'INSERT INTO user (login, pass, name, mail) VALUES (:user, :hash, :name, :mail)';
         $conf['plugin']['authpdo']['delete-user'] = 'DELETE FROM user WHERE id = :uid';
 
+        $conf['plugin']['authpdo']['list-users'] = 'SELECT DISTINCT login as user
+                                                      FROM user U, member M, "group" G
+                                                     WHERE U.id = M.uid
+                                                       AND M.gid = G.id
+                                                       AND G."group" LIKE :group
+                                                       AND U.login LIKE :user
+                                                       AND U.name LIKE :name
+                                                       AND U.mail LIKE :mail
+                                                  ORDER BY login
+                                                     LIMIT :start,:limit';
+
+        $conf['plugin']['authpdo']['count-users'] = 'SELECT COUNT(DISTINCT login) as count
+                                                      FROM user U, member M, "group" G
+                                                     WHERE U.id = M.uid
+                                                       AND M.gid = G.id
+                                                       AND G."group" LIKE :group
+                                                       AND U.login LIKE :user
+                                                       AND U.name LIKE :name
+                                                       AND U.mail LIKE :mail';
+
+
         $conf['plugin']['authpdo']['update-user-login'] = 'UPDATE user SET login = :newlogin WHERE id = :uid';
         $conf['plugin']['authpdo']['update-user-info'] = 'UPDATE user SET name = :name, mail = :mail WHERE id = :uid';
         $conf['plugin']['authpdo']['update-user-pass'] = 'UPDATE user SET pass = :hash WHERE id = :uid';
@@ -71,7 +92,7 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertArrayHasKey('admin', $groups);
         $this->assertEquals(2, $groups['admin']['gid']);
 
-        $ok = $auth->_insertGroup('test');
+        $ok = $auth->addGroup('test');
         $this->assertTrue($ok);
         $groups = $auth->_selectGroups();
         $this->assertArrayHasKey('test', $groups);
@@ -125,9 +146,35 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $info = $auth->getUserData('tester');
         $this->assertEquals(array('admin', 'another', 'user'), $info['grps']);
 
+        // list users
+        $users = $auth->retrieveUsers();
+        $this->assertEquals(array('admin', 'tester', 'user'), $users);
+
+        $users = $auth->retrieveUsers(1); // offset
+        $this->assertEquals(array('tester', 'user'), $users);
+
+        $users = $auth->retrieveUsers(1, 1); // offset + limit
+        $this->assertEquals(array('tester'), $users);
+
+        $users = $auth->retrieveUsers(0, -1, array('group' => 'admin')); // full group
+        $this->assertEquals(array('admin', 'tester'), $users);
+        $count = $auth->getUserCount(array('group' => 'admin'));
+        $this->assertEquals(2, $count);
+
+        $users = $auth->retrieveUsers(0, -1, array('group' => 'dmi')); // substring
+        $this->assertEquals(array('admin', 'tester'), $users);
+        $count = $auth->getUserCount(array('group' => 'dmi'));
+        $this->assertEquals(2, $count);
+
+        $users = $auth->retrieveUsers(0, -1, array('user' => 'dmi')); // substring
+        $this->assertEquals(array('admin'), $users);
+        $count = $auth->getUserCount(array('user' => 'dmi'));
+        $this->assertEquals(1, $count);
+
         // delete user
         $num = $auth->deleteUsers(array('tester', 'foobar'));
         $this->assertEquals(1, $num);
+
     }
 
 }
