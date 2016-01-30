@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Class testable_auth_plugin_authpdo
+ *
+ * makes protected methods public for testing
+ */
 class testable_auth_plugin_authpdo extends auth_plugin_authpdo {
     public function getPluginName() {
         return 'authpdo';
@@ -13,7 +17,6 @@ class testable_auth_plugin_authpdo extends auth_plugin_authpdo {
     public function _insertGroup($group) {
         return parent::_insertGroup($group);
     }
-
 }
 
 /**
@@ -42,8 +45,14 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $conf['plugin']['authpdo']['select-user-groups'] = 'SELECT * FROM member AS m, "group" AS g  WHERE m.gid = g.id AND  m.uid = :uid';
         $conf['plugin']['authpdo']['select-groups'] = 'SELECT id AS gid, "group" FROM "group"';
         $conf['plugin']['authpdo']['insert-user'] = 'INSERT INTO user (login, pass, name, mail) VALUES (:user, :hash, :name, :mail)';
+
+        $conf['plugin']['authpdo']['update-user-login'] = 'UPDATE user SET login = :newlogin WHERE id = :uid';
+        $conf['plugin']['authpdo']['update-user-info'] = 'UPDATE user SET name = :name, mail = :mail WHERE id = :uid';
+        $conf['plugin']['authpdo']['update-user-pass'] = 'UPDATE user SET pass = :hash WHERE id = :uid';
+
         $conf['plugin']['authpdo']['insert-group'] = 'INSERT INTO "group" ("group") VALUES (:group)';
         $conf['plugin']['authpdo']['join-group'] = 'INSERT INTO member (uid, gid) VALUES (:uid, :gid)';
+        $conf['plugin']['authpdo']['leave-group'] = 'DELETE FROM member WHERE uid = :uid AND gid = :gid';
     }
 
     public function tearDown() {
@@ -101,6 +110,18 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals('test@example.com', $info['mail']);
         $this->assertEquals(array('newgroup', 'user'), $info['grps']);
         $this->assertEquals(array('admin', 'newgroup', 'user'), $auth->retrieveGroups());
+
+        // user modification
+        $auth->modifyUser('test', array('user' => 'tester', 'name' => 'The Test User', 'pass' => 'secret'));
+        $info = $auth->getUserData('tester');
+        $this->assertEquals('tester', $info['user']);
+        $this->assertEquals('The Test User', $info['name']);
+        $this->assertTrue($auth->checkPass('tester','secret'));
+
+        // move user to different groups
+        $auth->modifyUser('tester', array('grps' => array('user', 'admin', 'another')));
+        $info = $auth->getUserData('tester');
+        $this->assertEquals(array('admin', 'another', 'user'), $info['grps']);
     }
 
 }

@@ -5,7 +5,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-//$conf['fixme']    = 'FIXME';
 
 $conf['debug'] = 0;
 $conf['dsn'] = '';
@@ -30,9 +29,30 @@ $conf['select-group'] = '';
 /**
  * Create a new user
  *
- * input: :user, :name, :mail, (:clear,:hash)
+ * input: :user, :name, :mail, (:clear|:hash)
  */
 $conf['insert-user'] = '';
+
+/**
+ * Update user data (except password and user name)
+ *
+ * input: :user, :name, :mail, [:uid], [*]
+ */
+$conf['update-user-info'] = '';
+
+/**
+ * Update user name aka login
+ *
+ * input: :user, :newlogin, [:uid], [*]
+ */
+$conf['update-user-login'] = '';
+
+/**
+ * Update user password
+ *
+ * input: :user, :clear, :hash, [:uid], [*]
+ */
+$conf['update-user-pass'] = '';
 
 /**
  * Create a new group
@@ -47,3 +67,10 @@ $conf['insert-group'] = '';
  * input: :user, [:uid], group, [:gid], [*]
  */
 $conf['join-group'] = '';
+
+/**
+ * Make user leave group
+ *
+ * input: :user, [:uid], group, [:gid], [*]
+ */
+$conf['leave-group'] = '';

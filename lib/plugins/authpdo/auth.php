@@ -70,8 +70,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     /**
      * Check user+password
      *
-     * May be ommited if trustExternal is used.
-     *
      * @param   string $user the user name
      * @param   string $pass the clear text password
      * @return  bool
@@ -189,18 +187,93 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * Modify user data [implement only where required/possible]
-     *
-     * Set the mod* capabilities according to the implemented features
+     * Modify user data
      *
      * @param   string $user nick of the user to be changed
      * @param   array $changes array of field/value pairs to be changed (password will be clear text)
      * @return  bool
      */
-    //public function modifyUser($user, $changes) {
-    // FIXME implement
-    //    return false;
-    //}
+    public function modifyUser($user, $changes) {
+        // secure everything in transaction
+        $this->pdo->beginTransaction();
+        {
+            $olddata = $this->getUserData($user);
+            $oldgroups = $olddata['grps'];
+            unset($olddata['grps']);
+
+            // changing the user name?
+            if(isset($changes['user'])) {
+                if($this->getUserData($changes['user'], false)) goto FAIL;
+                $params = $olddata;
+                $params['newlogin'] = $changes['user'];
+
+                $ok = $this->_query($this->getConf('update-user-login'), $params);
+                if($ok === false) goto FAIL;
+            }
+
+            // changing the password?
+            if(isset($changes['pass'])) {
+                $params = $olddata;
+                $params['clear'] = $changes['pass'];
+                $params['hash'] = auth_cryptPassword($changes['pass']);
+
+                $ok = $this->_query($this->getConf('update-user-pass'), $params);
+                if($ok === false) goto FAIL;
+            }
+
+            // changing info?
+            if(isset($changes['mail']) || isset($changes['name'])) {
+                $params = $olddata;
+                if(isset($changes['mail'])) $params['mail'] = $changes['mail'];
+                if(isset($changes['name'])) $params['name'] = $changes['name'];
+
+                $ok = $this->_query($this->getConf('update-user-info'), $params);
+                if($ok === false) goto FAIL;
+            }
+
+            // changing groups?
+            if(isset($changes['grps'])) {
+                $allgroups = $this->_selectGroups();
+
+                // remove membership for previous groups
+                foreach($oldgroups as $group) {
+                    if(!in_array($group, $changes['grps'])) {
+                        $ok = $this->_leaveGroup($olddata, $allgroups[$group]);
+                        if($ok === false) goto FAIL;
+                    }
+                }
+
+                // create all new groups that are missing
+                $added = 0;
+                foreach($changes['grps'] as $group) {
+                    if(!isset($allgroups[$group])) {
+                        $ok = $this->_insertGroup($group);
+                        if($ok === false) goto FAIL;
+                        $added++;
+                    }
+                }
+                // reload group info
+                if($added > 0) $allgroups = $this->_selectGroups();
+
+                // add membership for new groups
+                foreach($changes['grps'] as $group) {
+                    if(!in_array($group, $oldgroups)) {
+                        $ok = $this->_joinGroup($olddata, $allgroups[$group]);
+                        if($ok === false) goto FAIL;
+                    }
+                }
+            }
+
+        }
+        $this->pdo->commit();
+        return true;
+
+        // something went wrong, rollback
+        FAIL:
+        $this->pdo->rollBack();
+        $this->_debug('Transaction rolled back', 0, __LINE__);
+        return false; // return error
+    }
 
     /**
      * Delete one or more users [implement only where required/possible]
@@ -386,7 +459,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * Enters the user to the group
+     * Adds the user to the group
      *
      * @param array $userdata all the user data
      * @param array $groupdata all the group data
@@ -395,6 +468,21 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     protected function _joinGroup($userdata, $groupdata) {
         $data = array_merge($userdata, $groupdata);
         $sql = $this->getConf('join-group');
+        $result = $this->_query($sql, $data);
+        if($result === false) return false;
+        return true;
+    }
+
+    /**
+     * Removes the user from the group
+     *
+     * @param array $userdata all the user data
+     * @param array $groupdata all the group data
+     * @return bool
+     */
+    protected function _leaveGroup($userdata, $groupdata) {
+        $data = array_merge($userdata, $groupdata);
+        $sql = $this->getConf('leave-group');
         $result = $this->_query($sql, $data);
         if($result === false) return false;
         return true;
@@ -428,9 +516,12 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             $sth->execute($params);
             $result = $sth->fetchAll();
         } catch(Exception $e) {
+            // report the caller's line
+            $trace = debug_backtrace();
+            $line = $trace[0]['line'];
             $dsql = $this->_debugSQL($sql, $params, !defined('DOKU_UNITTEST'));
-            $this->_debug($e);
-            $this->_debug("SQL: <pre>$dsql</pre>", -1, $e->getLine());
+            $this->_debug($e, -1, $line);
+            $this->_debug("SQL: <pre>$dsql</pre>", -1, $line);
             $result = false;
         } finally {
             $sth->closeCursor();
@@ -451,8 +542,8 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if(!$this->getConf('debug')) return;
         if(is_a($message, 'Exception')) {
             $err = -1;
-            $line = $message->getLine();
             $msg = $message->getMessage();
+            if(!$line) $line = $message->getLine();
         } else {
             $msg = $message;
         }
@@ -488,7 +579,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      * @param bool $htmlescape Should the result be escaped for output in HTML?
      * @return string
      */
-    protected function _debugSQL($sql, $params, $htmlescape=true) {
+    protected function _debugSQL($sql, $params, $htmlescape = true) {
         foreach($params as $key => $val) {
             if(is_int($val)) {
                 $val = $this->pdo->quote($val, PDO::PARAM_INT);
