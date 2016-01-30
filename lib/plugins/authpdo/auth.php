@@ -9,6 +9,9 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+/**
+ * Class auth_plugin_authpdo
+ */
 class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
     /** @var PDO */
@@ -49,23 +52,89 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             return;
         }
 
-        // FIXME set capabilities accordingly
-        //$this->cando['addUser']     = false; // can Users be created?
-        //$this->cando['delUser']     = false; // can Users be deleted?
-        //$this->cando['modLogin']    = false; // can login names be changed?
-        //$this->cando['modPass']     = false; // can passwords be changed?
-        //$this->cando['modName']     = false; // can real names be changed?
-        //$this->cando['modMail']     = false; // can emails be changed?
-        //$this->cando['modGroups']   = false; // can groups be changed?
-        //$this->cando['getUsers']    = false; // can a (filtered) list of users be retrieved?
-        //$this->cando['getUserCount']= false; // can the number of users be retrieved?
-        //$this->cando['getGroups']   = false; // can a list of available groups be retrieved?
-        //$this->cando['external']    = false; // does the module do external auth checking?
-        //$this->cando['logout']      = true; // can the user logout again? (eg. not possible with HTTP auth)
+        // can Users be created?
+        $this->cando['addUser'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'select-groups',
+                'insert-user',
+                'insert-group',
+                'join-group'
+            )
+        );
 
-        // FIXME intialize your auth system and set success to true, if successful
+        // can Users be deleted?
+        $this->cando['delUser'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'select-groups',
+                'leave-group'
+            )
+        );
+
+        // can login names be changed?
+        $this->cando['modLogin'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'update-user-login'
+            )
+        );
+
+        // can passwords be changed?
+        $this->cando['modPass'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'update-user-pass'
+            )
+        );
+
+        // can real names and emails be changed?
+        $this->cando['modName'] = $this->cando['modMail'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'update-user-info'
+            )
+        );
+
+        // can groups be changed?
+        $this->cando['modGroups'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'select-groups',
+                'leave-group',
+                'join-group',
+                'insert-group'
+            )
+        );
+
+        // can a filtered list of users be retrieved?
+        $this->cando['getUsers'] = $this->_chkcnf(
+            array(
+                'list-users'
+            )
+        );
+
+        // can the number of users be retrieved?
+        $this->cando['getUserCount'] = $this->_chkcnf(
+            array(
+                'count-users'
+            )
+        );
+
+        // can a list of available groups be retrieved?
+        $this->cando['getGroups'] = $this->_chkcnf(
+            array(
+                'select-groups'
+            )
+        );
+
         $this->success = true;
-
     }
 
     /**
@@ -306,15 +375,15 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if($limit < 0) $limit = 10000; // we don't support no limit
         if(is_null($filter)) $filter = array();
 
-        foreach(array('user','name','mail','group') as $key) {
+        foreach(array('user', 'name', 'mail', 'group') as $key) {
             if(!isset($filter[$key])) {
                 $filter[$key] = '%';
             } else {
-                $filter[$key] = '%'.$filter[$key].'%';
+                $filter[$key] = '%' . $filter[$key] . '%';
             }
         }
         $filter['start'] = $start;
-        $filter['end']   = $start + $limit;
+        $filter['end'] = $start + $limit;
         $filter['limit'] = $limit;
 
         $result = $this->_query($this->getConf('list-users'), $filter);
@@ -339,11 +408,11 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     public function getUserCount($filter = array()) {
         if(is_null($filter)) $filter = array();
 
-        foreach(array('user','name','mail','group') as $key) {
+        foreach(array('user', 'name', 'mail', 'group') as $key) {
             if(!isset($filter[$key])) {
                 $filter[$key] = '%';
             } else {
-                $filter[$key] = '%'.$filter[$key].'%';
+                $filter[$key] = '%' . $filter[$key] . '%';
             }
         }
 
@@ -510,7 +579,6 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         ksort($groups);
         return $groups;
     }
-
 
     /**
      * Adds the user to the group
