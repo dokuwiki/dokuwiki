@@ -34,6 +34,13 @@ $conf['select-group'] = '';
 $conf['insert-user'] = '';
 
 /**
+ * Remove a user
+ *
+ * input: :user, [:uid], [*]
+ */
+$conf['delete-user'] = '';
+
+/**
  * Update user data (except password and user name)
  *
  * input: :user, :name, :mail, [:uid], [*]

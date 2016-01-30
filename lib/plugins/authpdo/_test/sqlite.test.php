@@ -44,7 +44,9 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $conf['plugin']['authpdo']['select-user'] = 'SELECT id AS uid, login AS user, name, pass AS clear, mail FROM user WHERE login = :user';
         $conf['plugin']['authpdo']['select-user-groups'] = 'SELECT * FROM member AS m, "group" AS g  WHERE m.gid = g.id AND  m.uid = :uid';
         $conf['plugin']['authpdo']['select-groups'] = 'SELECT id AS gid, "group" FROM "group"';
+
         $conf['plugin']['authpdo']['insert-user'] = 'INSERT INTO user (login, pass, name, mail) VALUES (:user, :hash, :name, :mail)';
+        $conf['plugin']['authpdo']['delete-user'] = 'DELETE FROM user WHERE id = :uid';
 
         $conf['plugin']['authpdo']['update-user-login'] = 'UPDATE user SET login = :newlogin WHERE id = :uid';
         $conf['plugin']['authpdo']['update-user-info'] = 'UPDATE user SET name = :name, mail = :mail WHERE id = :uid';
@@ -122,6 +124,10 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $auth->modifyUser('tester', array('grps' => array('user', 'admin', 'another')));
         $info = $auth->getUserData('tester');
         $this->assertEquals(array('admin', 'another', 'user'), $info['grps']);
+
+        // delete user
+        $num = $auth->deleteUsers(array('tester', 'foobar'));
+        $this->assertEquals(1, $num);
     }
 
 }

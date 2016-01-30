@@ -65,6 +65,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
         // FIXME intialize your auth system and set success to true, if successful
         $this->success = true;
+
     }
 
     /**
@@ -276,17 +277,20 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * Delete one or more users [implement only where required/possible]
+     * Delete one or more users
      *
      * Set delUser capability when implemented
      *
      * @param   array $users
      * @return  int    number of users deleted
      */
-    //public function deleteUsers($users) {
-    // FIXME implement
-    //    return false;
-    //}
+    public function deleteUsers($users) {
+        $count = 0;
+        foreach($users as $user) {
+            if($this->_deleteUser($user)) $count++;
+        }
+        return $count;
+    }
 
     /**
      * Bulk retrieval of user data [implement only where required/possible]
@@ -389,6 +393,35 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
         if(!$dataok) return false;
         return $data;
+    }
+
+    /**
+     * Delete a user after removing all their group memberships
+     *
+     * @param string $user
+     * @return bool true when the user was deleted
+     */
+    protected function _deleteUser($user) {
+        $this->pdo->beginTransaction();
+        {
+            $userdata = $this->getUserData($user);
+            if($userdata === false) goto FAIL;
+            $allgroups = $this->_selectGroups();
+
+            // remove group memberships (ignore errors)
+            foreach($userdata['grps'] as $group) {
+                $this->_leaveGroup($userdata, $allgroups[$group]);
+            }
+
+            $ok = $this->_query($this->getConf('delete-user'), $userdata);
+            if($ok === false) goto FAIL;
+        }
+        $this->pdo->commit();
+        return true;
+
+        FAIL:
+        $this->pdo->rollBack();
+        return false;
     }
 
     /**
