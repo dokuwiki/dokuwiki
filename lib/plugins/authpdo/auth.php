@@ -40,6 +40,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 array(
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // always fetch as array
                     PDO::ATTR_EMULATE_PREPARES => true, // emulating prepares allows us to reuse param names
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // we want exceptions, not error codes
                 )
             );
         } catch(PDOException $e) {
@@ -113,11 +114,11 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
         if($requireGroups) {
             $data['grps'] = $this->_selectUserGroups($data);
+            if($data['grps'] === false) return false;
         }
 
         return $data;
     }
-
 
     /**
      * Create a new User [implement only where required/possible]
@@ -131,16 +132,61 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      * Set addUser capability when implemented
      *
      * @param  string $user
-     * @param  string $pass
+     * @param  string $clear
      * @param  string $name
      * @param  string $mail
      * @param  null|array $grps
      * @return bool|null
      */
-    //public function createUser($user, $pass, $name, $mail, $grps = null) {
-    // FIXME implement
-    //    return null;
-    //}
+    public function createUser($user, $clear, $name, $mail, $grps = null) {
+        global $conf;
+
+        if(($info = $this->getUserData($user, false)) !== false) {
+            msg($this->getLang('userexists'), -1);
+            return false; // user already exists
+        }
+
+        // prepare data
+        if($grps == null) $grps = array();
+        $grps[] = $conf['defaultgroup'];
+        $grps = array_unique($grps);
+        $hash = auth_cryptPassword($clear);
+        $userdata = compact('user', 'clear', 'hash', 'name', 'mail');
+
+        // action protected by transaction
+        $this->pdo->beginTransaction();
+        {
+            // insert the user
+            $ok = $this->_query($this->getConf('insert-user'), $userdata);
+            if($ok === false) goto FAIL;
+            $userdata = $this->getUserData($user, false);
+            if($userdata === false) goto FAIL;
+
+            // create all groups that do not exist, the refetch the groups
+            $allgroups = $this->_selectGroups();
+            foreach($grps as $group) {
+                if(!isset($allgroups[$group])) {
+                    $ok = $this->_insertGroup($group);
+                    if($ok === false) goto FAIL;
+                }
+            }
+            $allgroups = $this->_selectGroups();
+
+            // add user to the groups
+            foreach($grps as $group) {
+                $ok = $this->_joinGroup($userdata, $allgroups[$group]);
+                if($ok === false) goto FAIL;
+            }
+        }
+        $this->pdo->commit();
+        return true;
+
+        // something went wrong, rollback
+        FAIL:
+        $this->pdo->rollBack();
+        $this->_debug('Transaction rolled back', 0, __LINE__);
+        return null; // return error
+    }
 
     /**
      * Modify user data [implement only where required/possible]
@@ -212,7 +258,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     //}
 
     /**
-     * Retrieve groups [implement only where required/possible]
+     * Retrieve groups
      *
      * Set getGroups capability when implemented
      *
@@ -220,95 +266,27 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      * @param   int $limit
      * @return  array
      */
-    //public function retrieveGroups($start = 0, $limit = 0) {
-    // FIXME implement
-    //    return array();
-    //}
+    public function retrieveGroups($start = 0, $limit = 0) {
+        $groups = array_keys($this->_selectGroups());
+        if($groups === false) return array();
 
-    /**
-     * Return case sensitivity of the backend
-     *
-     * When your backend is caseinsensitive (eg. you can login with USER and
-     * user) then you need to overwrite this method and return false
-     *
-     * @return bool
-     */
-    public function isCaseSensitive() {
-        return true;
+        if(!$limit) {
+            return array_splice($groups, $start);
+        } else {
+            return array_splice($groups, $start, $limit);
+        }
     }
-
-    /**
-     * Sanitize a given username
-     *
-     * This function is applied to any user name that is given to
-     * the backend and should also be applied to any user name within
-     * the backend before returning it somewhere.
-     *
-     * This should be used to enforce username restrictions.
-     *
-     * @param string $user username
-     * @return string the cleaned username
-     */
-    public function cleanUser($user) {
-        return $user;
-    }
-
-    /**
-     * Sanitize a given groupname
-     *
-     * This function is applied to any groupname that is given to
-     * the backend and should also be applied to any groupname within
-     * the backend before returning it somewhere.
-     *
-     * This should be used to enforce groupname restrictions.
-     *
-     * Groupnames are to be passed without a leading '@' here.
-     *
-     * @param  string $group groupname
-     * @return string the cleaned groupname
-     */
-    public function cleanGroup($group) {
-        return $group;
-    }
-
-    /**
-     * Check Session Cache validity [implement only where required/possible]
-     *
-     * DokuWiki caches user info in the user's session for the timespan defined
-     * in $conf['auth_security_timeout'].
-     *
-     * This makes sure slow authentication backends do not slow down DokuWiki.
-     * This also means that changes to the user database will not be reflected
-     * on currently logged in users.
-     *
-     * To accommodate for this, the user manager plugin will touch a reference
-     * file whenever a change is submitted. This function compares the filetime
-     * of this reference file with the time stored in the session.
-     *
-     * This reference file mechanism does not reflect changes done directly in
-     * the backend's database through other means than the user manager plugin.
-     *
-     * Fast backends might want to return always false, to force rechecks on
-     * each page load. Others might want to use their own checking here. If
-     * unsure, do not override.
-     *
-     * @param  string $user - The username
-     * @return bool
-     */
-    //public function useSessionCache($user) {
-    // FIXME implement
-    //}
 
     /**
      * Select data of a specified user
      *
-     * @param $user
-     * @return bool|array
+     * @param string $user the user name
+     * @return bool|array user data, false on error
      */
     protected function _selectUser($user) {
         $sql = $this->getConf('select-user');
 
-        $result = $this->query($sql, array(':user' => $user));
+        $result = $this->_query($sql, array(':user' => $user));
         if(!$result) return false;
 
         if(count($result) > 1) {
@@ -344,17 +322,20 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      * Select all groups of a user
      *
      * @param array $userdata The userdata as returned by _selectUser()
-     * @return array
+     * @return array|bool list of group names, false on error
      */
     protected function _selectUserGroups($userdata) {
         global $conf;
         $sql = $this->getConf('select-user-groups');
-
-        $result = $this->query($sql, $userdata);
+        $result = $this->_query($sql, $userdata);
+        if($result === false) return false;
 
         $groups = array($conf['defaultgroup']); // always add default config
-        if($result) foreach($result as $row) {
-            if(!isset($row['group'])) continue;
+        foreach($result as $row) {
+            if(!isset($row['group'])) {
+                $this->_debug("No 'group' field returned in select-user-groups statement");
+                return false;
+            }
             $groups[] = $row['group'];
         }
 
@@ -364,13 +345,74 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Select all available groups
+     *
+     * @todo this should be cached
+     * @return array|bool list of all available groups and their properties
+     */
+    protected function _selectGroups() {
+        $sql = $this->getConf('select-groups');
+        $result = $this->_query($sql);
+        if($result === false) return false;
+
+        $groups = array();
+        foreach($result as $row) {
+            if(!isset($row['group'])) {
+                $this->_debug("No 'group' field returned from select-groups statement", -1, __LINE__);
+                return false;
+            }
+
+            // relayout result with group name as key
+            $group = $row['group'];
+            $groups[$group] = $row;
+        }
+
+        ksort($groups);
+        return $groups;
+    }
+
+    /**
+     * Create a new group with the given name
+     *
+     * @param string $group
+     * @return bool
+     */
+    protected function _insertGroup($group) {
+        $sql = $this->getConf('insert-group');
+
+        $result = $this->_query($sql, array(':group' => $group));
+        if($result === false) return false;
+        return true;
+    }
+
+    /**
+     * Enters the user to the group
+     *
+     * @param array $userdata all the user data
+     * @param array $groupdata all the group data
+     * @return bool
+     */
+    protected function _joinGroup($userdata, $groupdata) {
+        $data = array_merge($userdata, $groupdata);
+        $sql = $this->getConf('join-group');
+        $result = $this->_query($sql, $data);
+        if($result === false) return false;
+        return true;
+    }
+
+    /**
      * Executes a query
      *
      * @param string $sql The SQL statement to execute
      * @param array $arguments Named parameters to be used in the statement
-     * @return array|bool The result as associative array
+     * @return array|bool The result as associative array, false on error
      */
-    protected function query($sql, $arguments) {
+    protected function _query($sql, $arguments = array()) {
+        if(empty($sql)) {
+            $this->_debug('No SQL query given', -1, __LINE__);
+            return false;
+        }
+
         // prepare parameters - we only use those that exist in the SQL
         $params = array();
         foreach($arguments as $key => $value) {
@@ -381,23 +423,22 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         }
 
         // execute
+        $sth = $this->pdo->prepare($sql);
         try {
-            $sth = $this->pdo->prepare($sql);
             $sth->execute($params);
             $result = $sth->fetchAll();
-            if((int) $sth->errorCode()) {
-                $this->_debug(join(' ',$sth->errorInfo()), -1, __LINE__);
-                $result = false;
-            }
+        } catch(Exception $e) {
+            $dsql = $this->_debugSQL($sql, $params, !defined('DOKU_UNITTEST'));
+            $this->_debug($e);
+            $this->_debug("SQL: <pre>$dsql</pre>", -1, $e->getLine());
+            $result = false;
+        } finally {
             $sth->closeCursor();
             $sth = null;
-        } catch(PDOException $e) {
-            $this->_debug($e);
-            $result = false;
         }
+
         return $result;
     }
-
 
     /**
      * Wrapper around msg() but outputs only when debug is enabled
@@ -421,6 +462,47 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         } else {
             msg('authpdo: ' . $msg, $err, $line, __FILE__);
         }
+    }
+
+    /**
+     * Check if the given config strings are set
+     *
+     * @author  Matthias Grimm <matthiasgrimm@users.sourceforge.net>
+     *
+     * @param   string[] $keys
+     * @return  bool
+     */
+    protected function _chkcnf($keys) {
+        foreach($keys as $key) {
+            if(!$this->getConf($key)) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * create an approximation of the SQL string with parameters replaced
+     *
+     * @param string $sql
+     * @param array $params
+     * @param bool $htmlescape Should the result be escaped for output in HTML?
+     * @return string
+     */
+    protected function _debugSQL($sql, $params, $htmlescape=true) {
+        foreach($params as $key => $val) {
+            if(is_int($val)) {
+                $val = $this->pdo->quote($val, PDO::PARAM_INT);
+            } elseif(is_bool($val)) {
+                $val = $this->pdo->quote($val, PDO::PARAM_BOOL);
+            } elseif(is_null($val)) {
+                $val = 'NULL';
+            } else {
+                $val = $this->pdo->quote($val);
+            }
+            $sql = str_replace($key, $val, $sql);
+        }
+        if($htmlescape) $sql = hsc($sql);
+        return $sql;
     }
 }
 

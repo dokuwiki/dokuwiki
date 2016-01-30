@@ -21,9 +21,29 @@ $conf['pass'] = '';
 $conf['select-user'] = '';
 
 /**
- * Select all the group names a user is member of
+ * Select all the existing group names
  *
- * input: :user, [:uid], [*]
- * return: group
+ * return: group, [gid], [*]
  */
-$conf['select-user-group'] = '';
+$conf['select-group'] = '';
+
+/**
+ * Create a new user
+ *
+ * input: :user, :name, :mail, (:clear,:hash)
+ */
+$conf['insert-user'] = '';
+
+/**
+ * Create a new group
+ *
+ * input: :group
+ */
+$conf['insert-group'] = '';
+
+/**
+ * Make user join group
+ *
+ * input: :user, [:uid], group, [:gid], [*]
+ */
+$conf['join-group'] = '';
