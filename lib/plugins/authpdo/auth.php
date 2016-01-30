@@ -648,10 +648,9 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             $this->_debug($e, -1, $line);
             $this->_debug("SQL: <pre>$dsql</pre>", -1, $line);
             $result = false;
-        } finally {
-            $sth->closeCursor();
-            $sth = null;
         }
+        $sth->closeCursor();
+        $sth = null;
 
         return $result;
     }
