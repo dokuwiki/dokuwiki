@@ -38,6 +38,9 @@ class Schema {
     /** @var int */
     protected $maxsort = 0;
 
+    /** @var int */
+    protected $ts = 0;
+
     /**
      * Schema constructor
      *
@@ -52,6 +55,7 @@ class Schema {
 
         $table = self::cleanTableName($table);
         $this->table = $table;
+        $this->ts = $ts;
 
         // load info about the schema itself
         if($ts) {
