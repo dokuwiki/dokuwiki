@@ -36,20 +36,6 @@ class SchemaData extends Schema {
     public function getData() {
         $table = $this->table . '_data';
 
-        // figure out when this page data was saved
-        if($this->ts) {
-            /** @noinspection SqlResolve */
-            $sql = "SELECT rev FROM $table WHERE pid = ? AND rev <= ? ORDER BY rev DESC LIMIT 1";
-            $opt = array($this->page, $this->ts);
-        } else {
-            /** @noinspection SqlResolve */
-            $sql = "SELECT rev FROM $table WHERE pid = ? ORDER BY rev DESC LIMIT 1";
-            $opt = array($this->page);
-        }
-        $res = $this->sqlite->query($sql, $opt);
-        $rev = $this->sqlite->res2single($res);
-        $this->sqlite->res_close($res);
-
         // prepare column names
         $columns = array();
         foreach ($this->columns as $col ){
@@ -58,9 +44,17 @@ class SchemaData extends Schema {
         }
         $colsel = join(',', $columns);
 
-        /** @noinspection SqlResolve */
-        $sql = "SELECT $colsel FROM $table WHERE rev = ? ORDER BY ";
-        $res = $this->sqlite->query($sql, array($rev));
+        // figure out when this page data was saved
+        if($this->ts) {
+            /** @noinspection SqlResolve */
+            $sql = "SELECT $colsel FROM $table WHERE pid = ? AND rev <= ? ORDER BY rev DESC LIMIT 1";
+            $opt = array($this->page, $this->ts);
+        } else {
+            /** @noinspection SqlResolve */
+            $sql = "SELECT $colsel FROM $table WHERE pid = ? ORDER BY rev DESC LIMIT 1";
+            $opt = array($this->page);
+        }
+        $res = $this->sqlite->query($sql, $opt);
         $data = $this->sqlite->res2arr($res);
 
         return $data;
