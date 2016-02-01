@@ -89,20 +89,13 @@ abstract class AbstractBaseType {
     }
 
     /**
-     * Adds the admin schema editor to the given form
+     * Return the editor to edit a single value
      *
-     * @param Form $form
-     * @return void
+     * @param string $name the form name where this has to be stored
+     * @param string $value the current value
+     * @return string html
      */
-    abstract public function schemaEditor(Form $form);
-
-    /**
-     * Adds the frontend editor to the given form
-     *
-     * @param Form $form
-     * @return void
-     */
-    abstract public function frontendEditor(Form $form);
+    abstract public function valueEditor($name, $value);
 
     /**
      * Output the stored data
