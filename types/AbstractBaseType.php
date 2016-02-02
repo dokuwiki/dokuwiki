@@ -32,15 +32,22 @@ abstract class AbstractBaseType {
     protected $ismulti = false;
 
     /**
+     * @var int the type ID
+     */
+    protected $tid = 0;
+
+    /**
      * AbstractBaseType constructor.
      * @param array|null $config The configuration, might be null if nothing saved, yet
      * @param string $label The label for this field (empty for new definitions=
      * @param bool $ismulti Should this field accept multiple values?
+     * @param int $tid The id of this type if it has been saved, yet
      */
-    public function __construct($config = null, $label = '', $ismulti = false) {
+    public function __construct($config = null, $label = '', $ismulti = false, $tid=0) {
         if(!is_null($config)) $this->config = array_merge($this->config, $config);
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
+        $this->tid = $tid;
     }
 
     /**
@@ -86,6 +93,13 @@ abstract class AbstractBaseType {
      */
     public function getLabel() {
         return $this->label;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTid() {
+        return $this->tid;
     }
 
     /**
