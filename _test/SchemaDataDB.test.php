@@ -15,8 +15,15 @@ class schemaDataDB_struct_test extends DokuWikiTest {
 
     protected $pluginsEnabled = array('struct', 'sqlite',);
 
+    /** @var helper_plugin_sqlite $sqlite */
+    protected $sqlite;
+
     public function setUp() {
         parent::setUp();
+
+        /** @var helper_plugin_struct_db $sqlite */
+        $sqlite = plugin_load('helper', 'struct_db');
+        $this->sqlite = $sqlite->getDB();
 
         $testdata = array();
         $testdata['new']['new1']['sort'] = 70;
@@ -36,50 +43,41 @@ class schemaDataDB_struct_test extends DokuWikiTest {
         $builder = new SchemaBuilder($testname, $testdata);
         $builder->build();
 
-        /** @var helper_plugin_sqlite $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite = $sqlite->getDB();
-
         // revision 1
-        $sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 123, 'value1',));
-        $sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
+        $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 123, 'value1',));
+        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
                        array('data_testtable',2,'testpage',123,1,'value2.1',));
-        $sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
+        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
                        array('data_testtable',2,'testpage',123,2,'value2.2',));
 
 
         // revision 2
-        $sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 789, 'value1a',));
-        $sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
+        $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 789, 'value1a',));
+        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
                        array('data_testtable',2,'testpage',789,1,'value2.1a',));
-        $sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
+        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
                        array('data_testtable',2,'testpage',789,2,'value2.2a',));
-
     }
 
     public function tearDown() {
         parent::tearDown();
 
-        /** @var helper_plugin_sqlite $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite = $sqlite->getDB();
-
-        $res = $sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
-        $tableNames = $sqlite->res2arr($res);
+        $res = $this->sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
+        $tableNames = $this->sqlite->res2arr($res);
         $tableNames = array_map(function ($value) { return $value['name'];},$tableNames);
-        $sqlite->res_close($res);
+        $this->sqlite->res_close($res);
 
         foreach ($tableNames as $tableName) {
             if ($tableName == 'opts') continue;
-            $sqlite->query('DROP TABLE ?;', $tableName);
+            $this->sqlite->query('DROP TABLE ?;', $tableName);
         }
 
-        $sqlite->query("CREATE TABLE schema_assignments ( assign NOT NULL, tbl NOT NULL, PRIMARY KEY(assign, tbl) );");
-        $sqlite->query("CREATE TABLE schema_cols ( sid INTEGER REFERENCES schemas (id), colref INTEGER NOT NULL, enabled BOOLEAN DEFAULT 1, tid INTEGER REFERENCES types (id), sort INTEGER NOT NULL, PRIMARY KEY ( sid, colref) )");
-        $sqlite->query("CREATE TABLE schemas ( id INTEGER PRIMARY KEY AUTOINCREMENT, tbl NOT NULL, ts INT NOT NULL, chksum DEFAULT '' )");
-        $sqlite->query("CREATE TABLE sqlite_sequence(name,seq)");
-        $sqlite->query("CREATE TABLE types ( id INTEGER PRIMARY KEY AUTOINCREMENT, class NOT NULL, ismulti BOOLEAN DEFAULT 0, label DEFAULT '', config DEFAULT '' )");
-        $sqlite->query("CREATE TABLE multivals ( tbl NOT NULL, colref INTEGER NOT NULL, pid NOT NULL, rev INTEGER NOT NULL, row INTEGER NOT NULL, value, PRIMARY KEY(tbl, colref, pid, rev, row) )");
+        $this->sqlite->query("CREATE TABLE schema_assignments ( assign NOT NULL, tbl NOT NULL, PRIMARY KEY(assign, tbl) );");
+        $this->sqlite->query("CREATE TABLE schema_cols ( sid INTEGER REFERENCES schemas (id), colref INTEGER NOT NULL, enabled BOOLEAN DEFAULT 1, tid INTEGER REFERENCES types (id), sort INTEGER NOT NULL, PRIMARY KEY ( sid, colref) )");
+        $this->sqlite->query("CREATE TABLE schemas ( id INTEGER PRIMARY KEY AUTOINCREMENT, tbl NOT NULL, ts INT NOT NULL, chksum DEFAULT '' )");
+        $this->sqlite->query("CREATE TABLE sqlite_sequence(name,seq)");
+        $this->sqlite->query("CREATE TABLE types ( id INTEGER PRIMARY KEY AUTOINCREMENT, class NOT NULL, ismulti BOOLEAN DEFAULT 0, label DEFAULT '', config DEFAULT '' )");
+        $this->sqlite->query("CREATE TABLE multivals ( tbl NOT NULL, colref INTEGER NOT NULL, pid NOT NULL, rev INTEGER NOT NULL, row INTEGER NOT NULL, value, PRIMARY KEY(tbl, colref, pid, rev, row) )");
     }
 
     public function test_getDataFromDB_currentRev() {
