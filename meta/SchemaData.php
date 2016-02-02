@@ -8,7 +8,6 @@ namespace plugin\struct\meta;
  *
  * This class is for accessing the data stored for a page in a schema
  *
- * @todo handle saving data
  */
 class SchemaData extends Schema {
 
@@ -31,7 +30,10 @@ class SchemaData extends Schema {
     }
 
     /**
-     * Save the data to the database
+     * Save the data to the database.
+     *
+     * We differentiate between single-value-column and multi-value-column by the value to the respective column-name,
+     * i.e. depending on if that is a string or an array, respectively.
      *
      * @param array $data typelabel => value for single fields or typelabel => array(value, value, ...) for multi fields
      *
@@ -83,6 +85,9 @@ class SchemaData extends Schema {
     }
 
     /**
+     * retrieve the data saved for the page from the database. Usually there is no need to call this function.
+     * Call @see SchemaData::getData instead.
+     *
      * @return array
      */
     public function getDataFromDB() {
@@ -110,8 +115,8 @@ class SchemaData extends Schema {
     }
 
     /**
-     * @param array $DBdata
-     * @param array $labels
+     * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
+     * @param array $labels A lookup-array of colref => label
      *
      * @return array
      */
@@ -141,10 +146,13 @@ class SchemaData extends Schema {
     }
 
     /**
-     * @param string $table
-     * @param array  $colsel
-     * @param array  $multis
-     * @param string $ts
+     * Build the sql string and collect the parameters for an sql request to retrieve the data
+     *
+     * @param string $table  the name of the table
+     * @param string $colsel the columns which may only hold 1 value, comma-separated
+     * @param array  $multis the colrefs of the columns which may hold more than 1 value
+     * @param string $page   the page for which the data is to be retrieved. e.g. $this->page
+     * @param string $ts     the exact timestamp of the entry to retrieve, best determined by SchemaData::setCorrectTimestamp
      *
      * @return array
      */
@@ -170,6 +178,9 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Set $this->ts to an existing timestamp, which is either current timestamp if it exists
+     * or the next oldest timestamp that exists. If not timestamp is provided it is the newest timestamp that exists.
+     *
      * @param int|null $ts
      */
     public function setCorrectTimestamp($ts = null) {
