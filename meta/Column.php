@@ -79,6 +79,22 @@ class Column {
         return $this->enabled;
     }
 
+    /**
+     * Returns a list of all available types
+     *
+     * @return array
+     */
+    static public function allTypes() {
+        $types = array();
+        $files = glob(DOKU_PLUGIN . 'struct/types/*.php');
+        foreach($files as $file) {
+            $file = basename($file, '.php');
+            if(substr($file, 0, 8) == 'Abstract') continue;
+            $types[] = $file;
+        }
+        sort($types);
 
+        return $types;
+    }
 
 }

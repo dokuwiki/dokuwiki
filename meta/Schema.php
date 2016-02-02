@@ -38,6 +38,9 @@ class Schema {
     /** @var int */
     protected $maxsort = 0;
 
+    /** @var int */
+    protected $ts = 0;
+
     /**
      * Schema constructor
      *
@@ -52,6 +55,7 @@ class Schema {
 
         $table = self::cleanTableName($table);
         $this->table = $table;
+        $this->ts = $ts;
 
         // load info about the schema itself
         if($ts) {
@@ -115,83 +119,11 @@ class Schema {
      * @return string
      */
     static public function cleanTableName($table) {
+        $table = strtolower($table);
         $table = preg_replace('/[^a-z0-9_]+/', '', $table);
         $table = preg_replace('/^[0-9_]+/', '', $table);
         $table = trim($table);
         return $table;
-    }
-
-    /**
-     * Returns the Admin Form to edit the schema
-     *
-     * This data is processed by the SchemaBuilder class
-     *
-     * @return string
-     * @see SchemaBuilder
-     * @todo it could be discussed if this editor should be part of the schema class it self or if that should be in a SchemaEditor class
-     */
-    public function adminEditor() {
-        $form = new Form(array('method' => 'POST'));
-        $form->setHiddenField('do', 'admin');
-        $form->setHiddenField('page', 'struct');
-        $form->setHiddenField('table', $this->table);
-        $form->setHiddenField('schema[id]', $this->id);
-
-        $form->addHTML('<table class="inline">');
-        $form->addHTML('<tr><th>Sort</th><th>Label</th><th>Multi-Input?</th><th>Configuration</th><th>Type</th></tr>'); // FIXME localize
-
-        foreach($this->columns as $key => $obj) {
-            $form->addHTML($this->adminColumn($key, $obj));
-        }
-
-        // FIXME new one needs to be added dynamically, this is just for testing
-        $form->addHTML($this->adminColumn('new1', new Column($this->maxsort+10, new Text()), 'new'));
-
-        $form->addHTML('</table>');
-        $form->addButton('save', 'Save')->attr('type','submit');
-        return $form->toHTML();
-    }
-
-    /**
-     * Returns the HTML to edit a single column definition of the schema
-     *
-     * @param string $column_id
-     * @param Column $col
-     * @param string $key The key to use in the form
-     * @return string
-     * @todo this should probably be reused for adding new columns via AJAX later?
-     * @todo as above this might be better fitted to a SchemaEditor class
-     */
-    protected function adminColumn($column_id, Column $col, $key='cols') {
-        $base = 'schema['.$key.'][' . $column_id . ']'; // base name for all fields
-
-        $html = '<tr>';
-
-        $html .= '<td>';
-        $html .= '<input type="text" name="' . $base . '[sort]" value="' . hsc($col->getSort()) . '" size="3">';
-        $html .= '</td>';
-
-        $html .= '<td>';
-        $html .= '<input type="text" name="' . $base . '[label]" value="' . hsc($col->getType()->getLabel()) . '">';
-        $html .= '</td>';
-
-        $html .= '<td>';
-        $checked = $col->getType()->isMulti() ? 'checked="checked"' : '';
-        $html .= '<input type="checkbox" name="' . $base . '[ismulti]" value="1" ' . $checked . '>';
-        $html .= '</td>';
-
-        $html .= '<td>';
-        $config = json_encode($col->getType()->getConfig(), JSON_PRETTY_PRINT);
-        $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10">' . hsc($config) . '</textarea>';
-        $html .= '</td>';
-
-        $html .= '<td>';
-        $html .= '<input type="text" name="' . $base . '[class]" value="' . hsc($col->getType()->getClass()) . '">'; //FIXME this needs to be a dropdown
-        $html .= '</td>';
-
-        $html .= '</tr>';
-
-        return $html;
     }
 
     /**
@@ -215,7 +147,18 @@ class Schema {
         return $this->columns;
     }
 
+    /**
+     * @return string
+     */
+    public function getTable() {
+        return $this->table;
+    }
 
-
+    /**
+     * @return int the highest sort number used in this schema
+     */
+    public function getMaxsort() {
+        return $this->maxsort;
+    }
 
 }

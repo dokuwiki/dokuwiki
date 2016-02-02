@@ -5,11 +5,16 @@
  * @author Andreas Gohr, Michael Große <dokuwiki@cosmocode.de>
  */
 
-// menu entry for admin plugins
-// $lang['menu'] = 'Your menu entry';
 
-// custom language strings for the plugin
-// $lang['fixme'] = 'FIXME';
+$lang['menu'] = 'Struct Schema Editor';
+$lang['edithl'] = 'Editing Schema <i>%s</i>';
+$lang['create'] = 'Create new Schema';
+$lang['schemaname'] = 'Schema Name:';
+$lang['save'] = 'Save';
+$lang['createhint'] = 'Please note: schemas can not be renamed later';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
 
 
 

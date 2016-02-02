@@ -10,25 +10,8 @@ class Text extends AbstractBaseType {
         'postfix' => '',
     );
 
-    /**
-     * Adds the admin schema editor to the given form
-     *
-     * @param Form $form
-     * @return void
-     */
-    public function schemaEditor(Form $form) {
-        // TODO: Implement schemaEditor() method.
-    }
 
-    /**
-     * Adds the frontend editor to the given form
-     *
-     * @param Form $form
-     * @return void
-     */
-    public function frontendEditor(Form $form) {
-        // TODO: Implement frontendEditor() method.
-    }
+
 
     /**
      * Output the stored data
@@ -38,5 +21,16 @@ class Text extends AbstractBaseType {
      */
     public function getDisplayData($value) {
         return hsc($this->config['prefix'] . $value . $this->config['postfix']);
+    }
+
+    /**
+     * Return the editor to edit a single value
+     *
+     * @param string $name the form name where this has to be stored
+     * @param string $value the current value
+     * @return string html
+     */
+    public function valueEditor($name, $value) {
+        // TODO: Implement valueEditor() method.
     }
 }
