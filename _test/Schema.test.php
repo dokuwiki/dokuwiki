@@ -8,7 +8,6 @@ use plugin\struct\meta\Schema;
  * @group plugin_struct
  * @group plugins
  *
- * @covers
  */
 class schema_struct_test extends DokuWikiTest {
 
@@ -61,6 +60,8 @@ class schema_struct_test extends DokuWikiTest {
 
     /**
      * @dataProvider cleanTableName_testdata
+     *
+     * @covers Schema::cleanTableName
      *
      * @param string $input_name
      * @param string $expected_cleaned_name
