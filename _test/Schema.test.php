@@ -61,7 +61,7 @@ class schema_struct_test extends DokuWikiTest {
     /**
      * @dataProvider cleanTableName_testdata
      *
-     * @covers Schema::cleanTableName
+     * @covers plugin\struct\meta\Schema::cleanTableName
      *
      * @param string $input_name
      * @param string $expected_cleaned_name
