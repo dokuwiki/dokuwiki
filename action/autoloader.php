@@ -18,7 +18,7 @@ class action_plugin_struct_autoloader extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-        spl_autoload_register(array($this, 'autoloader'));
+        spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
     }
 
     /**
@@ -27,7 +27,7 @@ class action_plugin_struct_autoloader extends DokuWiki_Action_Plugin {
      * @param string $name class to be loaded
      * @return bool
      */
-    public function autoloader($name) {
+    static public function autoloader($name) {
         $name = str_replace('\\', '/', $name);
         if(substr($name, 0, 14) == 'plugin/struct/') {
             require DOKU_PLUGIN . substr($name, 7) . '.php';
