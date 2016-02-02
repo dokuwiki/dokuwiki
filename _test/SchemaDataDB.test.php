@@ -154,4 +154,54 @@ class schemaDataDB_struct_test extends DokuWikiTest {
         // assert
         $this->assertEquals($expected_data, $actual_data , '');
     }
+
+    public function test_saveData() {
+        // arrange
+        $testdata = array(
+            'testcolumn' => 'value1_saved',
+            'testMulitColumn' => array(
+                "value2.1_saved",
+                "value2.2_saved",
+                "value2.3_saved",
+            )
+        );
+
+        // act
+        $schemaData = new SchemaData('testtable','testpage', "");
+        $result = $schemaData->saveData($testdata);
+
+        // assert
+        $res = $this->sqlite->query("SELECT pid, col1, col2 FROM data_testtable WHERE pid = ? ORDER BY rev DESC LIMIT 1",array('testpage'));
+        $actual_saved_single = $this->sqlite->res2row($res);
+        $expected_saved_single = array(
+            'pid' => 'testpage',
+            'col1' => 'value1_saved',
+            'col2' => ''
+        );
+
+        $res = $this->sqlite->query("SELECT colref, row, value FROM multivals WHERE pid = ? AND tbl = ? ORDER BY rev DESC LIMIT 3",array('testpage', 'data_testtable'));
+        $actual_saved_multi = $this->sqlite->res2arr($res);
+        $expected_saved_multi = array(
+            array(
+                'colref' => '2',
+                'row' => '1',
+                'value' => "value2.1_saved"
+            ),
+            array(
+                'colref' => '2',
+                'row' => '2',
+                'value' => "value2.2_saved"
+            ),
+            array(
+                'colref' => '2',
+                'row' => '3',
+                'value' => "value2.3_saved"
+            )
+        );
+
+
+        $this->assertTrue($result, 'should be true on success');
+        $this->assertEquals($expected_saved_single, $actual_saved_single,'single value fields');
+        $this->assertEquals($expected_saved_multi, $actual_saved_multi,'multi value fields');
+    }
 }

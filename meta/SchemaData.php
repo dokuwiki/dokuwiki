@@ -31,6 +31,45 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Save the data to the database
+     *
+     * @param array $data typelabel => value for single fields or typelabel => array(value, value, ...) for multi fields
+     *
+     * @return bool success of saving the data to the database
+     */
+    public function saveData($data) {
+        $table = 'data_' . $this->table;
+
+        $colrefs = array_flip($this->labels);
+        $now = time();
+        $opt = array($this->page, $now,);
+        $multiopts = array();
+        $singlecols = 'pid,rev';
+        foreach ($data as $colname => $value) {
+            if (is_array($value)) {
+                foreach ($value as $index => $multivalue) {
+                    $multiopts[] = array($colrefs[$colname], $index+1, $multivalue,);
+                }
+            } else {
+                $singlecols .= ",col" . $colrefs[$colname];
+                $opt[] = $value;
+            }
+        }
+        $singlesql = "INSERT INTO $table ($singlecols) VALUES (" . trim(str_repeat('?,',count($opt)),',') . ")";
+        $multisql = "INSERT INTO multivals (tbl, rev, pid, colref, row, value) VALUES (?,?,?,?,?,?)";
+
+        $this->sqlite->query('BEGIN TRANSACTION');
+        if (!$this->sqlite->query($singlesql, $opt)) return false;
+
+        foreach ($multiopts as $multiopt) {
+            $multiopt = array_merge(array($table, $now, $this->page,), $multiopt);
+            if (!$this->sqlite->query($multisql, $multiopt)) return false;
+        }
+        $this->sqlite->query('COMMIT TRANSACTION');
+        return true;
+    }
+
+    /**
      * returns the data saved for the page
      *
      */
