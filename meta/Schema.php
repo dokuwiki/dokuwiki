@@ -77,7 +77,8 @@ class Schema {
         }
         $res = $this->sqlite->query($sql, $opt);
         if($this->sqlite->res2count($res)) {
-            $result = array_shift($this->sqlite->res2arr($res));
+            $schema = $this->sqlite->res2arr($res);
+            $result = array_shift($schema);
             $this->id = $result['id'];
             $this->chksum = $result['chksum'];
 
