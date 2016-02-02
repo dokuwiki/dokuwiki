@@ -8,7 +8,6 @@ namespace plugin\struct\meta;
  *
  * This class is for accessing the data stored for a page in a schema
  *
- * @todo handle saving data
  */
 class SchemaData extends Schema {
 
@@ -31,6 +30,48 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Save the data to the database.
+     *
+     * We differentiate between single-value-column and multi-value-column by the value to the respective column-name,
+     * i.e. depending on if that is a string or an array, respectively.
+     *
+     * @param array $data typelabel => value for single fields or typelabel => array(value, value, ...) for multi fields
+     *
+     * @return bool success of saving the data to the database
+     */
+    public function saveData($data) {
+        $table = 'data_' . $this->table;
+
+        $colrefs = array_flip($this->labels);
+        $now = time();
+        $opt = array($this->page, $now,);
+        $multiopts = array();
+        $singlecols = 'pid,rev';
+        foreach ($data as $colname => $value) {
+            if (is_array($value)) {
+                foreach ($value as $index => $multivalue) {
+                    $multiopts[] = array($colrefs[$colname], $index+1, $multivalue,);
+                }
+            } else {
+                $singlecols .= ",col" . $colrefs[$colname];
+                $opt[] = $value;
+            }
+        }
+        $singlesql = "INSERT INTO $table ($singlecols) VALUES (" . trim(str_repeat('?,',count($opt)),',') . ")";
+        $multisql = "INSERT INTO multivals (tbl, rev, pid, colref, row, value) VALUES (?,?,?,?,?,?)";
+
+        $this->sqlite->query('BEGIN TRANSACTION');
+        if (!$this->sqlite->query($singlesql, $opt)) return false;
+
+        foreach ($multiopts as $multiopt) {
+            $multiopt = array_merge(array($table, $now, $this->page,), $multiopt);
+            if (!$this->sqlite->query($multisql, $multiopt)) return false;
+        }
+        $this->sqlite->query('COMMIT TRANSACTION');
+        return true;
+    }
+
+    /**
      * returns the data saved for the page
      *
      */
@@ -44,6 +85,9 @@ class SchemaData extends Schema {
     }
 
     /**
+     * retrieve the data saved for the page from the database. Usually there is no need to call this function.
+     * Call @see SchemaData::getData instead.
+     *
      * @return array
      */
     public function getDataFromDB() {
@@ -68,8 +112,8 @@ class SchemaData extends Schema {
     }
 
     /**
-     * @param array $DBdata
-     * @param array $labels
+     * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
+     * @param array $labels A lookup-array of colref => label
      *
      * @return array
      */
@@ -129,6 +173,9 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Set $this->ts to an existing timestamp, which is either current timestamp if it exists
+     * or the next oldest timestamp that exists. If not timestamp is provided it is the newest timestamp that exists.
+     *
      * @param int|null $ts
      */
     public function setCorrectTimestamp($ts = null) {

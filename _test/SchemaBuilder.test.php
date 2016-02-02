@@ -14,34 +14,37 @@ class schemaBuilder_struct_test extends DokuWikiTest {
 
     protected $pluginsEnabled = array('struct', 'sqlite');
 
+    /** @var helper_plugin_sqlite $sqlite */
+    protected $sqlite;
+
     public function setUp() {
         parent::setUp();
+
+        /** @var helper_plugin_struct_db $sqlite */
+        $sqlite = plugin_load('helper', 'struct_db');
+        $this->sqlite = $sqlite->getDB();
     }
 
     public function tearDown() {
         parent::tearDown();
 
-        /** @var helper_plugin_sqlite $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite = $sqlite->getDB();
-
-        $res = $sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
-        $tableNames = $sqlite->res2arr($res);
+        $res = $this->sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
+        $tableNames = $this->sqlite->res2arr($res);
         $tableNames = array_map(function ($value) { return $value['name'];},$tableNames);
-        $sqlite->res_close($res);
+        $this->sqlite->res_close($res);
 
         foreach ($tableNames as $tableName) {
             if ($tableName == 'opts') continue;
-            $sqlite->query('DROP TABLE ?;', $tableName);
+            $this->sqlite->query('DROP TABLE ?;', $tableName);
         }
 
 
-        $sqlite->query("CREATE TABLE schema_assignments ( assign NOT NULL, tbl NOT NULL, PRIMARY KEY(assign, tbl) );");
-        $sqlite->query("CREATE TABLE schema_cols ( sid INTEGER REFERENCES schemas (id), colref INTEGER NOT NULL, enabled BOOLEAN DEFAULT 1, tid INTEGER REFERENCES types (id), sort INTEGER NOT NULL, PRIMARY KEY ( sid, colref) )");
-        $sqlite->query("CREATE TABLE schemas ( id INTEGER PRIMARY KEY AUTOINCREMENT, tbl NOT NULL, ts INT NOT NULL, chksum DEFAULT '' )");
-        $sqlite->query("CREATE TABLE sqlite_sequence(name,seq)");
-        $sqlite->query("CREATE TABLE types ( id INTEGER PRIMARY KEY AUTOINCREMENT, class NOT NULL, ismulti BOOLEAN DEFAULT 0, label DEFAULT '', config DEFAULT '' )");
-        $sqlite->query("CREATE TABLE multivals ( tbl NOT NULL, colref INTEGER NOT NULL, pid NOT NULL, rev INTEGER NOT NULL, row INTEGER NOT NULL, value, PRIMARY KEY(tbl, colref, pid, rev, row) )");
+        $this->sqlite->query("CREATE TABLE schema_assignments ( assign NOT NULL, tbl NOT NULL, PRIMARY KEY(assign, tbl) );");
+        $this->sqlite->query("CREATE TABLE schema_cols ( sid INTEGER REFERENCES schemas (id), colref INTEGER NOT NULL, enabled BOOLEAN DEFAULT 1, tid INTEGER REFERENCES types (id), sort INTEGER NOT NULL, PRIMARY KEY ( sid, colref) )");
+        $this->sqlite->query("CREATE TABLE schemas ( id INTEGER PRIMARY KEY AUTOINCREMENT, tbl NOT NULL, ts INT NOT NULL, chksum DEFAULT '' )");
+        $this->sqlite->query("CREATE TABLE sqlite_sequence(name,seq)");
+        $this->sqlite->query("CREATE TABLE types ( id INTEGER PRIMARY KEY AUTOINCREMENT, class NOT NULL, ismulti BOOLEAN DEFAULT 0, label DEFAULT '', config DEFAULT '' )");
+        $this->sqlite->query("CREATE TABLE multivals ( tbl NOT NULL, colref INTEGER NOT NULL, pid NOT NULL, rev INTEGER NOT NULL, row INTEGER NOT NULL, value, PRIMARY KEY(tbl, colref, pid, rev, row) )");
     }
 
     /**
@@ -69,22 +72,18 @@ class schemaBuilder_struct_test extends DokuWikiTest {
         $builder = new SchemaBuilder($testname, $testdata);
         $result = $builder->build();
 
-        /** @var helper_plugin_sqlite $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite = $sqlite->getDB();
-
-        $res = $sqlite->query("SELECT sql FROM sqlite_master WHERE type='table' AND name=?", 'data_' . $testname);
-        $tableSQL = $sqlite->res2single($res);
-        $sqlite->res_close($res);
+        $res = $this->sqlite->query("SELECT sql FROM sqlite_master WHERE type='table' AND name=?", 'data_' . $testname);
+        $tableSQL = $this->sqlite->res2single($res);
+        $this->sqlite->res_close($res);
         $expected_tableSQL = "CREATE TABLE data_testtable (
                     pid NOT NULL,
                     rev INTEGER NOT NULL, col1 DEFAULT '', col2 DEFAULT '',
                     PRIMARY KEY(pid, rev)
                 )";
 
-        $res = $sqlite->query("SELECT * FROM types");
-        $actual_types = $sqlite->res2arr($res);
-        $sqlite->res_close($res);
+        $res = $this->sqlite->query("SELECT * FROM types");
+        $actual_types = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
         $expected_types = array(
             array(
                 'id' => "1",
@@ -102,9 +101,9 @@ class schemaBuilder_struct_test extends DokuWikiTest {
             )
         );
 
-        $res = $sqlite->query("SELECT * FROM schema_cols");
-        $actual_cols = $sqlite->res2arr($res);
-        $sqlite->res_close($res);
+        $res = $this->sqlite->query("SELECT * FROM schema_cols");
+        $actual_cols = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
         $expected_cols = array(
             array(
                 'sid' => "1",
@@ -122,9 +121,9 @@ class schemaBuilder_struct_test extends DokuWikiTest {
             )
         );
 
-        $res = $sqlite->query("SELECT * FROM schemas");
-        $actual_schema = $sqlite->res2row($res);
-        $sqlite->res_close($res);
+        $res = $this->sqlite->query("SELECT * FROM schemas");
+        $actual_schema = $this->sqlite->res2row($res);
+        $this->sqlite->res_close($res);
 
         $this->assertSame($result, '1');
         $this->assertEquals($tableSQL, $expected_tableSQL);
@@ -166,14 +165,9 @@ class schemaBuilder_struct_test extends DokuWikiTest {
         $builder = new SchemaBuilder($testname, $updatedata);
         $result = $builder->build();
 
-
-        /** @var helper_plugin_sqlite $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite = $sqlite->getDB();
-
-        $res = $sqlite->query("SELECT * FROM types");
-        $actual_types = $sqlite->res2arr($res);
-        $sqlite->res_close($res);
+        $res = $this->sqlite->query("SELECT * FROM types");
+        $actual_types = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
         $expected_types = array(
             array(
                 'id' => "1",
