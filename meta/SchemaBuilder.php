@@ -112,7 +112,7 @@ class SchemaBuilder {
                 // todo I'm not too happy with this hardcoded here - we should probably have a list of fields at one place
                 $newEntry['config'] = $this->data['cols'][$column->getColref()]['config'];
                 $newEntry['label'] = $this->data['cols'][$column->getColref()]['label'];
-                $newEntry['ismulti'] = $this->data['cols'][$column->getColref()]['multi'];
+                $newEntry['ismulti'] = $this->data['cols'][$column->getColref()]['ismulti'];
                 $newEntry['class'] = $this->data['cols'][$column->getColref()]['class'];
                 $sort = $this->data['cols'][$column->getColref()]['sort'];
 
@@ -158,7 +158,7 @@ class SchemaBuilder {
             $newEntry = array();
             $newEntry['config'] = $column['config'];
             $newEntry['label'] = $column['label'];
-            $newEntry['ismulti'] = $column['multi'];
+            $newEntry['ismulti'] = $column['ismulti'];
             $newEntry['class'] = $column['class'];
             $sort = $column['sort'];
             $enabled = true;
