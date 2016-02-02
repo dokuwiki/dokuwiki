@@ -34,7 +34,7 @@ class SchemaData extends Schema {
      * @todo we have to decide how to store multi values
      */
     public function getData() {
-        $table = $this->table . '_data';
+        $table = 'data_' . $this->table;
 
         // prepare column names
         $columns = array();
