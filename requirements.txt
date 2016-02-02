@@ -1,0 +1,2 @@
+# we need additional plugin(s) for testing
+https://github.com/cosmocode/sqlite.git                         lib/plugins/sqlite
