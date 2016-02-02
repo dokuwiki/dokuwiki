@@ -47,22 +47,19 @@ class SchemaData extends Schema {
      * @return array
      */
     public function getDataFromDB() {
-        $table = 'data_' . $this->table;
-
         // prepare column names
         $singles = array();
         $multis = array();
-        foreach ($this->columns as $col ){
+        foreach($this->columns as $col) {
             if(!$col->isEnabled()) continue;
-            if(!$col->getType()->isMulti()) {
-                $singles[] = 'col' . $col->getColref();
-            } else {
+
+            if($col->getType()->isMulti()) {
                 $multis[] = $col->getColref();
+            } else {
+                $singles[] = $col->getColref();
             }
         }
-        $colsel = join(',', $singles);
-
-        list($sql, $opt) = $this->buildGetDataSQL($table, $colsel, $multis, $this->page, $this->ts);
+        list($sql, $opt) = $this->buildGetDataSQL($singles, $multis);
 
         $res = $this->sqlite->query($sql, $opt);
         $data = $this->sqlite->res2arr($res);
@@ -102,32 +99,33 @@ class SchemaData extends Schema {
     }
 
     /**
-     * @param string $table
-     * @param array  $colsel
-     * @param array  $multis
-     * @param string $ts
+     * Builds the SQL statement to select the data for this page and schema
      *
-     * @return array
+     * @param int[] $singles Column reference numbers of single value columns to select
+     * @param int[] $multis Column reference numbers of multi value columns to select
+     * @return array Two fields: the SQL string and the parameters array
      */
-    public static function buildGetDataSQL($table, $colsel, $multis, $page, $ts) {
-        $select = "SELECT $colsel";
+    protected function buildGetDataSQL($singles, $multis) {
+        $table = 'data_' . $this->table;
 
+        $colsel = join(',', preg_filter('/^/', 'col', $singles));
+
+        $select = 'SELECT ' . $colsel;
         $join = '';
-        /** @var Column $col */
-        foreach ($multis as $colref) {
-            $tn = 'M' . $colref;
-            $select .= ",$tn.value AS col$colref";
+        foreach($multis as $col) {
+            $tn = 'M' . $col;
+            $select .= ",$tn.value AS col$col";
             $join .= "LEFT OUTER JOIN multivals $tn";
             $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
-            $join .= " AND $tn.tbl = '$table' AND $tn.colref = $colref\n";
+            $join .= " AND $tn.tbl = '$table' AND $tn.colref = $col\n";
         }
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
-        $opt = array($page,$ts,);
+        $opt = array($this->page, $this->ts);
 
         $sql = "$select FROM $table DATA\n$join $where";
 
-        return array($sql, $opt,);
+        return array($sql, $opt);
     }
 
     /**
