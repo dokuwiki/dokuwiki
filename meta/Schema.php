@@ -103,8 +103,7 @@ class Schema {
             $this->columns[$row['colref']] =
                 new Column(
                     $row['sort'],
-                    new $class($config, $row['label'], $row['ismulti']),
-                    $row['tid'],
+                    new $class($config, $row['label'], $row['ismulti'], $row['tid']),
                     $row['colref'],
                     $row['enabled']
                 );

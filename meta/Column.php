@@ -21,8 +21,6 @@ class Column {
     protected $sort;
     /** @var AbstractBaseType the type of this column */
     protected $type;
-    /** @var int the ID of the currently used type */
-    protected $tid;
     /** @var int the column in the datatable. columns count from 1 */
     protected $colref;
     /** @var bool is this column still enabled? */
@@ -32,14 +30,12 @@ class Column {
      * Column constructor.
      * @param int $sort
      * @param AbstractBaseType $type
-     * @param int $tid
      * @param int $colref
      * @param bool $enabled
      */
-    public function __construct($sort, AbstractBaseType $type, $tid = 0, $colref=0, $enabled=true) {
+    public function __construct($sort, AbstractBaseType $type, $colref=0, $enabled=true) {
         $this->sort = (int) $sort;
         $this->type = $type;
-        $this->tid = (int) $tid;
         $this->colref = (int) $colref;
         $this->enabled = (bool) $enabled;
     }
@@ -55,7 +51,7 @@ class Column {
      * @return int
      */
     public function getTid() {
-        return $this->tid;
+        return $this->type->getTid();
     }
 
     /**
