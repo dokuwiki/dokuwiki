@@ -31,6 +31,9 @@ class Text extends AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
-        // TODO: Implement valueEditor() method.
+        if(is_array($value)) {$value = join(', ',$value);}
+        $html = '';
+        $html .= "<input name=\"$name\" value=\"$value\" />";
+        return "$html";
     }
 }
