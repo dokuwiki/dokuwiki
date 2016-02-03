@@ -1,0 +1,7 @@
+====== Schema Assignments ======
+
+Namespaces excluding subnamespaces are assigned as ''<nowiki>namespace:*</nowiki>''.
+
+Namespaces including subnamespaces are assigned as ''<nowiki>namespace:**</nowiki>''.
+
+Pages as usual.

@@ -13,7 +13,7 @@ use plugin\struct\meta\SchemaEditor;
 
 if(!defined('DOKU_INC')) die();
 
-class admin_plugin_struct extends DokuWiki_Admin_Plugin {
+class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
 
     /**
      * @return int sort number in admin menu
