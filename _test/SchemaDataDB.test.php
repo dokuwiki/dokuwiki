@@ -1,8 +1,36 @@
 <?php
 
-use plugin\struct\meta\SchemaData;
+namespace plugin\struct\test;
+
+// we don't have the auto loader here
+spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+
 use plugin\struct\meta\SchemaBuilder;
 use plugin\struct\meta\Schema;
+
+/**
+ * Class SchemaData for testing
+ *
+ * Makes protected methods accessible and avoids database initialization
+ *
+ * @package plugin\struct\test
+ */
+class SchemaDataDB extends \plugin\struct\meta\SchemaData {
+
+    public function __construct($table, $page, $ts) {
+        // we do intialization by parent here, because we don't need the whole database behind the class
+        parent::__construct($table, $page, $ts);
+    }
+
+    public function setCorrectTimestamp($ts = null) {
+        parent::setCorrectTimestamp($ts);
+    }
+
+    public function getDataFromDB() {
+        return parent::getDataFromDB();
+    }
+
+}
 
 /**
  * Tests to the DB for the struct plugin
@@ -11,17 +39,17 @@ use plugin\struct\meta\Schema;
  * @group plugins
  *
  */
-class schemaDataDB_struct_test extends DokuWikiTest {
+class schemaDataDB_struct_test extends \DokuWikiTest {
 
     protected $pluginsEnabled = array('struct', 'sqlite',);
 
-    /** @var helper_plugin_sqlite $sqlite */
+    /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;
 
     public function setUp() {
         parent::setUp();
 
-        /** @var helper_plugin_struct_db $sqlite */
+        /** @var \helper_plugin_struct_db $sqlite */
         $sqlite = plugin_load('helper', 'struct_db');
         $this->sqlite = $sqlite->getDB();
 
@@ -83,7 +111,7 @@ class schemaDataDB_struct_test extends DokuWikiTest {
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = new SchemaData('testtable','testpage', "");
+        $schemaData = new SchemaDataDB('testtable','testpage', "");
         $schemaData->setCorrectTimestamp();
         $actual_data =  $schemaData->getDataFromDB();
 
@@ -105,7 +133,7 @@ class schemaDataDB_struct_test extends DokuWikiTest {
     public function test_getDataFromDB_oldRev() {
 
         // act
-        $schemaData = new SchemaData('testtable','testpage','');
+        $schemaData = new SchemaDataDB('testtable','testpage','');
         $schemaData->setCorrectTimestamp(200);
         $actual_data = $schemaData->getDataFromDB();
 
@@ -126,7 +154,7 @@ class schemaDataDB_struct_test extends DokuWikiTest {
     public function test_getData_currentRev() {
 
         // act
-        $schemaData = new SchemaData('testtable','testpage', "");
+        $schemaData = new SchemaDataDB('testtable','testpage', "");
         $schemaData->setCorrectTimestamp();
         $actual_data = $schemaData->getData();
 
@@ -142,7 +170,7 @@ class schemaDataDB_struct_test extends DokuWikiTest {
     public function test_getData_oldRev() {
 
         // act
-        $schemaData = new SchemaData('testtable','testpage','');
+        $schemaData = new SchemaDataDB('testtable','testpage','');
         $schemaData->setCorrectTimestamp(200);
         $actual_data = $schemaData->getData();
 
@@ -167,7 +195,7 @@ class schemaDataDB_struct_test extends DokuWikiTest {
         );
 
         // act
-        $schemaData = new SchemaData('testtable','testpage', "");
+        $schemaData = new \plugin\struct\meta\SchemaData('testtable','testpage', "");
         $result = $schemaData->saveData($testdata);
 
         // assert

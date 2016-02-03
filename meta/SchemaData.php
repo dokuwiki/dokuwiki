@@ -90,7 +90,7 @@ class SchemaData extends Schema {
      *
      * @return array
      */
-    public function getDataFromDB() {
+    protected function getDataFromDB() {
         // prepare column names
         $singles = array();
         $multis = array();
@@ -117,7 +117,7 @@ class SchemaData extends Schema {
      *
      * @return array
      */
-    public static function consolidateData($DBdata, $labels) {
+    protected function consolidateData($DBdata, $labels) {
 
         $data = array();
         foreach ($labels as $label) {
@@ -178,7 +178,7 @@ class SchemaData extends Schema {
      *
      * @param int|null $ts
      */
-    public function setCorrectTimestamp($ts = null) {
+    protected function setCorrectTimestamp($ts = null) {
         $table = 'data_' . $this->table;
         $where = '';
         if ($ts) {
