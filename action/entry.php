@@ -30,7 +30,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * [Custom event handler which performs action]
+     * Enhance the editing form with structural data editing
      *
      * @param Doku_Event $event  event object by reference
      * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
@@ -59,16 +59,18 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     }
 
     /**
+     * Adds the form to edit schemadata
+     *
      * @param string $tablename
-     * @param Doku_Form $data
+     * @param Doku_Form $form The editor form
      */
-    private function createForm($tablename, $data) {
+    protected function createForm($tablename, $form) {
         global $ID;
         global $REV;
         $schema = new SchemaData($tablename, $ID, $REV);
         $schemadata = $schema->getData();
 
-        $data->insertElement(4, "<h3>$tablename</h3>");
+        $form->insertElement(4, "<h3>$tablename</h3>");
 
         $cols = $schema->getColumns(false);
         foreach ($cols as $index => $col) {
@@ -77,7 +79,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $name = "Schema[$tablename][$label]";
             $input = $type->valueEditor($name, $schemadata[$label]);
             $element = "<label>$label $input</label><br />";
-            $data->insertElement(5 + $index, $element);
+            $form->insertElement(5 + $index, $element);
         }
     }
 
