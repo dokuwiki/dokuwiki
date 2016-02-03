@@ -64,7 +64,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      */
     private function createForm($tablename, $data) {
         global $ID;
-        $schema = new SchemaData($tablename, $ID, 0);
+        global $REV;
+        $schema = new SchemaData($tablename, $ID, $REV);
         $schemadata = $schema->getData();
 
         $data->insertElement(4, "<h3>$tablename</h3>");
