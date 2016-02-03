@@ -41,6 +41,8 @@ class Text extends AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
+        $name = hsc($name);
+        $value = hsc($value);
         $html = "<input name=\"$name\" value=\"$value\" />";
         return "$html";
     }
