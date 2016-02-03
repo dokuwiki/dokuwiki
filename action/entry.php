@@ -37,8 +37,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      *                           handler was registered]
      * @return bool
      */
-
-    public function handle_editform(Doku_Event $event, $param) {
+     public function handle_editform(Doku_Event $event, $param) {
 
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
@@ -69,9 +68,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $schemadata = $schema->getData();
 
         $data->insertElement(4, "<h3>$tablename</h3>");
-        $cols = $schema->getColumns();
-        usort($cols, function($a, $b){if ($a->getSort()<$b->getSort())return -1;return 1;});
 
+        $cols = $schema->getColumns(false);
         foreach ($cols as $index => $col) {
             $type = $col->getType();
             $label = $type->getLabel();
