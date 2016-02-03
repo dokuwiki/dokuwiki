@@ -141,9 +141,21 @@ class Schema {
     }
 
     /**
-     * @return \plugin\struct\meta\Column[]
+     * Returns a list of columns in this schema
+     *
+     * @param bool $withDisabled if false, disabled columns will not be returned
+     * @return Column[]
      */
-    public function getColumns() {
+    public function getColumns($withDisabled = true) {
+        if(!$withDisabled) {
+            return array_filter(
+                $this->columns,
+                function (Column $col) {
+                    return $col->isEnabled();
+                }
+            );
+        }
+
         return $this->columns;
     }
 
