@@ -24,6 +24,16 @@ class Text extends AbstractBaseType {
     }
 
     /**
+     * @param string $name
+     * @param \string[] $values
+     * @return string
+     */
+    public function multiValueEditor($name, $values) {
+        $value = join(', ',$values);
+        return $this->valueEditor($name, $value);
+    }
+
+    /**
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
@@ -31,9 +41,7 @@ class Text extends AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
-        if(is_array($value)) {$value = join(', ',$value);}
-        $html = '';
-        $html .= "<input name=\"$name\" value=\"$value\" />";
+        $html = "<input name=\"$name\" value=\"$value\" />";
         return "$html";
     }
 }
