@@ -39,18 +39,22 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @return bool
      */
     public function handle_pagesave(Doku_Event &$event, $param) {
+        global $ID, $INPUT;
         if (act_clean($event->data) !== "save") return false;
 
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
 
-        global $ID, $INPUT;
-
         $res = $this->sqlite->query("SELECT tbl FROM schema_assignments WHERE assign = ?",array($ID,));
         if (!$this->sqlite->res2count($res)) return false;
 
-        $tables = array_map(function ($value){return $value['tbl'];},$this->sqlite->res2arr($res));
+        $tables = array_map(
+            function ($value) {
+                return $value['tbl'];
+            },
+            $this->sqlite->res2arr($res)
+        );
         $this->sqlite->res_close($res);
 
         $structData = $INPUT->arr('Schema');
@@ -61,8 +65,14 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $schemaData = $structData[$table];
             foreach ($schema->getColumns() as $col) {
                 if ($col->getType()->isMulti()) {
-                    $schemaData[$col->getType()->getLabel()] = explode(',',$schemaData[$col->getType()->getLabel()]);
-                    $schemaData[$col->getType()->getLabel()] = array_map(function($value){return trim($value);}, $schemaData[$col->getType()->getLabel()]);
+                    $label = $col->getType()->getLabel();
+                    $schemaData[$label] = explode(',',$schemaData[$label]);
+                    $schemaData[$label] = array_map(
+                        function($value) {
+                            return trim($value);
+                        },
+                        $schemaData[$label]
+                    );
                 }
             }
             $schema->saveData($schemaData);
@@ -93,6 +103,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             },
             $this->sqlite->res2arr($res)
         );
+        $this->sqlite->res_close($res);
 
         $html = '';
         foreach($tables as $table) {
