@@ -103,6 +103,41 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * Split a single value into multiple values
+     *
+     * This function is called on saving data when only a single value instead of an array
+     * was submitted.
+     *
+     * Types implementing their own @see multiValueEditor() will probably want to override this
+     *
+     * @param string $value
+     * @return array
+     */
+    public function splitValues($value) {
+        return array_map('trim', explode(',', $value));
+    }
+
+    /**
+     * Return the editor to edit multiple values
+     *
+     * Types can override this to provide a better alternative than multiple entry fields
+     *
+     * @param string $name the form base name where this has to be stored
+     * @param string[] $values the current values
+     * @return string html
+     */
+    public function multiValueEditor($name, $values) {
+        $html = '';
+        foreach($values as $value) {
+            $html .= $this->valueEditor($name.'[]', $value);
+        }
+        // empty field to add
+        $html .= $this->valueEditor($name.'[]', '');
+
+        return $html;
+    }
+
+    /**
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
