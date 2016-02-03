@@ -61,11 +61,16 @@ class SchemaData extends Schema {
         $multisql = "INSERT INTO multivals (tbl, rev, pid, colref, row, value) VALUES (?,?,?,?,?,?)";
 
         $this->sqlite->query('BEGIN TRANSACTION');
-        if (!$this->sqlite->query($singlesql, $opt)) return false;
+        $ok = $this->sqlite->query($singlesql, $opt);
 
         foreach ($multiopts as $multiopt) {
             $multiopt = array_merge(array($table, $now, $this->page,), $multiopt);
-            if (!$this->sqlite->query($multisql, $multiopt)) return false;
+            $ok = $ok && $this->sqlite->query($multisql, $multiopt);
+        }
+
+        if (!$ok) {
+            $this->sqlite->query('ROLLBACK TRANSACTION');
+            return false;
         }
         $this->sqlite->query('COMMIT TRANSACTION');
         return true;

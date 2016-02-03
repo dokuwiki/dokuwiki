@@ -63,20 +63,23 @@ class SchemaBuilder {
      */
     public function build() {
         $this->sqlite->query('BEGIN TRANSACTION');
-
+        $ok = true;
         // create the data table if new schema
         if(!$this->oldschema->getId()) {
             $ok = $this->newDataTable();
-            if(!$ok) return false;
         }
 
         // create a new schema
-        if(!$this->newSchema()) return false;
+        $ok = $ok && $this->newSchema();
 
         // update column info
-        if(!$this->updateColumns()) return false;
-        if(!$this->addColumns()) return false;
+        $ok = $ok && $this->updateColumns();
+        $ok = $ok && $this->addColumns();
 
+        if (!$ok) {
+            $this->sqlite->query('ROLLBACK TRANSACTION');
+            return false;
+        }
         $this->sqlite->query('COMMIT TRANSACTION');
 
         return $this->newschemaid;
