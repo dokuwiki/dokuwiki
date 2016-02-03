@@ -64,15 +64,10 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $schema = new SchemaData($table, $ID, $timestamp);
             $schemaData = $structData[$table];
             foreach ($schema->getColumns() as $col) {
-                if ($col->getType()->isMulti()) {
-                    $label = $col->getType()->getLabel();
-                    $schemaData[$label] = explode(',',$schemaData[$label]);
-                    $schemaData[$label] = array_map(
-                        function($value) {
-                            return trim($value);
-                        },
-                        $schemaData[$label]
-                    );
+                $type = $col->getType();
+                $label = $type->getLabel();
+                if ($type->isMulti() && !is_array($schemaData[$label])) {
+                    $schemaData[$label] = $type->splitValues($schemaData[$label]);
                 }
             }
             $schema->saveData($schemaData);
