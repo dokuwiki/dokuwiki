@@ -38,7 +38,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @return bool
      */
 
-    public function handle_editform(Doku_Event &$event, $param) {
+    public function handle_editform(Doku_Event $event, $param) {
 
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
@@ -63,7 +63,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @param string $tablename
      * @param Doku_Form $data
      */
-    private function createForm($tablename, &$data) {
+    private function createForm($tablename, $data) {
         global $ID;
         $schema = new SchemaData($tablename, $ID, 0);
         $schemadata = $schema->getData();
