@@ -16,6 +16,7 @@
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
  * @author Mohmmad Razavi <sepent@gmail.com>
+ * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
