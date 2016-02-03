@@ -25,8 +25,49 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      */
     public function register(Doku_Event_Handler $controller) {
 
-       $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform');
+        $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform');
+        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_pagesave');
 
+    }
+
+    /**
+     * Save values of Schemas but do not interfere with saving the page.
+     *
+     * @param Doku_Event $event  event object by reference
+     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_pagesave(Doku_Event &$event, $param) {
+        if (act_clean($event->data) !== "save") return false;
+
+        /** @var \helper_plugin_struct_db $helper */
+        $helper = plugin_load('helper', 'struct_db');
+        $this->sqlite = $helper->getDB();
+
+        global $ID, $INPUT;
+
+        $res = $this->sqlite->query("SELECT tbl FROM schema_assignments WHERE assign = ?",array($ID,));
+        if (!$this->sqlite->res2count($res)) return false;
+
+        $tables = array_map(function ($value){return $value['tbl'];},$this->sqlite->res2arr($res));
+        $this->sqlite->res_close($res);
+
+        $structData = $INPUT->arr('Schema');
+        $timestamp = $INPUT->int('date');
+
+        foreach ($tables as $table) {
+            $schema = new SchemaData($table, $ID, $timestamp);
+            $schemaData = $structData[$table];
+            foreach ($schema->getColumns() as $col) {
+                if ($col->getType()->isMulti()) {
+                    $schemaData[$col->getType()->getLabel()] = explode(',',$schemaData[$col->getType()->getLabel()]);
+                    $schemaData[$col->getType()->getLabel()] = array_map(function($value){return trim($value);}, $schemaData[$col->getType()->getLabel()]);
+                }
+            }
+            $schema->saveData($schemaData);
+        }
+        return false;
     }
 
     /**
@@ -37,7 +78,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      *                           handler was registered]
      * @return bool
      */
-
     public function handle_editform(Doku_Event &$event, $param) {
 
         /** @var \helper_plugin_struct_db $helper */
@@ -50,7 +90,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         if (!$this->sqlite->res2count($res)) return false;
 
         $tables = array_map(function ($value){return $value['tbl'];},$this->sqlite->res2arr($res));
-
+        $this->sqlite->res_close($res);
 
         foreach ($tables as $table) {
             $this->createForm($table, $event->data);

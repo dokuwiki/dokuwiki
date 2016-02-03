@@ -43,7 +43,7 @@ class SchemaData extends Schema {
         $table = 'data_' . $this->table;
 
         $colrefs = array_flip($this->labels);
-        $now = time();
+        $now = $this->ts;
         $opt = array($this->page, $now,);
         $multiopts = array();
         $singlecols = 'pid,rev';
