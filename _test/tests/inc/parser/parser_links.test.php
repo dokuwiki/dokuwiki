@@ -289,6 +289,21 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testExternalInInternalLinkNoExtensionToThreeSquareBrackets() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[https://www.dokuwiki.org/faq:support|[DokuWiki] Support]] [Bar[Foo[Bar]]]");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('https://www.dokuwiki.org/faq:support','[DokuWiki] Support')),
+            array('cdata',array(' [Bar[Foo[Bar]]]')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testInterwikiLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[iw>somepage|Some Page]] Bar");
@@ -686,6 +701,5 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
-
 }
 
