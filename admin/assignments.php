@@ -68,6 +68,8 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
+        global $ID;
+
         echo $this->locale_xhtml('assignments_intro');
 
         $res = $this->sqlite->query('SELECT tbl FROM schemas GROUP BY tbl');
@@ -77,33 +79,56 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         $ass = new Assignments();
         $assignments = $ass->getAll();
 
-        echo '<ul>';
+
+
+        echo '<form action="'.wl($ID).'">';
+        echo '<input type="hidden" name="do" value="admin" />';
+        echo '<input type="hidden" name="page" value="struct_assignments" />';
+        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+        echo '<table class="inline">';
+
+        // header
+        echo '<tr>';
+        echo '<th>Page/Namespace</th>'; // FIXME localize
+        echo '<th>Schema</th>'; // FIXME localize
+        echo '<th></th>';
+        echo '</tr>';
+
+        // existing assignments
         foreach ($assignments as $assignment) {
             $schema = $assignment['tbl'];
             $assignee = $assignment['assign'];
-            $form = new Form();
-            $form->setHiddenField("assignment[assign]", $assignee);
-            $form->setHiddenField("assignment[tbl]", $schema);
-            $form->addHTML("<button type=\"submit\" name=\"action\" value=\"delete\">Delete</button>");
-            $html = "<li class=\"level1\"><div class=\"li\">$assignee - $schema ";
-            $html .= $form->toHTML();
-            $html .= "</div></li>";
-            echo $html;
+
+            $link = wl($ID, array(
+                'do' => 'admin',
+                'page' => 'struct_assignments',
+                'action' => 'delete',
+                'sectok' => getSecurityToken(),
+                'assignment[tbl]' => $schema,
+                'assignment[assign]' => $assignee,
+            ));
+
+            echo '<tr>';
+            echo '<td>'.hsc($assignee).'</td>';
+            echo '<td>'.hsc($schema).'</td>';
+            echo '<td><a href="'.$link.'">Delete</a></td>'; //FIXME localize
+            echo '</tr>';
         }
-        $form = new Form();
-        $form->addTextInput("assignment[assign]",'Page or Namespace: ');
-        $form->addLabel('Schema','schemaSelect');
-        $form->addHTML('<select id="schemaSelect" name="assignment[tbl]">');
+
+        // new assignment form
+        echo '<tr>';
+        echo '<td><input type="text" name="assignment[assign]" /></td>';
+        echo '<td>';
+        echo '<select name="assignment[tbl]">';
         foreach ($schemas as $schema){
-            $form->addHTML('<option value="'. $schema['tbl'] .'">'. $schema['tbl'] . '</option>');
+            echo '<option value="'. hsc($schema['tbl']) .'">'. hsc($schema['tbl']) . '</option>';
         }
-        $form->addHTML('</select>');
-        $form->addHTML("<button type=\"submit\" name=\"action\" value=\"add\">Add</button>");
-        $html = "<li class=\"level1\"><div class=\"li\">";
-        $html .= $form->toHTML();
-        $html .= "</div></li>";
-        echo $html;
-        echo '</ul>';
+        echo '</select>';
+        echo '</td>';
+        echo '<td><button type="submit" name="action" value="add">Add</button></td>'; // FIXME localize
+        echo '</tr>';
+
+        echo '</table>';
     }
 
     /**
