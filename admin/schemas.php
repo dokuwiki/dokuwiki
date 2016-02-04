@@ -71,7 +71,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $form = new Form();
         $form->addFieldsetOpen($this->getLang('create'));
         $form->setHiddenField('do', 'admin');
-        $form->setHiddenField('page', 'struct');
+        $form->setHiddenField('page', 'struct_schemas');
         $form->addTextInput('table', $this->getLang('schemaname'));
         $form->addButton('', $this->getLang('save'));
         $form->addHTML('<p>'.$this->getLang('createhint').'</p>'); // FIXME is that true? we probably could
@@ -90,9 +90,8 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         /** @var helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $db = $helper->getDB();
-
-        parent::getTOC();
         if(!$db) return parent::getTOC();
+
 
         $res = $db->query("SELECT DISTINCT tbl FROM schemas ORDER BY tbl");
         $tables = $db->res2arr($res);
@@ -101,14 +100,19 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $toc = array();
         $link = wl($ID, array(
             'do' => 'admin',
-            'page' => 'struct'
+            'page' => 'struct_assignments'
+        ));
+        $toc[] = html_mktocitem($link, $this->getLang('menu_assignments'), 0, '');
+        $link = wl($ID, array(
+            'do' => 'admin',
+            'page' => 'struct_schemas'
         ));
         $toc[] = html_mktocitem($link, $this->getLang('menu'), 0, '');
 
         foreach($tables as $row) {
             $link = wl($ID, array(
                 'do' => 'admin',
-                'page' => 'struct',
+                'page' => 'struct_schemas',
                 'table' => $row['tbl']
             ));
 

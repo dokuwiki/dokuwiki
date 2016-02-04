@@ -68,8 +68,6 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
-        global $INPUT;
-
         echo $this->locale_xhtml('assignments_intro');
 
         $res = $this->sqlite->query('SELECT tbl FROM schemas GROUP BY tbl');
@@ -106,17 +104,17 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         $html .= "</div></li>";
         echo $html;
         echo '</ul>';
+    }
 
-
-        $table = Schema::cleanTableName($INPUT->str('table'));
-        if($table) {
-            echo '<h2>'.sprintf($this->getLang('edithl'), hsc($table)).'</h2>';
-
-            $editor = new SchemaEditor(new Schema($table));
-            echo $editor->getEditor();
-        } else {
-            $this->html_newschema();
-        }
+    /**
+     * Copies the TOC from the Schema Editor
+     *
+     * @return array
+     */
+    public function getTOC() {
+        /** @var admin_plugin_struct_schemas $plugin */
+        $plugin = plugin_load('admin', 'struct_schemas');
+        return $plugin->getTOC();
     }
 
 }
