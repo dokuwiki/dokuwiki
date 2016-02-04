@@ -155,6 +155,22 @@ class adLDAP {
     protected $useSSO = false;
     
     /**
+    * Try controllers  
+    * Before returning a random or prefered controller ping it to ensure they are alive.
+    * 
+    * @var bool
+    */
+    protected $tryControllers = false;
+    
+    /**
+    * Get random controller
+    * Pick random controller (default) or use controller array order as preference (best choice is first)
+    * 
+    * @var bool
+    */
+    protected $randomControllers = true;
+
+    /**
     * When querying group memberships, do it recursively 
     * eg. User Fred is a member of Group A, which is a member of Group B, which is a member of Group C
     * user_ingroup("Fred","C") will returns true with this option turned on, false if turned off     
@@ -582,6 +598,10 @@ class adLDAP {
                 }
                 $this->domainControllers = $options["domain_controllers"]; 
             }
+			// Update: options for controller choosing 
+            if (array_key_exists("try_controller",$options)){ $this->tryControllers = (bool)$options["try_controller"]; }
+            if (array_key_exists("random_controller",$options)){ $this->randomControllers = (bool) $options["random_controller"]; }
+
             if (array_key_exists("admin_username",$options)){ $this->adminUsername = $options["admin_username"]; }
             if (array_key_exists("admin_password",$options)){ $this->adminPassword = $options["admin_password"]; }
             if (array_key_exists("real_primarygroup",$options)){ $this->realPrimaryGroup = $options["real_primarygroup"]; }
@@ -623,7 +643,10 @@ class adLDAP {
     public function connect() 
     {
         // Connect to the AD/LDAP server as the username/password
-        $domainController = $this->randomController();
+        //$domainController = $this->randomController();
+		
+		// Update: options for controller choosing 
+        $domainController = $this->pickController();
         if ($this->useSSL) {
             $this->ldapConnection = ldap_connect("ldaps://" . $domainController, $this->adPort);
         } else {
@@ -916,6 +939,28 @@ class adLDAP {
         } */
         return $this->domainControllers[array_rand($this->domainControllers)];
     }  
+
+    /**
+    * Picks a controller according to try_controller and random_controller settings
+    * 
+    * @return string
+    */
+    protected function pickController()
+    {
+		if (empty($this->domainControllers)) return '';
+		if ($this->randomControllers){
+		        mt_srand(doubleval(microtime()) * 100000000); // For older PHP versions
+				$key = array_rand($this->domainControllers);
+		}else{
+			$key = array_shift(array_keys($this->domainControllers));
+		}
+		if ($this->tryControllers && !$this->pingController($this->domainControllers[$key])){
+			unset($this->domainControllers[$key]);
+			return $this->pickController();
+		}
+		return $this->domainControllers[$key];
+    }  
+
     
     /** 
     * Test basic connectivity to controller 

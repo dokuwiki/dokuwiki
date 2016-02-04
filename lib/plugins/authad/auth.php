@@ -73,6 +73,16 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     protected $_grpsusers = array();
 
     /**
+     * @var object if user caching is enabled and the helper plugin is available, it is here.
+     */
+    protected $_cache = null;
+
+    /**
+     * @var array parsed user to AD user mapping.
+     */
+    protected $_user_map = array();
+	
+    /**
      * Constructor
      */
     public function __construct() {
@@ -82,6 +92,13 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // we load the config early to modify it a bit here
         $this->loadConfig();
 
+		if ($this->conf['user_caching'])
+			$this->_cache = $this->loadHelper('memcache',false);	//loads the helper plugin if it is available.
+		
+		// get user remapping
+		$this->_getUserMap();
+		// sets auth features initially.
+		$this->_setFeatureArray();
         // additional information fields
         if(isset($this->conf['additional'])) {
             $this->conf['additional'] = str_replace(' ', '', $this->conf['additional']);
@@ -118,12 +135,17 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             }
         }
 
-        // other can do's are changed in $this->_loadServerConfig() base on domain setup
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
-        $this->cando['getUserCount'] = true;
+
     }
 
+	public function trustExternal($user, $pass, $sticky = false) {
+		if (!($user = $this->cleanUser($_SERVER['REMOTE_USER']))) return false;
+		global $USERINFO;
+		$USERINFO = $this->getUserData($user);
+		return !empty($USERINFO);
+	}
+
+	
     /**
      * Load domain config on capability check
      *
@@ -132,9 +154,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     public function canDo($cap) {
         //capabilities depend on config, which may change depending on domain
-        $domain = $this->_userDomain($_SERVER['REMOTE_USER']);
-        $this->_loadServerConfig($domain);
-        return parent::canDo($cap);
+		$domain = $this->_userDomain($_SERVER['REMOTE_USER']);
+        $opts = $this->_loadServerConfig($domain);
+		// recheck the feature, as domain may have different admin_feature settings
+		return $this->_checkFeatureStatus($cap,$opts);
     }
 
     /**
@@ -158,7 +181,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $adldap = $this->_adldap($this->_userDomain($user));
         if(!$adldap) return false;
 
-        return $adldap->authenticate($this->_userName($user), $pass);
+		// FIX: authenticate both without and with domain.
+        return $adldap->authenticate($this->_userName($user), $pass) || $adldap->authenticate($user, $pass);
     }
 
     /**
@@ -190,10 +214,22 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         global $conf;
         global $lang;
         global $ID;
-        $adldap = $this->_adldap($this->_userDomain($user));
-        if(!$adldap) return false;
+		// make sure $user is always in cleanUser format.
+		$orig_user = $user = $this->cleanUser($user);
+		
+		// see if a user is mapped to different user. (while loop to apply chained remapping, but don't allow circular remapping, so break if the mapped user is the original one)
+		while(($mapped_user = @$this->_user_map[$user]) && ($mapped_user != $orig_user)){
+			$user = $mapped_user;
+		}
+		
+		// if caching is enabled, and user is in the cache, no need to do anything.
+		if ($this->_cache && ($info = $this->_cache->get('authad_users_'.$user))){
+			return $info;
+		}
 
-        if($user == '') return array();
+        $adldap = $this->_adldap($this->_userDomain($user));
+        if(!$adldap || !$user) return array();
+
 
         $fields = array('mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol');
 
@@ -268,7 +304,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 }
             }
         }
-
+		// if caching is enabled and data is recieved, save data to cache.
+		if ($this->_cache && !empty($info)){
+			$this->_cache->set('authad_users_'.$user,$info,$this->conf['user_caching_ttl']);
+		}
         return $info;
     }
 
@@ -300,7 +339,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     public function cleanUser($user) {
         $domain = '';
-
         // get NTLM or Kerberos domain part
         list($dom, $user) = explode('\\', $user, 2);
         if(!$user) $user = $dom;
@@ -313,12 +351,13 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $user   = utf8_strtolower(trim($user));
 
         // is this a known, valid domain? if not discard
-        if(!is_array($this->conf[$domain])) {
+		// FIX: This discarding breaks automatic domain or controller lookup
+        if(!($this->conf['auto_domain'] || $this->conf['auto_controller_lookup']) && !is_array($this->conf[$domain])) {
             $domain = '';
         }
 
         // reattach domain
-        if($domain) $user = "$user@$domain";
+		if($domain) $user = "{$user}@{$domain}";
         return $user;
     }
 
@@ -577,7 +616,6 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         if(is_null($domain) && is_array($this->opts)) {
             $domain = $this->opts['domain'];
         }
-
         $this->opts = $this->_loadServerConfig((string) $domain);
         if(isset($this->adldap[$domain])) return $this->adldap[$domain];
 
@@ -586,12 +624,13 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->adldap[$domain] = new adLDAP($this->opts);
             return $this->adldap[$domain];
         } catch(adLDAPException $e) {
-            if($this->conf['debug']) {
+			if($this->conf['debug']) {
                 msg('AD Auth: '.$e->getMessage(), -1);
             }
             $this->success         = false;
             $this->adldap[$domain] = null;
         }
+
         return false;
     }
 
@@ -602,7 +641,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @return string
      */
     public function _userDomain($user) {
-        list(, $domain) = explode('@', $user, 2);
+		// FIX: usable with both NTLM and reversedomain notation
+		if (strpos($user,"\\") !== false)
+			list($domain) = explode("\\", $user, 2);
+		else
+			list(,$domain) = explode("@", $user, 2);
         return $domain;
     }
 
@@ -613,7 +656,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * @return string
      */
     public function _userName($user) {
-        list($name) = explode('@', $user, 2);
+		// FIX: usable with both NTLM and reversedomain notation
+        if (strpos($user,"\\") !== false)
+			list(,$name) = explode("\\", $user, 2);
+		else
+			list($name) = explode("@", $user, 2);
         return $name;
     }
 
@@ -628,7 +675,12 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts = $this->conf;
 
         $opts['domain'] = $domain;
-
+		
+		// Update: automatically add user's domain to base_dn. But for this, use the base config, without domain-specific arrays.
+		if ($domain && $this->conf['auto_domain']){
+			$opts['base_dn'] = "DC={$domain},".$this->conf['base_dn'];
+		}
+		
         // add possible domain specific configuration
         if($domain && is_array($this->conf[$domain])) foreach($this->conf[$domain] as $key => $val) {
             $opts[$key] = $val;
@@ -639,28 +691,30 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
+		// Update: automatically look up controllers
+		if (	$this->conf['auto_controller_lookup'] // feature is enabled
+			&&	empty($this->conf[$domain]['domain_controllers'])	// and controllers not set explicitly by domain-specific array
+			&&	preg_match_all('~DC=\s*(\w+)\s*(?:,|$)~iU',$opts['base_dn'],$parts)){ // and we can extract the parts from base_dn (preg_* patterns may fail)
+
+			//imploding the $parts now generate 'd1.company.net' from 'DC=d1,DC=company,DC=net'.
+			//Note: at this point the domain_controllers should be array not string.
+			
+			if ($this->conf['try_controller']){	// if try_controller is enabled, we look up the domain to have a list of ipaddresses
+				$opts['domain_controllers'] = gethostbynamel(implode('.',$parts[1]));
+			}
+			else{	// try_controller disabled: it's enough to pass the logical name of controller as openldap should be able to handle multiple addresses per domain name.
+				$opts['domain_controllers'] = array(implode('.',$parts[1]));
+			}
+		}
+
         // compatibility with old option name
         if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
         if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
 
-        // we can change the password if SSL is set
-        if($opts['use_ssl'] || $opts['use_tls']) {
-            $this->cando['modPass'] = true;
-        } else {
-            $this->cando['modPass'] = false;
-        }
 
         // adLDAP expects empty user/pass as NULL, we're less strict FS#2781
         if(empty($opts['admin_username'])) $opts['admin_username'] = null;
         if(empty($opts['admin_password'])) $opts['admin_password'] = null;
-
-        // user listing needs admin priviledges
-        if(!empty($opts['admin_username']) && !empty($opts['admin_password'])) {
-            $this->cando['getUsers'] = true;
-        } else {
-            $this->cando['getUsers'] = false;
-        }
-
         return $opts;
     }
 
@@ -726,4 +780,103 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
             $this->_pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
         }
     }
+	
+	/**
+	* Fetch auth feature override settings from config
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	* @param string $feature feature name as it should be in canDo (case sensitive)
+	* @param string $config config string that include specific domain options
+	* @return bool (override) or null (no override)
+	*/
+    protected function _checkFeatureOverride($feature,$config) {
+		// return null, if feature is not overridden
+		if (($pos = strpos($config,$feature)) === false) return null;
+		// return false if disabled
+		if (($sign = $config[max(0,$pos-1)]) == '-') return false;
+		// return true ('+' sign is optional)
+		return true;
+	}
+	
+	/**
+	* Fetch auth feature status
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	* @param string $feature feature name as it should be in canDo (case sensitive)
+	* @param array $opts config array that include specific domain options
+	* @return bool
+	*/
+    protected function _checkFeatureStatus($feature,$opts) {
+		$override = $this->_checkFeatureOverride($feature,$opts['admin_features']);
+		$orig_val = @$this->cando[$feature];
+		switch ($feature){
+			case 'modPass': 
+				// modPass available: when on secure channel and not explicitly disabled
+				return (($opts['use_ssl'] || $opts['use_tls']) && ($override !== false));
+			case 'modName':
+			case 'modMail':
+				$orig_val = true; // modName and modMail was defaultly enabled in authad (code removed)
+			case 'modLogin':
+			case 'modGroups':
+				return (
+					$override === true	// explicitly enabled
+					||
+					($orig_val && ($override !== false))	// default value not explicitly disabled
+					);
+			case 'getUserCount':// getUserCount was defaultly enabled in authad when using admin login (code removed)
+				return (
+					(!empty($opts['admin_username']) && !empty($opts['admin_password']))	// requires admin login
+					&&
+					($override !== false)	// default value not explicitly disabled
+				);
+			case 'getUsers':
+			case 'getGroups':
+				return (
+					($override !== false)	// default value not explicitly disabled
+				);
+			case 'addUser': 
+			case 'delUser':
+				return (
+					(!empty($opts['admin_username']) && !empty($opts['admin_password']))	// requires admin login
+					&&
+					($this->cando[$feature] && ($override !== false))	// default value not explicitly disabled
+				);
+			case 'external': 
+				return (bool)$opts['doku_signin'];	// external is used for auto-signin
+			case 'logout':
+				return !((bool)$opts['sso'] || (bool) $opts['doku_signin']);	// logout is disabled for sso or auto-signin
+			default:	// don't care for different stuff.
+				// NOTE: using $this->canDo would cause circular dependence deadlock... This is false-positive issue by scrutinizer.
+				return parent::canDo($feature);
+		}
+	}
+
+	/**
+	* Sets all features to the default (no domain) options.
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	*/
+    protected function _setFeatureArray() {
+		foreach ($this->cando as $feature => &$value){
+			$value = $this->_checkFeatureStatus($feature,$this->conf);
+		}
+	}
+
+	/**
+	* Parses the user_map string to $this->_user_map array
+	*
+	* @author János Fekete <jan@fjan.eu>
+	*
+	*/
+    protected function _getUserMap() {
+		if (preg_match_all('~\s*([\'\"]?)([\w-\\\\/@\s]+)\\1\s*\=\>\s*([\'\"]?)([\w-\\\\/@\s]+)\\3\s*(?:$|,)~iU',@$this->conf['user_map'],$users,PREG_SET_ORDER)){
+			foreach ($users as $user){
+				$this->_user_map[$this->cleanUser($user[2])] = $this->cleanUser($user[4]);
+			}
+		}
+	}
+	
 }
