@@ -25,8 +25,14 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         return 501;
     }
 
-    public function getMenuText() {
-        return 'struct plugin schema page assignments';
+    /**
+     * Return the text that is displayed at the main admin menu
+     *
+     * @param string $language language code
+     * @return string menu string
+     */
+    public function getMenuText($language) {
+        return $this->getLang('menu_assignments');
     }
 
     /**
