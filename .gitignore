@@ -34,28 +34,6 @@
 /lib/tpl/*
 !/lib/tpl/dokuwiki
 !/lib/tpl/index.php
-/lib/plugins/*
-!/lib/plugins/acl
-!/lib/plugins/authad
-!/lib/plugins/authldap
-!/lib/plugins/authmysql
-!/lib/plugins/authpgsql
-!/lib/plugins/authplain
-!/lib/plugins/config
-!/lib/plugins/extension
-!/lib/plugins/info
-!/lib/plugins/popularity
-!/lib/plugins/revert
-!/lib/plugins/safefnrecode
-!/lib/plugins/styling
-!/lib/plugins/testing
-!/lib/plugins/usermanager
-!/lib/plugins/action.php
-!/lib/plugins/admin.php
-!/lib/plugins/auth.php
-!/lib/plugins/index.html
-!/lib/plugins/remote.php
-!/lib/plugins/syntax.php
 lib/images/*/local/*
 
 # composer default ignores
