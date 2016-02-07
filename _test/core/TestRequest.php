@@ -22,11 +22,7 @@ class TestRequest {
     
     public function getServer($key) { return $this->server[$key]; }
     public function getSession($key) { return $this->session[$key]; }
-    /**
-     * @param string $key key of GET value. If NULL all GET variables will be returned
-     * @return string[] | string
-     */
-    public function getGet($key = null) { return (!empty($key) ? $this->get[$key] : $this->get); }
+    public function getGet($key) { return $this->get[$key]; }
     public function getPost($key) { return $this->post[$key]; }
     public function getScript() { return $this->script; }
     
@@ -38,7 +34,7 @@ class TestRequest {
     /**
      * Executes the request
      * @param string $uri end URL to simulate, needs to start with /doku.php currently
-     * @param string $header_remove call <b>header_remove()</b> or not
+     * @param bool $header_remove call <b>header_remove()</b> or not
      * @return \TestResponse the resulting output of the request
      */
     public function execute($uri='/doku.php', $header_remove = true) {
@@ -73,11 +69,12 @@ class TestRequest {
         if ($header_remove) {
         	header_remove(); // makes error in PHPUNIT 'Cannot modify header information - headers already sent by'
         }
-
+        
         $INPUT = new Input();
-       	ob_start();
-        include(DOKU_INC.$this->script);
-       	$content = ob_get_clean();
+        $content = '';
+       	ob_start(function ($c) use (&$content) { $content .= $c;});
+        require DOKU_INC.$this->script;
+        ob_end_clean();
        	
         // create the response object
         $response = new TestResponse(
@@ -137,26 +134,28 @@ class TestRequest {
      * Simulate a POST request with the given variables
      *
      * @param array $post  all the POST parameters to use
-     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
+     * @param string $uri  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
+     * @param bool $header_remove call <b>header_remove()</b> or not
      * @param return TestResponse
      */
-    public function post($post=array(), $uri='/doku.php') {
+    public function post($post=array(), $uri='/doku.php', $header_remove = true) {
         $this->post = array_merge($this->post, $post);
         $this->setServer('REQUEST_METHOD', 'POST');
-        return $this->execute($uri);
+        return $this->execute($uri, $header_remove);
     }
 
     /**
      * Simulate a GET request with the given variables
      *
      * @param array $GET   all the GET parameters to use
-     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
+     * @param string $uri  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
+     * @param bool $header_remove call <b>header_remove()</b> or not
      * @param return TestResponse
      */
-    public function get($get=array(), $uri='/doku.php') {
+    public function get($get=array(), $uri='/doku.php', $header_remove = true) {
         $this->get  = array_merge($this->get, $get);
         $this->setServer('REQUEST_METHOD', 'GET');
-        return $this->execute($uri);
+        return $this->execute($uri, $header_remove);
     }
 
 
