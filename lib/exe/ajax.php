@@ -11,8 +11,6 @@ require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
 
-header('Content-Type: text/html; charset=utf-8');
-
 //call the requested function
 if($INPUT->post->has('call')){
     $call = $INPUT->post->str('call');
