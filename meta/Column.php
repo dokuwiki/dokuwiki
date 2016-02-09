@@ -25,6 +25,8 @@ class Column {
     protected $colref;
     /** @var bool is this column still enabled? */
     protected $enabled=true;
+    /** @var  string backreference to the table this column is part of */
+    protected $table;
 
     /**
      * Column constructor.
@@ -32,12 +34,14 @@ class Column {
      * @param AbstractBaseType $type
      * @param int $colref
      * @param bool $enabled
+     * @param string $table
      */
-    public function __construct($sort, AbstractBaseType $type, $colref=0, $enabled=true) {
+    public function __construct($sort, AbstractBaseType $type, $colref=0, $enabled=true, $table='') {
         $this->sort = (int) $sort;
         $this->type = $type;
         $this->colref = (int) $colref;
         $this->enabled = (bool) $enabled;
+        $this->table = $table;
     }
 
     /**
@@ -73,6 +77,13 @@ class Column {
      */
     public function isEnabled() {
         return $this->enabled;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTable() {
+        return $this->table;
     }
 
     /**

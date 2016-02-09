@@ -105,7 +105,8 @@ class Schema {
                     $row['sort'],
                     new $class($config, $row['label'], $row['ismulti'], $row['tid']),
                     $row['colref'],
-                    $row['enabled']
+                    $row['enabled'],
+                    $table
                 );
 
             if($row['sort'] > $this->maxsort) $this->maxsort = $row['sort'];
