@@ -59,6 +59,13 @@ class Column {
     }
 
     /**
+     * @return string
+     */
+    public function getLabel() {
+        return $this->type->getLabel();
+    }
+
+    /**
      * @return AbstractBaseType
      */
     public function getType() {
@@ -84,6 +91,13 @@ class Column {
      */
     public function getTable() {
         return $this->table;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMulti() {
+        return $this->type->isMulti();
     }
 
     /**
