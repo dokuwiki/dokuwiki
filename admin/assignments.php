@@ -8,6 +8,7 @@
 
 // must be run within Dokuwiki
 use dokuwiki\Form\Form;
+use plugin\struct\meta\Assignments;
 use plugin\struct\meta\Schema;
 use plugin\struct\meta\SchemaEditor;
 
@@ -48,24 +49,19 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
     public function handle() {
         global $INPUT;
 
-        /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
-
+        $assignments = new Assignments();
         if($INPUT->str('action') && $INPUT->arr('assignment') && checkSecurityToken()) {
             $assignment = $INPUT->arr('assignment');
+            $ok = false;
             if ($INPUT->str('action') === 'delete') {
-                $sql = 'DELETE FROM schema_assignments WHERE assign = ? AND tbl = ?';
+                $ok = $assignments->remove($assignment['assign'], $assignment['tbl']);
+            } else if($INPUT->str('action') === 'add') {
+                $ok = $assignments->add($assignment['assign'], $assignment['tbl']);
             }
-            if ($INPUT->str('action') === 'add') {
-                $sql = 'REPLACE INTO schema_assignments (assign, tbl) VALUES (?,?)';
-            }
-            $opts = array($assignment['assign'], $assignment['tbl']);
-            if(empty($sql) || empty($assignment['assign']) || empty($assignment['tbl']) || !$this->sqlite->query($sql, $opts)) {
+            if(empty($sql) || empty($assignment['assign']) || empty($assignment['tbl']) || !$ok) {
                 msg('something went wrong while saving', -1);
             }
         }
-
     }
 
     /**
@@ -80,9 +76,8 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         $schemas = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
 
-        $res = $this->sqlite->query('SELECT * FROM schema_assignments ORDER BY assign');
-        $assignments = $this->sqlite->res2arr($res);
-        $this->sqlite->res_close($res);
+        $ass = new Assignments();
+        $assignments = $ass->getAll();
 
         echo '<ul>';
         foreach ($assignments as $assignment) {

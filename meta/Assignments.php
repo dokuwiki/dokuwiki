@@ -2,6 +2,13 @@
 
 namespace plugin\struct\meta;
 
+/**
+ * Class Assignments
+ *
+ * Manages the assignment of schemas (table names) to pages and namespaces
+ *
+ * @package plugin\struct\meta
+ */
 class Assignments {
 
     /** @var \helper_plugin_sqlite|null */
@@ -29,6 +36,39 @@ class Assignments {
         $res = $this->sqlite->query($sql);
         $this->assignments = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
+    }
+
+    /**
+     * Add a new assignment to the assignment table
+     *
+     * @param string $assign
+     * @param string $table
+     * @return bool
+     */
+    public function add($assign, $table) {
+        $sql = 'REPLACE INTO schema_assignments (assign, tbl) VALUES (?,?)';
+        return (bool) $this->sqlite->query($sql, array($assign, $table));
+    }
+
+    /**
+     * Remove an existing assignment from the assignment table
+     *
+     * @param string $assign
+     * @param string $table
+     * @return bool
+     */
+    public function remove($assign, $table) {
+        $sql = 'DELETE FROM schema_assignments WHERE assign = ? AND tbl = ?';
+        return (bool) $this->sqlite->query($sql, array($assign, $table));
+    }
+
+    /**
+     * Get the whole assignments table
+     *
+     * @return array
+     */
+    public function getAll() {
+        return $this->assignments;
     }
 
     /**
