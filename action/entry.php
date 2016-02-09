@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+use plugin\struct\meta\Assignments;
 use plugin\struct\meta\SchemaData;
 
 class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
@@ -85,20 +86,9 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      */
     public function handle_editform(Doku_Event $event, $param) {
         global $ID;
-        /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
 
-        $res = $this->sqlite->query("SELECT tbl FROM schema_assignments WHERE assign = ?", array($ID,));
-        if(!$this->sqlite->res2count($res)) return false;
-
-        $tables = array_map(
-            function ($value) {
-                return $value['tbl'];
-            },
-            $this->sqlite->res2arr($res)
-        );
-        $this->sqlite->res_close($res);
+        $assignments = new Assignments();
+        $tables = $assignments->getPageAssignments($ID);
 
         $html = '';
         foreach($tables as $table) {
