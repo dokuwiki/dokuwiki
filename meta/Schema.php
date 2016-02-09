@@ -161,6 +161,23 @@ class Schema {
     }
 
     /**
+     * Find a column in the schema by its label
+     *
+     * Only enabled columns are returned!
+     *
+     * @param $name
+     * @return bool|Column
+     */
+    public function findColumn($name) {
+        foreach($this->columns as $col) {
+            if($col->isEnabled() && utf8_strtolower($col->getLabel()) == utf8_strtolower($name)) {
+                return $col;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function getTable() {
