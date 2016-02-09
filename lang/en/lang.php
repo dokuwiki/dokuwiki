@@ -14,9 +14,14 @@ $lang['create'] = 'Create new Schema';
 $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
+
+
+
+
+$lang['searchex_noschemas'] = 'There have been no schemas given to load columns from';
+$lang['searchex_nocolname'] = 'No column name given';
+$lang['searchex_'] = '';
+$lang['searchex_'] = '';
 
 
 

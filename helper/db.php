@@ -17,12 +17,16 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         /** @var helper_plugin_sqlite $sqlite */
         $this->sqlite = plugin_load('helper', 'sqlite');
         if(!$this->sqlite) {
+            if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t load sqlite.');
+
             msg('The struct plugin requires the sqlite plugin. Please install it', -1);
             return;
         }
 
         if($this->sqlite->getAdapter()->getName() != DOKU_EXT_PDO) {
-            msg('The struct plugin requires sqlite3 you\'re still using sqlite2');
+            if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t load PDO sqlite.');
+
+            msg('The struct plugin requires sqlite3 you\'re still using sqlite2',-1);
             $this->sqlite = null;
             return;
         }
@@ -30,6 +34,8 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
 
         // initialize the database connection
         if(!$this->sqlite->init('struct', DOKU_PLUGIN . 'struct/db/')) {
+            if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t init sqlite.');
+
             return;
         }
     }

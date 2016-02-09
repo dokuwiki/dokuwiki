@@ -7,6 +7,9 @@
  */
 
 // must be run within Dokuwiki
+use plugin\struct\meta\Search;
+use plugin\struct\meta\SearchException;
+
 if (!defined('DOKU_INC')) die();
 
 class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
@@ -14,19 +17,19 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @return string Syntax mode type
      */
     public function getType() {
-        return 'FIXME: container|baseonly|formatting|substition|protected|disabled|paragraphs';
+        return 'substition';
     }
     /**
      * @return string Paragraph type
      */
     public function getPType() {
-        return 'FIXME: normal|block|stack';
+        return 'block';
     }
     /**
      * @return int Sort order - Low numbers go before high numbers
      */
     public function getSort() {
-        return FIXME;
+        return 500;
     }
 
     /**
@@ -35,13 +38,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('<FIXME>',$mode,'plugin_struct_table');
-//        $this->Lexer->addEntryPattern('<FIXME>',$mode,'plugin_struct_table');
+        $this->Lexer->addSpecialPattern('STRUCT',$mode,'plugin_struct_table');
     }
 
-//    public function postConnect() {
-//        $this->Lexer->addExitPattern('</FIXME>','plugin_struct_table');
-//    }
 
     /**
      * Handle matches of the struct syntax
@@ -68,6 +67,22 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
+
+        try {
+            $search = new Search();
+            $search->addSchema('foo');
+            $search->addSchema('try1');
+            $search->addColumn('try1.first');
+            $sql = $search->getSQL();
+
+            $renderer->doc = $sql;
+        } catch (SearchException $e) {
+            msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
+        }
+
+
+
+
 
         return true;
     }
