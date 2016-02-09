@@ -1,11 +1,17 @@
 <?php
+namespace plugin\struct\test;
+
+// we don't have the auto loader here
+spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+
+
 /**
  * General tests for the struct plugin
  *
  * @group plugin_struct
  * @group plugins
  */
-class general_plugin_struct_test extends DokuWikiTest {
+class general_plugin_struct_test extends \DokuWikiTest {
 
     /**
      * Simple test to make sure the plugin.info.txt is in correct format

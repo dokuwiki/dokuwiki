@@ -1,4 +1,8 @@
 <?php
+namespace plugin\struct\test;
+
+// we don't have the auto loader here
+spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 use plugin\struct\meta\Schema;
 
@@ -9,7 +13,7 @@ use plugin\struct\meta\Schema;
  * @group plugins
  *
  */
-class schema_struct_test extends DokuWikiTest {
+class schema_struct_test extends \DokuWikiTest {
 
     protected $pluginsEnabled = array('struct');
 

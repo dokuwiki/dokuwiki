@@ -1,4 +1,8 @@
 <?php
+namespace plugin\struct\test;
+
+// we don't have the auto loader here
+spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 use plugin\struct\meta\SchemaBuilder;
 use plugin\struct\meta\Schema;
@@ -10,17 +14,17 @@ use plugin\struct\meta\Schema;
  * @group plugins
  *
  */
-class schemaBuilder_struct_test extends DokuWikiTest {
+class schemaBuilder_struct_test extends \DokuWikiTest {
 
     protected $pluginsEnabled = array('struct', 'sqlite');
 
-    /** @var helper_plugin_sqlite $sqlite */
+    /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;
 
     public function setUp() {
         parent::setUp();
 
-        /** @var helper_plugin_struct_db $sqlite */
+        /** @var \helper_plugin_struct_db $sqlite */
         $sqlite = plugin_load('helper', 'struct_db');
         $this->sqlite = $sqlite->getDB();
     }
@@ -35,7 +39,7 @@ class schemaBuilder_struct_test extends DokuWikiTest {
 
         foreach ($tableNames as $tableName) {
             if ($tableName == 'opts') continue;
-            $this->sqlite->query('DROP TABLE ?;', $tableName);
+            $this->sqlite->query('DROP TABLE ?', $tableName);
         }
 
 
