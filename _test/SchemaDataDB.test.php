@@ -74,17 +74,17 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         // revision 1
         $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 123, 'value1',));
         $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('data_testtable',2,'testpage',123,1,'value2.1',));
+                       array('testtable',2,'testpage',123,1,'value2.1',));
         $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('data_testtable',2,'testpage',123,2,'value2.2',));
+                       array('testtable',2,'testpage',123,2,'value2.2',));
 
 
         // revision 2
         $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 789, 'value1a',));
         $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('data_testtable',2,'testpage',789,1,'value2.1a',));
+                       array('testtable',2,'testpage',789,1,'value2.1a',));
         $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('data_testtable',2,'testpage',789,2,'value2.2a',));
+                       array('testtable',2,'testpage',789,2,'value2.2a',));
     }
 
     public function tearDown() {
@@ -207,7 +207,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
             'col2' => ''
         );
 
-        $res = $this->sqlite->query("SELECT colref, row, value FROM multivals WHERE pid = ? AND tbl = ? ORDER BY rev DESC LIMIT 3",array('testpage', 'data_testtable'));
+        $res = $this->sqlite->query("SELECT colref, row, value FROM multivals WHERE pid = ? AND tbl = ? ORDER BY rev DESC LIMIT 3",array('testpage', 'testtable'));
         $actual_saved_multi = $this->sqlite->res2arr($res);
         $expected_saved_multi = array(
             array(

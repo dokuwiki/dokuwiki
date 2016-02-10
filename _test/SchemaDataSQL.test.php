@@ -77,7 +77,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                    LEFT OUTER JOIN multivals M3
                      ON DATA.pid = M3.pid
                     AND DATA.rev = M3.rev
-                    AND M3.tbl = 'data_testtable'
+                    AND M3.tbl = 'testtable'
                     AND M3.colref = 3
                   WHERE DATA.pid = ?
                     AND DATA.rev = ?",

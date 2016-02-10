@@ -64,7 +64,7 @@ class SchemaData extends Schema {
         $ok = $this->sqlite->query($singlesql, $opt);
 
         foreach ($multiopts as $multiopt) {
-            $multiopt = array_merge(array($table, $now, $this->page,), $multiopt);
+            $multiopt = array_merge(array($this->table, $now, $this->page,), $multiopt);
             $ok = $ok && $this->sqlite->query($multisql, $multiopt);
         }
 
@@ -166,7 +166,7 @@ class SchemaData extends Schema {
             $select .= ",$tn.value AS col$col";
             $join .= "LEFT OUTER JOIN multivals $tn";
             $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
-            $join .= " AND $tn.tbl = '$table' AND $tn.colref = $col\n";
+            $join .= " AND $tn.tbl = '{$this->table}' AND $tn.colref = $col\n";
         }
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
