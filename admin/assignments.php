@@ -16,9 +16,6 @@ if(!defined('DOKU_INC')) die();
 
 class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
 
-    /** @var helper_plugin_sqlite */
-    protected $sqlite;
-
     /**
      * @return int sort number in admin menu
      */
@@ -72,9 +69,13 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
 
         echo $this->locale_xhtml('assignments_intro');
 
-        $res = $this->sqlite->query('SELECT tbl FROM schemas GROUP BY tbl');
-        $schemas = $this->sqlite->res2arr($res);
-        $this->sqlite->res_close($res);
+        //fixme listing schema tables should be moved to one of the meta classes
+        /** @var helper_plugin_struct_db $helper */
+        $helper = plugin_load('helper', 'struct_db');
+        $sqlite = $helper->getDB();
+        $res = $sqlite->query('SELECT tbl FROM schemas GROUP BY tbl');
+        $schemas = $sqlite->res2arr($res);
+        $sqlite->res_close($res);
 
         $ass = new Assignments();
         $assignments = $ass->getAll();
