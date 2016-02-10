@@ -7,9 +7,11 @@ use plugin\struct\meta;
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 class Search extends meta\Search {
-    public $schemas;
+    public $schemas = array();
     /** @var  meta\Column[] */
-    public $columns;
+    public $columns = array();
+
+    public $sortby = array();
 }
 
 
@@ -74,6 +76,31 @@ class Search_struct_test extends \DokuWikiTest {
         );
     }
 
+
+    public function test_simple() {
+
+        /** @var \helper_plugin_struct_db $plugin */
+        $plugin = plugin_load('helper', 'struct_db');
+        $sqlite = $plugin->getDB();
+
+        /*
+        $res = $sqlite->query('SELECT * FROM multivals');
+        $data = $sqlite->res2arr($res);
+        $sqlite->res_close($res);
+        print_r($data);
+        */
+
+
+        $search = new Search();
+
+        $search->addSchema('schema1');
+        $search->addColumn('first');
+        $search->addColumn('second');
+
+        $sql = $search->getSQL();
+        echo "\n$sql\n";
+    }
+
     public function test_search() {
         $search = new Search();
 
@@ -104,10 +131,16 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addColumn('doesntexist');
         $this->assertEquals(5, count($search->columns));
 
+        $search->addSort('first', false);
+        $this->assertEquals(1, count($search->sortby));
+
+
+        $search->addFilter('second', 'sec', '~', 'AND');
 
         $sql = $search->getSQL();
         echo "\n$sql\n";
-
-
     }
+
+
+
 }

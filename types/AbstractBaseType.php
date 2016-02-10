@@ -153,4 +153,28 @@ abstract class AbstractBaseType {
      * @return string the HTML to represent this data
      */
     abstract public function getDisplayData($value);
+
+    /**
+     * This function builds a where clause for this column, comparing
+     * the current value stored in $column with $value. Types can use it to do
+     * clever things with the comparison.
+     *
+     * This default implementation is probably good enough for most basic types
+     *
+     * @param string $column The column name to us in the SQL
+     * @param string $comp The comparator ('=', '<', '>', '<=', '>=', '~')
+     * @param string $value
+     * @return array Tuple with the SQL and parameter array
+     */
+    public function compare($column, $comp, $value) {
+        if($comp == '~') {
+            $sql = "$column LIKE ?";
+            $opt = array('%'.$value.'%');
+        } else {
+            $sql = "$column $comp ?";
+            $opt = array($value);
+        }
+
+        return array($sql, $opt);
+    }
 }
