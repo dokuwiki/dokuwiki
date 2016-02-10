@@ -129,13 +129,13 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
         $actual_schema = $this->sqlite->res2row($res);
         $this->sqlite->res_close($res);
 
-        $this->assertSame($result, '1');
-        $this->assertEquals($tableSQL, $expected_tableSQL);
-        $this->assertEquals($actual_types, $expected_types);
-        $this->assertEquals($actual_cols, $expected_cols);
-        $this->assertEquals($actual_schema['id'], '1');
-        $this->assertEquals($actual_schema['tbl'], $testname);
-        $this->assertEquals($actual_schema['chksum'], '');
+        $this->assertSame('1', $result);
+        $this->assertEquals($expected_tableSQL, $tableSQL);
+        $this->assertEquals($expected_types, $actual_types);
+        $this->assertEquals($expected_cols, $actual_cols);
+        $this->assertEquals('1', $actual_schema['id']);
+        $this->assertEquals($testname, $actual_schema['tbl']);
+        $this->assertEquals('', $actual_schema['chksum']);
         $this->assertTrue((int)$actual_schema['ts'] > 0, 'timestamp should be larger than 0');
     }
 
