@@ -211,6 +211,7 @@ class SchemaBuilder {
         $sql = "CREATE TABLE $tbl (
                     pid NOT NULL,
                     rev INTEGER NOT NULL,
+                    latest BOOLEAN NOT NULL DEFAULT 0,
                     PRIMARY KEY(pid, rev)
                 )";
 

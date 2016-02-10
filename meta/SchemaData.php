@@ -44,9 +44,9 @@ class SchemaData extends Schema {
 
         $colrefs = array_flip($this->labels);
         $now = $this->ts;
-        $opt = array($this->page, $now,);
+        $opt = array($this->page, $now, 1);
         $multiopts = array();
-        $singlecols = 'pid,rev';
+        $singlecols = 'pid, rev, latest';
         foreach ($data as $colname => $value) {
             if (is_array($value)) {
                 foreach ($value as $index => $multivalue) {
@@ -61,8 +61,14 @@ class SchemaData extends Schema {
         $multisql = "INSERT INTO multivals (tbl, rev, pid, colref, row, value) VALUES (?,?,?,?,?,?)";
 
         $this->sqlite->query('BEGIN TRANSACTION');
-        $ok = $this->sqlite->query($singlesql, $opt);
 
+        // remove latest status from previous data
+        $ok = $this->sqlite->query( "UPDATE $table SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->page));
+
+        // insert single values
+        $ok = $ok && $this->sqlite->query($singlesql, $opt);
+
+        // insert multi values
         foreach ($multiopts as $multiopt) {
             $multiopt = array_merge(array($this->table, $now, $this->page,), $multiopt);
             $ok = $ok && $this->sqlite->query($multisql, $multiopt);

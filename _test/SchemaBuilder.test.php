@@ -81,7 +81,8 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
         $this->sqlite->res_close($res);
         $expected_tableSQL = "CREATE TABLE data_testtable (
                     pid NOT NULL,
-                    rev INTEGER NOT NULL, col1 DEFAULT '', col2 DEFAULT '',
+                    rev INTEGER NOT NULL,
+                    latest BOOLEAN NOT NULL DEFAULT 0, col1 DEFAULT '', col2 DEFAULT '',
                     PRIMARY KEY(pid, rev)
                 )";
 

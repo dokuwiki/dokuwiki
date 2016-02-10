@@ -126,6 +126,8 @@ class Search {
                 $from .= "data_{$schema->getTable()}";
                 $first = $schema->getTable();
             }
+
+            $where .= "\nAND data_{$schema->getTable()}.latest = 1";
         }
 
         // columns to select, handling multis
