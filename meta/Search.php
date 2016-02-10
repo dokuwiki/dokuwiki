@@ -148,7 +148,9 @@ class Search {
         $select = rtrim($select, ', ');
 
         // where clauses
-        foreach($this->filter as list($col, $value, $comp, $type)) {
+        foreach($this->filter as $filter) {
+            list($col, $value, $comp, $type) = $filter;
+
             /** @var $col Column */
             if($col->isMulti()) {
                 $tn = 'MN' . $col->getColref(); // FIXME this joins a second time if the column was selected before
@@ -168,7 +170,9 @@ class Search {
         }
 
         // sorting
-        foreach($this->sortby as list($col, $asc)) {
+        foreach($this->sortby as $sort) {
+            list($col, $asc) = $sort;
+
             /** @var $col Column */
             if($col->isMulti()) {
                 // FIXME how to sort by multival?
