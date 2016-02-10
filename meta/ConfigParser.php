@@ -186,7 +186,7 @@ class ConfigParser {
      */
     protected function parseFilter($val) {
 
-        $comps = Search::COMPARATORS;
+        $comps = Search::$COMPARATORS;
         $comps = array_map('preg_quote_cb', $comps);
         $comps = join('|', $comps);
 

@@ -162,7 +162,7 @@ abstract class AbstractBaseType {
      * This default implementation is probably good enough for most basic types
      *
      * @param string $column The column name to us in the SQL
-     * @param string $comp The comparator @see Search::COMPARATORS
+     * @param string $comp The comparator @see Search::$COMPARATORS
      * @param string $value
      * @return array Tuple with the SQL and parameter array
      */

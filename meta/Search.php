@@ -11,7 +11,7 @@ class Search {
     /**
      * The list of known and allowed comparators
      */
-    const COMPARATORS = array(
+    static public $COMPARATORS = array(
         '<', '>', '<=', '>=', '!=', '!~', '~'
     );
 
@@ -94,7 +94,7 @@ class Search {
      * @param string $type either 'OR' or 'AND'
      */
     public function addFilter($colname, $value, $comp, $type = 'OR') {
-        if(!in_array($comp, self::COMPARATORS)) throw new StructException("Bad comperator. Use ".join(',', self::COMPARATORS));
+        if(!in_array($comp, self::$COMPARATORS)) throw new StructException("Bad comperator. Use ".join(',', self::$COMPARATORS));
         if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
