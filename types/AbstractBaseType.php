@@ -43,7 +43,7 @@ abstract class AbstractBaseType {
      * @param bool $ismulti Should this field accept multiple values?
      * @param int $tid The id of this type if it has been saved, yet
      */
-    public function __construct($config = null, $label = '', $ismulti = false, $tid=0) {
+    public function __construct($config = null, $label = '', $ismulti = false, $tid = 0) {
         if(!is_null($config)) $this->config = array_merge($this->config, $config);
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
@@ -129,10 +129,10 @@ abstract class AbstractBaseType {
     public function multiValueEditor($name, $values) {
         $html = '';
         foreach($values as $value) {
-            $html .= $this->valueEditor($name.'[]', $value);
+            $html .= $this->valueEditor($name . '[]', $value);
         }
         // empty field to add
-        $html .= $this->valueEditor($name.'[]', '');
+        $html .= $this->valueEditor($name . '[]', '');
 
         return $html;
     }
@@ -162,14 +162,17 @@ abstract class AbstractBaseType {
      * This default implementation is probably good enough for most basic types
      *
      * @param string $column The column name to us in the SQL
-     * @param string $comp The comparator ('=', '<', '>', '<=', '>=', '~')
+     * @param string $comp The comparator @see Search::COMPARATORS
      * @param string $value
      * @return array Tuple with the SQL and parameter array
      */
     public function compare($column, $comp, $value) {
         if($comp == '~') {
             $sql = "$column LIKE ?";
-            $opt = array('%'.$value.'%');
+            $opt = array('%' . $value . '%');
+        } else if($comp == '!~') {
+            $sql = "$column NOT LIKE ?";
+            $opt = array('%' . $value . '%');
         } else {
             $sql = "$column $comp ?";
             $opt = array($value);

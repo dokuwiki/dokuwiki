@@ -18,8 +18,8 @@ $lang['createhint'] = 'Please note: schemas can not be renamed later';
 
 
 
-$lang['searchex_noschemas'] = 'There have been no schemas given to load columns from';
-$lang['searchex_nocolname'] = 'No column name given';
+$lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
+$lang['Exception nocolname'] = 'No column name given';
 $lang['searchex_'] = '';
 $lang['searchex_'] = '';
 

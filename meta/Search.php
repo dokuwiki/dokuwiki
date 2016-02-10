@@ -2,13 +2,18 @@
 
 namespace plugin\struct\meta;
 
-use Exception;
-
 class Search {
     /**
      * This separator will be used to concat multi values to flatten them in the result set
      */
     const CONCAT_SEPARATOR = "\n!_-_-_-_-_!\n";
+
+    /**
+     * The list of known and allowed comparators
+     */
+    const COMPARATORS = array(
+        '<', '>', '<=', '>=', '!=', '!~', '~'
+    );
 
     /** @var  \helper_plugin_sqlite */
     protected $sqlite;
@@ -85,12 +90,12 @@ class Search {
      *
      * @param string $colname may contain an alias
      * @param string $value
-     * @param string $comp ('=', '<', '>', '<=', '>=', '~')
+     * @param string $comp @see self::COMPARATORS
      * @param string $type either 'OR' or 'AND'
      */
     public function addFilter($colname, $value, $comp, $type = 'OR') {
-        if(!in_array($comp, array('<', '>', '<=', '>=', '~'))) throw new SearchException("Bad comperator. Use '=', '<', '>', '<=', '>=' or '~'");
-        if($type != 'OR' && $type != 'AND') throw new SearchException('Bad filter type . Only AND or OR allowed');
+        if(!in_array($comp, self::COMPARATORS)) throw new StructException("Bad comperator. Use ".join(',', self::COMPARATORS));
+        if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
@@ -105,7 +110,7 @@ class Search {
      * @return string
      */
     public function getSQL() {
-        if(!$this->columns) throw new SearchException('nocolname');
+        if(!$this->columns) throw new StructException('nocolname');
 
         $from = '';
         $select = '';
@@ -207,7 +212,7 @@ class Search {
      * @return bool|Column
      */
     protected function findColumn($colname) {
-        if(!$this->schemas) throw new SearchException('noschemas');
+        if(!$this->schemas) throw new StructException('noschemas');
 
         // resolve the alias or table name
         list($table, $colname) = explode('.', $colname, 2);
@@ -219,7 +224,7 @@ class Search {
             $table = $this->aliases[$table];
         }
 
-        if(!$colname) throw new SearchException('nocolname');
+        if(!$colname) throw new StructException('nocolname');
 
         // if table name given search only that, otherwiese try all for matching column name
         if($table) {
@@ -240,19 +245,4 @@ class Search {
 
 }
 
-/**
- * Class SearchException
- *
- * A translatable exception
- *
- * @package plugin\struct\meta
- */
-class SearchException extends \RuntimeException {
-    public function __construct($message, $code = -1, Exception $previous = null) {
-        /** @var \action_plugin_struct_autoloader $plugin */
-        $plugin = plugin_load('action', 'struct_autoloader');
-        $trans = $plugin->getLang('searchex_' . $message);
-        if(!$trans) $trans = $message;
-        parent::__construct($trans, $code, $previous);
-    }
-}
+

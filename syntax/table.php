@@ -7,8 +7,11 @@
  */
 
 // must be run within Dokuwiki
+use plugin\struct\meta\ConfigParser;
 use plugin\struct\meta\Search;
+use plugin\struct\meta\SearchConfig;
 use plugin\struct\meta\SearchException;
+use plugin\struct\meta\StructException;
 
 if (!defined('DOKU_INC')) die();
 
@@ -29,7 +32,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @return int Sort order - Low numbers go before high numbers
      */
     public function getSort() {
-        return 500;
+        return 155;
     }
 
     /**
@@ -38,7 +41,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('STRUCT',$mode,'plugin_struct_table');
+        $this->Lexer->addSpecialPattern('----+ *struct table *-+\n.*?\n----+', $mode, 'plugin_struct_table');
     }
 
 
@@ -52,9 +55,18 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @return array Data for the renderer
      */
     public function handle($match, $state, $pos, Doku_Handler $handler){
-        $data = array();
 
-        return $data;
+        $lines = explode("\n", $match);
+        array_shift($lines);
+        array_pop($lines);
+
+        try {
+            $parser = new ConfigParser($lines);
+            return  $parser->getConfig();
+        } catch (StructException $e) {
+            msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
+            return null;
+        }
     }
 
     /**
@@ -67,16 +79,16 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
+        if(!$data) return false;
 
         try {
-            $search = new Search();
-            $search->addSchema('foo');
-            $search->addSchema('try1');
-            $search->addColumn('try1.first');
+            $search = new SearchConfig($data);
+
+
             $sql = $search->getSQL();
 
             $renderer->doc = $sql;
-        } catch (SearchException $e) {
+        } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
         }
 
