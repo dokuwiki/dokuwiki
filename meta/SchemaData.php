@@ -40,7 +40,8 @@ class SchemaData extends Schema {
      * @return bool success of saving the data to the database
      */
     public function saveData($data) {
-        $table = 'data_' . $this->table;
+        $stable = 'data_' . $this->table;
+        $mtable = 'multi_' . $this->table;
 
         $colrefs = array_flip($this->labels);
         $now = $this->ts;
@@ -48,6 +49,10 @@ class SchemaData extends Schema {
         $multiopts = array();
         $singlecols = 'pid, rev, latest';
         foreach ($data as $colname => $value) {
+            if(!isset($colrefs[$colname])) {
+                throw new StructException("Unknown column %s in schema.", hsc($colname));
+            }
+
             if (is_array($value)) {
                 foreach ($value as $index => $multivalue) {
                     $multiopts[] = array($colrefs[$colname], $index+1, $multivalue,);
@@ -57,20 +62,23 @@ class SchemaData extends Schema {
                 $opt[] = $value;
             }
         }
-        $singlesql = "INSERT INTO $table ($singlecols) VALUES (" . trim(str_repeat('?,',count($opt)),',') . ")";
-        $multisql = "INSERT INTO multivals (tbl, rev, pid, colref, row, value) VALUES (?,?,?,?,?,?)";
+        $singlesql = "INSERT INTO $stable ($singlecols) VALUES (" . trim(str_repeat('?,',count($opt)),',') . ")";
+        /** @noinspection SqlResolve */
+        $multisql = "INSERT INTO $mtable (rev, pid, colref, row, value) VALUES (?,?,?,?,?)";
 
         $this->sqlite->query('BEGIN TRANSACTION');
 
         // remove latest status from previous data
-        $ok = $this->sqlite->query( "UPDATE $table SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->page));
+        /** @noinspection SqlResolve */
+        $ok = $this->sqlite->query( "UPDATE $stable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->page));
 
         // insert single values
         $ok = $ok && $this->sqlite->query($singlesql, $opt);
 
+
         // insert multi values
         foreach ($multiopts as $multiopt) {
-            $multiopt = array_merge(array($this->table, $now, $this->page,), $multiopt);
+            $multiopt = array_merge(array($now, $this->page,), $multiopt);
             $ok = $ok && $this->sqlite->query($multisql, $multiopt);
         }
 
@@ -161,7 +169,8 @@ class SchemaData extends Schema {
      * @return array Two fields: the SQL string and the parameters array
      */
     protected function buildGetDataSQL($singles, $multis) {
-        $table = 'data_' . $this->table;
+        $stable = 'data_' . $this->table;
+        $mtable = 'multi_' . $this->table;
 
         $colsel = join(',', preg_filter('/^/', 'col', $singles));
 
@@ -170,15 +179,15 @@ class SchemaData extends Schema {
         foreach($multis as $col) {
             $tn = 'M' . $col;
             $select .= ",$tn.value AS col$col";
-            $join .= "LEFT OUTER JOIN multivals $tn";
+            $join .= "LEFT OUTER JOIN $mtable $tn";
             $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
-            $join .= " AND $tn.tbl = '{$this->table}' AND $tn.colref = $col\n";
+            $join .= " AND $tn.colref = $col\n";
         }
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
         $opt = array($this->page, $this->ts);
 
-        $sql = "$select FROM $table DATA\n$join $where";
+        $sql = "$select FROM $stable DATA\n$join $where";
 
         return array($sql, $opt);
     }

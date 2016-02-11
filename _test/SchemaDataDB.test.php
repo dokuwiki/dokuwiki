@@ -7,6 +7,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 use plugin\struct\meta\SchemaBuilder;
 use plugin\struct\meta\Schema;
+use plugin\struct\meta;
 
 /**
  * Class SchemaData for testing
@@ -72,40 +73,33 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $builder->build();
 
         // revision 1
+        /** @noinspection SqlResolve */
         $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 123, 'value1',));
-        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('testtable',2,'testpage',123,1,'value2.1',));
-        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('testtable',2,'testpage',123,2,'value2.2',));
+        /** @noinspection SqlResolve */
+        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
+                       array(2,'testpage',123,1,'value2.1',));
+        /** @noinspection SqlResolve */
+        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
+                       array(2,'testpage',123,2,'value2.2',));
 
 
         // revision 2
+        /** @noinspection SqlResolve */
         $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 789, 'value1a',));
-        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('testtable',2,'testpage',789,1,'value2.1a',));
-        $this->sqlite->query("INSERT INTO multivals (tbl, colref, pid, rev, row, value) VALUES (?,?,?,?,?,?)",
-                       array('testtable',2,'testpage',789,2,'value2.2a',));
+        /** @noinspection SqlResolve */
+        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
+                       array(2,'testpage',789,1,'value2.1a',));
+        /** @noinspection SqlResolve */
+        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
+                       array(2,'testpage',789,2,'value2.2a',));
     }
 
     public function tearDown() {
         parent::tearDown();
 
-        $res = $this->sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
-        $tableNames = $this->sqlite->res2arr($res);
-        $tableNames = array_map(function ($value) { return $value['name'];},$tableNames);
-        $this->sqlite->res_close($res);
-
-        foreach ($tableNames as $tableName) {
-            if ($tableName == 'opts') continue;
-            $this->sqlite->query('DROP TABLE ?;', $tableName);
-        }
-
-        $this->sqlite->query("CREATE TABLE schema_assignments ( assign NOT NULL, tbl NOT NULL, PRIMARY KEY(assign, tbl) );");
-        $this->sqlite->query("CREATE TABLE schema_cols ( sid INTEGER REFERENCES schemas (id), colref INTEGER NOT NULL, enabled BOOLEAN DEFAULT 1, tid INTEGER REFERENCES types (id), sort INTEGER NOT NULL, PRIMARY KEY ( sid, colref) )");
-        $this->sqlite->query("CREATE TABLE schemas ( id INTEGER PRIMARY KEY AUTOINCREMENT, tbl NOT NULL, ts INT NOT NULL, chksum DEFAULT '' )");
-        $this->sqlite->query("CREATE TABLE sqlite_sequence(name,seq)");
-        $this->sqlite->query("CREATE TABLE types ( id INTEGER PRIMARY KEY AUTOINCREMENT, class NOT NULL, ismulti BOOLEAN DEFAULT 0, label DEFAULT '', config DEFAULT '' )");
-        $this->sqlite->query("CREATE TABLE multivals ( tbl NOT NULL, colref INTEGER NOT NULL, pid NOT NULL, rev INTEGER NOT NULL, row INTEGER NOT NULL, value, PRIMARY KEY(tbl, colref, pid, rev, row) )");
+        /** @var \helper_plugin_struct_db $sqlite */
+        $sqlite = plugin_load('helper', 'struct_db');
+        $sqlite->resetDB();
     }
 
     public function test_getDataFromDB_currentRev() {
@@ -195,11 +189,12 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         );
 
         // act
-        $schemaData = new \plugin\struct\meta\SchemaData('testtable','testpage', "");
+        $schemaData = new meta\SchemaData('testtable','testpage', "");
         $result = $schemaData->saveData($testdata);
 
         // assert
-        $res = $this->sqlite->query("SELECT pid, col1, col2 FROM data_testtable WHERE pid = ? ORDER BY rev DESC LIMIT 1",array('testpage'));
+        /** @noinspection SqlResolve */
+        $res = $this->sqlite->query("SELECT pid, col1, col2 FROM data_testtable WHERE pid = ? ORDER BY rev DESC LIMIT 1", array('testpage'));
         $actual_saved_single = $this->sqlite->res2row($res);
         $expected_saved_single = array(
             'pid' => 'testpage',
@@ -207,7 +202,8 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
             'col2' => ''
         );
 
-        $res = $this->sqlite->query("SELECT colref, row, value FROM multivals WHERE pid = ? AND tbl = ? ORDER BY rev DESC LIMIT 3",array('testpage', 'testtable'));
+        /** @noinspection SqlResolve */
+        $res = $this->sqlite->query("SELECT colref, row, value FROM multi_testtable WHERE pid = ? ORDER BY rev DESC LIMIT 3", array('testpage'));
         $actual_saved_multi = $this->sqlite->res2arr($res);
         $expected_saved_multi = array(
             array(

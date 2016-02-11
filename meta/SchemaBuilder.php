@@ -200,22 +200,36 @@ class SchemaBuilder {
     }
 
     /**
-     * Create a completely new data table with columns yet
+     * Create a completely new data table with no columns yet also create the appropriate
+     * multi value table for the schema
      *
      * @todo how do we want to handle indexes?
      * @return bool
      */
     protected function newDataTable() {
-        $tbl = 'data_' . $this->table;
+        $ok = true;
 
+        $tbl = 'data_' . $this->table;
         $sql = "CREATE TABLE $tbl (
                     pid NOT NULL,
                     rev INTEGER NOT NULL,
                     latest BOOLEAN NOT NULL DEFAULT 0,
                     PRIMARY KEY(pid, rev)
                 )";
+        $ok = $ok && (bool) $this->sqlite->query($sql);
 
-        return (bool) $this->sqlite->query($sql);
+        $tbl = 'multi_' . $this->table;
+        $sql = "CREATE TABLE $tbl (
+                    colref INTEGER NOT NULL,
+                    pid NOT NULL,
+                    rev INTEGER NOT NULL,
+                    row INTEGER NOT NULL,
+                    value,
+                    PRIMARY KEY(colref, pid, rev, row)
+                );";
+        $ok = $ok && (bool) $this->sqlite->query($sql);
+
+        return $ok;
     }
 
     /**
