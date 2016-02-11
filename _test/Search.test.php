@@ -76,6 +76,13 @@ class Search_struct_test extends \DokuWikiTest {
         );
     }
 
+    protected function tearDown() {
+        parent::tearDown();
+
+        /** @var \helper_plugin_struct_db $sqlite */
+        $sqlite = plugin_load('helper', 'struct_db');
+        $sqlite->resetDB();
+    }
 
     public function test_simple() {
 
