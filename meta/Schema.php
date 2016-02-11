@@ -66,7 +66,6 @@ class Schema {
                   ORDER BY ts DESC
                      LIMIT 1";
             $opt = array($table, $ts);
-
         } else {
             $sql = "SELECT *
                       FROM schemas

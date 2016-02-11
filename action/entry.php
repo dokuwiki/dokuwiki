@@ -59,10 +59,15 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $this->sqlite->res_close($res);
 
         $structData = $INPUT->arr('Schema');
-        $timestamp = $INPUT->int('date');
+        $timestamp = time(); //FIXME we should use the time stamp used to save the page data
 
         foreach ($tables as $table) {
             $schema = new SchemaData($table, $ID, $timestamp);
+            if(!$schema->getId()) {
+                // this schema is not available for some reason. skip it
+                continue;
+            }
+
             $schemaData = $structData[$table];
             foreach ($schema->getColumns() as $col) {
                 $type = $col->getType();
