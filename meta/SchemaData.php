@@ -151,7 +151,8 @@ class SchemaData extends Schema {
 
         foreach ($data as $column => $values) {
             $values = array_unique($values);
-            if (count($values) == 1) {
+
+            if (count($values) == 1 && !$this->findColumn($column)->isMulti()) {
                 $data[$column] = $values[0];
             } else {
                 $data[$column] = $values;

@@ -18,11 +18,6 @@ use plugin\struct\meta;
  */
 class SchemaDataDB extends \plugin\struct\meta\SchemaData {
 
-    public function __construct($table, $page, $ts) {
-        // we do intialization by parent here, because we don't need the whole database behind the class
-        parent::__construct($table, $page, $ts);
-    }
-
     public function setCorrectTimestamp($ts = null) {
         parent::setCorrectTimestamp($ts);
     }
@@ -92,6 +87,13 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         /** @noinspection SqlResolve */
         $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
                        array(2,'testpage',789,2,'value2.2a',));
+
+        // revision 1 of different page
+        /** @noinspection SqlResolve */
+        $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage2', 789, 'value1a',));
+        /** @noinspection SqlResolve */
+        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
+                             array(2,'testpage2',789,1,'value2.1a',));
     }
 
     public function tearDown() {
@@ -154,6 +156,22 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
 
         $expected_data = array(
             'testMulitColumn' => array('value2.1a', 'value2.2a'),
+            'testcolumn' => 'value1a',
+        );
+
+        // assert
+        $this->assertEquals($expected_data, $actual_data , '');
+    }
+
+    public function test_getData_currentRev2() {
+
+        // act
+        $schemaData = new SchemaDataDB('testtable','testpage2', "");
+        $schemaData->setCorrectTimestamp();
+        $actual_data = $schemaData->getData();
+
+        $expected_data = array(
+            'testMulitColumn' => array('value2.1a'),
             'testcolumn' => 'value1a',
         );
 
