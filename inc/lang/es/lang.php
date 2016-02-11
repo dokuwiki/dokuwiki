@@ -42,6 +42,7 @@
  * @author Mauricio Segura <maose38@yahoo.es>
  * @author Domingo Redal <docxml@gmail.com>
  * @author solohazlo <solohhazlo@gmail.com>
+ * @author Romano <romanocl@outlook.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
