@@ -84,15 +84,34 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
     }
 
     /**
+     * Run general tests on all users
+     *
+     * @param auth_plugin_authpdo $auth
+     * @param array $users
+     */
+    protected function runGeneralTests(auth_plugin_authpdo $auth, $users) {
+        $this->assertTrue($auth->success, 'intialize auth');
+
+        if($auth->canDo('getUsers')) {
+            $list = $auth->retrieveUsers();
+            $this->assertGreaterThanOrEqual(count($users), count($list));
+        }
+
+        if($auth->canDo('getUserCount')) {
+            $count = $auth->getUserCount();
+            $this->assertGreaterThanOrEqual(count($users), $count);
+        }
+    }
+
+    /**
      * run all the tests with the given user, depending on the capabilities
      *
      * @param auth_plugin_authpdo $auth
      * @param $user
      */
-    protected function runTests(auth_plugin_authpdo $auth, $user) {
+    protected function runUserTests(auth_plugin_authpdo $auth, $user) {
         global $conf;
         $info = 'testing ' . $user['user'];
-        $this->assertTrue($auth->success, $info);
 
         // minimal setup
         $this->assertTrue($auth->checkPass($user['user'], $user['pass']), $info);
@@ -102,6 +121,26 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
         $this->assertEquals($user['mail'], $check['mail'], $info);
         $groups = array_merge($user['grps'], array($conf['defaultgroup']));
         $this->assertEquals($groups, $check['grps'], $info);
+
+        // getUsers
+        if($auth->canDo('getUsers')) {
+            $list = $auth->retrieveUsers(0, -1, array('user' => $user['user']));
+            $this->assertGreaterThanOrEqual(1, count($list));
+            $list = $auth->retrieveUsers(0, -1, array('name' => $user['name']));
+            $this->assertGreaterThanOrEqual(1, count($list));
+            $list = $auth->retrieveUsers(0, -1, array('mail' => $user['mail']));
+            $this->assertGreaterThanOrEqual(1, count($list));
+        }
+
+        // getUserCount
+        if($auth->canDo('getUserCount')) {
+            $count = $auth->getUserCount(array('user' => $user['user']));
+            $this->assertGreaterThanOrEqual(1, $count);
+            $count = $auth->getUserCount(array('name' => $user['name']));
+            $this->assertGreaterThanOrEqual(1, $count);
+            $count = $auth->getUserCount(array('mail' => $user['mail']));
+            $this->assertGreaterThanOrEqual(1, $count);
+        }
 
         // modPass
         if($auth->canDo('modPass')) {
@@ -131,7 +170,7 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
 
         // modLogin
         if($auth->canDo('modLogin')) {
-            $newuser = 'foobar'.$user['user'];
+            $newuser = 'foobar' . $user['user'];
             $ok = $auth->modifyUser($user['user'], array('user' => $newuser));
             $this->assertTrue($ok, $info);
             $check = $auth->getUserData($newuser);
@@ -168,8 +207,9 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
             if($data['passcrypt']) $conf['passcrypt'] = $data['passcrypt'];
             $auth = new auth_plugin_authpdo();
 
+            $this->runGeneralTests($auth, $data['users']);
             foreach($data['users'] as $user) {
-                $this->runTests($auth, $user);
+                $this->runUserTests($auth, $user);
             }
 
             $this->dropDatabase();

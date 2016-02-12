@@ -19,7 +19,7 @@ $data = array(
              WHERE user_login = :user
         ',
         'select-user-groups' => '
-            SELECT CONCAT("group",meta_value) as `group`
+            SELECT CONCAT("group",meta_value) AS `group`
               FROM wpvk_usermeta
              WHERE user_id = :uid
                AND meta_key = "wpvk_user_level"
@@ -27,8 +27,29 @@ $data = array(
         'select-groups' => '',
         'insert-user' => '',
         'delete-user' => '',
-        'list-users' => '',
-        'count-users' => '',
+        'list-users' => '
+            SELECT DISTINCT user_login AS user
+              FROM wpvk_users U, wpvk_usermeta M
+             WHERE U.ID = M.user_id
+               AND M.meta_key = "wpvk_user_level"
+               AND CONCAT("group", M.meta_value) LIKE :group
+               AND U.user_login LIKE :user
+               AND U.display_name LIKE :name
+               AND U.user_email LIKE :mail
+          ORDER BY user_login
+             LIMIT :limit
+            OFFSET :start
+        ',
+        'count-users' => '
+            SELECT COUNT(DISTINCT user_login) as `count`
+              FROM wpvk_users U, wpvk_usermeta M
+             WHERE U.ID = M.user_id
+               AND M.meta_key = "wpvk_user_level"
+               AND CONCAT("group", M.meta_value) LIKE :group
+               AND U.user_login LIKE :user
+               AND U.display_name LIKE :name
+               AND U.user_email LIKE :mail
+        ',
         'update-user-info' => '
             UPDATE wpvk_users
                SET display_name = :name,
