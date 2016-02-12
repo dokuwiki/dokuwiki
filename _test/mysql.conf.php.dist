@@ -1,0 +1,8 @@
+<?php
+/**
+ * This configures the access to a mysql database. The user needs to have permissions
+ * to create and drop databases.
+ */
+$conf['host'] = 'localhost';
+$conf['user'] = 'root';
+$conf['pass'] = '';
