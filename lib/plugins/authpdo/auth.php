@@ -701,7 +701,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      */
     protected function _chkcnf($keys) {
         foreach($keys as $key) {
-            if(!$this->getConf($key)) return false;
+            if(!trim($this->getConf($key))) return false;
         }
 
         return true;
