@@ -172,7 +172,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      *
      * @param   string $user the user name
      * @param   bool $requireGroups whether or not the returned data must include groups
-     * @return array containing user data or false
+     * @return array|bool containing user data or false
      */
     public function getUserData($user, $requireGroups = true) {
         $data = $this->_selectUser($user);
@@ -309,7 +309,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
                 // remove membership for previous groups
                 foreach($oldgroups as $group) {
-                    if(!in_array($group, $changes['grps'])) {
+                    if(!in_array($group, $changes['grps']) && isset($allgroups[$group])) {
                         $ok = $this->_leaveGroup($olddata, $allgroups[$group]);
                         if($ok === false) goto FAIL;
                     }
@@ -516,7 +516,9 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
             // remove group memberships (ignore errors)
             foreach($userdata['grps'] as $group) {
-                $this->_leaveGroup($userdata, $allgroups[$group]);
+                if(isset($allgroups[$group])) {
+                    $this->_leaveGroup($userdata, $allgroups[$group]);
+                }
             }
 
             $ok = $this->_query($this->getConf('delete-user'), $userdata);
