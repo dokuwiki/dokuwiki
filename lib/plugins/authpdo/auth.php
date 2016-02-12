@@ -618,9 +618,10 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      *
      * @param string $sql The SQL statement to execute
      * @param array $arguments Named parameters to be used in the statement
-     * @return array|bool The result as associative array, false on error
+     * @return array|int|bool The result as associative array for SELECTs, affected rows for others, false on error
      */
     protected function _query($sql, $arguments = array()) {
+        $sql = trim($sql);
         if(empty($sql)) {
             $this->_debug('No SQL query given', -1, __LINE__);
             return false;
@@ -639,7 +640,11 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         $sth = $this->pdo->prepare($sql);
         try {
             $sth->execute($params);
-            $result = $sth->fetchAll();
+            if(strtolower(substr($sql, 0, 6)) == 'select') {
+                $result = $sth->fetchAll();
+            } else {
+                $result = $sth->rowCount();
+            }
         } catch(Exception $e) {
             // report the caller's line
             $trace = debug_backtrace();
