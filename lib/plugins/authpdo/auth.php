@@ -385,9 +385,9 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 $filter[$key] = '%' . $filter[$key] . '%';
             }
         }
-        $filter['start'] = $start;
-        $filter['end'] = $start + $limit;
-        $filter['limit'] = $limit;
+        $filter['start'] = (int) $start;
+        $filter['end'] = (int) $start + $limit;
+        $filter['limit'] = (int) $limit;
 
         $result = $this->_query($this->getConf('list-users'), $filter);
         if(!$result) return array();
@@ -627,19 +627,26 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             return false;
         }
 
-        // prepare parameters - we only use those that exist in the SQL
-        $params = array();
-        foreach($arguments as $key => $value) {
-            if(is_array($value)) continue;
-            if(is_object($value)) continue;
-            if($key[0] != ':') $key = ":$key"; // prefix with colon if needed
-            if(strpos($sql, $key) !== false) $params[$key] = $value;
-        }
-
         // execute
+        $params = array();
         $sth = $this->pdo->prepare($sql);
         try {
-            $sth->execute($params);
+            // prepare parameters - we only use those that exist in the SQL
+            foreach($arguments as $key => $value) {
+                if(is_array($value)) continue;
+                if(is_object($value)) continue;
+                if($key[0] != ':') $key = ":$key"; // prefix with colon if needed
+                if(strpos($sql, $key) === false) continue; // skip if parameter is missing
+
+                if(is_int($value)) {
+                    $sth->bindValue($key, $value, PDO::PARAM_INT);
+                } else {
+                    $sth->bindValue($key, $value);
+                }
+                $param[$key] = $value; //remember for debugging
+            }
+
+            $sth->execute();
             if(strtolower(substr($sql, 0, 6)) == 'select') {
                 $result = $sth->fetchAll();
             } else {
