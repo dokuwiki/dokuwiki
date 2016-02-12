@@ -217,7 +217,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
         // prepare data
         if($grps == null) $grps = array();
-        $grps[] = $conf['defaultgroup'];
+        array_unshift($grps, $conf['defaultgroup']);
         $grps = array_unique($grps);
         $hash = auth_cryptPassword($clear);
         $userdata = compact('user', 'clear', 'hash', 'name', 'mail');
