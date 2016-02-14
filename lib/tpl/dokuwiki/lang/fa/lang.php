@@ -5,6 +5,7 @@
  * 
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  */
+$lang['__background_site__']   = 'رنگ پس‌زمینه (پشت جعبهٔ متن)';
 $lang['__link__']              = 'رنگ لینک معمول';
 $lang['__existing__']          = 'رنگ برای لینک به صفحات موجود';
 $lang['__missing__']           = 'رنگ برای لینک به صفحات ناموجود';
