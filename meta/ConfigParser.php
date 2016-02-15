@@ -22,7 +22,7 @@ class ConfigParser {
      * @param $lines
      */
     public function __construct($lines) {
-        $data = array(
+        $this->config = array(
             'limit' => 0,
             'dynfilters' => false,
             'summarize' => false,
@@ -126,8 +126,6 @@ class ConfigParser {
             $columnprops = array_pop($column);
             $this->config['headers'][] = $columnprops['title'];
         }
-
-        return $data;
     }
 
     /**
