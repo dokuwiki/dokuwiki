@@ -138,6 +138,17 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addColumn('doesntexist');
         $this->assertEquals(5, count($search->columns));
 
+        $search->addColumn('%pid%');
+        $this->assertEquals('schema1', $search->columns[5]->getTable());
+        $exception = false;
+        try {
+            $search->columns[5]->getColref();
+        } catch (meta\StructException $e) {
+            $exception = true;
+        }
+        $this->assertTrue($exception, "Struct exception expected for accesing colref of PageColumn");
+
+
         $search->addSort('first', false);
         $this->assertEquals(1, count($search->sortby));
 
