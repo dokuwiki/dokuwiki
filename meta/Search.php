@@ -2,6 +2,7 @@
 
 namespace plugin\struct\meta;
 
+use plugin\struct\types\Page;
 use plugin\struct\types\Text;
 
 class Search {
@@ -141,7 +142,6 @@ class Search {
             $this->range_end = 0;
         }
     }
-
 
     /**
      * Return the number of results (regardless of limit and offset settings)
@@ -302,7 +302,7 @@ class Search {
 
         // handling of page column is special
         if($colname == '%pageid%') {
-            return new PageColumn(0, new Text(), array_shift(array_keys($this->schemas))); //FIXME the type should be Page
+            return new PageColumn(0, new Page(), array_shift(array_keys($this->schemas)));
         }
         // FIXME %title% needs to be handled here, too (later)
 
