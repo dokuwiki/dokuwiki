@@ -162,6 +162,23 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * format and return the data
+     *
+     * @param int[]|string[] $values the values stored in the database
+     *
+     * @return string the HTML to represent this data
+     */
+    public function getMultiDisplay($values) {
+        $formattedValues = array();
+        foreach ($values as $value) {
+            $formattedValues[] = $this->getDisplayData($value);
+        }
+
+        return join(', ', $formattedValues);
+
+    }
+
+    /**
      * This function builds a where clause for this column, comparing
      * the current value stored in $column with $value. Types can use it to do
      * clever things with the comparison.
