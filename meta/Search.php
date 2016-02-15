@@ -35,6 +35,15 @@ class Search {
     /** @var array list of aliases tables can be referenced by */
     protected $aliases = array();
 
+    /** @var  int begin results from here */
+    protected $range_begin = 0;
+
+    /** @var  int end results here */
+    protected $range_end = 0;
+
+    /** @var int the number of results */
+    protected $count = -1;
+
     /**
      * Search constructor.
      */
@@ -106,20 +115,68 @@ class Search {
     }
 
     /**
+     * Set offset for the results
+     *
+     * @param int $offset
+     */
+    public function setOffset($offset) {
+        $limit = 0;
+        if($this->range_end) {
+            // if there was a limit set previously, the range_end needs to be recalculated
+            $limit = $this->range_end - $this->range_begin;
+        }
+        $this->range_begin = $offset;
+        if($limit) $this->setLimit($limit);
+    }
+
+    /**
+     * Limit results to this number
+     *
+     * @param int $limit Set to 0 to disable limit again
+     */
+    public function setLimit($limit) {
+        if($limit) {
+            $this->range_end = $this->range_begin + $limit;
+        } else {
+            $this->range_end = 0;
+        }
+    }
+
+
+    /**
+     * Return the number of results (regardless of limit and offset settings)
+     *
+     * Use this to implement paging. Important: this may only be called after running @see execute()
+     *
+     * @return int
+     */
+    public function getCount() {
+        if($this->count < 0) throw new StructException('Count is only accessible after executing the search');
+        return $this->count;
+    }
+
+    /**
      * Execute this search and return the result
      *
      * The result is a two dimensional array of array. Each cell contains an array with
      * the keys 'col' (containing a Column object) and 'val' containing the value(s)
+     *
+     * This will always query for the full result (not using offset and limit) and then
+     * return the wanted range, setting the count (@see getCount) to the whole result number
      */
     public function execute() {
         list($sql, $opts) = $this->getSQL();
 
+        /** @var \PDOStatement $res */
         $res = $this->sqlite->query($sql, $opts);
-        $data = $this->sqlite->res2arr($res);
-        $this->sqlite->res_close($res);
 
         $result = array();
-        foreach($data as $row) {
+        $cursor = -1;
+        while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
+            $cursor++;
+            if($cursor < $this->range_begin) continue;
+            if($this->range_end && $cursor >= $this->range_end) continue;
+
             $C = 0;
             $resrow = array();
             foreach($this->columns as $col) {
@@ -127,13 +184,16 @@ class Search {
                 $rescol['col'] = $col;
                 $rescol['val'] = $row["C$C"];
                 if($col->isMulti()) {
-                    $rescol['val'] = explode(self::CONCAT_SEPARATOR,$rescol['val']);
+                    $rescol['val'] = explode(self::CONCAT_SEPARATOR, $rescol['val']);
                 }
                 $resrow[] = $rescol;
                 $C++;
             }
             $result[] = $resrow;
         }
+
+        $this->sqlite->res_close($res);
+        $this->count = $cursor + 1;
         return $result;
     }
 
@@ -218,7 +278,7 @@ class Search {
                 // FIXME how to sort by multival?
                 // FIXME what if sort by non merged multival?
             } else {
-                $order .= $col->getColName().' ';
+                $order .= $col->getColName() . ' ';
                 $order .= ($asc) ? 'ASC' : 'DESC';
                 $order .= ', ';
             }
@@ -241,11 +301,10 @@ class Search {
         if(!$this->schemas) throw new StructException('noschemas');
 
         // handling of page column is special
-        if($colname == '%pid%') {
+        if($colname == '%pageid%') {
             return new PageColumn(0, new Text(), array_shift(array_keys($this->schemas))); //FIXME the type should be Page
         }
         // FIXME %title% needs to be handled here, too (later)
-
 
         // resolve the alias or table name
         list($table, $colname) = explode('.', $colname, 2);
