@@ -104,7 +104,7 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addColumn('first');
         $search->addColumn('second');
 
-        $sql = $search->getSQL();
+        list($sql, $opts) = $search->getSQL();
         echo "\n$sql\n";
     }
 
@@ -144,8 +144,12 @@ class Search_struct_test extends \DokuWikiTest {
 
         $search->addFilter('second', 'sec', '~', 'AND');
 
-        $sql = $search->getSQL();
+        list($sql, $opts) = $search->getSQL();
         echo "\n$sql\n";
+
+
+        $result = $search->execute();
+        print_r($result);
     }
 
 

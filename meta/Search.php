@@ -94,7 +94,7 @@ class Search {
      * @param string $type either 'OR' or 'AND'
      */
     public function addFilter($colname, $value, $comp, $type = 'OR') {
-        if(!in_array($comp, self::$COMPARATORS)) throw new StructException("Bad comperator. Use ".join(',', self::$COMPARATORS));
+        if(!in_array($comp, self::$COMPARATORS)) throw new StructException("Bad comperator. Use " . join(',', self::$COMPARATORS));
         if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
@@ -104,10 +104,41 @@ class Search {
     }
 
     /**
+     * Execute this search and return the result
+     *
+     * The result is a two dimensional array of array. Each cell contains an array with
+     * the keys 'col' (containing a Column object) and 'val' containing the value(s)
+     */
+    public function execute() {
+        list($sql, $opts) = $this->getSQL();
+
+        $res = $this->sqlite->query($sql, $opts);
+        $data = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        $result = array();
+        foreach($data as $row) {
+            $C = 0;
+            $resrow = array();
+            foreach($this->columns as $col) {
+                $rescol = array();
+                $rescol['col'] = $col;
+                $rescol['val'] = $row["C$C"];
+                if($col->isMulti()) {
+                    $rescol['val'] = explode(self::CONCAT_SEPARATOR,$rescol['val']);
+                }
+                $resrow[] = $rescol;
+                $C++;
+            }
+            $result[] = $resrow;
+        }
+        return $result;
+    }
+
+    /**
      * Transform the set search parameters into a statement
      *
-     * @todo limit to the newest data!
-     * @return string
+     * @return array ($sql, $opts) The SQL and parameters to execute
      */
     public function getSQL() {
         if(!$this->columns) throw new StructException('nocolname');
@@ -148,7 +179,7 @@ class Search {
                 $from .= " ON data_{$col->getTable()}.pid = $tn.pid AND data_{$col->getTable()}.rev = $tn.rev";
                 $from .= " AND $tn.colref = {$col->getColref()}\n";
             } else {
-                $select .= 'data_' . $col->getTable() . ' . col' . $col->getColref() . " AS $CN, ";
+                $select .= 'data_' . $col->getTable() . '.col' . $col->getColref() . " AS $CN, ";
                 $grouping[] = $CN;
             }
         }
@@ -195,14 +226,7 @@ class Search {
         $sql = "SELECT $select\n  FROM $from\nWHERE $where\nGROUP BY " . join(', ', $grouping);
         if($order) $sql .= "\nORDER BY $order";
 
-        {#debugging
-            $res = $this->sqlite->query($sql, $opts);
-            $data = $this->sqlite->res2arr($res);
-            $this->sqlite->res_close($res);
-            print_r($data);
-        }
-
-        return $sql;
+        return array($sql, $opts);
     }
 
     /**
