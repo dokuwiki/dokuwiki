@@ -168,7 +168,7 @@ abstract class AbstractBaseType {
      *
      * @return string the HTML to represent this data
      */
-    public function getMultiDisplay($values) {
+    public function getMultiDisplayData($values) {
         $formattedValues = array();
         foreach ($values as $value) {
             $formattedValues[] = $this->getDisplayData($value);
