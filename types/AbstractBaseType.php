@@ -155,27 +155,32 @@ abstract class AbstractBaseType {
      * Output the stored data
      *
      * @param string|int $value the value stored in the database
-     * @return string the HTML to represent this data
+     * @param \Doku_Renderer $R the renderer currently used to render the data
+     * @param string $mode The mode the output is rendered in (eg. XHTML)
+     * @return bool true if $mode could be satisfied
      */
-    public function getDisplayData($value) {
-        return hsc($value);
+    public function renderValue($value, \Doku_Renderer $R, $mode) {
+        $R->cdata($value);
+        return true;
     }
 
     /**
      * format and return the data
      *
      * @param int[]|string[] $values the values stored in the database
-     *
-     * @return string the HTML to represent this data
+     * @param \Doku_Renderer $R the renderer currently used to render the data
+     * @param string $mode The mode the output is rendered in (eg. XHTML)
+     * @return bool true if $mode could be satisfied
      */
-    public function getMultiDisplayData($values) {
-        $formattedValues = array();
-        foreach ($values as $value) {
-            $formattedValues[] = $this->getDisplayData($value);
+    public function renderMultiValue($values, \Doku_Renderer $R, $mode) {
+        $len = count($values);
+        for($i=0; $i<$len; $i++) {
+            $this->renderValue($values[$i], $R, $mode);
+            if($i < $len-1) {
+                $R->cdata(', ');
+            }
         }
-
-        return join(', ', $formattedValues);
-
+        return true;
     }
 
     /**

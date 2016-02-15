@@ -13,11 +13,14 @@ class Text extends AbstractBaseType {
     /**
      * Output the stored data
      *
-     * @param int|string $value
-     * @return string the HTML to represent this data
+     * @param string|int $value the value stored in the database
+     * @param \Doku_Renderer $R the renderer currently used to render the data
+     * @param string $mode The mode the output is rendered in (eg. XHTML)
+     * @return bool true if $mode could be satisfied
      */
-    public function getDisplayData($value) {
-        return hsc($this->config['prefix'] . $value . $this->config['postfix']);
+    public function renderValue($value, \Doku_Renderer $R, $mode) {
+        $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
+        return true;
     }
 
     /**
