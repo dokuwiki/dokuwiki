@@ -301,7 +301,7 @@ class Search {
         if(!$this->schemas) throw new StructException('noschemas');
 
         // handling of page column is special
-        if($colname == '%pid%') {
+        if($colname == '%pageid%') {
             return new PageColumn(0, new Text(), array_shift(array_keys($this->schemas))); //FIXME the type should be Page
         }
         // FIXME %title% needs to be handled here, too (later)

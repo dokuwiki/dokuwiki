@@ -99,7 +99,7 @@ class Search_struct_test extends \DokuWikiTest {
         $search = new Search();
 
         $search->addSchema('schema1');
-        $search->addColumn('%pid%');
+        $search->addColumn('%pageid%');
         $search->addColumn('first');
         $search->addColumn('second');
 
@@ -142,7 +142,7 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addColumn('doesntexist');
         $this->assertEquals(5, count($search->columns));
 
-        $search->addColumn('%pid%');
+        $search->addColumn('%pageid%');
         $this->assertEquals('schema1', $search->columns[5]->getTable());
         $exception = false;
         try {
@@ -155,7 +155,7 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addSort('first', false);
         $this->assertEquals(1, count($search->sortby));
 
-        $search->addFilter('%pid%', 'ag', '~', 'AND');
+        $search->addFilter('%pageidid%', 'ag', '~', 'AND');
         $search->addFilter('second', 'sec', '~', 'AND');
         $search->addFilter('first', 'rst', '~', 'AND');
 
@@ -185,11 +185,11 @@ class Search_struct_test extends \DokuWikiTest {
         $search = new Search();
         $search->addSchema('schema2');
 
-        $search->addColumn('%pid%');
+        $search->addColumn('%pageid%');
         $search->addColumn('afirst');
         $search->addColumn('asecond');
 
-        $search->addSort('%pid%', false);
+        $search->addSort('%pageid%', false);
 
         $result = $search->execute();
         $count  = $search->getCount();
