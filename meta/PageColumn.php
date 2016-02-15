@@ -21,6 +21,7 @@ class PageColumn extends Column {
      * @param string $table
      */
     public function __construct($sort, AbstractBaseType $type, $table='') {
+        if($type->isMulti()) throw new StructException('PageColumns can not be multi value types!');
         parent::__construct($sort, $type, 0, true, $table);
     }
 
@@ -33,7 +34,7 @@ class PageColumn extends Column {
      */
     public function getColName() {
         $col = 'pid';
-        if($this->table) $col = $this->table.'.'.$col;
+        if($this->table) $col = 'data_'.$this->table.'.'.$col;
         return $col;
     }
 

@@ -85,8 +85,10 @@ class Column {
      * @return string
      */
     public function getColName() {
+        if($this->isMulti()) throw new StructException('Calling getColName on a multi value column makes no sense.');
+
         $col = 'col'.$this->colref;
-        if($this->table) $col = $this->table.'.'.$col;
+        if($this->table) $col = 'data_'.$this->table.'.'.$col;
         return $col;
     }
 

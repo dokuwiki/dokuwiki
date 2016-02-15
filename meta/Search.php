@@ -181,7 +181,7 @@ class Search {
                 $from .= " ON data_{$col->getTable()}.pid = $tn.pid AND data_{$col->getTable()}.rev = $tn.rev";
                 $from .= " AND $tn.colref = {$col->getColref()}\n";
             } else {
-                $select .= "data_{$col->getColName()} AS $CN, ";
+                $select .= "{$col->getColName()} AS $CN, ";
                 $grouping[] = $CN;
             }
         }
