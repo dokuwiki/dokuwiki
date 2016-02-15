@@ -66,13 +66,7 @@ class Search {
      * @param string $colname may contain an alias
      */
     public function addColumn($colname) {
-        if(!$this->schemas) throw new StructException('noschemas');
-        if($colname == '%pid%') { // Special column
-            $col = new PageColumn(0, new Text(), array_shift(array_keys($this->schemas))); //FIXME the type should be Page
-        // FIXME %title% needs to be handled here, too (later)
-        } else {
-            $col = $this->findColumn($colname);
-        }
+        $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
         $this->columns[] = $col;
     }
@@ -180,17 +174,14 @@ class Search {
         foreach($this->columns as $col) {
             $CN = 'C' . $n++;
 
-            if(is_a($col, 'plugin\struct\meta\PageColumn')) {
-                $select .= 'data_' . $col->getTable() . ".pid AS $CN, ";
-                $grouping[] = $CN;
-            } else if($col->isMulti()) {
+            if($col->isMulti()) {
                 $tn = 'M' . $col->getColref();
                 $select .= "GROUP_CONCAT($tn.value, '$sep') AS $CN, ";
                 $from .= "\nLEFT OUTER JOIN multi_{$col->getTable()} AS $tn";
                 $from .= " ON data_{$col->getTable()}.pid = $tn.pid AND data_{$col->getTable()}.rev = $tn.rev";
                 $from .= " AND $tn.colref = {$col->getColref()}\n";
             } else {
-                $select .= 'data_' . $col->getTable() . '.col' . $col->getColref() . " AS $CN, ";
+                $select .= "data_{$col->getColName()} AS $CN, ";
                 $grouping[] = $CN;
             }
         }
@@ -209,13 +200,13 @@ class Search {
 
                 $column = "$tn.value";
             } else {
-                $column = "data_{$col->getTable()}.col{$col->getColref()}";
+                $column = $col->getColName();
             }
 
             list($wsql, $wopt) = $col->getType()->compare($column, $comp, $value);
             $opts = array_merge($opts, $wopt);
 
-            $where .= " $type $wsql";
+            $where .= "\n$type $wsql";
         }
 
         // sorting
@@ -227,7 +218,7 @@ class Search {
                 // FIXME how to sort by multival?
                 // FIXME what if sort by non merged multival?
             } else {
-                $order .= "data_{$col->getTable()}.col{$col->getColref()} ";
+                $order .= $col->getColName().' ';
                 $order .= ($asc) ? 'ASC' : 'DESC';
                 $order .= ', ';
             }
@@ -248,6 +239,13 @@ class Search {
      */
     protected function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
+
+        // handling of page column is special
+        if($colname == '%pid%') {
+            return new PageColumn(0, new Text(), array_shift(array_keys($this->schemas))); //FIXME the type should be Page
+        }
+        // FIXME %title% needs to be handled here, too (later)
+
 
         // resolve the alias or table name
         list($table, $colname) = explode('.', $colname, 2);

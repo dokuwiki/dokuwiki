@@ -28,4 +28,13 @@ class PageColumn extends Column {
         throw new StructException('Accessing the colref of a PageColumn makes no sense');
     }
 
+    /**
+     * @return string
+     */
+    public function getColName() {
+        $col = 'pid';
+        if($this->table) $col = $this->table.'.'.$col;
+        return $col;
+    }
+
 }

@@ -152,8 +152,9 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addSort('first', false);
         $this->assertEquals(1, count($search->sortby));
 
-
+        $search->addFilter('%pid%', 'ag', '~', 'AND');
         $search->addFilter('second', 'sec', '~', 'AND');
+        $search->addFilter('first', 'rst', '~', 'AND');
 
         list($sql, $opts) = $search->getSQL();
         echo "\n$sql\n";

@@ -80,6 +80,17 @@ class Column {
     }
 
     /**
+     * Returns the full column name. When table is set, prefixed by the table name
+     *
+     * @return string
+     */
+    public function getColName() {
+        $col = 'col'.$this->colref;
+        if($this->table) $col = $this->table.'.'.$col;
+        return $col;
+    }
+
+    /**
      * @return boolean
      */
     public function isEnabled() {
