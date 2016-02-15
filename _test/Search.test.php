@@ -14,7 +14,6 @@ class Search extends meta\Search {
     public $sortby = array();
 }
 
-
 /**
  * Tests for the building of SQL-Queries for the struct plugin
  *
@@ -72,6 +71,16 @@ class Search_struct_test extends \DokuWikiTest {
                 'asecond' => array('second data', 'more data', 'even more'),
                 'athird' => 'third data',
                 'afourth' => 'fourth data'
+            )
+        );
+
+        $sd = new meta\SchemaData('schema2', 'page2', time());
+        $sd->saveData(
+            array(
+                'afirst' => 'page2 first data',
+                'asecond' => array('page2 second data'),
+                'athird' => 'page3 third data',
+                'afourth' => 'page4 fourth data'
             )
         );
     }
@@ -136,11 +145,10 @@ class Search_struct_test extends \DokuWikiTest {
         $exception = false;
         try {
             $search->columns[5]->getColref();
-        } catch (meta\StructException $e) {
+        } catch(meta\StructException $e) {
             $exception = true;
         }
         $this->assertTrue($exception, "Struct exception expected for accesing colref of PageColumn");
-
 
         $search->addSort('first', false);
         $this->assertEquals(1, count($search->sortby));
@@ -150,13 +158,21 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addFilter('first', 'rst', '~', 'AND');
 
         list($sql, $opts) = $search->getSQL();
-        print_r($sql);
-        print_r($opts);
-
         $result = $search->execute();
-        print_r($result);
+
+        $this->assertEquals(1, count($result), 'result rows');
+        $this->assertEquals(6, count($result[0]), 'result columns');
+
+        /*
+        {#debugging
+            print "\n";
+            print_r($sql);
+            print "\n";
+            print_r($opts);
+            print "\n";
+            print_r($result);
+        }
+        */
     }
-
-
 
 }
