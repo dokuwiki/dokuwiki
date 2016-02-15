@@ -10,9 +10,6 @@ class Text extends AbstractBaseType {
         'postfix' => '',
     );
 
-
-
-
     /**
      * Output the stored data
      *
@@ -29,21 +26,8 @@ class Text extends AbstractBaseType {
      * @return string
      */
     public function multiValueEditor($name, $values) {
-        $value = join(', ',$values);
+        $value = join(', ', $values);
         return $this->valueEditor($name, $value);
     }
 
-    /**
-     * Return the editor to edit a single value
-     *
-     * @param string $name the form name where this has to be stored
-     * @param string $value the current value
-     * @return string html
-     */
-    public function valueEditor($name, $value) {
-        $name = hsc($name);
-        $value = hsc($value);
-        $html = "<input name=\"$name\" value=\"$value\" />";
-        return "$html";
-    }
 }

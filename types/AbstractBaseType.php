@@ -144,7 +144,12 @@ abstract class AbstractBaseType {
      * @param string $value the current value
      * @return string html
      */
-    abstract public function valueEditor($name, $value);
+    public function valueEditor($name, $value) {
+        $name = hsc($name);
+        $value = hsc($value);
+        $html = "<input name=\"$name\" value=\"$value\" />";
+        return "$html";
+    }
 
     /**
      * Output the stored data
@@ -152,7 +157,9 @@ abstract class AbstractBaseType {
      * @param string|int $value the value stored in the database
      * @return string the HTML to represent this data
      */
-    abstract public function getDisplayData($value);
+    public function getDisplayData($value) {
+        return hsc($value);
+    }
 
     /**
      * This function builds a where clause for this column, comparing
