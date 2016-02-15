@@ -85,27 +85,20 @@ class Search_struct_test extends \DokuWikiTest {
     }
 
     public function test_simple() {
-
-        /** @var \helper_plugin_struct_db $plugin */
-        $plugin = plugin_load('helper', 'struct_db');
-        $sqlite = $plugin->getDB();
-
-        /*
-        $res = $sqlite->query('SELECT * FROM multivals');
-        $data = $sqlite->res2arr($res);
-        $sqlite->res_close($res);
-        print_r($data);
-        */
-
-
         $search = new Search();
 
         $search->addSchema('schema1');
+        $search->addColumn('%pid%');
         $search->addColumn('first');
         $search->addColumn('second');
 
-        list($sql, $opts) = $search->getSQL();
-        echo "\n$sql\n";
+        $result = $search->execute();
+
+        $this->assertEquals(1, count($result), 'result rows');
+        $this->assertEquals(3, count($result[0]), 'result columns');
+        $this->assertEquals('page1', $result[0][0]['val']);
+        $this->assertEquals('first data', $result[0][1]['val']);
+        $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][2]['val']);
     }
 
     public function test_search() {
@@ -157,8 +150,8 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addFilter('first', 'rst', '~', 'AND');
 
         list($sql, $opts) = $search->getSQL();
-        echo "\n$sql\n";
-
+        print_r($sql);
+        print_r($opts);
 
         $result = $search->execute();
         print_r($result);
