@@ -124,9 +124,10 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $html = "<h3>$tablename</h3>";
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
+            $trans = hsc($field->getColumn()->getTranslatedLabel());
             $name = "Schema[$tablename][$label]";
             $input = $field->getValueEditor($name);
-            $element = "<label>$label $input</label><br />";
+            $element = "<label>$trans $input</label><br />";
             $html .= $element;
         }
 

@@ -92,7 +92,7 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
             foreach($data as $field) {
                 $R->tablerow_open();
                 $R->tableheader_open();
-                $R->cdata($field->getColumn()->getLabel());
+                $R->cdata($field->getColumn()->getTranslatedLabel());
                 $R->tableheader_close();
                 $R->tablecell_open();
                 $field->render($R, $mode);

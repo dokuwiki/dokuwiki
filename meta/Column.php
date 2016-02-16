@@ -66,6 +66,13 @@ class Column {
     }
 
     /**
+     * @return string
+     */
+    public function getTranslatedLabel() {
+        return $this->type->getTranslatedLabel();
+    }
+
+    /**
      * @return AbstractBaseType
      */
     public function getType() {

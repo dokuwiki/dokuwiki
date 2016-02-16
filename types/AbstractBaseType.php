@@ -45,9 +45,34 @@ abstract class AbstractBaseType {
      */
     public function __construct($config = null, $label = '', $ismulti = false, $tid = 0) {
         if(!is_null($config)) $this->config = array_merge($this->config, $config);
+        $this->initTransConfig();
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
         $this->tid = $tid;
+    }
+
+    /**
+     * Add the translation keys to the configuration
+     *
+     * This checks if a configuration for the translation plugin exists and if so
+     * adds all configured languages to the config array. This ensures all types
+     * can have translatable labels.
+     */
+    protected function initTransConfig() {
+        global $conf;
+        $lang = $conf['lang'];
+        if(isset($conf['plugin']['translation']['translations'])) {
+            $lang .= ' ' . $conf['plugin']['translation']['translations'];
+        }
+        $langs = explode(' ', $lang);
+        $langs = array_map('trim', $langs);
+        $langs = array_filter($langs);
+        $langs = array_unique($langs);
+
+        if(!isset($this->config['translation'])) $this->config['translation'] = array();
+        foreach($langs as $lang) {
+            if(!isset($this->config['translation'][$lang])) $this->config['translation'][$lang] = '';
+        }
     }
 
     /**
@@ -92,6 +117,26 @@ abstract class AbstractBaseType {
      * @return string
      */
     public function getLabel() {
+        return $this->label;
+    }
+
+    /**
+     * Returns the translated label for this type
+     *
+     * Uses the current language as determined by $conf['lang']. Falls back to english
+     * and then to the Schema label
+     *
+     * @return string
+     */
+    public function getTranslatedLabel() {
+        global $conf;
+        $lang = $conf['lang'];
+        if(!blank($this->config['translation'][$lang])) {
+            return $this->config['translation'][$lang];
+        }
+        if(!blank($this->config['translation']['en'])) {
+            return $this->config['translation']['en'];
+        }
         return $this->label;
     }
 
@@ -174,9 +219,9 @@ abstract class AbstractBaseType {
      */
     public function renderMultiValue($values, \Doku_Renderer $R, $mode) {
         $len = count($values);
-        for($i=0; $i<$len; $i++) {
+        for($i = 0; $i < $len; $i++) {
             $this->renderValue($values[$i], $R, $mode);
-            if($i < $len-1) {
+            if($i < $len - 1) {
                 $R->cdata(', ');
             }
         }
