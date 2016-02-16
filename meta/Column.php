@@ -114,6 +114,21 @@ class Column {
     }
 
     /**
+     * Render the values for this column
+     *
+     * @param                $values
+     * @param \Doku_Renderer $R
+     * @param                $mode
+     */
+    public function render($values, \Doku_Renderer $R, $mode) {
+        if ($this->isMulti()) {
+            $this->type->renderMultiValue($values, $R, $mode);
+            return;
+        }
+        $this->type->renderValue($values, $R, $mode);
+    }
+
+    /**
      * Returns a list of all available types
      *
      * @return array
