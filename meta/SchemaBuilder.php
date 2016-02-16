@@ -115,7 +115,7 @@ class SchemaBuilder {
         $wantedlabel = trim($wantedlabel);
         $fixedlabel = $wantedlabel;
         $idx = 1;
-        while(isset($labels[$fixedlabel])) {
+        while(isset($labels[utf8_strtolower($fixedlabel)])) {
             $fixedlabel = $wantedlabel.$idx++;
         }
         // did we actually do a rename? apply it.
@@ -123,7 +123,7 @@ class SchemaBuilder {
             msg(sprintf($this->helper->getLang('duplicate_label'), $wantedlabel, $fixedlabel), -1);
             $this->data['cols']['label'] = $fixedlabel;
         }
-        $labels[$fixedlabel] = 1;
+        $labels[utf8_strtolower($fixedlabel)] = 1;
         return $fixedlabel;
     }
 
