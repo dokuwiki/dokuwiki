@@ -32,6 +32,7 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
     public function tearDown() {
         parent::tearDown();
 
+        /** @noinspection SqlResolve */
         $res = $this->sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
         $tableNames = $this->sqlite->res2arr($res);
         $tableNames = array_map(function ($value) { return $value['name'];},$tableNames);
@@ -76,6 +77,7 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
         $builder = new SchemaBuilder($testname, $testdata);
         $result = $builder->build();
 
+        /** @noinspection SqlResolve */
         $res = $this->sqlite->query("SELECT sql FROM sqlite_master WHERE type='table' AND name=?", 'data_' . $testname);
         $tableSQL = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);

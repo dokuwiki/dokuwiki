@@ -15,7 +15,7 @@ $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
 
-
+$lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
