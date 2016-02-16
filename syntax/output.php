@@ -12,7 +12,7 @@ use plugin\struct\meta\SchemaData;
 
 if (!defined('DOKU_INC')) die();
 
-class syntax_plugin_struct_list extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
     /**
      * @return string Syntax mode type
      */
@@ -35,10 +35,14 @@ class syntax_plugin_struct_list extends DokuWiki_Syntax_Plugin {
     /**
      * Connect lookup pattern to lexer.
      *
+     * We do not connect any pattern here, because the call to this plugin is not
+     * triggered from syntax but our action component
+     *
+     * @asee action_plugin_struct_output
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('~~STRUCT~~',$mode,'plugin_struct_list');
+
     }
 
 
@@ -52,22 +56,28 @@ class syntax_plugin_struct_list extends DokuWiki_Syntax_Plugin {
      * @return array Data for the renderer
      */
     public function handle($match, $state, $pos, Doku_Handler $handler){
-        $data = array();
-
-        return $data;
+        // this is never called
+        return array();
     }
 
     /**
-     * Render xhtml output or metadata
+     * Render schema data
      *
-     * @param string         $mode      Renderer mode (supported modes: xhtml)
+     * Currently completely renderer agnostic
+     *
+     * @todo add some classes for nicer styling when $mode = 'xhtml'
+     * @todo we currently have no schema headlines
+     *
+     * @param string         $mode      Renderer mode
      * @param Doku_Renderer  $R         The renderer
      * @param array          $data      The data from the handler() function
      * @return bool If rendering was successful.
      */
     public function render($mode, Doku_Renderer $R, $data) {
         global $ID;
+        global $INFO;
         global $REV;
+        if($ID != $INFO['id']) return true;
 
         $assignments = new Assignments();
         $tables = $assignments->getPageAssignments($ID);
@@ -92,10 +102,6 @@ class syntax_plugin_struct_list extends DokuWiki_Syntax_Plugin {
         }
         $R->tabletbody_close();
         $R->table_close();
-
-
-
-        if($mode != 'xhtml') return false;
 
         return true;
     }
