@@ -103,13 +103,14 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addColumn('first');
         $search->addColumn('second');
 
+        /** @var meta\Value[][] $result */
         $result = $search->execute();
 
         $this->assertEquals(1, count($result), 'result rows');
         $this->assertEquals(3, count($result[0]), 'result columns');
-        $this->assertEquals('page01', $result[0][0]['val']);
-        $this->assertEquals('first data', $result[0][1]['val']);
-        $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][2]['val']);
+        $this->assertEquals('page01', $result[0][0]->getValue());
+        $this->assertEquals('first data', $result[0][1]->getValue());
+        $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][2]->getValue());
     }
 
     public function test_search() {
@@ -191,6 +192,7 @@ class Search_struct_test extends \DokuWikiTest {
 
         $search->addSort('%pageid%', false);
 
+        /** @var meta\Value[][] $result */
         $result = $search->execute();
         $count  = $search->getCount();
 
@@ -200,9 +202,9 @@ class Search_struct_test extends \DokuWikiTest {
         $this->assertEquals(3, count($result[0]), 'result columns');
 
         // check sorting
-        $this->assertEquals('page20', $result[0][0]['val']);
-        $this->assertEquals('page19', $result[1][0]['val']);
-        $this->assertEquals('page18', $result[2][0]['val']);
+        $this->assertEquals('page20', $result[0][0]->getValue());
+        $this->assertEquals('page19', $result[1][0]->getValue());
+        $this->assertEquals('page18', $result[2][0]->getValue());
 
         // now add limit
         $search->setLimit(5);
@@ -214,8 +216,8 @@ class Search_struct_test extends \DokuWikiTest {
         $this->assertEquals(5, count($result), 'result rows'); // wanted result set
 
         // check the values
-        $this->assertEquals('page20', $result[0][0]['val']);
-        $this->assertEquals('page16', $result[4][0]['val']);
+        $this->assertEquals('page20', $result[0][0]->getValue());
+        $this->assertEquals('page16', $result[4][0]->getValue());
 
         // now add offset
         $search->setOffset(5);
@@ -227,8 +229,8 @@ class Search_struct_test extends \DokuWikiTest {
         $this->assertEquals(5, count($result), 'result rows'); // wanted result set
 
         // check the values
-        $this->assertEquals('page15', $result[0][0]['val']);
-        $this->assertEquals('page11', $result[4][0]['val']);
+        $this->assertEquals('page15', $result[0][0]->getValue());
+        $this->assertEquals('page11', $result[4][0]->getValue());
     }
 
 }

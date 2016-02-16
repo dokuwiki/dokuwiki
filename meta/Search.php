@@ -158,11 +158,12 @@ class Search {
     /**
      * Execute this search and return the result
      *
-     * The result is a two dimensional array of array. Each cell contains an array with
-     * the keys 'col' (containing a Column object) and 'val' containing the value(s)
+     * The result is a two dimensional array of Value()s.
      *
      * This will always query for the full result (not using offset and limit) and then
      * return the wanted range, setting the count (@see getCount) to the whole result number
+     *
+     * @return Value[][]
      */
     public function execute() {
         list($sql, $opts) = $this->getSQL();
@@ -180,13 +181,11 @@ class Search {
             $C = 0;
             $resrow = array();
             foreach($this->columns as $col) {
-                $rescol = array();
-                $rescol['col'] = $col;
-                $rescol['val'] = $row["C$C"];
+                $val = $row["C$C"];
                 if($col->isMulti()) {
-                    $rescol['val'] = explode(self::CONCAT_SEPARATOR, $rescol['val']);
+                    $val = explode(self::CONCAT_SEPARATOR, $val);
                 }
-                $resrow[] = $rescol;
+                $resrow[] = new Value($col, $val);
                 $C++;
             }
             $result[] = $resrow;
