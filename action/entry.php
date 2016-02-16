@@ -122,16 +122,10 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $schemadata = $schema->getData();
 
         $html = "<h3>$tablename</h3>";
-        $cols = $schema->getColumns(false);
-        foreach ($cols as $index => $col) {
-            $type = $col->getType();
-            $label = $type->getLabel();
+        foreach($schemadata as $field) {
+            $label = $field->getColumn()->getLabel();
             $name = "Schema[$tablename][$label]";
-            if($type->isMulti()) {
-                $input = $type->multiValueEditor($name, $schemadata[$label]);
-            } else {
-                $input = $type->valueEditor($name, $schemadata[$label]);
-            }
+            $input = $field->getValueEditor($name);
             $element = "<label>$label $input</label><br />";
             $html .= $element;
         }

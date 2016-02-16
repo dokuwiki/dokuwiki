@@ -48,14 +48,31 @@ class Value {
     /**
      * Render the value using the given renderer and mode
      *
+     * automativally picks the right mechanism depending on multi or single value
+     *
      * @param \Doku_Renderer $R
      * @param string $mode
+     * @return bool
      */
     public function render(\Doku_Renderer $R, $mode) {
         if($this->column->isMulti()) {
-            $this->column->getType()->renderMultiValue($this->value, $R, $mode);
+            return $this->column->getType()->renderMultiValue($this->value, $R, $mode);
         } else {
-            $this->column->getType()->renderValue($this->value, $R, $mode);
+            return $this->column->getType()->renderValue($this->value, $R, $mode);
+        }
+    }
+
+    /**
+     * Return the value editor for this value field
+     *
+     * @param string $name The field name to use in the editor
+     * @return string The HTML for the editor
+     */
+    public function getValueEditor($name) {
+        if($this->column->isMulti()) {
+            return $this->column->getType()->multiValueEditor($name, $this->value);
+        } else {
+            return $this->column->getType()->valueEditor($name, $this->value);
         }
     }
 }
