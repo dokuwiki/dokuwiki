@@ -25,11 +25,6 @@ class SchemaData extends \plugin\struct\meta\SchemaData {
     public function buildGetDataSQL($singles, $multis) {
         return parent::buildGetDataSQL($singles, $multis);
     }
-
-    public function consolidateData($DBdata, $labels) {
-        return parent::consolidateData($DBdata, $labels);
-    }
-
 }
 
 /**
@@ -119,42 +114,4 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
         $this->assertEquals($expected_opt, $actual_opt, $msg);
     }
 
-    /**
-     * Testdata for @see schemaDataSQL_struct_test::test_consolidateData
-     *
-     * @return array
-     */
-    public static function consolidateData_testdata() {
-        return array(
-            array(
-                array(
-                    array('col1' => 'value1', 'col2' => 'value2.1',),
-                    array('col1' => 'value1', 'col2' => 'value2.2',),
-                ),
-                array('1' => 'columnname1', '2' => 'columnname2',),
-                array('columnname1' => 'value1',
-                    'columnname2' => array('value2.1', 'value2.2',),),
-                '',
-            ),
-        );
-    }
-
-    /**
-     * @dataProvider consolidateData_testdata
-     *
-     * @param array  $testdata
-     * @param array  $testlabels
-     * @param array  $expected_data
-     * @param string $msg
-     */
-    public function test_consolidateData($testdata, $testlabels, $expected_data, $msg){
-        $this->markTestSkipped('FIXME this test doesnt work because consolidateData needs real column info now');
-
-        // act
-        $schemadata = new SchemaData('', '', null);
-        $actual_data = $schemadata->consolidateData($testdata, $testlabels);
-
-        // assert
-        $this->assertEquals($expected_data, $actual_data, $msg);
-    }
 }

@@ -152,15 +152,18 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         // act
         $schemaData = new SchemaDataDB('testtable','testpage', "");
         $schemaData->setCorrectTimestamp();
+
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
-            'testMulitColumn' => array('value2.1a', 'value2.2a'),
-            'testcolumn' => 'value1a',
+            array('value2.1a', 'value2.2a'),
+            'value1a',
         );
 
         // assert
-        $this->assertEquals($expected_data, $actual_data , '');
+        foreach($expected_data as $index => $value) {
+            $this->assertEquals($value, $actual_data[$index]->getValue());
+        }
     }
 
     public function test_getData_currentRev2() {
@@ -171,12 +174,14 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
-            'testMulitColumn' => array('value2.1a'),
-            'testcolumn' => 'value1a',
+            array('value2.1a'),
+            'value1a',
         );
 
         // assert
-        $this->assertEquals($expected_data, $actual_data , '');
+        foreach($expected_data as $index => $value) {
+            $this->assertEquals($value, $actual_data[$index]->getValue());
+        }
     }
 
     public function test_getData_oldRev() {
@@ -187,12 +192,14 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
-            'testMulitColumn' => array('value2.1', 'value2.2'),
-            'testcolumn' => 'value1',
+            array('value2.1', 'value2.2'),
+            'value1',
         );
 
         // assert
-        $this->assertEquals($expected_data, $actual_data , '');
+        foreach($expected_data as $index => $value) {
+            $this->assertEquals($value, $actual_data[$index]->getValue());
+        }
     }
 
     public function test_saveData() {
