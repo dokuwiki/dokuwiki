@@ -95,11 +95,11 @@ class SchemaBuilder {
     protected function fixLabelUniqueness() {
         $labels = array();
 
-        foreach($this->data['cols'] as $idx => $column) {
+        if(isset($this->data['cols'])) foreach($this->data['cols'] as $idx => $column) {
             $this->data['cols'][$idx]['label'] = $this->fixLabel($column['label'], $labels);
         }
 
-        foreach($this->data['new'] as $idx => $column) {
+        if(isset($this->data['new'])) foreach($this->data['new'] as $idx => $column) {
             $this->data['new'][$idx]['label'] = $this->fixLabel($column['label'], $labels);
         }
     }
