@@ -26,6 +26,10 @@ class SearchConfig extends Search {
             $this->addColumn($col);
         }
 
+        if ($config['sort'][0] != '') {
+            $this->addSort($config['sort'][0], $config['sort'][1] === 'ASC');
+        }
+
         foreach($config['filter'] as $filter) {
             $this->addFilter($filter[0], $filter[2], $filter[1], $filter[3]);
         }
