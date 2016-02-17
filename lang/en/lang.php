@@ -19,6 +19,8 @@ $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, seco
 
 $lang['validation_prefix'] = "Field [%s]: ";
 
+$lang['Validation Exception Integer needed'] = 'only integers are allowed';
+
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
 
