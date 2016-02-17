@@ -41,7 +41,7 @@ class helper_plugin_struct_aggregation extends DokuWiki_Plugin {
             $cur_params['datasrt'] = $INPUT->str('datasrt');
         }
         if($INPUT->has('dataofs')) {
-            $cur_params['dataofs'] = $INPUT->arr('dataofs');
+            $cur_params['dataofs'] = $INPUT->int('dataofs');
         }
 
         //combine key and value

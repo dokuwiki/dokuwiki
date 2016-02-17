@@ -24,6 +24,10 @@ $lang['Validation Exception Integer needed'] = 'only integers are allowed';
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
 
+$lang['sort']      = 'Sort by this column';
+$lang['next']      = 'Next page';
+$lang['prev']      = 'Previous page';
+
 $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 

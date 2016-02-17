@@ -117,8 +117,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                 //return true;
             }
 
+            $dataofs = $INPUT->has('dataofs') ? $INPUT->int('dataofs') : 0;
             if ($data['limit'] && $cnt > $data['limit']) {
-                $rows = array_slice($rows, 0, $data['limit']);
+                $rows = array_slice($rows, $dataofs, $data['limit']);
             }
 
             $this->renderPreTable($mode, $renderer, $clist, $data);
@@ -169,9 +170,10 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * if limit was set, add control
      *
-     * @param $data
-     * @param $rowcnt
-     *
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $data
+     * @param               $rowcnt
      */
     protected function addLimitControls($mode, Doku_Renderer $renderer, $data, $rowcnt) {
         global $ID;
@@ -202,7 +204,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                 }
             }
 
-            if($rowcnt > $data['limit']) {
+            if($rowcnt > $offset + $data['limit']) {
                 $next = $offset + $data['limit'];
 
                 // keep url params
