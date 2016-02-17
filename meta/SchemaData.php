@@ -93,12 +93,13 @@ class SchemaData extends Schema {
     /**
      * returns the data saved for the page
      *
+     * @return Value[] a list of values saved for the current page
      */
     public function getData() {
 
         $this->setCorrectTimestamp($this->ts);
         $data = $this->getDataFromDB();
-        $data = $this->consolidateData($data, $this->labels);
+        $data = $this->consolidateData($data);
 
         return $data;
     }
@@ -132,31 +133,29 @@ class SchemaData extends Schema {
 
     /**
      * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
-     * @param array $labels A lookup-array of colref => label
-     *
-     * @return array
+     * @return Value[]
      */
-    protected function consolidateData($DBdata, $labels) {
-
+    protected function consolidateData($DBdata) {
         $data = array();
-        foreach ($labels as $label) {
-            $data[$label] = array();
-        }
 
-        foreach ($DBdata as $row) {
-            foreach ($row as $column => $value) {
-                $data[$labels[substr($column,3)]][] = $value;
+        foreach($this->getColumns() as $col) {
+            if(!$DBdata) {
+                // if no data saved, yet return empty strings
+                $val = '';
+            } else if($col->isMulti()) {
+                // data may be in multiple rows
+                $val = array();
+                foreach($DBdata as $row) {
+                    if(!is_null($row['col'.$col->getColref()])) {
+                        $val[] = $row['col'.$col->getColref()];
+                    }
+                }
+            }else {
+                // data is in the first row only
+                $val = $DBdata[0]['col'.$col->getColref()];
             }
-        }
 
-        foreach ($data as $column => $values) {
-            $values = array_unique($values);
-
-            if (count($values) == 1 && !$this->findColumn($column)->isMulti()) {
-                $data[$column] = $values[0];
-            } else {
-                $data[$column] = $values;
-            }
+            $data[] = new Value($col, $val);
         }
 
         return $data;

@@ -66,6 +66,13 @@ class Column {
     }
 
     /**
+     * @return string
+     */
+    public function getTranslatedLabel() {
+        return $this->type->getTranslatedLabel();
+    }
+
+    /**
      * @return AbstractBaseType
      */
     public function getType() {
@@ -111,21 +118,6 @@ class Column {
      */
     public function isMulti() {
         return $this->type->isMulti();
-    }
-
-    /**
-     * Render the values for this column
-     *
-     * @param                $values
-     * @param \Doku_Renderer $R
-     * @param                $mode
-     */
-    public function render($values, \Doku_Renderer $R, $mode) {
-        if ($this->isMulti()) {
-            $this->type->renderMultiValue($values, $R, $mode);
-            return;
-        }
-        $this->type->renderValue($values, $R, $mode);
     }
 
     /**

@@ -36,6 +36,9 @@ class SchemaBuilder {
     /** @var int the ID of the newly created schema */
     protected $newschemaid = 0;
 
+    /** @var \helper_plugin_struct_db */
+    protected $helper;
+
     /** @var \helper_plugin_sqlite|null  */
     protected $sqlite;
 
@@ -51,9 +54,8 @@ class SchemaBuilder {
         $this->data = $data;
         $this->oldschema = new Schema($table);
 
-        /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
+        $this->helper = plugin_load('helper', 'struct_db');
+        $this->sqlite = $this->helper->getDB();
     }
 
     /**
@@ -62,6 +64,8 @@ class SchemaBuilder {
      * @return bool|int the new schema id on success
      */
     public function build() {
+        $this->fixLabelUniqueness();
+
         $this->sqlite->query('BEGIN TRANSACTION');
         $ok = true;
         // create the data table if new schema
@@ -83,6 +87,44 @@ class SchemaBuilder {
         $this->sqlite->query('COMMIT TRANSACTION');
 
         return $this->newschemaid;
+    }
+
+    /**
+     * Makes sure all labels in the schema to save are unique
+     */
+    protected function fixLabelUniqueness() {
+        $labels = array();
+
+        if(isset($this->data['cols'])) foreach($this->data['cols'] as $idx => $column) {
+            $this->data['cols'][$idx]['label'] = $this->fixLabel($column['label'], $labels);
+        }
+
+        if(isset($this->data['new'])) foreach($this->data['new'] as $idx => $column) {
+            $this->data['new'][$idx]['label'] = $this->fixLabel($column['label'], $labels);
+        }
+    }
+
+    /**
+     * Creates a unique label from the given one
+     *
+     * @param string $wantedlabel
+     * @param array $labels list of already assigned labels (will be filled)
+     * @return string
+     */
+    protected function fixLabel($wantedlabel, &$labels) {
+        $wantedlabel = trim($wantedlabel);
+        $fixedlabel = $wantedlabel;
+        $idx = 1;
+        while(isset($labels[utf8_strtolower($fixedlabel)])) {
+            $fixedlabel = $wantedlabel.$idx++;
+        }
+        // did we actually do a rename? apply it.
+        if($fixedlabel != $wantedlabel) {
+            msg(sprintf($this->helper->getLang('duplicate_label'), $wantedlabel, $fixedlabel), -1);
+            $this->data['cols']['label'] = $fixedlabel;
+        }
+        $labels[utf8_strtolower($fixedlabel)] = 1;
+        return $fixedlabel;
     }
 
     /**
