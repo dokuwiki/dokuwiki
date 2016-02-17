@@ -242,15 +242,22 @@ abstract class AbstractBaseType {
      * @return array Tuple with the SQL and parameter array
      */
     public function compare($column, $comp, $value) {
-        if($comp == '~') {
-            $sql = "$column LIKE ?";
-            $opt = array('%' . $value . '%');
-        } else if($comp == '!~') {
-            $sql = "$column NOT LIKE ?";
-            $opt = array('%' . $value . '%');
-        } else {
-            $sql = "$column $comp ?";
-            $opt = array($value);
+        switch ($comp) {
+            case '*~':
+                $sql = "$column LIKE ?";
+                $opt = array('%' . $value . '%');
+                break;
+            case '~':
+                $sql = "$column LIKE ?";
+                $opt = array($value);
+                break;
+            case '!~':
+                $sql = "$column NOT LIKE ?";
+                $opt = array('%' . $value . '%');
+                break;
+            default:
+                $sql = "$column $comp ?";
+                $opt = array($value);
         }
 
         return array($sql, $opt);
