@@ -147,7 +147,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         $cur_params = $this->dthlp->_get_current_param();
 
         $this->startScope($mode, $renderer);
-        $this->showActiveFilters($mode, $renderer, $cur_params);
+        $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
         $this->buildColumnHeaders($mode, $renderer, $clist, $data, $cur_params);
@@ -176,51 +176,31 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param               $rowcnt
      */
     protected function addLimitControls($mode, Doku_Renderer $renderer, $data, $rowcnt) {
-        global $ID;
+        global $ID, $INPUT;
 
         if($data['limit']) {
             $renderer->tablerow_open();
             $renderer->tableheader_open((count($data['cols']) + ($data['rownumbers'] ? 1 : 0)));
             $offset = (int) $_REQUEST['dataofs'];
+
+            // keep url params
+            $params = array();
+            $params['dataflt'] = $INPUT->arr('dataflt');
+            if ($INPUT->has('datasrt')) {$params['datasrt'] = $INPUT->str('datasrt');}
+
             if($offset) {
                 $prev = $offset - $data['limit'];
                 if($prev < 0) {
                     $prev = 0;
                 }
-
-                // keep url params
-                $params = $this->dthlp->_a2ua('dataflt', $_REQUEST['dataflt']);
-                if(isset($_REQUEST['datasrt'])) {
-                    $params['datasrt'] = $_REQUEST['datasrt'];
-                }
                 $params['dataofs'] = $prev;
-
-                if ($mode == 'xhtml') {
-                    $renderer->doc .= '<a href="' . wl($ID, $params) .
-                        '" title="' . $this->getLang('prev') .
-                        '" class="prev">' . $this->getLang('prev') . '</a>&nbsp;';
-                } else {
-                    $renderer->internallink($ID,$this->getLang('prev'));
-                }
+                $renderer->internallink($ID . '?' . http_build_query($params), $this->getLang('prev'));
             }
 
             if($rowcnt > $offset + $data['limit']) {
                 $next = $offset + $data['limit'];
-
-                // keep url params
-                $params = $this->dthlp->_a2ua('dataflt', $_REQUEST['dataflt']);
-                if(isset($_REQUEST['datasrt'])) {
-                    $params['datasrt'] = $_REQUEST['datasrt'];
-                }
                 $params['dataofs'] = $next;
-
-                if ($mode == 'xhtml') {
-                    $renderer->doc .= '<a href="' . wl($ID, $params) .
-                    '" title="' . $this->getLang('next') .
-                    '" class="next">' . $this->getLang('next') . '</a>';
-                } else {
-                    $renderer->internallink($ID,$this->getLang('next'));
-                }
+                $renderer->internallink($ID . '?' . http_build_query($params), $this->getLang('next'));
             }
             $renderer->tableheader_close();
             $renderer->tablerow_close();
@@ -230,9 +210,8 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * @param               $mode
      * @param Doku_Renderer $renderer
-     * @param               $cur_params
      */
-    protected function showActiveFilters($mode, Doku_Renderer $renderer, $cur_params) {
+    protected function showActiveFilters($mode, Doku_Renderer $renderer) {
         global $ID, $INPUT;
 
         if($mode == 'xhtml' && $INPUT->has('dataflt')) {
@@ -289,17 +268,23 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                     $form->addHidden('id', $ID);
                 }
 
-                $key = 'dataflt[' . $data['cols'][$num] . '*~' . ']';
-                $val = isset($cur_params[$key]) ? $cur_params[$key] : '';
+                $key = $data['cols'][$num] . '*~';
+                $val = isset($cur_params['dataflt'][$key]) ? $cur_params['dataflt'][$key] : '';
 
                 // Add current request params
-                foreach($cur_params as $c_key => $c_val) {
+                if (!empty($cur_params['datasrt'])) {
+                    $form->addHidden('datasrt', $cur_params['datasrt']);
+                }
+                if (!empty($cur_params['dataofs'])) {
+                    $form->addHidden('dataofs', $cur_params['dataofs']);
+                }
+                foreach($cur_params['dataflt'] as $c_key => $c_val) {
                     if($c_val !== '' && $c_key !== $key) {
-                        $form->addHidden($c_key, $c_val);
+                        $form->addHidden('dataflt[' . $c_key . ']', $c_val);
                     }
                 }
 
-                $form->addElement(form_makeField('text', $key, $val, ''));
+                $form->addElement(form_makeField('text', 'dataflt[' . $key . ']', $val, ''));
                 $html .= $form->getForm();
                 $html .= '</th>';
             }
@@ -359,14 +344,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                     }
                 }
             }
-
-            // Clickable header for dynamic sorting
-            if ($mode == 'xhtml') {
-                $renderer->doc .= '<a href="' . wl($ID, array('datasrt' => $ckey,) + $cur_params) .
-                    '" title="' . $this->getLang('sort') . '">' . hsc($head) . '</a>';
-            } else {
-                $renderer->internallink($ID . "?datasrt=$ckey", hsc($head));
-            }
+            $renderer->internallink($ID . "?" . http_build_query(array('datasrt' => $ckey,) + $cur_params), hsc($head));
             $renderer->tableheader_close();
         }
         $renderer->tablerow_close();

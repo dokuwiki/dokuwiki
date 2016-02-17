@@ -10,20 +10,6 @@
 if(!defined('DOKU_INC')) die();
 
 class helper_plugin_struct_aggregation extends DokuWiki_Plugin {
-    /**
-     * prepare an array to be passed through buildURLparams()
-     *
-     * @param string $name keyname
-     * @param string|array $array value or key-value pairs
-     * @return array
-     */
-    function _a2ua($name, $array) {
-        $urlarray = array();
-        foreach((array) $array as $key => $val) {
-            $urlarray[$name . '[' . $key . ']'] = $val;
-        }
-        return $urlarray;
-    }
 
     /**
      * get current URL parameters
@@ -35,7 +21,7 @@ class helper_plugin_struct_aggregation extends DokuWiki_Plugin {
         global $INPUT;
         $cur_params = array();
         if($INPUT->has('dataflt')) {
-            $cur_params = $this->_a2ua('dataflt', $INPUT->arr('dataflt'));
+            $cur_params['dataflt'] = $INPUT->arr('dataflt');
         }
         if($INPUT->has('datasrt')) {
             $cur_params['datasrt'] = $INPUT->str('datasrt');
@@ -44,14 +30,6 @@ class helper_plugin_struct_aggregation extends DokuWiki_Plugin {
             $cur_params['dataofs'] = $INPUT->int('dataofs');
         }
 
-        //combine key and value
-        if(!$returnURLparams) {
-            $flat_param = array();
-            foreach($cur_params as $key => $val) {
-                $flat_param[] = $key . $val;
-            }
-            $cur_params = $flat_param;
-        }
         return $cur_params;
     }
 }
