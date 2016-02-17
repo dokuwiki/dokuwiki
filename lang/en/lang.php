@@ -22,6 +22,7 @@ $lang['validation_prefix'] = "Field [%s]: ";
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
 
-
+$lang['tablefilteredby'] = 'Filtered by %s';
+$lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 
 //Setup VIM: ex: et ts=4 :

@@ -22,6 +22,8 @@ class ConfigParser {
      * @param $lines
      */
     public function __construct($lines) {
+        /** @var \helper_plugin_struct_config $helper */
+        $helper = plugin_load('helper','struct_config');
         $this->config = array(
             'limit' => 0,
             'dynfilters' => false,
@@ -76,11 +78,7 @@ class ConfigParser {
                 case 'order':
                 case 'sort':
                     // FIXME multiple values!?
-                    if(substr($val, 0, 1) == '^') {
-                        $this->config['sort'] = array(substr($val, 1), 'DESC');
-                    } else {
-                        $this->config['sort'] = array($val, 'ASC');
-                    }
+                    $this->config['sort'] = $helper->parseSort($val);
                     break;
                 case 'where':
                 case 'filter':
@@ -90,9 +88,8 @@ class ConfigParser {
                     $logic = 'AND';
                 case 'filteror':
                 case 'or':
-                    $flt = $this->parseFilter($val);
-                    if($flt) {
-                        $flt[] = $logic;
+                    $flt = $helper->parseFilterLine($logic, $val);
+                    if ($flt) {
                         $this->config['filter'][] = $flt;
                     }
                     break;
@@ -171,30 +168,10 @@ class ConfigParser {
             $alias = trim($alias);
             if(!$table) continue;
 
-            $schemas[] = array($table, $alias);
+            $schemas[] = array($table, $alias,);
         }
         return $schemas;
     }
-
-    /**
-     * Parse a filter
-     *
-     * @param string $val
-     * @return array ($col, $comp, $value)
-     */
-    protected function parseFilter($val) {
-
-        $comps = Search::$COMPARATORS;
-        $comps = array_map('preg_quote_cb', $comps);
-        $comps = join('|', $comps);
-
-        if(!preg_match('/^(.*?)('.$comps.')(.*)$/', $val, $match)) {
-            throw new StructException('Invalid search filter %s', hsc($val));
-        }
-        array_shift($match); // we don't need the zeroth match
-        return $match;
-    }
-
 
     /**
      * Parse alignment data

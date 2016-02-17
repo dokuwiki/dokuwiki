@@ -69,6 +69,11 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         }
     }
 
+    protected $sums = array();
+
+    /** @var helper_plugin_struct_aggregation $dthlp  */
+    protected $dthlp = null;
+
     /**
      * Render xhtml output or metadata
      *
@@ -80,23 +85,378 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
         if(!$data) return false;
+        $this->dthlp = $this->loadHelper('struct_aggregation');
+
+        $clist = $data['cols'];
+
+        //reset counters
+        $this->sums = array();
+
+        /** @var \helper_plugin_struct_config $confHlp */
+        $confHlp = plugin_load('helper','struct_config');
 
         try {
+            global $INPUT;
+
+            $datasrt = $INPUT->str('datasrt');
+            if ($datasrt) {
+                $data['sort'] = $confHlp->parseSort($datasrt);
+            }
+            $dataflt = $INPUT->arr('dataflt');
+            if ($dataflt) {
+                foreach ($dataflt as $colcomp => $filter) {
+                    $data['filter'][] = $confHlp->parseFilterLine('AND', $colcomp . $filter);
+                }
+            }
             $search = new SearchConfig($data);
+            $rows = $search->execute();
+            $cnt = count($rows);
 
+            if ($cnt === 0) {
+                //$this->nullList($data, $clist, $R);
+                //return true;
+            }
 
-            $sql = $search->getSQL();
+            if ($data['limit'] && $cnt > $data['limit']) {
+                $rows = array_slice($rows, 0, $data['limit']);
+            }
 
-            $renderer->doc = $sql;
+            $this->renderPreTable($mode, $renderer, $clist, $data);
+            $this->renderRows($mode, $renderer, $data, $rows);
+            $this->renderPostTable($mode, $renderer, $data, $cnt);
+
+            $renderer->doc .= '';
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
         }
 
-
-
-
-
         return true;
+    }
+
+    /**
+     * create the pretext to the actual table rows
+     *
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $clist
+     * @param               $data
+     */
+    protected function renderPreTable($mode, Doku_Renderer $renderer, $clist, $data) {
+        // Save current request params to not loose them
+        $cur_params = $this->dthlp->_get_current_param();
+
+        $this->startScope($mode, $renderer);
+        $this->showActiveFilters($mode, $renderer, $cur_params);
+        $this->startTable($mode, $renderer);
+        $renderer->tablethead_open();
+        $this->buildColumnHeaders($mode, $renderer, $clist, $data, $cur_params);
+        $this->addDynamicFilters($mode, $renderer, $data, $cur_params);
+        $renderer->tablethead_close();
+    }
+
+    /**
+     * @param array $data
+     * @param int $rowcnt
+     *
+     * @return string
+     */
+    private function renderPostTable($mode, Doku_Renderer $renderer, $data, $rowcnt) {
+        $this->summarize($mode, $renderer, $data, $this->sums);
+        $this->addLimitControls($mode, $renderer, $data, $rowcnt);
+        $this->finishTableAndScope($mode, $renderer);
+    }
+
+    /**
+     * if limit was set, add control
+     *
+     * @param $data
+     * @param $rowcnt
+     *
+     */
+    protected function addLimitControls($mode, Doku_Renderer $renderer, $data, $rowcnt) {
+        global $ID;
+
+        if($data['limit']) {
+            $renderer->tablerow_open();
+            $renderer->tableheader_open((count($data['cols']) + ($data['rownumbers'] ? 1 : 0)));
+            $offset = (int) $_REQUEST['dataofs'];
+            if($offset) {
+                $prev = $offset - $data['limit'];
+                if($prev < 0) {
+                    $prev = 0;
+                }
+
+                // keep url params
+                $params = $this->dthlp->_a2ua('dataflt', $_REQUEST['dataflt']);
+                if(isset($_REQUEST['datasrt'])) {
+                    $params['datasrt'] = $_REQUEST['datasrt'];
+                }
+                $params['dataofs'] = $prev;
+
+                if ($mode == 'xhtml') {
+                    $renderer->doc .= '<a href="' . wl($ID, $params) .
+                        '" title="' . $this->getLang('prev') .
+                        '" class="prev">' . $this->getLang('prev') . '</a>&nbsp;';
+                } else {
+                    $renderer->internallink($ID,$this->getLang('prev'));
+                }
+            }
+
+            if($rowcnt > $data['limit']) {
+                $next = $offset + $data['limit'];
+
+                // keep url params
+                $params = $this->dthlp->_a2ua('dataflt', $_REQUEST['dataflt']);
+                if(isset($_REQUEST['datasrt'])) {
+                    $params['datasrt'] = $_REQUEST['datasrt'];
+                }
+                $params['dataofs'] = $next;
+
+                if ($mode == 'xhtml') {
+                    $renderer->doc .= '<a href="' . wl($ID, $params) .
+                    '" title="' . $this->getLang('next') .
+                    '" class="next">' . $this->getLang('next') . '</a>';
+                } else {
+                    $renderer->internallink($ID,$this->getLang('next'));
+                }
+            }
+            $renderer->tableheader_close();
+            $renderer->tablerow_close();
+        }
+    }
+
+    /**
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $cur_params
+     */
+    protected function showActiveFilters($mode, Doku_Renderer $renderer, $cur_params) {
+        global $ID, $INPUT;
+
+        if($mode == 'xhtml' && $INPUT->has('dataflt')) {
+            $filters = $INPUT->arr('dataflt');
+            $confHelper = $this->loadHelper('struct_config');
+            $fltrs = array();
+            foreach($filters as $colcomp => $filter) {
+                $filter = $confHelper->parseFilterLine('', $colcomp.$filter);
+                if(strpos($filter[1], '~') !== false) {
+                    if(strpos($filter[1], '!~') !== false) {
+                        $comparator_value = '!~' . str_replace('%', '*', $filter[2]);
+                    } else {
+                        $comparator_value = '~' . str_replace('%', '', $filter[2]);
+                    }
+                    $fltrs[] = $filter[0] . $comparator_value;
+                } else {
+                    $fltrs[] = $filter[0] . $filter[1] . $filter[2];
+                }
+            }
+
+            $renderer->doc .= '<div class="filter">';
+            $renderer->doc .= '<h4>' . sprintf($this->getLang('tablefilteredby'), hsc(implode(' & ', $fltrs))) . '</h4>';
+            $renderer->doc .= '<div class="resetfilter">';
+            $renderer->internallink($ID, $this->getLang('tableresetfilter'));
+            $renderer->doc .=  '</div>';
+            $renderer->doc .= '</div>';
+        }
+    }
+
+    /**
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $data
+     * @param               $cur_params
+     */
+    protected function addDynamicFilters($mode, Doku_Renderer $renderer, $data, $cur_params) {
+        if ($mode != 'xhtml') return;
+
+        global $conf, $ID;
+
+        $html = '';
+        if($data['dynfilters']) {
+            $html .= '<tr class="dataflt">';
+
+            if($data['rownumbers']) {
+                $html .= '<th></th>';
+            }
+
+            foreach($data['headers'] as $num => $head) {
+                $html .= '<th>';
+                $form = new Doku_Form(array('method' => 'GET',));
+                $form->_hidden = array();
+                if(!$conf['userewrite']) {
+                    $form->addHidden('id', $ID);
+                }
+
+                $key = 'dataflt[' . $data['cols'][$num] . '~' . ']';
+                $val = isset($cur_params[$key]) ? $cur_params[$key] : '';
+
+                // Add current request params
+                foreach($cur_params as $c_key => $c_val) {
+                    if($c_val !== '' && $c_key !== $key) {
+                        $form->addHidden($c_key, $c_val);
+                    }
+                }
+
+                $form->addElement(form_makeField('text', $key, $val, ''));
+                $html .= $form->getForm();
+                $html .= '</th>';
+            }
+            $html .= '</tr>';
+            $renderer->doc .= $html;
+        }
+    }
+
+    /**
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     */
+    private function startTable($mode, Doku_Renderer $renderer) {
+        $renderer->table_open();
+    }
+
+    /**
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $clist
+     * @param               $data
+     * @param               $cur_params
+     *
+     */
+    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $clist, $data, $cur_params) {
+        global $ID;
+
+        $renderer->tablerow_open();
+
+        if($data['rownumbers']) {
+            $renderer->tableheader_open();
+            $renderer->cdata('#');
+            $renderer->tableheader_close();
+        }
+
+        foreach($data['headers'] as $num => $head) {
+            $ckey = $clist[$num];
+
+            $width = '';
+            if(isset($data['widths'][$num]) AND $data['widths'][$num] != '-') {
+                $width = ' style="width: ' . $data['widths'][$num] . ';"';
+            }
+            if ($mode == 'xhmtl') {
+                $renderer->doc .= '<th' . $width . '>';
+            } else {
+                $renderer->tableheader_open();
+            }
+
+            // add sort arrow
+            if ($mode == 'xhtml') {
+                if(isset($data['sort']) && $ckey == $data['sort'][0]) {
+                    if($data['sort'][1] == 'ASC') {
+                        $renderer->doc .= '<span>&darr;</span> ';
+                        $ckey = '^' . $ckey;
+                    } else {
+                        $renderer->doc .= '<span>&uarr;</span> ';
+                    }
+                }
+            }
+
+            // Clickable header for dynamic sorting
+            if ($mode == 'xhtml') {
+                $renderer->doc .= '<a href="' . wl($ID, array('datasrt' => $ckey,) + $cur_params) .
+                    '" title="' . $this->getLang('sort') . '">' . hsc($head) . '</a>';
+            } else {
+                $renderer->internallink($ID . "?datasrt=$ckey", hsc($head));
+            }
+            $renderer->tableheader_close();
+        }
+        $renderer->tablerow_close();
+    }
+
+
+    protected function startScope($mode, \Doku_Renderer $renderer) {
+        if ($mode == 'xhtml') {
+            $renderer->doc .= '<div class="table structaggegation">';
+        }
+    }
+
+    /**
+     * if summarize was set, add sums
+     *
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $data
+     * @param               $sums
+     */
+    private function summarize($mode, \Doku_Renderer $renderer, $data, $sums) {
+        if($data['summarize']) {
+            $renderer->tablerow_open();
+            $len = count($data['cols']);
+
+            if($data['rownumbers']) {
+                $renderer->tablecell_open();
+                $renderer->tablecell_close();
+            }
+
+            for($i = 0; $i < $len; $i++) {
+                $renderer->tablecell_open(1, $data['align'][$i]);
+                if(!empty($sums[$i])) {
+                    $renderer->cdata('∑ ' . $sums[$i]);
+                } else {
+                    if ($mode == 'xhtml') {
+                        $renderer->doc .= '&nbsp;';
+                    }
+                }
+                $renderer->tablecell_close();
+            }
+            $renderer->tablerow_close();
+        }
+    }
+
+    /**
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     *
+     */
+    private function finishTableAndScope($mode, Doku_Renderer $renderer) {
+        $renderer->table_close();
+        if ($mode == 'xhmtl') {
+            $renderer->doc .= '</div>';
+        }
+    }
+
+    /**
+     * @param               $mode
+     * @param Doku_Renderer $renderer
+     * @param               $data
+     * @param               $rows
+     *
+     */
+    private function renderRows($mode, Doku_Renderer $renderer, $data, $rows) {
+        $renderer->tabletbody_open();
+        foreach($rows as $rownum => $row) {
+            $renderer->tablerow_open();
+
+            if($data['rownumbers']) {
+                $renderer->tablecell_open();
+                $renderer->doc .= $rownum + 1;
+                $renderer->tablecell_close();
+            }
+
+            /** @var plugin\struct\meta\Value $value */
+            foreach($row as $colnum => $value) {
+                $renderer->tablecell_open();
+                $value->render($renderer, $mode);
+                $renderer->tablecell_close();
+
+                // summarize
+                if($data['summarize'] && is_numeric($value->getValue())) {
+                    if(!isset($this->sums[$colnum])) {
+                        $this->sums[$colnum] = 0;
+                    }
+                    $this->sums[$colnum] += $value->getValue();
+                }
+            }
+            $renderer->tablerow_close();
+        }
+        $renderer->tabletbody_close();
     }
 }
 
