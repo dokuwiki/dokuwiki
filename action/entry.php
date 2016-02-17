@@ -43,21 +43,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $ID, $INPUT;
         if (act_clean($event->data) !== "save") return false;
 
-        /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
-
-        $res = $this->sqlite->query("SELECT tbl FROM schema_assignments WHERE assign = ?",array($ID,));
-        if (!$this->sqlite->res2count($res)) return false;
-
-        $tables = array_map(
-            function ($value) {
-                return $value['tbl'];
-            },
-            $this->sqlite->res2arr($res)
-        );
-        $this->sqlite->res_close($res);
-
+        $assignments = new Assignments();
+        $tables = $assignments->getPageAssignments($ID);
         $structData = $INPUT->arr('Schema');
         $timestamp = time(); //FIXME we should use the time stamp used to save the page data
 
