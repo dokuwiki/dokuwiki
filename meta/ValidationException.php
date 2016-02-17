@@ -10,5 +10,5 @@ namespace plugin\struct\meta;
  * @package plugin\struct\meta
  */
 class ValidationException extends StructException {
-    protected $trans_prefix = 'Validation Exception';
+    protected $trans_prefix = 'Validation Exception ';
 }
