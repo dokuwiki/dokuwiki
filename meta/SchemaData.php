@@ -97,7 +97,7 @@ class SchemaData extends Schema {
      */
     public function getData() {
 
-        $this->setCorrectTimestamp($this->ts);
+        $this->setCorrectTimestamp($this->page, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data);
 
@@ -185,24 +185,25 @@ class SchemaData extends Schema {
         }
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
-        $opt = array($this->page, $this->ts);
+        $opt = array($this->page, $this->ts,);
 
         $sql = "$select FROM $stable DATA\n$join $where";
 
-        return array($sql, $opt);
+        return array($sql, $opt,);
     }
 
     /**
      * Set $this->ts to an existing timestamp, which is either current timestamp if it exists
      * or the next oldest timestamp that exists. If not timestamp is provided it is the newest timestamp that exists.
      *
+     * @param          $page
      * @param int|null $ts
      */
-    protected function setCorrectTimestamp($ts = null) {
+    protected function setCorrectTimestamp($page, $ts = null) {
         $table = 'data_' . $this->table;
-        $where = '';
+        $where = "WHERE pid = '$page'";
         if ($ts) {
-            $where = "WHERE rev <= $ts";
+            $where .= " AND rev <= $ts";
         }
         $sql = "SELECT rev FROM $table $where ORDER BY rev DESC LIMIT 1";
         $res = $this->sqlite->query($sql);

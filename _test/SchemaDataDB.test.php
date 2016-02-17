@@ -18,8 +18,8 @@ use plugin\struct\meta;
  */
 class SchemaDataDB extends \plugin\struct\meta\SchemaData {
 
-    public function setCorrectTimestamp($ts = null) {
-        parent::setCorrectTimestamp($ts);
+    public function setCorrectTimestamp($page, $ts = null) {
+        parent::setCorrectTimestamp($page, $ts);
     }
 
     public function getDataFromDB() {
@@ -108,7 +108,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
 
         // act
         $schemaData = new SchemaDataDB('testtable','testpage', "");
-        $schemaData->setCorrectTimestamp();
+        $schemaData->setCorrectTimestamp('testpage');
         $actual_data =  $schemaData->getDataFromDB();
 
         $expected_data = array(
@@ -130,7 +130,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
 
         // act
         $schemaData = new SchemaDataDB('testtable','testpage','');
-        $schemaData->setCorrectTimestamp(200);
+        $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
@@ -151,7 +151,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
 
         // act
         $schemaData = new SchemaDataDB('testtable','testpage', "");
-        $schemaData->setCorrectTimestamp();
+        $schemaData->setCorrectTimestamp('testpage');
 
         $actual_data = $schemaData->getData();
 
@@ -170,7 +170,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
 
         // act
         $schemaData = new SchemaDataDB('testtable','testpage2', "");
-        $schemaData->setCorrectTimestamp();
+        $schemaData->setCorrectTimestamp('testpage2');
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
@@ -188,7 +188,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
 
         // act
         $schemaData = new SchemaDataDB('testtable','testpage','');
-        $schemaData->setCorrectTimestamp(200);
+        $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
