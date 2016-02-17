@@ -2,6 +2,7 @@
 namespace plugin\struct\types;
 
 use dokuwiki\Form\Form;
+use plugin\struct\meta\ValidationException;
 
 /**
  * Class AbstractBaseType
@@ -253,5 +254,18 @@ abstract class AbstractBaseType {
         }
 
         return array($sql, $opt);
+    }
+
+    /**
+     * Validate a single value
+     *
+     * This function needs to throw a validation exception when validation fails.
+     * The exception message will be prefixed by the appropriate field on output
+     *
+     * @param string|int $value
+     * @throws ValidationException
+     */
+    public function validate($value) {
+        // nothing by default - we allow everything
     }
 }

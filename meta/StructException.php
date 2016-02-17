@@ -2,8 +2,6 @@
 
 namespace plugin\struct\meta;
 
-use Exception;
-
 /**
  * Class StructException
  *
@@ -12,6 +10,8 @@ use Exception;
  * @package plugin\struct\meta
  */
 class StructException extends \RuntimeException {
+
+    protected $trans_prefix = 'Exception ';
 
     /**
      * StructException constructor.
@@ -22,7 +22,7 @@ class StructException extends \RuntimeException {
     public function __construct($message) {
         /** @var \action_plugin_struct_autoloader $plugin */
         $plugin = plugin_load('action', 'struct_autoloader');
-        $trans = $plugin->getLang('Exception ' . $message);
+        $trans = $plugin->getLang($this->trans_prefix . $message);
         if(!$trans) $trans = $message;
 
         $args = func_get_args();

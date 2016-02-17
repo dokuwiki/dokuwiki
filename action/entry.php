@@ -11,9 +11,15 @@ if(!defined('DOKU_INC')) die();
 
 use plugin\struct\meta\Assignments;
 use plugin\struct\meta\SchemaData;
+use plugin\struct\meta\ValidationException;
+use plugin\struct\types\AbstractBaseType;
 
 class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
 
+    /**
+     * @var string The form name we use to transfer schema data
+     */
+    protected static $VAR = 'struct_schema_data';
 
     /** @var helper_plugin_sqlite */
     protected $sqlite;
@@ -32,23 +38,25 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * Save values of Schemas but do not interfere with saving the page.
+     * Validate the input data and save on ACT=save.
      *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
      *                           handler was registered]
      * @return bool
      */
     public function handle_pagesave(Doku_Event &$event, $param) {
         global $ID, $INPUT;
-        if (act_clean($event->data) !== "save") return false;
+        $act = act_clean($event->data);
+        if(!in_array($act, array('save', 'preview'))) return false;
 
         $assignments = new Assignments();
         $tables = $assignments->getPageAssignments($ID);
-        $structData = $INPUT->arr('Schema');
+        $structData = $INPUT->arr(self::$VAR);
         $timestamp = time(); //FIXME we should use the time stamp used to save the page data
 
-        foreach ($tables as $table) {
+        $ok = true;
+        foreach($tables as $table) {
             $schema = new SchemaData($table, $ID, $timestamp);
             if(!$schema->getId()) {
                 // this schema is not available for some reason. skip it
@@ -56,17 +64,79 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             }
 
             $schemaData = $structData[$table];
-            foreach ($schema->getColumns() as $col) {
+            foreach($schema->getColumns() as $col) {
+                // fix multi value types
                 $type = $col->getType();
                 $label = $type->getLabel();
-                if ($type->isMulti() && !is_array($schemaData[$label])) {
+                $trans = $type->getTranslatedLabel();
+                if($type->isMulti() && !is_array($schemaData[$label])) {
                     $schemaData[$label] = $type->splitValues($schemaData[$label]);
                 }
+
+                // validate data
+                $ok = $ok & $this->validate($type, $trans, $schemaData[$label]);
             }
-            $schema->saveData($schemaData);
+
+            // save if validated okay
+            if($ok && $act == 'save') {
+                $schema->saveData($schemaData);
+            }
+
+            // write back cleaned up schemaData
+            $structData[$table] = $schemaData;
         }
+        // write back cleaned up structData
+        $INPUT->post->set('Schema', $structData);
+
+        // did validation go through? other wise abort saving
+        if(!$ok && $act == 'save') {
+            $event->data = 'edit';
+        }
+
         return false;
     }
+
+    /**
+     * Validate the given data
+     *
+     * Catches the Validation exceptions and transforms them into proper messages.
+     *
+     * Blank values are not validated and always pass
+     *
+     * @param AbstractBaseType $type
+     * @param string $label
+     * @param array|string|int $data
+     * @return bool true if the data validates, otherwise false
+     */
+    protected function validate(AbstractBaseType $type, $label, $data) {
+        $prefix = sprintf($this->getLang('validation_prefix'), $label);
+
+        $ok = true;
+        if(is_array($data)) {
+            foreach($data as $value) {
+                if(!blank($value)) {
+                    try {
+                        $type->validate($value);
+                    } catch (ValidationException $e) {
+                        msg($prefix . $e->getMessage(), -1);
+                        $ok = false;
+                    }
+                }
+            }
+        } else {
+            if(!blank($data)) {
+                try {
+                    $type->validate($data);
+                } catch (ValidationException $e) {
+                    msg($prefix . $e->getMessage(), -1);
+                    $ok = false;
+                }
+            }
+        }
+
+        return $ok;
+    }
+
 
     /*
      * Enhance the editing form with structural data editing
@@ -105,14 +175,26 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     protected function createForm($tablename) {
         global $ID;
         global $REV;
+        global $INPUT;
         $schema = new SchemaData($tablename, $ID, $REV);
         $schemadata = $schema->getData();
+
+        $structdata = $INPUT->arr(self::$VAR);
+        if(isset($structdata[$tablename])) {
+            $postdata = $structdata[$tablename];
+        } else {
+            $postdata = array();
+        }
 
         $html = "<h3>$tablename</h3>";
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
+            if(isset($postdata[$label])) {
+                // posted data trumps stored data
+                $field->setValue($postdata[$label]);
+            }
             $trans = hsc($field->getColumn()->getTranslatedLabel());
-            $name = "Schema[$tablename][$label]";
+            $name = self::$VAR . "[$tablename][$label]";
             $input = $field->getValueEditor($name);
             $element = "<label>$trans $input</label><br />";
             $html .= $element;

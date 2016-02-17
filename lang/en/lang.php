@@ -17,11 +17,10 @@ $lang['createhint'] = 'Please note: schemas can not be renamed later';
 
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
+$lang['validation_prefix'] = "Field [%s]: ";
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
-$lang['searchex_'] = '';
-$lang['searchex_'] = '';
 
 
 

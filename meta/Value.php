@@ -24,11 +24,8 @@ class Value {
      * @param array|int|string $value
      */
     public function __construct(Column $column, $value) {
-        if($column->isMulti() && !is_array($value)) {
-            $value = array($value);
-        }
-        $this->value = $value;
         $this->column = $column;
+        $this->setValue($value);
     }
 
     /**
@@ -43,6 +40,18 @@ class Value {
      */
     public function getValue() {
         return $this->value;
+    }
+
+    /**
+     * Allows overwriting the current value
+     *
+     * @param array|int|string $value
+     */
+    public function setValue($value) {
+        if($this->column->isMulti() && !is_array($value)) {
+            $value = array($value);
+        }
+        $this->value = $value;
     }
 
     /**
