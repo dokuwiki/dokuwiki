@@ -17,6 +17,8 @@ $lang['createhint'] = 'Please note: schemas can not be renamed later';
 
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
+$lang['emptypage'] = 'Struct data has not been saved for an empty page';
+
 $lang['validation_prefix'] = "Field [%s]: ";
 
 $lang['Validation Exception Integer needed'] = 'only integers are allowed';
