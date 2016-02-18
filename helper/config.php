@@ -49,6 +49,8 @@ class helper_plugin_struct_config extends DokuWiki_Plugin {
     protected function parseFilter($val) {
 
         $comps = plugin\struct\meta\Search::$COMPARATORS;
+        $comps[] = '*~';
+        $comps[] = '<>';
         $comps = array_map('preg_quote_cb', $comps);
         $comps = join('|', $comps);
 
@@ -58,6 +60,12 @@ class helper_plugin_struct_config extends DokuWiki_Plugin {
         array_shift($match); // we don't need the zeroth match
         $match[0] = trim($match[0]);
         $match[2] = trim($match[2]);
+        if ($match[1] == '*~') {
+            $match[2] = '*' . $match[2] . '*';
+            $match[1] = '~';
+        } elseif ($match[1] == '<>') {
+            $match[1] = '!=';
+        }
         return $match;
     }
 }

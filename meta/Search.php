@@ -15,7 +15,7 @@ class Search {
      * The list of known and allowed comparators
      */
     static public $COMPARATORS = array(
-        '*~', '<=', '>=', '=', '<', '>', '!=', '!~', '~'
+        '<=', '>=', '=', '<', '>', '!=', '!~', '~'
     );
 
     /** @var  \helper_plugin_sqlite */
