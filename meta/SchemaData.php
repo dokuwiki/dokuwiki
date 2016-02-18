@@ -174,20 +174,21 @@ class SchemaData extends Schema {
 
         $colsel = join(',', preg_filter('/^/', 'col', $singles));
 
-        $select = 'SELECT ' . $colsel;
+        //$select = 'SELECT ' . $colsel;
         $join = '';
         foreach($multis as $col) {
             $tn = 'M' . $col;
-            $select .= ",$tn.value AS col$col";
+            $colsel .= ",$tn.value AS col$col";
             $join .= "LEFT OUTER JOIN $mtable $tn";
             $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
             $join .= " AND $tn.colref = $col\n";
         }
+        $colsel = ltrim($colsel, ',');
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
         $opt = array($this->page, $this->ts,);
 
-        $sql = "$select FROM $stable DATA\n$join $where";
+        $sql = "SELECT $colsel FROM $stable DATA\n$join $where";
 
         return array($sql, $opt,);
     }
