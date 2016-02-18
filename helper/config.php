@@ -50,7 +50,7 @@ class helper_plugin_struct_config extends DokuWiki_Plugin {
 
         $comps = plugin\struct\meta\Search::$COMPARATORS;
         $comps[] = '*~';
-        $comps[] = '<>';
+        array_unshift($comps, '<>');
         $comps = array_map('preg_quote_cb', $comps);
         $comps = join('|', $comps);
 
