@@ -111,7 +111,7 @@ class Search {
 
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
-
+        $value = str_replace('*','%',$value);
         $this->filter[] = array($col, $value, $comp, $type);
     }
 
