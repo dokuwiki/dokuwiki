@@ -1184,6 +1184,38 @@ function con($pre, $text, $suf, $pretty = false) {
 }
 
 /**
+ * Checks if the current page version is newer than the last entry in the page's
+ * changelog. If so, we assume it has been an external edit and we create an
+ * attic copy and add a proper changelog line.
+ *
+ * This check is only executed when the page is about to be saved again from the
+ * wiki, triggered in @see saveWikiText()
+ *
+ * @param string $id the page ID
+ */
+function detectExternalEdit($id) {
+    global $lang;
+
+    $file     = wikiFN($id);
+    $old      = @filemtime($file); // from page
+    $pagelog  = new PageChangeLog($id, 1024);
+    $oldRev   = $pagelog->getRevisions(-1, 1); // from changelog
+    $oldRev   = (int) (empty($oldRev) ? 0 : $oldRev[0]);
+
+    if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
+        // add old revision to the attic if missing
+        saveOldRevision($id);
+        // add a changelog entry if this edit came from outside dokuwiki
+        if($old > $oldRev) {
+            addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true));
+            // remove soon to be stale instructions
+            $cache = new cache_instructions($id, $file);
+            $cache->removeCache();
+        }
+    }
+}
+
+/**
  * Saves a wikitext by calling io_writeWikiPage.
  * Also directs changelog and attic updates.
  *
@@ -1208,77 +1240,72 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     /* @var Input $INPUT */
     global $INPUT;
 
-    // ignore if no changes were made
-    if($text == rawWiki($id, '')) {
-        return;
+    // prepare data for event
+    $svdta = array();
+    $svdta['id']             = $id;
+    $svdta['file']           = wikiFN($id);
+    $svdta['revertFrom']     = $REV;
+    $svdta['oldRevision']    = @filemtime($svdta['file']);
+    $svdta['newRevision']    = 0;
+    $svdta['newContent']     = $text;
+    $svdta['oldContent']     = rawWiki($id);
+    $svdta['summary']        = $summary;
+    $svdta['contentChanged'] = ($svdta['newContent'] != $svdta['oldContent']);
+    $svdta['changeInfo']     = '';
+    $svdta['changeType']     = DOKU_CHANGE_TYPE_EDIT;
+
+    // select changelog line type
+    if($REV) {
+        $svdta['changeType']  = DOKU_CHANGE_TYPE_REVERT;
+        $svdta['changeInfo'] = $REV;
+    } else if(!file_exists($svdta['file'])) {
+        $svdta['changeType'] = DOKU_CHANGE_TYPE_CREATE;
+    } else if(trim($text) == '') {
+        // empty or whitespace only content deletes
+        $svdta['changeType'] = DOKU_CHANGE_TYPE_DELETE;
+        // autoset summary on deletion
+        if(blank($svdta['summary'])) $svdta['summary'] = $lang['deleted'];
+    } else if($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
+        //minor edits only for logged in users
+        $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
     }
 
-    $file        = wikiFN($id);
-    $old         = @filemtime($file); // from page
-    $wasRemoved  = (trim($text) == ''); // check for empty or whitespace only
-    $wasCreated  = !file_exists($file);
-    $wasReverted = ($REV == true);
-    $pagelog     = new PageChangeLog($id, 1024);
-    $newRev      = false;
-    $oldRev      = $pagelog->getRevisions(-1, 1); // from changelog
-    $oldRev      = (int) (empty($oldRev) ? 0 : $oldRev[0]);
-    if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
-        // add old revision to the attic if missing
-        saveOldRevision($id);
-        // add a changelog entry if this edit came from outside dokuwiki
-        if($old > $oldRev) {
-            addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true));
-            // remove soon to be stale instructions
-            $cache = new cache_instructions($id, $file);
-            $cache->removeCache();
-        }
-    }
+    $event = new Doku_Event('COMMON_WIKIPAGE_SAVE', $svdta);
+    if(!$event->advise_before()) return;
 
-    if($wasRemoved) {
+    // if the content has not been changed, no save happens (plugins may override this)
+    if(!$svdta['contentChanged']) return;
+
+    detectExternalEdit($id);
+    if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
-        $data = array(array($file, '', false), getNS($id), noNS($id), false);
+        $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
         trigger_event('IO_WIKIPAGE_WRITE', $data);
         // pre-save deleted revision
-        @touch($file);
+        @touch($svdta['file']);
         clearstatcache();
-        $newRev = saveOldRevision($id);
+        $data['newRevision'] = saveOldRevision($id);
         // remove empty file
-        @unlink($file);
+        @unlink($svdta['file']);
         // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
         // purge non-persistant meta data
         p_purge_metadata($id);
-        $del = true;
-        // autoset summary on deletion
-        if(empty($summary)) $summary = $lang['deleted'];
         // remove empty namespaces
         io_sweepNS($id, 'datadir');
         io_sweepNS($id, 'mediadir');
     } else {
         // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($file, $text, $id);
+        io_writeWikiPage($svdta['file'], $text, $id);
         // pre-save the revision, to keep the attic in sync
-        $newRev = saveOldRevision($id);
-        $del    = false;
+        $svdta['newRevision'] = saveOldRevision($id);
     }
 
-    // select changelog line type
-    $extra = '';
-    $type  = DOKU_CHANGE_TYPE_EDIT;
-    if($wasReverted) {
-        $type  = DOKU_CHANGE_TYPE_REVERT;
-        $extra = $REV;
-    } else if($wasCreated) {
-        $type = DOKU_CHANGE_TYPE_CREATE;
-    } else if($wasRemoved) {
-        $type = DOKU_CHANGE_TYPE_DELETE;
-    } else if($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        $type = DOKU_CHANGE_TYPE_MINOR_EDIT;
-    } //minor edits only for logged in users
+    $event->advise_after();
 
-    addLogEntry($newRev, $id, $type, $summary, $extra);
+    addLogEntry($svdta['newRevision'], $svdta['id'], $svdta['changeType'], $svdta['summary'], $svdta['changeInfo']);
     // send notify mails
-    notify($id, 'admin', $old, $summary, $minor);
-    notify($id, 'subscribers', $old, $summary, $minor);
+    notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor);
+    notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor);
 
     // update the purgefile (timestamp of the last time anything within the wiki was changed)
     io_saveFile($conf['cachedir'].'/purgefile', time());
