@@ -83,7 +83,7 @@ class config_helper_struct_test extends \DokuWikiTest {
                 ),
                 '',
             ),
-//            array('a<>b', array(0 => 'a', 1 => '<>', 2 => 'b'), ''),
+            array('a<>b', array(0 => 'a', 1 => '!=', 2 => 'b'), ''),
             array(
                 'a!~b',
                 array(
@@ -102,7 +102,7 @@ class config_helper_struct_test extends \DokuWikiTest {
                 ),
                 '',
             ),
-            array('a*~b',array(0 => 'a',1 => '*~',2 => 'b'), ''),
+            array('a*~b',array(0 => 'a',1 => '~',2 => '*b*'), ''),
         );
     }
 

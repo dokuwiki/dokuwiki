@@ -243,17 +243,13 @@ abstract class AbstractBaseType {
      */
     public function compare($column, $comp, $value) {
         switch ($comp) {
-            case '*~':
-                $sql = "$column LIKE ?";
-                $opt = array('%' . $value . '%');
-                break;
             case '~':
                 $sql = "$column LIKE ?";
                 $opt = array($value);
                 break;
             case '!~':
                 $sql = "$column NOT LIKE ?";
-                $opt = array('%' . $value . '%');
+                $opt = array($value);
                 break;
             default:
                 $sql = "$column $comp ?";
