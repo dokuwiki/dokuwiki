@@ -71,9 +71,6 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
     protected $sums = array();
 
-    /** @var helper_plugin_struct_aggregation $dthlp  */
-    protected $dthlp = null;
-
     /**
      * Render xhtml output or metadata
      *
@@ -85,7 +82,6 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
         if(!$data) return false;
-        $this->dthlp = $this->loadHelper('struct_aggregation');
 
         $clist = $data['cols'];
 
