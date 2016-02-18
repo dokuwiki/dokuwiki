@@ -83,8 +83,6 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         if($mode != 'xhtml') return false;
         if(!$data) return false;
 
-        $clist = $data['cols'];
-
         //reset counters
         $this->sums = array();
 
@@ -92,14 +90,14 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $search = new SearchConfig($data);
             $data = $search->getConf();
             $rows = $search->execute();
-            $cnt = count($rows);
+            $cnt = $search->getCount();
 
             if ($cnt === 0) {
-                //$this->nullList($data, $clist, $R);
-                //return true;
+                $this->nullList($data, $mode, $renderer);
+                return true;
             }
 
-            $this->renderPreTable($mode, $renderer, $clist, $data);
+            $this->renderPreTable($mode, $renderer, $data);
             $this->renderRows($mode, $renderer, $data, $rows);
             $this->renderPostTable($mode, $renderer, $data, $cnt);
         } catch (StructException $e) {
@@ -114,15 +112,14 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      *
      * @param               $mode
      * @param Doku_Renderer $renderer
-     * @param               $clist
      * @param               $data
      */
-    protected function renderPreTable($mode, Doku_Renderer $renderer, $clist, $data) {
+    protected function renderPreTable($mode, Doku_Renderer $renderer, $data) {
         $this->startScope($mode, $renderer);
         $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
-        $this->buildColumnHeaders($mode, $renderer, $clist, $data);
+        $this->buildColumnHeaders($mode, $renderer, $data);
         $this->addDynamicFilters($mode, $renderer, $data);
         $renderer->tablethead_close();
     }
@@ -142,9 +139,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * if limit was set, add control
      *
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      * @param               $rowcnt
      */
     protected function addLimitControls($mode, Doku_Renderer $renderer, $data, $rowcnt) {
@@ -180,8 +177,8 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
      */
     protected function showActiveFilters($mode, Doku_Renderer $renderer) {
         global $ID;
@@ -214,9 +211,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      */
     protected function addDynamicFilters($mode, Doku_Renderer $renderer, $data) {
         if ($mode != 'xhtml') return;
@@ -266,21 +263,20 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
      */
     private function startTable($mode, Doku_Renderer $renderer) {
         $renderer->table_open();
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $clist
-     * @param               $data
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      *
      */
-    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $clist, $data) {
+    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $data) {
         global $ID;
 
         $renderer->tablerow_open();
@@ -292,7 +288,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         }
 
         foreach($data['headers'] as $num => $head) {
-            $ckey = $clist[$num];
+            $ckey = $data['cols'][$num];
 
             $width = '';
             if(isset($data['widths'][$num]) AND $data['widths'][$num] != '-') {
@@ -321,7 +317,10 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         $renderer->tablerow_close();
     }
 
-
+    /**
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     */
     protected function startScope($mode, \Doku_Renderer $renderer) {
         if ($mode == 'xhtml') {
             $renderer->doc .= '<div class="table structaggegation">';
@@ -331,10 +330,10 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * if summarize was set, add sums
      *
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
-     * @param               $sums
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
+     * @param array         $sums     the summarized output of the numerical fields
      */
     private function summarize($mode, \Doku_Renderer $renderer, $data, $sums) {
         if($data['summarize']) {
@@ -362,8 +361,8 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
      *
      */
     private function finishTableAndScope($mode, Doku_Renderer $renderer) {
@@ -374,9 +373,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      * @param               $rows
      *
      */
@@ -408,6 +407,21 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $renderer->tablerow_close();
         }
         $renderer->tabletbody_close();
+    }
+
+    /**
+     * @param array         $data     the configuration of the table/search
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     */
+    private function nullList($data, $mode, Doku_Renderer $renderer) {
+        $this->renderPreTable($mode, $renderer, $data);
+        $renderer->tablerow_open();
+        $renderer->tablecell_open(count($data['cols']) + $data['rownumbers'], 'center');
+        $renderer->cdata($this->getLang('none'));
+        $renderer->tablecell_close();
+        $renderer->tablerow_close();
+        $renderer->table_close();
     }
 }
 
