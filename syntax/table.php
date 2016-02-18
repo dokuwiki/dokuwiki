@@ -92,23 +92,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         //reset counters
         $this->sums = array();
 
-        /** @var \helper_plugin_struct_config $confHlp */
-        $confHlp = plugin_load('helper','struct_config');
-
         try {
-            global $INPUT;
-
-            $datasrt = $INPUT->str('datasrt');
-            if ($datasrt) {
-                $data['sort'] = $confHlp->parseSort($datasrt);
-            }
-            $dataflt = $INPUT->arr('dataflt');
-            if ($dataflt) {
-                foreach ($dataflt as $colcomp => $filter) {
-                    $data['filter'][] = $confHlp->parseFilterLine('AND', $colcomp . $filter);
-                }
-            }
             $search = new SearchConfig($data);
+            $data = $search->getConf();
             $rows = $search->execute();
             $cnt = count($rows);
 
@@ -117,16 +103,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                 //return true;
             }
 
-            $dataofs = $INPUT->has('dataofs') ? $INPUT->int('dataofs') : 0;
-            if ($data['limit'] && $cnt > $data['limit']) {
-                $rows = array_slice($rows, $dataofs, $data['limit']);
-            }
-
             $this->renderPreTable($mode, $renderer, $clist, $data);
             $this->renderRows($mode, $renderer, $data, $rows);
             $this->renderPostTable($mode, $renderer, $data, $cnt);
-
-            $renderer->doc .= '';
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
         }
@@ -143,15 +122,12 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param               $data
      */
     protected function renderPreTable($mode, Doku_Renderer $renderer, $clist, $data) {
-        // Save current request params to not loose them
-        $cur_params = $this->dthlp->_get_current_param();
-
         $this->startScope($mode, $renderer);
         $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
-        $this->buildColumnHeaders($mode, $renderer, $clist, $data, $cur_params);
-        $this->addDynamicFilters($mode, $renderer, $data, $cur_params);
+        $this->buildColumnHeaders($mode, $renderer, $clist, $data);
+        $this->addDynamicFilters($mode, $renderer, $data);
         $renderer->tablethead_close();
     }
 
@@ -176,7 +152,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param               $rowcnt
      */
     protected function addLimitControls($mode, Doku_Renderer $renderer, $data, $rowcnt) {
-        global $ID, $INPUT;
+        global $ID;
 
         if($data['limit']) {
             $renderer->tablerow_open();
@@ -185,8 +161,8 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
             // keep url params
             $params = array();
-            $params['dataflt'] = $INPUT->arr('dataflt');
-            if ($INPUT->has('datasrt')) {$params['datasrt'] = $INPUT->str('datasrt');}
+            if (!empty($data['current_params']['dataflt'])) {$params['dataflt'] = $data['current_params']['dataflt'];}
+            if (!empty($data['current_params']['datasrt'])) {$params['datasrt'] = $data['current_params']['datasrt'];}
 
             if($offset) {
                 $prev = $offset - $data['limit'];
@@ -212,10 +188,10 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param Doku_Renderer $renderer
      */
     protected function showActiveFilters($mode, Doku_Renderer $renderer) {
-        global $ID, $INPUT;
+        global $ID;
 
-        if($mode == 'xhtml' && $INPUT->has('dataflt')) {
-            $filters = $INPUT->arr('dataflt');
+        if($mode == 'xhtml' && !empty($data['current_params']['dataflt'])) {
+            $filters = $data['current_params']['dataflt'];
             $confHelper = $this->loadHelper('struct_config');
             $fltrs = array();
             foreach($filters as $colcomp => $filter) {
@@ -245,13 +221,13 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param               $mode
      * @param Doku_Renderer $renderer
      * @param               $data
-     * @param               $cur_params
      */
-    protected function addDynamicFilters($mode, Doku_Renderer $renderer, $data, $cur_params) {
+    protected function addDynamicFilters($mode, Doku_Renderer $renderer, $data) {
         if ($mode != 'xhtml') return;
 
         global $conf, $ID;
 
+        $cur_params = $data['current_params'];
         $html = '';
         if($data['dynfilters']) {
             $html .= '<tr class="dataflt">';
@@ -306,10 +282,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param Doku_Renderer $renderer
      * @param               $clist
      * @param               $data
-     * @param               $cur_params
      *
      */
-    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $clist, $data, $cur_params) {
+    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $clist, $data) {
         global $ID;
 
         $renderer->tablerow_open();
@@ -344,7 +319,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                     }
                 }
             }
-            $renderer->internallink($ID . "?" . http_build_query(array('datasrt' => $ckey,) + $cur_params), hsc($head));
+            $renderer->internallink($ID . "?" . http_build_query(array('datasrt' => $ckey,) + $data['current_params']), hsc($head));
             $renderer->tableheader_close();
         }
         $renderer->tablerow_close();
