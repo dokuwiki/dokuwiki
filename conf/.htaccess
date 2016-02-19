@@ -1,3 +1,8 @@
 ## no access to the conf directory
-order allow,deny
-deny from all
+<IfModule mod_authz_host>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_host>
+    Order allow,deny
+    Deny from all
+</IfModule>

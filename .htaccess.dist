@@ -6,8 +6,13 @@
 
 ## make sure nobody gets the htaccess, README, COPYING or VERSION files
 <Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
-    Order allow,deny
-    Deny from all
+    <IfModule mod_authz_host>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_host>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </Files>
 
 ## Uncomment these rules if you want to have nice URLs using
