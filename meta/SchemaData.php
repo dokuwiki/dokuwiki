@@ -96,19 +96,29 @@ class SchemaData extends Schema {
      * @return Value[] a list of values saved for the current page
      */
     public function getData() {
-
         $this->setCorrectTimestamp($this->page, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data);
+        return $data;
+    }
 
+    /**
+     * returns the data saved for the page as associative array
+     *
+     * The array returned is in the same format as used in @see saveData()
+     *
+     * @return array
+     */
+    public function getDataArray() {
+        $this->setCorrectTimestamp($this->page, $this->ts);
+        $data = $this->getDataFromDB();
+        $data = $this->consolidateData($data, true);
         return $data;
     }
 
     /**
      * retrieve the data saved for the page from the database. Usually there is no need to call this function.
      * Call @see SchemaData::getData instead.
-     *
-     * @return array
      */
     protected function getDataFromDB() {
         // prepare column names
@@ -132,10 +142,13 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Creates a proper result array from the database data
+     *
      * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
-     * @return Value[]
+     * @param bool $asarray return data as associative array (true) or as array of Values (false)
+     * @return array|Value[]
      */
-    protected function consolidateData($DBdata) {
+    protected function consolidateData($DBdata, $asarray = false) {
         $data = array();
 
         foreach($this->getColumns() as $col) {
@@ -155,7 +168,11 @@ class SchemaData extends Schema {
                 $val = $DBdata[0]['col'.$col->getColref()];
             }
 
-            $data[] = new Value($col, $val);
+            if($asarray) {
+                $data[$col->getLabel()] = $val;
+            } else {
+                $data[] = new Value($col, $val);
+            }
         }
 
         return $data;
@@ -174,20 +191,21 @@ class SchemaData extends Schema {
 
         $colsel = join(',', preg_filter('/^/', 'col', $singles));
 
-        $select = 'SELECT ' . $colsel;
+        //$select = 'SELECT ' . $colsel;
         $join = '';
         foreach($multis as $col) {
             $tn = 'M' . $col;
-            $select .= ",$tn.value AS col$col";
+            $colsel .= ",$tn.value AS col$col";
             $join .= "LEFT OUTER JOIN $mtable $tn";
             $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
             $join .= " AND $tn.colref = $col\n";
         }
+        $colsel = ltrim($colsel, ',');
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
         $opt = array($this->page, $this->ts,);
 
-        $sql = "$select FROM $stable DATA\n$join $where";
+        $sql = "SELECT $colsel FROM $stable DATA\n$join $where";
 
         return array($sql, $opt,);
     }

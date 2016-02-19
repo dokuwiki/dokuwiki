@@ -14,6 +14,11 @@ use plugin\struct\meta\SchemaData;
 use plugin\struct\meta\ValidationException;
 use plugin\struct\types\AbstractBaseType;
 
+/**
+ * Class action_plugin_struct_entry
+ *
+ * Handles the whole struct data entry process
+ */
 class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
 
     /**
@@ -24,6 +29,12 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     /** @var helper_plugin_sqlite */
     protected $sqlite;
 
+    /** @var  bool has the data been validated correctly? */
+    protected $validated;
+
+    /** @var  array these schemas have changed data and need to be saved */
+    protected $tosave;
+
     /**
      * Registers a callback function for a given event
      *
@@ -31,21 +42,53 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-
+        // add the struct editor to the edit form;
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, 'handle_editform');
-        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_pagesave');
-
+        // validate data on preview and save;
+        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_validation');
+        // ensure a page revision is created when struct data changes:
+        $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'BEFORE', $this, 'handle_pagesave_before');
+        // save struct data after page has been saved:
+        $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'AFTER', $this, 'handle_pagesave_after');
     }
 
     /**
-     * Validate the input data and save on ACT=save.
+     * Enhance the editing form with structural data editing
      *
      * @param Doku_Event $event event object by reference
      * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
      *                           handler was registered]
      * @return bool
      */
-    public function handle_pagesave(Doku_Event &$event, $param) {
+    public function handle_editform(Doku_Event $event, $param) {
+        global $ID;
+
+        $assignments = new Assignments();
+        $tables = $assignments->getPageAssignments($ID);
+
+        $html = '';
+        foreach($tables as $table) {
+            $html .= $this->createForm($table);
+        }
+
+        /** @var Doku_Form $form */
+        $form = $event->data;
+        $html = "<div class=\"struct\">$html</div>";
+        $pos = $form->findElementById('wiki__editbar'); // insert the form before the main buttons
+        $form->insertElement($pos, $html);
+
+        return true;
+    }
+
+    /**
+     * Clean up and validate the input data
+     *
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_validation(Doku_Event $event, $param) {
         global $ID, $INPUT;
         $act = act_clean($event->data);
         if(!in_array($act, array('save', 'preview'))) return false;
@@ -53,47 +96,98 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $assignments = new Assignments();
         $tables = $assignments->getPageAssignments($ID);
         $structData = $INPUT->arr(self::$VAR);
-        $timestamp = time(); //FIXME we should use the time stamp used to save the page data
+        $timestamp = time();
 
-        $ok = true;
+        $this->tosave = array();
+        $this->validated = true;
         foreach($tables as $table) {
-            $schema = new SchemaData($table, $ID, $timestamp);
-            if(!$schema->getId()) {
+            $schemaData = new SchemaData($table, $ID, $timestamp);
+            if(!$schemaData->getId()) {
                 // this schema is not available for some reason. skip it
                 continue;
             }
 
-            $schemaData = $structData[$table];
-            foreach($schema->getColumns() as $col) {
+            $newData = $structData[$table];
+            foreach($schemaData->getColumns() as $col) {
                 // fix multi value types
                 $type = $col->getType();
                 $label = $type->getLabel();
                 $trans = $type->getTranslatedLabel();
-                if($type->isMulti() && !is_array($schemaData[$label])) {
-                    $schemaData[$label] = $type->splitValues($schemaData[$label]);
+                if($type->isMulti() && !is_array($newData[$label])) {
+                    $newData[$label] = $type->splitValues($newData[$label]);
                 }
 
                 // validate data
-                $ok = $ok & $this->validate($type, $trans, $schemaData[$label]);
+                $this->validated = $this->validated && $this->validate($type, $trans, $newData[$label]);
             }
 
-            // save if validated okay
-            if($ok && $act == 'save') {
-                $schema->saveData($schemaData);
+            // has the data changed? mark it for saving.
+            $olddata = $schemaData->getDataArray();
+            if($olddata != $newData) {
+                $this->tosave[] = $table;
             }
 
-            // write back cleaned up schemaData
-            $structData[$table] = $schemaData;
+            // write back cleaned up data
+            $structData[$table] = $newData;
         }
         // write back cleaned up structData
-        $INPUT->post->set('Schema', $structData);
+        $INPUT->post->set(self::$VAR, $structData);
 
-        // did validation go through? other wise abort saving
-        if(!$ok && $act == 'save') {
+        // did validation go through? otherwise abort saving
+        if(!$this->validated && $act == 'save') {
             $event->data = 'edit';
         }
 
         return false;
+    }
+
+    /**
+     * Check if the page has to be changed
+     *
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_pagesave_before(Doku_Event $event, $param) {
+        global $lang;
+
+        if($event->data['contentChanged']) return; // will be saved for page changes
+        if(count($this->tosave)) {
+            if(trim($event->data['newContent']) === '') {
+                // this happens when a new page is tried to be created with only struct data
+                msg($this->getLang('emptypage'), -1);
+            } else {
+                $event->data['contentChanged'] = true; // save for data changes
+            }
+        }
+    }
+
+    /**
+     * Save the data
+     *
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_pagesave_after(Doku_Event $event, $param) {
+        global $INPUT;
+
+        // this should never happen, because the validation is checked in handle_validation already
+        if(!$this->validated) return;
+
+        if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+            // FIXME we should probably clean out all data on delete!?
+            return;
+        }
+
+        $structData = $INPUT->arr(self::$VAR);
+
+        foreach($this->tosave as $table) {
+            $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
+            $schemaData->saveData($structData[$table]);
+        }
     }
 
     /**
@@ -117,7 +211,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 if(!blank($value)) {
                     try {
                         $type->validate($value);
-                    } catch (ValidationException $e) {
+                    } catch(ValidationException $e) {
                         msg($prefix . $e->getMessage(), -1);
                         $ok = false;
                     }
@@ -127,7 +221,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             if(!blank($data)) {
                 try {
                     $type->validate($data);
-                } catch (ValidationException $e) {
+                } catch(ValidationException $e) {
                     msg($prefix . $e->getMessage(), -1);
                     $ok = false;
                 }
@@ -135,35 +229,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         }
 
         return $ok;
-    }
-
-
-    /*
-     * Enhance the editing form with structural data editing
-     *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
-     * @return bool
-     */
-    public function handle_editform(Doku_Event $event, $param) {
-        global $ID;
-
-        $assignments = new Assignments();
-        $tables = $assignments->getPageAssignments($ID);
-
-        $html = '';
-        foreach($tables as $table) {
-            $html .= $this->createForm($table);
-        }
-
-        /** @var Doku_Form $form */
-        $form = $event->data;
-        $html = "<div class=\"struct\">$html</div>";
-        $pos = $form->findElementById('wiki__editbar'); // insert the form before the main buttons
-        $form->insertElement($pos, $html);
-
-        return true;
     }
 
     /**
