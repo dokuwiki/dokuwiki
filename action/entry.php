@@ -217,17 +217,17 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                     }
                 }
             }
-        } else {
-            if(!blank($data)) {
-                try {
-                    $type->validate($data);
-                } catch(ValidationException $e) {
-                    msg($prefix . $e->getMessage(), -1);
-                    $ok = false;
-                }
-            }
+            return $ok;
         }
 
+        if(!blank($data)) {
+            try {
+                $type->validate($data);
+            } catch(ValidationException $e) {
+                msg($prefix . $e->getMessage(), -1);
+                $ok = false;
+            }
+        }
         return $ok;
     }
 
