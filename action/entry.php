@@ -118,7 +118,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 }
 
                 // validate data
-                $this->validated = $this->validated & $this->validate($type, $trans, $newData[$label]);
+                $this->validated = $this->validated && $this->validate($type, $trans, $newData[$label]);
             }
 
             // has the data changed? mark it for saving.
