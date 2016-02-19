@@ -17,6 +17,9 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     /** @var PDO */
     protected $pdo;
 
+    /** @var null|array The list of all groups */
+    protected $groupcache = null;
+
     /**
      * Constructor.
      */
@@ -436,6 +439,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         $sql = $this->getConf('insert-group');
 
         $result = $this->_query($sql, array(':group' => $group));
+        $this->_clearGroupCache();
         if($result === false) return false;
         return true;
     }
@@ -561,10 +565,11 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     /**
      * Select all available groups
      *
-     * @todo this should be cached
      * @return array|bool list of all available groups and their properties
      */
     protected function _selectGroups() {
+        if($this->groupcache) return $this->groupcache;
+
         $sql = $this->getConf('select-groups');
         $result = $this->_query($sql);
         if($result === false) return false;
@@ -583,6 +588,13 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
 
         ksort($groups);
         return $groups;
+    }
+
+    /**
+     * Remove all entries from the group cache
+     */
+    protected function _clearGroupCache() {
+        $this->groupcache = null;
     }
 
     /**
