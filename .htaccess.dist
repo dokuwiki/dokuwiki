@@ -15,6 +15,11 @@
     </IfModule>
 </Files>
 
+## Don't allow access to git directories
+<IfModule alias_module>
+    RedirectMatch 404 /\.git
+</IfModule>
+
 ## Uncomment these rules if you want to have nice URLs using
 ## $conf['userewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
