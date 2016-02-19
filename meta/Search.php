@@ -301,7 +301,8 @@ class Search {
 
         // handling of page column is special
         if($colname == '%pageid%') {
-            return new PageColumn(0, new Page(), array_shift(array_keys($this->schemas)));
+            $schema_list = array_keys($this->schemas);
+            return new PageColumn(0, new Page(), array_shift($schema_list));
         }
         // FIXME %title% needs to be handled here, too (later)
 
