@@ -35,12 +35,19 @@ function hsc($string) {
  *
  * This is similar to empty() but will return false for "0".
  *
+ * Please note: when you pass uninitialized variables, they will implicitly be created
+ * with a NULL value without warning.
+ *
+ * To avoid this it's recommended to guard the call with isset like this:
+ *
+ * (isset($foo) && !blank($foo))
+ * (!isset($foo) || blank($foo))
+ *
  * @param $in
  * @param bool $trim Consider a string of whitespace to be blank
  * @return bool
  */
 function blank(&$in, $trim = false) {
-    if(!isset($in)) return true;
     if(is_null($in)) return true;
     if(is_array($in)) return empty($in);
     if($in === "\0") return true;
