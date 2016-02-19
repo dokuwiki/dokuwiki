@@ -3,12 +3,21 @@ namespace plugin\struct\types;
 
 use plugin\struct\meta\ValidationException;
 
+/**
+ * Class Integer
+ *
+ * A field accepting integer numbers only
+ *
+ * @package plugin\struct\types
+ */
 class Integer extends Text {
 
     protected $config = array(
         'prefix' => '',
         'postfix' => '',
-        'format' => '%d'
+        'format' => '%d',
+        'min' => '',
+        'max' => ''
     );
 
     /**
@@ -43,6 +52,14 @@ class Integer extends Text {
 
         if((string) $value != (string) intval($value)) {
             throw new ValidationException('Integer needed');
+        }
+
+        if($this->config['min'] !== '' && intval($value) <= intval($this->config['min'])) {
+            throw new ValidationException('Integer min', intval($this->config['min']));
+        }
+
+        if($this->config['max'] !== '' && intval($value) >= intval($this->config['max'])) {
+            throw new ValidationException('Integer max', intval($this->config['max']));
         }
     }
 

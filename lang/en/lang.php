@@ -17,9 +17,13 @@ $lang['createhint'] = 'Please note: schemas can not be renamed later';
 
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
+$lang['emptypage'] = 'Struct data has not been saved for an empty page';
+
 $lang['validation_prefix'] = "Field [%s]: ";
 
 $lang['Validation Exception Integer needed'] = 'only integers are allowed';
+$lang['Validation Exception Integer min'] = 'has to be equal or greater than %d';
+$lang['Validation Exception Integer max'] = 'has to be equal or less than %d';
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
