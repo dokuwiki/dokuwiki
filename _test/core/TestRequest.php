@@ -1,9 +1,20 @@
 <?php
 /**
- * 
- * Simulates a fake full DokuWiki HTTP Request and allows
+ * Simulates a full DokuWiki HTTP Request and allows
  * runtime inspection.
- * 
+ */
+
+// output buffering
+$output_buffer = '';
+
+function ob_start_callback($buffer) {
+    global $output_buffer;
+    $output_buffer .= $buffer;
+}
+
+
+/**
+ * Helper class to execute a fake request
  */
 class TestRequest {
 
@@ -15,17 +26,12 @@ class TestRequest {
     private $get = array();
     private $post = array();
 
-    /**
-     * @return string[]
-     */
-    protected function getValidScripts() { return $this->valid_scripts; }
-    
     public function getServer($key) { return $this->server[$key]; }
     public function getSession($key) { return $this->session[$key]; }
     public function getGet($key) { return $this->get[$key]; }
     public function getPost($key) { return $this->post[$key]; }
     public function getScript() { return $this->script; }
-    
+
     public function setServer($key, $value) { $this->server[$key] = $value; }
     public function setSession($key, $value) { $this->session[$key] = $value; }
     public function setGet($key, $value) { $this->get[$key] = $value; }
@@ -33,11 +39,11 @@ class TestRequest {
 
     /**
      * Executes the request
-     * @param string $uri end URL to simulate, needs to start with /doku.php currently
-     * @param bool $header_remove call <b>header_remove()</b> or not
-     * @return \TestResponse the resulting output of the request
+     *
+     * @param string $url  end URL to simulate, needs to start with /doku.php currently
+     * @return TestResponse the resulting output of the request
      */
-    public function execute($uri='/doku.php', $header_remove = true) {
+    public function execute($uri='/doku.php') {
         global $INPUT;
 
         // save old environment
@@ -64,21 +70,20 @@ class TestRequest {
         $_POST = $this->post;
         $_REQUEST = array_merge($_GET, $_POST);
 
+        // reset output buffer
+        global $output_buffer;
+        $output_buffer = '';
+
         // now execute dokuwiki and grep the output
-        
-        if ($header_remove) {
-        	header_remove(); // makes error in PHPUNIT 'Cannot modify header information - headers already sent by'
-        }
-        
+        header_remove();
+        ob_start('ob_start_callback');
         $INPUT = new Input();
-        $content = '';
-       	ob_start(function ($c) use (&$content) { $content .= $c;});
-        require DOKU_INC.$this->script;
-        ob_end_clean();
-       	
+        include(DOKU_INC.$this->script);
+        ob_end_flush();
+
         // create the response object
         $response = new TestResponse(
-            $content,
+            $output_buffer,
             (function_exists('xdebug_get_headers') ? xdebug_get_headers() : headers_list())   // cli sapi doesn't do headers, prefer xdebug_get_headers() which works under cli
         );
 
@@ -106,8 +111,8 @@ class TestRequest {
      * @todo make this work with other end points
      */
     protected function setUri($uri){
-        if(!preg_match('#^('.join('|',$this->getValidScripts()).')#',$uri)){
-            throw new Exception("$uri \n--- only ".join(', ',$this->getValidScripts())." are supported currently");
+        if(!preg_match('#^('.join('|',$this->valid_scripts).')#',$uri)){
+            throw new Exception("$uri \n--- only ".join(', ',$this->valid_scripts)." are supported currently");
         }
 
         $params = array();
@@ -134,28 +139,26 @@ class TestRequest {
      * Simulate a POST request with the given variables
      *
      * @param array $post  all the POST parameters to use
-     * @param string $uri  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
-     * @param bool $header_remove call <b>header_remove()</b> or not
+     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
      * @param return TestResponse
      */
-    public function post($post=array(), $uri='/doku.php', $header_remove = true) {
+    public function post($post=array(), $uri='/doku.php') {
         $this->post = array_merge($this->post, $post);
         $this->setServer('REQUEST_METHOD', 'POST');
-        return $this->execute($uri, $header_remove);
+        return $this->execute($uri);
     }
 
     /**
      * Simulate a GET request with the given variables
      *
      * @param array $GET   all the GET parameters to use
-     * @param string $uri  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
-     * @param bool $header_remove call <b>header_remove()</b> or not
+     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
      * @param return TestResponse
      */
-    public function get($get=array(), $uri='/doku.php', $header_remove = true) {
+    public function get($get=array(), $uri='/doku.php') {
         $this->get  = array_merge($this->get, $get);
         $this->setServer('REQUEST_METHOD', 'GET');
-        return $this->execute($uri, $header_remove);
+        return $this->execute($uri);
     }
 
 
