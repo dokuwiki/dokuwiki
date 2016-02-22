@@ -71,9 +71,6 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
     protected $sums = array();
 
-    /** @var helper_plugin_struct_aggregation $dthlp  */
-    protected $dthlp = null;
-
     /**
      * Render xhtml output or metadata
      *
@@ -85,48 +82,24 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
         if(!$data) return false;
-        $this->dthlp = $this->loadHelper('struct_aggregation');
-
-        $clist = $data['cols'];
 
         //reset counters
         $this->sums = array();
 
-        /** @var \helper_plugin_struct_config $confHlp */
-        $confHlp = plugin_load('helper','struct_config');
-
         try {
-            global $INPUT;
-
-            $datasrt = $INPUT->str('datasrt');
-            if ($datasrt) {
-                $data['sort'] = $confHlp->parseSort($datasrt);
-            }
-            $dataflt = $INPUT->arr('dataflt');
-            if ($dataflt) {
-                foreach ($dataflt as $colcomp => $filter) {
-                    $data['filter'][] = $confHlp->parseFilterLine('AND', $colcomp . $filter);
-                }
-            }
             $search = new SearchConfig($data);
+            $data = $search->getConf();
             $rows = $search->execute();
-            $cnt = count($rows);
+            $cnt = $search->getCount();
 
             if ($cnt === 0) {
-                //$this->nullList($data, $clist, $R);
-                //return true;
+                $this->nullList($data, $mode, $renderer);
+                return true;
             }
 
-            $dataofs = $INPUT->has('dataofs') ? $INPUT->int('dataofs') : 0;
-            if ($data['limit'] && $cnt > $data['limit']) {
-                $rows = array_slice($rows, $dataofs, $data['limit']);
-            }
-
-            $this->renderPreTable($mode, $renderer, $clist, $data);
+            $this->renderPreTable($mode, $renderer, $data);
             $this->renderRows($mode, $renderer, $data, $rows);
             $this->renderPostTable($mode, $renderer, $data, $cnt);
-
-            $renderer->doc .= '';
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
         }
@@ -139,19 +112,15 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      *
      * @param               $mode
      * @param Doku_Renderer $renderer
-     * @param               $clist
      * @param               $data
      */
-    protected function renderPreTable($mode, Doku_Renderer $renderer, $clist, $data) {
-        // Save current request params to not loose them
-        $cur_params = $this->dthlp->_get_current_param();
-
+    protected function renderPreTable($mode, Doku_Renderer $renderer, $data) {
         $this->startScope($mode, $renderer);
-        $this->showActiveFilters($mode, $renderer, $cur_params);
+        $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
-        $this->buildColumnHeaders($mode, $renderer, $clist, $data, $cur_params);
-        $this->addDynamicFilters($mode, $renderer, $data, $cur_params);
+        $this->buildColumnHeaders($mode, $renderer, $data);
+        $this->addDynamicFilters($mode, $renderer, $data);
         $renderer->tablethead_close();
     }
 
@@ -170,9 +139,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * if limit was set, add control
      *
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      * @param               $rowcnt
      */
     protected function addLimitControls($mode, Doku_Renderer $renderer, $data, $rowcnt) {
@@ -182,45 +151,25 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $renderer->tablerow_open();
             $renderer->tableheader_open((count($data['cols']) + ($data['rownumbers'] ? 1 : 0)));
             $offset = (int) $_REQUEST['dataofs'];
+
+            // keep url params
+            $params = array();
+            if (!empty($data['current_params']['dataflt'])) {$params['dataflt'] = $data['current_params']['dataflt'];}
+            if (!empty($data['current_params']['datasrt'])) {$params['datasrt'] = $data['current_params']['datasrt'];}
+
             if($offset) {
                 $prev = $offset - $data['limit'];
                 if($prev < 0) {
                     $prev = 0;
                 }
-
-                // keep url params
-                $params = $this->dthlp->_a2ua('dataflt', $_REQUEST['dataflt']);
-                if(isset($_REQUEST['datasrt'])) {
-                    $params['datasrt'] = $_REQUEST['datasrt'];
-                }
                 $params['dataofs'] = $prev;
-
-                if ($mode == 'xhtml') {
-                    $renderer->doc .= '<a href="' . wl($ID, $params) .
-                        '" title="' . $this->getLang('prev') .
-                        '" class="prev">' . $this->getLang('prev') . '</a>&nbsp;';
-                } else {
-                    $renderer->internallink($ID,$this->getLang('prev'));
-                }
+                $renderer->internallink($ID . '?' . http_build_query($params), $this->getLang('prev'));
             }
 
             if($rowcnt > $offset + $data['limit']) {
                 $next = $offset + $data['limit'];
-
-                // keep url params
-                $params = $this->dthlp->_a2ua('dataflt', $_REQUEST['dataflt']);
-                if(isset($_REQUEST['datasrt'])) {
-                    $params['datasrt'] = $_REQUEST['datasrt'];
-                }
                 $params['dataofs'] = $next;
-
-                if ($mode == 'xhtml') {
-                    $renderer->doc .= '<a href="' . wl($ID, $params) .
-                    '" title="' . $this->getLang('next') .
-                    '" class="next">' . $this->getLang('next') . '</a>';
-                } else {
-                    $renderer->internallink($ID,$this->getLang('next'));
-                }
+                $renderer->internallink($ID . '?' . http_build_query($params), $this->getLang('next'));
             }
             $renderer->tableheader_close();
             $renderer->tablerow_close();
@@ -228,15 +177,14 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $cur_params
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
      */
-    protected function showActiveFilters($mode, Doku_Renderer $renderer, $cur_params) {
-        global $ID, $INPUT;
+    protected function showActiveFilters($mode, Doku_Renderer $renderer) {
+        global $ID;
 
-        if($mode == 'xhtml' && $INPUT->has('dataflt')) {
-            $filters = $INPUT->arr('dataflt');
+        if($mode == 'xhtml' && !empty($data['current_params']['dataflt'])) {
+            $filters = $data['current_params']['dataflt'];
             $confHelper = $this->loadHelper('struct_config');
             $fltrs = array();
             foreach($filters as $colcomp => $filter) {
@@ -263,16 +211,16 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
-     * @param               $cur_params
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      */
-    protected function addDynamicFilters($mode, Doku_Renderer $renderer, $data, $cur_params) {
+    protected function addDynamicFilters($mode, Doku_Renderer $renderer, $data) {
         if ($mode != 'xhtml') return;
 
         global $conf, $ID;
 
+        $cur_params = $data['current_params'];
         $html = '';
         if($data['dynfilters']) {
             $html .= '<tr class="dataflt">';
@@ -289,17 +237,23 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                     $form->addHidden('id', $ID);
                 }
 
-                $key = 'dataflt[' . $data['cols'][$num] . '*~' . ']';
-                $val = isset($cur_params[$key]) ? $cur_params[$key] : '';
+                $key = $data['cols'][$num] . '*~';
+                $val = isset($cur_params['dataflt'][$key]) ? $cur_params['dataflt'][$key] : '';
 
                 // Add current request params
-                foreach($cur_params as $c_key => $c_val) {
+                if (!empty($cur_params['datasrt'])) {
+                    $form->addHidden('datasrt', $cur_params['datasrt']);
+                }
+                if (!empty($cur_params['dataofs'])) {
+                    $form->addHidden('dataofs', $cur_params['dataofs']);
+                }
+                foreach($cur_params['dataflt'] as $c_key => $c_val) {
                     if($c_val !== '' && $c_key !== $key) {
-                        $form->addHidden($c_key, $c_val);
+                        $form->addHidden('dataflt[' . $c_key . ']', $c_val);
                     }
                 }
 
-                $form->addElement(form_makeField('text', $key, $val, ''));
+                $form->addElement(form_makeField('text', 'dataflt[' . $key . ']', $val, ''));
                 $html .= $form->getForm();
                 $html .= '</th>';
             }
@@ -309,22 +263,20 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
      */
     private function startTable($mode, Doku_Renderer $renderer) {
         $renderer->table_open();
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $clist
-     * @param               $data
-     * @param               $cur_params
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      *
      */
-    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $clist, $data, $cur_params) {
+    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $data) {
         global $ID;
 
         $renderer->tablerow_open();
@@ -336,7 +288,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         }
 
         foreach($data['headers'] as $num => $head) {
-            $ckey = $clist[$num];
+            $ckey = $data['cols'][$num];
 
             $width = '';
             if(isset($data['widths'][$num]) AND $data['widths'][$num] != '-') {
@@ -359,20 +311,16 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                     }
                 }
             }
-
-            // Clickable header for dynamic sorting
-            if ($mode == 'xhtml') {
-                $renderer->doc .= '<a href="' . wl($ID, array('datasrt' => $ckey,) + $cur_params) .
-                    '" title="' . $this->getLang('sort') . '">' . hsc($head) . '</a>';
-            } else {
-                $renderer->internallink($ID . "?datasrt=$ckey", hsc($head));
-            }
+            $renderer->internallink($ID . "?" . http_build_query(array('datasrt' => $ckey,) + $data['current_params']), hsc($head));
             $renderer->tableheader_close();
         }
         $renderer->tablerow_close();
     }
 
-
+    /**
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     */
     protected function startScope($mode, \Doku_Renderer $renderer) {
         if ($mode == 'xhtml') {
             $renderer->doc .= '<div class="table structaggegation">';
@@ -382,10 +330,10 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * if summarize was set, add sums
      *
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
-     * @param               $sums
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
+     * @param array         $sums     the summarized output of the numerical fields
      */
     private function summarize($mode, \Doku_Renderer $renderer, $data, $sums) {
         if($data['summarize']) {
@@ -413,8 +361,8 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
      *
      */
     private function finishTableAndScope($mode, Doku_Renderer $renderer) {
@@ -425,9 +373,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param               $mode
-     * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     * @param array         $data     the configuration of the table/search
      * @param               $rows
      *
      */
@@ -459,6 +407,21 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $renderer->tablerow_close();
         }
         $renderer->tabletbody_close();
+    }
+
+    /**
+     * @param array         $data     the configuration of the table/search
+     * @param string        $mode     the mode of the renderer
+     * @param Doku_Renderer $renderer the renderer
+     */
+    private function nullList($data, $mode, Doku_Renderer $renderer) {
+        $this->renderPreTable($mode, $renderer, $data);
+        $renderer->tablerow_open();
+        $renderer->tablecell_open(count($data['cols']) + $data['rownumbers'], 'center');
+        $renderer->cdata($this->getLang('none'));
+        $renderer->tablecell_close();
+        $renderer->tablerow_close();
+        $renderer->table_close();
     }
 }
 

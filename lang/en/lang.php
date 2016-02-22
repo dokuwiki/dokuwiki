@@ -32,6 +32,8 @@ $lang['sort']      = 'Sort by this column';
 $lang['next']      = 'Next page';
 $lang['prev']      = 'Previous page';
 
+$lang['none']      = 'Nothing found';
+
 $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 
