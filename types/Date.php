@@ -39,8 +39,17 @@ class Date extends AbstractBaseType {
         return "$html";
     }
 
+    /**
+     * Validate a single value
+     *
+     * This function needs to throw a validation exception when validation fails.
+     * The exception message will be prefixed by the appropriate field on output
+     *
+     * @param string|int $value
+     * @throws ValidationException
+     */
     public function validate($value) {
-        list($year, $month, $day) = explode('-',$value);
+        list($year, $month, $day) = explode('-',$value, 3);
         if (!checkdate($month, $day, $year)) {
             throw new ValidationException('invalid date format');
         }
