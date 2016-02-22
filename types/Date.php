@@ -8,6 +8,7 @@ class Date extends AbstractBaseType {
     protected $config = array(
         'prefix' => '',
         'postfix' => '',
+        'format' => 'Y/m/d'
     );
 
     /**
@@ -19,10 +20,8 @@ class Date extends AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $config_helper = plugin_load('helper','struct_config');
-        $format = $config_helper->getConf('dformat');
         $date = date_create($value);
-        $R->cdata($this->config['prefix'] . date_format($date, $format) . $this->config['postfix']);
+        $R->cdata($this->config['prefix'] . date_format($date, $this->config['format']) . $this->config['postfix']);
         return true;
     }
 
