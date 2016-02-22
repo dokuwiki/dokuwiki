@@ -78,6 +78,7 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         global $INFO;
         global $REV;
         if($ID != $INFO['id']) return true;
+        if(!$INFO['exists']) return true;
 
         $assignments = new Assignments();
         $tables = $assignments->getPageAssignments($ID);
