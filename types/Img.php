@@ -18,7 +18,11 @@ class Img extends AbstractBaseType {
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
         if (!empty($value)) {
-            $R->internalmedia($value);
+            if (strpos($value, '://') === false) {
+                $R->internalmedia($value);
+            } else {
+                $R->externalmedia($value);
+            }
         }
         return true;
     }
