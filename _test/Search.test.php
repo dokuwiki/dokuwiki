@@ -156,9 +156,9 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addSort('first', false);
         $this->assertEquals(1, count($search->sortby));
 
-        $search->addFilter('%pageidid%', 'ag', '~', 'AND');
-        $search->addFilter('second', 'sec', '~', 'AND');
-        $search->addFilter('first', 'rst', '~', 'AND');
+        $search->addFilter('%pageidid%', '%ag%', '~', 'AND');
+        $search->addFilter('second', '%sec%', '~', 'AND');
+        $search->addFilter('first', '%rst%', '~', 'AND');
 
 
 

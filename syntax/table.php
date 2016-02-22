@@ -289,7 +289,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                     $form->addHidden('id', $ID);
                 }
 
-                $key = 'dataflt[' . $data['cols'][$num] . '~' . ']';
+                $key = 'dataflt[' . $data['cols'][$num] . '*~' . ']';
                 $val = isset($cur_params[$key]) ? $cur_params[$key] : '';
 
                 // Add current request params
