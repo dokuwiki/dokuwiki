@@ -5,4 +5,4 @@
  * @author Andreas Gohr, Michael Große <dokuwiki@cosmocode.de>
  */
 
-//$conf['fixme']    = 'FIXME';
+# $conf['dformat']    = 'Y/m/d';
