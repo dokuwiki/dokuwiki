@@ -221,6 +221,7 @@ class Search {
                 // first table
                 $select .= "data_{$schema->getTable()}.pid as PID, ";
                 $from .= "data_{$schema->getTable()}";
+                $where .= "\nAND GETACCESSLEVEL(data_{$schema->getTable()}.pid) > 0";
                 $first = $schema->getTable();
             }
 
