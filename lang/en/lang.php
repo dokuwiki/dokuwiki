@@ -24,6 +24,7 @@ $lang['validation_prefix'] = "Field [%s]: ";
 $lang['Validation Exception Integer needed'] = 'only integers are allowed';
 $lang['Validation Exception Integer min'] = 'has to be equal or greater than %d';
 $lang['Validation Exception Integer max'] = 'has to be equal or less than %d';
+$lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-DD';
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
