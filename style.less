@@ -1,4 +1,37 @@
-#dw_editform .struct {
+#dw__editform .struct {
+
+    margin-bottom: 1em;
+
+    fieldset {
+        width: 100%;
+        padding: 0.5em 0;
+
+        display: table;
+    }
+
+    label {
+        display: table-row;
+        text-align: left;
+
+        &:hover {
+            background-color: @ini_background_alt;
+        }
+
+        span.label {
+            width: 10em;
+            display: table-cell;
+            padding-left: 0.5em;
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+        }
+
+        div.input {
+            display: table-cell;
+            padding-left: 11em;
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+        }
+    }
 
     .newtemplate {
         display: inline;

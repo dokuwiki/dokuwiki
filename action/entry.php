@@ -251,7 +251,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $postdata = array();
         }
 
-        $html = "<h3>$tablename</h3>";
+        $html = '<fieldset>';
+        $html .= '<legend>'.hsc($tablename).'</legend>';
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
             if(isset($postdata[$label])) {
@@ -261,9 +262,9 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $trans = hsc($field->getColumn()->getTranslatedLabel());
             $name = self::$VAR . "[$tablename][$label]";
             $input = $field->getValueEditor($name);
-            $element = "<label>$trans $input</label><br />";
-            $html .= $element;
+            $html .= "<label><span class=\"label\">$trans</span><div class=\"input\">$input</div></label>";
         }
+        $html .= '</fieldset>';
 
         return $html;
     }
