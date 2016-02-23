@@ -324,7 +324,8 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     protected function startScope($mode, \Doku_Renderer $renderer, $hash) {
         if ($mode == 'xhtml') {
-            $renderer->doc .= "<div class=\"table structaggregation hash:$hash\">";
+            $renderer->doc .= "<div class=\"table structaggregation\">";
+            $renderer->info['struct_table_hash'] = $hash;
         }
     }
 
@@ -370,6 +371,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         $renderer->table_close();
         if ($mode == 'xhmtl') {
             $renderer->doc .= '</div>';
+            unset($renderer->info['struct_table_hash']);
         }
     }
 

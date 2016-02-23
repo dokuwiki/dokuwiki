@@ -34,11 +34,7 @@ class Img extends AbstractBaseType {
         }
 
         if ($mode == 'xhtml') {
-            $hash = '';
-            if (strrpos($R->doc,'</table>') < strrpos($R->doc,'class="table structaggregation')) {
-                $hash = substr($R->doc,strpos($R->doc,'hash:',strrpos($R->doc,'class="table structaggregation'))+5,32);
-                $hash = "[gal-$hash]";
-            }
+            $hash = !empty($R->info['struct_table_hash']) ? "[gal-" . $R->info['struct_table_hash'] . "]" : '';
             $html = str_replace('href', "rel=\"lightbox$hash\" href", $html);
             $R->doc .= $html;
         }
