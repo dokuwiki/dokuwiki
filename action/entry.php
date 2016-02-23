@@ -171,6 +171,9 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     /**
      * Save the data
      *
+     * When this is called, INPUT data has been validated already. On a restore action, the data is
+     * loaded from the database and not validated again.
+     *
      * @param Doku_Event $event event object by reference
      * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
      *                           handler was registered]
@@ -178,16 +181,27 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      */
     public function handle_pagesave_after(Doku_Event $event, $param) {
         global $INPUT;
-
-        // this should never happen, because the validation is checked in handle_validation already
-        if(!$this->validated) return;
+        global $ACT;
+        global $REV;
 
         if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
             // FIXME we should probably clean out all data on delete!?
             return;
         }
 
-        $structData = $INPUT->arr(self::$VAR);
+        if($ACT == 'revert' && $REV) {
+            // reversion is a special case, we load the data to restore from DB:
+            $structData = array();
+            $assignments = new Assignments();
+            $this->tosave = $assignments->getPageAssignments($event->data['id']);
+            foreach($this->tosave as $table) {
+                $oldData = new SchemaData($table, $event->data['id'], $REV);
+                $structData[$table] = $oldData->getDataArray();
+            }
+        } else {
+            // data comes from the edit form
+            $structData = $INPUT->arr(self::$VAR);
+        }
 
         foreach($this->tosave as $table) {
             $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
