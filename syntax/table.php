@@ -115,7 +115,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @param               $data
      */
     protected function renderPreTable($mode, Doku_Renderer $renderer, $data) {
-        $this->startScope($mode, $renderer);
+        $this->startScope($mode, $renderer, md5(serialize($data)));
         $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
@@ -320,10 +320,11 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * @param string        $mode     the mode of the renderer
      * @param Doku_Renderer $renderer the renderer
+     * @param string        $hash     hash to identify the table and group images in gallery
      */
-    protected function startScope($mode, \Doku_Renderer $renderer) {
+    protected function startScope($mode, \Doku_Renderer $renderer, $hash) {
         if ($mode == 'xhtml') {
-            $renderer->doc .= '<div class="table structaggegation">';
+            $renderer->doc .= "<div class=\"table structaggregation hash:$hash\">";
         }
     }
 
