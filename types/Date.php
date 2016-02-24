@@ -6,8 +6,6 @@ use plugin\struct\meta\ValidationException;
 class Date extends AbstractBaseType {
 
     protected $config = array(
-        'prefix' => '',
-        'postfix' => '',
         'format' => 'Y/m/d'
     );
 
@@ -21,7 +19,13 @@ class Date extends AbstractBaseType {
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
         $date = date_create($value);
-        $R->cdata($this->config['prefix'] . date_format($date, $this->config['format']) . $this->config['postfix']);
+        if($date !== false) {
+            $out = date_format($date, $this->config['format']);
+        } else {
+            $out = '';
+        }
+
+        $R->cdata($out);
         return true;
     }
 
