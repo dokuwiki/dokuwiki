@@ -1,6 +1,7 @@
 jQuery(function () {
     'use strict';
 
+    /** counter for copied multi templates */
     var copycount = 0;
 
     /**
@@ -26,11 +27,6 @@ jQuery(function () {
 
     /**
      * Custom onSelect handler for struct img button
-     *
-     * @param edid
-     * @param mediaid
-     * @param opts
-     * @param align
      */
     window.insertStructImage = function (edid, mediaid, opts, align) {
         jQuery('#' + edid).val(mediaid).change();
@@ -57,4 +53,13 @@ jQuery(function () {
             $tplwrapper.append($copy);
         });
     });
+
+    /**
+     * Toggle the disabled class in the schema editor
+     */
+    jQuery('#plugin__struct').find('td.isenabled input').change(function() {
+        var $checkbox = jQuery(this);
+        $checkbox.parents('tr').toggleClass('disabled', !$checkbox.prop('checked'));
+    });
+
 });

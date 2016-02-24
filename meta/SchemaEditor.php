@@ -94,28 +94,30 @@ class SchemaEditor {
     protected function adminColumn($column_id, Column $col, $key='cols') {
         $base = 'schema['.$key.'][' . $column_id . ']'; // base name for all fields
 
-        $html = '<tr>';
+        $class = $col->isEnabled() ? '' : 'disabled';
 
-        $html .= '<td>';
+        $html = "<tr class=\"$class\">";
+
+        $html .= '<td class="sort">';
         $html .= '<input type="text" name="' . $base . '[sort]" value="' . hsc($col->getSort()) . '" size="3">';
         $html .= '</td>';
 
-        $html .= '<td>';
+        $html .= '<td class="label">';
         $html .= '<input type="text" name="' . $base . '[label]" value="' . hsc($col->getType()->getLabel()) . '">';
         $html .= '</td>';
 
-        $html .= '<td>';
+        $html .= '<td class="ismulti">';
         $checked = $col->getType()->isMulti() ? 'checked="checked"' : '';
         $html .= '<input type="checkbox" name="' . $base . '[ismulti]" value="1" ' . $checked . '>';
         $html .= '</td>';
 
-        $html .= '<td>';
+        $html .= '<td class="config">';
         $config = json_encode($col->getType()->getConfig(), JSON_PRETTY_PRINT);
         $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10" class="config">' . hsc($config) . '</textarea>';
         $html .= '</td>';
 
         $types = Column::allTypes();
-        $html .= '<td>';
+        $html .= '<td class="class">';
         $html .= '<select name="' . $base . '[class]">';
         foreach($types as $type) {
             $selected = ($col->getType()->getClass() == $type) ? 'selected="selected"' : '';
@@ -125,7 +127,7 @@ class SchemaEditor {
         $html .= '</td>';
 
 
-        $html .= '<td>';
+        $html .= '<td class="isenabled">';
         $checked = $col->isEnabled() ? 'checked="checked"' : '';
         $html .= '<input type="checkbox" name="' . $base . '[isenabled]" value="1" ' . $checked . '>';
         $html .= '</td>';

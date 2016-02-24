@@ -1,5 +1,7 @@
+/**
+ * The input entry form
+ */
 #dw__editform .struct {
-
     margin-bottom: 1em;
 
     fieldset {
@@ -41,5 +43,30 @@
     .multiwrap {
         display: inline-block;
         margin: 0 0.25em 0.25em 0;
+    }
+}
+
+/**
+ * The Schema Editor
+ */
+#plugin__struct {
+    tr.disabled {
+        td {
+            opacity: 0.5;
+        }
+
+        // collapse config block
+        td.config >div {
+            overflow: auto;
+            height: 2em;
+            div.jsoneditor-outer {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        td.isenabled {
+            opacity: 1;
+        }
     }
 }
