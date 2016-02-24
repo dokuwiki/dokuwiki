@@ -44,6 +44,7 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
         global $ACT;
         global $ID;
         if($ACT != 'show') return; //FIXME what about export_*?
+        if(!page_exists($ID)) return;
 
         $pos = filesize(wikiFN($ID))+1;
 
