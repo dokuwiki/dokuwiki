@@ -113,15 +113,13 @@ class ConfigParser {
                     throw new StructException("unknown option '%s'", hsc($val));
             }
         }
-        // we need at least one column to display
-        // fill up headers with field names if necessary
+
+        // fill up headers - a NULL signifies that the column label is wanted
         $this->config['headers'] = (array) $this->config['headers'];
         $cnth = count($this->config['headers']);
         $cntf = count($this->config['cols']);
         for($i = $cnth; $i < $cntf; $i++) {
-            $column = array_slice($this->config['cols'], $i, 1);
-            $columnprops = array_pop($column);
-            $this->config['headers'][] = $columnprops['title'];
+            $this->config['headers'][] = null;
         }
     }
 

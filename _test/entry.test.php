@@ -116,8 +116,16 @@ class entry_struct_test extends \DokuWikiTest {
         global $ID;
         $ID = 'page01';
         $test_html = $entry->createForm('schema1');
-        $expected_html = '<h3>schema1</h3><label>first <input name="struct_schema_data[schema1][first]" value="first data" /></label><br /><label>second <input name="struct_schema_data[schema1][second]" value="second data, more data, even more" /></label><br /><label>third <input name="struct_schema_data[schema1][third]" value="third data" /></label><br /><label>fourth <input name="struct_schema_data[schema1][fourth]" value="fourth data" /></label><br />';
-        $this->assertEquals($expected_html, $test_html);
+
+        $this->assertContains('<legend>schema1</legend>', $test_html);
+        $this->assertContains('first', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][first]" value="first data" />', $test_html);
+        $this->assertContains('second', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][second]" value="second data, more data, even more" />', $test_html);
+        $this->assertContains('third', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][third]" value="third data" />', $test_html);
+        $this->assertContains('fourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][fourth]" value="fourth data" />', $test_html);
     }
 
     public function test_createForm_emptyData() {
@@ -125,8 +133,16 @@ class entry_struct_test extends \DokuWikiTest {
         global $ID;
         $ID = 'page02';
         $test_html = $entry->createForm('schema1');
-        $expected_html = '<h3>schema1</h3><label>first <input name="struct_schema_data[schema1][first]" value="" /></label><br /><label>second <input name="struct_schema_data[schema1][second]" value="" /></label><br /><label>third <input name="struct_schema_data[schema1][third]" value="" /></label><br /><label>fourth <input name="struct_schema_data[schema1][fourth]" value="" /></label><br />';
-        $this->assertEquals($expected_html, $test_html);
+
+        $this->assertContains('<legend>schema1</legend>', $test_html);
+        $this->assertContains('first', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][first]" value="" />', $test_html);
+        $this->assertContains('second', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][second]" value="" />', $test_html);
+        $this->assertContains('third', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][third]" value="" />', $test_html);
+        $this->assertContains('fourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][fourth]" value="" />', $test_html);
     }
 
     public function test_createForm_postData() {
@@ -142,8 +158,16 @@ class entry_struct_test extends \DokuWikiTest {
 
         $entry = new action_plugin_struct_entry();
         $test_html = $entry->createForm('schema1');
-        $expected_html = '<h3>schema1</h3><label>first <input name="struct_schema_data[schema1][first]" value="first post data" /></label><br /><label>second <input name="struct_schema_data[schema1][second]" value="second post data, more post data, even more post data" /></label><br /><label>third <input name="struct_schema_data[schema1][third]" value="third post data" /></label><br /><label>fourth <input name="struct_schema_data[schema1][fourth]" value="fourth post data" /></label><br />';
-        $this->assertEquals($expected_html, $test_html);
+
+        $this->assertContains('<legend>schema1</legend>', $test_html);
+        $this->assertContains('first', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][first]" value="first post data" />', $test_html);
+        $this->assertContains('second', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][second]" value="second post data, more post data, even more post data" />', $test_html);
+        $this->assertContains('third', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][third]" value="third post data" />', $test_html);
+        $this->assertContains('fourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[schema1][fourth]" value="fourth post data" />', $test_html);
     }
 
     public function test_validate_nonArray() {
@@ -200,10 +224,17 @@ class entry_struct_test extends \DokuWikiTest {
 
         $request = new \TestRequest();
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
-        $structHTML = trim($response->queryHTML('.struct')->html());
-        $expectedHTML = '<h3>Schema2</h3>'."\n".'<label>afirst <input name="struct_schema_data[Schema2][afirst]" value=""></label><br><label>asecond <input name="struct_schema_data[Schema2][asecond]" value=""></label><br><label>athird <input name="struct_schema_data[Schema2][athird]" value=""></label><br><label>afourth <input name="struct_schema_data[Schema2][afourth]" value=""></label><br>';
+        $test_html = trim($response->queryHTML('.struct')->html());
 
-        $this->assertEquals($expectedHTML,$structHTML);
+        $this->assertContains('<legend>Schema2</legend>', $test_html);
+        $this->assertContains('afirst', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="">', $test_html);
+        $this->assertContains('asecond', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="">', $test_html);
+        $this->assertContains('athird', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="">', $test_html);
+        $this->assertContains('afourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="">', $test_html);
     }
 
     public function test_preview_page_invaliddata() {
@@ -225,11 +256,18 @@ class entry_struct_test extends \DokuWikiTest {
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
         $expected_errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],'afourth');
         $actual_errormsg = $response->queryHTML('.error')->html();
-        $structHTML = trim($response->queryHTML('.struct')->html());
-        $expectedHTML = '<h3>Schema2</h3>'."\n".'<label>afirst <input name="struct_schema_data[Schema2][afirst]" value="foo"></label><br><label>asecond <input name="struct_schema_data[Schema2][asecond]" value="bar, baz"></label><br><label>athird <input name="struct_schema_data[Schema2][athird]" value="foobar"></label><br><label>afourth <input name="struct_schema_data[Schema2][afourth]" value="Eve"></label><br>';
+        $test_html = trim($response->queryHTML('.struct')->html());
 
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
-        $this->assertEquals($expectedHTML, $structHTML);
+        $this->assertContains('<legend>Schema2</legend>', $test_html);
+        $this->assertContains('afirst', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="foo">', $test_html);
+        $this->assertContains('asecond', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="bar, baz">', $test_html);
+        $this->assertContains('athird', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="foobar">', $test_html);
+        $this->assertContains('afourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="Eve">', $test_html);
     }
 
     public function test_preview_page_validdata() {
@@ -250,11 +288,18 @@ class entry_struct_test extends \DokuWikiTest {
         $request->setPost('struct_schema_data',$structData);
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
         $actual_errormsg = $response->queryHTML('.error')->get();
-        $structHTML = trim($response->queryHTML('.struct')->html());
-        $expectedHTML = '<h3>Schema2</h3>'."\n".'<label>afirst <input name="struct_schema_data[Schema2][afirst]" value="foo"></label><br><label>asecond <input name="struct_schema_data[Schema2][asecond]" value="bar, baz"></label><br><label>athird <input name="struct_schema_data[Schema2][athird]" value="foobar"></label><br><label>afourth <input name="struct_schema_data[Schema2][afourth]" value="42"></label><br>';
+        $test_html = trim($response->queryHTML('.struct')->html());
 
         $this->assertEquals($actual_errormsg,array(), "If all data is valid, then there should be no error message.");
-        $this->assertEquals($expectedHTML,$structHTML);
+        $this->assertContains('<legend>Schema2</legend>', $test_html);
+        $this->assertContains('afirst', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="foo">', $test_html);
+        $this->assertContains('asecond', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="bar, baz">', $test_html);
+        $this->assertContains('athird', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="foobar">', $test_html);
+        $this->assertContains('afourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="42">', $test_html);
     }
 
     public function test_fail_saving_empty_page() {
@@ -310,8 +355,7 @@ class entry_struct_test extends \DokuWikiTest {
         $actual_errormsg = $response->queryHTML('.error')->html();
         $expected_errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],'afourth');
 
-        $structHTML = trim($response->queryHTML('.struct')->html());
-        $expectedHTML = '<h3>Schema2</h3>'."\n".'<label>afirst <input name="struct_schema_data[Schema2][afirst]" value="foo"></label><br><label>asecond <input name="struct_schema_data[Schema2][asecond]" value="bar, baz"></label><br><label>athird <input name="struct_schema_data[Schema2][athird]" value="foobar"></label><br><label>afourth <input name="struct_schema_data[Schema2][afourth]" value="Eve"></label><br>';
+        $test_html = trim($response->queryHTML('.struct')->html());
 
         $pagelog = new \PageChangeLog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
@@ -319,8 +363,18 @@ class entry_struct_test extends \DokuWikiTest {
         // assert
         $this->assertEquals(0, count($revisions));
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
-        $this->assertEquals($expectedHTML,$structHTML);
         $this->assertEquals($expected_wikitext,$actual_wikitext);
+
+        $this->assertContains('<legend>Schema2</legend>', $test_html);
+        $this->assertContains('afirst', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="foo">', $test_html);
+        $this->assertContains('asecond', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="bar, baz">', $test_html);
+        $this->assertContains('athird', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="foobar">', $test_html);
+        $this->assertContains('afourth', $test_html);
+        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="Eve">', $test_html);
+
         // todo: assert that no struct data has been saved
     }
 

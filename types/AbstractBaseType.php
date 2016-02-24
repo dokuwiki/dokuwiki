@@ -178,7 +178,9 @@ abstract class AbstractBaseType {
             $html .= $this->valueEditor($name . '[]', $value);
         }
         // empty field to add
+        $html .= '<div class="newtemplate">';
         $html .= $this->valueEditor($name . '[]', '');
+        $html .= '</div>';
 
         return $html;
     }
