@@ -175,11 +175,15 @@ abstract class AbstractBaseType {
     public function multiValueEditor($name, $values) {
         $html = '';
         foreach($values as $value) {
+            $html .= '<div class="multiwrap">';
             $html .= $this->valueEditor($name . '[]', $value);
+            $html .= '</div>';
         }
         // empty field to add
         $html .= '<div class="newtemplate">';
+        $html .= '<div class="multiwrap">';
         $html .= $this->valueEditor($name . '[]', '');
+        $html .= '</div>';
         $html .= '</div>';
 
         return $html;
