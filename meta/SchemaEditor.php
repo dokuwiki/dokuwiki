@@ -17,12 +17,16 @@ class SchemaEditor {
     /** @var Schema the schema that is edited */
     protected $schema;
 
+    /** @var \DokuWiki_Plugin  */
+    protected $hlp;
+
     /**
      * SchemaEditor constructor.
      * @param Schema $schema
      */
     public function __construct(Schema $schema) {
         $this->schema = $schema;
+        $this->hlp = plugin_load('helper', 'struct_config');
     }
 
     /**
@@ -41,7 +45,14 @@ class SchemaEditor {
         $form->setHiddenField('schema[id]', $this->schema->getId());
 
         $form->addHTML('<table class="inline">');
-        $form->addHTML('<tr><th>Sort</th><th>Label</th><th>Multi-Input?</th><th>Configuration</th><th>Type</th></tr>'); // FIXME localize
+        $form->addHTML("<tr>
+            <th>{$this->hlp->getLang('editor_sort')}</th>
+            <th>{$this->hlp->getLang('editor_label')}</th>
+            <th>{$this->hlp->getLang('editor_multi')}</th>
+            <th>{$this->hlp->getLang('editor_conf')}</th>
+            <th>{$this->hlp->getLang('editor_type')}</th>
+        </tr>");
+
 
         foreach($this->schema->getColumns() as $key => $obj) {
             $form->addHTML($this->adminColumn($key, $obj));
@@ -59,8 +70,6 @@ class SchemaEditor {
      * Gives the code to attach the JSON editor to the config field
      *
      * We do not use the "normal" way, because this is rarely used code and there's no need to always load it.
-     *
-     * @todo decide if that is really the way we want to go
      * @return string
      */
     protected function initJSONEditor() {

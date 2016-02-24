@@ -15,6 +15,13 @@ $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
 
+$lang['editor_sort'] = 'Sort';
+$lang['editor_label'] = 'Field Name';
+$lang['editor_multi'] = 'Multi-Input?';
+$lang['editor_conf'] = 'Configuration';
+$lang['editor_type'] = 'Type';
+
+
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
 $lang['emptypage'] = 'Struct data has not been saved for an empty page';
