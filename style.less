@@ -49,7 +49,7 @@
 /**
  * The Schema Editor
  */
-#plugin__struct {
+#plugin__struct_editor {
     tr.disabled {
         td {
             opacity: 0.5;
@@ -67,6 +67,26 @@
 
         td.isenabled {
             opacity: 1;
+        }
+    }
+}
+
+/**
+ * In page output
+ */
+#plugin__struct_output {
+    table {
+        font-size: 90%;
+
+        border: none;
+        td, th {
+            background-color: transparent;
+            border: none;
+            border-top: 1px solid @ini_border;
+        }
+        tr:first-child td,
+        tr:first-child th {
+            border: none;
         }
     }
 }

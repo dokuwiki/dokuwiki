@@ -38,7 +38,7 @@ class SchemaEditor {
      * @see SchemaBuilder
      */
     public function getEditor() {
-        $form = new Form(array('method' => 'POST', 'id'=>'plugin__struct'));
+        $form = new Form(array('method' => 'POST', 'id'=>'plugin__struct_editor'));
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'struct_schemas');
         $form->setHiddenField('table', $this->schema->getTable());

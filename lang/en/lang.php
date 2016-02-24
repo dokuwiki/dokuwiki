@@ -9,6 +9,8 @@
 $lang['menu'] = 'Struct Schema Editor';
 $lang['menu_assignments'] = 'Struct Schema Assignments';
 
+$lang['headline'] = 'Structured Data';
+
 $lang['edithl'] = 'Editing Schema <i>%s</i>';
 $lang['create'] = 'Create new Schema';
 $lang['schemaname'] = 'Schema Name:';
