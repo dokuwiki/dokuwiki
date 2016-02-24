@@ -1,7 +1,7 @@
 ====== Schema Assignments ======
 
-Namespaces excluding subnamespaces are assigned as ''<nowiki>namespace:*</nowiki>''.
+Here you can define patterns to automatically assign schemas to pages. Whenever a page matches one of the patterns here, the appropiate schemas will be shown.
 
-Namespaces including subnamespaces are assigned as ''<nowiki>namespace:**</nowiki>''.
-
-Pages as usual.
+  * Namespaces excluding subnamespaces are assigned as ''<nowiki>namespace:*</nowiki>''.
+  * Namespaces including subnamespaces are assigned as ''<nowiki>namespace:**</nowiki>''.
+  * Pages as usual with their full page ID.

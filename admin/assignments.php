@@ -94,8 +94,8 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
 
         // header
         echo '<tr>';
-        echo '<th>Page/Namespace</th>'; // FIXME localize
-        echo '<th>Schema</th>'; // FIXME localize
+        echo '<th>'.$this->getLang('assign_assign').'</th>';
+        echo '<th>'.$this->getLang('assign_tbl').'</th>';
         echo '<th></th>';
         echo '</tr>';
 
@@ -118,7 +118,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
             echo '<tr>';
             echo '<td>' . hsc($assignee) . '</td>';
             echo '<td>' . hsc($schema) . '</td>';
-            echo '<td><a href="' . $link . '">Delete</a></td>'; //FIXME localize
+            echo '<td><a href="' . $link . '">'.$this->getLang('assign_del').'</a></td>';
             echo '</tr>';
         }
 
@@ -132,7 +132,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         }
         echo '</select>';
         echo '</td>';
-        echo '<td><button type="submit" name="action" value="add">Add</button></td>'; // FIXME localize
+        echo '<td><button type="submit" name="action" value="add">'.$this->getLang('assign_add').'</button></td>';
         echo '</tr>';
 
         echo '</table>';
