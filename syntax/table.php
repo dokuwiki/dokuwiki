@@ -375,9 +375,11 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     private function finishTableAndScope($mode, Doku_Renderer $renderer) {
         $renderer->table_close();
-        if ($mode == 'xhmtl') {
+        if ($mode == 'xhtml') {
             $renderer->doc .= '</div>';
-            unset($renderer->info['struct_table_hash']);
+            if(isset($renderer->info['struct_table_hash'])) {
+                unset($renderer->info['struct_table_hash']);
+            }
         }
     }
 
