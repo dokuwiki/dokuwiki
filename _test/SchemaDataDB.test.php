@@ -55,11 +55,13 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $testdata['new']['new1']['ismulti'] = 0;
         $testdata['new']['new1']['config'] = '{"prefix": "", "postfix": ""}';
         $testdata['new']['new1']['class'] = 'Text';
+        $testdata['new']['new1']['isenabled'] = '1';
         $testdata['new']['new2']['sort'] = 40;
         $testdata['new']['new2']['label'] = 'testMulitColumn';
         $testdata['new']['new2']['ismulti'] = 1;
         $testdata['new']['new2']['config'] = '{"prefix": "", "postfix": ""}';
         $testdata['new']['new2']['class'] = 'Text';
+        $testdata['new']['new2']['isenabled'] = '1';
 
         $testname = 'testTable';
         $testname = Schema::cleanTableName($testname);

@@ -51,6 +51,7 @@ class SchemaEditor {
             <th>{$this->hlp->getLang('editor_multi')}</th>
             <th>{$this->hlp->getLang('editor_conf')}</th>
             <th>{$this->hlp->getLang('editor_type')}</th>
+            <th>{$this->hlp->getLang('editor_enabled')}</th>
         </tr>");
 
 
@@ -121,6 +122,12 @@ class SchemaEditor {
             $html .= '<option value="' . hsc($type) . '" ' . $selected . '>' . hsc($type) . '</option>';
         }
         $html .= '</select>';
+        $html .= '</td>';
+
+
+        $html .= '<td>';
+        $checked = $col->isEnabled() ? 'checked="checked"' : '';
+        $html .= '<input type="checkbox" name="' . $base . '[isenabled]" value="1" ' . $checked . '>';
         $html .= '</td>';
 
         $html .= '</tr>';
