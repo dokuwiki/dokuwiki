@@ -7,6 +7,7 @@
  */
 
 // must be run within Dokuwiki
+use plugin\struct\meta\Column;
 use plugin\struct\meta\ConfigParser;
 use plugin\struct\meta\Search;
 use plugin\struct\meta\SearchConfig;
@@ -91,13 +92,14 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $data = $search->getConf();
             $rows = $search->execute();
             $cnt = $search->getCount();
+            $cols = $search->getColumns();
 
             if ($cnt === 0) {
                 $this->nullList($data, $mode, $renderer);
                 return true;
             }
 
-            $this->renderPreTable($mode, $renderer, $data);
+            $this->renderPreTable($mode, $renderer, $data, $cols);
             $this->renderRows($mode, $renderer, $data, $rows);
             $this->renderPostTable($mode, $renderer, $data, $cnt);
         } catch (StructException $e) {
@@ -110,16 +112,17 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * create the pretext to the actual table rows
      *
-     * @param               $mode
+     * @param string $mode
      * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param array $data the configuration data
+     * @param Column[] $cols
      */
-    protected function renderPreTable($mode, Doku_Renderer $renderer, $data) {
+    protected function renderPreTable($mode, Doku_Renderer $renderer, $data, $cols) {
         $this->startScope($mode, $renderer);
         $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
-        $this->buildColumnHeaders($mode, $renderer, $data);
+        $this->buildColumnHeaders($mode, $renderer, $data, $cols);
         $this->addDynamicFilters($mode, $renderer, $data);
         $renderer->tablethead_close();
     }
@@ -271,12 +274,12 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param string        $mode     the mode of the renderer
+     * @param string $mode the mode of the renderer
      * @param Doku_Renderer $renderer the renderer
-     * @param array         $data     the configuration of the table/search
-     *
+     * @param array $data the configuration of the table/search
+     * @param Column[] $cols
      */
-    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $data) {
+    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $data, $cols) {
         global $ID;
 
         $renderer->tablerow_open();
@@ -289,6 +292,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         foreach($data['headers'] as $num => $head) {
             $ckey = $data['cols'][$num];
+            if(blank($head)) {
+                $head = $cols[$num]->getTranslatedLabel();
+            }
 
             $width = '';
             if(isset($data['widths'][$num]) AND $data['widths'][$num] != '-') {

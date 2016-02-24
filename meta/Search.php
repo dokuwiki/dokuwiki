@@ -292,6 +292,16 @@ class Search {
     }
 
     /**
+     * Returns all the columns that where added to the search
+     *
+     * @return Column[]
+     */
+    public function getColumns() {
+        return $this->columns;
+    }
+
+
+    /**
      * Find a column to be used in the search
      *
      * @param string $colname may contain an alias
