@@ -9,9 +9,6 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-use plugin\struct\meta\Assignments;
-use plugin\struct\meta\SchemaData;
-
 /**
  * Class action_plugin_struct_output
  *

@@ -9,9 +9,7 @@
 // must be run within Dokuwiki
 use plugin\struct\meta\Column;
 use plugin\struct\meta\ConfigParser;
-use plugin\struct\meta\Search;
 use plugin\struct\meta\SearchConfig;
-use plugin\struct\meta\SearchException;
 use plugin\struct\meta\StructException;
 
 if (!defined('DOKU_INC')) die();

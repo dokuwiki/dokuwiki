@@ -2,10 +2,6 @@
 
 namespace plugin\struct\meta;
 
-use dokuwiki\Form\Form;
-use plugin\struct\types\AbstractBaseType;
-use plugin\struct\types\Text;
-
 /**
  * Class Schema
  *

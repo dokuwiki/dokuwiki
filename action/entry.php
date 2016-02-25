@@ -155,8 +155,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @return bool
      */
     public function handle_pagesave_before(Doku_Event $event, $param) {
-        global $lang;
-
         if($event->data['contentChanged']) return; // will be saved for page changes
         if(count($this->tosave)) {
             if(trim($event->data['newContent']) === '') {
@@ -272,7 +270,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $trans = hsc($field->getColumn()->getTranslatedLabel());
             $name = self::$VAR . "[$tablename][$label]";
             $input = $field->getValueEditor($name);
-            $html .= "<label><span class=\"label\">$trans</span><div class=\"input\">$input</div></label>";
+            $html .= "<label><span class=\"label\">$trans</span><span class=\"input\">$input</span></label>";
         }
         $html .= '</fieldset>';
 

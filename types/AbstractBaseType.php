@@ -1,7 +1,6 @@
 <?php
 namespace plugin\struct\types;
 
-use dokuwiki\Form\Form;
 use plugin\struct\meta\ValidationException;
 
 /**

@@ -246,6 +246,7 @@ class SchemaData extends Schema {
         if ($ts) {
             $where .= " AND rev <= $ts";
         }
+        /** @noinspection SqlResolve */
         $sql = "SELECT rev FROM $table $where ORDER BY rev DESC LIMIT 1";
         $res = $this->sqlite->query($sql);
         $this->ts = $this->sqlite->res2single($res);

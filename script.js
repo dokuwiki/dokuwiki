@@ -14,7 +14,7 @@ jQuery(function () {
     /**
      * Attach image dialog to image types
      */
-    jQuery('button.struct_img').click(function (event) {
+    jQuery('button.struct_img').click(function () {
         var input_id = jQuery(this).siblings('input').attr('id');
         window.open(
             DOKU_BASE + 'lib/exe/mediamanager.php' +

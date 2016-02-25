@@ -3,7 +3,6 @@
 namespace plugin\struct\meta;
 
 use plugin\struct\types\Page;
-use plugin\struct\types\Text;
 
 class Search {
     /**

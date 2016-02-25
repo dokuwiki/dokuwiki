@@ -7,10 +7,7 @@
  */
 
 // must be run within Dokuwiki
-use dokuwiki\Form\Form;
 use plugin\struct\meta\Assignments;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\SchemaEditor;
 
 if(!defined('DOKU_INC')) die();
 
