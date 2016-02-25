@@ -109,4 +109,34 @@ class Assignments {
 
         return array_unique($tables);
     }
+
+    /**
+     * Returns all tables of schemas that existed and stored data for the page back then
+     *
+     * @todo this is not used currently and can probably be removed again, because we're
+     *       always only interested in the current state of affairs, even when restoring.
+     *
+     * @param string $page
+     * @param string $ts
+     * @return array
+     */
+    public function getHistoricAssignments($page, $ts) {
+        $sql = "SELECT DISTINCT tbl FROM schemas WHERE ts <= ? ORDER BY ts DESC";
+        $res = $this->sqlite->query($sql, $ts);
+        $tables = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        $assigned = array();
+        foreach ($tables as $row) {
+            $table = $row['tbl'];
+            $sql = "SELECT pid FROM data_$table WHERE pid = ? AND rev <= ? LIMIT 1";
+            $res = $this->sqlite->query($sql, $page, $ts);
+            $found = $this->sqlite->res2arr($res);
+            $this->sqlite->res_close($res);
+
+            if($found) $assigned[] = $table;
+        }
+
+        return $assigned;
+    }
 }
