@@ -216,7 +216,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         );
 
         // act
-        $schemaData = new meta\SchemaData('testtable','testpage', "");
+        $schemaData = new meta\SchemaData('testtable','testpage', time());
         $result = $schemaData->saveData($testdata);
 
         // assert

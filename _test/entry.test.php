@@ -529,10 +529,10 @@ class entry_struct_test extends \DokuWikiTest {
         $schemaData = new meta\SchemaData($schema, $page, 0);
         $actual_struct_data = $schemaData->getDataArray();
         $expected_struct_data = array(
-            'afirst' => 'foo',
-            'asecond' => array('bar', 'baz'),
-            'athird' => 'foobar',
-            'afourth' => 42
+            'afirst' => '',
+            'asecond' => array(),
+            'athird' => '',
+            'afourth' => ''
         );
 
         $this->assertEquals(2, count($revisions), 'there should be 2 (two) revisions');
