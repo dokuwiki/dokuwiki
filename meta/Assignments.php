@@ -14,7 +14,7 @@ class Assignments {
     /** @var \helper_plugin_sqlite|null */
     protected $sqlite;
 
-    /** @var  array All the assignments */
+    /** @var  array All the assignments patterns */
     protected $patterns;
 
     /**
@@ -25,13 +25,13 @@ class Assignments {
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
 
-        if($this->sqlite) $this->load();
+        if($this->sqlite) $this->loadPatterns();
     }
 
     /**
      * Load existing assignment patterns
      */
-    protected function load() {
+    protected function loadPatterns() {
         $sql = 'SELECT * FROM schema_assignments_patterns ORDER BY pattern';
         $res = $this->sqlite->query($sql);
         $this->patterns = $this->sqlite->res2arr($res);
@@ -45,7 +45,7 @@ class Assignments {
      * @param string $table
      * @return bool
      */
-    public function add($pattern, $table) {
+    public function addPattern($pattern, $table) {
         $sql = 'REPLACE INTO schema_assignments_patterns (pattern, tbl) VALUES (?,?)';
         return (bool) $this->sqlite->query($sql, array($pattern, $table));
     }
@@ -57,7 +57,7 @@ class Assignments {
      * @param string $table
      * @return bool
      */
-    public function remove($pattern, $table) {
+    public function removePattern($pattern, $table) {
         $sql = 'DELETE FROM schema_assignments_patterns WHERE pattern = ? AND tbl = ?';
         return (bool) $this->sqlite->query($sql, array($pattern, $table));
     }
@@ -67,7 +67,7 @@ class Assignments {
      *
      * @return array
      */
-    public function getAll() {
+    public function getAllPatterns() {
         return $this->patterns;
     }
 

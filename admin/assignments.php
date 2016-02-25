@@ -50,9 +50,9 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
             $ok = true;
             if(!blank($assignment['assign']) && !blank($assignment['tbl'])) {
                 if($INPUT->str('action') === 'delete') {
-                    $ok = $assignments->remove($assignment['assign'], $assignment['tbl']);
+                    $ok = $assignments->removePattern($assignment['assign'], $assignment['tbl']);
                 } else if($INPUT->str('action') === 'add') {
-                    $ok = $assignments->add($assignment['assign'], $assignment['tbl']);
+                    $ok = $assignments->addPattern($assignment['assign'], $assignment['tbl']);
                 }
             }
 
@@ -81,7 +81,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         $sqlite->res_close($res);
 
         $ass = new Assignments();
-        $assignments = $ass->getAll();
+        $assignments = $ass->getAllPatterns();
 
         echo '<form action="' . wl($ID) . '" action="post">';
         echo '<input type="hidden" name="do" value="admin" />';

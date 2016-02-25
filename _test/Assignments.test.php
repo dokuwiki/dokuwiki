@@ -7,7 +7,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 class Assignments extends \plugin\struct\meta\Assignments {
 
-    protected function load() {
+    protected function loadPatterns() {
         $this->patterns = array(
             array('pattern' => 'a:single:page', 'tbl' => 'singlepage'),
             array('pattern' => 'the:namespace:*', 'tbl' => 'singlens'),
