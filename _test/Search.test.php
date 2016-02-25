@@ -54,6 +54,9 @@ class Search_struct_test extends \DokuWikiTest {
         );
         $sb->build();
 
+        $as = new meta\Assignments();
+
+        $as->assignPageSchema('page01', 'schema1');
         $sd = new meta\SchemaData('schema1', 'page01', time());
         $sd->saveData(
             array(
@@ -64,6 +67,7 @@ class Search_struct_test extends \DokuWikiTest {
             )
         );
 
+        $as->assignPageSchema('page01', 'schema2');
         $sd = new meta\SchemaData('schema2', 'page01', time());
         $sd->saveData(
             array(
@@ -75,6 +79,7 @@ class Search_struct_test extends \DokuWikiTest {
         );
 
         for($i=10; $i <=20; $i++) {
+            $as->assignPageSchema("page$i", 'schema2');
             $sd = new meta\SchemaData('schema2', "page$i", time());
             $sd->saveData(
                 array(
