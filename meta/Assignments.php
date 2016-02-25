@@ -15,7 +15,7 @@ class Assignments {
     protected $sqlite;
 
     /** @var  array All the assignments */
-    protected $assignments;
+    protected $patterns;
 
     /**
      * Assignments constructor.
@@ -29,46 +29,46 @@ class Assignments {
     }
 
     /**
-     * Load existing assignments
+     * Load existing assignment patterns
      */
     protected function load() {
-        $sql = 'SELECT * FROM schema_assignments ORDER BY assign';
+        $sql = 'SELECT * FROM schema_assignments_patterns ORDER BY pattern';
         $res = $this->sqlite->query($sql);
-        $this->assignments = $this->sqlite->res2arr($res);
+        $this->patterns = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
     }
 
     /**
-     * Add a new assignment to the assignment table
+     * Add a new assignment pattern to the pattern table
      *
-     * @param string $assign
+     * @param string $pattern
      * @param string $table
      * @return bool
      */
-    public function add($assign, $table) {
-        $sql = 'REPLACE INTO schema_assignments (assign, tbl) VALUES (?,?)';
-        return (bool) $this->sqlite->query($sql, array($assign, $table));
+    public function add($pattern, $table) {
+        $sql = 'REPLACE INTO schema_assignments_patterns (pattern, tbl) VALUES (?,?)';
+        return (bool) $this->sqlite->query($sql, array($pattern, $table));
     }
 
     /**
-     * Remove an existing assignment from the assignment table
+     * Remove an existing assignment pattern from the pattern table
      *
-     * @param string $assign
+     * @param string $pattern
      * @param string $table
      * @return bool
      */
-    public function remove($assign, $table) {
-        $sql = 'DELETE FROM schema_assignments WHERE assign = ? AND tbl = ?';
-        return (bool) $this->sqlite->query($sql, array($assign, $table));
+    public function remove($pattern, $table) {
+        $sql = 'DELETE FROM schema_assignments_patterns WHERE pattern = ? AND tbl = ?';
+        return (bool) $this->sqlite->query($sql, array($pattern, $table));
     }
 
     /**
-     * Get the whole assignments table
+     * Get the whole pattern table
      *
      * @return array
      */
     public function getAll() {
-        return $this->assignments;
+        return $this->patterns;
     }
 
     /**
@@ -83,25 +83,25 @@ class Assignments {
         $page = cleanID($page);
         $pns = ':' . getNS($page) . ':';
 
-        foreach($this->assignments as $row) {
-            $ass = $row['assign'];
+        foreach($this->patterns as $row) {
+            $pat = $row['pattern'];
             $tbl = $row['tbl'];
 
-            $ans = ':' . cleanID($ass) . ':';
+            $ans = ':' . cleanID($pat) . ':';
 
-            if(substr($ass, -2) == '**') {
+            if(substr($pat, -2) == '**') {
                 // upper namespaces match
                 if(strpos($pns, $ans) === 0) {
                     $tables[] = $tbl;
                 }
-            } else if(substr($ass, -1) == '*') {
+            } else if(substr($pat, -1) == '*') {
                 // namespaces match exact
                 if($ans == $pns) {
                     $tables[] = $tbl;
                 }
             } else {
                 // exact match
-                if(cleanID($ass) == $page) {
+                if(cleanID($pat) == $page) {
                     $tables[] = $tbl;
                 }
             }

@@ -7,14 +7,12 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 class Assignments extends \plugin\struct\meta\Assignments {
 
-    public function __construct() {
-
-        $this->assignments = array(
-            array('assign' => 'a:single:page', 'tbl' => 'singlepage'),
-            array('assign' => 'the:namespace:*', 'tbl' => 'singlens'),
-            array('assign' => 'another:namespace:**', 'tbl' => 'deepns')
+    protected function load() {
+        $this->patterns = array(
+            array('pattern' => 'a:single:page', 'tbl' => 'singlepage'),
+            array('pattern' => 'the:namespace:*', 'tbl' => 'singlens'),
+            array('pattern' => 'another:namespace:**', 'tbl' => 'deepns')
         );
-
     }
 
 }
@@ -28,7 +26,7 @@ class Assignments extends \plugin\struct\meta\Assignments {
  */
 class Assignments_struct_test extends \DokuWikiTest {
 
-    protected $pluginsEnabled = array('struct',);
+    protected $pluginsEnabled = array('struct','sqlite');
 
     public function test_pagematching() {
 
