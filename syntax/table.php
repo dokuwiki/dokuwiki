@@ -7,10 +7,9 @@
  */
 
 // must be run within Dokuwiki
+use plugin\struct\meta\Column;
 use plugin\struct\meta\ConfigParser;
-use plugin\struct\meta\Search;
 use plugin\struct\meta\SearchConfig;
-use plugin\struct\meta\SearchException;
 use plugin\struct\meta\StructException;
 
 if (!defined('DOKU_INC')) die();
@@ -91,13 +90,14 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $data = $search->getConf();
             $rows = $search->execute();
             $cnt = $search->getCount();
+            $cols = $search->getColumns();
 
             if ($cnt === 0) {
-                $this->nullList($data, $mode, $renderer);
+                $this->nullList($data, $mode, $renderer, $cols);
                 return true;
             }
 
-            $this->renderPreTable($mode, $renderer, $data);
+            $this->renderPreTable($mode, $renderer, $data, $cols);
             $this->renderRows($mode, $renderer, $data, $rows);
             $this->renderPostTable($mode, $renderer, $data, $cnt);
         } catch (StructException $e) {
@@ -110,24 +110,26 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * create the pretext to the actual table rows
      *
-     * @param               $mode
+     * @param string $mode
      * @param Doku_Renderer $renderer
-     * @param               $data
+     * @param array $data the configuration data
+     * @param Column[] $cols
      */
-    protected function renderPreTable($mode, Doku_Renderer $renderer, $data) {
-        $this->startScope($mode, $renderer);
+    protected function renderPreTable($mode, Doku_Renderer $renderer, $data, $cols) {
+        $this->startScope($mode, $renderer, md5(serialize($data)));
         $this->showActiveFilters($mode, $renderer);
         $this->startTable($mode, $renderer);
         $renderer->tablethead_open();
-        $this->buildColumnHeaders($mode, $renderer, $data);
+        $this->buildColumnHeaders($mode, $renderer, $data, $cols);
         $this->addDynamicFilters($mode, $renderer, $data);
         $renderer->tablethead_close();
     }
 
     /**
+     * @param string $mode current render mode
+     * @param Doku_Renderer $renderer
      * @param array $data
      * @param int $rowcnt
-     *
      * @return string
      */
     private function renderPostTable($mode, Doku_Renderer $renderer, $data, $rowcnt) {
@@ -185,6 +187,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         if($mode == 'xhtml' && !empty($data['current_params']['dataflt'])) {
             $filters = $data['current_params']['dataflt'];
+            /** @var helper_plugin_struct_config $confHelper */
             $confHelper = $this->loadHelper('struct_config');
             $fltrs = array();
             foreach($filters as $colcomp => $filter) {
@@ -271,12 +274,12 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param string        $mode     the mode of the renderer
+     * @param string $mode the mode of the renderer
      * @param Doku_Renderer $renderer the renderer
-     * @param array         $data     the configuration of the table/search
-     *
+     * @param array $data the configuration of the table/search
+     * @param Column[] $cols
      */
-    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $data) {
+    protected function buildColumnHeaders($mode, Doku_Renderer $renderer, $data, $cols) {
         global $ID;
 
         $renderer->tablerow_open();
@@ -289,6 +292,13 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         foreach($data['headers'] as $num => $head) {
             $ckey = $data['cols'][$num];
+            if(blank($head)) {
+                if(isset($cols[$num]) && is_a($cols[$num], 'plugin\struct\meta\Column')) {
+                    $head = $cols[$num]->getTranslatedLabel();
+                } else {
+                    $head = 'column '.$num; // this should never happen
+                }
+            }
 
             $width = '';
             if(isset($data['widths'][$num]) AND $data['widths'][$num] != '-') {
@@ -320,10 +330,12 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     /**
      * @param string        $mode     the mode of the renderer
      * @param Doku_Renderer $renderer the renderer
+     * @param string        $hash     hash to identify the table and group images in gallery
      */
-    protected function startScope($mode, \Doku_Renderer $renderer) {
+    protected function startScope($mode, \Doku_Renderer $renderer, $hash) {
         if ($mode == 'xhtml') {
-            $renderer->doc .= '<div class="table structaggegation">';
+            $renderer->doc .= "<div class=\"table structaggregation\">";
+            $renderer->info['struct_table_hash'] = $hash;
         }
     }
 
@@ -367,8 +379,11 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     private function finishTableAndScope($mode, Doku_Renderer $renderer) {
         $renderer->table_close();
-        if ($mode == 'xhmtl') {
+        if ($mode == 'xhtml') {
             $renderer->doc .= '</div>';
+            if(isset($renderer->info['struct_table_hash'])) {
+                unset($renderer->info['struct_table_hash']);
+            }
         }
     }
 
@@ -410,12 +425,13 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param array         $data     the configuration of the table/search
-     * @param string        $mode     the mode of the renderer
+     * @param array $data the configuration of the table/search
+     * @param string $mode the mode of the renderer
      * @param Doku_Renderer $renderer the renderer
+     * @param Column[] $cols
      */
-    private function nullList($data, $mode, Doku_Renderer $renderer) {
-        $this->renderPreTable($mode, $renderer, $data);
+    private function nullList($data, $mode, Doku_Renderer $renderer, $cols) {
+        $this->renderPreTable($mode, $renderer, $data, $cols);
         $renderer->tablerow_open();
         $renderer->tablecell_open(count($data['cols']) + $data['rownumbers'], 'center');
         $renderer->cdata($this->getLang('none'));

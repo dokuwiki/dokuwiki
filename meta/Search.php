@@ -3,7 +3,6 @@
 namespace plugin\struct\meta;
 
 use plugin\struct\types\Page;
-use plugin\struct\types\Text;
 
 class Search {
     /**
@@ -290,6 +289,16 @@ class Search {
 
         return array($sql, $opts);
     }
+
+    /**
+     * Returns all the columns that where added to the search
+     *
+     * @return Column[]
+     */
+    public function getColumns() {
+        return $this->columns;
+    }
+
 
     /**
      * Find a column to be used in the search

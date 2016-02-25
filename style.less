@@ -1,5 +1,7 @@
+/**
+ * The input entry form
+ */
 #dw__editform .struct {
-
     margin-bottom: 1em;
 
     fieldset {
@@ -33,7 +35,58 @@
         }
     }
 
+    // this should not influence the design
     .newtemplate {
         display: inline;
+    }
+    // add some spacing to multi-value fields
+    .multiwrap {
+        display: inline-block;
+        margin: 0 0.25em 0.25em 0;
+    }
+}
+
+/**
+ * The Schema Editor
+ */
+#plugin__struct_editor {
+    tr.disabled {
+        td {
+            opacity: 0.5;
+        }
+
+        // collapse config block
+        td.config >div {
+            overflow: auto;
+            height: 2em;
+            div.jsoneditor-outer {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        td.isenabled {
+            opacity: 1;
+        }
+    }
+}
+
+/**
+ * In page output
+ */
+#plugin__struct_output {
+    table {
+        font-size: 90%;
+
+        border: none;
+        td, th {
+            background-color: transparent;
+            border: none;
+            border-top: 1px solid @ini_border;
+        }
+        tr:first-child td,
+        tr:first-child th {
+            border: none;
+        }
     }
 }

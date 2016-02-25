@@ -1,7 +1,6 @@
 <?php
 namespace plugin\struct\types;
 
-use dokuwiki\Form\Form;
 use plugin\struct\meta\ValidationException;
 
 /**
@@ -21,6 +20,11 @@ abstract class AbstractBaseType {
      * @var array current config
      */
     protected $config = array();
+
+    /**
+     * @var array config keys that should not be cleaned despite not being in $config
+     */
+    protected $keepconfig = array('translation');
 
     /**
      * @var string label for the field
@@ -45,7 +49,15 @@ abstract class AbstractBaseType {
      * @param int $tid The id of this type if it has been saved, yet
      */
     public function __construct($config = null, $label = '', $ismulti = false, $tid = 0) {
-        if(!is_null($config)) $this->config = array_merge($this->config, $config);
+        // initialize the configuration, ignoring all keys that are not supposed to be here
+        if(!is_null($config)) {
+            foreach($config as $key => $value) {
+                if(isset($this->config[$key]) || in_array($key, $this->keepconfig)) {
+                    $this->config[$key] = $value;
+                }
+            }
+        }
+
         $this->initTransConfig();
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
@@ -175,11 +187,15 @@ abstract class AbstractBaseType {
     public function multiValueEditor($name, $values) {
         $html = '';
         foreach($values as $value) {
+            $html .= '<div class="multiwrap">';
             $html .= $this->valueEditor($name . '[]', $value);
+            $html .= '</div>';
         }
         // empty field to add
         $html .= '<div class="newtemplate">';
+        $html .= '<div class="multiwrap">';
         $html .= $this->valueEditor($name . '[]', '');
+        $html .= '</div>';
         $html .= '</div>';
 
         return $html;

@@ -9,11 +9,26 @@
 $lang['menu'] = 'Struct Schema Editor';
 $lang['menu_assignments'] = 'Struct Schema Assignments';
 
+$lang['headline'] = 'Structured Data';
+
 $lang['edithl'] = 'Editing Schema <i>%s</i>';
 $lang['create'] = 'Create new Schema';
 $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
+
+$lang['editor_sort'] = 'Sort';
+$lang['editor_label'] = 'Field Name';
+$lang['editor_multi'] = 'Multi-Input?';
+$lang['editor_conf'] = 'Configuration';
+$lang['editor_type'] = 'Type';
+$lang['editor_enabled'] = 'Enabled';
+
+$lang['assign_add'] = 'Add';
+$lang['assign_del'] = 'Delete';
+$lang['assign_assign'] = 'Page/Namespace';
+$lang['assign_tbl'] = 'Schema';
+
 
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 

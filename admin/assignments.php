@@ -7,10 +7,7 @@
  */
 
 // must be run within Dokuwiki
-use dokuwiki\Form\Form;
 use plugin\struct\meta\Assignments;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\SchemaEditor;
 
 if(!defined('DOKU_INC')) die();
 
@@ -45,19 +42,25 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
      */
     public function handle() {
         global $INPUT;
+        global $ID;
 
         $assignments = new Assignments();
         if($INPUT->str('action') && $INPUT->arr('assignment') && checkSecurityToken()) {
             $assignment = $INPUT->arr('assignment');
-            $ok = false;
-            if ($INPUT->str('action') === 'delete') {
-                $ok = $assignments->remove($assignment['assign'], $assignment['tbl']);
-            } else if($INPUT->str('action') === 'add') {
-                $ok = $assignments->add($assignment['assign'], $assignment['tbl']);
+            $ok = true;
+            if(!blank($assignment['assign']) && !blank($assignment['tbl'])) {
+                if($INPUT->str('action') === 'delete') {
+                    $ok = $assignments->remove($assignment['assign'], $assignment['tbl']);
+                } else if($INPUT->str('action') === 'add') {
+                    $ok = $assignments->add($assignment['assign'], $assignment['tbl']);
+                }
             }
-            if(empty($sql) || empty($assignment['assign']) || empty($assignment['tbl']) || !$ok) {
+
+            if(!$ok) {
                 msg('something went wrong while saving', -1);
             }
+
+            send_redirect(wl($ID, array('do' => 'admin', 'page' => 'struct_assignments'), true, '&'));
         }
     }
 
@@ -80,39 +83,39 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         $ass = new Assignments();
         $assignments = $ass->getAll();
 
-
-
-        echo '<form action="'.wl($ID).'">';
+        echo '<form action="' . wl($ID) . '" action="post">';
         echo '<input type="hidden" name="do" value="admin" />';
         echo '<input type="hidden" name="page" value="struct_assignments" />';
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
+        echo '<input type="hidden" name="sectok" value="' . getSecurityToken() . '" />';
         echo '<table class="inline">';
 
         // header
         echo '<tr>';
-        echo '<th>Page/Namespace</th>'; // FIXME localize
-        echo '<th>Schema</th>'; // FIXME localize
+        echo '<th>'.$this->getLang('assign_assign').'</th>';
+        echo '<th>'.$this->getLang('assign_tbl').'</th>';
         echo '<th></th>';
         echo '</tr>';
 
         // existing assignments
-        foreach ($assignments as $assignment) {
+        foreach($assignments as $assignment) {
             $schema = $assignment['tbl'];
             $assignee = $assignment['assign'];
 
-            $link = wl($ID, array(
+            $link = wl(
+                $ID, array(
                 'do' => 'admin',
                 'page' => 'struct_assignments',
                 'action' => 'delete',
                 'sectok' => getSecurityToken(),
                 'assignment[tbl]' => $schema,
                 'assignment[assign]' => $assignee,
-            ));
+            )
+            );
 
             echo '<tr>';
-            echo '<td>'.hsc($assignee).'</td>';
-            echo '<td>'.hsc($schema).'</td>';
-            echo '<td><a href="'.$link.'">Delete</a></td>'; //FIXME localize
+            echo '<td>' . hsc($assignee) . '</td>';
+            echo '<td>' . hsc($schema) . '</td>';
+            echo '<td><a href="' . $link . '">'.$this->getLang('assign_del').'</a></td>';
             echo '</tr>';
         }
 
@@ -121,12 +124,12 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         echo '<td><input type="text" name="assignment[assign]" /></td>';
         echo '<td>';
         echo '<select name="assignment[tbl]">';
-        foreach ($schemas as $schema){
-            echo '<option value="'. hsc($schema['tbl']) .'">'. hsc($schema['tbl']) . '</option>';
+        foreach($schemas as $schema) {
+            echo '<option value="' . hsc($schema['tbl']) . '">' . hsc($schema['tbl']) . '</option>';
         }
         echo '</select>';
         echo '</td>';
-        echo '<td><button type="submit" name="action" value="add">Add</button></td>'; // FIXME localize
+        echo '<td><button type="submit" name="action" value="add">'.$this->getLang('assign_add').'</button></td>';
         echo '</tr>';
 
         echo '</table>';

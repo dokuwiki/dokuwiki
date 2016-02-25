@@ -118,7 +118,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 }
                 // strip empty fields from multi vals
                 if(is_array($newData[$label])) {
-                    $newData[$label] = array_filter($newData[$label], array($this,'filter'));
+                    $newData[$label] = array_filter($newData[$label], array($this, 'filter'));
                     $newData[$label] = array_values($newData[$label]); // reset the array keys
                 }
 
@@ -155,8 +155,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @return bool
      */
     public function handle_pagesave_before(Doku_Event $event, $param) {
-        global $lang;
-
         if($event->data['contentChanged']) return; // will be saved for page changes
         if(count($this->tosave)) {
             if(trim($event->data['newContent']) === '') {
@@ -184,11 +182,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $ACT;
         global $REV;
 
-        if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
-            // FIXME we should probably clean out all data on delete!?
-            return;
-        }
-
         if($ACT == 'revert' && $REV) {
             // reversion is a special case, we load the data to restore from DB:
             $structData = array();
@@ -203,9 +196,20 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $structData = $INPUT->arr(self::$VAR);
         }
 
-        foreach($this->tosave as $table) {
-            $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
-            $schemaData->saveData($structData[$table]);
+        if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+            // clear all data
+            $assignments = new Assignments();
+            $tables = $assignments->getPageAssignments($event->data['id']);
+            foreach($tables as $table) {
+                $schemaData = new SchemaData($table, $event->data['id'], time());
+                $schemaData->clearData();
+            }
+        } else {
+            // save the provided data
+            foreach($this->tosave as $table) {
+                $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
+                $schemaData->saveData($structData[$table]);
+            }
         }
     }
 
@@ -271,7 +275,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         }
 
         $html = '<fieldset>';
-        $html .= '<legend>'.hsc($tablename).'</legend>';
+        $html .= '<legend>' . hsc($tablename) . '</legend>';
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
             if(isset($postdata[$label])) {
@@ -281,7 +285,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $trans = hsc($field->getColumn()->getTranslatedLabel());
             $name = self::$VAR . "[$tablename][$label]";
             $input = $field->getValueEditor($name);
-            $html .= "<label><span class=\"label\">$trans</span><div class=\"input\">$input</div></label>";
+            $html .= "<label><span class=\"label\">$trans</span><span class=\"input\">$input</span></label>";
         }
         $html .= '</fieldset>';
 

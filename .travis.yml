@@ -8,7 +8,7 @@ php:
   - "5.4"
   - "5.3"
 env:
-  - DOKUWIKI=wikisave_event
+  - DOKUWIKI=mediaselect
   #- DOKUWIKI=master
   #- DOKUWIKI=stable
 before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh

@@ -9,9 +9,6 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-use plugin\struct\meta\Assignments;
-use plugin\struct\meta\SchemaData;
-
 /**
  * Class action_plugin_struct_output
  *
@@ -42,14 +39,16 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
      */
     public function handle_output(Doku_Event &$event, $param) {
         global $ACT;
-        if($ACT != 'show') return;
+        global $ID;
+        if($ACT != 'show') return; //FIXME what about export_*?
+        if(!page_exists($ID)) return;
 
-        $pos = 0; //FIXME this should probably be the file size?
+        $pos = filesize(wikiFN($ID))+1;
 
         $event->data->calls[] = array(
             'plugin',
             array(
-                'struct_output', array(), DOKU_LEXER_SPECIAL, ''
+                'struct_output', array('pos'=>$pos), DOKU_LEXER_SPECIAL, ''
             ),
             $pos
         );

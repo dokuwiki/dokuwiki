@@ -84,6 +84,9 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         $tables = $assignments->getPageAssignments($ID);
         if(!$tables) return true;
 
+        if($mode == 'xhtml') $R->doc .= '<div id="plugin__struct_output">';
+        $R->header($this->getLang('headline'), 1, $data['pos']);
+
         $R->table_open();
         $R->tabletbody_open();
         foreach($tables as $table) {
@@ -103,6 +106,8 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         }
         $R->tabletbody_close();
         $R->table_close();
+
+        if($mode == 'xhtml') $R->doc .= '</div>';
 
         return true;
     }

@@ -13,8 +13,6 @@ use plugin\struct\meta\ValidationException;
 class Integer extends Text {
 
     protected $config = array(
-        'prefix' => '',
-        'postfix' => '',
         'format' => '%d',
         'min' => '',
         'max' => ''
@@ -29,7 +27,7 @@ class Integer extends Text {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $R->cdata($this->config['prefix'] . sprintf($this->config['format'], $value) . $this->config['postfix']);
+        $R->cdata(sprintf($this->config['format'], $value));
         return true;
     }
 

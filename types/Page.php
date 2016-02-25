@@ -1,8 +1,6 @@
 <?php
 namespace plugin\struct\types;
 
-use dokuwiki\Form\Form;
-
 /**
  * Class Page
  *
@@ -10,11 +8,7 @@ use dokuwiki\Form\Form;
  *
  * @package plugin\struct\types
  */
-class Page extends AbstractBaseType {
-
-    // FIXME we will probably want to have some prefix/postfix configuration here later
-    protected $config = array(
-    );
+class Page extends Text {
 
     /**
      * Output the stored data
@@ -25,7 +19,10 @@ class Page extends AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $R->internallink(":$value");
+        $link = cleanID($this->config['prefix'] . $value . $this->config['postfix']);
+        if(!$link) return true;
+
+        $R->internallink(":$link");
         return true;
     }
 

@@ -17,12 +17,16 @@ class SchemaEditor {
     /** @var Schema the schema that is edited */
     protected $schema;
 
+    /** @var \DokuWiki_Plugin  */
+    protected $hlp;
+
     /**
      * SchemaEditor constructor.
      * @param Schema $schema
      */
     public function __construct(Schema $schema) {
         $this->schema = $schema;
+        $this->hlp = plugin_load('helper', 'struct_config');
     }
 
     /**
@@ -34,14 +38,22 @@ class SchemaEditor {
      * @see SchemaBuilder
      */
     public function getEditor() {
-        $form = new Form(array('method' => 'POST', 'id'=>'plugin__struct'));
+        $form = new Form(array('method' => 'POST', 'id'=>'plugin__struct_editor'));
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'struct_schemas');
         $form->setHiddenField('table', $this->schema->getTable());
         $form->setHiddenField('schema[id]', $this->schema->getId());
 
         $form->addHTML('<table class="inline">');
-        $form->addHTML('<tr><th>Sort</th><th>Label</th><th>Multi-Input?</th><th>Configuration</th><th>Type</th></tr>'); // FIXME localize
+        $form->addHTML("<tr>
+            <th>{$this->hlp->getLang('editor_sort')}</th>
+            <th>{$this->hlp->getLang('editor_label')}</th>
+            <th>{$this->hlp->getLang('editor_multi')}</th>
+            <th>{$this->hlp->getLang('editor_conf')}</th>
+            <th>{$this->hlp->getLang('editor_type')}</th>
+            <th>{$this->hlp->getLang('editor_enabled')}</th>
+        </tr>");
+
 
         foreach($this->schema->getColumns() as $key => $obj) {
             $form->addHTML($this->adminColumn($key, $obj));
@@ -59,8 +71,6 @@ class SchemaEditor {
      * Gives the code to attach the JSON editor to the config field
      *
      * We do not use the "normal" way, because this is rarely used code and there's no need to always load it.
-     *
-     * @todo decide if that is really the way we want to go
      * @return string
      */
     protected function initJSONEditor() {
@@ -84,34 +94,42 @@ class SchemaEditor {
     protected function adminColumn($column_id, Column $col, $key='cols') {
         $base = 'schema['.$key.'][' . $column_id . ']'; // base name for all fields
 
-        $html = '<tr>';
+        $class = $col->isEnabled() ? '' : 'disabled';
 
-        $html .= '<td>';
+        $html = "<tr class=\"$class\">";
+
+        $html .= '<td class="sort">';
         $html .= '<input type="text" name="' . $base . '[sort]" value="' . hsc($col->getSort()) . '" size="3">';
         $html .= '</td>';
 
-        $html .= '<td>';
+        $html .= '<td class="label">';
         $html .= '<input type="text" name="' . $base . '[label]" value="' . hsc($col->getType()->getLabel()) . '">';
         $html .= '</td>';
 
-        $html .= '<td>';
+        $html .= '<td class="ismulti">';
         $checked = $col->getType()->isMulti() ? 'checked="checked"' : '';
         $html .= '<input type="checkbox" name="' . $base . '[ismulti]" value="1" ' . $checked . '>';
         $html .= '</td>';
 
-        $html .= '<td>';
+        $html .= '<td class="config">';
         $config = json_encode($col->getType()->getConfig(), JSON_PRETTY_PRINT);
         $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10" class="config">' . hsc($config) . '</textarea>';
         $html .= '</td>';
 
         $types = Column::allTypes();
-        $html .= '<td>';
+        $html .= '<td class="class">';
         $html .= '<select name="' . $base . '[class]">';
         foreach($types as $type) {
             $selected = ($col->getType()->getClass() == $type) ? 'selected="selected"' : '';
             $html .= '<option value="' . hsc($type) . '" ' . $selected . '>' . hsc($type) . '</option>';
         }
         $html .= '</select>';
+        $html .= '</td>';
+
+
+        $html .= '<td class="isenabled">';
+        $checked = $col->isEnabled() ? 'checked="checked"' : '';
+        $html .= '<input type="checkbox" name="' . $base . '[isenabled]" value="1" ' . $checked . '>';
         $html .= '</td>';
 
         $html .= '</tr>';

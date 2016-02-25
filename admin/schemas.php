@@ -51,15 +51,17 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
     public function html() {
         global $INPUT;
 
-        echo $this->locale_xhtml('intro');
+
 
         $table = Schema::cleanTableName($INPUT->str('table'));
         if($table) {
-            echo '<h2>'.sprintf($this->getLang('edithl'), hsc($table)).'</h2>';
+            echo $this->locale_xhtml('editor_edit');
 
+            echo '<h2>'.sprintf($this->getLang('edithl'), hsc($table)).'</h2>';
             $editor = new SchemaEditor(new Schema($table));
             echo $editor->getEditor();
         } else {
+            echo $this->locale_xhtml('editor_intro');
             $this->html_newschema();
         }
     }

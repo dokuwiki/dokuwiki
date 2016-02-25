@@ -1,8 +1,6 @@
 <?php
 namespace plugin\struct\types;
 
-use dokuwiki\Form\Form;
-
 class Text extends AbstractBaseType {
 
     protected $config = array(

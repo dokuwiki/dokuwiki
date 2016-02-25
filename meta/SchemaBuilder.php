@@ -151,7 +151,6 @@ class SchemaBuilder {
             $oldTid   = $column->getTid();
             $newEntry = $oldEntry;
             $newTid   = $oldTid;
-            $enabled  = true;
             $sort = $column->getSort();
             if(isset($this->data['cols'][$column->getColref()])){
                 // todo I'm not too happy with this hardcoded here - we should probably have a list of fields at one place
@@ -160,6 +159,7 @@ class SchemaBuilder {
                 $newEntry['ismulti'] = $this->data['cols'][$column->getColref()]['ismulti'];
                 $newEntry['class'] = $this->data['cols'][$column->getColref()]['class'];
                 $sort = $this->data['cols'][$column->getColref()]['sort'];
+                $enabled = (bool) $this->data['cols'][$column->getColref()]['isenabled'];
 
                 // when the type definition has changed, we create a new one
                 if(array_diff_assoc($oldEntry, $newEntry)) {
@@ -171,7 +171,7 @@ class SchemaBuilder {
                     $this->sqlite->res_close($res);
                 }
             } else {
-                $enabled = false; // no longer there FIXME this assumes we remove the entry from the form completely. We might not want to do that
+                $enabled = false; // no longer there for some reason
             }
 
             // add this type to the schema columns
@@ -199,6 +199,8 @@ class SchemaBuilder {
         $colref = count($this->oldschema->getColumns())+1;
 
         foreach($this->data['new'] as $column) {
+            if(!$column['isenabled']) continue; // we do not add a disabled column
+
             // todo this duplicates the hardcoding as in  the function above
             $newEntry = array();
             $newEntry['config'] = $column['config'];
@@ -206,7 +208,7 @@ class SchemaBuilder {
             $newEntry['ismulti'] = $column['ismulti'];
             $newEntry['class'] = $column['class'];
             $sort = $column['sort'];
-            $enabled = true;
+
 
             // only save if the column got a name
             if(!$newEntry['label']) continue;
@@ -229,7 +231,7 @@ class SchemaBuilder {
             $schemaEntry = array(
                 'sid' => $this->newschemaid,
                 'colref' => $colref,
-                'enabled' => $enabled,
+                'enabled' => true,
                 'tid' => $newTid,
                 'sort' => $sort
             );
