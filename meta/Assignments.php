@@ -46,8 +46,28 @@ class Assignments {
      * @return bool
      */
     public function addPattern($pattern, $table) {
+        // add the pattern
         $sql = 'REPLACE INTO schema_assignments_patterns (pattern, tbl) VALUES (?,?)';
-        return (bool) $this->sqlite->query($sql, array($pattern, $table));
+        $ok = (bool) $this->sqlite->query($sql, array($pattern, $table));
+
+        // reload patterns
+        $this->loadPatterns();
+
+        // fetch all pages where the schema isn't assigned, yet
+        $sql = 'SELECT pid FROM schema_assignments WHERE tbl != ? OR assigned != 1';
+        $res = $this->sqlite->query($sql, $table);
+        $pages = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        // reevalute the pages and assign when needed
+        foreach($pages as $page) {
+            $tables = $this->getPageAssignments($page);
+            if(in_array($table, $tables)) {
+                $this->assignPageSchema($page, $table);
+            }
+        }
+
+        return $ok;
     }
 
     /**
@@ -58,8 +78,52 @@ class Assignments {
      * @return bool
      */
     public function removePattern($pattern, $table) {
+        // remove the pattern
         $sql = 'DELETE FROM schema_assignments_patterns WHERE pattern = ? AND tbl = ?';
-        return (bool) $this->sqlite->query($sql, array($pattern, $table));
+        $ok = (bool) $this->sqlite->query($sql, array($pattern, $table));
+
+        // reload patterns
+        $this->loadPatterns();
+
+        // fetch possibly affected pages
+        $sql = 'SELECT pid FROM schema_assignments WHERE tbl = ?';
+        $res = $this->sqlite->query($sql, $table);
+        $pages = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        // reevalute the pages and unassign when needed
+        foreach($pages as $page) {
+            $tables = $this->getPageAssignments($page);
+            if(!in_array($table, $tables)) {
+                $this->deassignPageSchema($page, $table);
+            }
+        }
+
+        return $ok;
+    }
+
+    /**
+     * Add page to assignments
+     *
+     * @param string $page
+     * @param string $table
+     * @return bool
+     */
+    public function assignPageSchema($page, $table) {
+        $sql = 'REPLACE INTO schema_assignments (pid, tbl, assigned) VALUES (?, ?, 1)';
+        return (bool) $this->sqlite->query($sql, array($page, $table));
+    }
+
+    /**
+     * Remove page from assignments
+     *
+     * @param string $page
+     * @param string $table
+     * @return bool
+     */
+    public function deassignPageSchema($page, $table) {
+        $sql = 'REPLACE INTO schema_assignments (pid, tbl, assigned) VALUES (?, ?, 0)';
+        return (bool) $this->sqlite->query($sql, array($page, $table));
     }
 
     /**
@@ -84,30 +148,47 @@ class Assignments {
         $pns = ':' . getNS($page) . ':';
 
         foreach($this->patterns as $row) {
-            $pat = $row['pattern'];
-            $tbl = $row['tbl'];
-
-            $ans = ':' . cleanID($pat) . ':';
-
-            if(substr($pat, -2) == '**') {
-                // upper namespaces match
-                if(strpos($pns, $ans) === 0) {
-                    $tables[] = $tbl;
-                }
-            } else if(substr($pat, -1) == '*') {
-                // namespaces match exact
-                if($ans == $pns) {
-                    $tables[] = $tbl;
-                }
-            } else {
-                // exact match
-                if(cleanID($pat) == $page) {
-                    $tables[] = $tbl;
-                }
+            if($this->matchPagePattern($row['pattern'], $page, $pns)) {
+                $tables[] = $row['tbl'];
             }
         }
 
         return array_unique($tables);
+    }
+
+    /**
+     * Check if the given pattern matches the given page
+     *
+     * @param string $pattern the pattern to check against
+     * @param string $page the cleaned pageid to check
+     * @param string|null $pns optimization, the colon wrapped namespace of the page, set null for automatic
+     * @return bool
+     */
+    protected function matchPagePattern($pattern, $page, $pns = null) {
+        if(is_null($pns)) {
+            $pns = ':' . getNS($page) . ':';
+        }
+
+        $ans = ':' . cleanID($pattern) . ':';
+
+        if(substr($pattern, -2) == '**') {
+            // upper namespaces match
+            if(strpos($pns, $ans) === 0) {
+                return true;
+            }
+        } else if(substr($pattern, -1) == '*') {
+            // namespaces match exact
+            if($ans == $pns) {
+                return true;
+            }
+        } else {
+            // exact match
+            if(cleanID($pattern) == $page) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -127,8 +208,9 @@ class Assignments {
         $this->sqlite->res_close($res);
 
         $assigned = array();
-        foreach ($tables as $row) {
+        foreach($tables as $row) {
             $table = $row['tbl'];
+            /** @noinspection SqlResolve */
             $sql = "SELECT pid FROM data_$table WHERE pid = ? AND rev <= ? LIMIT 1";
             $res = $this->sqlite->query($sql, $page, $ts);
             $found = $this->sqlite->res2arr($res);
