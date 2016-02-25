@@ -118,7 +118,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 }
                 // strip empty fields from multi vals
                 if(is_array($newData[$label])) {
-                    $newData[$label] = array_filter($newData[$label], array($this,'filter'));
+                    $newData[$label] = array_filter($newData[$label], array($this, 'filter'));
                     $newData[$label] = array_values($newData[$label]); // reset the array keys
                 }
 
@@ -183,15 +183,20 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         if(!$this->validated) return;
 
         if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
-            // FIXME we should probably clean out all data on delete!?
-            return;
-        }
-
-        $structData = $INPUT->arr(self::$VAR);
-
-        foreach($this->tosave as $table) {
-            $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
-            $schemaData->saveData($structData[$table]);
+            // clear all data
+            $assignments = new Assignments();
+            $tables = $assignments->getPageAssignments($event->data['id']);
+            foreach($tables as $table) {
+                $schemaData = new SchemaData($table, $event->data['id'], time());
+                $schemaData->clearData();
+            }
+        } else {
+            // save the provided data
+            $structData = $INPUT->arr(self::$VAR);
+            foreach($this->tosave as $table) {
+                $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
+                $schemaData->saveData($structData[$table]);
+            }
         }
     }
 
@@ -257,7 +262,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         }
 
         $html = '<fieldset>';
-        $html .= '<legend>'.hsc($tablename).'</legend>';
+        $html .= '<legend>' . hsc($tablename) . '</legend>';
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
             if(isset($postdata[$label])) {

@@ -30,6 +30,27 @@ class SchemaData extends Schema {
     }
 
     /**
+     * adds an empty data set for this schema and page
+     *
+     * This is basically a delete for the schema fields of a page
+     *
+     * @return bool
+     */
+    public function clearData() {
+        $data = array();
+
+        foreach($this->columns as $col) {
+            if($col->isMulti()) {
+                $data[$col->getLabel()] = array();
+            } else {
+                $data[$col->getLabel()] = null;
+            }
+        }
+
+        return $this->saveData($data);
+    }
+
+    /**
      * Save the data to the database.
      *
      * We differentiate between single-value-column and multi-value-column by the value to the respective column-name,
@@ -42,6 +63,8 @@ class SchemaData extends Schema {
     public function saveData($data) {
         $stable = 'data_' . $this->table;
         $mtable = 'multi_' . $this->table;
+
+        if($this->ts == 0) throw new StructException("Saving with zero timestamp does not work.");
 
         $colrefs = array_flip($this->labels);
         $now = $this->ts;
