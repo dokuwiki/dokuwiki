@@ -182,10 +182,11 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $ACT;
         global $REV;
 
+        $assignments = new Assignments();
+
         if($ACT == 'revert' && $REV) {
             // reversion is a special case, we load the data to restore from DB:
             $structData = array();
-            $assignments = new Assignments();
             $this->tosave = $assignments->getPageAssignments($event->data['id']);
             foreach($this->tosave as $table) {
                 $oldData = new SchemaData($table, $event->data['id'], $REV);
@@ -198,7 +199,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
 
         if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
             // clear all data
-            $assignments = new Assignments();
             $tables = $assignments->getPageAssignments($event->data['id']);
             foreach($tables as $table) {
                 $schemaData = new SchemaData($table, $event->data['id'], time());
@@ -209,6 +209,9 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             foreach($this->tosave as $table) {
                 $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
                 $schemaData->saveData($structData[$table]);
+
+                // make sure this schema is assigned
+                $assignments->assignPageSchema($event->data['id'], $table);
             }
         }
     }
