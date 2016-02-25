@@ -95,7 +95,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $cols = $search->getColumns();
 
             if ($cnt === 0) {
-                $this->nullList($data, $mode, $renderer);
+                $this->nullList($data, $mode, $renderer, $cols);
                 return true;
             }
 
@@ -128,9 +128,10 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
+     * @param string $mode current render mode
+     * @param Doku_Renderer $renderer
      * @param array $data
      * @param int $rowcnt
-     *
      * @return string
      */
     private function renderPostTable($mode, Doku_Renderer $renderer, $data, $rowcnt) {
@@ -188,6 +189,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         if($mode == 'xhtml' && !empty($data['current_params']['dataflt'])) {
             $filters = $data['current_params']['dataflt'];
+            /** @var helper_plugin_struct_config $confHelper */
             $confHelper = $this->loadHelper('struct_config');
             $fltrs = array();
             foreach($filters as $colcomp => $filter) {
@@ -293,7 +295,11 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         foreach($data['headers'] as $num => $head) {
             $ckey = $data['cols'][$num];
             if(blank($head)) {
-                $head = $cols[$num]->getTranslatedLabel();
+                if(isset($cols[$num]) && is_a($cols[$num], 'plugin\struct\meta\Column')) {
+                    $head = $cols[$num]->getTranslatedLabel();
+                } else {
+                    $head = 'column '.$num; // this should never happen
+                }
             }
 
             $width = '';
@@ -421,12 +427,13 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * @param array         $data     the configuration of the table/search
-     * @param string        $mode     the mode of the renderer
+     * @param array $data the configuration of the table/search
+     * @param string $mode the mode of the renderer
      * @param Doku_Renderer $renderer the renderer
+     * @param Column[] $cols
      */
-    private function nullList($data, $mode, Doku_Renderer $renderer) {
-        $this->renderPreTable($mode, $renderer, $data);
+    private function nullList($data, $mode, Doku_Renderer $renderer, $cols) {
+        $this->renderPreTable($mode, $renderer, $data, $cols);
         $renderer->tablerow_open();
         $renderer->tablecell_open(count($data['cols']) + $data['rownumbers'], 'center');
         $renderer->cdata($this->getLang('none'));
