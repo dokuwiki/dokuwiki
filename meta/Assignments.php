@@ -61,7 +61,7 @@ class Assignments {
 
         // reevalute the pages and assign when needed
         foreach($pages as $page) {
-            $tables = $this->getPageAssignments($page);
+            $tables = $this->getPageAssignments($page, true);
             if(in_array($table, $tables)) {
                 $this->assignPageSchema($page, $table);
             }
@@ -93,7 +93,7 @@ class Assignments {
 
         // reevalute the pages and unassign when needed
         foreach($pages as $page) {
-            $tables = $this->getPageAssignments($page);
+            $tables = $this->getPageAssignments($page, true);
             if(!in_array($table, $tables)) {
                 $this->deassignPageSchema($page, $table);
             }
@@ -139,16 +139,28 @@ class Assignments {
      * Returns a list of table names assigned to the given page
      *
      * @param string $page
-     * @return string[] tables assigned
+     * @param bool $checkpatterns Should the current patterns be re-evaluated?
+     * @return \string[] tables assigned
      */
-    public function getPageAssignments($page) {
+    public function getPageAssignments($page, $checkpatterns=true) {
         $tables = array();
-
         $page = cleanID($page);
-        $pns = ':' . getNS($page) . ':';
 
-        foreach($this->patterns as $row) {
-            if($this->matchPagePattern($row['pattern'], $page, $pns)) {
+        if($checkpatterns) {
+            // evaluate patterns
+            $pns = ':' . getNS($page) . ':';
+            foreach($this->patterns as $row) {
+                if($this->matchPagePattern($row['pattern'], $page, $pns)) {
+                    $tables[] = $row['tbl'];
+                }
+            }
+        } else {
+            // just select
+            $sql = 'SELECT tbl FROM schema_assignments WHERE pid = ? AND assigned = 1';
+            $res = $this->sqlite->query($sql, array($page));
+            $list = $this->sqlite->res2arr($res);
+            $this->sqlite->res_close($res);
+            foreach($list as $row) {
                 $tables[] = $row['tbl'];
             }
         }
