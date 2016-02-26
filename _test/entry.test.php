@@ -541,4 +541,89 @@ class entry_struct_test extends \DokuWikiTest {
         $this->assertEquals($expected_struct_data, $actual_struct_data);
         // todo: timestamps?
     }
+
+
+    /**
+     * @group slow
+     */
+    public function test_revert_page() {
+        $page = 'test_revert_page';
+        $assignment = new meta\Assignments();
+        $schema = 'Schema2';
+        $assignment->add($page, $schema);
+        $wikitext = 'teststring';
+
+        $this->markTestIncomplete('Reverting needs admin priviledges, which require an loggedin user.
+        This user would require then need valid security-tokens their actions.');
+
+        global $conf;
+        $conf['useacl']    = 1;
+        $conf['superuser'] = 'admin';
+        $_SERVER['REMOTE_USER'] = 'admin'; //now it's testing as admin
+        global $default_server_vars;
+        $default_server_vars['REMOTE_USER'] = 'admin';  //Hack until Issue #1099 is fixed
+        $USERINFO['grps'] = array('admin','user');
+
+        // first save;
+        $request = new \TestRequest();
+        $structData = array(
+            $schema => array(
+                'afirst' => 'foo',
+                'asecond' => 'bar, baz',
+                'athird' => 'foobar',
+                'afourth' => '42'
+            )
+        );
+        $request->setPost('struct_schema_data',$structData);
+        $request->setPost('wikitext',$wikitext);
+        $request->setPost('summary','content and struct data saved');
+        $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
+
+        sleep(1);
+
+        // second save
+        $request = new \TestRequest();
+        $structData = array(
+            $schema => array(
+                'afirst' => 'foo2',
+                'asecond' => 'bar2, baz2',
+                'athird' => 'foobar2',
+                'afourth' => '43'
+            )
+        );
+        $request->setPost('struct_schema_data',$structData);
+        $request->setPost('wikitext',$wikitext . $wikitext);
+        $request->setPost('summary','delete page');
+        $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
+
+        sleep(1);
+
+        // revert to first save
+        $actpagelog = new \PageChangeLog($page);
+        $actrevisions = $actpagelog->getRevisions(-1, 200);
+        $actrevinfo = $actpagelog->getRevisionInfo($actrevisions[0]);
+        $request = new \TestRequest();
+        $request->setPost('summary','revert page');
+        $request->post(array('id' => $page, 'do' => 'revert', 'rev' => $actrevinfo['date']), '/doku.php');
+
+        // assert
+        $pagelog = new \PageChangeLog($page);
+        $revisions = $pagelog->getRevisions(-1, 200);
+        $revinfo = $pagelog->getRevisionInfo($revisions[0]);
+        $schemaData = new meta\SchemaData($schema, $page, 0);
+        $actual_struct_data = $schemaData->getDataArray();
+        $expected_struct_data = array(
+            'afirst' => 'foo',
+            'asecond' => array('bar', 'baz'),
+            'athird' => 'foobar',
+            'afourth' => '42'
+        );
+
+        $this->assertEquals(3, count($revisions), 'there should be 3 (three) revisions');
+        $this->assertEquals('revert page', $revinfo['sum']);
+        $this->assertEquals(DOKU_CHANGE_TYPE_DELETE, $revinfo['type']);
+        $this->assertEquals($expected_struct_data, $actual_struct_data);
+        // todo: timestamps?
+    }
+
 }
