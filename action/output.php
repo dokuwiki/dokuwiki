@@ -40,7 +40,8 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
     public function handle_output(Doku_Event &$event, $param) {
         global $ACT;
         global $ID;
-        if($ACT != 'show') return; //FIXME what about export_*?
+        // blank $ACT happens when instructions are rendered in indexer
+        if(!blank($ACT) &&  $ACT != 'show') return; //FIXME what about export_*?
         if(!page_exists($ID)) return;
 
         $pos = filesize(wikiFN($ID))+1;
