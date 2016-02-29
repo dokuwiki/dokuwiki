@@ -220,7 +220,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_edit_page_with_schema';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
@@ -241,7 +241,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_preview_page_invaliddata';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
         $structData = array(
@@ -274,7 +274,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_preview_page_validdata';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
         $structData = array(
@@ -306,7 +306,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_fail_saving_empty_page';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
         $structData = array(
@@ -333,7 +333,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_fail_saveing_page_with_invaliddata';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
 
         $wikitext = 'teststring';
         $request = new \TestRequest();
@@ -382,7 +382,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_save_page';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
         $structData = array(
@@ -424,7 +424,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_save_page_without_new_text';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
         // first save;
@@ -487,7 +487,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_delete_page';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
         // first save;

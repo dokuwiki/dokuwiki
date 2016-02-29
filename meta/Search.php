@@ -219,6 +219,11 @@ class Search {
             } else {
                 // first table
                 $select .= "data_{$schema->getTable()}.pid as PID, ";
+
+                $from .= 'schema_assignments, ';
+                $where .= "\nAND data_{$schema->getTable()}.pid = schema_assignments.pid";
+                $where .= "\nAND schema_assignments.assigned = 1";
+
                 $from .= "data_{$schema->getTable()}";
                 $where .= "\nAND GETACCESSLEVEL(data_{$schema->getTable()}.pid) > 0";
                 $first = $schema->getTable();
