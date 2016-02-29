@@ -2,7 +2,6 @@
 
 namespace plugin\struct\test;
 
-use \plugin\struct\types\AbstractBaseType;
 use plugin\struct\meta;
 
 // we don't have the auto loader here
@@ -52,7 +51,7 @@ class diff_struct_test extends \DokuWikiTest {
         $page = 'test_save_page_without_new_text';
         $assignment = new meta\Assignments();
         $schema = 'schema1';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
         // first save;
@@ -90,8 +89,9 @@ class diff_struct_test extends \DokuWikiTest {
         // diff
         $request = new \TestRequest();
         $response = $request->post(array('id' => $page, 'do' => 'diff'), '/doku.php');
-        print_r($response); // todo: do something with it
-        $this->markTestIncomplete('Assertations needed. There are many strange whitespace chars in the html?');
+
+        #print_r($response); // todo: do something with it
+        $this->markTestIncomplete('Assertions needed. There are many strange whitespace chars in the html?');
 
     }
 

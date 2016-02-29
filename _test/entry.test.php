@@ -550,7 +550,7 @@ class entry_struct_test extends \DokuWikiTest {
         $page = 'test_revert_page';
         $assignment = new meta\Assignments();
         $schema = 'Schema2';
-        $assignment->add($page, $schema);
+        $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
         $this->markTestIncomplete('Reverting needs admin priviledges, which require an loggedin user.
