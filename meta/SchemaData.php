@@ -149,7 +149,6 @@ class SchemaData extends Schema {
         $multis = array();
         foreach($this->columns as $col) {
             if(!$col->isEnabled()) continue;
-
             if($col->getType()->isMulti()) {
                 $multis[] = $col->getColref();
             } else {
@@ -175,6 +174,8 @@ class SchemaData extends Schema {
         $data = array();
 
         foreach($this->getColumns() as $col) {
+            if(!$col->isEnabled()) continue;
+
             if(!$DBdata) {
                 // if no data saved, yet return empty strings
                 $val = '';
