@@ -33,9 +33,19 @@ jQuery(function () {
     };
 
     /**
+     * Toggle the disabled class in the schema editor
+     */
+    jQuery('#plugin__struct').find('td.isenabled input').change(function () {
+        var $checkbox = jQuery(this);
+        $checkbox.parents('tr').toggleClass('disabled', !$checkbox.prop('checked'));
+    });
+
+    var $dokuform = jQuery('#dw__editform');
+
+    /**
      * Duplicate the elements in .newtemplate whenever any input in it changes
      */
-    jQuery('#dw__editform').find('.struct .newtemplate').each(function () {
+    $dokuform.find('.struct .newtemplate').each(function () {
         var $tplwrapper = jQuery(this);
         var $tpl = $tplwrapper.children().clone(true, true);
 
@@ -45,7 +55,7 @@ jQuery(function () {
             // prepare a new template and make sure all the IDs in it are unique
             var $copy = $tpl.clone(true, true);
             copycount++;
-            $copy.find('*[id]').each(function() {
+            $copy.find('*[id]').each(function () {
                 this.id = this.id + '_' + copycount;
             });
 
@@ -55,11 +65,28 @@ jQuery(function () {
     });
 
     /**
-     * Toggle the disabled class in the schema editor
+     * Toggle fieldsets in edit form and remeber in cookie
      */
-    jQuery('#plugin__struct').find('td.isenabled input').change(function() {
-        var $checkbox = jQuery(this);
-        $checkbox.parents('tr').toggleClass('disabled', !$checkbox.prop('checked'));
+    $dokuform.find('.struct fieldset legend').each(function () {
+        var $legend = jQuery(this);
+        var $fset = $legend.parent();
+
+        // reinit saved state from cookie
+        if (DokuCookie.getValue($fset.data('schema'))) {
+            $fset.toggleClass('closed');
+        }
+
+        // attach click handler
+
+        $legend.click(function () {
+            $fset.toggleClass('closed');
+            // remember setting in preference cookie
+            if ($fset.hasClass('closed')) {
+                DokuCookie.setValue($fset.data('schema'), 1);
+            } else {
+                DokuCookie.setValue($fset.data('schema'), '');
+            }
+        });
     });
 
 });

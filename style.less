@@ -7,8 +7,29 @@
     fieldset {
         width: 100%;
         padding: 0.5em 0;
-
         display: table;
+
+        legend {
+            text-align: left;
+            padding-left: 17px;
+            cursor: pointer;
+            margin-left: 1em;
+            background: transparent url(../../images/open.png) 5px center no-repeat;
+            font-weight: bold;
+        }
+    }
+
+    fieldset.closed {
+        padding: 0;
+
+        * {
+            display: none;
+        }
+
+        legend {
+            display: block;
+            background: transparent url(../../images/closed.png) 5px center no-repeat;
+        }
     }
 
     label {
@@ -56,7 +77,7 @@
         }
 
         // collapse config block
-        td.config >div {
+        td.config > div {
             overflow: auto;
             height: 2em;
             div.jsoneditor-outer {
