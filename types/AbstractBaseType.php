@@ -210,9 +210,10 @@ abstract class AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
+        $class = 'struct_'.strtolower($this->getClass());
         $name = hsc($name);
         $value = hsc($value);
-        $html = "<input name=\"$name\" value=\"$value\" />";
+        $html = "<input name=\"$name\" value=\"$value\" class=\"$class\" />";
         return "$html";
     }
 
