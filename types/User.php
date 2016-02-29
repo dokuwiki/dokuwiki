@@ -34,15 +34,18 @@ class User extends AbstractBaseType {
 
         // find users by login, fill up with names if wanted
         $max = $this->config['autocomplete']['maxresult'];
-        $logins = (array) $auth->retrieveUsers(0, $max, array('user'=>$lookup));
+        $logins = (array) $auth->retrieveUsers(0, $max, array('user' => $lookup));
         if((count($logins) < $max) && $this->config['fullname']) {
-            $logins = array_merge($logins, (array) $auth->retrieveUsers(0, $max, array('name'=>$lookup)));
+            $logins = array_merge($logins, (array) $auth->retrieveUsers(0, $max, array('name' => $lookup)));
         }
 
-        // clean up result
+        // reformat result for jQuery UI Autocomplete
         $users = array();
         foreach($logins as $login => $info) {
-            $users[$login] = $login.' - '.$info['name'];
+            $users[] = array(
+                'label' => $info['name'] . ' [' . $login . ']',
+                'value' => $login
+            );
         }
 
         return $users;

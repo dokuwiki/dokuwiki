@@ -5,6 +5,28 @@ jQuery(function () {
     var copycount = 0;
 
     /**
+     * Simplyfies AJAX requests for types
+     *
+     * @param {string} column A configured column in the form schema.name
+     * @param {function} fn Callback on success
+     * @param {object} data Additional data to pass
+     */
+    function struct_ajax(column, fn, data) {
+        if (!data) data = {};
+
+        data['call'] = 'plugin_struct';
+        data['column'] = column;
+
+
+        console.log(data);
+
+        jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
+            .fail(function (result) {
+                alert(result.error);
+            });
+    }
+
+    /**
      * Attach datepicker to date types
      */
     jQuery('input.struct_date').datepicker({
@@ -31,6 +53,18 @@ jQuery(function () {
     window.insertStructImage = function (edid, mediaid, opts, align) {
         jQuery('#' + edid).val(mediaid).change();
     };
+
+    /**
+     * Autocomplete for user type
+     */
+    jQuery('input.struct_user').autocomplete({
+        source: function (request, cb) {
+            var name = this.element.attr('name');
+            name = name.substring(19, name.length - 1);
+            name = name.replace('][', '.');
+            struct_ajax(name, cb, {search: request.term});
+        }
+    });
 
     /**
      * Toggle the disabled class in the schema editor
