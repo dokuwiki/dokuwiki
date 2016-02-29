@@ -1,6 +1,7 @@
 <?php
 namespace plugin\struct\types;
 
+use plugin\struct\meta\StructException;
 use plugin\struct\meta\ValidationException;
 
 /**
@@ -288,5 +289,20 @@ abstract class AbstractBaseType {
      */
     public function validate($value) {
         // nothing by default - we allow everything
+    }
+
+    /**
+     * Overwrite to handle Ajax requests
+     *
+     * A call to DOKU_BASE/lib/exe/ajax.php?call=plugin_struct&column=schema.name will
+     * be redirected to this function on a fully initialized type. The result is
+     * JSON encoded and returned to the caller. Access additional parameter via $INPUT
+     * as usual
+     *
+     * @throws StructException when something goes wrong
+     * @return mixed
+     */
+    public function handleAjax() {
+        throw new StructException('not implemented');
     }
 }
