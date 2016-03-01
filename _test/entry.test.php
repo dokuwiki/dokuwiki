@@ -2,8 +2,9 @@
 
 namespace plugin\struct\test;
 
-use \plugin\struct\types\AbstractBaseType;
 use plugin\struct\meta;
+use plugin\struct\types\AbstractBaseType;
+use plugin\struct\types\Integer;
 
 // we don't have the auto loader here
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
@@ -171,7 +172,7 @@ class entry_struct_test extends \DokuWikiTest {
         global $MSG;
         $label = 'label';
         $errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],$label);
-        $integer = new \plugin\struct\types\Integer();
+        $integer = new Integer();
         $entry = new action_plugin_struct_entry();
 
         $entry->validate($integer, $label, 'NaN');
@@ -183,7 +184,7 @@ class entry_struct_test extends \DokuWikiTest {
         global $MSG;
         $label = 'label';
         $errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],$label);
-        $integer = new \plugin\struct\types\Integer();
+        $integer = new Integer();
         $entry = new action_plugin_struct_entry();
 
         $entry->validate($integer, $label, array('NaN','NaN'));
@@ -194,7 +195,7 @@ class entry_struct_test extends \DokuWikiTest {
 
     public function test_validate_blank() {
         global $MSG;
-        $integer = new \plugin\struct\types\Integer();
+        $integer = new Integer();
         $entry = new action_plugin_struct_entry();
 
         $entry->validate($integer, 'label', null);
