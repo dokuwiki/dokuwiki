@@ -92,10 +92,10 @@ class Assignments {
         $this->sqlite->res_close($res);
 
         // reevalute the pages and unassign when needed
-        foreach($pages as $page) {
-            $tables = $this->getPageAssignments($page, true);
+        foreach($pages as $row) {
+            $tables = $this->getPageAssignments($row['pid'], true);
             if(!in_array($table, $tables)) {
-                $this->deassignPageSchema($page, $table);
+                $this->deassignPageSchema($row['pid'], $table);
             }
         }
 
