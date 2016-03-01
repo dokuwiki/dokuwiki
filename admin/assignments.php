@@ -99,7 +99,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         // existing assignments
         foreach($assignments as $assignment) {
             $schema = $assignment['tbl'];
-            $assignee = $assignment['assign'];
+            $assignee = $assignment['pattern'];
 
             $link = wl(
                 $ID, array(
