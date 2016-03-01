@@ -94,6 +94,12 @@ class Schema {
 
         foreach($rows as $row) {
             $class = 'plugin\\struct\\types\\' . $row['class'];
+            if(!class_exists($class)) {
+                // This usually never happens, except during development
+                msg('Unknown type "'.hsc($row['class']).'" falling back to Text', -1);
+                $class = 'plugin\\struct\\types\\Text';
+            }
+
             $config = json_decode($row['config'], true);
             $this->columns[$row['colref']] =
                 new Column(

@@ -30,9 +30,11 @@ class action_plugin_struct_autoloader extends DokuWiki_Action_Plugin {
     static public function autoloader($name) {
         $name = str_replace('\\', '/', $name);
         if(substr($name, 0, 14) == 'plugin/struct/') {
-            /** @noinspection PhpIncludeInspection */
-            require DOKU_PLUGIN . substr($name, 7) . '.php';
-            return true;
+            $file = DOKU_PLUGIN . substr($name, 7) . '.php';
+            if(file_exists($file)) {
+                require $file;
+                return true;
+            }
         }
         return false;
     }
