@@ -17,13 +17,26 @@ jQuery(function () {
         data['call'] = 'plugin_struct';
         data['column'] = column;
 
-
-        console.log(data);
-
         jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
             .fail(function (result) {
-                alert(result.error);
+                alert(result.responseJSON.error);
             });
+    }
+
+    /**
+     * @param {string} val
+     * @return {array}
+     */
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+
+    /**
+     * @param {string} term
+     * @returns {string}
+     */
+    function extractLast(term) {
+        return split(term).pop();
     }
 
     /**
@@ -55,14 +68,42 @@ jQuery(function () {
     };
 
     /**
-     * Autocomplete for user type
+     * Autocomplete for single user type
      */
     jQuery('input.struct_user').autocomplete({
+        ismulti: false,
         source: function (request, cb) {
             var name = this.element.attr('name');
             name = name.substring(19, name.length - 1);
             name = name.replace('][', '.');
-            struct_ajax(name, cb, {search: request.term});
+
+            var term = request.term;
+            if (this.options.ismulti) {
+                term = extractLast(term);
+            }
+            struct_ajax(name, cb, {search: term});
+        }
+    });
+
+    /**
+     * Autocomplete for multi user type
+     */
+    jQuery('.multiwrap input.struct_user').autocomplete('option', {
+        ismulti: true,
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            var terms = split(this.value);
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push(ui.item.value);
+            // add placeholder to get the comma-and-space at the end
+            terms.push("");
+            this.value = terms.join(", ");
+            return false;
         }
     });
 

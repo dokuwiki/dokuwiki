@@ -4,7 +4,7 @@ namespace plugin\struct\types;
 use plugin\struct\meta\StructException;
 use plugin\struct\meta\ValidationException;
 
-class User extends AbstractBaseType {
+class User extends AbstractMultiBaseType {
 
     protected $config = array(
         'fullname' => true,
