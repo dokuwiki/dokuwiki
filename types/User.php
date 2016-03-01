@@ -21,7 +21,24 @@ class User extends AbstractBaseType {
         /** @var \DokuWiki_Auth_Plugin $auth */
         global $auth;
         $info = $auth->getUserData($value, false);
-        if($info == false) throw new ValidationException('User not found', $value);
+        if($info === false) throw new ValidationException('User not found', $value);
+    }
+
+    /**
+     * @param string $value the user to display
+     * @param \Doku_Renderer $R
+     * @param string $mode
+     * @return bool
+     */
+    public function renderValue($value, \Doku_Renderer $R, $mode) {
+        if($mode == 'xhtml') {
+            $name = userlink($value);
+            $R->doc .= $name;
+        } else {
+            $name = userlink($value, true);
+            $R->cdata($name);
+        }
+        return true;
     }
 
     /**
