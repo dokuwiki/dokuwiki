@@ -2,6 +2,7 @@
 namespace plugin\struct\types;
 
 use plugin\struct\meta\StructException;
+use plugin\struct\meta\ValidationException;
 
 class User extends AbstractBaseType {
 
@@ -12,6 +13,16 @@ class User extends AbstractBaseType {
             'maxresult' => 5,
         ),
     );
+
+    /**
+     * @param string $value the user to validate
+     */
+    public function validate($value) {
+        /** @var \DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        $info = $auth->getUserData($value, false);
+        if($info == false) throw new ValidationException('User not found', $value);
+    }
 
     /**
      * Autocompletion for user names
