@@ -1,7 +1,7 @@
 <?php
 namespace plugin\struct\types;
 
-class Text extends AbstractBaseType {
+class Text extends AbstractMultiBaseType {
 
     protected $config = array(
         'prefix' => '',
@@ -20,15 +20,4 @@ class Text extends AbstractBaseType {
         $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
         return true;
     }
-
-    /**
-     * @param string $name
-     * @param \string[] $values
-     * @return string
-     */
-    public function multiValueEditor($name, $values) {
-        $value = join(', ', $values);
-        return $this->valueEditor($name, $value);
-    }
-
 }

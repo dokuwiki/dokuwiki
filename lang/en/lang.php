@@ -29,7 +29,7 @@ $lang['assign_del'] = 'Delete';
 $lang['assign_assign'] = 'Page/Namespace';
 $lang['assign_tbl'] = 'Schema';
 
-
+$lang['multi'] = 'Enter multiple values separated by commas.';
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
 $lang['emptypage'] = 'Struct data has not been saved for an empty page';

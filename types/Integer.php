@@ -10,7 +10,7 @@ use plugin\struct\meta\ValidationException;
  *
  * @package plugin\struct\types
  */
-class Integer extends Text {
+class Integer extends AbstractMultiBaseType {
 
     protected $config = array(
         'format' => '%d',
@@ -29,16 +29,6 @@ class Integer extends Text {
     public function renderValue($value, \Doku_Renderer $R, $mode) {
         $R->cdata(sprintf($this->config['format'], $value));
         return true;
-    }
-
-    /**
-     * @param string $name
-     * @param \string[] $values
-     * @return string
-     */
-    public function multiValueEditor($name, $values) {
-        $value = join(', ', $values);
-        return $this->valueEditor($name, $value);
     }
 
     /**

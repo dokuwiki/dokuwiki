@@ -8,7 +8,7 @@ namespace plugin\struct\types;
  *
  * @package plugin\struct\types
  */
-class Page extends Text {
+class Page extends AbstractMultiBaseType {
 
     /**
      * Output the stored data
