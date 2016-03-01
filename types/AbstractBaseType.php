@@ -1,6 +1,5 @@
 <?php
 namespace plugin\struct\types;
-
 use plugin\struct\meta\StructException;
 use plugin\struct\meta\ValidationException;
 
@@ -41,6 +40,11 @@ abstract class AbstractBaseType {
      * @var int the type ID
      */
     protected $tid = 0;
+
+    /**
+     * @var \DokuWiki_Plugin
+     */
+    protected $hlp = null;
 
     /**
      * AbstractBaseType constructor.
@@ -305,5 +309,16 @@ abstract class AbstractBaseType {
      */
     public function handleAjax() {
         throw new StructException('not implemented');
+    }
+
+    /**
+     * Convenience method to access plugin language strings
+     *
+     * @param string $string
+     * @return string
+     */
+    public function getLang($string) {
+        if(is_null($this->hlp)) $this->hlp = plugin_load('action', 'struct_autoloader');
+        return $this->hlp->getLang($string);
     }
 }
