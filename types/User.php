@@ -60,8 +60,11 @@ class User extends AbstractMultiBaseType {
         $lookup = trim($INPUT->str('search'));
         if(utf8_strlen($lookup) < $this->config['autocomplete']['mininput']) return array();
 
-        // find users by login, fill up with names if wanted
+        // results wanted?
         $max = $this->config['autocomplete']['maxresult'];
+        if($max <= 0) return array();
+
+        // find users by login, fill up with names if wanted
         $logins = (array) $auth->retrieveUsers(0, $max, array('user' => $lookup));
         if((count($logins) < $max) && $this->config['fullname']) {
             $logins = array_merge($logins, (array) $auth->retrieveUsers(0, $max, array('name' => $lookup)));

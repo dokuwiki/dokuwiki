@@ -68,9 +68,9 @@ jQuery(function () {
     };
 
     /**
-     * Autocomplete for single user type
+     * Autocomplete for single type
      */
-    jQuery('input.struct_user').autocomplete({
+    jQuery('input.struct_user, input.struct_page').autocomplete({
         ismulti: false,
         source: function (request, cb) {
             var name = this.element.attr('name');
@@ -86,9 +86,9 @@ jQuery(function () {
     });
 
     /**
-     * Autocomplete for multi user type
+     * Autocomplete for multi type
      */
-    jQuery('.multiwrap input.struct_user').autocomplete('option', {
+    jQuery('.multiwrap input.struct_user, .multiwrap input.struct_page').autocomplete('option', {
         ismulti: true,
         focus: function () {
             // prevent value inserted on focus
