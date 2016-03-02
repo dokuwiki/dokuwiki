@@ -10,25 +10,6 @@ use plugin\struct\meta\Schema;
 use plugin\struct\meta;
 
 /**
- * Class SchemaData for testing
- *
- * Makes protected methods accessible and avoids database initialization
- *
- * @package plugin\struct\test
- */
-class SchemaDataDB extends \plugin\struct\meta\SchemaData {
-
-    public function setCorrectTimestamp($page, $ts = null) {
-        parent::setCorrectTimestamp($page, $ts);
-    }
-
-    public function getDataFromDB() {
-        return parent::getDataFromDB();
-    }
-
-}
-
-/**
  * Tests to the DB for the struct plugin
  *
  * @group plugin_struct
@@ -109,7 +90,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = new SchemaDataDB('testtable','testpage', "");
+        $schemaData = new mock\SchemaData('testtable','testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
         $actual_data =  $schemaData->getDataFromDB();
 
@@ -131,7 +112,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getDataFromDB_oldRev() {
 
         // act
-        $schemaData = new SchemaDataDB('testtable','testpage','');
+        $schemaData = new mock\SchemaData('testtable','testpage','');
         $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getDataFromDB();
 
@@ -152,7 +133,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getData_currentRev() {
 
         // act
-        $schemaData = new SchemaDataDB('testtable','testpage', "");
+        $schemaData = new mock\SchemaData('testtable','testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
 
         $actual_data = $schemaData->getData();
@@ -171,7 +152,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getData_currentRev2() {
 
         // act
-        $schemaData = new SchemaDataDB('testtable','testpage2', "");
+        $schemaData = new mock\SchemaData('testtable','testpage2', "");
         $schemaData->setCorrectTimestamp('testpage2');
         $actual_data = $schemaData->getData();
 
@@ -189,7 +170,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getData_oldRev() {
 
         // act
-        $schemaData = new SchemaDataDB('testtable','testpage','');
+        $schemaData = new mock\SchemaData('testtable','testpage','');
         $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getData();
 

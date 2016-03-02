@@ -6,28 +6,6 @@ namespace plugin\struct\test;
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
- * Class SchemaData for testing
- *
- * Makes protected methods accessible and avoids database initialization
- *
- * @package plugin\struct\test
- */
-class SchemaData extends \plugin\struct\meta\SchemaData {
-
-    public function __construct($table, $page, $ts) {
-        // we do intialization by parent here, because we don't need the whole database behind the class
-
-        $this->page = $page;
-        $this->table = $table;
-        $this->ts = $ts;
-    }
-
-    public function buildGetDataSQL($singles, $multis) {
-        return parent::buildGetDataSQL($singles, $multis);
-    }
-}
-
-/**
  * Tests for the building of SQL-Queries for the struct plugin
  *
  * @group plugin_struct
@@ -36,7 +14,7 @@ class SchemaData extends \plugin\struct\meta\SchemaData {
  */
 class schemaDataSQL_struct_test extends \DokuWikiTest {
 
-    protected $pluginsEnabled = array('struct',);
+    protected $pluginsEnabled = array('struct', 'sqlite');
 
     /**
      * Testdata for @see schemaDataSQL_struct_test::test_buildGetDataSQL
@@ -44,7 +22,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
      * @return array
      */
     public static function buildGetDataSQL_testdata() {
-        $schemadata = new SchemaData('testtable', 'pagename', 27);
+        $schemadata = new mock\SchemaDataNoDB('testtable', 'pagename', 27);
 
         /** @noinspection SqlResolve */
         return array(
@@ -103,7 +81,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
      *
      */
     public function test_buildGetDataSQL($testvals, $expected_sql, $expected_opt, $msg) {
-        /** @var SchemaData $obj */
+        /** @var mock\SchemaData $obj */
         $obj = $testvals['obj'];
         list($actual_sql, $actual_opt) = $obj->buildGetDataSQL(
             $testvals['singles'],

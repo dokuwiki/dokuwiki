@@ -116,12 +116,13 @@ class SchemaData extends Schema {
     /**
      * returns the data saved for the page
      *
+     * @param bool $skipempty do not return empty fields
      * @return Value[] a list of values saved for the current page
      */
-    public function getData() {
+    public function getData($skipempty=false) {
         $this->setCorrectTimestamp($this->page, $this->ts);
         $data = $this->getDataFromDB();
-        $data = $this->consolidateData($data);
+        $data = $this->consolidateData($data, false, $skipempty);
         return $data;
     }
 
@@ -130,12 +131,13 @@ class SchemaData extends Schema {
      *
      * The array returned is in the same format as used in @see saveData()
      *
+     * @param bool $skipempty do not return empty fields
      * @return array
      */
-    public function getDataArray() {
+    public function getDataArray($skipempty=false) {
         $this->setCorrectTimestamp($this->page, $this->ts);
         $data = $this->getDataFromDB();
-        $data = $this->consolidateData($data, true);
+        $data = $this->consolidateData($data, true, $skipempty);
         return $data;
     }
 
@@ -168,9 +170,10 @@ class SchemaData extends Schema {
      *
      * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
      * @param bool $asarray return data as associative array (true) or as array of Values (false)
+     * @param bool $skipemtpy skip empty fields from being returned at all
      * @return array|Value[]
      */
-    protected function consolidateData($DBdata, $asarray = false) {
+    protected function consolidateData($DBdata, $asarray = false, $skipemtpy=false) {
         $data = array();
 
         foreach($this->getColumns() as $col) {
@@ -191,6 +194,8 @@ class SchemaData extends Schema {
                 // data is in the first row only
                 $val = $DBdata[0]['col'.$col->getColref()];
             }
+
+            if($skipemtpy && ($val === '' || $val == array())) continue;
 
             if($asarray) {
                 $data[$col->getLabel()] = $val;

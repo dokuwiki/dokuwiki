@@ -3,45 +3,11 @@
 namespace plugin\struct\test;
 
 use plugin\struct\meta;
-use plugin\struct\types\AbstractBaseType;
-use plugin\struct\types\Integer;
 
 // we don't have the auto loader here
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
-class action_plugin_struct_entry extends \action_plugin_struct_entry {
 
-    /**
-     * Validate the given data
-     *
-     * Catches the Validation exceptions and transforms them into proper messages.
-     *
-     * Blank values are not validated and always pass
-     *
-     * @param AbstractBaseType $type
-     * @param string $label
-     * @param array|string|int $data
-     * @return bool true if the data validates, otherwise false
-     */
-    public function validate(AbstractBaseType $type, $label, $data) {
-        return parent::validate($type, $label, $data);
-    }
-
-    /**
-     * Create the form to edit schemadata
-     *
-     * @param string $tablename
-     * @return string The HTML for this schema's form
-     */
-    public function createForm($tablename) {
-        return parent::createForm($tablename);
-    }
-
-    public static function getVAR() {
-        return self::$VAR;
-    }
-
-}
 
 /**
  * Tests for the building of SQL-Queries for the struct plugin
@@ -119,7 +85,7 @@ class entry_struct_test extends \DokuWikiTest {
     }
 
     public function test_createForm_storedData() {
-        $entry = new action_plugin_struct_entry();
+        $entry = new mock\action_plugin_struct_entry();
         global $ID;
         $ID = 'page01';
         $test_html = $entry->createForm('schema1');
@@ -133,7 +99,7 @@ class entry_struct_test extends \DokuWikiTest {
     }
 
     public function test_createForm_emptyData() {
-        $entry = new action_plugin_struct_entry();
+        $entry = new mock\action_plugin_struct_entry();
         global $ID;
         $ID = 'page02';
         $test_html = $entry->createForm('schema1');
@@ -155,9 +121,9 @@ class entry_struct_test extends \DokuWikiTest {
             'third' => 'third post data',
             'fourth' => 'fourth post data'
         ));
-        $INPUT->set(action_plugin_struct_entry::getVAR(),$structdata);
+        $INPUT->set(mock\action_plugin_struct_entry::getVAR(),$structdata);
 
-        $entry = new action_plugin_struct_entry();
+        $entry = new mock\action_plugin_struct_entry();
         $test_html = $entry->createForm('schema1');
 
         $pq = \phpQuery::newDocument($test_html);
@@ -172,8 +138,8 @@ class entry_struct_test extends \DokuWikiTest {
         global $MSG;
         $label = 'label';
         $errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],$label);
-        $integer = new Integer();
-        $entry = new action_plugin_struct_entry();
+        $integer = new \plugin\struct\types\Integer();
+        $entry = new mock\action_plugin_struct_entry();
 
         $entry->validate($integer, $label, 'NaN');
 
@@ -184,8 +150,8 @@ class entry_struct_test extends \DokuWikiTest {
         global $MSG;
         $label = 'label';
         $errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],$label);
-        $integer = new Integer();
-        $entry = new action_plugin_struct_entry();
+        $integer = new \plugin\struct\types\Integer();
+        $entry = new mock\action_plugin_struct_entry();
 
         $entry->validate($integer, $label, array('NaN','NaN'));
 
@@ -195,8 +161,8 @@ class entry_struct_test extends \DokuWikiTest {
 
     public function test_validate_blank() {
         global $MSG;
-        $integer = new Integer();
-        $entry = new action_plugin_struct_entry();
+        $integer = new \plugin\struct\types\Integer();
+        $entry = new mock\action_plugin_struct_entry();
 
         $entry->validate($integer, 'label', null);
 
