@@ -63,4 +63,42 @@ class Type_Media_struct_test extends \DokuWikiTest {
         $integer->validate($value);
         $this->assertTrue(true); // we simply check that no exceptions are thrown
     }
+
+    public function test_render_page_img() {
+        $R = new \Doku_Renderer_xhtml();
+
+        $media = new Media(array('width' => 150, 'height' => 160, 'agg_width' => 180, 'agg_height' => 190));
+        $media->renderValue('foo.png', $R, 'xhtml');
+        $pq = \phpQuery::newDocument($R->doc);
+
+        $a = $pq->find('a');
+        $img = $pq->find('img');
+
+        $this->assertContains('fetch.php', $a->attr('href')); // direct link goes to fetch
+        $this->assertEquals('lightbox', $a->attr('rel')); // lightbox single mode
+        $this->assertContains('w=150', $img->attr('src')); // fetch param
+        $this->assertEquals(150, $img->attr('width')); // img param
+        $this->assertContains('h=160', $img->attr('src')); // fetch param
+        $this->assertEquals(160, $img->attr('height')); // img param
+    }
+
+
+    public function test_render_aggregation_img() {
+        $R = new \Doku_Renderer_xhtml();
+        $R->info['struct_table_hash'] = 'HASH';
+
+        $media = new Media(array('width' => 150, 'height' => 160, 'agg_width' => 180, 'agg_height' => 190));
+        $media->renderValue('foo.png', $R, 'xhtml');
+        $pq = \phpQuery::newDocument($R->doc);
+
+        $a = $pq->find('a');
+        $img = $pq->find('img');
+
+        $this->assertContains('fetch.php', $a->attr('href')); // direct link goes to fetch
+        $this->assertEquals('lightbox[gal-HASH]', $a->attr('rel')); // lightbox single mode
+        $this->assertContains('w=180', $img->attr('src')); // fetch param
+        $this->assertEquals(180, $img->attr('width')); // img param
+        $this->assertContains('h=190', $img->attr('src')); // fetch param
+        $this->assertEquals(190, $img->attr('height')); // img param
+    }
 }
