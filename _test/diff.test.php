@@ -90,9 +90,22 @@ class diff_struct_test extends \DokuWikiTest {
         $request = new \TestRequest();
         $response = $request->post(array('id' => $page, 'do' => 'diff'), '/doku.php');
 
-        #print_r($response); // todo: do something with it
-        $this->markTestIncomplete('Assertions needed. There are many strange whitespace chars in the html?');
+        $pq = $response->queryHTML('table.diff_sidebyside');
+        $this->assertEquals(1, $pq->length);
 
+        $added = $pq->find('td.diff-addedline');
+        $deleted = $pq->find('td.diff-deletedline');
+
+        $this->assertEquals(2, $added->length);
+        $this->assertEquals(2, $deleted->length);
+
+        $this->assertContains('bar', $deleted->eq(0)->html());
+        $this->assertContains('baz', $deleted->eq(0)->html());
+        $this->assertContains('bar2', $added->eq(0)->html());
+        $this->assertContains('baz2', $added->eq(0)->html());
+
+        $this->assertContains('foobar', $deleted->eq(1)->html());
+        $this->assertContains('foobar2', $added->eq(1)->html());
     }
 
 }
