@@ -53,13 +53,13 @@ class TestRequest {
         $post = $_POST;
         $request = $_REQUEST;
         $input = $INPUT;
-        
+
         // prepare the right URI
         $this->setUri($uri);
 
         // import all defined globals into the function scope
         foreach(array_keys($GLOBALS) as $glb){
-            global $$glb;
+            global ${$glb};
         }
 
         // fake environment
