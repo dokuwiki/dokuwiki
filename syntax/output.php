@@ -65,7 +65,6 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
      *
      * Currently completely renderer agnostic
      *
-     * @todo add some classes for nicer styling when $mode = 'xhtml'
      * @todo we currently have no schema headlines
      *
      * @param string         $mode      Renderer mode
@@ -91,7 +90,7 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         $R->tabletbody_open();
         foreach($tables as $table) {
             $schemadata = new SchemaData($table, $ID, $REV);
-            $data = $schemadata->getData();
+            $data = $schemadata->getData(true);
 
             foreach($data as $field) {
                 $R->tablerow_open();
