@@ -56,14 +56,14 @@ class Assignments {
         // fetch all pages where the schema isn't assigned, yet
         $sql = 'SELECT pid FROM schema_assignments WHERE tbl != ? OR assigned != 1';
         $res = $this->sqlite->query($sql, $table);
-        $pages = $this->sqlite->res2arr($res);
+        $pagerows = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
 
         // reevalute the pages and assign when needed
-        foreach($pages as $page) {
-            $tables = $this->getPageAssignments($page, true);
+        foreach($pagerows as $row) {
+            $tables = $this->getPageAssignments($row['pid'], true);
             if(in_array($table, $tables)) {
-                $this->assignPageSchema($page, $table);
+                $this->assignPageSchema($row['pid'], $table);
             }
         }
 
@@ -88,16 +88,36 @@ class Assignments {
         // fetch possibly affected pages
         $sql = 'SELECT pid FROM schema_assignments WHERE tbl = ?';
         $res = $this->sqlite->query($sql, $table);
-        $pages = $this->sqlite->res2arr($res);
+        $pagerows = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
 
         // reevalute the pages and unassign when needed
-        foreach($pages as $row) {
+        foreach($pagerows as $row) {
             $tables = $this->getPageAssignments($row['pid'], true);
             if(!in_array($table, $tables)) {
                 $this->deassignPageSchema($row['pid'], $table);
             }
         }
+
+        return $ok;
+    }
+
+    /**
+     * Clear all patterns - deassigns all pages
+     *
+     * This is mostly useful for testing and not used in the interface currently
+     *
+     * @return bool
+     */
+    public function clear() {
+        $sql = 'DELETE FROM schema_assignments_patterns';
+        $ok = (bool) $this->sqlite->query($sql);
+
+        $sql = 'UPDATE schema_assignments SET assigned = 0';
+        $ok = $ok && (bool) $this->sqlite->query($sql);
+
+        // reload patterns
+        $this->loadPatterns();
 
         return $ok;
     }
@@ -109,7 +129,7 @@ class Assignments {
      * @param string $table
      * @return bool
      */
-    public function assignPageSchema($page, $table) {
+    protected function assignPageSchema($page, $table) {
         $sql = 'REPLACE INTO schema_assignments (pid, tbl, assigned) VALUES (?, ?, 1)';
         return (bool) $this->sqlite->query($sql, array($page, $table));
     }
@@ -121,7 +141,7 @@ class Assignments {
      * @param string $table
      * @return bool
      */
-    public function deassignPageSchema($page, $table) {
+    protected function deassignPageSchema($page, $table) {
         $sql = 'REPLACE INTO schema_assignments (pid, tbl, assigned) VALUES (?, ?, 0)';
         return (bool) $this->sqlite->query($sql, array($page, $table));
     }
@@ -177,6 +197,8 @@ class Assignments {
      * @return bool
      */
     protected function matchPagePattern($pattern, $page, $pns = null) {
+        if(trim($pattern,':') == '**') return true; // match all
+
         if(is_null($pns)) {
             $pns = ':' . getNS($page) . ':';
         }
@@ -206,8 +228,7 @@ class Assignments {
     /**
      * Returns all tables of schemas that existed and stored data for the page back then
      *
-     * @todo this is not used currently and can probably be removed again, because we're
-     *       always only interested in the current state of affairs, even when restoring.
+     * @deprecated because we're always only interested in the current state of affairs, even when restoring.
      *
      * @param string $page
      * @param string $ts
