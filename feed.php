@@ -135,7 +135,7 @@ function rss_parseOptions() {
                 'content_type' => array('str', 'view', $conf['rss_media'])
 
             ) as $name => $val) {
-        $opt[$name] = $INPUT->$val[0]($val[1], $val[2], true);
+        $opt[$name] = $INPUT->{$val[0]}($val[1], $val[2], true);
     }
 
     $opt['items']      = max(0, (int) $opt['items']);
