@@ -50,17 +50,23 @@ class Value {
      * @param array|int|string $value
      */
     public function setValue($value) {
-        if($this->column->isMulti()) {
-            if(!is_array($value)) {
+        if($this->column->isMulti() && !is_array($value)) {
                 $value = array($value);
-            }
+        }
+
+        if(is_array($value)) {
             // remove all blanks
             $value = array_map('trim', $value);
             $value = array_filter($value, array($this, 'filter'));
             $value = array_values($value); // reset keys
+
+            if(!$this->column->isMulti()) {
+                $value = (string) array_shift($value);
+            }
         } else {
             $value = trim($value);
         }
+
         $this->value = $value;
     }
 
