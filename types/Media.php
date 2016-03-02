@@ -29,7 +29,7 @@ class Media extends AbstractBaseType {
             if(strpos($mime, $allow) === 0) return;
         }
 
-        throw new ValidationException('Media mime type', $this->config['mime']);
+        throw new ValidationException('Media mime type', $mime, $this->config['mime']);
     }
 
     /**
