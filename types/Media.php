@@ -103,8 +103,8 @@ class Media extends AbstractBaseType {
 
         $id = 'struct__' . md5($name);
 
-        $html = "<input id=\"$id\" class=\"struct_img\"  name=\"$name\" value=\"$value\" />";
-        $html .= "<button type=\"button\" class=\"struct_img\">";
+        $html = "<input id=\"$id\" class=\"struct_media\"  name=\"$name\" value=\"$value\" />";
+        $html .= "<button type=\"button\" class=\"struct_media\">";
         $html .= "<img src=\"" . DOKU_BASE . "lib/images/toolbar/image.png\" height=\"16\" width=\"16\">";
         $html .= "</button>";
         return $html;
