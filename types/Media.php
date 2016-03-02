@@ -1,14 +1,36 @@
 <?php
 namespace plugin\struct\types;
 
-class Image extends AbstractBaseType {
+use plugin\struct\meta\ValidationException;
+
+class Media extends AbstractBaseType {
 
     protected $config = array(
+        'mime' => 'image/',
         'width' => 150,
         'height' => '',
         'agg_width' => '',
         'agg_height' => ''
     );
+
+    /**
+     * Checks against the allowed mime types
+     *
+     * @param string $value
+     */
+    public function validate($value) {
+        if(!trim($this->config['mime'])) return;
+        $allows = explode(',', $this->config['mime']);
+        $allows = array_map('trim', $allows);
+        $allows = array_filter($allows);
+
+        list(, $mime,) = mimetype($value, false);
+        foreach($allows as $allow) {
+            if(strpos($mime, $allow) === 0) return;
+        }
+
+        throw new ValidationException('Media mime type', $this->config['mime']);
+    }
 
     /**
      * Output the stored data
@@ -21,18 +43,16 @@ class Image extends AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        if (empty($value)) {
+        if(empty($value)) {
             return false;
         }
 
         // get width and height from config
-        $width  = null;
+        $width = null;
         $height = null;
         if($this->config['width']) $width = $this->config['width'];
         if($this->config['height']) $height = $this->config['height'];
         if(!empty($R->info['struct_table_hash'])) {
-
-            msg('dafuck'.$R->info['struct_table_hash']);
             // this is an aggregation, check for special values
             if($this->config['agg_width']) $width = $this->config['agg_width'];
             if($this->config['agg_height']) $height = $this->config['agg_height'];
@@ -41,7 +61,7 @@ class Image extends AbstractBaseType {
         // depending on renderer type directly output or get value from it
         $returnLink = null;
         $html = '';
-        if (strpos($value, '://') === false) {
+        if(!media_isexternal($value)) {
             if(is_a($R, '\Doku_Renderer_xhtml')) {
                 /** @var \Doku_Renderer_xhtml $R */
                 $html = $R->internalmedia($value, null, null, $width, $height, null, 'direct', true);
@@ -58,10 +78,13 @@ class Image extends AbstractBaseType {
         }
 
         // add gallery meta data in XHTML
-        if ($mode == 'xhtml') {
-            $hash = !empty($R->info['struct_table_hash']) ? "[gal-" . $R->info['struct_table_hash'] . "]" : '';
-            $html = str_replace('href', "rel=\"lightbox$hash\" href", $html);
-            $R->doc .= $html;
+        if($mode == 'xhtml') {
+            list(, $mime,) = mimetype($value, false);
+            if(substr($mime, 0, 6) == 'image/') {
+                $hash = !empty($R->info['struct_table_hash']) ? "[gal-" . $R->info['struct_table_hash'] . "]" : '';
+                $html = str_replace('href', "rel=\"lightbox$hash\" href", $html);
+                $R->doc .= $html;
+            }
         }
 
         return true;
@@ -78,7 +101,7 @@ class Image extends AbstractBaseType {
         $name = hsc($name);
         $value = hsc($value);
 
-        $id = 'struct__'.md5($name);
+        $id = 'struct__' . md5($name);
 
         $html = "<input id=\"$id\" class=\"struct_img\"  name=\"$name\" value=\"$value\" />";
         $html .= "<button type=\"button\" class=\"struct_img\">";
