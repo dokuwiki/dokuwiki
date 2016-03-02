@@ -40,7 +40,7 @@ class TestRequest {
     /**
      * Executes the request
      *
-     * @param string $url  end URL to simulate, needs to start with /doku.php currently
+     * @param string $uri  end URL to simulate, needs to start with /doku.php currently
      * @return TestResponse the resulting output of the request
      */
     public function execute($uri='/doku.php') {
@@ -107,7 +107,8 @@ class TestRequest {
      * It initializes the $_SERVER['REQUEST_URI'] and $_SERVER['QUERY_STRING']
      * with all set GET variables.
      *
-     * @param string $url  end URL to simulate, needs to start with /doku.php currently
+     * @param string $uri end URL to simulate, needs to start with /doku.php currently
+     * @throws Exception
      * @todo make this work with other end points
      */
     protected function setUri($uri){
@@ -138,9 +139,9 @@ class TestRequest {
     /**
      * Simulate a POST request with the given variables
      *
-     * @param array $post  all the POST parameters to use
-     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
-     * @param return TestResponse
+     * @param array $post all the POST parameters to use
+     * @param string $uri end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
+     * @return TestResponse
      */
     public function post($post=array(), $uri='/doku.php') {
         $this->post = array_merge($this->post, $post);
@@ -151,9 +152,9 @@ class TestRequest {
     /**
      * Simulate a GET request with the given variables
      *
-     * @param array $GET   all the GET parameters to use
-     * @param string $url  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
-     * @param return TestResponse
+     * @param array $get   all the GET parameters to use
+     * @param string $uri  end URL to simulate, needs to start with /doku.php, /lib/exe/fetch.php or /lib/exe/detail.php currently
+     * @return TestResponse
      */
     public function get($get=array(), $uri='/doku.php') {
         $this->get  = array_merge($this->get, $get);
