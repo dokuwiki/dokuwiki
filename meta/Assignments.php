@@ -129,7 +129,7 @@ class Assignments {
      * @param string $table
      * @return bool
      */
-    protected function assignPageSchema($page, $table) {
+    public function assignPageSchema($page, $table) {
         $sql = 'REPLACE INTO schema_assignments (pid, tbl, assigned) VALUES (?, ?, 1)';
         return (bool) $this->sqlite->query($sql, array($page, $table));
     }
@@ -141,7 +141,7 @@ class Assignments {
      * @param string $table
      * @return bool
      */
-    protected function deassignPageSchema($page, $table) {
+    public function deassignPageSchema($page, $table) {
         $sql = 'REPLACE INTO schema_assignments (pid, tbl, assigned) VALUES (?, ?, 0)';
         return (bool) $this->sqlite->query($sql, array($page, $table));
     }
