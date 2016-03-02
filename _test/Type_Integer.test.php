@@ -2,7 +2,6 @@
 
 namespace plugin\struct\test;
 
-use plugin\struct\meta\ValidationException;
 use plugin\struct\types\Integer;
 
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));

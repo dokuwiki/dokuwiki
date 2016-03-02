@@ -29,6 +29,8 @@ class action_plugin_struct_autoloader extends DokuWiki_Action_Plugin {
      */
     static public function autoloader($name) {
         $name = str_replace('\\', '/', $name);
+        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
+
         if(substr($name, 0, 14) == 'plugin/struct/') {
             $file = DOKU_PLUGIN . substr($name, 7) . '.php';
             if(file_exists($file)) {

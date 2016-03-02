@@ -2,20 +2,9 @@
 
 namespace plugin\struct\test;
 
-use plugin\struct\meta\SchemaBuilder;
-
 // we don't have the auto loader here
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
-class Assignments extends \plugin\struct\meta\Assignments {
-    public function assignPageSchema($page, $table) {
-        return parent::assignPageSchema($page, $table);
-    }
-
-    public function matchPagePattern($pattern, $page, $pns = null) {
-        return parent::matchPagePattern($pattern, $page, $pns);
-    }
-}
 
 /**
  * Tests for the building of SQL-Queries for the struct plugin
@@ -30,7 +19,7 @@ class Assignments_struct_test extends \DokuWikiTest {
 
 
     public function test_patternmatching() {
-        $ass = new Assignments();
+        $ass = new mock\Assignments();
 
         $this->assertTrue($ass->matchPagePattern('some:ns:page', 'some:ns:page'));
         $this->assertTrue($ass->matchPagePattern('some:ns:*', 'some:ns:page'));
@@ -46,7 +35,7 @@ class Assignments_struct_test extends \DokuWikiTest {
      * check clearing works
      */
     public function test_clear() {
-        $ass = new Assignments();
+        $ass = new mock\Assignments();
         $this->assertTrue($ass->clear());
         $ass->addPattern('foo', 'foo');
         $ass->assignPageSchema('foo', 'foo');
@@ -61,7 +50,7 @@ class Assignments_struct_test extends \DokuWikiTest {
      * basic usage
      */
     public function test_patternassigns() {
-        $ass = new Assignments();
+        $ass = new mock\Assignments();
         $ass->clear();
 
         $ass->addPattern('a:single:page', 'singlepage');
@@ -110,7 +99,7 @@ class Assignments_struct_test extends \DokuWikiTest {
      * Check the direct page assignments
      */
     public function test_pageassign() {
-        $ass = new Assignments();
+        $ass = new mock\Assignments();
         $ass->clear();
 
         // no assignment

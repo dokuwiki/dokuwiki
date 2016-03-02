@@ -1,23 +1,8 @@
 <?php
 namespace plugin\struct\test;
 
-/**
- * Class helper_plugin_struct_config
- * @package plugin\struct\test
- */
-class helper_plugin_struct_config extends \helper_plugin_struct_config {
-    /**
-     * Parse a filter
-     *
-     * @param string $val
-     *
-     * @return array ($col, $comp, $value)
-     * @throws \plugin\struct\meta\StructException
-     */
-    public function parseFilter($val) {
-        return parent::parseFilter($val);
-    }
-}
+// we don't have the auto loader here
+spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
  * Tests for the class action_plugin_magicmatcher_oldrevisions of the magicmatcher plugin
@@ -109,14 +94,14 @@ class config_helper_struct_test extends \DokuWikiTest {
     /**
      * @dataProvider cleanTableName_testdata
      *
-     * @covers plugin\struct\meta\Schema::cleanTableName
+     * @covers       plugin\struct\meta\Schema::cleanTableName
      *
-     * @param string $input_name
-     * @param string $expected_cleaned_name
+     * @param $input_filter
+     * @param $expected_filter
      * @param string $msg
      */
     public function test_parseFilter($input_filter, $expected_filter, $msg) {
-        $confHelper = new helper_plugin_struct_config;
+        $confHelper = new mock\helper_plugin_struct_config();
 
         $actual_filter = $confHelper->parseFilter($input_filter);
 

@@ -6,14 +6,6 @@ use plugin\struct\meta;
 
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
-class Search extends meta\Search {
-    public $schemas = array();
-    /** @var  meta\Column[] */
-    public $columns = array();
-
-    public $sortby = array();
-}
-
 /**
  * Tests for the building of SQL-Queries for the struct plugin
  *
@@ -54,7 +46,7 @@ class Search_struct_test extends \DokuWikiTest {
         );
         $sb->build();
 
-        $as = new meta\Assignments();
+        $as = new mock\Assignments();
 
         $as->assignPageSchema('page01', 'schema1');
         $sd = new meta\SchemaData('schema1', 'page01', time());
@@ -101,7 +93,7 @@ class Search_struct_test extends \DokuWikiTest {
     }
 
     public function test_simple() {
-        $search = new Search();
+        $search = new mock\Search();
 
         $search->addSchema('schema1');
         $search->addColumn('%pageid%');
@@ -119,7 +111,7 @@ class Search_struct_test extends \DokuWikiTest {
     }
 
     public function test_search() {
-        $search = new Search();
+        $search = new mock\Search();
 
         $search->addSchema('schema1');
         $search->addSchema('schema2', 'foo');
@@ -188,7 +180,7 @@ class Search_struct_test extends \DokuWikiTest {
     }
 
     public function test_ranges() {
-        $search = new Search();
+        $search = new mock\Search();
         $search->addSchema('schema2');
 
         $search->addColumn('%pageid%');
