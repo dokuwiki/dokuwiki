@@ -73,6 +73,13 @@ class Column {
     }
 
     /**
+     * @return string
+     */
+    public function getTranslatedHint() {
+        return $this->type->getTranslatedHint();
+    }
+
+    /**
      * @return AbstractBaseType
      */
     public function getType() {

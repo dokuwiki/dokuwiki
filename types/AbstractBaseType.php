@@ -24,7 +24,7 @@ abstract class AbstractBaseType {
     /**
      * @var array config keys that should not be cleaned despite not being in $config
      */
-    protected $keepconfig = array('label');
+    protected $keepconfig = array('label', 'hint');
 
     /**
      * @var string label for the field
@@ -70,7 +70,7 @@ abstract class AbstractBaseType {
     }
 
     /**
-     * Add the translation keys to the configuration
+     * Add the translatable keys to the configuration
      *
      * This checks if a configuration for the translation plugin exists and if so
      * adds all configured languages to the config array. This ensures all types
@@ -88,8 +88,10 @@ abstract class AbstractBaseType {
         $langs = array_unique($langs);
 
         if(!isset($this->config['label'])) $this->config['label'] = array();
+        if(!isset($this->config['hint'])) $this->config['hint'] = array();
         foreach($langs as $lang) {
             if(!isset($this->config['label'][$lang])) $this->config['label'][$lang] = '';
+            if(!isset($this->config['hint'][$lang])) $this->config['hint'][$lang] = '';
         }
     }
 
@@ -156,6 +158,26 @@ abstract class AbstractBaseType {
             return $this->config['label']['en'];
         }
         return $this->label;
+    }
+
+    /**
+     * Returns the translated hint for this type
+     *
+     * Uses the current language as determined by $conf['lang']. Falls back to english.
+     * Returns empty string if no hint is configured
+     *
+     * @return string
+     */
+    public function getTranslatedHint() {
+        global $conf;
+        $lang = $conf['lang'];
+        if(!blank($this->config['hint'][$lang])) {
+            return $this->config['hint'][$lang];
+        }
+        if(!blank($this->config['hint']['en'])) {
+            return $this->config['hint']['en'];
+        }
+        return '';
     }
 
     /**

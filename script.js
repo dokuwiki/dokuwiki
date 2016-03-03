@@ -40,6 +40,11 @@ jQuery(function () {
     }
 
     /**
+     * hints
+     */
+    jQuery('.struct .hashint').tooltip();
+
+    /**
      * Attach datepicker to date types
      */
     jQuery('input.struct_date').datepicker({

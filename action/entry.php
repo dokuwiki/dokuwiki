@@ -288,9 +288,15 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 $field->setValue($postdata[$label]);
             }
             $trans = hsc($field->getColumn()->getTranslatedLabel());
+            $hint  = hsc($field->getColumn()->getTranslatedHint());
+            $class = $hint ? 'hashint' : '';
+
             $name = self::$VAR . "[$tablename][$label]";
             $input = $field->getValueEditor($name);
-            $html .= "<label><span class=\"label\">$trans</span><span class=\"input\">$input</span></label>";
+            $html .= '<label>';
+            $html .= "<span class=\"label $class\" title=\"$hint\">$trans</span>";
+            $html .= "<span class=\"input\">$input</span>";
+            $html .= '</label>';
         }
         $html .= '</fieldset>';
 
