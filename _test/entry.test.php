@@ -508,9 +508,6 @@ class entry_struct_test extends \DokuWikiTest {
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
-        $this->markTestIncomplete('Reverting needs admin priviledges, which require an loggedin user.
-        This user would require then need valid security-tokens their actions.');
-
         global $conf;
         $conf['useacl']    = 1;
         $conf['superuser'] = 'admin';
@@ -532,7 +529,7 @@ class entry_struct_test extends \DokuWikiTest {
         $request->setPost('struct_schema_data',$structData);
         $request->setPost('wikitext',$wikitext);
         $request->setPost('summary','content and struct data saved');
-        $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
+        $request->post(array('id' => $page, 'do' => 'save', 'sectok' => getSecurityToken()), '/doku.php');
 
         sleep(1);
 
@@ -549,17 +546,18 @@ class entry_struct_test extends \DokuWikiTest {
         $request->setPost('struct_schema_data',$structData);
         $request->setPost('wikitext',$wikitext . $wikitext);
         $request->setPost('summary','delete page');
-        $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
+        $request->post(array('id' => $page, 'do' => 'save', 'sectok' => getSecurityToken()), '/doku.php');
 
         sleep(1);
 
         // revert to first save
         $actpagelog = new \PageChangeLog($page);
-        $actrevisions = $actpagelog->getRevisions(-1, 200);
+        $actrevisions = $actpagelog->getRevisions(0, 200);
+
         $actrevinfo = $actpagelog->getRevisionInfo($actrevisions[0]);
         $request = new \TestRequest();
         $request->setPost('summary','revert page');
-        $request->post(array('id' => $page, 'do' => 'revert', 'rev' => $actrevinfo['date']), '/doku.php');
+        $request->post(array('id' => $page, 'do' => 'revert', 'rev' => $actrevinfo['date'], 'sectok' => getSecurityToken()), '/doku.php');
 
         // assert
         $pagelog = new \PageChangeLog($page);
@@ -575,8 +573,8 @@ class entry_struct_test extends \DokuWikiTest {
         );
 
         $this->assertEquals(3, count($revisions), 'there should be 3 (three) revisions');
-        $this->assertEquals('revert page', $revinfo['sum']);
-        $this->assertEquals(DOKU_CHANGE_TYPE_DELETE, $revinfo['type']);
+        $this->assertContains('restored', $revinfo['sum']);
+        $this->assertEquals(DOKU_CHANGE_TYPE_REVERT, $revinfo['type']);
         $this->assertEquals($expected_struct_data, $actual_struct_data);
         // todo: timestamps?
     }
