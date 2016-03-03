@@ -89,10 +89,19 @@ abstract class AbstractBaseType {
 
         if(!isset($this->config['label'])) $this->config['label'] = array();
         if(!isset($this->config['hint'])) $this->config['hint'] = array();
+        // initialize missing keys
         foreach($langs as $lang) {
             if(!isset($this->config['label'][$lang])) $this->config['label'][$lang] = '';
             if(!isset($this->config['hint'][$lang])) $this->config['hint'][$lang] = '';
         }
+        // strip unknown languages
+        foreach(array_keys($this->config['label']) as $key) {
+            if(!in_array($key, $langs)) unset($this->config['label'][$key]);
+        }
+        foreach(array_keys($this->config['hint']) as $key) {
+            if(!in_array($key, $langs)) unset($this->config['hint'][$key]);
+        }
+
     }
 
     /**
