@@ -24,7 +24,7 @@ abstract class AbstractBaseType {
     /**
      * @var array config keys that should not be cleaned despite not being in $config
      */
-    protected $keepconfig = array('translation');
+    protected $keepconfig = array('label');
 
     /**
      * @var string label for the field
@@ -87,9 +87,9 @@ abstract class AbstractBaseType {
         $langs = array_filter($langs);
         $langs = array_unique($langs);
 
-        if(!isset($this->config['translation'])) $this->config['translation'] = array();
+        if(!isset($this->config['label'])) $this->config['label'] = array();
         foreach($langs as $lang) {
-            if(!isset($this->config['translation'][$lang])) $this->config['translation'][$lang] = '';
+            if(!isset($this->config['label'][$lang])) $this->config['label'][$lang] = '';
         }
     }
 
@@ -149,11 +149,11 @@ abstract class AbstractBaseType {
     public function getTranslatedLabel() {
         global $conf;
         $lang = $conf['lang'];
-        if(!blank($this->config['translation'][$lang])) {
-            return $this->config['translation'][$lang];
+        if(!blank($this->config['label'][$lang])) {
+            return $this->config['label'][$lang];
         }
-        if(!blank($this->config['translation']['en'])) {
-            return $this->config['translation']['en'];
+        if(!blank($this->config['label']['en'])) {
+            return $this->config['label']['en'];
         }
         return $this->label;
     }
