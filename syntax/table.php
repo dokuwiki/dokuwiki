@@ -293,7 +293,9 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         foreach($data['headers'] as $num => $head) {
             $ckey = $data['cols'][$num];
             if(blank($head)) {
-                if(isset($cols[$num]) && is_a($cols[$num], 'plugin\struct\meta\Column')) {
+                if(isset($cols[$num]) && is_a($cols[$num], 'plugin\struct\meta\PageColumn')) {
+                    $head = $this->getLang('pagelabel');
+                }else if(isset($cols[$num]) && is_a($cols[$num], 'plugin\struct\meta\Column')) {
                     $head = $cols[$num]->getTranslatedLabel();
                 } else {
                     $head = 'column '.$num; // this should never happen
@@ -334,7 +336,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     protected function startScope($mode, \Doku_Renderer $renderer, $hash) {
         if ($mode == 'xhtml') {
-            $renderer->doc .= "<div class=\"table structaggregation\">";
+            $renderer->doc .= "<div class=\"structaggregation\">";
             $renderer->info['struct_table_hash'] = $hash;
         }
     }

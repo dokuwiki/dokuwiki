@@ -16,6 +16,7 @@ $lang['create'] = 'Create new Schema';
 $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
+$lang['pagelabel'] = 'Page';
 
 $lang['editor_sort'] = 'Sort';
 $lang['editor_label'] = 'Field Name';
