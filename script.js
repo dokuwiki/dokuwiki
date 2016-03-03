@@ -14,13 +14,13 @@ jQuery(function () {
     /**
      * Attach image dialog to image types
      */
-    jQuery('button.struct_img').click(function () {
+    jQuery('button.struct_media').click(function () {
         var input_id = jQuery(this).siblings('input').attr('id');
         window.open(
             DOKU_BASE + 'lib/exe/mediamanager.php' +
             '?ns=' + encodeURIComponent(JSINFO['namespace']) +
             '&edid=' + encodeURIComponent(input_id) +
-            '&onselect=insertStructImage',
+            '&onselect=insertStructMedia',
             'mediaselect',
             'width=750,height=500,left=20,top=20,scrollbars=yes,resizable=yes'); //
     });
@@ -28,7 +28,7 @@ jQuery(function () {
     /**
      * Custom onSelect handler for struct img button
      */
-    window.insertStructImage = function (edid, mediaid, opts, align) {
+    window.insertStructMedia = function (edid, mediaid, opts, align) {
         jQuery('#' + edid).val(mediaid).change();
     };
 
