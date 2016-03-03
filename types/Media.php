@@ -43,10 +43,6 @@ class Media extends AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        if(empty($value)) {
-            return false;
-        }
-
         // get width and height from config
         $width = null;
         $height = null;
@@ -83,8 +79,8 @@ class Media extends AbstractBaseType {
             if(substr($mime, 0, 6) == 'image/') {
                 $hash = !empty($R->info['struct_table_hash']) ? "[gal-" . $R->info['struct_table_hash'] . "]" : '';
                 $html = str_replace('href', "rel=\"lightbox$hash\" href", $html);
-                $R->doc .= $html;
             }
+            $R->doc .= $html;
         }
 
         return true;

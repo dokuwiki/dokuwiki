@@ -37,6 +37,8 @@ class Type_Media_struct_test extends \DokuWikiTest {
      */
     public function validateSuccessProvider() {
         return array(
+            array('', 'foo.png'),
+            array('', 'http://www.example.com/foo.png'),
             array('image/jpeg, image/png', 'foo.png'),
             array('image/jpeg, image/png', 'http://www.example.com/foo.png'),
             array('image/jpeg, image/png', 'http://www.example.com/dynamic?.png'),
@@ -101,4 +103,43 @@ class Type_Media_struct_test extends \DokuWikiTest {
         $this->assertContains('h=190', $img->attr('src')); // fetch param
         $this->assertEquals(190, $img->attr('height')); // img param
     }
+
+    public function test_render_aggregation_pdf() {
+        $R = new \Doku_Renderer_xhtml();
+
+        $media = new Media(array('width' => 150, 'height' => 160, 'agg_width' => 180, 'agg_height' => 190, 'mime' => ''));
+        $media->renderValue('foo.pdf', $R, 'xhtml');
+        $pq = \phpQuery::newDocument($R->doc);
+
+        $a = $pq->find('a');
+        $img = $pq->find('img');
+
+        $this->assertContains('fetch.php', $a->attr('href')); // direct link goes to fetch
+        $this->assertTrue($a->hasClass('mediafile')); // it's a media link
+        $this->assertEquals('', $a->attr('rel')); // no lightbox
+        $this->assertEquals(0, $img->length); // no image
+        $this->assertEquals('foo.pdf', $a->text()); // name is link name
+    }
+
+    public function test_render_aggregation_video() {
+        $R = new \Doku_Renderer_xhtml();
+
+        // local video requires an existing file to be rendered. we fake one
+        $fake = mediaFN('foo.mp4');
+        touch($fake);
+
+        $media = new Media(array('width' => 150, 'height' => 160, 'agg_width' => 180, 'agg_height' => 190, 'mime' => ''));
+        $media->renderValue('foo.mp4', $R, 'xhtml');
+        $pq = \phpQuery::newDocument($R->doc);
+
+        $a = $pq->find('a');
+        $vid = $pq->find('video');
+        $src = $pq->find('source');
+
+        $this->assertContains('fetch.php', $a->attr('href')); // direct link goes to fetch
+        $this->assertContains('fetch.php', $src->attr('src')); // direct link goes to fetch
+        $this->assertEquals(150, $vid->attr('width')); // video param
+        $this->assertEquals(160, $vid->attr('height')); // video param
+    }
+
 }
