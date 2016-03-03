@@ -78,21 +78,24 @@ class entry_struct_test extends \DokuWikiTest {
         $sqlite->resetDB();
     }
 
+
+    protected function checkField(\phpQueryObject $pq, $schema, $name, $value) {
+        $this->assertEquals(1, $pq->find("span.label:contains('$name')")->length, "Field $schema.$name not found");
+        $this->assertEquals($value, $pq->find("input[name='struct_schema_data[$schema][$name]']")->val(), "Field $schema.$name has wrong value");
+    }
+
     public function test_createForm_storedData() {
         $entry = new mock\action_plugin_struct_entry();
         global $ID;
         $ID = 'page01';
         $test_html = $entry->createForm('schema1');
 
-        $this->assertContains('<legend>schema1</legend>', $test_html);
-        $this->assertContains('first', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][first]" value="first data" />', $test_html);
-        $this->assertContains('second', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][second]" value="second data, more data, even more" />', $test_html);
-        $this->assertContains('third', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][third]" value="third data" />', $test_html);
-        $this->assertContains('fourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][fourth]" value="fourth data" />', $test_html);
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('schema1', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema1', 'first', 'first data');
+        $this->checkField($pq, 'schema1', 'second', 'second data, more data, even more');
+        $this->checkField($pq, 'schema1', 'third', 'third data');
+        $this->checkField($pq, 'schema1', 'fourth', 'fourth data');
     }
 
     public function test_createForm_emptyData() {
@@ -101,15 +104,12 @@ class entry_struct_test extends \DokuWikiTest {
         $ID = 'page02';
         $test_html = $entry->createForm('schema1');
 
-        $this->assertContains('<legend>schema1</legend>', $test_html);
-        $this->assertContains('first', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][first]" value="" />', $test_html);
-        $this->assertContains('second', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][second]" value="" />', $test_html);
-        $this->assertContains('third', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][third]" value="" />', $test_html);
-        $this->assertContains('fourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][fourth]" value="" />', $test_html);
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('schema1', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema1', 'first', '');
+        $this->checkField($pq, 'schema1', 'second', '');
+        $this->checkField($pq, 'schema1', 'third', '');
+        $this->checkField($pq, 'schema1', 'fourth', '');
     }
 
     public function test_createForm_postData() {
@@ -126,15 +126,12 @@ class entry_struct_test extends \DokuWikiTest {
         $entry = new mock\action_plugin_struct_entry();
         $test_html = $entry->createForm('schema1');
 
-        $this->assertContains('<legend>schema1</legend>', $test_html);
-        $this->assertContains('first', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][first]" value="first post data" />', $test_html);
-        $this->assertContains('second', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][second]" value="second post data, more post data, even more post data" />', $test_html);
-        $this->assertContains('third', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][third]" value="third post data" />', $test_html);
-        $this->assertContains('fourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[schema1][fourth]" value="fourth post data" />', $test_html);
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('schema1', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema1', 'first', 'first post data');
+        $this->checkField($pq, 'schema1', 'second', 'second post data, more post data, even more post data');
+        $this->checkField($pq, 'schema1', 'third', 'third post data');
+        $this->checkField($pq, 'schema1', 'fourth', 'fourth post data');
     }
 
     public function test_validate_nonArray() {
@@ -193,15 +190,13 @@ class entry_struct_test extends \DokuWikiTest {
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
         $test_html = trim($response->queryHTML('.struct')->html());
 
-        $this->assertContains('<legend>Schema2</legend>', $test_html);
-        $this->assertContains('afirst', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="">', $test_html);
-        $this->assertContains('asecond', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="">', $test_html);
-        $this->assertContains('athird', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="">', $test_html);
-        $this->assertContains('afourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="">', $test_html);
+
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('Schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'Schema2', 'afirst', '');
+        $this->checkField($pq, 'Schema2', 'asecond', '');
+        $this->checkField($pq, 'Schema2', 'athird', '');
+        $this->checkField($pq, 'Schema2', 'afourth', '');
     }
 
     public function test_preview_page_invaliddata() {
@@ -226,15 +221,13 @@ class entry_struct_test extends \DokuWikiTest {
         $test_html = trim($response->queryHTML('.struct')->html());
 
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
-        $this->assertContains('<legend>Schema2</legend>', $test_html);
-        $this->assertContains('afirst', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="foo">', $test_html);
-        $this->assertContains('asecond', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="bar, baz">', $test_html);
-        $this->assertContains('athird', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="foobar">', $test_html);
-        $this->assertContains('afourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="Eve">', $test_html);
+
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('Schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'Schema2', 'afirst', 'foo');
+        $this->checkField($pq, 'Schema2', 'asecond', 'bar, baz');
+        $this->checkField($pq, 'Schema2', 'athird', 'foobar');
+        $this->checkField($pq, 'Schema2', 'afourth', 'Eve');
     }
 
     public function test_preview_page_validdata() {
@@ -258,15 +251,13 @@ class entry_struct_test extends \DokuWikiTest {
         $test_html = trim($response->queryHTML('.struct')->html());
 
         $this->assertEquals($actual_errormsg,array(), "If all data is valid, then there should be no error message.");
-        $this->assertContains('<legend>Schema2</legend>', $test_html);
-        $this->assertContains('afirst', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="foo">', $test_html);
-        $this->assertContains('asecond', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="bar, baz">', $test_html);
-        $this->assertContains('athird', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="foobar">', $test_html);
-        $this->assertContains('afourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="42">', $test_html);
+
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('Schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'Schema2', 'afirst', 'foo');
+        $this->checkField($pq, 'Schema2', 'asecond', 'bar, baz');
+        $this->checkField($pq, 'Schema2', 'athird', 'foobar');
+        $this->checkField($pq, 'Schema2', 'afourth', '42');
     }
 
     public function test_fail_saving_empty_page() {
@@ -332,15 +323,12 @@ class entry_struct_test extends \DokuWikiTest {
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
         $this->assertEquals($expected_wikitext,$actual_wikitext);
 
-        $this->assertContains('<legend>Schema2</legend>', $test_html);
-        $this->assertContains('afirst', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afirst]" value="foo">', $test_html);
-        $this->assertContains('asecond', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][asecond]" value="bar, baz">', $test_html);
-        $this->assertContains('athird', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][athird]" value="foobar">', $test_html);
-        $this->assertContains('afourth', $test_html);
-        $this->assertContains('<input name="struct_schema_data[Schema2][afourth]" value="Eve">', $test_html);
+        $pq = \phpQuery::newDocument($test_html);
+        $this->assertEquals('Schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'Schema2', 'afirst', 'foo');
+        $this->checkField($pq, 'Schema2', 'asecond', 'bar, baz');
+        $this->checkField($pq, 'Schema2', 'athird', 'foobar');
+        $this->checkField($pq, 'Schema2', 'afourth', 'Eve');
 
         // todo: assert that no struct data has been saved
     }

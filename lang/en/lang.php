@@ -29,7 +29,7 @@ $lang['assign_del'] = 'Delete';
 $lang['assign_assign'] = 'Page/Namespace';
 $lang['assign_tbl'] = 'Schema';
 
-
+$lang['multi'] = 'Enter multiple values separated by commas.';
 $lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
 
 $lang['emptypage'] = 'Struct data has not been saved for an empty page';
@@ -39,6 +39,7 @@ $lang['validation_prefix'] = "Field [%s]: ";
 $lang['Validation Exception Integer needed'] = 'only integers are allowed';
 $lang['Validation Exception Integer min'] = 'has to be equal or greater than %d';
 $lang['Validation Exception Integer max'] = 'has to be equal or less than %d';
+$lang['Validation Exception User not found'] = 'has to be an existing user. User \'%s\' was not found.';
 $lang['Validation Exception Media mime type'] = 'MIME type %s has to match the allowed set of %s';
 $lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-DD';
 

@@ -5,6 +5,41 @@ jQuery(function () {
     var copycount = 0;
 
     /**
+     * Simplyfies AJAX requests for types
+     *
+     * @param {string} column A configured column in the form schema.name
+     * @param {function} fn Callback on success
+     * @param {object} data Additional data to pass
+     */
+    function struct_ajax(column, fn, data) {
+        if (!data) data = {};
+
+        data['call'] = 'plugin_struct';
+        data['column'] = column;
+
+        jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
+            .fail(function (result) {
+                alert(result.responseJSON.error);
+            });
+    }
+
+    /**
+     * @param {string} val
+     * @return {array}
+     */
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+
+    /**
+     * @param {string} term
+     * @returns {string}
+     */
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    /**
      * Attach datepicker to date types
      */
     jQuery('input.struct_date').datepicker({
@@ -31,6 +66,46 @@ jQuery(function () {
     window.insertStructMedia = function (edid, mediaid, opts, align) {
         jQuery('#' + edid).val(mediaid).change();
     };
+
+    /**
+     * Autocomplete for single type
+     */
+    jQuery('input.struct_user, input.struct_page').autocomplete({
+        ismulti: false,
+        source: function (request, cb) {
+            var name = this.element.attr('name');
+            name = name.substring(19, name.length - 1);
+            name = name.replace('][', '.');
+
+            var term = request.term;
+            if (this.options.ismulti) {
+                term = extractLast(term);
+            }
+            struct_ajax(name, cb, {search: term});
+        }
+    });
+
+    /**
+     * Autocomplete for multi type
+     */
+    jQuery('.multiwrap input.struct_user, .multiwrap input.struct_page').autocomplete('option', {
+        ismulti: true,
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            var terms = split(this.value);
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push(ui.item.value);
+            // add placeholder to get the comma-and-space at the end
+            terms.push("");
+            this.value = terms.join(", ");
+            return false;
+        }
+    });
 
     /**
      * Toggle the disabled class in the schema editor

@@ -8,7 +8,14 @@ namespace plugin\struct\types;
  *
  * @package plugin\struct\types
  */
-class Page extends Text {
+class Page extends AbstractMultiBaseType {
+
+    protected $config = array(
+        'autocomplete' => array(
+            'mininput' => 2,
+            'maxresult' => 5,
+        ),
+    );
 
     /**
      * Output the stored data
@@ -24,6 +31,51 @@ class Page extends Text {
 
         $R->internallink(":$link");
         return true;
+    }
+
+    /**
+     * Autocompletion support for pages
+     *
+     * @return array
+     */
+    public function handleAjax() {
+        global $INPUT;
+
+        // check minimum length
+        $lookup = trim($INPUT->str('search'));
+        if(utf8_strlen($lookup) < $this->config['autocomplete']['mininput']) return array();
+
+        // results wanted?
+        $max = $this->config['autocomplete']['maxresult'];
+        if($max <= 0) return array();
+
+        $data = ft_pageLookup($lookup, true, useHeading('navigation'));
+        if(!count($data)) return array();
+
+        // this basically duplicates what we do in ajax_qsearch()
+        $result = array();
+        $counter = 0;
+        foreach($data as $id => $title){
+            if (useHeading('navigation')) {
+                $name = $title;
+            } else {
+                $ns = getNS($id);
+                if($ns){
+                    $name = noNS($id).' ('.$ns.')';
+                }else{
+                    $name = $id;
+                }
+            }
+            $result[] = array(
+                'label' => $name,
+                'value' => $id
+            );
+
+            $counter ++;
+            if($counter > $max) break;
+        }
+
+        return $result;
     }
 
 }

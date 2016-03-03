@@ -1,6 +1,6 @@
 <?php
 namespace plugin\struct\types;
-
+use plugin\struct\meta\StructException;
 use plugin\struct\meta\ValidationException;
 
 /**
@@ -40,6 +40,11 @@ abstract class AbstractBaseType {
      * @var int the type ID
      */
     protected $tid = 0;
+
+    /**
+     * @var \DokuWiki_Plugin
+     */
+    protected $hlp = null;
 
     /**
      * AbstractBaseType constructor.
@@ -209,9 +214,10 @@ abstract class AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
+        $class = 'struct_'.strtolower($this->getClass());
         $name = hsc($name);
         $value = hsc($value);
-        $html = "<input name=\"$name\" value=\"$value\" />";
+        $html = "<input name=\"$name\" value=\"$value\" class=\"$class\" />";
         return "$html";
     }
 
@@ -288,5 +294,31 @@ abstract class AbstractBaseType {
      */
     public function validate($value) {
         // nothing by default - we allow everything
+    }
+
+    /**
+     * Overwrite to handle Ajax requests
+     *
+     * A call to DOKU_BASE/lib/exe/ajax.php?call=plugin_struct&column=schema.name will
+     * be redirected to this function on a fully initialized type. The result is
+     * JSON encoded and returned to the caller. Access additional parameter via $INPUT
+     * as usual
+     *
+     * @throws StructException when something goes wrong
+     * @return mixed
+     */
+    public function handleAjax() {
+        throw new StructException('not implemented');
+    }
+
+    /**
+     * Convenience method to access plugin language strings
+     *
+     * @param string $string
+     * @return string
+     */
+    public function getLang($string) {
+        if(is_null($this->hlp)) $this->hlp = plugin_load('action', 'struct_autoloader');
+        return $this->hlp->getLang($string);
     }
 }
