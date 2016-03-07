@@ -250,7 +250,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             try {
                 $type->validate($data);
             } catch(ValidationException $e) {
-                msg($prefix . $e->getMessage(), -1);
+                msg($prefix . hsc($e->getMessage()), -1);
                 $ok = false;
             }
         }
