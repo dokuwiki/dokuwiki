@@ -1,5 +1,6 @@
 <?php
 namespace plugin\struct\types;
+use plugin\struct\meta\Column;
 use plugin\struct\meta\StructException;
 use plugin\struct\meta\ValidationException;
 
@@ -40,6 +41,11 @@ abstract class AbstractBaseType {
      * @var int the type ID
      */
     protected $tid = 0;
+
+    /**
+     * @var null|Column the column context this type is part of
+     */
+    protected $context = null;
 
     /**
      * @var \DokuWiki_Plugin
@@ -194,6 +200,23 @@ abstract class AbstractBaseType {
      */
     public function getTid() {
         return $this->tid;
+    }
+
+    /**
+     * @throws StructException
+     * @return Column
+     */
+    public function getContext() {
+        if(is_null($this->context))
+            throw new StructException('Empty column context requested. Type was probably initialized outside of Schema.');
+        return $this->context;
+    }
+
+    /**
+     * @param Column $context
+     */
+    public function setContext($context) {
+        $this->context = $context;
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 namespace plugin\struct\meta;
+use plugin\struct\types\AbstractBaseType;
 
 /**
  * Class Schema
@@ -101,15 +102,18 @@ class Schema {
             }
 
             $config = json_decode($row['config'], true);
-            $this->columns[$row['colref']] =
-                new Column(
-                    $row['sort'],
-                    new $class($config, $row['label'], $row['ismulti'], $row['tid']),
-                    $row['colref'],
-                    $row['enabled'],
-                    $table
-                );
+            /** @var AbstractBaseType $type */
+            $type = new $class($config, $row['label'], $row['ismulti'], $row['tid']);
+            $column = new Column(
+                $row['sort'],
+                $type,
+                $row['colref'],
+                $row['enabled'],
+                $table
+            );
+            $type->setContext($column);
 
+            $this->columns[$row['colref']] = $column;
             if($row['sort'] > $this->maxsort) $this->maxsort = $row['sort'];
         }
     }
