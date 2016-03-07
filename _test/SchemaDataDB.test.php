@@ -149,6 +149,23 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         }
     }
 
+    public function test_getDataArray_currentRev() {
+
+        // act
+        $schemaData = new mock\SchemaData('testtable','testpage', "");
+        $schemaData->setCorrectTimestamp('testpage');
+
+        $actual_data = $schemaData->getDataArray();
+
+        $expected_data = array(
+            'testMulitColumn' => array('value2.1a', 'value2.2a'),
+            'testcolumn' => 'value1a'
+        );
+
+        // assert
+        $this->assertEquals($expected_data, $actual_data , '');
+    }
+
     public function test_getData_currentRev2() {
 
         // act
@@ -265,5 +282,51 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         // assert
         $this->assertEquals(array(), $actual_data[0]->getValue());
         $this->assertEquals(null, $actual_data[1]->getValue());
+    }
+
+    public function test_getData_skipEmpty() {
+        // arrange
+        $testdata = array(
+            'testcolumn' => '',
+            'testMulitColumn' => array(
+                "value2.1_saved",
+                "value2.2_saved",
+            )
+        );
+        $schemaData = new meta\SchemaData('testtable','testpage', time());
+        $schemaData->saveData($testdata);
+
+        // act
+        $actual_data = $schemaData->getData(true);
+
+        $expected_data = array('value2.1_saved', 'value2.2_saved');
+
+        // assert
+        $this->assertEquals(1, count($actual_data), 'There should be only one value returned and the empty value skipped');
+        $this->assertEquals($expected_data, $actual_data[0]->getValue());
+    }
+
+    public function test_getDataArray_skipEmpty() {
+        // arrange
+        $testdata = array(
+            'testcolumn' => '',
+            'testMulitColumn' => array(
+                "value2.1_saved",
+                "value2.2_saved",
+            )
+        );
+        $schemaData = new meta\SchemaData('testtable','testpage', time());
+        $schemaData->saveData($testdata);
+
+        // act
+        $actual_data = $schemaData->getDataArray(true);
+
+        $expected_data = array(
+            'testMulitColumn' => array('value2.1_saved', 'value2.2_saved')
+        );
+
+        // assert
+        $this->assertEquals(1, count($actual_data), 'There should be only one value returned and the empty value skipped');
+        $this->assertEquals($expected_data, $actual_data);
     }
 }
