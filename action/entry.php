@@ -268,6 +268,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $REV;
         global $INPUT;
         if (auth_quickaclcheck($ID) == AUTH_READ) return '';
+        if (checklock($ID)) return '';
         $schema = new SchemaData($tablename, $ID, $REV);
         $schemadata = $schema->getData();
 
