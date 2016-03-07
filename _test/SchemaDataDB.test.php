@@ -236,4 +236,34 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $this->assertEquals($expected_saved_single, $actual_saved_single,'single value fields');
         $this->assertEquals($expected_saved_multi, $actual_saved_multi,'multi value fields');
     }
+
+    public function test_getDataFromDB_clearData() {
+
+        // act
+        $schemaData = new mock\SchemaData('testtable','testpage', time());
+        $schemaData->clearData();
+        $actual_data =  $schemaData->getDataFromDB();
+
+        $expected_data = array(
+            array(
+                'col1' => '',
+                'col2' => null
+            )
+        );
+
+
+        $this->assertEquals($expected_data, $actual_data , '');
+    }
+
+    public function test_getData_clearData() {
+
+        // act
+        $schemaData = new mock\SchemaData('testtable','testpage', time());
+        $schemaData->clearData();
+        $actual_data = $schemaData->getData();
+
+        // assert
+        $this->assertEquals(array(), $actual_data[0]->getValue());
+        $this->assertEquals(null, $actual_data[1]->getValue());
+    }
 }
