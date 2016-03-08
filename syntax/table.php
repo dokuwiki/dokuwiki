@@ -250,7 +250,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                 if (!empty($cur_params['dataofs'])) {
                     $form->addHidden('dataofs', $cur_params['dataofs']);
                 }
-                foreach($cur_params['dataflt'] as $c_key => $c_val) {
+                if (!empty($cur_params['dataflt'])) foreach($cur_params['dataflt'] as $c_key => $c_val) {
                     if($c_val !== '' && $c_key !== $key) {
                         $form->addHidden('dataflt[' . $c_key . ']', $c_val);
                     }
