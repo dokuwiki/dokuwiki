@@ -6,13 +6,19 @@ use plugin\struct\meta\ValidationException;
 
 class Url extends Text {
 
+    protected $config = array(
+        'autoscheme' => 'https',
+        'prefix' => '',
+        'postfix' => '',
+    );
+
     /**
      * The final string should be an URL
      *
      * @param string $value
      */
     public function validate($value) {
-        $url = $this->config['prefix'] . trim($value) . $this->config['postfix'];
+        $url = $this->buildURL($value);
 
         $schemes = getSchemes();
         $regex = '^(' . join('|', $schemes) . '):\/\/.+';
@@ -28,9 +34,25 @@ class Url extends Text {
      * @return bool
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $url = $this->config['prefix'] . trim($value) . $this->config['postfix'];
+        $url = $this->buildURL($value);
         $R->externallink($url);
         return true;
+    }
+
+    /**
+     * Creates the full URL and applies the autoscheme if needed
+     *
+     * @param string $value
+     * @return string
+     */
+    protected function buildURL($value) {
+        $url = $this->config['prefix'] . trim($value) . $this->config['postfix'];
+
+        if(!preg_match('/\w+:\/\//', $url)) {
+            $url = $this->config['autoscheme'] . '://' . $url;
+        }
+
+        return $url;
     }
 
 }

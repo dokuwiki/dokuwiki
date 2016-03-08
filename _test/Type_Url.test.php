@@ -23,12 +23,14 @@ class Type_Url_struct_test extends \DokuWikiTest {
      */
     public function validateFailProvider() {
         return array(
-            array('foo', '', ''),
-            array('http', '', ''),
-            array('http://', '', ''),
-            array('foo', 'pre', ''),
-            array('foo', '', 'post'),
-            array('foo', 'pre', 'post')
+            array('foo', '', '', ''),
+            array('http', '', '', ''),
+            array('http://', '', '', ''),
+            array('foo', 'pre', '', ''),
+            array('foo', '', 'post', ''),
+            array('foo', 'pre', 'post', ''),
+
+            array('http://', '', '', 'http')
         );
     }
 
@@ -39,10 +41,16 @@ class Type_Url_struct_test extends \DokuWikiTest {
      */
     public function validateSuccessProvider() {
         return array(
-            array('http://www.example.com', '', ''),
-            array('www.example.com', 'http://', ''),
-            array('www.example.com', 'http://', 'bang'),
-            array('http://www.example.com', '', 'bang'),
+            array('http://www.example.com', '', '', ''),
+            array('www.example.com', 'http://', '', ''),
+            array('www.example.com', 'http://', 'bang', ''),
+            array('http://www.example.com', '', 'bang', ''),
+
+            array('foo', '', '', 'http'),
+            array('http', '', '', 'http'),
+            array('foo', 'pre', '', 'http'),
+            array('foo', '', 'post', 'http'),
+            array('foo', 'pre', 'post', 'http')
         );
     }
 
@@ -50,16 +58,16 @@ class Type_Url_struct_test extends \DokuWikiTest {
      * @expectedException \plugin\struct\meta\ValidationException
      * @dataProvider validateFailProvider
      */
-    public function test_validate_fail($value, $prefix, $postfix) {
-        $url = new Url(array('prefix' => $prefix, 'postfix' => $postfix));
+    public function test_validate_fail($value, $prefix, $postfix, $autoscheme) {
+        $url = new Url(array('prefix' => $prefix, 'postfix' => $postfix, 'autoscheme' => $autoscheme));
         $url->validate($value);
     }
 
     /**
      * @dataProvider validateSuccessProvider
      */
-    public function test_validate_success($value, $prefix, $postfix) {
-        $url = new Url(array('prefix' => $prefix, 'postfix' => $postfix));
+    public function test_validate_success($value, $prefix, $postfix, $autoscheme) {
+        $url = new Url(array('prefix' => $prefix, 'postfix' => $postfix, 'autoscheme' => $autoscheme));
         $url->validate($value);
         $this->assertTrue(true); // we simply check that no exceptions are thrown
     }
