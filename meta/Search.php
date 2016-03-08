@@ -209,6 +209,7 @@ class Search {
         $grouping = array();
         $opts = array();
         $where = '1 = 1';
+        $fwhere = '';
 
         // basic tables
         $first = '';
@@ -270,7 +271,8 @@ class Search {
             list($wsql, $wopt) = $col->getType()->compare($column, $comp, $value);
             $opts = array_merge($opts, $wopt);
 
-            $where .= "\n$type $wsql";
+            if(!$fwhere) $type = ''; // no type for first filter
+            $fwhere .= "\n$type $wsql";
         }
 
         // sorting
@@ -289,7 +291,12 @@ class Search {
         }
         $order = rtrim($order, ', ');
 
-        $sql = "SELECT $select\n  FROM $from\nWHERE $where\nGROUP BY " . join(', ', $grouping);
+        $fwhere = trim($fwhere);
+        if($fwhere) {
+            $fwhere = "AND ($fwhere\n)";
+        }
+
+        $sql = "SELECT $select\n  FROM $from\nWHERE $where\n$fwhere\nGROUP BY " . join(', ', $grouping);
         if($order) $sql .= "\nORDER BY $order";
 
         return array($sql, $opts);
