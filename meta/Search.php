@@ -44,6 +44,9 @@ class Search {
     /** @var int the number of results */
     protected $count = -1;
 
+    /** @var bool only distinct data? */
+    protected $distinct = false;
+
     /**
      * Search constructor.
      */
@@ -143,6 +146,15 @@ class Search {
     }
 
     /**
+     * Request distinct data only, no PID column
+     *
+     * @param boolean $distinct
+     */
+    public function setDistinct($distinct) {
+        $this->distinct = $distinct;
+    }
+
+    /**
      * Return the number of results (regardless of limit and offset settings)
      *
      * Use this to implement paging. Important: this may only be called after running @see execute()
@@ -219,7 +231,11 @@ class Search {
                 $from .= "\nLEFT OUTER JOIN data_{$schema->getTable()} ON data_$first.pid = data_{$schema->getTable()}.pid";
             } else {
                 // first table
-                $select .= "data_{$schema->getTable()}.pid as PID, ";
+                if($this->distinct) {
+                    $select .= 'DISTINCT ';
+                } else {
+                    $select .= "data_{$schema->getTable()}.pid as PID, ";
+                }
 
                 $from .= 'schema_assignments, ';
                 $where .= "\nAND data_{$schema->getTable()}.pid = schema_assignments.pid";
