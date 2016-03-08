@@ -75,7 +75,7 @@ jQuery(function () {
     /**
      * Autocomplete for single type
      */
-    jQuery('input.struct_user, input.struct_page').autocomplete({
+    jQuery('input.struct_autocomplete').autocomplete({
         ismulti: false,
         source: function (request, cb) {
             var name = this.element.attr('name');
@@ -93,7 +93,7 @@ jQuery(function () {
     /**
      * Autocomplete for multi type
      */
-    jQuery('.multiwrap input.struct_user, .multiwrap input.struct_page').autocomplete('option', {
+    jQuery('.multiwrap input.struct_autocomplete').autocomplete('option', {
         ismulti: true,
         focus: function () {
             // prevent value inserted on focus

@@ -269,6 +269,12 @@ abstract class AbstractBaseType {
      */
     public function valueEditor($name, $value) {
         $class = 'struct_'.strtolower($this->getClass());
+
+        // support the autocomplete configurations out of the box
+        if(isset($this->config['autocomplete']['maxresult']) && $this->config['autocomplete']['maxresult']) {
+            $class .= ' struct_autocomplete';
+        }
+
         $name = hsc($name);
         $value = hsc($value);
         $html = "<input name=\"$name\" value=\"$value\" class=\"$class\" />";
