@@ -81,6 +81,11 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if(!$data) return false;
 
+        if($mode == 'metadata') {
+            /** @var Doku_Renderer_metadata $renderer  */
+            $renderer->meta['plugin']['struct']['hasaggregation'] = true;
+        }
+
         //reset counters
         $this->sums = array();
 
