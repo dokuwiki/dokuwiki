@@ -34,7 +34,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
      * @return bool true if only access for superuser, false is for superusers and moderators
      */
     public function forAdminOnly() {
-        return true;
+        return false;
     }
 
     /**
