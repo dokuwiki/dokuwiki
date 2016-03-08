@@ -79,8 +79,12 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @return bool If rendering was successful.
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
-        if($mode != 'xhtml') return false;
         if(!$data) return false;
+
+        if($mode == 'metadata') {
+            /** @var Doku_Renderer_metadata $renderer  */
+            $renderer->meta['plugin']['struct']['hasaggregation'] = true;
+        }
 
         //reset counters
         $this->sums = array();
@@ -250,7 +254,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                 if (!empty($cur_params['dataofs'])) {
                     $form->addHidden('dataofs', $cur_params['dataofs']);
                 }
-                foreach($cur_params['dataflt'] as $c_key => $c_val) {
+                if (!empty($cur_params['dataflt'])) foreach($cur_params['dataflt'] as $c_key => $c_val) {
                     if($c_val !== '' && $c_key !== $key) {
                         $form->addHidden('dataflt[' . $c_key . ']', $c_val);
                     }
@@ -312,18 +316,26 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
                 $renderer->tableheader_open();
             }
 
-            // add sort arrow
+            // output header
             if ($mode == 'xhtml') {
+                $sort = '';
                 if(isset($data['sort']) && $ckey == $data['sort'][0]) {
                     if($data['sort'][1] == 'ASC') {
-                        $renderer->doc .= '<span>&darr;</span> ';
+                        $sort = 'sort-down';
                         $ckey = '^' . $ckey;
                     } else {
-                        $renderer->doc .= '<span>&uarr;</span> ';
+                        $sort = 'sort-up';
                     }
                 }
+
+                $params = $data['current_params'];
+                $params['datasrt'] = $ckey;
+                $link = wl($ID, $params);
+                $renderer->doc .= '<a href="'.$link.'" class="'.$sort.'" title="'.$this->getLang('sort').'">'.hsc($head).'</a>';
+            } else {
+                $renderer->cdata($head);
             }
-            $renderer->internallink($ID . "?" . http_build_query(array('datasrt' => $ckey,) + $data['current_params']), hsc($head));
+
             $renderer->tableheader_close();
         }
         $renderer->tablerow_close();
