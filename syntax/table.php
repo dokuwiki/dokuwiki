@@ -79,7 +79,6 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @return bool If rendering was successful.
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
-        if($mode != 'xhtml') return false;
         if(!$data) return false;
 
         //reset counters
