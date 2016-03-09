@@ -76,25 +76,25 @@ class AggregationTable {
     public function render() {
         // table open
         $this->startScope();
-        $this->showActiveFilters();
+        $this->renderActiveFilters();
         $this->renderer->table_open();
 
         // header
         $this->renderer->tablethead_open();
-        $this->buildColumnHeaders();
-        $this->addDynamicFilters();
+        $this->renderColumnHeaders();
+        $this->renderDynamicFilters();
         $this->renderer->tablethead_close();
 
         if($this->resultCount) {
             // actual data
-            $this->renderRows();
+            $this->renderResult();
 
             // footer
-            $this->summarize();
-            $this->addLimitControls();
+            $this->renderSums();
+            $this->renderPagingControls();
         } else {
             // nothing found
-            $this->nullRow();
+            $this->renderEmptyResult();
         }
 
         // table close
@@ -137,7 +137,7 @@ class AggregationTable {
     /**
      * Displays info about the currently applied filters
      */
-    protected function showActiveFilters() {
+    protected function renderActiveFilters() {
         if($this->mode != 'xhtml') return;
         $dynamic = $this->searchConfig->getDynamicParameters();
         $filters = $dynamic->getFilters();
@@ -170,7 +170,7 @@ class AggregationTable {
     /**
      * Shows the column headers with links to sort by column
      */
-    protected function buildColumnHeaders() {
+    protected function renderColumnHeaders() {
         $this->renderer->tablerow_open();
 
         // additional column for row numbers
@@ -239,7 +239,7 @@ class AggregationTable {
     /**
      * Add input fields for dynamic filtering
      */
-    protected function addDynamicFilters() {
+    protected function renderDynamicFilters() {
         if($this->mode != 'xhtml') return;
         if(!$this->data['dynfilters']) return;
 
@@ -286,7 +286,7 @@ class AggregationTable {
     /**
      * Display the actual table data
      */
-    protected function renderRows() {
+    protected function renderResult() {
         $this->renderer->tabletbody_open();
         foreach($this->result as $rownum => $row) {
             $this->renderer->tablerow_open();
@@ -320,7 +320,7 @@ class AggregationTable {
     /**
      * Renders an information row for when no results were found
      */
-    protected function nullRow() {
+    protected function renderEmptyResult() {
         $this->renderer->tablerow_open();
         $this->renderer->tablecell_open(count($this->data['cols']) + $this->data['rownumbers'], 'center');
         $this->renderer->cdata($this->helper->getLang('none'));
@@ -331,7 +331,7 @@ class AggregationTable {
     /**
      * Add sums if wanted
      */
-    protected function summarize() {
+    protected function renderSums() {
         if($this->data['summarize']) return;
 
         $this->renderer->tablerow_open();
@@ -357,9 +357,9 @@ class AggregationTable {
     }
 
     /**
-     * Adds pagin controls to the table
+     * Adds paging controls to the table
      */
-    protected function addLimitControls() {
+    protected function renderPagingControls() {
         if(empty($this->data['limit'])) return;
         if($this->mode != 'xhtml') ;
 
