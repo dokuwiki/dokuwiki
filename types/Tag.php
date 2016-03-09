@@ -3,6 +3,7 @@
 namespace plugin\struct\types;
 
 use plugin\struct\meta\Search;
+use plugin\struct\meta\SearchConfigParameters;
 use plugin\struct\meta\Value;
 
 class Tag extends AbstractMultiBaseType {
@@ -23,7 +24,7 @@ class Tag extends AbstractMultiBaseType {
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
         $context = $this->getContext();
-        $filter = 'dataflt[' . $context->getTable() . '.' . $context->getLabel() . '*~]=' . $value;
+        $filter = SearchConfigParameters::$PARAM_FILTER . '[' . $context->getTable() . '.' . $context->getLabel() . '*~]=' . $value;
 
         $R->internallink($this->config['page'] . '?' . $filter);
         return true;
