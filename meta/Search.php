@@ -334,7 +334,7 @@ class Search {
      * @param string $colname may contain an alias
      * @return bool|Column
      */
-    protected function findColumn($colname) {
+    public function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
 
         // handling of page column is special

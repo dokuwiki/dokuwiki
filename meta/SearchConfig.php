@@ -13,19 +13,22 @@ class SearchConfig extends Search {
 
     protected $config;
 
+    protected $dynamicParameters;
+
     /**
      * SearchConfig constructor.
-     * @param $config
+     * @param array $config The parsed configuration for this search
      */
     public function __construct($config) {
-        global $INPUT;
-        /** @var \helper_plugin_struct_config $confHlp */
-        $confHlp = plugin_load('helper','struct_config');
         $this->config = $config;
-        $this->config['current_params'] = array();
 
         parent::__construct();
 
+        // apply dynamic paramters
+        $this->dynamicParameters = new SearchConfigParameters($this);
+        $this->config = $this->dynamicParameters->updateConfig($config);
+
+        // configure search from configuration
         foreach($config['schemas'] as $schema) {
             $this->addSchema($schema[0], $schema[1]);
         }
@@ -34,41 +37,53 @@ class SearchConfig extends Search {
             $this->addColumn($col);
         }
 
-        if ($INPUT->has('datasrt')) {
-            list($colname, $sort) = $confHlp->parseSort($INPUT->str('datasrt'));
-            $this->addSort($colname, $sort === 'ASC');
-            $this->config['sort'] = array($colname, $sort);
-            $this->config['current_params']['datasrt'] = $INPUT->str('datasrt');
-        } elseif ($config['sort'][0] != '') {
-            $this->addSort($config['sort'][0], $config['sort'][1] === 'ASC');
-        }
-
-        foreach($config['filter'] as $filter) {
+        if(!empty($config['filter'])) foreach($config['filter'] as $filter) {
             $this->addFilter($filter[0], $filter[2], $filter[1], $filter[3]);
         }
-        if ($INPUT->has('dataflt')) {
-            foreach ($INPUT->arr('dataflt') as $colcomp => $filter) {
-                list($colname, $comp, $value, $logic) = $confHlp->parseFilterLine('AND', $colcomp . $filter);
-                $this->addFilter($colname, $value, $comp, $logic);
-                $this->config['filter'][] = array($colname, $comp, $value, $logic);
-                $this->config['current_params']['dataflt'] = $INPUT->arr('dataflt');
-            }
+
+        if(!empty($config['sort'])) foreach($config['sort'] as $sort) {
+            $this->addSort($sort[0], $sort[1] === 'ASC');
         }
 
         if (!empty($config['limit'])) {
             $this->setLimit($config['limit']);
         }
-        if ($INPUT->has('dataofs')) {
-            $this->setOffset($INPUT->int('dataofs'));
-            $this->config['current_params']['dataofs'] = $INPUT->int('dataofs');
+
+        if (!empty($config['offset'])) {
+            $this->setLimit($config['offset']);
         }
-
-        // FIXME add additional stuff
-
     }
 
-    public function getConf() {
-        return $this->config;
+    /**
+     * Access the dynamic paramters of this search
+     *
+     * Note: This call retruns a clone of the parameters as they were initialized
+     *
+     * @return SearchConfigParameters
+     */
+    public function getDynamicParameters() {
+        return clone $this->dynamicParameters;
+    }
+
+    /**
+     * Access the current config.
+     *
+     * When no key is given the whole configuration is returned. With a key only
+     * that key's value is returned. Returns NULL on a non-existing key
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getConf($key='') {
+        if($key) {
+            if(isset($this->config[$key])) {
+                return $this->config[$key];
+            } else {
+                return null;
+            }
+        } else {
+            return $this->config;
+        }
     }
 
 }

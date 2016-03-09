@@ -66,6 +66,14 @@ class Column {
     }
 
     /**
+     * @return string the label prepended with the table name
+     */
+    public function getFullQualifiedLabel() {
+        if(!$this->table) throw new StructException('No table set for this column');
+        return $this->table .'.'. $this->getLabel();
+    }
+
+    /**
      * @return string
      */
     public function getTranslatedLabel() {
