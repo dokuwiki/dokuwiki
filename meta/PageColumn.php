@@ -38,4 +38,11 @@ class PageColumn extends Column {
         return $col;
     }
 
+    /**
+     * @return string always '%pageid%'
+     */
+    public function getLabel() {
+        return '%pageid%';
+    }
+
 }
