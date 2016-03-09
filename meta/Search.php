@@ -96,7 +96,16 @@ class Search {
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
 
-        $this->sortby[] = array($col, $asc);
+        $this->sortby[$col->getFullQualifiedLabel()] = array($col, $asc);
+    }
+
+    /**
+     * Returns all set sort columns
+     *
+     * @return array
+     */
+    public function getSorts() {
+        return $this->sortby;
     }
 
     /**

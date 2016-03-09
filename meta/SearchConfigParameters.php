@@ -102,6 +102,9 @@ class SearchConfigParameters {
     /**
      * Adds another filter
      *
+     * When there is a filter for that column already, the new filter overwrites it. Setting a
+     * blank value is the same as calling @see removeFilter()
+     *
      * @param string|Column $column
      * @param string $comp the comparator
      * @param string $value the value to compare against
@@ -110,7 +113,11 @@ class SearchConfigParameters {
         $column = $this->resolveColumn($column);
         if(!$column) return;
 
-        $this->filters[$column] = array($comp, $value);
+        if(trim($value) === '') {
+            $this->removeFilter($column);
+        } else {
+            $this->filters[$column] = array($comp, $value);
+        }
     }
 
     /**
@@ -129,6 +136,13 @@ class SearchConfigParameters {
      */
     public function clearFilters() {
         $this->filters = array();
+    }
+
+    /**
+     * @return array the current filters
+     */
+    public function getFilters() {
+        return $this->filters;
     }
 
     /**

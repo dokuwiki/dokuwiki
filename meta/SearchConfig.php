@@ -45,11 +45,11 @@ class SearchConfig extends Search {
             $this->addSort($sort[0], $sort[1] === 'ASC');
         }
 
-        if (!empty($config['limit'])) {
+        if(!empty($config['limit'])) {
             $this->setLimit($config['limit']);
         }
 
-        if (!empty($config['offset'])) {
+        if(!empty($config['offset'])) {
             $this->setLimit($config['offset']);
         }
     }
@@ -66,24 +66,10 @@ class SearchConfig extends Search {
     }
 
     /**
-     * Access the current config.
-     *
-     * When no key is given the whole configuration is returned. With a key only
-     * that key's value is returned. Returns NULL on a non-existing key
-     *
-     * @param string $key
-     * @return mixed
+     * @return array the current config
      */
-    public function getConf($key='') {
-        if($key) {
-            if(isset($this->config[$key])) {
-                return $this->config[$key];
-            } else {
-                return null;
-            }
-        } else {
-            return $this->config;
-        }
+    public function getConf() {
+        return $this->config;
     }
 
 }
