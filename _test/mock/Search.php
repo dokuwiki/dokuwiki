@@ -10,4 +10,6 @@ class Search extends meta\Search {
     public $columns = array();
 
     public $sortby = array();
+
+    public $filter = array();
 }

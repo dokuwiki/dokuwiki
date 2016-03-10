@@ -230,4 +230,39 @@ class Search_struct_test extends \DokuWikiTest {
         $this->assertEquals('page11', $result[4][0]->getValue());
     }
 
+    public static function addFilter_testdata() {
+        return array(
+            array('%pageid%','val','<>','OR',array(array('%pageid%', 'val', '!=', 'OR')),false,'replace <> comp'),
+            array('%pageid%','val','*~','OR',array(array('%pageid%', '%val%', '~', 'OR')),false,'replace *~ comp'),
+            array('%pageid%','val*','~','OR',array(array('%pageid%', 'val%', '~', 'OR')),false,'replace * in value'),
+            array('nonexisting','val','~','OR',array(),false,'ignore missing columns'),
+            array('%pageid%','val','?','OR',array(),'\plugin\struct\meta\StructException','wrong comperator'),
+            array('%pageid%','val','=','NOT',array(),'\plugin\struct\meta\StructException','wrong type')
+        );
+    }
+
+    /**
+     * @dataProvider addFilter_testdata
+     *
+     */
+    public function test_addFilter($colname, $value, $comp, $type, $expected_filter, $expectException, $msg) {
+        $search = new mock\Search();
+        $search->addSchema('schema2');
+        $search->addColumn('%pageid%');
+        if ($expectException !== false) {
+            $this->setExpectedException('\plugin\struct\meta\StructException');
+        }
+
+        $search->addFilter($colname, $value, $comp, $type);
+
+        if (count($expected_filter) === 0) {
+            $this->assertEquals(count($search->filter),0, $msg);
+            return;
+        }
+        $this->assertEquals($expected_filter[0][0], $search->filter[0][0]->getLabel(), $msg);
+        $this->assertEquals($expected_filter[0][1], $search->filter[0][1], $msg);
+        $this->assertEquals($expected_filter[0][2], $search->filter[0][2], $msg);
+        $this->assertEquals($expected_filter[0][3], $search->filter[0][3], $msg);
+    }
+
 }
