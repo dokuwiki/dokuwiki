@@ -96,7 +96,16 @@ class Search {
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
 
-        $this->sortby[] = array($col, $asc);
+        $this->sortby[$col->getFullQualifiedLabel()] = array($col, $asc);
+    }
+
+    /**
+     * Returns all set sort columns
+     *
+     * @return array
+     */
+    public function getSorts() {
+        return $this->sortby;
     }
 
     /**
@@ -108,6 +117,15 @@ class Search {
      * @param string $type either 'OR' or 'AND'
      */
     public function addFilter($colname, $value, $comp, $type = 'OR') {
+        /* Convert certain filters into others
+         * this reduces the number of supported filters to implement in types */
+        if ($comp == '*~') {
+            $value = '*' . $value . '*';
+            $comp = '~';
+        } elseif ($comp == '<>') {
+            $comp = '!=';
+        }
+
         if(!in_array($comp, self::$COMPARATORS)) throw new StructException("Bad comperator. Use " . join(',', self::$COMPARATORS));
         if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
@@ -334,7 +352,7 @@ class Search {
      * @param string $colname may contain an alias
      * @return bool|Column
      */
-    protected function findColumn($colname) {
+    public function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
 
         // handling of page column is special

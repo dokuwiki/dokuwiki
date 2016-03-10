@@ -11,62 +11,69 @@ namespace plugin\struct\meta;
  */
 class SearchConfig extends Search {
 
+    /**
+     * @var array hold the configuration as parsed and extended by dynamic params
+     */
     protected $config;
 
     /**
+     * @var SearchConfigParameters manages dynamic parameters
+     */
+    protected $dynamicParameters;
+
+    /**
      * SearchConfig constructor.
-     * @param $config
+     * @param array $config The parsed configuration for this search
      */
     public function __construct($config) {
-        global $INPUT;
-        /** @var \helper_plugin_struct_config $confHlp */
-        $confHlp = plugin_load('helper','struct_config');
-        $this->config = $config;
-        $this->config['current_params'] = array();
-
         parent::__construct();
 
+        // setup schemas and columns
         foreach($config['schemas'] as $schema) {
             $this->addSchema($schema[0], $schema[1]);
         }
-
         foreach($config['cols'] as $col) {
             $this->addColumn($col);
         }
 
-        if ($INPUT->has('datasrt')) {
-            list($colname, $sort) = $confHlp->parseSort($INPUT->str('datasrt'));
-            $this->addSort($colname, $sort === 'ASC');
-            $this->config['sort'] = array($colname, $sort);
-            $this->config['current_params']['datasrt'] = $INPUT->str('datasrt');
-        } elseif ($config['sort'][0] != '') {
-            $this->addSort($config['sort'][0], $config['sort'][1] === 'ASC');
-        }
+        // apply dynamic paramters
+        $this->dynamicParameters = new SearchConfigParameters($this);
+        $config = $this->dynamicParameters->updateConfig($config);
 
-        foreach($config['filter'] as $filter) {
+        // configure search from configuration
+        if(!empty($config['filter'])) foreach($config['filter'] as $filter) {
             $this->addFilter($filter[0], $filter[2], $filter[1], $filter[3]);
         }
-        if ($INPUT->has('dataflt')) {
-            foreach ($INPUT->arr('dataflt') as $colcomp => $filter) {
-                list($colname, $comp, $value, $logic) = $confHlp->parseFilterLine('AND', $colcomp . $filter);
-                $this->addFilter($colname, $value, $comp, $logic);
-                $this->config['filter'][] = array($colname, $comp, $value, $logic);
-                $this->config['current_params']['dataflt'] = $INPUT->arr('dataflt');
-            }
+
+        if(!empty($config['sort'])) foreach($config['sort'] as $sort) {
+            $this->addSort($sort[0], $sort[1]);
         }
 
-        if (!empty($config['limit'])) {
+        if(!empty($config['limit'])) {
             $this->setLimit($config['limit']);
         }
-        if ($INPUT->has('dataofs')) {
-            $this->setOffset($INPUT->int('dataofs'));
-            $this->config['current_params']['dataofs'] = $INPUT->int('dataofs');
+
+        if(!empty($config['offset'])) {
+            $this->setLimit($config['offset']);
         }
 
-        // FIXME add additional stuff
-
+        $this->config = $config;
     }
 
+    /**
+     * Access the dynamic paramters of this search
+     *
+     * Note: This call returns a clone of the parameters as they were initialized
+     *
+     * @return SearchConfigParameters
+     */
+    public function getDynamicParameters() {
+        return clone $this->dynamicParameters;
+    }
+
+    /**
+     * @return array the current config
+     */
     public function getConf() {
         return $this->config;
     }

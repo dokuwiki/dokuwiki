@@ -18,9 +18,9 @@ class helper_plugin_struct_config extends DokuWiki_Plugin {
      */
     public function parseSort($val) {
         if(substr($val, 0, 1) == '^') {
-            return array(substr($val, 1), 'DESC',);
+            return array(substr($val, 1), false);
         }
-        return array($val, 'ASC',);
+        return array($val, true);
     }
 
     /**
@@ -60,12 +60,6 @@ class helper_plugin_struct_config extends DokuWiki_Plugin {
         array_shift($match); // we don't need the zeroth match
         $match[0] = trim($match[0]);
         $match[2] = trim($match[2]);
-        if ($match[1] == '*~') {
-            $match[2] = '*' . $match[2] . '*';
-            $match[1] = '~';
-        } elseif ($match[1] == '<>') {
-            $match[1] = '!=';
-        }
         return $match;
     }
 }

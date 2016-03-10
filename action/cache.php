@@ -1,4 +1,5 @@
 <?php
+use plugin\struct\meta\SearchConfigParameters;
 
 /**
  * Handle caching of pages containing struct aggregations
@@ -57,7 +58,11 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
         global $INPUT;
 
         // disable cache use when one of these parameters is present
-        foreach(array('dataflt', 'dataofs', 'datasrt') as $key) {
+        foreach(array(
+                    SearchConfigParameters::$PARAM_FILTER,
+                    SearchConfigParameters::$PARAM_OFFSET,
+                    SearchConfigParameters::$PARAM_SORT
+                ) as $key) {
             if($INPUT->has($key)) {
                 $event->result = false;
                 return true;

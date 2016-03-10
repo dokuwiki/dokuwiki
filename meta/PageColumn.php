@@ -38,4 +38,20 @@ class PageColumn extends Column {
         return $col;
     }
 
+    /**
+     * @return string always '%pageid%'
+     */
+    public function getLabel() {
+        return '%pageid%';
+    }
+
+    /**
+     * @return string always '%pageid%'
+     */
+    public function getFullQualifiedLabel() {
+        // There is only one pageid for each row because we JOIN on it
+        // so we do not prefix it with the table
+        return '%pageid%';
+    }
+
 }
