@@ -249,9 +249,7 @@ class Search_struct_test extends \DokuWikiTest {
         $search = new mock\Search();
         $search->addSchema('schema2');
         $search->addColumn('%pageid%');
-        if ($expectException !== false) {
-            $this->setExpectedException('\plugin\struct\meta\StructException');
-        }
+        if ($expectException !== false) $this->setExpectedException($expectException);
 
         $search->addFilter($colname, $value, $comp, $type);
 
