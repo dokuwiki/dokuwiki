@@ -2,6 +2,11 @@
 
 namespace plugin\struct\meta;
 
+/**
+ * Creates the table aggregation output
+ *
+ * @package plugin\struct\meta
+ */
 class AggregationTable {
 
     /**
@@ -274,7 +279,7 @@ class AggregationTable {
 
                 // add input field
                 $key = $column->getFullQualifiedLabel() . '*~';
-                $form->addElement(form_makeField('text', 'dataflt[' . $key . ']', $current, ''));
+                $form->addElement(form_makeField('text', SearchConfigParameters::$PARAM_FILTER. '[' . $key . ']', $current, ''));
                 $this->renderer->doc .= $form->getForm();
             }
             $this->renderer->doc .= '</th>';

@@ -134,21 +134,68 @@ class SearchConfigParameter_struct_test extends \DokuWikiTest {
         $this->assertEquals($params, $dynamic->getURLParameters());
 
         // init with filters
-        $_REQUEST[meta\SearchConfigParameters::$PARAM_FILTER]['alias1.first='] = 'test';
+        $_REQUEST[meta\SearchConfigParameters::$PARAM_FILTER]['alias1.first*~'] = 'test';
         $_REQUEST[meta\SearchConfigParameters::$PARAM_FILTER]['afirst='] = 'test2';
         $expect['filter'] = array(
-            array('schema1.first', '=', 'test', 'AND'),
+            array('schema1.first', '*~', 'test', 'AND'),
             array('schema2.afirst', '=', 'test2', 'AND')
         );
-        $params[meta\SearchConfigParameters::$PARAM_FILTER] = array(
-            'schema1.first=' => 'test',
-            'schema2.afirst=' => 'test2',
-        );
+        $params[meta\SearchConfigParameters::$PARAM_FILTER .'[schema1.first*~]'] = 'test';
+        $params[meta\SearchConfigParameters::$PARAM_FILTER .'[schema2.afirst=]'] = 'test2';
         $searchConfig = new meta\SearchConfig($data);
         $dynamic = $searchConfig->getDynamicParameters();
         $this->assertEquals($expect, $searchConfig->getConf());
         $this->assertEquals($params, $dynamic->getURLParameters());
     }
 
+    public function test_filter() {
+        $data = array(
+            'schemas' => array(
+                array('schema1', 'alias1'),
+                array('schema2', 'alias2'),
+            ),
+            'cols' => array(
+                '%pageid%',
+                'first', 'second', 'third', 'fourth',
+                'afirst', 'asecond', 'athird', 'afourth',
+            )
+        );
 
+        $searchConfig = new meta\SearchConfig($data);
+        $dynamic = $searchConfig->getDynamicParameters();
+        $expect = array();
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        $dynamic->addFilter('first', '*~', 'test');
+        $expect = array('schema1.first' => array('*~', 'test'));
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        $dynamic->addFilter('asecond', '*~', 'test2');
+        $expect = array('schema1.first' => array('*~', 'test'), 'schema2.asecond' => array('*~', 'test2'));
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        // overwrite a filter
+        $dynamic->addFilter('asecond', '*~', 'foobar');
+        $expect = array('schema1.first' => array('*~', 'test'), 'schema2.asecond' => array('*~', 'foobar'));
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        // overwrite a filter with blank removes
+        $dynamic->addFilter('asecond', '*~', '');
+        $expect = array('schema1.first' => array('*~', 'test'));
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        // adding unknown filter does nothing
+        $dynamic->addFilter('nope', '*~', 'foobar');
+        $expect = array('schema1.first' => array('*~', 'test'));
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        // removing unknown column does nothing
+        $dynamic->removeFilter('nope');
+        $expect = array('schema1.first' => array('*~', 'test'));
+        $this->assertEquals($expect, $dynamic->getFilters());
+
+        $dynamic->removeFilter('first');
+        $expect = array();
+        $this->assertEquals($expect, $dynamic->getFilters());
+    }
 }

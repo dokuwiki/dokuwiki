@@ -35,7 +35,7 @@ class SearchConfigParameters {
         global $INPUT;
         $this->searchConfig = $searchConfig;
         /** @var \helper_plugin_struct_config $confHlp */
-        $confHlp = plugin_load('helper','struct_config');
+        $confHlp = plugin_load('helper', 'struct_config');
 
         if($INPUT->has(self::$PARAM_SORT)) {
             list($colname, $sort) = $confHlp->parseSort($INPUT->str(self::$PARAM_SORT));
@@ -151,7 +151,13 @@ class SearchConfigParameters {
     }
 
     /**
-     * Get the current parameters in a form that can be used to create URLs
+     * Get the current parameters
+     *
+     * It creates a flat key value in a form that can be used to
+     * create URLs or Form parameters
+     *
+     *
+     * @return array
      */
     public function getURLParameters() {
         $params = array();
@@ -166,10 +172,11 @@ class SearchConfigParameters {
         }
 
         if($this->filters) {
-            $params[self::$PARAM_FILTER] = array();
+
             foreach($this->filters as $column => $filter) {
                 list($comp, $value) = $filter;
-                $params[self::$PARAM_FILTER][$column . $comp] = $value;
+                $key = self::$PARAM_FILTER . '[' . $column . $comp . ']';
+                $params[$key] = $value;
             }
         }
 
