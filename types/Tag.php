@@ -30,6 +30,11 @@ class Tag extends AbstractMultiBaseType {
         return true;
     }
 
+    /**
+     * Autocomplete from existing tags
+     *
+     * @return array
+     */
     public function handleAjax() {
         global $INPUT;
 
