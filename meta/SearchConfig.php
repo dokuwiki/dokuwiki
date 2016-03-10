@@ -11,8 +11,14 @@ namespace plugin\struct\meta;
  */
 class SearchConfig extends Search {
 
+    /**
+     * @var array hold the configuration as parsed and extended by dynamic params
+     */
     protected $config;
 
+    /**
+     * @var SearchConfigParameters manages dynamic parameters
+     */
     protected $dynamicParameters;
 
     /**
@@ -20,8 +26,6 @@ class SearchConfig extends Search {
      * @param array $config The parsed configuration for this search
      */
     public function __construct($config) {
-        $this->config = $config;
-
         parent::__construct();
 
         // setup schemas and columns
@@ -34,7 +38,7 @@ class SearchConfig extends Search {
 
         // apply dynamic paramters
         $this->dynamicParameters = new SearchConfigParameters($this);
-        $this->config = $this->dynamicParameters->updateConfig($config);
+        $config = $this->dynamicParameters->updateConfig($config);
 
         // configure search from configuration
         if(!empty($config['filter'])) foreach($config['filter'] as $filter) {
@@ -52,12 +56,14 @@ class SearchConfig extends Search {
         if(!empty($config['offset'])) {
             $this->setLimit($config['offset']);
         }
+
+        $this->config = $config;
     }
 
     /**
      * Access the dynamic paramters of this search
      *
-     * Note: This call retruns a clone of the parameters as they were initialized
+     * Note: This call returns a clone of the parameters as they were initialized
      *
      * @return SearchConfigParameters
      */
