@@ -151,17 +151,7 @@ class AggregationTable {
         $fltrs = array();
         foreach($filters as $column => $filter) {
             list($comp, $value) = $filter;
-
-            if(strpos($comp, '~') !== false) {
-                if(strpos($comp, '!~') !== false) {
-                    $comparator_value = '!~' . str_replace('%', '*', $value);
-                } else {
-                    $comparator_value = '~' . str_replace('%', '', $value);
-                }
-                $fltrs[] = $column . $comparator_value;
-            } else {
-                $fltrs[] = $column . $comp . $value;
-            }
+            $fltrs[] = $column . ' ' . $comp . ' ' . $value;
         }
 
         $this->renderer->doc .= '<div class="filter">';
@@ -282,7 +272,7 @@ class AggregationTable {
 
                 // add input field
                 $key = $column->getFullQualifiedLabel() . '*~';
-                $form->addElement(form_makeField('text', SearchConfigParameters::$PARAM_FILTER. '[' . $key . ']', $current, ''));
+                $form->addElement(form_makeField('text', SearchConfigParameters::$PARAM_FILTER . '[' . $key . ']', $current, ''));
                 $this->renderer->doc .= $form->getForm();
             }
             $this->renderer->doc .= '</th>';
@@ -340,7 +330,7 @@ class AggregationTable {
      * Add sums if wanted
      */
     protected function renderSums() {
-        if($this->data['summarize']) return;
+        if(empty($this->data['summarize'])) return;
 
         $this->renderer->tablerow_open();
         $len = count($this->data['cols']);

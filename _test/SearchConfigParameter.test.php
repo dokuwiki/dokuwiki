@@ -7,7 +7,7 @@ use plugin\struct\meta;
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
- * Tests for the building of SQL-Queries for the struct plugin
+ * Tests handling dynamic search parameters
  *
  * @group plugin_struct
  * @group plugins
