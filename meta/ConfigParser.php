@@ -33,7 +33,8 @@ class ConfigParser {
             'headers' => array(),
             'widths' => array(),
             'filter' => array(),
-            'schemas' => array()
+            'schemas' => array(),
+            'sort' => array()
         );
         // parse info
         foreach($lines as $line) {
@@ -78,7 +79,7 @@ class ConfigParser {
                 case 'order':
                 case 'sort':
                     // FIXME multiple values!?
-                    $this->config['sort'] = $helper->parseSort($val);
+                    $this->config['sort'][] = $helper->parseSort($val);
                     break;
                 case 'where':
                 case 'filter':
