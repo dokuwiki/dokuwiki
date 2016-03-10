@@ -247,6 +247,7 @@ class AggregationTable {
     protected function renderDynamicFilters() {
         if($this->mode != 'xhtml') return;
         if(!$this->data['dynfilters']) return;
+        global $conf;
 
         $this->renderer->doc .= '<tr class="dataflt">';
 
@@ -260,6 +261,8 @@ class AggregationTable {
             $this->renderer->doc .= '<th>';
             {
                 $form = new \Doku_Form(array('method' => 'GET', 'action' => wl($this->id)));
+                unset($form->_hidden['sectok']); // we don't need it here
+                if(!$conf['userewrite']) $form->addHidden('id', $this->id);
 
                 // current value
                 $dynamic = $this->searchConfig->getDynamicParameters();
