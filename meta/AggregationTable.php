@@ -151,17 +151,7 @@ class AggregationTable {
         $fltrs = array();
         foreach($filters as $column => $filter) {
             list($comp, $value) = $filter;
-
-            if(strpos($comp, '~') !== false) {
-                if(strpos($comp, '!~') !== false) {
-                    $comparator_value = '!~' . str_replace('%', '*', $value);
-                } else {
-                    $comparator_value = '~' . str_replace('%', '', $value);
-                }
-                $fltrs[] = $column . $comparator_value;
-            } else {
-                $fltrs[] = $column . $comp . $value;
-            }
+            $fltrs[] = $column . ' ' . $comp . ' ' . $value;
         }
 
         $this->renderer->doc .= '<div class="filter">';
