@@ -46,4 +46,24 @@ class config_helper_struct_test extends \DokuWikiTest {
 
         $this->assertSame($expected_filter, $actual_filter, $input_filter . ' ' . $msg);
     }
+
+    public function test_parseSort_asc() {
+        /** @var \helper_plugin_struct_config $confHelper */
+        $confHelper = plugin_load('helper', 'struct_config');
+        $teststring = "column";
+
+        $actual_sort = $confHelper->parseSort($teststring);
+
+        $this->assertEquals(array($teststring, true), $actual_sort);
+    }
+
+    public function test_parseSort_desc() {
+        /** @var \helper_plugin_struct_config $confHelper */
+        $confHelper = plugin_load('helper', 'struct_config');
+        $teststring = "^column";
+
+        $actual_sort = $confHelper->parseSort($teststring);
+
+        $this->assertEquals(array('column', false), $actual_sort);
+    }
 }
