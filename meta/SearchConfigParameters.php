@@ -2,14 +2,19 @@
 
 namespace plugin\struct\meta;
 
+/**
+ * Manage dynamic parameters for aggregations
+ *
+ * @package plugin\struct\meta
+ */
 class SearchConfigParameters {
 
     /** @var string parameter name to pass filters */
-    public static $PARAM_FILTER = 'flt'; // @todo search code for hardcoded dataflt
+    public static $PARAM_FILTER = 'flt';
     /** @var string parameter name to pass offset */
-    public static $PARAM_OFFSET = 'ofs'; // @todo search code for hardcoded dataofs
+    public static $PARAM_OFFSET = 'ofs';
     /** @var string parameter name to pass srt */
-    public static $PARAM_SORT = 'srt'; // @todo search code for hardcoded datasrt
+    public static $PARAM_SORT = 'srt';
 
     /** @var SearchConfig */
     protected $searchConfig;
@@ -40,7 +45,7 @@ class SearchConfigParameters {
         if($INPUT->has(self::$PARAM_FILTER)) {
             foreach($INPUT->arr(self::$PARAM_FILTER) as $colcomp => $filter) {
                 list($colname, $comp, $value,) = $confHlp->parseFilterLine('AND', $colcomp . $filter);
-                $this->addFilter($colname, $value, $comp);
+                $this->addFilter($colname, $comp, $value);
             }
         }
 
