@@ -282,7 +282,7 @@ class AggregationTable {
 
                 // add input field
                 $key = $column->getFullQualifiedLabel() . '*~';
-                $form->addElement(form_makeField('text', SearchConfigParameters::$PARAM_FILTER. '[' . $key . ']', $current, ''));
+                $form->addElement(form_makeField('text', SearchConfigParameters::$PARAM_FILTER . '[' . $key . ']', $current, ''));
                 $this->renderer->doc .= $form->getForm();
             }
             $this->renderer->doc .= '</th>';
@@ -340,7 +340,7 @@ class AggregationTable {
      * Add sums if wanted
      */
     protected function renderSums() {
-        if($this->data['summarize']) return;
+        if(empty($this->data['summarize'])) return;
 
         $this->renderer->tablerow_open();
         $len = count($this->data['cols']);

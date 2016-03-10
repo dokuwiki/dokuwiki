@@ -92,6 +92,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             $table->render();
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
+            msg('<pre>'.hsc($e->getTraceAsString()).'</pre>', -1);
         }
 
         return true;
