@@ -15,12 +15,7 @@ class config_helper_struct_test extends \DokuWikiTest {
 
     protected $pluginsEnabled = array('struct',);
 
-    /**
-     * Testdata for @see schema_struct_test::test_cleanTableName
-     *
-     * @return array
-     */
-    public static function cleanTableName_testdata() {
+    public static function filter_testdata() {
         return array(
             array('a=b', array(0 => 'a', 1 => '=', 2 => 'b'), ''),
             array(
@@ -92,9 +87,7 @@ class config_helper_struct_test extends \DokuWikiTest {
     }
 
     /**
-     * @dataProvider cleanTableName_testdata
-     *
-     * @covers       plugin\struct\meta\Schema::cleanTableName
+     * @dataProvider filter_testdata
      *
      * @param $input_filter
      * @param $expected_filter
