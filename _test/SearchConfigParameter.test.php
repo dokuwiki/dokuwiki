@@ -198,4 +198,41 @@ class SearchConfigParameter_struct_test extends \DokuWikiTest {
         $expect = array();
         $this->assertEquals($expect, $dynamic->getFilters());
     }
+
+    public function test_sort() {
+        $data = array(
+            'schemas' => array(
+                array('schema1', 'alias1'),
+                array('schema2', 'alias2'),
+            ),
+            'cols' => array(
+                '%pageid%',
+                'first', 'second', 'third', 'fourth',
+                'afirst', 'asecond', 'athird', 'afourth',
+            )
+        );
+
+        $searchConfig = new meta\SearchConfig($data);
+        $dynamic = $searchConfig->getDynamicParameters();
+
+        $dynamic->setSort('%pageid%', true);
+        $conf = $dynamic->updateConfig($data);
+        $param = $dynamic->getURLParameters();
+        $this->assertEquals(array(array('%pageid%', true)), $conf['sort']);
+        $this->assertArrayHasKey(meta\SearchConfigParameters::$PARAM_SORT, $param);
+        $this->assertEquals('%pageid%', $param[meta\SearchConfigParameters::$PARAM_SORT]);
+
+        $dynamic->setSort('%pageid%', false);
+        $conf = $dynamic->updateConfig($data);
+        $param = $dynamic->getURLParameters();
+        $this->assertEquals(array(array('%pageid%', false)), $conf['sort']);
+        $this->assertArrayHasKey(meta\SearchConfigParameters::$PARAM_SORT, $param);
+        $this->assertEquals('^%pageid%', $param[meta\SearchConfigParameters::$PARAM_SORT]);
+
+        $dynamic->removeSort();
+        $conf = $dynamic->updateConfig($data);
+        $param = $dynamic->getURLParameters();
+        $this->assertArrayNotHasKey('sort', $conf);
+        $this->assertArrayNotHasKey(meta\SearchConfigParameters::$PARAM_SORT, $param);
+    }
 }

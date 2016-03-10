@@ -46,7 +46,7 @@ class SearchConfig extends Search {
         }
 
         if(!empty($config['sort'])) foreach($config['sort'] as $sort) {
-            $this->addSort($sort[0], $sort[1] === 'ASC');
+            $this->addSort($sort[0], $sort[1]);
         }
 
         if(!empty($config['limit'])) {

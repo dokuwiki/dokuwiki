@@ -220,16 +220,16 @@ class AggregationTable {
             $sortclass = '';
             $sorts = $this->searchConfig->getSorts();
             $dynamic = $this->searchConfig->getDynamicParameters();
+            $dynamic->setSort($column, true);
             if(isset($sorts[$column->getFullQualifiedLabel()])) {
-                list(, $currentSort) = $sorts[$column->getFullQualifiedLabel()];
-                if($currentSort[1]) {
+                list(/*colname*/, $currentSort) = $sorts[$column->getFullQualifiedLabel()];
+                if($currentSort) {
                     $sortclass = 'sort-down';
                     $dynamic->setSort($column, false);
                 } else {
                     $sortclass = 'sort-up';
                 }
             }
-            $dynamic->setSort($column, true);
             $link = wl($this->id, $dynamic->getURLParameters());
 
             // output XHTML header

@@ -18,9 +18,9 @@ class helper_plugin_struct_config extends DokuWiki_Plugin {
      */
     public function parseSort($val) {
         if(substr($val, 0, 1) == '^') {
-            return array(substr($val, 1), 'DESC',);
+            return array(substr($val, 1), false);
         }
-        return array($val, 'ASC',);
+        return array($val, true);
     }
 
     /**

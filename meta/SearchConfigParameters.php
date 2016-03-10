@@ -39,7 +39,7 @@ class SearchConfigParameters {
 
         if($INPUT->has(self::$PARAM_SORT)) {
             list($colname, $sort) = $confHlp->parseSort($INPUT->str(self::$PARAM_SORT));
-            $this->setSort($colname, $sort === 'ASC');
+            $this->setSort($colname, $sort);
         }
 
         if($INPUT->has(self::$PARAM_FILTER)) {
