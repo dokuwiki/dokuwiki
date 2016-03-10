@@ -26,7 +26,10 @@ class Tag extends AbstractMultiBaseType {
         $context = $this->getContext();
         $filter = SearchConfigParameters::$PARAM_FILTER . '[' . $context->getTable() . '.' . $context->getLabel() . '*~]=' . $value;
 
-        $R->internallink($this->config['page'] . '?' . $filter, $value);
+        $page = trim($this->config['page']);
+        if(!$page) $page = cleanID($context->getLabel());
+
+        $R->internallink($page . '?' . $filter, $value);
         return true;
     }
 
