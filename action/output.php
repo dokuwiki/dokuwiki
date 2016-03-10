@@ -33,6 +33,7 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
 
     /**
      * Appends the instruction to render our syntax output component to each page
+     * after the first found headline or the very begining if no headline was found
      *
      * @param Doku_Event $event
      * @param $param
@@ -41,17 +42,39 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
         global $ACT;
         global $ID;
         // blank $ACT happens when instructions are rendered in indexer
-        if(!blank($ACT) &&  $ACT != 'show') return; //FIXME what about export_*?
+        if(!blank($ACT) && $ACT != 'show') return; //FIXME what about export_*?
         if(!page_exists($ID)) return;
 
-        $pos = filesize(wikiFN($ID))+1;
+        $ins = -1;
+        $pos = 0;
+        foreach($event->data->calls as $num => $call) {
+            // try to find the first header
+            if($call[0] == 'header') {
+                $pos = $call[2];
+                $ins = $num;
+                break;
+            }
 
-        $event->data->calls[] = array(
-            'plugin',
+            // abort when after we looked at the first 150 bytes
+            if($call[3] > 150) {
+                break;
+            }
+        }
+
+        // insert our own call after the found position
+        array_splice(
+            $event->data->calls,
+            $ins+1,
+            0,
             array(
-                'struct_output', array('pos'=>$pos), DOKU_LEXER_SPECIAL, ''
-            ),
-            $pos
+                array(
+                    'plugin',
+                    array(
+                        'struct_output', array('pos' => $pos), DOKU_LEXER_SPECIAL, ''
+                    ),
+                    $pos
+                )
+            )
         );
     }
 

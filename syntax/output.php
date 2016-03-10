@@ -85,7 +85,6 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         if(!$tables) return true;
 
         if($mode == 'xhtml') $R->doc .= '<div id="plugin__struct_output">';
-        $R->header($this->getLang('headline'), 1, $data['pos']);
 
         foreach($tables as $table) {
             $schemadata = new SchemaData($table, $ID, $REV);

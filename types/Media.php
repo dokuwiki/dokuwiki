@@ -7,8 +7,8 @@ class Media extends AbstractBaseType {
 
     protected $config = array(
         'mime' => 'image/',
-        'width' => 150,
-        'height' => '',
+        'width' => 90,
+        'height' => 90,
         'agg_width' => '',
         'agg_height' => ''
     );
