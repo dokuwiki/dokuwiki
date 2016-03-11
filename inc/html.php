@@ -898,7 +898,7 @@ function html_index($ns){
     $ns  = cleanID($ns);
     if(empty($ns)){
         $ns = getNS($ID);
-        if($ns == false) $ns ='';
+        if($ns === false) $ns ='';
     }
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
