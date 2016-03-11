@@ -1,21 +1,23 @@
 <?php
 
 /**
- * MySQL tests for the authpdo plugin
+ * mysql tests for the authpdo plugin
  *
  * @group plugin_authpdo
  * @group plugins
  */
 class mysql_plugin_authpdo_test extends DokuWikiTest {
 
+    protected $driver = 'mysql';
     protected $host = '';
     protected $database = 'authpdo_testing';
     protected $user = '';
     protected $pass = '';
+    protected $port = '';
 
     public function setUp() {
         parent::setUp();
-        $configuration = DOKU_UNITTEST . 'mysql.conf.php';
+        $configuration = DOKU_UNITTEST . "{$this->driver}.conf.php";
         if(!file_exists($configuration)) {
             return;
         }
@@ -24,14 +26,31 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
         $this->host = $conf['host'];
         $this->user = $conf['user'];
         $this->pass = $conf['pass'];
+        $this->port = $conf['port'];
     }
 
     /**
-     * Check if database credentials exist
+     * try to remove the last set up database
+     *
+     * it might still be there if something went wrong
+     */
+    public function tearDown() {
+        parent::tearDown();
+        $this->dropDatabase();
+    }
+
+    /**
+     * Check if database credentials and extensions exist
      */
     public function test_requirements() {
         if(!$this->host || !$this->user) {
-            $this->markTestSkipped("Skipped mysql tests. Missing configuration");
+            $this->markTestSkipped("Skipped {$this->driver} tests. Missing configuration");
+        }
+        if(!class_exists('PDO')) {
+            $this->markTestSkipped("Skipped {$this->driver} tests. Missing PDO extension");
+        }
+        if(!in_array($this->driver, pdo_drivers())) {
+            $this->markTestSkipped("Skipped {$this->driver} tests. Missing pdo_{$this->driver} extension");
         }
     }
 
@@ -40,7 +59,7 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
      */
     protected function createDatabase() {
         $pdo = new PDO(
-            "mysql:dbname=;host={$this->host}", $this->user, $this->pass,
+            "{$this->driver}:host={$this->host};port={$this->port}", $this->user, $this->pass,
             array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // we want exceptions, not error codes
             )
@@ -55,12 +74,16 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
      */
     protected function dropDatabase() {
         $pdo = new PDO(
-            "mysql:dbname={$this->database};host={$this->host}", $this->user, $this->pass,
+            "{$this->driver}:host={$this->host};port={$this->port}", $this->user, $this->pass,
             array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // we want exceptions, not error codes
             )
         );
-        $pdo->exec("DROP DATABASE IF EXISTS {$this->database}");
+        try {
+            $pdo->exec("DROP DATABASE IF EXISTS {$this->database}");
+        } catch (PDOException $e) {
+            // ignore - sometimes this fails even though the database was deleted
+        }
         $pdo = null;
     }
 
@@ -73,7 +96,7 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
         // connect to database and import dump
         $pdo = null;
         $pdo = new PDO(
-            "mysql:dbname={$this->database};host={$this->host}", $this->user, $this->pass,
+            "{$this->driver}:dbname={$this->database};host={$this->host};port={$this->port}", $this->user, $this->pass,
             array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // we want exceptions, not error codes
             )
@@ -232,10 +255,10 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
      *
      * @depends test_requirements
      */
-    public function test_mysql() {
+    public function test_pgsql() {
         global $conf;
 
-        $files = glob(__DIR__ . '/mysql/*.php');
+        $files = glob(__DIR__ . "/{$this->driver}/*.php");
         foreach($files as $file) {
             $dump = preg_replace('/\.php$/', '.sql', $file);
             $this->database = 'authpdo_testing_' . basename($file, '.php');
@@ -249,7 +272,7 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
 
             $conf['plugin']['authpdo'] = array();
             $conf['plugin']['authpdo'] = $data['conf'];
-            $conf['plugin']['authpdo']['dsn'] = "mysql:dbname={$this->database};host={$this->host}";
+            $conf['plugin']['authpdo']['dsn'] = "{$this->driver}:dbname={$this->database};host={$this->host};port={$this->port}";
             $conf['plugin']['authpdo']['user'] = $this->user;
             $conf['plugin']['authpdo']['pass'] = $this->pass;
             $conf['plugin']['authpdo']['debug'] = 1;
