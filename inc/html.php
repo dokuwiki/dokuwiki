@@ -896,10 +896,9 @@ function html_index($ns){
     global $conf;
     global $ID;
     $ns  = cleanID($ns);
-    #fixme use appropriate function
     if(empty($ns)){
-        $ns = dirname(str_replace(':','/',$ID));
-        if($ns == '.') $ns ='';
+        $ns = getNS($ID);
+        if($ns === false) $ns ='';
     }
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
