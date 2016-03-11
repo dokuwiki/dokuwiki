@@ -701,7 +701,7 @@ function ft_queryParser($Indexer, $query){
         if (preg_match($ope_regex, $token)) {
             // operator
             $last_ope = end($ope_stack);
-            while ($ope_precedence[$token] <= $ope_precedence[$last_ope] && $last_ope != '(') {
+            while ($last_ope !== false && $ope_precedence[$token] <= $ope_precedence[$last_ope] && $last_ope != '(') {
                 $parsed_ary[] = array_pop($ope_stack);
                 $last_ope = end($ope_stack);
             }

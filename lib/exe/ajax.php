@@ -303,7 +303,8 @@ function ajax_mediaupload(){
         );
     }
     $json = new JSON;
-    echo htmlspecialchars($json->encode($result), ENT_NOQUOTES);
+    header('Content-Type: application/json');
+    echo $json->encode($result);
 }
 
 /**
