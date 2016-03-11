@@ -21,7 +21,9 @@ notifications:
     on_failure: change
 services:
   - "mysql"
+  - "postgresql"
 before_script:
   - echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - cp _test/mysql.conf.php.dist _test/mysql.conf.php
+  - cp _test/pgsql.conf.php.dist _test/pgsql.conf.php
 script: cd _test && phpunit --verbose --stderr
