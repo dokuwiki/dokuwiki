@@ -218,18 +218,9 @@ function tpl_toc($return = false) {
             $toc = array();
         }
     } elseif($ACT == 'admin') {
-        // try to load admin plugin TOC FIXME: duplicates code from tpl_admin
-        $plugin = null;
-        $class  = $INPUT->str('page');
-        if(!empty($class)) {
-            $pluginlist = plugin_list('admin');
-            if(in_array($class, $pluginlist)) {
-                // attempt to load the plugin
-                /** @var $plugin DokuWiki_Admin_Plugin */
-                $plugin = plugin_load('admin', $class);
-            }
-        }
-        if( ($plugin !== null) && (!$plugin->forAdminOnly() || $INFO['isadmin']) ) {
+        // try to load admin plugin TOC
+        /** @var $plugin DokuWiki_Admin_Plugin */
+        if ($plugin = plugin_getRequestAdminPlugin()) {
             $toc = $plugin->getTOC();
             $TOC = $toc; // avoid later rebuild
         }
@@ -306,6 +297,7 @@ function tpl_metaheaders($alt = true) {
     // prepare seed for js and css
     $tseed   = $updateVersion;
     $depends = getConfigFiles('main');
+    $depends[] = DOKU_CONF."tpl/".$conf['template']."/style.ini";
     foreach($depends as $f) $tseed .= @filemtime($f);
     $tseed   = md5($tseed);
 
@@ -402,7 +394,7 @@ function tpl_metaheaders($alt = true) {
     // load stylesheets
     $head['link'][] = array(
         'rel' => 'stylesheet', 'type'=> 'text/css',
-        'href'=> DOKU_BASE.'lib/exe/css.php?t='.$conf['template'].'&tseed='.$tseed
+        'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
     // make $INFO and other vars available to JavaScripts
@@ -417,7 +409,7 @@ function tpl_metaheaders($alt = true) {
     // load external javascript
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
-        'src' => DOKU_BASE.'lib/exe/js.php'.'?tseed='.$tseed
+        'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
     );
 
     // trigger event here
@@ -655,6 +647,8 @@ function tpl_get_action($type) {
     $params      = array('do' => $type);
     $nofollow    = true;
     $replacement = '';
+
+    $unknown = false;
     switch($type) {
         case 'edit':
             // most complicated type - we need to decide on current action
@@ -779,9 +773,23 @@ function tpl_get_action($type) {
             //$type = 'media';
             break;
         default:
-            return '[unknown %s type]';
+            //unknown type
+            $unknown = true;
     }
-    return compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
+
+    $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
+
+    $evt = new Doku_Event('TPL_ACTION_GET', $data);
+    if($evt->advise_before()) {
+        //handle unknown types
+        if($unknown) {
+            $data = '[unknown %s type]';
+        }
+    }
+    $evt->advise_after();
+    unset($evt);
+
+    return $data;
 }
 
 /**
@@ -840,9 +848,10 @@ function tpl_searchform($ajax = true, $autocomplete = true) {
     print '<input type="hidden" name="do" value="search" />';
     print '<input type="text" ';
     if($ACT == 'search') print 'value="'.htmlspecialchars($QUERY).'" ';
+    print 'placeholder="'.$lang['btn_search'].'" ';
     if(!$autocomplete) print 'autocomplete="off" ';
     print 'id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" />';
-    print '<input type="submit" value="'.$lang['btn_search'].'" class="button" title="'.$lang['btn_search'].'" />';
+    print '<button type="submit" title="'.$lang['btn_search'].'">'.$lang['btn_search'].'</button>';
     if($ajax) print '<div id="qsearch__out" class="ajax_qsearch JSpopup"></div>';
     print '</div></form>';
     return true;
@@ -1034,6 +1043,8 @@ function tpl_pageinfo($ret = false) {
  * @return bool|string
  */
 function tpl_pagetitle($id = null, $ret = false) {
+    global $ACT, $INPUT, $conf, $lang;
+
     if(is_null($id)) {
         global $ID;
         $id = $ID;
@@ -1041,14 +1052,60 @@ function tpl_pagetitle($id = null, $ret = false) {
 
     $name = $id;
     if(useHeading('navigation')) {
-        $title = p_get_first_heading($id);
-        if($title) $name = $title;
+        $first_heading = p_get_first_heading($id);
+        if($first_heading) $name = $first_heading;
+    }
+
+    // default page title is the page name, modify with the current action
+    switch ($ACT) {
+        // admin functions
+        case 'admin' :
+            $page_title = $lang['btn_admin'];
+            // try to get the plugin name
+            /** @var $plugin DokuWiki_Admin_Plugin */
+            if ($plugin = plugin_getRequestAdminPlugin()){
+                $plugin_title = $plugin->getMenuText($conf['lang']);
+                $page_title = $plugin_title ? $plugin_title : $plugin->getPluginName();
+            }
+            break;
+
+        // user functions
+        case 'login' :
+        case 'profile' :
+        case 'register' :
+        case 'resendpwd' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+         // wiki functions
+        case 'search' :
+        case 'index' :
+            $page_title = $lang['btn_'.$ACT];
+            break;
+
+        // page functions
+        case 'edit' :
+            $page_title = "✎ ".$name;
+            break;
+
+        case 'revisions' :
+            $page_title = $name . ' - ' . $lang['btn_revs'];
+            break;
+
+        case 'backlink' :
+        case 'recent' :
+        case 'subscribe' :
+            $page_title = $name . ' - ' . $lang['btn_'.$ACT];
+            break;
+
+        default : // SHOW and anything else not included
+            $page_title = $name;
     }
 
     if($ret) {
-        return hsc($name);
+        return hsc($page_title);
     } else {
-        print hsc($name);
+        print hsc($page_title);
         return true;
     }
 }
@@ -1573,6 +1630,12 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     /** @var Input $INPUT */
     global $INPUT;
 
+    $action_structure = array(
+        'page_tools' => array('edit', 'revert', 'revisions', 'backlink', 'subscribe'),
+        'site_tools' => array('recent', 'media', 'index'),
+        'user_tools' => array('login', 'register', 'profile', 'admin'),
+    );
+
     echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
     echo '<div class="no">';
     echo '<input type="hidden" name="id" value="'.$ID.'" />';
@@ -1584,50 +1647,17 @@ function tpl_actiondropdown($empty = '', $button = '&gt;') {
     echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
     echo '<option value="">'.$empty.'</option>';
 
-    echo '<optgroup label="'.$lang['page_tools'].'">';
-    $act = tpl_get_action('edit');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revert');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('revisions');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('backlink');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('subscribe');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['site_tools'].'">';
-    $act = tpl_get_action('recent');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('media');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('index');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
-
-    echo '<optgroup label="'.$lang['user_tools'].'">';
-    $act = tpl_get_action('login');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('register');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('profile');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-
-    $act = tpl_get_action('admin');
-    if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-    echo '</optgroup>';
+    foreach($action_structure as $tools => $actions) {
+        echo '<optgroup label="'.$lang[$tools].'">';
+        foreach($actions as $action) {
+            $act = tpl_get_action($action);
+            if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
+        }
+        echo '</optgroup>';
+    }
 
     echo '</select>';
-    echo '<input type="submit" value="'.$button.'" />';
+    echo '<button type="submit">'.$button.'</button>';
     echo '</div>';
     echo '</form>';
 }
@@ -1966,6 +1996,28 @@ function tpl_classes() {
         ($ID == $conf['start']) ? 'home' : '',
     );
     return join(' ', $classes);
+}
+
+/**
+ * Create event for tools menues
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @param string $toolsname name of menu
+ * @param array $items
+ * @param string $view e.g. 'main', 'detail', ...
+ */
+function tpl_toolsevent($toolsname, $items, $view = 'main') {
+    $data = array(
+        'view' => $view,
+        'items' => $items
+    );
+
+    $hook = 'TEMPLATE_' . strtoupper($toolsname) . '_DISPLAY';
+    $evt = new Doku_Event($hook, $data);
+    if($evt->advise_before()) {
+        foreach($evt->data['items'] as $k => $html) echo $html;
+    }
+    $evt->advise_after();
 }
 
 //Setup VIM: ex: et ts=4 :

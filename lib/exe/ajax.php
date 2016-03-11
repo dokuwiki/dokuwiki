@@ -303,7 +303,8 @@ function ajax_mediaupload(){
         );
     }
     $json = new JSON;
-    echo htmlspecialchars($json->encode($result), ENT_NOQUOTES);
+    header('Content-Type: application/json');
+    echo $json->encode($result);
 }
 
 /**
@@ -428,7 +429,7 @@ function ajax_linkwiz(){
 
         echo '<a href="'.$link.'" title="'.htmlspecialchars($item['id']).'" class="wikilink1">'.$name.'</a>';
 
-        if($item['title']){
+        if(!blank($item['title'])){
             echo '<span>'.htmlspecialchars($item['title']).'</span>';
         }
         echo '</div>';

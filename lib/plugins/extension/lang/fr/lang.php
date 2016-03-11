@@ -5,6 +5,8 @@
  * 
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
+ * @author Carbain Frédéric <fcarbain@yahoo.fr>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  */
 $lang['menu']                  = 'Gestionnaire d\'extensions';
 $lang['tab_plugins']           = 'Greffons installés';
@@ -26,6 +28,10 @@ $lang['btn_disable']           = 'Désactiver';
 $lang['btn_install']           = 'Installer';
 $lang['btn_reinstall']         = 'Réinstaller';
 $lang['js']['reallydel']       = 'Vraiment désinstaller cette extension';
+$lang['js']['display_viewoptions'] = 'Voir les options:';
+$lang['js']['display_enabled'] = 'activé';
+$lang['js']['display_disabled'] = 'désactivé';
+$lang['js']['display_updatable'] = 'Mise à jour possible';
 $lang['search_for']            = 'Rechercher l\'extension :';
 $lang['search']                = 'Chercher';
 $lang['extensionby']           = '<strong>%s</strong> de %s';
@@ -64,7 +70,7 @@ $lang['msg_enabled']           = 'Greffon %s activé';
 $lang['msg_disabled']          = 'Greffon %s désactivé';
 $lang['msg_delete_success']    = 'Extension %s désinstallée.';
 $lang['msg_delete_failed']     = 'Echec de la désinstallation de l\'extension %s';
-$lang['msg_template_install_success'] = 'Thème %s installée avec succès';
+$lang['msg_template_install_success'] = 'Thème %s installé avec succès';
 $lang['msg_template_update_success'] = 'Thème %s mis à jour avec succès';
 $lang['msg_plugin_install_success'] = 'Greffon %s installé avec succès';
 $lang['msg_plugin_update_success'] = 'Greffon %s mis à jour avec succès';
@@ -79,7 +85,7 @@ $lang['error_badurl']          = 'Les URL doivent commencer par http ou https';
 $lang['error_dircreate']       = 'Impossible de créer le dossier temporaire pour le téléchargement.';
 $lang['error_download']        = 'Impossible de télécharger le fichier : %s';
 $lang['error_decompress']      = 'Impossible de décompresser le fichier téléchargé. C\'est peut être le résultat d\'une erreur de téléchargement, auquel cas vous devriez réessayer. Le format de compression est peut-être inconnu. Dans ce cas il vous faudra procéder à une installation manuelle.';
-$lang['error_findfolder']      = 'Impossible d\'idnetifier le dossier de l\'extension. vous devez procéder à une installation manuelle.';
+$lang['error_findfolder']      = 'Impossible d\'identifier le dossier de l\'extension. vous devez procéder à une installation manuelle.';
 $lang['error_copy']            = 'Une erreur de copie de fichier s\'est produite lors de l\'installation des fichiers dans le dossier <em>%s</em>. Il se peut que le disque soit plein, ou que les permissions d\'accès aux fichiers soient incorrectes. Il est possible que le greffon soit partiellement installé et que cela laisse votre installation de DoluWiki instable.';
 $lang['noperms']               = 'Impossible d\'écrire dans le dossier des extensions.';
 $lang['notplperms']            = 'Impossible d\'écrire dans le dossier des thèmes.';

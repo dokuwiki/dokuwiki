@@ -1,0 +1,1 @@
+Questi sono i temi attualmente installati nel tuo DokuWiki. Puoi selezionare il tema da usare in [[?do=admin&page=config|Configurazione Wiki]].

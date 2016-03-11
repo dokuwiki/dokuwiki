@@ -121,15 +121,21 @@ function p_cached_output($file, $format='xhtml', $id='') {
     $cache = new cache_renderer($id, $file, $format);
     if ($cache->useCache()) {
         $parsed = $cache->retrieveCache(false);
-        if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
+        if($conf['allowdebug'] && $format=='xhtml') {
+            $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
+        }
     } else {
         $parsed = p_render($format, p_cached_instructions($file,false,$id), $info);
 
         if ($info['cache'] && $cache->storeCache($parsed)) {              // storeCache() attempts to save cachefile
-            if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
+            if($conf['allowdebug'] && $format=='xhtml') {
+                $parsed .= "\n<!-- no cachefile used, but created {$cache->cache} -->\n";
+            }
         }else{
             $cache->removeCache();                     //try to delete cachefile
-            if($conf['allowdebug'] && $format=='xhtml') $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
+            if($conf['allowdebug'] && $format=='xhtml') {
+                $parsed .= "\n<!-- no cachefile used, caching forbidden -->\n";
+            }
         }
     }
 
@@ -616,8 +622,9 @@ function p_sort_modes($a, $b){
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $mode
- * @param array|null|false  $instructions
- * @param array  $info returns render info like enabled toc and cache
+ * @param array|null|false $instructions
+ * @param array $info returns render info like enabled toc and cache
+ * @param string $date_at
  * @return null|string rendered output
  */
 function p_render($mode,$instructions,&$info,$date_at=''){
@@ -632,7 +639,7 @@ function p_render($mode,$instructions,&$info,$date_at=''){
     if($date_at) {
         $Renderer->date_at = $date_at;
     }
-    
+
     $Renderer->smileys = getSmileys();
     $Renderer->entities = getEntities();
     $Renderer->acronyms = getAcronyms();
@@ -746,14 +753,13 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
     $cache = getCacheName($language.$code,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
-            $ctime > filemtime(DOKU_INC.'inc/geshi.php') &&                 // geshi changed
-            $ctime > @filemtime(DOKU_INC.'inc/geshi/'.$language.'.php') &&  // language syntax definition changed
+            $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
 
     } else {
 
-        $geshi = new GeSHi($code, $language, DOKU_INC . 'inc/geshi');
+        $geshi = new GeSHi($code, $language);
         $geshi->set_encoding('utf-8');
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);

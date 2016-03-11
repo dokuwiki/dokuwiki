@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Slovaklanguage file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
@@ -139,7 +140,7 @@ $lang['renderer__plugin']      = '%s (plugin)';
 $lang['dnslookups']            = 'DokuWiki hľadá mená vzdialených IP adries používateľov editujúcich stránky. Ak máte pomalý alebo nefunkčný DNS server alebo nechcete túto možnosť, deaktivujte túto voľbu';
 $lang['proxy____host']         = 'Proxy server - názov';
 $lang['proxy____port']         = 'Proxy server - port';
-$lang['proxy____user']         = 'Proxy server - užívateľské meno';
+$lang['proxy____user']         = 'Proxy server - používateľské meno';
 $lang['proxy____pass']         = 'Proxy server - heslo';
 $lang['proxy____ssl']          = 'Proxy server - použiť SSL';
 $lang['proxy____except']       = 'Regulárny výraz popisujúci URL odkazy, pre ktoré by proxy nemala byť použitá.';

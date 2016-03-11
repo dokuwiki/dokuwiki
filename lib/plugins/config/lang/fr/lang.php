@@ -1,26 +1,30 @@
 <?php
+
 /**
- * french language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author stephane.gully@gmail.com
+ * @author <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
- * @author Samuel Dorsaz samuel.dorsaz@novelion.net
+ * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author schplurtz@laposte.net
- * @author skimpax@gmail.com
+ * @author <skimpax@gmail.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
+ * @author Carbain Frédéric <fcarbain@yahoo.fr>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
+ * @author Floriang <antispam@floriang.eu>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Simon DELAGE <simon.geekitude@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -33,7 +37,7 @@ $lang['security']              = 'Avertissement de sécurité : modifier cette o
 $lang['_configuration_manager'] = 'Gestionnaire de configuration';
 $lang['_header_dokuwiki']      = 'Paramètres de DokuWiki';
 $lang['_header_plugin']        = 'Paramètres des extensions';
-$lang['_header_template']      = 'Paramètres des modèles';
+$lang['_header_template']      = 'Paramètres du modèle';
 $lang['_header_undefined']     = 'Paramètres indéfinis';
 $lang['_basic']                = 'Paramètres de base';
 $lang['_display']              = 'Paramètres d\'affichage';
@@ -94,7 +98,9 @@ $lang['disableactions']        = 'Actions à désactiver dans DokuWiki';
 $lang['disableactions_check']  = 'Vérifier';
 $lang['disableactions_subscription'] = 'Abonnement aux pages';
 $lang['disableactions_wikicode'] = 'Afficher le texte source';
+$lang['disableactions_profile_delete'] = 'Supprimer votre propre compte';
 $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
+$lang['disableactions_rss']    = 'Syndication XML (RSS)';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 $lang['securecookie']          = 'Les cookies définis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Désactivez cette option lorsque seule la connexion à votre wiki est sécurisée avec SSL et que la navigation sur le wiki est effectuée de manière non sécurisée.';
 $lang['remote']                = 'Active l\'API système distante. Ceci permet à d\'autres applications d\'accéder au wiki via XML-RPC ou d\'autres mécanismes.';
@@ -200,6 +206,7 @@ $lang['xsendfile_o_2']         = 'Entête standard X-Sendfile';
 $lang['xsendfile_o_3']         = 'En-tête propriétaire Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Identifiant de l\'utilisateur';
 $lang['showuseras_o_username'] = 'Nom de l\'utilisateur';
+$lang['showuseras_o_username_link'] = 'Nom complet de l\'utilisateur en tant que lien interwiki';
 $lang['showuseras_o_email']    = 'Courriel de l\'utilisateur (brouillé suivant les paramètres de brouillage sélectionnés)';
 $lang['showuseras_o_email_link'] = 'Courriel de l\'utilisateur en tant que lien mailto:';
 $lang['useheading_o_0']        = 'Jamais';

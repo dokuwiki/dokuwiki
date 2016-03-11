@@ -1,0 +1,3 @@
+====== Rheolwr Troi'n Ôl ======
+
+Mae'r dudalen hon yn eich helpu chi i droi'n ôl yn awtomatig yn dilyn ymosodiad sbam. Er mwyn darganfod rhestr o dudalennau sbamllyd, rhowch linyn chwilio (ee. URL sbamllyd), yna cadarnhewch fod y tudalennau a ddarganfuwyd wir yn sbamllyd a throwch y golygiadau'n ôl.

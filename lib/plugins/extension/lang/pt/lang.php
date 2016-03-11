@@ -4,6 +4,9 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author Guido Salatino <guidorafael23@gmail.com>
+ * @author Romulo Pereira <romuloccomp@gmail.com>
+ * @author Paulo Carmino <contato@paulocarmino.com>
+ * @author Alfredo Silva <alfredo.silva@sky.com>
  */
 $lang['menu']                  = 'Gerenciador de Extensões';
 $lang['tab_plugins']           = 'Plugins Instalados';
@@ -25,6 +28,10 @@ $lang['btn_disable']           = 'Desabilitar';
 $lang['btn_install']           = 'Instalar';
 $lang['btn_reinstall']         = 'Reinstalar';
 $lang['js']['reallydel']       = 'Confirma a desinstalação desta extensão?';
+$lang['js']['display_viewoptions'] = 'Ver Opções:';
+$lang['js']['display_enabled'] = 'ativado';
+$lang['js']['display_disabled'] = 'desativado';
+$lang['js']['display_updatable'] = 'atualizável';
 $lang['search_for']            = 'Pesquisar Extensão:';
 $lang['search']                = 'Pesquisar';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
@@ -40,7 +47,7 @@ $lang['downloadurl']           = 'Baixar URL:
 ';
 $lang['repository']            = 'Repositório:
 ';
-$lang['unknown']               = '<em> desconhecido </ em>
+$lang['unknown']               = '<em> desconhecido </em>
 ';
 $lang['installed_version']     = 'Versão instalada:';
 $lang['install_date']          = 'Sua última atualização:';

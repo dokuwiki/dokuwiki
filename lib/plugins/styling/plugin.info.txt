@@ -1,0 +1,7 @@
+base   styling
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2015-07-26
+name   styling plugin
+desc   Allows to edit style.ini replacements
+url    https://www.dokuwiki.org/plugin:styling

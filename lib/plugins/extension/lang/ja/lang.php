@@ -6,6 +6,7 @@
  * @author Hideaki SAWADA <chuno@live.jp>
  * @author PzF_X <jp_minecraft@yahoo.co.jp>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
+ * @author Ikuo Obataya <i.obataya@gmail.com>
  */
 $lang['menu']                  = '拡張機能管理';
 $lang['tab_plugins']           = 'インストール済プラグイン';
@@ -27,6 +28,10 @@ $lang['btn_disable']           = '無効化';
 $lang['btn_install']           = 'インストール';
 $lang['btn_reinstall']         = '再インストール';
 $lang['js']['reallydel']       = 'この拡張機能を本当にアンインストールしますか？';
+$lang['js']['display_viewoptions'] = '表示オプション： ';
+$lang['js']['display_enabled'] = '有効';
+$lang['js']['display_disabled'] = '無効';
+$lang['js']['display_updatable'] = '更新可能';
 $lang['search_for']            = '拡張機能の検索：';
 $lang['search']                = '検索';
 $lang['extensionby']           = '<strong>%s</strong> 作者： %s';

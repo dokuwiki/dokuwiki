@@ -20,7 +20,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
     var $helper;
     var $sentStatus = null;
 
-    function admin_plugin_popularity(){
+    function __construct(){
         $this->helper = $this->loadHelper('popularity', false);
     }
 
@@ -144,7 +144,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin {
                 .'<input type="hidden" name="do" value="admin" />'
                 .'<input type="hidden" name="page" value="popularity" />';
         }
-        $form .= '<input type="submit" class="button" value="'.$this->getLang('submit').'"/>'
+        $form .= '<button type="submit">'.$this->getLang('submit').'</button>'
             .'</fieldset>'
             .'</form>';
         return $form;

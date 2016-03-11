@@ -1,0 +1,15 @@
+Shw mae @FULLNAME@!
+
+Mae rhywun wedi gofyn am gyfrinair newydd ar gyfer eich manylion
+@TITLE@ ar @DOKUWIKIURL@
+
+Os na wnaethoch chi ofyn am gyfrinair newydd, anwybyddwch yr e-bost hwn.
+
+I gadarnhau daeth y cais oddi wrthoch chi, pwyswch y ddolen isod.
+
+@CONFIRM@
+
+--
+Cafodd y neges hon ei generadu gan DokuWiki ar
+@DOKUWIKIURL@
+

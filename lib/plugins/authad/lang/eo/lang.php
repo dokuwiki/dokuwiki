@@ -6,3 +6,4 @@
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['domain']                = 'Ensaluta domajno';
+$lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';

@@ -197,6 +197,8 @@ function http_rangeRequest($fh,$size,$mime){
  * @return bool
  */
 function http_gzip_valid($uncompressed_file) {
+    if(!DOKU_HAS_GZIP) return false;
+
     $gzip = $uncompressed_file.'.gz';
     if (filemtime($gzip) < filemtime($uncompressed_file)) {    // filemtime returns false (0) if file doesn't exist
         return copy($uncompressed_file, 'compress.zlib://'.$gzip);
@@ -252,10 +254,10 @@ function http_cached_finish($file, $content) {
 
     // save cache file
     io_saveFile($file, $content);
-    if(function_exists('gzopen')) io_saveFile("$file.gz",$content);
+    if(DOKU_HAS_GZIP) io_saveFile("$file.gz",$content);
 
     // finally send output
-    if ($conf['gzip_output']) {
+    if ($conf['gzip_output'] && DOKU_HAS_GZIP) {
         header('Vary: Accept-Encoding');
         header('Content-Encoding: gzip');
         print gzencode($content,9,FORCE_GZIP);

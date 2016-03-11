@@ -37,7 +37,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         // Add the capabilities to change the password
-        $this->cando['modPass'] = true;
+        $this->cando['modPass'] = $this->getConf('modPass');
     }
 
     /**
@@ -281,14 +281,14 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         // open the connection to the ldap
         if(!$this->_openLDAP()){
-            msg('LDAP cannot connect: '. htmlspecialchars(ldap_error($this->con)));
+            $this->_debug('LDAP cannot connect: '. htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
             return false;
         }
 
         // find the information about the user, in particular the "dn"
         $info = $this->getUserData($user,true);
         if(empty($info['dn'])) {
-            msg('LDAP cannot find your user dn');
+            $this->_debug('LDAP cannot find your user dn', 0, __LINE__, __FILE__);
             return false;
         }
         $dn = $info['dn'];
@@ -301,7 +301,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
             // bind with the ldap
             if(!@ldap_bind($this->con, $dn, $pass)){
-                msg('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                $this->_debug('LDAP user bind failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
         } elseif ($this->getConf('binddn') && $this->getConf('bindpw')) {
@@ -322,7 +322,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         // change the password
         if(!@ldap_mod_replace($this->con, $dn,array('userpassword' => $hash))){
-            msg('LDAP mod replace failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)));
+            $this->_debug('LDAP mod replace failed: '. htmlspecialchars($dn) .': '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
             return false;
         }
 
@@ -360,8 +360,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $sr          = ldap_search($this->con, $this->getConf('usertree'), $all_filter);
             $entries     = ldap_get_entries($this->con, $sr);
             $users_array = array();
+            $userkey     = $this->getConf('userkey');
             for($i = 0; $i < $entries["count"]; $i++) {
-                array_push($users_array, $entries[$i]["uid"][0]);
+                array_push($users_array, $entries[$i][$userkey][0]);
             }
             asort($users_array);
             $result = $users_array;
@@ -462,9 +463,12 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return string
      */
     protected function _filterEscape($string) {
-        return preg_replace(
-            '/([\x00-\x1F\*\(\)\\\\])/e',
-            '"\\\\\".join("",unpack("H2","$1"))',
+        // see https://github.com/adldap/adLDAP/issues/22
+        return preg_replace_callback(
+            '/([\x00-\x1F\*\(\)\\\\])/',
+            function ($matches) {
+                return "\\".join("", unpack("H2", $matches[1]));
+            },
             $string
         );
     }
@@ -477,6 +481,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      */
     protected function _openLDAP() {
         if($this->con) return true; // connection already established
+
+        if($this->getConf('debug')) {
+            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+        }
 
         $this->bound = 0;
 
@@ -516,13 +524,13 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                         }
                     }
                     // needs version 3
-                    if($this->getConf('referrals')) {
+                    if($this->getConf('referrals') > -1) {
                         if(!@ldap_set_option(
                             $this->con, LDAP_OPT_REFERRALS,
                             $this->getConf('referrals')
                         )
                         ) {
-                            msg('Setting LDAP referrals to off failed', -1);
+                            msg('Setting LDAP referrals failed', -1);
                             $this->_debug('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                         }
                     }
@@ -554,6 +562,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         if(!$bound) {
             msg("LDAP: couldn't connect to LDAP server", -1);
+            $this->_debug(ldap_error($this->con), 0, __LINE__, __FILE__);
             return false;
         }
 

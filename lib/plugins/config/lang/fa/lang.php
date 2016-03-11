@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Persian language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
@@ -9,6 +10,8 @@
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
+ * @author Mohmmad Razavi <sepent@gmail.com>
+ * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  */
 $lang['menu']                  = 'تنظیمات پیکر‌بندی';
 $lang['error']                 = 'به دلیل ایراد در مقادیر وارد شده، تنظیمات اعمال نشد، خواهشمندیم تغییرات را مجددن کنترل نمایید و دوباره ارسال کنید.<br/> مقادیر مشکل‌دار با کادر قرمز مشخص شده‌اند.';
@@ -82,7 +85,9 @@ $lang['disableactions']        = 'غیرفعال کردن فعالیت‌های 
 $lang['disableactions_check']  = 'بررسی';
 $lang['disableactions_subscription'] = 'عضویت/عدم عضویت';
 $lang['disableactions_wikicode'] = 'نمایش سورس/برون‌بری خام';
+$lang['disableactions_profile_delete'] = 'حذف حساب کاربری خود.';
 $lang['disableactions_other']  = 'فعالیت‌های دیگر (با ویرگول انگلیسی «,» از هم جدا کنید)';
+$lang['disableactions_rss']    = 'خبرخوان (RSS)';
 $lang['auth_security_timeout'] = 'زمان انقضای معتبرسازی به ثانیه';
 $lang['securecookie']          = 'آیا کوکی‌ها باید با قرارداد HTTPS ارسال شوند؟ این گزینه را زمانی که فقط صفحه‌ی ورود ویکی‌تان با SSL امن شده است، اما ویکی را ناامن مرور می‌کنید، غیرفعال نمایید.';
 $lang['remote']                = 'سیستم API راه دور را فعال کنید . این به سایر کاربردها اجازه می دهد که به ویکی از طریق XML-RPC یا سایر مکانیزم ها دسترسی داشته باشند.';
@@ -188,6 +193,7 @@ $lang['xsendfile_o_2']         = 'هدر استاندارد X-Sendfile';
 $lang['xsendfile_o_3']         = 'هدر اختصاصی X-Accel-Redirect در وب سرور Nginx';
 $lang['showuseras_o_loginname'] = 'نام کاربری';
 $lang['showuseras_o_username'] = 'نام کامل کاربران';
+$lang['showuseras_o_username_link'] = 'نام کامل کاربر به عنوان لینک داخلی ویکی';
 $lang['showuseras_o_email']    = 'آدرس ایمیل کاربران (با تنظیمات «نگهبان ایمیل» مبهم می‌شود)';
 $lang['showuseras_o_email_link'] = 'نمایش ایمیل کاربران با افزودن mailto';
 $lang['useheading_o_0']        = 'هرگز';

@@ -11,6 +11,7 @@
  * @author Myeongjin <aranet100@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Garam <rowain8@gmail.com>
+ * @author Erial <erial2@gmail.com>
  */
 $lang['menu']                  = '사용자 관리자';
 $lang['noauth']                = '(사용자 인증을 사용할 수 없습니다)';
@@ -43,7 +44,7 @@ $lang['nonefound']             = '찾은 사용자가 없습니다. 전체 사�
 $lang['delete_ok']             = '사용자 %d명이 삭제되었습니다';
 $lang['delete_fail']           = '사용자 %d명을 삭제하는 데 실패했습니다.';
 $lang['update_ok']             = '사용자 정보를 성공적으로 바꾸었습니다';
-$lang['update_fail']           = '사용자 정보를 바꾸는 데 실패했습니다';
+$lang['update_fail']           = '사용자 정보를 업데이트하는 데 실패했습니다';
 $lang['update_exists']         = '사용자 이름을 바꾸는 데 실패했습니다. 사용자 이름(%s)이 이미 존재합니다. (다른 항목의 바뀜은 적용됩니다)';
 $lang['start']                 = '시작';
 $lang['prev']                  = '이전';
@@ -53,7 +54,7 @@ $lang['edit_usermissing']      = '선택된 사용자를 찾을 수 없습니다
 $lang['user_notify']           = '사용자에게 알림';
 $lang['note_notify']           = '사용자에게 새로운 비밀번호를 준 경우에만 알림 이메일이 보내집니다.';
 $lang['note_group']            = '새로운 사용자는 어떤 그룹도 설정하지 않은 경우에 기본 그룹(%s)에 추가됩니다.';
-$lang['note_pass']             = '사용자 알림이 지정되어 있을 때 필드에 아무 값도 입력하지 않으면 비밀번호가 자동으로 만들어집니다.';
+$lang['note_pass']             = '사용자 알림이 지정되어 있을 때 필드에 아무 값도 입력하지 않으면 비밀번호가 자동으로 생성됩니다.';
 $lang['add_ok']                = '사용자를 성공적으로 추가했습니다';
 $lang['add_fail']              = '사용자 추가를 실패했습니다';
 $lang['notify_ok']             = '알림 이메일을 성공적으로 보냈습니다';
@@ -71,3 +72,11 @@ $lang['import_error_readfail'] = '가져오기를 실패했습니다. 올린 파
 $lang['import_error_create']   = '사용자를 만들 수 없습니다';
 $lang['import_notify_fail']    = '알림 메시지를 가져온 %s (이메일: %s) 사용자에게 보낼 수 없습니다.';
 $lang['import_downloadfailures'] = '교정을 위한 CSV로 다운로드 실패';
+$lang['addUser_error_missing_pass'] = '암호를 입력하시거나, 암호 생성 기능이 켜진 경우 사용자 알림을 활성화 해주십시오.';
+$lang['addUser_error_pass_not_identical'] = '입력된 암호가 일치하지 않습니다.';
+$lang['addUser_error_modPass_disabled'] = '현재 암호 변경이 금지되어있습니다';
+$lang['addUser_error_name_missing'] = '새 사용자의 이름을 넣어주세요.';
+$lang['addUser_error_modName_disabled'] = '현재 이름 변경이 금지되어있습니다.';
+$lang['addUser_error_mail_missing'] = '새 사용자의 이메일 주소를 넣어주세요.';
+$lang['addUser_error_modMail_disabled'] = '현재 이메일 주소 변경이 금지되어있습니다.';
+$lang['addUser_error_create_event_failed'] = '새 사용자 추가를 플러그인이 막았습니다. 정확한 정보를 위한 메시지를 보고해주시기 바랍니다.';

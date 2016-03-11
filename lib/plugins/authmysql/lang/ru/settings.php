@@ -6,6 +6,7 @@
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Type-kun <workwork-1@yandex.ru>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
 $lang['server']                = 'Ваш MySQL-сервер';
 $lang['user']                  = 'Имя пользователя MySQL';
@@ -14,7 +15,7 @@ $lang['database']              = 'Имя базы данных';
 $lang['charset']               = 'Используемый набор символов в базе данных';
 $lang['debug']                 = 'Отображение дополнительной отладочной информации';
 $lang['forwardClearPass']      = 'Передача пароля пользователя открытым текстом, вместо зашифрованной формы в используемом выражении SQL';
-$lang['TablesToLock']          = 'Имена таблиц (через запятую), которые необходимо ограничение для записи';
+$lang['TablesToLock']          = 'Имена таблиц (через запятую), которым необходимо ограничение для записи';
 $lang['checkPass']             = 'Выражение SQL, осуществляющее проверку пароля';
 $lang['getUserInfo']           = 'Выражение SQL, осуществляющее извлечение информации о пользователе';
 $lang['getGroups']             = 'Выражение SQL, осуществляющее извлечение информации о членстве пользователе в группах';

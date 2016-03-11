@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Mati <mackosa@wp.pl>
  */
 $lang['menu']                  = 'Menedżer rozszerzeń';
@@ -36,4 +36,4 @@ $lang['status_not_installed']  = 'nie zainstalowano';
 $lang['status_enabled']        = 'uruchomione';
 $lang['status_disabled']       = 'wyłączone';
 $lang['status_plugin']         = 'dodatek';
-$lang['msg_delete_success']    = 'Rozszerzenie odinstalowane';
+$lang['msg_delete_success']    = 'Rozszerzenie %s odinstalowane';

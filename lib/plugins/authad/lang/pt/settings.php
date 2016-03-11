@@ -9,7 +9,7 @@
  * @author Guido Salatino <guidorafael23@gmail.com>
  */
 $lang['account_suffix']        = 'O sufixo da sua conta. Por exemplo, <code>@my.domain.org</code>';
-$lang['base_dn']               = 'Sua base DN. Eg. <code> DC=meu, DC=dominio, DC=org </ code>';
+$lang['base_dn']               = 'Sua base DN. Eg. <code> DC=meu, DC=dominio, DC=org </code>';
 $lang['domain_controllers']    = 'Uma lista separada por vírgulas de Controladores de Domínio (AD DC). Ex.: <code>srv1.domain.org,srv2.domain.org</code>';
 $lang['admin_username']        = 'Um utilizador com privilégios na Active Directory que tenha acesso aos dados de todos os outros utilizadores. Opcional, mas necessário para certas ações como enviar emails de subscrição.';
 $lang['admin_password']        = 'A senha para o utilizador acima.';

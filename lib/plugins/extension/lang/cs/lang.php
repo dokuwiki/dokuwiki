@@ -5,8 +5,9 @@
  * 
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
  */
-$lang['menu']                  = 'Manager rozšíření';
+$lang['menu']                  = 'Správce rozšíření';
 $lang['tab_plugins']           = 'Instalované moduly';
 $lang['tab_templates']         = 'Instalované šablony';
 $lang['tab_search']            = 'Vyhledej a instaluj';
@@ -26,6 +27,10 @@ $lang['btn_disable']           = 'Zakázat';
 $lang['btn_install']           = 'Instalovat';
 $lang['btn_reinstall']         = 'Přeinstalovat';
 $lang['js']['reallydel']       = 'Opravdu odinstalovat toto rozšíření?';
+$lang['js']['display_viewoptions'] = 'Zobrazit možnosti:';
+$lang['js']['display_enabled'] = 'povolit';
+$lang['js']['display_disabled'] = 'zakázat';
+$lang['js']['display_updatable'] = 'aktualizovatelné';
 $lang['search_for']            = 'Hledat rozšíření:';
 $lang['search']                = 'Hledat';
 $lang['extensionby']           = '<strong>%s</strong> od %s';
@@ -62,7 +67,7 @@ $lang['status_template']       = 'šablona';
 $lang['status_bundled']        = 'svázaný';
 $lang['msg_enabled']           = 'Zásuvný modul %s povolen';
 $lang['msg_disabled']          = 'Zásuvný modul %s zakázán';
-$lang['msg_delete_success']    = 'Rozšíření odinstalováno';
+$lang['msg_delete_success']    = 'Rozšíření %s odinstalováno';
 $lang['msg_delete_failed']     = 'Odinstalování rozšíření %s selhalo';
 $lang['msg_template_install_success'] = 'Šablona %s úspěšně nainstalována';
 $lang['msg_template_update_success'] = 'Šablona %s úspěšně aktualizována';

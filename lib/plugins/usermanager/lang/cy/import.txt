@@ -1,0 +1,9 @@
+===== Swmp Mewnforio Defnyddwyr =====
+
+Mae hwn angen ffeil CSV o ddefnyddwyr gydag o leiaf pedair colofn.
+Mae'n rhaid i'r colofnau gynnwys, mewn trefn: id-defnyddiwr, enw llawn, cyfeiriad ebost a grwpiau.
+Dylai'r meysydd CSV gael eu gwahanu gan goma (,) a llinynnau eu hamffinio gan ddyfynodau (%%""%%). Gall ôl-slaes (\) ei ddefnyddio ar gyfer glanhau (escaping).
+Am enghraifft o ffeil addas, ceisiwch y swyddogaeth "Allforio Defnyddwyr" uchod.
+Caiff id-defnyddiwr dyblygiedig eu hanwybyddu.
+
+Generadwyd cyfrinair a'i ebostio i bob defnyddiwr sydd wedi'i fewnforio'n llwyddiannus.

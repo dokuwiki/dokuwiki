@@ -80,8 +80,8 @@
         overflow: hidden;
     }
 
-    input.button {
-        margin: 0 .3em .3em 0;
+    button {
+        margin-bottom: .3em;
     }
 }
 
@@ -170,6 +170,11 @@
         span.tags {
             padding-left: 18px;
             background: transparent url(images/tag.png) no-repeat 0 0;
+        }
+
+        a.bugs {
+            padding-left: 18px;
+            background: transparent url(images/bug.gif) no-repeat 0 0;
         }
     }
 
@@ -281,6 +286,21 @@
  * Enabled/Disabled overrides
  */
 #extension__list {
+
+    &.hasDisplayOptions {
+        .enabled,
+        .disabled,
+        .updatable {
+            display: none;
+        }
+
+        &.enabled .enabled,
+        &.disabled .disabled,
+        &.updatable .updatable {
+            display: block;
+        }
+    }
+
     .enabled div.screenshot span {
         background: transparent url(images/enabled.png) no-repeat 2px 2px;
     }
@@ -360,4 +380,9 @@
     text-align: center;
     display: block;
     width: 60%;
+}
+
+#extension__viewoptions label {
+    margin-left: 1em;
+    vertical-align: baseline;
 }

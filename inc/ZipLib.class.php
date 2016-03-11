@@ -6,6 +6,7 @@
  * @link       http://forum.maxg.info
  *
  * Modified for Dokuwiki
+ * @deprecated 2015-05-15 - use splitbrain\PHPArchive\Zip instead
  * @author    Christopher Smith <chris@jalakai.co.uk>
  */
 class ZipLib {

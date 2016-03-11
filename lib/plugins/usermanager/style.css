@@ -17,7 +17,7 @@
   padding-left: 0;
   padding-right: 1.4em;
 }
-#user__manager input.button[disabled] {
+#user__manager button[disabled] {
   color: #ccc!important;
   border-color: #ccc!important;
 }

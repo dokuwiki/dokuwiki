@@ -592,18 +592,24 @@ class HTTPClient {
             // set correct peer name for verification (enabled since PHP 5.6)
             stream_context_set_option($socket, 'ssl', 'peer_name', $requestinfo['host']);
 
-            // Because of older PHP versions having trouble with TLS (enable_crypto returns true, but
-            // the conection still borks) we try SSLv3 first
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
-                $requesturl = $requestinfo['path'];
+            // because SSLv3 is mostly broken, we try TLS connections here first.
+            // according to  https://github.com/splitbrain/dokuwiki/commit/c05ef534 we had problems with certain
+            // setups with this solution before, but we have no usable test for that and TLS should be the more
+            // common crypto by now
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+                $requesturl = $requestinfo['path'].
+                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }
 
-            // If the proxy does not support SSLv3 we try TLS
-            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-                $requesturl = $requestinfo['path'];
+            // if the above failed, this will most probably not work either, but we can try
+            if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
+                $requesturl = $requestinfo['path'].
+                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }
+
+            throw new HTTPClientException('Failed to set up crypto for secure connection to '.$requestinfo['host'], -151);
         }
 
         throw new HTTPClientException('Failed to establish secure proxy connection', -150);

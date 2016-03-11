@@ -19,6 +19,7 @@
  * @author Radovan Buroň <radovan@buron.cz>
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,7 +51,6 @@ $lang['btn_update']            = 'Aktualizovat';
 $lang['btn_delete']            = 'Vymazat';
 $lang['btn_back']              = 'Zpět';
 $lang['btn_backlink']          = 'Zpětné odkazy';
-$lang['btn_backtomedia']       = 'Zpět do Výběru dokumentu';
 $lang['btn_subscribe']         = 'Odebírat e-mailem změny stránky';
 $lang['btn_profile']           = 'Upravit profil';
 $lang['btn_reset']             = 'Reset';
@@ -85,6 +85,7 @@ $lang['regmissing']            = 'Musíte vyplnit všechny údaje.';
 $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistrován.';
 $lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
 $lang['regsuccess2']           = 'Uživatelský účet byl vytvořen.';
+$lang['regfail']               = 'Uživatelský profil nemohl být vytvořen.';
 $lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání mailu s heslem. Zkuste kontaktovat správce.';
 $lang['regbadmail']            = 'Zadaná e-mailová adresa není platná. Pokud si myslíte, že to je špatně, zkuste kontaktovat správce.';
 $lang['regbadpass']            = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím znovu.';
@@ -99,6 +100,7 @@ $lang['profdeleteuser']        = 'Smazat účet';
 $lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki smazán';
 $lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
 $lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
+$lang['proffail']              = 'Uživatelský profil nebyl aktualizován.';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
 $lang['resendpwd']             = 'Nastavit nové heslo pro';
@@ -163,7 +165,6 @@ $lang['js']['media_overwrt']   = 'Přepsat existující soubory';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
 $lang['nothingfound']          = 'Nic nenalezeno.';
 $lang['mediaselect']           = 'Výběr dokumentu';
-$lang['fileupload']            = 'Načtení dokumentu';
 $lang['uploadsucc']            = 'Přenos proběhl v pořádku';
 $lang['uploadfail']            = 'Chyba při načítání. Možná kvůli špatně nastaveným právům?';
 $lang['uploadwrong']           = 'Načtení souboru s takovouto příponou není dovoleno.';
@@ -254,7 +255,6 @@ $lang['qb_sig']                = 'Vložit podpis';
 $lang['qb_smileys']            = 'Emotikony';
 $lang['qb_chars']              = 'Speciální znaky';
 $lang['upperns']               = 'skočit do nadřazeného jmenného prostoru';
-$lang['admin_register']        = 'Přidat nového uživatele';
 $lang['metaedit']              = 'Upravit Metadata';
 $lang['metasaveerr']           = 'Chyba při zápisu metadat';
 $lang['metasaveok']            = 'Metadata uložena';
@@ -287,7 +287,6 @@ $lang['subscr_style_every']    = 'e-mail pro každou změnu';
 $lang['subscr_style_digest']   = 'souhrnný e-mail změn pro každou stránku (každé %.2f dny/dní)';
 $lang['subscr_style_list']     = 'seznam změněných stránek od posledního e-mailu (každé %.2f dny/dní)';
 $lang['authtempfail']          = 'Autentizace uživatelů je dočasně nedostupná. Pokud tento problém přetrvává, informujte prosím správce této wiki.';
-$lang['authpwdexpire']         = 'Platnost vašeho hesla vyprší za %d dní, měli byste ho změnit co nejdříve.';
 $lang['i_chooselang']          = 'Vyberte si jazyk';
 $lang['i_installer']           = 'Instalace DokuWiki';
 $lang['i_wikiname']            = 'Název wiki';
@@ -347,6 +346,7 @@ $lang['media_perm_read']       = 'Bohužel, nemáte práva číst soubory.';
 $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
+$lang['media_acl_warning']     = 'Tento seznam nemusí být úplný z důvodu omezení práv ACL a skrytým stránkám.';
 $lang['currentns']             = 'Aktuální jmenný prostor';
 $lang['searchresult']          = 'Výsledek hledání';
 $lang['plainhtml']             = 'Čisté HTML';
