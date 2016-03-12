@@ -8,7 +8,7 @@
 $meta['debug']              = array('onoff', '_caution' => 'security');
 $meta['dsn']                = array('string', '_caution' => 'danger');
 $meta['user']               = array('string', '_caution' => 'danger');
-$meta['pass']               = array('password', '_caution' => 'danger');
+$meta['pass']               = array('password', '_caution' => 'danger', '_code' => 'base64');
 $meta['select-user']        = array('', '_caution' => 'danger');
 $meta['select-user-groups'] = array('', '_caution' => 'danger');
 $meta['select-groups']      = array('', '_caution' => 'danger');

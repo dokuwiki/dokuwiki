@@ -42,7 +42,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             $this->pdo = new PDO(
                 $this->getConf('dsn'),
                 $this->getConf('user'),
-                $this->getConf('pass'),
+                conf_decodeString($this->getConf('pass')),
                 array(
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // always fetch as array
                     PDO::ATTR_EMULATE_PREPARES => true, // emulating prepares allows us to reuse param names
