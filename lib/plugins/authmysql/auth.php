@@ -874,7 +874,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _openDB() {
         if(!$this->dbcon) {
-            $con = @mysql_connect($this->getConf('server'), $this->getConf('user'), $this->getConf('password'));
+            $con = @mysql_connect($this->getConf('server'), $this->getConf('user'), conf_decodeString($this->getConf('password')));
             if($con) {
                 if((mysql_select_db($this->getConf('database'), $con))) {
                     if((preg_match('/^(\d+)\.(\d+)\.(\d+).*/', mysql_get_server_info($con), $result)) == 1) {
