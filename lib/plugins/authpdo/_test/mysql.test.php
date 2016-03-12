@@ -251,41 +251,65 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
     }
 
     /**
-     * This triggers all the tests based on the dumps and configurations
+     * prepares the individual configurations for testing
      *
-     * @depends test_requirements
+     * @return array
      */
-    public function test_pgsql() {
-        global $conf;
+    public function data_provider() {
+        $testdata = array();
 
         $files = glob(__DIR__ . "/{$this->driver}/*.php");
         foreach($files as $file) {
             $dump = preg_replace('/\.php$/', '.sql', $file);
-            $this->database = 'authpdo_testing_' . basename($file, '.php');
+            $dbname = 'authpdo_testing_' . basename($file, '.php');
 
-            $this->createDatabase();
-            $this->importDatabase($dump);
-
-            // Setup the configuration and initialize a new auth object
             /** @var $data array */
             include $file;
 
-            $conf['plugin']['authpdo'] = array();
-            $conf['plugin']['authpdo'] = $data['conf'];
-            $conf['plugin']['authpdo']['dsn'] = "{$this->driver}:dbname={$this->database};host={$this->host};port={$this->port}";
-            $conf['plugin']['authpdo']['user'] = $this->user;
-            $conf['plugin']['authpdo']['pass'] = $this->pass;
-            $conf['plugin']['authpdo']['debug'] = 1;
-            if($data['passcrypt']) $conf['passcrypt'] = $data['passcrypt'];
-            $auth = new auth_plugin_authpdo();
-
-            $this->runGeneralTests($auth, $data['users']);
-            foreach($data['users'] as $user) {
-                $this->runUserTests($auth, $user);
-            }
-
-            $this->dropDatabase();
+            $testdata[] = array($dbname, $dump, $data);
         }
+
+        return $testdata;
+    }
+
+    /**
+     * This triggers all the tests based on the dumps and configurations
+     *
+     * @dataProvider data_provider
+     * @depends      test_requirements
+     * @param string $dbname Name of the database to use
+     * @param string $dump The path to the dump file to import
+     * @param array|string $data config and test user setup. When a string is passed, test is skipped with that msg
+     */
+    public function test_database($dbname, $dump, $data){
+        global $conf;
+
+        if(!is_array($data)) {
+            $this->markTestSkipped($data);
+            return;
+        }
+
+        $this->database = $dbname;
+
+        $this->createDatabase();
+        $this->importDatabase($dump);
+
+        // Setup the configuration and initialize a new auth object
+        $conf['plugin']['authpdo'] = array();
+        $conf['plugin']['authpdo'] = $data['conf'];
+        $conf['plugin']['authpdo']['dsn'] = "{$this->driver}:dbname={$this->database};host={$this->host};port={$this->port}";
+        $conf['plugin']['authpdo']['user'] = $this->user;
+        $conf['plugin']['authpdo']['pass'] = $this->pass;
+        $conf['plugin']['authpdo']['debug'] = 1;
+        if($data['passcrypt']) $conf['passcrypt'] = $data['passcrypt'];
+        $auth = new auth_plugin_authpdo();
+
+        $this->runGeneralTests($auth, $data['users']);
+        foreach($data['users'] as $user) {
+            $this->runUserTests($auth, $user);
+        }
+
+        $this->dropDatabase();
     }
 
 }

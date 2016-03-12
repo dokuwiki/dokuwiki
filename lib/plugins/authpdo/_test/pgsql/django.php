@@ -133,3 +133,8 @@ $data = array(
         ),
     ),
 );
+
+// passwords in the dump use the newest format, we need PHP support for that
+if(!function_exists('hash_pbkdf2') || !in_array('sha256', hash_algos())){
+    $data = 'missing pbkdf2 hash support to check passwords - django test has to be skipped';
+}
