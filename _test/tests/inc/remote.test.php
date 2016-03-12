@@ -157,6 +157,8 @@ class remote_test extends DokuWikiTest {
     }
 
     function test_hasAccessSuccess() {
+        global $conf;
+        $conf['remoteuser'] = '';
         $this->assertTrue($this->remote->hasAccess());
     }
 
@@ -209,6 +211,7 @@ class remote_test extends DokuWikiTest {
     function test_forceAccessSuccess() {
         global $conf;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
         $this->remote->forceAccess(); // no exception should occur
     }
 
@@ -223,7 +226,11 @@ class remote_test extends DokuWikiTest {
 
     function test_generalCoreFunctionWithoutArguments() {
         global $conf;
+        global $USERINFO;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
+        $USERINFO['grps'] = array('grp');
         $remoteApi = new RemoteApi();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
 
@@ -249,7 +256,10 @@ class remote_test extends DokuWikiTest {
 
     function test_generalCoreFunctionWithArguments() {
         global $conf;
+        global $USERINFO;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
 
         $remoteApi = new RemoteApi();
         $remoteApi->getCoreMethods(new RemoteAPICoreTest());
@@ -262,7 +272,10 @@ class remote_test extends DokuWikiTest {
 
     function test_pluginCallMethods() {
         global $conf;
+        global $USERINFO;
         $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
 
         $remoteApi = new RemoteApi();
         $this->assertEquals($remoteApi->call('plugin.testplugin.method1'), null);
@@ -319,6 +332,11 @@ class remote_test extends DokuWikiTest {
     }
 
     function test_pluginCallCustomPath() {
+        global $conf;
+        global $USERINFO;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $conf['useacl'] = 1;
         global $EVENT_HANDLER;
         $EVENT_HANDLER->register_hook('RPC_CALL_ADD', 'BEFORE', $this, 'pluginCallCustomPathRegister');
 
