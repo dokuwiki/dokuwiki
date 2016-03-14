@@ -12,6 +12,7 @@ if(!defined('DOKU_INC')) die();
 use plugin\struct\meta\Assignments;
 use plugin\struct\meta\SchemaData;
 use plugin\struct\meta\ValidationException;
+use plugin\struct\meta\Validator;
 use plugin\struct\types\AbstractBaseType;
 
 /**
@@ -93,50 +94,15 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $act = act_clean($event->data);
         if(!in_array($act, array('save', 'preview'))) return false;
 
-        $assignments = new Assignments();
-        $tables = $assignments->getPageAssignments($ID);
-        $structData = $INPUT->arr(self::$VAR);
-        $timestamp = time();
+        // execute the validator
+        $validator = new Validator();
+        $this->validated = $validator->validate($INPUT->arr(self::$VAR), $ID);
+        $this->tosave = $validator->getChangedSchemas();
+        $INPUT->post->set(self::$VAR, $validator->getCleanedData());
 
-        $this->tosave = array();
-        $this->validated = true;
-        foreach($tables as $table) {
-            $schemaData = new SchemaData($table, $ID, $timestamp);
-            if(!$schemaData->getId()) {
-                // this schema is not available for some reason. skip it
-                continue;
-            }
-
-            $newData = $structData[$table];
-            foreach($schemaData->getColumns() as $col) {
-                // fix multi value types
-                $type = $col->getType();
-                $label = $type->getLabel();
-                $trans = $type->getTranslatedLabel();
-                if($type->isMulti() && !is_array($newData[$label])) {
-                    $newData[$label] = $type->splitValues($newData[$label]);
-                }
-                // strip empty fields from multi vals
-                if(is_array($newData[$label])) {
-                    $newData[$label] = array_filter($newData[$label], array($this, 'filter'));
-                    $newData[$label] = array_values($newData[$label]); // reset the array keys
-                }
-
-                // validate data
-                $this->validated = $this->validated && $this->validate($type, $trans, $newData[$label]);
-            }
-
-            // has the data changed? mark it for saving.
-            $olddata = $schemaData->getDataArray();
-            if($olddata != $newData) {
-                $this->tosave[] = $table;
-            }
-
-            // write back cleaned up data
-            $structData[$table] = $newData;
+        if(!$this->validated) foreach($validator->getErrors() as $error) {
+            msg(hsc($error), -1);
         }
-        // write back cleaned up structData
-        $INPUT->post->set(self::$VAR, $structData);
 
         // did validation go through? otherwise abort saving
         if(!$this->validated && $act == 'save') {
@@ -217,47 +183,6 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * Validate the given data
-     *
-     * Catches the Validation exceptions and transforms them into proper messages.
-     *
-     * Blank values are not validated and always pass
-     *
-     * @param AbstractBaseType $type
-     * @param string $label
-     * @param array|string|int $data
-     * @return bool true if the data validates, otherwise false
-     */
-    protected function validate(AbstractBaseType $type, $label, $data) {
-        $prefix = sprintf($this->getLang('validation_prefix'), $label);
-
-        $ok = true;
-        if(is_array($data)) {
-            foreach($data as $value) {
-                if(!blank($value)) {
-                    try {
-                        $type->validate($value);
-                    } catch(ValidationException $e) {
-                        msg($prefix . $e->getMessage(), -1);
-                        $ok = false;
-                    }
-                }
-            }
-            return $ok;
-        }
-
-        if(!blank($data)) {
-            try {
-                $type->validate($data);
-            } catch(ValidationException $e) {
-                msg($prefix . hsc($e->getMessage()), -1);
-                $ok = false;
-            }
-        }
-        return $ok;
-    }
-
-    /**
      * Create the form to edit schemadata
      *
      * @param string $tablename
@@ -305,15 +230,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         return $html;
     }
 
-    /**
-     * Simple filter to remove blank values
-     *
-     * @param string $val
-     * @return bool
-     */
-    public function filter($val) {
-        return !blank($val);
-    }
+
 }
 
 // vim:ts=4:sw=4:et:

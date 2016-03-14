@@ -134,41 +134,6 @@ class entry_struct_test extends \DokuWikiTest {
         $this->checkField($pq, 'schema1', 'fourth', 'fourth post data');
     }
 
-    public function test_validate_nonArray() {
-        global $MSG;
-        $label = 'label';
-        $errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],$label);
-        $integer = new \plugin\struct\types\Integer();
-        $entry = new mock\action_plugin_struct_entry();
-
-        $entry->validate($integer, $label, 'NaN');
-
-        $this->assertEquals(array('lvl' => 'error', 'msg' => $errormsg, 'allow' => 0),$MSG[0]);
-    }
-
-    public function test_validate_array() {
-        global $MSG;
-        $label = 'label';
-        $errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],$label);
-        $integer = new \plugin\struct\types\Integer();
-        $entry = new mock\action_plugin_struct_entry();
-
-        $entry->validate($integer, $label, array('NaN','NaN'));
-
-        $this->assertEquals(array('lvl' => 'error', 'msg' => $errormsg, 'allow' => 0),$MSG[0]);
-        $this->assertEquals(array('lvl' => 'error', 'msg' => $errormsg, 'allow' => 0),$MSG[1]);
-    }
-
-    public function test_validate_blank() {
-        global $MSG;
-        $integer = new \plugin\struct\types\Integer();
-        $entry = new mock\action_plugin_struct_entry();
-
-        $entry->validate($integer, 'label', null);
-
-        $this->assertEquals(null,$MSG);
-    }
-
     public function test_edit_page_wo_schema() {
         $page = 'test_edit_page_wo_schema';
 
