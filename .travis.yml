@@ -16,4 +16,4 @@ before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/tr
 install: sh travis.sh
 script: cd _test && phpunit --stderr --group plugin_struct
 after_success:
-  - sh generate-api.sh
+  - sh lib/plugins/struct/generate-api.sh
