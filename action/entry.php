@@ -128,6 +128,11 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 msg($this->getLang('emptypage'), -1);
             } else {
                 $event->data['contentChanged'] = true; // save for data changes
+
+                // add a summary
+                if(empty($event->data['summary'])) {
+                    $event->data['summary'] = $this->getLang('summary');
+                }
             }
         }
     }
