@@ -122,7 +122,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      */
     public function handle_pagesave_before(Doku_Event $event, $param) {
         if($event->data['contentChanged']) return; // will be saved for page changes
-        if(count($this->tosave)) {
+
+        if(count($this->tosave) || isset($GLOBALS['struct_plugin_force_page_save'])) {
             if(trim($event->data['newContent']) === '') {
                 // this happens when a new page is tried to be created with only struct data
                 msg($this->getLang('emptypage'), -1);

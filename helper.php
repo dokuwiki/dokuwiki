@@ -7,17 +7,24 @@
  */
 
 // must be run within Dokuwiki
+use plugin\struct\meta\Assignments;
+use plugin\struct\meta\Schema;
+use plugin\struct\meta\SchemaData;
 use plugin\struct\meta\StructException;
+use plugin\struct\meta\Validator;
 
 if(!defined('DOKU_INC')) die();
 
 /**
  * The public interface for the struct plugin
  *
- * 3rd party developer should always interact with struct data through this
- * helper plugin only.
+ * 3rd party developers should always interact with struct data through this
+ * helper plugin only. If additionional interface functionality is needed,
+ * it should be added here.
  *
  * All functions will throw StructExceptions when something goes wrong.
+ *
+ * Remember to check permissions yourself!
  */
 class helper_plugin_struct extends DokuWiki_Plugin {
 
@@ -31,29 +38,99 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @throws StructException
      */
     public function getData($page, $schema=null, $time=0) {
+        $page = cleanID($page);
 
+        if(is_null($schema)) {
+            $assignments = new Assignments();
+            $schemas = $assignments->getPageAssignments($page, false);
+        } else {
+            $schemas = array($schema);
+        }
+
+        $result = array();
+        foreach($schemas as $schema) {
+            $schemaData = new SchemaData($schema, $page, $time);
+            $result[$schema] = $schemaData->getDataArray(false);
+        }
+
+        return $result;
     }
 
     /**
      * Saves data for a given page (creates a new revision)
      *
+     * If this call succeeds you can assume your data has either been saved or it was
+     * not necessary to save it because the data already existed in the wanted form or
+     * the given schemas are no longer assigned to that page.
+     *
+     * Important: You have to check write permissions for the given page before calling
+     * this function yourself!
+     *
+     * this duplicates a bit of code from entry.php - we could also fake post data and let
+     * entry handle it, but that would be rather unclean and might be problematic when multiple
+     * calls are done within the same request.
+     *
+     * @todo should this try to lock the page?
+     *
+     *
      * @param string $page
+     * @param array $data ('schema' => ( 'fieldlabel' => 'value', ...))
      * @param string $summary
      * @throws StructException
      */
-    public function saveData($page, $summary='') {
+    public function saveData($page, $data, $summary='') {
+        $page = cleanID($page);
+        $summary = trim($summary);
+        if(!$summary) $summary = $this->getLang('summary');
 
+        if(!page_exists($page)) throw new StructException("Page does not exist. You can not attach struct data");
+
+        // validate and see if anything changes
+        $validator = new Validator();
+        if(!$validator->validate($data, $page)) {
+            throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
+        }
+        $data = $validator->getCleanedData();
+        $tosave = $validator->getChangedSchemas();
+        if(!$tosave) return;
+
+        // force a new page revision @see action_plugin_struct_entry::handle_pagesave_before()
+        $GLOBALS['struct_plugin_force_page_save'] = true;
+        saveWikiText($page, rawWiki($page), $summary);
+        unset($GLOBALS['struct_plugin_force_page_save']);
+        $file = wikiFN($page);
+        clearstatcache(false, $file);
+        $newrevision = filemtime($file);
+
+        // save the provided data
+        $assignments = new Assignments();
+        foreach($tosave as $table) {
+            $schemaData = new SchemaData($table, $page, $newrevision);
+            $schemaData->saveData($data[$table]);
+            // make sure this schema is assigned
+            $assignments->assignPageSchema($page, $table);
+        }
     }
 
     /**
      * Get info about existing schemas
      *
      * @param string|null $schema the schema to query, null for all
-     * @return array ('schema' => ( (sort, label, type, ...), ...))
+     * @return Schema[]
      * @throws StructException
      */
     public function getSchema($schema=null) {
+        if(is_null($schema)) {
+            $schemas = Schema::getAll();
+        } else {
+            $schemas = array($schema);
+        }
 
+        $result = array();
+        foreach($schemas as $table) {
+            $result[$table] = new Schema($table);
+        }
+        return $result;
     }
 
     /**
@@ -62,11 +139,12 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * That means all pages that have or had once struct data saved
      *
      * @param string|null $schema limit the result to a given schema
-     * @return array ((page, schema), ...)
+     * @return array (page => (schema => true), ...)
      * @throws StructException
      */
     public function getPages($schema=null) {
-
+        $assignments = new Assignments();
+        return $assignments->getPages($schema);
     }
 
 }
