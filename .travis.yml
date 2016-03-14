@@ -10,10 +10,6 @@ php:
 env:
   matrix:
     - DOKUWIKI=mediaselect
-  global:
-    secure: cxuJ22IpGj+OwvuV8etEcmL4z4q+Bxo3jnz48pi6AjLbR9FyDCAtePF8y0B3DHzXkySmIgWm38S1A/q9KwBA9TMZohplhwGedKrg4Hje6VFUjYcf/VqxkUvFhlYNvkffQUenk0IRY6JpiYotYyXjhHJsRkuTYBABVQ40i0wZcafyyr5TKu9d3V785z83vGTtfnt0ljFd4leiHfx2NXsfib1uhbusC+JAJdrWRpPe1X6yYhhsUyWhWMo/bSA5cImKFWLOBg67BCjnkWJ0mg3rmZVJY1RxPEJjhO20O4HROr3iewfX3b4DC6y/vU7s4b3guVp+gKC8Cif2OYbJRODAuUsvpHj1IIXS3TigxBV8XArxGEPROPZFFvz6zKfGRzfujR1+D/xdYBnTERk8ZKCvIYQukXLzYbpi8OebqRIl/QsvE+vonqXqjXqt0DyHH/NDxmvrMrMjq3gfJm41FygvRZLH+PwrsAT7sntXWu2cdowU6zqR7ozO/WOzY7RavG+lVI0kLoVtI7qsFYLGEUmygcYs38ssKjx6hvMc9HJxwe/nqpFjOvD9qI0rXfHyRuvVq976l2eUCUy8D9dhp421P1QEImoqMe+OKN7Fp/JiXCX2yyMB4Oy7hdEcNIJRG8QL98Up6sWm0IgsztstqovFiKZZN1pz9A6OzogrpFdrXAM=
 before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
 install: sh travis.sh
 script: cd _test && phpunit --stderr --group plugin_struct
-after_success:
-  - sh ../lib/plugins/struct/generate-api.sh
