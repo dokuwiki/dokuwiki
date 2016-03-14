@@ -107,13 +107,18 @@ class Assignments {
      *
      * This is mostly useful for testing and not used in the interface currently
      *
+     * @param bool $full fully delete all previous assignments
      * @return bool
      */
-    public function clear() {
+    public function clear($full=false) {
         $sql = 'DELETE FROM schema_assignments_patterns';
         $ok = (bool) $this->sqlite->query($sql);
 
-        $sql = 'UPDATE schema_assignments SET assigned = 0';
+        if($full) {
+            $sql = 'DELETE FROM schema_assignments';
+        } else {
+            $sql = 'UPDATE schema_assignments SET assigned = 0';
+        }
         $ok = $ok && (bool) $this->sqlite->query($sql);
 
         // reload patterns
@@ -186,6 +191,42 @@ class Assignments {
         }
 
         return array_unique($tables);
+    }
+
+    /**
+     * Get the pages known to struct and their assignment state
+     *
+     * @param null|string $schema limit results to the given schema
+     * @param bool $assignedonly limit results to currently assigned only
+     * @return array
+     */
+    public function getPages($schema = null, $assignedonly = false) {
+        $sql = 'SELECT pid, tbl, assigned FROM schema_assignments WHERE 1=1';
+
+        $opts = array();
+        if($schema) {
+            $sql .= ' AND tbl = ?';
+            $opts[] = $schema;
+        }
+        if($assignedonly) {
+            $sql .= ' AND assigned = 1';
+        }
+
+        $sql .= ' ORDER BY pid, tbl';
+
+        $res = $this->sqlite->query($sql, $opts);
+        $list = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        $result = array();
+        foreach($list as $row) {
+            $pid = $row['pid'];
+            $tbl = $row['tbl'];
+            if(!isset($result[$pid])) $result[$pid] = array();
+            $result[$pid][$tbl] = (bool) $row['assigned'];
+        }
+
+        return $result;
     }
 
     /**

@@ -44,6 +44,13 @@ class Assignments_struct_test extends \DokuWikiTest {
         $this->assertEquals(array(), $ass->getAllPatterns());
         $this->assertEquals(array(), $ass->getPageAssignments('foo', true));
         $this->assertEquals(array(), $ass->getPageAssignments('foo', false));
+
+        // old page is still known
+        $this->assertEquals(array('foo' => array('foo' => false)), $ass->getPages());
+
+        // now it's gone
+        $ass->clear(true);
+        $this->assertEquals(array(), $ass->getPages());
     }
 
     /**
@@ -51,7 +58,7 @@ class Assignments_struct_test extends \DokuWikiTest {
      */
     public function test_patternassigns() {
         $ass = new mock\Assignments();
-        $ass->clear();
+        $ass->clear(true);
 
         $ass->addPattern('a:single:page', 'singlepage');
         $ass->addPattern('the:namespace:*', 'singlens');
@@ -100,7 +107,7 @@ class Assignments_struct_test extends \DokuWikiTest {
      */
     public function test_pageassign() {
         $ass = new mock\Assignments();
-        $ass->clear();
+        $ass->clear(true);
 
         // no assignment
         $this->assertEquals(array(), $ass->getPageAssignments('wiki:syntax', false));
@@ -128,5 +135,41 @@ class Assignments_struct_test extends \DokuWikiTest {
         // new pattern will also update all known struct pages
         $ass->addPattern('wiki:*', 'bar');
         $this->assertEquals(array('bar', 'foo'), $ass->getPageAssignments('wiki:syntax', false));
+
+        // page should deassign again
+        $ass->addPattern('*', 'baz');
+        $ass->assignPageSchema('attoplevel', 'baz');
+        $ass->assignPageSchema('attoplevel', 'foo');
+        $ass->removePattern('*', 'baz');
+        $ass->removePattern('**', 'foo');
+
+        // check that all pages are known
+        $expect = array (
+            'attoplevel' => array (
+                'baz' => false,
+                'foo' => false
+            ),
+            'wiki:syntax' => array(
+                'bar' => true,
+                'foo' => false
+            )
+        );
+        $this->assertEquals($expect, $ass->getPages());
+
+        // limit to certain schema
+        $expect = array (
+            'attoplevel' => array (
+                'baz' => false,
+            ),
+        );
+        $this->assertEquals($expect, $ass->getPages('baz'));
+
+        // show current assignments only
+        $expect = array (
+            'wiki:syntax' => array(
+                'bar' => true,
+            )
+        );
+        $this->assertEquals($expect, $ass->getPages(null, true));
     }
 }
