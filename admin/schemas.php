@@ -89,16 +89,6 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
     public function getTOC() {
         global $ID;
 
-        /** @var helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $db = $helper->getDB();
-        if(!$db) return parent::getTOC();
-
-
-        $res = $db->query("SELECT DISTINCT tbl FROM schemas ORDER BY tbl");
-        $tables = $db->res2arr($res);
-        $db->res_close($res);
-
         $toc = array();
         $link = wl($ID, array(
             'do' => 'admin',
@@ -111,14 +101,15 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         ));
         $toc[] = html_mktocitem($link, $this->getLang('menu'), 0, '');
 
-        foreach($tables as $row) {
+        $tables = Schema::getAll();
+        foreach($tables as $table) {
             $link = wl($ID, array(
                 'do' => 'admin',
                 'page' => 'struct_schemas',
-                'table' => $row['tbl']
+                'table' => $table
             ));
 
-            $toc[] = html_mktocitem($link, hsc($row['tbl']), 1, '');
+            $toc[] = html_mktocitem($link, hsc($table), 1, '');
         }
         return $toc;
     }

@@ -8,6 +8,7 @@
 
 // must be run within Dokuwiki
 use plugin\struct\meta\Assignments;
+use plugin\struct\meta\Schema;
 
 if(!defined('DOKU_INC')) die();
 
@@ -72,14 +73,6 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
 
         echo $this->locale_xhtml('assignments_intro');
 
-        //fixme listing schema tables should be moved to one of the meta classes
-        /** @var helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $sqlite = $helper->getDB();
-        $res = $sqlite->query('SELECT tbl FROM schemas GROUP BY tbl');
-        $schemas = $sqlite->res2arr($res);
-        $sqlite->res_close($res);
-
         $ass = new Assignments();
         $assignments = $ass->getAllPatterns();
 
@@ -124,8 +117,8 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         echo '<td><input type="text" name="assignment[assign]" /></td>';
         echo '<td>';
         echo '<select name="assignment[tbl]">';
-        foreach($schemas as $schema) {
-            echo '<option value="' . hsc($schema['tbl']) . '">' . hsc($schema['tbl']) . '</option>';
+        foreach(Schema::getAll() as $table) {
+            echo '<option value="' . hsc($table) . '">' . hsc($table) . '</option>';
         }
         echo '</select>';
         echo '</td>';

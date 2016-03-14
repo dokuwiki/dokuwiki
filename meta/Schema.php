@@ -133,6 +133,28 @@ class Schema {
     }
 
     /**
+     * Gets a list of all available schemas
+     *
+     * @return string[]
+     */
+    static public function getAll() {
+        /** @var \helper_plugin_struct_db $helper */
+        $helper = plugin_load('helper', 'struct_db');
+        $db = $helper->getDB();
+        if(!$db) return array();
+
+        $res = $db->query("SELECT DISTINCT tbl FROM schemas ORDER BY tbl");
+        $tables = $db->res2arr($res);
+        $db->res_close($res);
+
+        $result = array();
+        foreach($tables as $row) {
+            $result[] = $row['tbl'];
+        }
+        return $result;
+    }
+
+    /**
      * @return string
      */
     public function getChksum() {
