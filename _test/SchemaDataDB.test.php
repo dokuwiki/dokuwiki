@@ -8,6 +8,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 use plugin\struct\meta\SchemaBuilder;
 use plugin\struct\meta\Schema;
 use plugin\struct\meta;
+use plugin\struct\meta\Search;
 
 /**
  * Tests to the DB for the struct plugin
@@ -97,11 +98,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $expected_data = array(
             array(
                 'col1' => 'value1a',
-                'col2' => 'value2.1a',
-            ),
-            array(
-                'col1' => 'value1a',
-                'col2' => 'value2.2a',
+                'col2' => 'value2.1a'. Search::CONCAT_SEPARATOR . 'value2.2a',
             ),
         );
 
@@ -119,11 +116,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $expected_data = array(
             array(
                 'col1' => 'value1',
-                'col2' => 'value2.1',
-            ),
-            array(
-                'col1' => 'value1',
-                'col2' => 'value2.2',
+                'col2' => 'value2.1'. Search::CONCAT_SEPARATOR . 'value2.2',
             ),
         );
 
