@@ -30,7 +30,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
             // skip parent methods, only methods further down are exported
             $declaredin = $method->getDeclaringClass()->name;
             if($declaredin == 'DokuWiki_Plugin' || $declaredin == 'DokuWiki_Remote_Plugin') continue;
-            $method_name = $method->getName();
+            $method_name = $method->name;
             if(substr($method_name, 0, 1) == '_') continue;
 
             // strip asterisks
@@ -50,7 +50,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
 
             // get parameter type from doc block type hint
             foreach($method->getParameters() as $parameter) {
-                $name = $parameter->getName();
+                $name = $parameter->name;
                 $type = 'string'; // we default to string
                 if(preg_match('/^@param[ \t]+([\w|\[\]]+)[ \t]\$'.$name.'/m', $doc, $m)){
                     $type = $this->cleanTypeHint($m[1]);
@@ -75,7 +75,7 @@ abstract class DokuWiki_Remote_Plugin extends DokuWiki_Plugin {
     /**
      * Matches the given type hint against the valid options for the remote API
      *
-     * @param $hint
+     * @param string $hint
      * @return string
      */
     protected function cleanTypeHint($hint) {
