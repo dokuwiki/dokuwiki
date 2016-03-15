@@ -309,19 +309,13 @@ class Search {
             $fwhere .= "\n$type $wsql";
         }
 
-        // sorting
+        // sorting - we always sort by the single val column
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
-
             /** @var $col Column */
-            if($col->isMulti()) {
-                // FIXME how to sort by multival?
-                // FIXME what if sort by non merged multival?
-            } else {
-                $order .= $col->getColName() . ' ';
-                $order .= ($asc) ? 'ASC' : 'DESC';
-                $order .= ', ';
-            }
+            $order .= $col->getColName() . ' ';
+            $order .= ($asc) ? 'ASC' : 'DESC';
+            $order .= ', ';
         }
         $order = rtrim($order, ', ');
 
