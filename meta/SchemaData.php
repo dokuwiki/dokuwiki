@@ -182,6 +182,8 @@ class SchemaData extends Schema {
     protected function consolidateData($DBdata, $asarray = false, $skipemtpy=false) {
         $data = array();
 
+        $sep = Search::CONCAT_SEPARATOR;
+
         foreach($this->getColumns() as $col) {
             if(!$col->isEnabled()) continue;
 
@@ -189,13 +191,9 @@ class SchemaData extends Schema {
                 // if no data saved, yet return empty strings
                 $val = '';
             } else if($col->isMulti()) {
-                // data may be in multiple rows
-                $val = array();
-                foreach($DBdata as $row) {
-                    if(!is_null($row['col'.$col->getColref()])) {
-                        $val[] = $row['col'.$col->getColref()];
-                    }
-                }
+                // data is concatenated
+                $val = explode($sep, $DBdata[0]['col'.$col->getColref()]);
+                $val = array_filter($val);
             }else {
                 // data is in the first row only
                 $val = $DBdata[0]['col'.$col->getColref()];
@@ -225,12 +223,13 @@ class SchemaData extends Schema {
         $mtable = 'multi_' . $this->table;
 
         $colsel = join(',', preg_filter('/^/', 'col', $singles));
+        $groups = $colsel;
+        $sep = Search::CONCAT_SEPARATOR;
 
-        //$select = 'SELECT ' . $colsel;
         $join = '';
         foreach($multis as $col) {
             $tn = 'M' . $col;
-            $colsel .= ",$tn.value AS col$col";
+            $colsel .= ", GROUP_CONCAT($tn.value, '$sep') AS col$col";
             $join .= "LEFT OUTER JOIN $mtable $tn";
             $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
             $join .= " AND $tn.colref = $col\n";
@@ -239,8 +238,7 @@ class SchemaData extends Schema {
 
         $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
         $opt = array($this->page, $this->ts,);
-
-        $sql = "SELECT $colsel FROM $stable DATA\n$join $where";
+        $sql = "SELECT $colsel FROM $stable DATA\n$join $where GROUP BY $groups";
 
         return array($sql, $opt,);
     }

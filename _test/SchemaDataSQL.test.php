@@ -3,6 +3,8 @@
 namespace plugin\struct\test;
 
 // we don't have the auto loader here
+use plugin\struct\meta\Search;
+
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
@@ -35,7 +37,8 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                 "SELECT col1,col2
                    FROM data_testtable DATA
                   WHERE DATA.pid = ?
-                    AND DATA.rev = ?",
+                    AND DATA.rev = ?
+               GROUP BY col1,col2",
                 array('pagename', 27),
                 'no multis, with ts',
             ),
@@ -45,14 +48,15 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                     'singles' => array(1,2),
                     'multis' => array(3),
                 ),
-                "SELECT col1,col2,M3.value AS col3
+                "SELECT col1,col2, GROUP_CONCAT(M3.value,'".Search::CONCAT_SEPARATOR."') AS col3
                    FROM data_testtable DATA
                    LEFT OUTER JOIN multi_testtable M3
                      ON DATA.pid = M3.pid
                     AND DATA.rev = M3.rev
                     AND M3.colref = 3
                   WHERE DATA.pid = ?
-                    AND DATA.rev = ?",
+                    AND DATA.rev = ?
+               GROUP BY col1,col2",
                 array('pagename', 27,),
                 'one multi, with ts',
             ),
@@ -81,7 +85,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
     }
 
     /**
-     * Turns subsequent whitespace into single ones
+     * Removes Whitespace
      *
      * Makes comparing sql statements a bit simpler as it ignores formatting
      *
@@ -89,7 +93,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
      * @return string
      */
     protected function cleanWS($string) {
-        return preg_replace('/\s+/s', ' ', $string);
+        return preg_replace('/\s+/s', '', $string);
     }
 
     /**
