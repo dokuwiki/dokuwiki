@@ -1276,7 +1276,9 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // empty or whitespace only content deletes
         $svdta['changeType'] = DOKU_CHANGE_TYPE_DELETE;
         // autoset summary on deletion
-        if(blank($svdta['summary'])) $svdta['summary'] = $lang['deleted'];
+        if(blank($svdta['summary'])) {
+            $svdta['summary'] = $lang['deleted'];
+        }
     } else if($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         //minor edits only for logged in users
         $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
@@ -1296,7 +1298,6 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $filesize_old = filesize($svdta['file']);
     }
     if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
-
         // Send "update" event with empty data, so plugins can react to page deletion
         $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
         trigger_event('IO_WIKIPAGE_WRITE', $data);
