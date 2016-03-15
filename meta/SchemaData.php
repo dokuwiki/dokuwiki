@@ -76,12 +76,18 @@ class SchemaData extends Schema {
                 throw new StructException("Unknown column %s in schema.", hsc($colname));
             }
 
+            $singlecols .= ",col" . $colrefs[$colname];
             if (is_array($value)) {
                 foreach ($value as $index => $multivalue) {
                     $multiopts[] = array($colrefs[$colname], $index+1, $multivalue,);
                 }
+                // copy first value to the single column
+                if(isset($value[0])) {
+                    $opt[] = $value[0];
+                } else {
+                    $opt[] = null;
+                }
             } else {
-                $singlecols .= ",col" . $colrefs[$colname];
                 $opt[] = $value;
             }
         }

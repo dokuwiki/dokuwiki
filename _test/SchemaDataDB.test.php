@@ -224,7 +224,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $expected_saved_single = array(
             'pid' => 'testpage',
             'col1' => 'value1_saved',
-            'col2' => ''
+            'col2' => 'value2.1_saved' # copy of the multi-value's first value
         );
 
         /** @noinspection SqlResolve */
