@@ -1,0 +1,1 @@
+Dyma'r templedau sydd wedi'u harsefydlu yn eich DokuWiki yn bresennol. Gallwch chi ddewis y templed i'w ddefnyddio yn y [[?do=admin&page=config|Rheolwr Ffurfwedd]].

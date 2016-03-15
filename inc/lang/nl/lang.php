@@ -29,6 +29,7 @@
  * @author Hugo Smet <hugo.smet@scarlet.be>
  * @author Mark C. Prins <mprins@users.sf.net>
  * @author hugo smet <hugo.smet@scarlet.be>
+ * @author Wesley de Weerd <wesleytiel@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

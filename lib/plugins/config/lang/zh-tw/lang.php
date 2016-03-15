@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Chinese Traditional language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
  * @author Wayne San <waynesan@zerozone.tw>
@@ -11,6 +12,7 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author syaoranhinata@gmail.com
  * @author Ichirou Uchiki <syaoranhinata@gmail.com>
+ * @author Liou, Jhe-Yu <lioujheyu@gmail.com>
  */
 $lang['menu']                  = '系統設定';
 $lang['error']                 = '因為含有不合規格的設定值，故未能更新設定。請檢查您的更改並重新送出。

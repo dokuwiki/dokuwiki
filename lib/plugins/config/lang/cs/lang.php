@@ -204,6 +204,7 @@ $lang['xsendfile_o_2']         = 'Standardní hlavička X-Sendfile';
 $lang['xsendfile_o_3']         = 'Proprietární hlavička Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Přihlašovací jméno';
 $lang['showuseras_o_username'] = 'Celé jméno uživatele';
+$lang['showuseras_o_username_link'] = 'Celé uživatelské jméno jako odkaz mezi wiki';
 $lang['showuseras_o_email']    = 'E-mailová adresa uživatele ("zamaskována" aktuálně nastavenou metodou)';
 $lang['showuseras_o_email_link'] = 'E-mailová adresa uživatele jako mailto: odkaz';
 $lang['useheading_o_0']        = 'Nikdy';

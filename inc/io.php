@@ -107,9 +107,11 @@ function io_readFile($file,$clean=true){
     $ret = '';
     if(file_exists($file)){
         if(substr($file,-3) == '.gz'){
+            if(!DOKU_HAS_GZIP) return false;
             $ret = gzfile($file);
             if(is_array($ret)) $ret = join('', $ret);
         }else if(substr($file,-4) == '.bz2'){
+            if(!DOKU_HAS_BZIP) return false;
             $ret = bzfile($file);
         }else{
             $ret = file_get_contents($file);
@@ -222,11 +224,13 @@ function _io_saveFile($file, $content, $append) {
     $fileexists = file_exists($file);
 
     if(substr($file,-3) == '.gz'){
+        if(!DOKU_HAS_GZIP) return false;
         $fh = @gzopen($file,$mode.'9');
         if(!$fh) return false;
         gzwrite($fh, $content);
         gzclose($fh);
     }else if(substr($file,-4) == '.bz2'){
+        if(!DOKU_HAS_BZIP) return false;
         if($append) {
             $bzcontent = bzfile($file);
             if($bzcontent === false) return false;
@@ -313,8 +317,10 @@ function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) 
 
     // load into array
     if(substr($file,-3) == '.gz'){
+        if(!DOKU_HAS_GZIP) return false;
         $lines = gzfile($file);
     }else if(substr($file,-4) == '.bz2'){
+        if(!DOKU_HAS_BZIP) return false;
         $lines = bzfile($file, true);
     }else{
         $lines = file($file);

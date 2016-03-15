@@ -9,6 +9,7 @@
  * @author André Neves <drakferion@gmail.com>
  * @author José Campos zecarlosdecampos@gmail.com
  * @author Paulo Carmino <contato@paulocarmino.com>
+ * @author Alfredo Silva <alfredo.silva@sky.com>
  */
 $lang['menu']                  = 'Configuração';
 $lang['error']                 = 'Parâmetros de Configuração não actualizados devido a valores inválidos. Por favor, reveja as modificações que pretende efectuar antes de re-submetê-las.<br /> Os valores incorrectos serão mostrados dentro de uma "moldura" vermelha.';
@@ -32,6 +33,7 @@ $lang['_editing']              = 'Configuração de Edição';
 $lang['_links']                = 'Configuração de Ligações';
 $lang['_media']                = 'Configuração de Media';
 $lang['_notifications']        = 'Notificação';
+$lang['_syndication']          = 'Sindicação (RSS)';
 $lang['_advanced']             = 'Configurações Avançadas';
 $lang['_network']              = 'Configuração de Rede';
 $lang['_msg_setting_undefined'] = 'Nenhum metadado configurado.';
@@ -81,6 +83,7 @@ $lang['disableactions_subscription'] = 'Subscrever/Não Subscrver';
 $lang['disableactions_wikicode'] = 'Ver fonte/Exportar em bruto';
 $lang['disableactions_profile_delete'] = 'Deletar Sua Conta.';
 $lang['disableactions_other']  = 'Outras acções (separadas por vírgula)';
+$lang['disableactions_rss']    = 'Sindicação XML (RSS)';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS deverão ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação de maneira insegura.';
 $lang['usewordblock']          = 'Bloquear spam baseado em lista de palavras (wordlist)';
@@ -98,6 +101,7 @@ $lang['target____interwiki']   = 'Parâmetro "target" para links entre wikis';
 $lang['target____extern']      = 'Parâmetro "target" para links externos';
 $lang['target____media']       = 'Parâmetro "target" para links de media';
 $lang['target____windows']     = 'Parâmetro "target" para links do Windows';
+$lang['mediarevisions']        = 'Ativar Mediarevisions?';
 $lang['refcheck']              = 'Verificação de referência da media';
 $lang['gdlib']                 = 'Versão GD Lib';
 $lang['im_convert']            = 'Caminho para a ferramenta "convert" do ImageMagick';

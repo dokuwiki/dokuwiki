@@ -1,0 +1,3 @@
+====== Rheoli Tanysgrifiad ======
+
+Mae'r dudalen hon yn eich galluogi i reoli'ch tanysgrifiadau ar gyfer y dudalen gyfredol a'r namespace.

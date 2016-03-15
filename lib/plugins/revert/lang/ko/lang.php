@@ -9,6 +9,7 @@
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Erial <erial2@gmail.com>
  */
 $lang['menu']                  = '되돌리기 관리자';
 $lang['filter']                = '스팸 문서 검색';

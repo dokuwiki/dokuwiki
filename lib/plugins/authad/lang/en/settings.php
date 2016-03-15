@@ -13,3 +13,5 @@ $lang['use_tls']            = 'Use TLS connection? If used, do not enable SSL ab
 $lang['debug']              = 'Display additional debugging output on errors?';
 $lang['expirywarn']         = 'Days in advance to warn user about expiring password. 0 to disable.';
 $lang['additional']         = 'A comma separated list of additional AD attributes to fetch from user data. Used by some plugins.';
+$lang['update_name']        = 'Allow users to update their AD display name?';
+$lang['update_mail']        = 'Allow users to update their email address?';

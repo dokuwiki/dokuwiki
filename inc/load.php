@@ -107,14 +107,15 @@ function load_autoload($name){
     );
 
     if(isset($classes[$name])){
-        require_once($classes[$name]);
-        return;
+        require ($classes[$name]);
+        return true;
     }
 
     // our own namespace
     $name = str_replace('\\', '/', $name);
     if(substr($name, 0, 9) == 'dokuwiki/') {
-        require_once(substr($name, 9) . '.php');
+        require substr($name, 9) . '.php';
+        return true;
     }
 
     // Plugin loading
@@ -124,9 +125,10 @@ function load_autoload($name){
         $c = ((count($m) === 4) ? "/{$m[3]}" : '');
         $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
         if(file_exists($plg)){
-            include_once DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+            require $plg;
         }
-        return;
+        return true;
     }
+    return false;
 }
 

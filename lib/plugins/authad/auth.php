@@ -119,8 +119,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // other can do's are changed in $this->_loadServerConfig() base on domain setup
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
+        $this->cando['modName'] = (bool)$this->conf['update_name'];
+        $this->cando['modMail'] = (bool)$this->conf['update_mail'];
         $this->cando['getUserCount'] = true;
     }
 

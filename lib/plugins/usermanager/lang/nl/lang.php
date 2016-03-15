@@ -16,6 +16,7 @@
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Rene <wllywlnt@yahoo.com>
+ * @author Wesley de Weerd <wesleytiel@gmail.com>
  */
 $lang['menu']                  = 'Gebruikersbeheer';
 $lang['noauth']                = '(gebruikersauthenticatie niet beschikbaar)';
@@ -76,3 +77,11 @@ $lang['import_error_readfail'] = 'Importeren mislukt. Lezen van het geüploade b
 $lang['import_error_create']   = 'Aanmaken van de gebruiker was niet mogelijk.';
 $lang['import_notify_fail']    = 'Notificatiebericht kon niet naar de geïmporteerde gebruiker worden verstuurd, %s met e-mail %s.';
 $lang['import_downloadfailures'] = 'Download de gevonden fouten als CSV voor correctie';
+$lang['addUser_error_missing_pass'] = 'Vul een wachtwoord in of activeer de gebruikers notificatie om een wachtwoord te genereren.';
+$lang['addUser_error_pass_not_identical'] = 'De ingevulde wachtwoorden komen niet overeen';
+$lang['addUser_error_modPass_disabled'] = 'Het aanpassen van wachtwoorden is momenteel uitgeschakeld';
+$lang['addUser_error_name_missing'] = 'Vul een naam in voor de nieuwe gebruiker';
+$lang['addUser_error_modName_disabled'] = 'Het aanpassen van namen is momenteel uitgeschakeld';
+$lang['addUser_error_mail_missing'] = 'Vul een email adres in voor de nieuwe gebruiker';
+$lang['addUser_error_modMail_disabled'] = 'Het aanpassen van uw email adres is momenteel uitgeschakeld';
+$lang['addUser_error_create_event_failed'] = 'Een plugin heeft voorkomen dat de nieuwe gebruiker wordt toegevoegd . Bekijk mogelijke andere berichten voor meer informatie.';

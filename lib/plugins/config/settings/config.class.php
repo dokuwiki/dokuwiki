@@ -101,7 +101,12 @@ if (!class_exists('configuration')) {
                     }
 
                     $this->setting[$key] = new $class($key,$param);
-                    $this->setting[$key]->initialize($default[$key],$local[$key],$protected[$key]);
+
+                    $d = array_key_exists($key, $default) ? $default[$key] : null;
+                    $l = array_key_exists($key, $local) ? $local[$key] : null;
+                    $p = array_key_exists($key, $protected) ? $protected[$key] : null;
+
+                    $this->setting[$key]->initialize($d,$l,$p);
                 }
 
                 $this->_loaded = true;
@@ -1186,6 +1191,7 @@ if (!class_exists('setting_multicheckbox')) {
 
         var $_choices = array();
         var $_combine = array();
+        var $_other = 'always';
 
         /**
          * update changed setting with user provided value $input
@@ -1219,7 +1225,7 @@ if (!class_exists('setting_multicheckbox')) {
          * Build html for label and input of setting
          *
          * @param DokuWiki_Plugin $plugin object of config plugin
-         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @param bool            $echo   true: show input value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
         function html(&$plugin, $echo=false) {
@@ -1269,16 +1275,21 @@ if (!class_exists('setting_multicheckbox')) {
             }
 
             // handle any remaining values
-            $other = join(',',$value);
+            if ($this->_other != 'never'){
+                $other = join(',',$value);
+                // test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
+                // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
+                if ($this->_other != 'exists' || $other) {
 
-            $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
-                            " selectiondefault" : "";
+                    $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+                                    " selectiondefault" : "";
 
-            $input .= '<div class="other'.$class.'">'."\n";
-            $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
-            $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
-            $input .= "</div>\n";
-
+                    $input .= '<div class="other'.$class.'">'."\n";
+                    $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
+                    $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+                    $input .= "</div>\n";
+                }
+            }
             $label = '<label>'.$this->prompt($plugin).'</label>';
             return array($label,$input);
         }
