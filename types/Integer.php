@@ -33,10 +33,11 @@ class Integer extends AbstractMultiBaseType {
 
     /**
      * @param int|string $value
+     * @return int|string
      * @throws ValidationException
      */
     public function validate($value) {
-        $value = trim($value);
+        $value = parent::validate($value);
 
         if((string) $value != (string) intval($value)) {
             throw new ValidationException('Integer needed');
@@ -49,6 +50,8 @@ class Integer extends AbstractMultiBaseType {
         if($this->config['max'] !== '' && intval($value) >= intval($this->config['max'])) {
             throw new ValidationException('Integer max', intval($this->config['max']));
         }
+
+        return $value;
     }
 
 }

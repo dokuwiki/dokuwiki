@@ -16,8 +16,11 @@ class Url extends Text {
      * The final string should be an URL
      *
      * @param string $value
+     * @return int|string|void
      */
     public function validate($value) {
+        $value = parent::validate($value);
+
         $url = $this->buildURL($value);
 
         $schemes = getSchemes();
@@ -25,6 +28,8 @@ class Url extends Text {
         if(!preg_match("/$regex/i", $url)) {
             throw new ValidationException('Url invalid', $url);
         }
+
+        return $value;
     }
 
     /**

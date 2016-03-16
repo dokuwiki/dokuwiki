@@ -4,6 +4,7 @@ namespace plugin\struct\test;
 
 use plugin\struct\meta;
 use plugin\struct\types\Integer;
+use plugin\struct\types\Text;
 
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
@@ -80,7 +81,8 @@ class Validator_struct_test extends \DokuWikiTest {
         $integer = new Integer();
 
         $validator = new mock\Validator();
-        $this->assertFalse($validator->validateField($integer, $label, 'NaN'));
+        $value = 'NaN';
+        $this->assertFalse($validator->validateField($integer, $label, $value));
         $this->assertEquals(array($errormsg), $validator->getErrors());
     }
 
@@ -90,16 +92,31 @@ class Validator_struct_test extends \DokuWikiTest {
         $integer = new Integer();
 
         $validator = new mock\Validator();
-        $this->assertFalse($validator->validateField($integer, $label, array('NaN','NaN')));
+        $value = array('NaN','NaN');
+        $this->assertFalse($validator->validateField($integer, $label, $value));
         $this->assertEquals(array($errormsg, $errormsg), $validator->getErrors());
     }
 
     public function test_validate_blank() {
         $integer = new Integer();
 
-        $entry = new mock\Validator();
-        $this->assertTrue($entry->validateField($integer, 'label', null));
-        $this->assertEquals(array(), $entry->getErrors());
+        $validator = new mock\Validator();
+        $value = null;
+        $this->assertTrue($validator->validateField($integer, 'label', $value));
+        $this->assertEquals(array(), $validator->getErrors());
+    }
+
+    public function test_validate_clean() {
+        $text = new Text();
+
+        $validator = new mock\Validator();
+        $value = '  foo  ';
+        $this->assertTrue($validator->validateField($text, 'label', $value));
+        $this->assertEquals('foo', $value);
+
+        $value = array('  foo  ', '  bar  ');
+        $this->assertTrue($validator->validateField($text, 'label', $value));
+        $this->assertEquals(array('foo', 'bar'), $value);
     }
 
 }

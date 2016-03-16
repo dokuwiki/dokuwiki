@@ -344,16 +344,19 @@ abstract class AbstractBaseType {
     }
 
     /**
-     * Validate a single value
+     * Validate and optionally clean a single value
      *
      * This function needs to throw a validation exception when validation fails.
      * The exception message will be prefixed by the appropriate field on output
      *
+     * The function should return the value as it should be saved later on.
+     *
      * @param string|int $value
+     * @return int|string the cleaned value
      * @throws ValidationException
      */
     public function validate($value) {
-        // nothing by default - we allow everything
+        return trim($value);
     }
 
     /**

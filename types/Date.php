@@ -50,13 +50,17 @@ class Date extends AbstractBaseType {
      * The exception message will be prefixed by the appropriate field on output
      *
      * @param string|int $value
+     * @return int|string
      * @throws ValidationException
      */
     public function validate($value) {
+        $value = parent::validate($value);
+
         list($year, $month, $day) = explode('-',$value, 3);
         if (!checkdate($month, $day, $year)) {
             throw new ValidationException('invalid date format');
         }
+        return $value;
     }
 
 }

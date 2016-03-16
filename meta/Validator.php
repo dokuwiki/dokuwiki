@@ -119,18 +119,18 @@ class Validator {
      *
      * @param AbstractBaseType $type
      * @param string $label
-     * @param array|string|int $data
+     * @param array|string|int &$data may be modified by the validation function
      * @return bool true if the data validates, otherwise false
      */
-    protected function validateField(AbstractBaseType $type, $label, $data) {
+    protected function validateField(AbstractBaseType $type, $label, &$data) {
         $prefix = sprintf($this->hlp->getLang('validation_prefix'), $label);
 
         $ok = true;
         if(is_array($data)) {
-            foreach($data as $value) {
+            foreach($data as &$value) {
                 if(!blank($value)) {
                     try {
-                        $type->validate($value);
+                        $value = $type->validate($value);
                     } catch(ValidationException $e) {
                         $this->errors[] = $prefix . $e->getMessage();
                         $ok = false;
@@ -142,7 +142,7 @@ class Validator {
 
         if(!blank($data)) {
             try {
-                $type->validate($data);
+                $data = $type->validate($data);
             } catch(ValidationException $e) {
                 $this->errors[] = $prefix . $e->getMessage();
                 $ok = false;

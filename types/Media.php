@@ -17,16 +17,19 @@ class Media extends AbstractBaseType {
      * Checks against the allowed mime types
      *
      * @param string $value
+     * @return int|string
      */
     public function validate($value) {
-        if(!trim($this->config['mime'])) return;
+        $value = parent::validate($value);
+
+        if(!trim($this->config['mime'])) return $value;
         $allows = explode(',', $this->config['mime']);
         $allows = array_map('trim', $allows);
         $allows = array_filter($allows);
 
         list(, $mime,) = mimetype($value, false);
         foreach($allows as $allow) {
-            if(strpos($mime, $allow) === 0) return;
+            if(strpos($mime, $allow) === 0) return $value;
         }
 
         throw new ValidationException('Media mime type', $mime, $this->config['mime']);

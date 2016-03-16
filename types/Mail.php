@@ -28,12 +28,17 @@ class Mail extends Text {
      * Validate
      *
      * @param int|string $value
+     * @return int|string
      */
     public function validate($value) {
+        $value = parent::validate($value);
+
         $mail = $this->config['prefix'] . $value . $this->config['postfix'];
         if(!mail_isvalid($mail)) {
             throw new ValidationException('Mail invalid', $mail);
         }
+
+        return $value;
     }
 
 }
