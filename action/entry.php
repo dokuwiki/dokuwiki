@@ -178,7 +178,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             }
         } else {
             // save the provided data
-            foreach($this->tosave as $table) {
+            if($this->tosave) foreach($this->tosave as $table) {
                 $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
                 $schemaData->saveData($structData[$table]);
 
