@@ -11,6 +11,8 @@ namespace plugin\struct\types;
 class Page extends AbstractMultiBaseType {
 
     protected $config = array(
+        'namespace' => '',
+        'postfix' => '',
         'autocomplete' => array(
             'mininput' => 2,
             'maxresult' => 5,
@@ -26,7 +28,7 @@ class Page extends AbstractMultiBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $link = cleanID($this->config['prefix'] . $value . $this->config['postfix']);
+        $link = cleanID($this->config['namespace'] .':'. $value . $this->config['postfix']);
         if(!$link) return true;
 
         $R->internallink(":$link");
@@ -49,6 +51,11 @@ class Page extends AbstractMultiBaseType {
         $max = $this->config['autocomplete']['maxresult'];
         if($max <= 0) return array();
 
+        // lookup with namespace and postfix applied
+        $namespace = cleanID($this->config['namespace']);
+        $postfix = $this->config['postfix'];
+        if($namespace) $lookup .= ' @'.$namespace;
+
         $data = ft_pageLookup($lookup, true, useHeading('navigation'));
         if(!count($data)) return array();
 
@@ -66,6 +73,25 @@ class Page extends AbstractMultiBaseType {
                     $name = $id;
                 }
             }
+
+            // check suffix and remove
+            if($postfix) {
+                if(substr($id, -1 * strlen($postfix)) == $postfix) {
+                    $id = substr($id, 0, -1 * strlen($postfix));
+                } else {
+                    continue; // page does not end in postfix, don't suggest it
+                }
+            }
+
+            // remove namespace again
+            if($namespace) {
+                if(substr($id, 0, strlen($namespace) + 1) == "$namespace:") {
+                    $id = substr($id, strlen($namespace) + 1);
+                } else {
+                    continue; // this should usually not happen
+                }
+            }
+
             $result[] = array(
                 'label' => $name,
                 'value' => $id
