@@ -44,6 +44,7 @@ $lang['Validation Exception Integer max'] = 'has to be equal or less than %d';
 $lang['Validation Exception User not found'] = 'has to be an existing user. User \'%s\' was not found.';
 $lang['Validation Exception Media mime type'] = 'MIME type %s has to match the allowed set of %s';
 $lang['Validation Exception Url invalid'] = '%s is not a valid URL';
+$lang['Validation Exception Mail invalid'] = '%s is not a valid email address';
 $lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-DD';
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
