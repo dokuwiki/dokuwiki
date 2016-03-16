@@ -20,6 +20,8 @@ if(!defined('DOKU_INC')) die();
  */
 class action_plugin_struct_output extends DokuWiki_Action_Plugin {
 
+    protected $lastread = '';
+
     /**
      * Registers a callback function for a given event
      *
@@ -28,7 +30,20 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
      */
     public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('PARSER_HANDLER_DONE', 'AFTER', $this, 'handle_output');
+        $controller->register_hook('IO_WIKIPAGE_READ', 'AFTER', $this, 'handle_read');
+    }
 
+    /**
+     * This is kind of a hack. We want to be sure our instruction is only added when the
+     * instructions of the main page are created. There is no clear way to figure that out
+     * though. Thus we only act on when the appropriate wiki page was read from disk
+     * immediately before our call.
+     *
+     * @param Doku_Event $event
+     * @param $param
+     */
+    public function handle_read(Doku_Event $event, $param) {
+        $this->lastread = $event->data[2];
     }
 
     /**
@@ -38,11 +53,10 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
      * @param Doku_Event $event
      * @param $param
      */
-    public function handle_output(Doku_Event &$event, $param) {
-        global $ACT;
+    public function handle_output(Doku_Event $event, $param) {
         global $ID;
-        // blank $ACT happens when instructions are rendered in indexer
-        if(!blank($ACT) && $ACT != 'show') return; //FIXME what about export_*?
+        if($this->lastread != $ID) return; // avoid nested calls
+        $this->lastread = '';
         if(!page_exists($ID)) return;
 
         $ins = -1;
