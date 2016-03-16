@@ -148,6 +148,20 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Return the data in pseudo syntax
+     */
+    public function getDataPseudoSyntax() {
+        $result = '';
+        $data = $this->getDataArray();
+        foreach($data as $key => $value) {
+            $key = $this->table . ".$key";
+            if(is_array($value)) $value = join(', ', $value);
+            $result .= sprintf("% -20s : %s\n", $key, $value);
+        }
+        return $result;
+    }
+
+    /**
      * retrieve the data saved for the page from the database. Usually there is no need to call this function.
      * Call @see SchemaData::getData instead.
      */

@@ -46,17 +46,12 @@ class action_plugin_struct_diff extends DokuWiki_Action_Plugin {
         $tables = $assignments->getPageAssignments($id);
         if(!$tables) return;
 
-        $event->result .= "\n---- struct data ----";
+        $event->result .= "\n---- struct data ----\n";
         foreach($tables as $table) {
             $schemadata = new SchemaData($table, $id, $rev);
-            $data = $schemadata->getDataArray();
-            foreach($data as $key => $value) {
-                $key = "$table.$key";
-                if(is_array($value)) $value = join(', ', $value);
-                $event->result .= sprintf("\n% -20s : %s", $key, $value);
-            }
+            $event->result .= $schemadata->getDataPseudoSyntax();
         }
-        $event->result .= "\n----";
+        $event->result .= "----\n";
     }
 
 }
