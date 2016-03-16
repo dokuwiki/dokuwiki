@@ -8,6 +8,19 @@ class Dropdown extends AbstractBaseType {
     );
 
     /**
+     * Creates the options array
+     *
+     * @return array
+     */
+    protected function getOptions() {
+        $options = explode(',', $this->config['values']);
+        $options = array_map('trim', $options);
+        $options = array_filter($options);
+        array_unshift($options, '');
+        return $options;
+    }
+
+    /**
      * A Dropdown with a single value to pick
      *
      * @param string $name
@@ -15,22 +28,18 @@ class Dropdown extends AbstractBaseType {
      * @return string
      */
     public function valueEditor($name, $value) {
-        $class = 'struct_'.strtolower($this->getClass());
-
-        $options = explode(',', $this->config['values']);
-        $options = array_map('trim', $options);
-        $options = array_filter($options);
+        $class = 'struct_' . strtolower($this->getClass());
 
         $name = hsc($name);
         $html = "<select name=\"$name\" class=\"$class\">";
-        foreach ($options as $opt) {
+        foreach($this->getOptions() as $opt) {
             if($opt == $value) {
                 $selected = 'selected="selected"';
             } else {
                 $selected = '';
             }
 
-            $html .= "<option $selected value=\"".hsc($opt)."\">".hsc($opt).'</option>';
+            $html .= "<option $selected value=\"" . hsc($opt) . "\">" . hsc($opt) . '</option>';
         }
         $html .= '</select>';
 
@@ -45,26 +54,22 @@ class Dropdown extends AbstractBaseType {
      * @return string
      */
     public function multiValueEditor($name, $values) {
-        $class = 'struct_'.strtolower($this->getClass());
-
-        $options = explode(',', $this->config['values']);
-        $options = array_map('trim', $options);
-        $options = array_filter($options);
+        $class = 'struct_' . strtolower($this->getClass());
 
         $name = hsc($name);
         $html = "<select name=\"{$name}[]\" class=\"$class\" multiple=\"multiple\" size=\"5\">";
-        foreach ($options as $opt) {
+        foreach($this->getOptions() as $opt) {
             if(in_array($opt, $values)) {
                 $selected = 'selected="selected"';
             } else {
                 $selected = '';
             }
 
-            $html .= "<option $selected value=\"".hsc($opt)."\">".hsc($opt).'</option>';
+            $html .= "<option $selected value=\"" . hsc($opt) . "\">" . hsc($opt) . '</option>';
 
         }
         $html .= '</select> ';
-        $html .= '<small>'.$this->getLang('multidropdown').'</small>';
+        $html .= '<small>' . $this->getLang('multidropdown') . '</small>';
         return $html;
     }
 
