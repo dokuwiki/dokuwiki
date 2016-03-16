@@ -223,7 +223,7 @@ class SchemaData extends Schema {
         $mtable = 'multi_' . $this->table;
 
         $colsel = join(',', preg_filter('/^/', 'col', $singles));
-        $groups = $colsel;
+        $groups = join(',', array_filter(array('DATA.pid', $colsel)));
         $sep = Search::CONCAT_SEPARATOR;
 
         $join = '';

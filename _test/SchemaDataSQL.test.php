@@ -38,7 +38,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                    FROM data_testtable DATA
                   WHERE DATA.pid = ?
                     AND DATA.rev = ?
-               GROUP BY col1,col2",
+               GROUP BY DATA.pid,col1,col2",
                 array('pagename', 27),
                 'no multis, with ts',
             ),
@@ -56,7 +56,7 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                     AND M3.colref = 3
                   WHERE DATA.pid = ?
                     AND DATA.rev = ?
-               GROUP BY col1,col2",
+               GROUP BY DATA.pid,col1,col2",
                 array('pagename', 27,),
                 'one multi, with ts',
             ),
@@ -66,7 +66,8 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                     'singles' => array(),
                     'multis' => array(1,2)
                 ),
-                "SELECT M1.value AS col1,M2.value AS col2
+                "SELECT GROUP_CONCAT(M1.value,'".Search::CONCAT_SEPARATOR."') AS col1,
+                        GROUP_CONCAT(M2.value,'".Search::CONCAT_SEPARATOR."') AS col2
                    FROM data_testtable DATA
                    LEFT OUTER JOIN multi_testtable M1
                      ON DATA.pid = M1.pid
@@ -77,7 +78,8 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                     AND DATA.rev = M2.rev
                     AND M2.colref = 2
                   WHERE DATA.pid = ?
-                    AND DATA.rev = ?",
+                    AND DATA.rev = ?
+               GROUP BY DATA.pid",
                 array('pagename', 27,),
                 "only two multis"
             )
