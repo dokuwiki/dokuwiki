@@ -60,6 +60,27 @@ class schemaDataSQL_struct_test extends \DokuWikiTest {
                 array('pagename', 27,),
                 'one multi, with ts',
             ),
+            array(
+                array(
+                    'obj' => $schemadata,
+                    'singles' => array(),
+                    'multis' => array(1,2)
+                ),
+                "SELECT M1.value AS col1,M2.value AS col2
+                   FROM data_testtable DATA
+                   LEFT OUTER JOIN multi_testtable M1
+                     ON DATA.pid = M1.pid
+                    AND DATA.rev = M1.rev
+                    AND M1.colref = 1
+                   LEFT OUTER JOIN multi_testtable M2
+                     ON DATA.pid = M2.pid
+                    AND DATA.rev = M2.rev
+                    AND M2.colref = 2
+                  WHERE DATA.pid = ?
+                    AND DATA.rev = ?",
+                array('pagename', 27,),
+                "only two multis"
+            )
         );
     }
 
