@@ -8,6 +8,7 @@ class User extends AbstractMultiBaseType {
 
     protected $config = array(
         'fullname' => true,
+        'existingonly' => true,
         'autocomplete' => array(
             'mininput' => 2,
             'maxresult' => 5,
@@ -21,10 +22,13 @@ class User extends AbstractMultiBaseType {
     public function validate($value) {
         $value = parent::validate($value);
 
-        /** @var \DokuWiki_Auth_Plugin $auth */
-        global $auth;
-        $info = $auth->getUserData($value, false);
-        if($info === false) throw new ValidationException('User not found', $value);
+        if($this->config['existingonly']) {
+            /** @var \DokuWiki_Auth_Plugin $auth */
+            global $auth;
+            $info = $auth->getUserData($value, false);
+            if($info === false) throw new ValidationException('User not found', $value);
+        }
+
         return $value;
     }
 

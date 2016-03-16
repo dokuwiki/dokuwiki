@@ -28,6 +28,10 @@ class Type_User_struct_test extends \DokuWikiTest {
         $user = new User();
         $user->validate('testuser');
         $this->assertTrue(true); // we simply check that no exceptions are thrown
+
+        $user = new User(array('existingonly'=>false));
+        $user->validate('nosuchuser');
+        $this->assertTrue(true); // we simply check that no exceptions are thrown
     }
 
     public function test_ajax() {
