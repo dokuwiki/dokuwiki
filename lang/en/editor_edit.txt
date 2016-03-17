@@ -6,4 +6,4 @@ Field names have to be unique. It is recommended to use short identifiers that u
 
 The type of a field defines what kind of data can be stored in the field and influences how it will be displayed later. Each type has its own specific configuration options.
 
-Please refer to the documentation to learn more.
+Please refer to the [[doku>plugin:struct:type|documentation]] to learn more.
