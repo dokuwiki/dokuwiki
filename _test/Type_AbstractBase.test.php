@@ -45,7 +45,8 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
                 ),
                 'hint' => array(
                     'en' => ''
-                )
+                ),
+                'visibility' => array('inpage' => true, 'ineditor' => true)
             ),
             $type->getConfig()
         );
@@ -68,7 +69,8 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
                 ),
                 'hint' => array(
                     'en' => 'english hint'
-                )
+                ),
+                'visibility' => array('inpage' => true, 'ineditor' => true)
             ),
             $type->getConfig()
         );
@@ -101,7 +103,8 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
                     'tr' => '',
                     'it' => '',
                     'de' => '',
-                )
+                ),
+                'visibility' => array('inpage' => true, 'ineditor' => true)
             ),
             $type->getConfig()
         );
@@ -141,7 +144,8 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
                     'tr' => '',
                     'it' => '',
                     'de' => 'german hint',
-                )
+                ),
+                'visibility' => array('inpage' => true, 'ineditor' => true)
             ),
             $type->getConfig()
         );
