@@ -48,18 +48,26 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         $assignments = new Assignments();
         if($INPUT->str('action') && $INPUT->arr('assignment') && checkSecurityToken()) {
             $assignment = $INPUT->arr('assignment');
-            $ok = true;
             if(!blank($assignment['assign']) && !blank($assignment['tbl'])) {
                 if($INPUT->str('action') === 'delete') {
                     $ok = $assignments->removePattern($assignment['assign'], $assignment['tbl']);
+                    if(!$ok) msg('failed to remove pattern', -1);
                 } else if($INPUT->str('action') === 'add') {
-                    $ok = $assignments->addPattern($assignment['assign'], $assignment['tbl']);
+                    if($assignment['assign']{0} == '/') {
+                        if(@preg_match($assignment['assign'], null) === false) {
+                            msg('Invalid regular expression. Pattern not saved', -1);
+                        } else {
+                            $ok = $assignments->addPattern($assignment['assign'], $assignment['tbl']);
+                            if(!$ok) msg('failed to add pattern', -1);
+                        }
+                    } else {
+                        $ok = $assignments->addPattern($assignment['assign'], $assignment['tbl']);
+                        if(!$ok) msg('failed to add pattern', -1);
+                    }
                 }
             }
 
-            if(!$ok) {
-                msg('something went wrong while saving', -1);
-            }
+
 
             send_redirect(wl($ID, array('do' => 'admin', 'page' => 'struct_assignments'), true, '&'));
         }

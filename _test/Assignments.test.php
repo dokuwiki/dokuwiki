@@ -28,6 +28,12 @@ class Assignments_struct_test extends \DokuWikiTest {
 
         $this->assertFalse($ass->matchPagePattern('some:ns:page', 'some:ns:other'));
         $this->assertFalse($ass->matchPagePattern('some:ns:*', 'some:ns:deep:other'));
+
+        // some regexes
+        $this->assertTrue($ass->matchPagePattern('/page/', 'somepagehere'));
+        $this->assertFalse($ass->matchPagePattern('/:page/', 'somepagehere'));
+        $this->assertTrue($ass->matchPagePattern('/:page/', 'some:pagehere'));
+        $this->assertTrue($ass->matchPagePattern('/:page/', 'pagehere'));
     }
 
 

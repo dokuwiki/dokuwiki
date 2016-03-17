@@ -240,12 +240,16 @@ class Assignments {
     protected function matchPagePattern($pattern, $page, $pns = null) {
         if(trim($pattern,':') == '**') return true; // match all
 
+        // regex patterns
+        if($pattern{0} == '/') {
+            return (bool) preg_match($pattern, ":$page");
+        }
+
         if(is_null($pns)) {
             $pns = ':' . getNS($page) . ':';
         }
 
         $ans = ':' . cleanID($pattern) . ':';
-
         if(substr($pattern, -2) == '**') {
             // upper namespaces match
             if(strpos($pns, $ans) === 0) {

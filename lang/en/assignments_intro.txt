@@ -5,3 +5,4 @@ Here you can define patterns to automatically assign schemas to pages. Whenever 
   * Namespaces excluding subnamespaces are assigned as ''<nowiki>namespace:*</nowiki>''.
   * Namespaces including subnamespaces are assigned as ''<nowiki>namespace:**</nowiki>''.
   * Pages as usual with their full page ID.
+  * Regular Expressions starting and ending with ''/'' - they are matched against a '':'' prefixed full page id.
