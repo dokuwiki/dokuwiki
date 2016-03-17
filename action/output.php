@@ -43,7 +43,7 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
      * @param $param
      */
     public function handle_read(Doku_Event $event, $param) {
-        $this->lastread = $event->data[2];
+        $this->lastread = cleanID($event->data[1] . ':' . $event->data[2]);
     }
 
     /**
