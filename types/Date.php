@@ -6,7 +6,8 @@ use plugin\struct\meta\ValidationException;
 class Date extends AbstractBaseType {
 
     protected $config = array(
-        'format' => 'Y/m/d'
+        'format' => 'Y/m/d',
+        'prefilltoday' => false
     );
 
     /**
@@ -39,6 +40,11 @@ class Date extends AbstractBaseType {
     public function valueEditor($name, $value) {
         $name = hsc($name);
         $value = hsc($value);
+
+        if($this->config['prefilltoday'] && !$value) {
+            $value = date('Y-m-d');
+        }
+
         $html = "<input class=\"struct_date\" name=\"$name\" value=\"$value\" />";
         return "$html";
     }
