@@ -226,7 +226,15 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
 
             $name = self::$VAR . "[$tablename][$label]";
             $input = $field->getValueEditor($name);
-            $html .= '<label>';
+
+            // we keep all the custom form stuff the field might produce, but hide it
+            if(!$field->getColumn()->isVisibleInEditor()) {
+                $hide = 'style="display:none"';
+            } else {
+                $hide = '';
+            }
+
+            $html .= "<label $hide>";
             $html .= "<span class=\"label $class\" title=\"$hint\">$trans</span>";
             $html .= "<span class=\"input\">$input</span>";
             $html .= '</label>';

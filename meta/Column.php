@@ -136,6 +136,20 @@ class Column {
     }
 
     /**
+     * @return bool
+     */
+    public function isVisibleInEditor() {
+        return $this->getType()->isVisibleInEditor();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibleInPage() {
+        return $this->getType()->isVisibleInPage();
+    }
+
+    /**
      * Returns a list of all available types
      *
      * @return array

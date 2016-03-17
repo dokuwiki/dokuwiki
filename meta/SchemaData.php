@@ -122,7 +122,7 @@ class SchemaData extends Schema {
     /**
      * returns the data saved for the page
      *
-     * @param bool $skipempty do not return empty fields
+     * @param bool $skipempty do not return empty or invisible (inpage) fields
      * @return Value[] a list of values saved for the current page
      */
     public function getData($skipempty=false) {
@@ -137,7 +137,7 @@ class SchemaData extends Schema {
      *
      * The array returned is in the same format as used in @see saveData()
      *
-     * @param bool $skipempty do not return empty fields
+     * @param bool $skipempty do not return empty or invisible (inpage) fields
      * @return array
      */
     public function getDataArray($skipempty=false) {
@@ -190,7 +190,7 @@ class SchemaData extends Schema {
      *
      * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
      * @param bool $asarray return data as associative array (true) or as array of Values (false)
-     * @param bool $skipemtpy skip empty fields from being returned at all
+     * @param bool $skipemtpy skip empty or invisible (inpage) fields from being returned at all
      * @return array|Value[]
      */
     protected function consolidateData($DBdata, $asarray = false, $skipemtpy=false) {
@@ -214,6 +214,7 @@ class SchemaData extends Schema {
             }
 
             if($skipemtpy && ($val === '' || $val == array())) continue;
+            if($skipemtpy && !$col->isVisibleInPage()) continue;
 
             if($asarray) {
                 $data[$col->getLabel()] = $val;

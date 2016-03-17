@@ -1,5 +1,6 @@
 <?php
 namespace plugin\struct\types;
+
 use plugin\struct\meta\Column;
 use plugin\struct\meta\StructException;
 use plugin\struct\meta\ValidationException;
@@ -25,7 +26,7 @@ abstract class AbstractBaseType {
     /**
      * @var array config keys that should not be cleaned despite not being in $config
      */
-    protected $keepconfig = array('label', 'hint');
+    protected $keepconfig = array('label', 'hint', 'visibility');
 
     /**
      * @var string label for the field
@@ -60,7 +61,15 @@ abstract class AbstractBaseType {
      * @param int $tid The id of this type if it has been saved, yet
      */
     public function __construct($config = null, $label = '', $ismulti = false, $tid = 0) {
-        // initialize the configuration, ignoring all keys that are not supposed to be here
+        // general config options
+        $baseconfig = array(
+            'visibility' => array(
+                'inpage' => true,
+                'ineditor' => true,
+            )
+        );
+
+        // use previously saved configuration, ignoring all keys that are not supposed to be here
         if(!is_null($config)) {
             foreach($config as $key => $value) {
                 if(isset($this->config[$key]) || in_array($key, $this->keepconfig)) {
@@ -70,6 +79,7 @@ abstract class AbstractBaseType {
         }
 
         $this->initTransConfig();
+        $this->config = array_merge($baseconfig, $this->config);
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
         $this->tid = $tid;
@@ -220,6 +230,20 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * @return bool
+     */
+    public function isVisibleInEditor() {
+        return $this->config['visibility']['ineditor'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibleInPage() {
+        return $this->config['visibility']['inpage'];
+    }
+
+    /**
      * Split a single value into multiple values
      *
      * This function is called on saving data when only a single value instead of an array
@@ -268,7 +292,7 @@ abstract class AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
-        $class = 'struct_'.strtolower($this->getClass());
+        $class = 'struct_' . strtolower($this->getClass());
 
         // support the autocomplete configurations out of the box
         if(isset($this->config['autocomplete']['maxresult']) && $this->config['autocomplete']['maxresult']) {
@@ -326,7 +350,7 @@ abstract class AbstractBaseType {
      * @return array Tuple with the SQL and parameter array
      */
     public function compare($column, $comp, $value) {
-        switch ($comp) {
+        switch($comp) {
             case '~':
                 $sql = "$column LIKE ?";
                 $opt = array($value);
