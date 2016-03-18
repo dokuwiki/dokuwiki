@@ -776,3 +776,52 @@ function io_grep($file,$pattern,$max=0,$backref=false){
     return $matches;
 }
 
+
+/**
+ * Get size of contents of a file, for a compressed file the uncompressed size
+ * Warning: reading uncompressed size of content of bz-files requires uncompressing
+ *
+ * @author  Gerrit Uitslag <klapinklapin@gmail.com>
+ *
+ * @param string $file filename path to file
+ * @return int size of file
+ */
+function io_getSizeFile($file) {
+    if (!file_exists($file)) return 0;
+
+    if(substr($file,-3) == '.gz'){
+        if(!DOKU_HAS_GZIP) return 0;
+
+        $fp = @fopen($file, "rb");
+        if($fp === false) return 0;
+
+        fseek($fp, -4, SEEK_END);
+        $buffer = fread($fp, 4);
+        fclose($fp);
+        $array = unpack("V", $buffer);
+        $uncompressedsize = end($array);
+    }else if(substr($file,-4) == '.bz2'){
+        if(!DOKU_HAS_BZIP) return 0;
+
+        $bz = bzopen($file,"r");
+        if($bz === false) return 0;
+
+        $uncompressedsize = 0;
+        while (!feof($bz)) {
+            //8192 seems to be the maximum buffersize?
+            $buffer = bzread($bz,8192);
+            if(($buffer === false) || (bzerrno($bz) !== 0)) {
+                return 0;
+            }
+            if (UTF8_MBSTRING) {
+                $uncompressedsize += mb_strlen($buffer, '8bit');
+            } else {
+                $uncompressedsize += strlen($buffer);
+            }
+        }
+    }else{
+        $uncompressedsize = filesize($file);
+    }
+
+    return $uncompressedsize;
+ }
