@@ -1214,7 +1214,13 @@ function detectExternalEdit($id) {
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
         if($old > $oldRev) {
-            $filesize_old = filesize(wikiFN($id, $oldRev));
+            $lastfileinrevisions = wikiFN($id, $oldRev);
+            $revinfo = $pagelog->getRevisionInfo($oldRev);
+            if(empty($oldRev) || !file_exists($lastfileinrevisions) || $revinfo['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+                $filesize_old = 0;
+            } else {
+                $filesize_old = io_getSizeFile($lastfileinrevisions);
+            }
             $filesize_new = filesize($file);
             $sizechange = $filesize_new - $filesize_old;
 
@@ -1292,7 +1298,10 @@ function saveWikiText($id, $text, $summary, $minor = false) {
 
     detectExternalEdit($id);
 
-    if($svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE) {
+    if(
+        $svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE ||
+        ($svdta['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($svdta['file']))
+    ) {
         $filesize_old = 0;
     } else {
         $filesize_old = filesize($svdta['file']);
