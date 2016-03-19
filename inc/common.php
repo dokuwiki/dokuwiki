@@ -1203,30 +1203,30 @@ function con($pre, $text, $suf, $pretty = false) {
 function detectExternalEdit($id) {
     global $lang;
 
-    $file     = wikiFN($id);
-    $old      = @filemtime($file); // from page
-    $pagelog  = new PageChangeLog($id, 1024);
-    $oldRev   = $pagelog->getRevisions(-1, 1); // from changelog
-    $oldRev   = (int) (empty($oldRev) ? 0 : $oldRev[0]);
+    $fileLastMod = wikiFN($id);
+    $lastMod     = @filemtime($fileLastMod); // from page
+    $pagelog     = new PageChangeLog($id, 1024);
+    $lastRev     = $pagelog->getRevisions(-1, 1); // from changelog
+    $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
 
-    if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
+    if(!file_exists(wikiFN($id, $lastMod)) && file_exists($fileLastMod) && $lastMod >= $lastRev) {
         // add old revision to the attic if missing
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
-        if($old > $oldRev) {
-            $lastfileinrevisions = wikiFN($id, $oldRev);
-            $revinfo = $pagelog->getRevisionInfo($oldRev);
-            if(empty($oldRev) || !file_exists($lastfileinrevisions) || $revinfo['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+        if($lastMod > $lastRev) {
+            $fileLastRev = wikiFN($id, $lastRev);
+            $revinfo = $pagelog->getRevisionInfo($lastRev);
+            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
                 $filesize_old = 0;
             } else {
-                $filesize_old = io_getSizeFile($lastfileinrevisions);
+                $filesize_old = io_getSizeFile($fileLastRev);
             }
-            $filesize_new = filesize($file);
+            $filesize_new = filesize($fileLastMod);
             $sizechange = $filesize_new - $filesize_old;
 
-            addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true), $sizechange);
+            addLogEntry($lastMod, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true), $sizechange);
             // remove soon to be stale instructions
-            $cache = new cache_instructions($id, $file);
+            $cache = new cache_instructions($id, $fileLastMod);
             $cache->removeCache();
         }
     }
