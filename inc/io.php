@@ -790,8 +790,6 @@ function io_getSizeFile($file) {
     if (!file_exists($file)) return 0;
 
     if(substr($file,-3) == '.gz'){
-        if(!DOKU_HAS_GZIP) return 0;
-
         $fp = @fopen($file, "rb");
         if($fp === false) return 0;
 
