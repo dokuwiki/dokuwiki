@@ -1216,7 +1216,7 @@ function detectExternalEdit($id) {
         if($lastMod > $lastRev) {
             $fileLastRev = wikiFN($id, $lastRev);
             $revinfo = $pagelog->getRevisionInfo($lastRev);
-            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 $filesize_old = 0;
             } else {
                 $filesize_old = io_getSizeFile($fileLastRev);
