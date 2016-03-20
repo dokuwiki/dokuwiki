@@ -811,11 +811,7 @@ function io_getSizeFile($file) {
             if(($buffer === false) || (bzerrno($bz) !== 0)) {
                 return 0;
             }
-            if (UTF8_MBSTRING) {
-                $uncompressedsize += mb_strlen($buffer, '8bit');
-            } else {
-                $uncompressedsize += strlen($buffer);
-            }
+            $uncompressedsize += strlen($buffer);
         }
     }else{
         $uncompressedsize = filesize($file);
