@@ -45,6 +45,23 @@
 .dokuwiki form.changes li span.user {
 }
 
+/*____________ size differences ____________*/
+
+.dokuwiki li .sizechange {
+    color: #fff;
+    font-size: 80%;
+    border-radius: 0.2em;
+    padding: 0.1em 0.2em
+}
+
+.dokuwiki li .sizechange.positive {
+    background-color: #6A6;
+}
+
+.dokuwiki li .sizechange.negative {
+    background-color: #A66;
+}
+
 
 /*____________ page navigator ____________*/
 
