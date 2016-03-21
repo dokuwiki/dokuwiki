@@ -18,6 +18,7 @@ $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
 $lang['pagelabel'] = 'Page';
 $lang['summary'] = 'Struct data changed';
+$lang['export'] = 'Export Schema as JSON';
 
 $lang['editor_sort'] = 'Sort';
 $lang['editor_label'] = 'Field Name';

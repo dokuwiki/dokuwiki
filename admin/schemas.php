@@ -42,7 +42,13 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                 msg('something went wrong while saving', -1);
             }
         }
-
+        if($table && $INPUT->bool('export')) {
+            $builder = new \plugin\struct\meta\Schema($table);
+            header('Content-Type: application/json');
+            header("Content-Disposition: attachment; filename=$table.struct.json");
+            echo $builder->toJSON();
+            exit;
+        }
     }
 
     /**
@@ -50,8 +56,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
      */
     public function html() {
         global $INPUT;
-
-
+        global $ID;
 
         $table = Schema::cleanTableName($INPUT->str('table'));
         if($table) {
@@ -60,6 +65,11 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
             echo '<h2>'.sprintf($this->getLang('edithl'), hsc($table)).'</h2>';
             $editor = new SchemaEditor(new Schema($table));
             echo $editor->getEditor();
+
+            echo '<p>';
+            $export = wl($ID, array('do' => 'admin', 'page' => 'struct_schemas', 'table' => $table, 'export' => 1));
+            echo '<a href="' . $export . '">' . $this->getLang('export') . '</a>';
+            echo '</p>';
         } else {
             echo $this->locale_xhtml('editor_intro');
             $this->html_newschema();

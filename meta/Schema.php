@@ -1,6 +1,7 @@
 <?php
 
 namespace plugin\struct\meta;
+
 use plugin\struct\types\AbstractBaseType;
 
 /**
@@ -38,6 +39,9 @@ class Schema {
     /** @var int */
     protected $ts = 0;
 
+    /** @var string struct version info */
+    protected $structversion = '?';
+
     /**
      * Schema constructor
      *
@@ -47,6 +51,8 @@ class Schema {
     public function __construct($table, $ts = 0) {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
+        $info = $helper->getInfo();
+        $this->structversion = $info['date'];
         $this->sqlite = $helper->getDB();
         if(!$this->sqlite) return;
 
@@ -77,7 +83,6 @@ class Schema {
             $result = array_shift($schema);
             $this->id = $result['id'];
             $this->chksum = $result['chksum'];
-
         }
         $this->sqlite->res_close($res);
         if(!$this->id) return;
@@ -97,7 +102,7 @@ class Schema {
             $class = 'plugin\\struct\\types\\' . $row['class'];
             if(!class_exists($class)) {
                 // This usually never happens, except during development
-                msg('Unknown type "'.hsc($row['class']).'" falling back to Text', -1);
+                msg('Unknown type "' . hsc($row['class']) . '" falling back to Text', -1);
                 $class = 'plugin\\struct\\types\\Text';
             }
 
@@ -218,4 +223,29 @@ class Schema {
         return $this->maxsort;
     }
 
+    /**
+     * @return string the JSON representing this schema
+     */
+    public function toJSON() {
+        $data = array(
+            'structversion' => $this->structversion,
+            'schema' => $this->getTable(),
+            'id' => $this->getId(),
+            'columns' => array()
+        );
+
+        foreach($this->columns as $column) {
+            $data['columns'][] = array(
+                'colref' => $column->getColref(),
+                'ismulti' => $column->isMulti(),
+                'isenabled' => $column->isEnabled(),
+                'sort' => $column->getSort(),
+                'label' => $column->getLabel(),
+                'class' => $column->getType()->getClass(),
+                'config' => $column->getType()->getConfig(),
+            );
+        }
+
+        return json_encode($data, JSON_PRETTY_PRINT);
+    }
 }

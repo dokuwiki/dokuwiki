@@ -1,7 +1,7 @@
 base   struct
 author Andreas Gohr, Michael Große
 email  dokuwiki@cosmocode.de
-date   2015-12-17
+date   2016-03-21
 name   struct plugin
 desc   Add and query additional structured page data
 url    https://www.dokuwiki.org/plugin:struct
