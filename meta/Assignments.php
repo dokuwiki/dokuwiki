@@ -103,6 +103,32 @@ class Assignments {
     }
 
     /**
+     * Rechecks all assignments of a given page against the current patterns
+     *
+     * @param string $pid
+     */
+    public function reevaluatePageAssignments($pid) {
+        // reload patterns
+        $this->loadPatterns();
+        $tables = $this->getPageAssignments($pid, true);
+
+        // fetch possibly affected tables
+        $sql = 'SELECT tbl FROM schema_assignments WHERE pid = ?';
+        $res = $this->sqlite->query($sql, $pid);
+        $tablerows = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        // reevalute the tables and apply assignments
+        foreach($tablerows as $row) {
+            if(in_array($row['tbl'], $tables)) {
+                $this->assignPageSchema($pid, $row['tbl']);
+            } else {
+                $this->deassignPageSchema($pid, $row['tbl']);
+            }
+        }
+    }
+
+    /**
      * Clear all patterns - deassigns all pages
      *
      * This is mostly useful for testing and not used in the interface currently

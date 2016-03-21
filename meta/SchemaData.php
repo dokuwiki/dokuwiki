@@ -201,16 +201,17 @@ class SchemaData extends Schema {
         foreach($this->getColumns() as $col) {
             if(!$col->isEnabled()) continue;
 
-            if(!$DBdata) {
-                // if no data saved, yet return empty strings
-                $val = '';
-            } else if($col->isMulti()) {
-                // data is concatenated
-                $val = explode($sep, $DBdata[0]['col'.$col->getColref()]);
-                $val = array_filter($val);
-            }else {
-                // data is in the first row only
+            // if no data saved, yet return empty strings
+            if($DBdata) {
                 $val = $DBdata[0]['col'.$col->getColref()];
+            } else {
+                $val = '';
+            }
+
+            // multi val data is concatenated
+            if($col->isMulti()) {
+                $val = explode($sep, $val);
+                $val = array_filter($val);
             }
 
             if($skipemtpy && ($val === '' || $val == array())) continue;

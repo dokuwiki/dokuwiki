@@ -109,6 +109,34 @@ class Assignments_struct_test extends \DokuWikiTest {
     }
 
     /**
+     * Check reevaluation of patterns for a specific page works
+     */
+    public function test_pagereassign() {
+        $ass = new mock\Assignments();
+        $ass->clear(true);
+
+        // no assignment
+        $this->assertEquals(array(), $ass->getPageAssignments('wiki:syntax', false));
+
+        // fake assign the page to some schema
+        $ass->assignPageSchema('wiki:syntax', 'foo');
+        $this->assertEquals(array('foo'), $ass->getPageAssignments('wiki:syntax', false));
+
+        // reevaluate should deassign
+        $ass->reevaluatePageAssignments('wiki:syntax');
+        $this->assertEquals(array(), $ass->getPageAssignments('wiki:syntax', false));
+
+        // add a pattern and deliberately deassign the page
+        $ass->addPattern('wiki:*', 'foo');
+        $ass->deassignPageSchema('wiki:syntax', 'foo');
+        $this->assertEquals(array(), $ass->getPageAssignments('wiki:syntax', false));
+
+        // reevaluate should assign
+        $ass->reevaluatePageAssignments('wiki:syntax');
+        $this->assertEquals(array('foo'), $ass->getPageAssignments('wiki:syntax', false));
+    }
+
+    /**
      * Check the direct page assignments
      */
     public function test_pageassign() {
