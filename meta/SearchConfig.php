@@ -29,10 +29,10 @@ class SearchConfig extends Search {
         parent::__construct();
 
         // setup schemas and columns
-        foreach($config['schemas'] as $schema) {
+        if(!empty($config['schemas'])) foreach($config['schemas'] as $schema) {
             $this->addSchema($schema[0], $schema[1]);
         }
-        foreach($config['cols'] as $col) {
+        if(!empty($config['cols'])) foreach($config['cols'] as $col) {
             $this->addColumn($col);
         }
 
