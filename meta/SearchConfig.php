@@ -42,7 +42,7 @@ class SearchConfig extends Search {
 
         // configure search from configuration
         if(!empty($config['filter'])) foreach($config['filter'] as $filter) {
-            $this->addFilter($filter[0], $filter[2], $filter[1], $filter[3]);
+            $this->addFilter($filter[0], $this->applyFilterVars($filter[2]), $filter[1], $filter[3]);
         }
 
         if(!empty($config['sort'])) foreach($config['sort'] as $sort) {
@@ -58,6 +58,57 @@ class SearchConfig extends Search {
         }
 
         $this->config = $config;
+    }
+
+    /**
+     * Replaces placeholders in the given filter value by the proper value
+     *
+     * @param string $filter
+     * @return string
+     */
+    protected function applyFilterVars($filter) {
+        global $ID;
+
+        // apply inexpensive filters first
+        $filter = str_replace(
+            array(
+                '$ID$',
+                '$NS$',
+                '$PAGE$',
+                '$USER$',
+                '$TODAY$'
+            ),
+            array(
+                $ID,
+                getNS($ID),
+                noNS($ID),
+                isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : '',
+                date('Y-m-d')
+            ),
+            $filter
+        );
+
+        // apply struct filter
+        while(preg_match('/\$STRUCT\.(.*?)\$/', $filter, $matches)) {
+            foreach($matches as $match) {
+                $key = $match[1];
+                $column = $this->findColumn($key);
+                if($column) {
+                    $label = $column->getLabel();
+                    $table = $column->getTable();
+                    $schemaData = new SchemaData($table, $ID, 0);
+                    $data = $schemaData->getDataArray();
+                    $value = $data[$label];
+                    if(is_array($value)) $value = array_shift($value);
+                } else {
+                    $value = '';
+                }
+                $key = preg_quote_cb($key);
+                $filter = preg_replace('/\$STRUCT\.'.$key.'\$/', $value, 1);
+            }
+        }
+
+        return $filter;
     }
 
     /**
