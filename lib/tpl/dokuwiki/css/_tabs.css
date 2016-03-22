@@ -67,6 +67,7 @@
 .dokuwiki ul.tabs li a:hover,
 .dokuwiki ul.tabs li a:active,
 .dokuwiki ul.tabs li a:focus,
+.dokuwiki ul.tabs li.active a,
 .dokuwiki ul.tabs li strong {
     background-color: @ini_background_alt;
     color: @ini_text;
