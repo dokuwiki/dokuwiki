@@ -48,7 +48,7 @@ class SchemaImporter_struct_test extends \DokuWikiTest {
 
     public function test_import() {
         $sb = new meta\SchemaImporter('foobar', file_get_contents(__DIR__.'/json/schema1.schema.json'));
-        $this->assertTrue($sb->build());
+        $this->assertTrue((bool) $sb->build());
 
         $schema = new meta\Schema('foobar');
         $expect = json_decode(file_get_contents(__DIR__.'/json/schema1.schema.json'), true);
