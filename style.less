@@ -76,9 +76,36 @@
 }
 
 /**
+ * Tabs in the Schema Editor
+ */
+#plugin__struct_json {
+    border: 1px solid @ini_border;
+    border-top: none;
+    display: block;
+    padding: 2em;
+
+    fieldset {
+        margin-bottom: 1em;
+    }
+}
+
+/**
  * The Schema Editor
  */
 #plugin__struct_editor {
+    table.inline {
+        width: 100%;
+        border-top: none;
+
+        tr:first-child {
+            border-top: none;
+
+            th {
+                border-top: none;
+            }
+        }
+    }
+
     tr.disabled {
         td {
             opacity: 0.5;

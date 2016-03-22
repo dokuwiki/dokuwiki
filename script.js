@@ -113,6 +113,23 @@ jQuery(function () {
     });
 
     /**
+     * Handle tabs in the Schema Editor
+     */
+    jQuery('#plugin__struct_json').hide();
+    jQuery('#plugin__struct_tabs').find('a').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $me = jQuery(this);
+        if($me.parent().hasClass('active')) return; // nothing to do
+
+        $me.parent().parent().find('li').removeClass('active');
+        $me.parent().addClass('active');
+        jQuery('#plugin__struct_json, #plugin__struct_editor').hide();
+        jQuery($me.attr('href')).show();
+    });
+
+
+    /**
      * Toggle the disabled class in the schema editor
      */
     jQuery('#plugin__struct_editor').find('td.isenabled input').change(function () {

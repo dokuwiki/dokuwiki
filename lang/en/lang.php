@@ -19,6 +19,13 @@ $lang['createhint'] = 'Please note: schemas can not be renamed later';
 $lang['pagelabel'] = 'Page';
 $lang['summary'] = 'Struct data changed';
 $lang['export'] = 'Export Schema as JSON';
+$lang['btn_export'] = 'Export';
+$lang['import'] = 'Import a Schema from JSON';
+$lang['btn_import'] = 'Import';
+$lang['import_warning'] = 'Warning: this will overwrite already defined fields!';
+
+$lang['tab_edit'] = 'Edit Schema';
+$lang['tab_export'] = 'Import/Export';
 
 $lang['editor_sort'] = 'Sort';
 $lang['editor_label'] = 'Field Name';
