@@ -115,7 +115,7 @@ jQuery(function () {
     /**
      * Toggle the disabled class in the schema editor
      */
-    jQuery('#plugin__struct').find('td.isenabled input').change(function () {
+    jQuery('#plugin__struct_editor').find('td.isenabled input').change(function () {
         var $checkbox = jQuery(this);
         $checkbox.parents('tr').toggleClass('disabled', !$checkbox.prop('checked'));
     });
