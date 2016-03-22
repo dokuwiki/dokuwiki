@@ -89,23 +89,23 @@ class SearchConfig extends Search {
         );
 
         // apply struct filter
-        while(preg_match('/\$STRUCT\.(.*?)\$/', $filter, $matches)) {
-            foreach($matches as $match) {
-                $key = $match[1];
-                $column = $this->findColumn($key);
-                if($column) {
-                    $label = $column->getLabel();
-                    $table = $column->getTable();
-                    $schemaData = new SchemaData($table, $ID, 0);
-                    $data = $schemaData->getDataArray();
-                    $value = $data[$label];
-                    if(is_array($value)) $value = array_shift($value);
-                } else {
-                    $value = '';
-                }
-                $key = preg_quote_cb($key);
-                $filter = preg_replace('/\$STRUCT\.'.$key.'\$/', $value, 1);
+        while(preg_match('/\$STRUCT\.(.*?)\$/', $filter, $match)) {
+            $key = $match[1];
+            $column = $this->findColumn($key);
+
+            if($column) {
+                $label = $column->getLabel();
+                $table = $column->getTable();
+                $schemaData = new SchemaData($table, $ID, 0);
+                $data = $schemaData->getDataArray();
+                $value = $data[$label];
+                if(is_array($value)) $value = array_shift($value);
+            } else {
+                $value = '';
             }
+            $key = preg_quote_cb($key);
+            $filter = preg_replace('/\$STRUCT\.' . $key . '\$/', $value, $filter, 1);
+
         }
 
         return $filter;

@@ -16,6 +16,14 @@ class SearchConfig_struct_test extends \DokuWikiTest {
 
     protected $pluginsEnabled = array('struct', 'sqlite');
 
+    protected function tearDown() {
+        parent::tearDown();
+
+        /** @var \helper_plugin_struct_db $sqlite */
+        $sqlite = plugin_load('helper', 'struct_db');
+        $sqlite->resetDB();
+    }
+
     public function test_filtervars_simple() {
         global $ID;
         $ID = 'foo:bar:baz';
@@ -35,5 +43,29 @@ class SearchConfig_struct_test extends \DokuWikiTest {
 
     }
 
-    // FIXME test the struct ones
+    public function test_filtervars_struct() {
+        global $ID;
+        $ID = 'foo:bar:baz';
+
+        // prepare some struct data
+        $sb = new meta\SchemaImporter('schema1', file_get_contents(__DIR__ . '/json/schema1.schema.json'));
+        $sb->build();
+        $schemaData = new meta\SchemaData('schema1', $ID, time());
+        $schemaData->saveData(
+            array(
+                'first' => 'test',
+                'second' => array('multi1', 'multi2')
+            )
+        );
+
+        $searchConfig = new SearchConfig(array('schemas' => array(array('schema1', 'alias'))));
+        $this->assertEquals('test', $searchConfig->applyFilterVars('$STRUCT.first$'));
+        $this->assertEquals('test', $searchConfig->applyFilterVars('$STRUCT.alias.first$'));
+        $this->assertEquals('test', $searchConfig->applyFilterVars('$STRUCT.schema1.first$'));
+        $this->assertEquals('multi1', $searchConfig->applyFilterVars('$STRUCT.second$'));
+        $this->assertEquals('multi1', $searchConfig->applyFilterVars('$STRUCT.alias.second$'));
+        $this->assertEquals('multi1', $searchConfig->applyFilterVars('$STRUCT.schema1.second$'));
+
+        $this->assertEquals('', $searchConfig->applyFilterVars('$STRUCT.notexisting$'));
+    }
 }
