@@ -42,6 +42,9 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
             $dirs[] = $dir.'/'.$file;
             continue;
         }
+        if ( is_ns_index("$base/$dir/$file") ) {  // check if file is a default namespace file
+            continue;
+        }
         $files[] = $dir.'/'.$file;
         $filepaths[] = $base.'/'.$dir.'/'.$file;
     }
@@ -66,6 +69,49 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
         call_user_func_array($func, array(&$data,$base,$file,'f',$lvl,$opts));
     }
 }
+
+
+/**
+ * Checks if a file is a namespace default file according
+ * to https://www.dokuwiki.org/namespaces#namespace_default_linking
+ *
+ * @param  string  $path  full path to the file to be checked
+ * @author Frank Thommen <frank.thommen@gmx.net>
+ */
+function is_ns_index($path='') {
+    if ( !$path or
+         (substr($path,-4) != '.txt') ) {
+        // no path given or not a DW pagefile
+        return false;
+    }
+
+    // /path/to/the/file.txt
+    // +-----------++--+
+    //      ^         ^
+    //      |         $fname
+    //      $basedir
+    // +---------------+
+    //      ^
+    //      $ns
+
+    $ns      = preg_replace('/.txt$/', '', $path);
+    preg_match('|^(.+/)([^/]+)$|', $ns, $matches);
+    $basedir = $matches[1];
+    $fname   = $matches[2];
+
+    if ($fname == 'start') {
+        return true; //'start' always wins (foo:bar:start.txt)
+    } elseif ( preg_match("|^.*/$fname/$fname$|", $ns) ) {
+        return true; // foo:bar:bar.txt for foo:bar:
+    } elseif (  is_dir("$basedir/$fname")             and
+               !is_file("$basedir/$fname/start.txt")  and
+               !is_file("$basedir/$fname/$fname.txt") )  {
+        return true; // foo:bar.txt for foo:bar:
+    }
+
+  return false;
+}
+
 
 /**
  * The following functions are userfunctions to use with the search
