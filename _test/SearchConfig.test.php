@@ -68,4 +68,28 @@ class SearchConfig_struct_test extends \DokuWikiTest {
 
         $this->assertEquals('', $searchConfig->applyFilterVars('$STRUCT.notexisting$'));
     }
+
+    public function test_cacheflags() {
+        $searchConfig = new SearchConfig(array());
+
+        $flag = $searchConfig->determineCacheFlag(array('foo', 'bar'));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_DEFAULT));
+        $this->assertFalse((bool) ($flag & SearchConfig::$CACHE_USER));
+        $this->assertFalse((bool) ($flag & SearchConfig::$CACHE_DATE));
+
+        $flag = $searchConfig->determineCacheFlag(array('foo', '$USER$'));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_DEFAULT));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_USER));
+        $this->assertFalse((bool) ($flag & SearchConfig::$CACHE_DATE));
+
+        $flag = $searchConfig->determineCacheFlag(array('foo', '$TODAY$'));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_DEFAULT));
+        $this->assertFalse((bool) ($flag & SearchConfig::$CACHE_USER));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_DATE));
+
+        $flag = $searchConfig->determineCacheFlag(array('foo', '$TODAY$', '$USER$'));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_DEFAULT));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_USER));
+        $this->assertTrue((bool) ($flag & SearchConfig::$CACHE_DATE));
+    }
 }

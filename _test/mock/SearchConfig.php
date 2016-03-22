@@ -8,4 +8,9 @@ class SearchConfig extends meta\SearchConfig {
     public function applyFilterVars($filter) {
         return parent::applyFilterVars($filter);
     }
+
+    public function determineCacheFlag($filters) {
+        return parent::determineCacheFlag($filters);
+    }
+
 }

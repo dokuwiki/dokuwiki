@@ -1,4 +1,5 @@
 <?php
+use plugin\struct\meta\SearchConfig;
 use plugin\struct\meta\SearchConfigParameters;
 
 /**
@@ -27,6 +28,8 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
      * @return bool
      */
     public function handle_cache_aggregation(Doku_Event $event, $param) {
+        global $INPUT;
+
         /** @var \cache_parser $cache */
         $cache = $event->data;
         if($cache->mode != 'xhtml') return true;
@@ -37,6 +40,19 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
             /** @var helper_plugin_struct_db $db */
             $db = plugin_load('helper', 'struct_db');
             $cache->depends['files'][] = $db->getDB()->getAdapter()->getDbFile();
+
+            // cache depends on today's date
+            if($meta['hasaggregation'] & SearchConfig::$CACHE_DATE) {
+                $oldage = $cache->depends['age'];
+                $newage = time() - mktime(0, 0, 1); // time since first second today
+                $cache->depends['age'] = min($oldage, $newage);
+            }
+
+            // cache depends on current user
+            if($meta['hasaggregation'] & SearchConfig::$CACHE_USER) {
+                $cache->key .= ';'.$INPUT->server->str('REMOTE_USER');
+                $cache->cache = getCacheName($cache->key, $cache->ext);
+            }
         }
 
         return true;

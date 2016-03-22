@@ -11,6 +11,13 @@ namespace plugin\struct\meta;
  */
 class SearchConfig extends Search {
 
+    /** @var int default aggregation caching (depends on last struct save) */
+    static public $CACHE_DEFAULT = 1;
+    /** @var int caching depends on current user */
+    static public $CACHE_USER = 2;
+    /** @var int caching depends on current date */
+    static public $CACHE_DATE = 4;
+
     /**
      * @var array hold the configuration as parsed and extended by dynamic params
      */
@@ -20,6 +27,11 @@ class SearchConfig extends Search {
      * @var SearchConfigParameters manages dynamic parameters
      */
     protected $dynamicParameters;
+
+    /**
+     * @var int the cache flag to use (binary flags)
+     */
+    protected $cacheFlag;
 
     /**
      * SearchConfig constructor.
@@ -35,6 +47,10 @@ class SearchConfig extends Search {
         if(!empty($config['cols'])) foreach($config['cols'] as $col) {
             $this->addColumn($col);
         }
+
+        // cache flag setting
+        $this->cacheFlag = self::$CACHE_DEFAULT;
+        if(!empty($config['filters'])) $this->cacheFlag = $this->determineCacheFlag($config['filters']);
 
         // apply dynamic paramters
         $this->dynamicParameters = new SearchConfigParameters($this);
@@ -58,6 +74,28 @@ class SearchConfig extends Search {
         }
 
         $this->config = $config;
+    }
+
+    /**
+     * Set the cache flag accordingly to the set filter placeholders
+     *
+     * @param array $filters
+     * @return int
+     */
+    protected function determineCacheFlag($filters) {
+        $flags = self::$CACHE_DEFAULT;
+
+        foreach($filters as $filter) {
+            if(is_array($filter)) $filter = $filter[2]; // this is the format we get fro the config parser
+
+            if(strpos($filter, '$USER$') !== false) {
+                $flags |= self::$CACHE_USER;
+            } else if(strpos($filter, '$TODAY$') !== false) {
+                $flags |= self::$CACHE_DATE;
+            }
+        }
+
+        return $flags;
     }
 
     /**
@@ -109,6 +147,13 @@ class SearchConfig extends Search {
         }
 
         return $filter;
+    }
+
+    /**
+     * @return int cacheflag for this search
+     */
+    public function getCacheFlag() {
+        return $this->cacheFlag;
     }
 
     /**

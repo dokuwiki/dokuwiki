@@ -81,15 +81,16 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
         if(!$data) return false;
         global $ID;
 
-        if($mode == 'metadata') {
-            /** @var Doku_Renderer_metadata $renderer  */
-            $renderer->meta['plugin']['struct']['hasaggregation'] = true;
-        }
-
         try {
             $search = new SearchConfig($data);
             $table = new AggregationTable($ID, $mode, $renderer, $search);
             $table->render();
+
+            if($mode == 'metadata') {
+                /** @var Doku_Renderer_metadata $renderer  */
+                $renderer->meta['plugin']['struct']['hasaggregation'] = $search->getCacheFlag();
+            }
+
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
         }
