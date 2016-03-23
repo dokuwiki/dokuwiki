@@ -44,9 +44,6 @@ class Search {
     /** @var int the number of results */
     protected $count = -1;
 
-    /** @var bool only distinct data? */
-    protected $distinct = false;
-
     /**
      * Search constructor.
      */
@@ -164,15 +161,6 @@ class Search {
     }
 
     /**
-     * Request distinct data only, no PID column
-     *
-     * @param boolean $distinct
-     */
-    public function setDistinct($distinct) {
-        $this->distinct = $distinct;
-    }
-
-    /**
      * Return the number of results (regardless of limit and offset settings)
      *
      * Use this to implement paging. Important: this may only be called after running @see execute()
@@ -199,6 +187,7 @@ class Search {
 
         /** @var \PDOStatement $res */
         $res = $this->sqlite->query($sql, $opts);
+        if($res === false) throw new StructException("SQL execution failed for\n\n$sql");
 
         $result = array();
         $cursor = -1;
@@ -249,11 +238,7 @@ class Search {
                 $from .= "\nLEFT OUTER JOIN data_{$schema->getTable()} ON data_{$first_table}.pid = data_{$schema->getTable()}.pid";
             } else {
                 // first table
-                if($this->distinct) {
-                    $select .= 'DISTINCT ';
-                } else {
-                    $select .= "data_{$schema->getTable()}.pid as PID, ";
-                }
+                $select .= "data_{$schema->getTable()}.pid as PID, ";
 
                 $from .= 'schema_assignments, ';
                 $from .= "data_{$schema->getTable()}";
