@@ -19,10 +19,15 @@ jQuery(function () {
 
         jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
             .fail(function (result) {
-                if(result.responseJSON.stacktrace) {
-                    console.error(result.responseJSON.error + "\n" + result.responseJSON.stacktrace);
+                if(result.responseJSON) {
+                    if (result.responseJSON.stacktrace) {
+                        console.error(result.responseJSON.error + "\n" + result.responseJSON.stacktrace);
+                    }
+                    alert(result.responseJSON.error);
+                } else {
+                    // some fatal error occured, get a text only version of the response
+                    alert(jQuery(result.responseText).text());
                 }
-                alert(result.responseJSON.error);
             });
     }
 
