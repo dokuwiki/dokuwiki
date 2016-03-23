@@ -368,7 +368,7 @@ class Search {
 
         if(!$colname) throw new StructException('nocolname');
 
-        // if table name given search only that, otherwiese try all for matching column name
+        // if table name given search only that, otherwise try all for matching column name
         if($table) {
             $schemas = array($table => $this->schemas[$table]);
         } else {

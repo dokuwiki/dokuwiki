@@ -55,6 +55,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      * @return array Data for the renderer
      */
     public function handle($match, $state, $pos, Doku_Handler $handler){
+        global $conf;
 
         $lines = explode("\n", $match);
         array_shift($lines);
@@ -65,6 +66,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             return  $parser->getConfig();
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
+            if($conf['allowdebug']) msg('<pre>'.hsc($e->getTraceAsString()).'</pre>', -1);
             return null;
         }
     }
@@ -80,6 +82,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if(!$data) return false;
         global $ID;
+        global $conf;
 
         try {
             $search = new SearchConfig($data);
@@ -93,6 +96,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
+            if($conf['allowdebug']) msg('<pre>'.hsc($e->getTraceAsString()).'</pre>', -1);
         }
 
         return true;
