@@ -39,7 +39,19 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
         if(isset($meta['hasaggregation'])) {
             /** @var helper_plugin_struct_db $db */
             $db = plugin_load('helper', 'struct_db');
+            // cache depends on last database save
             $cache->depends['files'][] = $db->getDB()->getAdapter()->getDbFile();
+
+            // dynamic renders should never overwrite the default page cache
+            // we need this in additon to handle_cache_dynamic() below because we can only
+            // influence if a cache is used, not that it will be written
+            if(
+                $INPUT->has(SearchConfigParameters::$PARAM_FILTER) ||
+                $INPUT->has(SearchConfigParameters::$PARAM_OFFSET) ||
+                $INPUT->has(SearchConfigParameters::$PARAM_SORT)
+            ) {
+                $cache->key .= 'dynamic';
+            }
 
             // cache depends on today's date
             if($meta['hasaggregation'] & SearchConfig::$CACHE_DATE) {
@@ -51,8 +63,11 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
             // cache depends on current user
             if($meta['hasaggregation'] & SearchConfig::$CACHE_USER) {
                 $cache->key .= ';'.$INPUT->server->str('REMOTE_USER');
-                $cache->cache = getCacheName($cache->key, $cache->ext);
+
             }
+
+            // rebuild cachename
+            $cache->cache = getCacheName($cache->key, $cache->ext);
         }
 
         return true;
