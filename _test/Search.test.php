@@ -48,6 +48,7 @@ class Search_struct_test extends \DokuWikiTest {
 
         $as = new mock\Assignments();
 
+        saveWikiText('page01', 'test', 'test');
         $as->assignPageSchema('page01', 'schema1');
         $sd = new meta\SchemaData('schema1', 'page01', time());
         $sd->saveData(
@@ -71,6 +72,7 @@ class Search_struct_test extends \DokuWikiTest {
         );
 
         for($i=10; $i <=20; $i++) {
+            saveWikiText("page$i", 'test', 'test');
             $as->assignPageSchema("page$i", 'schema2');
             $sd = new meta\SchemaData('schema2', "page$i", time());
             $sd->saveData(

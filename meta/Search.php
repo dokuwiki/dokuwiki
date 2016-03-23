@@ -233,20 +233,20 @@ class Search {
     public function getSQL() {
         if(!$this->columns) throw new StructException('nocolname');
 
-        $from = '';
-        $select = '';
-        $order = '';
-        $grouping = array();
-        $opts = array();
-        $where = '1 = 1';
-        $fwhere = '';
+        $from = ''; // FROM clauses (tables to select from)
+        $select = ''; // SELECT clauses (columns to fetch)
+        $order = ''; // SORT BY clauses
+        $grouping = array(); // GROUP BY
+        $opts = array(); // variables
+        $where = '1 = 1'; // WHERE clauses from JOINS etc.
+        $fwhere = ''; // WHERE clauses from filters
 
         // basic tables
-        $first = '';
+        $first_table = '';
         foreach($this->schemas as $schema) {
-            if($first) {
+            if($first_table) {
                 // follow up tables
-                $from .= "\nLEFT OUTER JOIN data_{$schema->getTable()} ON data_$first.pid = data_{$schema->getTable()}.pid";
+                $from .= "\nLEFT OUTER JOIN data_{$schema->getTable()} ON data_{$first_table}.pid = data_{$schema->getTable()}.pid";
             } else {
                 // first table
                 if($this->distinct) {
@@ -256,14 +256,14 @@ class Search {
                 }
 
                 $from .= 'schema_assignments, ';
+                $from .= "data_{$schema->getTable()}";
+
                 $where .= "\nAND data_{$schema->getTable()}.pid = schema_assignments.pid";
                 $where .= "\nAND schema_assignments.assigned = 1";
-
-                $from .= "data_{$schema->getTable()}";
                 $where .= "\nAND GETACCESSLEVEL(data_{$schema->getTable()}.pid) > 0";
-                $first = $schema->getTable();
+                $where .= "\nAND PAGEEXISTS(data_{$schema->getTable()}.pid) = 1";
+                $first_table = $schema->getTable();
             }
-
             $where .= "\nAND data_{$schema->getTable()}.latest = 1";
         }
 
