@@ -99,12 +99,12 @@ function is_ns_index($path='') {
     $basedir = $matches[1];
     $fname   = $matches[2];
 
-    if ($fname == 'start') {
+    if ($fname == $conf['start']) {
         return true; //'start' always wins (foo:bar:start.txt)
     } elseif ( preg_match("|^.*/$fname/$fname$|", $ns) ) {
         return true; // foo:bar:bar.txt for foo:bar:
     } elseif (  is_dir("$basedir/$fname")             and
-               !is_file("$basedir/$fname/start.txt")  and
+               !is_file("$basedir/$fname/".$conf['start'].".txt")  and
                !is_file("$basedir/$fname/$fname.txt") )  {
         return true; // foo:bar.txt for foo:bar:
     }
