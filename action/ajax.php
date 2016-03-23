@@ -36,14 +36,18 @@ class action_plugin_struct_ajax extends DokuWiki_Action_Plugin {
         if($event->data != 'plugin_struct') return;
         $event->preventDefault();
         $event->stopPropagation();
+        global $conf;
 
         header('Content-Type: application/json');
         try {
             $result = $this->executeTypeAjax();
         } catch(StructException $e) {
             $result = array(
-                'error' => $e->getMessage()
+                'error' => $e->getMessage().' '.basename($e->getFile()).':'.$e->getLine()
             );
+            if($conf['allowdebug']) {
+                $result['stacktrace'] = $e->getTraceAsString();
+            }
             http_status(500);
         }
 

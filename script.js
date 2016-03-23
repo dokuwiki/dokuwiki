@@ -19,6 +19,9 @@ jQuery(function () {
 
         jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
             .fail(function (result) {
+                if(result.responseJSON.stacktrace) {
+                    console.error(result.responseJSON.error + "\n" + result.responseJSON.stacktrace);
+                }
                 alert(result.responseJSON.error);
             });
     }
