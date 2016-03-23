@@ -169,8 +169,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $structData = $INPUT->arr(self::$VAR);
         }
 
-        if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
-            // clear all data
+        if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE && empty($GLOBALS['PLUGIN_MOVE_WORKING'])) {
+            // clear all data on delete unless it's a move operation
             $tables = $assignments->getPageAssignments($event->data['id']);
             foreach($tables as $table) {
                 $schemaData = new SchemaData($table, $event->data['id'], time());
