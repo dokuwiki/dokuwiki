@@ -51,23 +51,44 @@ class Tag extends AbstractMultiBaseType {
 
         $context = $this->getContext();
 
-        // lookup other values
-        $search = new Search();
-        $search->addSchema($context->getTable());
-        $search->addColumn($context->getLabel());
-        $search->addFilter($context->getLabel(), "$lookup%", '~');
-        $search->addSort($context->getLabel());
-        $search->setLimit($max);
-        $search->setDistinct(true);
-        $values = $search->execute();
+        if($context->isMulti()) {
+            /** @noinspection SqlResolve */
+            $sql = "SELECT DISTINCT value
+                      FROM multi_{$context->getTable()} AS M, data_{$context->getTable()} AS D
+                     WHERE M.pid = D.pid
+                       AND M.rev = D.rev
+                       AND D.latest = 1
+                       AND PAGEEXISTS(D.pid) = 1
+                       AND GETACCESSLEVEL(D.pid) > 0
+                       AND M.colref = ?
+                       AND value LIKE ?
+                  ORDER BY value";
+            $opt = array($context->getColref(), "%$lookup%");
+        } else {
+            /** @noinspection SqlResolve */
+            $sql = "SELECT DISTINCT col{$context->getColref()} AS value
+                      FROM data_{$context->getTable()} AS D
+                     WHERE D.latest = 1
+                       AND PAGEEXISTS(D.pid) = 1
+                       AND GETACCESSLEVEL(D.pid) > 0
+                       AND value LIKE ?
+                  ORDER BY value";
+            $opt = array("%$lookup%");
+        }
+
+        /** @var \helper_plugin_struct_db $hlp */
+        $hlp = plugin_load('helper', 'struct_db');
+        $sqlite = $hlp->getDB();
+        $res = $sqlite->query($sql, $opt);
+        $rows = $sqlite->res2arr($res);
+        $sqlite->res_close($res);
 
         $result = array();
-        /** @var Value[] $row */
-        foreach($values as $row) {
-            $result[] = array(
-                'label' => $row[0]->getValue(),
-                'value' => $row[0]->getValue(),
-            );
+        foreach($rows as $row) {
+                $result[] = array(
+                    'label' => $row['value'],
+                    'value' => $row['value'],
+                );
         }
 
         return $result;
