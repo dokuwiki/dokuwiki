@@ -173,17 +173,35 @@
  * Aggregation
  */
 .structaggregation {
-    table th a {
-        color: @ini_link;
-        font-weight: bold;
+    table th {
+        a {
+            color: @ini_link;
+            font-weight: bold;
 
-        &.sort-up::before {
+            &.sort-up::before {
                 content: '↑';
-        }
-        &.sort-down::before {
-            content: '↓';
+            }
+            &.sort-down::before {
+                content: '↓';
+            }
         }
 
+        input {
+            width: 20px;
+            background-image: url(../../tpl/dokuwiki/images/search.png);
+            background-repeat: no-repeat;
+            background-position: 2px center;
+            padding-left: 20px;
+        }
+
+        input:not([value]) {
+            opacity: 0.5;
+        }
+
+        input:focus {
+            width: auto;
+            opacity: 1;
+        }
     }
 }
 
