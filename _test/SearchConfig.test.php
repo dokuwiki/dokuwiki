@@ -12,17 +12,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugins
  *
  */
-class SearchConfig_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
-
-    protected function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
-    }
+class SearchConfig_struct_test extends StructTest {
 
     public function test_filtervars_simple() {
         global $ID;
@@ -48,7 +38,7 @@ class SearchConfig_struct_test extends \DokuWikiTest {
         $ID = 'foo:bar:baz';
 
         // prepare some struct data
-        $sb = new meta\SchemaImporter('schema1', file_get_contents(__DIR__ . '/json/schema1.schema.json'));
+        $sb = new meta\SchemaImporter('schema1', file_get_contents(__DIR__ . '/json/schema1.struct.json'));
         $sb->build();
         $schemaData = new meta\SchemaData('schema1', $ID, time());
         $schemaData->saveData(

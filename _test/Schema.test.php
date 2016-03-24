@@ -7,15 +7,11 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 use plugin\struct\meta\Schema;
 
 /**
- * Tests for the class action_plugin_magicmatcher_oldrevisions of the magicmatcher plugin
- *
  * @group plugin_struct
  * @group plugins
  *
  */
-class schema_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct');
+class schema_struct_test extends StructTest {
 
     /**
      * Testdata for @see schema_struct_test::test_cleanTableName
@@ -58,7 +54,7 @@ class schema_struct_test extends \DokuWikiTest {
     /**
      * @dataProvider cleanTableName_testdata
      *
-     * @covers plugin\struct\meta\Schema::cleanTableName
+     * @covers       plugin\struct\meta\Schema::cleanTableName
      *
      * @param string $input_name
      * @param string $expected_cleaned_name
@@ -67,6 +63,5 @@ class schema_struct_test extends \DokuWikiTest {
         $actual_cleaned_name = Schema::cleanTableName($input_name);
         $this->assertSame($expected_cleaned_name, $actual_cleaned_name, $input_name);
     }
-
 
 }

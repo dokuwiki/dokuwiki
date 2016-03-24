@@ -17,34 +17,12 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  *
  *
  */
-class move_struct_test extends \DokuWikiTest {
+class move_struct_test extends StructTest {
 
-    protected $pluginsEnabled = array('struct', 'sqlite');
 
     public function setUp() {
         parent::setUp();
-
-        $schema = 'schema1';
-        $sb = new meta\SchemaBuilder(
-            $schema,
-            array(
-                'new' => array(
-                    'new1' => array('label' => 'first', 'class' => 'Text', 'sort' => 10, 'ismulti' => 0, 'isenabled' => 1),
-                    'new2' => array('label' => 'second', 'class' => 'Text', 'sort' => 20, 'ismulti' => 1, 'isenabled' => 1),
-                    'new3' => array('label' => 'third', 'class' => 'Text', 'sort' => 30, 'ismulti' => 0, 'isenabled' => 1),
-                    'new4' => array('label' => 'fourth', 'class' => 'Text', 'sort' => 40, 'ismulti' => 0, 'isenabled' => 1)
-                )
-            )
-        );
-        $sb->build();
-    }
-
-    public function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
+        $this->loadSchemaJSON('schema1');
     }
 
     public function test_move() {
@@ -80,5 +58,4 @@ class move_struct_test extends \DokuWikiTest {
         $schemaData = new meta\SchemaData('schema1', 'newpage', 0);
         $this->assertEquals($data, $schemaData->getDataArray());
     }
-
 }

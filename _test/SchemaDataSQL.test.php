@@ -14,9 +14,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugins
  *
  */
-class schemaDataSQL_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class schemaDataSQL_struct_test extends StructTest {
 
     /**
      * Testdata for @see schemaDataSQL_struct_test::test_buildGetDataSQL

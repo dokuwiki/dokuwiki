@@ -2,20 +2,13 @@
 
 namespace plugin\struct\test;
 
-use plugin\struct\types\Integer;
-
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
- * Testing the Integer Type
- *
  * @group plugin_struct
  * @group plugins
  */
-class Type_AbstractBase_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
-
+class Type_AbstractBase_struct_test extends StructTest {
 
     protected $preset = array(
         'label' => array(
@@ -28,7 +21,6 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
             'zh' => 'chinese hint' // always stripped
         )
     );
-
 
     /**
      * Translation Init: empty config, no translation plugin
@@ -86,7 +78,6 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
         $conf['lang'] = 'en';
         $conf['plugin']['translation']['translations'] = 'fr tr it de';
 
-
         $type = new mock\BaseType(null, 'A Label');
         $this->assertEquals(
             array(
@@ -127,7 +118,6 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
         $conf['lang'] = 'en';
         $conf['plugin']['translation']['translations'] = 'fr tr it de';
 
-
         $type = new mock\BaseType($this->preset, 'A Label');
         $this->assertEquals(
             array(
@@ -162,6 +152,4 @@ class Type_AbstractBase_struct_test extends \DokuWikiTest {
         $this->assertEquals('english hint', $type->getTranslatedHint());  # falls back to english
         $conf['lang'] = 'en';
     }
-
-
 }

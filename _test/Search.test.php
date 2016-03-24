@@ -13,45 +13,19 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugins
  *
  */
-class Search_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Search_struct_test extends StructTest {
 
     public function setUp() {
         parent::setUp();
 
-        $sb = new meta\SchemaBuilder(
-            'schema1',
-            array(
-                'new' => array(
-                    'new1' => array('label' => 'first', 'class' => 'Text', 'sort' => 10, 'ismulti' => 0, 'isenabled' => 1),
-                    'new2' => array('label' => 'second', 'class' => 'Text', 'sort' => 20, 'ismulti' => 1, 'isenabled' => 1),
-                    'new3' => array('label' => 'third', 'class' => 'Text', 'sort' => 30, 'ismulti' => 0, 'isenabled' => 1),
-                    'new4' => array('label' => 'fourth', 'class' => 'Text', 'sort' => 40, 'ismulti' => 0, 'isenabled' => 1),
-                )
-            )
-        );
-        $sb->build();
-
-        $sb = new meta\SchemaBuilder(
-            'schema2',
-            array(
-                'new' => array(
-                    'new1' => array('label' => 'afirst', 'class' => 'Text', 'sort' => 10, 'ismulti' => 0, 'isenabled' => 1),
-                    'new2' => array('label' => 'asecond', 'class' => 'Text', 'sort' => 20, 'ismulti' => 1, 'isenabled' => 1),
-                    'new3' => array('label' => 'athird', 'class' => 'Text', 'sort' => 30, 'ismulti' => 0, 'isenabled' => 1),
-                    'new4' => array('label' => 'afourth', 'class' => 'Text', 'sort' => 40, 'ismulti' => 0, 'isenabled' => 1),
-                )
-            )
-        );
-        $sb->build();
+        $this->loadSchemaJSON('schema1');
+        $this->loadSchemaJSON('schema2');
 
         $as = new mock\Assignments();
 
-        saveWikiText('page01', 'test', 'test');
-        $as->assignPageSchema('page01', 'schema1');
-        $sd = new meta\SchemaData('schema1', 'page01', time());
-        $sd->saveData(
+        $this->saveData(
+            'page01',
+            'schema1',
             array(
                 'first' => 'first data',
                 'second' => array('second data', 'more data', 'even more'),
@@ -59,10 +33,11 @@ class Search_struct_test extends \DokuWikiTest {
                 'fourth' => 'fourth data'
             )
         );
+        $as->assignPageSchema('page01', 'schema1');
 
-        $as->assignPageSchema('page01', 'schema2');
-        $sd = new meta\SchemaData('schema2', 'page01', time());
-        $sd->saveData(
+        $this->saveData(
+            'page01',
+            'schema2',
             array(
                 'afirst' => 'first data',
                 'asecond' => array('second data', 'more data', 'even more'),
@@ -70,12 +45,12 @@ class Search_struct_test extends \DokuWikiTest {
                 'afourth' => 'fourth data'
             )
         );
+        $as->assignPageSchema('page01', 'schema2');
 
-        for($i=10; $i <=20; $i++) {
-            saveWikiText("page$i", 'test', 'test');
-            $as->assignPageSchema("page$i", 'schema2');
-            $sd = new meta\SchemaData('schema2', "page$i", time());
-            $sd->saveData(
+        for($i = 10; $i <= 20; $i++) {
+            $this->saveData(
+                "page$i",
+                'schema2',
                 array(
                     'afirst' => "page$i first data",
                     'asecond' => array("page$i second data"),
@@ -83,15 +58,8 @@ class Search_struct_test extends \DokuWikiTest {
                     'afourth' => "page$i fourth data"
                 )
             );
+            $as->assignPageSchema("page$i", 'schema2');
         }
-    }
-
-    protected function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
     }
 
     public function test_simple() {
@@ -159,10 +127,8 @@ class Search_struct_test extends \DokuWikiTest {
         $search->addFilter('second', '%sec%', '~', 'AND');
         $search->addFilter('first', '%rst%', '~', 'AND');
 
-
-
         $result = $search->execute();
-        $count  = $search->getCount();
+        $count = $search->getCount();
 
         $this->assertEquals(1, $count, 'result count');
         $this->assertEquals(1, count($result), 'result rows');
@@ -193,7 +159,7 @@ class Search_struct_test extends \DokuWikiTest {
 
         /** @var meta\Value[][] $result */
         $result = $search->execute();
-        $count  = $search->getCount();
+        $count = $search->getCount();
 
         // check result dimensions
         $this->assertEquals(12, $count, 'result count');
@@ -208,7 +174,7 @@ class Search_struct_test extends \DokuWikiTest {
         // now add limit
         $search->setLimit(5);
         $result = $search->execute();
-        $count  = $search->getCount();
+        $count = $search->getCount();
 
         // check result dimensions
         $this->assertEquals(12, $count, 'result count'); // full result set
@@ -221,7 +187,7 @@ class Search_struct_test extends \DokuWikiTest {
         // now add offset
         $search->setOffset(5);
         $result = $search->execute();
-        $count  = $search->getCount();
+        $count = $search->getCount();
 
         // check result dimensions
         $this->assertEquals(12, $count, 'result count'); // full result set
@@ -234,12 +200,12 @@ class Search_struct_test extends \DokuWikiTest {
 
     public static function addFilter_testdata() {
         return array(
-            array('%pageid%','val','<>','OR',array(array('%pageid%', 'val', '!=', 'OR')),false,'replace <> comp'),
-            array('%pageid%','val','*~','OR',array(array('%pageid%', '%val%', '~', 'OR')),false,'replace *~ comp'),
-            array('%pageid%','val*','~','OR',array(array('%pageid%', 'val%', '~', 'OR')),false,'replace * in value'),
-            array('nonexisting','val','~','OR',array(),false,'ignore missing columns'),
-            array('%pageid%','val','?','OR',array(),'\plugin\struct\meta\StructException','wrong comperator'),
-            array('%pageid%','val','=','NOT',array(),'\plugin\struct\meta\StructException','wrong type')
+            array('%pageid%', 'val', '<>', 'OR', array(array('%pageid%', 'val', '!=', 'OR')), false, 'replace <> comp'),
+            array('%pageid%', 'val', '*~', 'OR', array(array('%pageid%', '%val%', '~', 'OR')), false, 'replace *~ comp'),
+            array('%pageid%', 'val*', '~', 'OR', array(array('%pageid%', 'val%', '~', 'OR')), false, 'replace * in value'),
+            array('nonexisting', 'val', '~', 'OR', array(), false, 'ignore missing columns'),
+            array('%pageid%', 'val', '?', 'OR', array(), '\plugin\struct\meta\StructException', 'wrong comperator'),
+            array('%pageid%', 'val', '=', 'NOT', array(), '\plugin\struct\meta\StructException', 'wrong type')
         );
     }
 
@@ -251,12 +217,12 @@ class Search_struct_test extends \DokuWikiTest {
         $search = new mock\Search();
         $search->addSchema('schema2');
         $search->addColumn('%pageid%');
-        if ($expectException !== false) $this->setExpectedException($expectException);
+        if($expectException !== false) $this->setExpectedException($expectException);
 
         $search->addFilter($colname, $value, $comp, $type);
 
-        if (count($expected_filter) === 0) {
-            $this->assertEquals(count($search->filter),0, $msg);
+        if(count($expected_filter) === 0) {
+            $this->assertEquals(count($search->filter), 0, $msg);
             return;
         }
         $this->assertEquals($expected_filter[0][0], $search->filter[0][0]->getLabel(), $msg);

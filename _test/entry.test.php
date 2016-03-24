@@ -7,8 +7,6 @@ use plugin\struct\meta;
 // we don't have the auto loader here
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
-
-
 /**
  * Tests for the building of SQL-Queries for the struct plugin
  *
@@ -19,42 +17,16 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  *
  *
  */
-class entry_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct','sqlite');
-    protected $lang;
+class entry_struct_test extends StructTest {
 
     public function setUp() {
         parent::setUp();
 
-        $sb = new meta\SchemaBuilder(
+        $this->loadSchemaJSON('schema1');
+        $this->loadSchemaJSON('schema2', 'schema2int');
+        $this->saveData(
+            'page01',
             'schema1',
-            array(
-                'new' => array(
-                    'new1' => array('label' => 'first', 'class' => 'Text', 'sort' => 10, 'ismulti' => 0, 'isenabled' => 1),
-                    'new2' => array('label' => 'second', 'class' => 'Text', 'sort' => 20, 'ismulti' => 1, 'isenabled' => 1),
-                    'new3' => array('label' => 'third', 'class' => 'Text', 'sort' => 30, 'ismulti' => 0, 'isenabled' => 1),
-                    'new4' => array('label' => 'fourth', 'class' => 'Text', 'sort' => 40, 'ismulti' => 0, 'isenabled' => 1)
-                )
-            )
-        );
-        $sb->build();
-
-        $sb = new meta\SchemaBuilder(
-            'schema2',
-            array(
-                'new' => array(
-                    'new1' => array('label' => 'afirst', 'class' => 'Text', 'sort' => 10, 'ismulti' => 0, 'isenabled' => 1),
-                    'new2' => array('label' => 'asecond', 'class' => 'Text', 'sort' => 20, 'ismulti' => 1, 'isenabled' => 1),
-                    'new3' => array('label' => 'athird', 'class' => 'Text', 'sort' => 30, 'ismulti' => 0, 'isenabled' => 1),
-                    'new4' => array('label' => 'afourth', 'class' => 'Integer', 'sort' => 40, 'ismulti' => 0, 'isenabled' => 1)
-                )
-            )
-        );
-        $sb->build();
-
-        $sd = new meta\SchemaData('schema1', 'page01', time());
-        $sd->saveData(
             array(
                 'first' => 'first data',
                 'second' => array('second data', 'more data', 'even more'),
@@ -62,22 +34,7 @@ class entry_struct_test extends \DokuWikiTest {
                 'fourth' => 'fourth data'
             )
         );
-
-        $path = DOKU_PLUGIN . 'struct/lang/';
-        $lang = array();
-        // don't include once, in case several plugin components require the same language file
-        @include($path . 'en/lang.php');
-        $this->lang = $lang;
     }
-
-    public function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
-    }
-
 
     protected function checkField(\phpQueryObject $pq, $schema, $name, $value) {
         $this->assertEquals(1, $pq->find("span.label:contains('$name')")->length, "Field $schema.$name not found");
@@ -115,13 +72,15 @@ class entry_struct_test extends \DokuWikiTest {
     public function test_createForm_postData() {
         global $INPUT, $ID;
         $ID = 'page01';
-        $structdata = array('schema1' => array(
-            'first' => 'first post data',
-            'second' => array('second post data', 'more post data', 'even more post data'),
-            'third' => 'third post data',
-            'fourth' => 'fourth post data'
-        ));
-        $INPUT->set(mock\action_plugin_struct_entry::getVAR(),$structdata);
+        $structdata = array(
+            'schema1' => array(
+                'first' => 'first post data',
+                'second' => array('second post data', 'more post data', 'even more post data'),
+                'third' => 'third post data',
+                'fourth' => 'fourth post data'
+            )
+        );
+        $INPUT->set(mock\action_plugin_struct_entry::getVAR(), $structdata);
 
         $entry = new mock\action_plugin_struct_entry();
         $test_html = $entry->createForm('schema1');
@@ -141,8 +100,8 @@ class entry_struct_test extends \DokuWikiTest {
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
         $structElement = $response->queryHTML('.struct');
 
-        $this->assertEquals(1,count($structElement));
-        $this->assertEquals($structElement->html(),'');
+        $this->assertEquals(1, count($structElement));
+        $this->assertEquals($structElement->html(), '');
     }
 
     public function test_edit_page_with_schema() {
@@ -154,7 +113,6 @@ class entry_struct_test extends \DokuWikiTest {
         $request = new \TestRequest();
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
         $test_html = trim($response->queryHTML('.struct')->html());
-
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('Schema2', $pq->find('legend')->text());
@@ -179,9 +137,9 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => 'Eve'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
+        $request->setPost('struct_schema_data', $structData);
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
-        $expected_errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],'afourth');
+        $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Integer needed'), 'afourth');
         $actual_errormsg = $response->queryHTML('.error')->html();
         $test_html = trim($response->queryHTML('.struct')->html());
 
@@ -210,12 +168,12 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '42'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
+        $request->setPost('struct_schema_data', $structData);
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
         $actual_errormsg = $response->queryHTML('.error')->get();
         $test_html = trim($response->queryHTML('.struct')->html());
 
-        $this->assertEquals($actual_errormsg,array(), "If all data is valid, then there should be no error message.");
+        $this->assertEquals($actual_errormsg, array(), "If all data is valid, then there should be no error message.");
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('Schema2', $pq->find('legend')->text());
@@ -240,16 +198,16 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '42'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('summary','only struct data saved');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('summary', 'only struct data saved');
         $response = $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
-        $expected_errormsg = $this->lang['emptypage'];
+        $expected_errormsg = $this->getLang('emptypage');
         $actual_errormsg = $response->queryHTML('.error')->html();
-        $pagelog = new \PageChangeLog($page);
+        $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
 
         $this->assertEquals(0, count($revisions));
-        $this->assertEquals($expected_errormsg,$actual_errormsg, "An empty page should not be saved.");
+        $this->assertEquals($expected_errormsg, $actual_errormsg, "An empty page should not be saved.");
     }
 
     public function test_fail_saveing_page_with_invaliddata() {
@@ -268,25 +226,25 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => 'Eve'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext',$wikitext);
-        $request->setPost('summary','content and struct data saved');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', $wikitext);
+        $request->setPost('summary', 'content and struct data saved');
         $response = $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
         $actual_wikitext = trim($response->queryHTML('#wiki__text')->html());
         $expected_wikitext = $wikitext;
 
         $actual_errormsg = $response->queryHTML('.error')->html();
-        $expected_errormsg = sprintf($this->lang['validation_prefix'] . $this->lang['Validation Exception Integer needed'],'afourth');
+        $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Integer needed'), 'afourth');
 
         $test_html = trim($response->queryHTML('.struct')->html());
 
-        $pagelog = new \PageChangeLog($page);
+        $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
 
         // assert
         $this->assertEquals(0, count($revisions));
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
-        $this->assertEquals($expected_wikitext,$actual_wikitext);
+        $this->assertEquals($expected_wikitext, $actual_wikitext);
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('Schema2', $pq->find('legend')->text());
@@ -313,12 +271,12 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '42'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext','teststring');
-        $request->setPost('summary','content and struct data saved');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', 'teststring');
+        $request->setPost('summary', 'content and struct data saved');
         $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
 
-        $pagelog = new \PageChangeLog($page);
+        $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $schemaData = new meta\SchemaData($schema, $page, 0);
@@ -357,12 +315,12 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '42'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext',$wikitext);
-        $request->setPost('summary','content and struct data saved');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', $wikitext);
+        $request->setPost('summary', 'content and struct data saved');
         $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
 
-        sleep(1);
+        $this->waitForTick(true);
 
         // second save - only struct data
         $request = new \TestRequest();
@@ -374,13 +332,13 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '43'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext',$wikitext);
-        $request->setPost('summary','2nd revision');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', $wikitext);
+        $request->setPost('summary', '2nd revision');
         $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
 
         // assert
-        $pagelog = new \PageChangeLog($page);
+        $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $schemaData = new meta\SchemaData($schema, $page, 0);
@@ -398,7 +356,6 @@ class entry_struct_test extends \DokuWikiTest {
         $this->assertEquals($expected_struct_data, $actual_struct_data);
         // todo: assert that pagerevisions and struct entries have the same timestamps
     }
-
 
     /**
      * @group slow
@@ -420,12 +377,12 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '42'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext',$wikitext);
-        $request->setPost('summary','content and struct data saved');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', $wikitext);
+        $request->setPost('summary', 'content and struct data saved');
         $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
 
-        sleep(1);
+        $this->waitForTick(true);
 
         // delete
         $request = new \TestRequest();
@@ -437,13 +394,13 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '43'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext','');
-        $request->setPost('summary','delete page');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', '');
+        $request->setPost('summary', 'delete page');
         $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
 
         // assert
-        $pagelog = new \PageChangeLog($page);
+        $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $schemaData = new meta\SchemaData($schema, $page, 0);
@@ -462,7 +419,6 @@ class entry_struct_test extends \DokuWikiTest {
         // todo: timestamps?
     }
 
-
     /**
      * @group slow
      */
@@ -474,12 +430,12 @@ class entry_struct_test extends \DokuWikiTest {
         $wikitext = 'teststring';
 
         global $conf;
-        $conf['useacl']    = 1;
+        $conf['useacl'] = 1;
         $conf['superuser'] = 'admin';
         $_SERVER['REMOTE_USER'] = 'admin'; //now it's testing as admin
         global $default_server_vars;
         $default_server_vars['REMOTE_USER'] = 'admin';  //Hack until Issue #1099 is fixed
-        $USERINFO['grps'] = array('admin','user');
+        $USERINFO['grps'] = array('admin', 'user');
 
         // first save;
         $request = new \TestRequest();
@@ -491,12 +447,12 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '42'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext',$wikitext);
-        $request->setPost('summary','content and struct data saved');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', $wikitext);
+        $request->setPost('summary', 'content and struct data saved');
         $request->post(array('id' => $page, 'do' => 'save', 'sectok' => getSecurityToken()), '/doku.php');
 
-        sleep(1);
+        $this->waitForTick(true);
 
         // second save
         $request = new \TestRequest();
@@ -508,24 +464,24 @@ class entry_struct_test extends \DokuWikiTest {
                 'afourth' => '43'
             )
         );
-        $request->setPost('struct_schema_data',$structData);
-        $request->setPost('wikitext',$wikitext . $wikitext);
-        $request->setPost('summary','delete page');
+        $request->setPost('struct_schema_data', $structData);
+        $request->setPost('wikitext', $wikitext . $wikitext);
+        $request->setPost('summary', 'delete page');
         $request->post(array('id' => $page, 'do' => 'save', 'sectok' => getSecurityToken()), '/doku.php');
 
-        sleep(1);
+        $this->waitForTick(true);
 
         // revert to first save
-        $actpagelog = new \PageChangeLog($page);
+        $actpagelog = new \PageChangelog($page);
         $actrevisions = $actpagelog->getRevisions(0, 200);
 
         $actrevinfo = $actpagelog->getRevisionInfo($actrevisions[0]);
         $request = new \TestRequest();
-        $request->setPost('summary','revert page');
+        $request->setPost('summary', 'revert page');
         $request->post(array('id' => $page, 'do' => 'revert', 'rev' => $actrevinfo['date'], 'sectok' => getSecurityToken()), '/doku.php');
 
         // assert
-        $pagelog = new \PageChangeLog($page);
+        $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
         $schemaData = new meta\SchemaData($schema, $page, 0);

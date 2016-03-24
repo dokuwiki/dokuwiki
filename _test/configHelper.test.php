@@ -5,29 +5,25 @@ namespace plugin\struct\test;
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
- * Tests for the class action_plugin_magicmatcher_oldrevisions of the magicmatcher plugin
- *
  * @group plugin_struct
  * @group plugins
  *
  */
-class config_helper_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct',);
+class config_helper_struct_test extends StructTest {
 
     public static function filter_testdata() {
         return array(
             array('a=b', array(0 => 'a', 1 => '=', 2 => 'b'), false, ''),
             array('a<b', array(0 => 'a', 1 => '<', 2 => 'b'), false, ''),
-            array('a>b', array( 0 => 'a', 1 => '>', 2 => 'b' ), false, ''),
-            array( 'a<=b', array( 0 => 'a', 1 => '<=', 2 => 'b' ), false, ''),
-            array( 'a>=b', array( 0 => 'a', 1 => '>=', 2 => 'b' ), false, ''),
-            array( 'a!=b', array( 0 => 'a', 1 => '!=', 2 => 'b' ), false, ''),
+            array('a>b', array(0 => 'a', 1 => '>', 2 => 'b'), false, ''),
+            array('a<=b', array(0 => 'a', 1 => '<=', 2 => 'b'), false, ''),
+            array('a>=b', array(0 => 'a', 1 => '>=', 2 => 'b'), false, ''),
+            array('a!=b', array(0 => 'a', 1 => '!=', 2 => 'b'), false, ''),
             array('a<>b', array(0 => 'a', 1 => '<>', 2 => 'b'), false, ''),
-            array( 'a!~b', array( 0 => 'a', 1 => '!~', 2 => 'b' ), false, ''),
-            array( 'a~b', array( 0 => 'a', 1 => '~', 2 => 'b' ), false, ''),
-            array('a*~b',array(0 => 'a',1 => '*~',2 => 'b'), false, ''),
-            array('a?b',array(), '\plugin\struct\meta\StructException', 'Exception should be thrown on unknown operator')
+            array('a!~b', array(0 => 'a', 1 => '!~', 2 => 'b'), false, ''),
+            array('a~b', array(0 => 'a', 1 => '~', 2 => 'b'), false, ''),
+            array('a*~b', array(0 => 'a', 1 => '*~', 2 => 'b'), false, ''),
+            array('a?b', array(), '\plugin\struct\meta\StructException', 'Exception should be thrown on unknown operator')
         );
     }
 
@@ -40,7 +36,7 @@ class config_helper_struct_test extends \DokuWikiTest {
      */
     public function test_parseFilter($input_filter, $expected_filter, $expectException, $msg) {
         $confHelper = new mock\helper_plugin_struct_config();
-        if ($expectException !== false) $this->setExpectedException($expectException);
+        if($expectException !== false) $this->setExpectedException($expectException);
 
         $actual_filter = $confHelper->parseFilter($input_filter);
 

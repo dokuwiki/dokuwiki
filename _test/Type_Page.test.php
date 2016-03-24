@@ -7,14 +7,12 @@ use plugin\struct\types\Page;
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
 /**
- * Testing the User Type
+ * Testing the Page Type
  *
  * @group plugin_struct
  * @group plugins
  */
-class Type_Page_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Type_Page_struct_test extends StructTest {
 
     public function setUp() {
         parent::setUp();
@@ -79,7 +77,7 @@ class Type_Page_struct_test extends \DokuWikiTest {
         );
 
         $INPUT->set('search', 'ynt');
-        $this->assertEquals(array(array('label'=>'syntax (wiki)', 'value'=>'syntax')), $page->handleAjax());
+        $this->assertEquals(array(array('label' => 'syntax (wiki)', 'value' => 'syntax')), $page->handleAjax());
     }
 
     public function test_ajax_postfix() {
@@ -98,7 +96,7 @@ class Type_Page_struct_test extends \DokuWikiTest {
         );
 
         $INPUT->set('search', 'oku');
-        $this->assertEquals(array(array('label'=>'dokuwiki (wiki)', 'value'=>'wiki:dokuw')), $page->handleAjax());
+        $this->assertEquals(array(array('label' => 'dokuwiki (wiki)', 'value' => 'wiki:dokuw')), $page->handleAjax());
     }
 
 }

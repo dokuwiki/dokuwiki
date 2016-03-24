@@ -8,15 +8,11 @@ use plugin\struct\meta\SchemaBuilder;
 use plugin\struct\meta\Schema;
 
 /**
- * Tests for the class action_plugin_magicmatcher_oldrevisions of the magicmatcher plugin
- *
  * @group plugin_struct
  * @group plugins
  *
  */
-class schemaBuilder_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class schemaBuilder_struct_test extends StructTest {
 
     /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;
@@ -27,29 +23,6 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
         /** @var \helper_plugin_struct_db $sqlite */
         $sqlite = plugin_load('helper', 'struct_db');
         $this->sqlite = $sqlite->getDB();
-    }
-
-    public function tearDown() {
-        parent::tearDown();
-
-        /** @noinspection SqlResolve */
-        $res = $this->sqlite->query("SELECT name FROM sqlite_master WHERE type='table'");
-        $tableNames = $this->sqlite->res2arr($res);
-        $tableNames = array_map(function ($value) { return $value['name'];},$tableNames);
-        $this->sqlite->res_close($res);
-
-        foreach ($tableNames as $tableName) {
-            if ($tableName == 'opts') continue;
-            if (substr($tableName, 0, 7) == 'sqlite_') continue;
-            $this->sqlite->query('DROP TABLE ?', $tableName);
-        }
-
-
-        $this->sqlite->query("CREATE TABLE schema_assignments ( assign NOT NULL, tbl NOT NULL, PRIMARY KEY(assign, tbl) );");
-        $this->sqlite->query("CREATE TABLE schema_cols ( sid INTEGER REFERENCES schemas (id), colref INTEGER NOT NULL, enabled BOOLEAN DEFAULT 1, tid INTEGER REFERENCES types (id), sort INTEGER NOT NULL, PRIMARY KEY ( sid, colref) )");
-        $this->sqlite->query("CREATE TABLE schemas ( id INTEGER PRIMARY KEY AUTOINCREMENT, tbl NOT NULL, ts INT NOT NULL, chksum DEFAULT '' )");
-        $this->sqlite->query("CREATE TABLE types ( id INTEGER PRIMARY KEY AUTOINCREMENT, class NOT NULL, ismulti BOOLEAN DEFAULT 0, label DEFAULT '', config DEFAULT '' )");
-        $this->sqlite->query("CREATE TABLE multivals ( tbl NOT NULL, colref INTEGER NOT NULL, pid NOT NULL, rev INTEGER NOT NULL, row INTEGER NOT NULL, value, PRIMARY KEY(tbl, colref, pid, rev, row) )");
     }
 
     /**
@@ -141,9 +114,8 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
         $this->assertEquals('1', $actual_schema['id']);
         $this->assertEquals($testname, $actual_schema['tbl']);
         $this->assertEquals('', $actual_schema['chksum']);
-        $this->assertTrue((int)$actual_schema['ts'] > 0, 'timestamp should be larger than 0');
+        $this->assertTrue((int) $actual_schema['ts'] > 0, 'timestamp should be larger than 0');
     }
-
 
     public function test_build_update() {
 
@@ -171,7 +143,6 @@ class schemaBuilder_struct_test extends \DokuWikiTest {
         $updatedata['cols']['1']['config'] = '{"prefix": "pre", "postfix": "fix"}';
         $updatedata['cols']['1']['class'] = 'Text';
         $updatedata['cols']['1']['isenabled'] = '1';
-
 
         // act
         $builder = new SchemaBuilder($testname, $updatedata);

@@ -6,15 +6,13 @@ use plugin\struct\meta\Column;
 use plugin\struct\meta\Value;
 use plugin\struct\types\Text;
 
+spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+
 /**
- * Class Value_struct_test
- *
  * @group plugin_struct
  * @group plugins
  */
-class Value_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Value_struct_test extends StructTest {
 
     /**
      * @param bool $multi
@@ -79,7 +77,7 @@ class Value_struct_test extends \DokuWikiTest {
         $val->setValue(false);
         $this->assertEquals('', $val->getValue());
 
-        $val->setValue(array('what','the', 'foo'));
+        $val->setValue(array('what', 'the', 'foo'));
         $this->assertEquals('what', $val->getValue());
 
         $val->setValue(array());

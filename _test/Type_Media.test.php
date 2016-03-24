@@ -12,9 +12,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugin_struct
  * @group plugins
  */
-class Type_Media_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Type_Media_struct_test extends StructTest {
 
     /**
      * Provides failing validation data
@@ -83,7 +81,6 @@ class Type_Media_struct_test extends \DokuWikiTest {
         $this->assertContains('h=160', $img->attr('src')); // fetch param
         $this->assertEquals(160, $img->attr('height')); // img param
     }
-
 
     public function test_render_aggregation_img() {
         $R = new \Doku_Renderer_xhtml();

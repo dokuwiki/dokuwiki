@@ -5,8 +5,6 @@ namespace plugin\struct\test;
 // we don't have the auto loader here
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
-use plugin\struct\meta\SchemaBuilder;
-use plugin\struct\meta\Schema;
 use plugin\struct\meta;
 use plugin\struct\meta\Search;
 
@@ -17,9 +15,7 @@ use plugin\struct\meta\Search;
  * @group plugins
  *
  */
-class schemaDataDB_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite',);
+class schemaDataDB_struct_test extends StructTest {
 
     /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;
@@ -31,102 +27,80 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         $sqlite = plugin_load('helper', 'struct_db');
         $this->sqlite = $sqlite->getDB();
 
-        $testdata = array();
-        $testdata['new']['new1']['sort'] = 70;
-        $testdata['new']['new1']['label'] = 'testcolumn';
-        $testdata['new']['new1']['ismulti'] = 0;
-        $testdata['new']['new1']['config'] = '{"prefix": "", "postfix": ""}';
-        $testdata['new']['new1']['class'] = 'Text';
-        $testdata['new']['new1']['isenabled'] = '1';
-        $testdata['new']['new2']['sort'] = 40;
-        $testdata['new']['new2']['label'] = 'testMulitColumn';
-        $testdata['new']['new2']['ismulti'] = 1;
-        $testdata['new']['new2']['config'] = '{"prefix": "", "postfix": ""}';
-        $testdata['new']['new2']['class'] = 'Text';
-        $testdata['new']['new2']['isenabled'] = '1';
-
-        $testname = 'testTable';
-        $testname = Schema::cleanTableName($testname);
-
-        $builder = new SchemaBuilder($testname, $testdata);
-        $builder->build();
+        $this->loadSchemaJSON('testtable', '', 100);
 
         // revision 1
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 123, 'value1',));
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
-                       array(2,'testpage',123,1,'value2.1',));
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
-                       array(2,'testpage',123,2,'value2.2',));
-
+        $this->saveData(
+            'testpage',
+            'testtable',
+            array(
+                'testcolumn' => 'value1',
+                'testMulitColumn' => array('value2.1', 'value2.2')
+            ),
+            123
+        );
 
         // revision 2
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage', 789, 'value1a',));
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
-                       array(2,'testpage',789,1,'value2.1a',));
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
-                       array(2,'testpage',789,2,'value2.2a',));
+        $this->saveData(
+            'testpage',
+            'testtable',
+            array(
+                'testcolumn' => 'value1a',
+                'testMulitColumn' => array('value2.1a', 'value2.2a')
+            ),
+            789
+        );
 
         // revision 1 of different page
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO data_testtable (pid, rev, col1) VALUES (?,?,?)", array('testpage2', 789, 'value1a',));
-        /** @noinspection SqlResolve */
-        $this->sqlite->query("INSERT INTO multi_testtable (colref, pid, rev, row, value) VALUES (?,?,?,?,?)",
-                             array(2,'testpage2',789,1,'value2.1a',));
-    }
-
-    public function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
+        $this->saveData(
+            'testpage2',
+            'testtable',
+            array(
+                'testcolumn' => 'value1a',
+                'testMulitColumn' => array('value2.1a')
+            ),
+            789
+        );
     }
 
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage', "");
+        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
-        $actual_data =  $schemaData->getDataFromDB();
+        $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
             array(
                 'col1' => 'value1a',
-                'col2' => 'value2.1a'. Search::CONCAT_SEPARATOR . 'value2.2a',
+                'col2' => 'value2.1a' . Search::CONCAT_SEPARATOR . 'value2.2a',
             ),
         );
 
-
-        $this->assertEquals($expected_data, $actual_data , '');
+        $this->assertEquals($expected_data, $actual_data, '');
     }
 
     public function test_getDataFromDB_oldRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage','');
+        $schemaData = new mock\SchemaData('testtable', 'testpage', '');
         $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
             array(
                 'col1' => 'value1',
-                'col2' => 'value2.1'. Search::CONCAT_SEPARATOR . 'value2.2',
+                'col2' => 'value2.1' . Search::CONCAT_SEPARATOR . 'value2.2',
             ),
         );
 
-        $this->assertEquals($expected_data, $actual_data , '');
+        $this->assertEquals($expected_data, $actual_data, '');
     }
 
     public function test_getData_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage', "");
+        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
 
         $actual_data = $schemaData->getData();
@@ -145,7 +119,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getDataArray_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage', "");
+        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
 
         $actual_data = $schemaData->getDataArray();
@@ -156,13 +130,13 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         );
 
         // assert
-        $this->assertEquals($expected_data, $actual_data , '');
+        $this->assertEquals($expected_data, $actual_data, '');
     }
 
     public function test_getData_currentRev2() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage2', "");
+        $schemaData = new mock\SchemaData('testtable', 'testpage2', "");
         $schemaData->setCorrectTimestamp('testpage2');
         $actual_data = $schemaData->getData();
 
@@ -180,7 +154,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
     public function test_getData_oldRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage','');
+        $schemaData = new mock\SchemaData('testtable', 'testpage', '');
         $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getData();
 
@@ -207,7 +181,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
         );
 
         // act
-        $schemaData = new meta\SchemaData('testtable','testpage', time());
+        $schemaData = new meta\SchemaData('testtable', 'testpage', time());
         $result = $schemaData->saveData($testdata);
 
         // assert
@@ -241,18 +215,17 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
             )
         );
 
-
         $this->assertTrue($result, 'should be true on success');
-        $this->assertEquals($expected_saved_single, $actual_saved_single,'single value fields');
-        $this->assertEquals($expected_saved_multi, $actual_saved_multi,'multi value fields');
+        $this->assertEquals($expected_saved_single, $actual_saved_single, 'single value fields');
+        $this->assertEquals($expected_saved_multi, $actual_saved_multi, 'multi value fields');
     }
 
     public function test_getDataFromDB_clearData() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage', time());
+        $schemaData = new mock\SchemaData('testtable', 'testpage', time());
         $schemaData->clearData();
-        $actual_data =  $schemaData->getDataFromDB();
+        $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
             array(
@@ -261,14 +234,13 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
             )
         );
 
-
-        $this->assertEquals($expected_data, $actual_data , '');
+        $this->assertEquals($expected_data, $actual_data, '');
     }
 
     public function test_getData_clearData() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable','testpage', time());
+        $schemaData = new mock\SchemaData('testtable', 'testpage', time());
         $schemaData->clearData();
         $actual_data = $schemaData->getData();
 
@@ -286,7 +258,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
                 "value2.2_saved",
             )
         );
-        $schemaData = new meta\SchemaData('testtable','testpage', time());
+        $schemaData = new meta\SchemaData('testtable', 'testpage', time());
         $schemaData->saveData($testdata);
 
         // act
@@ -308,7 +280,7 @@ class schemaDataDB_struct_test extends \DokuWikiTest {
                 "value2.2_saved",
             )
         );
-        $schemaData = new meta\SchemaData('testtable','testpage', time());
+        $schemaData = new meta\SchemaData('testtable', 'testpage', time());
         $schemaData->saveData($testdata);
 
         // act

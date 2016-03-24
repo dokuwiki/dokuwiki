@@ -1,0 +1,28 @@
+{
+    "structversion": "2016-03-21",
+    "schema": "testtable",
+    "columns": [
+        {
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 70,
+            "label": "testcolumn",
+            "class": "Text",
+            "config": {
+                "prefix": "",
+                "postfix": ""
+            }
+        },
+        {
+            "ismulti": true,
+            "isenabled": true,
+            "sort": 40,
+            "label": "testMulitColumn",
+            "class": "Text",
+            "config": {
+                "prefix": "",
+                "postfix": ""
+            }
+        }
+    ]
+}

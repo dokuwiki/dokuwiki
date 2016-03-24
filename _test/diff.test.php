@@ -17,34 +17,12 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  *
  *
  */
-class diff_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct','sqlite');
+class diff_struct_test extends StructTest {
 
     public function setUp() {
         parent::setUp();
 
-        $schema = 'schema1';
-        $sb = new meta\SchemaBuilder(
-            $schema,
-            array(
-                'new' => array(
-                    'new1' => array('label' => 'first', 'class' => 'Text', 'sort' => 10, 'ismulti' => 0, 'isenabled' => 1),
-                    'new2' => array('label' => 'second', 'class' => 'Text', 'sort' => 20, 'ismulti' => 1, 'isenabled' => 1),
-                    'new3' => array('label' => 'third', 'class' => 'Text', 'sort' => 30, 'ismulti' => 0, 'isenabled' => 1),
-                    'new4' => array('label' => 'fourth', 'class' => 'Text', 'sort' => 40, 'ismulti' => 0, 'isenabled' => 1)
-                )
-            )
-        );
-        $sb->build();
-    }
-
-    public function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
+        $this->loadSchemaJSON('schema1');
     }
 
     public function test_diff() {
@@ -69,7 +47,7 @@ class diff_struct_test extends \DokuWikiTest {
         $request->setPost('summary','content and struct data saved');
         $request->post(array('id' => $page, 'do' => 'save'), '/doku.php');
 
-        sleep(1);
+        $this->waitForTick(true);
 
         // second save - only struct data
         $request = new \TestRequest();

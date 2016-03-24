@@ -11,17 +11,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugins
  *
  */
-class SchemaImporter_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
-
-    protected function tearDown() {
-        parent::tearDown();
-
-        /** @var \helper_plugin_struct_db $sqlite */
-        $sqlite = plugin_load('helper', 'struct_db');
-        $sqlite->resetDB();
-    }
+class SchemaImporter_struct_test extends StructTest {
 
     public function test_export() {
         $sb = new meta\SchemaBuilder(
@@ -38,7 +28,7 @@ class SchemaImporter_struct_test extends \DokuWikiTest {
         $sb->build();
 
         $schema = new meta\Schema('schema1');
-        $expect = json_decode(file_get_contents(__DIR__.'/json/schema1.schema.json'), true);
+        $expect = json_decode(file_get_contents(__DIR__ . '/json/schema1.struct.json'), true);
         $actual = json_decode($schema->toJSON(), true);
         // we don't expect this to match
         unset($expect['structversion']);
@@ -47,7 +37,7 @@ class SchemaImporter_struct_test extends \DokuWikiTest {
     }
 
     public function test_import_one() {
-        $sb = new meta\SchemaImporter('tag', file_get_contents(__DIR__.'/json/tag.struct.json'));
+        $sb = new meta\SchemaImporter('tag', file_get_contents(__DIR__ . '/json/tag.struct.json'));
         $this->assertTrue((bool) $sb->build());
 
         $schema = new meta\Schema('tag');
@@ -60,13 +50,12 @@ class SchemaImporter_struct_test extends \DokuWikiTest {
         $this->assertEquals('tags', $columns[1]->getLabel());
     }
 
-
     public function test_import_export() {
-        $sb = new meta\SchemaImporter('foobar', file_get_contents(__DIR__.'/json/schema1.schema.json'));
+        $sb = new meta\SchemaImporter('foobar', file_get_contents(__DIR__ . '/json/schema1.struct.json'));
         $this->assertTrue((bool) $sb->build());
 
         $schema = new meta\Schema('foobar');
-        $expect = json_decode(file_get_contents(__DIR__.'/json/schema1.schema.json'), true);
+        $expect = json_decode(file_get_contents(__DIR__ . '/json/schema1.struct.json'), true);
         $actual = json_decode($schema->toJSON(), true);
         // we don't expect this to match
         unset($expect['structversion']);
@@ -74,6 +63,5 @@ class SchemaImporter_struct_test extends \DokuWikiTest {
         $expect['schema'] = 'foobar'; // we exported the new schema
         $this->assertEquals($expect, $actual);
     }
-
 
 }

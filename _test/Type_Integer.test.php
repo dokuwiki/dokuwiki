@@ -12,9 +12,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugin_struct
  * @group plugins
  */
-class Type_Integer_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Type_Integer_struct_test extends StructTest {
 
     /**
      * Provides failing validation data

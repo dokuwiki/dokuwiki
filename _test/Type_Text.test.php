@@ -2,7 +2,6 @@
 
 namespace plugin\struct\test;
 
-
 use plugin\struct\types\Text;
 
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
@@ -13,9 +12,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugin_struct
  * @group plugins
  */
-class Type_Text_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Type_Text_struct_test extends StructTest {
 
     public function test_compare_simple() {
         $text = new Text(array('prefix' => '', 'postfix' => ''));

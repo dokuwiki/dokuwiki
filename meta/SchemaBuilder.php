@@ -42,6 +42,9 @@ class SchemaBuilder {
     /** @var \helper_plugin_sqlite|null  */
     protected $sqlite;
 
+    /** @var int the time for which this schema should be created - default to time() can be overriden for tests */
+    protected $time = 0;
+
     /**
      * SchemaBuilder constructor.
      *
@@ -61,9 +64,11 @@ class SchemaBuilder {
     /**
      * Create the new schema
      *
+     * @param int $time when to create this schema 0 for now
      * @return bool|int the new schema id on success
      */
-    public function build() {
+    public function build($time=0) {
+        $this->time = $time;
         $this->fixLabelUniqueness();
 
         $this->sqlite->query('BEGIN TRANSACTION');
@@ -133,8 +138,10 @@ class SchemaBuilder {
      * @todo use checksum or other heuristic to see if we really need a new schema OTOH we probably need one nearly always!?
      */
     protected function newSchema() {
+        if(!$this->time) $this->time = time();
+
         $sql = "INSERT INTO schemas (tbl, ts) VALUES (?, ?)";
-        $this->sqlite->query($sql, $this->table, time());
+        $this->sqlite->query($sql, $this->table, $this->time);
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
         $this->newschemaid = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);

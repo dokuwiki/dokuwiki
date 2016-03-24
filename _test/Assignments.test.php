@@ -5,18 +5,12 @@ namespace plugin\struct\test;
 // we don't have the auto loader here
 spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 
-
 /**
- * Tests for the building of SQL-Queries for the struct plugin
- *
  * @group plugin_struct
  * @group plugins
  *
  */
-class Assignments_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
-
+class Assignments_struct_test extends StructTest {
 
     public function test_patternmatching() {
         $ass = new mock\Assignments();
@@ -35,7 +29,6 @@ class Assignments_struct_test extends \DokuWikiTest {
         $this->assertTrue($ass->matchPagePattern('/:page/', 'some:pagehere'));
         $this->assertTrue($ass->matchPagePattern('/:page/', 'pagehere'));
     }
-
 
     /**
      * check clearing works
@@ -178,8 +171,8 @@ class Assignments_struct_test extends \DokuWikiTest {
         $ass->removePattern('**', 'foo');
 
         // check that all pages are known
-        $expect = array (
-            'attoplevel' => array (
+        $expect = array(
+            'attoplevel' => array(
                 'baz' => false,
                 'foo' => false
             ),
@@ -191,15 +184,15 @@ class Assignments_struct_test extends \DokuWikiTest {
         $this->assertEquals($expect, $ass->getPages());
 
         // limit to certain schema
-        $expect = array (
-            'attoplevel' => array (
+        $expect = array(
+            'attoplevel' => array(
                 'baz' => false,
             ),
         );
         $this->assertEquals($expect, $ass->getPages('baz'));
 
         // show current assignments only
-        $expect = array (
+        $expect = array(
             'wiki:syntax' => array(
                 'bar' => true,
             )

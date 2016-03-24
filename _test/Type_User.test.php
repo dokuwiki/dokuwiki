@@ -12,9 +12,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
  * @group plugin_struct
  * @group plugins
  */
-class Type_User_struct_test extends \DokuWikiTest {
-
-    protected $pluginsEnabled = array('struct', 'sqlite');
+class Type_User_struct_test extends StructTest {
 
     /**
      * @expectedException \plugin\struct\meta\ValidationException
@@ -29,7 +27,7 @@ class Type_User_struct_test extends \DokuWikiTest {
         $user->validate('testuser');
         $this->assertTrue(true); // we simply check that no exceptions are thrown
 
-        $user = new User(array('existingonly'=>false));
+        $user = new User(array('existingonly' => false));
         $user->validate('nosuchuser');
         $this->assertTrue(true); // we simply check that no exceptions are thrown
     }
@@ -48,10 +46,10 @@ class Type_User_struct_test extends \DokuWikiTest {
         );
 
         $INPUT->set('search', 'test');
-        $this->assertEquals(array(array('label'=>'Arthur Dent [testuser]', 'value'=>'testuser')), $user->handleAjax());
+        $this->assertEquals(array(array('label' => 'Arthur Dent [testuser]', 'value' => 'testuser')), $user->handleAjax());
 
         $INPUT->set('search', 'dent');
-        $this->assertEquals(array(array('label'=>'Arthur Dent [testuser]', 'value'=>'testuser')), $user->handleAjax());
+        $this->assertEquals(array(array('label' => 'Arthur Dent [testuser]', 'value' => 'testuser')), $user->handleAjax());
 
         $INPUT->set('search', 'd'); // under mininput
         $this->assertEquals(array(), $user->handleAjax());
@@ -67,7 +65,7 @@ class Type_User_struct_test extends \DokuWikiTest {
         );
 
         $INPUT->set('search', 'test');
-        $this->assertEquals(array(array('label'=>'Arthur Dent [testuser]', 'value'=>'testuser')), $user->handleAjax());
+        $this->assertEquals(array(array('label' => 'Arthur Dent [testuser]', 'value' => 'testuser')), $user->handleAjax());
 
         $INPUT->set('search', 'dent');
         $this->assertEquals(array(), $user->handleAjax());
