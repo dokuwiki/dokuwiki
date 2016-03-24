@@ -120,7 +120,7 @@ class Schema {
             );
             $type->setContext($column);
 
-            $this->columns[$row['colref']] = $column;
+            $this->columns[] = $column;
             if($row['sort'] > $this->maxsort) $this->maxsort = $row['sort'];
         }
     }

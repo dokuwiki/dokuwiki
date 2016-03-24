@@ -46,7 +46,22 @@ class SchemaImporter_struct_test extends \DokuWikiTest {
         $this->assertEquals($expect, $actual);
     }
 
-    public function test_import() {
+    public function test_import_one() {
+        $sb = new meta\SchemaImporter('tag', file_get_contents(__DIR__.'/json/tag.struct.json'));
+        $this->assertTrue((bool) $sb->build());
+
+        $schema = new meta\Schema('tag');
+        $columns = $schema->getColumns();
+
+        $this->assertEquals(2, count($columns));
+        $this->assertTrue(is_a($columns[0], '\plugin\struct\meta\Column'));
+        $this->assertTrue(is_a($columns[1], '\plugin\struct\meta\Column'));
+        $this->assertEquals('tag', $columns[0]->getLabel());
+        $this->assertEquals('tags', $columns[1]->getLabel());
+    }
+
+
+    public function test_import_export() {
         $sb = new meta\SchemaImporter('foobar', file_get_contents(__DIR__.'/json/schema1.schema.json'));
         $this->assertTrue((bool) $sb->build());
 

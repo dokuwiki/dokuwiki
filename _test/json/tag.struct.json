@@ -1,0 +1,73 @@
+{
+    "structversion": "2016-03-21",
+    "schema": "tag",
+    "id": "129",
+    "columns": [
+        {
+            "colref": 1,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 10,
+            "label": "tag",
+            "class": "Tag",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "page": "",
+                "autocomplete": {
+                    "mininput": 2,
+                    "maxresult": 5
+                },
+                "label": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                },
+                "hint": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                }
+            }
+        },
+        {
+            "colref": 2,
+            "ismulti": true,
+            "isenabled": true,
+            "sort": 20,
+            "label": "tags",
+            "class": "Tag",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "page": "",
+                "autocomplete": {
+                    "mininput": 2,
+                    "maxresult": 5
+                },
+                "label": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                },
+                "hint": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                }
+            }
+        }
+    ]
+}
