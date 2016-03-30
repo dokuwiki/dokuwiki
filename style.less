@@ -76,6 +76,31 @@
 }
 
 /**
+ * Bureaucracy form adjustments
+ */
+.dokuwiki form.bureaucracy__plugin label {
+    span {
+        line-height: 2em;
+    }
+
+    span.label {
+        vertical-align: top;
+    }
+
+    span.input {
+        width: 50%;
+        display: inline-block;
+        text-align: left;
+        padding-left: 0.25em;
+        color: @ini_text;
+
+        input, select, textarea {
+            width: 100%;
+        }
+    }
+}
+
+/**
  * Tabs in the Schema Editor
  */
 #plugin__struct_json {

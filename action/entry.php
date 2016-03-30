@@ -221,7 +221,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 // posted data trumps stored data
                 $field->setValue($postdata[$label]);
             }
-            $html .= self::makeField($field, self::$VAR . "[$tablename][$label]");
+            $html .=  $this->makeField($field, self::$VAR . "[$tablename][$label]");
         }
         $html .= '</fieldset>';
 
@@ -235,7 +235,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @param String $name field's name
      * @return string
      */
-    static public function makeField(Value $field, $name) {
+    protected function makeField(Value $field, $name) {
         $trans = hsc($field->getColumn()->getTranslatedLabel());
         $hint  = hsc($field->getColumn()->getTranslatedHint());
         $class = $hint ? 'hashint' : '';

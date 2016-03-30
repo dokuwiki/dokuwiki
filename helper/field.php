@@ -63,8 +63,37 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
 
         // output the field
         $value = new Value($this->column, $this->opt['value']);
-        $field = action_plugin_struct_entry::makeField($value, $params['name']);
+        $field = $this->makeField($value, $params['name']);
         $form->addElement($field);
+    }
+
+
+
+    /**
+     * Create the input field
+     *
+     * @param Value $field
+     * @param String $name field's name
+     * @return string
+     */
+    protected function makeField(Value $field, $name) {
+        $trans = hsc($field->getColumn()->getTranslatedLabel());
+        $hint  = hsc($field->getColumn()->getTranslatedHint());
+        $class = $hint ? 'hashint' : '';
+        $lclass = $this->error ? 'bureaucracy_error' : '';
+        $colname = $field->getColumn()->getFullQualifiedLabel();
+        $required = ' <sup>*</sup>';
+
+        $input = $field->getValueEditor($name);
+
+
+        $html = '';
+        $html .= "<label class=\"$lclass\" data-column=\"$colname\">";
+        $html .= "<span class=\"label $class\" title=\"$hint\">$trans$required</span>";
+        $html .= "<span class=\"input\">$input</span>";
+        $html .= '</label>';
+
+        return $html;
     }
 
     /**
