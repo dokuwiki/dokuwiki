@@ -248,6 +248,8 @@ class Search {
                 $where .= "\nAND GETACCESSLEVEL(data_{$schema->getTable()}.pid) > 0";
                 $where .= "\nAND PAGEEXISTS(data_{$schema->getTable()}.pid) = 1";
                 $first_table = $schema->getTable();
+
+                $grouping[] =  "data_{$schema->getTable()}.pid";
             }
             $where .= "\nAND data_{$schema->getTable()}.latest = 1";
         }
