@@ -13,6 +13,7 @@ use plugin\struct\meta\Assignments;
 use plugin\struct\meta\SchemaData;
 use plugin\struct\meta\ValidationException;
 use plugin\struct\meta\Validator;
+use plugin\struct\meta\Value;
 use plugin\struct\types\AbstractBaseType;
 
 /**
@@ -220,31 +221,43 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 // posted data trumps stored data
                 $field->setValue($postdata[$label]);
             }
-            $trans = hsc($field->getColumn()->getTranslatedLabel());
-            $hint  = hsc($field->getColumn()->getTranslatedHint());
-            $class = $hint ? 'hashint' : '';
-
-            $name = self::$VAR . "[$tablename][$label]";
-            $input = $field->getValueEditor($name);
-
-            // we keep all the custom form stuff the field might produce, but hide it
-            if(!$field->getColumn()->isVisibleInEditor()) {
-                $hide = 'style="display:none"';
-            } else {
-                $hide = '';
-            }
-
-            $html .= "<label $hide>";
-            $html .= "<span class=\"label $class\" title=\"$hint\">$trans</span>";
-            $html .= "<span class=\"input\">$input</span>";
-            $html .= '</label>';
+            $html .= self::makeField($field, self::$VAR . "[$tablename][$label]");
         }
         $html .= '</fieldset>';
 
         return $html;
     }
 
+    /**
+     * Create the input field
+     *
+     * @param Value $field
+     * @param String $name field's name
+     * @return string
+     */
+    static public function makeField(Value $field, $name) {
+        $trans = hsc($field->getColumn()->getTranslatedLabel());
+        $hint  = hsc($field->getColumn()->getTranslatedHint());
+        $class = $hint ? 'hashint' : '';
+        $colname = $field->getColumn()->getFullQualifiedLabel();
 
+        $input = $field->getValueEditor($name);
+
+        // we keep all the custom form stuff the field might produce, but hide it
+        if(!$field->getColumn()->isVisibleInEditor()) {
+            $hide = 'style="display:none"';
+        } else {
+            $hide = '';
+        }
+
+        $html = '';
+        $html .= "<label $hide data-column=\"$colname\">";
+        $html .= "<span class=\"label $class\" title=\"$hint\">$trans</span>";
+        $html .= "<span class=\"input\">$input</span>";
+        $html .= '</label>';
+
+        return $html;
+    }
 }
 
 // vim:ts=4:sw=4:et:

@@ -86,10 +86,7 @@ jQuery(function () {
     jQuery('input.struct_autocomplete').autocomplete({
         ismulti: false,
         source: function (request, cb) {
-            var name = this.element.attr('name');
-            name = name.substring(19, name.length - 1);
-            name = name.replace('][', '.');
-
+            var name = jQuery(this.element[0]).closest('label').data('column');
             var term = request.term;
             if (this.options.ismulti) {
                 term = extractLast(term);
