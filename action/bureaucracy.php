@@ -10,6 +10,7 @@
 if(!defined('DOKU_INC')) die();
 
 use plugin\struct\meta\Assignments;
+use plugin\struct\meta\Schema;
 use plugin\struct\meta\SchemaData;
 use plugin\struct\meta\ValidationException;
 use plugin\struct\meta\Validator;
@@ -17,10 +18,14 @@ use plugin\struct\meta\Value;
 use plugin\struct\types\AbstractBaseType;
 
 /**
- * Handles saving from bureaucracy forms
+ * Handles bureaucracy additions
  *
  * This registers to the template action of the bureaucracy plugin and saves all struct data
- * submitted through the bureaucracy form to all newly created pages (if the schema applies)
+ * submitted through the bureaucracy form to all newly created pages (if the schema applies).
+ *
+ * It also registers the struct_schema type for bureaucracy which will add all fields of the
+ * schema to the form. The struct_field type is added through standard naming convention - see
+ * helper/fiels.php for that.
  */
 class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
 
@@ -32,6 +37,42 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
      */
     public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('PLUGIN_BUREAUCRACY_TEMPLATE_SAVE', 'AFTER', $this, 'handle_save');
+        $controller->register_hook('PLUGIN_BUREAUCRACY_FIELD_UNKNOWN', 'BEFORE', $this, 'handle_schema');
+    }
+
+    /**
+     * Load a whole schema as fields
+     *
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_schema(Doku_Event $event, $param) {
+        $args = $event->data['args'];
+        if($args[0] != 'struct_schema') return;
+        $event->preventDefault();
+        $event->stopPropagation();
+
+        /** @var helper_plugin_bureaucracy_field $helper */
+        $helper = plugin_load('helper', 'bureaucracy_field');
+        $helper->initialize($args);
+
+        $schema = new Schema($helper->opt['label']);
+        if(!$schema->getId()) {
+            msg('This schema does not exist', -1);
+            return;
+        }
+
+        foreach($schema->getColumns(false) as $column) {
+            /** @var helper_plugin_struct_field $field */
+            $field = plugin_load('helper', 'struct_field');
+            // we don't initialize the field but set the appropriate values
+            $field->opt = $helper->opt; // copy all the settings to each field
+            $field->opt['label'] = $column->getFullQualifiedLabel();
+            $field->column = $column;
+            $event->data['fields'][] = $field;
+        }
     }
 
     /**
