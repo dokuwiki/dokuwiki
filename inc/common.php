@@ -1846,6 +1846,8 @@ function is_mem_available($mem, $bytes = 1048576) {
  * @param string $url url being directed to
  */
 function send_redirect($url) {
+    $url = stripctl($url); // defend against HTTP Response Splitting
+
     /* @var Input $INPUT */
     global $INPUT;
 
