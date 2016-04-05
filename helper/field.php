@@ -67,8 +67,6 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
         $form->addElement($field);
     }
 
-
-
     /**
      * Create the input field
      *
@@ -78,14 +76,13 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
      */
     protected function makeField(Value $field, $name) {
         $trans = hsc($field->getColumn()->getTranslatedLabel());
-        $hint  = hsc($field->getColumn()->getTranslatedHint());
+        $hint = hsc($field->getColumn()->getTranslatedHint());
         $class = $hint ? 'hashint' : '';
         $lclass = $this->error ? 'bureaucracy_error' : '';
         $colname = $field->getColumn()->getFullQualifiedLabel();
-        $required = ' <sup>*</sup>';
+        $required = $this->opt['optional'] ? '' : ' <sup>*</sup>';
 
         $input = $field->getValueEditor($name);
-
 
         $html = '';
         $html .= "<label class=\"$lclass\" data-column=\"$colname\">";
