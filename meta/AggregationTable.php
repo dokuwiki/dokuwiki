@@ -344,7 +344,8 @@ class AggregationTable {
         for($i = 0; $i < $len; $i++) {
             $this->renderer->tablecell_open(1, $this->data['align'][$i]);
             if(!empty($this->sums[$i])) {
-                $this->renderer->cdata('∑ ' . $this->sums[$i]);
+                $this->renderer->cdata('∑ ');
+                $this->columns[$i]->getType()->renderValue($this->sums[$i], $this->renderer, $this->mode);
             } else {
                 if($this->mode == 'xhtml') {
                     $this->renderer->doc .= '&nbsp;';
