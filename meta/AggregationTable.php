@@ -334,17 +334,17 @@ class AggregationTable {
         if(empty($this->data['summarize'])) return;
 
         $this->renderer->tablerow_open();
-        $len = count($this->data['cols']);
 
         if($this->data['rownumbers']) {
             $this->renderer->tablecell_open();
             $this->renderer->tablecell_close();
         }
 
+        $len = count($this->columns);
         for($i = 0; $i < $len; $i++) {
             $this->renderer->tablecell_open(1, $this->data['align'][$i]);
-            if(!empty($sums[$i])) {
-                $this->renderer->cdata('∑ ' . $sums[$i]);
+            if(!empty($this->sums[$i])) {
+                $this->renderer->cdata('∑ ' . $this->sums[$i]);
             } else {
                 if($this->mode == 'xhtml') {
                     $this->renderer->doc .= '&nbsp;';
