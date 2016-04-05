@@ -57,8 +57,8 @@ class SchemaEditor {
         </tr>");
 
 
-        foreach($this->schema->getColumns() as $key => $obj) {
-            $form->addHTML($this->adminColumn($key, $obj));
+        foreach($this->schema->getColumns() as $key => $col) {
+            $form->addHTML($this->adminColumn($col->getColref(), $col));
         }
 
         // FIXME new one needs to be added dynamically, this is just for testing
