@@ -13,10 +13,12 @@ use plugin\struct\meta\ValidationException;
 class Decimal extends AbstractMultiBaseType {
 
     protected $config = array(
-        'format' => '%f',
         'min' => '',
         'max' => '',
-        'decpoint' => '.'
+        'roundto' => '-1',
+        'decpoint' => '.',
+        'thousands' => "\xE2\x80\xAF", // narrow no-break space
+        'trimzeros' => true
     );
 
     /**
@@ -28,8 +30,26 @@ class Decimal extends AbstractMultiBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $value = sprintf($this->config['format'], $value);
-        $value = str_replace('.', $this->config['decpoint'], $value);
+        if($this->config['roundto'] == -1) {
+            $value = $this->formatWithoutRounding(
+                $value,
+                $this->config['decpoint'],
+                $this->config['thousands']
+            );
+        } else {
+            $value = floatval($value);
+            $value = number_format(
+                $value,
+                $this->config['roundto'],
+                $this->config['decpoint'],
+                $this->config['thousands']
+            );
+        }
+        if($this->config['trimzeros'] && (strpos($value, $this->config['decpoint']) !== false)) {
+            $value = rtrim($value, '0');
+            $value = rtrim($value, $this->config['decpoint']);
+        }
+
         $R->cdata($value);
         return true;
     }
@@ -56,6 +76,28 @@ class Decimal extends AbstractMultiBaseType {
         }
 
         return $value;
+    }
+
+    /**
+     * Works like number_format but keeps the decimals as is
+     *
+     * @link http://php.net/manual/en/function.number-format.php#91047
+     * @author info at daniel-marschall dot de
+     * @param float $number
+     * @param string $dec_point
+     * @param string $thousands_sep
+     * @return string
+     */
+    function formatWithoutRounding($number, $dec_point, $thousands_sep) {
+        $was_neg = $number < 0; // Because +0 == -0
+
+        $tmp = explode('.', $number);
+        $out = number_format(abs(floatval($tmp[0])), 0, $dec_point, $thousands_sep);
+        if(isset($tmp[1])) $out .= $dec_point . $tmp[1];
+
+        if($was_neg) $out = "-$out";
+
+        return $out;
     }
 
 }
