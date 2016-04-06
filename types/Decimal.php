@@ -18,7 +18,9 @@ class Decimal extends AbstractMultiBaseType {
         'roundto' => '-1',
         'decpoint' => '.',
         'thousands' => "\xE2\x80\xAF", // narrow no-break space
-        'trimzeros' => true
+        'trimzeros' => true,
+        'prefix' => '',
+        'postfix' => ''
     );
 
     /**
@@ -50,7 +52,7 @@ class Decimal extends AbstractMultiBaseType {
             $value = rtrim($value, $this->config['decpoint']);
         }
 
-        $R->cdata($value);
+        $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
         return true;
     }
 

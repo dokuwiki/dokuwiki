@@ -85,7 +85,7 @@ class Type_Decimal_struct_test extends StructTest {
 
     public function valueProvider() {
         return array(
-            // $value, $expect, $roundto, $decpoint, $thousands, $trimzeros
+            // $value, $expect, $roundto, $decpoint, $thousands, $trimzeros, $prefix='', $postfix=''
             array('5000', '5 000,00', '2', ',', ' ', false),
             array('5000', '5 000', '2', ',', ' ', true),
             array('5000', '5 000', '0', ',', ' ', false),
@@ -98,18 +98,23 @@ class Type_Decimal_struct_test extends StructTest {
             array('-0.55600', '-0,556', '-1', ',', ' ', true),
             array('-0.55600', '-0,5560', '4', ',', ' ', false),
             array('-0.55600', '-0,556', '4', ',', ' ', true),
+
+            array('-0.55600', '$ -0,556', '4', ',', ' ', true, '$ '),
+            array('-0.55600', '-0,556 EUR', '4', ',', ' ', true, '', ' EUR'),
         );
     }
 
     /**
      * @dataProvider valueProvider
      */
-    public function test_renderValue($value, $expect, $roundto, $decpoint, $thousands, $trimzeros ) {
+    public function test_renderValue($value, $expect, $roundto, $decpoint, $thousands, $trimzeros, $prefix='', $postfix='') {
         $decimal = new Decimal(array(
                                    'roundto' => $roundto,
                                    'decpoint' => $decpoint,
                                    'thousands' => $thousands,
-                                   'trimzeros' => $trimzeros
+                                   'trimzeros' => $trimzeros,
+                                   'prefix' => $prefix,
+                                   'postfix' => $postfix
                                ));
         $R = new \Doku_Renderer_xhtml();
         $R->doc = '';
