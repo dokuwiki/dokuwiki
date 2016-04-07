@@ -137,7 +137,10 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff','_caution' => 'danger');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype','_caution' => 'danger');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','djangomd5','djangosha1','sha512'));
+$meta['passcrypt']   = array('multichoice','_choices' => array(
+    'smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5',
+    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256','sha512'
+));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string','_caution' => 'danger');
 $meta['manager']     = array('string');
