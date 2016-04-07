@@ -1,0 +1,1 @@
+**WARNING:** Deleting a schema will delete the schema definition and **all** data that has ever been saved for this schema. There is no going back!

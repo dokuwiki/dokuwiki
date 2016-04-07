@@ -120,7 +120,7 @@ jQuery(function () {
     /**
      * Handle tabs in the Schema Editor
      */
-    jQuery('#plugin__struct_json').hide();
+    jQuery('#plugin__struct_json, #plugin__struct_delete').hide();
     jQuery('#plugin__struct_tabs').find('a').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -129,7 +129,7 @@ jQuery(function () {
 
         $me.parent().parent().find('li').removeClass('active');
         $me.parent().addClass('active');
-        jQuery('#plugin__struct_json, #plugin__struct_editor').hide();
+        jQuery('#plugin__struct_json, #plugin__struct_editor, #plugin__struct_delete').hide();
         jQuery($me.attr('href')).show();
     });
 

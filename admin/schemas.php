@@ -6,11 +6,14 @@
  * @author  Andreas Gohr, Michael Große <dokuwiki@cosmocode.de>
  */
 
-// must be run within Dokuwiki
 use dokuwiki\Form\Form;
 use plugin\struct\meta\Schema;
+use plugin\struct\meta\SchemaBuilder;
 use plugin\struct\meta\SchemaEditor;
+use plugin\struct\meta\SchemaImporter;
+use plugin\struct\meta\StructException;
 
+// must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
 class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
@@ -34,18 +37,19 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
      */
     public function handle() {
         global $INPUT;
+        global $ID;
 
         // form submit
         $table = Schema::cleanTableName($INPUT->str('table'));
         if($table && $INPUT->bool('save') && checkSecurityToken()) {
-            $builder = new \plugin\struct\meta\SchemaBuilder($table, $INPUT->arr('schema'));
+            $builder = new SchemaBuilder($table, $INPUT->arr('schema'));
             if(!$builder->build()) {
                 msg('something went wrong while saving', -1);
             }
         }
         // export
         if($table && $INPUT->bool('export')) {
-            $builder = new \plugin\struct\meta\Schema($table);
+            $builder = new Schema($table);
             header('Content-Type: application/json');
             header("Content-Disposition: attachment; filename=$table.struct.json");
             echo $builder->toJSON();
@@ -58,13 +62,29 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                 if(!$json) {
                     msg('Something went wrong with the upload', -1);
                 } else {
-                    $builder = new \plugin\struct\meta\SchemaImporter($table, $json);
+                    $builder = new SchemaImporter($table, $json);
                     if(!$builder->build()) {
                         msg('something went wrong while saving', -1);
                     }
                 }
             }
         }
+        // delete
+        if($table && $INPUT->bool('delete')) {
+            if($table != $INPUT->str('confirm')) {
+                msg($this->getLang('del_fail'), -1);
+            } else {
+                try {
+                    $schema = new Schema($table);
+                    $schema->delete();
+                    msg($this->getLang('del_ok'), 1);
+                    send_redirect(wl($ID, array('do' => 'admin', 'page' => 'struct_schemas'), true, '&'));
+                } catch(StructException $e) {
+                    msg(hsc($e->getMessage()), -1);
+                }
+            }
+        }
+
     }
 
     /**
@@ -80,15 +100,18 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
 
             echo '<ul class="tabs" id="plugin__struct_tabs">';
             /** @noinspection HtmlUnknownAnchorTarget */
-            echo '<li class="active"><a href="#plugin__struct_editor">'.$this->getLang('tab_edit').'</a></li>';
+            echo '<li class="active"><a href="#plugin__struct_editor">' . $this->getLang('tab_edit') . '</a></li>';
             /** @noinspection HtmlUnknownAnchorTarget */
-            echo '<li><a href="#plugin__struct_json">'.$this->getLang('tab_export').'</a></li>';
+            echo '<li><a href="#plugin__struct_json">' . $this->getLang('tab_export') . '</a></li>';
+            /** @noinspection HtmlUnknownAnchorTarget */
+            echo '<li><a href="#plugin__struct_delete">' . $this->getLang('tab_delete') . '</a></li>';
             echo '</ul>';
             echo '<div class="panelHeader"></div>';
 
             $editor = new SchemaEditor(new Schema($table));
             echo $editor->getEditor();
             echo $this->html_json();
+            echo $this->html_delete();
 
         } else {
             echo $this->locale_xhtml('editor_intro');
@@ -116,7 +139,29 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $form->addFieldsetOpen($this->getLang('import'));
         $form->addElement(new \dokuwiki\Form\InputElement('file', 'schemafile'));
         $form->addButton('import', $this->getLang('btn_import'));
-        $form->addHTML('<p>'.$this->getLang('import_warning').'</p>');
+        $form->addHTML('<p>' . $this->getLang('import_warning') . '</p>');
+        $form->addFieldsetClose();
+        return $form->toHTML();
+    }
+
+    /**
+     * Form for deleting schemas
+     * @return string
+     */
+    protected function html_delete() {
+        global $INPUT;
+        $table = Schema::cleanTableName($INPUT->str('table'));
+
+        $form = new Form(array('id' => 'plugin__struct_delete'));
+        $form->setHiddenField('do', 'admin');
+        $form->setHiddenField('page', 'struct_schemas');
+        $form->setHiddenField('table', $table);
+
+        $form->addHTML($this->locale_xhtml('delete_intro'));
+
+        $form->addFieldsetOpen($this->getLang('tab_delete'));
+        $form->addTextInput('confirm', $this->getLang('del_confirm'));
+        $form->addButton('delete', $this->getLang('btn_delete'));
         $form->addFieldsetClose();
         return $form->toHTML();
     }
@@ -149,16 +194,16 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $toc = array();
         $link = wl(
             $ID, array(
-            'do' => 'admin',
-            'page' => 'struct_assignments'
-        )
+                   'do' => 'admin',
+                   'page' => 'struct_assignments'
+               )
         );
         $toc[] = html_mktocitem($link, $this->getLang('menu_assignments'), 0, '');
         $link = wl(
             $ID, array(
-            'do' => 'admin',
-            'page' => 'struct_schemas'
-        )
+                   'do' => 'admin',
+                   'page' => 'struct_schemas'
+               )
         );
         $toc[] = html_mktocitem($link, $this->getLang('menu'), 0, '');
 
@@ -166,10 +211,10 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         foreach($tables as $table) {
             $link = wl(
                 $ID, array(
-                'do' => 'admin',
-                'page' => 'struct_schemas',
-                'table' => $table
-            )
+                       'do' => 'admin',
+                       'page' => 'struct_schemas',
+                       'table' => $table
+                   )
             );
 
             $toc[] = html_mktocitem($link, hsc($table), 1, '');

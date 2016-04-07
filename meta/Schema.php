@@ -162,6 +162,47 @@ class Schema {
     }
 
     /**
+     * Delete all data associated with this schema
+     *
+     * This is really all data ever! Be careful!
+     */
+    public function delete() {
+        if(!$this->id) throw new StructException('can not delete unsaved schema');
+
+        $this->sqlite->query('BEGIN TRANSACTION');
+
+        $sql = "DROP TABLE ?";
+        $this->sqlite->query($sql, 'data_'.$this->table);
+        $this->sqlite->query($sql, 'multi_'.$this->table);
+
+        $sql = "DELETE FROM schema_assignments WHERE tbl = ?";
+        $this->sqlite->query($sql, $this->table);
+
+        $sql = "DELETE FROM schema_assignments_patterns WHERE tbl = ?";
+        $this->sqlite->query($sql, $this->table);
+
+        $sql = "SELECT T.id
+                  FROM types T, schema_cols SC, schemas S 
+                 WHERE T.id = SC.tid
+                   AND SC.sid = S.id
+                   AND S.tbl = ?";
+        $sql = "DELETE FROM types WHERE id IN ($sql)";
+        $this->sqlite->query($sql, $this->table);
+
+        $sql = "SELECT id
+                  FROM schemas 
+                 WHERE tbl = ?";
+        $sql = "DELETE FROM schema_cols WHERE sid IN ($sql)";
+        $this->sqlite->query($sql, $this->table);
+
+        $sql = "DELETE FROM schemas WHERE tbl = ?";
+        $this->sqlite->query($sql, $this->table);
+
+        $this->sqlite->query('COMMIT TRANSACTION');
+        $this->sqlite->query('VACUUM');
+    }
+
+    /**
      * @return string
      */
     public function getChksum() {

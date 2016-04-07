@@ -24,8 +24,14 @@ $lang['import'] = 'Import a Schema from JSON';
 $lang['btn_import'] = 'Import';
 $lang['import_warning'] = 'Warning: this will overwrite already defined fields!';
 
+$lang['del_confirm'] = 'Enter schema name to confirm deletion';
+$lang['del_fail'] = 'Schema names did not match. Schema not deleted';
+$lang['del_ok'] = 'Schema has been deleted';
+$lang['btn_delete'] = 'Delete';
+
 $lang['tab_edit'] = 'Edit Schema';
 $lang['tab_export'] = 'Import/Export';
+$lang['tab_delete'] = 'Delete';
 
 $lang['editor_sort'] = 'Sort';
 $lang['editor_label'] = 'Field Name';
