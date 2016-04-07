@@ -9,7 +9,7 @@ php:
   - "5.3"
 env:
   matrix:
-    - DOKUWIKI=mediaselect
+    - DOKUWIKI=master
 before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
 install: sh travis.sh
 script: cd _test && phpunit --stderr --group plugin_struct
