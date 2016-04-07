@@ -200,6 +200,13 @@ class Schema {
 
         $this->sqlite->query('COMMIT TRANSACTION');
         $this->sqlite->query('VACUUM');
+
+        // a deleted schema should not be used anymore, but let's make sure it's somewhat sane anyway
+        $this->id = 0;
+        $this->chksum = '';
+        $this->columns = array();
+        $this->maxsort = 0;
+        $this->ts = 0;
     }
 
     /**

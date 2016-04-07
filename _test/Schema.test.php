@@ -54,7 +54,7 @@ class schema_struct_test extends StructTest {
     /**
      * @dataProvider cleanTableName_testdata
      *
-     * @covers       plugin\struct\meta\Schema::cleanTableName
+     * @covers       \plugin\struct\meta\Schema::cleanTableName
      *
      * @param string $input_name
      * @param string $expected_cleaned_name
@@ -64,4 +64,23 @@ class schema_struct_test extends StructTest {
         $this->assertSame($expected_cleaned_name, $actual_cleaned_name, $input_name);
     }
 
+    /**
+     * @expectedException \plugin\struct\meta\StructException
+     */
+    public function test_deletefail() {
+        $schema = new Schema('foo');
+        $schema->delete();
+    }
+
+    public function test_deleteok() {
+        $this->loadSchemaJSON('schema1');
+
+        $schema = new Schema('schema1');
+        $this->assertEquals(1, $schema->getId());
+        $schema->delete();
+        $this->assertEquals(0, $schema->getId());
+
+        $schema = new Schema('schema1');
+        $this->assertEquals(0, $schema->getId());
+    }
 }
