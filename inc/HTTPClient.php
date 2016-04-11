@@ -278,7 +278,7 @@ class HTTPClient {
         }
 
         // add SSL stream prefix if needed - needs SSL support in PHP
-        if($port == 443 || $this->proxy_ssl) {
+        if($port == 443 || $this->proxy_ssl || $uri['scheme'] == 'https') {
             if(!in_array('ssl', stream_get_transports())) {
                 $this->status = -200;
                 $this->error = 'This PHP version does not support SSL - cannot connect to server';
