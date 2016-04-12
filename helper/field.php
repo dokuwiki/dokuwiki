@@ -2,6 +2,7 @@
 use plugin\struct\meta\Column;
 use plugin\struct\meta\Schema;
 use plugin\struct\meta\StructException;
+use plugin\struct\meta\Validator;
 use plugin\struct\meta\Value;
 
 /**
@@ -32,14 +33,34 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
     }
 
     /**
-     * Validate the field
+     * Sets the value and validates it
      *
-     * @throws Exception
+     * @param mixed $value
+     * @return bool value was set successfully validated
      */
-    protected function _validate() {
-        parent::_validate(); // checks optional state stuff
-        if(!$this->column) return;
-        $this->opt['value'] = $this->column->getType()->validate($this->opt['value']);
+    protected function setVal($value) {
+        if(!$this->column) {
+            $value = '';
+        } else {
+            $validator = new Validator();
+            $this->error = !$validator->validateValue($this->column, $value);
+            if($this->error) {
+                foreach($validator->getErrors() as $error) {
+                    msg(hsc($error), -1);
+                }
+            }
+
+        }
+
+        if($value === array() || $value === '') {
+            if(!isset($this->opt['optional'])) {
+                $this->error = true;
+                msg(sprintf($this->getLang('e_required'), hsc($this->opt['label'])), -1);
+            }
+        }
+
+        $this->opt['value'] = $value;
+        return !$this->error;
     }
 
     /**

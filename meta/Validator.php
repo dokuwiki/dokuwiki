@@ -59,21 +59,8 @@ class Validator {
 
             $newData = $data[$table];
             foreach($schemaData->getColumns() as $col) {
-                // fix multi value types
-                $type = $col->getType();
-                $label = $type->getLabel();
-                $trans = $type->getTranslatedLabel();
-                if($type->isMulti() && !is_array($newData[$label])) {
-                    $newData[$label] = $type->splitValues($newData[$label]);
-                }
-                // strip empty fields from multi vals
-                if(is_array($newData[$label])) {
-                    $newData[$label] = array_filter($newData[$label], array($this, 'filter'));
-                    $newData[$label] = array_values($newData[$label]); // reset the array keys
-                }
-
-                // validate data
-                $result = $result && $this->validateField($type, $trans, $newData[$label]);
+                $label = $col->getType()->getLabel();
+                $result = $result && $this->validateValue($col, $newData[$label]);
             }
 
             // has the data changed? mark it for saving.
@@ -87,6 +74,31 @@ class Validator {
         }
 
         return $result;
+    }
+
+    /**
+     * Validate a single value
+     *
+     * @param Column $col the column of that value
+     * @param mixed &$value the value, will be fixed according to the type
+     * @return bool
+     */
+    public function validateValue(Column $col, &$value) {
+        // fix multi value types
+        $type = $col->getType();
+        $label = $type->getLabel();
+        $trans = $type->getTranslatedLabel();
+        if($type->isMulti() && !is_array($value)) {
+            $value = $type->splitValues($value);
+        }
+        // strip empty fields from multi vals
+        if(is_array($value)) {
+            $value = array_filter($value, array($this, 'filter'));
+            $value = array_values($value); // reset the array keys
+        }
+
+        // validate data
+        return $this->validateField($type, $trans, $value);
     }
 
     /**
