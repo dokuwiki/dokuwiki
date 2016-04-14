@@ -118,6 +118,16 @@ function load_autoload($name){
         return true;
     }
 
+    // plugin namespace
+    if(substr($name, 0, 7) == 'plugin/') {
+        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
+        $file = DOKU_PLUGIN . substr($name, 7) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
     // Plugin loading
     if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
                   $name, $m)) {
