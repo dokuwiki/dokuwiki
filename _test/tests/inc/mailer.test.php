@@ -126,7 +126,9 @@ class mailer_test extends DokuWikiTest {
 
         // construct the expected mail body text - include the expected dokuwiki signature
         $replacements = $mail->prop('replacements');
-        $expected_mail_body = chunk_split(base64_encode($mailbody.$replacements['text']['EMAILSIGNATURE']),72,MAILHEADER_EOL);
+        $expected_mail_body = chunk_split(base64_encode(
+                                              str_replace("\n", "\r\n", $mailbody.$replacements['text']['EMAILSIGNATURE'])
+                                          ),72,MAILHEADER_EOL);
 
         $this->assertNotRegexp('/Content-Type: multipart/',$dump);
         $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#',$dump);
@@ -222,8 +224,6 @@ class mailer_test extends DokuWikiTest {
             if(substr($line,0,5) == 'ERROR' || substr($line,0,7) == 'WARNING'){
                 // ignore some errors
                 if(strpos($line, "missing mandatory header 'return-path'")) continue; #set by MDA
-                if(strpos($line, "bare newline in text body decoded")) continue; #we don't send mail bodies as CRLF, yet
-                if(strpos($line, "last decoded line too long")) continue; #we don't send mail bodies as CRLF, yet
 
                 // get the context in which the error occured
                 $errorin = '';

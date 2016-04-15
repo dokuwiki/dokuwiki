@@ -461,6 +461,14 @@ class Mailer {
             return false;
         }
 
+        // ensure content is CRLF encoded
+        $this->text = str_replace("\r\n", "\n", $this->text);
+        $this->text = str_replace("\r", "\n", $this->text);
+        $this->text = str_replace("\n", "\r\n", $this->text);
+        $this->html = str_replace("\r\n", "\n", $this->html);
+        $this->html = str_replace("\r", "\n", $this->html);
+        $this->html = str_replace("\n", "\r\n", $this->html);
+
         // add general headers
         $this->headers['MIME-Version'] = '1.0';
 
