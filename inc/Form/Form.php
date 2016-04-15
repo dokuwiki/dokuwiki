@@ -222,6 +222,19 @@ class Form extends Element {
     }
 
     /**
+     * Adds a dropdown field
+     *
+     * @param $name
+     * @param array $options
+     * @param string $label
+     * @param int $pos
+     * @return DropdownElement
+     */
+    public function addDropdown($name, $options, $label = '', $pos = -1) {
+        return $this->addElement(new DropdownElement($name, $options, $label), $pos);
+    }
+
+    /**
      * Adds a textarea field
      *
      * @param $name
