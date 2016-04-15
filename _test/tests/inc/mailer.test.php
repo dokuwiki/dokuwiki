@@ -222,7 +222,8 @@ class mailer_test extends DokuWikiTest {
             if(substr($line,0,5) == 'ERROR' || substr($line,0,7) == 'WARNING'){
                 // ignore some errors
                 if(strpos($line, "missing mandatory header 'return-path'")) continue; #set by MDA
-                if(strpos($line, "bare newline in text body decoded")) continue; #seems to be false positive
+                if(strpos($line, "bare newline in text body decoded")) continue; #we don't send mail bodies as CRLF, yet
+                if(strpos($line, "last decoded line too long")) continue; #we don't send mail bodies as CRLF, yet
 
                 // get the context in which the error occured
                 $errorin = '';
