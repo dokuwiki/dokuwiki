@@ -148,4 +148,4 @@ $language_data = array (
     'TAB_WIDTH' => 8
 // vim: set sw=4 sts=4 :
 );
-?>
+
