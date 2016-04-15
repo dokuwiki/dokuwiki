@@ -303,7 +303,7 @@ class auth_plugin_authpgsql extends auth_plugin_authmysql {
             $dsn .= ' port='.$this->conf['port'];
             $dsn .= ' dbname='.$this->conf['database'];
             $dsn .= ' user='.$this->conf['user'];
-            $dsn .= ' password='.$this->conf['password'];
+            $dsn .= ' password='.conf_decodeString($this->conf['password']);
 
             $con = @pg_connect($dsn);
             if($con) {

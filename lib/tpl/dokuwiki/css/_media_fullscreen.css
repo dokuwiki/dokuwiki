@@ -394,7 +394,7 @@
     width: 50%;
 }
 
-#mediamanager__page form.meta input.button {
+#mediamanager__page form.meta button {
     width: auto;
 }
 
@@ -407,19 +407,19 @@
 
 /* file revisions form */
 
-#mediamanager__page #page__revisions ul {
+#mediamanager__page form.changes ul {
     margin-left: 10px;
     padding: 0;
     list-style-type: none;
 }
 
-#mediamanager__page #page__revisions ul li div.li div {
+#mediamanager__page form.changes ul li div.li div {
     font-size: 90%;
     color: @ini_text_neu;
     padding-left: 18px;
 }
 
-#mediamanager__page #page__revisions ul li div.li input {
+#mediamanager__page form.changes ul li div.li input {
     position: relative;
     top: 1px;
 }

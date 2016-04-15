@@ -34,7 +34,6 @@ $lang['btn_update'] = 'កែឡើង';
 $lang['btn_delete'] = 'លុបចោល';
 $lang['btn_back']   = 'ត្រឡប់';
 $lang['btn_backlink']    = 'ខ្សែចំណងក្រោយ';
-$lang['btn_backtomedia'] = 'ទៅប្រព័នឯកសាវិញ';
 $lang['btn_subscribe']   = 'ដាក់ដំណឹងផ្លស់ប្តូរ';
 $lang['btn_profile']     = 'កែប្រវត្តិរូប';
 $lang['btn_reset']       = 'កមណត់ឡើងរិញ';
@@ -62,7 +61,7 @@ $lang['reguexists'] = 'សុំអាទោស​ នាមប្រើនេ�
 $lang['regsuccess'] = 'អ្នកប្រើបានបង្កើតហើយ និងពាក្សសម្ងាតក៏បានផ្ញើទៀត។';
 $lang['regsuccess2']= 'អ្នកប្រើបានបង្កើតហើយ។';
 $lang['regmailfail']= 'មើលទៅដុចជាមានកំហុសក្នុង....សុំទាកទងអ្នកក្របក្រង';
-$lang['regbadmail'] = 'អ៊ីមេលអ្នកសាសេមិនត្រូវបញ្ជរ&mdash;បើអ្នកកិតថានេះជាកំហុសបដិបត្តិ សុំទាកទងអ្នកក្របគ្រោង។';
+$lang['regbadmail'] = 'អ៊ីមេលអ្នកសាសេមិនត្រូវបញ្ជរ—បើអ្នកកិតថានេះជាកំហុសបដិបត្តិ សុំទាកទងអ្នកក្របគ្រោង។';
 $lang['regbadpass'] = 'គូពាក្សសម្ងាតមិនដូចគ្នាទេ សមសាកទៀត។';
 $lang['regpwmail']  = 'ពាក្សសម្ងាតអ្នក';
 $lang['reghere']    = 'អ្នកឥតមានបញ្ជីនាមបម្រើទេ?  សុំចល់ចុះឈ្មោះធ្វើគណនីសម្របប្រើប្រស';
@@ -92,7 +91,6 @@ $lang['rssfailed']   = 'មានកំហុសពេលទៅ​ប្រម�
 $lang['nothingfound']= 'រកមិនឃើញអ្វីទេ។';
 
 $lang['mediaselect'] = 'ឯកសារមីឌៀ';
-$lang['fileupload']  = 'រុញឯកសារមីឌៀឡើង';
 $lang['uploadsucc']  = 'រុញចូលមានជ័យ';
 $lang['uploadfail']  = 'រុញឡើងបរាជ័យ។ ប្រហែលខុសសិទ្ឋានុញ្ញាត?';
 $lang['uploadwrong'] = 'រុញឡើងត្រូវ​បាន​បដិសេធ។ ឯកសារ';
@@ -101,8 +99,8 @@ $lang['uploadbadcontent'] = 'ធាតុចំរុញឡើងមិនត្
 $lang['uploadspam']  = 'ចំរុញឡើង បង្ខាំង ដៅយ  ';
 $lang['uploadxss']   = 'ចំរុញឡើង បង្ខាំង  ';
 $lang['deletesucc']  = 'ឯកសារ «%s» បានលុបហើយ។';
-$lang['deletefail']  = '«%s» មិនអាចលុបទេ&mdashមើល';
-$lang['mediainuse']  = 'ឯកសារ «%s» ឥតទានលុបទេ&mdashមានគេកំភងទេជាប់ប្រើ។';
+$lang['deletefail']  = '«%s» មិនអាចលុបទេ—មើល';
+$lang['mediainuse']  = 'ឯកសារ «%s» ឥតទានលុបទេ—មានគេកំភងទេជាប់ប្រើ។';
 $lang['namespaces']  = 'នាមដ្ឋាន';
 $lang['mediafiles']  = 'ឯកសារទំនេនៅក្នុង';
 
@@ -160,7 +158,6 @@ $lang['qb_smileys'] = 'សញ្ញាអារម្មណ៍';
 $lang['qb_chars']   = 'អក្ខរៈពិសេស';
 
 $lang['js']['del_confirm']= 'លុប';
-$lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
 
 $lang['metaedit']    = 'កែទិន្នន័យអរូប';//'Edit Metadata';
 $lang['metasaveerr'] = 'ពំអាចកត់រទិន្នន័យអរូប';//'Writing metadata failed';
@@ -188,12 +185,9 @@ $lang['i_enableacl']  = 'បើកប្រើ (អនុសាស)';
 $lang['i_superuser']  = 'អ្នកកំពូល';
 $lang['i_problems']   = 'កម្មវិធី​ដំឡើងបានប៉ះឧបសគ្គ។ អ្នកមិនអាចបន្តទៅទៀត ដល់អ្នកជួសជុលវា។';
 $lang['i_modified']   = '';
-$lang['i_funcna']     = '<code>%s</code> ';
 $lang['i_permfail']   = '<code>%s</code> មិនអាចសាស';
 $lang['i_confexists'] = '<code>%s</code> មានហាយ';
 $lang['i_writeerr']   = 'មិនអាចបណ្កើ<code>%s</code>។ អ្នកត្រវការពិនិត្យអធិក្រឹតិរបស់ថតនឹងឯកសារ។';
-$lang['i_badhash']    = '(hash=<code>%s</code>)';
-$lang['i_badval']     = '<code>%s</code>&mdash;';
 $lang['i_success']    = '';
 $lang['i_failure']    = 'ពលសាសារ';
 $lang['i_policy']     = 'បញ្ជីអនុញ្ញតផ្ដើម';

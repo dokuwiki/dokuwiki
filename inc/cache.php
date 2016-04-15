@@ -26,7 +26,7 @@ class cache {
      * @param string $key primary identifier
      * @param string $ext file extension
      */
-    public function cache($key,$ext) {
+    public function __construct($key,$ext) {
         $this->key = $key;
         $this->ext = $ext;
         $this->cache = getCacheName($key,$ext);
@@ -188,12 +188,12 @@ class cache_parser extends cache {
      * @param string $file source file for cache
      * @param string $mode input mode
      */
-    public function cache_parser($id, $file, $mode) {
+    public function __construct($id, $file, $mode) {
         if ($id) $this->page = $id;
         $this->file = $file;
         $this->mode = $mode;
 
-        parent::cache($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
+        parent::__construct($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
     }
 
     /**
@@ -308,8 +308,8 @@ class cache_instructions extends cache_parser {
      * @param string $id page id
      * @param string $file source file for cache
      */
-    public function cache_instructions($id, $file) {
-        parent::cache_parser($id, $file, 'i');
+    public function __construct($id, $file) {
+        parent::__construct($id, $file, 'i');
     }
 
     /**

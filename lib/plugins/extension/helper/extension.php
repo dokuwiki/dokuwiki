@@ -105,10 +105,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function isBundled() {
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
-        return in_array($this->base,
+        return in_array($this->id,
                         array(
                             'authad', 'authldap', 'authmysql', 'authpgsql', 'authplain', 'acl', 'info', 'extension',
-                            'revert', 'popularity', 'config', 'safefnrecode', 'testing', 'template:dokuwiki'
+                            'revert', 'popularity', 'config', 'safefnrecode', 'styling', 'testing', 'template:dokuwiki'
                         )
         );
     }
@@ -578,6 +578,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         try {
             $installed = $this->installArchive("$tmp/upload.archive", true, $basename);
             $this->updateManagerData('', $installed);
+            $this->removeDeletedfiles($installed);
             // purge cache
             $this->purgeCache();
         }catch (Exception $e){
@@ -598,6 +599,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             $path      = $this->download($url);
             $installed = $this->installArchive($path, true);
             $this->updateManagerData($url, $installed);
+            $this->removeDeletedfiles($installed);
 
             // purge cache
             $this->purgeCache();
@@ -623,6 +625,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if (!isset($installed[$this->getID()])) {
             throw new Exception('Error, the requested extension hasn\'t been installed or updated');
         }
+        $this->removeDeletedfiles($installed);
         $this->setExtension($this->getID());
         $this->purgeCache();
         return $installed;
@@ -918,7 +921,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
             if($this->dircopy($item['tmp'], $target)) {
                 // return info
                 $id = $item['base'];
-                if($item['type'] == 'template') $id = 'template:'.$id;
+                if($item['type'] == 'template') {
+                    $id = 'template:'.$id;
+                }
                 $installed_extensions[$id] = array(
                     'base' => $item['base'],
                     'type' => $item['type'],
@@ -1035,33 +1040,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
 
         $ext = $this->guess_archive($file);
         if(in_array($ext, array('tar', 'bz', 'gz'))) {
-            switch($ext) {
-                case 'bz':
-                    $compress_type = Tar::COMPRESS_BZIP;
-                    break;
-                case 'gz':
-                    $compress_type = Tar::COMPRESS_GZIP;
-                    break;
-                default:
-                    $compress_type = Tar::COMPRESS_NONE;
-            }
 
-            $tar = new Tar();
             try {
-                $tar->open($file, $compress_type);
+                $tar = new \splitbrain\PHPArchive\Tar();
+                $tar->open($file);
                 $tar->extract($target);
-            } catch (Exception $e) {
+            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
                 throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;
         } elseif($ext == 'zip') {
 
-            $zip = new ZipLib();
-            $ok  = $zip->Extract($file, $target);
-
-            if($ok == -1){
-                throw new Exception($this->getLang('error_decompress').' Error extracting the zip archive');
+            try {
+                $zip = new \splitbrain\PHPArchive\Zip();
+                $zip->open($file);
+                $zip->extract($target);
+            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
+                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
             }
 
             return true;
@@ -1125,6 +1121,40 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
 
         return true;
+    }
+
+    /**
+     * Delete outdated files from updated plugins
+     *
+     * @param array $installed
+     */
+    private function removeDeletedfiles($installed) {
+        foreach($installed as $id => $extension) {
+            // only on update
+            if($extension['action'] == 'install') continue;
+
+            // get definition file
+            if($extension['type'] == 'template') {
+                $extensiondir = DOKU_TPLLIB;
+            }else{
+                $extensiondir = DOKU_PLUGIN;
+            }
+            $extensiondir = $extensiondir . $extension['base'] .'/';
+            $definitionfile = $extensiondir . 'deleted.files';
+            if(!file_exists($definitionfile)) continue;
+
+            // delete the old files
+            $list = file($definitionfile);
+
+            foreach($list as $line) {
+                $line = trim(preg_replace('/#.*$/', '', $line));
+                if(!$line) continue;
+                $file = $extensiondir . $line;
+                if(!file_exists($file)) continue;
+
+                io_rmdir($file, true);
+            }
+        }
     }
 }
 

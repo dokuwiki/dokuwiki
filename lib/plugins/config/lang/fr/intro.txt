@@ -5,5 +5,3 @@ Utilisez cette page pour contrôler les paramètres de votre installation de Dok
 Les paramètres affichés sur un fond rouge sont protégés et ne peuvent être modifiés avec cette extension. Les paramètres affichés sur un fond bleu sont les valeurs par défaut et les valeurs spécifiquement définies pour votre installation sont affichées sur un fond blanc. Seuls les paramètres sur fond bleu ou blanc peuvent être modifiés.
 
 N'oubliez pas d'utiliser le bouton **ENREGISTRER** avant de quitter cette page, sinon vos modifications ne seront pas prises en compte !
-
-

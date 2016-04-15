@@ -1,0 +1,9 @@
+===== Importación y carga de usuarios  =====
+
+Se requiere un archivo CSV de usuarios con al menos cuatro columnas.
+Las columnas deben contener, en este orden: Identificador de usuario, nombre completo, dirección de correo electrónico y grupos.
+Los campos CSV deben estar separados por comas (,) y las cadenas delimitadas por comillas dobles (%%""%%). Barra inversa (\\) se puede utilizar para escapar caracteres.
+Para un ejemplo de un archivo adecuado, probar la función "Exportar usuarios" de arriba.
+Valores de identificador de usuario duplicados serán ignorados.
+
+Una contraseña será generada y enviada por correo electrónico a cada usuario importado correctamente.

@@ -9,6 +9,7 @@
 
     global $INPUT;
     global $lang;
+    global $conf;
     // handle passed message
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);

@@ -243,7 +243,6 @@ function sectionID($title,&$check) {
     return $title;
 }
 
-
 /**
  * Wiki page existence check
  *
@@ -251,9 +250,10 @@ function sectionID($title,&$check) {
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  *
- * @param string     $id     page id
- * @param string|int $rev    empty or revision timestamp
- * @param bool       $clean  flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param string $id page id
+ * @param string|int $rev empty or revision timestamp
+ * @param bool $clean flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param bool $date_at
  * @return bool exists?
  */
 function page_exists($id,$rev='',$clean=true, $date_at=false) {
@@ -489,9 +489,11 @@ function resolve_id($ns,$id,$clean=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative media id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative media id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param int|string $rev
+ * @param bool $date_at
  */
 function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
     $page   = resolve_id($ns,$page);
@@ -502,7 +504,7 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
             $rev = $medialog_rev;
         }
     }
-    
+
     $file   = mediaFN($page,$rev);
     $exists = file_exists($file);
 }
@@ -512,9 +514,11 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative page id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative page id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param string $rev
+ * @param bool $date_at
  */
 function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     global $conf;

@@ -15,12 +15,12 @@ if (!class_exists('setting_sepchar')) {
          * @param string $key
          * @param array|null $param array with metadata of setting
          */
-        function setting_sepchar($key,$param=null) {
+        function __construct($key,$param=null) {
             $str = '_-.';
             for ($i=0;$i<strlen($str);$i++) $this->_choices[] = $str{$i};
 
             // call foundation class constructor
-            $this->setting($key,$param);
+            parent::__construct($key,$param);
         }
     }
 }

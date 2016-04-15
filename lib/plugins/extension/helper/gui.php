@@ -144,11 +144,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin {
         foreach($this->tabs as $tab) {
             $url = $this->tabURL($tab);
             if($this->currentTab() == $tab) {
-                $class = 'class="active"';
+                $class = ' active';
             } else {
                 $class = '';
             }
-            echo '<li '.$class.'><a href="'.$url.'">'.$this->getLang('tab_'.$tab).'</a></li>';
+            echo '<li class="'.$tab.$class.'"><a href="'.$url.'">'.$this->getLang('tab_'.$tab).'</a></li>';
         }
         echo '</ul>';
     }

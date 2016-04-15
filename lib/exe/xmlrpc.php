@@ -20,7 +20,7 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
         $this->remote = new RemoteAPI();
         $this->remote->setDateTransformation(array($this, 'toDate'));
         $this->remote->setFileTransformation(array($this, 'toFile'));
-        $this->IXR_Server();
+        parent::__construct();
     }
 
     /**

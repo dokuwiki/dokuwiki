@@ -119,8 +119,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // other can do's are changed in $this->_loadServerConfig() base on domain setup
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
+        $this->cando['modName'] = (bool)$this->conf['update_name'];
+        $this->cando['modMail'] = (bool)$this->conf['update_mail'];
         $this->cando['getUserCount'] = true;
     }
 
@@ -258,7 +258,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                     ($info['expiresin'] <= $this->conf['expirywarn']) &&
                     !$this->msgshown
                 ) {
-                    $msg = sprintf($lang['authpwdexpire'], $info['expiresin']);
+                    $msg = sprintf($this->getLang('authpwdexpire'), $info['expiresin']);
                     if($this->canDo('modPass')) {
                         $url = wl($ID, array('do'=> 'profile'));
                         $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
@@ -522,7 +522,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function modifyUser($user, $changes) {
         $return = true;
         $adldap = $this->_adldap($this->_userDomain($user));
-        if(!$adldap) return false;
+        if(!$adldap) {
+            msg($this->getLang('connectfail'), -1);
+            return false;
+        }
 
         // password changing
         if(isset($changes['pass'])) {
@@ -532,7 +535,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
-            if(!$return) msg('AD Auth: failed to change the password. Maybe the password policy was not met?', -1);
+            if(!$return) msg($this->getLang('passchangefail'), -1);
         }
 
         // changing user data
@@ -554,6 +557,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
+            if(!$return) msg($this->getLang('userchangefail'), -1);
         }
 
         return $return;
@@ -638,6 +642,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // compatibility with old option name
         if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
         if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
+        $opts['ad_password'] = conf_decodeString($opts['ad_password']); // deobfuscate
 
         // we can change the password if SSL is set
         if($opts['use_ssl'] || $opts['use_tls']) {

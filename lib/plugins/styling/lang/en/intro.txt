@@ -1,0 +1,2 @@
+This tool allows you to change certain style settings of your currently selected template.
+All changes are stored in a local configuration file and are upgrade safe.

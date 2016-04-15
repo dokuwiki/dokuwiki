@@ -1,7 +1,7 @@
 base   authmysql
 author Andreas Gohr
 email  andi@splitbrain.org
-date   2014-02-15
+date   2015-07-13
 name   MYSQL Auth Plugin
 desc   Provides user authentication against a MySQL database
 url    http://www.dokuwiki.org/plugin:authmysql

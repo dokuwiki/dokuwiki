@@ -28,6 +28,7 @@
  * @author Hoisl <hoisl@gmx.at>
  * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
  * @author Pascal Schröder <Pascal1802@gmail.com>
+ * @author Hendrik Diel <diel.hendrik@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -59,7 +60,6 @@ $lang['btn_update']            = 'Updaten';
 $lang['btn_delete']            = 'Löschen';
 $lang['btn_back']              = 'Zurück';
 $lang['btn_backlink']          = 'Links hierher';
-$lang['btn_backtomedia']       = 'Zurück zur Dateiauswahl';
 $lang['btn_subscribe']         = 'Aboverwaltung';
 $lang['btn_profile']           = 'Benutzerprofil';
 $lang['btn_reset']             = 'Zurücksetzen';
@@ -94,6 +94,7 @@ $lang['regmissing']            = 'Alle Felder müssen ausgefüllt werden.';
 $lang['reguexists']            = 'Der Benutzername existiert leider schon.';
 $lang['regsuccess']            = 'Der neue Benutzer wurde angelegt und das Passwort per E-Mail versandt.';
 $lang['regsuccess2']           = 'Der neue Benutzer wurde angelegt.';
+$lang['regfail']               = 'Der Benutzer konnte nicht angelegt werden.';
 $lang['regmailfail']           = 'Offenbar ist ein Fehler beim Versenden der Passwort-E-Mail aufgetreten. Bitte wenden Sie sich an den Wiki-Admin.';
 $lang['regbadmail']            = 'Die angegebene E-Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wenden Sie sich bitte an den Wiki-Admin.';
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal.';
@@ -108,6 +109,7 @@ $lang['profdeleteuser']        = 'Benutzerprofil löschen';
 $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
 $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion ist nicht umkehrbar.';
 $lang['profconfdeletemissing'] = 'Bestätigungs-Checkbox wurde nicht angehakt.';
+$lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordere ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
@@ -170,7 +172,6 @@ $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['rssfailed']             = 'Es ist ein Fehler beim Laden des Feeds aufgetreten: ';
 $lang['nothingfound']          = 'Nichts gefunden.';
 $lang['mediaselect']           = 'Dateiauswahl';
-$lang['fileupload']            = 'Datei hochladen';
 $lang['uploadsucc']            = 'Datei wurde erfolgreich hochgeladen';
 $lang['uploadfail']            = 'Hochladen fehlgeschlagen. Keine Berechtigung?';
 $lang['uploadwrong']           = 'Hochladen verweigert. Diese Dateiendung ist nicht erlaubt.';
@@ -261,7 +262,6 @@ $lang['qb_sig']                = 'Unterschrift einfügen';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Sonderzeichen';
 $lang['upperns']               = 'zum übergeordneten Namensraum springen';
-$lang['admin_register']        = 'Neuen Benutzer anmelden';
 $lang['metaedit']              = 'Metadaten bearbeiten';
 $lang['metasaveerr']           = 'Die Metadaten konnten nicht gesichert werden';
 $lang['metasaveok']            = 'Metadaten gesichert';
@@ -294,7 +294,6 @@ $lang['subscr_style_every']    = 'E-Mail bei jeder Bearbeitung';
 $lang['subscr_style_digest']   = 'Zusammenfassung der Änderungen für jede veränderte Seite (Alle %.2f Tage)';
 $lang['subscr_style_list']     = 'Liste der geänderten Seiten (Alle %.2f Tage)';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wenden Sie sich an den Admin.';
-$lang['authpwdexpire']         = 'Ihr Passwort läuft in %d Tag(en) ab. Sie sollten es frühzeitig ändern.';
 $lang['i_chooselang']          = 'Wählen Sie Ihre Sprache';
 $lang['i_installer']           = 'DokuWiki Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
@@ -354,10 +353,11 @@ $lang['media_perm_read']       = 'Sie besitzen nicht die notwendigen Berechtigun
 $lang['media_perm_upload']     = 'Sie besitzen nicht die notwendigen Berechtigungen um Dateien hochzuladen.';
 $lang['media_update']          = 'Neue Version hochladen';
 $lang['media_restore']         = 'Diese Version wiederherstellen';
+$lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnisse';
 $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
-$lang['page_nonexist_rev']     = 'DIe Seite exitiert nicht unter %s. Sie wurde aber unter <a herf="%s">%s</a>';
+$lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde aber unter <a href="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature'] = 'Diese E-Mail wurde erzeugt vom DokuWiki unter';

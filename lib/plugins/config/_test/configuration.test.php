@@ -1,4 +1,10 @@
 <?php
+/**
+ * @group plugin_config
+ * @group admin_plugins
+ * @group plugins
+ * @group bundled_plugins
+ */
 
 class plugin_config_configuration_test extends DokuWikiTest {
 

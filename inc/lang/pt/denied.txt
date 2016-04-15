@@ -1,4 +1,4 @@
 ====== Permissão Negada ======
 
-Desculpe, você não possui direitos e permissões suficientes para continuar.
+Desculpe, não tem direitos suficientes para continuar.
 

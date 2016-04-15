@@ -1,0 +1,1 @@
+Esta pestaña te da acceso a todos los plugins de 3as partes disponibles y plantillas para DokuWiki. Tenga en cuenta que la instalación de código de terceras partes puede plantear un **riesgo de seguridad**, es posible que desee leer primero sobre [[doku>security#plugin_security|plugin security]].

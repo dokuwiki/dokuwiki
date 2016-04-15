@@ -8,6 +8,8 @@
  * @author Simon <st103267@stud.uni-stuttgart.de>
  * @author Hoisl <hoisl@gmx.at>
  * @author Dominik Mahr <drache.mahr@gmx.de>
+ * @author Noel Tilliot <noeltilliot@byom.de>
+ * @author Philip Knack <p.knack@stollfuss.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -29,6 +31,10 @@ $lang['btn_disable']           = 'Deaktivieren';
 $lang['btn_install']           = 'Installieren';
 $lang['btn_reinstall']         = 'Neu installieren';
 $lang['js']['reallydel']       = 'Wollen Sie diese Erweiterung wirklich löschen?';
+$lang['js']['display_viewoptions'] = 'Optionen anzeigen';
+$lang['js']['display_enabled'] = 'aktiviert';
+$lang['js']['display_disabled'] = 'deaktiviert';
+$lang['js']['display_updatable'] = 'aktualisierbar';
 $lang['search_for']            = 'Erweiterung suchen:';
 $lang['search']                = 'Suchen';
 $lang['extensionby']           = '<strong>%s</strong> von %s';
@@ -65,7 +71,8 @@ $lang['status_template']       = 'Template';
 $lang['status_bundled']        = 'gebündelt';
 $lang['msg_enabled']           = 'Plugin %s ist aktiviert';
 $lang['msg_disabled']          = 'Erweiterung %s ist deaktiviert';
-$lang['msg_delete_success']    = 'Erweiterung wurde entfernt';
+$lang['msg_delete_success']    = 'Erweiterung %s wurde entfernt';
+$lang['msg_delete_failed']     = 'Deinstallation der Erweiterung %s fehlgeschlagen';
 $lang['msg_template_install_success'] = 'Das Template %s wurde erfolgreich installiert';
 $lang['msg_template_update_success'] = 'Das Update des Templates %s war erfolgreich ';
 $lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installiert';
@@ -87,6 +94,8 @@ $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgesch�
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';
 $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
 $lang['git']                   = 'Diese Erweiterung wurde über git installiert und sollte daher nicht hier aktualisiert werden.';
+$lang['auth']                  = 'Dieses Auth Plugin ist in der Konfiguration nicht aktiviert, Sie sollten es deaktivieren.';
 $lang['install_url']           = 'Von Webadresse (URL) installieren';
 $lang['install_upload']        = 'Erweiterung hochladen:';
 $lang['repo_error']            = 'Es konnte keine Verbindung zum Plugin-Verzeichnis hergestellt werden. Stellen sie sicher das der Server Verbindung mit www.dokuwiki.org aufnehmen darf und überprüfen sie ihre Proxy Einstellungen.';
+$lang['nossl']                 = 'Ihr PHP scheint SSL nicht zu unterstützen. Das Herunterladen vieler DokuWiki Erweiterungen wird scheitern.';

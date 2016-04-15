@@ -9,7 +9,9 @@
  * authplain won't get unexpectedly surprised.)
  *
  * @group plugin_authplain
+ * @group auth_plugins
  * @group plugins
+ * @group bundled_plugins
  */
 class helper_plugin_authplain_escaping_test extends DokuWikiTest {
 

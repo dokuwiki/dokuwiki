@@ -64,24 +64,24 @@ class Doku_Parser {
     /**
      * @param Doku_Parser_Mode_base $BaseMode
      */
-    function addBaseMode(& $BaseMode) {
-        $this->modes['base'] =& $BaseMode;
+    function addBaseMode($BaseMode) {
+        $this->modes['base'] = $BaseMode;
         if ( !$this->Lexer ) {
             $this->Lexer = new Doku_Lexer($this->Handler,'base', true);
         }
-        $this->modes['base']->Lexer =& $this->Lexer;
+        $this->modes['base']->Lexer = $this->Lexer;
     }
 
     /**
      * PHP preserves order of associative elements
      * Mode sequence is important
      */
-    function addMode($name, & $Mode) {
+    function addMode($name, Doku_Parser_Mode_Interface $Mode) {
         if ( !isset($this->modes['base']) ) {
             $this->addBaseMode(new Doku_Parser_Mode_base());
         }
-        $Mode->Lexer = & $this->Lexer;
-        $this->modes[$name] =& $Mode;
+        $Mode->Lexer = $this->Lexer;
+        $this->modes[$name] = $Mode;
     }
 
     function connectModes() {
@@ -226,7 +226,7 @@ class Doku_Parser_Mode_Plugin extends DokuWiki_Plugin implements Doku_Parser_Mod
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_base extends Doku_Parser_Mode {
 
-    function Doku_Parser_Mode_base() {
+    function __construct() {
         global $PARSER_MODES;
 
         $this->allowedModes = array_merge (
@@ -248,7 +248,7 @@ class Doku_Parser_Mode_base extends Doku_Parser_Mode {
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_footnote extends Doku_Parser_Mode {
 
-    function Doku_Parser_Mode_footnote() {
+    function __construct() {
         global $PARSER_MODES;
 
         $this->allowedModes = array_merge (
@@ -416,7 +416,7 @@ class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
     /**
      * @param string $type
      */
-    function Doku_Parser_Mode_formatting($type) {
+    function __construct($type) {
         global $PARSER_MODES;
 
         if ( !array_key_exists($type, $this->formatting) ) {
@@ -470,7 +470,7 @@ class Doku_Parser_Mode_formatting extends Doku_Parser_Mode {
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_listblock extends Doku_Parser_Mode {
 
-    function Doku_Parser_Mode_listblock() {
+    function __construct() {
         global $PARSER_MODES;
 
         $this->allowedModes = array_merge (
@@ -504,7 +504,7 @@ class Doku_Parser_Mode_listblock extends Doku_Parser_Mode {
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_table extends Doku_Parser_Mode {
 
-    function Doku_Parser_Mode_table() {
+    function __construct() {
         global $PARSER_MODES;
 
         $this->allowedModes = array_merge (
@@ -648,7 +648,7 @@ class Doku_Parser_Mode_file extends Doku_Parser_Mode {
 //-------------------------------------------------------------------
 class Doku_Parser_Mode_quote extends Doku_Parser_Mode {
 
-    function Doku_Parser_Mode_quote() {
+    function __construct() {
         global $PARSER_MODES;
 
         $this->allowedModes = array_merge (
@@ -682,7 +682,7 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
     var $acronyms = array();
     var $pattern = '';
 
-    function Doku_Parser_Mode_acronym($acronyms) {
+    function __construct($acronyms) {
         usort($acronyms,array($this,'_compare'));
         $this->acronyms = $acronyms;
     }
@@ -729,7 +729,7 @@ class Doku_Parser_Mode_smiley extends Doku_Parser_Mode {
     var $smileys = array();
     var $pattern = '';
 
-    function Doku_Parser_Mode_smiley($smileys) {
+    function __construct($smileys) {
         $this->smileys = $smileys;
     }
 
@@ -762,7 +762,7 @@ class Doku_Parser_Mode_wordblock extends Doku_Parser_Mode {
     var $badwords = array();
     var $pattern = '';
 
-    function Doku_Parser_Mode_wordblock($badwords) {
+    function __construct($badwords) {
         $this->badwords = $badwords;
     }
 
@@ -797,7 +797,7 @@ class Doku_Parser_Mode_entity extends Doku_Parser_Mode {
     var $entities = array();
     var $pattern = '';
 
-    function Doku_Parser_Mode_entity($entities) {
+    function __construct($entities) {
         $this->entities = $entities;
     }
 

@@ -74,7 +74,7 @@ function html_login(){
 function html_denied() {
     print p_locale_xhtml('denied');
 
-    if(!$_SERVER['REMOTE_USER']){
+    if(empty($_SERVER['REMOTE_USER'])){
         html_login();
     }
 }
@@ -183,7 +183,7 @@ function html_topbtn(){
  * @param bool|string    $label  label text, false: lookup btn_$name in localization
  * @return string
  */
-function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false){
+function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label=false){
     global $conf;
     global $lang;
 
@@ -221,13 +221,14 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
         $tip = htmlspecialchars($label);
     }
 
-    $ret .= '<input type="submit" value="'.hsc($label).'" class="button" ';
+    $ret .= '<button type="submit" ';
     if($akey){
         $tip .= ' ['.strtoupper($akey).']';
         $ret .= 'accesskey="'.$akey.'" ';
     }
-    $ret .= 'title="'.$tip.'" ';
-    $ret .= '/>';
+    $ret .= 'title="'.$tip.'">';
+    $ret .= hsc($label);
+    $ret .= '</button>';
     $ret .= '</div></form>';
 
     return $ret;
@@ -776,10 +777,16 @@ function html_recent($first=0, $show_changes='both'){
         $href = '';
 
         if (!empty($recent['media'])) {
-            $diff = (count(getRevisions($recent['id'], 0, 1, 8192, true)) && file_exists(mediaFN($recent['id'])));
+            $changelog = new MediaChangeLog($recent['id']);
+            $revs = $changelog->getRevisions(0, 1);
+            $diff = (count($revs) && file_exists(mediaFN($recent['id'])));
             if ($diff) {
-                $href = media_managerURL(array('tab_details' => 'history',
-                    'mediado' => 'diff', 'image' => $recent['id'], 'ns' => getNS($recent['id'])), '&');
+                $href = media_managerURL(array(
+                                             'tab_details' => 'history',
+                                             'mediado' => 'diff',
+                                             'image' => $recent['id'],
+                                             'ns' => getNS($recent['id'])
+                                         ), '&');
             }
         } else {
             $href = wl($recent['id'],"do=diff", false, '&');
@@ -850,26 +857,28 @@ function html_recent($first=0, $show_changes='both'){
         $first -= $conf['recent'];
         if ($first < 0) $first = 0;
         $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav-prev')));
-        $form->addElement(form_makeTag('input', array(
+        $form->addElement(form_makeOpenTag('button', array(
                     'type'  => 'submit',
                     'name'  => 'first['.$first.']',
-                    'value' => $lang['btn_newer'],
                     'accesskey' => 'n',
                     'title' => $lang['btn_newer'].' [N]',
                     'class' => 'button show'
                     )));
+        $form->addElement($lang['btn_newer']);
+        $form->addElement(form_makeCloseTag('button'));
         $form->addElement(form_makeCloseTag('div'));
     }
     if ($hasNext) {
         $form->addElement(form_makeOpenTag('div', array('class' => 'pagenav-next')));
-        $form->addElement(form_makeTag('input', array(
+        $form->addElement(form_makeOpenTag('button', array(
                         'type'  => 'submit',
                         'name'  => 'first['.$last.']',
-                        'value' => $lang['btn_older'],
                         'accesskey' => 'p',
                         'title' => $lang['btn_older'].' [P]',
                         'class' => 'button show'
                         )));
+        $form->addElement($lang['btn_older']);
+        $form->addElement(form_makeCloseTag('button'));
         $form->addElement(form_makeCloseTag('div'));
     }
     $form->addElement(form_makeCloseTag('div'));
@@ -887,10 +896,9 @@ function html_index($ns){
     global $conf;
     global $ID;
     $ns  = cleanID($ns);
-    #fixme use appropriate function
     if(empty($ns)){
-        $ns = dirname(str_replace(':','/',$ID));
-        if($ns == '.') $ns ='';
+        $ns = getNS($ID);
+        if($ns === false) $ns ='';
     }
     $ns  = utf8_encodeFN(str_replace(':','/',$ns));
 
@@ -949,13 +957,14 @@ function html_list_index($item){
  */
 function html_li_index($item){
     global $INFO;
+    global $ACT;
 
     $class = '';
     $id = '';
 
     if($item['type'] == "f"){
         // scroll to the current item
-        if($item['id'] == $INFO['id']) {
+        if($item['id'] == $INFO['id'] && $ACT == 'index') {
             $id = ' id="scroll__here"';
             $class = ' bounce';
         }
@@ -999,7 +1008,7 @@ function html_li_default($item){
  * @param callable $func  callback to print an list item
  * @param callable $lifunc callback to the opening li tag
  * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
-                                 0 (we have a root object) or 1 (just the root content)
+ *                               0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
  */
 function html_buildlist($data,$class,$func,$lifunc='html_li_default',$forcewrapper=false){
@@ -1403,7 +1412,13 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
 
     // last timestamp is not in changelog, retrieve timestamp from metadata
     // note: when page is removed, the metadata timestamp is zero
-    $r_rev = $r_rev ? $r_rev : $INFO['meta']['last_change']['date'];
+    if(!$r_rev) {
+        if(isset($INFO['meta']['last_change']['date'])) {
+            $r_rev = $INFO['meta']['last_change']['date'];
+        } else {
+            $r_rev = 0;
+        }
+    }
 
     //retrieve revisions with additional info
     list($l_revs, $r_revs) = $pagelog->getRevisionsAround($l_rev, $r_rev);
@@ -2064,6 +2079,13 @@ function html_admin(){
                     $menu['config']['prompt'].'</a></div></li>');
         }
         unset($menu['config']);
+
+        if($menu['styling']){
+            ptln('  <li class="admin_styling"><div class="li">'.
+                '<a href="'.wl($ID, array('do' => 'admin','page' => 'styling')).'">'.
+                $menu['styling']['prompt'].'</a></div></li>');
+        }
+        unset($menu['styling']);
     }
     ptln('</ul>');
 
@@ -2092,7 +2114,17 @@ function html_admin(){
 
     // print the rest as sorted list
     if(count($menu)){
-        usort($menu, 'p_sort_modes');
+        // sort by name, then sort
+        usort(
+            $menu,
+            function ($a, $b) {
+                $strcmp = strcasecmp($a['prompt'], $b['prompt']);
+                if($strcmp != 0) return $strcmp;
+                if($a['sort'] == $b['sort']) return 0;
+                return ($a['sort'] < $b['sort']) ? -1 : 1;
+            }
+        );
+
         // output the menu
         ptln('<div class="clearer"></div>');
         print p_locale_xhtml('adminplugins');

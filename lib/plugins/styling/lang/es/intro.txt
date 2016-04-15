@@ -1,0 +1,2 @@
+Esta herramienta le permite cambiar algunos ajustes de estilo de la plantilla seleccionada.
+Todos los cambios se guardan en un archivo de configuración local y son una actualización segura.

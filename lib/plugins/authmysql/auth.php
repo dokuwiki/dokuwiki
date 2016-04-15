@@ -222,6 +222,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
 
         if($this->_openDB()) {
             if(($info = $this->_getUserInfo($user)) !== false) {
+                msg($this->getLang('userexists'), -1);
                 return false; // user already exists
             }
 
@@ -235,7 +236,13 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
             $rc  = $this->_addUser($user, $pwd, $name, $mail, $grps);
             $this->_unlockTables();
             $this->_closeDB();
-            if($rc) return true;
+            if(!$rc) {
+                msg($this->getLang('writefail'));
+                return null;
+            }
+            return true;
+        } else {
+            msg($this->getLang('connectfail'), -1);
         }
         return null; // return error
     }
@@ -279,7 +286,9 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
 
             $rc = $this->_updateUserInfo($user, $changes);
 
-            if($rc && isset($changes['grps']) && $this->cando['modGroups']) {
+            if(!$rc) {
+                msg($this->getLang('usernotexists'), -1);
+            } elseif(isset($changes['grps']) && $this->cando['modGroups']) {
                 $groups = $this->_getGroups($user);
                 $grpadd = array_diff($changes['grps'], $groups);
                 $grpdel = array_diff($groups, $changes['grps']);
@@ -295,10 +304,14 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                         $rc = false;
                     }
                 }
+
+                if(!$rc) msg($this->getLang('writefail'));
             }
 
             $this->_unlockTables();
             $this->_closeDB();
+        } else {
+            msg($this->getLang('connectfail'), -1);
         }
         return $rc;
     }
@@ -328,6 +341,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
                 $this->_unlockTables();
             }
             $this->_closeDB();
+        } else {
+            msg($this->getLang('connectfail'), -1);
         }
         return $count;
     }
@@ -859,7 +874,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _openDB() {
         if(!$this->dbcon) {
-            $con = @mysql_connect($this->getConf('server'), $this->getConf('user'), $this->getConf('password'));
+            $con = @mysql_connect($this->getConf('server'), $this->getConf('user'), conf_decodeString($this->getConf('password')));
             if($con) {
                 if((mysql_select_db($this->getConf('database'), $con))) {
                     if((preg_match('/^(\d+)\.(\d+)\.(\d+).*/', mysql_get_server_info($con), $result)) == 1) {

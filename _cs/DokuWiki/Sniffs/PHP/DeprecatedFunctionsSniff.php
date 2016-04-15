@@ -39,7 +39,7 @@ class DokuWiki_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_Fo
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array(
+    public $forbiddenFunctions = array(
         'setCorrectLocale'     => null,
         'html_attbuild'        => 'buildAttributes',
         'io_runcmd'            => null,

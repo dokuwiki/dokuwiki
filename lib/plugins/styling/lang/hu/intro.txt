@@ -1,0 +1,2 @@
+Ezzel az eszközzel módosíthatod az aktuális sablon kinézetének néhány elemét.
+A változtatások egy helyi konfigurációs fájlban kerülnek tárolásra, így a frissítések során megmaradnak.

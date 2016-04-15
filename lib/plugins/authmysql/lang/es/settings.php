@@ -7,6 +7,7 @@
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Alejandro Nunez <nunez.alejandro@gmail.com>
+ * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['server']                = 'Tu servidor MySQL';
 $lang['user']                  = 'Nombre de usuario MySQL';
@@ -37,6 +38,7 @@ $lang['UpdateLogin']           = 'Cláusula de actualización para actualizar el
 $lang['UpdatePass']            = 'Cláusula de actualización para actualizar la contraseña del usuario';
 $lang['UpdateEmail']           = 'Cláusula de actualización para actualizar la dirección de correo del usuario';
 $lang['UpdateName']            = 'Cláusula de actualización para actualizar el nomblre completo del usuario';
+$lang['UpdateTarget']          = 'Cláusula limite para identificar al usuario cuando se actualiza';
 $lang['delUserGroup']          = 'Sentencia SQL para eliminar un usuario de un grupo dado';
 $lang['getGroupID']            = 'Sentencia SQL para obtener la clave principal de un grupo dado';
 $lang['debug_o_0']             = 'ninguno';

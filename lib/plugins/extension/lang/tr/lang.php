@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author İlker R. Kapaç <irifat@gmail.com>
+ * @author Mete Cuma <mcumax@gmail.com>
  */
 $lang['menu']                  = 'Genişletme Yöneticisi';
 $lang['tab_plugins']           = 'Kurulmuş Eklentiler';
@@ -44,7 +45,7 @@ $lang['available_version']     = 'Müsait sürüm:';
 $lang['compatible']            = 'Şununla uyumlu:';
 $lang['depends']               = 'Şuna bağımlı';
 $lang['similar']               = 'Şununla benzer';
-$lang['conflicts']             = 'Şununla çelişir';
+$lang['conflicts']             = 'Şununla çelişir:';
 $lang['donate']                = 'Beğendiniz mi?';
 $lang['donate_action']         = 'Yazara bir kahve ısmarlayın!';
 $lang['repo_retry']            = 'Yeniden dene';

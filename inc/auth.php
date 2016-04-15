@@ -101,10 +101,7 @@ function auth_setup() {
         $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
-    if($INPUT->str('authtok')) {
-        // when an authentication token is given, trust the session
-        auth_validateToken($INPUT->str('authtok'));
-    } elseif(!is_null($auth) && $auth->canDo('external')) {
+    if(!is_null($auth) && $auth->canDo('external')) {
         // external trust mechanism in place
         $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
     } else {
@@ -272,52 +269,6 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
     //just to be sure
     auth_logoff(true);
     return false;
-}
-
-/**
- * Checks if a given authentication token was stored in the session
- *
- * Will setup authentication data using data from the session if the
- * token is correct. Will exit with a 401 Status if not.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param  string $token The authentication token
- * @return boolean|null true (or will exit on failure)
- */
-function auth_validateToken($token) {
-    if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {
-        // bad token
-        http_status(401);
-        print 'Invalid auth token - maybe the session timed out';
-        unset($_SESSION[DOKU_COOKIE]['auth']['token']); // no second chance
-        exit;
-    }
-    // still here? trust the session data
-    global $USERINFO;
-    /* @var Input $INPUT */
-    global $INPUT;
-
-    $INPUT->server->set('REMOTE_USER',$_SESSION[DOKU_COOKIE]['auth']['user']);
-    $USERINFO               = $_SESSION[DOKU_COOKIE]['auth']['info'];
-    return true;
-}
-
-/**
- * Create an auth token and store it in the session
- *
- * NOTE: this is completely unrelated to the getSecurityToken() function
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @return string The auth token
- */
-function auth_createToken() {
-    $token = md5(auth_randombytes(16));
-    @session_start(); // reopen the session if needed
-    $_SESSION[DOKU_COOKIE]['auth']['token'] = $token;
-    session_write_close();
-    return $token;
 }
 
 /**
@@ -739,27 +690,22 @@ function auth_aclcheck_cb($data) {
         $user   = utf8_strtolower($user);
         $groups = array_map('utf8_strtolower', $groups);
     }
-    $user   = $auth->cleanUser($user);
+    $user   = auth_nameencode($auth->cleanUser($user));
     $groups = array_map(array($auth, 'cleanGroup'), (array) $groups);
-    $user   = auth_nameencode($user);
 
     //prepend groups with @ and nameencode
-    $cnt = count($groups);
-    for($i = 0; $i < $cnt; $i++) {
-        $groups[$i] = '@'.auth_nameencode($groups[$i]);
+    foreach($groups as &$group) {
+        $group = '@'.auth_nameencode($group);
     }
 
     $ns   = getNS($id);
     $perm = -1;
 
-    if($user || count($groups)) {
-        //add ALL group
-        $groups[] = '@ALL';
-        //add User
-        if($user) $groups[] = $user;
-    } else {
-        $groups[] = '@ALL';
-    }
+    //add ALL group
+    $groups[] = '@ALL';
+
+    //add User
+    if($user) $groups[] = $user;
 
     //check exact match first
     $matches = preg_grep('/^'.preg_quote($id, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
@@ -1006,7 +952,7 @@ function register() {
 
     //okay try to create the user
     if(!$auth->triggerUserMod('create', array($login, $pass, $fullname, $email))) {
-        msg($lang['reguexists'], -1);
+        msg($lang['regfail'], -1);
         return false;
     }
 
@@ -1098,17 +1044,18 @@ function updateprofile() {
         }
     }
 
-    if($result = $auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
-        // update cookie and session with the changed data
-        if($changes['pass']) {
-            list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
-            $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
-            auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
-        }
-        return true;
+    if(!$auth->triggerUserMod('modify', array($INPUT->server->str('REMOTE_USER'), &$changes))) {
+        msg($lang['proffail'], -1);
+        return false;
     }
 
-    return false;
+    // update cookie and session with the changed data
+    if($changes['pass']) {
+        list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
+        $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
+        auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
+    }
+    return true;
 }
 
 /**
@@ -1221,7 +1168,7 @@ function act_resendpwd() {
 
             // change it
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
-                msg('error modifying user data', -1);
+                msg($lang['proffail'], -1);
                 return false;
             }
 
@@ -1229,7 +1176,7 @@ function act_resendpwd() {
 
             $pass = auth_pwgen($user);
             if(!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
-                msg('error modifying user data', -1);
+                msg($lang['proffail'], -1);
                 return false;
             }
 

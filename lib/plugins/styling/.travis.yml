@@ -1,0 +1,13 @@
+# Config file for travis-ci.org
+
+language: php
+php:
+  - "5.5"
+  - "5.4"
+  - "5.3"
+env:
+  - DOKUWIKI=master
+  - DOKUWIKI=stable
+before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
+install: sh travis.sh
+script: cd _test && phpunit --stderr --group plugin_styling

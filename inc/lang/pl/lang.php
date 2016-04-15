@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
  * @author Mariusz Kujawski <marinespl@gmail.com>
  * @author Maciej Kurczewski <pipijajko@gmail.com>
@@ -25,7 +25,7 @@ $lang['doublequoteopening']    = '„';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Edytuj stronę';
 $lang['btn_source']            = 'Pokaż źródło strony';
 $lang['btn_show']              = 'Pokaż stronę';
@@ -49,7 +49,6 @@ $lang['btn_update']            = 'Aktualizuj';
 $lang['btn_delete']            = 'Usuń';
 $lang['btn_back']              = 'Wstecz';
 $lang['btn_backlink']          = 'Odnośniki';
-$lang['btn_backtomedia']       = 'Powrót do wyboru pliku';
 $lang['btn_subscribe']         = 'Subskrybuj zmiany';
 $lang['btn_profile']           = 'Aktualizuj profil';
 $lang['btn_reset']             = 'Resetuj';
@@ -162,7 +161,6 @@ $lang['js']['media_overwrt']   = 'Nadpisz istniejące pliki';
 $lang['rssfailed']             = 'Wystąpił błąd przy pobieraniu tych danych: ';
 $lang['nothingfound']          = 'Nic nie znaleziono.';
 $lang['mediaselect']           = 'Wysyłanie pliku';
-$lang['fileupload']            = 'Wysyłanie pliku';
 $lang['uploadsucc']            = 'Wysyłanie powiodło się!';
 $lang['uploadfail']            = 'Błąd wysyłania pliku. Czy prawa do katalogów są poprawne?';
 $lang['uploadwrong']           = 'Wysyłanie zabronione. Nie można wysłać plików z takim rozszerzeniem';
@@ -251,7 +249,6 @@ $lang['qb_sig']                = 'Wstaw podpis';
 $lang['qb_smileys']            = 'Emotikony';
 $lang['qb_chars']              = 'Znaki specjalne';
 $lang['upperns']               = 'Skok piętro wyżej';
-$lang['admin_register']        = 'Dodawanie użytkownika';
 $lang['metaedit']              = 'Edytuj metadane';
 $lang['metasaveerr']           = 'Zapis metadanych nie powiódł się';
 $lang['metasaveok']            = 'Metadane zapisano';
@@ -284,7 +281,6 @@ $lang['subscr_style_every']    = 'email przy każdej zmianie';
 $lang['subscr_style_digest']   = 'e-mailowy wyciąg zmian dla każdej strony (co %.2f dni)';
 $lang['subscr_style_list']     = 'lista zmienionych stron od ostatniego e-maila (co %.2f dni)';
 $lang['authtempfail']          = 'Uwierzytelnienie użytkownika jest w tej chwili niemożliwe. Jeśli ta sytuacja się powtórzy, powiadom administratora tego wiki.';
-$lang['authpwdexpire']         = 'Twoje hasło wygaśnie za %d dni. Należy je zmienić w krótkim czasie.';
 $lang['i_chooselang']          = 'Wybierz język';
 $lang['i_installer']           = 'Instalator DokuWiki';
 $lang['i_wikiname']            = 'Nazwa Wiki';

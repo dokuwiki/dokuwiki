@@ -1,40 +1,67 @@
 <?php
 
-class template_include_page_test extends DokuWikiTest {
-    function testNoSidebar() {
-        global $ID;
+class template_pagetitle_test extends DokuWikiTest {
 
-        $ID = 'foo:bar:baz:test';
-        $sidebar = tpl_include_page('sidebar', false, true);
-        $this->assertEquals('', $sidebar);
+    function test_localID() {
+        global $ID,$ACT;
+
+
+        $id = 'foo:bar';
+
+        $ACT = 'show';
+        $this->assertEquals('foo:bar', tpl_pagetitle($id, true));
     }
 
-    function testExistingSidebars() {
-        global $ID;
+    function test_globalID() {
+        global $ID,$ACT;
 
-        saveWikiText('sidebar', 'topsidebar-test', '');
 
-        $ID = 'foo:bar:baz:test';
-        $sidebar = tpl_include_page('sidebar', false, true);
-        $this->assertTrue(strpos($sidebar, 'topsidebar-test') > 0);
+        $ID = 'foo:bar';
 
-        $ID = 'foo';
-        $sidebar = tpl_include_page('sidebar', false, true);
-        $this->assertTrue(strpos($sidebar, 'topsidebar-test') > 0);
-
-        saveWikiText('foo:bar:sidebar', 'bottomsidebar-test', '');
-
-        $ID = 'foo:bar:baz:test';
-        $sidebar = tpl_include_page('sidebar', false, true);
-        $this->assertTrue(strpos($sidebar, 'bottomsidebar-test') > 0);
-
-        $ID = 'foo:bar:test';
-        $sidebar = tpl_include_page('sidebar', false, true);
-        $this->assertTrue(strpos($sidebar, 'bottomsidebar-test') > 0);
-
-        $ID = 'foo';
-        $sidebar = tpl_include_page('sidebar', false, true);
-        $this->assertTrue(strpos($sidebar, 'topsidebar-test') > 0);
+        $ACT = 'show';
+        $this->assertEquals('foo:bar', tpl_pagetitle(null, true));
     }
 
+    function test_adminTitle() {
+        global $ID,$ACT;
+
+        $ID = 'foo:bar';
+
+        $ACT = 'admin';
+        $this->assertEquals('Admin', tpl_pagetitle(null, true));
+    }
+
+    function test_adminPluginTitle() {
+        global $ID,$ACT,$INPUT,$conf;
+
+        if (!plugin_load('admin','revert')) {
+            $this->markTestSkipped('Revert plugin not found, unable to test admin plugin titles');
+            return;
+        }
+
+        $ID = 'foo:bar';
+        $ACT = 'admin';
+        $conf['lang'] = 'en';
+        $INPUT->set('page','revert');
+
+        $this->assertEquals('Revert Manager', tpl_pagetitle(null, true));
+    }
+
+    function test_nonPageFunctionTitle() {
+        global $ID,$ACT;
+
+        $ID = 'foo:bar';
+
+        $ACT = 'index';
+        $this->assertEquals('Sitemap', tpl_pagetitle(null, true));
+    }
+
+    function test_pageFunctionTitle() {
+        global $ID,$ACT;
+
+        $ID = 'foo:bar';
+
+        $ACT = 'revisions';
+        $this->assertEquals('foo:bar - Old revisions', tpl_pagetitle(null, true));
+    }
 }

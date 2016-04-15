@@ -191,13 +191,16 @@ global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = 'Doku_Plugin_Controller';
 
 // load libraries
+require_once(DOKU_INC.'vendor/autoload.php');
 require_once(DOKU_INC.'inc/load.php');
 
 // disable gzip if not available
-if($conf['compression'] == 'bz2' && !function_exists('bzopen')){
+define('DOKU_HAS_BZIP', function_exists('bzopen'));
+define('DOKU_HAS_GZIP', function_exists('gzopen'));
+if($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
     $conf['compression'] = 'gz';
 }
-if($conf['compression'] == 'gz' && !function_exists('gzopen')){
+if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
     $conf['compression'] = 0;
 }
 
