@@ -746,10 +746,10 @@ function utf8_decodeFN($file){
  * @todo   add event hook
  *
  * @param  string $page the pagename you're looking for
- * @param bool $ignoreacl If pages that can't be accessed by the current user shall be returend
+ * @param bool $useacl only return pages readable by the current user, false to ignore ACLs
  * @return false|string the full page id of the found page, false if any
  */
-function page_findnearest($page, $ignoreacl = false){
+function page_findnearest($page, $useacl = true){
     if (!$page) return false;
     global $ID;
 
@@ -757,7 +757,7 @@ function page_findnearest($page, $ignoreacl = false){
     do {
         $ns = getNS($ns);
         $pageid = cleanID("$ns:$page");
-        if(page_exists($pageid) && ($ignoreacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
+        if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
     } while($ns);

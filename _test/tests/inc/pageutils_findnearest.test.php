@@ -78,7 +78,7 @@ class pageutils_findnearest_test extends DokuWikiTest {
         $sidebar = page_findnearest('sidebar');
         $this->assertEquals('sidebar', $sidebar);
 
-        $sidebar = page_findnearest('sidebar', true);
+        $sidebar = page_findnearest('sidebar', false);
         $this->assertEquals('internal:sidebar', $sidebar);
 
         $INPUT->server->set('REMOTE_USER', 'max');
