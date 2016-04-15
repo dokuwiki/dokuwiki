@@ -621,8 +621,7 @@ class Mailer {
             'USER' => $INPUT->server->str('REMOTE_USER'),
             'NAME' => $INFO['userinfo']['name'],
             'MAIL' => $INFO['userinfo']['mail'],
-            // per RFC2045 6.8, "text line breaks must be converted into CRLF sequences prior to base64 encoding.", so we use \r\n
-            'EMAILSIGNATURE' => "\r\n-- \r\n" . $lang['email_signature'] . ":\r\n" . DOKU_URL . "\r\n",
+            'EMAILSIGNATURE' => "\n-- \n" . $lang['email_signature'] . "\n" . DOKU_URL . "\n",
         );
 
         $this->replacements['html'] = array(
