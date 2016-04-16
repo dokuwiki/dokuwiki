@@ -43,6 +43,7 @@
  * @author Domingo Redal <docxml@gmail.com>
  * @author solohazlo <solohhazlo@gmail.com>
  * @author Romano <romanocl@outlook.com>
+ * @author David Roy <davidroyapp@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
