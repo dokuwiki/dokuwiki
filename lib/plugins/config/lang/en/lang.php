@@ -165,7 +165,7 @@ $lang['autoplural']  = 'Check for plural forms in links';
 $lang['compression'] = 'Compression method for attic files';
 $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['compress']    = 'Compact CSS and javascript output';
-$lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. This technique won\'t work in IE 7 and below! <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
+$lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
 $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';

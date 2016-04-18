@@ -108,10 +108,6 @@
     bottom: -1px;
     z-index: 2;
 }
-* html #mediamanager__page .namespaces h2,
-*+html #mediamanager__page .namespaces h2 {
-    display: inline;
-}
 [dir=rtl] #mediamanager__page .namespaces h2 {
     margin: 0 .3em 0 0;
     position: relative;
@@ -213,14 +209,6 @@
     display: table-cell;
     overflow: hidden;
 }
-* html #mediamanager__page .filelist .thumbs li dt a,
-*+html #mediamanager__page .filelist .thumbs li dt a {
-    display: block;
-}
-* html #mediamanager__page .filelist .rows li dt a,
-*+html #mediamanager__page .filelist .rows li dt a {
-    display: inline;
-}
 
 /* file list as thumbs */
 
@@ -242,11 +230,6 @@
 [dir=rtl] #mediamanager__page .filelist .thumbs li {
     margin-right: 0;
     margin-left: 6px;
-}
-* html #mediamanager__page .filelist .thumbs li,
-*+html #mediamanager__page .filelist .thumbs li {
-    display: inline;
-    zoom: 1;
 }
 
 #mediamanager__page .filelist .thumbs li dt a {

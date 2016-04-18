@@ -166,7 +166,7 @@ $lang['autoplural']  = 'Gwirio am ffurfiau lluosog mewn dolenni';
 $lang['compression'] = 'Dull cywasgu ar gyfer ffeiliau llofft (hen adolygiadau)';
 $lang['gzip_output'] = 'Defnyddio gzip Content-Encoding ar gyfer xhtml'; //pwy a wyr
 $lang['compress']    = 'Cywasgu allbwn CSS a javascript';
-$lang['cssdatauri']  = 'Uchafswm maint mewn beitiau ar gyfer delweddau i\'w cyfeirio atynt mewn ffeiliau CSS a ddylai cael eu mewnosod i\'r ddalen arddull i leihau gorbenion pennyn cais HTTP. \'Dyw\'r dechneg hon ddim yn gweithio mewn IE 7 ac is! Mae <code>400</code> i <code>600</code> beit yn werth da. Gosodwch i <code>0</code> i\'w analluogi.';
+$lang['cssdatauri']  = 'Uchafswm maint mewn beitiau ar gyfer delweddau i\'w cyfeirio atynt mewn ffeiliau CSS a ddylai cael eu mewnosod i\'r ddalen arddull i leihau gorbenion pennyn cais HTTP. Mae <code>400</code> i <code>600</code> beit yn werth da. Gosodwch i <code>0</code> i\'w analluogi.';
 $lang['send404']     = 'Anfon "HTTP 404/Page Not Found" ar gyfer tudalennau sy ddim yn bodoli';
 $lang['broken_iua']  = 'Ydy\'r swyddogaeth ignore_user_abort wedi torri ar eich system? Gall hwn achosi\'r indecs chwilio i beidio â gweithio. Rydym yn gwybod bod IIS+PHP/CGI wedi torri. Gweler <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> am wybodaeth bellach.';
 $lang['xsendfile']   = 'Defnyddio\'r pennyn X-Sendfile i ganiatáu\'r gweinydd gwe i ddanfon ffeiliau statig? Mae\'n rhaid bod eich gweinydd gwe yn caniatáu hyn.';

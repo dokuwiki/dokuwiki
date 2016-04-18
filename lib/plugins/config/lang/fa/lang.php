@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author omidmr@gmail.com
@@ -138,7 +138,7 @@ $lang['autoplural']            = 'بررسی جمع بودن در پیوندها
 $lang['compression']           = 'روش فشرده‌سازی برای فایل‌های خُرد';
 $lang['gzip_output']           = 'استفاده از gzip برای xhtmlها';
 $lang['compress']              = 'فشرده‌سازی کد‌های CSS و JavaScript';
-$lang['cssdatauri']            = 'اندازه بایت هایی که تصاویر ارجاع شده به فایل های CSS باید به درستی درون stylesheet جایگذاری شود تا سربار سرایند درخواست HTTP را کاهش دهد. این روش در IE 7 و پایین تر کار نمی کند! مقادیر <code>400</code> تا <code>600</code> بایت مقدار خوبی است. برای غیر فعال کردن <code>0</code> قرار دهید.';
+$lang['cssdatauri']            = 'اندازه بایت هایی که تصاویر ارجاع شده به فایل های CSS باید به درستی درون stylesheet جایگذاری شود تا سربار سرایند درخواست HTTP را کاهش دهد. مقادیر <code>400</code> تا <code>600</code> بایت مقدار خوبی است. برای غیر فعال کردن <code>0</code> قرار دهید.';
 $lang['send404']               = 'ارسال «HTTP 404/Page Not Found» برای صفحاتی که وجود ندارند';
 $lang['broken_iua']            = 'آیا تابع ignore_user_about در ویکی شما کار نمی‌کند؟ ممکن است فهرست جستجوی شما کار نکند. IIS به همراه PHP/CGI باعث خراب شدن این گزینه می‌شود. برای اطلاعات بیشتر <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">باگ ۸۵۲</a> را مشاهده کنید.';
 $lang['xsendfile']             = 'استفاده از هدر X-Sendfile، تا به وب‌سرور  توانایی ارسال فایل‌های ثابت را بدهد. وب‌سرور شما باید این مورد را پشتیبانی کند.';

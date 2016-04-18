@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
@@ -137,7 +137,7 @@ $lang['autoplural']            = '링크에서 복수형 검사';
 $lang['compression']           = '첨부 파일의 압축 방법';
 $lang['gzip_output']           = 'xhtml에 대해 gzip 내용 인코딩 사용';
 $lang['compress']              = 'CSS 및 자바스크립트를 압축하여 출력';
-$lang['cssdatauri']            = 'CSS 파일에서 그림이 참조되는 최대 바이트 크기를 스타일시트에 규정해야 HTTP 요청 헤더 오버헤드 크기를 줄일 수 있습니다. 이 기술은 IE 7 이하에서는 작동하지 않습니다! <code>400</code>에서 <code>600</code> 바이트 정도면 좋은 효율을 가져옵니다. 비활성화하려면 <code>0</code>으로 설정하세요.';
+$lang['cssdatauri']            = 'CSS 파일에서 그림이 참조되는 최대 바이트 크기를 스타일시트에 규정해야 HTTP 요청 헤더 오버헤드 크기를 줄일 수 있습니다. <code>400</code>에서 <code>600</code> 바이트 정도면 좋은 효율을 가져옵니다. 비활성화하려면 <code>0</code>으로 설정하세요.';
 $lang['send404']               = '존재하지 않는 문서에 "HTTP 404/페이지를 찾을 수 없습니다" 보내기';
 $lang['broken_iua']            = '시스템에서 ignore_user_abort 함수에 문제가 있습니까? 문제가 있다면 검색 색인이 동작하지 않는 원인이 됩니다. 이 함수가 IIS+PHP/CGI에서 문제가 있는 것으로 알려져 있습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참조하시기 바랍니다.';
 $lang['xsendfile']             = '웹 서버가 정적 파일을 제공할 수 있도록 X-Sendfile 헤더를 사용하겠습니까? 웹 서버가 이 기능을 지원해야 합니다.';
