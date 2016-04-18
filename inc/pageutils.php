@@ -391,9 +391,9 @@ function metaFiles($id){
  * @param string|int $rev empty string or revision timestamp
  * @return string full path
  */
-function mediaFN($id, $rev=''){
+function mediaFN($id, $rev='', $clean=true){
     global $conf;
-    $id = cleanID($id);
+    if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
     if(empty($rev)){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
