@@ -1716,20 +1716,19 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  * @return bool|null|string
  */
 function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = true) {
-    if (!$pageid) return false;
     if($propagate) {
         $pageid = page_findnearest($pageid, $useacl);
     } elseif($useacl && auth_quickaclcheck($pageid) == AUTH_NONE) {
         return false;
     }
+    if(!$pageid) return false;
 
     global $TOC;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
     $TOC    = $oldtoc;
 
-    if(!$print) return $html;
-    echo $html;
+    if($print) echo $html;
     return $html;
 }
 
