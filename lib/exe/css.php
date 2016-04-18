@@ -50,11 +50,6 @@ function css_out(){
     // load styl.ini
     $styleini = css_styleini($tpl, $INPUT->bool('preview'));
 
-    // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
-    if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
-    }
-
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
