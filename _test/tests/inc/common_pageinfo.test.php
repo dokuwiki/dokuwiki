@@ -128,6 +128,10 @@ class common_pageinfo_test extends DokuWikiTest {
         $filename = $conf['datadir'].'/wiki/syntax.txt';
         $rev = filemtime($filename);
         $REV = $rev - 100;
+        $ext = '.txt';
+        if($conf['compression']) {  //compression in $info['filepath'] determined by wikiFN depends also on if the page exist
+            $ext .= "." . $conf['compression']; //.gz or .bz2
+        }
 
         $info = $this->_get_expected_pageinfo();
         $info['id'] = 'wiki:syntax';
@@ -135,7 +139,7 @@ class common_pageinfo_test extends DokuWikiTest {
         $info['meta'] = p_get_metadata($ID);
         $info['rev'] = $REV;
         $info['currentrev'] = $rev;
-        $info['filepath'] = str_replace('pages','attic',substr($filename,0,-3).$REV.'.txt.gz');
+        $info['filepath'] = str_replace('pages','attic',substr($filename,0,-3).$REV.$ext);
 
         $this->assertEquals($info, pageinfo());
         $this->assertEquals($rev-100, $REV);
