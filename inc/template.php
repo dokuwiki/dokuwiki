@@ -1712,22 +1712,26 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
  * This function is useful to populate sidebars or similar features in a
  * template
  *
- * @param string $pageid
- * @param bool $print
- * @param bool $propagate
+ * @param string $pageid The page name you want to include
+ * @param bool $print Should the content be printed or returned only
+ * @param bool $propagate Search higher namespaces, too?
+ * @param bool $useacl Include the page only if the ACLs check out?
  * @return bool|null|string
  */
-function tpl_include_page($pageid, $print = true, $propagate = false) {
-    if (!$pageid) return false;
-    if ($propagate) $pageid = page_findnearest($pageid);
+function tpl_include_page($pageid, $print = true, $propagate = false, $useacl = true) {
+    if($propagate) {
+        $pageid = page_findnearest($pageid, $useacl);
+    } elseif($useacl && auth_quickaclcheck($pageid) == AUTH_NONE) {
+        return false;
+    }
+    if(!$pageid) return false;
 
     global $TOC;
     $oldtoc = $TOC;
     $html   = p_wiki_xhtml($pageid, '', false);
     $TOC    = $oldtoc;
 
-    if(!$print) return $html;
-    echo $html;
+    if($print) echo $html;
     return $html;
 }
 

@@ -738,24 +738,26 @@ function utf8_decodeFN($file){
 
 /**
  * Find a page in the current namespace (determined from $ID) or any
- * higher namespace
+ * higher namespace that can be accessed by the current user,
+ * this condition can be overriden by an optional parameter.
  *
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
  *
  * @param  string $page the pagename you're looking for
- * @return string|false the full page id of the found page, false if any
+ * @param bool $useacl only return pages readable by the current user, false to ignore ACLs
+ * @return false|string the full page id of the found page, false if any
  */
-function page_findnearest($page){
+function page_findnearest($page, $useacl = true){
     if (!$page) return false;
     global $ID;
 
     $ns = $ID;
     do {
         $ns = getNS($ns);
-        $pageid = ltrim("$ns:$page",':');
-        if(page_exists($pageid)){
+        $pageid = cleanID("$ns:$page");
+        if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
     } while($ns);
