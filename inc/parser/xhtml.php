@@ -1686,7 +1686,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['suf']    = '';
         $link['more']   = '';
         $link['target'] = $conf['target']['media'];
-        if($conf['target']['media']) $link['rel'] = 'nofollow';
+        if($conf['target']['media']) $link['rel'] = 'noopener';
         $link['title']  = $this->_xmlEntities($src);
         $link['name']   = $this->_media($src, $title, $align, $width, $height, $cache, $render);
 
