@@ -111,21 +111,23 @@ function load_autoload($name){
         return true;
     }
 
-    // our own namespace
+    // namespace to directory conversion
     $name = str_replace('\\', '/', $name);
-    if(substr($name, 0, 9) == 'dokuwiki/') {
-        require substr($name, 9) . '.php';
-        return true;
-    }
 
     // plugin namespace
-    if(substr($name, 0, 7) == 'plugin/') {
+    if(substr($name, 0, 16) == 'dokuwiki/plugin/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
         $file = DOKU_PLUGIN . substr($name, 7) . '.php';
         if(file_exists($file)) {
             require $file;
             return true;
         }
+    }
+
+    // our own namespace
+    if(substr($name, 0, 9) == 'dokuwiki/') {
+        require substr($name, 9) . '.php';
+        return true;
     }
 
     // Plugin loading
