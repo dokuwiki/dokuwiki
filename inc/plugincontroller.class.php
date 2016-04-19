@@ -172,25 +172,7 @@ class Doku_Plugin_Controller {
                 if ($plugin[0] == '.') continue;               // skip hidden entries
                 if (is_file(DOKU_PLUGIN.$plugin)) continue;    // skip files, we're only interested in directories
 
-                if (substr($plugin,-9) == '.disabled') {
-                    // the plugin was disabled by rc2009-01-26
-                    // disabling mechanism was changed back very soon again
-                    // to keep everything simple we just skip the plugin completely
-                    continue;
-                } elseif (file_exists(DOKU_PLUGIN.$plugin.'/disabled')) {
-                    /**
-                     * treat this as a default disabled plugin(over-rideable by the plugin manager)
-                     * @deprecated 2011-09-10 (usage of disabled files)
-                     */
-                    if (empty($this->plugin_cascade['local'][$plugin])) {
-                        $all_plugins[$plugin] = 0;
-                    } else {
-                        $all_plugins[$plugin] = 1;
-                    }
-                    $this->plugin_cascade['default'][$plugin] = 0;
-
-                } elseif ((array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 0) ||
-                          ($plugin === 'plugin' && isset($conf['pluginmanager']) && !$conf['pluginmanager'])){
+                if (array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 0){
                     $all_plugins[$plugin] = 0;
 
                 } elseif ((array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 1)) {
