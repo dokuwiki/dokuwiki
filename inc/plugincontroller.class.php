@@ -172,8 +172,7 @@ class Doku_Plugin_Controller {
                 if ($plugin[0] == '.') continue;               // skip hidden entries
                 if (is_file(DOKU_PLUGIN.$plugin)) continue;    // skip files, we're only interested in directories
 
-                if ((array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 0) ||
-                          ($plugin === 'plugin' && isset($conf['pluginmanager']) && !$conf['pluginmanager'])){
+                if (array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 0){
                     $all_plugins[$plugin] = 0;
 
                 } elseif ((array_key_exists($plugin,$this->tmp_plugins) && $this->tmp_plugins[$plugin] == 1)) {
