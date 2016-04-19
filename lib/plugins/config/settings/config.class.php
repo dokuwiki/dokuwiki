@@ -1256,9 +1256,7 @@ if (!class_exists('setting_multicheckbox')) {
 
                 $checked = ($idx !== false) ? 'checked="checked"' : '';
 
-                // ideally this would be handled using a second class of "default", however IE6 does not
-                // correctly support CSS selectors referencing multiple class names on the same element
-                // (e.g. .default.selection).
+                // @todo ideally this would be handled using a second class of "default"
                 $class = (($idx !== false) == (false !== $idx_default)) ? " selectiondefault" : "";
 
                 $prompt = ($plugin->getLang($this->_key.'_'.$choice) ?
