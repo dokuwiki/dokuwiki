@@ -26,14 +26,6 @@ class admin_mock_usermanager extends admin_plugin_usermanager {
         return $this->_import();
     }
 
-    /**
-     * @deprecated    remove when dokuwiki requires php 5.3+
-     *                also associated unit test & usermanager methods
-     */
-    public function access_str_getcsv($line){
-        return $this->str_getcsv($line);
-    }
-
     // no need to send email notifications (mostly)
     protected function _notifyUser($user, $password, $status_alert=true) {
         if ($this->mock_email_notifications) {

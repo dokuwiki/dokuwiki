@@ -942,7 +942,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 if (!utf8_check($csv)) {
                     $csv = utf8_encode($csv);
                 }
-                $raw = $this->_getcsv($csv);
+                $raw = str_getcsv($csv);
                 $error = '';                        // clean out any errors from the previous line
                 // data checks...
                 if (1 == ++$line) {
@@ -1079,38 +1079,5 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     protected function _isUploadedFile($file) {
         return is_uploaded_file($file);
-    }
-
-    /**
-     * wrapper for str_getcsv() to simplify maintaining compatibility with php 5.2
-     *
-     * @deprecated    remove when dokuwiki php requirement increases to 5.3+
-     *                also associated unit test & mock access method
-     *
-     * @param string $csv string to parse
-     * @return array
-     */
-    protected function _getcsv($csv) {
-        return function_exists('str_getcsv') ? str_getcsv($csv) : $this->str_getcsv($csv);
-    }
-
-    /**
-     * replacement str_getcsv() function for php < 5.3
-     * loosely based on www.php.net/str_getcsv#88311
-     *
-     * @deprecated    remove when dokuwiki php requirement increases to 5.3+
-     *
-     * @param string $str string to parse
-     * @return array
-     */
-    protected function str_getcsv($str) {
-        $fp = fopen("php://temp/maxmemory:1048576", 'r+');    // 1MiB
-        fputs($fp, $str);
-        rewind($fp);
-
-        $data = fgetcsv($fp);
-
-        fclose($fp);
-        return $data;
     }
 }
