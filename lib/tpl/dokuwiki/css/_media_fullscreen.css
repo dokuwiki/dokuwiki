@@ -216,7 +216,6 @@
     width: 100px;
     min-height: 130px;
     display: inline-block;
-    display: -moz-inline-stack;
     /* the right margin should visually be 10px, but because of its inline-block nature the whitespace inbetween is about 4px more */
     margin: 0 6px 10px 0;
     background-color: @ini_background_neu;
