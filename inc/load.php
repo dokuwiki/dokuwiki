@@ -117,7 +117,7 @@ function load_autoload($name){
     // plugin namespace
     if(substr($name, 0, 16) == 'dokuwiki/plugin/') {
         $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
-        $file = DOKU_PLUGIN . substr($name, 7) . '.php';
+        $file = DOKU_PLUGIN . substr($name, 16) . '.php';
         if(file_exists($file)) {
             require $file;
             return true;
