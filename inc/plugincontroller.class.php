@@ -224,7 +224,7 @@ class Doku_Plugin_Controller {
             $file = $this->last_local_config_file;
             $out = "<?php\n/*\n * Local plugin enable/disable settings\n * Auto-generated through plugin/extension manager\n *\n".
                    " * NOTE: Plugins will not be added to this file unless there is a need to override a default setting. Plugins are\n".
-                   " *       enabled by default, unless having a 'disabled' file in their plugin folder.\n */\n";
+                   " *       enabled by default.\n */\n";
             foreach ($local_plugins as $plugin => $value) {
                 $out .= "\$plugins['$plugin'] = $value;\n";
             }
