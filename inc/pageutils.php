@@ -110,7 +110,7 @@ function cleanID($raw_id,$ascii=false){
     $cache = & $cache_cleanid;
 
     // check if it's already in the memory cache
-    if (isset($cache[(string)$raw_id])) {
+    if (!$ascii && isset($cache[(string)$raw_id])) {
         return $cache[(string)$raw_id];
     }
 
@@ -143,7 +143,7 @@ function cleanID($raw_id,$ascii=false){
     $id = preg_replace('#:[:\._\-]+#',':',$id);
     $id = preg_replace('#[:\._\-]+:#',':',$id);
 
-    $cache[(string)$raw_id] = $id;
+    if (!$ascii) $cache[(string)$raw_id] = $id;
     return($id);
 }
 
