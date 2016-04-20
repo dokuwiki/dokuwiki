@@ -422,17 +422,17 @@ class Form extends Element {
     public function toHTML() {
         $this->balanceFieldsets();
 
-        $html = '<form ' . buildAttributes($this->attrs()) . '>' . DOKU_LF;
+        $html = '<form ' . buildAttributes($this->attrs()) . '>';
 
         foreach($this->hidden as $name => $value) {
-            $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />' . DOKU_LF;
+            $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />';
         }
 
         foreach($this->elements as $element) {
-            $html .= $element->toHTML() . DOKU_LF;
+            $html .= $element->toHTML();
         }
 
-        $html .= '</form>' . DOKU_LF;
+        $html .= '</form>';
 
         return $html;
     }
