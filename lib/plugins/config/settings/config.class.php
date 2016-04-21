@@ -220,15 +220,12 @@ if (!class_exists('configuration')) {
                         $len = count($arr);
                         for($j=0; $j<$len; $j++){
                             $arr[$j] = trim($arr[$j]);
-                            $arr[$j] = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$arr[$j]);
-                            $arr[$j] = strtr($arr[$j], array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+                            $arr[$j] = $this->_readValue($arr[$j]);
                         }
 
                         $value = $arr;
                     }else{
-                        // remove quotes from quoted strings & unescape escaped data
-                        $value = preg_replace('/^(\'|")(.*)(?<!\\\\)\1$/s','$2',$value);
-                        $value = strtr($value, array('\\\\'=>'\\','\\\''=>'\'','\\"'=>'"'));
+                        $value = $this->_readValue($value);
                     }
 
                     $config[$key] = $value;
@@ -236,6 +233,32 @@ if (!class_exists('configuration')) {
             }
 
             return $config;
+        }
+
+        /**
+         * Convert php string into value
+         *
+         * @param string $value
+         * @return bool|string
+         */
+        protected function _readValue($value) {
+            $removequotes_pattern = '/^(\'|")(.*)(?<!\\\\)\1$/s';
+            $unescape_pairs = array(
+                '\\\\' => '\\',
+                '\\\'' => '\'',
+                '\\"' => '"'
+            );
+
+            if($value == 'true') {
+                $value = true;
+            } elseif($value == 'false') {
+                $value = false;
+            } else {
+                // remove quotes from quoted strings & unescape escaped data
+                $value = preg_replace($removequotes_pattern,'$2',$value);
+                $value = strtr($value, $unescape_pairs);
+            }
+            return $value;
         }
 
         /**
