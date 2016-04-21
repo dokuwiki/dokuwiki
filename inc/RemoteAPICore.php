@@ -758,7 +758,7 @@ class RemoteAPICore {
             $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
         }
 
-        if(count($revisions)>0 && $first==0) {
+        if($first == 0) {
             array_unshift($revisions, '');  // include current revision
             if ( count($revisions) > $conf['recent'] ){
                 array_pop($revisions);          // remove extra log entry
@@ -901,7 +901,7 @@ class RemoteAPICore {
         global $auth;
         if(!$conf['useacl']) return 0;
         if(!$auth) return 0;
-        
+
         auth_logoff();
 
         return 1;
