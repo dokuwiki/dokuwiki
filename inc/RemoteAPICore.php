@@ -753,11 +753,6 @@ class RemoteAPICore {
         $pagelog = new PageChangeLog($id);
         $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
 
-        if(count($revisions)==0 && $first!=0) {
-            $first=0;
-            $revisions = $pagelog->getRevisions($first, $conf['recent']+1);
-        }
-
         if($first == 0) {
             array_unshift($revisions, '');  // include current revision
             if ( count($revisions) > $conf['recent'] ){
