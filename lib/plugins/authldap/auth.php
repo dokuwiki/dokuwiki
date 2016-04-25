@@ -275,6 +275,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
     /**
      * Definition of the function modifyUser in order to modify the password
+     *
+     * @param   string $user    nick of the user to be changed
+     * @param   array  $changes array of field/value pairs to be changed (password will be clear text)
+     * @return  bool   true on success, false on error
      */
 
     function modifyUser($user,$changes){
