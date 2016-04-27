@@ -311,12 +311,13 @@ You can use up to five different levels of',
     function test_core2() {
         $remoteApi = new RemoteApi();
 
+        $localdoku = array(
+            'type' => 'local',
+            'page' => 'DokuWiki',
+            'href' => DOKU_BASE . DOKU_SCRIPT . '?id=DokuWiki'
+        );
         $expected = array(  //no local links
-            array(
-                'type' => 'local',
-                'page' => 'DokuWiki',
-                'href' => '/tmp/doku.php?id=DokuWiki'
-            ),
+            $localdoku,
             array(
                 'type' => 'extern',
                 'page' => 'http://www.freelists.org',
@@ -332,16 +333,8 @@ You can use up to five different levels of',
                 'page' => 'http://www.catb.org/~esr/faqs/smart-questions.html',
                 'href' => 'http://www.catb.org/~esr/faqs/smart-questions.html'
             ),
-            array(
-                'type' => 'local',
-                'page' => 'DokuWiki',
-                'href' => '/tmp/doku.php?id=DokuWiki'
-            ),
-            array(
-                'type' => 'local',
-                'page' => 'DokuWiki',
-                'href' => '/tmp/doku.php?id=DokuWiki'
-            )
+            $localdoku,
+            $localdoku
         );
         $params = array('mailinglist');
         $this->assertEquals($expected, $remoteApi->call('wiki.listLinks', $params));
