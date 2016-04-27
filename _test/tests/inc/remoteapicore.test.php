@@ -35,6 +35,7 @@ class remoteapicore_test extends DokuWikiTest {
         $AUTH_ACL = $this->oldAuthAcl;
 
     }
+
     function test_core() {
         $remoteApi = new RemoteApi();
 
@@ -93,7 +94,7 @@ You can use up to five different levels of',
 
         $timeexpect = time();
         $timeactual = $remoteApi->call('dokuwiki.getTime');
-        $this->assertTrue(($timeexpect <= $timeactual) && ($timeactual<= $timeexpect+1));
+        $this->assertTrue(($timeexpect <= $timeactual) && ($timeactual <= $timeexpect + 1));
 
         $expected = array(
             'locked' => array('wiki:dokuwiki', 'wiki:syntax', 'nonexisting'),
@@ -145,7 +146,6 @@ You can use up to five different levels of',
         $params = array('nice_page');
         $this->assertEquals($content, $remoteApi->call('wiki.getPage', $params));
 
-
         $morecontent = "\nOther text.";
         $secondcontent = $content . $morecontent;
         $params_append = array(
@@ -162,7 +162,7 @@ You can use up to five different levels of',
         $this->assertEquals($content, $remoteApi->call('wiki.getPageVersion', $params));
         $params = array('nice_page', 1234);
         $this->assertEquals('', $remoteApi->call('wiki.getPageVersion', $params), 'Not existing revision');
-        $params = array('notexisting', );
+        $params = array('notexisting', 1234);
         $this->assertEquals('', $remoteApi->call('wiki.getPageVersion', $params), 'Not existing page');
 
         $html1 = "\n<h3 class=\"sectionedit1\" id=\"title\">Title</h3>\n<div class=\"level3\">\n\n<p>\nText\n";
@@ -215,7 +215,6 @@ You can use up to five different levels of',
         $params = array('nice_page', $rev[1]);
         $this->assertEquals($expected, $remoteApi->call('wiki.getPageInfoVersion', $params));
 
-
         $rev[2] = filemtime(wikiFN('nice_page'));
         sleep(1); // wait for new revision ID
         $remoteApi->call('dokuwiki.appendPage', $params_append);
@@ -265,7 +264,7 @@ You can use up to five different levels of',
         $this->assertEquals($rev[3], $versions[0]['version']); //skips current,1st old,2nd old
         $this->assertEquals(3, count($remoteApi->call('wiki.getPageVersions', $params)));
 
-        $params = array('nice_page', 2*$conf['recent']);
+        $params = array('nice_page', 2 * $conf['recent']);
         $this->assertEquals(0, count($remoteApi->call('wiki.getPageVersions', $params)));
 
         //remove page
@@ -292,7 +291,7 @@ You can use up to five different levels of',
 
         global $conf;
         global $AUTH_ACL, $USERINFO;
-        $conf['useacl']    = 1;
+        $conf['useacl'] = 1;
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['grps'] = array('user');
         $AUTH_ACL = array(
@@ -375,7 +374,7 @@ You can use up to five different levels of',
         $this->assertEquals($expected, $remoteApi->call('wiki.getRecentMediaChanges', $params));
 
         sleep(1);
-        $conf['useacl']    = 1;
+        $conf['useacl'] = 1;
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['grps'] = array('user');
         $AUTH_ACL = array(
