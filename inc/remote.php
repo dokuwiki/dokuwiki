@@ -226,6 +226,7 @@ class RemoteAPI {
      * Perform access check for current user
      *
      * @return bool true if the current user has access to remote api.
+     * @throws RemoteAccessDeniedException If remote access disabled
      */
     public function hasAccess() {
         global $conf;
