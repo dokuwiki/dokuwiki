@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\test\mock;
+namespace dokuwiki\plugin\struct\test\mock;
 
-use plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\types\AbstractBaseType;
 
 class BaseType extends AbstractBaseType {
 

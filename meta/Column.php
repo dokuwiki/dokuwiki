@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
-use plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\types\AbstractBaseType;
 
 /**
  * Class Column
@@ -13,7 +13,7 @@ use plugin\struct\types\AbstractBaseType;
  * It basically combines the information how a column's content behaves (as defines in the BaseType and its
  * configuration) with where to find that content and adds some basic meta data (like sort or enabled)
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class Column {
 

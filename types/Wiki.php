@@ -1,5 +1,5 @@
 <?php
-namespace plugin\struct\types;
+namespace dokuwiki\plugin\struct\types;
 
 class Wiki extends AbstractBaseType {
 

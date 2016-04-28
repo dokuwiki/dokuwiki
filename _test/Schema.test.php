@@ -1,10 +1,7 @@
 <?php
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-// we don't have the auto loader here
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
-
-use plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\Schema;
 
 /**
  * @group plugin_struct
@@ -54,7 +51,7 @@ class schema_struct_test extends StructTest {
     /**
      * @dataProvider cleanTableName_testdata
      *
-     * @covers       \plugin\struct\meta\Schema::cleanTableName
+     * @covers       \dokuwiki\plugin\struct\meta\Schema::cleanTableName
      *
      * @param string $input_name
      * @param string $expected_cleaned_name
@@ -65,7 +62,7 @@ class schema_struct_test extends StructTest {
     }
 
     /**
-     * @expectedException \plugin\struct\meta\StructException
+     * @expectedException \dokuwiki\plugin\struct\meta\StructException
      */
     public function test_deletefail() {
         $schema = new Schema('foo');

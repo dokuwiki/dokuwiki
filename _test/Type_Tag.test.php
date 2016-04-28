@@ -1,11 +1,9 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta\Schema;
-use plugin\struct\types\Tag;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\types\Tag;
 
 /**
  * @group plugin_struct

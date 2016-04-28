@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta;
 
 /**
  * @group plugin_struct
@@ -44,8 +42,8 @@ class SchemaImporter_struct_test extends StructTest {
         $columns = $schema->getColumns();
 
         $this->assertEquals(2, count($columns));
-        $this->assertTrue(is_a($columns[0], '\plugin\struct\meta\Column'));
-        $this->assertTrue(is_a($columns[1], '\plugin\struct\meta\Column'));
+        $this->assertTrue(is_a($columns[0], '\dokuwiki\plugin\struct\meta\Column'));
+        $this->assertTrue(is_a($columns[1], '\dokuwiki\plugin\struct\meta\Column'));
         $this->assertEquals('tag', $columns[0]->getLabel());
         $this->assertEquals('tags', $columns[1]->getLabel());
     }

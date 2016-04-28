@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
-use plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\types\AbstractBaseType;
 
 if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 compatibility
 
@@ -14,7 +14,7 @@ if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 com
  *
  * It can be initialized with a timestamp to access the schema as it looked at that particular point in time.
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class Schema {
 
@@ -101,11 +101,11 @@ class Schema {
         $this->sqlite->res_close($res);
 
         foreach($rows as $row) {
-            $class = 'plugin\\struct\\types\\' . $row['class'];
+            $class = 'dokuwiki\\plugin\\struct\\types\\' . $row['class'];
             if(!class_exists($class)) {
                 // This usually never happens, except during development
                 msg('Unknown type "' . hsc($row['class']) . '" falling back to Text', -1);
-                $class = 'plugin\\struct\\types\\Text';
+                $class = 'dokuwiki\\plugin\\struct\\types\\Text';
             }
 
             $config = json_decode($row['config'], true);

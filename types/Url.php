@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\types;
+namespace dokuwiki\plugin\struct\types;
 
-use plugin\struct\meta\ValidationException;
+use dokuwiki\plugin\struct\meta\ValidationException;
 
 class Url extends Text {
 

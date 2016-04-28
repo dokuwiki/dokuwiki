@@ -1,11 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-// we don't have the auto loader here
-use plugin\struct\meta\Search;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta\Search;
 
 /**
  * Tests for the building of SQL-Queries for the struct plugin
@@ -99,7 +96,7 @@ class schemaDataSQL_struct_test extends StructTest {
     /**
      * @dataProvider buildGetDataSQL_testdata
      *
-     * @covers       plugin\struct\meta\SchemaData::buildGetDataSQL
+     * @covers       dokuwiki\plugin\struct\meta\SchemaData::buildGetDataSQL
      *
      * @param string $expected_sql
      * @param string $msg

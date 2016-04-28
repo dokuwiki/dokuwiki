@@ -1,12 +1,10 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta\Column;
-use plugin\struct\meta\Value;
-use plugin\struct\types\Text;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta\Column;
+use dokuwiki\plugin\struct\meta\Value;
+use dokuwiki\plugin\struct\types\Text;
 
 /**
  * @group plugin_struct

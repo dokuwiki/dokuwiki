@@ -1,10 +1,10 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Class SchemaData
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  *
  * This class is for accessing the data stored for a page in a schema
  *

@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta;
 
 /**
  * Tests handling dynamic search parameters

@@ -7,11 +7,11 @@
  */
 
 // must be run within Dokuwiki
-use plugin\struct\meta\Assignments;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\SchemaData;
-use plugin\struct\meta\StructException;
-use plugin\struct\meta\Validator;
+use dokuwiki\plugin\struct\meta\Assignments;
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\Validator;
 
 if(!defined('DOKU_INC')) die();
 

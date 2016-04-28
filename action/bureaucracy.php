@@ -9,13 +9,9 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-use plugin\struct\meta\Assignments;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\SchemaData;
-use plugin\struct\meta\ValidationException;
-use plugin\struct\meta\Validator;
-use plugin\struct\meta\Value;
-use plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\Validator;
 
 /**
  * Handles bureaucracy additions

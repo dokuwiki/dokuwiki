@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta;
 
 /**
  * Tests for the building of SQL-Queries for the struct plugin
@@ -204,8 +202,8 @@ class Search_struct_test extends StructTest {
             array('%pageid%', 'val', '*~', 'OR', array(array('%pageid%', '%val%', '~', 'OR')), false, 'replace *~ comp'),
             array('%pageid%', 'val*', '~', 'OR', array(array('%pageid%', 'val%', '~', 'OR')), false, 'replace * in value'),
             array('nonexisting', 'val', '~', 'OR', array(), false, 'ignore missing columns'),
-            array('%pageid%', 'val', '?', 'OR', array(), '\plugin\struct\meta\StructException', 'wrong comperator'),
-            array('%pageid%', 'val', '=', 'NOT', array(), '\plugin\struct\meta\StructException', 'wrong type')
+            array('%pageid%', 'val', '?', 'OR', array(), '\dokuwiki\plugin\struct\meta\StructException', 'wrong comperator'),
+            array('%pageid%', 'val', '=', 'NOT', array(), '\dokuwiki\plugin\struct\meta\StructException', 'wrong type')
         );
     }
 

@@ -1,18 +1,16 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta\SchemaData;
-use plugin\struct\meta\SchemaImporter;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\SchemaImporter;
 
 /**
  * Base class for all struct tests
  *
  * It cleans up the database in teardown and provides some useful helper methods
  *
- * @package plugin\struct\test
+ * @package dokuwiki\plugin\struct\test
  */
 abstract class StructTest extends \DokuWikiTest {
 

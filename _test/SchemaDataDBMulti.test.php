@@ -1,14 +1,11 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-// we don't have the auto loader here
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
-
-use plugin\struct\meta\SchemaBuilder;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta;
-use plugin\struct\meta\Search;
+use dokuwiki\plugin\struct\meta\SchemaBuilder;
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta;
+use dokuwiki\plugin\struct\meta\Search;
 
 /**
  * Tests to the DB for the struct plugin

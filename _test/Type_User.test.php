@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\types\User;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\types\User;
 
 /**
  * Testing the User Type
@@ -15,7 +13,7 @@ spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
 class Type_User_struct_test extends StructTest {
 
     /**
-     * @expectedException \plugin\struct\meta\ValidationException
+     * @expectedException \dokuwiki\plugin\struct\meta\ValidationException
      */
     public function test_validate_fail() {
         $user = new User();

@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\types;
+namespace dokuwiki\plugin\struct\types;
 
-use plugin\struct\meta\Search;
-use plugin\struct\meta\SearchConfigParameters;
-use plugin\struct\meta\Value;
+use dokuwiki\plugin\struct\meta\SearchConfigParameters;
 
 class Tag extends AbstractMultiBaseType {
 

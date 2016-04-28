@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\types\Integer;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\types\Integer;
 
 /**
  * Testing the Integer Type
@@ -47,7 +45,7 @@ class Type_Integer_struct_test extends StructTest {
     }
 
     /**
-     * @expectedException \plugin\struct\meta\ValidationException
+     * @expectedException \dokuwiki\plugin\struct\meta\ValidationException
      * @dataProvider validateFailProvider
      */
     public function test_validate_fail($value, $min, $max) {

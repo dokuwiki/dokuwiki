@@ -1,11 +1,11 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Creates the table aggregation output
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class AggregationTable {
 
@@ -182,9 +182,9 @@ class AggregationTable {
 
             // use field label if no header was set
             if(blank($header)) {
-                if(is_a($column, 'plugin\struct\meta\PageColumn')) {
+                if(is_a($column, 'dokuwiki\plugin\struct\meta\PageColumn')) {
                     $header = $this->helper->getLang('pagelabel'); // @todo this could be part of PageColumn::getTranslatedLabel
-                } else if(is_a($column, 'plugin\struct\meta\Column')) {
+                } else if(is_a($column, 'dokuwiki\plugin\struct\meta\Column')) {
                     $header = $column->getTranslatedLabel();
                 } else {
                     $header = 'column ' . $num; // this should never happen

@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\test\mock;
+namespace dokuwiki\plugin\struct\test\mock;
 
-use \plugin\struct\meta;
+use \dokuwiki\plugin\struct\meta;
 
 class Search extends meta\Search {
     public $schemas = array();

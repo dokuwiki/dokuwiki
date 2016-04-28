@@ -1,9 +1,5 @@
 <?php
-namespace plugin\struct\test;
-
-// we don't have the auto loader here
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
-
+namespace dokuwiki\plugin\struct\test;
 
 /**
  * General tests for the struct plugin

@@ -1,13 +1,13 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Class Value
  *
  * Holds the value for a single "cell". That value may be an array for multi value columns
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class Value {
 

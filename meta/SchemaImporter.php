@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 compatibility
 
@@ -9,7 +9,7 @@ if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 com
  *
  * This works just like the schema builder, except that it expects a JSON structure as input
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class SchemaImporter extends SchemaBuilder {
 

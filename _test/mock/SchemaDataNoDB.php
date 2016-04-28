@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\test\mock;
+namespace dokuwiki\plugin\struct\test\mock;
 
-class SchemaDataNoDB extends \plugin\struct\meta\SchemaData {
+class SchemaDataNoDB extends \dokuwiki\plugin\struct\meta\SchemaData {
 
     public function __construct($table, $page, $ts) {
         // we do intialization by parent here, because we don't need the whole database behind the class

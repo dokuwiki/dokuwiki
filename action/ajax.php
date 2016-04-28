@@ -7,8 +7,8 @@
  */
 
 // must be run within Dokuwiki
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\StructException;
 
 if(!defined('DOKU_INC')) die();
 

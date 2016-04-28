@@ -1,6 +1,6 @@
 <?php
-use plugin\struct\meta\SearchConfig;
-use plugin\struct\meta\SearchConfigParameters;
+use dokuwiki\plugin\struct\meta\SearchConfig;
+use dokuwiki\plugin\struct\meta\SearchConfigParameters;
 
 /**
  * Handle caching of pages containing struct aggregations

@@ -1,6 +1,6 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Class SchemaBuilder
@@ -13,7 +13,7 @@ namespace plugin\struct\meta;
  * Note: even though data tables use a data_ prefix in the database, this prefix is internal only and should
  *       never be passed as $table anywhere!
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class SchemaBuilder {
 

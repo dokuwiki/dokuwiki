@@ -1,13 +1,13 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Class ConfigParser
  *
  * Utilities to parse the configuration syntax into an array
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class ConfigParser {
 

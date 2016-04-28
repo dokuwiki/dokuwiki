@@ -1,15 +1,15 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
-use plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\types\AbstractBaseType;
 
 /**
  * Class PageColumn
  *
  * Just like a column, but does not reference one of the col* data columns but the pid column.
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class PageColumn extends Column {
 

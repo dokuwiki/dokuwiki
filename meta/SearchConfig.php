@@ -1,13 +1,13 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Class SearchConfig
  *
  * The same as @see Search but can be initialized by a configuration array
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class SearchConfig extends Search {
 

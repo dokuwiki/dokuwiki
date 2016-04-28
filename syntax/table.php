@@ -7,10 +7,10 @@
  */
 
 
-use plugin\struct\meta\AggregationTable;
-use plugin\struct\meta\ConfigParser;
-use plugin\struct\meta\SearchConfig;
-use plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\AggregationTable;
+use dokuwiki\plugin\struct\meta\ConfigParser;
+use dokuwiki\plugin\struct\meta\SearchConfig;
+use dokuwiki\plugin\struct\meta\StructException;
 
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();

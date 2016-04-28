@@ -1,9 +1,9 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 use dokuwiki\Form\Form;
-use plugin\struct\types\Text;
+use dokuwiki\plugin\struct\types\Text;
 
 if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 compatibility
 
@@ -13,7 +13,7 @@ if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 com
  * Provides the editing interface for a given Schema as used in the admin backend. The actual modifying of the
  * schema happens in the SchemaBuilder class.
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class SchemaEditor {
     /** @var Schema the schema that is edited */

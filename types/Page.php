@@ -1,12 +1,12 @@
 <?php
-namespace plugin\struct\types;
+namespace dokuwiki\plugin\struct\types;
 
 /**
  * Class Page
  *
  * Represents a single page in the wiki. Will be linked in output.
  *
- * @package plugin\struct\types
+ * @package dokuwiki\plugin\struct\types
  */
 class Page extends AbstractMultiBaseType {
 

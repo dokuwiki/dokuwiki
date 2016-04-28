@@ -1,12 +1,10 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta;
-use plugin\struct\types\Integer;
-use plugin\struct\types\Text;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta;
+use dokuwiki\plugin\struct\types\Integer;
+use dokuwiki\plugin\struct\types\Text;
 
 /**
  * Tests for the basic validation functions

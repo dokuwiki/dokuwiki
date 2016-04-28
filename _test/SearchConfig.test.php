@@ -1,11 +1,9 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\meta;
-use plugin\struct\test\mock\SearchConfig;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\meta;
+use dokuwiki\plugin\struct\test\mock\SearchConfig;
 
 /**
  * @group plugin_struct

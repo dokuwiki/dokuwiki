@@ -1,13 +1,13 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
-use plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\types\AbstractBaseType;
 
 /**
  * Validate input data against schemas and their field validators
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class Validator {
 
@@ -86,7 +86,6 @@ class Validator {
     public function validateValue(Column $col, &$value) {
         // fix multi value types
         $type = $col->getType();
-        $label = $type->getLabel();
         $trans = $type->getTranslatedLabel();
         if($type->isMulti() && !is_array($value)) {
             $value = $type->splitValues($value);

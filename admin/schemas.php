@@ -7,11 +7,11 @@
  */
 
 use dokuwiki\Form\Form;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\SchemaBuilder;
-use plugin\struct\meta\SchemaEditor;
-use plugin\struct\meta\SchemaImporter;
-use plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\SchemaBuilder;
+use dokuwiki\plugin\struct\meta\SchemaEditor;
+use dokuwiki\plugin\struct\meta\SchemaImporter;
+use dokuwiki\plugin\struct\meta\StructException;
 
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();

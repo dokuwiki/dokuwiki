@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\test\mock;
+namespace dokuwiki\plugin\struct\test\mock;
 
-use \plugin\struct\meta;
+use \dokuwiki\plugin\struct\meta;
 
 class SearchConfig extends meta\SearchConfig {
     public function applyFilterVars($filter) {

@@ -1,8 +1,6 @@
 <?php
 
-namespace plugin\struct\test;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+namespace dokuwiki\plugin\struct\test;
 
 /**
  * @group plugin_struct

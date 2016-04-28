@@ -1,14 +1,14 @@
 <?php
-namespace plugin\struct\types;
+namespace dokuwiki\plugin\struct\types;
 
-use plugin\struct\meta\ValidationException;
+use dokuwiki\plugin\struct\meta\ValidationException;
 
 /**
  * Class Decimal
  *
  * A field accepting decimal numbers
  *
- * @package plugin\struct\types
+ * @package dokuwiki\plugin\struct\types
  */
 class Decimal extends AbstractMultiBaseType {
 

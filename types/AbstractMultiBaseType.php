@@ -1,9 +1,6 @@
 <?php
 
-namespace plugin\struct\types;
-
-use plugin\struct\meta\StructException;
-use plugin\struct\meta\ValidationException;
+namespace dokuwiki\plugin\struct\types;
 
 /**
  * Class AbstractBaseType
@@ -11,7 +8,7 @@ use plugin\struct\meta\ValidationException;
  * This class implements a standard multi editor that can be reused by user types. The multi-
  * edit simply joins all values with commas
  *
- * @package plugin\struct\types
+ * @package dokuwiki\plugin\struct\types
  * @see Column
  */
 abstract class AbstractMultiBaseType extends AbstractBaseType {

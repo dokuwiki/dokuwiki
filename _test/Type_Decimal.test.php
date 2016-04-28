@@ -1,10 +1,8 @@
 <?php
 
-namespace plugin\struct\test;
+namespace dokuwiki\plugin\struct\test;
 
-use plugin\struct\types\Decimal;
-
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+use dokuwiki\plugin\struct\types\Decimal;
 
 /**
  * Testing the Decimal Type
@@ -65,7 +63,7 @@ class Type_Decimal_struct_test extends StructTest {
 
 
     /**
-     * @expectedException \plugin\struct\meta\ValidationException
+     * @expectedException \dokuwiki\plugin\struct\meta\ValidationException
      * @dataProvider validateFailProvider
      */
     public function test_validate_fail($value, $min, $max) {

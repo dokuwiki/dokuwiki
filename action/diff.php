@@ -7,8 +7,8 @@
  */
 
 // must be run within Dokuwiki
-use plugin\struct\meta\Assignments;
-use plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\Assignments;
+use dokuwiki\plugin\struct\meta\SchemaData;
 
 if(!defined('DOKU_INC')) die();
 

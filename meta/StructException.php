@@ -1,13 +1,13 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Class StructException
  *
  * A translatable exception
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class StructException extends \RuntimeException {
 
@@ -20,8 +20,8 @@ class StructException extends \RuntimeException {
      * @param ...string $vars
      */
     public function __construct($message) {
-        /** @var \action_plugin_struct_autoloader $plugin */
-        $plugin = plugin_load('action', 'struct_autoloader');
+        /** @var \helper_plugin_struct $plugin */
+        $plugin = plugin_load('helper', 'struct');
         $trans = $plugin->getLang($this->trans_prefix . $message);
         if(!$trans) $trans = $message;
 

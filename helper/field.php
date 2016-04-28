@@ -1,9 +1,9 @@
 <?php
-use plugin\struct\meta\Column;
-use plugin\struct\meta\Schema;
-use plugin\struct\meta\StructException;
-use plugin\struct\meta\Validator;
-use plugin\struct\meta\Value;
+use dokuwiki\plugin\struct\meta\Column;
+use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\Validator;
+use dokuwiki\plugin\struct\meta\Value;
 
 /**
  * Allows adding a single struct field as a bureaucracy field
@@ -119,7 +119,7 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
      *
      * @throws StructException
      * @param string $colname
-     * @return \plugin\struct\meta\Column
+     * @return \dokuwiki\plugin\struct\meta\Column
      */
     protected function findColumn($colname) {
         list($table, $label) = explode('.', $colname, 2);

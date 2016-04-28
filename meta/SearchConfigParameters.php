@@ -1,11 +1,11 @@
 <?php
 
-namespace plugin\struct\meta;
+namespace dokuwiki\plugin\struct\meta;
 
 /**
  * Manage dynamic parameters for aggregations
  *
- * @package plugin\struct\meta
+ * @package dokuwiki\plugin\struct\meta
  */
 class SearchConfigParameters {
 
@@ -61,7 +61,7 @@ class SearchConfigParameters {
      * @return bool|string
      */
     protected function resolveColumn($column) {
-        if(!is_a($column, '\plugin\struct\meta\Column')) {
+        if(!is_a($column, '\dokuwiki\plugin\struct\meta\Column')) {
             $column = $this->searchConfig->findColumn($column);
             if(!$column) return false;
         }

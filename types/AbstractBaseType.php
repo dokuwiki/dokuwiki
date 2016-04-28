@@ -1,9 +1,9 @@
 <?php
-namespace plugin\struct\types;
+namespace dokuwiki\plugin\struct\types;
 
-use plugin\struct\meta\Column;
-use plugin\struct\meta\StructException;
-use plugin\struct\meta\ValidationException;
+use dokuwiki\plugin\struct\meta\Column;
+use dokuwiki\plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\ValidationException;
 
 /**
  * Class AbstractBaseType
@@ -13,7 +13,7 @@ use plugin\struct\meta\ValidationException;
  *
  * This defines also how the content of the coulmn will be entered and formatted.
  *
- * @package plugin\struct\types
+ * @package dokuwiki\plugin\struct\types
  * @see Column
  */
 abstract class AbstractBaseType {
@@ -139,7 +139,8 @@ abstract class AbstractBaseType {
      * @return string
      */
     public function getClass() {
-        return substr(get_class($this), 20);
+        $class = get_class($this);
+        return substr($class, strrpos($class, "\\") + 1);
     }
 
     /**
@@ -405,7 +406,7 @@ abstract class AbstractBaseType {
      * @return string
      */
     public function getLang($string) {
-        if(is_null($this->hlp)) $this->hlp = plugin_load('action', 'struct_autoloader');
+        if(is_null($this->hlp)) $this->hlp = plugin_load('helper', 'struct');
         return $this->hlp->getLang($string);
     }
 }

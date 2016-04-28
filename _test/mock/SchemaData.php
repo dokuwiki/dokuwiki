@@ -1,8 +1,8 @@
 <?php
 
-namespace plugin\struct\test\mock;
+namespace dokuwiki\plugin\struct\test\mock;
 
-class SchemaData extends \plugin\struct\meta\SchemaData {
+class SchemaData extends \dokuwiki\plugin\struct\meta\SchemaData {
 
     public function setCorrectTimestamp($page, $ts = null) {
         parent::setCorrectTimestamp($page, $ts);

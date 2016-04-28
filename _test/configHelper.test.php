@@ -1,8 +1,5 @@
 <?php
-namespace plugin\struct\test;
-
-// we don't have the auto loader here
-spl_autoload_register(array('action_plugin_struct_autoloader', 'autoloader'));
+namespace dokuwiki\plugin\struct\test;
 
 /**
  * @group plugin_struct
@@ -23,7 +20,7 @@ class config_helper_struct_test extends StructTest {
             array('a!~b', array(0 => 'a', 1 => '!~', 2 => 'b'), false, ''),
             array('a~b', array(0 => 'a', 1 => '~', 2 => 'b'), false, ''),
             array('a*~b', array(0 => 'a', 1 => '*~', 2 => 'b'), false, ''),
-            array('a?b', array(), '\plugin\struct\meta\StructException', 'Exception should be thrown on unknown operator')
+            array('a?b', array(), '\dokuwiki\plugin\struct\meta\StructException', 'Exception should be thrown on unknown operator')
         );
     }
 
