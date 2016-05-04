@@ -79,6 +79,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
  * @author Frank Thommen <frank.thommen@gmx.net>
  */
 function is_ns_index($path='') {
+    global $conf;
     if ( !$path or
          (substr($path,-4) != '.txt') ) {
         // no path given or not a DW pagefile
@@ -103,7 +104,7 @@ function is_ns_index($path='') {
         return true; //'start' always wins (foo:bar:start.txt)
     } elseif ( preg_match("|^.*/$fname/$fname$|", $ns) ) {
         return true; // foo:bar:bar.txt for foo:bar:
-    } elseif (  is_dir("$basedir/$fname")             and
+    } elseif (  is_dir("$basedir/$fname")                          and
                !is_file("$basedir/$fname/".$conf['start'].".txt")  and
                !is_file("$basedir/$fname/$fname.txt") )  {
         return true; // foo:bar.txt for foo:bar:
