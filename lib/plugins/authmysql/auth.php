@@ -27,7 +27,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     /**
      * Constructor
      *
-     * checks if the mysql interface is available, otherwise it will
+     * checks if the mysqli interface is available, otherwise it will
      * set the variable $success of the basis class to false
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -35,8 +35,8 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
     public function __construct() {
         parent::__construct();
 
-        if(!function_exists('mysql_connect')) {
-            $this->_debug("MySQL err: PHP MySQL extension not found.", -1, __LINE__, __FILE__);
+        if(!function_exists('mysqli_connect')) {
+            $this->_debug("MySQL err: PHP MySQLi extension not found.", -1, __LINE__, __FILE__);
             $this->success = false;
             return;
         }
@@ -874,21 +874,21 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _openDB() {
         if(!$this->dbcon) {
-            $con = @mysql_connect($this->getConf('server'), $this->getConf('user'), conf_decodeString($this->getConf('password')));
+            $con = @mysqli_connect($this->getConf('server'), $this->getConf('user'), $this->getConf('password'));
             if($con) {
-                if((mysql_select_db($this->getConf('database'), $con))) {
-                    if((preg_match('/^(\d+)\.(\d+)\.(\d+).*/', mysql_get_server_info($con), $result)) == 1) {
+                if((mysqli_select_db($con, $this->getConf('database')))) {
+                    if((preg_match('/^(\d+)\.(\d+)\.(\d+).*/', mysqli_get_server_info($con), $result)) == 1) {
                         $this->dbver = $result[1];
                         $this->dbrev = $result[2];
                         $this->dbsub = $result[3];
                     }
                     $this->dbcon = $con;
                     if($this->getConf('charset')) {
-                        mysql_query('SET CHARACTER SET "'.$this->getConf('charset').'"', $con);
+                        mysqli_query($con, 'SET CHARACTER SET "'.$this->getConf('charset').'"');
                     }
                     return true; // connection and database successfully opened
                 } else {
-                    mysql_close($con);
+                    mysqli_close($con);
                     $this->_debug("MySQL err: No access to database {$this->getConf('database')}.", -1, __LINE__, __FILE__);
                 }
             } else {
@@ -910,7 +910,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _closeDB() {
         if($this->dbcon) {
-            mysql_close($this->dbcon);
+            mysqli_close($this->dbcon);
             $this->dbcon = 0;
         }
     }
@@ -934,14 +934,14 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
 
         $resultarray = array();
         if($this->dbcon) {
-            $result = @mysql_query($query, $this->dbcon);
+            $result = @mysqli_query($this->dbcon, $query);
             if($result) {
-                while(($t = mysql_fetch_assoc($result)) !== false)
+                while($t = mysqli_fetch_assoc($result))
                     $resultarray[] = $t;
-                mysql_free_result($result);
+                mysqli_free_result($result);
                 return $resultarray;
             }
-            $this->_debug('MySQL err: '.mysql_error($this->dbcon), -1, __LINE__, __FILE__);
+            $this->_debug('MySQL err: '.mysqli_error($this->dbcon), -1, __LINE__, __FILE__);
         }
         return false;
     }
@@ -963,12 +963,12 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
         }
 
         if($this->dbcon) {
-            $result = @mysql_query($query, $this->dbcon);
+            $result = @mysqli_query($this->dbcon, $query);
             if($result) {
-                $rc = mysql_insert_id($this->dbcon); //give back ID on insert
+                $rc = mysqli_insert_id($this->dbcon); //give back ID on insert
                 if($rc !== false) return $rc;
             }
-            $this->_debug('MySQL err: '.mysql_error($this->dbcon), -1, __LINE__, __FILE__);
+            $this->_debug('MySQL err: '.mysqli_error($this->dbcon), -1, __LINE__, __FILE__);
         }
         return false;
     }
@@ -1084,7 +1084,7 @@ class auth_plugin_authmysql extends DokuWiki_Auth_Plugin {
      */
     protected function _escape($string, $like = false) {
         if($this->dbcon) {
-            $string = mysql_real_escape_string($string, $this->dbcon);
+            $string = mysqli_real_escape_string($this->dbcon, $string);
         } else {
             $string = addslashes($string);
         }
