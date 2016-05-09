@@ -42,8 +42,15 @@ class PassHash {
             $magic  = 'P';
         } elseif(preg_match('/^\$H\$(.{31})$/', $hash, $m)) {
             $method = 'pmd5';
-            $salt   = $m[1];
-            $magic  = 'H';
+            $salt = $m[1];
+            $magic = 'H';
+        } elseif(preg_match('/^pbkdf2_(\w+?)\$(\d+)\$(.{12})\$/', $hash, $m)) {
+            $method = 'djangopbkdf2';
+            $magic = array(
+                'algo' => $m[1],
+                'iter' => $m[2],
+            );
+            $salt = $m[3];
         } elseif(preg_match('/^sha1\$(.{5})\$/', $hash, $m)) {
             $method = 'djangosha1';
             $salt   = $m[1];
@@ -83,7 +90,8 @@ class PassHash {
 
         //crypt and compare
         $call = 'hash_'.$method;
-        if($this->$call($clear, $salt, $magic) === $hash) {
+        $newhash = $this->$call($clear, $salt, $magic);
+        if($newhash === $hash) {
             return true;
         }
         return false;
@@ -433,6 +441,69 @@ class PassHash {
     public function hash_djangomd5($clear, $salt = null) {
         $this->init_salt($salt, 5);
         return 'md5$'.$salt.'$'.md5($salt.$clear);
+    }
+
+    /**
+     * Password hashing method 'djangopbkdf2'
+     *
+     * An algorithm and iteration count should be given in the opts array.
+     * Defaults to sha256 and 24000 iterations
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @param array $opts ('algo' => hash algorithm, 'iter' => iterations)
+     * @return string Hashed password
+     * @throws Exception when PHP is missing support for the method/algo
+     */
+    public function hash_djangopbkdf2($clear, $salt=null, $opts=array()) {
+        $this->init_salt($salt, 12);
+        if(empty($opts['algo'])) {
+            $algo = 'sha256';
+        } else {
+            $algo = $opts['algo'];
+        }
+        if(empty($opts['iter'])) {
+            $iter = 24000;
+        } else {
+            $iter = (int) $opts['iter'];
+        }
+        if(!function_exists('hash_pbkdf2')) {
+            throw new Exception('This PHP installation has no PBKDF2 support');
+        }
+        if(!in_array($algo, hash_algos())) {
+            throw new Exception("This PHP installation has no $algo support");
+        }
+
+        $hash = base64_encode(hash_pbkdf2($algo, $clear, $salt, $iter, 0, true));
+        return "pbkdf2_$algo\$$iter\$$salt\$$hash";
+    }
+
+    /**
+     * Alias for djangopbkdf2 defaulting to sha256 as hash algorithm
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @param array $opts ('iter' => iterations)
+     * @return string Hashed password
+     * @throws Exception when PHP is missing support for the method/algo
+     */
+    public function hash_djangopbkdf2_sha256($clear, $salt=null, $opts=array()) {
+        $opts['algo'] = 'sha256';
+        return $this->hash_djangopbkdf2($clear, $salt, $opts);
+    }
+
+    /**
+     * Alias for djangopbkdf2 defaulting to sha1 as hash algorithm
+     *
+     * @param string $clear The clear text to hash
+     * @param string $salt  The salt to use, null for random
+     * @param array $opts ('iter' => iterations)
+     * @return string Hashed password
+     * @throws Exception when PHP is missing support for the method/algo
+     */
+    public function hash_djangopbkdf2_sha1($clear, $salt=null, $opts=array()) {
+        $opts['algo'] = 'sha1';
+        return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
 
     /**

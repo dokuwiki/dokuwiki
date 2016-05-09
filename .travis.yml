@@ -1,20 +1,23 @@
 language: php
 sudo: false
 php:
+  - "7.0"
   - "5.6"
   - "5.5"
   - "5.4"
   - "5.3"
   - "hhvm"
-  - "nightly"
+env:
+  - DISABLE_FUNCTIONS=
+  - DISABLE_FUNCTIONS="gzopen"
 matrix:
   allow_failures:
     - php: "hhvm"
-    - php: "nightly"
 notifications:
   irc:
     channels:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
+before_script: echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 script: cd _test && phpunit --verbose --stderr

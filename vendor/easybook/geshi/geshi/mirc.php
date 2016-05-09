@@ -168,4 +168,3 @@ $language_data = array (
     )
 );
 
-?>

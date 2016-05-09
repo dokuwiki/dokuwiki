@@ -274,4 +274,3 @@ $language_data = array (
         )
 );
 
-?>

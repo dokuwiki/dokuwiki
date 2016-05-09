@@ -110,7 +110,7 @@ function cleanID($raw_id,$ascii=false){
     $cache = & $cache_cleanid;
 
     // check if it's already in the memory cache
-    if (isset($cache[(string)$raw_id])) {
+    if (!$ascii && isset($cache[(string)$raw_id])) {
         return $cache[(string)$raw_id];
     }
 
@@ -143,7 +143,7 @@ function cleanID($raw_id,$ascii=false){
     $id = preg_replace('#:[:\._\-]+#',':',$id);
     $id = preg_replace('#[:\._\-]+:#',':',$id);
 
-    $cache[(string)$raw_id] = $id;
+    if (!$ascii) $cache[(string)$raw_id] = $id;
     return($id);
 }
 
@@ -285,14 +285,15 @@ function wikiFN($raw_id,$rev='',$clean=true){
     global $cache_wikifn;
     $cache = & $cache_wikifn;
 
-    if (isset($cache[$raw_id]) && isset($cache[$raw_id][$rev])) {
-        return $cache[$raw_id][$rev];
-    }
-
     $id = $raw_id;
 
     if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
+
+    if (isset($cache[$id]) && isset($cache[$id][$rev])) {
+        return $cache[$id][$rev];
+    }
+
     if(empty($rev)){
         $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
     }else{
@@ -310,8 +311,8 @@ function wikiFN($raw_id,$rev='',$clean=true){
         }
     }
 
-    if (!isset($cache[$raw_id])) { $cache[$raw_id] = array(); }
-    $cache[$raw_id][$rev] = $fn;
+    if (!isset($cache[$id])) { $cache[$id] = array(); }
+    $cache[$id][$rev] = $fn;
     return $fn;
 }
 
@@ -391,9 +392,9 @@ function metaFiles($id){
  * @param string|int $rev empty string or revision timestamp
  * @return string full path
  */
-function mediaFN($id, $rev=''){
+function mediaFN($id, $rev='', $clean=true){
     global $conf;
-    $id = cleanID($id);
+    if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
     if(empty($rev)){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
@@ -738,24 +739,26 @@ function utf8_decodeFN($file){
 
 /**
  * Find a page in the current namespace (determined from $ID) or any
- * higher namespace
+ * higher namespace that can be accessed by the current user,
+ * this condition can be overriden by an optional parameter.
  *
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
  *
  * @param  string $page the pagename you're looking for
- * @return string|false the full page id of the found page, false if any
+ * @param bool $useacl only return pages readable by the current user, false to ignore ACLs
+ * @return false|string the full page id of the found page, false if any
  */
-function page_findnearest($page){
+function page_findnearest($page, $useacl = true){
     if (!$page) return false;
     global $ID;
 
     $ns = $ID;
     do {
         $ns = getNS($ns);
-        $pageid = ltrim("$ns:$page",':');
-        if(page_exists($pageid)){
+        $pageid = cleanID("$ns:$page");
+        if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
     } while($ns);

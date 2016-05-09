@@ -173,7 +173,7 @@ function js_load($file){
         // is it a include_once?
         if($match[1]){
             $base = utf8_basename($ifile);
-            if($loaded[$base]){
+            if(array_key_exists($base, $loaded) && $loaded[$base] === true){
                 $data  = str_replace($match[0], '' ,$data);
                 continue;
             }
@@ -419,9 +419,9 @@ function js_compress($s){
 
             // Only consider deleting whitespace if the signs before and after
             // are not equal and are not an operator which may not follow itself.
-            if ((!$lch || $s[$i+1] == ' ')
+            if ($i+1 < $slen && ((!$lch || $s[$i+1] == ' ')
                 || $lch != $s[$i+1]
-                || strpos($ops,$s[$i+1]) === false) {
+                || strpos($ops,$s[$i+1]) === false)) {
                 // leading spaces
                 if($i+1 < $slen && (strpos($chars,$s[$i+1]) !== false)){
                     $i = $i + 1;

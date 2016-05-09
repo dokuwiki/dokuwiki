@@ -13,8 +13,8 @@ JQUI_VERSION='1.11.4'
 JQUI_HOST="https://code.jquery.com/ui/$JQUI_VERSION"
 JQUI_GIT="https://raw.githubusercontent.com/jquery/jquery-ui/$JQUI_VERSION/ui"
 
-# Adjust version for jQueryhere - latest updates slowly
-JQ_VERSION='1.11.3'
+# Adjust version for jQuery here - latest updates slowly
+JQ_VERSION='1.12.3'
 
 
 # load jQuery

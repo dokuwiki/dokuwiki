@@ -23,6 +23,7 @@ define('DOKU_CHANGE_TYPE_REVERT',       'R');
  * @return array|bool parsed line or false
  */
 function parseChangelogLine($line) {
+    $line = rtrim($line, "\n");
     $tmp = explode("\t", $line);
     if ($tmp!==false && count($tmp)>1) {
         $info = array();
@@ -32,9 +33,16 @@ function parseChangelogLine($line) {
         $info['id']    = $tmp[3]; // page id
         $info['user']  = $tmp[4]; // user name
         $info['sum']   = $tmp[5]; // edit summary (or action reason)
-        $info['extra'] = rtrim($tmp[6], "\n"); // extra data (varies by line type)
+        $info['extra'] = $tmp[6]; // extra data (varies by line type)
+        if(isset($tmp[7]) && $tmp[7] !== '') { //last item has line-end||
+            $info['sizechange'] = (int) $tmp[7];
+        } else {
+            $info['sizechange'] = null;
+        }
         return $info;
-    } else { return false; }
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -48,12 +56,13 @@ function parseChangelogLine($line) {
  * @param array  $flags     Additional flags in a key value array.
  *                             Available flags:
  *                             - ExternalEdit - mark as an external edit.
+ * @param null|int $sizechange Change of filesize
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Esther Brunner <wikidesign@gmail.com>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
-function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
+function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null, $sizechange = null){
     global $conf, $INFO;
     /** @var Input $INPUT */
     global $INPUT;
@@ -71,17 +80,23 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
     if(!$date) $date = time(); //use current time if none supplied
     $remote = (!$flagExternalEdit)?clientIP(true):'127.0.0.1';
     $user   = (!$flagExternalEdit)?$INPUT->server->str('REMOTE_USER'):'';
+    if($sizechange === null) {
+        $sizechange = '';
+    } else {
+        $sizechange = (int) $sizechange;
+    }
 
     $strip = array("\t", "\n");
     $logline = array(
-            'date'  => $date,
-            'ip'    => $remote,
-            'type'  => str_replace($strip, '', $type),
-            'id'    => $id,
-            'user'  => $user,
-            'sum'   => utf8_substr(str_replace($strip, '', $summary),0,255),
-            'extra' => str_replace($strip, '', $extra)
-            );
+        'date'       => $date,
+        'ip'         => $remote,
+        'type'       => str_replace($strip, '', $type),
+        'id'         => $id,
+        'user'       => $user,
+        'sum'        => utf8_substr(str_replace($strip, '', $summary), 0, 255),
+        'extra'      => str_replace($strip, '', $extra),
+        'sizechange' => $sizechange
+    );
 
     $wasCreated = ($type===DOKU_CHANGE_TYPE_CREATE);
     $wasReverted = ($type===DOKU_CHANGE_TYPE_REVERT);
@@ -130,8 +145,9 @@ function addLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extr
  * @param array  $flags     Additional flags in a key value array.
  *                             Available flags:
  *                             - (none, so far)
+ * @param null|int $sizechange Change of filesize
  */
-function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null){
+function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', $extra='', $flags=null, $sizechange = null){
     global $conf;
     /** @var Input $INPUT */
     global $INPUT;
@@ -141,17 +157,23 @@ function addMediaLogEntry($date, $id, $type=DOKU_CHANGE_TYPE_EDIT, $summary='', 
     if(!$date) $date = time(); //use current time if none supplied
     $remote = clientIP(true);
     $user   = $INPUT->server->str('REMOTE_USER');
+    if($sizechange === null) {
+        $sizechange = '';
+    } else {
+        $sizechange = (int) $sizechange;
+    }
 
     $strip = array("\t", "\n");
     $logline = array(
-            'date'  => $date,
-            'ip'    => $remote,
-            'type'  => str_replace($strip, '', $type),
-            'id'    => $id,
-            'user'  => $user,
-            'sum'   => utf8_substr(str_replace($strip, '', $summary),0,255),
-            'extra' => str_replace($strip, '', $extra)
-            );
+        'date'       => $date,
+        'ip'         => $remote,
+        'type'       => str_replace($strip, '', $type),
+        'id'         => $id,
+        'user'       => $user,
+        'sum'        => utf8_substr(str_replace($strip, '', $summary), 0, 255),
+        'extra'      => str_replace($strip, '', $extra),
+        'sizechange' => $sizechange
+    );
 
     // add changelog lines
     $logline = implode("\t", $logline)."\n";
@@ -1035,69 +1057,3 @@ class MediaChangelog extends ChangeLog {
         return mediaFN($this->id);
     }
 }
-
-/**
- * Get the changelog information for a specific page id
- * and revision (timestamp). Adjacent changelog lines
- * are optimistically parsed and cached to speed up
- * consecutive calls to getRevisionInfo. For large
- * changelog files, only the chunk containing the
- * requested changelog line is read.
- *
- * @deprecated 2013-11-20
- *
- * @author Ben Coburn <btcoburn@silicodon.net>
- * @author Kate Arzamastseva <pshns@ukr.net>
- *
- * @param string $id
- * @param int    $rev
- * @param int    $chunk_size
- * @param bool   $media
- * @return array|bool
- */
-function getRevisionInfo($id, $rev, $chunk_size = 8192, $media = false) {
-    dbg_deprecated('class PageChangeLog or class MediaChangelog');
-    if($media) {
-        $changelog = new MediaChangeLog($id, $chunk_size);
-    } else {
-        $changelog = new PageChangeLog($id, $chunk_size);
-    }
-    return $changelog->getRevisionInfo($rev);
-}
-
-/**
- * Return a list of page revisions numbers
- * Does not guarantee that the revision exists in the attic,
- * only that a line with the date exists in the changelog.
- * By default the current revision is skipped.
- *
- * The current revision is automatically skipped when the page exists.
- * See $INFO['meta']['last_change'] for the current revision.
- *
- * For efficiency, the log lines are parsed and cached for later
- * calls to getRevisionInfo. Large changelog files are read
- * backwards in chunks until the requested number of changelog
- * lines are recieved.
- *
- * @deprecated 2013-11-20
- *
- * @author Ben Coburn <btcoburn@silicodon.net>
- * @author Kate Arzamastseva <pshns@ukr.net>
- *
- * @param string $id          the page of interest
- * @param int    $first       skip the first n changelog lines
- * @param int    $num         number of revisions to return
- * @param int    $chunk_size
- * @param bool   $media
- * @return array
- */
-function getRevisions($id, $first, $num, $chunk_size = 8192, $media = false) {
-    dbg_deprecated('class PageChangeLog or class MediaChangelog');
-    if($media) {
-        $changelog = new MediaChangeLog($id, $chunk_size);
-    } else {
-        $changelog = new PageChangeLog($id, $chunk_size);
-    }
-    return $changelog->getRevisions($first, $num);
-}
-
