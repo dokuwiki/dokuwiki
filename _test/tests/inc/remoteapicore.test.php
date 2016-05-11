@@ -5,12 +5,12 @@
  */
 class remoteapicore_test extends DokuWikiTest {
 
-    var $userinfo;
-    var $oldAuthAcl;
+    protected $userinfo;
+    protected $oldAuthAcl;
     /** @var  RemoteAPI */
-    var $remote;
+    protected $remote;
 
-    function setUp() {
+    public function setUp() {
         parent::setUp();
         global $conf;
         global $USERINFO;
@@ -27,7 +27,7 @@ class remoteapicore_test extends DokuWikiTest {
         $this->remote = new RemoteAPI();
     }
 
-    function tearDown() {
+    public function tearDown() {
         global $USERINFO;
         global $AUTH_ACL;
 
@@ -36,10 +36,8 @@ class remoteapicore_test extends DokuWikiTest {
 
     }
 
-    function test_core() {
-        $remoteApi = new RemoteApi();
-
-        $this->assertEquals(getVersion(), $remoteApi->call('dokuwiki.getVersion'));
+    public function test_core() {
+        $this->assertEquals(getVersion(), $this->remote->call('dokuwiki.getVersion'));
 //        $params = array('user', 'passwrd');
 //        $this->assertEquals(, $remoteApi->call('dokuwiki.login'));                   //TODO
 
@@ -71,7 +69,7 @@ class remoteapicore_test extends DokuWikiTest {
                 'skipacl' => 1 // is ignored
             )
         );
-        $this->assertEquals($expected, $remoteApi->call('dokuwiki.getPagelist', $params));
+        $this->assertEquals($expected, $this->remote->call('dokuwiki.getPagelist', $params));
 
         idx_addPage('wiki:syntax'); //full text search depends on index
         $expected = array(
@@ -90,10 +88,10 @@ You can use up to five different levels of',
             )
         );
         $params = array('Sectioning');
-        $this->assertEquals($expected, $remoteApi->call('dokuwiki.search', $params));
+        $this->assertEquals($expected, $this->remote->call('dokuwiki.search', $params));
 
         $timeexpect = time();
-        $timeactual = $remoteApi->call('dokuwiki.getTime');
+        $timeactual = $this->remote->call('dokuwiki.getTime');
         $this->assertTrue(($timeexpect <= $timeactual) && ($timeactual <= $timeexpect + 1));
 
         $expected = array(
@@ -108,7 +106,7 @@ You can use up to five different levels of',
                 'unlock' => array()
             )
         );
-        $this->assertEquals($expected, $remoteApi->call('dokuwiki.setLocks', $params));
+        $this->assertEquals($expected, $this->remote->call('dokuwiki.setLocks', $params));
 
         $expected = array(
             'locked' => array(),
@@ -122,10 +120,10 @@ You can use up to five different levels of',
                 'unlock' => array('wiki:dokuwiki', 'wiki:syntax', 'nonexisting', 'nonexisting2')
             )
         );
-        $this->assertEquals($expected, $remoteApi->call('dokuwiki.setLocks', $params));
+        $this->assertEquals($expected, $this->remote->call('dokuwiki.setLocks', $params));
 
         global $conf;
-        $this->assertEquals($conf['title'], $remoteApi->call('dokuwiki.getTitle'));
+        $this->assertEquals($conf['title'], $this->remote->call('dokuwiki.getTitle'));
 
         $file3 = wikiFN('nice_page');
         $content = "====Title====\nText";
@@ -137,14 +135,14 @@ You can use up to five different levels of',
                 'sum' => 'Summary of nice text'
             )
         );
-        $this->assertEquals(true, $remoteApi->call('wiki.putPage', $params));  //TODO check exceptions
+        $this->assertEquals(true, $this->remote->call('wiki.putPage', $params));  //TODO check exceptions
         $this->assertEquals($content, rawWiki('nice_page'));
 
         $rev[1] = filemtime(wikiFN('nice_page')); //stored for later
         sleep(1); // wait for new revision ID
 
         $params = array('nice_page');
-        $this->assertEquals($content, $remoteApi->call('wiki.getPage', $params));
+        $this->assertEquals($content, $this->remote->call('wiki.getPage', $params));
 
         $morecontent = "\nOther text.";
         $secondcontent = $content . $morecontent;
@@ -153,30 +151,30 @@ You can use up to five different levels of',
             $morecontent,
             array()
         );
-        $this->assertEquals(true, $remoteApi->call('dokuwiki.appendPage', $params_append));
+        $this->assertEquals(true, $this->remote->call('dokuwiki.appendPage', $params_append));
         $this->assertEquals($secondcontent, rawWiki('nice_page'));
 
         $params = array('nice_page', '');
-        $this->assertEquals($secondcontent, $remoteApi->call('wiki.getPageVersion', $params));
+        $this->assertEquals($secondcontent, $this->remote->call('wiki.getPageVersion', $params));
         $params = array('nice_page', $rev[1]);
-        $this->assertEquals($content, $remoteApi->call('wiki.getPageVersion', $params));
+        $this->assertEquals($content, $this->remote->call('wiki.getPageVersion', $params));
         $params = array('nice_page', 1234);
-        $this->assertEquals('', $remoteApi->call('wiki.getPageVersion', $params), 'Not existing revision');
+        $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Not existing revision');
         $params = array('notexisting', 1234);
-        $this->assertEquals('', $remoteApi->call('wiki.getPageVersion', $params), 'Not existing page');
+        $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Not existing page');
 
         $html1 = "\n<h3 class=\"sectionedit1\" id=\"title\">Title</h3>\n<div class=\"level3\">\n\n<p>\nText\n";
         $html2 = "Other text.\n";
         $html3 = "</p>\n\n</div>\n";
         $params = array('nice_page');
-        $this->assertEquals($html1 . $html2 . $html3, $remoteApi->call('wiki.getPageHTML', $params));
+        $this->assertEquals($html1 . $html2 . $html3, $this->remote->call('wiki.getPageHTML', $params));
 
         $params = array('nice_page', '');
-        $this->assertEquals($html1 . $html2 . $html3, $remoteApi->call('wiki.getPageHTMLVersion', $params));
+        $this->assertEquals($html1 . $html2 . $html3, $this->remote->call('wiki.getPageHTMLVersion', $params));
         $params = array('nice_page', $rev[1]);
-        $this->assertEquals($html1 . $html3, $remoteApi->call('wiki.getPageHTMLVersion', $params));
+        $this->assertEquals($html1 . $html3, $this->remote->call('wiki.getPageHTMLVersion', $params));
         $params = array('nice_page', 1234);
-        $this->assertEquals('', $remoteApi->call('wiki.getPageHTMLVersion', $params));
+        $this->assertEquals('', $this->remote->call('wiki.getPageHTMLVersion', $params));
 
         $expected = array(
             array(
@@ -192,10 +190,10 @@ You can use up to five different levels of',
                 'lastModified' => filemtime($file3)
             )
         );
-        $this->assertEquals($expected, $remoteApi->call('wiki.getAllPages')); //only indexed pages
+        $this->assertEquals($expected, $this->remote->call('wiki.getAllPages')); //only indexed pages
 
         $params = array('wiki:syntax');
-        $this->assertEquals(ft_backlinks('wiki:syntax'), $remoteApi->call('wiki.getBackLinks', $params));
+        $this->assertEquals(ft_backlinks('wiki:syntax'), $this->remote->call('wiki.getBackLinks', $params));
 
         $expected = array(
             'name' => 'nice_page',
@@ -204,7 +202,7 @@ You can use up to five different levels of',
             'version' => filemtime($file3)
         );
         $params = array('nice_page');
-        $this->assertEquals($expected, $remoteApi->call('wiki.getPageInfo', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getPageInfo', $params));
 
         $expected = array(
             'name' => 'nice_page',
@@ -213,20 +211,20 @@ You can use up to five different levels of',
             'version' => $rev[1]
         );
         $params = array('nice_page', $rev[1]);
-        $this->assertEquals($expected, $remoteApi->call('wiki.getPageInfoVersion', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params));
 
         $rev[2] = filemtime(wikiFN('nice_page'));
         sleep(1); // wait for new revision ID
-        $remoteApi->call('dokuwiki.appendPage', $params_append);
+        $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[3] = filemtime(wikiFN('nice_page'));
         sleep(1);
-        $remoteApi->call('dokuwiki.appendPage', $params_append);
+        $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[4] = filemtime(wikiFN('nice_page'));
         sleep(1);
-        $remoteApi->call('dokuwiki.appendPage', $params_append);
+        $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[5] = filemtime(wikiFN('nice_page'));
         sleep(1);
-        $remoteApi->call('dokuwiki.appendPage', $params_append);
+        $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[6] = filemtime(wikiFN('nice_page'));
 
         $expected = array(
@@ -240,32 +238,32 @@ You can use up to five different levels of',
             )
         );
         $params = array(strtotime("-1 year"));
-        $this->assertEquals($expected, $remoteApi->call('wiki.getRecentChanges', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getRecentChanges', $params));
 
         $params = array('nice_page', 0);
-        $versions = $remoteApi->call('wiki.getPageVersions', $params);
+        $versions = $this->remote->call('wiki.getPageVersions', $params);
         $this->assertEquals($rev[6], $versions[0]['version']);
         $this->assertEquals($rev[5], $versions[1]['version']);
         $this->assertEquals($rev[1], $versions[5]['version']);
-        $this->assertEquals(6, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(6, count($this->remote->call('wiki.getPageVersions', $params)));
 
         $params = array('nice_page', 1);
-        $versions = $remoteApi->call('wiki.getPageVersions', $params);
+        $versions = $this->remote->call('wiki.getPageVersions', $params);
         $this->assertEquals($rev[5], $versions[0]['version']);
         $this->assertEquals($rev[4], $versions[1]['version']);
-        $this->assertEquals(5, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(5, count($this->remote->call('wiki.getPageVersions', $params)));
 
         $conf['recent'] = 3; //set number of page returned
         $params = array('nice_page', 1);
-        $this->assertEquals(3, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(3, count($this->remote->call('wiki.getPageVersions', $params)));
 
         $params = array('nice_page', $conf['recent']);
-        $versions = $remoteApi->call('wiki.getPageVersions', $params);
+        $versions = $this->remote->call('wiki.getPageVersions', $params);
         $this->assertEquals($rev[3], $versions[0]['version']); //skips current,1st old,2nd old
-        $this->assertEquals(3, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(3, count($this->remote->call('wiki.getPageVersions', $params)));
 
         $params = array('nice_page', 2 * $conf['recent']);
-        $this->assertEquals(0, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(0, count($this->remote->call('wiki.getPageVersions', $params)));
 
         //remove page
         $file3 = wikiFN('nice_page');
@@ -277,17 +275,17 @@ You can use up to five different levels of',
                 'minor' => false,
             )
         );
-        $this->assertEquals(true, $remoteApi->call('wiki.putPage', $params));
+        $this->assertEquals(true, $this->remote->call('wiki.putPage', $params));
         $this->assertFalse(file_exists($file3));
 
         $params = array('nice_page', 0);
-        $this->assertEquals(2, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(2, count($this->remote->call('wiki.getPageVersions', $params)));
 
         $params = array('nice_page', 1);
-        $this->assertEquals(3, count($remoteApi->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(3, count($this->remote->call('wiki.getPageVersions', $params)));
 
         $params = array('nice_page');
-        $this->assertEquals(AUTH_UPLOAD, $remoteApi->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_UPLOAD, $this->remote->call('wiki.aclCheck', $params));
 
         global $conf;
         global $AUTH_ACL, $USERINFO;
@@ -300,16 +298,14 @@ You can use up to five different levels of',
         );
 
         $params = array('nice_page');
-        $this->assertEquals(AUTH_EDIT, $remoteApi->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('wiki.aclCheck', $params));
 
-        $this->assertEquals(DOKU_API_VERSION, $remoteApi->call('dokuwiki.getXMLRPCAPIVersion'));
+        $this->assertEquals(DOKU_API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
 
-        $this->assertEquals(2, $remoteApi->call('wiki.getRPCVersionSupported'));
+        $this->assertEquals(2, $this->remote->call('wiki.getRPCVersionSupported'));
     }
 
-    function test_core2() {
-        $remoteApi = new RemoteApi();
-
+    public function test_core2() {
         $localdoku = array(
             'type' => 'local',
             'page' => 'DokuWiki',
@@ -336,21 +332,19 @@ You can use up to five different levels of',
             $localdoku
         );
         $params = array('mailinglist');
-        $this->assertEquals($expected, $remoteApi->call('wiki.listLinks', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.listLinks', $params));
     }
 
-    function test_coreattachments() {
+    public function test_coreattachments() {
         global $conf;
         global $AUTH_ACL, $USERINFO;
 
-        $remoteApi = new RemoteApi();
-
         $filecontent = io_readFile(mediaFN('wiki:dokuwiki-128.png'), false);
         $params = array('test:dokuwiki-128_2.png', $filecontent, array('ow' => false));
-        $this->assertEquals('test:dokuwiki-128_2.png', $remoteApi->call('wiki.putAttachment', $params)); //prints a success div
+        $this->assertEquals('test:dokuwiki-128_2.png', $this->remote->call('wiki.putAttachment', $params)); //prints a success div
 
         $params = array('test:dokuwiki-128_2.png');
-        $this->assertEquals($filecontent, $remoteApi->call('wiki.getAttachment', $params));
+        $this->assertEquals($filecontent, $this->remote->call('wiki.getAttachment', $params));
         $rev = filemtime(mediaFN('test:dokuwiki-128_2.png'));
 
         $expected = array(
@@ -358,7 +352,7 @@ You can use up to five different levels of',
             'size' => 27895,
         );
         $params = array('test:dokuwiki-128_2.png');
-        $this->assertEquals($expected, $remoteApi->call('wiki.getAttachmentInfo', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getAttachmentInfo', $params));
 
         $params = array(strtotime("-5 year"));
         $expected = array(
@@ -371,7 +365,7 @@ You can use up to five different levels of',
                 'size' => 27895 //actual size, not size change
             )
         );
-        $this->assertEquals($expected, $remoteApi->call('wiki.getRecentMediaChanges', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getRecentMediaChanges', $params));
 
         sleep(1);
         $conf['useacl'] = 1;
@@ -383,7 +377,7 @@ You can use up to five different levels of',
         );
 
         $params = array('test:dokuwiki-128_2.png');
-        $this->assertEquals(0, $remoteApi->call('wiki.deleteAttachment', $params));
+        $this->assertEquals(0, $this->remote->call('wiki.deleteAttachment', $params));
 
         $rev2 = filemtime($conf['media_changelog']);
         $expected = array(
@@ -391,14 +385,14 @@ You can use up to five different levels of',
             'size' => 0,
         );
         $params = array('test:dokuwiki-128_2.png');
-        $this->assertEquals($expected, $remoteApi->call('wiki.getAttachmentInfo', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getAttachmentInfo', $params));
 
         $expected = array(
             'lastModified' => 0,
             'size' => 0,
         );
         $params = array('test:nonexisting.png');
-        $this->assertEquals($expected, $remoteApi->call('wiki.getAttachmentInfo', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getAttachmentInfo', $params));
 
         $media1 = mediaFN('wiki:dokuwiki-128.png');
         $expected = array(
@@ -424,7 +418,7 @@ You can use up to five different levels of',
                 'pattern' => '/128/' //filter
             )
         );
-        $this->assertEquals($expected, $remoteApi->call('wiki.getAttachments', $params));
+        $this->assertEquals($expected, $this->remote->call('wiki.getAttachments', $params));
     }
 
 }
