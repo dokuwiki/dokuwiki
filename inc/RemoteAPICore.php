@@ -133,7 +133,7 @@ class RemoteAPICore {
                 'return' => 'array',
                 'Returns a struct about all recent media changes since given timestamp.'
             ), 'wiki.aclCheck' => array(
-                'args' => array('string, string, array'),
+                'args' => array('string', 'string', 'array'),
                 'return' => 'int',
                 'doc' => 'Returns the permissions of a given wiki page. By default, for current user/groups'
             ), 'wiki.putAttachment' => array(
@@ -607,15 +607,26 @@ class RemoteAPICore {
      * Returns the permissions of a given wiki page for the current user or another user
      *
      * @param string $id page id
-     * @param string $user username/group
+     * @param string|null $user username
+     * @param array|null $groups array of groups
      * @return int permission level
      */
-    public function aclCheck($id, $user=null, $groups=null) {
+    public function aclCheck($id, $user = null, $groups = null) {
+        /** @var DokuWiki_Auth_Plugin $auth */
+        global $auth;
+
         $id = $this->resolvePageId($id);
-        $perms_current_user = auth_quickaclcheck($id);
-        if ($user === null){
-            return $perms_current_user;
+        if($user === null) {
+            return auth_quickaclcheck($id);
         } else {
+            if($groups === null) {
+                $userinfo = $auth->getUserData($user);
+                if($userinfo === false) {
+                    $groups = array();
+                } else {
+                    $groups = $userinfo['grps'];
+                }
+            }
             return auth_aclcheck($id, $user, $groups);
         }
     }
