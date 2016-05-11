@@ -130,7 +130,6 @@ $lang['js']['media_overwrt']   = 'Ghi đè các file trùng';
 $lang['rssfailed']             = 'Nguồn này gặp phải lỗi';
 $lang['nothingfound']          = 'Không tìm được gì';
 $lang['mediaselect']           = 'Xem';
-$lang['fileupload']            = 'Tải lên tệp media';
 $lang['uploadsucc']            = 'Tải lên thành công';
 $lang['uploadfail']            = 'Tải lên thất bại. Có thể vì không đủ quyền?';
 $lang['uploadwrong']           = 'Tải lên bị từ chối. Cấm tải loại tệp này';

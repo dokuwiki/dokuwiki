@@ -1,0 +1,2 @@
+Cet outil vous permet de changer les paramètres de certains style de votre thème actuel.
+Tous les changement sont enregistrés dans un fichier de configuration local qui sera inchangé en cas de mise à jour.

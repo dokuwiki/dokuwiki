@@ -199,7 +199,7 @@ function sendGIF(){
     header('Content-Length: '.strlen($img));
     header('Connection: Close');
     print $img;
-    flush();
+    tpl_flush();
     // Browser should drop connection after this
     // Thinks it's got the whole image
 }

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Slovaklanguage file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
@@ -129,7 +130,7 @@ $lang['autoplural']            = 'Kontrolovať množné číslo v odkazoch';
 $lang['compression']           = 'Metóda kompresie pre staré verzie stránok';
 $lang['gzip_output']           = 'Používať gzip Content-Encoding pre xhtml';
 $lang['compress']              = 'Komprimovať CSS a javascript výstup';
-$lang['cssdatauri']            = 'Veľkosť v bytoch, do ktorej by mali byť obrázky s odkazom v CSS vložené priamo do štýlu z dôvodu obmedzenia HTTP požiadaviek. Tento postup nefunguje v IE verzie 7 a nižšie! Vhodná hodnota je od <code>400</code> do <code>600</code> bytov. Hodnota <code>0</code> deaktivuje túto metódu.';
+$lang['cssdatauri']            = 'Veľkosť v bytoch, do ktorej by mali byť obrázky s odkazom v CSS vložené priamo do štýlu z dôvodu obmedzenia HTTP požiadaviek. Vhodná hodnota je od <code>400</code> do <code>600</code> bytov. Hodnota <code>0</code> deaktivuje túto metódu.';
 $lang['send404']               = 'Poslať "HTTP 404/Page Not Found" pre neexistujúce stránky';
 $lang['broken_iua']            = 'Je vo Vašom systéme funkcia ignore_user_abort poškodená? Môže to mať za následok nefunkčnosť vyhľadávania v indexe. IIS+PHP/CGI je známy tým, že nefunguje správne. Pozrite <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> pre dalšie informácie.';
 $lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručenie statických súborov webserverom? Webserver musí túto funkcionalitu podporovať.';
@@ -139,7 +140,7 @@ $lang['renderer__plugin']      = '%s (plugin)';
 $lang['dnslookups']            = 'DokuWiki hľadá mená vzdialených IP adries používateľov editujúcich stránky. Ak máte pomalý alebo nefunkčný DNS server alebo nechcete túto možnosť, deaktivujte túto voľbu';
 $lang['proxy____host']         = 'Proxy server - názov';
 $lang['proxy____port']         = 'Proxy server - port';
-$lang['proxy____user']         = 'Proxy server - užívateľské meno';
+$lang['proxy____user']         = 'Proxy server - používateľské meno';
 $lang['proxy____pass']         = 'Proxy server - heslo';
 $lang['proxy____ssl']          = 'Proxy server - použiť SSL';
 $lang['proxy____except']       = 'Regulárny výraz popisujúci URL odkazy, pre ktoré by proxy nemala byť použitá.';

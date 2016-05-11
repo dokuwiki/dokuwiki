@@ -31,7 +31,7 @@ class Doku_Event {
      * @param string $name
      * @param mixed $data
      */
-    function Doku_Event($name, &$data) {
+    function __construct($name, &$data) {
 
         $this->name = $name;
         $this->data =& $data;
@@ -153,7 +153,7 @@ class Doku_Event_Handler {
      * constructor, loads all action plugins and calls their register() method giving them
      * an opportunity to register any hooks they require
      */
-    function Doku_Event_Handler() {
+    function __construct() {
 
         // load action plugins
         /** @var DokuWiki_Action_Plugin $plugin */

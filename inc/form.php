@@ -55,7 +55,7 @@ class Doku_Form {
      *
      * @author  Tom N Harris <tnharris@whoopdedo.org>
      */
-    function Doku_Form($params, $action=false, $method=false, $enctype=false) {
+    function __construct($params, $action=false, $method=false, $enctype=false) {
         if(!is_array($params)) {
             $this->params = array('id' => $params);
             if ($action !== false) $this->params['action'] = $action;
@@ -400,7 +400,7 @@ function form_makeWikiText($text, $attrs=array()) {
 function form_makeButton($type, $act, $value='', $attrs=array()) {
     if ($value == '') $value = $act;
     $elem = array('_elem'=>'button', 'type'=>$type, '_action'=>$act,
-                        'value'=>$value, 'class'=>'button');
+                        'value'=>$value);
     if (!empty($attrs['accesskey']) && empty($attrs['title'])) {
         $attrs['title'] = $value . ' ['.strtoupper($attrs['accesskey']).']';
     }
@@ -761,7 +761,9 @@ function form_wikitext($attrs) {
  */
 function form_button($attrs) {
     $p = (!empty($attrs['_action'])) ? 'name="do['.$attrs['_action'].']" ' : '';
-    return '<input '.$p.buildAttributes($attrs,true).' />';
+    $value = $attrs['value'];
+    unset($attrs['value']);
+    return '<button '.$p.buildAttributes($attrs,true).'>'.$value.'</button>';
 }
 
 /**

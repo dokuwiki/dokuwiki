@@ -37,7 +37,7 @@ if (!class_exists('configuration')) {
          *
          * @param string $datafile path to config metadata file
          */
-        public function configuration($datafile) {
+        public function __construct($datafile) {
             global $conf, $config_cascade;
 
             if (!file_exists($datafile)) {
@@ -101,7 +101,12 @@ if (!class_exists('configuration')) {
                     }
 
                     $this->setting[$key] = new $class($key,$param);
-                    $this->setting[$key]->initialize($default[$key],$local[$key],$protected[$key]);
+
+                    $d = array_key_exists($key, $default) ? $default[$key] : null;
+                    $l = array_key_exists($key, $local) ? $local[$key] : null;
+                    $p = array_key_exists($key, $protected) ? $protected[$key] : null;
+
+                    $this->setting[$key]->initialize($d,$l,$p);
                 }
 
                 $this->_loaded = true;
@@ -434,7 +439,7 @@ if (!class_exists('setting')) {
          * @param string $key
          * @param array|null $params array with metadata of setting
          */
-        public function setting($key, $params=null) {
+        public function __construct($key, $params=null) {
             $this->_key = $key;
 
             if (is_array($params)) {
@@ -887,29 +892,6 @@ if (!class_exists('setting_email')) {
     }
 }
 
-/**
- * @deprecated 2013-02-16
- */
-if (!class_exists('setting_richemail')) {
-    /**
-     * Class setting_richemail
-     */
-    class setting_richemail extends setting_email {
-        /**
-         * update changed setting with user provided value $input
-         * - if changed value fails error check, save it
-         *
-         * @param  mixed   $input   the new value
-         * @return boolean          true if changed, false otherwise (also on error)
-         */
-        function update($input) {
-            $this->_placeholders = true;
-            return parent::update($input);
-        }
-    }
-}
-
-
 if (!class_exists('setting_numeric')) {
     /**
      * Class setting_numeric
@@ -1209,6 +1191,7 @@ if (!class_exists('setting_multicheckbox')) {
 
         var $_choices = array();
         var $_combine = array();
+        var $_other = 'always';
 
         /**
          * update changed setting with user provided value $input
@@ -1242,7 +1225,7 @@ if (!class_exists('setting_multicheckbox')) {
          * Build html for label and input of setting
          *
          * @param DokuWiki_Plugin $plugin object of config plugin
-         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @param bool            $echo   true: show input value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
         function html(&$plugin, $echo=false) {
@@ -1273,9 +1256,7 @@ if (!class_exists('setting_multicheckbox')) {
 
                 $checked = ($idx !== false) ? 'checked="checked"' : '';
 
-                // ideally this would be handled using a second class of "default", however IE6 does not
-                // correctly support CSS selectors referencing multiple class names on the same element
-                // (e.g. .default.selection).
+                // @todo ideally this would be handled using a second class of "default"
                 $class = (($idx !== false) == (false !== $idx_default)) ? " selectiondefault" : "";
 
                 $prompt = ($plugin->getLang($this->_key.'_'.$choice) ?
@@ -1292,16 +1273,21 @@ if (!class_exists('setting_multicheckbox')) {
             }
 
             // handle any remaining values
-            $other = join(',',$value);
+            if ($this->_other != 'never'){
+                $other = join(',',$value);
+                // test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
+                // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
+                if ($this->_other != 'exists' || $other) {
 
-            $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
-                            " selectiondefault" : "";
+                    $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+                                    " selectiondefault" : "";
 
-            $input .= '<div class="other'.$class.'">'."\n";
-            $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
-            $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
-            $input .= "</div>\n";
-
+                    $input .= '<div class="other'.$class.'">'."\n";
+                    $input .= '<label for="config___'.$key.'_other">'.$plugin->getLang($key.'_other')."</label>\n";
+                    $input .= '<input id="config___'.$key.'_other" name="config['.$key.'][other]" type="text" class="edit" value="'.htmlspecialchars($other).'" '.$disable." />\n";
+                    $input .= "</div>\n";
+                }
+            }
             $label = '<label>'.$this->prompt($plugin).'</label>';
             return array($label,$input);
         }

@@ -28,6 +28,11 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
     $files  = array();
     $filepaths = array();
 
+    // safeguard against runaways #1452
+    if($base == '' || $base == '/') {
+        throw new RuntimeException('No valid $base passed to search() - possible misconfiguration or bug');
+    }
+
     //read in directories and files
     $dh = @opendir($base.'/'.$dir);
     if(!$dh) return;

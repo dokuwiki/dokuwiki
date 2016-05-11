@@ -39,7 +39,7 @@ class DokuWiki_Sniffs_PHP_DiscouragedFunctionsSniff extends Generic_Sniffs_PHP_F
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array(
+    public $forbiddenFunctions = array(
                                      'date' => 'dformat',
                                      'strftime'   => 'dformat',
                                     );

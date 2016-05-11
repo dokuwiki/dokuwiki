@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Tomo Krajina <aaa@puzz.info>
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
@@ -15,7 +15,7 @@ $lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Izmijeni stranicu';
 $lang['btn_source']            = 'Prikaži kod stranice';
 $lang['btn_show']              = 'Prikaži dokument';
@@ -35,11 +35,10 @@ $lang['btn_secedit']           = 'Uredi';
 $lang['btn_login']             = 'Prijavi se';
 $lang['btn_logout']            = 'Odjavi se';
 $lang['btn_admin']             = 'Administriranje';
-$lang['btn_update']            = 'Dopuni';
+$lang['btn_update']            = 'Nadogradi';
 $lang['btn_delete']            = 'Obriši';
 $lang['btn_back']              = 'Nazad';
 $lang['btn_backlink']          = 'Povratni linkovi';
-$lang['btn_backtomedia']       = 'Natrag na odabir datoteka';
 $lang['btn_subscribe']         = 'Uređivanje pretplata';
 $lang['btn_profile']           = 'Dopuni profil';
 $lang['btn_reset']             = 'Poništi';
@@ -74,6 +73,7 @@ $lang['regmissing']            = 'Morate popuniti sva polja.';
 $lang['reguexists']            = 'Korisnik s tim korisničkim imenom već postoji.';
 $lang['regsuccess']            = 'Korisnik je uspješno stvoren i poslana je lozinka emailom.';
 $lang['regsuccess2']           = 'Korisnik je uspješno stvoren.';
+$lang['regfail']               = 'Korisnik ne može biti kreiran.';
 $lang['regmailfail']           = 'Pojavila se greška prilikom slanja lozinke emailom. Kontaktirajte administratora!';
 $lang['regbadmail']            = 'Email adresa nije ispravna, ukoliko ovo smatrate greškom, kontaktirajte administratora.';
 $lang['regbadpass']            = 'Unesene lozinke nisu jednake, pokušajte ponovno.';
@@ -88,6 +88,7 @@ $lang['profdeleteuser']        = 'Obriši korisnika';
 $lang['profdeleted']           = 'Vaš korisnik je obrisan s ovog wiki-a';
 $lang['profconfdelete']        = 'Želim ukloniti mojeg korisnika s ovog wiki-a. <br/> Ova akcija se ne može poništiti.';
 $lang['profconfdeletemissing'] = 'Kvačica za potvrdu nije označena';
+$lang['proffail']              = 'Profil korisnika nije izmijenjen.';
 $lang['pwdforget']             = 'Izgubili ste lozinku? Zatražite novu';
 $lang['resendna']              = 'Ovaj wiki ne podržava ponovno slanje lozinke e-poštom.';
 $lang['resendpwd']             = 'Postavi novu lozinku za';
@@ -151,7 +152,6 @@ $lang['js']['media_overwrt']   = 'Prepiši preko postojeće datoteke';
 $lang['rssfailed']             = 'Došlo je do greške prilikom preuzimanja feed-a: ';
 $lang['nothingfound']          = 'Traženi dokumetni nisu pronađeni.';
 $lang['mediaselect']           = 'Datoteke';
-$lang['fileupload']            = 'Učitavanje datoteka';
 $lang['uploadsucc']            = 'Učitavanje uspješno';
 $lang['uploadfail']            = 'Neuspješno učitavanje. Možda dozvole na poslužitelju nisu ispravne?';
 $lang['uploadwrong']           = 'Učitavanje nije dopušteno. Nastavak datoteke je zabranjen!';
@@ -242,7 +242,6 @@ $lang['qb_sig']                = 'Ubaci potpis';
 $lang['qb_smileys']            = 'Smiješkići';
 $lang['qb_chars']              = 'Posebni znakovi';
 $lang['upperns']               = 'Skoči u nadređeni imenski prostor';
-$lang['admin_register']        = 'Dodaj novog korisnika';
 $lang['metaedit']              = 'Uredi metapodatake';
 $lang['metasaveerr']           = 'Neuspješno zapisivanje metapodataka';
 $lang['metasaveok']            = 'Spremljeni metapdaci';
@@ -275,7 +274,6 @@ $lang['subscr_style_every']    = 'e-pošta za svaku promjenu';
 $lang['subscr_style_digest']   = 'e-pošta s kratakim prikazom promjena za svaku stranicu (svaka %.2f dana)';
 $lang['subscr_style_list']     = 'listu promijenjenih stranica od zadnje primljene e-pošte (svaka %.2f dana)';
 $lang['authtempfail']          = 'Autentifikacija korisnika je privremeno nedostupna. Molimo Vas da kontaktirate administratora.';
-$lang['authpwdexpire']         = 'Vaša lozinka će isteći za %d dana, trebate ju promijeniti.';
 $lang['i_chooselang']          = 'Izaberite vaš jezik';
 $lang['i_installer']           = 'DokuWiki postavljanje';
 $lang['i_wikiname']            = 'Naziv Wikija';
@@ -336,6 +334,7 @@ $lang['media_perm_read']       = 'Nažalost, nemate prava za čitanje datoteka.'
 $lang['media_perm_upload']     = 'Nažalost, nemate prava za učitavanje datoteka.';
 $lang['media_update']          = 'Učitaj novu verziju';
 $lang['media_restore']         = 'Vrati ovu verziju';
+$lang['media_acl_warning']     = 'Ova lista moguće da nije kompletna zbog ACL ograničenja i skrivenih stranica.';
 $lang['currentns']             = 'Tekući imenički prostor';
 $lang['searchresult']          = 'Rezultati pretraživanja';
 $lang['plainhtml']             = 'Čisti HTML';

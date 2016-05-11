@@ -32,37 +32,31 @@ function css_out(){
     global $config_cascade;
     global $INPUT;
 
-    // decide from where to get the template
-    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
-    if(!$tpl) $tpl = $conf['template'];
-
-    // load style.ini
-    $styleini = css_styleini($tpl);
-    
-    // find mediatypes
     if ($INPUT->str('s') == 'feed') {
         $mediatypes = array('feed');
         $type = 'feed';
     } else {
-        $mediatypes = array_unique(array_merge(array('screen', 'all', 'print'), array_keys($styleini['stylesheets'])));
+        $mediatypes = array('screen', 'all', 'print');
         $type = '';
     }
 
-    // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
+    // decide from where to get the template
+    $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
+    if(!$tpl) $tpl = $conf['template'];
 
-    // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
-    if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
-    }
+    // The generated script depends on some dynamic options
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$INPUT->int('preview').DOKU_BASE.$tpl.$type,'.css');
+
+    // load styl.ini
+    $styleini = css_styleini($tpl, $INPUT->bool('preview'));
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
-    $cache_files[] = $tplinc.'style.local.ini'; // @deprecated
     $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
     $cache_files[] = __FILE__;
+    if($INPUT->bool('preview')) $cache_files[] = $conf['cachedir'].'/preview.ini';
 
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
@@ -262,9 +256,12 @@ function css_applystyle($css, $replacements) {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $tpl the used template
+ * @param bool   $preview load preview replacements
  * @return array with keys 'stylesheets' and 'replacements'
  */
-function css_styleini($tpl) {
+function css_styleini($tpl, $preview=false) {
+    global $conf;
+
     $stylesheets = array(); // mode, file => base
     $replacements = array(); // placeholder => value
 
@@ -272,23 +269,6 @@ function css_styleini($tpl) {
     $incbase = tpl_incdir($tpl);
     $webbase = tpl_basedir($tpl);
     $ini = $incbase.'style.ini';
-    if(file_exists($ini)){
-        $data = parse_ini_file($ini, true);
-
-        // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
-            $stylesheets[$mode][$incbase.$file] = $webbase;
-        }
-
-        // replacements
-        if(is_array($data['replacements'])){
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
-        }
-    }
-
-    // load template's style.local.ini
-    // @deprecated 2013-08-03
-    $ini = $incbase.'style.local.ini';
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
@@ -311,13 +291,26 @@ function css_styleini($tpl) {
         $data = parse_ini_file($ini, true);
 
         // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+        if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
             $stylesheets[$mode][$incbase.$file] = $webbase;
         }
 
         // replacements
-        if(is_array($data['replacements'])){
+        if(isset($data['replacements']) && is_array($data['replacements'])){
             $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
+        }
+    }
+
+    // allow replacement overwrites in preview mode
+    if($preview) {
+        $webbase = DOKU_BASE;
+        $ini     = $conf['cachedir'].'/preview.ini';
+        if(file_exists($ini)) {
+            $data = parse_ini_file($ini, true);
+            // replacements
+            if(is_array($data['replacements'])) {
+                $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'], $webbase));
+            }
         }
     }
 

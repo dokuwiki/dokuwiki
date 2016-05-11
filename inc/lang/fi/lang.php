@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
@@ -17,7 +17,7 @@ $lang['doublequoteopening']    = '”';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '’';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Muokkaa tätä sivua';
 $lang['btn_source']            = 'Näytä sivun lähdekoodi';
 $lang['btn_show']              = 'Näytä sivu';
@@ -41,7 +41,6 @@ $lang['btn_update']            = 'Päivitä';
 $lang['btn_delete']            = 'Poista';
 $lang['btn_back']              = 'Takaisin';
 $lang['btn_backlink']          = 'Paluulinkit';
-$lang['btn_backtomedia']       = 'Takaisin mediatiedostojen valintaan';
 $lang['btn_subscribe']         = 'Tilaa muutokset';
 $lang['btn_profile']           = 'Päivitä profiili';
 $lang['btn_reset']             = 'Tyhjennä';
@@ -154,7 +153,6 @@ $lang['js']['media_overwrt']   = 'Ylikirjoita olemassa olevat tiedostot';
 $lang['rssfailed']             = 'Virhe tapahtui noudettaessa tätä syötettä: ';
 $lang['nothingfound']          = 'Mitään ei löytynyt.';
 $lang['mediaselect']           = 'Mediatiedoston valinta';
-$lang['fileupload']            = 'Mediatiedoston lähetys';
 $lang['uploadsucc']            = 'Tiedoston lähetys onnistui';
 $lang['uploadfail']            = 'Tiedoston lähetys epäonnistui. Syynä ehkä väärät oikeudet?';
 $lang['uploadwrong']           = 'Tiedoston lähetys evätty. Tämä tiedostopääte on kielletty';
@@ -243,7 +241,6 @@ $lang['qb_sig']                = 'Lisää allekirjoitus';
 $lang['qb_smileys']            = 'Hymiöt';
 $lang['qb_chars']              = 'Erikoismerkit';
 $lang['upperns']               = 'Hyppää edelliseen nimiavaruuteen';
-$lang['admin_register']        = 'Lisää uusi käyttäjä';
 $lang['metaedit']              = 'Muokkaa metadataa';
 $lang['metasaveerr']           = 'Metadatan kirjoittaminen epäonnistui';
 $lang['metasaveok']            = 'Metadata tallennettu';
@@ -276,7 +273,6 @@ $lang['subscr_style_every']    = 'Sähköposti joka muutoksesta';
 $lang['subscr_style_digest']   = 'yhteenveto-sähköposti joka sivusta (joka %.2f. päivä)';
 $lang['subscr_style_list']     = 'lista muuttuneista sivuista edellisen sähköpostin jälkeen (joka %.2f. päivä)';
 $lang['authtempfail']          = 'Käyttäjien autentikointi ei tällä hetkellä onnistu. Jos ongelma jatkuu, ota yhteyttä wikin ylläpitäjään.';
-$lang['authpwdexpire']         = 'Salasanasi vanhenee %d pv:n päästä, vaihda salasanasi pikaisesti.';
 $lang['i_chooselang']          = 'Valitse kieli';
 $lang['i_installer']           = 'DokuWikin asentaja';
 $lang['i_wikiname']            = 'Wikin nimi';

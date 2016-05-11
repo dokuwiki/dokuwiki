@@ -1,0 +1,1 @@
+Dette er de templates du aktuelt har installeret i din DokuWiki. Du kan vælge det template du vil benytte under [[?do=admin&page=config|Opsætningsstyring]].

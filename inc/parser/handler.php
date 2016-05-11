@@ -17,7 +17,7 @@ class Doku_Handler {
 
     var $rewriteBlocks = true;
 
-    function Doku_Handler() {
+    function __construct() {
         $this->CallWriter = new Doku_Handler_CallWriter($this);
     }
 
@@ -295,7 +295,7 @@ class Doku_Handler {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
                 $ReWriter = new Doku_Handler_Preformatted($this->CallWriter);
-                $this->CallWriter = & $ReWriter;
+                $this->CallWriter = $ReWriter;
                 $this->_addCall('preformatted_start',array(), $pos);
             break;
             case DOKU_LEXER_EXIT:
@@ -715,15 +715,21 @@ function Doku_Handler_Parse_Media($match) {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_CallWriter {
+interface Doku_Handler_CallWriter_Interface {
+    public function writeCall($call);
+    public function writeCalls($calls);
+    public function finalise();
+}
+
+class Doku_Handler_CallWriter implements Doku_Handler_CallWriter_Interface {
 
     var $Handler;
 
     /**
      * @param Doku_Handler $Handler
      */
-    function Doku_Handler_CallWriter(& $Handler) {
-        $this->Handler = & $Handler;
+    function __construct(Doku_Handler $Handler) {
+        $this->Handler = $Handler;
     }
 
     function writeCall($call) {
@@ -748,7 +754,7 @@ class Doku_Handler_CallWriter {
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
-class Doku_Handler_Nest {
+class Doku_Handler_Nest implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
     var $calls = array();
@@ -762,8 +768,8 @@ class Doku_Handler_Nest {
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
-    function Doku_Handler_Nest(& $CallWriter, $close="nest_close") {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter, $close="nest_close") {
+        $this->CallWriter = $CallWriter;
 
         $this->closingInstruction = $close;
     }
@@ -808,7 +814,7 @@ class Doku_Handler_Nest {
     }
 }
 
-class Doku_Handler_List {
+class Doku_Handler_List implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -818,8 +824,8 @@ class Doku_Handler_List {
 
     const NODE = 1;
 
-    function Doku_Handler_List(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1018,7 +1024,7 @@ class Doku_Handler_List {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_Preformatted {
+class Doku_Handler_Preformatted implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -1028,8 +1034,8 @@ class Doku_Handler_Preformatted {
 
 
 
-    function Doku_Handler_Preformatted(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1078,7 +1084,7 @@ class Doku_Handler_Preformatted {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_Quote {
+class Doku_Handler_Quote implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -1086,8 +1092,8 @@ class Doku_Handler_Quote {
 
     var $quoteCalls = array();
 
-    function Doku_Handler_Quote(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1170,7 +1176,7 @@ class Doku_Handler_Quote {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_Table {
+class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -1185,8 +1191,8 @@ class Doku_Handler_Table {
     var $currentRow = array('tableheader' => 0, 'tablecell' => 0);
     var $countTableHeadRows = 0;
 
-    function Doku_Handler_Table(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1551,7 +1557,7 @@ class Doku_Handler_Block {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function Doku_Handler_Block(){
+    function __construct(){
         global $DOKU_PLUGINS;
         //check if syntax plugins were loaded
         if(empty($DOKU_PLUGINS['syntax'])) return;

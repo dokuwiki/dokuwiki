@@ -295,7 +295,7 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      */
     public function deleteUsers($users) {
         msg("authorisation method does not allow deleting of users", -1);
-        return false;
+        return 0;
     }
 
     /**
@@ -434,24 +434,5 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
     public function useSessionCache($user) {
         global $conf;
         return ($_SESSION[DOKU_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'].'/sessionpurge'));
-    }
-
-    /**
-     * Overrides the standard config loading to integrate old auth module style configs
-     *
-     * @deprecated 2012-11-09
-     */
-    public function loadConfig() {
-        global $conf;
-        $plugin  = $this->getPluginName();
-        $oldname = preg_replace('/^auth/', '', $plugin);
-
-        $default = $this->readDefaultSettings();
-        $oldconf = array();
-        if(isset($conf['auth'][$oldname])) $oldconf = (array) $conf['auth'][$oldname];
-        $conf['plugin'][$plugin] = array_merge($default, $oldconf, (array) $conf['plugin'][$plugin]);
-
-        $this->conf         =& $conf['plugin'][$plugin];
-        $this->configloaded = true;
     }
 }

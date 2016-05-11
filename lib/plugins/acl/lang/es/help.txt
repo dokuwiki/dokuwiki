@@ -2,7 +2,7 @@
 
 En esta página puede agregar o retirar permisos para los espacios de nombres y páginas en su wiki.
 
-El panel de la izquierda muiestra todos los espacios de nombres y páginas
+El panel de la izquierda muestra todos los espacios de nombres y páginas
 
 El formulario inferior permite  ver y modificar los permisos del usuario o grupo elegido.
 

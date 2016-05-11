@@ -243,7 +243,6 @@ function sectionID($title,&$check) {
     return $title;
 }
 
-
 /**
  * Wiki page existence check
  *
@@ -251,9 +250,10 @@ function sectionID($title,&$check) {
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  *
- * @param string     $id     page id
- * @param string|int $rev    empty or revision timestamp
- * @param bool       $clean  flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param string $id page id
+ * @param string|int $rev empty or revision timestamp
+ * @param bool $clean flag indicating that $id should be cleaned (see wikiFN as well)
+ * @param bool $date_at
  * @return bool exists?
  */
 function page_exists($id,$rev='',$clean=true, $date_at=false) {
@@ -391,9 +391,9 @@ function metaFiles($id){
  * @param string|int $rev empty string or revision timestamp
  * @return string full path
  */
-function mediaFN($id, $rev=''){
+function mediaFN($id, $rev='', $clean=true){
     global $conf;
-    $id = cleanID($id);
+    if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
     if(empty($rev)){
         $fn = $conf['mediadir'].'/'.utf8_encodeFN($id);
@@ -489,9 +489,11 @@ function resolve_id($ns,$id,$clean=true){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative media id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative media id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param int|string $rev
+ * @param bool $date_at
  */
 function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
     $page   = resolve_id($ns,$page);
@@ -502,7 +504,7 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
             $rev = $medialog_rev;
         }
     }
-    
+
     $file   = mediaFN($page,$rev);
     $exists = file_exists($file);
 }
@@ -512,9 +514,11 @@ function resolve_mediaid($ns,&$page,&$exists,$rev='',$date_at=false){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string  $ns     namespace which is context of id
- * @param string &$page   (reference) relative page id, updated to resolved id
- * @param bool   &$exists (reference) updated with existance of media
+ * @param string $ns namespace which is context of id
+ * @param string &$page (reference) relative page id, updated to resolved id
+ * @param bool &$exists (reference) updated with existance of media
+ * @param string $rev
+ * @param bool $date_at
  */
 function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     global $conf;
@@ -734,24 +738,26 @@ function utf8_decodeFN($file){
 
 /**
  * Find a page in the current namespace (determined from $ID) or any
- * higher namespace
+ * higher namespace that can be accessed by the current user,
+ * this condition can be overriden by an optional parameter.
  *
  * Used for sidebars, but can be used other stuff as well
  *
  * @todo   add event hook
  *
  * @param  string $page the pagename you're looking for
- * @return string|false the full page id of the found page, false if any
+ * @param bool $useacl only return pages readable by the current user, false to ignore ACLs
+ * @return false|string the full page id of the found page, false if any
  */
-function page_findnearest($page){
+function page_findnearest($page, $useacl = true){
     if (!$page) return false;
     global $ID;
 
     $ns = $ID;
     do {
         $ns = getNS($ns);
-        $pageid = ltrim("$ns:$page",':');
-        if(page_exists($pageid)){
+        $pageid = cleanID("$ns:$page");
+        if(page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)){
             return $pageid;
         }
     } while($ns);

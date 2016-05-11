@@ -14,7 +14,7 @@
  */
 $lang['account_suffix']        = 'Суффикс вашего аккаунта. Например, <code>@my.domain.org</code>';
 $lang['base_dn']               = 'Ваш базовый DN. Например: <code>DC=my,DC=domain,DC=org</code>';
-$lang['domain_controllers']    = 'Список DNS-серверов, разделенных запятой. Например:<code>srv1.domain.org,srv2.domain.org</code>';
+$lang['domain_controllers']    = 'Список DNS-серверов, разделённых запятой. Например:<code>srv1.domain.org,srv2.domain.org</code>';
 $lang['admin_username']        = 'Привилегированный пользователь Active Directory с доступом ко всем остальным пользовательским данным. Необязательно, однако необходимо для определённых действий вроде отправки почтовой подписки.';
 $lang['admin_password']        = 'Пароль для указанного пользователя.';
 $lang['sso']                   = 'Использовать SSO (Single-Sign-On) через Kerberos или NTLM?';

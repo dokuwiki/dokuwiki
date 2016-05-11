@@ -1,0 +1,99 @@
+[
+    {
+        "name": "splitbrain/php-archive",
+        "version": "1.0.7",
+        "version_normalized": "1.0.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/splitbrain/php-archive.git",
+            "reference": "c075304b44c4aadff0718af445e86bf730f331ff"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/c075304b44c4aadff0718af445e86bf730f331ff",
+            "reference": "c075304b44c4aadff0718af445e86bf730f331ff",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.5.*"
+        },
+        "time": "2015-08-12 13:24:34",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "splitbrain\\PHPArchive\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Gohr",
+                "email": "andi@splitbrain.org"
+            }
+        ],
+        "description": "Pure-PHP implementation to read and write TAR and ZIP archives",
+        "keywords": [
+            "archive",
+            "extract",
+            "tar",
+            "unpack",
+            "unzip",
+            "zip"
+        ]
+    },
+    {
+        "name": "easybook/geshi",
+        "version": "v1.0.8.17",
+        "version_normalized": "1.0.8.17",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/easybook/geshi.git",
+            "reference": "0fced4f530c0a1726588651f04c2bf2a3073c9c0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/easybook/geshi/zipball/0fced4f530c0a1726588651f04c2bf2a3073c9c0",
+            "reference": "0fced4f530c0a1726588651f04c2bf2a3073c9c0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">4.3.0"
+        },
+        "time": "2016-03-29 13:15:17",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "./"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Nigel McNie",
+                "email": "nigel@geshi.org"
+            },
+            {
+                "name": "Benny Baumann",
+                "email": "BenBE@geshi.org"
+            }
+        ],
+        "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
+        "homepage": "http://qbnz.com/highlighter",
+        "keywords": [
+            "highlight",
+            "highlighter",
+            "syntax"
+        ]
+    }
+]

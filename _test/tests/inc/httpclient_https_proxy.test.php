@@ -2,7 +2,7 @@
 require_once dirname(__FILE__).'/httpclient_http_proxy.test.php';
 
 class httpclient_https_proxy_test extends httpclient_http_proxy_test {
-    protected $url = 'https://www.dokuwiki.org/README';
+    protected $url = 'https://httpbin.org/user-agent';
 
     public function setUp(){
         // skip tests when this PHP has no SSL support

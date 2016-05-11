@@ -27,7 +27,6 @@ $lang['btn_admin']  = 'Admin';
 $lang['btn_update'] = 'Update';
 $lang['btn_delete'] = 'Fafao';
 $lang['btn_back']   = 'Miverina';
-$lang['btn_backtomedia'] = 'Fitsongana fichier Media';
 $lang['btn_register'] = 'Hisoratra';
 
 $lang['loggedinas'] = 'Anaranao:';
@@ -61,7 +60,6 @@ $lang['rssfailed']   = 'An error occured while fetching this feed: ';
 $lang['nothingfound']= 'Tsy nahitana n\'inon\'inona.';
 
 $lang['mediaselect'] = 'Safidy rakitra Media';
-$lang['fileupload']  = 'Fandefasana rakitra Media';
 $lang['uploadsucc']  = 'Voalefa soa aman-tsara';
 $lang['uploadfail']  = 'Tsy lasa ilay izy. Mety tsy fananana alalana?';
 $lang['uploadwrong'] = 'Nolavina ny lefa. Voarara io extension-na rakitra io!';
@@ -116,6 +114,5 @@ $lang['qb_sig']     = 'Manisy sonia';
 
 $lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 
-$lang['admin_register']= 'Ampio mpampiasa vaovao...';
 $lang['searchcreatepage']      = "Raha tsy nahita izay notadiavinao ianao, dia afaka mamorona pejy vaovao avy amin'ny teny nanaovanao fikarohana; Ampiasao ny bokotra ''Hanova ny pejy''.";
 //Setup VIM: ex: et ts=2 :

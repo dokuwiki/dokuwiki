@@ -54,10 +54,7 @@ div.picker button.toolbutton {
 /*____________ edit textarea ____________*/
 
 .dokuwiki textarea.edit {
-    /* should just be "width: 100%", but IE8 doesn't like it, see FS#1910 + FS#1667 */
-    width: 700px;
-    min-width: 100%;
-    max-width: 100%;
+    width: 100%;
     margin-bottom: .5em;
 }
 
@@ -88,7 +85,7 @@ div.picker button.toolbutton {
     margin-right: 0;
     margin-left: 1em;
 }
-.dokuwiki .editBar .editButtons input {
+.dokuwiki .editBar .editButtons button {
 }
 
 /* summary input and minor changes checkbox */
@@ -130,7 +127,7 @@ div.picker button.toolbutton {
 [dir=rtl] .dokuwiki .secedit {
     float: left;
 }
-.dokuwiki .secedit input.button {
+.dokuwiki .secedit button {
     font-size: 75%;
 }
 

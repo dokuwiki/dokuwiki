@@ -5,6 +5,7 @@
  * 
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
+ * @author Alejandro Nunez <nunez.alejandro@gmail.com>
  */
 $lang['server']                = 'Tu servidor LDAP. Puede ser el nombre del host  (<code>localhost</code>) o una URL completa (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Servidor LDAP en caso de que no se diera la URL completa anteriormente.';
@@ -20,8 +21,12 @@ $lang['bindpw']                = 'Contraseña del usuario de arriba.';
 $lang['userscope']             = 'Limitar ámbito de búsqueda para búsqueda de usuarios';
 $lang['groupscope']            = 'Limitar ámbito de búsqueda para búsqueda de grupos';
 $lang['groupkey']              = 'Pertenencia al grupo desde cualquier atributo de usuario (en lugar de grupos AD estándar) p.e., grupo a partir departamento o número de teléfono';
+$lang['modPass']               = 'Puede ser cambiara via dokuwiki la password LDAP?';
 $lang['debug']                 = 'Mostrar información adicional para depuración de errores';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
+$lang['referrals_o_-1']        = 'usar default';
+$lang['referrals_o_0']         = 'no seguir referencias';
+$lang['referrals_o_1']         = 'seguir referencias';
