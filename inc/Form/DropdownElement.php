@@ -113,8 +113,9 @@ class DropdownElement extends InputElement {
         $html = '<select ' . buildAttributes($this->attrs()) . '>';
         foreach($this->options as $key => $val) {
             $selected = ($key == $this->value) ? ' selected="selected"' : '';
+            $attrs = '';
             if (is_array($val['attrs'])) {
-                array_walk($val['attrs'],function (&$aval, $akey){$aval = hsc($akey)."='".hsc($aval)."'";});
+                array_walk($val['attrs'],function (&$aval, $akey){$aval = hsc($akey).'="'.hsc($aval).'"';});
                 $attrs = join(' ', $val['attrs']);
             }
             $html .= '<option' . $selected . ' value="' . hsc($key) . '" '.$attrs.'>' . hsc($val['label']) . '</option>';
