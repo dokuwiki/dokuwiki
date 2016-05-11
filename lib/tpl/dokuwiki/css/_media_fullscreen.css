@@ -32,10 +32,12 @@
 #mediamanager__page .namespaces {
     width: 20%;
     min-width: 10em; /* @change */
+    left:0 !important; /* overrules jQuery UI resizable in rtl */
 }
 #mediamanager__page .filelist {
     width: 50%;
     min-width: 25em; /* @change */
+    left:0 !important; /* overrules jQuery UI resizable in rtl */
 }
 #mediamanager__page .file {
     width: 30%;
