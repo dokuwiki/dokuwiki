@@ -657,7 +657,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 } else {
                     $sth->bindValue($key, $value);
                 }
-                $param[$key] = $value; //remember for debugging
+                $params[$key] = $value; //remember for debugging
             }
 
             $sth->execute();
