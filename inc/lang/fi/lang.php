@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
@@ -10,6 +10,7 @@
  * @author Sami Olmari <sami@olmari.fi>
  * @author Rami Lehti <rammer@ipi.fi>
  * @author Jussi Takala <jussi.takala@live.fi>
+ * @author Wiki Doku <SugarKidder@mailinator.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -75,6 +76,7 @@ $lang['regmissing']            = 'Kaikki kentät tulee täyttää.';
 $lang['reguexists']            = 'Käyttäjä tällä käyttäjänimellä on jo olemassa.';
 $lang['regsuccess']            = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla.';
 $lang['regsuccess2']           = 'Käyttäjänimi on luotu.';
+$lang['regfail']               = 'Valitsemaasi käyttäjää ei voitu luoda.';
 $lang['regmailfail']           = 'Näyttää siltä, että salasanan lähettämisessä tapahtui virhe. Ota yhteys ylläpitäjään!';
 $lang['regbadmail']            = 'Antamasi sähköpostiosoite näyttää epäkelvolta. Jos pidät tätä virheenä ota yhteys ylläpitäjään.';
 $lang['regbadpass']            = 'Annetut kaksi salasanaa eivät täsmää. Yritä uudelleen.';
