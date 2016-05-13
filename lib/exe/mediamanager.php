@@ -33,7 +33,8 @@
 
     global $INFO, $JSINFO;
     $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
-    $JSINFO = array('id' => '', 'namespace' => '');
+    $JSINFO['id']        = '';
+    $JSINFO['namespace'] = '';
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     $tmp = array();
