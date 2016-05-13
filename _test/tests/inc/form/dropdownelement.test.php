@@ -46,6 +46,41 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals('label text', $label->find('span')->text());
     }
 
+    function test_extended_options() {
+        $form = new Form\Form();
+
+        $options = array(
+            'first' => array (
+                'label' => 'the label',
+                'attrs' => array(
+                    'id' => 'theID',
+                    'class' => 'two classes',
+                    'data-foo' => 'bar'
+                )
+            ),
+            'second'
+        );
+
+        $form->addDropdown('foo', $options, 'label text');
+        // HTML
+        $html = $form->toHTML();
+        $pq = phpQuery::newDocumentXHTML($html);
+
+        $select = $pq->find('select[name=foo]');
+        $this->assertTrue($select->length == 1);
+
+        $options = $pq->find('option');
+        $this->assertTrue($options->length == 2);
+
+        $option = $pq->find('option#theID');
+        $this->assertEquals(1, $option->length);
+        $this->assertEquals('first', $option->val());
+        $this->assertEquals('the label', $option->text());
+        $this->assertEquals('bar', $option->attr('data-foo'));
+        $this->assertTrue($option->hasClass('two'));
+        $this->assertTrue($option->hasClass('classes'));
+    }
+
     /**
      * check that posted values overwrite preset default
      */

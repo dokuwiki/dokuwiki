@@ -28,7 +28,14 @@ class DropdownElement extends InputElement {
      * Get or set the options of the Dropdown
      *
      * Options can be given as associative array (value => label) or as an
-     * indexd array (label = value).
+     * indexd array (label = value) or as an array of arrays. In the latter
+     * case an element has to look as follows:
+     * option-value => array (
+     *                 'label' => option-label,
+     *                 'attrs' => array (
+     *                                    attr-key => attr-value, ...
+     *                                  )
+     *                 )
      *
      * @param null|array $options
      * @return $this|array
@@ -40,9 +47,12 @@ class DropdownElement extends InputElement {
 
         foreach($options as $key => $val) {
             if(is_int($key)) {
-                $this->options[$val] = (string) $val;
+                $this->options[$val] = array('label' => (string) $val);
+            } elseif (!is_array($val)) {
+                $this->options[$key] = array('label' => (string) $val);
             } else {
-                $this->options[$key] = (string) $val;
+                if (!key_exists('label', $val)) throw new \InvalidArgumentException('If option is given as array, it has to have a "label"-key!');
+                $this->options[$key] = $val;
             }
         }
         $this->val(''); // set default value (empty or first)
@@ -103,7 +113,12 @@ class DropdownElement extends InputElement {
         $html = '<select ' . buildAttributes($this->attrs()) . '>';
         foreach($this->options as $key => $val) {
             $selected = ($key == $this->value) ? ' selected="selected"' : '';
-            $html .= '<option' . $selected . ' value="' . hsc($key) . '">' . hsc($val) . '</option>';
+            $attrs = '';
+            if (is_array($val['attrs'])) {
+                array_walk($val['attrs'],function (&$aval, $akey){$aval = hsc($akey).'="'.hsc($aval).'"';});
+                $attrs = join(' ', $val['attrs']);
+            }
+            $html .= '<option' . $selected . ' value="' . hsc($key) . '" '.$attrs.'>' . hsc($val['label']) . '</option>';
         }
         $html .= '</select>';
 
