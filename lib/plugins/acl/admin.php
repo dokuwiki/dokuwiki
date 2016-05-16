@@ -649,7 +649,6 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin {
         echo '</div></form>'.NL;
     }
 
-
     /**
      * Returns the permission which were set for exactly the given user/group
      * and page/namespace. Returns null if no exact match is available
