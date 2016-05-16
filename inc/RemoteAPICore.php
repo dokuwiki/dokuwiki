@@ -126,9 +126,9 @@ class RemoteAPICore {
                 'return' => 'array',
                 'Returns a struct about all recent media changes since given timestamp.'
             ), 'wiki.aclCheck' => array(
-                'args' => array('string'),
+                'args' => array('string, string, array'),
                 'return' => 'int',
-                'doc' => 'Returns the permissions of a given wiki page.'
+                'doc' => 'Returns the permissions of a given wiki page. By default, for current user/groups'
             ), 'wiki.putAttachment' => array(
                 'args' => array('string', 'file', 'array'),
                 'return' => 'array',
@@ -588,14 +588,20 @@ class RemoteAPICore {
     }
 
     /**
-     * Returns the permissions of a given wiki page
+     * Returns the permissions of a given wiki page for the current user or another user
      *
      * @param string $id page id
+     * @param string $user username/group
      * @return int permission level
      */
-    function aclCheck($id) {
+    function aclCheck($id, $user=null, $groups=null) {
         $id = $this->resolvePageId($id);
-        return auth_quickaclcheck($id);
+        $perms_current_user = auth_quickaclcheck($id);
+        if ($user === null){
+            return $perms_current_user;
+        } else {
+            return auth_aclcheck($id, $user, $groups);
+        }
     }
 
     /**
