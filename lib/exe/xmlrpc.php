@@ -16,7 +16,7 @@ class dokuwiki_xmlrpc_server extends IXR_Server {
     /**
      * Constructor. Register methods and run Server
      */
-    function dokuwiki_xmlrpc_server(){
+    function __construct(){
         $this->remote = new RemoteAPI();
         $this->remote->setDateTransformation(array($this, 'toDate'));
         $this->remote->setFileTransformation(array($this, 'toFile'));
