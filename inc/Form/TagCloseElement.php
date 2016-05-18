@@ -22,7 +22,7 @@ class TagCloseElement extends ValueElement {
     /**
      * do not call this
      *
-     * @param $class
+     * @param string $class
      * @return void
      * @throws \BadMethodCallException
      */
@@ -33,7 +33,7 @@ class TagCloseElement extends ValueElement {
     /**
      * do not call this
      *
-     * @param $id
+     * @param null|string $id
      * @return string
      * @throws \BadMethodCallException
      */
@@ -48,8 +48,8 @@ class TagCloseElement extends ValueElement {
     /**
      * do not call this
      *
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param null|string $value
      * @return string
      * @throws \BadMethodCallException
      */
@@ -64,7 +64,7 @@ class TagCloseElement extends ValueElement {
     /**
      * do not call this
      *
-     * @param $attributes
+     * @param array|null $attributes
      * @return array
      * @throws \BadMethodCallException
      */

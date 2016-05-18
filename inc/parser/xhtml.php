@@ -1422,6 +1422,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</td>';
     }
 
+    /**
+     * Returns the current header level.
+     * (required e.g. by the filelist plugin)
+     *
+     * @return int The current header level
+     */
+    function getLastlevel() {
+        return $this->lastlevel;
+    }
+
     #region Utility functions
 
     /**

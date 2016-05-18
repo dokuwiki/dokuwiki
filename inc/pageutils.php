@@ -110,7 +110,7 @@ function cleanID($raw_id,$ascii=false){
     $cache = & $cache_cleanid;
 
     // check if it's already in the memory cache
-    if (isset($cache[(string)$raw_id])) {
+    if (!$ascii && isset($cache[(string)$raw_id])) {
         return $cache[(string)$raw_id];
     }
 
@@ -143,7 +143,7 @@ function cleanID($raw_id,$ascii=false){
     $id = preg_replace('#:[:\._\-]+#',':',$id);
     $id = preg_replace('#[:\._\-]+:#',':',$id);
 
-    $cache[(string)$raw_id] = $id;
+    if (!$ascii) $cache[(string)$raw_id] = $id;
     return($id);
 }
 
@@ -285,14 +285,15 @@ function wikiFN($raw_id,$rev='',$clean=true){
     global $cache_wikifn;
     $cache = & $cache_wikifn;
 
-    if (isset($cache[$raw_id]) && isset($cache[$raw_id][$rev])) {
-        return $cache[$raw_id][$rev];
-    }
-
     $id = $raw_id;
 
     if ($clean) $id = cleanID($id);
     $id = str_replace(':','/',$id);
+
+    if (isset($cache[$id]) && isset($cache[$id][$rev])) {
+        return $cache[$id][$rev];
+    }
+
     if(empty($rev)){
         $fn = $conf['datadir'].'/'.utf8_encodeFN($id).'.txt';
     }else{
@@ -310,8 +311,8 @@ function wikiFN($raw_id,$rev='',$clean=true){
         }
     }
 
-    if (!isset($cache[$raw_id])) { $cache[$raw_id] = array(); }
-    $cache[$raw_id][$rev] = $fn;
+    if (!isset($cache[$id])) { $cache[$id] = array(); }
+    $cache[$id][$rev] = $fn;
     return $fn;
 }
 

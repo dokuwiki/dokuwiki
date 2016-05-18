@@ -6,7 +6,7 @@ namespace dokuwiki\Form;
  *
  * For Radio- and Checkboxes
  *
- * @package DokuForm
+ * @package dokuwiki\Form
  */
 class CheckableElement extends InputElement {
 

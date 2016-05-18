@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
@@ -127,7 +127,7 @@ $lang['rss_content']           = 'XML 피드 항목에 보여주는 내용은 �
 $lang['rss_update']            = 'XML 피드 업데이트 간격 (초)';
 $lang['rss_show_summary']      = 'XML 피드의 제목에서 요악 보여주기';
 $lang['rss_media']             = '어떤 규격으로 XML 피드에 바뀜을 나열해야 합니까?';
-$lang['updatecheck']           = '데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
+$lang['updatecheck']           = '업데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
 $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름공간 구분자로 슬래시 사용';
 $lang['sepchar']               = '문서 이름 낱말 구분자';

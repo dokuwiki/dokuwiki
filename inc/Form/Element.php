@@ -69,7 +69,7 @@ abstract class Element {
     /**
      * Removes the given attribute if it exists
      *
-     * @param $name
+     * @param string $name
      * @return $this
      */
     public function rmattr($name) {
