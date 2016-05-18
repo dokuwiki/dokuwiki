@@ -44,6 +44,10 @@
     min-width: 15em; /* @change */
 }
 
+#mediamanager__page .tabs li {
+    white-space: nowrap;
+}
+
 #mediamanager__page .panelHeader {
     background-color: @ini_background_alt;
     margin: 0 10px 10px 0;
