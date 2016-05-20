@@ -74,7 +74,8 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 'select-user',
                 'select-user-groups',
                 'select-groups',
-                'leave-group'
+                'leave-group',
+                'delete-user'
             )
         );
 
