@@ -1436,7 +1436,7 @@ function tpl_localeFN($id) {
 }
 
 /**
- * prints the "main content" in the mediamanger popup
+ * prints the "main content" in the mediamanager popup
  *
  * Depending on the user's actions this may be a list of
  * files in a namespace, the meta editing dialog or
@@ -1603,7 +1603,7 @@ function tpl_mediaFileDetails($image, $rev) {
 }
 
 /**
- * prints the namespace tree in the mediamanger popup
+ * prints the namespace tree in the mediamanager popup
  *
  * Only allowed in mediamanager.php
  *
