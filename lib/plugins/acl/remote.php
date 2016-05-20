@@ -12,7 +12,12 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
      */
     public function _getMethods() {
         return array(
-            'addAcl' => array(
+            'listAcls' => array(
+                'args' => array(),
+                'return' => 'Array of ACLs {scope, user, permission}',
+                'name' => 'listAcl',
+                'doc' => 'Get the list of all ACLs',
+            ),'addAcl' => array(
                 'args' => array('string','string','int'),
                 'return' => 'int',
                 'name' => 'addAcl',
@@ -24,6 +29,22 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
                 'doc' => 'Delete an existing ACL rule.'
             ),
         );
+    }
+
+    /**
+     * List all ACL config entries
+     *
+     * @throws RemoteAccessDeniedException
+     * @return dictionary {Scope: ACL}, where ACL = dictionnary {user/group: permissions_int}
+     */
+    public function listAcls(){
+        if(!auth_isadmin()) {
+         throw new RemoteAccessDeniedException('You are not allowed to access ACLs, superuser permission is required', 114);
+        }
+        /** @var admin_plugin_acl $apa */
+        $apa = plugin_load('admin', 'acl');
+        $apa->_init_acl_config();
+        return $apa->acl;
     }
 
     /**
