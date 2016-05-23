@@ -226,6 +226,7 @@ You can use up to five different levels of',
         sleep(1);
         $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[6] = filemtime(wikiFN('nice_page'));
+        sleep(1);
 
         $expected = array(
             array(
