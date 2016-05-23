@@ -1477,7 +1477,7 @@ function filesize_h($size, $dec = 1) {
         $i++;
     }
 
-    return round($size, $dec).' '.$sizes[$i];
+    return round($size, $dec).'&#xa0;'.$sizes[$i];
 }
 
 /**
