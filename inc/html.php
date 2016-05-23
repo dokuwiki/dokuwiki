@@ -2442,6 +2442,8 @@ function html_sizechange($sizechange, Doku_Form $form) {
         } elseif($sizechange < 0) {
             $class .= ' negative';
             $value = '-' . $value;
+        } else {
+            $value = '±' . $value;
         }
         $form->addElement(form_makeOpenTag('span', array('class' => $class)));
         $form->addElement($value);
