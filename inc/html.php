@@ -587,20 +587,7 @@ function html_revisions($first=0, $media_id = false){
         $form->addElement((empty($editor))?('('.$lang['external_edit'].')'):'<bdi>'.editorinfo($editor).'</bdi>');
         $form->addElement(form_makeCloseTag('span'));
 
-        if(isset($sizechange)) {
-            $class = 'sizechange';
-            $value = filesize_h(abs($sizechange));
-            if($sizechange > 0) {
-                $class .= ' positive';
-                $value = '+' . $value;
-            } elseif($sizechange < 0) {
-                $class .= ' negative';
-                $value = '-' . $value;
-            }
-            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
-            $form->addElement($value);
-            $form->addElement(form_makeCloseTag('span'));
-        }
+        html_sizechange($sizechange, $form);
 
         $form->addElement('('.$lang['current'].')');
 
@@ -690,20 +677,7 @@ function html_revisions($first=0, $media_id = false){
         }
         $form->addElement(form_makeCloseTag('span'));
 
-        if(isset($info['sizechange'])) {
-            $class = 'sizechange';
-            $value = filesize_h(abs($info['sizechange']));
-            if($info['sizechange'] > 0) {
-                $class .= ' positive';
-                $value = '+' . $value;
-            } elseif($info['sizechange'] < 0) {
-                $class .= ' negative';
-                $value = '-' . $value;
-            }
-            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
-            $form->addElement($value);
-            $form->addElement(form_makeCloseTag('span'));
-        }
+        html_sizechange($info['sizechange'], $form);
 
         if ($media_id) $form->addElement(form_makeCloseTag('div'));
 
@@ -913,20 +887,7 @@ function html_recent($first = 0, $show_changes = 'both') {
         }
         $form->addElement(form_makeCloseTag('span'));
 
-        if(isset($recent['sizechange'])) {
-            $class = 'sizechange';
-            $value = filesize_h(abs($recent['sizechange']));
-            if($recent['sizechange'] > 0) {
-                $class .= ' positive';
-                $value = '+' . $value;
-            } elseif($recent['sizechange'] < 0) {
-                $class .= ' negative';
-                $value = '-' . $value;
-            }
-            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
-            $form->addElement($value);
-            $form->addElement(form_makeCloseTag('span'));
-        }
+        html_sizechange($recent['sizechange'], $form);
 
         $form->addElement(form_makeCloseTag('div'));
         $form->addElement(form_makeCloseTag('li'));
@@ -2439,6 +2400,7 @@ function html_tabs($tabs, $current_tab = null) {
 
     echo '</ul>'.NL;
 }
+
 /**
  * Prints a single tab
  *
@@ -2463,3 +2425,26 @@ function html_tab($href, $caption, $selected=false) {
     echo $tab;
 }
 
+/**
+ * Display size change
+ *
+ * @param int $sizechange - size of change in Bytes
+ * @param Doku_Form $form - form to add elements to
+ */
+
+function html_sizechange($sizechange, Doku_Form $form) {
+    if(isset($sizechange)) {
+        $class = 'sizechange';
+        $value = filesize_h(abs($sizechange));
+        if($sizechange > 0) {
+            $class .= ' positive';
+            $value = '+' . $value;
+        } elseif($sizechange < 0) {
+            $class .= ' negative';
+            $value = '-' . $value;
+        }
+        $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+        $form->addElement($value);
+        $form->addElement(form_makeCloseTag('span'));
+    }
+}
