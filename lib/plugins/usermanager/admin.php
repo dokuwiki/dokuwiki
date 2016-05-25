@@ -1000,7 +1000,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         $INPUT->set('userpass', $candidate[1]);
         $INPUT->set('username', $candidate[2]);
         $INPUT->set('usermail', $candidate[3]);
-        $INPUT->set('usergroups', $candidate[4]);
+        $INPUT->set('usergroups', implode(',', array_slice($candidate, 4)));
 
         $cleaned = $this->_retrieveUser();
         list($user,/* $pass */,$name,$mail,/* $grps */) = $cleaned;
