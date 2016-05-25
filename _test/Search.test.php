@@ -132,6 +132,15 @@ class Search_struct_test extends StructTest {
         $this->assertEquals(1, count($result), 'result rows');
         $this->assertEquals(6, count($result[0]), 'result columns');
 
+        // sort by multi-column
+        $search->addSort('second');
+        $this->assertEquals(2, count($search->sortby));
+        $result = $search->execute();
+        $count = $search->getCount();
+        $this->assertEquals(1, $count, 'result count');
+        $this->assertEquals(1, count($result), 'result rows');
+        $this->assertEquals(6, count($result[0]), 'result columns');
+
         /*
         {#debugging
             list($sql, $opts) = $search->getSQL();

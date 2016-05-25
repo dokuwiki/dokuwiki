@@ -30,9 +30,10 @@ class PageColumn extends Column {
     }
 
     /**
+     * @param bool $forceSingleColumn ignored
      * @return string
      */
-    public function getColName() {
+    public function getColName($forceSingleColumn = true) {
         $col = 'pid';
         if($this->table) $col = 'data_'.$this->table.'.'.$col;
         return $col;

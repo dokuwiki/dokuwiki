@@ -300,7 +300,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $order .= $col->getColName() . ' ';
+            $order .= $col->getColName(false) . ' ';
             $order .= ($asc) ? 'ASC' : 'DESC';
             $order .= ', ';
         }
