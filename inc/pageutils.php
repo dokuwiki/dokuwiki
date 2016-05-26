@@ -81,7 +81,13 @@ function getID($param='id',$clean=true){
             // fall back to default
             $id = $id.$conf['start'];
         }
-        if (isset($ACT) && $ACT === 'show') send_redirect(wl($id,'',true));
+        if (isset($ACT) && $ACT === 'show') {
+            $urlParameters = $_GET;
+            if (isset($urlParameters['id'])) {
+                unset($urlParameters['id']);
+            }
+            send_redirect(wl($id,$urlParameters,true));
+        }
     }
 
     if($clean) $id = cleanID($id);
