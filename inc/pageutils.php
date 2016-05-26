@@ -83,7 +83,9 @@ function getID($param='id',$clean=true){
         }
         if (isset($ACT) && $ACT === 'show') {
             $urlParameters = $_GET;
-            if (isset($urlParameters['id'])) {unset($urlParameters['id']);}
+            if (isset($urlParameters['id'])) {
+                unset($urlParameters['id']);
+            }
             send_redirect(wl($id,$urlParameters,true));
         }
     }
