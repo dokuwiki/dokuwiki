@@ -620,9 +620,10 @@ class Mailer {
             'DOKUWIKIURL' => DOKU_URL,
             'USER' => $INPUT->server->str('REMOTE_USER'),
             'NAME' => $INFO['userinfo']['name'],
-            'MAIL' => $INFO['userinfo']['mail'],
-            'EMAILSIGNATURE' => "\n-- \n" . $lang['email_signature'] . "\n" . DOKU_URL . "\n",
+            'MAIL' => $INFO['userinfo']['mail']
         );
+        $signature = str_replace('@DOKUWIKIURL@',$this->replacements['text']['DOKUWIKIURL'], $lang['email_signature_text']);
+        $this->replacements['text']['EMAILSIGNATURE'] = "\n-- \n" . $signature . "\n";
 
         $this->replacements['html'] = array(
             'DATE' => '<i>' . hsc(dformat()) . '</i>',
@@ -634,10 +635,24 @@ class Mailer {
             'USER' => hsc($INPUT->server->str('REMOTE_USER')),
             'NAME' => hsc($INFO['userinfo']['name']),
             'MAIL' => '<a href="mailto:"' . hsc($INFO['userinfo']['mail']) . '">' .
-                hsc($INFO['userinfo']['mail']) . '</a>',
-            'EMAILSIGNATURE' => hsc($lang['email_signature']) . ':<br />' .
-                '<a href="' . DOKU_URL . '">' . DOKU_URL . '</a>',
+                hsc($INFO['userinfo']['mail']) . '</a>'
         );
+        $signature = $lang['email_signature_text'];
+        if(!empty($lang['email_signature_html'])) {
+            $signature = $lang['email_signature_html'];
+        }
+        $signature = str_replace(
+            array(
+                '@DOKUWIKIURL@',
+                "\n"
+            ),
+            array(
+                $this->replacements['html']['DOKUWIKIURL'],
+                '<br />'
+            ),
+            $signature
+        );
+        $this->replacements['html']['EMAILSIGNATURE'] = $signature;
     }
 
     /**

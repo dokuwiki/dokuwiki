@@ -345,4 +345,5 @@ $lang['currentns']             = 'مساحة الاسم الحالية';
 $lang['searchresult']          = 'نتيجة البحث';
 $lang['plainhtml']             = 'نص HTML غير منسق';
 $lang['wikimarkup']            = 'علامات الوكي';
-$lang['email_signature'] = 'أنشئت هذه الرسالة من دوكو ويكي في';
+$lang['email_signature_text']       = 'أنشئت هذه الرسالة من دوكو ويكي في
+@DOKUWIKIURL@';

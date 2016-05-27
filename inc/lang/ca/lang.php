@@ -331,7 +331,8 @@ $lang['media_perm_read']       = 'No teniu permisos suficients per a llegir arxi
 $lang['media_perm_upload']     = 'No teniu permisos suficients per a pujar arxius';
 $lang['media_update']          = 'Puja la nova versió';
 $lang['media_restore']         = 'Restaura aquesta versió';
-$lang['email_signature']       = 'Aquest mail ha estat generat per DokuWiki a';
+$lang['email_signature_text']       = 'Aquest mail ha estat generat per DokuWiki a
+@DOKUWIKIURL@';
 $lang['currentns']             = 'Espai de noms actual';
 $lang['searchresult']          = 'Resultats cerca';
 $lang['plainhtml']             = 'HTML pla';

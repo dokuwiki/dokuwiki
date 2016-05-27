@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -350,4 +350,5 @@ $lang['searchresult']          = 'Søgsresultat';
 $lang['plainhtml']             = 'Ren HTML';
 $lang['wikimarkup']            = 'Wiki Opmærkning';
 $lang['page_nonexist_rev']     = 'Siden blev ikke fundet ved %s. Den blev efterfølgende oprettet ved <a href="%s">%s</a>.';
-$lang['email_signature'] = 'Denne e-mail blev genereret af DokuWiki på';
+$lang['email_signature_text'] = 'Denne e-mail blev genereret af DokuWiki på
+@DOKUWIKIURL@';

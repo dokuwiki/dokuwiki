@@ -345,4 +345,5 @@ $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
-$lang['email_signature'] = 'List został wygenerowany przez DokuWiki pod adresem';
+$lang['email_signature_text'] = 'List został wygenerowany przez DokuWiki pod adresem
+@DOKUWIKIURL@';

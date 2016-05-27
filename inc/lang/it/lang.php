@@ -355,5 +355,6 @@ $lang['searchresult']          = 'Risultati della ricerca';
 $lang['plainhtml']             = 'HTML';
 $lang['wikimarkup']            = 'Marcatura wiki';
 $lang['page_nonexist_rev']     = 'Pagina non esistente a %s. E\' stata creata successivamente a <a href="%s">%s</a>.';
-$lang['email_signature']       = 'Questa email è stata generata dal DokuWiki all\'indirizzo';
+$lang['email_signature_text']       = 'Questa email è stata generata dal DokuWiki all\'indirizzo
+@DOKUWIKIURL@';
 $lang['unable_to_parse_date']  = 'Impossibile eseguire l\'analisi al parametro "%s".';

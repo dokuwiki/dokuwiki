@@ -337,4 +337,5 @@ $lang['currentns']             = 'Aktuala nomspaco';
 $lang['searchresult']          = 'Serĉrezulto';
 $lang['plainhtml']             = 'Plena HTML';
 $lang['wikimarkup']            = 'Vikiteksto';
-$lang['email_signature'] = 'Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe';
+$lang['email_signature_text'] = 'Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe
+@DOKUWIKIURL@';
