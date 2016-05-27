@@ -622,7 +622,7 @@ class Mailer {
             'NAME' => $INFO['userinfo']['name'],
             'MAIL' => $INFO['userinfo']['mail']
         );
-        $signature = str_replace('@DOKUWIKIURL@',$this->replacements['text']['DOKUWIKIURL'], $lang['email_signature_text']);
+        $signature = str_replace('@DOKUWIKIURL@', $this->replacements['text']['DOKUWIKIURL'], $lang['email_signature_text']);
         $this->replacements['text']['EMAILSIGNATURE'] = "\n-- \n" . $signature . "\n";
 
         $this->replacements['html'] = array(
