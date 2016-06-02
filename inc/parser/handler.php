@@ -1470,12 +1470,16 @@ class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
                 case 'tablerow_close':
 
                     // Fix broken tables by adding missing cells
+                    $moreCalls = array();
                     while (++$lastCell < $this->maxCols) {
-                        array_splice($this->tableCalls, $key, 0, array(
-                               array('tablecell_open', array(1, null, 1), $call[2]),
-                               array('cdata', array(''), $call[2]),
-                               array('tablecell_close', array(), $call[2])));
-                        $key += 3;
+                        $moreCalls[] = array('tablecell_open', array(1, null, 1), $call[2]);
+                        $moreCalls[] = array('cdata', array(''), $call[2]);
+                        $moreCalls[] = array('tablecell_close', array(), $call[2]);
+                    }
+                    $moreCallsLength = count($moreCalls);
+                    if($moreCallsLength) {
+                        array_splice($this->tableCalls, $key, 0, $moreCalls);
+                        $key += $moreCallsLength;
                     }
 
                     if($this->countTableHeadRows == $lastRow) {
