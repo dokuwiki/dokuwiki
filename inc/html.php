@@ -550,7 +550,9 @@ function html_revisions($first=0, $media_id = false){
                     $sizechange = null;
                 }
             }
-            $href = wl($id);
+            $pagelog = new PageChangeLog($ID);
+            $latestrev = $pagelog->getRevisions(-1, 1)[0];
+            $href = wl($id,"rev=$latestrev",false,'&');
             $summary = $INFO['sum'];
             $editor = $INFO['editor'];
         }
