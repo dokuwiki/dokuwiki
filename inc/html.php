@@ -551,7 +551,7 @@ function html_revisions($first=0, $media_id = false){
                 }
             }
             $pagelog = new PageChangeLog($ID);
-            $latestrev = $pagelog->getRevisions(-1, 1)[0];
+            $latestrev = array_pop($pagelog->getRevisions(-1, 1));
             $href = wl($id,"rev=$latestrev",false,'&');
             $summary = $INFO['sum'];
             $editor = $INFO['editor'];
