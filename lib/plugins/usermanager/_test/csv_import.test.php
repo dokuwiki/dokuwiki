@@ -150,20 +150,6 @@ importiso8859,"F'.chr(0xF8).'rd Prefect",ford@example.com,user
         $this->doImportTest($csv, true, $expected, array());
     }
 
-    /**
-     * Verify usermanager::str_getcsv() behaves identically to php 5.3's str_getcsv()
-     * within the context/parameters required by _import()
-     *
-     * @requires PHP 5.3
-     * @deprecated    remove when dokuwiki requires 5.3+
-     *                also associated usermanager & mock usermanager access methods
-     */
-    function test_getcsvcompatibility() {
-        $line = 'importuser,"Ford Prefect",ford@example.com,user'.NL;
-
-        $this->assertEquals(str_getcsv($line), $this->usermanager->access_str_getcsv($line));
-    }
-
     private function stripPasswords($array){
         foreach ($array as $user => $data) {
             unset($array[$user]['pass']);

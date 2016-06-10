@@ -1203,20 +1203,30 @@ function con($pre, $text, $suf, $pretty = false) {
 function detectExternalEdit($id) {
     global $lang;
 
-    $file     = wikiFN($id);
-    $old      = @filemtime($file); // from page
-    $pagelog  = new PageChangeLog($id, 1024);
-    $oldRev   = $pagelog->getRevisions(-1, 1); // from changelog
-    $oldRev   = (int) (empty($oldRev) ? 0 : $oldRev[0]);
+    $fileLastMod = wikiFN($id);
+    $lastMod     = @filemtime($fileLastMod); // from page
+    $pagelog     = new PageChangeLog($id, 1024);
+    $lastRev     = $pagelog->getRevisions(-1, 1); // from changelog
+    $lastRev     = (int) (empty($lastRev) ? 0 : $lastRev[0]);
 
-    if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
+    if(!file_exists(wikiFN($id, $lastMod)) && file_exists($fileLastMod) && $lastMod >= $lastRev) {
         // add old revision to the attic if missing
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
-        if($old > $oldRev) {
-            addLogEntry($old, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true));
+        if($lastMod > $lastRev) {
+            $fileLastRev = wikiFN($id, $lastRev);
+            $revinfo = $pagelog->getRevisionInfo($lastRev);
+            if(empty($lastRev) || !file_exists($fileLastRev) || $revinfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+                $filesize_old = 0;
+            } else {
+                $filesize_old = io_getSizeFile($fileLastRev);
+            }
+            $filesize_new = filesize($fileLastMod);
+            $sizechange = $filesize_new - $filesize_old;
+
+            addLogEntry($lastMod, $id, DOKU_CHANGE_TYPE_EDIT, $lang['external_edit'], '', array('ExternalEdit'=> true), $sizechange);
             // remove soon to be stale instructions
-            $cache = new cache_instructions($id, $file);
+            $cache = new cache_instructions($id, $fileLastMod);
             $cache->removeCache();
         }
     }
@@ -1260,6 +1270,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $svdta['contentChanged'] = ($svdta['newContent'] != $svdta['oldContent']);
     $svdta['changeInfo']     = '';
     $svdta['changeType']     = DOKU_CHANGE_TYPE_EDIT;
+    $svdta['sizechange']     = null;
 
     // select changelog line type
     if($REV) {
@@ -1271,7 +1282,9 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // empty or whitespace only content deletes
         $svdta['changeType'] = DOKU_CHANGE_TYPE_DELETE;
         // autoset summary on deletion
-        if(blank($svdta['summary'])) $svdta['summary'] = $lang['deleted'];
+        if(blank($svdta['summary'])) {
+            $svdta['summary'] = $lang['deleted'];
+        }
     } else if($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
         //minor edits only for logged in users
         $svdta['changeType'] = DOKU_CHANGE_TYPE_MINOR_EDIT;
@@ -1284,6 +1297,15 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     if(!$svdta['contentChanged']) return;
 
     detectExternalEdit($id);
+
+    if(
+        $svdta['changeType'] == DOKU_CHANGE_TYPE_CREATE ||
+        ($svdta['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($svdta['file']))
+    ) {
+        $filesize_old = 0;
+    } else {
+        $filesize_old = filesize($svdta['file']);
+    }
     if($svdta['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
         // Send "update" event with empty data, so plugins can react to page deletion
         $data = array(array($svdta['file'], '', false), getNS($id), noNS($id), false);
@@ -1294,6 +1316,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         $data['newRevision'] = saveOldRevision($id);
         // remove empty file
         @unlink($svdta['file']);
+        $filesize_new = 0;
         // don't remove old meta info as it should be saved, plugins can use IO_WIKIPAGE_WRITE for removing their metadata...
         // purge non-persistant meta data
         p_purge_metadata($id);
@@ -1305,11 +1328,14 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         io_writeWikiPage($svdta['file'], $text, $id);
         // pre-save the revision, to keep the attic in sync
         $svdta['newRevision'] = saveOldRevision($id);
+        $filesize_new = filesize($svdta['file']);
     }
+    $svdta['sizechange'] = $filesize_new - $filesize_old;
 
     $event->advise_after();
 
-    addLogEntry($svdta['newRevision'], $svdta['id'], $svdta['changeType'], $svdta['summary'], $svdta['changeInfo']);
+    addLogEntry($svdta['newRevision'], $svdta['id'], $svdta['changeType'], $svdta['summary'], $svdta['changeInfo'], null, $svdta['sizechange']);
+
     // send notify mails
     notify($svdta['id'], 'admin', $svdta['oldRevision'], $svdta['summary'], $minor);
     notify($svdta['id'], 'subscribers', $svdta['oldRevision'], $svdta['summary'], $minor);
@@ -1451,7 +1477,7 @@ function filesize_h($size, $dec = 1) {
         $i++;
     }
 
-    return round($size, $dec).' '.$sizes[$i];
+    return round($size, $dec).'&#xa0;'.$sizes[$i];
 }
 
 /**
@@ -1846,6 +1872,8 @@ function is_mem_available($mem, $bytes = 1048576) {
  * @param string $url url being directed to
  */
 function send_redirect($url) {
+    $url = stripctl($url); // defend against HTTP Response Splitting
+
     /* @var Input $INPUT */
     global $INPUT;
 

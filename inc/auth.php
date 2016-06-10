@@ -51,11 +51,6 @@ function auth_setup() {
         if ($conf['authtype'] === $plugin) {
             $auth = $plugin_controller->load('auth', $plugin);
             break;
-        } elseif ('auth' . $conf['authtype'] === $plugin) {
-            // matches old auth backends (pre-Weatherwax)
-            $auth = $plugin_controller->load('auth', $plugin);
-            msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
-                 . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
         }
     }
 
@@ -1049,12 +1044,19 @@ function updateprofile() {
         return false;
     }
 
-    // update cookie and session with the changed data
     if($changes['pass']) {
+        // update cookie and session with the changed data
         list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
         $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
         auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
+    } else {
+        // make sure the session is writable
+        @session_start();
+        // invalidate session cache
+        $_SESSION[DOKU_COOKIE]['auth']['time'] = 0;
+        session_write_close();
     }
+
     return true;
 }
 

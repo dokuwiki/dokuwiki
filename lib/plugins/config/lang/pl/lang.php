@@ -138,7 +138,7 @@ $lang['autoplural']            = 'Automatyczne tworzenie liczby mnogiej';
 $lang['compression']           = 'Metoda kompresji dla usuniętych plików';
 $lang['gzip_output']           = 'Używaj kodowania GZIP dla zawartości XHTML';
 $lang['compress']              = 'Kompresja arkuszy CSS i plików JavaScript';
-$lang['cssdatauri']            = 'Rozmiar w bajtach, poniżej którego odwołania do obrazów w plikach CSS powinny być osadzone bezpośrednio w arkuszu stylów by zmniejszyć ogólne żądania nagłówków HTTP. Technika ta nie działa w IE 7 i poniżej! <code>400</code> do <code>600</code> bajtów jest dobrą wartością. Ustaw <code>0</code> aby wyłączyć.';
+$lang['cssdatauri']            = 'Rozmiar w bajtach, poniżej którego odwołania do obrazów w plikach CSS powinny być osadzone bezpośrednio w arkuszu stylów by zmniejszyć ogólne żądania nagłówków HTTP. <code>400</code> do <code>600</code> bajtów jest dobrą wartością. Ustaw <code>0</code> aby wyłączyć.';
 $lang['send404']               = 'Nagłówek "HTTP 404/Page Not Found" dla nieistniejących stron';
 $lang['broken_iua']            = 'Czy funkcja "ignore_user_abort" działa? Jeśli nie, może to powodować problemy z indeksem przeszukiwania. Funkcja nie działa przy konfiguracji oprogramowania IIS+PHP/CGI. Szczegółowe informacje: <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesyłania statycznych plików. Serwer HTTP musi obsługiwać ten nagłówek.';

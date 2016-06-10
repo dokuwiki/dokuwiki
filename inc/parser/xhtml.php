@@ -938,10 +938,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['more']   = '';
         $link['class']  = $class;
         $link['url']    = $url;
+        $link['rel']    = '';
 
         $link['name']  = $name;
         $link['title'] = $this->_xmlEntities($url);
-        if($conf['relnofollow']) $link['more'] .= ' rel="nofollow"';
+        if($conf['relnofollow']) $link['rel'] .= ' nofollow';
+        if($conf['target']['extern']) $link['rel'] .= ' noopener';
 
         //output formatted
         if($returnonly) {
@@ -971,6 +973,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['suf']    = '';
         $link['more']   = '';
         $link['name']   = $this->_getLinkTitle($name, $wikiUri, $isImage);
+        $link['rel']    = '';
 
         //get interwiki URL
         $exists = null;
@@ -992,9 +995,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                 $link['class'] .= ' wikilink1';
             } else {
                 $link['class'] .= ' wikilink2';
-                $link['rel'] = 'nofollow';
+                $link['rel'] .= ' nofollow';
             }
         }
+        if($conf['target']['interwiki']) $link['rel'] .= ' noopener';
 
         $link['url']   = $url;
         $link['title'] = htmlspecialchars($link['url']);
@@ -1418,6 +1422,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $this->doc .= '</td>';
     }
 
+    /**
+     * Returns the current header level.
+     * (required e.g. by the filelist plugin)
+     *
+     * @return int The current header level
+     */
+    function getLastlevel() {
+        return $this->lastlevel;
+    }
+
     #region Utility functions
 
     /**
@@ -1448,7 +1462,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if(!empty($link['target'])) $ret .= ' target="'.$link['target'].'"';
         if(!empty($link['title'])) $ret .= ' title="'.$link['title'].'"';
         if(!empty($link['style'])) $ret .= ' style="'.$link['style'].'"';
-        if(!empty($link['rel'])) $ret .= ' rel="'.$link['rel'].'"';
+        if(!empty($link['rel'])) $ret .= ' rel="'.trim($link['rel']).'"';
         if(!empty($link['more'])) $ret .= ' '.$link['more'];
         $ret .= '>';
         $ret .= $link['name'];
@@ -1682,6 +1696,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['suf']    = '';
         $link['more']   = '';
         $link['target'] = $conf['target']['media'];
+        if($conf['target']['media']) $link['rel'] = 'noopener';
         $link['title']  = $this->_xmlEntities($src);
         $link['name']   = $this->_media($src, $title, $align, $width, $height, $cache, $render);
 

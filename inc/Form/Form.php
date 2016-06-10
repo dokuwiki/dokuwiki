@@ -58,8 +58,8 @@ class Form extends Element {
     /**
      * Sets a hidden field
      *
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @return $this
      */
     public function setHiddenField($name, $value) {
@@ -83,7 +83,7 @@ class Form extends Element {
      * A position out-of-bounds will return either the
      * first (underflow) or last (overflow) element.
      *
-     * @param $pos
+     * @param int $pos
      * @return Element
      */
     public function getElementAt($pos) {
@@ -153,7 +153,7 @@ class Form extends Element {
      * Replaces an existing element with a new one
      *
      * @param Element $element the new element
-     * @param $pos 0-based position of the element to replace
+     * @param int $pos 0-based position of the element to replace
      */
     public function replaceElement(Element $element, $pos) {
         if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
@@ -163,7 +163,7 @@ class Form extends Element {
     /**
      * Remove an element from the form completely
      *
-     * @param $pos 0-based position of the element to remove
+     * @param int $pos 0-based position of the element to remove
      */
     public function removeElement($pos) {
         array_splice($this->elements, $pos, 1);
@@ -176,8 +176,8 @@ class Form extends Element {
     /**
      * Adds a text input field
      *
-     * @param $name
-     * @param $label
+     * @param string $name
+     * @param string $label
      * @param int $pos
      * @return InputElement
      */
@@ -188,8 +188,8 @@ class Form extends Element {
     /**
      * Adds a password input field
      *
-     * @param $name
-     * @param $label
+     * @param string $name
+     * @param string $label
      * @param int $pos
      * @return InputElement
      */
@@ -200,8 +200,8 @@ class Form extends Element {
     /**
      * Adds a radio button field
      *
-     * @param $name
-     * @param $label
+     * @param string $name
+     * @param string $label
      * @param int $pos
      * @return CheckableElement
      */
@@ -212,8 +212,8 @@ class Form extends Element {
     /**
      * Adds a checkbox field
      *
-     * @param $name
-     * @param $label
+     * @param string $name
+     * @param string $label
      * @param int $pos
      * @return CheckableElement
      */
@@ -222,10 +222,23 @@ class Form extends Element {
     }
 
     /**
+     * Adds a dropdown field
+     *
+     * @param string $name
+     * @param array $options
+     * @param string $label
+     * @param int $pos
+     * @return DropdownElement
+     */
+    public function addDropdown($name, $options, $label = '', $pos = -1) {
+        return $this->addElement(new DropdownElement($name, $options, $label), $pos);
+    }
+
+    /**
      * Adds a textarea field
      *
-     * @param $name
-     * @param $label
+     * @param string $name
+     * @param string $label
      * @param int $pos
      * @return TextareaElement
      */
@@ -260,7 +273,7 @@ class Form extends Element {
     /**
      * Adds a label referencing another input element, escapes the label for you
      *
-     * @param $label
+     * @param string $label
      * @param string $for
      * @param int $pos
      * @return Element
@@ -295,7 +308,7 @@ class Form extends Element {
     /**
      * Add fixed HTML to the form
      *
-     * @param $html
+     * @param string $html
      * @param int $pos
      * @return HTMLElement
      */
@@ -306,7 +319,7 @@ class Form extends Element {
     /**
      * Add a closed HTML tag to the form
      *
-     * @param $tag
+     * @param string $tag
      * @param int $pos
      * @return TagElement
      */
@@ -319,7 +332,7 @@ class Form extends Element {
      *
      * Be sure to close it again!
      *
-     * @param $tag
+     * @param string $tag
      * @param int $pos
      * @return TagOpenElement
      */
@@ -332,7 +345,7 @@ class Form extends Element {
      *
      * Be sure it had been opened before
      *
-     * @param $tag
+     * @param string $tag
      * @param int $pos
      * @return TagCloseElement
      */
@@ -343,7 +356,7 @@ class Form extends Element {
     /**
      * Open a Fieldset
      *
-     * @param $legend
+     * @param string $legend
      * @param int $pos
      * @return FieldsetOpenElement
      */
@@ -409,17 +422,17 @@ class Form extends Element {
     public function toHTML() {
         $this->balanceFieldsets();
 
-        $html = '<form ' . buildAttributes($this->attrs()) . '>' . DOKU_LF;
+        $html = '<form ' . buildAttributes($this->attrs()) . '>';
 
         foreach($this->hidden as $name => $value) {
-            $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />' . DOKU_LF;
+            $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />';
         }
 
         foreach($this->elements as $element) {
-            $html .= $element->toHTML() . DOKU_LF;
+            $html .= $element->toHTML();
         }
 
-        $html .= '</form>' . DOKU_LF;
+        $html .= '</form>';
 
         return $html;
     }

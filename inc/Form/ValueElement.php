@@ -20,7 +20,7 @@ abstract class ValueElement extends Element {
 
     /**
      * @param string $type
-     * @param array|string $value
+     * @param string $value
      * @param array $attributes
      */
     public function __construct($type, $value, $attributes = array()) {

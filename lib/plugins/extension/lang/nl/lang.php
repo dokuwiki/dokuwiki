@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
@@ -39,7 +39,7 @@ $lang['search_for']            = 'Zoek Uitbreiding:';
 $lang['search']                = 'Zoek';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
 $lang['screenshot']            = 'Schermafdruk bij %s';
-$lang['popularity']            = 'Populariteit:%s%%';
+$lang['popularity']            = 'Populariteit: %s%%';
 $lang['homepage_link']         = 'Documentatie';
 $lang['bugs_features']         = 'Bugs';
 $lang['tags']                  = 'Tags:';
@@ -82,7 +82,7 @@ $lang['missing_dependency']    = '<strong>niet aanwezige of uitgeschakelde afhan
 $lang['security_issue']        = '<strong>Veiligheids kwestie:</strong> %s';
 $lang['security_warning']      = '<strong>Veiligheids Waarschuwing</strong> %s';
 $lang['update_available']      = '<strong>Update:</strong> Nieuwe versie %s is beschikbaar.';
-$lang['wrong_folder']          = '<strong>Plugin onjuist geïnstalleerd:</strong> Hernoem de plugin directory van "%s" naar"%s"';
+$lang['wrong_folder']          = '<strong>Plugin onjuist geïnstalleerd:</strong> Hernoem de plugin directory van "%s" naar "%s"';
 $lang['url_change']            = '<strong>URL gewijzigd:</strong> Download URL is gewijzigd sinds de laatste download. Controleer of de nieuwe URL juist is voordat u de uitbreiding updatet. <br />Nieuw:%s<Br /> Vorig: %s';
 $lang['error_badurl']          = 'URLs moeten beginnen met http of https';
 $lang['error_dircreate']       = 'De tijdelijke map kon niet worden gemaakt om de download te ontvangen';

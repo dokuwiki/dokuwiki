@@ -23,11 +23,6 @@
     margin: 1px 1px 5px;
 }
 
-* html .qq-upload-button,
-*+html .qq-upload-button {
-    display: inline;
-}
-
 .qq-upload-button-focus {
     outline: 1px dotted;
 }
