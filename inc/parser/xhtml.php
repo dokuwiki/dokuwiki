@@ -1349,7 +1349,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     function tablerow_open() {
         // initialize the cell counter used for classes
         $this->_counter['cell_counter'] = 0;
-        $class                          = 'row'.$this->_counter['row_counter']++;
+		if (!isset($this->_counter['row_counter'])){
+            $this->_counter['row_counter'] = 0;
+        }
+		$class                          = 'row'.$this->_counter['row_counter']++;
         $this->doc .= DOKU_TAB.'<tr class="'.$class.'">'.DOKU_LF.DOKU_TAB.DOKU_TAB;
     }
 
