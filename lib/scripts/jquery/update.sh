@@ -14,7 +14,7 @@ JQUI_HOST="https://code.jquery.com/ui/$JQUI_VERSION"
 JQUI_GIT="https://raw.githubusercontent.com/jquery/jquery-ui/$JQUI_VERSION/ui"
 
 # Adjust version for jQuery here - latest updates slowly
-JQ_VERSION='2.2.3'
+JQ_VERSION='2.2.4'
 
 
 # load jQuery
