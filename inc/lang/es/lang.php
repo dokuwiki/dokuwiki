@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Zigor Astarbe <zigor@astarbe.com>
  * @author Adrián Ariza <adrian_ariza.ciudad.com.ar>
  * @author Gabiel Molina <gabriel191@gmail.com>
@@ -377,3 +377,5 @@ $lang['plainhtml']             = 'HTML sencillo';
 $lang['wikimarkup']            = 'Etiquetado Wiki';
 $lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue creada en <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';
+$lang['email_signature_text']       = 'Este mail ha sido generado por DokuWiki en
+@DOKUWIKIURL@';

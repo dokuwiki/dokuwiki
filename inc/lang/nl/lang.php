@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author François Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
@@ -361,5 +361,7 @@ $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
 $lang['wikimarkup']            = 'Wiki Opmaak';
+$lang['email_signature_text']       = 'Deze mail werd gegenereerd door DokuWiki op
+@DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'Pagina bestaat niet bij %s. Het is vervolgens aangemaakt bij <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Begrijp het niet bij parameter "%s".';

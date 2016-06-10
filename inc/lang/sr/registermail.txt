@@ -8,8 +8,3 @@
 Веб читач: @BROWSER@
 ИП адреса: @IPADDRESS@
 Домаћин: @HOSTNAME@
-
-
--- 
-Ову поруку је генерисао DokuWiki sa
-@DOKUWIKIURL@

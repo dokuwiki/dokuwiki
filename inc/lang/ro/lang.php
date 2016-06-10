@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Tiberiu Micu <tibimicu@gmx.net>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author Emanuel-Emeric Andrași <n30@mandrivausers.ro>
@@ -333,4 +333,6 @@ $lang['media_perm_read']       = 'Ne pare rău, dar nu ai suficiente permisiuni 
 $lang['media_perm_upload']     = 'Ne pare rău, dar nu ai suficiente permisiuni pentru a putea încărca fișiere.';
 $lang['media_update']          = 'Încarcă noua versiune';
 $lang['media_restore']         = 'Restaurează această versiune';
+$lang['email_signature_text']       = 'Acest e-mail a fost generat de DokuWiki la
+@DOKUWIKIURL@';
 $lang['searchresult']          = 'Rezultatul cautarii';

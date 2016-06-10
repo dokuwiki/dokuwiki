@@ -10,8 +10,3 @@ Samenvatting  : @SUMMARY@
 User          : @USER@
 
 @DIFF@
-
-
--- 
-Deze mail werd gegenereerd door DokuWiki op
-@DOKUWIKIURL@

@@ -8,7 +8,3 @@ Data : @DATE@
 Browser : @BROWSER@
 Endereço IP : @IPADDRESS@
 Hostname : @HOSTNAME@
-
-----
-
-Esta mensagem foi gerada pelo DokuWiki em @DOKUWIKIURL@

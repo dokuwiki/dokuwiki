@@ -8,7 +8,3 @@ Data: @DATE@
 Navegador: @BROWSER@
 Adreça IP: @IPADDRESS@
 Ordinador: @HOSTNAME@
-
--- 
-Missatge generat per DokuWiki en
-@DOKUWIKIURL@

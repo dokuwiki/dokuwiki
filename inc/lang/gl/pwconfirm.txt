@@ -9,7 +9,3 @@ Para confirmares que esta solicitude foi realmente enviada por ti,
 por favor, visita a seguinte ligazón.
 
 @CONFIRM@
-
---
-Este correo-e foi xerado polo DokuWiki de
-@DOKUWIKIURL@

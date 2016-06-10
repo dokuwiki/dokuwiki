@@ -8,7 +8,3 @@ Data: @DATE@
 Shfletuesi: @BROWSER@
 Adresa IP: @IPADDRESS@
 Emri Hostit: @HOSTNAME@
-
---
-Ky email u gjenerua nga DokuWiki në
-@DOKUWIKIURL@

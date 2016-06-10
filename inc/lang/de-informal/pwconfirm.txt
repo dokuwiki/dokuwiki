@@ -10,8 +10,3 @@ Um die Anforderung zu bestätigen, folge bitte dem unten angegebenen
 Bestätigungslink.
 
 @CONFIRM@
-
--- 
-Diese Mail wurde vom DokuWiki auf
-@DOKUWIKIURL@
-erzeugt.

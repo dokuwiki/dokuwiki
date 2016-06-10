@@ -10,6 +10,3 @@ Povzetek urejanja: @SUMMARY@
 Uporabnik        : @USER@
 
 @DIFF@
-
---
-Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@

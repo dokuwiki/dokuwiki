@@ -10,7 +10,3 @@ Opis izmjene      : @SUMMARY@
 Korisnik          : @USER@
 
 @DIFF@
-
-
--- 
-Ovaj email je poslan na: @DOKUWIKIURL@

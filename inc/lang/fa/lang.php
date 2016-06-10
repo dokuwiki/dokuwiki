@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author Omid Mottaghi <omidmr@gmail.com>
@@ -347,5 +347,7 @@ $lang['currentns']             = 'فضای نام جاری';
 $lang['searchresult']          = 'نتیجه‌ی جستجو';
 $lang['plainhtml']             = 'HTML ساده';
 $lang['wikimarkup']            = 'نشانه‌گذاری ویکی';
+$lang['email_signature_text'] = 'این ایمیل توسط DokuWiki تولید شده است
+@DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'صفحه %s وجود نداشت. این صفحه معاقباً در<a href="%s">%s</a> ایجاد شد.';
 $lang['unable_to_parse_date']  = 'امکان تجزیه و تحلیل پارامتر «%s» وجود ندارد.';

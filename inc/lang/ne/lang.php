@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Saroj Kumar Dhakal <lotusnagarkot@gmail.com>
  * @author Saroj Kumar Dhakal <lotusnagarkot@yahoo.com>
  * @author सरोज ढकाल <lotusnagarkot@gmail.com>
@@ -201,3 +201,5 @@ $lang['i_pol1']                = 'Public विकि (पठन सवैका
 $lang['i_pol2']                = 'बन्द विकि (पठन , लेखन, अपलोड ) दर्ता भएका प्रयोगकर्ताका लागि मात्र ।';
 $lang['i_retry']               = 'पुन: प्रयास गर्नुहोस् ';
 $lang['recent_global']         = 'तपाई अहिले <b>%s</b> नेमस्पेस भित्र भएका परिवर्तन हेर्दैहुनुहुन्छ। तपाई <a href="%s">पुरै विकिमा भएको परिवर्तन हेर्न सक्नुहुन्छ</a>.';
+$lang['email_signature_text'] = 'यो पत्र DokuWiki ले, मा तयार पारेको हो ।
+@DOKUWIKIURL@';

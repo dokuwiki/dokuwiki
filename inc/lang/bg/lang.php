@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Viktor Usunov <usun0v@mail.bg>
  * @author Kiril <neohidra@gmail.com>
@@ -334,3 +334,5 @@ $lang['media_restore']         = 'Възстановяване на тази в�
 $lang['currentns']             = 'Текущо именно пространство';
 $lang['searchresult']          = 'Резултати от търсенето';
 $lang['plainhtml']             = 'Обикновен HTML';
+$lang['email_signature_text'] = 'Писмото е генерирано от DokuWiki на адрес
+@DOKUWIKIURL@';

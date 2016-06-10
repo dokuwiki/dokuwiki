@@ -339,3 +339,5 @@ $lang['searchresult']          = 'Haun tulokset';
 $lang['plainhtml']             = 'pelkkä HTML';
 $lang['wikimarkup']            = 'Wiki markup';
 $lang['unable_to_parse_date']  = 'Parametrin "%s" jäsennys ei onnistu.';
+$lang['email_signature_text'] = 'Tämän postin loi DokuWiki osoitteessa
+@DOKUWIKIURL@';

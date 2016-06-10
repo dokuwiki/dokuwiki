@@ -8,7 +8,3 @@ Dies : @DATE@
 Machina interretis : @BROWSER@
 IP-numerus : @IPADDRESS@
 Hostname : @HOSTNAME@
-
--- 
-Hic cursus generatus a
-@DOKUWIKIURL@

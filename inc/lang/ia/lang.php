@@ -258,3 +258,5 @@ $lang['days']                  = '%d dies retro';
 $lang['hours']                 = '%d horas retro';
 $lang['minutes']               = '%d minutas retro';
 $lang['seconds']               = '%d secundas retro';
+$lang['email_signature_text'] = 'Iste message ha essite generate per DokuWiki a
+@DOKUWIKIURL@';

@@ -10,8 +10,3 @@ Komentár : @SUMMARY@
 User : @USER@
 
 @DIFF@
-
-
--- 
-Táto správa bola zaslaná DokuWiki
-@DOKUWIKIURL@

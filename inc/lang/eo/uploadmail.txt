@@ -8,6 +8,3 @@ Ret-nodo: @HOSTNAME@
 Grandeco: @SIZE@
 Dosier-tipo: @MIME@
 Uzanto: @USER@
-
--- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki ĉe @DOKUWIKIURL@

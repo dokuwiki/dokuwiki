@@ -14,7 +14,3 @@ For at stoppe notifikationer om sideændringer, login på wikien på
 @DOKUWIKIURL@ og besøg så
 @SUBSCRIBE@
 for at afmelde side og/eller navneområde ændringer.
-
--- 
-Denne mail blev sendt af DokuWiki på
-@DOKUWIKIURL@

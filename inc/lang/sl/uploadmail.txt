@@ -9,6 +9,3 @@ Ponudnik  : @HOSTNAME@
 Velikost  : @SIZE@
 Vrsta MIME: @MIME@
 Uporabnik : @USER@
-
---
-Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@
