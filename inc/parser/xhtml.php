@@ -428,11 +428,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Open an unordered list
      *
-     * @param string $classes css class
+     * @param string|string[] $classes css class
      */
     function listu_open($classes = null) {
         $class = '';
         if($classes !== null) {
+            if(is_array($classes)) $classes = join(' ', $classes);
             $class = " class=\"$classes\"";
         }
         $this->doc .= "<ul$class>".DOKU_LF;
@@ -448,11 +449,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Open an ordered list
      *
-     * @param string $classes css class
+     * @param string|string[] $classes css class
      */
     function listo_open($classes = null) {
         $class = '';
         if($classes !== null) {
+            if(is_array($classes)) $classes = join(' ', $classes);
             $class = " class=\"$classes\"";
         }
         $this->doc .= "<ol$class>".DOKU_LF;
@@ -1314,13 +1316,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int $maxcols maximum number of columns
      * @param int $numrows NOT IMPLEMENTED
      * @param int $pos byte position in the original source
-     * @param string $classes css class
+     * @param string|string[] $classes css class
      */
     function table_open($maxcols = null, $numrows = null, $pos = null, $classes = null) {
         // initialize the row counter used for classes
         $this->_counter['row_counter'] = 0;
         $class                         = 'table';
         if($classes !== null) {
+            if(is_array($classes)) $classes = join(' ', $classes);
             $class .= ' ' . $classes;
         }
         if($pos !== null) {
@@ -1373,13 +1376,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Open a table row
      *
-     * @param string $classes css class
+     * @param string|string[] $classes css class
      */
     function tablerow_open($classes = null) {
         // initialize the cell counter used for classes
         $this->_counter['cell_counter'] = 0;
         $class                          = 'row'.$this->_counter['row_counter']++;
         if($classes !== null) {
+            if(is_array($classes)) $classes = join(' ', $classes);
             $class .= ' ' . $classes;
         }
         $this->doc .= DOKU_TAB.'<tr class="'.$class.'">'.DOKU_LF.DOKU_TAB.DOKU_TAB;
@@ -1398,7 +1402,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int    $colspan
      * @param string $align left|center|right
      * @param int    $rowspan
-     * @param string $classes css class
+     * @param string|string[] $classes css class
      */
     function tableheader_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
         $class = 'class="col'.$this->_counter['cell_counter']++;
@@ -1406,6 +1410,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class .= ' '.$align.'align';
         }
         if($classes !== null) {
+            if(is_array($classes)) $classes = join(' ', $classes);
             $class .= ' ' . $classes;
         }
         $class .= '"';
@@ -1433,7 +1438,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int       $colspan
      * @param string    $align left|center|right
      * @param int       $rowspan
-     * @param string    $classes css class
+     * @param string|string[]    $classes css class
      */
     function tablecell_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
         $class = 'class="col'.$this->_counter['cell_counter']++;
@@ -1441,6 +1446,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $class .= ' '.$align.'align';
         }
         if($classes !== null) {
+            if(is_array($classes)) $classes = join(' ', $classes);
             $class .= ' ' . $classes;
         }
         $class .= '"';

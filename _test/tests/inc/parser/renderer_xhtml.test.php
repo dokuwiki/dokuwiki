@@ -49,10 +49,17 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->assertEquals($expected, $this->R->doc);
     }
 
-    function test_tableopen_4arg() {
+    function test_tableopen_4arg_str() {
         $this->R->table_open(4, 4, 100, 'feature');
 
         $expected = '<div class="table feature sectionedit1"><table class="inline">'."\n";
+        $this->assertEquals($expected, $this->R->doc);
+    }
+
+    function test_tableopen_4arg_arr() {
+        $this->R->table_open(4, 4, 100, array('feature', 'test'));
+
+        $expected = '<div class="table feature test sectionedit1"><table class="inline">'."\n";
         $this->assertEquals($expected, $this->R->doc);
     }
 
