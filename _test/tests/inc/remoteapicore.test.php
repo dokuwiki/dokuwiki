@@ -213,17 +213,22 @@ You can use up to five different levels of',
         $params = array('nice_page', $rev[1]);
         $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params));
 
+        clearstatcache(wikiFN('nice_page'));
         $rev[2] = filemtime(wikiFN('nice_page'));
         sleep(1); // wait for new revision ID
+        clearstatcache(wikiFN('nice_page'));
         $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[3] = filemtime(wikiFN('nice_page'));
         sleep(1);
+        clearstatcache(wikiFN('nice_page'));
         $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[4] = filemtime(wikiFN('nice_page'));
         sleep(1);
+        clearstatcache(wikiFN('nice_page'));
         $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[5] = filemtime(wikiFN('nice_page'));
         sleep(1);
+        clearstatcache(wikiFN('nice_page'));
         $this->remote->call('dokuwiki.appendPage', $params_append);
         $rev[6] = filemtime(wikiFN('nice_page'));
         sleep(1);
