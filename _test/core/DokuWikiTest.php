@@ -127,4 +127,44 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         global $INPUT;
         $INPUT = new Input();
     }
+
+    /**
+     * This implements a retry annotation to automatically rerun flaky tests on failure
+     *
+     * @link http://stackoverflow.com/a/7705811/172068
+     * @throws Exception
+     */
+    public function runBare() {
+        // how often should this test be retried?
+        $retryCount = 1;
+        $annotations = $this->getAnnotations();
+        if(isset($annotations['method']['retry'][0])) {
+            $retryCount = (int) $annotations['method']['retry'][0];
+            if($retryCount < 1) $retryCount = 1;
+        }
+
+        $e = null;
+        for ($i = 0; $i < $retryCount; $i++) {
+            try {
+                parent::runBare();
+                return;
+            } catch (PHPUnit_Framework_IncompleteTestError $e) {
+                // return right away
+                throw $e;
+            } catch (PHPUnit_Framework_SkippedTestError $e) {
+                // return right away
+                throw $e;
+            } catch (Exception $e) {
+                // last one thrown below
+            }
+
+            // wait til retry (each time a little longer)
+            usleep($i * 250000);
+        }
+
+        if($e) {
+            throw $e;
+        }
+    }
+
 }
