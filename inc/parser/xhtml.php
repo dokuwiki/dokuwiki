@@ -428,7 +428,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Open an unordered list
      *
-     * @param string|string[] $classes css class
+     * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
      */
     function listu_open($classes = null) {
         $class = '';
@@ -449,7 +449,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Open an ordered list
      *
-     * @param string|string[] $classes css class
+     * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
      */
     function listo_open($classes = null) {
         $class = '';
@@ -1316,7 +1316,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int $maxcols maximum number of columns
      * @param int $numrows NOT IMPLEMENTED
      * @param int $pos byte position in the original source
-     * @param string|string[] $classes css class
+     * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
      */
     function table_open($maxcols = null, $numrows = null, $pos = null, $classes = null) {
         // initialize the row counter used for classes
@@ -1376,7 +1376,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     /**
      * Open a table row
      *
-     * @param string|string[] $classes css class
+     * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
      */
     function tablerow_open($classes = null) {
         // initialize the cell counter used for classes
@@ -1402,7 +1402,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int    $colspan
      * @param string $align left|center|right
      * @param int    $rowspan
-     * @param string|string[] $classes css class
+     * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
      */
     function tableheader_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
         $class = 'class="col'.$this->_counter['cell_counter']++;
@@ -1438,7 +1438,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * @param int       $colspan
      * @param string    $align left|center|right
      * @param int       $rowspan
-     * @param string|string[]    $classes css class
+     * @param string|string[]    $classes css classes - have to be valid, do not pass unfiltered user input
      */
     function tablecell_open($colspan = 1, $align = null, $rowspan = 1, $classes = null) {
         $class = 'class="col'.$this->_counter['cell_counter']++;
