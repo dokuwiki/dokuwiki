@@ -6,6 +6,7 @@
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Michalek <michalek.dev@gmail.com>
  */
 $lang['menu']                  = 'Nastavenia konfigurácie';
 $lang['error']                 = 'Nastavenia neboli aktualizované kvôli neplatnej hodnote, prosím skontrolujte vaše zmeny a znovu ich pošlite. <br />Nesprávna hodnota(y) bude ohraničená červeným okrajom.';

@@ -7,6 +7,7 @@
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Michalek <michalek.dev@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -185,6 +186,9 @@ $lang['difflink']              = 'Odkaz na tento prehľad zmien';
 $lang['diff_type']             = 'Prehľad zmien:';
 $lang['diff_inline']           = 'Vnorený';
 $lang['diff_side']             = 'Vedľa seba';
+$lang['diffprevrev']           = 'Predchádzajúca revízia';
+$lang['diffnextrev']           = 'Nasledujúca revízia';
+$lang['difflastrev']           = 'Posledná revízia';
 $lang['line']                  = 'Riadok';
 $lang['breadcrumb']            = 'História:';
 $lang['youarehere']            = 'Nachádzate sa:';
@@ -331,5 +335,5 @@ $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
-$lang['email_signature_text'] = 'Táto správa bola zaslaná DokuWiki
+$lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@';
