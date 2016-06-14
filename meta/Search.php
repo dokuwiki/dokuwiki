@@ -244,6 +244,7 @@ class Search {
                 $from .= "data_{$schema->getTable()}";
 
                 $where .= "\nAND data_{$schema->getTable()}.pid = schema_assignments.pid";
+                $where .= "\nAND schema_assignments.tbl = '{$schema->getTable()}'";
                 $where .= "\nAND schema_assignments.assigned = 1";
                 $where .= "\nAND GETACCESSLEVEL(data_{$schema->getTable()}.pid) > 0";
                 $where .= "\nAND PAGEEXISTS(data_{$schema->getTable()}.pid) = 1";
