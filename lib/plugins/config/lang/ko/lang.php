@@ -60,7 +60,7 @@ $lang['breadcrumbs']           = '이동 경로 "추적" 수. 비활성화하려
 $lang['youarehere']            = '계층적 이동 경로 사용 (다음에 위 옵션을 비활성화하기를 원할 겁니다)';
 $lang['fullpath']              = '바닥글에 문서의 전체 경로 밝히기';
 $lang['typography']            = '타이포그래피 대체';
-$lang['dformat']               = '날짜 형식 (PHP의 <a href="http://www.php.net/strftime">strftime</a> 함수 참고)';
+$lang['dformat']               = '날짜 형식 (PHP의 <a href="http://php.net/strftime">strftime</a> 함수 참고)';
 $lang['signature']             = '편집기에서 서명 버튼을 누를 때 넣을 내용';
 $lang['showuseras']            = '문서를 마지막으로 편집한 사용자를 보여줄지 여부';
 $lang['toptoclevel']           = '목차의 최상위 단계';

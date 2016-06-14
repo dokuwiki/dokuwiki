@@ -526,7 +526,7 @@ class adLDAP {
     public function setUseSSO($useSSO)
     {
           if ($useSSO === true && !$this->ldapSaslSupported()) {
-              throw new adLDAPException('No LDAP SASL support for PHP.  See: http://www.php.net/ldap_sasl_bind');
+              throw new adLDAPException('No LDAP SASL support for PHP.  See: http://php.net/ldap_sasl_bind');
           }
           $this->useSSO = $useSSO;
     }
@@ -598,7 +598,7 @@ class adLDAP {
         }
         
         if ($this->ldapSupported() === false) {
-            throw new adLDAPException('No LDAP support for PHP.  See: http://www.php.net/ldap');
+            throw new adLDAPException('No LDAP support for PHP.  See: http://php.net/ldap');
         }
 
         return $this->connect();

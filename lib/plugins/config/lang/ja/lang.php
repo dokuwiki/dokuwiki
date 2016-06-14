@@ -61,7 +61,7 @@ $lang['breadcrumbs']           = 'トレース（パンくず）表示数';
 $lang['youarehere']            = '現在位置を表示';
 $lang['fullpath']              = 'ページのフッターに絶対パスを表示';
 $lang['typography']            = 'タイポグラフィー変換';
-$lang['dformat']               = '日付フォーマット（PHPの<a href="http://www.php.net/strftime">strftime</a>関数を参照）';
+$lang['dformat']               = '日付フォーマット（PHPの<a href="http://php.net/strftime">strftime</a>関数を参照）';
 $lang['signature']             = '署名';
 $lang['showuseras']            = '最終編集者の情報として表示する内容';
 $lang['toptoclevel']           = '目次 トップレベル見出し';

@@ -53,7 +53,7 @@ $lang['breadcrumbs']           = 'Ekmek kırıntıların sayısı';
 $lang['youarehere']            = 'hiyerarşik ekmek kırıntıları';
 $lang['fullpath']              = 'sayfaların tüm patikasını (full path) göster';
 $lang['typography']            = 'Tipografik değiştirmeleri yap';
-$lang['dformat']               = 'Tarih biçimi (PHP\'nin <a href="http://www.php.net/strftime">strftime</a> fonksiyonuna bakın)';
+$lang['dformat']               = 'Tarih biçimi (PHP\'nin <a href="http://php.net/strftime">strftime</a> fonksiyonuna bakın)';
 $lang['signature']             = 'İmza';
 $lang['showuseras']            = 'Bir sayfayı en son düzenleyen kullanıcıya ne gösterilsin';
 $lang['toptoclevel']           = 'İçindekiler için en üst seviye';

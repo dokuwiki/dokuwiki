@@ -489,7 +489,7 @@ function io_makeFileDir($file){
 /**
  * Creates a directory hierachy.
  *
- * @link    http://www.php.net/manual/en/function.mkdir.php
+ * @link    http://php.net/manual/en/function.mkdir.php
  * @author  <saint@corenova.com>
  * @author  Andreas Gohr <andi@splitbrain.org>
  *

@@ -67,7 +67,7 @@ $lang['breadcrumbs']           = 'Počet odkazů na navštívené stránky';
 $lang['youarehere']            = 'Hierarchická "drobečková" navigace';
 $lang['fullpath']              = 'Ukazovat plnou cestu ke stránkám v patičce';
 $lang['typography']            = 'Provádět typografické nahrazování';
-$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['showuseras']            = 'Co se má přesně zobrazit, když se ukazuje uživatel, který naposledy editoval stránku';
 $lang['toptoclevel']           = 'Nejvyšší úroveň, kterou začít automaticky generovaný obsah';

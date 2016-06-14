@@ -66,7 +66,7 @@ $lang['breadcrumbs']           = 'Numero di breadcrumb';
 $lang['youarehere']            = 'Breadcrumb gerarchici';
 $lang['fullpath']              = 'Mostra il percorso completo delle pagine';
 $lang['typography']            = 'Abilita la sostituzione tipografica';
-$lang['dformat']               = 'Formato delle date (vedi la funzione <a href="http://www.php.net/strftime">strftime</a> di PHP)';
+$lang['dformat']               = 'Formato delle date (vedi la funzione <a href="http://php.net/strftime">strftime</a> di PHP)';
 $lang['signature']             = 'Firma';
 $lang['showuseras']            = 'Cosa visualizzare quando si mostra l\'ultimo utente che ha modificato una pagina';
 $lang['toptoclevel']           = 'Livello superiore per l\'indice';

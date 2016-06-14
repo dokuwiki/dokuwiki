@@ -1541,7 +1541,7 @@ function dformat($dt = null, $format = '') {
  * Formats a timestamp as ISO 8601 date
  *
  * @author <ungu at terong dot com>
- * @link http://www.php.net/manual/en/function.date.php#54072
+ * @link http://php.net/manual/en/function.date.php#54072
  *
  * @param int $int_date current date in UNIX timestamp
  * @return string
@@ -1602,7 +1602,7 @@ function unslash($string, $char = "'") {
  * Convert php.ini shorthands to byte
  *
  * @author <gilthans dot NO dot SPAM at gmail dot com>
- * @link   http://de3.php.net/manual/en/ini.core.php#79564
+ * @link   http://php.net/manual/en/ini.core.php#79564
  *
  * @param string $v shorthands
  * @return int|string

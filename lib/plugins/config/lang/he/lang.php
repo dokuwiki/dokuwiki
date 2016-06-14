@@ -50,7 +50,7 @@ $lang['breadcrumbs']           = 'מספר עקבות להיסטוריה';
 $lang['youarehere']            = 'עקבות היררכיות להיסטוריה';
 $lang['fullpath']              = 'הצגת נתיב מלא לדפים בתחתית';
 $lang['typography']            = 'שימוש בחלופות טיפוגרפיות';
-$lang['dformat']               = 'תסדיר תאריך (נא לפנות לפונקציה <a href="http://www.php.net/strftime">strftime</a> של PHP)';
+$lang['dformat']               = 'תסדיר תאריך (נא לפנות לפונקציה <a href="http://php.net/strftime">strftime</a> של PHP)';
 $lang['signature']             = 'חתימה';
 $lang['toptoclevel']           = 'רמה עליונה בתוכן הענינים';
 $lang['maxtoclevel']           = 'רמה מירבית בתוכן הענינים';

@@ -62,7 +62,7 @@ $lang['breadcrumbs']           = '導覽路徑數量。輸入0表示停用。';
 $lang['youarehere']            = '顯示階層式導覽路徑 (若要用此功能，建議停用上方的選項)';
 $lang['fullpath']              = '顯示完整的路徑於頁面底部';
 $lang['typography']            = '進行字元替換';
-$lang['dformat']               = '日期格式 (參見 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 函數)';
+$lang['dformat']               = '日期格式 (參見 PHP 的 <a href="http://php.net/strftime">strftime</a> 函數)';
 $lang['signature']             = '簽名';
 $lang['showuseras']            = '將最後編輯頁面的使用者顯示為：';
 $lang['toptoclevel']           = '目錄表的最上層級';

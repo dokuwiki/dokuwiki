@@ -60,7 +60,7 @@ $lang['breadcrumbs']           = 'تعداد ردپاها';
 $lang['youarehere']            = 'ردپای درختی';
 $lang['fullpath']              = 'نمایش دادن مسیر کامل صفحات در پایین صفحه';
 $lang['typography']            = 'جای‌گزاری متن‌ها انجام شود';
-$lang['dformat']               = 'فرمت تاریخ (راهنمای تابع <a href="http://www.php.net/strftime">strftime</a> را مشاهده کنید)';
+$lang['dformat']               = 'فرمت تاریخ (راهنمای تابع <a href="http://php.net/strftime">strftime</a> را مشاهده کنید)';
 $lang['signature']             = 'امضا';
 $lang['showuseras']            = 'چگونه آخرین کاربر ویرایش کننده، یک صفحه نمایش داده شود';
 $lang['toptoclevel']           = 'بیشترین عمق برای «فهرست مطالب»';

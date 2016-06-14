@@ -143,7 +143,7 @@ class PassHash {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author <mikey_nich at hotmail dot com>
-     * @link   http://de.php.net/manual/en/function.crypt.php#73619
+     * @link   http://php.net/manual/en/function.crypt.php#73619
      *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
@@ -184,7 +184,7 @@ class PassHash {
      * This is basically the same as smd1 above, but as used by Apache.
      *
      * @author <mikey_nich at hotmail dot com>
-     * @link   http://de.php.net/manual/en/function.crypt.php#73619
+     * @link   http://php.net/manual/en/function.crypt.php#73619
      *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
@@ -284,7 +284,7 @@ class PassHash {
      *
      * This method was used by old MySQL systems
      *
-     * @link   http://www.php.net/mysql
+     * @link   http://php.net/mysql
      * @author <soren at byu dot edu>
      * @param string $clear The clear text to hash
      * @return string Hashed password
@@ -582,7 +582,7 @@ class PassHash {
      *
      * @see hash_hmac()
      * @author KC Cloyd
-     * @link http://www.php.net/manual/en/function.hash-hmac.php#93440
+     * @link http://php.net/manual/en/function.hash-hmac.php#93440
      *
      * @param string $algo Name of selected hashing algorithm (i.e. "md5", "sha256", "haval160,4",
      *                     etc..) See hash_algos() for a list of supported algorithms.

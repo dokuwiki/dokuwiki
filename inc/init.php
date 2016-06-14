@@ -549,7 +549,7 @@ EOT;
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author <richpageau at yahoo dot co dot uk>
- * @link   http://de3.php.net/manual/en/function.realpath.php#75992
+ * @link   http://php.net/manual/en/function.realpath.php#75992
  */
 function fullpath($path,$exists=false){
     static $run = 0;

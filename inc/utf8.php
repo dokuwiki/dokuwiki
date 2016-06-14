@@ -80,7 +80,7 @@ if(!function_exists('utf8_check')){
      * Tries to detect if a string is in Unicode encoding
      *
      * @author <bmorel@ssi.fr>
-     * @link   http://www.php.net/manual/en/function.utf8-encode.php
+     * @link   http://php.net/manual/en/function.utf8-encode.php
      *
      * @param string $Str
      * @return bool
@@ -417,7 +417,7 @@ if(!function_exists('utf8_ucwords')){
      * Uppercase the first character of each word in a string
      *
      * @author Harry Fuecks
-     * @see http://www.php.net/ucwords
+     * @see http://php.net/ucwords
      *
      * @param string $str
      * @return string with first char of each word uppercase
@@ -425,7 +425,7 @@ if(!function_exists('utf8_ucwords')){
     function utf8_ucwords($str) {
         // Note: [\x0c\x09\x0b\x0a\x0d\x20] matches;
         // form feeds, horizontal tabs, vertical tabs, linefeeds and carriage returns
-        // This corresponds to the definition of a "word" defined at http://www.php.net/ucwords
+        // This corresponds to the definition of a "word" defined at http://php.net/ucwords
         $pattern = '/(^|([\x0c\x09\x0b\x0a\x0d\x20]+))([^\x0c\x09\x0b\x0a\x0d\x20]{1})[^\x0c\x09\x0b\x0a\x0d\x20]*/u';
 
         return preg_replace_callback($pattern, 'utf8_ucwords_callback',$str);
@@ -558,7 +558,7 @@ if(!function_exists('utf8_tohtml')){
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author <vpribish at shopping dot com>
-     * @link   http://www.php.net/manual/en/function.utf8-decode.php
+     * @link   http://php.net/manual/en/function.utf8-decode.php
      *
      * @param string $str
      * @return string

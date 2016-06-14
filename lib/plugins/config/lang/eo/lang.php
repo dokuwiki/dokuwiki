@@ -59,7 +59,7 @@ $lang['breadcrumbs']           = 'Nombro da paderoj';
 $lang['youarehere']            = 'Hierarkiaj paderoj';
 $lang['fullpath']              = 'Montri la kompletan padon de la paĝoj en la piedlinio';
 $lang['typography']            = 'Fari tipografiajn anstataŭigojn';
-$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Subskribo';
 $lang['showuseras']            = 'Kiel indiki la lastan redaktinton';
 $lang['toptoclevel']           = 'Supera nivelo por la enhavtabelo';

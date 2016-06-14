@@ -62,7 +62,7 @@ $lang['breadcrumbs']           = 'Αριθμός συνδέσμων ιστορι
 $lang['youarehere']            = 'Εμφάνιση ιεραρχικής προβολής τρέχουσας σελίδας';
 $lang['fullpath']              = 'Εμφάνιση πλήρους διαδρομής σελίδας στην υποκεφαλίδα';
 $lang['typography']            = 'Μετατροπή ειδικών χαρακτήρων στο τυπογραφικό ισοδύναμό τους';
-$lang['dformat']               = 'Μορφή ημερομηνίας (βλέπε την <a href="http://www.php.net/strftime">strftime</a> function της PHP)';
+$lang['dformat']               = 'Μορφή ημερομηνίας (βλέπε την <a href="http://php.net/strftime">strftime</a> function της PHP)';
 $lang['signature']             = 'Υπογραφή';
 $lang['showuseras']            = 'Τι να εμφανίζεται όταν φαίνεται ο χρήστης που τροποποίησε τελευταίος μία σελίδα';
 $lang['toptoclevel']           = 'Ανώτατο επίπεδο πίνακα περιεχομένων σελίδας';
