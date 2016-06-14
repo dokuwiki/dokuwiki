@@ -46,7 +46,7 @@ $lang['youarehere']            = 'Ordo uestigiorum';
 $lang['typography']            = 'Signa supponentes';
 $lang['htmlok']                = 'HTML aptum facere';
 $lang['phpok']                 = 'PHP aptum facere';
-$lang['dformat']               = 'Forma diei (uide paginam <a href="http://www.php.net/strftime">de diebus</a>)';
+$lang['dformat']               = 'Forma diei (uide paginam <a href="http://php.net/strftime">de diebus</a>)';
 $lang['signature']             = 'Subscriptio';
 $lang['toptoclevel']           = 'Gradus maior tabularum argumentorum';
 $lang['tocminheads']           = 'Minimus numerus capitum';

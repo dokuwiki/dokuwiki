@@ -60,7 +60,7 @@ $lang['breadcrumbs']           = 'Anzahl der Einträge im "Krümelpfad"';
 $lang['youarehere']            = 'Hierarchische Pfadnavigation verwenden';
 $lang['fullpath']              = 'Zeige vollen Pfad der Datei in Fußzeile an';
 $lang['typography']            = 'Mach drucktechnische Ersetzungen';
-$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://www.php.net/strftime">strftime</a> Funktion)';
+$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
 $lang['showuseras']            = 'Was angezeigt werden soll, wenn der Benutzer, der zuletzt eine Seite bearbeitet hat, angezeigt wird';
 $lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';

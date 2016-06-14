@@ -60,7 +60,7 @@ $lang['breadcrumbs']           = 'Nyomvonal elemszám';
 $lang['youarehere']            = 'Hierarchikus nyomvonal';
 $lang['fullpath']              = 'Az oldalak teljes útvonalának mutatása a láblécben';
 $lang['typography']            = 'Legyen-e tipográfiai csere';
-$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://www.php.net/strftime">strftime</a> függvényt)';
+$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://php.net/strftime">strftime</a> függvényt)';
 $lang['signature']             = 'Aláírás';
 $lang['showuseras']            = 'A felhasználó melyik adatát mutassunk az utolsó változtatás adatainál?';
 $lang['toptoclevel']           = 'A tartalomjegyzék felső szintje';

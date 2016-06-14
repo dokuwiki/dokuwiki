@@ -55,7 +55,7 @@ $lang['breadcrumbs']           = 'Número de niveis da estrutura de navegación'
 $lang['youarehere']            = 'Niveis xerárquicos da estrutura de navegación';
 $lang['fullpath']              = 'Amosar a ruta completa das páxinas no pé das mesmas';
 $lang['typography']            = 'Facer substitucións tipográficas';
-$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://www.php.net/strftime">strftime</a> do PHP)';
+$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Sinatura';
 $lang['showuseras']            = 'Que amosar cando se informe do usuario que fixo a última modificación dunha páxina';
 $lang['toptoclevel']           = 'Nivel superior para a táboa de contidos';

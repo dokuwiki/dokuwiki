@@ -66,7 +66,7 @@ $lang['breadcrumbs']           = 'Aantal broodkruimels. Zet dit op 0 om uit te s
 $lang['youarehere']            = 'Gebruik hiërarchische broodkruimels (waarschijnlijk wil je dan de optie hierboven uitschakelen)';
 $lang['fullpath']              = 'Volledig pad van pagina\'s in de footer weergeven';
 $lang['typography']            = 'Breng typografische wijzigingen aan';
-$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';
+$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://php.net/strftime">strftime</a> functie)';
 $lang['signature']             = 'Tekst die ingevoegd wordt met de Handtekening-knop in het bewerkvenster.';
 $lang['showuseras']            = 'Hoe de gebruiker die de pagina het laatst wijzigde weergeven';
 $lang['toptoclevel']           = 'Bovenste niveau voor inhoudsopgave';

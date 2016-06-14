@@ -73,7 +73,7 @@ $lang['breadcrumbs']           = 'Número de pasos de traza';
 $lang['youarehere']            = 'Traza jerárquica';
 $lang['fullpath']              = 'Mostrar ruta completa en el pie de página';
 $lang['typography']            = 'Realizar reemplazos tipográficos';
-$lang['dformat']               = 'Formato de fecha (ver la función de PHP <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de fecha (ver la función de PHP <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Firma';
 $lang['showuseras']            = 'Qué ver al mostrar el último usuario que editó una página';
 $lang['toptoclevel']           = 'Nivel superior para la tabla de contenidos';

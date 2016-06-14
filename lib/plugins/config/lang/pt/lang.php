@@ -56,7 +56,7 @@ $lang['breadcrumbs']           = 'Número máximo de breadcrumbs';
 $lang['youarehere']            = 'Breadcrumbs hierárquicas';
 $lang['fullpath']              = 'Revelar caminho completo no rodapé';
 $lang['typography']            = 'Executar substituições tipográficas';
-$lang['dformat']               = 'Formato de Data (ver função PHP\'s <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de Data (ver função PHP\'s <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Assinatura';
 $lang['showuseras']            = 'O que exibir quando mostrar o utilizador que editou a página pela última vez';
 $lang['toptoclevel']           = 'Nível de topo para a tabela de conteúdo';

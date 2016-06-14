@@ -66,7 +66,7 @@ $lang['breadcrumbs']           = '显示“足迹”的数量';
 $lang['youarehere']            = '显示“您在这里”';
 $lang['fullpath']              = '在页面底部显示完整路径';
 $lang['typography']            = '进行字符替换';
-$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 功能）';
+$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://php.net/strftime">strftime</a> 功能）';
 $lang['signature']             = '签名样式';
 $lang['showuseras']            = '显示用户为';
 $lang['toptoclevel']           = '目录的最顶层';

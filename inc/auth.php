@@ -326,7 +326,7 @@ function auth_cookiesalt($addsession = false, $secure = false) {
  *
  * @author Mark Seecof
  * @author Michael Hamann <michael@content-space.de>
- * @link   http://www.php.net/manual/de/function.mt-rand.php#83655
+ * @link   http://php.net/manual/de/function.mt-rand.php#83655
  *
  * @param int $length number of bytes to get
  * @return string binary random strings

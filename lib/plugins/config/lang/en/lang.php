@@ -72,7 +72,7 @@ $lang['breadcrumbs'] = 'Number of "trace" breadcrumbs. Set to 0 to disable.';
 $lang['youarehere']  = 'Use hierarchical breadcrumbs (you probably want to disable the above option then)';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['typography']  = 'Do typographical replacements';
-$lang['dformat']     = 'Date format (see PHP\'s <a href="http://www.php.net/strftime">strftime</a> function)';
+$lang['dformat']     = 'Date format (see PHP\'s <a href="http://php.net/strftime">strftime</a> function)';
 $lang['signature']   = 'What to insert with the signature button in the editor';
 $lang['showuseras']  = 'What to display when showing the user that last edited a page';
 $lang['toptoclevel'] = 'Top level for table of contents';

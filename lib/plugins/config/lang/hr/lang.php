@@ -54,7 +54,7 @@ $lang['breadcrumbs']           = 'Broj nedavnih stranica koji se prikazuje. Post
 $lang['youarehere']            = 'Prikaži hijerarhijsku stazu stranice (tada vjerojatno želite onemogućiti gornju opciju)';
 $lang['fullpath']              = 'Prikaži punu putanju u podnožju stranice';
 $lang['typography']            = 'Napravi tipografske zamjene';
-$lang['dformat']               = 'Format datuma (pogledajte PHP <a href="http://www.php.net/strftime">strftime</a> funkciju)';
+$lang['dformat']               = 'Format datuma (pogledajte PHP <a href="http://php.net/strftime">strftime</a> funkciju)';
 $lang['signature']             = 'Što  ubacuje gumb potpisa u uređivaču';
 $lang['showuseras']            = 'Što da prikažem za korisnika koji je napravio zadnju izmjenu';
 $lang['toptoclevel']           = 'Najviši nivo za sadržaj stranice';

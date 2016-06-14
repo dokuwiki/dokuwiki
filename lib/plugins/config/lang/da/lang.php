@@ -61,7 +61,7 @@ $lang['breadcrumbs']           = 'Stilængde';
 $lang['youarehere']            = 'Hierarkisk sti';
 $lang['fullpath']              = 'Vis den fulde sti til siderne i bundlinjen';
 $lang['typography']            = 'Typografiske erstatninger';
-$lang['dformat']               = 'Datoformat (se PHP\'s <a href="http://www.php.net/strftime">strftime</a>-funktion)';
+$lang['dformat']               = 'Datoformat (se PHP\'s <a href="http://php.net/strftime">strftime</a>-funktion)';
 $lang['signature']             = 'Underskrift';
 $lang['showuseras']            = 'Hvad skal vises når den sidste bruger, der har ændret siden, fremstilles';
 $lang['toptoclevel']           = 'Øverste niveau for indholdsfortegnelse';

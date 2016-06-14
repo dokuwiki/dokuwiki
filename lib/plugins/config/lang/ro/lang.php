@@ -58,7 +58,7 @@ $lang['breadcrumbs']           = 'Numărul de "urme" lăsate';
 $lang['youarehere']            = 'Structura ierarhică a "urmelor" lăsate';
 $lang['fullpath']              = 'Arată calea completă a paginii în subsol';
 $lang['typography']            = 'Fă înlocuiri topografice';
-$lang['dformat']               = 'Format dată (vezi funcţia PHP <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Format dată (vezi funcţia PHP <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Semnătura';
 $lang['showuseras']            = 'Ce se afişează la indicarea utilizatorului care a editat ultimul o pagină';
 $lang['toptoclevel']           = 'Primul nivel pentru cuprins';

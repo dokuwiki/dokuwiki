@@ -57,7 +57,7 @@ $lang['breadcrumbs']           = 'Ви відвідали (кількість с
 $lang['youarehere']            = 'Показувати "Ви тут"';
 $lang['fullpath']              = 'Повний шлях до документу';
 $lang['typography']            = 'Замінювати типографські символи';
-$lang['dformat']               = 'Формат дати (дивіться функцію <a href="http://www.php.net/strftime">strftime</a> PHP)';
+$lang['dformat']               = 'Формат дати (дивіться функцію <a href="http://php.net/strftime">strftime</a> PHP)';
 $lang['signature']             = 'Підпис';
 $lang['showuseras']            = 'Що вказувати при відображенні користувача, який востаннє редагував сторінку';
 $lang['toptoclevel']           = 'Мінімальний рівень для змісту';

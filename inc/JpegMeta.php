@@ -1314,8 +1314,8 @@ class JpegMeta {
             $this->_info['file']['Width']  = $size[0];
             $this->_info['file']['Height'] = $size[1];
             // set mime types and formats
-            // http://www.php.net/manual/en/function.getimagesize.php
-            // http://www.php.net/manual/en/function.image-type-to-mime-type.php
+            // http://php.net/manual/en/function.getimagesize.php
+            // http://php.net/manual/en/function.image-type-to-mime-type.php
             switch ($size[2]){
                 case 1:
                     $this->_info['file']['Mime']   = 'image/gif';

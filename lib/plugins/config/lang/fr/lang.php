@@ -73,7 +73,7 @@ $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cet
 $lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Données à insérer lors de l\'utilisation du bouton « signature » dans l\'éditeur';
 $lang['showuseras']            = 'Données à afficher concernant le dernier utilisateur ayant modifié une page';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';
