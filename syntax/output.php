@@ -13,6 +13,9 @@ use dokuwiki\plugin\struct\meta\SchemaData;
 if(!defined('DOKU_INC')) die();
 
 class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
+
+    protected $hasBeenRendered = false;
+
     /**
      * @return string Syntax mode type
      */
@@ -79,6 +82,10 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         global $REV;
         if($ID != $INFO['id']) return true;
         if(!$INFO['exists']) return true;
+        if($this->hasBeenRendered) return true;
+
+        // do not render the output twice on the same page, e.g. when another page has been included
+        $this->hasBeenRendered = true;
 
         $assignments = new Assignments();
         $tables = $assignments->getPageAssignments($ID);

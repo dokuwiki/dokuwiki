@@ -59,9 +59,6 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
         $this->lastread = '';
         if(!page_exists($ID)) return;
 
-        // we really only want to work on the main ID, not for any included page
-        if($ID != getID()) return;
-
         $ins = -1;
         $pos = 0;
         foreach($event->data->calls as $num => $call) {
