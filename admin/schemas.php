@@ -38,6 +38,8 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
     public function handle() {
         global $INPUT;
         global $ID;
+        global $config_cascade;
+        $config_file_path =  end($config_cascade['main']['local']);
 
         // form submit
         $table = Schema::cleanTableName($INPUT->str('table'));
@@ -46,6 +48,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
             if(!$builder->build()) {
                 msg('something went wrong while saving', -1);
             }
+            touch($config_file_path);
         }
         // export
         if($table && $INPUT->bool('export')) {
@@ -66,6 +69,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                     if(!$builder->build()) {
                         msg('something went wrong while saving', -1);
                     }
+                    touch($config_file_path);
                 }
             }
         }
@@ -78,6 +82,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                     $schema = new Schema($table);
                     $schema->delete();
                     msg($this->getLang('del_ok'), 1);
+                    touch($config_file_path);
                     send_redirect(wl($ID, array('do' => 'admin', 'page' => 'struct_schemas'), true, '&'));
                 } catch(StructException $e) {
                     msg(hsc($e->getMessage()), -1);
