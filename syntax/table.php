@@ -69,7 +69,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             foreach ($config['schemas'] as $schema) {
                 $result = $struct_helper->getSchema($schema[0]);
                 if (!$result[$schema[0]]->getId()) {
-                    throw new StructException(sprintf($this->getLang('error:schema missing'), $schema[0]));
+                    throw new StructException('schema missing', $schema[0]);
                 }
             }
             return $config;
