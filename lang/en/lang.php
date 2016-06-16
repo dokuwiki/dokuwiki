@@ -74,4 +74,6 @@ $lang['none']      = 'Nothing found';
 $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 
+$lang['error:schema missing'] = "Schema %s does not exist!";
+
 //Setup VIM: ex: et ts=4 :
