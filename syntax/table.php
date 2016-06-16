@@ -63,7 +63,16 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         try {
             $parser = new ConfigParser($lines);
-            return  $parser->getConfig();
+            $config = $parser->getConfig();
+            /** @var helper_plugin_struct $struct_helper */
+            $struct_helper = plugin_load('helper', 'struct');
+            foreach ($config['schemas'] as $schema) {
+                $result = $struct_helper->getSchema($schema[0]);
+                if (!$result[$schema[0]]->getId()) {
+                    throw new StructException('schema missing', $schema[0]);
+                }
+            }
+            return $config;
         } catch (StructException $e) {
             msg($e->getMessage(), -1, $e->getLine(), $e->getFile());
             if($conf['allowdebug']) msg('<pre>'.hsc($e->getTraceAsString()).'</pre>', -1);
