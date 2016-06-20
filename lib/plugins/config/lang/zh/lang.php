@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
@@ -16,6 +16,7 @@
  * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Garfield <garfield_550@outlook.com>
+ * @author 笔仙 <bixian@venixie.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
