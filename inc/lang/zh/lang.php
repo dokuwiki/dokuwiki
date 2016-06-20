@@ -26,6 +26,7 @@
  * @author Yuwei Sun <yuwei@hrz.tu-chemnitz.de>
  * @author Errol <errol@hotmail.com>
  * @author Garfield <garfield_550@outlook.com>
+ * @author 笔仙 <bixian@venixie.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -363,5 +364,5 @@ $lang['plainhtml']             = '纯HTML';
 $lang['wikimarkup']            = 'Wiki Markup 语言';
 $lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a href="%s">%s</a>。';
 $lang['unable_to_parse_date']  = '无法解析参数 "%s"。';
-$lang['email_signature_text'] = '本邮件由 DokuWiki 自动创建
+$lang['email_signature_text']  = '本邮件由 DokuWiki 自动创建
 @DOKUWIKIURL@';
