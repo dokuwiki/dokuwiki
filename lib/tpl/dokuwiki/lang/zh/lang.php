@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author lainme <lainme993@gmail.com>
  */
 $lang['__background_site__']   = '特别背景的颜色 (内容框后面)';
