@@ -366,7 +366,6 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             $line = trim($line);
             if(empty($line)) continue;
 
-            /* NB: preg_split can be deprecated/replaced with str_getcsv once dokuwiki is min php 5.3 */
             $row = $this->_splitUserData($line);
             $row = str_replace('\\:', ':', $row);
             $row = str_replace('\\\\', '\\', $row);
