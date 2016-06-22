@@ -366,6 +366,9 @@ class Search {
         // find it
         $col = false;
         foreach($schemas as $schema) {
+            if(empty($schema)) {
+                continue;
+            }
             $col = $schema->findColumn($colname);
             if($col) break;
         }
