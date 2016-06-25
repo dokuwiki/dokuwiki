@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <sawadakun@live.jp>
  * @author Hideaki SAWADA <chuno@live.jp>
