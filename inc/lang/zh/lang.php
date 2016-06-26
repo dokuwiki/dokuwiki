@@ -24,6 +24,7 @@
  * @author xiqingongzi <Xiqingongzi@Gmail.com>
  * @author qinghao <qingxianhao@gmail.com>
  * @author Yuwei Sun <yuwei@hrz.tu-chemnitz.de>
+ * @author Errol <errol@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -55,7 +56,6 @@ $lang['btn_update']            = '更新';
 $lang['btn_delete']            = '删除';
 $lang['btn_back']              = '返回';
 $lang['btn_backlink']          = '反向链接';
-$lang['btn_backtomedia']       = '返回到媒体文件选择工具';
 $lang['btn_subscribe']         = '订阅本页更改';
 $lang['btn_profile']           = '更新个人信息';
 $lang['btn_reset']             = '重设';
@@ -90,6 +90,7 @@ $lang['regmissing']            = '对不起，您必须填写所有的字段。'
 $lang['reguexists']            = '对不起，该用户名已经存在。';
 $lang['regsuccess']            = '新用户已建立，密码将通过电子邮件发送给您。';
 $lang['regsuccess2']           = '新用户已建立';
+$lang['regfail']               = '用户不能被创建。';
 $lang['regmailfail']           = '发送密码邮件时产生错误。请联系管理员！';
 $lang['regbadmail']            = '您输入的邮件地址有问题——如果您认为这是系统错误，请联系管理员。';
 $lang['regbadpass']            = '您输入的密码与系统产生的不符，请重试。';
@@ -104,6 +105,7 @@ $lang['profdeleteuser']        = '删除账号';
 $lang['profdeleted']           = '你的用户已经从这个 wiki 中删除';
 $lang['profconfdelete']        = '我希望删除我的账户。<br/>这项操作无法撤销。';
 $lang['profconfdeletemissing'] = '确认框未勾选';
+$lang['proffail']              = '用户设置没有更新。';
 $lang['pwdforget']             = '忘记密码？立即获取新密码';
 $lang['resendna']              = '本维基不支持二次发送密码。';
 $lang['resendpwd']             = '设置新密码用于';
@@ -168,7 +170,6 @@ $lang['js']['media_overwrt']   = '覆盖已存在的文件';
 $lang['rssfailed']             = '获取该 RSS 信息时产生错误：';
 $lang['nothingfound']          = '什么都没有找到。';
 $lang['mediaselect']           = '媒体文件';
-$lang['fileupload']            = '上传媒体文件';
 $lang['uploadsucc']            = '上传成功';
 $lang['uploadfail']            = '上传失败。也许是上传权限错误。';
 $lang['uploadwrong']           = '上传失败。该扩展名被禁止。';
@@ -259,7 +260,6 @@ $lang['qb_sig']                = '插入签名';
 $lang['qb_smileys']            = '表情符号';
 $lang['qb_chars']              = '特殊字符';
 $lang['upperns']               = '跳转到父级名空间';
-$lang['admin_register']        = '添加新用户';
 $lang['metaedit']              = '编辑元数据';
 $lang['metasaveerr']           = '写入元数据失败';
 $lang['metasaveok']            = '元数据已保存';
@@ -292,7 +292,6 @@ $lang['subscr_style_every']    = '对每次更改发送邮件';
 $lang['subscr_style_digest']   = '对每个页面发送更改的摘要邮件（每 %.2f 天）';
 $lang['subscr_style_list']     = '自上封邮件以来更改的页面的列表（每 %.2f 天）';
 $lang['authtempfail']          = '用户认证暂时无法使用。如果该状态一直存在，请通知维基管理员。';
-$lang['authpwdexpire']         = '您的密码将在 %d 天内过期，请尽快更改';
 $lang['i_chooselang']          = '选择您的语言';
 $lang['i_installer']           = 'DokuWiki 安装工具';
 $lang['i_wikiname']            = '维基名称';
@@ -356,7 +355,10 @@ $lang['media_perm_read']       = '抱歉，您没有足够权限读取这些文�
 $lang['media_perm_upload']     = '抱歉，您没有足够权限来上传文件。';
 $lang['media_update']          = '上传新版本';
 $lang['media_restore']         = '恢复这个版本';
+$lang['media_acl_warning']     = '此列表可能不完全是由ACL限制和隐藏的页面。';
 $lang['currentns']             = '当前命名空间';
 $lang['searchresult']          = '搜索结果';
 $lang['plainhtml']             = '纯HTML';
 $lang['wikimarkup']            = 'Wiki Markup 语言';
+$lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a href="%s">%s</a>。';
+$lang['unable_to_parse_date']  = '无法解析参数 "%s"。';

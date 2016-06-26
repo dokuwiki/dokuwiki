@@ -21,6 +21,11 @@ class Doku_Renderer_code extends Doku_Renderer {
         $filename = utf8_basename($filename);
         $filename = utf8_stripspecials($filename, '_');
 
+        // send CRLF to Windows clients
+        if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
+            $text = str_replace("\n", "\r\n", $text);
+        }
+
         if($this->_codeblock == $INPUT->str('codeblock')) {
             header("Content-Type: text/plain; charset=utf-8");
             header("Content-Disposition: attachment; filename=$filename");

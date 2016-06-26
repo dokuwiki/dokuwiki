@@ -62,8 +62,7 @@
 }
 
 
-.dokuwiki input.button,
-.dokuwiki button.button {
+.dokuwiki button {
     vertical-align: middle;
 }
 /**

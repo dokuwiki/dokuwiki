@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author mubaidillah <mubaidillah@gmail.com>
  * @author Irwan Butar Butar <irwansah.putra@gmail.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
@@ -12,10 +12,10 @@
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '"';
-$lang['doublequoteclosing']    = '"';
-$lang['singlequoteopening']    = '\'';
-$lang['singlequoteclosing']    = '\'';
+$lang['doublequoteopening']    = '“';
+$lang['doublequoteclosing']    = '”';
+$lang['singlequoteopening']    = '‘';
+$lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '\'';
 $lang['btn_edit']              = 'Edit halaman ini';
 $lang['btn_source']            = 'Lihat sumber halaman';
@@ -23,7 +23,6 @@ $lang['btn_show']              = 'Tampilkan halaman';
 $lang['btn_create']            = 'Buat halaman baru';
 $lang['btn_search']            = 'Cari';
 $lang['btn_save']              = 'Simpan';
-$lang['btn_preview']           = 'Preview';
 $lang['btn_top']               = 'kembali ke atas';
 $lang['btn_newer']             = '<< lebih lanjut';
 $lang['btn_older']             = 'sebelumnya >>';
@@ -32,7 +31,6 @@ $lang['btn_recent']            = 'Perubahan terbaru';
 $lang['btn_upload']            = 'Upload';
 $lang['btn_cancel']            = 'Batal';
 $lang['btn_index']             = 'Indeks';
-$lang['btn_secedit']           = 'Edit';
 $lang['btn_login']             = 'Login';
 $lang['btn_logout']            = 'Keluar';
 $lang['btn_admin']             = 'Admin';
@@ -40,12 +38,9 @@ $lang['btn_update']            = 'Ubah';
 $lang['btn_delete']            = 'Hapus';
 $lang['btn_back']              = 'Kembali';
 $lang['btn_backlink']          = 'Backlinks';
-$lang['btn_backtomedia']       = 'Kembali ke Pilihan Mediafile';
 $lang['btn_subscribe']         = 'Ikuti Perubahan';
 $lang['btn_profile']           = 'Ubah Profil';
-$lang['btn_reset']             = 'Reset';
 $lang['btn_resendpwd']         = 'Atur password baru';
-$lang['btn_draft']             = 'Edit draft';
 $lang['btn_recover']           = 'Cadangkan draf';
 $lang['btn_draftdel']          = 'Hapus draft';
 $lang['btn_revert']            = 'Kembalikan';
@@ -151,7 +146,6 @@ $lang['js']['media_overwrt']   = 'Timpa berkas yang ada';
 $lang['rssfailed']             = 'Error terjadi saat mengambil feed: ';
 $lang['nothingfound']          = 'Tidak menemukan samasekali.';
 $lang['mediaselect']           = 'Pilihan Mediafile';
-$lang['fileupload']            = 'Mediafile Upload';
 $lang['uploadsucc']            = 'Upload sukses';
 $lang['uploadfail']            = 'Upload gagal. Apakah hak ijinnya salah?';
 $lang['uploadwrong']           = 'Upload ditolak. Ekstensi file ini tidak diperbolehkan!';
@@ -159,7 +153,7 @@ $lang['uploadexist']           = 'File telah ada. Tidak mengerjakan apa-apa.';
 $lang['uploadbadcontent']      = 'Isi file yang diupload tidak cocok dengan ekstensi file %s.';
 $lang['uploadspam']            = 'File yang diupload diblok oleh spam blacklist.';
 $lang['uploadxss']             = 'File yang diupload diblok karena kemungkinan isi yang berbahaya.';
-$lang['uploadsize']            = 'File yang diupload terlalu besar. (max.%)';
+$lang['uploadsize']            = 'File yang diupload terlalu besar. (max. %s)';
 $lang['deletesucc']            = 'File "%s" telah dihapus.';
 $lang['deletefail']            = '"%s" tidak dapat dihapus - cek hak aksesnya.';
 $lang['mediainuse']            = 'File "%s" belum dihapus - file ini sedang digunakan.';
@@ -174,7 +168,6 @@ $lang['mediaextchange']        = 'Ektensi file berubah dari .%s ke .%s';
 $lang['reference']             = 'Referensi untuk';
 $lang['ref_inuse']             = 'File tidak dapat dihapus karena sedang digunakan oleh halaman:';
 $lang['ref_hidden']            = 'Beberapa referensi ada didalam halaman yang tidak diijinkan untuk Anda baca.';
-$lang['hits']                  = 'Hits';
 $lang['quickhits']             = 'Matching pagenames';
 $lang['toc']                   = 'Daftar isi';
 $lang['current']               = 'sekarang';
@@ -197,7 +190,6 @@ $lang['deleted']               = 'terhapus';
 $lang['created']               = 'dibuat';
 $lang['restored']              = 'revisi lama ditampilkan kembali (%s)';
 $lang['external_edit']         = 'Perubahan eksternal';
-$lang['summary']               = 'Edit summary';
 $lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> diperlukan untuk menampilkan konten ini.';
 $lang['download']              = 'Unduh Cuplikan';
 $lang['tools']                 = 'Alat';
@@ -220,27 +212,17 @@ $lang['qb_italic']             = 'Miring';
 $lang['qb_underl']             = 'Garis Bawah';
 $lang['qb_code']               = 'Kode';
 $lang['qb_strike']             = 'Text Tercoret';
-$lang['qb_h1']                 = 'Level 1 Headline';
-$lang['qb_h2']                 = 'Level 2 Headline';
-$lang['qb_h3']                 = 'Level 3 Headline';
-$lang['qb_h4']                 = 'Level 4 Headline';
-$lang['qb_h5']                 = 'Level 5 Headline';
 $lang['qb_hs']                 = 'Pilih Judul';
 $lang['qb_hplus']              = 'Judul Lebih Atas';
 $lang['qb_hminus']             = 'Judul Lebih Bawah';
 $lang['qb_hequal']             = 'Tingkat Judul yang Sama';
-$lang['qb_link']               = 'Link Internal';
-$lang['qb_extlink']            = 'Link External';
 $lang['qb_hr']                 = 'Garis Horisontal';
 $lang['qb_ol']                 = 'Item Berurutan';
 $lang['qb_ul']                 = 'Item Tidak Berurutan';
 $lang['qb_media']              = 'Tambahkan gambar atau file lain';
 $lang['qb_sig']                = 'Sisipkan tanda tangan';
-$lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Karakter Khusus';
 $lang['upperns']               = 'lompat ke namespace induk';
-$lang['admin_register']        = 'Tambah user baru';
-$lang['metaedit']              = 'Edit Metadata';
 $lang['metasaveerr']           = 'Gagal menulis metadata';
 $lang['metasaveok']            = 'Metadata tersimpan';
 $lang['img_title']             = 'Judul:';

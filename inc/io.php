@@ -20,6 +20,7 @@ if(!defined('DOKU_INC')) die('meh.');
  * @param string $id      - a pageid, the namespace of that id will be tried to deleted
  * @param string $basedir - the config name of the type to delete (datadir or mediadir usally)
  * @return bool - true if at least one namespace was deleted
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
@@ -60,6 +61,11 @@ function io_sweepNS($id,$basedir='datadir'){
  * $data[3]    rev: The page revision, false for current wiki pages.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string   $file filename
+ * @param string   $id page id
+ * @param bool|int $rev revision timestamp
+ * @return string
  */
 function io_readWikiPage($file, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
@@ -69,7 +75,11 @@ function io_readWikiPage($file, $id, $rev=false) {
 
 /**
  * Callback adapter for io_readFile().
+ *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param array $data event data
+ * @return string
  */
 function _io_readWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
@@ -88,19 +98,25 @@ function _io_readWikiPage_action($data) {
  * be sure to set $clean to false!
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file  filename
+ * @param bool   $clean
+ * @return string|bool the file contents or false on error
  */
 function io_readFile($file,$clean=true){
     $ret = '';
-    if(@file_exists($file)){
+    if(file_exists($file)){
         if(substr($file,-3) == '.gz'){
-            $ret = join('',gzfile($file));
+            $ret = gzfile($file);
+            if(is_array($ret)) $ret = join('', $ret);
         }else if(substr($file,-4) == '.bz2'){
             $ret = bzfile($file);
         }else{
             $ret = file_get_contents($file);
         }
     }
-    if($clean){
+    if($ret === null) return false;
+    if($ret !== false && $clean){
         return cleanText($ret);
     }else{
         return $ret;
@@ -108,20 +124,43 @@ function io_readFile($file,$clean=true){
 }
 /**
  * Returns the content of a .bz2 compressed file as string
+ *
  * @author marcel senf <marcel@rucksackreinigung.de>
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename
+ * @param bool   $array return array of lines
+ * @return string|array|bool content or false on error
  */
-
-function bzfile($file){
+function bzfile($file, $array=false) {
     $bz = bzopen($file,"r");
+    if($bz === false) return false;
+
+    if($array) $lines = array();
     $str = '';
-    while (!feof($bz)){
+    while (!feof($bz)) {
         //8192 seems to be the maximum buffersize?
-        $str = $str . bzread($bz,8192);
+        $buffer = bzread($bz,8192);
+        if(($buffer === false) || (bzerrno($bz) !== 0)) {
+            return false;
+        }
+        $str = $str . $buffer;
+        if($array) {
+            $pos = strpos($str, "\n");
+            while($pos !== false) {
+                $lines[] = substr($str, 0, $pos+1);
+                $str = substr($str, $pos+1);
+                $pos = strpos($str, "\n");
+            }
+        }
     }
     bzclose($bz);
+    if($array) {
+        if($str !== '') $lines[] = $str;
+        return $lines;
+    }
     return $str;
 }
-
 
 /**
  * Used to write out a DokuWiki page to file, and send IO_WIKIPAGE_WRITE events.
@@ -138,6 +177,12 @@ function bzfile($file){
  * $data[3]    rev: The page revision, false for current wiki pages.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $file      filename
+ * @param string $content
+ * @param string $id        page id
+ * @param int|bool $rev timestamp of revision
+ * @return bool
  */
 function io_writeWikiPage($file, $content, $id, $rev=false) {
     if (empty($rev)) { $rev = false; }
@@ -149,6 +194,9 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
 /**
  * Callback adapter for io_saveFile().
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param array $data event data
+ * @return bool
  */
 function _io_writeWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
@@ -156,6 +204,47 @@ function _io_writeWikiPage_action($data) {
     } else {
         return false; //callback error
     }
+}
+
+/**
+ * Internal function to save contents to a file.
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename path to file
+ * @param string $content
+ * @param bool   $append
+ * @return bool true on success, otherwise false
+ */
+function _io_saveFile($file, $content, $append) {
+    global $conf;
+    $mode = ($append) ? 'ab' : 'wb';
+    $fileexists = file_exists($file);
+
+    if(substr($file,-3) == '.gz'){
+        $fh = @gzopen($file,$mode.'9');
+        if(!$fh) return false;
+        gzwrite($fh, $content);
+        gzclose($fh);
+    }else if(substr($file,-4) == '.bz2'){
+        if($append) {
+            $bzcontent = bzfile($file);
+            if($bzcontent === false) return false;
+            $content = $bzcontent.$content;
+        }
+        $fh = @bzopen($file,'w');
+        if(!$fh) return false;
+        bzwrite($fh, $content);
+        bzclose($fh);
+    }else{
+        $fh = @fopen($file,$mode);
+        if(!$fh) return false;
+        fwrite($fh, $content);
+        fclose($fh);
+    }
+
+    if(!$fileexists and !empty($conf['fperm'])) chmod($file, $conf['fperm']);
+    return true;
 }
 
 /**
@@ -168,104 +257,97 @@ function _io_writeWikiPage_action($data) {
  * and bz2 if extension is .bz2
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- * @return bool true on success
+ *
+ * @param string $file filename path to file
+ * @param string $content
+ * @param bool   $append
+ * @return bool true on success, otherwise false
  */
-function io_saveFile($file,$content,$append=false){
-    global $conf;
-    $mode = ($append) ? 'ab' : 'wb';
-
-    $fileexists = @file_exists($file);
+function io_saveFile($file, $content, $append=false) {
     io_makeFileDir($file);
     io_lock($file);
-    if(substr($file,-3) == '.gz'){
-        $fh = @gzopen($file,$mode.'9');
-        if(!$fh){
-            msg("Writing $file failed",-1);
-            io_unlock($file);
-            return false;
-        }
-        gzwrite($fh, $content);
-        gzclose($fh);
-    }else if(substr($file,-4) == '.bz2'){
-        $fh = @bzopen($file,$mode{0});
-        if(!$fh){
-            msg("Writing $file failed", -1);
-            io_unlock($file);
-            return false;
-        }
-        bzwrite($fh, $content);
-        bzclose($fh);
-    }else{
-        $fh = @fopen($file,$mode);
-        if(!$fh){
-            msg("Writing $file failed",-1);
-            io_unlock($file);
-            return false;
-        }
-        fwrite($fh, $content);
-        fclose($fh);
+    if(!_io_saveFile($file, $content, $append)) {
+        msg("Writing $file failed",-1);
+        io_unlock($file);
+        return false;
     }
-
-    if(!$fileexists and !empty($conf['fperm'])) chmod($file, $conf['fperm']);
     io_unlock($file);
     return true;
 }
 
 /**
- * Delete exact linematch for $badline from $file.
+ * Replace one or more occurrences of a line in a file.
  *
- * Be sure to include the trailing newline in $badline
+ * The default, when $maxlines is 0 is to delete all matching lines then append a single line.
+ * A regex that matches any part of the line will remove the entire line in this mode.
+ * Captures in $newline are not available.
+ *
+ * Otherwise each line is matched and replaced individually, up to the first $maxlines lines
+ * or all lines if $maxlines is -1. If $regex is true then captures can be used in $newline.
+ *
+ * Be sure to include the trailing newline in $oldline when replacing entire lines.
  *
  * Uses gzip if extension is .gz
- *
- * 2005-10-14 : added regex option -- Christopher Smith <chris@jalakai.co.uk>
+ * and bz2 if extension is .bz2
  *
  * @author Steven Danz <steven-danz@kc.rr.com>
+ * @author Christopher Smith <chris@jalakai.co.uk>
+ * @author Patrick Brown <ptbrown@whoopdedo.org>
+ *
+ * @param string $file     filename
+ * @param string $oldline  exact linematch to remove
+ * @param string $newline  new line to insert
+ * @param bool   $regex    use regexp?
+ * @param int    $maxlines number of occurrences of the line to replace
  * @return bool true on success
  */
-function io_deleteFromFile($file,$badline,$regex=false){
-    if (!@file_exists($file)) return true;
+function io_replaceInFile($file, $oldline, $newline, $regex=false, $maxlines=0) {
+    if ((string)$oldline === '') {
+        trigger_error('$oldline parameter cannot be empty in io_replaceInFile()', E_USER_WARNING);
+        return false;
+    }
+
+    if (!file_exists($file)) return true;
 
     io_lock($file);
 
     // load into array
     if(substr($file,-3) == '.gz'){
         $lines = gzfile($file);
+    }else if(substr($file,-4) == '.bz2'){
+        $lines = bzfile($file, true);
     }else{
         $lines = file($file);
     }
 
-    // remove all matching lines
-    if ($regex) {
-        $lines = preg_grep($badline,$lines,PREG_GREP_INVERT);
-    } else {
-        $pos = array_search($badline,$lines); //return null or false if not found
-        while(is_int($pos)){
-            unset($lines[$pos]);
-            $pos = array_search($badline,$lines);
+    // make non-regexes into regexes
+    $pattern = $regex ? $oldline : '/^'.preg_quote($oldline,'/').'$/';
+    $replace = $regex ? $newline : addcslashes($newline, '\$');
+
+    // remove matching lines
+    if ($maxlines > 0) {
+        $count = 0;
+        $matched = 0;
+        while (($count < $maxlines) && (list($i,$line) = each($lines))) {
+            // $matched will be set to 0|1 depending on whether pattern is matched and line replaced
+            $lines[$i] = preg_replace($pattern, $replace, $line, -1, $matched);
+            if ($matched) $count++;
         }
+    } else if ($maxlines == 0) {
+        $lines = preg_grep($pattern, $lines, PREG_GREP_INVERT);
+
+        if ((string)$newline !== ''){
+            $lines[] = $newline;
+        }
+    } else {
+        $lines = preg_replace($pattern, $replace, $lines);
     }
 
     if(count($lines)){
-        $content = join('',$lines);
-        if(substr($file,-3) == '.gz'){
-            $fh = @gzopen($file,'wb9');
-            if(!$fh){
-                msg("Removing content from $file failed",-1);
-                io_unlock($file);
-                return false;
-            }
-            gzwrite($fh, $content);
-            gzclose($fh);
-        }else{
-            $fh = @fopen($file,'wb');
-            if(!$fh){
-                msg("Removing content from $file failed",-1);
-                io_unlock($file);
-                return false;
-            }
-            fwrite($fh, $content);
-            fclose($fh);
+        if(!_io_saveFile($file, join('',$lines), false)) {
+            msg("Removing content from $file failed",-1);
+            io_unlock($file);
+            return false;
         }
     }else{
         @unlink($file);
@@ -273,6 +355,22 @@ function io_deleteFromFile($file,$badline,$regex=false){
 
     io_unlock($file);
     return true;
+}
+
+/**
+ * Delete lines that match $badline from $file.
+ *
+ * Be sure to include the trailing newline in $badline
+ *
+ * @author Patrick Brown <ptbrown@whoopdedo.org>
+ *
+ * @param string $file    filename
+ * @param string $badline exact linematch to remove
+ * @param bool   $regex   use regexp?
+ * @return bool true on success
+ */
+function io_deleteFromFile($file,$badline,$regex=false){
+    return io_replaceInFile($file,$badline,null,$regex,0);
 }
 
 /**
@@ -285,6 +383,8 @@ function io_deleteFromFile($file,$badline,$regex=false){
  * the lock is assumed to be stale and the function goes on
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename
  */
 function io_lock($file){
     global $conf;
@@ -311,6 +411,8 @@ function io_lock($file){
  * Unlocks a file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file filename
  */
 function io_unlock($file){
     global $conf;
@@ -331,6 +433,9 @@ function io_unlock($file){
  * $data[1]    ns_type: 'pages' or 'media' namespace tree.
  *
  * @author Ben Coburn <btcoburn@silicodon.net>
+ *
+ * @param string $id page id
+ * @param string $ns_type 'pages' or 'media'
  */
 function io_createNamespace($id, $ns_type='pages') {
     // verify ns_type
@@ -344,7 +449,7 @@ function io_createNamespace($id, $ns_type='pages') {
     $ns_stack = explode(':', $id);
     $ns = $id;
     $tmp = dirname( $file = call_user_func($types[$ns_type], $ns) );
-    while (!@is_dir($tmp) && !(@file_exists($tmp) && !is_dir($tmp))) {
+    while (!@is_dir($tmp) && !(file_exists($tmp) && !is_dir($tmp))) {
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);
         if (strlen($ns)==0) { break; }
@@ -365,6 +470,8 @@ function io_createNamespace($id, $ns_type='pages') {
  * Create the directory needed for the given file
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $file file name
  */
 function io_makeFileDir($file){
     $dir = dirname($file);
@@ -379,11 +486,14 @@ function io_makeFileDir($file){
  * @link    http://www.php.net/manual/en/function.mkdir.php
  * @author  <saint@corenova.com>
  * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $target filename
+ * @return bool|int|string
  */
 function io_mkdir_p($target){
     global $conf;
     if (@is_dir($target)||empty($target)) return 1; // best case check first
-    if (@file_exists($target) && !is_dir($target)) return 0;
+    if (file_exists($target) && !is_dir($target)) return 0;
     //recursion
     if (io_mkdir_p(substr($target,0,strrpos($target,'/')))){
         if($conf['safemodehack']){
@@ -454,6 +564,9 @@ function io_rmdir($path, $removefiles = false) {
  * This is used when the safemode workaround is enabled
  *
  * @author <andi@splitbrain.org>
+ *
+ * @param string $dir name of the new directory
+ * @return false|string
  */
 function io_mkdir_ftp($dir){
     global $conf;
@@ -488,6 +601,8 @@ function io_mkdir_ftp($dir){
  * its path.
  *
  * @author Michael Klier <chi@chimeric.de>
+ *
+ * @return false|string path to new directory or false
  */
 function io_mktmpdir() {
     global $conf;
@@ -516,6 +631,13 @@ function io_mktmpdir() {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string $url           url to download
+ * @param string $file          path to file or directory where to save
+ * @param bool   $useAttachment if true: try to use name of download, uses otherwise $defaultName, false: uses $file as path to file
+ * @param string $defaultName   fallback for if using $useAttachment
+ * @param int    $maxSize       maximum file size
+ * @return bool|string          if failed false, otherwise true or the name of the file in the given dir
  */
 function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=2097152){
     global $conf;
@@ -548,7 +670,7 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
         $file = $file.$name;
     }
 
-    $fileexists = @file_exists($file);
+    $fileexists = file_exists($file);
     $fp = @fopen($file,"w");
     if(!$fp) return false;
     fwrite($fp,$data);
@@ -563,6 +685,10 @@ function io_download($url,$file,$useAttachment=false,$defaultName='',$maxSize=20
  *
  * rename() can not overwrite existing files on Windows
  * this function will use copy/unlink instead
+ *
+ * @param string $from
+ * @param string $to
+ * @return bool succes or fail
  */
 function io_rename($from,$to){
     global $conf;
@@ -582,6 +708,11 @@ function io_rename($from,$to){
  * Returns the exit code from the process.
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>
+ *
+ * @param string $cmd
+ * @param string $input  input pipe
+ * @param string $output output pipe
+ * @return int exit code from process
  */
 function io_exec($cmd, $input, &$output){
     $descspec = array(

@@ -13,6 +13,7 @@
  * @author Michael Pedersen subben@gmail.com
  * @author Mikael Lyngvig <mikael@lyngvig.org>
  * @author soer9648 <soer9648@eucl.dk>
+ * @author Søren Birk <soer9648@eucl.dk>
  */
 $lang['menu']                  = 'Brugerstyring';
 $lang['noauth']                = '(Brugervalidering er ikke tilgængelig)';
@@ -72,3 +73,4 @@ $lang['import_error_upload']   = 'Import Fejlet. CSV-filen kunne ikke uploades e
 $lang['import_error_readfail'] = 'Import Fejlet. Ikke muligt at læse uploadede fil.';
 $lang['import_error_create']   = 'Ikke muligt at oprette brugeren';
 $lang['import_notify_fail']    = 'Notifikationsmeddelelse kunne ikke sendes for importerede bruger %s, med emailen %s.';
+$lang['import_downloadfailures'] = 'Download Fejl som CSV til rettelser';

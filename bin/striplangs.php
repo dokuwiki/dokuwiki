@@ -26,7 +26,8 @@ class StripLangsCLI extends DokuCLI {
         $options->registerOption(
             'keep',
             'Comma separated list of languages to keep in addition to English.',
-            'k'
+            'k',
+            'langcodes'
         );
         $options->registerOption(
             'english-only',

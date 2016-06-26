@@ -15,7 +15,7 @@ class action_plugin_popularity extends Dokuwiki_Action_Plugin {
      */
     var $helper;
 
-    function action_plugin_popularity(){
+    function __construct(){
         $this->helper = $this->loadHelper('popularity', false);
     }
 

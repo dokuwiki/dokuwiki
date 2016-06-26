@@ -5,5 +5,3 @@ Använd den här sidan för att göra inställningar i din Dokuwiki. För hjälp
 Inställningar med en rosa bakgrund är skyddade och kan inte ändras med den här insticksmodulen. Inställningar med en blå bakgrund är standardvärden, och inställningar som visas med en vit bakgrund har ändrats i den här installationen. Både blåa och vita inställningar kan ändras.
 
 Kom i håg att trycka på knappen **Spara** innan du lämnar den här sidan, annars kommer ändringarna att gå förlorade.
-
-

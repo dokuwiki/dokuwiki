@@ -54,7 +54,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         foreach (array('default','local','protected') as $config_group) {
             if (empty($config_cascade['main'][$config_group])) continue;
             foreach ($config_cascade['main'][$config_group] as $config_file) {
-                if (@file_exists($config_file)) {
+                if (file_exists($config_file)) {
                     include($config_file);
                 }
             }
@@ -68,7 +68,7 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
         foreach (array('default','local') as $config_group) {
             if (empty($config_cascade['license'][$config_group])) continue;
             foreach ($config_cascade['license'][$config_group] as $config_file) {
-                if(@file_exists($config_file)){
+                if(file_exists($config_file)){
                     include($config_file);
                 }
             }

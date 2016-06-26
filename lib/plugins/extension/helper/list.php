@@ -151,6 +151,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         if($extension->isInstalled()) {
             $class.=' installed';
             $class.= ($extension->isEnabled()) ? ' enabled':' disabled';
+            if($extension->updateAvailable()) $class .= ' updatable';
         }
         if(!$extension->canModify()) $class.= ' notselect';
         if($extension->isProtected()) $class.=  ' protected';
@@ -265,7 +266,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $return  = '<div class="linkbar">';
         $return .= $this->make_homepagelink($extension);
         if ($extension->getBugtrackerURL()) {
-            $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="interwiki iw_dokubug">'.$this->getLang('bugs_features').'</a> ';
+            $return .= ' <a href="'.hsc($extension->getBugtrackerURL()).'" title="'.hsc($extension->getBugtrackerURL()).'" class ="bugs">'.$this->getLang('bugs_features').'</a> ';
         }
         if ($extension->getTags()){
             $first = true;
@@ -333,7 +334,6 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * Shortens the URL for display
      *
      * @param string $url
-     *
      * @return string  HTML link
      */
     function shortlink($url){
@@ -461,6 +461,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
      * @return string The HTML code
      */
     function make_actions(helper_plugin_extension_extension $extension) {
+        global $conf;
         $return = '';
         $errors = '';
 
@@ -490,6 +491,10 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
 
             if ($extension->isGitControlled()){
                 $errors .= '<p class="permerror">'.$this->getLang('git').'</p>';
+            }
+
+            if ($extension->isEnabled() && in_array('Auth', $extension->getTypes()) && $conf['authtype'] != $extension->getID()) {
+                $errors .= '<p class="permerror">'.$this->getLang('auth').'</p>';
             }
 
         }else{
@@ -530,7 +535,7 @@ class helper_plugin_extension_list extends DokuWiki_Plugin {
         $classes = 'button '.$action;
         $name    = 'fn['.$action.']['.hsc($extension->getID()).']';
 
-        return '<input class="'.$classes.'" name="'.$name.'" type="submit" value="'.$this->getLang('btn_'.$action).'" '.$title.' />';
+        return '<button class="'.$classes.'" name="'.$name.'" type="submit" '.$title.'>'.$this->getLang('btn_'.$action).'</button> ';
     }
 
     /**

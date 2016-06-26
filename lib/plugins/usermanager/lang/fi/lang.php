@@ -7,6 +7,7 @@
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Jussi Takala <jussi.takala@live.fi>
  */
 $lang['menu']                  = 'Käyttäjähallinta';
 $lang['noauth']                = '(autentikointi ei ole käytössä)';
@@ -29,6 +30,9 @@ $lang['search']                = 'Hae';
 $lang['search_prompt']         = 'Tee haku';
 $lang['clear']                 = 'Tyhjennä hakusuodatin';
 $lang['filter']                = 'Suodatin';
+$lang['import']                = 'Tuo uusia käyttäjiä';
+$lang['line']                  = 'Rivi nro.';
+$lang['error']                 = 'Vikailmoitus';
 $lang['summary']               = 'Näytetään käyttäjät %1$d-%2$d / %3$d löytynyttä. %4$d käyttäjää yhteensä.';
 $lang['nonefound']             = 'Ei löytynyt käyttäjiä. %d käyttäjää yhteensä.';
 $lang['delete_ok']             = '%d käyttäjää poistettu';
@@ -49,3 +53,9 @@ $lang['add_ok']                = 'Käyttäjä lisätty onnistuneesti';
 $lang['add_fail']              = 'Käyttäjän lisäys epäonnistui';
 $lang['notify_ok']             = 'Ilmoitus sähköpostilla lähetetty';
 $lang['notify_fail']           = 'Ilmoitusta sähköpostilla ei voitu lähettää';
+$lang['import_error_baduserid'] = 'Käyttäjätunnus puuttuu';
+$lang['import_error_badname']  = 'Epäkelpo nimi';
+$lang['import_error_badmail']  = 'Epäkelpo sähköpostiosoite';
+$lang['import_error_upload']   = 'Tuonti epäonnistui. CSV-tiedostoa ei voitu ladata tai se on tyhjä.';
+$lang['import_error_readfail'] = 'Tuonti epäonnistui. Ladattua tiedostoa ei voida lukea.';
+$lang['import_error_create']   = 'Käyttäjää ei voida luoda.';

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Chinese(Simplified) language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
@@ -90,7 +90,9 @@ $lang['disableactions']        = '停用 DokuWiki 功能';
 $lang['disableactions_check']  = '检查';
 $lang['disableactions_subscription'] = '订阅/退订';
 $lang['disableactions_wikicode'] = '查看源文件/导出源文件';
+$lang['disableactions_profile_delete'] = '删除自己的账户';
 $lang['disableactions_other']  = '其他功能（用英文逗号分隔）';
+$lang['disableactions_rss']    = 'XML 同步 (RSS)';
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
 $lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
 $lang['remote']                = '激活远程 API 系统。这允许其他程序通过 XML-RPC 或其他机制来访问维基。';
@@ -196,6 +198,7 @@ $lang['xsendfile_o_2']         = '标准 X-Sendfile 头';
 $lang['xsendfile_o_3']         = '专有 Nginx X-Accel-Redirect 头';
 $lang['showuseras_o_loginname'] = '登录名';
 $lang['showuseras_o_username'] = '用户全名';
+$lang['showuseras_o_username_link'] = '使用用户全名作为维基内的用户链接';
 $lang['showuseras_o_email']    = '用户的电子邮箱（按邮箱保护设置加扰）';
 $lang['showuseras_o_email_link'] = '以mailto：形式显示用户的电子邮箱';
 $lang['useheading_o_0']        = '从不';

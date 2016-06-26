@@ -13,7 +13,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -46,7 +46,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listo_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -80,7 +80,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listo_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -109,7 +109,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -138,7 +138,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listo_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -188,7 +188,7 @@ Bar');
             array('cdata',array("Foo")),
             array('p_close',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -227,7 +227,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('strong_open',array()),
             array('cdata',array("A")),
@@ -262,7 +262,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('unformatted',array("A")),
             array('listcontent_close',array()),
@@ -291,7 +291,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('linebreak',array()),
@@ -355,7 +355,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1)),
+            array('listitem_open',array(1,Doku_Handler_List::NODE)),
             array('listcontent_open',array()),
             array('nest', array( array(
                 array('footnote_open',array()),

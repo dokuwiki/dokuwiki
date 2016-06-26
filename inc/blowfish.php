@@ -356,7 +356,7 @@ class Horde_Cipher_blowfish
      * Encrypt a block on data.
      *
      * @param String $block         The data to encrypt
-     * @param optional String $key  The key to use
+     * @param String $key  optional The key to use
      *
      * @return String the encrypted output
      */
@@ -404,8 +404,8 @@ class Horde_Cipher_blowfish
     /**
      * Decrypt a block on data.
      *
-     * @param String $block         The data to decrypt
-     * @param optional String $key  The key to use
+     * @param String $block          The data to decrypt
+     * @param String $key   optional The key to use
      *
      * @return String the decrypted output
      */
@@ -452,6 +452,7 @@ class Horde_Cipher_blowfish
     /**
      * Converts a text key into an array.
      *
+     * @param string $key
      * @return array  The key.
      */
     function _formatKey($key) {
@@ -464,8 +465,8 @@ class Horde_Cipher_blowfish
 /**
  * Encryption using blowfish algorithm
  *
- * @param   string  original data
- * @param   string  the secret
+ * @param   string  $data   original data
+ * @param   string  $secret the secret
  *
  * @return  string  the encrypted result
  *
@@ -493,8 +494,8 @@ function PMA_blowfish_encrypt($data, $secret) {
 /**
  * Decryption using blowfish algorithm
  *
- * @param   string  encrypted data
- * @param   string  the secret
+ * @param   string  $encdata encrypted data
+ * @param   string  $secret  the secret
  *
  * @return  string  original data
  *

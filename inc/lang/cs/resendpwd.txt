@@ -1,3 +1,3 @@
 ====== Zaslat nové heslo ======
 
-Abyste získali nové heslo k vašemu učtu v této wiki, vyplňte všechny níže uvedené informace . Vaše nové heslo bude zasláno na emailovou adresu, kterou jste zadali při registraci. Uživatelské jméno by mělo být stejné jako vaše uživatelské jméno, s nímž se přihlašujete do této wiki.
+Abyste získali nové heslo ke svému účtu v této wiki, vyplňte všechny níže uvedené informace. Nové heslo bude zasláno na e-mailovou adresu, kterou jste zadali při registraci. Uživatelské jméno by mělo být stejné jako vaše uživatelské jméno, s nímž se přihlašujete do této wiki.

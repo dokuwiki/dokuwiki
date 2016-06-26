@@ -1,0 +1,1 @@
+Dette er de plugins du aktuelt har installeret i din DokuWiki. Du kan aktivere, deaktiver eller fjerne plugins fra denne side. Opdateringer til plugins vises også her - husk at læse dokumentationen til et plugin inden du opdaterer det.

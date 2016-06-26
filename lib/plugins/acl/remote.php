@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class remote_plugin_acl
+ */
 class remote_plugin_acl extends DokuWiki_Remote_Plugin {
-    function _getMethods() {
+
+    /**
+     * Returns details about the remote plugin methods
+     *
+     * @return array Information about all provided methods. {@see RemoteAPI}
+     */
+    public function _getMethods() {
         return array(
             'addAcl' => array(
                 'args' => array('string','string','int'),

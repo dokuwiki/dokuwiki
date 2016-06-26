@@ -49,7 +49,7 @@ function ptln($string, $indent = 0) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param $string string being stripped
+ * @param string $string being stripped
  * @return string
  */
 function stripctl($string) {
@@ -62,6 +62,7 @@ function stripctl($string) {
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @link    http://en.wikipedia.org/wiki/Cross-site_request_forgery
  * @link    http://christ1an.blogspot.com/2007/04/preventing-csrf-efficiently.html
+ *
  * @return  string
  */
 function getSecurityToken() {
@@ -95,7 +96,7 @@ function checkSecurityToken($token = null) {
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param bool $print  if true print the field, otherwise html of the field is returned
- * @return void|string html of hidden form field
+ * @return string html of hidden form field
  */
 function formSecurityToken($print = true) {
     $ret = '<div class="no"><input type="hidden" name="sectok" value="'.getSecurityToken().'" /></div>'."\n";
@@ -120,6 +121,7 @@ function basicinfo($id, $htmlClient=true){
     global $INPUT;
 
     // set info about manager/admin status.
+    $info = array();
     $info['isadmin']   = false;
     $info['ismanager'] = false;
     if($INPUT->server->has('REMOTE_USER')) {
@@ -186,7 +188,7 @@ function pageinfo() {
 
     $info['locked']     = checklock($ID);
     $info['filepath']   = fullpath(wikiFN($ID));
-    $info['exists']     = @file_exists($info['filepath']);
+    $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
         //check if current revision was meant
@@ -200,7 +202,7 @@ function pageinfo() {
         } else {
             //really use old revision
             $info['filepath'] = fullpath(wikiFN($ID, $REV));
-            $info['exists']   = @file_exists($info['filepath']);
+            $info['exists']   = file_exists($info['filepath']);
         }
     }
     $info['rev'] = $REV;
@@ -254,7 +256,7 @@ function pageinfo() {
 
     // draft
     $draft = getCacheName($info['client'].$ID, '.draft');
-    if(@file_exists($draft)) {
+    if(file_exists($draft)) {
         if(@filemtime($draft) < @filemtime(wikiFN($ID))) {
             // remove stale draft
             @unlink($draft);
@@ -335,7 +337,7 @@ function buildAttributes($params, $skipempty = false) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @return array(pageid=>name, ... )
+ * @return string[] with the data: array(pageid=>name, ... )
  */
 function breadcrumbs() {
     // we prepare the breadcrumbs early for quick session closing
@@ -350,7 +352,7 @@ function breadcrumbs() {
     $crumbs = isset($_SESSION[DOKU_COOKIE]['bc']) ? $_SESSION[DOKU_COOKIE]['bc'] : array();
     //we only save on show and existing wiki documents
     $file = wikiFN($ID);
-    if($ACT != 'show' || !@file_exists($file)) {
+    if($ACT != 'show' || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
@@ -688,6 +690,7 @@ function checkwordblock($text = '') {
         }
         if(count($re) && preg_match('#('.join('|', $re).')#si', $text, $matches)) {
             // prepare event data
+            $data = array();
             $data['matches']        = $matches;
             $data['userinfo']['ip'] = $INPUT->server->str('REMOTE_ADDR');
             if($INPUT->server->str('REMOTE_USER')) {
@@ -850,7 +853,7 @@ function checklock($id) {
     $lock = wikiLockFN($id);
 
     //no lockfile
-    if(!@file_exists($lock)) return false;
+    if(!file_exists($lock)) return false;
 
     //lockfile expired
     if((time() - filemtime($lock)) > $conf['locktime']) {
@@ -904,7 +907,7 @@ function unlock($id) {
     global $INPUT;
 
     $lock = wikiLockFN($id);
-    if(@file_exists($lock)) {
+    if(file_exists($lock)) {
         @list($ip, $session) = explode("\n", io_readFile($lock));
         if($ip == $INPUT->server->str('REMOTE_USER') || $ip == clientIP() || $session == session_id()) {
             @unlink($lock);
@@ -971,7 +974,7 @@ function rawLocale($id, $ext = 'txt') {
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $id   page id
- * @param string $rev  timestamp when a revision of wikitext is desired
+ * @param string|int $rev  timestamp when a revision of wikitext is desired
  * @return string
  */
 function rawWiki($id, $rev = '') {
@@ -1007,13 +1010,13 @@ function pageTemplate($id) {
             // if the before event did not set a template file, try to find one
             if(empty($data['tplfile'])) {
                 $path = dirname(wikiFN($id));
-                if(@file_exists($path.'/_template.txt')) {
+                if(file_exists($path.'/_template.txt')) {
                     $data['tplfile'] = $path.'/_template.txt';
                 } else {
                     // search upper namespaces for templates
                     $len = strlen(rtrim($conf['datadir'], '/'));
                     while(strlen($path) >= $len) {
-                        if(@file_exists($path.'/__template.txt')) {
+                        if(file_exists($path.'/__template.txt')) {
                             $data['tplfile'] = $path.'/__template.txt';
                             break;
                         }
@@ -1111,7 +1114,7 @@ function parsePageTemplate(&$data) {
  * @param string $range in form "from-to"
  * @param string $id    page id
  * @param string $rev   optional, the revision timestamp
- * @return array with three slices
+ * @return string[] with three slices
  */
 function rawWikiSlices($range, $id, $rev = '') {
     $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
@@ -1122,6 +1125,7 @@ function rawWikiSlices($range, $id, $rev = '') {
     $from = !$from ? 0 : ($from - 1);
     $to   = !$to ? strlen($text) : ($to - 1);
 
+    $slices = array();
     $slices[0] = substr($text, 0, $from);
     $slices[1] = substr($text, $from, $to - $from);
     $slices[2] = substr($text, $to);
@@ -1193,13 +1197,13 @@ function saveWikiText($id, $text, $summary, $minor = false) {
     $file        = wikiFN($id);
     $old         = @filemtime($file); // from page
     $wasRemoved  = (trim($text) == ''); // check for empty or whitespace only
-    $wasCreated  = !@file_exists($file);
+    $wasCreated  = !file_exists($file);
     $wasReverted = ($REV == true);
     $pagelog     = new PageChangeLog($id, 1024);
     $newRev      = false;
     $oldRev      = $pagelog->getRevisions(-1, 1); // from changelog
     $oldRev      = (int) (empty($oldRev) ? 0 : $oldRev[0]);
-    if(!@file_exists(wikiFN($id, $old)) && @file_exists($file) && $old >= $oldRev) {
+    if(!file_exists(wikiFN($id, $old)) && file_exists($file) && $old >= $oldRev) {
         // add old revision to the attic if missing
         saveOldRevision($id);
         // add a changelog entry if this edit came from outside dokuwiki
@@ -1281,7 +1285,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
  */
 function saveOldRevision($id) {
     $oldf = wikiFN($id);
-    if(!@file_exists($oldf)) return '';
+    if(!file_exists($oldf)) return '';
     $date = filemtime($oldf);
     $newf = wikiFN($id, $date);
     io_writeWikiPage($newf, rawWiki($id), $id, $date);
@@ -1296,7 +1300,7 @@ function saveOldRevision($id) {
  * @param int|string $rev Old page revision
  * @param string     $summary  What changed
  * @param boolean    $minor    Is this a minor edit?
- * @param array      $replace  Additional string substitutions, @KEY@ to be replaced by value
+ * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
  * @return bool
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -1376,8 +1380,8 @@ function getGoogleQuery() {
 /**
  * Return the human readable size of a file
  *
- * @param       int $size A file size
- * @param       int $dec A number of decimal places
+ * @param int $size A file size
+ * @param int $dec A number of decimal places
  * @return string human readable size
  *
  * @author      Martin Benjamin <b.martin@cybernet.ch>
@@ -1460,7 +1464,7 @@ function dformat($dt = null, $format = '') {
  * @author <ungu at terong dot com>
  * @link http://www.php.net/manual/en/function.date.php#54072
  *
- * @param int $int_date: current date in UNIX timestamp
+ * @param int $int_date current date in UNIX timestamp
  * @return string
  */
 function date_iso8601($int_date) {
@@ -1739,7 +1743,7 @@ function license_img($type) {
         $try[] = 'lib/images/license/'.$type.'/cc.png';
     }
     foreach($try as $src) {
-        if(@file_exists(DOKU_INC.$src)) return $src;
+        if(file_exists(DOKU_INC.$src)) return $src;
     }
     return '';
 }
@@ -1803,17 +1807,6 @@ function send_redirect($url) {
     // always close the session
     session_write_close();
 
-    // work around IE bug
-    // http://www.ianhoar.com/2008/11/16/internet-explorer-6-and-redirected-anchor-links/
-    @list($url, $hash) = explode('#', $url);
-    if($hash) {
-        if(strpos($url, '?')) {
-            $url = $url.'&#'.$hash;
-        } else {
-            $url = $url.'?&#'.$hash;
-        }
-    }
-
     // check if running on IIS < 6 with CGI-PHP
     if($INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
         (strpos($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI') !== false) &&
@@ -1824,6 +1817,8 @@ function send_redirect($url) {
     } else {
         header('Location: '.$url);
     }
+
+    if(defined('DOKU_UNITTEST')) return; // no exits during unit tests
     exit;
 }
 
@@ -1880,6 +1875,7 @@ function get_doku_pref($pref, $default) {
 /**
  * Add a preference to the DokuWiki cookie
  * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
+ * Remove it by setting $val to false
  *
  * @param string $pref  preference key
  * @param string $val   preference value
@@ -1896,12 +1892,17 @@ function set_doku_pref($pref, $val) {
         $enc_pref = rawurlencode($pref);
         for($i = 0; $i < $cnt; $i += 2) {
             if($parts[$i] == $enc_pref) {
-                $parts[$i + 1] = rawurlencode($val);
+                if ($val !== false) {
+                    $parts[$i + 1] = rawurlencode($val);
+                } else {
+                    unset($parts[$i]);
+                    unset($parts[$i + 1]);
+                }
                 break;
             }
         }
         $cookieVal = implode('#', $parts);
-    } else if (!$orig) {
+    } else if (!$orig && $val !== false) {
         $cookieVal = ($_COOKIE['DOKU_PREFS'] ? $_COOKIE['DOKU_PREFS'].'#' : '').rawurlencode($pref).'#'.rawurlencode($val);
     }
 
@@ -1914,7 +1915,7 @@ function set_doku_pref($pref, $val) {
 /**
  * Strips source mapping declarations from given text #601
  *
- * @param &string $text reference to the CSS or JavaScript code to clean
+ * @param string &$text reference to the CSS or JavaScript code to clean
  */
 function stripsourcemaps(&$text){
     $text = preg_replace('/^(\/\/|\/\*)[@#]\s+sourceMappingURL=.*?(\*\/)?$/im', '\\1\\2', $text);

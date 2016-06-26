@@ -41,12 +41,42 @@ if(!function_exists('gzopen') && function_exists('gzopen64')) {
      *
      * @link http://stackoverflow.com/questions/23417519/php-zlib-gzopen-not-exists
      *
-     * @param string    $filename
-     * @param string    $mode
-     * @param int $use_include_path
+     * @param string $filename
+     * @param string $mode
+     * @param int    $use_include_path
      * @return mixed
      */
     function gzopen($filename, $mode, $use_include_path = 0) {
         return gzopen64($filename, $mode, $use_include_path);
+    }
+}
+
+if(!function_exists('gzseek') && function_exists('gzseek64')) {
+    /**
+     * work around for PHP compiled against certain zlib versions #865
+     *
+     * @link http://stackoverflow.com/questions/23417519/php-zlib-gzopen-not-exists
+     *
+     * @param resource $zp
+     * @param int      $offset
+     * @param int      $whence
+     * @return int
+     */
+    function gzseek($zp, $offset, $whence = SEEK_SET) {
+        return gzseek64($zp, $offset, $whence);
+    }
+}
+
+if(!function_exists('gztell') && function_exists('gztell64')) {
+    /**
+     * work around for PHP compiled against certain zlib versions #865
+     *
+     * @link   http://stackoverflow.com/questions/23417519/php-zlib-gzopen-not-exists
+     *
+     * @param resource $zp
+     * @return int
+     */
+    function gztell($zp) {
+        return gztell64($zp);
     }
 }

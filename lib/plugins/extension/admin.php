@@ -54,6 +54,10 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
             msg($this->getLang('repo_error').' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1);
         }
 
+        if(!in_array('ssl', stream_get_transports())) {
+            msg($this->getLang('nossl'), -1);
+        }
+
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
 
@@ -75,10 +79,10 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin {
                             case 'uninstall':
                                 $extension->setExtension($extname);
                                 $status = $extension->uninstall();
-                                if($status !== true) {
-                                    msg($status, -1);
-                                } else {
+                                if($status) {
                                     msg(sprintf($this->getLang('msg_delete_success'), hsc($extension->getDisplayName())), 1);
+                                } else {
+                                    msg(sprintf($this->getLang('msg_delete_failed'), hsc($extension->getDisplayName())), -1);
                                 }
                                 break;
                             case 'enable';

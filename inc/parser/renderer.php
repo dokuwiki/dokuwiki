@@ -190,7 +190,7 @@ class Doku_Renderer extends DokuWiki_Plugin {
     /**
      * Render plain text data
      *
-     * @param $text
+     * @param string $text
      */
     function cdata($text) {
     }
@@ -343,8 +343,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * Open a list item
      *
      * @param int $level the nesting level
+     * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level) {
+    function listitem_open($level,$node=false) {
     }
 
     /**
@@ -707,6 +708,18 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
+     * Open a table body
+     */
+    function tabletbody_open() {
+    }
+
+    /**
+     * Close a table body
+     */
+    function tabletbody_close() {
+    }
+
+    /**
      * Open a table row
      */
     function tablerow_open() {
@@ -759,6 +772,9 @@ class Doku_Renderer extends DokuWiki_Plugin {
      * casing and special chars
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string $name
+     * @return string
      */
     function _simpleTitle($name) {
         global $conf;
@@ -778,6 +794,11 @@ class Doku_Renderer extends DokuWiki_Plugin {
 
     /**
      * Resolve an interwikilink
+     *
+     * @param string    $shortcut  identifier for the interwiki link
+     * @param string    $reference fragment that refers the content
+     * @param null|bool $exists    reference which returns if an internal page exists
+     * @return string interwikilink
      */
     function _resolveInterWiki(&$shortcut, $reference, &$exists = null) {
         //get interwiki URL
@@ -785,18 +806,26 @@ class Doku_Renderer extends DokuWiki_Plugin {
             $url = $this->interwiki[$shortcut];
         } else {
             // Default to Google I'm feeling lucky
-            $url      = 'http://www.google.com/search?q={URL}&amp;btnI=lucky';
+            $url      = 'https://www.google.com/search?q={URL}&amp;btnI=lucky';
             $shortcut = 'go';
         }
 
         //split into hash and url part
-        @list($reference, $hash) = explode('#', $reference, 2);
+        $hash = strrchr($reference, '#');
+        if($hash) {
+            $reference = substr($reference, 0, -strlen($hash));
+            $hash = substr($hash, 1);
+        }
 
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#', $url)) {
             //use placeholders
             $url    = str_replace('{URL}', rawurlencode($reference), $url);
-            $url    = str_replace('{NAME}', $reference, $url);
+            //wiki names will be cleaned next, otherwise urlencode unsafe chars
+            $url    = str_replace('{NAME}', ($url{0} === ':') ? $reference :
+                                  preg_replace_callback('/[[\\\\\]^`{|}#%]/', function($match) {
+                                    return rawurlencode($match[0]);
+                                  }, $reference), $url);
             $parsed = parse_url($reference);
             if(!$parsed['port']) $parsed['port'] = 80;
             $url = str_replace('{SCHEME}', $parsed['scheme'], $url);

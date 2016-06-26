@@ -16,8 +16,9 @@ class PassHash {
      * match true is is returned else false
      *
      * @author  Andreas Gohr <andi@splitbrain.org>
-     * @param $clear string Clear-Text password
-     * @param $hash  string Hash to compare against
+     *
+     * @param string $clear Clear-Text password
+     * @param string $hash  Hash to compare against
      * @return  bool
      */
     function verify_hash($clear, $hash) {
@@ -49,7 +50,7 @@ class PassHash {
         } elseif(preg_match('/^md5\$(.{5})\$/', $hash, $m)) {
             $method = 'djangomd5';
             $salt   = $m[1];
-        } elseif(preg_match('/^\$2a\$(.{2})\$/', $hash, $m)) {
+        } elseif(preg_match('/^\$2(a|y)\$(.{2})\$/', $hash, $m)) {
             $method = 'bcrypt';
             $salt   = $hash;
         } elseif(substr($hash, 0, 6) == '{SSHA}') {
@@ -109,9 +110,9 @@ class PassHash {
      * If $salt is not null, the value is kept, but the lenght restriction is
      * applied (unless, $cut is false).
      *
-     * @param string &$salt The salt, pass null if you want one generated
-     * @param int    $len   The length of the salt
-     * @param bool   $cut   Apply length restriction to existing salt?
+     * @param string|null &$salt  The salt, pass null if you want one generated
+     * @param int          $len   The length of the salt
+     * @param bool         $cut   Apply length restriction to existing salt?
      */
     public function init_salt(&$salt, $len = 32, $cut = true) {
         if(is_null($salt)) {
@@ -135,6 +136,7 @@ class PassHash {
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author <mikey_nich at hotmail dot com>
      * @link   http://de.php.net/manual/en/function.crypt.php#73619
+     *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
@@ -175,6 +177,7 @@ class PassHash {
      *
      * @author <mikey_nich at hotmail dot com>
      * @link   http://de.php.net/manual/en/function.crypt.php#73619
+     *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
      * @param string $magic The hash identifier (apr1 or 1)
@@ -337,6 +340,7 @@ class PassHash {
      * an exception.
      *
      * @link  http://www.openwall.com/phpass/
+     *
      * @param string $clear   The clear text to hash
      * @param string $salt    The salt to use, null for random
      * @param string $magic   The hash identifier (P or H)
@@ -404,6 +408,7 @@ class PassHash {
      * This is used by the Django Python framework
      *
      * @link http://docs.djangoproject.com/en/dev/topics/auth/#passwords
+     *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
@@ -420,6 +425,7 @@ class PassHash {
      * This is used by the Django Python framework
      *
      * @link http://docs.djangoproject.com/en/dev/topics/auth/#passwords
+     *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
@@ -486,6 +492,7 @@ class PassHash {
      * method 'A' is not supported.
      *
      * @link  http://www.mediawiki.org/wiki/Manual_talk:User_table#user_password_column
+     *
      * @param string $clear The clear text to hash
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
@@ -511,7 +518,6 @@ class PassHash {
      * @param string $data Message to be hashed.
      * @param string $key  Shared secret key used for generating the HMAC variant of the message digest.
      * @param bool $raw_output When set to TRUE, outputs raw binary data. FALSE outputs lowercase hexits.
-     *
      * @return string
      */
     public static function hmac($algo, $data, $key, $raw_output = false) {
@@ -545,9 +551,8 @@ class PassHash {
     /**
      * Use DokuWiki's secure random generator if available
      *
-     * @param $min
-     * @param $max
-     *
+     * @param int $min
+     * @param int $max
      * @return int
      */
     protected function random($min, $max){

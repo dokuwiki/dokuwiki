@@ -26,7 +26,7 @@ class cache {
      * @param string $key primary identifier
      * @param string $ext file extension
      */
-    public function cache($key,$ext) {
+    public function __construct($key,$ext) {
         $this->key = $key;
         $this->ext = $ext;
         $this->cache = getCacheName($key,$ext);
@@ -50,7 +50,7 @@ class cache {
         $this->_addDependencies();
 
         if ($this->_event) {
-            return $this->_stats(trigger_event($this->_event,$this,array($this,'_useCache')));
+            return $this->_stats(trigger_event($this->_event, $this, array($this,'_useCache')));
         } else {
             return $this->_stats($this->_useCache());
         }
@@ -188,12 +188,12 @@ class cache_parser extends cache {
      * @param string $file source file for cache
      * @param string $mode input mode
      */
-    public function cache_parser($id, $file, $mode) {
+    public function __construct($id, $file, $mode) {
         if ($id) $this->page = $id;
         $this->file = $file;
         $this->mode = $mode;
 
-        parent::cache($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
+        parent::__construct($file.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'],'.'.$mode);
     }
 
     /**
@@ -203,7 +203,7 @@ class cache_parser extends cache {
      */
     public function _useCache() {
 
-        if (!@file_exists($this->file)) return false;                   // source exists?
+        if (!file_exists($this->file)) return false;                   // source exists?
         return parent::_useCache();
     }
 
@@ -308,15 +308,15 @@ class cache_instructions extends cache_parser {
      * @param string $id page id
      * @param string $file source file for cache
      */
-    public function cache_instructions($id, $file) {
-        parent::cache_parser($id, $file, 'i');
+    public function __construct($id, $file) {
+        parent::__construct($id, $file, 'i');
     }
 
     /**
      * retrieve the cached data
      *
      * @param   bool   $clean   true to clean line endings, false to leave line endings alone
-     * @return  string          cache contents
+     * @return  array          cache contents
      */
     public function retrieveCache($clean=true) {
         $contents = io_readFile($this->cache, false);
@@ -326,7 +326,7 @@ class cache_instructions extends cache_parser {
     /**
      * cache $instructions
      *
-     * @param   string $instructions  the instruction to be cached
+     * @param   array $instructions  the instruction to be cached
      * @return  bool                  true on success, false otherwise
      */
     public function storeCache($instructions) {

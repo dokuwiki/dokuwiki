@@ -17,7 +17,7 @@ class action_plugin_authad extends DokuWiki_Action_Plugin {
     /**
      * Registers a callback function for a given event
      */
-    public function register(Doku_Event_Handler &$controller) {
+    public function register(Doku_Event_Handler $controller) {
 
         $controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'handle_auth_login_check');
         $controller->register_hook('HTML_LOGINFORM_OUTPUT', 'BEFORE', $this, 'handle_html_loginform_output');

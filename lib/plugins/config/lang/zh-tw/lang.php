@@ -137,7 +137,7 @@ $lang['gzip_output']           = '對 xhtml 使用 gzip 內容編碼';
 $lang['compress']              = '壓縮 CSS 與 JavaScript 的輸出';
 $lang['cssdatauri']            = '假如 CSS 中所引用的圖片小於該數字大小(bytes)，圖片將被直接嵌入 CSS 中，以減少 HTTP Request 的發送。 IE 7 及以下的版本並不支援此功能。推薦把此數值設定成 <code>400</code> 至 <code>600</code> bytes 之間。若輸入 <code>0</code> 則停用此功能。';
 $lang['send404']               = '存取不存在的頁面時送出 "HTTP 404/Page Not Found"';
-$lang['broken_iua']            = 'ignore_user_abort 功能失效了？這有可能導致搜索索引不可用。IIS+PHP/CGI 已損壞。請參閱 <a href=\"http://bugs.splitbrain.org/?do=details&task_id=852\">Bug 852</a> 獲取更多訊息。';
+$lang['broken_iua']            = 'ignore_user_abort 功能失效了？這有可能導致搜索索引不可用。IIS+PHP/CGI 已損壞。請參閱 <a href=\"http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> 獲取更多訊息。';
 $lang['xsendfile']             = '使用 X-Sendfile 頭讓網頁伺服器發送狀態文件？您的網頁伺服器需要支持該功能。';
 $lang['renderer_xhtml']        = '主要 wiki 輸出 (xhtml) 的渲染器';
 $lang['renderer__core']        = '%s (dokuwiki 核心)';

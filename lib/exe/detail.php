@@ -37,7 +37,7 @@ $AUTH = auth_quickaclcheck($IMG);
 if($AUTH >= AUTH_READ){
     // check if image exists
     $SRC = mediaFN($IMG,$REV); 
-    if(!@file_exists($SRC)){
+    if(!file_exists($SRC)){
         //doesn't exist!
         http_status(404);
         $ERROR = 'File not found';

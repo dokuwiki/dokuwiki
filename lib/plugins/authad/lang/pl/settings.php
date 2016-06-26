@@ -6,6 +6,7 @@
  * @author Tomasz Bosak <bosak.tomasz@gmail.com>
  * @author Paweł Jan Czochański <czochanski@gmail.com>
  * @author Mati <mackosa@wp.pl>
+ * @author Maciej Helt <geraldziu@gmail.com>
  */
 $lang['account_suffix']        = 'Przyrostek twojej nazwy konta np. <code>@my.domain.org</code>';
 $lang['base_dn']               = 'Twoje bazowe DN. Na przykład: <code>DC=my,DC=domain,DC=org</code>';

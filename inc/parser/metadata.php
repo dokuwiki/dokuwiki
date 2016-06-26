@@ -165,7 +165,7 @@ class Doku_Renderer_metadata extends Doku_Renderer {
         if(!isset($this->meta['title'])) $this->meta['title'] = $text;
 
         // add the header to the TOC
-        $hid = $this->_headerToLink($text, 'true');
+        $hid = $this->_headerToLink($text, true);
         $this->toc_additem($hid, $text, $level);
 
         // add to summary
@@ -251,8 +251,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * Open a list item
      *
      * @param int $level the nesting level
+     * @param bool $node true when a node; false when a leaf
      */
-    function listitem_open($level) {
+    function listitem_open($level,$node=false) {
         $this->cdata(str_repeat(DOKU_TAB, $level).'* ');
     }
 
@@ -421,8 +422,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * keep track of internal links in $this->meta['relation']['references']
      *
-     * @param string       $id   page ID to link to. eg. 'wiki:syntax'
-     * @param string|array $name name for the link, array for media file
+     * @param string            $id   page ID to link to. eg. 'wiki:syntax'
+     * @param string|array|null $name name for the link, array for media file
      */
     function internallink($id, $name = null) {
         global $ID;
@@ -458,8 +459,8 @@ class Doku_Renderer_metadata extends Doku_Renderer {
     /**
      * Render an external link
      *
-     * @param string       $url  full URL with scheme
-     * @param string|array $name name for the link, array for media file
+     * @param string            $url  full URL with scheme
+     * @param string|array|null $name name for the link, array for media file
      */
     function externallink($url, $name = null) {
         if(is_array($name)) {
@@ -628,9 +629,9 @@ class Doku_Renderer_metadata extends Doku_Renderer {
      * Construct a title and handle images in titles
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
-     * @param string|array $title    either string title or media array
-     * @param string       $default  default title if nothing else is found
-     * @param null|string  $id       linked page id (used to extract title from first heading)
+     * @param string|array|null $title    either string title or media array
+     * @param string            $default  default title if nothing else is found
+     * @param null|string       $id       linked page id (used to extract title from first heading)
      * @return string title text
      */
     function _getLinkTitle($title, $default, $id = null) {

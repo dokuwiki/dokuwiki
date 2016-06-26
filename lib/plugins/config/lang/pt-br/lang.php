@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Portuguese language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
@@ -92,7 +93,9 @@ $lang['disableactions']        = 'Desabilitar as ações do DokuWiki';
 $lang['disableactions_check']  = 'Verificação';
 $lang['disableactions_subscription'] = 'Monitoramento';
 $lang['disableactions_wikicode'] = 'Ver a fonte/Exportar sem processamento';
+$lang['disableactions_profile_delete'] = 'Excluir a própria conta';
 $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
+$lang['disableactions_rss']    = 'Sindicância XML (RSS)';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS devem ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação, de maneira insegura.';
 $lang['remote']                = 'Habilitar o sistema de API remota. Isso permite que outras aplicações acessem o wiki via XML-RPC ou outros mecanismos.';
@@ -197,6 +200,7 @@ $lang['xsendfile_o_2']         = 'cabeçalho "X-Sendfile" padrão';
 $lang['xsendfile_o_3']         = 'cabeçalho proprietário "Nginx X-Accel-Redirect"';
 $lang['showuseras_o_loginname'] = 'nome de usuário';
 $lang['showuseras_o_username'] = 'nome completo do usuário';
+$lang['showuseras_o_username_link'] = 'Nome completo do usuário como um link de usuário interwiki';
 $lang['showuseras_o_email']    = 'endereço de e-mail do usuário (obscurecido segundo a definição anterior)';
 $lang['showuseras_o_email_link'] = 'endereço de e-mail de usuário como um link "mailto:"';
 $lang['useheading_o_0']        = 'nunca';

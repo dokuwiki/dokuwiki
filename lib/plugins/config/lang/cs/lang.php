@@ -1,8 +1,8 @@
 <?php
+
 /**
- * Czech language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author tomas@valenta.cz
@@ -13,6 +13,8 @@
  * @author Bohumir Zamecnik <bohumir.zamecnik@gmail.com>
  * @author Jakub A. Těšínský (j@kub.cz)
  * @author mkucera66@seznam.cz
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Turkislav <turkislav@blabla.com>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -95,7 +97,9 @@ $lang['disableactions']        = 'Vypnout DokuWiki akce';
 $lang['disableactions_check']  = 'Zkontrolovat';
 $lang['disableactions_subscription'] = 'Přihlásit se/Odhlásit se ze seznamu pro odběr změn';
 $lang['disableactions_wikicode'] = 'Prohlížet zdrojové kódy/Export wiki textu';
+$lang['disableactions_profile_delete'] = 'Smazat vlasní účet';
 $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
+$lang['disableactions_rss']    = 'XMS syndikace (RSS)';
 $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)';
 $lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
 $lang['remote']                = 'Zapne API systému, umožňující jiným aplikacím vzdálený přístup k wiki pomoci XML-RPC nebo jiných mechanizmů.';

@@ -5,6 +5,7 @@
  * 
  * @author Young gon Cha <garmede@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
+ * @author hyeonsoft <hyeonsoft@live.co.kr>
  */
 $lang['menu']                  = '확장 기능 관리자';
 $lang['tab_plugins']           = '설치된 플러그인';
@@ -26,6 +27,10 @@ $lang['btn_disable']           = '비활성화';
 $lang['btn_install']           = '설치';
 $lang['btn_reinstall']         = '다시 설치';
 $lang['js']['reallydel']       = '정말 이 확장 기능을 제거하겠습니까?';
+$lang['js']['display_viewoptions'] = '보기 옵션:';
+$lang['js']['display_enabled'] = '활성화됨';
+$lang['js']['display_disabled'] = '비활성화됨';
+$lang['js']['display_updatable'] = '업데이트할 수 있음';
 $lang['search_for']            = '확장 기능 검색:';
 $lang['search']                = '검색';
 $lang['extensionby']           = '<strong>%s</strong> (저자 %s)';
@@ -62,7 +67,8 @@ $lang['status_template']       = '템플릿';
 $lang['status_bundled']        = '포함';
 $lang['msg_enabled']           = '%s 플러그인이 활성화되었습니다';
 $lang['msg_disabled']          = '%s 플러그인이 비활성화되었습니다';
-$lang['msg_delete_success']    = '확장 기능이 제거되었습니다';
+$lang['msg_delete_success']    = '%s 확장 기능이 제거되었습니다';
+$lang['msg_delete_failed']     = '%s 확장 기능 제거에 실패했습니다';
 $lang['msg_template_install_success'] = '%s 템플릿을 성공적으로 설치했습니다';
 $lang['msg_template_update_success'] = '%s 템플릿을 성공적으로 업데이트했습니다';
 $lang['msg_plugin_install_success'] = '%s 플러그인을 성공적으로 설치했습니다';
@@ -79,11 +85,13 @@ $lang['error_dircreate']       = '다운로드를 받을 임시 폴더를 만들
 $lang['error_download']        = '파일을 다운로드할 수 없습니다: %s';
 $lang['error_decompress']      = '다운로드한 파일의 압축을 풀 수 없습니다. 이는 아마도 잘못된 다운로드의 결과로, 이럴 경우 다시 시도해야 합니다; 또는 압축 형식을 알 수 없으며, 이럴 경우 수동으로 다운로드하고 설치해야 합니다.';
 $lang['error_findfolder']      = '확장 기능 디렉터리를 식별할 수 없습니다, 수동으로 다운로드하고 설치해야 합니다';
-$lang['error_copy']            = '<em>%s</em> 디렉터리에 파일을 설치하는 동안 파일 복사 오류가 발생했습니다: 디스크가 꽉 찼거나 파일 접근 권한이 잘못되었을 수도 있습니다. 플러그인 설치가 부분적으로 되었거나 불안정하게 위키 설치가 되었을 수 있습니다.';
+$lang['error_copy']            = '<em>%s</em> 디렉터리에 파일을 설치하는 동안 파일 복사 오류가 발생했습니다: 디스크가 꽉 찼거나 파일 접근 권한이 잘못되었을 수도 있습니다. 플러그인이 부분적으로 설치되어 위키가 불안정할지도 모릅니다';
 $lang['noperms']               = '확장 기능 디렉터리에 쓸 수 없습니다';
 $lang['notplperms']            = '임시 디렉터리에 쓸 수 없습니다';
 $lang['nopluginperms']         = '플러그인 디렉터리에 쓸 수 없습니다';
-$lang['git']                   = '이 확장 기능은 git을 통해 설치되었으며, 여기에서 업데이트할 수 없을 수 있습니다.';
+$lang['git']                   = '이 확장 기능은 git를 통해 설치되었으며, 여기에서 업데이트할 수 없을 수 있습니다.';
+$lang['auth']                  = '이 인증 플러그인은 환경 설정에서 활성화할 수 없습니다, 그것을 비활성화하는 것을 고려하세요.';
 $lang['install_url']           = 'URL에서 설치:';
 $lang['install_upload']        = '확장 기능 올리기:';
 $lang['repo_error']            = '플러그인 저장소에 연결할 수 없습니다. 서버가 www.dokuwiki.org에 연결할 수 있는지 확인하고 프록시 설정을 확인하세요.';
+$lang['nossl']                 = 'PHP가 SSL 지원을 하지 않는 것으로 보입니다. 많은 도쿠위키 확장 기능의 다운로드가 작동하지 않을 것입니다.';

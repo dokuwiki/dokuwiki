@@ -17,10 +17,13 @@ class Doku_Handler {
 
     var $rewriteBlocks = true;
 
-    function Doku_Handler() {
+    function __construct() {
         $this->CallWriter = new Doku_Handler_CallWriter($this);
     }
 
+    /**
+     * @param string $handler
+     */
     function _addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
         $this->CallWriter->writeCall($call);
@@ -71,6 +74,7 @@ class Doku_Handler {
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
+        /** @var DokuWiki_Syntax_Plugin $plugin */
         $plugin = plugin_load('syntax',$pluginname);
         if($plugin != null){
             $data = $plugin->handle($match, $state, $pos, $this);
@@ -132,6 +136,9 @@ class Doku_Handler {
         return true;
     }
 
+    /**
+     * @param string $name
+     */
     function _nestingTag($match, $state, $pos, $name) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
@@ -288,7 +295,7 @@ class Doku_Handler {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
                 $ReWriter = new Doku_Handler_Preformatted($this->CallWriter);
-                $this->CallWriter = & $ReWriter;
+                $this->CallWriter = $ReWriter;
                 $this->_addCall('preformatted_start',array(), $pos);
             break;
             case DOKU_LEXER_EXIT:
@@ -525,6 +532,7 @@ class Doku_Handler {
         $p['author']  = (preg_match('/\b(by|author)/',$params));
         $p['date']    = (preg_match('/\b(date)/',$params));
         $p['details'] = (preg_match('/\b(desc|detail)/',$params));
+        $p['nosort']  = (preg_match('/\b(nosort)\b/',$params));
 
         if (preg_match('/\b(\d+)([dhm])\b/',$params,$match)) {
             $period = array('d' => 86400, 'h' => 3600, 'm' => 60);
@@ -707,12 +715,21 @@ function Doku_Handler_Parse_Media($match) {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_CallWriter {
+interface Doku_Handler_CallWriter_Interface {
+    public function writeCall($call);
+    public function writeCalls($calls);
+    public function finalise();
+}
+
+class Doku_Handler_CallWriter implements Doku_Handler_CallWriter_Interface {
 
     var $Handler;
 
-    function Doku_Handler_CallWriter(& $Handler) {
-        $this->Handler = & $Handler;
+    /**
+     * @param Doku_Handler $Handler
+     */
+    function __construct(Doku_Handler $Handler) {
+        $this->Handler = $Handler;
     }
 
     function writeCall($call) {
@@ -737,7 +754,7 @@ class Doku_Handler_CallWriter {
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
-class Doku_Handler_Nest {
+class Doku_Handler_Nest implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
     var $calls = array();
@@ -747,12 +764,12 @@ class Doku_Handler_Nest {
     /**
      * constructor
      *
-     * @param  object     $CallWriter     the renderers current call writer
+     * @param  Doku_Handler_CallWriter $CallWriter     the renderers current call writer
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
-    function Doku_Handler_Nest(& $CallWriter, $close="nest_close") {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter, $close="nest_close") {
+        $this->CallWriter = $CallWriter;
 
         $this->closingInstruction = $close;
     }
@@ -797,7 +814,7 @@ class Doku_Handler_Nest {
     }
 }
 
-class Doku_Handler_List {
+class Doku_Handler_List implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -805,8 +822,10 @@ class Doku_Handler_List {
     var $listCalls = array();
     var $listStack = array();
 
-    function Doku_Handler_List(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    const NODE = 1;
+
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -856,7 +875,8 @@ class Doku_Handler_List {
         $depth = $this->interpretSyntax($call[1][0], $listType);
 
         $this->initialDepth = $depth;
-        $this->listStack[] = array($listType, $depth);
+        //                   array(list type, current depth, index of current listitem_open)
+        $this->listStack[] = array($listType, $depth, 1);
 
         $this->listCalls[] = array('list'.$listType.'_open',array(),$call[2]);
         $this->listCalls[] = array('listitem_open',array(1),$call[2]);
@@ -881,6 +901,7 @@ class Doku_Handler_List {
     function listOpen($call) {
         $depth = $this->interpretSyntax($call[1][0], $listType);
         $end = end($this->listStack);
+        $key = key($this->listStack);
 
         // Not allowed to be shallower than initialDepth
         if ( $depth < $this->initialDepth ) {
@@ -897,6 +918,9 @@ class Doku_Handler_List {
                 $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
                 $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
+                // new list item, update list stack's index into current listitem_open
+                $this->listStack[$key][2] = count($this->listCalls) - 2;
+
             // Switched list type...
             } else {
 
@@ -908,7 +932,7 @@ class Doku_Handler_List {
                 $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
                 array_pop($this->listStack);
-                $this->listStack[] = array($listType, $depth);
+                $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
             }
 
         //------------------------------------------------------------------------
@@ -920,7 +944,10 @@ class Doku_Handler_List {
             $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
             $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
-            $this->listStack[] = array($listType, $depth);
+            // set the node/leaf state of this item's parent listitem_open to NODE
+            $this->listCalls[$this->listStack[$key][2]][1][1] = self::NODE;
+
+            $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
 
         //------------------------------------------------------------------------
         // Getting shallower ( $depth < $end[1] )
@@ -934,6 +961,7 @@ class Doku_Handler_List {
 
             while (1) {
                 $end = end($this->listStack);
+                $key = key($this->listStack);
 
                 if ( $end[1] <= $depth ) {
 
@@ -946,6 +974,9 @@ class Doku_Handler_List {
                         $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
                         $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
+                        // new list item, update list stack's index into current listitem_open
+                        $this->listStack[$key][2] = count($this->listCalls) - 2;
+
                     } else {
                         // Switching list type...
                         $this->listCalls[] = array('list'.$end[0].'_close', array(), $call[2]);
@@ -954,7 +985,7 @@ class Doku_Handler_List {
                         $this->listCalls[] = array('listcontent_open',array(),$call[2]);
 
                         array_pop($this->listStack);
-                        $this->listStack[] = array($listType, $depth);
+                        $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
                     }
 
                     break;
@@ -993,7 +1024,7 @@ class Doku_Handler_List {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_Preformatted {
+class Doku_Handler_Preformatted implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -1003,8 +1034,8 @@ class Doku_Handler_Preformatted {
 
 
 
-    function Doku_Handler_Preformatted(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1053,7 +1084,7 @@ class Doku_Handler_Preformatted {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_Quote {
+class Doku_Handler_Quote implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -1061,8 +1092,8 @@ class Doku_Handler_Quote {
 
     var $quoteCalls = array();
 
-    function Doku_Handler_Quote(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1145,7 +1176,7 @@ class Doku_Handler_Quote {
 }
 
 //------------------------------------------------------------------------
-class Doku_Handler_Table {
+class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
 
     var $CallWriter;
 
@@ -1160,8 +1191,8 @@ class Doku_Handler_Table {
     var $currentRow = array('tableheader' => 0, 'tablecell' => 0);
     var $countTableHeadRows = 0;
 
-    function Doku_Handler_Table(& $CallWriter) {
-        $this->CallWriter = & $CallWriter;
+    function __construct(Doku_Handler_CallWriter_Interface $CallWriter) {
+        $this->CallWriter = $CallWriter;
     }
 
     function writeCall($call) {
@@ -1526,7 +1557,7 @@ class Doku_Handler_Block {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function Doku_Handler_Block(){
+    function __construct(){
         global $DOKU_PLUGINS;
         //check if syntax plugins were loaded
         if(empty($DOKU_PLUGINS['syntax'])) return;

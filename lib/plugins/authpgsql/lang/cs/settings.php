@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * 
  * @author mkucera66@seznam.cz
+ * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
 $lang['server']                = 'Váš server PostgreSQL';
 $lang['port']                  = 'Port vašeho serveru PostgreSQL';
@@ -18,7 +19,7 @@ $lang['getGroups']             = 'Příkaz SQL pro získání členství uživat
 $lang['getUsers']              = 'Příkaz SQL pro seznam všech uživatelů';
 $lang['FilterLogin']           = 'Příkaz SQL pro filtrování uživatelů podle přihlašovacího jména';
 $lang['FilterName']            = 'Příkaz SQL pro filtrování uživatelů podle celého jména';
-$lang['FilterEmail']           = 'Příkaz SQL pro filtrování uživatelů podle adres emailů';
+$lang['FilterEmail']           = 'Příkaz SQL pro filtrování uživatelů podle adres e-mailů';
 $lang['FilterGroup']           = 'Příkaz SQL pro filtrování uživatelů podle členství ve skupinách';
 $lang['SortOrder']             = 'Příkaz SQL pro řazení uživatelů';
 $lang['addUser']               = 'Příkaz SQL pro řazení uživatelů';
@@ -31,7 +32,7 @@ $lang['delUserRefs']           = 'Příkaz SQL pro odstranění členství uživ
 $lang['updateUser']            = 'Příkaz SQL pro aktualizaci uživatelského profilu';
 $lang['UpdateLogin']           = 'Klauzule pro aktualizaci přihlačovacího jména uživatele';
 $lang['UpdatePass']            = 'Klauzule pro aktualizaci hesla uživatele';
-$lang['UpdateEmail']           = 'Klauzule pro aktualizaci emailové adresy uživatele';
+$lang['UpdateEmail']           = 'Klauzule pro aktualizaci e-mailové adresy uživatele';
 $lang['UpdateName']            = 'Klauzule pro aktualizaci celého jména uživatele';
 $lang['UpdateTarget']          = 'Omezující klauzule pro identifikaci uživatele při aktualizaci';
 $lang['delUserGroup']          = 'Příkaz SQL pro zrušení členství uživatele v dané skupině';

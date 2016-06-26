@@ -28,7 +28,8 @@ class PageCLI extends DokuCLI {
         $options->registerOption(
             'user',
             'work as this user. defaults to current CLI user',
-            'u'
+            'u',
+            'username'
         );
         $options->setHelp(
             'Utility to help command line Dokuwiki page editing, allow '.
@@ -239,6 +240,7 @@ class PageCLI extends DokuCLI {
         if($this->force) $this->deleteLock($wiki_id);
 
         $_SERVER['REMOTE_USER'] = $this->username;
+
         if(checklock($wiki_id)) {
             $this->error("Page $wiki_id is already locked by another user");
             exit(1);
@@ -246,7 +248,6 @@ class PageCLI extends DokuCLI {
 
         lock($wiki_id);
 
-        $_SERVER['REMOTE_USER'] = '_'.$this->username.'_';
         if(checklock($wiki_id) != $this->username) {
             $this->error("Unable to obtain lock for $wiki_id ");
             var_dump(checklock($wiki_id));

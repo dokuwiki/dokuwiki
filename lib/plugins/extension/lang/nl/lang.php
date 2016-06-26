@@ -6,6 +6,10 @@
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
+ * @author Mijndert <mijndert@mijndertstuij.nl>
+ * @author Johan Wijnker <johan@wijnker.eu>
+ * @author Mark C. Prins <mprins@users.sf.net>
+ * @author hugo smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Uitbreidingen';
 $lang['tab_plugins']           = 'Geïnstalleerde Plugins';
@@ -27,6 +31,10 @@ $lang['btn_disable']           = 'Schakel uit';
 $lang['btn_install']           = 'Installeer';
 $lang['btn_reinstall']         = 'Her-installeer';
 $lang['js']['reallydel']       = 'Wilt u deze uitbreiding deinstalleren?';
+$lang['js']['display_viewoptions'] = 'Weergave opties:';
+$lang['js']['display_enabled'] = 'ingeschakeld';
+$lang['js']['display_disabled'] = 'uitgeschakeld';
+$lang['js']['display_updatable'] = 'update beschikbaar';
 $lang['search_for']            = 'Zoek Uitbreiding:';
 $lang['search']                = 'Zoek';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
@@ -63,7 +71,8 @@ $lang['status_template']       = 'template';
 $lang['status_bundled']        = 'Gebundeld';
 $lang['msg_enabled']           = 'Plugin %s ingeschakeld';
 $lang['msg_disabled']          = 'Plugin %s uitgeschakeld';
-$lang['msg_delete_success']    = 'Uitbreiding gedeinstalleerd';
+$lang['msg_delete_success']    = 'Uitbreiding %s gedeinstalleerd';
+$lang['msg_delete_failed']     = 'Het deïnstalleren van de extensie %s is mislukt.';
 $lang['msg_template_install_success'] = 'Template %s werd succesvol geïnstalleerd';
 $lang['msg_template_update_success'] = 'Template %s werd succesvol geüpdatet';
 $lang['msg_plugin_install_success'] = 'Plugin %s werd succesvol geïnstalleerd';
@@ -85,6 +94,8 @@ $lang['noperms']               = 'Uitbreidings directory is niet schrijfbaar';
 $lang['notplperms']            = 'Template directory is niet schrijfbaar';
 $lang['nopluginperms']         = 'Plugin directory is niet schrijfbaar';
 $lang['git']                   = 'De uitbreiding werd geïnstalleerd via git, u wilt deze hier wellicht niet aanpassen.';
+$lang['auth']                  = 'Deze auth plugin is niet geactiveerd in de configuratie, overweeg het om uit te schakelen.';
 $lang['install_url']           = 'Installeer vanaf URL:';
 $lang['install_upload']        = 'Upload Uitbreiding:';
 $lang['repo_error']            = 'Er kon geen verbinding worden gemaakt met de centrale plugin opslag. Controleer of de server verbinding mag maken met www.dokuwiki.org en controleer de proxy instellingen.';
+$lang['nossl']                 = 'Je PHP mist SSL ondersteuning. Downloaden werkt niet met veel DokuWiki extensies.';

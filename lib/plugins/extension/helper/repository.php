@@ -32,7 +32,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
             $request_needed = false;
             foreach ($list as $name) {
                 $cache = new cache('##extension_manager##'.$name, '.repo');
-                $result = null;
+
                 if (!isset($this->loaded_extensions[$name]) && $this->hasAccess() && !$cache->useCache(array('age' => 3600 * 24))) {
                     $this->loaded_extensions[$name] = true;
                     $request_data['ext'][] = $name;
@@ -64,7 +64,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
     public function hasAccess() {
         if ($this->has_access === null) {
             $cache = new cache('##extension_manager###hasAccess', '.repo');
-            $result = null;
+
             if (!$cache->useCache(array('age' => 3600 * 24, 'purge'=>1))) {
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
@@ -91,7 +91,7 @@ class helper_plugin_extension_repository extends DokuWiki_Plugin {
      */
     public function getData($name) {
         $cache = new cache('##extension_manager##'.$name, '.repo');
-        $result = null;
+
         if (!isset($this->loaded_extensions[$name]) && $this->hasAccess() && !$cache->useCache(array('age' => 3600 * 24))) {
             $this->loaded_extensions[$name] = true;
             $httpclient = new DokuHTTPClient();

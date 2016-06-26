@@ -10,7 +10,9 @@
 if(!defined('CM_KEYMARKER')) define('CM_KEYMARKER','____');
 
 if (!class_exists('configuration')) {
-
+    /**
+     * Class configuration
+     */
     class configuration {
 
         var $_name = 'conf';           // name of the config variable found in the files (overridden by $config['varname'])
@@ -35,10 +37,10 @@ if (!class_exists('configuration')) {
          *
          * @param string $datafile path to config metadata file
          */
-        public function configuration($datafile) {
+        public function __construct($datafile) {
             global $conf, $config_cascade;
 
-            if (!@file_exists($datafile)) {
+            if (!file_exists($datafile)) {
                 msg('No configuration metadata found at - '.htmlspecialchars($datafile),-1);
                 return;
             }
@@ -123,8 +125,8 @@ if (!class_exists('configuration')) {
             $file = end($this->_local_files);
 
             // backup current file (remove any existing backup)
-            if (@file_exists($file) && $backup) {
-                if (@file_exists($file.'.bak')) @unlink($file.'.bak');
+            if (file_exists($file) && $backup) {
+                if (file_exists($file.'.bak')) @unlink($file.'.bak');
                 if (!io_rename($file, $file.'.bak')) return false;
             }
 
@@ -151,6 +153,8 @@ if (!class_exists('configuration')) {
 
         /**
          * Update last modified time stamp of the config file
+         *
+         * @return bool
          */
         public function touch_settings(){
             if ($this->locked) return false;
@@ -187,7 +191,7 @@ if (!class_exists('configuration')) {
 
             if ($this->_format == 'php') {
 
-                if(@file_exists($file)){
+                if(file_exists($file)){
                     $contents = @php_strip_whitespace($file);
                 }else{
                     $contents = '';
@@ -277,7 +281,7 @@ if (!class_exists('configuration')) {
             $local = $this->_local_files[0];
 
             if (!is_writable(dirname($local))) return true;
-            if (@file_exists($local) && !is_writable($local)) return true;
+            if (file_exists($local) && !is_writable($local)) return true;
 
             return false;
         }
@@ -285,6 +289,10 @@ if (!class_exists('configuration')) {
         /**
          * not used ... conf's contents are an array!
          * reduce any multidimensional settings to one dimension using CM_KEYMARKER
+         *
+         * @param $conf
+         * @param string $prefix
+         * @return array
          */
         protected function _flatten($conf,$prefix='') {
 
@@ -337,7 +345,7 @@ if (!class_exists('configuration')) {
 
             foreach ($this->get_plugin_list() as $plugin) {
                 $plugin_dir = plugin_directory($plugin);
-                if (@file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
+                if (file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
                     $meta = array();
                     @include(DOKU_PLUGIN.$plugin_dir.$file);
                     @include(DOKU_PLUGIN.$plugin_dir.$class);
@@ -352,7 +360,7 @@ if (!class_exists('configuration')) {
             }
 
             // the same for the active template
-            if (@file_exists(tpl_incdir().$file)){
+            if (file_exists(tpl_incdir().$file)){
                 $meta = array();
                 @include(tpl_incdir().$file);
                 @include(tpl_incdir().$class);
@@ -380,7 +388,7 @@ if (!class_exists('configuration')) {
 
             foreach ($this->get_plugin_list() as $plugin) {
                 $plugin_dir = plugin_directory($plugin);
-                if (@file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
+                if (file_exists(DOKU_PLUGIN.$plugin_dir.$file)){
                     $conf = $this->_read_config(DOKU_PLUGIN.$plugin_dir.$file);
                     foreach ($conf as $key => $value){
                         $default['plugin'.CM_KEYMARKER.$plugin.CM_KEYMARKER.$key] = $value;
@@ -389,7 +397,7 @@ if (!class_exists('configuration')) {
             }
 
             // the same for the active template
-            if (@file_exists(tpl_incdir().$file)){
+            if (file_exists(tpl_incdir().$file)){
                 $conf = $this->_read_config(tpl_incdir().$file);
                 foreach ($conf as $key => $value){
                     $default['tpl'.CM_KEYMARKER.$tpl.CM_KEYMARKER.$key] = $value;
@@ -403,6 +411,9 @@ if (!class_exists('configuration')) {
 }
 
 if (!class_exists('setting')) {
+    /**
+     * Class setting
+     */
     class setting {
 
         var $_key = '';
@@ -423,7 +434,7 @@ if (!class_exists('setting')) {
          * @param string $key
          * @param array|null $params array with metadata of setting
          */
-        public function setting($key, $params=null) {
+        public function __construct($key, $params=null) {
             $this->_key = $key;
 
             if (is_array($params)) {
@@ -452,7 +463,7 @@ if (!class_exists('setting')) {
          * - if changed value passes error check, set $this->_local to the new value
          *
          * @param  mixed   $input   the new value
-         * @return boolean          true if changed, false otherwise (incl. on error)
+         * @return boolean          true if changed, false otherwise (also on error)
          */
         public function update($input) {
             if (is_null($input)) return false;
@@ -476,10 +487,9 @@ if (!class_exists('setting')) {
          *
          * @param DokuWiki_Plugin $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
-         * @return array(string $label_html, string $input_html)
+         * @return string[] with content array(string $label_html, string $input_html)
          */
         public function html(&$plugin, $echo=false) {
-            $value = '';
             $disable = '';
 
             if ($this->is_protected()) {
@@ -503,6 +513,10 @@ if (!class_exists('setting')) {
 
         /**
          * Generate string to save setting value to file according to $fmt
+         *
+         * @param string $var name of variable
+         * @param string $fmt save format
+         * @return string
          */
         public function out($var, $fmt='php') {
 
@@ -556,7 +570,7 @@ if (!class_exists('setting')) {
         /**
          * Returns caution
          *
-         * @return bool|string caution string, otherwise false for invalid caution
+         * @return false|string caution string, otherwise false for invalid caution
          */
         public function caution() {
             if (!empty($this->_caution)) {
@@ -603,12 +617,15 @@ if (!class_exists('setting')) {
 
 
 if (!class_exists('setting_array')) {
+    /**
+     * Class setting_array
+     */
     class setting_array extends setting {
 
         /**
          * Create an array from a string
          *
-         * @param $string
+         * @param string $string
          * @return array
          */
         protected function _from_string($string){
@@ -622,7 +639,7 @@ if (!class_exists('setting_array')) {
         /**
          * Create a string from an array
          *
-         * @param $array
+         * @param array $array
          * @return string
          */
         protected function _from_array($array){
@@ -657,13 +674,23 @@ if (!class_exists('setting_array')) {
             return true;
         }
 
+        /**
+         * Escaping
+         *
+         * @param string $string
+         * @return string
+         */
         protected function _escape($string) {
             $tr = array("\\" => '\\\\', "'" => '\\\'');
             return "'".strtr( cleanText($string), $tr)."'";
         }
 
         /**
-         * generate string to save setting value to file according to $fmt
+         * Generate string to save setting value to file according to $fmt
+         *
+         * @param string $var name of variable
+         * @param string $fmt save format
+         * @return string
          */
         function out($var, $fmt='php') {
 
@@ -680,8 +707,14 @@ if (!class_exists('setting_array')) {
             return $out;
         }
 
+        /**
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return string[] with content array(string $label_html, string $input_html)
+         */
         function html(&$plugin, $echo=false) {
-            $value = '';
             $disable = '';
 
             if ($this->is_protected()) {
@@ -706,9 +739,18 @@ if (!class_exists('setting_array')) {
 }
 
 if (!class_exists('setting_string')) {
+    /**
+     * Class setting_string
+     */
     class setting_string extends setting {
+        /**
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return string[] with content array(string $label_html, string $input_html)
+         */
         function html(&$plugin, $echo=false) {
-            $value = '';
             $disable = '';
 
             if ($this->is_protected()) {
@@ -733,10 +775,21 @@ if (!class_exists('setting_string')) {
 }
 
 if (!class_exists('setting_password')) {
+    /**
+     * Class setting_password
+     */
     class setting_password extends setting_string {
 
         var $_code = 'plain';  // mechanism to be used to obscure passwords
 
+        /**
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
+         *
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (also on error)
+         */
         function update($input) {
             if ($this->is_protected()) return false;
             if (!$input) return false;
@@ -751,9 +804,15 @@ if (!class_exists('setting_password')) {
             return true;
         }
 
+        /**
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return string[] with content array(string $label_html, string $input_html)
+         */
         function html(&$plugin, $echo=false) {
 
-            $value = '';
             $disable = $this->is_protected() ? 'disabled="disabled"' : '';
 
             $key = htmlspecialchars($this->_key);
@@ -766,7 +825,9 @@ if (!class_exists('setting_password')) {
 }
 
 if (!class_exists('setting_email')) {
-
+    /**
+     * Class setting_email
+     */
     class setting_email extends setting_string {
         var $_multiple = false;
         var $_placeholders = false;
@@ -775,6 +836,7 @@ if (!class_exists('setting_email')) {
          * update setting with user provided value $input
          * if value fails error check, save it
          *
+         * @param mixed $input
          * @return boolean true if changed, false otherwise (incl. on error)
          */
         function update($input) {
@@ -825,20 +887,10 @@ if (!class_exists('setting_email')) {
     }
 }
 
-/**
- * @deprecated 2013-02-16
- */
-if (!class_exists('setting_richemail')) {
-    class setting_richemail extends setting_email {
-        function update($input) {
-            $this->_placeholders = true;
-            return parent::update($input);
-        }
-    }
-}
-
-
 if (!class_exists('setting_numeric')) {
+    /**
+     * Class setting_numeric
+     */
     class setting_numeric extends setting_string {
         // This allows for many PHP syntax errors...
         // var $_pattern = '/^[-+\/*0-9 ]*$/';
@@ -847,6 +899,14 @@ if (!class_exists('setting_numeric')) {
         var $_min = null;
         var $_max = null;
 
+        /**
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
+         *
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (also on error)
+         */
         function update($input) {
             $local = $this->_local;
             $valid = parent::update($input);
@@ -863,6 +923,13 @@ if (!class_exists('setting_numeric')) {
             return $valid;
         }
 
+        /**
+         * Generate string to save setting value to file according to $fmt
+         *
+         * @param string $var name of variable
+         * @param string $fmt save format
+         * @return string
+         */
         function out($var, $fmt='php') {
 
             if ($this->is_protected()) return '';
@@ -881,6 +948,9 @@ if (!class_exists('setting_numeric')) {
 }
 
 if (!class_exists('setting_numericopt')) {
+    /**
+     * Class setting_numericopt
+     */
     class setting_numericopt extends setting_numeric {
         // just allow an empty config
         var $_pattern = '/^(|[-]?[0-9]+(?:[-+*][0-9]+)*)$/';
@@ -888,10 +958,18 @@ if (!class_exists('setting_numericopt')) {
 }
 
 if (!class_exists('setting_onoff')) {
+    /**
+     * Class setting_onoff
+     */
     class setting_onoff extends setting_numeric {
-
+        /**
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return string[] with content array(string $label_html, string $input_html)
+         */
         function html(&$plugin, $echo = false) {
-            $value = '';
             $disable = '';
 
             if ($this->is_protected()) {
@@ -909,6 +987,14 @@ if (!class_exists('setting_onoff')) {
             return array($label,$input);
         }
 
+        /**
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
+         *
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (also on error)
+         */
         function update($input) {
             if ($this->is_protected()) return false;
 
@@ -923,11 +1009,21 @@ if (!class_exists('setting_onoff')) {
 }
 
 if (!class_exists('setting_multichoice')) {
+    /**
+     * Class setting_multichoice
+     */
     class setting_multichoice extends setting_string {
         var $_choices = array();
+        var $lang; //some custom language strings are stored in setting
 
+        /**
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return string[] with content array(string $label_html, string $input_html)
+         */
         function html(&$plugin, $echo = false) {
-            $value = '';
             $disable = '';
             $nochoice = '';
 
@@ -970,6 +1066,14 @@ if (!class_exists('setting_multichoice')) {
             return array($label,$input);
         }
 
+        /**
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
+         *
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (also on error)
+         */
         function update($input) {
             if (is_null($input)) return false;
             if ($this->is_protected()) return false;
@@ -987,10 +1091,20 @@ if (!class_exists('setting_multichoice')) {
 
 
 if (!class_exists('setting_dirchoice')) {
+    /**
+     * Class setting_dirchoice
+     */
     class setting_dirchoice extends setting_multichoice {
 
         var $_dir = '';
 
+        /**
+         * Receives current values for the setting $key
+         *
+         * @param mixed $default   default setting value
+         * @param mixed $local     local setting value
+         * @param mixed $protected protected setting value
+         */
         function initialize($default,$local,$protected) {
 
             // populate $this->_choices with a list of directories
@@ -1016,12 +1130,18 @@ if (!class_exists('setting_dirchoice')) {
 
 
 if (!class_exists('setting_hidden')) {
+    /**
+     * Class setting_hidden
+     */
     class setting_hidden extends setting {
         // Used to explicitly ignore a setting in the configuration manager.
     }
 }
 
 if (!class_exists('setting_fieldset')) {
+    /**
+     * Class setting_fieldset
+     */
     class setting_fieldset extends setting {
         // A do-nothing class used to detect the 'fieldset' type.
         // Used to start a new settings "display-group".
@@ -1029,6 +1149,9 @@ if (!class_exists('setting_fieldset')) {
 }
 
 if (!class_exists('setting_undefined')) {
+    /**
+     * Class setting_undefined
+     */
     class setting_undefined extends setting_hidden {
         // A do-nothing class used to detect settings with no metadata entry.
         // Used internaly to hide undefined settings, and generate the undefined settings list.
@@ -1036,6 +1159,9 @@ if (!class_exists('setting_undefined')) {
 }
 
 if (!class_exists('setting_no_class')) {
+    /**
+     * Class setting_no_class
+     */
     class setting_no_class extends setting_undefined {
         // A do-nothing class used to detect settings with a missing setting class.
         // Used internaly to hide undefined settings, and generate the undefined settings list.
@@ -1043,6 +1169,9 @@ if (!class_exists('setting_no_class')) {
 }
 
 if (!class_exists('setting_no_default')) {
+    /**
+     * Class setting_no_default
+     */
     class setting_no_default extends setting_undefined {
         // A do-nothing class used to detect settings with no default value.
         // Used internaly to hide undefined settings, and generate the undefined settings list.
@@ -1050,11 +1179,22 @@ if (!class_exists('setting_no_default')) {
 }
 
 if (!class_exists('setting_multicheckbox')) {
+    /**
+     * Class setting_multicheckbox
+     */
     class setting_multicheckbox extends setting_string {
 
         var $_choices = array();
         var $_combine = array();
 
+        /**
+         * update changed setting with user provided value $input
+         * - if changed value fails error check, save it to $this->_input (to allow echoing later)
+         * - if changed value passes error check, set $this->_local to the new value
+         *
+         * @param  mixed   $input   the new value
+         * @return boolean          true if changed, false otherwise (also on error)
+         */
         function update($input) {
             if ($this->is_protected()) return false;
 
@@ -1075,9 +1215,15 @@ if (!class_exists('setting_multicheckbox')) {
             return true;
         }
 
+        /**
+         * Build html for label and input of setting
+         *
+         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @return string[] with content array(string $label_html, string $input_html)
+         */
         function html(&$plugin, $echo=false) {
 
-            $value = '';
             $disable = '';
 
             if ($this->is_protected()) {
@@ -1125,7 +1271,7 @@ if (!class_exists('setting_multicheckbox')) {
             // handle any remaining values
             $other = join(',',$value);
 
-            $class = (count($default == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
+            $class = ((count($default) == count($value)) && (count($value) == count(array_intersect($value,$default)))) ?
                             " selectiondefault" : "";
 
             $input .= '<div class="other'.$class.'">'."\n";
@@ -1139,6 +1285,9 @@ if (!class_exists('setting_multicheckbox')) {
 
         /**
          * convert comma separated list to an array and combine any complimentary values
+         *
+         * @param string $str
+         * @return array
          */
         function _str2array($str) {
             $array = explode(',',$str);
@@ -1162,6 +1311,9 @@ if (!class_exists('setting_multicheckbox')) {
 
         /**
          * convert array of values + other back to a comma separated list, incl. splitting any combined values
+         *
+         * @param array $input
+         * @return string
          */
         function _array2str($input) {
 
@@ -1190,6 +1342,9 @@ if (!class_exists('setting_multicheckbox')) {
 }
 
 if (!class_exists('setting_regex')){
+    /**
+     * Class setting_regex
+     */
     class setting_regex extends setting_string {
 
         var $_delimiter = '/';    // regex delimiter to be used in testing input
@@ -1213,7 +1368,7 @@ if (!class_exists('setting_regex')){
             // see if the regex compiles and runs (we don't check for effectiveness)
             $regex = $this->_delimiter . $input . $this->_delimiter . $this->_pregflags;
             $lastError = error_get_last();
-            $ok = @preg_match($regex,'testdata');
+            @preg_match($regex,'testdata');
             if (preg_last_error() != PREG_NO_ERROR || error_get_last() != $lastError) {
                 $this->_input = $input;
                 $this->_error = true;

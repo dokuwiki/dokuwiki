@@ -111,6 +111,9 @@ blockquote {
 }
 
 /* tables */
+.dokuwiki div.table {
+    margin-bottom: 1.4em;
+}
 table {
     border-collapse: collapse;
     empty-cells: show;

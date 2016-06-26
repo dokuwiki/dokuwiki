@@ -58,6 +58,7 @@ $dokuwiki_hash = array(
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
+    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214'
 );
 
 
@@ -110,7 +111,7 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div style="float: right; width: 34%;">
         <?php
-            if(@file_exists(DOKU_INC.'inc/lang/'.$LC.'/install.html')){
+            if(file_exists(DOKU_INC.'inc/lang/'.$LC.'/install.html')){
                 include(DOKU_INC.'inc/lang/'.$LC.'/install.html');
             }else{
                 print "<div lang=\"en\" dir=\"ltr\">\n";
@@ -159,6 +160,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 /**
  * Print the input form
+ *
+ * @param array $d submitted entry 'd' of request data
  */
 function print_form($d){
     global $lang;
@@ -241,7 +244,7 @@ function print_form($d){
 
     </fieldset>
     <fieldset id="process">
-        <input class="button" type="submit" name="submit" value="<?php echo $lang['btn_save']?>" />
+        <button type="submit" name="submit"><?php echo $lang['btn_save']?></button>
     </fieldset>
     </form>
     <?php
@@ -254,7 +257,7 @@ function print_retry() {
     <form action="" method="get">
       <fieldset>
         <input type="hidden" name="l" value="<?php echo $LC ?>" />
-        <input class="button" type="submit" value="<?php echo $lang['i_retry'];?>" />
+        <button type="submit"><?php echo $lang['i_retry'];?></button>
       </fieldset>
     </form>
     <?php
@@ -264,6 +267,9 @@ function print_retry() {
  * Check validity of data
  *
  * @author Andreas Gohr
+ *
+ * @param array $d
+ * @return bool ok?
  */
 function check_data(&$d){
     static $form_default = array(
@@ -333,6 +339,9 @@ function check_data(&$d){
  * Writes the data to the config files
  *
  * @author  Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param array $d
+ * @return bool
  */
 function store_data($d){
     global $LC;
@@ -437,6 +446,10 @@ EOT;
  * Write the given content to a file
  *
  * @author  Chris Smith <chris@jalakai.co.uk>
+ *
+ * @param string $filename
+ * @param string $data
+ * @return bool
  */
 function fileWrite($filename, $data) {
     global $error;
@@ -459,6 +472,8 @@ function fileWrite($filename, $data) {
  * unmodified main config file
  *
  * @author      Chris Smith <chris@jalakai.co.uk>
+ *
+ * @return bool
  */
 function check_configs(){
     global $error;
@@ -483,7 +498,7 @@ function check_configs(){
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
-        if (@file_exists($file) && filesize($file)) {
+        if (file_exists($file) && filesize($file)) {
             $file    = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}/', $file);
             $error[] = sprintf($lang['i_confexists'],$file);
             $ok      = false;
@@ -497,6 +512,8 @@ function check_configs(){
  * Check other installation dir/file permission requirements
  *
  * @author      Chris Smith <chris@jalakai.co.uk>
+ *
+ * @return bool
  */
 function check_permissions(){
     global $error;
@@ -519,7 +536,7 @@ function check_permissions(){
 
     $ok = true;
     foreach($dirs as $dir){
-        if(!@file_exists("$dir/.") || !@is_writable($dir)){
+        if(!file_exists("$dir/.") || !is_writable($dir)){
             $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'],$dir);
             $ok      = false;
@@ -532,14 +549,16 @@ function check_permissions(){
  * Check the availability of functions used in DokuWiki and the PHP version
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @return bool
  */
 function check_functions(){
     global $error;
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.2.0','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.2.0');
+    if(version_compare(phpversion(),'5.3.3','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
         $ok = false;
     }
 
@@ -586,7 +605,7 @@ function langsel(){
     $langs = array();
     while (($file = readdir($dh)) !== false) {
         if(preg_match('/^[\._]/',$file)) continue;
-        if(is_dir($dir.'/'.$file) && @file_exists($dir.'/'.$file.'/lang.php')){
+        if(is_dir($dir.'/'.$file) && file_exists($dir.'/'.$file.'/lang.php')){
             $langs[] = $file;
         }
     }
@@ -601,7 +620,7 @@ function langsel(){
         echo '<option value="'.$l.'" '.$sel.'>'.$l.'</option>';
     }
     echo '</select> ';
-    echo '<input type="submit" value="'.$lang['btn_update'].'" />';
+    echo '<button type="submit">'.$lang['btn_update'].'</button>';
     echo '</form>';
 }
 
@@ -625,6 +644,8 @@ function print_errors(){
  * remove magic quotes recursivly
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $array
  */
 function remove_magic_quotes(&$array) {
     foreach (array_keys($array) as $key) {

@@ -1,0 +1,1 @@
+Tato záložka poskytuje náhled na všechny dostupné moduly a šablony třetích stran pro DokuWiki. Jejich instalací se múžete vystavit **bezpečnostním rizikům** o kterých se můžete více dočíst v oddíle [[doku>security#plugin_security|plugin security]].

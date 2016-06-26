@@ -1,12 +1,13 @@
 <?php
+
 /**
- * lithuanian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Linas Valiukas <shirshegsm@gmail.com>
  * @author Edmondas Girkantas <eg@zemaitija.net>
  * @author Arūnas Vaitekūnas <aras@fan.lt>
  * @author audrius.klevas@gmail.com
+ * @author Tomas Darius Davainis <tomasdd@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -38,7 +39,6 @@ $lang['btn_update']            = 'Atnaujinti';
 $lang['btn_delete']            = 'Ištrinti';
 $lang['btn_back']              = 'Atgal';
 $lang['btn_backlink']          = 'Atgalinės nuorodos';
-$lang['btn_backtomedia']       = 'Atgal į Mediabylos išsirinkimą';
 $lang['btn_subscribe']         = 'Užsisakyti keitimų prenumeratą';
 $lang['btn_profile']           = 'Atnaujinti profilį';
 $lang['btn_reset']             = 'Atstata';
@@ -46,6 +46,7 @@ $lang['btn_draft']             = 'Redaguoti juodraštį';
 $lang['btn_recover']           = 'Atkurti juodraštį';
 $lang['btn_draftdel']          = 'Šalinti juodraštį';
 $lang['btn_register']          = 'Registruotis';
+$lang['btn_img_backto']        = 'Atgal į %s';
 $lang['loggedinas']            = 'Prisijungęs kaip:';
 $lang['user']                  = 'Vartotojo vardas';
 $lang['pass']                  = 'Slaptažodis';
@@ -88,12 +89,16 @@ $lang['txt_filename']          = 'Įveskite wikivardą (nebūtina):';
 $lang['txt_overwrt']           = 'Perrašyti egzistuojančią bylą';
 $lang['lockedby']              = 'Užrakintas vartotojo:';
 $lang['lockexpire']            = 'Užraktas bus nuimtas:';
-$lang['js']['willexpire']            = 'Šio puslapio redagavimo užrakto galiojimo laikas baigsis po minutės.\nNorėdami išvengti nesklandumų naudokite peržiūros mygtuką ir užraktas atsinaujins.';
+$lang['js']['willexpire']      = 'Šio puslapio redagavimo užrakto galiojimo laikas baigsis po minutės.\nNorėdami išvengti nesklandumų naudokite peržiūros mygtuką ir užraktas atsinaujins.';
 $lang['js']['notsavedyet']     = 'Pakeitimai nebus išsaugoti.\nTikrai tęsti?';
+$lang['js']['keepopen']        = 'Pažymėjus palikti langą atvertą';
+$lang['js']['hidedetails']     = 'Paslėpti Detales';
+$lang['js']['nosmblinks']      = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.
+Vis dėlto, jūs galite nukopijuoti šią nuorodą.';
+$lang['js']['del_confirm']     = 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
 $lang['rssfailed']             = 'Siunčiant šį feed\'ą įvyko klaida: ';
 $lang['nothingfound']          = 'Paieškos rezultatų nėra.';
 $lang['mediaselect']           = 'Mediabylos išsirinkimas';
-$lang['fileupload']            = 'Mediabylos atsiuntimas';
 $lang['uploadsucc']            = 'Atsiuntimas pavyko';
 $lang['uploadfail']            = 'Atsiuntimas nepavyko. Blogi priėjimo leidimai??';
 $lang['uploadwrong']           = 'Atsiuntimas atmestas. Bylos tipas neleistinas';
@@ -107,10 +112,6 @@ $lang['deletefail']            = 'Byla "%s" negali būti ištrinta - patikrinkit
 $lang['mediainuse']            = 'Byla "%s" nebuvo ištrinta - ji vis dar naudojama.';
 $lang['namespaces']            = 'Pavadinimai';
 $lang['mediafiles']            = 'Prieinamos bylos';
-$lang['js']['keepopen']        = 'Pažymėjus palikti langą atvertą';
-$lang['js']['hidedetails']     = 'Paslėpti Detales';
-$lang['js']['nosmblinks']      = 'Nurodos į "Windows shares" veikia tik su Microsoft Internet Explorer naršykle.
-Vis dėlto, jūs galite nukopijuoti šią nuorodą.';
 $lang['mediausage']            = 'Failo nuorodai užrašyti naudokite tokią sintaksę:';
 $lang['mediaview']             = 'Žiūrėti pirminį failą';
 $lang['mediaroot']             = 'pradžia (root)';
@@ -159,12 +160,9 @@ $lang['qb_media']              = 'Paveikslėliai ir kitos bylos';
 $lang['qb_sig']                = 'Įterpti parašą';
 $lang['qb_smileys']            = 'Šypsenėlės';
 $lang['qb_chars']              = 'Specialūs simboliai';
-$lang['js']['del_confirm']           = 'Ar tikrai ištrinti pažymėtą(us) įrašą(us)?';
-$lang['admin_register']        = 'Sukurti naują vartotoją';
 $lang['metaedit']              = 'Redaguoti metaduomenis';
 $lang['metasaveerr']           = 'Nepavyko išsaugoti metaduomenų';
 $lang['metasaveok']            = 'Metaduomenys išsaugoti';
-$lang['btn_img_backto']            = 'Atgal į %s';
 $lang['img_title']             = 'Pavadinimas:';
 $lang['img_caption']           = 'Antraštė:';
 $lang['img_date']              = 'Data:';

@@ -3,6 +3,7 @@
 if(!defined('DOKU_INC')) die();
 
 require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
+require_once(DOKU_PLUGIN.'authad/adLDAP/classes/adLDAPUtils.php');
 
 /**
  * Active Directory authentication backend for DokuWiki
@@ -67,6 +68,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      */
     protected $_pattern = array();
 
+    protected $_actualstart = 0;
+
+    protected $_grpsusers = array();
+
     /**
      * Constructor
      */
@@ -116,6 +121,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // other can do's are changed in $this->_loadServerConfig() base on domain setup
         $this->cando['modName'] = true;
         $this->cando['modMail'] = true;
+        $this->cando['getUserCount'] = true;
     }
 
     /**
@@ -203,6 +209,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         //general user info
+        $info = array();
         $info['name'] = $result[0]['displayname'][0];
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];
@@ -251,7 +258,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                     ($info['expiresin'] <= $this->conf['expirywarn']) &&
                     !$this->msgshown
                 ) {
-                    $msg = sprintf($lang['authpwdexpire'], $info['expiresin']);
+                    $msg = sprintf($this->getLang('authpwdexpire'), $info['expiresin']);
                     if($this->canDo('modPass')) {
                         $url = wl($ID, array('do'=> 'profile'));
                         $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
@@ -325,13 +332,137 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     }
 
     /**
+     * Create a Search-String useable by adLDAPUsers::all($includeDescription = false, $search = "*", $sorted = true)
+     *
+     * @param array $filter
+     * @return string
+     */
+    protected function _constructSearchString($filter){
+        if (!$filter){
+            return '*';
+        }
+        $adldapUtils = new adLDAPUtils($this->_adldap(null));
+        $result = '*';
+        if (isset($filter['name'])) {
+            $result .= ')(displayname=*' . $adldapUtils->ldapSlashes($filter['name']) . '*';
+            unset($filter['name']);
+        }
+
+        if (isset($filter['user'])) {
+            $result .= ')(samAccountName=*' . $adldapUtils->ldapSlashes($filter['user']) . '*';
+            unset($filter['user']);
+        }
+
+        if (isset($filter['mail'])) {
+            $result .= ')(mail=*' . $adldapUtils->ldapSlashes($filter['mail']) . '*';
+            unset($filter['mail']);
+        }
+        return $result;
+    }
+
+    /**
+     * Return a count of the number of user which meet $filter criteria
+     *
+     * @param array $filter  $filter array of field/pattern pairs, empty array for no filter
+     * @return int number of users
+     */
+    public function getUserCount($filter = array()) {
+        $adldap = $this->_adldap(null);
+        if(!$adldap) {
+            dbglog("authad/auth.php getUserCount(): _adldap not set.");
+            return -1;
+        }
+        if ($filter == array()) {
+            $result = $adldap->user()->all();
+        } else {
+            $searchString = $this->_constructSearchString($filter);
+            $result = $adldap->user()->all(false, $searchString);
+            if (isset($filter['grps'])) {
+                $this->users = array_fill_keys($result, false);
+                $usermanager = plugin_load("admin", "usermanager", false);
+                $usermanager->setLastdisabled(true);
+                if (!isset($this->_grpsusers[$this->_filterToString($filter)])){
+                    $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize());
+                } elseif (count($this->_grpsusers[$this->_filterToString($filter)]) < $usermanager->getStart() + 3*$usermanager->getPagesize()) {
+                    $this->_fillGroupUserArray($filter,$usermanager->getStart() + 3*$usermanager->getPagesize() - count($this->_grpsusers[$this->_filterToString($filter)]));
+                }
+                $result = $this->_grpsusers[$this->_filterToString($filter)];
+            } else {
+                $usermanager = plugin_load("admin", "usermanager", false);
+                $usermanager->setLastdisabled(false);
+            }
+
+        }
+
+        if (!$result) {
+            return 0;
+        }
+        return count($result);
+    }
+
+    /**
+     *
+     * create a unique string for each filter used with a group
+     *
+     * @param array $filter
+     * @return string
+     */
+    protected function _filterToString ($filter) {
+        $result = '';
+        if (isset($filter['user'])) {
+            $result .= 'user-' . $filter['user'];
+        }
+        if (isset($filter['name'])) {
+            $result .= 'name-' . $filter['name'];
+        }
+        if (isset($filter['mail'])) {
+            $result .= 'mail-' . $filter['mail'];
+        }
+        if (isset($filter['grps'])) {
+            $result .= 'grps-' . $filter['grps'];
+        }
+        return $result;
+    }
+
+    /**
+     * Create an array of $numberOfAdds users passing a certain $filter, including belonging
+     * to a certain group and save them to a object-wide array. If the array
+     * already exists try to add $numberOfAdds further users to it.
+     *
+     * @param array $filter
+     * @param int $numberOfAdds additional number of users requested
+     * @return int number of Users actually add to Array
+     */
+    protected function _fillGroupUserArray($filter, $numberOfAdds){
+        $this->_grpsusers[$this->_filterToString($filter)];
+        $i = 0;
+        $count = 0;
+        $this->_constructPattern($filter);
+        foreach ($this->users as $user => &$info) {
+            if($i++ < $this->_actualstart) {
+                continue;
+            }
+            if($info === false) {
+                $info = $this->getUserData($user);
+            }
+            if($this->_filter($user, $info)) {
+                $this->_grpsusers[$this->_filterToString($filter)][$user] = $info;
+                if(($numberOfAdds > 0) && (++$count >= $numberOfAdds)) break;
+            }
+        }
+        $this->_actualstart = $i;
+        return $count;
+    }
+
+    /**
      * Bulk retrieval of user data
      *
      * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
-     * @param   int   $start     index of first user to be returned
-     * @param   int   $limit     max number of users to be returned
-     * @param   array $filter    array of field/pattern pairs, null for no filter
-     * @return  array userinfo (refer getUserData for internal userinfo details)
+     *
+     * @param   int $start index of first user to be returned
+     * @param   int $limit max number of users to be returned
+     * @param   array $filter array of field/pattern pairs, null for no filter
+     * @return array userinfo (refer getUserData for internal userinfo details)
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = array()) {
         $adldap = $this->_adldap(null);
@@ -339,27 +470,44 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
 
         if(!$this->users) {
             //get info for given user
-            $result = $adldap->user()->all();
+            $result = $adldap->user()->all(false, $this->_constructSearchString($filter));
             if (!$result) return array();
             $this->users = array_fill_keys($result, false);
         }
 
         $i     = 0;
         $count = 0;
-        $this->_constructPattern($filter);
         $result = array();
 
-        foreach($this->users as $user => &$info) {
-            if($i++ < $start) {
-                continue;
-            }
-            if($info === false) {
-                $info = $this->getUserData($user);
-            }
-            if($this->_filter($user, $info)) {
+        if (!isset($filter['grps'])) {
+            $usermanager = plugin_load("admin", "usermanager", false);
+            $usermanager->setLastdisabled(false);
+            $this->_constructPattern($filter);
+            foreach($this->users as $user => &$info) {
+                if($i++ < $start) {
+                    continue;
+                }
+                if($info === false) {
+                    $info = $this->getUserData($user);
+                }
                 $result[$user] = $info;
                 if(($limit > 0) && (++$count >= $limit)) break;
             }
+        } else {
+            $usermanager = plugin_load("admin", "usermanager", false);
+            $usermanager->setLastdisabled(true);
+            if (!isset($this->_grpsusers[$this->_filterToString($filter)]) || count($this->_grpsusers[$this->_filterToString($filter)]) < ($start+$limit)) {
+                $this->_fillGroupUserArray($filter,$start+$limit - count($this->_grpsusers[$this->_filterToString($filter)]) +1);
+            }
+            if (!$this->_grpsusers[$this->_filterToString($filter)]) return false;
+            foreach($this->_grpsusers[$this->_filterToString($filter)] as $user => &$info) {
+                if($i++ < $start) {
+                    continue;
+                }
+                $result[$user] = $info;
+                if(($limit > 0) && (++$count >= $limit)) break;
+            }
+
         }
         return $result;
     }
@@ -374,7 +522,10 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     public function modifyUser($user, $changes) {
         $return = true;
         $adldap = $this->_adldap($this->_userDomain($user));
-        if(!$adldap) return false;
+        if(!$adldap) {
+            msg($this->getLang('connectfail'), -1);
+            return false;
+        }
 
         // password changing
         if(isset($changes['pass'])) {
@@ -384,7 +535,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
-            if(!$return) msg('AD Auth: failed to change the password. Maybe the password policy was not met?', -1);
+            if(!$return) msg($this->getLang('passchangefail'), -1);
         }
 
         // changing user data
@@ -406,6 +557,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
                 if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
                 $return = false;
             }
+            if(!$return) msg($this->getLang('userchangefail'), -1);
         }
 
         return $return;
@@ -446,7 +598,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**
      * Get the domain part from a user
      *
-     * @param $user
+     * @param string $user
      * @return string
      */
     public function _userDomain($user) {
@@ -457,7 +609,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
     /**
      * Get the user part from a user
      *
-     * @param $user
+     * @param string $user
      * @return string
      */
     public function _userName($user) {
@@ -543,6 +695,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * The patterns are set up with $this->_constructPattern()
      *
      * @author Chris Smith <chris@jalakai.co.uk>
+     *
      * @param string $user
      * @param array  $info
      * @return bool
@@ -564,6 +717,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
      * Create a pattern for $this->_filter()
      *
      * @author Chris Smith <chris@jalakai.co.uk>
+     *
      * @param array $filter
      */
     protected function _constructPattern($filter) {

@@ -27,7 +27,7 @@ if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
  * Check if a given mail address is valid
  */
 if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
-if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,4}|museum|travel)');
+if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})');
 
 /**
  * Prepare mailfrom replacement patterns
@@ -96,15 +96,23 @@ function mail_setup(){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    mail()
+ *
+ * @deprecated User the Mailer:: class instead
  */
 function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=null, $params=null){
-
+    dbg_deprecated('class Mailer::');
     $message = compact('to','subject','body','from','cc','bcc','headers','params');
     return trigger_event('MAIL_MESSAGE_SEND',$message,'_mail_send_action');
 }
 
+/**
+ * @param $data
+ * @return bool
+ *
+ * @deprecated User the Mailer:: class instead
+ */
 function _mail_send_action($data) {
-
+    dbg_deprecated('class Mailer::');
     // retrieve parameters from event data, $to, $subject, $body, $from, $cc, $bcc, $headers, $params
     $to = $data['to'];
     $subject = $data['subject'];
@@ -177,8 +185,11 @@ function _mail_send_action($data) {
  * @param string  $string Multiple adresses separated by commas
  * @param string  $header Name of the header (To,Bcc,Cc,...)
  * @param boolean $names  Allow named Recipients?
+ *
+ * @deprecated User the Mailer:: class instead
  */
 function mail_encode_address($string,$header='',$names=true){
+    dbg_deprecated('class Mailer::');
     $headers = '';
     $parts = explode(',',$string);
     foreach ($parts as $part){

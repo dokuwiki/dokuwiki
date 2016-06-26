@@ -83,7 +83,6 @@ class Input {
      *
      * @see isset
      * @param string $name Parameter name
-     * @return bool
      */
     public function remove($name) {
         if(isset($this->access[$name])) {
@@ -132,7 +131,7 @@ class Input {
      * @param string    $name Parameter name
      * @param mixed     $default If parameter is not set, initialize with this value
      * @param bool      $nonempty Init with $default if parameter is set but empty()
-     * @return &mixed
+     * @return mixed (reference)
      */
     public function &ref($name, $default = '', $nonempty = false) {
         if(!isset($this->access[$name]) || ($nonempty && empty($this->access[$name]))) {
@@ -146,7 +145,7 @@ class Input {
      * Access a request parameter as int
      *
      * @param string    $name     Parameter name
-     * @param mixed     $default  Default to return if parameter isn't set or is an array
+     * @param int       $default  Default to return if parameter isn't set or is an array
      * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return int
      */
@@ -164,7 +163,7 @@ class Input {
      * Access a request parameter as string
      *
      * @param string    $name     Parameter name
-     * @param mixed     $default  Default to return if parameter isn't set or is an array
+     * @param string    $default  Default to return if parameter isn't set or is an array
      * @param bool      $nonempty Return $default if parameter is set but empty()
      * @return string
      */
@@ -246,7 +245,7 @@ class Input {
      *
      * This function returns the $INPUT object itself for easy chaining
      *
-     * @param $name
+     * @param string $name
      * @return Input
      */
     public function extract($name){

@@ -1,8 +1,8 @@
 <?php
+
 /**
- * dutch language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
@@ -16,6 +16,8 @@
  * @author Jeroen
  * @author Ricardo Guijt <ricardoguijt@gmail.com>
  * @author Gerrit <klapinklapin@gmail.com>
+ * @author Hugo Smet <hugo.smet@scarlet.be>
+ * @author hugo smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Configuratie-instellingen';
 $lang['error']                 = 'De instellingen zijn niet gewijzigd wegens een incorrecte waarde, kijk je wijzigingen na en sla dan opnieuw op.<br />Je kunt de incorrecte waarde(s) herkennen aan de rode rand.';
@@ -28,7 +30,7 @@ $lang['security']              = 'Beveiligingswaarschuwing: Het wijzigen van dez
 $lang['_configuration_manager'] = 'Configuratiemanager';
 $lang['_header_dokuwiki']      = 'DokuWiki-instellingen';
 $lang['_header_plugin']        = 'Plugin-instellingen';
-$lang['_header_template']      = 'Sjabloon-instellingen';
+$lang['_header_template']      = 'Template-instellingen';
 $lang['_header_undefined']     = 'Ongedefinieerde instellingen';
 $lang['_basic']                = 'Basisinstellingen';
 $lang['_display']              = 'Beeldinstellingen';
@@ -47,9 +49,9 @@ $lang['_msg_setting_no_default'] = 'Geen standaard waarde.';
 $lang['title']                 = 'Titel van de wiki';
 $lang['start']                 = 'Naam startpagina';
 $lang['lang']                  = 'Taal';
-$lang['template']              = 'Sjabloon ofwel het design van de wiki.';
-$lang['tagline']               = 'Ondertitel (als het sjabloon dat ondersteunt)';
-$lang['sidebar']               = 'Zijbalk-paginanaam (als het sjabloon dat ondersteunt), leeg veld betekent geen zijbalk';
+$lang['template']              = 'Template ofwel het design van de wiki.';
+$lang['tagline']               = 'Ondertitel (als het template dat ondersteunt)';
+$lang['sidebar']               = 'Zijbalk-paginanaam (als het template dat ondersteunt), leeg veld betekent geen zijbalk';
 $lang['license']               = 'Onder welke licentie zou je tekst moeten worden gepubliceerd?';
 $lang['savedir']               = 'Directory om data op te slaan';
 $lang['basedir']               = 'Basisdirectory';
@@ -89,7 +91,9 @@ $lang['disableactions']        = 'Aangevinkte DokuWiki-akties uitschakelen';
 $lang['disableactions_check']  = 'Controleer';
 $lang['disableactions_subscription'] = 'Inschrijven/opzeggen';
 $lang['disableactions_wikicode'] = 'Bron bekijken/exporteer rauw';
+$lang['disableactions_profile_delete'] = 'Schrap eigen account';
 $lang['disableactions_other']  = 'Andere akties (gescheiden door komma\'s)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Authenticatiebeveiligings-timeout (seconden)';
 $lang['securecookie']          = 'Moeten cookies die via HTTPS gezet zijn alleen via HTTPS verzonden worden door de browser? Zet deze optie uit als alleen het inloggen op de wiki beveiligd is, maar het gebruik verder niet.';
 $lang['remote']                = 'Activeer het remote API-systeem. Hiermee kunnen andere applicaties de wiki benaderen via XML-RPC of andere mechanismen.';
@@ -194,6 +198,7 @@ $lang['xsendfile_o_2']         = 'Standaard X-Sendfile header';
 $lang['xsendfile_o_3']         = 'Merkgebonden Nginx X-Accel-Redirect header';
 $lang['showuseras_o_loginname'] = 'Loginnaam';
 $lang['showuseras_o_username'] = 'Volledige naam';
+$lang['showuseras_o_username_link'] = 'Gebruikers volledige naam als interwiki gebruikers link';
 $lang['showuseras_o_email']    = 'E-mailadres (onherkenbaar gemaakt volgens mailguard-instelling)';
 $lang['showuseras_o_email_link'] = 'E-mailadres als mailto: link';
 $lang['useheading_o_0']        = 'Nooit';

@@ -16,8 +16,15 @@ class auth_password_test extends DokuWikiTest {
         'kmd5'  => 'a579299436d7969791189acadd86fcb716',
         'djangomd5'  => 'md5$abcde$d0fdddeda8cd92725d2b54148ac09158',
         'djangosha1' => 'sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678',
-        'sha512' => '$6$abcdefgh12345678$J9.zOcgx0lotwZdcz0uulA3IVQMinZvFZVjA5vapRLVAAqtay23XD4xeeUxQ3B4JvDWYFBIxVWW1tOYlHX13k1'
+
     );
+
+    function __construct() {
+        if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1) {
+            // Check SHA512 only if available in this PHP
+            $this->passes['sha512'] = '$6$abcdefgh12345678$J9.zOcgx0lotwZdcz0uulA3IVQMinZvFZVjA5vapRLVAAqtay23XD4xeeUxQ3B4JvDWYFBIxVWW1tOYlHX13k1';
+        }
+    }
 
 
     function test_cryptPassword(){

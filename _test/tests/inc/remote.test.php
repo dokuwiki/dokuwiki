@@ -160,10 +160,16 @@ class remote_test extends DokuWikiTest {
         $this->assertTrue($this->remote->hasAccess());
     }
 
+    /**
+     * @expectedException RemoteAccessDeniedException
+     */
     function test_hasAccessFail() {
         global $conf;
         $conf['remote'] = 0;
-        $this->assertFalse($this->remote->hasAccess());
+        // the hasAccess() should throw a Exception to keep the same semantics with xmlrpc.php.
+        // because the user(xmlrpc) check remote before .--> (!$conf['remote']) die('XML-RPC server not enabled.');
+        // so it must be a Exception when get here.
+        $this->remote->hasAccess();
     }
 
     function test_hasAccessFailAcl() {

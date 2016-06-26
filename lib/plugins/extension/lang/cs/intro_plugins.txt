@@ -1,0 +1,1 @@
+Toto je seznam momentálně nainstalovaných zásuvných modulů vaší DokuWiki. V tomto seznamu je lze zapínat, vypínat nebo kompletně odinstalovat. Jsou zde také vidět dostupné aktualizace pro moduly, ale před jejich případným aktualizováním si vždy přečtěte jejich dokumentaci.

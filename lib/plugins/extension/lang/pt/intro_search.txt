@@ -1,0 +1,1 @@
+Esta guia lhe dá acesso a todos os plugins e modelos de terceiros disponíveis DokuWiki. Por favor, esteja ciente de que a instalação de componentes de terceiros pode representar um risco de segurança ** **, você pode querer ler sobre [[doku> segurança # plugin_security | segurança plug-in]] antes de realizar a instalação de módulos de terceiros.

@@ -1,9 +1,11 @@
 <?php
+
 /**
- * Basque language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
+ * @author Yadav Gowda <yadav.gowda@gmail.com>
  */
 $lang['menu']                  = 'Berrezartze Kudeatzailea';
 $lang['filter']                = 'Bilatu spam duten orriak';

@@ -13,5 +13,5 @@ Uživatel    : @USER@
 
 
 -- 
-Tento email byl automaticky vygenerován systémem DokuWiki
+Tento e-mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@

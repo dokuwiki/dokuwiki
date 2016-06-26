@@ -1,13 +1,16 @@
 language: php
+sudo: false
 php:
   - "5.6"
   - "5.5"
   - "5.4"
   - "5.3"
-# PHP 5.6 is not yet released, allow failures
+  - "hhvm"
+  - "nightly"
 matrix:
   allow_failures:
-    - php: "5.6"
+    - php: "hhvm"
+    - php: "nightly"
 notifications:
   irc:
     channels:

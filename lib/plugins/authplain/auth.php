@@ -82,7 +82,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
      * @author  Andreas Gohr <andi@splitbrain.org>
      * @param string $user
      * @param bool $requireGroups  (optional) ignored by this plugin, grps info always supplied
-     * @return array|bool
+     * @return array|false
      */
     public function getUserData($user, $requireGroups=true) {
         if($this->users === null) $this->_loadUserData();
@@ -134,7 +134,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         global $config_cascade;
 
         // user mustn't already exist
-        if($this->getUserData($user) !== false) return false;
+        if($this->getUserData($user) !== false) {
+            msg($this->getLang('userexists'), -1);
+            return false;
+        }
 
         $pass = auth_cryptPassword($pwd);
 
@@ -144,16 +147,13 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         // prepare user line
         $userline = $this->_createUserLine($user, $pass, $name, $mail, $grps);
 
-        if(io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
-            $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
-            return $pwd;
+        if(!io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
+            msg($this->getLang('writefail'), -1);
+            return null;
         }
 
-        msg(
-            'The '.$config_cascade['plainauth.users']['default'].
-                ' file is not writable. Please inform the Wiki-Admin', -1
-        );
-        return null;
+        $this->users[$user] = compact('pass', 'name', 'mail', 'grps');
+        return $pwd;
     }
 
     /**
@@ -169,7 +169,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         global $config_cascade;
 
         // sanity checks, user must already exist and there must be something to change
-        if(($userinfo = $this->getUserData($user)) === false) return false;
+        if(($userinfo = $this->getUserData($user)) === false) {
+            msg($this->getLang('usernotexists'), -1);
+            return false;
+        }
         if(!is_array($changes) || !count($changes)) return true;
 
         // update userinfo with new data, remembering to encrypt any password
@@ -185,14 +188,9 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
 
         $userline = $this->_createUserLine($newuser, $userinfo['pass'], $userinfo['name'], $userinfo['mail'], $userinfo['grps']);
 
-        if(!$this->deleteUsers(array($user))) {
-            msg('Unable to modify user data. Please inform the Wiki-Admin', -1);
-            return false;
-        }
-
-        if(!io_saveFile($config_cascade['plainauth.users']['default'], $userline, true)) {
-            msg('There was an error modifying your user data. You should register again.', -1);
-            // FIXME, user has been deleted but not recreated, should force a logout and redirect to login page
+        if(!io_replaceInFile($config_cascade['plainauth.users']['default'], '/^'.$user.':/', $userline, true)) {
+            msg('There was an error modifying your user data. You may need to register again.', -1);
+            // FIXME, io functions should be fail-safe so existing data isn't lost
             $ACT = 'register';
             return false;
         }
@@ -223,7 +221,10 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         if(empty($deleted)) return 0;
 
         $pattern = '/^('.join('|', $deleted).'):/';
-        io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true);
+        if (!io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true)) {
+            msg($this->getLang('writefail'), -1);
+            return 0;
+        }
 
         // reload the user list and count the difference
         $count = count($this->users);
@@ -325,7 +326,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
 
         $this->users = array();
 
-        if(!@file_exists($config_cascade['plainauth.users']['default'])) return;
+        if(!file_exists($config_cascade['plainauth.users']['default'])) return;
 
         $lines = file($config_cascade['plainauth.users']['default']);
         foreach($lines as $line) {

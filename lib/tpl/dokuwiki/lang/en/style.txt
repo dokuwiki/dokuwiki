@@ -1,0 +1,4 @@
+If you want to adjust the logo, simply use the Media Manager to upload a ''logo.png'' into the ''wiki'' or the root namespace and it
+will be automatically used. You can also upload a ''favicon.ico'' there. If you use a closed
+wiki it is recommended to make the ''wiki'' (or root) namespace world readable in the ACL settings or
+your logo is not shown to not logged in users.

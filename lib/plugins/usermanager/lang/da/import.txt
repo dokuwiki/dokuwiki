@@ -1,0 +1,9 @@
+===== Samling af Brugere Import =====
+
+Kræver en CSV-fil med brugere på mindst fire kolonner.
+Kolonnerne skal indeholde, i denne orden: bruger-id, fulde navn, email-adresse og grupper.
+CSV-felterne skal separeres af kommaer (,) og strengafgrænser med anførelsestegn (%%""%%). Backslash (\) kan benyttes som "escape character".
+For et eksempel på en brugbar fil, kan du prøve "Eksportér Brugere"-funktionen her over.  
+Overlappende bruger-id'er bliver ignoreret.
+
+En adgangskode vil blive genereret og sendt til hver succesfuldt importeret bruger.

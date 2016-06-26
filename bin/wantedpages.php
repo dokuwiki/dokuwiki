@@ -61,6 +61,13 @@ class WantedPagesCLI extends DokuCLI {
         }
     }
 
+    /**
+     * Determine directions of the search loop
+     *
+     * @param string $entry
+     * @param string $basepath
+     * @return int
+     */
     protected function dir_filter($entry, $basepath) {
         if($entry == '.' || $entry == '..') {
             return WantedPagesCLI::DIR_CONTINUE;
@@ -77,6 +84,13 @@ class WantedPagesCLI extends DokuCLI {
         return WantedPagesCLI::DIR_CONTINUE;
     }
 
+    /**
+     * Collects recursively the pages in a namespace
+     *
+     * @param string $dir
+     * @return array
+     * @throws DokuCLI_Exception
+     */
     protected function get_pages($dir) {
         static $trunclen = null;
         if(!$trunclen) {
@@ -108,6 +122,12 @@ class WantedPagesCLI extends DokuCLI {
         return $pages;
     }
 
+    /**
+     * Parse instructions and returns the non-existing links
+     *
+     * @param array $page array with page id and file path
+     * @return array
+     */
     function internal_links($page) {
         global $conf;
         $instructions = p_get_instructions(file_get_contents($page['file']));

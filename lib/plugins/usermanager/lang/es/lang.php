@@ -27,6 +27,7 @@
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Antonio Castilla <antoniocastilla@trazoide.com>
  * @author Jonathan Hernández <me@jhalicea.com>
+ * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';
@@ -75,6 +76,12 @@ $lang['add_fail']              = 'Falló la creación del usuario';
 $lang['notify_ok']             = 'Se envió la notificación por correo electrónico';
 $lang['notify_fail']           = 'No se pudo enviar la notificación por correo electrónico';
 $lang['import_userlistcsv']    = 'Lista de usuarios (CSV): ';
+$lang['import_header']         = 'Importaciones Más Recientes - Fallos';
+$lang['import_success_count']  = 'Importación de usuarios: %d usuarios encontrados, %d importados correctamente.';
+$lang['import_failure_count']  = 'Importación de usuarios: %d fallaron. Los fallos se enumeran a continuación.';
+$lang['import_error_fields']   = 'Campos insuficientes, encontrados %d, se requieren 4.';
+$lang['import_error_baduserid'] = 'Identificador de usuario no encontrado';
+$lang['import_error_badname']  = 'Nombre erróneo';
 $lang['import_error_badmail']  = 'Dirección de correo electrónico incorrecta';
 $lang['import_error_upload']   = 'Error al importar. El archivo csv no se pudo cargar o está vacío.';
 $lang['import_error_readfail'] = 'Error al importar. No se puede leer el archivo subido.';

@@ -1,13 +1,13 @@
-Dobrý den,
+Dobrý den!
 
 Někdo požádal o nové heslo k vašemu uživatelskému účtu na wiki @TITLE@ (@DOKUWIKIURL@)
 
-Pokud jste o nové heslo nežádali, ignorujte prosím tento email.
+Pokud jste o nové heslo nežádali, ignorujte prosím tento e-mail.
 
 Pro potvrzení, že jste tento požadavek poslali opravdu vy, prosím otevřete následující odkaz.
 
 @CONFIRM@
 
 -- 
-Tento email byl automaticky vygenerován systémem DokuWiki
+Tento e-mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@

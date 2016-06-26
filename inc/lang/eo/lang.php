@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Felipe Castro <fefcas@uol.com.br>
@@ -17,7 +17,7 @@ $lang['doublequoteopening']    = '“';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Redakti la paĝon';
 $lang['btn_source']            = 'Montri fontan tekston';
 $lang['btn_show']              = 'Montri paĝon';
@@ -41,7 +41,6 @@ $lang['btn_update']            = 'Aktualigi';
 $lang['btn_delete']            = 'Forigi';
 $lang['btn_back']              = 'Retroiri';
 $lang['btn_backlink']          = 'Retroligoj';
-$lang['btn_backtomedia']       = 'Retroiri al elekto de dosiero';
 $lang['btn_subscribe']         = 'Aliĝi al paĝaj modifoj';
 $lang['btn_profile']           = 'Aktualigi profilon';
 $lang['btn_reset']             = 'Rekomenci';
@@ -153,7 +152,6 @@ $lang['js']['media_overwrt']   = 'Anstataûi ekzistantajn dosierojn';
 $lang['rssfailed']             = 'Okazis eraro dum ricevado de la novaĵ-fluo: ';
 $lang['nothingfound']          = 'Ankoraŭ nenio troviĝas tie ĉi.';
 $lang['mediaselect']           = 'Elekto de aŭdvidaĵa dosiero';
-$lang['fileupload']            = 'Alŝuto de aŭdvidaĵa dosiero';
 $lang['uploadsucc']            = 'Alŝuto sukcesis';
 $lang['uploadfail']            = 'Alŝuto malsukcesis. Ĉu eble estas problemoj pro permes-atributoj?';
 $lang['uploadwrong']           = 'Rifuzita alŝuto. Tiu ĉi dosiersufikso estas malpermesata!';
@@ -244,7 +242,6 @@ $lang['qb_sig']                = 'Inkluzivi subskribon';
 $lang['qb_smileys']            = 'Ridetuloj';
 $lang['qb_chars']              = 'Specialaj signaĵoj';
 $lang['upperns']               = 'saltu al la parenca nomspaco';
-$lang['admin_register']        = 'Aldoni novan uzanton';
 $lang['metaedit']              = 'Redakti metadatumaron';
 $lang['metasaveerr']           = 'La konservo de metadatumaro malsukcesis';
 $lang['metasaveok']            = 'La metadatumaro konserviĝis';
@@ -277,7 +274,6 @@ $lang['subscr_style_every']    = 'retpoŝtaĵo pro ĉiu ŝanĝo';
 $lang['subscr_style_digest']   = 'resuma retpoŝtaĵo de ŝanĝoj por ĉiu paĝo (je %.2f tagoj)';
 $lang['subscr_style_list']     = 'listo de ŝanĝitaj paĝoj ekde la lasta retpoŝtaĵo (je %.2f tagoj)';
 $lang['authtempfail']          = 'La identigo de via uzantonomo estas intertempe maldisponebla. Se tiu ĉi situacio daŭros, bonvolu informi la adminstranton de la vikio.';
-$lang['authpwdexpire']         = 'Via pasvorto malvalidos post %d tagoj, prefere ŝanĝu ĝin baldaũ.';
 $lang['i_chooselang']          = 'Elektu vian lingvon';
 $lang['i_installer']           = 'Instalilo de DokuWiki';
 $lang['i_wikiname']            = 'Nomo de la vikio';
