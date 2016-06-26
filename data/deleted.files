@@ -2,6 +2,10 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed in 2016-06-26
+inc/cliopts.php
+lib/tpl/dokuwiki/css/mixins.less
+
 # removed in 2015-08-10
 inc/TarLib.class.php
 inc/geshi.php
