@@ -242,7 +242,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("      <tr><td colspan=\"5\" class=\"centeralign\">");
         ptln("        <span class=\"medialeft\">");
         ptln("          <button type=\"submit\" name=\"fn[delete]\" id=\"usrmgr__del\" ".$delete_disable.">".$this->lang['delete_selected']."</button>");
-        ptln("        ");
+        ptln("        </span>");
         ptln("        <span class=\"mediaright\">");
         ptln("          <button type=\"submit\" name=\"fn[start]\" ".$page_buttons['start'].">".$this->lang['start']."</button>");
         ptln("          <button type=\"submit\" name=\"fn[prev]\" ".$page_buttons['prev'].">".$this->lang['prev']."</button>");
@@ -329,12 +329,12 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         ptln("    </thead>",$indent);
         ptln("    <tbody>",$indent);
 
-        $this->_htmlInputField($cmd."_userid",    "userid",    $this->lang["user_id"],    $user,  $this->_auth->canDo("modLogin"), $indent+6);
-        $this->_htmlInputField($cmd."_userpass",  "userpass",  $this->lang["user_pass"],  "",     $this->_auth->canDo("modPass"),  $indent+6);
-        $this->_htmlInputField($cmd."_userpass2", "userpass2", $lang["passchk"],          "",     $this->_auth->canDo("modPass"),  $indent+6);
-        $this->_htmlInputField($cmd."_username",  "username",  $this->lang["user_name"],  $name,  $this->_auth->canDo("modName"),  $indent+6);
-        $this->_htmlInputField($cmd."_usermail",  "usermail",  $this->lang["user_mail"],  $mail,  $this->_auth->canDo("modMail"),  $indent+6);
-        $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"),$indent+6);
+        $this->_htmlInputField($cmd."_userid",    "userid",    $this->lang["user_id"],    $user,  $this->_auth->canDo("modLogin"),   true, $indent+6);
+        $this->_htmlInputField($cmd."_userpass",  "userpass",  $this->lang["user_pass"],  "",     $this->_auth->canDo("modPass"),   false, $indent+6);
+        $this->_htmlInputField($cmd."_userpass2", "userpass2", $lang["passchk"],          "",     $this->_auth->canDo("modPass"),   false, $indent+6);
+        $this->_htmlInputField($cmd."_username",  "username",  $this->lang["user_name"],  $name,  $this->_auth->canDo("modName"),    true, $indent+6);
+        $this->_htmlInputField($cmd."_usermail",  "usermail",  $this->lang["user_mail"],  $mail,  $this->_auth->canDo("modMail"),    true, $indent+6);
+        $this->_htmlInputField($cmd."_usergroups","usergroups",$this->lang["user_groups"],$groups,$this->_auth->canDo("modGroups"), false, $indent+6);
 
         if ($this->_auth->canDo("modPass")) {
             if ($cmd == 'add') {
@@ -385,9 +385,10 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      * @param string $label
      * @param string $value
      * @param bool   $cando whether auth backend is capable to do this action
+     * @param bool   $required is this field required?
      * @param int $indent
      */
-    protected function _htmlInputField($id, $name, $label, $value, $cando, $indent=0) {
+    protected function _htmlInputField($id, $name, $label, $value, $cando, $required, $indent=0) {
         $class = $cando ? '' : ' class="disabled"';
         echo str_pad('',$indent);
 
@@ -407,7 +408,9 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         echo "<td><label for=\"$id\" >$label: </label></td>";
         echo "<td>";
         if($cando){
-            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit\" $autocomp />";
+            $req = '';
+            if($required) $req = 'required="required"';
+            echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit\" $autocomp $req />";
         }else{
             echo "<input type=\"hidden\" name=\"$name\" value=\"$value\" />";
             echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\" value=\"$value\" class=\"edit disabled\" disabled=\"disabled\" />";
@@ -518,16 +521,20 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                     $pass = auth_pwgen($user);
                 } else {
                     msg($this->lang['add_fail'], -1);
+                    msg($this->lang['addUser_error_missing_pass'], -1);
                     return false;
                 }
             } else {
                 if (!$this->_verifyPassword($pass,$passconfirm)) {
+                    msg($this->lang['add_fail'], -1);
+                    msg($this->lang['addUser_error_pass_not_identical'], -1);
                     return false;
                 }
             }
         } else {
             if (!empty($pass)){
                 msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_modPass_disabled'], -1);
                 return false;
             }
         }
@@ -535,10 +542,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_auth->canDo('modName')){
             if (empty($name)){
                 msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_name_missing'], -1);
                 return false;
             }
         } else {
             if (!empty($name)){
+                msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_modName_disabled'], -1);
                 return false;
             }
         }
@@ -546,10 +556,13 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
         if ($this->_auth->canDo('modMail')){
             if (empty($mail)){
                 msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_mail_missing'], -1);
                 return false;
             }
         } else {
             if (!empty($mail)){
+                msg($this->lang['add_fail'], -1);
+                msg($this->lang['addUser_error_modMail_disabled'], -1);
                 return false;
             }
         }
@@ -563,6 +576,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
             }
         } else {
             msg($this->lang['add_fail'], -1);
+            msg($this->lang['addUser_error_create_event_failed'], -1);
         }
 
         return $ok;
@@ -928,7 +942,7 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
                 if (!utf8_check($csv)) {
                     $csv = utf8_encode($csv);
                 }
-                $raw = $this->_getcsv($csv);
+                $raw = str_getcsv($csv);
                 $error = '';                        // clean out any errors from the previous line
                 // data checks...
                 if (1 == ++$line) {
@@ -1065,38 +1079,5 @@ class admin_plugin_usermanager extends DokuWiki_Admin_Plugin {
      */
     protected function _isUploadedFile($file) {
         return is_uploaded_file($file);
-    }
-
-    /**
-     * wrapper for str_getcsv() to simplify maintaining compatibility with php 5.2
-     *
-     * @deprecated    remove when dokuwiki php requirement increases to 5.3+
-     *                also associated unit test & mock access method
-     *
-     * @param string $csv string to parse
-     * @return array
-     */
-    protected function _getcsv($csv) {
-        return function_exists('str_getcsv') ? str_getcsv($csv) : $this->str_getcsv($csv);
-    }
-
-    /**
-     * replacement str_getcsv() function for php < 5.3
-     * loosely based on www.php.net/str_getcsv#88311
-     *
-     * @deprecated    remove when dokuwiki php requirement increases to 5.3+
-     *
-     * @param string $str string to parse
-     * @return array
-     */
-    protected function str_getcsv($str) {
-        $fp = fopen("php://temp/maxmemory:1048576", 'r+');    // 1MiB
-        fputs($fp, $str);
-        rewind($fp);
-
-        $data = fgetcsv($fp);
-
-        fclose($fp);
-        return $data;
     }
 }

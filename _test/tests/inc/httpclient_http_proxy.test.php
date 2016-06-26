@@ -3,7 +3,7 @@
 require_once (__DIR__ . '/httpclient_mock.php');
 
 class httpclient_http_proxy_test extends DokuWikiTest {
-    protected $url = 'http://httpbin.org/user-agent';
+    protected $url = 'http://eu.httpbin.org/user-agent';
 
     /**
      * @group internet

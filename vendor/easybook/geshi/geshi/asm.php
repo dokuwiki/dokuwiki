@@ -600,4 +600,3 @@ $language_data = array (
     )
 );
 
-?>

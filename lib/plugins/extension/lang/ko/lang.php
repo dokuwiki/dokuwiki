@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Young gon Cha <garmede@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
  * @author hyeonsoft <hyeonsoft@live.co.kr>

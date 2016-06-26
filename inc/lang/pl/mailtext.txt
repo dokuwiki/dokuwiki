@@ -11,8 +11,3 @@ Opis zmian   : @SUMMARY@
 Użytkownik   : @USER@
 
 @DIFF@
-
-
--- 
-List został wygenerowany przez DokuWiki pod adresem
-@DOKUWIKIURL@

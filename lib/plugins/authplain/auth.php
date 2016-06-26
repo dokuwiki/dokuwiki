@@ -173,6 +173,13 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
             msg($this->getLang('usernotexists'), -1);
             return false;
         }
+
+        // don't modify protected users
+        if(!empty($userinfo['protected'])) {
+            msg(sprintf($this->getLang('protected'), hsc($user)), -1);
+            return false;
+        }
+
         if(!is_array($changes) || !count($changes)) return true;
 
         // update userinfo with new data, remembering to encrypt any password
@@ -215,6 +222,11 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
 
         $deleted = array();
         foreach($users as $user) {
+            // don't delete protected users
+            if(!empty($this->users[$user]['protected'])) {
+                msg(sprintf($this->getLang('protected'), hsc($user)), -1);
+                continue;
+            }
             if(isset($this->users[$user])) $deleted[] = preg_quote($user, '/');
         }
 
@@ -324,28 +336,48 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
     protected function _loadUserData() {
         global $config_cascade;
 
-        $this->users = array();
+        $this->users = $this->_readUserFile($config_cascade['plainauth.users']['default']);
 
-        if(!file_exists($config_cascade['plainauth.users']['default'])) return;
+        // support protected users
+        if(!empty($config_cascade['plainauth.users']['protected'])) {
+            $protected = $this->_readUserFile($config_cascade['plainauth.users']['protected']);
+            foreach(array_keys($protected) as $key) {
+                $protected[$key]['protected'] = true;
+            }
+            $this->users = array_merge($this->users, $protected);
+        }
+    }
 
-        $lines = file($config_cascade['plainauth.users']['default']);
+    /**
+     * Read user data from given file
+     *
+     * ignores non existing files
+     *
+     * @param string $file the file to load data from
+     * @return array
+     */
+    protected function _readUserFile($file) {
+        $users = array();
+        if(!file_exists($file)) return $users;
+
+        $lines = file($file);
         foreach($lines as $line) {
             $line = preg_replace('/#.*$/', '', $line); //ignore comments
             $line = trim($line);
             if(empty($line)) continue;
 
-            /* NB: preg_split can be deprecated/replaced with str_getcsv once dokuwiki is min php 5.3 */
             $row = $this->_splitUserData($line);
             $row = str_replace('\\:', ':', $row);
             $row = str_replace('\\\\', '\\', $row);
 
             $groups = array_values(array_filter(explode(",", $row[4])));
 
-            $this->users[$row[0]]['pass'] = $row[1];
-            $this->users[$row[0]]['name'] = urldecode($row[2]);
-            $this->users[$row[0]]['mail'] = $row[3];
-            $this->users[$row[0]]['grps'] = $groups;
+            $users[$row[0]]['pass'] = $row[1];
+            $users[$row[0]]['name'] = urldecode($row[2]);
+            $users[$row[0]]['mail'] = $row[3];
+            $users[$row[0]]['grps'] = $groups;
         }
+        return $users;
     }
 
     protected function _splitUserData($line){

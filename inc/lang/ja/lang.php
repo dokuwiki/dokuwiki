@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Ikuo Obataya <i.obataya@gmail.com>
  * @author Daniel Dupriest <kououken@gmail.com>
@@ -345,3 +345,5 @@ $lang['plainhtml']             = 'プレーンHTML';
 $lang['wikimarkup']            = 'Wikiマークアップ';
 $lang['page_nonexist_rev']     = '指定ページ %s はありません。このリンク <a href="%s">%s</a> から作成できます。';
 $lang['unable_to_parse_date']  = 'パラメータ "%s" を処理できません。';
+$lang['email_signature_text']  = 'このメールは次のDokuWikiより自動的に送信されています。
+@DOKUWIKIURL@';

@@ -10,6 +10,7 @@
  * @author Marius OLAR <olarmariusalex@gmail.com>
  * @author Marius Olar <olarmariusalex@yahoo.com>
  * @author Marian Banica <banica.marian@gmail.com>
+ * @author Adrian Vesa <adrianvesa@dotwikis.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -75,6 +76,7 @@ $lang['regmissing']            = 'Ne pare rău, trebuie să completezi toate cî
 $lang['reguexists']            = 'Ne pare rău, un utilizator cu acest nume este deja autentificat.';
 $lang['regsuccess']            = 'Utilizatorul a fost creat. Parola a fost trimisă prin e-mail.';
 $lang['regsuccess2']           = 'Utilizatorul a fost creat.';
+$lang['regfail']               = 'Utilizatorul nu a putu fi creat.';
 $lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
 $lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
 $lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';
@@ -87,6 +89,8 @@ $lang['profchanged']           = 'Profilul de utilizator a fost actualizat cu su
 $lang['profnodelete']          = 'Acest wiki nu accepta stergerea conturilor utilizatorilor';
 $lang['profdeleteuser']        = 'Sterge cont';
 $lang['profdeleted']           = 'Contul tau a fost sters de pe acest wiki';
+$lang['profconfdelete']        = 'As dori sa sterf contul meu de pe acest Wiki. <br/> Aceasta actiune nu poate fi anulata.';
+$lang['proffail']              = 'Profilul utilizatorului nu a fost actualizat.';
 $lang['pwdforget']             = 'Parolă uitată? Obține una nouă!';
 $lang['resendna']              = 'Acest wiki nu permite retrimiterea parolei.';
 $lang['resendpwd']             = 'Configurează o parolă nouă pentru';
@@ -102,6 +106,7 @@ $lang['searchmedia_in']        = 'Caută în %s';
 $lang['txt_upload']            = 'Selectează fișierul de încărcat:';
 $lang['txt_filename']          = 'Încarcă fișierul ca (opțional):';
 $lang['txt_overwrt']           = 'Suprascrie fișierul existent';
+$lang['maxuploadsize']         = 'Incarcare maxima % per fisier.';
 $lang['lockedby']              = 'Momentan blocat de:';
 $lang['lockexpire']            = 'Blocarea expiră la:';
 $lang['js']['willexpire']      = 'Blocarea pentru editarea paginii expiră intr-un minut.\nPentru a preveni conflictele folosește butonul de previzualizare pentru resetarea blocării.';
@@ -183,6 +188,9 @@ $lang['difflink']              = 'Link către această vizualizare comparativă'
 $lang['diff_type']             = 'Vezi diferențe:';
 $lang['diff_inline']           = 'Succesiv';
 $lang['diff_side']             = 'Alăturate';
+$lang['diffprevrev']           = 'Versiuni anterioare';
+$lang['diffnextrev']           = 'Urmatoarea versiune';
+$lang['difflastrev']           = 'Ultima versiune';
 $lang['line']                  = 'Linia';
 $lang['breadcrumb']            = 'Traseu:';
 $lang['youarehere']            = 'Ești aici:';
@@ -287,8 +295,12 @@ $lang['i_policy']              = 'Politica ACL (liste de control a accesului) in
 $lang['i_pol0']                = 'Wiki deschis (oricine poate citi, scrie și încărca fișiere)';
 $lang['i_pol1']                = 'Wiki public (oricine poate citi, utilizatorii înregistrați pot scrie și încărca fișiere)';
 $lang['i_pol2']                = 'Wiki închis (doar utilizatorii înregistrați pot citi, scrie și încărca fișiere)';
+$lang['i_allowreg']            = 'Permite utilizatorilor sa se inregistreze singuri.';
 $lang['i_retry']               = 'Încearcă din nou';
 $lang['i_license']             = 'Te rugăm să alegi licența sub care dorești să publici conținutul:';
+$lang['i_license_none']        = 'Nu arata nici o informatie despre licenta.';
+$lang['i_pop_field']           = 'Te rog, ajuta-ne sa imbunatatim experienta DokuWiki.';
+$lang['i_pop_label']           = 'Odata pe luna, trimite date catre dezvoltatorii DokuWiki in mod anonim.';
 $lang['recent_global']         = 'În acest moment vizualizezi modificările în interiorul spațiului de nume <b>%s</b>. De asemenea poți <a href="%s">vizualiza modificările recente în întregului wiki-ul</a>.';
 $lang['years']                 = 'acum %d ani';
 $lang['months']                = 'acum %d luni';
@@ -321,3 +333,6 @@ $lang['media_perm_read']       = 'Ne pare rău, dar nu ai suficiente permisiuni 
 $lang['media_perm_upload']     = 'Ne pare rău, dar nu ai suficiente permisiuni pentru a putea încărca fișiere.';
 $lang['media_update']          = 'Încarcă noua versiune';
 $lang['media_restore']         = 'Restaurează această versiune';
+$lang['email_signature_text']       = 'Acest e-mail a fost generat de DokuWiki la
+@DOKUWIKIURL@';
+$lang['searchresult']          = 'Rezultatul cautarii';

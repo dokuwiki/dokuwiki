@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Jaka Kranjc <lynxlupodian@hotmail.com>
  * @author Boštjan Seničar <senicar@gmail.com>
  * @author Dejan Levec <webphp@gmail.com>
@@ -331,3 +331,5 @@ $lang['currentns']             = 'Trenutni imenski prostor';
 $lang['searchresult']          = 'Rezultati iskanja';
 $lang['plainhtml']             = 'Zapis HTML';
 $lang['wikimarkup']            = 'Oblikovni jezik Wiki';
+$lang['email_signature_text'] = 'Sporočilo je samodejno ustvarjeno na spletišču
+@DOKUWIKIURL@';

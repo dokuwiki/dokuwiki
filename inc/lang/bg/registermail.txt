@@ -8,6 +8,3 @@ E. поща : @NEWEMAIL@
 Браузър : @BROWSER@
 IP адрес : @IPADDRESS@
 Име на хоста : @HOSTNAME@
-
--- 
-Писмото е генерирано от DokuWiki на адрес @DOKUWIKIURL@

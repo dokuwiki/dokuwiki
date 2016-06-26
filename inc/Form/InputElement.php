@@ -128,9 +128,7 @@ class InputElement extends Element {
                 $value = '';
             }
         }
-        if($value !== '') {
-            $this->val($value);
-        }
+        $this->val($value);
     }
 
     /**

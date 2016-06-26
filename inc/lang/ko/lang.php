@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Hyun Kim <lawfully@gmail.com>
  * @author jk Lee
  * @author dongnak@gmail.com
@@ -14,6 +14,7 @@
  * @author Garam <rowain8@gmail.com>
  * @author Young gon Cha <garmede@gmail.com>
  * @author hyeonsoft <hyeonsoft@live.co.kr>
+ * @author Erial <erial2@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -82,7 +83,7 @@ $lang['regsuccess2']           = '사용자 계정을 만들었습니다.';
 $lang['regfail']               = '사용자 계정을 만들 수 없었습니다.';
 $lang['regmailfail']           = '비밀번호를 이메일로 보내는 동안 오류가 발생했습니다. 관리자에게 문의해주세요!';
 $lang['regbadmail']            = '주어진 이메일 주소가 잘못되었습니다 - 오류라고 생각하면 관리자에게 문의해주세요';
-$lang['regbadpass']            = '두 주어진 비밀번호가 같지 않습니다. 다시 입력하세요.';
+$lang['regbadpass']            = '두 주어진 비밀번호가 일치하지 않습니다, 다시 입력하세요.';
 $lang['regpwmail']             = '도쿠위키 비밀번호';
 $lang['reghere']               = '계정이 없나요? 계정을 등록하세요';
 $lang['profna']                = '이 위키는 프로필 수정을 할 수 없습니다';
@@ -111,7 +112,7 @@ $lang['txt_upload']            = '올릴 파일 선택:';
 $lang['txt_filename']          = '올릴 파일 이름 (선택 사항):';
 $lang['txt_overwrt']           = '기존 파일에 덮어쓰기';
 $lang['maxuploadsize']         = '최대 올리기 용량. 파일당 %s.';
-$lang['lockedby']              = '현재 잠겨진 사용자:';
+$lang['lockedby']              = '현재 잠근 사용자:';
 $lang['lockexpire']            = '잠금 해제 시간:';
 $lang['js']['willexpire']      = '잠시 후 편집 잠금이 해제됩니다.\n편집 충돌을 피하려면 미리 보기를 눌러 잠금 시간을 다시 설정하세요.';
 $lang['js']['notsavedyet']     = '저장하지 않은 바뀜이 사라집니다.';
@@ -122,7 +123,7 @@ $lang['js']['mediatitle']      = '링크 설정';
 $lang['js']['mediadisplay']    = '링크 유형';
 $lang['js']['mediaalign']      = '배치';
 $lang['js']['mediasize']       = '그림 크기';
-$lang['js']['mediatarget']     = '링크 목표';
+$lang['js']['mediatarget']     = '링크 타겟';
 $lang['js']['mediaclose']      = '닫기';
 $lang['js']['mediainsert']     = '넣기';
 $lang['js']['mediadisplayimg'] = '그림을 보여줍니다.';
@@ -303,7 +304,7 @@ $lang['i_policy']              = '초기 ACL 정책';
 $lang['i_pol0']                = '열린 위키 (누구나 읽기, 쓰기, 올리기가 가능합니다)';
 $lang['i_pol1']                = '공개 위키 (누구나 읽을 수 있지만, 등록된 사용자만 쓰기와 올리기가 가능합니다)';
 $lang['i_pol2']                = '닫힌 위키 (등록된 사용자만 읽기, 쓰기, 올리기가 가능합니다)';
-$lang['i_allowreg']            = '사용자 자신이 등록할 수 있음';
+$lang['i_allowreg']            = '사용자 자신이 등록할 수 있도록 하기';
 $lang['i_retry']               = '다시 시도';
 $lang['i_license']             = '내용을 배포하기 위한 라이선스를 선택하세요:';
 $lang['i_license_none']        = '라이선스 정보를 보여주지 않습니다';
@@ -348,3 +349,4 @@ $lang['plainhtml']             = '일반 HTML';
 $lang['wikimarkup']            = '위키 문법';
 $lang['page_nonexist_rev']     = '문서가 %s에 존재하지 않았습니다. 그 뒤로 <a href="%s">%s</a>에 만들어졌습니다.';
 $lang['unable_to_parse_date']  = '"%s" 변수에서 구문 분석할 수 없습니다.';
+$lang['email_signature_text']  = '이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다';

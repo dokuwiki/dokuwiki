@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Pieter van der Meulen <pieter@vdmeulen.net>
  * @author Wouter Schoot <wouter@schoot.org>
  * @author John de Graaff <john@de-graaff.net>
@@ -66,7 +66,7 @@ $lang['breadcrumbs']           = 'Aantal broodkruimels. Zet dit op 0 om uit te s
 $lang['youarehere']            = 'Gebruik hiërarchische broodkruimels (waarschijnlijk wil je dan de optie hierboven uitschakelen)';
 $lang['fullpath']              = 'Volledig pad van pagina\'s in de footer weergeven';
 $lang['typography']            = 'Breng typografische wijzigingen aan';
-$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://www.php.net/strftime">strftime</a> functie)';
+$lang['dformat']               = 'Datum formaat (zie de PHP <a href="http://php.net/strftime">strftime</a> functie)';
 $lang['signature']             = 'Tekst die ingevoegd wordt met de Handtekening-knop in het bewerkvenster.';
 $lang['showuseras']            = 'Hoe de gebruiker die de pagina het laatst wijzigde weergeven';
 $lang['toptoclevel']           = 'Bovenste niveau voor inhoudsopgave';
@@ -143,7 +143,7 @@ $lang['autoplural']            = 'Controleer op meervoudsvormen in links';
 $lang['compression']           = 'Compressiemethode voor attic-bestanden';
 $lang['gzip_output']           = 'Gebruik gzip Content-Encoding voor xhtml';
 $lang['compress']              = 'Compacte CSS en javascript output';
-$lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. Deze techniek werkt niet in IE7 en ouder! <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
+$lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
 $lang['broken_iua']            = 'Is de ignore_user_abort functie onbruikbaar op uw systeem? Dit kan een onbruikbare zoekindex tot gevolg hebben. IIS+PHP/CGI staat hier bekend om. Zie <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> voor meer informatie.';
 $lang['xsendfile']             = 'Gebruik de X-Sendfile header om de webserver statische content te laten versturen? De webserver moet dit wel ondersteunen.';

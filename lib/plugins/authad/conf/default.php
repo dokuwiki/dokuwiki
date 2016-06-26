@@ -13,3 +13,5 @@ $conf['use_tls']            = 0;
 $conf['debug']              = 0;
 $conf['expirywarn']         = 0;
 $conf['additional']         = '';
+$conf['update_name']        = 0;
+$conf['update_mail']        = 0;

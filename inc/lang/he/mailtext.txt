@@ -10,8 +10,3 @@
 משתמש        : @USER@
 
 @DIFF@
-
---
-
-דף זה נוצר ע״י ה־DokuWiki הזמין בכתובת
-@DOKUWIKIURL@

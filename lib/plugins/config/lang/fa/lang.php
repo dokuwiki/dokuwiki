@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Persian language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
@@ -9,6 +10,8 @@
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
  * @author Milad DZand <M.DastanZand@gmail.com>
  * @author AmirH Hassaneini <mytechmix@gmail.com>
+ * @author Mohmmad Razavi <sepent@gmail.com>
+ * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  */
 $lang['menu']                  = 'تنظیمات پیکر‌بندی';
 $lang['error']                 = 'به دلیل ایراد در مقادیر وارد شده، تنظیمات اعمال نشد، خواهشمندیم تغییرات را مجددن کنترل نمایید و دوباره ارسال کنید.<br/> مقادیر مشکل‌دار با کادر قرمز مشخص شده‌اند.';
@@ -57,7 +60,7 @@ $lang['breadcrumbs']           = 'تعداد ردپاها';
 $lang['youarehere']            = 'ردپای درختی';
 $lang['fullpath']              = 'نمایش دادن مسیر کامل صفحات در پایین صفحه';
 $lang['typography']            = 'جای‌گزاری متن‌ها انجام شود';
-$lang['dformat']               = 'فرمت تاریخ (راهنمای تابع <a href="http://www.php.net/strftime">strftime</a> را مشاهده کنید)';
+$lang['dformat']               = 'فرمت تاریخ (راهنمای تابع <a href="http://php.net/strftime">strftime</a> را مشاهده کنید)';
 $lang['signature']             = 'امضا';
 $lang['showuseras']            = 'چگونه آخرین کاربر ویرایش کننده، یک صفحه نمایش داده شود';
 $lang['toptoclevel']           = 'بیشترین عمق برای «فهرست مطالب»';
@@ -82,7 +85,9 @@ $lang['disableactions']        = 'غیرفعال کردن فعالیت‌های 
 $lang['disableactions_check']  = 'بررسی';
 $lang['disableactions_subscription'] = 'عضویت/عدم عضویت';
 $lang['disableactions_wikicode'] = 'نمایش سورس/برون‌بری خام';
+$lang['disableactions_profile_delete'] = 'حذف حساب کاربری خود.';
 $lang['disableactions_other']  = 'فعالیت‌های دیگر (با ویرگول انگلیسی «,» از هم جدا کنید)';
+$lang['disableactions_rss']    = 'خبرخوان (RSS)';
 $lang['auth_security_timeout'] = 'زمان انقضای معتبرسازی به ثانیه';
 $lang['securecookie']          = 'آیا کوکی‌ها باید با قرارداد HTTPS ارسال شوند؟ این گزینه را زمانی که فقط صفحه‌ی ورود ویکی‌تان با SSL امن شده است، اما ویکی را ناامن مرور می‌کنید، غیرفعال نمایید.';
 $lang['remote']                = 'سیستم API راه دور را فعال کنید . این به سایر کاربردها اجازه می دهد که به ویکی از طریق XML-RPC یا سایر مکانیزم ها دسترسی داشته باشند.';
@@ -133,7 +138,7 @@ $lang['autoplural']            = 'بررسی جمع بودن در پیوندها
 $lang['compression']           = 'روش فشرده‌سازی برای فایل‌های خُرد';
 $lang['gzip_output']           = 'استفاده از gzip برای xhtmlها';
 $lang['compress']              = 'فشرده‌سازی کد‌های CSS و JavaScript';
-$lang['cssdatauri']            = 'اندازه بایت هایی که تصاویر ارجاع شده به فایل های CSS باید به درستی درون stylesheet جایگذاری شود تا سربار سرایند درخواست HTTP را کاهش دهد. این روش در IE 7 و پایین تر کار نمی کند! مقادیر <code>400</code> تا <code>600</code> بایت مقدار خوبی است. برای غیر فعال کردن <code>0</code> قرار دهید.';
+$lang['cssdatauri']            = 'اندازه بایت هایی که تصاویر ارجاع شده به فایل های CSS باید به درستی درون stylesheet جایگذاری شود تا سربار سرایند درخواست HTTP را کاهش دهد. مقادیر <code>400</code> تا <code>600</code> بایت مقدار خوبی است. برای غیر فعال کردن <code>0</code> قرار دهید.';
 $lang['send404']               = 'ارسال «HTTP 404/Page Not Found» برای صفحاتی که وجود ندارند';
 $lang['broken_iua']            = 'آیا تابع ignore_user_about در ویکی شما کار نمی‌کند؟ ممکن است فهرست جستجوی شما کار نکند. IIS به همراه PHP/CGI باعث خراب شدن این گزینه می‌شود. برای اطلاعات بیشتر <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">باگ ۸۵۲</a> را مشاهده کنید.';
 $lang['xsendfile']             = 'استفاده از هدر X-Sendfile، تا به وب‌سرور  توانایی ارسال فایل‌های ثابت را بدهد. وب‌سرور شما باید این مورد را پشتیبانی کند.';
@@ -188,6 +193,7 @@ $lang['xsendfile_o_2']         = 'هدر استاندارد X-Sendfile';
 $lang['xsendfile_o_3']         = 'هدر اختصاصی X-Accel-Redirect در وب سرور Nginx';
 $lang['showuseras_o_loginname'] = 'نام کاربری';
 $lang['showuseras_o_username'] = 'نام کامل کاربران';
+$lang['showuseras_o_username_link'] = 'نام کامل کاربر به عنوان لینک داخلی ویکی';
 $lang['showuseras_o_email']    = 'آدرس ایمیل کاربران (با تنظیمات «نگهبان ایمیل» مبهم می‌شود)';
 $lang['showuseras_o_email_link'] = 'نمایش ایمیل کاربران با افزودن mailto';
 $lang['useheading_o_0']        = 'هرگز';

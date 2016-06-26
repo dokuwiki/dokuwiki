@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Ziegler Gábor <gziegler@freemail.hu>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
@@ -345,5 +345,7 @@ $lang['currentns']             = 'Aktuális névtér';
 $lang['searchresult']          = 'Keresés eredménye';
 $lang['plainhtml']             = 'Sima HTML';
 $lang['wikimarkup']            = 'Wiki-jelölőnyelv';
+$lang['email_signature_text']       = 'Ezt a levelet a DokuWiki generálta
+@DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'A(z) %s oldal nem létezik. Később lett létrehozva a(z) <a href="%s">%s</a> helyen.';
 $lang['unable_to_parse_date']  = 'A "%s" paraméter feldolgozása sikertelen.';

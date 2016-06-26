@@ -16,6 +16,7 @@
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>
  * @author lioujheyu <lioujheyu@gmail.com>
+ * @author Liou, Jhe-Yu <lioujheyu@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -344,3 +345,5 @@ $lang['currentns']             = '目前的命名空間';
 $lang['searchresult']          = '搜尋結果';
 $lang['plainhtml']             = '純 HTML';
 $lang['wikimarkup']            = 'Wiki 語法標記';
+$lang['email_signature_text'] = '本信件由以下 DokuWiki 網站產生
+@DOKUWIKIURL@';

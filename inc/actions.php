@@ -29,6 +29,8 @@ function act_dispatch(){
 
     // give plugins an opportunity to process the action
     $evt = new Doku_Event('ACTION_ACT_PREPROCESS',$ACT);
+
+    $headers = array();
     if ($evt->advise_before()) {
 
         //sanitize $ACT
@@ -144,8 +146,10 @@ function act_dispatch(){
             $ACT = act_draftdel($ACT);
 
         //draft saving on preview
-        if($ACT == 'preview')
+        if($ACT == 'preview') {
+            $headers[] = "X-XSS-Protection: 0";
             $ACT = act_draftsave($ACT);
+        }
 
         //edit
         if(in_array($ACT, array('edit', 'preview', 'recover'))) {
@@ -189,7 +193,6 @@ function act_dispatch(){
     global $license;
 
     //call template FIXME: all needed vars available?
-    $headers = array();
     $headers[] = 'Content-Type: text/html; charset=utf-8';
     trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
 

@@ -9,6 +9,3 @@ Ha Te voltál, az új jelszó kérelmed megerősítéséhez kattints a
 következő linkre vagy másold a böngésződbe:
 
 @CONFIRM@
-
--- 
-Ezt a levelet a @DOKUWIKIURL@ címen lévő DokuWiki generálta.

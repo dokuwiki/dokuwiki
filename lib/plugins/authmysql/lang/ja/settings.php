@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  */
 $lang['server']                = 'MySQL のホスト名';

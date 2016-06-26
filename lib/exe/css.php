@@ -50,11 +50,6 @@ function css_out(){
     // load styl.ini
     $styleini = css_styleini($tpl, $INPUT->bool('preview'));
 
-    // if old 'default' userstyle setting exists, make it 'screen' userstyle for backwards compatibility
-    if (isset($config_cascade['userstyle']['default'])) {
-        $config_cascade['userstyle']['screen'] = array($config_cascade['userstyle']['default']);
-    }
-
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
@@ -296,12 +291,12 @@ function css_styleini($tpl, $preview=false) {
         $data = parse_ini_file($ini, true);
 
         // stylesheets
-        if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+        if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
             $stylesheets[$mode][$incbase.$file] = $webbase;
         }
 
         // replacements
-        if(is_array($data['replacements'])){
+        if(isset($data['replacements']) && is_array($data['replacements'])){
             $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }

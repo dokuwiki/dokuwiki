@@ -10,8 +10,3 @@ Resum: @SUMMARY@
 Usuari: @USER@
 
 @DIFF@
-
-
--- 
-Este correu l'ha generat DokuWiki en
-@DOKUWIKIURL@

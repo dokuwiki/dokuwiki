@@ -8,7 +8,3 @@ Si tu non ha requestate un nove contrasigno, alora simplemente ignora iste messa
 Pro confirmar que le requesta realmente ha essite inviate per te, per favor usa le ligamine sequente.
 
 @CONFIRM@
-
--- 
-Iste message ha essite generate per DokuWiki a
-@DOKUWIKIURL@

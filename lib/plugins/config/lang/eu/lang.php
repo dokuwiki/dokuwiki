@@ -50,7 +50,7 @@ $lang['breadcrumbs']           = 'Arrasto pauso kopurua';
 $lang['youarehere']            = 'Arrasto pauso hierarkikoak';
 $lang['fullpath']              = 'Orri oinean orrien bide osoa erakutsi';
 $lang['typography']            = 'Ordezkapen tipografikoak egin';
-$lang['dformat']               = 'Data formatua (ikusi PHPren <a href="http://www.php.net/strftime">strftime</a> funtzioa)';
+$lang['dformat']               = 'Data formatua (ikusi PHPren <a href="http://php.net/strftime">strftime</a> funtzioa)';
 $lang['signature']             = 'Sinadura';
 $lang['showuseras']            = 'Zer azaldu orri bat editatu duen azken erabiltzailea erakusterakoan';
 $lang['toptoclevel']           = 'Eduki taularen goiko maila';

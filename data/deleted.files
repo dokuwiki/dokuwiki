@@ -2,6 +2,10 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed in 2016-06-26
+inc/cliopts.php
+lib/tpl/dokuwiki/css/mixins.less
+
 # removed in 2015-08-10
 inc/TarLib.class.php
 inc/geshi.php
@@ -228,19 +232,6 @@ inc/geshi/xpp.php
 inc/geshi/yaml.php
 inc/geshi/z80.php
 inc/geshi/zxbasic.php
-inc/lang/ku/admin.txt
-inc/lang/ku/denied.txt
-inc/lang/ku/editrev.txt
-inc/lang/ku/locked.txt
-inc/lang/ku/login.txt
-inc/lang/ku/mailtext.txt
-inc/lang/ku/norev.txt
-inc/lang/ku/password.txt
-inc/lang/ku/read.txt
-inc/lang/ku/register.txt
-inc/lang/ku/revisions.txt
-inc/lang/ku/showrev.txt
-inc/lang/ku/stopwords.txt
 lib/images/interwiki/coral.gif
 lib/images/interwiki/dokubug.gif
 lib/images/interwiki/sb.gif
@@ -250,25 +241,6 @@ lib/scripts/tw-sack.js
 
 # removed in 2014-05-05
 lib/images/fileicons/audio.png
-lib/plugins/acl/lang/hi/lang.php
-lib/plugins/acl/lang/id-ni/lang.php
-lib/plugins/acl/lang/lb/lang.php
-lib/plugins/acl/lang/ms/lang.php
-lib/plugins/authad/lang/lv/settings.php
-lib/plugins/authldap/lang/lv/settings.php
-lib/plugins/authmysql/lang/fi/settings.php
-lib/plugins/authmysql/lang/lv/settings.php
-lib/plugins/authpgsql/lang/fi/settings.php
-lib/plugins/authpgsql/lang/it/settings.php
-lib/plugins/authpgsql/lang/lv/settings.php
-lib/plugins/authpgsql/lang/pl/settings.php
-lib/plugins/config/lang/hr/lang.php
-lib/plugins/config/lang/id/lang.php
-lib/plugins/config/lang/kk/lang.php
-lib/plugins/config/lang/lb/lang.php
-lib/plugins/config/lang/mk/lang.php
-lib/plugins/config/lang/ms/lang.php
-lib/plugins/config/lang/vi/lang.php
 lib/plugins/plugin/admin.php
 lib/plugins/plugin/classes/ap_delete.class.php
 lib/plugins/plugin/classes/ap_download.class.php
@@ -380,31 +352,6 @@ lib/plugins/plugin/lang/zh/admin_plugin.txt
 lib/plugins/plugin/lang/zh/lang.php
 lib/plugins/plugin/plugin.info.txt
 lib/plugins/plugin/style.css
-lib/plugins/popularity/lang/et/lang.php
-lib/plugins/popularity/lang/hr/lang.php
-lib/plugins/popularity/lang/id/lang.php
-lib/plugins/popularity/lang/kk/lang.php
-lib/plugins/popularity/lang/lb/lang.php
-lib/plugins/popularity/lang/mk/lang.php
-lib/plugins/popularity/lang/ms/lang.php
-lib/plugins/popularity/lang/vi/lang.php
-lib/plugins/revert/lang/af/lang.php
-lib/plugins/revert/lang/hi/lang.php
-lib/plugins/revert/lang/hr/lang.php
-lib/plugins/revert/lang/id-ni/lang.php
-lib/plugins/revert/lang/id/lang.php
-lib/plugins/revert/lang/kk/lang.php
-lib/plugins/revert/lang/lb/lang.php
-lib/plugins/revert/lang/lt/lang.php
-lib/plugins/revert/lang/mk/lang.php
-lib/plugins/revert/lang/ms/lang.php
-lib/plugins/revert/lang/vi/lang.php
-lib/plugins/usermanager/lang/hi/lang.php
-lib/plugins/usermanager/lang/hr/lang.php
-lib/plugins/usermanager/lang/id-ni/lang.php
-lib/plugins/usermanager/lang/lb/lang.php
-lib/plugins/usermanager/lang/ms/lang.php
-lib/plugins/usermanager/lang/vi/lang.php
 
 # removed in 2013-11-18
 lib/images/arrow_down.gif
@@ -689,7 +636,6 @@ lib/scripts/domTT.js
 
 # removed in 2006-11-06
 inc/admin_acl.php
-inc/lang/lt/stopwords.txt
 inc/magpie
 inc/magpie/rss_cache.inc
 inc/magpie/rss_fetch.inc

@@ -10,8 +10,3 @@ Redigerings resumé : @SUMMARY@
 Bruger             : @USER@
 
 @DIFF@
-
-
--- 
-Denne e-mail blev genereret af DokuWiki på:
-@DOKUWIKIURL@

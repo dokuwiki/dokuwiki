@@ -8,7 +8,3 @@ Emri Hostit: @HOSTNAME@
 Madhësia: @SIZE@
 Tipi MIME: @MIME@
 Përdoruesi: @USER@
-
----
-Ky email u gjenerua nga DokuWiki në 
-@DOKUWIKIURL@

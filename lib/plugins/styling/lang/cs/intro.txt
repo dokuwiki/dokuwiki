@@ -1,0 +1,2 @@
+Tento nástroj umožňuje změnu určitých nastavení stylu právě používané šablony vzhledu.
+Všechny změny jsou uloženy v lokálním konfiguračním souboru a tím chráněny před smazáním při aktualizaci.

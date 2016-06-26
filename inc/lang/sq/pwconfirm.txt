@@ -7,7 +7,3 @@ Nëse nuk kërkuat një fjalëkalim të ri atëherë thjesht injorojeni këtë e
 Për të konfirmuar që kërkesa u dërgua me të vërtetë nga ju, ju lutemi përdorni link-un e mëposhtëm.
 
 @CONFIRM@
-
---
-Ky email u gjenerua nga DokuWiki në 
-@DOKUWIKIURL@

@@ -10,8 +10,3 @@ Redigeringskommentar : @SUMMARY@
 Användare            : @USER@
 
 @DIFF@
-
-
--- 
-Detta meddelande har skapats av DokuWiki på
-@DOKUWIKIURL@

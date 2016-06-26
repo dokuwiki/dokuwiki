@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
  * @author Hideaki SAWADA <chuno@live.jp>
  * @author PzF_X <jp_minecraft@yahoo.co.jp>
@@ -20,3 +20,5 @@ $lang['use_tls']               = 'TLS接続を使用しますか？使用した�
 $lang['debug']                 = 'エラー時に追加のデバッグ出力を表示する？';
 $lang['expirywarn']            = '何日前からパスワードの有効期限をユーザーに警告する。0 の場合は無効';
 $lang['additional']            = 'ユーザデータから取得する追加AD属性のカンマ区切り一覧。いくつかのプラグインが使用する。';
+$lang['update_name']           = 'ユーザー自身にAD表示名の変更を許可しますか？';
+$lang['update_mail']           = 'ユーザー自身にメールアドレスの変更を許可しますか？';

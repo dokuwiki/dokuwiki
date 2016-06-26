@@ -58,7 +58,8 @@ $dokuwiki_hash = array(
     '2013-05-10'   => '7b62b75245f57f122d3e0f8ed7989623',
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
-    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214'
+    '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
+    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73'
 );
 
 
@@ -152,7 +153,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <div style="clear: both">
   <a href="http://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki" /></a>
-  <a href="http://www.php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP" /></a>
+  <a href="http://php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP" /></a>
 </div>
 </body>
 </html>

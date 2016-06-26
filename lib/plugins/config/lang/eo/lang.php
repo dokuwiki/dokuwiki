@@ -59,7 +59,7 @@ $lang['breadcrumbs']           = 'Nombro da paderoj';
 $lang['youarehere']            = 'Hierarkiaj paderoj';
 $lang['fullpath']              = 'Montri la kompletan padon de la paĝoj en la piedlinio';
 $lang['typography']            = 'Fari tipografiajn anstataŭigojn';
-$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de datoj (vidu la PHP-an funkcion <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Subskribo';
 $lang['showuseras']            = 'Kiel indiki la lastan redaktinton';
 $lang['toptoclevel']           = 'Supera nivelo por la enhavtabelo';
@@ -134,7 +134,7 @@ $lang['autoplural']            = 'Kontroli pluralajn formojn en ligiloj';
 $lang['compression']           = 'Kompaktigmetodo por arkivaj dosieroj';
 $lang['gzip_output']           = 'Uzi gzip-an enhav-enkodigon por XHTML';
 $lang['compress']              = 'Kompaktigi CSS-ajn kaj ĵavaskriptajn elmetojn';
-$lang['cssdatauri']            = 'Grandeco en bitokoj, ĝis kiom en CSS-dosieroj referencitaj bildoj enmetiĝu rekte en la stilfolion por malgrandigi vanan HTTP-kapan trafikon. Tiu tekniko ne funkcias en IE 7 aŭ pli frua!
+$lang['cssdatauri']            = 'Grandeco en bitokoj, ĝis kiom en CSS-dosieroj referencitaj bildoj enmetiĝu rekte en la stilfolion por malgrandigi vanan HTTP-kapan trafikon.
 <code>400</code> ĝis <code>600</code> bitokoj estas bona grandeco. Indiku <code>0</code> por malebligi enmeton.';
 $lang['send404']               = 'Sendi la mesaĝon "HTTP 404/Paĝo ne trovita" por ne ekzistantaj paĝoj';
 $lang['broken_iua']            = 'Ĉu la funkcio "ignore_user_abort" difektas en via sistemo? Tio povus misfunkciigi la serĉindekson. IIS+PHP/CGI estas konata kiel fuŝaĵo. Vidu <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Cimon 852</a> por pli da informoj.';

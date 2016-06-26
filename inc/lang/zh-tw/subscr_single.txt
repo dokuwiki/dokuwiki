@@ -16,7 +16,3 @@
 要取消頁面提醒，請登入本 wiki @DOKUWIKIURL@
 然後拜訪 @NEWPAGE@
 並取消訂閱頁面或分類名稱的更改。
-
---
-本信件由以下 DokuWiki 網站產生：
-@DOKUWIKIURL@

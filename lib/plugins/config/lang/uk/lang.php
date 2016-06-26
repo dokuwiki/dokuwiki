@@ -1,8 +1,8 @@
 <?php
+
 /**
- * ukrainian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
  * @author okunia@gmail.com
@@ -10,6 +10,7 @@
  * @author Uko uko@uar.net
  * @author Ulrikhe Lukoie  <lukoie@gmail>.com
  * @author Kate Arzamastseva pshns@ukr.net
+ * @author Maksim <nikropol@yandex.ru>
  */
 $lang['menu']                  = 'Налаштування Вікі';
 $lang['error']                 = 'Параметри не збережено через помилкові значення. Будь ласка, перегляньте ваші зміни та спробуйте ще раз
@@ -56,7 +57,7 @@ $lang['breadcrumbs']           = 'Ви відвідали (кількість с
 $lang['youarehere']            = 'Показувати "Ви тут"';
 $lang['fullpath']              = 'Повний шлях до документу';
 $lang['typography']            = 'Замінювати типографські символи';
-$lang['dformat']               = 'Формат дати (дивіться функцію <a href="http://www.php.net/strftime">strftime</a> PHP)';
+$lang['dformat']               = 'Формат дати (дивіться функцію <a href="http://php.net/strftime">strftime</a> PHP)';
 $lang['signature']             = 'Підпис';
 $lang['showuseras']            = 'Що вказувати при відображенні користувача, який востаннє редагував сторінку';
 $lang['toptoclevel']           = 'Мінімальний рівень для змісту';

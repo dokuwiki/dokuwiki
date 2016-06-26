@@ -8,10 +8,6 @@ Her er endringene:
 --------------------------------------------------------
 
 For å avslutte varslinga, logg inn på
-@DOKUWIKIURL@ og gå til 
+@DOKUWIKIURL@ og gå til
 @SUBSCRIBE@
 og avslutt abonnementet på endringer av sida eller i navnerommet.
-
---
-Denne e-posten ble generert av DokuWiki på
-@DOKUWIKIURL@

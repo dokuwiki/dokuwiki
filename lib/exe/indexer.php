@@ -206,4 +206,4 @@ function sendGIF(){
 
 //Setup VIM: ex: et ts=4 :
 // No trailing PHP closing tag - no output please!
-// See Note at http://www.php.net/manual/en/language.basic-syntax.instruction-separation.php
+// See Note at http://php.net/manual/en/language.basic-syntax.instruction-separation.php

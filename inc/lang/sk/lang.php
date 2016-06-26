@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Michalek <michalek.dev@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -50,8 +51,10 @@ $lang['btn_register']          = 'Registrovať';
 $lang['btn_apply']             = 'Použiť';
 $lang['btn_media']             = 'Správa médií';
 $lang['btn_deleteuser']        = 'Zrušiť môj účet';
+$lang['btn_img_backto']        = 'Späť na %s';
+$lang['btn_mediaManager']      = 'Prezrieť v správcovi médií';
 $lang['loggedinas']            = 'Prihlásený(á) ako:';
-$lang['user']                  = 'Užívateľské meno';
+$lang['user']                  = 'Používateľské meno';
 $lang['pass']                  = 'Heslo';
 $lang['newpass']               = 'Nové heslo';
 $lang['oldpass']               = 'Potvrď aktuálne heslo';
@@ -59,36 +62,38 @@ $lang['passchk']               = 'Ešte raz znovu';
 $lang['remember']              = 'Zapamätaj si ma';
 $lang['fullname']              = 'Celé meno';
 $lang['email']                 = 'E-Mail';
-$lang['profile']               = 'Užívateľský profil';
-$lang['badlogin']              = 'Zadané užívateľské meno a heslo nie je správne.';
+$lang['profile']               = 'Používateľský profil';
+$lang['badlogin']              = 'Zadané používateľské meno a heslo nie je správne.';
 $lang['badpassconfirm']        = 'Ľutujem, heslo bolo nesprávne.';
 $lang['minoredit']             = 'Menšie zmeny';
 $lang['draftdate']             = 'Koncept automaticky uložený';
 $lang['nosecedit']             = 'Stránka bola medzičasom zmenená, informácie o sekcii sú zastaralé a z tohto dôvodu bola nahraná celá stránka.';
-$lang['searchcreatepage']      = "Pokiaľ ste nenašli, čo hľadáte, skúste požadovanú stránku sami vytvoriť stlačením tlačidla ''Vytvoriť stránku''.";
+$lang['searchcreatepage']      = 'Pokiaľ ste nenašli, čo hľadáte, skúste požadovanú stránku sami vytvoriť stlačením tlačidla \'\'Vytvoriť stránku\'\'.';
 $lang['regmissing']            = 'Musíte vyplniť všetky údaje.';
-$lang['reguexists']            = 'Užívateľ s rovnakým menom je už zaregistrovaný.';
-$lang['regsuccess']            = 'Užívateľský účet bol vytvorený a heslo zaslané emailom.';
-$lang['regsuccess2']           = 'Užívateľský účet bol vytvorený.';
+$lang['reguexists']            = 'Používateľ s rovnakým menom je už zaregistrovaný.';
+$lang['regsuccess']            = 'Používateľský účet bol vytvorený a heslo zaslané emailom.';
+$lang['regsuccess2']           = 'Používateľský účet bol vytvorený.';
+$lang['regfail']               = 'Používateľský účet nemôže byť vytvorený.';
 $lang['regmailfail']           = 'Zdá sa, že nastala chyba pri posielaní mailu s heslom. Skúste kontaktovať správcu.';
 $lang['regbadmail']            = 'Zadaná emailová adresa nie je platná. Pokiaľ si myslíte, že to je zle, skúste kontaktovať správcu.';
 $lang['regbadpass']            = 'Zadané heslá nie sú rovnaké, zadajte ich prosím znovu.';
 $lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
-$lang['reghere']               = 'Nemáte užívateľský účet? Vytvorte si ho';
+$lang['reghere']               = 'Nemáte používateľský účet? Vytvorte si ho';
 $lang['profna']                = 'Táto wiki nepodporuje zmenu profilu';
 $lang['profnochange']          = 'Žiadne zmeny, nie je čo robiť.';
 $lang['profnoempty']           = 'Prázdne meno alebo mailová adresa nie sú povolené.';
-$lang['profchanged']           = 'Užívateľský účet úspešne zmenený.';
+$lang['profchanged']           = 'Profil požívateľa bol úspešne zmenený.';
 $lang['profnodelete']          = 'Táto wiki neumožňuje zrušenie používateľov.';
 $lang['profdeleteuser']        = 'Zrušiť účet';
 $lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
 $lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
 $lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
+$lang['proffail']              = 'Profil používateľa nebol aktualizovaný.';
 $lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
 $lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
 $lang['resendpwd']             = 'Nastaviť nové heslo pre';
 $lang['resendpwdmissing']      = 'Prepáčte, musíte vyplniť všetky polia.';
-$lang['resendpwdnouser']       = 'Prepáčte, nemôžeme nájsť zadaného užívateľa v databáze.';
+$lang['resendpwdnouser']       = 'Prepáčte, nemôžeme nájsť zadaného používateľa v databáze.';
 $lang['resendpwdbadauth']      = 'Prepáčte, tento autorizačný kód nie je platný. Uistite sa, či ste použili celý autorizačný odkaz.';
 $lang['resendpwdconfirm']      = 'Autorizačný odkaz bol zaslaný na e-mail.';
 $lang['resendpwdsuccess']      = 'Vaše nové heslo bolo zaslané na e-mail.';
@@ -181,6 +186,9 @@ $lang['difflink']              = 'Odkaz na tento prehľad zmien';
 $lang['diff_type']             = 'Prehľad zmien:';
 $lang['diff_inline']           = 'Vnorený';
 $lang['diff_side']             = 'Vedľa seba';
+$lang['diffprevrev']           = 'Predchádzajúca revízia';
+$lang['diffnextrev']           = 'Nasledujúca revízia';
+$lang['difflastrev']           = 'Posledná revízia';
 $lang['line']                  = 'Riadok';
 $lang['breadcrumb']            = 'História:';
 $lang['youarehere']            = 'Nachádzate sa:';
@@ -202,7 +210,7 @@ $lang['sidebar']               = 'Bočný panel';
 $lang['mail_newpage']          = 'stránka pridaná:';
 $lang['mail_changed']          = 'stránka zmenená:';
 $lang['mail_subscribe_list']   = 'stránky zmenené v mennom priestore:';
-$lang['mail_new_user']         = 'nový užívateľ:';
+$lang['mail_new_user']         = 'nový používateľ:';
 $lang['mail_upload']           = 'nahraný súbor:';
 $lang['changes_type']          = 'Prehľad zmien';
 $lang['pages_changes']         = 'Stránok';
@@ -236,7 +244,6 @@ $lang['upperns']               = 'návrat do nadradeného menného priestoru';
 $lang['metaedit']              = 'Upraviť metainformácie';
 $lang['metasaveerr']           = 'Zápis metainformácií zlyhal';
 $lang['metasaveok']            = 'Metainformácie uložené';
-$lang['btn_img_backto']            = 'Späť na %s';
 $lang['img_title']             = 'Titul:';
 $lang['img_caption']           = 'Popis:';
 $lang['img_date']              = 'Dátum:';
@@ -249,7 +256,6 @@ $lang['img_camera']            = 'Fotoaparát:';
 $lang['img_keywords']          = 'Kľúčové slová:';
 $lang['img_width']             = 'Šírka:';
 $lang['img_height']            = 'Výška:';
-$lang['btn_mediaManager']           = 'Prezrieť v správcovi médií';
 $lang['subscr_subscribe_success'] = 'Používateľ %s bol pridaný do zoznamu hlásení o zmenách %s';
 $lang['subscr_subscribe_error'] = 'Chyba pri pridaní používateľa %s do zoznamu hlásení o zmenách %s';
 $lang['subscr_subscribe_noaddress'] = 'Vaše prihlasovacie meno nemá priradenú žiadnu email adresu, nemôžete byť pridaný do zoznamu hlásení o zmenách';
@@ -266,7 +272,7 @@ $lang['subscr_m_receive']      = 'Dostávať';
 $lang['subscr_style_every']    = 'email pri každej zmene';
 $lang['subscr_style_digest']   = 'email so zhrnutím zmien pre každú stránku (perióda %.2f dňa)';
 $lang['subscr_style_list']     = 'zoznam zmenených stránok od posledného emailu (perióda %.2f dňa)';
-$lang['authtempfail']          = 'Užívateľská autentifikácia je dočasne nedostupná. Ak táto situácia pretrváva, prosím informujte správcu systému.';
+$lang['authtempfail']          = 'Používateľská autentifikácia je dočasne nedostupná. Ak táto situácia pretrváva, prosím informujte správcu systému.';
 $lang['i_chooselang']          = 'Zvoľte váš jazyk';
 $lang['i_installer']           = 'DokuWiki inštalátor';
 $lang['i_wikiname']            = 'Názov Wiki';
@@ -285,8 +291,8 @@ $lang['i_success']             = 'Konfigurácia bola úspešne ukončená. Teraz
 $lang['i_failure']             = 'Pri zápise konfiguračného súboru nastali nejaké chyby. Potrebujete ich opraviť manuálne pred tým, ako budete môcť používať <a href="doku.php?id=wiki:welcome">vašu novú DokuWiki</a>.';
 $lang['i_policy']              = 'Počiatočná ACL politika';
 $lang['i_pol0']                = 'Otvorená Wiki (čítanie, zápis a nahrávanie pre každého)';
-$lang['i_pol1']                = 'Verejná Wiki (čítanie pre každého, zápis a nahrávanie pre registrovaných užívateľov)';
-$lang['i_pol2']                = 'Uzatvorená Wiki (čítanie, zápis a nahrávanie len pre registrovaných užívateľov)';
+$lang['i_pol1']                = 'Verejná Wiki (čítanie pre každého, zápis a nahrávanie pre registrovaných používateľov)';
+$lang['i_pol2']                = 'Uzatvorená Wiki (čítanie, zápis a nahrávanie len pre registrovaných používateľov)';
 $lang['i_allowreg']            = 'Povolenie samostanej registrácie používateľov';
 $lang['i_retry']               = 'Skúsiť znovu';
 $lang['i_license']             = 'Vyberte licenciu, pod ktorou chcete uložiť váš obsah:';
@@ -329,3 +335,5 @@ $lang['currentns']             = 'Aktuálny menný priestor';
 $lang['searchresult']          = 'Výsledky hľadania';
 $lang['plainhtml']             = 'Jednoduché HTML';
 $lang['wikimarkup']            = 'Wiki formát';
+$lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
+@DOKUWIKIURL@';

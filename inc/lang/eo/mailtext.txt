@@ -10,6 +10,3 @@ Bulteno de ŝanĝoj: @SUMMARY@
 Uzanto: @USER@
 
 @DIFF@
-
--- 
-Tiu ĉi mesaĝo kreiĝis de DokuWiki, kiu lokiĝas ĉe @DOKUWIKIURL@

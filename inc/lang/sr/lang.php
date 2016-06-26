@@ -258,3 +258,5 @@ $lang['hours']                 = 'Пре %d сати';
 $lang['minutes']               = 'Пре %d минута';
 $lang['seconds']               = 'Пре %d секунди';
 $lang['wordblock']             = 'Ваше измене нису сачуване јер садрже забрањен текст (спам)';
+$lang['email_signature_text'] = 'Ову поруку је генерисао DokuWiki sa
+@DOKUWIKIURL@';

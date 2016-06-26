@@ -309,3 +309,5 @@ $lang['media_restore']         = 'Kembalikan versi ini';
 $lang['currentns']             = 'Namespace saat ini';
 $lang['searchresult']          = 'Hasil Pencarian';
 $lang['wikimarkup']            = 'Markah Wiki';
+$lang['email_signature_text'] = 'Email ini dibuat otomatis oleh DokuWiki
+@DOKUWIKIURL@';

@@ -7,6 +7,3 @@ Pagina's in de namespace @PAGE@ van de @TITLE@ wiki zijn veranderd. Hier zijn de
 --------------------------------------------------------
 
 Om het verzenden van deze wijzigingsberichten te stoppen, logt u in op het wiki op @DOKUWIKIURL@ en navigeert u naar @SUBSCRIBE@. Vervolgens kunt u zich voor elke gewenste pagina of namespace uitschrijven.
-
---
-Deze email is gegenereerd door DokuWiki op @DOKUWIKIURL@

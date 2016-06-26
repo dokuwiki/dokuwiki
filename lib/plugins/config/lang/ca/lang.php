@@ -58,7 +58,7 @@ $lang['breadcrumbs']           = 'Nombre d\'engrunes';
 $lang['youarehere']            = 'Camí d\'engrunes jeràrquic';
 $lang['fullpath']              = 'Mostra el camí complet de les pàgines al peu';
 $lang['typography']            = 'Substitucions tipogràfiques';
-$lang['dformat']               = 'Format de data (vg. la funció PHP <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Format de data (vg. la funció PHP <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Signatura';
 $lang['showuseras']            = 'Què cal visualitzar quan es mostra el darrer usuari que ha editat la pàgina';
 $lang['toptoclevel']           = 'Nivell superior per a la taula de continguts';

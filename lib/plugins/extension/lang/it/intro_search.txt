@@ -1,0 +1,1 @@
+Questa sezione ti da accesso a tutti i plugin e temi di terze parti disponibili per DokuWiki. Sappi che l'installazione di codice di terze parti potrebbe rappresentare un **rischio di sicurezza**, quindi, forse, prima vorresti informarti a proposito della [[doku>security#plugin_security|sicurezza dei plugin]].

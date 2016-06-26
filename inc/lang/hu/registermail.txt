@@ -8,6 +8,3 @@ Dátum: @DATE@
 Böngésző: @BROWSER@
 IP-cím : @IPADDRESS@
 Gép neve: @HOSTNAME@
-
--- 
-Ezt a levelet @DOKUWIKIURL@ DokuWiki generálta.

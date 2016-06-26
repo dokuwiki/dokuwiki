@@ -326,3 +326,5 @@ $lang['media_perm_upload']     = 'Συγνώμη, δεν έχετε επαρκή
 $lang['media_update']          = 'Φόρτωση νέας έκδοσης';
 $lang['media_restore']         = 'Επαναφορά αυτή της έκδοσης';
 $lang['searchresult']          = 'Αποτέλεσμα έρευνας';
+$lang['email_signature_text'] = 'Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
+@DOKUWIKIURL@';

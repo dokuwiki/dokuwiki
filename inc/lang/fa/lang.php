@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author behrad eslamifar <behrad_es@yahoo.com)
  * @author Mohsen Firoozmandan <info@mambolearn.com>
  * @author Omid Mottaghi <omidmr@gmail.com>
@@ -15,6 +15,8 @@
  * @author Mohamad Mehdi Habibi <habibi.esf@gmail.com>
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
+ * @author Mohmmad Razavi <sepent@gmail.com>
+ * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -24,9 +26,9 @@ $lang['singlequoteopening']    = '‘';
 $lang['singlequoteclosing']    = '’';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'ویرایش این صفحه';
-$lang['btn_source']            = 'نمایش مبدا';
+$lang['btn_source']            = 'نمایش متن صفحه';
 $lang['btn_show']              = 'نمایش صفحه';
-$lang['btn_create']            = 'ساخت این صفحه';
+$lang['btn_create']            = 'ایجاد این صفحه';
 $lang['btn_search']            = 'جستجو';
 $lang['btn_save']              = 'ذخیره';
 $lang['btn_preview']           = 'پیش‌نمایش';
@@ -63,23 +65,24 @@ $lang['btn_mediaManager']      = 'مشاهده در مدیریت رسانه‌ه
 $lang['loggedinas']            = 'به این عنوان وارد شده‌اید:';
 $lang['user']                  = 'نام کاربری';
 $lang['pass']                  = 'گذرواژه‌';
-$lang['newpass']               = 'گذروازه‌ی جدید';
+$lang['newpass']               = 'گذرواژه‌ی جدید';
 $lang['oldpass']               = 'گذرواژه‌ی فعلی را تایید کنید';
 $lang['passchk']               = 'یک بار دیگر';
 $lang['remember']              = 'مرا به خاطر بسپار.';
-$lang['fullname']              = '*نام واقعی شما';
-$lang['email']                 = 'ایمیل شما*';
+$lang['fullname']              = 'نام واقعی شما';
+$lang['email']                 = 'ایمیل شما';
 $lang['profile']               = 'پروفایل کاربر';
-$lang['badlogin']              = 'خطا در ورود به سیستم';
-$lang['badpassconfirm']        = 'متاسفم ، رمز عبور اشتباه است';
+$lang['badlogin']              = 'متاسفم، نام کاربری یا رمز عبور اشتباه است.';
+$lang['badpassconfirm']        = 'متاسفم، رمز عبور اشتباه است';
 $lang['minoredit']             = 'این ویرایش خُرد است';
-$lang['draftdate']             = 'ذخیره خودکار پیش‌نویس';
+$lang['draftdate']             = 'ذخیره خودکار پیش‌نویس در';
 $lang['nosecedit']             = 'این صفحه در این میان تغییر کرده است، اطلاعات بخش قدیمی شده است، در عوض محتوای کل نمایش داده می‌شود.';
 $lang['searchcreatepage']      = 'اگر به نتیجه‌ی مطلوبی نرسیده‌اید، می‌توانید صفحه‌ی مورد نظر را ایجاد کنید.';
 $lang['regmissing']            = 'متاسفم، شما باید همه قسمت‌ها را پر کنید.';
 $lang['reguexists']            = 'نام کاربری‌ای که وارد کردید قبلن استفاده شده است. خواهشمندیم یک نام دیگر انتخاب کنید.';
 $lang['regsuccess']            = 'کاربر ساخته شد و گذرواژه به صورت ایمیل ارسال گردید.';
 $lang['regsuccess2']           = 'حساب ایجاد شد.';
+$lang['regfail']               = 'ایجاد کاربر ممکن نیست.';
 $lang['regmailfail']           = 'مشکلی در ارسال ایمیل پیش آمده است، با مدیر تماس بگیرید!';
 $lang['regbadmail']            = 'نشانی واردشده‌ی ایمیل قابل‌قبول نیست، چرا که دارای ساختار نامعتبری است. خواهشمندیم نشانی‌ای با ساختار صحیح وارد کنید و یا بخش مربوط را خالی بگذارید.';
 $lang['regbadpass']            = 'گذرواژه‌هایی که وارد کردید یکسان نیستند.';
@@ -94,30 +97,30 @@ $lang['profdeleteuser']        = 'حذف حساب کاربری';
 $lang['profdeleted']           = 'حساب کاربری شما حذف گردیده است.';
 $lang['profconfdelete']        = 'می‌خواهم حساب کاربری من از این ویکی حذف شود. <br/> این عمل قابل برگشت نیست.';
 $lang['profconfdeletemissing'] = 'جعبه‌ی تأیید تیک نخورده است';
-$lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ جدید دریافت کنید';
+$lang['proffail']              = 'بروزرسانی پروفایل کاربری انجام نشد.';
+$lang['pwdforget']             = 'گذرواژه‌ی خود را فراموش کرده‌اید؟ گذرواژه‌ی جدید دریافت کنید';
 $lang['resendna']              = 'این ویکی ارسال مجدد گذرواژه را پشتیبانی نمی‌کند';
 $lang['resendpwd']             = 'تعیین کلمه عبور جدید برای ';
-$lang['resendpwdmissing']      = 'متاسفم، شما باید تمام قسمت‌ها را پر کنید';
-$lang['resendpwdnouser']       = 'متاسفم، ما نتوانستیم این نام کاربری را در بانک خود پیدا کنیم';
+$lang['resendpwdmissing']      = 'متاسفم، شما باید تمام قسمت‌ها را پر کنید.';
+$lang['resendpwdnouser']       = 'متاسفم، ما نتوانستیم این نام کاربری را در پایگاه دادهٔ خود پیدا کنیم.';
 $lang['resendpwdbadauth']      = 'متاسفم، کد شناسایی معتبر نیست. از صحت لینک تاییدیه اطمینان حاصل کنید.';
-$lang['resendpwdconfirm']      = 'یک ایمیل تاییدیه‌ی آدرس به آدرس مورنظر ارسال شد. قبل از اینکه نامه‌ی دیگری قابل ارسال به این آدرس باشد، باید دستوراتی که در آن نامه آمده است را جهت تایید این مساله که این آدرس متعلق به شماست، اجرا کنید.';
-$lang['resendpwdsuccess']      = 'گذرواژه‌ی جدید شما توسط ایمیل ارسال شد';
+$lang['resendpwdconfirm']      = 'یک لینک تاییدیه آدرس از طریق ایمیل ارسال شد.';
+$lang['resendpwdsuccess']      = 'گذرواژه‌ی جدید شما توسط ایمیل ارسال شد.';
 $lang['license']               = 'به جز مواردی که ذکر می‌شود، مابقی محتویات ویکی تحت مجوز زیر می‌باشند:';
 $lang['licenseok']             = 'توجه: با ویرایش این صفحه، شما مجوز زیر را تایید می‌کنید:';
 $lang['searchmedia']           = 'نام فایل برای جستجو:';
 $lang['searchmedia_in']        = 'جستجو در %s';
-$lang['txt_upload']            = 'فایل را برای ارسال انتخاب کنید:';
+$lang['txt_upload']            = 'فایل را برای آپلود انتخاب کنید:';
 $lang['txt_filename']          = 'ارسال به صورت (اختیاری):';
 $lang['txt_overwrt']           = 'بر روی فایل موجود بنویس';
 $lang['maxuploadsize']         = 'حداکثر %s برای هر فایل مجاز است.';
 $lang['lockedby']              = 'در حال حاضر قفل شده است:';
-$lang['lockexpire']            = 'قفل منقضی شده است:';
+$lang['lockexpire']            = 'قفل منقضی می‌شود در:';
 $lang['js']['willexpire']      = 'حالت قفل شما مدتی است منقضی شده است \n برای جلوگیری از تداخل دکمه‌ی پیش‌نمایش را برای صفر شدن ساعت قفل بزنید.';
-$lang['js']['notsavedyet']     = 'تغییرات ذخیره شده از بین خواهد رفت.
- می‌خواهید ادامه دهید؟';
-$lang['js']['searchmedia']     = 'جستجو برای فایل';
-$lang['js']['keepopen']        = 'پنجره را ر زمان انتخاب باز نگه‌دار';
-$lang['js']['hidedetails']     = 'پتهان کردن جزییات';
+$lang['js']['notsavedyet']     = 'تغییرات ذخیره نشده از بین خواهد رفت.';
+$lang['js']['searchmedia']     = 'جستجو برای فایل‌ها';
+$lang['js']['keepopen']        = 'پنجره را در زمان انتخاب باز نگه‌دار';
+$lang['js']['hidedetails']     = 'پنهان کردن جزئیات';
 $lang['js']['mediatitle']      = 'تنظیمات پیوند';
 $lang['js']['mediadisplay']    = 'نوع پیوند';
 $lang['js']['mediaalign']      = 'هم‌ترازی';
@@ -125,13 +128,13 @@ $lang['js']['mediasize']       = 'اندازه تصویر';
 $lang['js']['mediatarget']     = 'هدف پیوند';
 $lang['js']['mediaclose']      = 'بستن';
 $lang['js']['mediainsert']     = 'درج کردن';
-$lang['js']['mediadisplayimg'] = 'نمایش تصویر';
+$lang['js']['mediadisplayimg'] = 'نمایش تصویر.';
 $lang['js']['mediadisplaylnk'] = 'فقط پیوند را نمایش بده.';
 $lang['js']['mediasmall']      = 'نگارش کوچک';
 $lang['js']['mediamedium']     = 'نگارش متوسط';
 $lang['js']['medialarge']      = 'نگارش بزرگ';
 $lang['js']['mediaoriginal']   = 'نگارش اصلی';
-$lang['js']['medialnk']        = 'پیوند به صفحه‌ی جزییات';
+$lang['js']['medialnk']        = 'پیوند به صفحه‌ی جزئیات';
 $lang['js']['mediadirect']     = 'پیوند مستقیم به اصلی';
 $lang['js']['medianolnk']      = 'بدون پیوند';
 $lang['js']['medianolink']     = 'تصویر را پیوند نکن';
@@ -149,38 +152,38 @@ $lang['js']['media_diff']      = 'تفاوت ها را ببینید: ';
 $lang['js']['media_diff_both'] = 'پهلو به پهلو';
 $lang['js']['media_diff_opacity'] = 'درخشش از';
 $lang['js']['media_diff_portions'] = 'کش رفتن';
-$lang['js']['media_select']    = 'انتخاب فایل -یا فایلها- ...';
+$lang['js']['media_select']    = 'انتخاب فایل‌ها...';
 $lang['js']['media_upload_btn'] = 'آپلود';
 $lang['js']['media_done_btn']  = 'انجام شد';
-$lang['js']['media_drop']      = 'فایل ها را در اینجا قرار دهید تا آپلود شود';
+$lang['js']['media_drop']      = 'فایل‌ها را در اینجا قرار دهید تا آپلود شود';
 $lang['js']['media_cancel']    = 'حذف';
-$lang['js']['media_overwrt']   = 'جاینوشت فایل های موجود';
-$lang['rssfailed']             = 'بروز خطا در هنگام واکشی';
-$lang['nothingfound']          = 'چیزی پیدا نشد';
+$lang['js']['media_overwrt']   = 'جاینوشت فایل‌های موجود';
+$lang['rssfailed']             = 'بروز خطا در هنگام واکشی این فید:';
+$lang['nothingfound']          = 'چیزی پیدا نشد.';
 $lang['mediaselect']           = 'فایل‌ها';
 $lang['uploadsucc']            = 'ارسال با موفقیت انجام شد';
-$lang['uploadfail']            = 'خطا در ارسال';
-$lang['uploadwrong']           = 'ارسال متوقف شد. این توسعه‌ی فایل ممنوع می‌باشد.';
-$lang['uploadexist']           = 'این فابل وجود دارد. عملی انجام نشد.';
-$lang['uploadbadcontent']      = 'محتوای فایل ارسال شده با توسعه‌ی %s متناقض است.';
+$lang['uploadfail']            = 'خطا در ارسال. شاید دسترسی‌ها نادرست است؟';
+$lang['uploadwrong']           = 'ارسال متوقف شد. این فرمت فایل ممنوع می‌باشد.';
+$lang['uploadexist']           = 'این فایل وجود دارد. عملی انجام نشد.';
+$lang['uploadbadcontent']      = 'محتوای فایل آپلود شده با فرمت %s یکسان نیست.';
 $lang['uploadspam']            = 'فایل ارسال شده توسط لیست سیاه اسپم‌ها مسدود شده است.';
 $lang['uploadxss']             = 'این صفحه حاوی اسکریپت یا کد اچ‌تی‌ام‌ال است که ممکن است به نادرست توسط مرورگر وب تفسیر شود.';
 $lang['uploadsize']            = 'فایل ارسال شده سنگین است. (بیشینه، %s)';
 $lang['deletesucc']            = 'فایل «%s» حذف شد.';
 $lang['deletefail']            = '«%s» حذف نمی‌شود، دسترسی‌ها را بررسی کنید.';
 $lang['mediainuse']            = 'فایل «%s» حذف نمی‌شود، چون هنوز در حال استفاده است.';
-$lang['namespaces']            = 'فضای‌نام';
+$lang['namespaces']            = 'فضای‌نام‌ها';
 $lang['mediafiles']            = 'فایل‌های موجود در';
 $lang['accessdenied']          = 'شما اجازه‌ی مشاهده‌ی این صفحه را ندارید.';
 $lang['mediausage']            = 'برای ارجاع دادن به فایل از نگارش زیر استفاده کنید.';
 $lang['mediaview']             = 'مشاهده‌ی فایل اصلی';
 $lang['mediaroot']             = 'ریشه';
-$lang['mediaupload']           = 'ارسال فایل به فضای‌نام کنونی. برای ایجاد زیرفضای‌نام‌ها، نام‌های آن‌ها را به عنوان پیشوندهایی که با دونقطه «:» جدا شده‌اند به نام فایل، در قسمت «ارسال به صورت» اضافه کنید.';
-$lang['mediaextchange']        = 'توسعه‌ی فایل از %s به %s تغییر داده شد.';
+$lang['mediaupload']           = 'ارسال فایل به فضای‌نام کنونی. برای ایجاد زیرفضای‌نام‌ها، پس از انتخاب فایل‌ها در قسمت «ارسال به صورت» به نام فایل نام‌های فضای‌نام‌ها را به عنوان پیشوندهایی که با دونقطه «:» جدا شده‌اند، اضافه کنید. همچنین فایل‌ها می‌توانند با کشیدن و ول کردن انتخاب شوند.';
+$lang['mediaextchange']        = 'فرمت فایل از %s به %s تغییر داده شد.';
 $lang['reference']             = 'ارجاع‌های';
 $lang['ref_inuse']             = 'این فایل نمی‌تواند حذف شود، زیرا هم‌چنان در این صفحه استفاده شده است:';
 $lang['ref_hidden']            = 'تعدادی مرجع در صفحاتی که شما دسترسی خواندن ندارید وجود دارد.';
-$lang['hits']                  = 'بازدید';
+$lang['hits']                  = 'بازدیدها';
 $lang['quickhits']             = 'جور کردن نام صفحات';
 $lang['toc']                   = 'فهرست مندرجات';
 $lang['current']               = 'فعلی';
@@ -339,7 +342,12 @@ $lang['media_perm_read']       = 'متاسفانه شما حق خواندن ای
 $lang['media_perm_upload']     = 'متاسفانه شما حق آپلود این فایل‌ها را ندارید.';
 $lang['media_update']          = 'آپلود نسخه‌ی جدید';
 $lang['media_restore']         = 'بازیابی این نسخه';
+$lang['media_acl_warning']     = 'این لیست ممکن است به خاطر محدودیتهای دسترسیهای ACL و صفحات پنهان کامل نباشد.';
 $lang['currentns']             = 'فضای نام جاری';
 $lang['searchresult']          = 'نتیجه‌ی جستجو';
 $lang['plainhtml']             = 'HTML ساده';
 $lang['wikimarkup']            = 'نشانه‌گذاری ویکی';
+$lang['email_signature_text'] = 'این ایمیل توسط DokuWiki تولید شده است
+@DOKUWIKIURL@';
+$lang['page_nonexist_rev']     = 'صفحه %s وجود نداشت. این صفحه معاقباً در<a href="%s">%s</a> ایجاد شد.';
+$lang['unable_to_parse_date']  = 'امکان تجزیه و تحلیل پارامتر «%s» وجود ندارد.';

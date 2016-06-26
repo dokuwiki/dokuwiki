@@ -310,7 +310,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin {
      * Convert php.ini shorthands to byte
      *
      * @author <gilthans dot NO dot SPAM at gmail dot com>
-     * @link   http://de3.php.net/manual/en/ini.core.php#79564
+     * @link   http://php.net/manual/en/ini.core.php#79564
      *
      * @param string $v
      * @return int|string

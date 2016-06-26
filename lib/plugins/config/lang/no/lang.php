@@ -64,7 +64,7 @@ $lang['youarehere']            = 'Vis hvor i hvilke(t) navnerom siden er';
 $lang['typography']            = 'Gjør typografiske erstatninger';
 $lang['htmlok']                = 'Tillat HTML';
 $lang['phpok']                 = 'Tillat PHP';
-$lang['dformat']               = 'Datoformat (se <a href="http://www.php.net/strftime">PHPs datofunksjon</a>)';
+$lang['dformat']               = 'Datoformat (se <a href="http://php.net/strftime">PHPs datofunksjon</a>)';
 $lang['signature']             = 'Signatur';
 $lang['toptoclevel']           = 'Toppnivå for innholdsfortegnelse';
 $lang['tocminheads']           = 'Minimum antall overskrifter som bestemmer om innholdsbetegnelse skal bygges.';

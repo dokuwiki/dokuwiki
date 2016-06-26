@@ -1,6 +1,6 @@
-Nový užívateľ bol registrovaný. Tu sú detaily:
+Nový používateľ bol registrovaný. Tu sú detaily:
 
-Užívateľské meno : @NEWUSER@
+Používateľské meno : @NEWUSER@
 Celé meno        : @NEWNAME@
 E-Mail           : @NEWEMAIL@
 
@@ -8,7 +8,3 @@ Dátum            : @DATE@
 Prehliadač       : @BROWSER@
 IP adresa        : @IPADDRESS@
 Meno servera     : @HOSTNAME@
-
--- 
-Táto správa bola zaslaná DokuWiki
-@DOKUWIKIURL@

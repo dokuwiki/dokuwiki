@@ -10,8 +10,3 @@ Yhteenveto: @SUMMARY@
 Käyttäjä : @USER@
 
 @DIFF@
-
-
--- 
-Tämän postin loi DokuWiki osoitteessa
-@DOKUWIKIURL@

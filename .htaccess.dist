@@ -6,9 +6,19 @@
 
 ## make sure nobody gets the htaccess, README, COPYING or VERSION files
 <Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
-    Order allow,deny
-    Deny from all
+    <IfModule mod_authz_host>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_host>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </Files>
+
+## Don't allow access to git directories
+<IfModule alias_module>
+    RedirectMatch 404 /\.git
+</IfModule>
 
 ## Uncomment these rules if you want to have nice URLs using
 ## $conf['userewrite'] = 1 - not needed for rewrite mode 2
