@@ -27,6 +27,7 @@
  * @author Hudson FAS <hudsonfas@gmail.com>
  * @author Guilherme Cardoso <guicardoso@gmail.com>
  * @author Viliam Dias <viliamjr@gmail.com>
+ * @author Frederico G. Guimarães <frederico@teia.bio.br>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -359,7 +360,8 @@ $lang['currentns']             = 'Domínio atual';
 $lang['searchresult']          = 'Resultado da Busca';
 $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Marcação wiki';
-$lang['email_signature_text']       = 'Essa mensagem foi gerada pelo DokuWiki em
-@DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada posteriormente em <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
+$lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
+@DOKUWIKIURL@';
+$lang['email_signature_html']  = ' ';
