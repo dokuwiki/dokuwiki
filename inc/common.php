@@ -1034,6 +1034,22 @@ function pageTemplate($id) {
         // the before event might have loaded the content already
         if(empty($data['tpl'])) {
             // if the before event did not set a template file, try to find one
+            // first try to find a template file that matches the name of the current page
+            // only performs looks up the tree, not in the current directory due to
+            // DokuWiki only allowing one page per name per namespace
+            if(empty($data['tplfile'])){
+                // search upper namespaces for templates
+                $path = dirname(wikiFN($id));
+                $len = strlen(rtrim($conf['datadir'],'/'));
+                while (strlen($path) >= $len){
+                    if(@file_exists($path.'/__'.noNS($id).'.txt')){
+                        $data['tplfile'] = $path.'/__'.noNS($id).'.txt';
+                        break;
+                    }
+                    $path = substr($path, 0, strrpos($path, '/'));
+                }
+            }
+            // search for standard template files
             if(empty($data['tplfile'])) {
                 $path = dirname(wikiFN($id));
                 if(file_exists($path.'/_template.txt')) {
