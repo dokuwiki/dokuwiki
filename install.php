@@ -5,6 +5,22 @@
  * @author      Chris Smith <chris@jalakai.co.uk>
  */
 
+function iswritable($filename) {
+	//echo PHP_VERSION_ID; die;
+	//return is_writable($filename);
+
+	// check writability
+	$perms = fileperms($filename);
+	if (($perms & 0x0080) || // owner can write
+		($perms & 0x0010) || // group
+		($perms & 0x0002) // other
+	) {
+		return true;
+	}
+
+	return false;
+}
+
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
@@ -537,7 +553,9 @@ function check_permissions(){
 
     $ok = true;
     foreach($dirs as $dir){
-        if(!file_exists("$dir/.") || !is_writable($dir)){
+        if(!file_exists("$dir/.") || !iswritable($dir)){
+        	
+        	var_dump(is_writable($dir)); die;
             $dir     = str_replace($_SERVER['DOCUMENT_ROOT'],'{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'],$dir);
             $ok      = false;

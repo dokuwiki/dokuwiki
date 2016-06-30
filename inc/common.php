@@ -233,7 +233,7 @@ function pageinfo() {
     }
     $info['rev'] = $REV;
     if($info['exists']) {
-        $info['writable'] = (is_writable($info['filepath']) &&
+        $info['writable'] = (iswritable($info['filepath']) &&
             ($info['perm'] >= AUTH_EDIT));
     } else {
         $info['writable'] = ($info['perm'] >= AUTH_CREATE);

@@ -3,6 +3,22 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+function iswritable($filename) {
+	//echo PHP_VERSION_ID; die;
+	//return is_writable($filename);
+	
+	// check writability
+	$perms = fileperms($filename);
+	if (($perms & 0x0080) || // owner can write
+		($perms & 0x0010) || // group
+		($perms & 0x0002) // other
+	) {
+		return true;
+	}
+	
+	return false;
+}
+
 /**
  * timing Dokuwiki execution
  */
@@ -350,7 +366,7 @@ function init_path($path){
     }
 
     // check writability
-    if(!@is_writable($p)){
+    if(!@iswritable($p)){
         return '';
     }
 
