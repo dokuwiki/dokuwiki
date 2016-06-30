@@ -179,7 +179,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
     $info['file']     = utf8_basename($file);
     $info['size']     = filesize($base.'/'.$file);
     $info['mtime']    = filemtime($base.'/'.$file);
-    $info['writable'] = is_writable($base.'/'.$file);
+    $info['writable'] = iswritable($base.'/'.$file);
     if(preg_match("/\.(jpe?g|gif|png)$/",$file)){
         $info['isimg'] = true;
         $info['meta']  = new JpegMeta($base.'/'.$file);
@@ -428,7 +428,7 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
         $item['size']       = filesize($base.'/'.$file);
         $item['mtime']      = filemtime($base.'/'.$file);
         $item['rev']        = $item['mtime'];
-        $item['writable']   = is_writable($base.'/'.$file);
+        $item['writable']   = iswritable($base.'/'.$file);
         $item['executable'] = is_executable($base.'/'.$file);
     }
 

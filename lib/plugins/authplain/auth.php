@@ -35,7 +35,7 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
         if(!@is_readable($config_cascade['plainauth.users']['default'])) {
             $this->success = false;
         } else {
-            if(@is_writable($config_cascade['plainauth.users']['default'])) {
+            if(@iswritable($config_cascade['plainauth.users']['default'])) {
                 $this->cando['addUser']   = true;
                 $this->cando['delUser']   = true;
                 $this->cando['modLogin']  = true;

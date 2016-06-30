@@ -308,8 +308,8 @@ if (!class_exists('configuration')) {
 
             $local = $this->_local_files[0];
 
-            if (!is_writable(dirname($local))) return true;
-            if (file_exists($local) && !is_writable($local)) return true;
+            if (!iswritable(dirname($local))) return true;
+            if (file_exists($local) && !iswritable($local)) return true;
 
             return false;
         }

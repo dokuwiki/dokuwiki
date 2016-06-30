@@ -3,6 +3,15 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+function iswritable($filename) {
+	$perms = fileperms($filename);
+	//        owner                group               world
+	if (($perms & 0x0080) || ($perms & 0x0010) || ($perms & 0x0002)) {
+		return true; // can write
+	}
+	return false; // cannot write
+}
+
 /**
  * timing Dokuwiki execution
  */
@@ -350,7 +359,7 @@ function init_path($path){
     }
 
     // check writability
-    if(!@is_writable($p)){
+    if(!@iswritable($p)){
         return '';
     }
 
