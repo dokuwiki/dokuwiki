@@ -85,6 +85,7 @@ $lang['deaccent']              = 'Retirer les accents dans les noms de pages';
 $lang['useheading']            = 'Utiliser le titre de premier niveau pour le nom de la page';
 $lang['sneaky_index']          = 'Par défaut, DokuWiki affichera toutes les catégories dans la vue par index. Activer cette option permet de cacher les catégories pour lesquelles l\'utilisateur n\'a pas l\'autorisation de lecture. Il peut en résulter le masquage de sous-catégories accessibles. Ceci peut rendre l\'index inutilisable avec certains contrôles d\'accès.';
 $lang['hidepages']             = 'Cacher les pages correspondant à (expression régulière)';
+$lang['hidenoacl']             = 'Cacher les messages \'No ACL setup yet\'. L\'activation de cette option permet par exemple de ne pas faire la différence entre un résultat de recherche vide ou un résultat que l\'on a pas le droit de voir.';
 $lang['useacl']                = 'Utiliser les listes de contrôle d\'accès (ACL)';
 $lang['autopasswd']            = 'Auto-générer les mots de passe';
 $lang['authtype']              = 'Mécanisme d\'authentification';

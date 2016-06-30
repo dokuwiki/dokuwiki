@@ -764,7 +764,9 @@ function auth_aclcheck_cb($data) {
             //we did this already
             //looks like there is something wrong with the ACL
             //break here
-            msg('No ACL setup yet! Denying access to everyone.');
+            if(!$conf['hidenoacl']) {
+                msg('No ACL setup yet! Denying access to everyone.');
+            }
             return AUTH_NONE;
         }
     } while(1); //this should never loop endless
