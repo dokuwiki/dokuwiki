@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Hideaki SAWADA <chuno@live.jp>
  */
 $lang['menu']                  = 'Struct スキーマ編集';
@@ -29,6 +29,7 @@ $lang['tab_export']            = '入力・出力';
 $lang['tab_delete']            = '削除';
 $lang['editor_sort']           = 'ソート';
 $lang['editor_label']          = 'フィールド名';
+$lang['editor_multi']          = '複数入力？';
 $lang['editor_conf']           = '設定';
 $lang['editor_type']           = '型';
 $lang['editor_enabled']        = '有効';
@@ -54,3 +55,4 @@ $lang['prev']                  = '前ページ';
 $lang['none']                  = '何もありません。';
 $lang['tablefilteredby']       = '%s で抽出';
 $lang['tableresetfilter']      = '全て表示（抽出・ソートを解除）';
+$lang['Exception schema missing'] = '%s スキーマは存在しません！';
