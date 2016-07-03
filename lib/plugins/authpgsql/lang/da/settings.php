@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Jens Hyllegaard <jens.hyllegaard@gmail.com>
  * @author soer9648 <soer9648@eucl.dk>
  */

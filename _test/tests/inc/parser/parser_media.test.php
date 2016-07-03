@@ -118,12 +118,12 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1&#xa0;KB)">kind_zu_katze.webm</a>';
+        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1'."\xC2\xA0".'KB)">kind_zu_katze.webm</a>';
         $substr_start = strpos($url, $a_webm, $substr_start + strlen($source_ogv));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8&#xa0;KB)">kind_zu_katze.ogv</a>';
+        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8'."\xC2\xA0".'KB)">kind_zu_katze.ogv</a>';
         $substr_start = strpos($url, $a_ogv, $substr_start + strlen($a_webm));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 

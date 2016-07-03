@@ -99,7 +99,7 @@ class adLDAPUtils {
     * @author Port by Andreas Gohr <andi@splitbrain.org>
     * @return string
     */
-    protected function ldapSlashes($str) {
+    public function ldapSlashes($str) {
         // see https://github.com/adldap/adLDAP/issues/22
         return preg_replace_callback(
             '/([\x00-\x1F\*\(\)\\\\])/',
