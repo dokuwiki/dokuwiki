@@ -1,6 +1,6 @@
 <?php
 /**
- * English language file for struct plugin
+ * French language file for struct plugin
  *
  * @author Andreas Gohr, Michael Große <dokuwiki@cosmocode.de>
  * @author Laynee <seedfloyd@gmail.com>
