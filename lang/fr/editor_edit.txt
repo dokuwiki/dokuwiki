@@ -1,0 +1,9 @@
+====== Struct - Éditeur de schémas ======
+
+C'est ici que vous ajouter ou modifiez des champs à votre schéma.
+
+Chaque champ doit avoir un nom unique. Il est recommandé d'utiliser des noms courts, peu sujets au changement car vous devrez les écrire dans les pages wiki pour afficher vos données. Donnez-leur un nom plus complet (destiné à être vu par les visiteurs) dans la case ''label'' de la configuration du champ.
+
+Le type de champ détermine quelles données peuvent y être stockées (texte, image, URL...) et influence également la façon dont elles seront affichées plus tard. Chaque type de champ a des options de configuration spécifiques.
+
+Consultez la [[doku>plugin:struct:type|documentation]] pour en savoir plus.

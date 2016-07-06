@@ -1,0 +1,1 @@
+**AVERTISSEMENT !** Supprimer un schéma supprime certes ce schéma mais aussi **toutes** les données qui lui étaient associées. Cette opération est irréversible !

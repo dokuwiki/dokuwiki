@@ -1,0 +1,5 @@
+====== Struct - Éditeur de schémas ======
+
+Les schémas sont à la base du plugin Struct. Un schéma est un ensemble de champs de formulaires permettant de rentrer des données de façon structurée. Ce schéma peut ensuite être assigné à des pages.
+
+Choisissez un schéma depuis la table des matières ou créez-en un nouveau à l'aide du formulaire ci-dessous.
