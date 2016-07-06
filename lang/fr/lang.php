@@ -7,12 +7,12 @@
  */
 
 
-$lang['menu'] = 'Struct - Editeur de schémas';
-$lang['menu_assignments'] = 'Struct - Assignement de schemas';
+$lang['menu'] = 'Struct - Éditeur de schémas';
+$lang['menu_assignments'] = 'Struct - Assignement de schémas';
 
 $lang['headline'] = 'Données structurées';
 
-$lang['edithl'] = 'Edition du schéma <i>%s</i>';
+$lang['edithl'] = 'Édition du schéma <i>%s</i>';
 $lang['create'] = 'Créer un nouveau schéma';
 $lang['schemaname'] = 'Nom du schéma :';
 $lang['save'] = 'Sauvegarder';
@@ -30,7 +30,7 @@ $lang['del_fail'] = 'Le nom que vous avez entré ne correspond pas au schéma ac
 $lang['del_ok'] = 'Le schéma a été supprimé.';
 $lang['btn_delete'] = 'Supprimer';
 
-$lang['tab_edit'] = 'Edition';
+$lang['tab_edit'] = 'Édition';
 $lang['tab_export'] = 'Import/Export';
 $lang['tab_delete'] = 'Suppression';
 
@@ -50,21 +50,21 @@ $lang['multi'] = 'Vous pouvez entrer plusieurs valeurs, séparées par des virgu
 $lang['multidropdown'] = 'Maintenez les touches CTRL ou CMD pour sélectionner plusieurs valeurs.';
 $lang['duplicate_label'] = "Le label <code>%s</code> existe déjà dans ce schéma, la deuxième occurence a été renommée en <code>%s</code>.";
 
-$lang['emptypage'] = 'Struct data has not been saved for an empty page';
+$lang['emptypage'] = 'Les données du plugin Struct ne sont pas sauvegardées si la page est vide.';
 
 $lang['validation_prefix'] = "Champ [%s] : ";
 
-$lang['Validation Exception Integer needed'] = 'only integers are allowed';
-$lang['Validation Exception Integer min'] = 'has to be equal or greater than %d';
-$lang['Validation Exception Integer max'] = 'has to be equal or less than %d';
-$lang['Validation Exception User not found'] = 'has to be an existing user. User \'%s\' was not found.';
+$lang['Validation Exception Integer needed'] = 'seuls les nombres entiers sont autorisés';
+$lang['Validation Exception Integer min'] = 'doit être supérieur ou égal à %d';
+$lang['Validation Exception Integer max'] = 'doit être inférieur ou égal à %d';
+$lang['Validation Exception User not found'] = 'doit être un utilisateur existant. L\'utilisateur \'%s\' n\'a pas été trouvé.';
 $lang['Validation Exception Media mime type'] = 'MIME type %s has to match the allowed set of %s';
-$lang['Validation Exception Url invalid'] = '%s is not a valid URL';
-$lang['Validation Exception Mail invalid'] = '%s is not a valid email address';
-$lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-DD';
+$lang['Validation Exception Url invalid'] = '%s n\'est pas une URL valide';
+$lang['Validation Exception Mail invalid'] = '%s n\'est pas une adresse email valide';
+$lang['Validation Exception invalid date format'] = 'doit être au format AAAA-MM-JJ';
 
-$lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
-$lang['Exception nocolname'] = 'No column name given';
+$lang['Exception noschemas'] = 'Schéma non spécifié, impossible de charger des colonnes';
+$lang['Exception nocolname'] = 'Nom de colonne non spécifié';
 
 $lang['sort']      = 'Trier selon cette colonne';
 $lang['next']      = 'Page suivante';
@@ -73,7 +73,7 @@ $lang['prev']      = 'Page précédente';
 $lang['none']      = 'Rien n\'a été trouvé.';
 
 $lang['tablefilteredby'] = 'Filtre : %s';
-$lang['tableresetfilter'] = 'Aucun filtre / Afficher tout';
+$lang['tableresetfilter'] = 'Supprimer les filtres';
 
 $lang['Exception schema missing'] = "Le schéma %s n\'existe pas !";
 
