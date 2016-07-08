@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\SchemaData;
 use dokuwiki\plugin\struct\meta\Validator;
@@ -101,6 +102,9 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             $time = filemtime(wikiFN($id));
             $schemaData = new SchemaData($table, $id, $time);
             $schemaData->saveData($data);
+
+            $assignments = new Assignments();
+            $assignments->assignPageSchema($id, $table);
         }
 
         return true;
