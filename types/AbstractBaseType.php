@@ -360,6 +360,10 @@ abstract class AbstractBaseType {
                 $sql = "$column NOT LIKE ?";
                 $opt = array($value);
                 break;
+            case '=*':
+                $sql = "$column REGEXP ?";
+                $opt = array($value);
+                break;
             default:
                 $sql = "$column $comp ?";
                 $opt = array($value);

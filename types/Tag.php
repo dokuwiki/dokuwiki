@@ -108,6 +108,10 @@ class Tag extends AbstractMultiBaseType {
                 $sql = "LOWER(REPLACE($column, ' ', '')) NOT LIKE LOWER(REPLACE(?, ' ', ''))";
                 $opt = array($value);
                 break;
+            case '=*':
+                $sql = "LOWER(REPLACE($column, ' ', '')) REGEXP ?";
+                $opt = array($value);
+                break;
             default:
                 $sql = "LOWER(REPLACE($column, ' ', '')) $comp LOWER(REPLACE(?, ' ', ''))";
                 $opt = array($value);

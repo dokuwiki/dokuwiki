@@ -12,9 +12,10 @@ class Search {
 
     /**
      * The list of known and allowed comparators
+     * (order matters)
      */
     static public $COMPARATORS = array(
-        '<=', '>=', '=', '<', '>', '!=', '!~', '~'
+        '<=', '>=', '=*', '=', '<', '>', '!=', '!~', '~',
     );
 
     /** @var  \helper_plugin_sqlite */
@@ -127,8 +128,8 @@ class Search {
         if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
-        if(!$col) return; //FIXME do we really want to ignore missing columns?
-        $value = str_replace('*','%',$value);
+        if(!$col) return;
+        if($comp == '~') $value = str_replace('*','%',$value);
         $this->filter[] = array($col, $value, $comp, $type);
     }
 
@@ -301,7 +302,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $order .= $col->getColName(false) . ' ';
+            $order .= $col->getColName() . ' ';
             $order .= ($asc) ? 'ASC' : 'DESC';
             $order .= ', ';
         }
