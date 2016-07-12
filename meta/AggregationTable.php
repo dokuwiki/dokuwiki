@@ -79,6 +79,15 @@ class AggregationTable {
      * Create the table on the renderer
      */
     public function render() {
+
+        // abort early if there are no results at all (not filtered)
+        if(!$this->resultCount && !$this->isDynamicallyFiltered()) {
+            $this->startScope();
+            $this->renderer->cdata($this->helper->getLang('none'));
+            $this->finishScope();
+            return;
+        }
+
         // table open
         $this->startScope();
         $this->renderActiveFilters();
@@ -230,6 +239,18 @@ class AggregationTable {
         }
 
         $this->renderer->tablerow_close();
+    }
+
+    /**
+     * Is the result set currently dynamically filtered?
+     * @return bool
+     */
+    protected function isDynamicallyFiltered() {
+        if($this->mode != 'xhtml') return false;
+        if(!$this->data['dynfilters']) return false;
+
+        $dynamic = $this->searchConfig->getDynamicParameters();
+        return (bool) $dynamic->getFilters();
     }
 
     /**
