@@ -192,6 +192,9 @@ class Search {
         $result = array();
         $cursor = -1;
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
+            if ($this->isRowEmpty($row)) {
+                continue;
+            }
             $cursor++;
             if($cursor < $this->range_begin) continue;
             if($this->range_end && $cursor >= $this->range_end) continue;
@@ -374,6 +377,25 @@ class Search {
         }
 
         return $col;
+    }
+
+    /**
+     * Check if a row is empty / only contains a reference to itself
+     *
+     * @param array $rowColumns an array as returned from the database
+     * @return bool
+     */
+    private function isRowEmpty($rowColumns) {
+        $C = 0;
+        foreach($this->columns as $col) {
+            $val = $rowColumns["C$C"];
+            $C += 1;
+            if (empty($val) || is_a($col->getType(),'dokuwiki\plugin\struct\types\Page') && $val == $rowColumns["PID"]) {
+                continue;
+            }
+            return false;
+        }
+        return true;
     }
 
 }
