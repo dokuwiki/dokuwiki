@@ -71,11 +71,7 @@ abstract class AbstractBaseType {
 
         // use previously saved configuration, ignoring all keys that are not supposed to be here
         if(!is_null($config)) {
-            foreach($config as $key => $value) {
-                if(isset($this->config[$key]) || in_array($key, $this->keepconfig)) {
-                    $this->config[$key] = $value;
-                }
-            }
+            $this->mergeConfig($config, $this->config);
         }
 
         $this->initTransConfig();
@@ -83,6 +79,26 @@ abstract class AbstractBaseType {
         $this->label = $label;
         $this->ismulti = (bool) $ismulti;
         $this->tid = $tid;
+    }
+
+    /**
+     * Merge the current config with the base config of the type
+     *
+     * Ignores all keys that are not supposed to be there. Recurses into sub keys
+     *
+     * @param array $current Current configuration
+     * @param array $config Base Type configuration
+     */
+    protected function mergeConfig($current, &$config) {
+        foreach($current as $key => $value) {
+            if(isset($config[$key]) || in_array($key, $this->keepconfig)) {
+                if(is_array($config[$key])) {
+                    $this->mergeConfig($value, $config[$key]);
+                } else {
+                    $config[$key] = $value;
+                }
+            }
+        }
     }
 
     /**
