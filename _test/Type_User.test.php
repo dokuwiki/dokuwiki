@@ -35,8 +35,8 @@ class Type_User_struct_test extends StructTest {
 
         $user = new User(
             array(
-                'fullname' => true,
                 'autocomplete' => array(
+                    'fullname' => true,
                     'mininput' => 2,
                     'maxresult' => 5,
                 ),
@@ -54,8 +54,8 @@ class Type_User_struct_test extends StructTest {
 
         $user = new User(
             array(
-                'fullname' => false,
                 'autocomplete' => array(
+                    'fullname' => false,
                     'mininput' => 2,
                     'maxresult' => 5,
                 ),
@@ -70,8 +70,8 @@ class Type_User_struct_test extends StructTest {
 
         $user = new User(
             array(
-                'fullname' => false,
                 'autocomplete' => array(
+                    'fullname' => false,
                     'mininput' => 2,
                     'maxresult' => 0,
                 ),

@@ -7,9 +7,9 @@ use dokuwiki\plugin\struct\meta\ValidationException;
 class User extends AbstractMultiBaseType {
 
     protected $config = array(
-        'fullname' => true,
         'existingonly' => true,
         'autocomplete' => array(
+            'fullname' => true,
             'mininput' => 2,
             'maxresult' => 5,
         ),
@@ -74,7 +74,7 @@ class User extends AbstractMultiBaseType {
 
         // find users by login, fill up with names if wanted
         $logins = (array) $auth->retrieveUsers(0, $max, array('user' => $lookup));
-        if((count($logins) < $max) && $this->config['fullname']) {
+        if((count($logins) < $max) && $this->config['autocomplete']['fullname']) {
             $logins = array_merge($logins, (array) $auth->retrieveUsers(0, $max, array('name' => $lookup)));
         }
 
