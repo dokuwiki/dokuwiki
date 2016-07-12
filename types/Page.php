@@ -11,11 +11,11 @@ namespace dokuwiki\plugin\struct\types;
 class Page extends AbstractMultiBaseType {
 
     protected $config = array(
-        'namespace' => '',
-        'postfix' => '',
         'autocomplete' => array(
             'mininput' => 2,
             'maxresult' => 5,
+            'namespace' => '',
+            'postfix' => '',
         ),
     );
 
@@ -28,11 +28,20 @@ class Page extends AbstractMultiBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $link = cleanID($this->config['namespace'] .':'. $value . $this->config['postfix']);
-        if(!$link) return true;
+        if(!$value) return true;
 
-        $R->internallink(":$link");
+        $R->internallink(":$value");
         return true;
+    }
+
+    /**
+     * Cleans the link
+     *
+     * @param string $value
+     * @return string
+     */
+    public function validate($value) {
+        return cleanID($value);
     }
 
     /**
@@ -52,9 +61,15 @@ class Page extends AbstractMultiBaseType {
         if($max <= 0) return array();
 
         // lookup with namespace and postfix applied
-        $namespace = cleanID($this->config['namespace']);
+        $namespace = $this->config['autocomplete']['namespace'];
+        if($namespace) {
+            // namespace may be relative, resolve in current context
+            $namespace .= ':foo'; // resolve expects pageID
+            resolve_pageid($INPUT->str('ns'), $namespace, $exists);
+            $namespace = getNS($namespace);
+        }
         $postfix = $this->config['postfix'];
-        if($namespace) $lookup .= ' @'.$namespace;
+        if($namespace) $lookup .= ' @' . $namespace;
 
         $data = ft_pageLookup($lookup, true, useHeading('navigation'));
         if(!count($data)) return array();
@@ -62,34 +77,21 @@ class Page extends AbstractMultiBaseType {
         // this basically duplicates what we do in ajax_qsearch()
         $result = array();
         $counter = 0;
-        foreach($data as $id => $title){
-            if (useHeading('navigation')) {
+        foreach($data as $id => $title) {
+            if(useHeading('navigation')) {
                 $name = $title;
             } else {
                 $ns = getNS($id);
-                if($ns){
-                    $name = noNS($id).' ('.$ns.')';
-                }else{
+                if($ns) {
+                    $name = noNS($id) . ' (' . $ns . ')';
+                } else {
                     $name = $id;
                 }
             }
 
-            // check suffix and remove
-            if($postfix) {
-                if(substr($id, -1 * strlen($postfix)) == $postfix) {
-                    $id = substr($id, 0, -1 * strlen($postfix));
-                } else {
-                    continue; // page does not end in postfix, don't suggest it
-                }
-            }
-
-            // remove namespace again
-            if($namespace) {
-                if(substr($id, 0, strlen($namespace) + 1) == "$namespace:") {
-                    $id = substr($id, strlen($namespace) + 1);
-                } else {
-                    continue; // this should usually not happen
-                }
+            // check suffix
+            if($postfix && !substr($id, -1 * strlen($postfix)) == $postfix) {
+                continue; // page does not end in postfix, don't suggest it
             }
 
             $result[] = array(
@@ -97,11 +99,10 @@ class Page extends AbstractMultiBaseType {
                 'value' => $id
             );
 
-            $counter ++;
+            $counter++;
             if($counter > $max) break;
         }
 
         return $result;
     }
-
 }

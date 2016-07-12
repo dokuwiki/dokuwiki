@@ -29,12 +29,12 @@ class Type_Page_struct_test extends StructTest {
 
         $page = new Page(
             array(
-                'namespace' => '',
-                'postfix' => '',
                 'fullname' => true,
                 'autocomplete' => array(
                     'mininput' => 2,
                     'maxresult' => 5,
+                    'namespace' => '',
+                    'postfix' => '',
                 ),
             )
         );
@@ -64,18 +64,18 @@ class Type_Page_struct_test extends StructTest {
 
         $page = new Page(
             array(
-                'namespace' => 'wiki',
-                'postfix' => '',
                 'fullname' => true,
                 'autocomplete' => array(
                     'mininput' => 2,
                     'maxresult' => 5,
+                    'namespace' => 'wiki',
+                    'postfix' => '',
                 ),
             )
         );
 
         $INPUT->set('search', 'ynt');
-        $this->assertEquals(array(array('label' => 'syntax (wiki)', 'value' => 'syntax')), $page->handleAjax());
+        $this->assertEquals(array(array('label' => 'syntax (wiki)', 'value' => 'wiki:syntax')), $page->handleAjax());
     }
 
     public function test_ajax_postfix() {
@@ -83,18 +83,18 @@ class Type_Page_struct_test extends StructTest {
 
         $page = new Page(
             array(
-                'namespace' => '',
-                'postfix' => 'iki',
                 'fullname' => true,
                 'autocomplete' => array(
                     'mininput' => 2,
                     'maxresult' => 5,
+                    'namespace' => '',
+                    'postfix' => 'iki',
                 ),
             )
         );
 
         $INPUT->set('search', 'oku');
-        $this->assertEquals(array(array('label' => 'dokuwiki (wiki)', 'value' => 'wiki:dokuw')), $page->handleAjax());
+        $this->assertEquals(array(array('label' => 'dokuwiki (wiki)', 'value' => 'wiki:dokuwiki')), $page->handleAjax());
     }
 
 }

@@ -1,5 +1,6 @@
 jQuery(function () {
     'use strict';
+    /* globals JSINFO */
 
     /** counter for copied multi templates */
     var copycount = 0;
@@ -16,6 +17,8 @@ jQuery(function () {
 
         data['call'] = 'plugin_struct';
         data['column'] = column;
+        data['id'] = JSINFO.id;
+        data['ns'] = JSINFO.namespace;
 
         jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
             .fail(function (result) {
@@ -33,7 +36,7 @@ jQuery(function () {
 
     /**
      * @param {string} val
-     * @return {array}
+     * @return {Array}
      */
     function split(val) {
         return val.split(/,\s*/);
