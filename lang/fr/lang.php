@@ -26,7 +26,7 @@ $lang['btn_import'] = 'Importer';
 $lang['import_warning'] = 'Attention : tous les champs précédement remplis seront remplacés !';
 
 $lang['del_confirm'] = 'Entrez le nom du schéma pour confirmer sa suppression';
-$lang['del_fail'] = 'Le nom que vous avez entré ne correspond pas au schéma actuel. Il n\'a pas été supprimé.';
+$lang['del_fail'] = 'Le nom que vous avez entré ne correspond pas à celui du schéma actuel. Il n\'a pas été supprimé.';
 $lang['del_ok'] = 'Le schéma a été supprimé.';
 $lang['btn_delete'] = 'Supprimer';
 
@@ -36,7 +36,7 @@ $lang['tab_delete'] = 'Suppression';
 
 $lang['editor_sort'] = 'Ordre de tri';
 $lang['editor_label'] = 'Nom du champ';
-$lang['editor_multi'] = 'Valeurs multiples ?';
+$lang['editor_multi'] = 'Valeurs multiples';
 $lang['editor_conf'] = 'Configuration';
 $lang['editor_type'] = 'Type';
 $lang['editor_enabled'] = 'Activer';
@@ -58,7 +58,7 @@ $lang['Validation Exception Integer needed'] = 'seuls les nombres entiers sont a
 $lang['Validation Exception Integer min'] = 'doit être supérieur ou égal à %d';
 $lang['Validation Exception Integer max'] = 'doit être inférieur ou égal à %d';
 $lang['Validation Exception User not found'] = 'doit être un utilisateur existant. L\'utilisateur \'%s\' n\'a pas été trouvé.';
-$lang['Validation Exception Media mime type'] = 'MIME type %s has to match the allowed set of %s';
+$lang['Validation Exception Media mime type'] = 'Les fichiers de type %s ne sont pas autorisés. Fichiers autorisés : %s';
 $lang['Validation Exception Url invalid'] = '%s n\'est pas une URL valide';
 $lang['Validation Exception Mail invalid'] = '%s n\'est pas une adresse email valide';
 $lang['Validation Exception invalid date format'] = 'doit être au format AAAA-MM-JJ';
