@@ -29,7 +29,6 @@ class Type_Page_struct_test extends StructTest {
 
         $page = new Page(
             array(
-                'fullname' => true,
                 'autocomplete' => array(
                     'mininput' => 2,
                     'maxresult' => 5,
@@ -64,7 +63,6 @@ class Type_Page_struct_test extends StructTest {
 
         $page = new Page(
             array(
-                'fullname' => true,
                 'autocomplete' => array(
                     'mininput' => 2,
                     'maxresult' => 5,
@@ -83,7 +81,6 @@ class Type_Page_struct_test extends StructTest {
 
         $page = new Page(
             array(
-                'fullname' => true,
                 'autocomplete' => array(
                     'mininput' => 2,
                     'maxresult' => 5,
