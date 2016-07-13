@@ -194,4 +194,13 @@ jQuery(function () {
         });
     });
 
+    jQuery('a.deleteSchema').click(function (event) {
+        var schema = jQuery(this).closest('tr').find('td:nth-child(2)').text();
+        var page = jQuery(this).closest('tr').find('td:nth-child(1)').text();
+        if(!window.confirm('Do you really want to delete the assignment of schema "' + schema + '" to page/namespace "' + page + '"?')) {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+    })
+
 });
