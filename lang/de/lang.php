@@ -17,3 +17,5 @@ $lang['pagelabel']             = 'Seite';
 $lang['summary']               = 'Struct-Daten geändert';
 $lang['export']                = 'Schema als JSON exportieren';
 $lang['btn_export']            = 'Exportieren';
+
+$lang['js']['confirmAssignmentsDelete'] = 'Wollen Sie wirklich die Zuweisung von Schma "{0}" zu Seite/Namensraum "{1}" löschen?';

@@ -50,6 +50,27 @@ jQuery(function () {
         return split(term).pop();
     }
 
+
+    /**
+     * Replace numbered placeholders in a string with the given arguments
+     *
+     * Example formatString('{0} is dead, but {1} is alive! {0} {2}', 'ASP', 'ASP.NET');
+     *
+     * adapted from http://stackoverflow.com/a/4673436/3293343
+     * @param format
+     * @returns {*}
+     */
+    function formatString(format) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return format.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+            ;
+        });
+    }
+
+
     /**
      * hints
      */
@@ -197,10 +218,10 @@ jQuery(function () {
     jQuery('a.deleteSchema').click(function (event) {
         var schema = jQuery(this).closest('tr').find('td:nth-child(2)').text();
         var page = jQuery(this).closest('tr').find('td:nth-child(1)').text();
-        if(!window.confirm('Do you really want to delete the assignment of schema "' + schema + '" to page/namespace "' + page + '"?')) {
+        if(!window.confirm(formatString(LANG.plugins.struct['confirmAssignmentsDelete'], schema, page))) {
             event.preventDefault();
             event.stopPropagation();
-        };
+        }
     })
 
 });
