@@ -82,7 +82,7 @@ class QueryBuilder {
 
         $pos = array_search($leftalias, array_keys($this->from));
         $statement = "LEFT OUTER JOIN $righttable AS $rightalias ON $onclause";
-        array_splice($this->from, $pos, 0, array($rightalias => $statement));  // FIXME needs to be tested if it works and is placed at correct position
+        $this->from = $this->array_insert($this->from, array($rightalias => $statement), $pos+1);
     }
 
     /**
@@ -154,6 +154,22 @@ class QueryBuilder {
         }
 
         return array($sql, $vals);
+    }
+
+    /**
+     * Insert an array into another array at a given position in an associative array
+     *
+     * @param array $array The initial array
+     * @param array $pairs The array to insert
+     * @param string $key_pos The position at which to insert
+     * @link https://gist.github.com/scribu/588429 simplified
+     * @return array
+     */
+    protected function array_insert($array, $pairs, $key_pos) {
+        $result = array_slice($array, 0, $key_pos);
+        $result = array_merge($result, $pairs);
+        $result = array_merge($result, array_slice($array, $key_pos));
+        return $result;
     }
 }
 
