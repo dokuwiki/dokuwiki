@@ -97,7 +97,9 @@ class QueryBuilder {
     /**
      * Adds a value to the statement
      *
-     * This function returns the name of the placeholder you have to use in your statement
+     * This function returns the name of the placeholder you have to use in your statement, so whenever
+     * you need to use a user value in a statement, call this first, then add the statement through the
+     * other functions using the returned placeholder.
      *
      * @param mixed $value
      * @return string

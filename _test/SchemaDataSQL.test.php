@@ -82,18 +82,6 @@ class schemaDataSQL_struct_test extends StructTest {
     }
 
     /**
-     * Removes Whitespace
-     *
-     * Makes comparing sql statements a bit simpler as it ignores formatting
-     *
-     * @param $string
-     * @return string
-     */
-    protected function cleanWS($string) {
-        return preg_replace('/\s+/s', '', $string);
-    }
-
-    /**
      * @dataProvider buildGetDataSQL_testdata
      *
      * @covers       dokuwiki\plugin\struct\meta\SchemaData::buildGetDataSQL
