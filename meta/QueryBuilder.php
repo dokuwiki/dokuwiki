@@ -14,12 +14,14 @@ class QueryBuilder {
     protected $select = array();
     /** @var array (alias -> statement) */
     protected $from = array();
+    /** @var array (alias -> "table"|"join") keeps how tables were added, as table or join*/
+    protected $type = array();
     /** @var QueryBuilderWhere */
     protected $where;
     /** @var  string[] */
-    protected $orderby;
+    protected $orderby = array();
     /** @var  string[] */
-    protected $groupby;
+    protected $groupby = array();
 
     /**
      * QueryBuilder constructor.
@@ -69,6 +71,7 @@ class QueryBuilder {
         if($alias === '') $alias = $table;
         if(isset($this->from[$alias])) throw new StructException('Table Alias exists');
         $this->from[$alias] = "$table AS $alias";
+        $this->type[$alias] = 'table';
     }
 
     /**
@@ -87,6 +90,7 @@ class QueryBuilder {
         $pos = array_search($leftalias, array_keys($this->from));
         $statement = "LEFT OUTER JOIN $righttable AS $rightalias ON $onclause";
         $this->from = $this->array_insert($this->from, array($rightalias => $statement), $pos + 1);
+        $this->type[$rightalias] = 'join';
     }
 
     /**
@@ -94,7 +98,7 @@ class QueryBuilder {
      *
      * @return QueryBuilderWhere
      */
-    public function getFilters() {
+    public function filters() {
         return $this->where;
     }
 
@@ -110,10 +114,23 @@ class QueryBuilder {
     /**
      * Add an GROUP BY clause
      *
-     * @param string $group a single grouping clause
+     * @param string $tablealias
+     * @param string $column
      */
-    public function addGroupBy($group) {
-        $this->groupby[] = $group;
+    public function addGroupByColumn($tablealias, $column) {
+        if(!isset($this->from[$tablealias])) throw new StructException('Table Alias does not exist');
+        $this->groupby[] = "$tablealias.$column";
+    }
+
+    /**
+     * Add an GROUP BY clause
+     *
+     * Like @see addGroupByColumn but accepts an arbitrary statement
+     *
+     * @param string $statement a single grouping clause
+     */
+    public function addGroupByStatement($statement) {
+        $this->groupby[] = $statement;
     }
 
     /**
@@ -152,19 +169,31 @@ class QueryBuilder {
      * @return array ($sql, $vals)
      */
     public function getSQL() {
+        // FROM needs commas only for tables, not joins
+        $from = '';
+        foreach($this->from as $alias => $statement) {
+            if($this->type[$alias] == 'table' && $from) {
+                $from .= ",\n";
+            } else {
+                $from .= "\n";
+            }
+
+            $from .= $statement;
+        }
+
         $sql =
             ' SELECT ' . join(",\n", $this->select) . "\n" .
-            '   FROM ' . join(",\n", $this->from) . "\n" .
+            '   FROM ' . $from . "\n" .
             '  WHERE ' . $this->where->toSQL() . "\n";
-
-        if($this->orderby) {
-            $sql .=
-                'ORDER BY' . join(",\n", $this->orderby) . "\n";
-        }
 
         if($this->groupby) {
             $sql .=
-                'GROUP BY' . join(",\n", $this->groupby) . "\n";
+                'GROUP BY ' . join(",\n", $this->groupby) . "\n";
+        }
+
+        if($this->orderby) {
+            $sql .=
+                'ORDER BY ' . join(",\n", $this->orderby) . "\n";
         }
 
         return $this->fixPlaceholders($sql);
