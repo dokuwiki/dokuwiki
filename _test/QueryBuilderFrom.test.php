@@ -19,13 +19,23 @@ class QueryBuilderFrom_struct_test extends StructTest {
         $qb->addLeftJoin('T2', 'fourth', 'T4' , 'T2.foo=T4.foo');
 
         $expectedSQL = '
-            SELECT FROM first AS T1, second AS T2, LEFT OUTER JOIN fourth AS T4
+            SELECT FROM first AS T1, second AS T2 LEFT OUTER JOIN fourth AS T4
             ON T2.foo = T4.foo, third AS T3 WHERE
 ';
 
         list($actual_sql, $actual_opts) = $qb->getSQL();
         $this->assertEquals($this->cleanWS($expectedSQL), $this->cleanWS($actual_sql));
         $this->assertEquals(array(), $actual_opts);
+    }
+
+    /**
+     * @expectedException \dokuwiki\plugin\struct\meta\StructException
+     */
+    public function test_table_alias_exception(){
+        $qb = new QueryBuilder();
+
+        $qb->addTable('first', 'T1');
+        $qb->addTable('second', 'T1');
     }
 
 }
