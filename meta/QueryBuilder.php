@@ -16,6 +16,10 @@ class QueryBuilder {
     protected $from = array();
     /** @var QueryBuilderWhere */
     protected $where;
+    /** @var  string[] */
+    protected $orderby;
+    /** @var  string[] */
+    protected $groupby;
 
     /**
      * QueryBuilder constructor.
@@ -82,7 +86,7 @@ class QueryBuilder {
 
         $pos = array_search($leftalias, array_keys($this->from));
         $statement = "LEFT OUTER JOIN $righttable AS $rightalias ON $onclause";
-        $this->from = $this->array_insert($this->from, array($rightalias => $statement), $pos+1);
+        $this->from = $this->array_insert($this->from, array($rightalias => $statement), $pos + 1);
     }
 
     /**
@@ -92,6 +96,24 @@ class QueryBuilder {
      */
     public function getFilters() {
         return $this->where;
+    }
+
+    /**
+     * Add an ORDER BY clause
+     *
+     * @param string $sort a single sorting condition
+     */
+    public function addOrderBy($sort) {
+        $this->orderby[] = $sort;
+    }
+
+    /**
+     * Add an GROUP BY clause
+     *
+     * @param string $group a single grouping clause
+     */
+    public function addGroupBy($group) {
+        $this->groupby[] = $group;
     }
 
     /**
@@ -127,13 +149,23 @@ class QueryBuilder {
     /**
      * Returns the complete SQL statement and the values to apply
      *
-     * @return array
+     * @return array ($sql, $vals)
      */
     public function getSQL() {
         $sql =
-            'SELECT ' . join(",\n", $this->select) . "\n" .
-            '  FROM ' . join(",\n", $this->from) . "\n" .
-            ' WHERE ' . $this->where->toSQL() . "\n";
+            ' SELECT ' . join(",\n", $this->select) . "\n" .
+            '   FROM ' . join(",\n", $this->from) . "\n" .
+            '  WHERE ' . $this->where->toSQL() . "\n";
+
+        if($this->orderby) {
+            $sql .=
+                'ORDER BY' . join(",\n", $this->orderby) . "\n";
+        }
+
+        if($this->groupby) {
+            $sql .=
+                'GROUP BY' . join(",\n", $this->groupby) . "\n";
+        }
 
         return $this->fixPlaceholders($sql);
     }
