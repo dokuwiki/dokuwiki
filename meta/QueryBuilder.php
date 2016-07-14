@@ -14,7 +14,7 @@ class QueryBuilder {
     protected $select = array();
     /** @var array (alias -> statement) */
     protected $from = array();
-    /** @var array (alias -> "table"|"join") keeps how tables were added, as table or join*/
+    /** @var array (alias -> "table"|"join") keeps how tables were added, as table or join */
     protected $type = array();
     /** @var QueryBuilderWhere */
     protected $where;
@@ -41,7 +41,9 @@ class QueryBuilder {
      */
     public function addSelectColumn($tablealias, $column, $alias = '') {
         if($alias === '') $alias = $column;
-        if(!isset($this->from[$tablealias])) throw new StructException('Table Alias does not exist');
+        if(!isset($this->from[$tablealias])) {
+            throw new StructException('Table Alias does not exist');
+        }
         $this->select[$alias] = "$tablealias.$column AS $alias";
     }
 
@@ -69,7 +71,9 @@ class QueryBuilder {
      */
     public function addTable($table, $alias = '') {
         if($alias === '') $alias = $table;
-        if(isset($this->from[$alias])) throw new StructException('Table Alias exists');
+        if(isset($this->from[$alias])) {
+            throw new StructException('Table Alias exists');
+        }
         $this->from[$alias] = "$table AS $alias";
         $this->type[$alias] = 'table';
     }
@@ -84,8 +88,12 @@ class QueryBuilder {
      */
     public function addLeftJoin($leftalias, $righttable, $rightalias, $onclause) {
         if($rightalias === '') $rightalias = $righttable;
-        if(!isset($this->from[$leftalias])) throw new StructException('Table Alias does not exist');
-        if(isset($this->from[$rightalias])) throw new StructException('Table Alias already exists');
+        if(!isset($this->from[$leftalias])) {
+            throw new StructException('Table Alias does not exist');
+        }
+        if(isset($this->from[$rightalias])) {
+            throw new StructException('Table Alias already exists');
+        }
 
         $pos = array_search($leftalias, array_keys($this->from));
         $statement = "LEFT OUTER JOIN $righttable AS $rightalias ON $onclause";
@@ -118,7 +126,9 @@ class QueryBuilder {
      * @param string $column
      */
     public function addGroupByColumn($tablealias, $column) {
-        if(!isset($this->from[$tablealias])) throw new StructException('Table Alias does not exist');
+        if(!isset($this->from[$tablealias])) {
+            throw new StructException('Table Alias does not exist');
+        }
         $this->groupby[] = "$tablealias.$column";
     }
 
@@ -213,7 +223,9 @@ class QueryBuilder {
         while(preg_match('/(:!!val\d+!!:)/', $sql, $m)) {
             $pl = $m[1];
 
-            if(!isset($this->values[$pl])) throw new StructException('Placeholder not found');
+            if(!isset($this->values[$pl])) {
+                throw new StructException('Placeholder not found');
+            }
 
             $sql = preg_replace("/$pl/", '?', $sql, 1);
             $vals[] = $this->values[$pl];
