@@ -151,7 +151,10 @@ class QueryBuilder {
 
         while(preg_match('/(:!!val\d+!!:)/', $sql, $m)) {
             $pl = $m[1];
-            $sql = preg_replace("/$pl/", '?', 1);
+
+            if(!isset($this->values[$pl])) throw new StructException('Placeholder not found');
+
+            $sql = preg_replace("/$pl/", '?', $sql, 1);
             $vals[] = $this->values[$pl];
         }
 
