@@ -35,7 +35,7 @@ class QueryBuilderWhere {
      * @return $this
      */
     public function whereAnd($statement) {
-        return $this->add('AND', $statement);
+        return $this->where('AND', $statement);
     }
 
     /**
@@ -45,7 +45,7 @@ class QueryBuilderWhere {
      * @return $this
      */
     public function whereOr($statement) {
-        return $this->add('OR', $statement);
+        return $this->where('OR', $statement);
     }
 
     /**
@@ -54,7 +54,7 @@ class QueryBuilderWhere {
      * @return QueryBuilderWhere
      */
     public function whereSubAnd() {
-        return $this->add('AND', null);
+        return $this->where('AND', null);
     }
 
     /**
@@ -63,7 +63,7 @@ class QueryBuilderWhere {
      * @return QueryBuilderWhere
      */
     public function whereSubOr() {
-        return $this->add('OR', null);
+        return $this->where('OR', null);
     }
 
     /**
@@ -74,8 +74,13 @@ class QueryBuilderWhere {
      * @return $this|QueryBuilderWhere
      * @throws StructException when this is not a sub clause
      */
-    protected function add($type = 'AND', $statement = null) {
-        if(!is_array($this->statement)) throw new StructException('This WHERE is not a sub clause and can not have additional clauses');
+    public function where($type = 'AND', $statement = null) {
+        if(!is_array($this->statement)) {
+            throw new StructException('This WHERE is not a sub clause and can not have additional clauses');
+        }
+        if($type != 'AND' && $type != 'OR') {
+            throw new StructException('Bad logical operator');
+        }
         $where = new QueryBuilderWhere($type, $statement);
         $this->statement[] = $where;
 
