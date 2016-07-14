@@ -222,37 +222,31 @@ class Search {
     public function getSQL() {
         if(!$this->columns) throw new StructException('nocolname');
 
-        $from = ''; // FROM clauses (tables to select from)
-        $select = ''; // SELECT clauses (columns to fetch)
-        $order = ''; // SORT BY clauses
-        $grouping = array(); // GROUP BY
-        $opts = array(); // variables
-        $where = '1 = 1'; // WHERE clauses from JOINS etc.
-        $fwhere = ''; // WHERE clauses from filters
+        $QB = new QueryBuilder();
 
         // basic tables
         $first_table = '';
         foreach($this->schemas as $schema) {
+            $datatable = 'data_'.$schema->getTable();
             if($first_table) {
                 // follow up tables
-                $from .= "\nLEFT OUTER JOIN data_{$schema->getTable()} ON data_{$first_table}.pid = data_{$schema->getTable()}.pid";
+                $QB->addLeftJoin($first_table, $datatable, $datatable, "$first_table.pid = $datatable.pid");
             } else {
                 // first table
-                $select .= "data_{$schema->getTable()}.pid as PID, ";
+                $QB->addTable('schema_assignments');
+                $QB->addTable($datatable);
+                $QB->addSelectColumn($datatable, 'pid', 'PID');
+                $QB->addGroupByColumn($datatable, 'pid');
 
-                $from .= 'schema_assignments, ';
-                $from .= "data_{$schema->getTable()}";
+                $QB->filters()->whereAnd("$datatable.pid = schema_assignments.pid");
+                $QB->filters()->whereAnd("schema_assignments.tbl = '{$schema->getTable()}'");
+                $QB->filters()->whereAnd("schema_assignments.assigned = 1");
+                $QB->filters()->whereAnd("GETACCESSLEVEL($datatable.pid) > 0");
+                $QB->filters()->whereAnd("PAGEEXISTS($datatable.pid) = 1");
 
-                $where .= "\nAND data_{$schema->getTable()}.pid = schema_assignments.pid";
-                $where .= "\nAND schema_assignments.tbl = '{$schema->getTable()}'";
-                $where .= "\nAND schema_assignments.assigned = 1";
-                $where .= "\nAND GETACCESSLEVEL(data_{$schema->getTable()}.pid) > 0";
-                $where .= "\nAND PAGEEXISTS(data_{$schema->getTable()}.pid) = 1";
-                $first_table = $schema->getTable();
-
-                $grouping[] =  "data_{$schema->getTable()}.pid";
+                $first_table = $datatable;
             }
-            $where .= "\nAND data_{$schema->getTable()}.latest = 1";
+            $QB->filters()->whereAnd("$datatable.latest = 1");
         }
 
         // columns to select, handling multis
@@ -262,17 +256,24 @@ class Search {
             $CN = 'C' . $n++;
 
             if($col->isMulti()) {
-                $tn = 'M' . $col->getColref();
-                $select .= "GROUP_CONCAT($tn.value, '$sep') AS $CN, ";
-                $from .= "\nLEFT OUTER JOIN multi_{$col->getTable()} AS $tn";
-                $from .= " ON data_{$col->getTable()}.pid = $tn.pid AND data_{$col->getTable()}.rev = $tn.rev";
-                $from .= " AND $tn.colref = {$col->getColref()}\n";
+                $datatable = "data_{$col->getTable()}";
+                $multitable = "multi_{$col->getTable()}";
+                $MN = 'M' . $col->getColref();
+
+                $QB->addLeftJoin(
+                    $datatable,
+                    $multitable,
+                    $MN,
+                    "$datatable.pid = $MN.pid AND
+                     $datatable.rev = $MN.rev AND
+                     $MN.colref = {$col->getColref()}"
+                );
+                $QB->addSelectStatement("GROUP_CONCAT($MN.value, '$sep')", $CN);
             } else {
-                $select .= "{$col->getColName()} AS $CN, ";
-                $grouping[] = $CN;
+                $QB->addSelectStatement($col->getColName(), $CN);
+                $QB->addGroupByStatement($col->getColName());
             }
         }
-        $select = rtrim($select, ', ');
 
         // where clauses
         foreach($this->filter as $filter) {
@@ -280,42 +281,46 @@ class Search {
 
             /** @var $col Column */
             if($col->isMulti()) {
-                $tn = 'MN' . $col->getColref(); // FIXME this joins a second time if the column was selected before
-                $from .= "\nLEFT OUTER JOIN multi_{$col->getTable()} AS $tn";
-                $from .= " ON data_{$col->getTable()}.pid = $tn.pid AND data_{$col->getTable()}.rev = $tn.rev";
-                $from .= " AND $tn.colref = {$col->getColref()}\n";
+                $datatable = "data_{$col->getTable()}";
+                $multitable = "multi_{$col->getTable()}";
+                $MN = 'MN' . $col->getColref(); // FIXME this joins a second time if the column was selected before
 
-                $column = "$tn.value";
+                $QB->addLeftJoin(
+                    $datatable,
+                    $multitable,
+                    $MN,
+                    "$datatable.pid = $MN.pid AND
+                     $datatable.rev = $MN.rev AND
+                     $MN.colref = {$col->getColref()}"
+                );
+                $column = "$MN.value";
             } else {
                 $column = $col->getColName();
             }
 
             list($wsql, $wopt) = $col->getType()->compare($column, $comp, $value);
-            $opts = array_merge($opts, $wopt);
 
-            if(!$fwhere) $type = ''; // no type for first filter
-            $fwhere .= "\n$type $wsql";
+            // FIXME temporary until compare() uses the query builder directly
+            foreach($wopt as $opt) {
+                $key = $QB->addValue($opt);
+                $wsql = preg_replace('/\?/', $key, $wsql, 1);
+            }
+
+            if($type == 'OR') {
+                $QB->filters()->whereOr($wsql);
+            } else {
+                $QB->filters()->whereAnd($wsql);
+            }
         }
 
         // sorting - we always sort by the single val column
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $order .= $col->getColName(false) . ' ';
-            $order .= ($asc) ? 'ASC' : 'DESC';
-            $order .= ', ';
-        }
-        $order = rtrim($order, ', ');
-
-        $fwhere = trim($fwhere);
-        if($fwhere) {
-            $fwhere = "AND ($fwhere\n)";
+            $QB->addOrderBy($col->getColName(false) . ' '.(($asc) ? 'ASC' : 'DESC'));
         }
 
-        $sql = "SELECT $select\n  FROM $from\nWHERE $where\n$fwhere\nGROUP BY " . join(', ', $grouping);
-        if($order) $sql .= "\nORDER BY $order";
-
-        return array($sql, $opts);
+        return $QB->getSQL();
     }
 
     /**
