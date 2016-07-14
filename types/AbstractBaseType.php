@@ -2,6 +2,7 @@
 namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\Column;
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
@@ -361,7 +362,7 @@ abstract class AbstractBaseType {
      *
      * This default implementation is probably good enough for most basic types
      *
-     * @param string $column The column name to us in the SQL
+     * @param string $column The column name to use in the SQL
      * @param string $comp The comparator @see Search::$COMPARATORS
      * @param string $value
      * @return array Tuple with the SQL and parameter array
@@ -382,6 +383,33 @@ abstract class AbstractBaseType {
         }
 
         return array($sql, $opt);
+    }
+
+    /**
+     * This function is used to modify an aggregation query to add a filter
+     * for the given column matching the given value. A type should add at
+     * least a filter here but could do additional things like joining more
+     * tables needed to handle more complex filters
+     *
+     * @param QueryBuilder $QB the query so far
+     * @param string $column The column name to use in the SQL
+     * @param string $comp The comparator @see Search::$COMPARATORS
+     * @param string $value this is the user supplied value to compare against
+     * @param string $type the logical operator this filter should use (AND|OR)
+     */
+    public function filter(QueryBuilder $QB, $column, $comp, $value, $type) {
+        $pl = $QB->addValue($value);
+
+        switch($comp) {
+            case '~':
+                $QB->filters()->where($type, "$column LIKE $pl");
+                break;
+            case '!~':
+                $QB->filters()->where($type, "$column NOT LIKE $pl");
+                break;
+            default:
+                $QB->filters()->where($type, "$column $comp $pl");
+        }
     }
 
     /**

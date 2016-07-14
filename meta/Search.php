@@ -306,11 +306,7 @@ class Search {
                 $wsql = preg_replace('/\?/', $key, $wsql, 1);
             }
 
-            if($type == 'OR') {
-                $QB->filters()->whereOr($wsql);
-            } else {
-                $QB->filters()->whereAnd($wsql);
-            }
+            $QB->filters()->where($type, $wsql);
         }
 
         // sorting - we always sort by the single val column
