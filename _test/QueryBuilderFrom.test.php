@@ -38,4 +38,24 @@ class QueryBuilderFrom_struct_test extends StructTest {
         $qb->addTable('second', 'T1');
     }
 
+    /**
+     * @expectedException \dokuwiki\plugin\struct\meta\StructException
+     */
+    public function test_leftjoin_missing_alias_exception(){
+        $qb = new QueryBuilder();
+
+        $qb->addTable('first', 'T1');
+        $qb->addLeftJoin('T2', 'third', 'T3', 'T2.bar = T3.bar');
+    }
+
+    /**
+     * @expectedException \dokuwiki\plugin\struct\meta\StructException
+     */
+    public function test_leftjoin_existing_alias_exception(){
+        $qb = new QueryBuilder();
+
+        $qb->addTable('first', 'T1');
+        $qb->addTable('second', 'T2');
+        $qb->addLeftJoin('T2', 'third', 'T1', 'T2.bar = T1.bar');
+    }
 }
