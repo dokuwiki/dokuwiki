@@ -116,7 +116,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
             echo '<tr>';
             echo '<td>' . hsc($assignee) . '</td>';
             echo '<td>' . hsc($schema) . '</td>';
-            echo '<td><a href="' . $link . '">'.$this->getLang('assign_del').'</a></td>';
+            echo '<td><a class="deleteSchema" href="' . $link . '">'.$this->getLang('assign_del').'</a></td>';
             echo '</tr>';
         }
 
