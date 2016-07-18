@@ -402,14 +402,14 @@ abstract class AbstractBaseType {
 
         switch($comp) {
             case '~':
-                $QB->filters()->where($type, "$column LIKE $pl");
+                $comp = 'LIKE';
                 break;
             case '!~':
-                $QB->filters()->where($type, "$column NOT LIKE $pl");
+                $comp = 'NOT LIKE';
                 break;
-            default:
-                $QB->filters()->where($type, "$column $comp $pl");
         }
+
+        $QB->filters()->where($type, "$column $comp $pl");
     }
 
     /**
