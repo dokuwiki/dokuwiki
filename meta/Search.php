@@ -111,9 +111,9 @@ class Search {
      * @param string $colname may contain an alias
      * @param string $value
      * @param string $comp @see self::COMPARATORS
-     * @param string $type either 'OR' or 'AND'
+     * @param string $op either 'OR' or 'AND'
      */
-    public function addFilter($colname, $value, $comp, $type = 'OR') {
+    public function addFilter($colname, $value, $comp, $op = 'OR') {
         /* Convert certain filters into others
          * this reduces the number of supported filters to implement in types */
         if ($comp == '*~') {
@@ -124,12 +124,12 @@ class Search {
         }
 
         if(!in_array($comp, self::$COMPARATORS)) throw new StructException("Bad comperator. Use " . join(',', self::$COMPARATORS));
-        if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
+        if($op != 'OR' && $op != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
         $value = str_replace('*','%',$value);
-        $this->filter[] = array($col, $value, $comp, $type);
+        $this->filter[] = array($col, $value, $comp, $op);
     }
 
     /**
@@ -277,7 +277,7 @@ class Search {
 
         // where clauses
         foreach($this->filter as $filter) {
-            list($col, $value, $comp, $type) = $filter;
+            list($col, $value, $comp, $op) = $filter;
 
             /** @var $col Column */
             if($col->isMulti()) {
@@ -306,7 +306,7 @@ class Search {
                 $wsql = preg_replace('/\?/', $key, $wsql, 1);
             }
 
-            $QB->filters()->where($type, $wsql);
+            $QB->filters()->where($op, $wsql);
         }
 
         // sorting - we always sort by the single val column
