@@ -273,8 +273,8 @@ class Search {
                 $sel = $QB->getSelectStatement($CN);
                 $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
-                $QB->addGroupByStatement($col->getFullColName());
                 $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
+                $QB->addGroupByStatement($CN);
             }
         }
 
