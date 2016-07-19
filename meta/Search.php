@@ -268,10 +268,13 @@ class Search {
                      $datatable.rev = $MN.rev AND
                      $MN.colref = {$col->getColref()}"
                 );
-                $QB->addSelectStatement("GROUP_CONCAT($MN.value, '$sep')", $CN);
+
+                $col->getType()->select($QB, $MN, 'value' , $CN);
+                $sel = $QB->getSelectStatement($CN);
+                $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
-                $QB->addSelectStatement($col->getColName(), $CN);
-                $QB->addGroupByStatement($col->getColName());
+                $QB->addGroupByStatement($col->getFullColName());
+                $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
             }
         }
 
@@ -295,7 +298,7 @@ class Search {
                 );
                 $column = "$MN.value";
             } else {
-                $column = $col->getColName();
+                $column = $col->getFullColName();
             }
 
             list($wsql, $wopt) = $col->getType()->compare($column, $comp, $value);
@@ -313,7 +316,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $QB->addOrderBy($col->getColName(false) . ' '.(($asc) ? 'ASC' : 'DESC'));
+            $QB->addOrderBy($col->getFullColName(false) . ' '.(($asc) ? 'ASC' : 'DESC'));
         }
 
         return $QB->getSQL();

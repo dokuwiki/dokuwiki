@@ -413,6 +413,30 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * Add the proper selection for this type to the current Query
+     *
+     * The default implementation here should be good for nearly all types, it simply
+     * passes the given parameters to the query builder. But type may do more fancy
+     * stuff here, eg. join more tables or select multiple values and combine them to
+     * JSON.
+     *
+     * The passed $tablealias.$columnname might be a data_* table (referencing a single
+     * row) or a multi_* table (referencing multiple rows). In the latter case the
+     * multi table has already been joined with the proper conditions.
+     *
+     * You may assume a column alias named 'PID' to be available, should you need the
+     * current page context for a join or sub select.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias The table the currently saved value(s) are stored in
+     * @param string $columname The column name on above table
+     * @param string $alias The added selection *has* to use this column alias
+     */
+    public function select(QueryBuilder $QB, $tablealias, $columname, $alias) {
+        $QB->addSelectColumn($tablealias, $columname, $alias);
+    }
+
+    /**
      * Validate and optionally clean a single value
      *
      * This function needs to throw a validation exception when validation fails.
