@@ -102,15 +102,24 @@ class Column {
     }
 
     /**
-     * Returns the full column name. When table is set, prefixed by the table name
+     * Returns the column name (without a table)
      *
      * @param bool $forceSingleColumn Throw an exception if $this is a multi column
      * @return string
      */
     public function getColName($forceSingleColumn = true) {
         if($forceSingleColumn && $this->isMulti()) throw new StructException('Calling getColName on a multi value column makes no sense.');
+        return 'col'.$this->colref;
+    }
 
-        $col = 'col'.$this->colref;
+    /**
+     * Returns the full column name. When table is set, prefixed by the table name
+     *
+     * @param bool $forceSingleColumn Throw an exception if $this is a multi column
+     * @return string
+     */
+    public function getFullColName($forceSingleColumn = true) {
+        $col = $this->getColName($forceSingleColumn);
         if($this->table) $col = 'data_'.$this->table.'.'.$col;
         return $col;
     }

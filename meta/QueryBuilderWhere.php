@@ -69,19 +69,19 @@ class QueryBuilderWhere {
     /**
      * Adds another statement to this sub clause
      *
-     * @param string $type either AND or OR
+     * @param string $op either AND or OR
      * @param null|string $statement null creates a new sub clause
      * @return $this|QueryBuilderWhere
      * @throws StructException when this is not a sub clause
      */
-    public function where($type = 'AND', $statement = null) {
+    public function where($op = 'AND', $statement = null) {
         if(!is_array($this->statement)) {
             throw new StructException('This WHERE is not a sub clause and can not have additional clauses');
         }
-        if($type != 'AND' && $type != 'OR') {
+        if($op != 'AND' && $op != 'OR') {
             throw new StructException('Bad logical operator');
         }
-        $where = new QueryBuilderWhere($type, $statement);
+        $where = new QueryBuilderWhere($op, $statement);
         $this->statement[] = $where;
 
         if($statement) {

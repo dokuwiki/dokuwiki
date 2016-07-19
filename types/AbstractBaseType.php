@@ -392,24 +392,49 @@ abstract class AbstractBaseType {
      * tables needed to handle more complex filters
      *
      * @param QueryBuilder $QB the query so far
-     * @param string $column The column name to use in the SQL
+     * @param string $tablealias The table the currently saved value(s) are stored in
+     * @param string $colname The column name on above table to use in the SQL
      * @param string $comp The comparator @see Search::$COMPARATORS
      * @param string $value this is the user supplied value to compare against
-     * @param string $type the logical operator this filter should use (AND|OR)
+     * @param string $op the logical operator this filter should use (AND|OR)
      */
-    public function filter(QueryBuilder $QB, $column, $comp, $value, $type) {
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
         $pl = $QB->addValue($value);
 
         switch($comp) {
             case '~':
-                $QB->filters()->where($type, "$column LIKE $pl");
+                $comp = 'LIKE';
                 break;
             case '!~':
-                $QB->filters()->where($type, "$column NOT LIKE $pl");
+                $comp = 'NOT LIKE';
                 break;
-            default:
-                $QB->filters()->where($type, "$column $comp $pl");
         }
+
+        $QB->filters()->where($op, "$tablealias.$colname $comp $pl");
+    }
+
+    /**
+     * Add the proper selection for this type to the current Query
+     *
+     * The default implementation here should be good for nearly all types, it simply
+     * passes the given parameters to the query builder. But type may do more fancy
+     * stuff here, eg. join more tables or select multiple values and combine them to
+     * JSON.
+     *
+     * The passed $tablealias.$columnname might be a data_* table (referencing a single
+     * row) or a multi_* table (referencing multiple rows). In the latter case the
+     * multi table has already been joined with the proper conditions.
+     *
+     * You may assume a column alias named 'PID' to be available, should you need the
+     * current page context for a join or sub select.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias The table the currently saved value(s) are stored in
+     * @param string $colname The column name on above table
+     * @param string $alias The added selection *has* to use this column alias
+     */
+    public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
+        $QB->addSelectColumn($tablealias, $colname, $alias);
     }
 
     /**

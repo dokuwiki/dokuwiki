@@ -38,7 +38,7 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         if($this->sqlite->getAdapter()->getName() != DOKU_EXT_PDO) {
             if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t load PDO sqlite.');
 
-            msg('The struct plugin requires sqlite3 you\'re still using sqlite2',-1);
+            msg('The struct plugin requires sqlite3 you\'re still using sqlite2', -1);
             $this->sqlite = null;
             return;
         }
@@ -47,9 +47,12 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         // initialize the database connection
         if(!$this->sqlite->init('struct', DOKU_PLUGIN . 'struct/db/')) {
             if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t init sqlite.');
-
             return;
         }
+
+        // register our JSON function with variable parameters
+        // todo this might be useful to be moved into the sqlite plugin
+        $this->sqlite->create_function('JSON', array($this, 'SQL_JSON'), -1);
     }
 
     /**
@@ -71,6 +74,17 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         unlink($file);
         clearstatcache(true, $file);
         $this->init();
+    }
+
+    /**
+     * Encodes all given arguments into a JSON encoded array
+     *
+     * @param string ...
+     * @return string
+     */
+    public function SQL_JSON() {
+        $args = func_get_args();
+        return json_encode($args);
     }
 }
 

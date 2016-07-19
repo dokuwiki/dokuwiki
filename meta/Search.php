@@ -111,9 +111,9 @@ class Search {
      * @param string $colname may contain an alias
      * @param string $value
      * @param string $comp @see self::COMPARATORS
-     * @param string $type either 'OR' or 'AND'
+     * @param string $op either 'OR' or 'AND'
      */
-    public function addFilter($colname, $value, $comp, $type = 'OR') {
+    public function addFilter($colname, $value, $comp, $op = 'OR') {
         /* Convert certain filters into others
          * this reduces the number of supported filters to implement in types */
         if ($comp == '*~') {
@@ -124,12 +124,12 @@ class Search {
         }
 
         if(!in_array($comp, self::$COMPARATORS)) throw new StructException("Bad comperator. Use " . join(',', self::$COMPARATORS));
-        if($type != 'OR' && $type != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
+        if($op != 'OR' && $op != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
         $value = str_replace('*','%',$value);
-        $this->filter[] = array($col, $value, $comp, $type);
+        $this->filter[] = array($col, $value, $comp, $op);
     }
 
     /**
@@ -268,21 +268,25 @@ class Search {
                      $datatable.rev = $MN.rev AND
                      $MN.colref = {$col->getColref()}"
                 );
-                $QB->addSelectStatement("GROUP_CONCAT($MN.value, '$sep')", $CN);
+
+                $col->getType()->select($QB, $MN, 'value' , $CN);
+                $sel = $QB->getSelectStatement($CN);
+                $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
-                $QB->addSelectStatement($col->getColName(), $CN);
-                $QB->addGroupByStatement($col->getColName());
+                $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
+                $QB->addGroupByStatement($CN);
             }
         }
 
         // where clauses
         foreach($this->filter as $filter) {
-            list($col, $value, $comp, $type) = $filter;
+            list($col, $value, $comp, $op) = $filter;
+
+            $datatable = "data_{$col->getTable()}";
+            $multitable = "multi_{$col->getTable()}";
 
             /** @var $col Column */
             if($col->isMulti()) {
-                $datatable = "data_{$col->getTable()}";
-                $multitable = "multi_{$col->getTable()}";
                 $MN = 'MN' . $col->getColref(); // FIXME this joins a second time if the column was selected before
 
                 $QB->addLeftJoin(
@@ -293,27 +297,20 @@ class Search {
                      $datatable.rev = $MN.rev AND
                      $MN.colref = {$col->getColref()}"
                 );
-                $column = "$MN.value";
+                $coltbl = $MN;
+                $colnam = 'value';
             } else {
-                $column = $col->getColName();
+                $coltbl = $datatable;
+                $colnam = $col->getColName();
             }
-
-            list($wsql, $wopt) = $col->getType()->compare($column, $comp, $value);
-
-            // FIXME temporary until compare() uses the query builder directly
-            foreach($wopt as $opt) {
-                $key = $QB->addValue($opt);
-                $wsql = preg_replace('/\?/', $key, $wsql, 1);
-            }
-
-            $QB->filters()->where($type, $wsql);
+            $col->getType()->filter($QB, $coltbl, $colnam, $comp, $value, $op); // type based filter
         }
 
         // sorting - we always sort by the single val column
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $QB->addOrderBy($col->getColName(false) . ' '.(($asc) ? 'ASC' : 'DESC'));
+            $QB->addOrderBy($col->getFullColName(false) . ' '.(($asc) ? 'ASC' : 'DESC'));
         }
 
         return $QB->getSQL();
