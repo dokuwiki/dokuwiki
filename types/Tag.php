@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\struct\types;
 
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\SearchConfigParameters;
 
 class Tag extends AbstractMultiBaseType {
@@ -114,6 +115,29 @@ class Tag extends AbstractMultiBaseType {
         }
 
         return array($sql, $opt);
+    }
+
+    /**
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $comp
+     * @param string $value
+     * @param string $op
+     */
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        $pl = $QB->addValue($value);
+
+        switch($comp) {
+            case '~':
+                $comp = 'LIKE';
+                break;
+            case '!~':
+                $comp = 'NOT LIKE';
+                break;
+        }
+
+        $QB->filters()->where($op, "LOWER(REPLACE($tablealias.$colname, ' ', '')) $comp LOWER(REPLACE($pl, ' ', ''))");
     }
 
 }

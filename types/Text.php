@@ -1,6 +1,8 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
 
+use dokuwiki\plugin\struct\meta\QueryBuilder;
+
 class Text extends AbstractMultiBaseType {
 
     protected $config = array(
@@ -46,6 +48,40 @@ class Text extends AbstractMultiBaseType {
         $opt[] = $value;
 
         return array($sql, $opt);
+    }
+
+    /**
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $comp
+     * @param string $value
+     * @param string $op
+     */
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        $column = "$tablealias.$colname";
+
+        if ($this->config['prefix']) {
+            $pl = $QB->addValue($this->config['prefix']);
+            $column = "$pl || $column";
+        }
+        if ($this->config['postfix']) {
+            $pl = $QB->addValue($this->config['postfix']);
+            $column = "$column || $pl";
+        }
+
+        $pl = $QB->addValue($value);
+
+        switch($comp) {
+            case '~':
+                $comp = 'LIKE';
+                break;
+            case '!~':
+                $comp = 'NOT LIKE';
+                break;
+        }
+
+        $QB->filters()->where($op, "$column $comp $pl");
     }
 
 }
