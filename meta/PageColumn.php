@@ -34,7 +34,15 @@ class PageColumn extends Column {
      * @return string
      */
     public function getColName($forceSingleColumn = true) {
-        $col = 'pid';
+        return 'pid';
+    }
+
+    /**
+     * @param bool $forceSingleColumn ignored
+     * @return string
+     */
+    public function getFullColName($forceSingleColumn = true) {
+        $col = $this->getColName($forceSingleColumn);
         if($this->table) $col = 'data_'.$this->table.'.'.$col;
         return $col;
     }
