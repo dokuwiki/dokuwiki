@@ -24,33 +24,8 @@ class Text extends AbstractMultiBaseType {
     }
 
     /**
-     * Comparisons should always be done against the full string
+     * Comparisons are done against the full string (including prefix/postfix)
      *
-     * @param string $column
-     * @param string $comp
-     * @param string $value
-     * @return array
-     */
-    public function compare($column, $comp, $value) {
-        $opt = array();
-        if ($this->config['prefix']) {
-            $column = "? || $column";
-            $opt[] = $this->config['prefix'];
-        }
-        if ($this->config['postfix']) {
-            $column = "$column || ?";
-            $opt[] = $this->config['postfix'];
-        }
-
-        // this assumes knowledge about the parent implementation which is kinda bad
-        // but avoids some code duplication
-        list($sql) = parent::compare($column, $comp, $value);
-        $opt[] = $value;
-
-        return array($sql, $opt);
-    }
-
-    /**
      * @param QueryBuilder $QB
      * @param string $tablealias
      * @param string $colname

@@ -94,30 +94,8 @@ class Tag extends AbstractMultiBaseType {
     }
 
     /**
-     * @param string $column
-     * @param string $comp
-     * @param string $value
-     * @return array
-     */
-    public function compare($column, $comp, $value) {
-        switch ($comp) {
-            case '~':
-                $sql = "LOWER(REPLACE($column, ' ', '')) LIKE LOWER(REPLACE(?, ' ', ''))";
-                $opt = array($value);
-                break;
-            case '!~':
-                $sql = "LOWER(REPLACE($column, ' ', '')) NOT LIKE LOWER(REPLACE(?, ' ', ''))";
-                $opt = array($value);
-                break;
-            default:
-                $sql = "LOWER(REPLACE($column, ' ', '')) $comp LOWER(REPLACE(?, ' ', ''))";
-                $opt = array($value);
-        }
-
-        return array($sql, $opt);
-    }
-
-    /**
+     * Normalize tags before comparing
+     *
      * @param QueryBuilder $QB
      * @param string $tablealias
      * @param string $colname

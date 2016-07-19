@@ -356,36 +356,6 @@ abstract class AbstractBaseType {
     }
 
     /**
-     * This function builds a where clause for this column, comparing
-     * the current value stored in $column with $value. Types can use it to do
-     * clever things with the comparison.
-     *
-     * This default implementation is probably good enough for most basic types
-     *
-     * @param string $column The column name to use in the SQL
-     * @param string $comp The comparator @see Search::$COMPARATORS
-     * @param string $value
-     * @return array Tuple with the SQL and parameter array
-     */
-    public function compare($column, $comp, $value) {
-        switch($comp) {
-            case '~':
-                $sql = "$column LIKE ?";
-                $opt = array($value);
-                break;
-            case '!~':
-                $sql = "$column NOT LIKE ?";
-                $opt = array($value);
-                break;
-            default:
-                $sql = "$column $comp ?";
-                $opt = array($value);
-        }
-
-        return array($sql, $opt);
-    }
-
-    /**
      * This function is used to modify an aggregation query to add a filter
      * for the given column matching the given value. A type should add at
      * least a filter here but could do additional things like joining more
