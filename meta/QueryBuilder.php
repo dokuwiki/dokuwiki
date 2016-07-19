@@ -244,7 +244,7 @@ class QueryBuilder {
         while(preg_match('/(:!!val\d+!!:)/', $sql, $m)) {
             $pl = $m[1];
 
-            if(!isset($this->values[$pl])) {
+            if(!array_key_exists($pl, $this->values)) {
                 throw new StructException('Placeholder not found');
             }
 
