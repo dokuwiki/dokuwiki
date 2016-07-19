@@ -11,7 +11,7 @@ class SchemaDataNoDB extends \dokuwiki\plugin\struct\meta\SchemaData {
         $this->ts = $ts;
     }
 
-    public function buildGetDataSQL($singles, $multis) {
-        return parent::buildGetDataSQL($singles, $multis);
+    public function buildGetDataSQL() {
+        return parent::buildGetDataSQL();
     }
 }
