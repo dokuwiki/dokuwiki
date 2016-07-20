@@ -113,6 +113,7 @@ class SearchConfig extends Search {
                 '$ID$',
                 '$NS$',
                 '$PAGE$',
+                '$TITLE$',
                 '$USER$',
                 '$TODAY$'
             ),
@@ -120,6 +121,7 @@ class SearchConfig extends Search {
                 $ID,
                 getNS($ID),
                 noNS($ID),
+                p_get_first_heading($ID) ? p_get_first_heading($ID) : $ID,
                 isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : '',
                 date('Y-m-d')
             ),

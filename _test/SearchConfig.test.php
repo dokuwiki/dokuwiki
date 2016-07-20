@@ -21,6 +21,9 @@ class SearchConfig_struct_test extends StructTest {
         $this->assertEquals('foo:bar:baz', $searchConfig->applyFilterVars('$ID$'));
         $this->assertEquals('baz', $searchConfig->applyFilterVars('$PAGE$'));
         $this->assertEquals('foo:bar', $searchConfig->applyFilterVars('$NS$'));
+        $this->assertEquals('foo:bar:baz', $searchConfig->applyFilterVars('$TITLE$'));
+        saveWikiText($ID,'=====The Title=====','');
+        $this->assertEquals('The Title', $searchConfig->applyFilterVars('$TITLE$'));
         $this->assertEquals(date('Y-m-d'), $searchConfig->applyFilterVars('$TODAY$'));
         $this->assertEquals('', $searchConfig->applyFilterVars('$USER$'));
         $_SERVER['REMOTE_USER'] = 'user';
