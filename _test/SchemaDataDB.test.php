@@ -71,6 +71,7 @@ class schemaDataDB_struct_test extends StructTest {
             array(
                 'col1' => 'value1a',
                 'col2' => 'value2.1a' . Search::CONCAT_SEPARATOR . 'value2.2a',
+                'PID' => 'testpage',
             ),
         );
 
@@ -88,6 +89,7 @@ class schemaDataDB_struct_test extends StructTest {
             array(
                 'col1' => 'value1',
                 'col2' => 'value2.1' . Search::CONCAT_SEPARATOR . 'value2.2',
+                'PID' => 'testpage',
             ),
         );
 
@@ -227,7 +229,8 @@ class schemaDataDB_struct_test extends StructTest {
         $expected_data = array(
             array(
                 'col1' => '',
-                'col2' => null
+                'col2' => null,
+                'PID' => 'testpage',
             )
         );
 

@@ -228,8 +228,7 @@ class SchemaData extends Schema {
 
         $QB = new QueryBuilder();
         $QB->addTable($stable, 'DATA');
-        #$QB->addSelectColumn('DATA', 'pid', 'PID'); #FIXME we need this to keep the contract of type::select()
-        #$QB->addGroupByStatement('PID');
+        $QB->addSelectColumn('DATA', 'pid', 'PID');
         $QB->addGroupByStatement('DATA.pid');
 
         foreach($this->columns as $col) {
