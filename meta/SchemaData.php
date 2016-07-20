@@ -166,18 +166,7 @@ class SchemaData extends Schema {
      * Call @see SchemaData::getData instead.
      */
     protected function getDataFromDB() {
-        // prepare column names
-        $singles = array();
-        $multis = array();
-        foreach($this->columns as $col) {
-            if(!$col->isEnabled()) continue;
-            if($col->getType()->isMulti()) {
-                $multis[] = $col->getColref();
-            } else {
-                $singles[] = $col->getColref();
-            }
-        }
-        list($sql, $opt) = $this->buildGetDataSQL($singles, $multis);
+        list($sql, $opt) = $this->buildGetDataSQL();
 
         $res = $this->sqlite->query($sql, $opt);
         $data = $this->sqlite->res2arr($res);
@@ -230,33 +219,47 @@ class SchemaData extends Schema {
     /**
      * Builds the SQL statement to select the data for this page and schema
      *
-     * @param int[] $singles Column reference numbers of single value columns to select
-     * @param int[] $multis Column reference numbers of multi value columns to select
      * @return array Two fields: the SQL string and the parameters array
      */
-    protected function buildGetDataSQL($singles, $multis) {
+    protected function buildGetDataSQL() {
+        $sep = Search::CONCAT_SEPARATOR;
         $stable = 'data_' . $this->table;
         $mtable = 'multi_' . $this->table;
 
-        $colsel = join(',', preg_filter('/^/', 'col', $singles));
-        $groups = join(',', array_filter(array('DATA.pid', $colsel)));
-        $sep = Search::CONCAT_SEPARATOR;
+        $QB = new QueryBuilder();
+        $QB->addTable($stable, 'DATA');
+        $QB->addSelectColumn('DATA', 'pid', 'PID');
+        $QB->addGroupByStatement('DATA.pid');
 
-        $join = '';
-        foreach($multis as $col) {
-            $tn = 'M' . $col;
-            $colsel .= ", GROUP_CONCAT($tn.value, '$sep') AS col$col";
-            $join .= "LEFT OUTER JOIN $mtable $tn";
-            $join .= " ON DATA.pid = $tn.pid AND DATA.rev = $tn.rev";
-            $join .= " AND $tn.colref = $col\n";
+        foreach($this->columns as $col) {
+            if(!$col->isEnabled()) continue;
+
+            $colref = $col->getColref();
+            $colname = 'col'.$colref;
+
+            if($col->getType()->isMulti()) {
+                $tn = 'M' . $colref;
+                $QB->addLeftJoin(
+                    'DATA',
+                    $mtable,
+                    $tn,
+                    "DATA.pid = $tn.pid AND DATA.rev = $tn.rev AND $tn.colref = $colref"
+                );
+                $col->getType()->select($QB, $tn, 'value', $colname);
+                $sel = $QB->getSelectStatement($colname);
+                $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $colname);
+            } else {
+                $col->getType()->select($QB, 'DATA', $colname, $colname);
+                $QB->addGroupByStatement($colname);
+            }
         }
-        $colsel = ltrim($colsel, ',');
 
-        $where = "WHERE DATA.pid = ? AND DATA.rev = ?";
-        $opt = array($this->page, $this->ts,);
-        $sql = "SELECT $colsel FROM $stable DATA\n$join $where GROUP BY $groups";
+        $pl = $QB->addValue($this->page);
+        $QB->filters()->whereAnd("DATA.pid = $pl");
+        $pl = $QB->addValue($this->ts);
+        $QB->filters()->whereAnd("DATA.rev = $pl");
 
-        return array($sql, $opt,);
+        return $QB->getSQL();
     }
 
     /**

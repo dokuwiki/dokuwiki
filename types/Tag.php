@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\struct\types;
 
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\SearchConfigParameters;
 
 class Tag extends AbstractMultiBaseType {
@@ -93,27 +94,28 @@ class Tag extends AbstractMultiBaseType {
     }
 
     /**
-     * @param string $column
+     * Normalize tags before comparing
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
      * @param string $comp
      * @param string $value
-     * @return array
+     * @param string $op
      */
-    public function compare($column, $comp, $value) {
-        switch ($comp) {
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        $pl = $QB->addValue($value);
+
+        switch($comp) {
             case '~':
-                $sql = "LOWER(REPLACE($column, ' ', '')) LIKE LOWER(REPLACE(?, ' ', ''))";
-                $opt = array($value);
+                $comp = 'LIKE';
                 break;
             case '!~':
-                $sql = "LOWER(REPLACE($column, ' ', '')) NOT LIKE LOWER(REPLACE(?, ' ', ''))";
-                $opt = array($value);
+                $comp = 'NOT LIKE';
                 break;
-            default:
-                $sql = "LOWER(REPLACE($column, ' ', '')) $comp LOWER(REPLACE(?, ' ', ''))";
-                $opt = array($value);
         }
 
-        return array($sql, $opt);
+        $QB->filters()->where($op, "LOWER(REPLACE($tablealias.$colname, ' ', '')) $comp LOWER(REPLACE($pl, ' ', ''))");
     }
 
 }

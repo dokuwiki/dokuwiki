@@ -44,13 +44,13 @@ class QueryBuilder {
         if(!isset($this->from[$tablealias])) {
             throw new StructException('Table Alias does not exist');
         }
-        $this->select[$alias] = "$tablealias.$column AS $alias";
+        $this->select[$alias] = "$tablealias.$column";
     }
 
     /**
-     * Add a new select statement (the column part of it)
+     * Add a new column selection statement
      *
-     * Basically the same as @see addSelectColumn but accepts any statement. This is useful to
+     * Basically the same as @see addSelectColumn() but accepts any statement. This is useful to
      * select things like fixed strings or more complex function calls, but the correctness will not
      * be checked.
      *
@@ -60,7 +60,22 @@ class QueryBuilder {
      * @param string $alias
      */
     public function addSelectStatement($statement, $alias) {
-        $this->select[$alias] = "$statement AS $alias";
+        $this->select[$alias] = $statement;
+    }
+
+    /**
+     * Return an already defined column selection statement based on the alias
+     *
+     * @param string $alias
+     * @return string
+     * @throws StructException when the alias does not exist
+     */
+    public function getSelectStatement($alias) {
+        if(!isset($this->select[$alias])) {
+            throw new StructException('No such select alias');
+        }
+
+        return $this->select[$alias];
     }
 
     /**
@@ -191,8 +206,14 @@ class QueryBuilder {
             $from .= $statement;
         }
 
+        // prepare aliases for the select columns
+        $selects = array();
+        foreach($this->select as $alias => $select) {
+            $selects[] = "$select AS $alias";
+        }
+
         $sql =
-            ' SELECT ' . join(",\n", $this->select) . "\n" .
+            ' SELECT ' . join(",\n", $selects) . "\n" .
             '   FROM ' . $from . "\n" .
             '  WHERE ' . $this->where->toSQL() . "\n";
 
@@ -223,7 +244,7 @@ class QueryBuilder {
         while(preg_match('/(:!!val\d+!!:)/', $sql, $m)) {
             $pl = $m[1];
 
-            if(!isset($this->values[$pl])) {
+            if(!array_key_exists($pl, $this->values)) {
                 throw new StructException('Placeholder not found');
             }
 

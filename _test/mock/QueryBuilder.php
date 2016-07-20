@@ -11,4 +11,12 @@ class QueryBuilder extends meta\QueryBuilder {
         return parent::fixPlaceholders($sql);
     }
 
+    /**
+     * for debugging where statements
+     *
+     * @return array ($sql, $opts)
+     */
+    public function getWhereSQL() {
+        return $this->fixPlaceholders($this->filters()->toSQL());
+    }
 }
