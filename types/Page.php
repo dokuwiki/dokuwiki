@@ -95,14 +95,14 @@ class Page extends AbstractMultiBaseType {
         $postfix = $this->config['postfix'];
         if($namespace) $lookup .= ' @' . $namespace;
 
-        $data = ft_pageLookup($lookup, true, useHeading('navigation'));
+        $data = ft_pageLookup($lookup, true, $this->config['usetitles']);
         if(!count($data)) return array();
 
         // this basically duplicates what we do in ajax_qsearch()
         $result = array();
         $counter = 0;
         foreach($data as $id => $title) {
-            if(useHeading('navigation')) {
+            if($this->config['usetitles']) {
                 $name = $title;
             } else {
                 $ns = getNS($id);
