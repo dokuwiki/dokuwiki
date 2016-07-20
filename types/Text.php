@@ -46,16 +46,6 @@ class Text extends AbstractMultiBaseType {
         }
 
         $pl = $QB->addValue($value);
-
-        switch($comp) {
-            case '~':
-                $comp = 'LIKE';
-                break;
-            case '!~':
-                $comp = 'NOT LIKE';
-                break;
-        }
-
         $QB->filters()->where($op, "$column $comp $pl");
     }
 

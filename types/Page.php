@@ -168,14 +168,6 @@ class Page extends AbstractMultiBaseType {
         $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
 
         $pl = $QB->addValue($value);
-        switch($comp) {
-            case '~':
-                $comp = 'LIKE';
-                break;
-            case '!~':
-                $comp = 'NOT LIKE';
-                break;
-        }
         $QB->filters()->where($op, "$rightalias.title $comp $pl");
     }
 

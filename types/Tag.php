@@ -105,16 +105,6 @@ class Tag extends AbstractMultiBaseType {
      */
     public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
         $pl = $QB->addValue($value);
-
-        switch($comp) {
-            case '~':
-                $comp = 'LIKE';
-                break;
-            case '!~':
-                $comp = 'NOT LIKE';
-                break;
-        }
-
         $QB->filters()->where($op, "LOWER(REPLACE($tablealias.$colname, ' ', '')) $comp LOWER(REPLACE($pl, ' ', ''))");
     }
 

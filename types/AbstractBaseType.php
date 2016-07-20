@@ -364,22 +364,12 @@ abstract class AbstractBaseType {
      * @param QueryBuilder $QB the query so far
      * @param string $tablealias The table the currently saved value(s) are stored in
      * @param string $colname The column name on above table to use in the SQL
-     * @param string $comp The comparator @see Search::$COMPARATORS
+     * @param string $comp The SQL comparator (LIKE, NOT LIKE, =, !=, etc)
      * @param string $value this is the user supplied value to compare against
      * @param string $op the logical operator this filter should use (AND|OR)
      */
     public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
         $pl = $QB->addValue($value);
-
-        switch($comp) {
-            case '~':
-                $comp = 'LIKE';
-                break;
-            case '!~':
-                $comp = 'NOT LIKE';
-                break;
-        }
-
         $QB->filters()->where($op, "$tablealias.$colname $comp $pl");
     }
 

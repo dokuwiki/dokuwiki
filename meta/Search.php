@@ -12,9 +12,10 @@ class Search {
 
     /**
      * The list of known and allowed comparators
+     * (order matters)
      */
     static public $COMPARATORS = array(
-        '<=', '>=', '=', '<', '>', '!=', '!~', '~'
+        '<=', '>=', '=*', '=', '<', '>', '!=', '!~', '~',
     );
 
     /** @var  \helper_plugin_sqlite */
@@ -127,8 +128,27 @@ class Search {
         if($op != 'OR' && $op != 'AND') throw new StructException('Bad filter type . Only AND or OR allowed');
 
         $col = $this->findColumn($colname);
-        if(!$col) return; //FIXME do we really want to ignore missing columns?
-        $value = str_replace('*','%',$value);
+        if(!$col) return; // ignore missing columns, filter might have been for different schema
+
+        // map filter operators to SQL syntax
+        switch($comp) {
+            case '~':
+                $comp = 'LIKE';
+                break;
+            case '!~':
+                $comp = 'NOT LIKE';
+                break;
+            case '=*':
+                $comp = 'REGEXP';
+                break;
+        }
+
+        // we use asterisks, but SQL wants percents
+        if($comp == 'LIKE' || $comp == 'NOT LIKE') {
+            $value = str_replace('*','%',$value);
+        }
+
+        // add the filter
         $this->filter[] = array($col, $value, $comp, $op);
     }
 
