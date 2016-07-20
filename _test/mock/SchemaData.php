@@ -12,7 +12,7 @@ class SchemaData extends \dokuwiki\plugin\struct\meta\SchemaData {
         return parent::getDataFromDB();
     }
 
-    public function buildGetDataSQL($singles, $multis) {
-        return parent::buildGetDataSQL($singles, $multis);
+    public function buildGetDataSQL() {
+        return parent::buildGetDataSQL();
     }
 }

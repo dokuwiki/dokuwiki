@@ -2,6 +2,7 @@
 namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\Column;
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
@@ -355,33 +356,45 @@ abstract class AbstractBaseType {
     }
 
     /**
-     * This function builds a where clause for this column, comparing
-     * the current value stored in $column with $value. Types can use it to do
-     * clever things with the comparison.
+     * This function is used to modify an aggregation query to add a filter
+     * for the given column matching the given value. A type should add at
+     * least a filter here but could do additional things like joining more
+     * tables needed to handle more complex filters
      *
-     * This default implementation is probably good enough for most basic types
-     *
-     * @param string $column The column name to us in the SQL
-     * @param string $comp The comparator @see Search::$COMPARATORS
-     * @param string $value
-     * @return array Tuple with the SQL and parameter array
+     * @param QueryBuilder $QB the query so far
+     * @param string $tablealias The table the currently saved value(s) are stored in
+     * @param string $colname The column name on above table to use in the SQL
+     * @param string $comp The SQL comparator (LIKE, NOT LIKE, =, !=, etc)
+     * @param string $value this is the user supplied value to compare against
+     * @param string $op the logical operator this filter should use (AND|OR)
      */
-    public function compare($column, $comp, $value) {
-        switch($comp) {
-            case '~':
-                $sql = "$column LIKE ?";
-                $opt = array($value);
-                break;
-            case '!~':
-                $sql = "$column NOT LIKE ?";
-                $opt = array($value);
-                break;
-            default:
-                $sql = "$column $comp ?";
-                $opt = array($value);
-        }
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        $pl = $QB->addValue($value);
+        $QB->filters()->where($op, "$tablealias.$colname $comp $pl");
+    }
 
-        return array($sql, $opt);
+    /**
+     * Add the proper selection for this type to the current Query
+     *
+     * The default implementation here should be good for nearly all types, it simply
+     * passes the given parameters to the query builder. But type may do more fancy
+     * stuff here, eg. join more tables or select multiple values and combine them to
+     * JSON.
+     *
+     * The passed $tablealias.$columnname might be a data_* table (referencing a single
+     * row) or a multi_* table (referencing multiple rows). In the latter case the
+     * multi table has already been joined with the proper conditions.
+     *
+     * You may assume a column alias named 'PID' to be available, should you need the
+     * current page context for a join or sub select.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias The table the currently saved value(s) are stored in
+     * @param string $colname The column name on above table
+     * @param string $alias The added selection *has* to use this column alias
+     */
+    public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
+        $QB->addSelectColumn($tablealias, $colname, $alias);
     }
 
     /**

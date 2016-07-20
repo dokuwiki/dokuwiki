@@ -208,8 +208,9 @@ class Search_struct_test extends StructTest {
     public static function addFilter_testdata() {
         return array(
             array('%pageid%', 'val', '<>', 'OR', array(array('%pageid%', 'val', '!=', 'OR')), false, 'replace <> comp'),
-            array('%pageid%', 'val', '*~', 'OR', array(array('%pageid%', '%val%', '~', 'OR')), false, 'replace *~ comp'),
-            array('%pageid%', 'val*', '~', 'OR', array(array('%pageid%', 'val%', '~', 'OR')), false, 'replace * in value'),
+            array('%pageid%', 'val', '*~', 'OR', array(array('%pageid%', '%val%', 'LIKE', 'OR')), false, 'replace *~ comp'),
+            array('%pageid%', 'val*', '~', 'OR', array(array('%pageid%', 'val%', 'LIKE', 'OR')), false, 'replace * in value'),
+            array('%pageid%', 'val.*', '=*', 'OR', array(array('%pageid%', 'val.*', 'REGEXP', 'OR')), false, 'replace * in value'),
             array('nonexisting', 'val', '~', 'OR', array(), false, 'ignore missing columns'),
             array('%pageid%', 'val', '?', 'OR', array(), '\dokuwiki\plugin\struct\meta\StructException', 'wrong comperator'),
             array('%pageid%', 'val', '=', 'NOT', array(), '\dokuwiki\plugin\struct\meta\StructException', 'wrong type')

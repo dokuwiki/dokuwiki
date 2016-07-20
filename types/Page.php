@@ -1,5 +1,6 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 
 /**
  * Class Page
@@ -11,6 +12,7 @@ namespace dokuwiki\plugin\struct\types;
 class Page extends AbstractMultiBaseType {
 
     protected $config = array(
+        'usetitles' => false,
         'autocomplete' => array(
             'mininput' => 2,
             'maxresult' => 5,
@@ -22,16 +24,38 @@ class Page extends AbstractMultiBaseType {
     /**
      * Output the stored data
      *
-     * @param string|int $value the value stored in the database
+     * @param string $value the value stored in the database - JSON when titles are used
      * @param \Doku_Renderer $R the renderer currently used to render the data
      * @param string $mode The mode the output is rendered in (eg. XHTML)
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        if(!$value) return true;
+        if($this->config['usetitles']) {
+            list($id, $title) = json_decode($value);
+        } else {
+            $id = $value;
+            $title = null;
+        }
 
-        $R->internallink(":$value");
+        if(!$id) return true;
+
+        $R->internallink(":$id", $title);
         return true;
+    }
+
+    /**
+     * Decode JSON before passing to the editor
+     *
+     * @param string $name
+     * @param string $value
+     * @return string
+     */
+    public function valueEditor($name, $value) {
+        if($this->config['usetitles']) {
+            list($value) = json_decode($value);
+        }
+
+        return parent::valueEditor($name, $value);
     }
 
     /**
@@ -71,14 +95,14 @@ class Page extends AbstractMultiBaseType {
         $postfix = $this->config['postfix'];
         if($namespace) $lookup .= ' @' . $namespace;
 
-        $data = ft_pageLookup($lookup, true, useHeading('navigation'));
+        $data = ft_pageLookup($lookup, true, $this->config['usetitles']);
         if(!count($data)) return array();
 
         // this basically duplicates what we do in ajax_qsearch()
         $result = array();
         $counter = 0;
         foreach($data as $id => $title) {
-            if(useHeading('navigation')) {
+            if($this->config['usetitles']) {
                 $name = $title;
             } else {
                 $ns = getNS($id);
@@ -105,4 +129,46 @@ class Page extends AbstractMultiBaseType {
 
         return $result;
     }
+
+    /**
+     * When using titles, we need ot join the titles table
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $alias
+     */
+    public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
+        if(!$this->config['usetitles']) {
+            parent::select($QB, $tablealias, $colname, $alias);
+            return;
+        }
+        $rightalias = $QB->generateTableAlias();
+        $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
+        $QB->addSelectStatement("JSON($tablealias.$colname, $rightalias.title)", $alias);
+    }
+
+    /**
+     * When using titles, we need to compare against the title table
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $comp
+     * @param string $value
+     * @param string $op
+     */
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        if(!$this->config['usetitles']) {
+            parent::filter($QB, $tablealias, $colname, $comp, $value, $op);
+            return;
+        }
+
+        $rightalias = $QB->generateTableAlias();
+        $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
+
+        $pl = $QB->addValue($value);
+        $QB->filters()->where($op, "$rightalias.title $comp $pl");
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
+use dokuwiki\plugin\struct\test\mock\QueryBuilder;
 use dokuwiki\plugin\struct\types\Text;
 
 /**
@@ -12,70 +13,122 @@ use dokuwiki\plugin\struct\types\Text;
  */
 class Type_Text_struct_test extends StructTest {
 
-    public function test_compare_simple() {
-        $text = new Text(array('prefix' => '', 'postfix' => ''));
-        list($sql, $opt) = $text->compare('col', '=', 'val');
-        $this->assertEquals('col = ?', $sql);
-        $this->assertEquals(array('val'), $opt);
+    public function data() {
+        return array(
+            // simple
+            array(
+                '', // prefix
+                '', // postfix
+                '=', // comp
+                'val', // value
+                '(T.col = ?)', // expect sql
+                array('val'), // expect opts
+            ),
+            array(
+                'before', // prefix
+                '', // postfix
+                '=', // comp
+                'val', // value
+                '(? || T.col = ?)', // expect sql
+                array('before', 'val'), // expect opts
+            ),
+            array(
+                '', // prefix
+                'after', // postfix
+                '=', // comp
+                'val', // value
+                '(T.col || ? = ?)', // expect sql
+                array('after', 'val'), // expect opts
+            ),
+            array(
+                'before', // prefix
+                'after', // postfix
+                '=', // comp
+                'val', // value
+                '(? || T.col || ? = ?)', // expect sql
+                array('before', 'after', 'val'), // expect opts
+            ),
+            // LIKE
+            array(
+                '', // prefix
+                '', // postfix
+                'LIKE', // comp
+                '%val%', // value
+                '(T.col LIKE ?)', // expect sql
+                array('%val%'), // expect opts
+            ),
+            array(
+                'before', // prefix
+                '', // postfix
+                'LIKE', // comp
+                '%val%', // value
+                '(? || T.col LIKE ?)', // expect sql
+                array('before','%val%'), // expect opts
+            ),
+            array(
+                '', // prefix
+                'after', // postfix
+                'LIKE', // comp
+                '%val%', // value
+                '(T.col || ? LIKE ?)', // expect sql
+                array('after','%val%'), // expect opts
+            ),
+            array(
+                'before', // prefix
+                'after', // postfix
+                'LIKE', // comp
+                '%val%', // value
+                '(? || T.col || ? LIKE ?)', // expect sql
+                array('before','after','%val%'), // expect opts
+            ),
+            // NOT LIKE
+            array(
+                '', // prefix
+                '', // postfix
+                'NOT LIKE', // comp
+                '%val%', // value
+                '(T.col NOT LIKE ?)', // expect sql
+                array('%val%'), // expect opts
+            ),
+            array(
+                'before', // prefix
+                '', // postfix
+                'NOT LIKE', // comp
+                '%val%', // value
+                '(? || T.col NOT LIKE ?)', // expect sql
+                array('before','%val%'), // expect opts
+            ),
+            array(
+                '', // prefix
+                'after', // postfix
+                'NOT LIKE', // comp
+                '%val%', // value
+                '(T.col || ? NOT LIKE ?)', // expect sql
+                array('after','%val%'), // expect opts
+            ),
+            array(
+                'before', // prefix
+                'after', // postfix
+                'NOT LIKE', // comp
+                '%val%', // value
+                '(? || T.col || ? NOT LIKE ?)', // expect sql
+                array('before','after','%val%'), // expect opts
+            ),
+        );
 
-        $text = new Text(array('prefix' => 'before', 'postfix' => ''));
-        list($sql, $opt) = $text->compare('col', '=', 'val');
-        $this->assertEquals('? || col = ?', $sql);
-        $this->assertEquals(array('before', 'val'), $opt);
-
-        $text = new Text(array('prefix' => '', 'postfix' => 'after'));
-        list($sql, $opt) = $text->compare('col', '=', 'val');
-        $this->assertEquals('col || ? = ?', $sql);
-        $this->assertEquals(array('after', 'val'), $opt);
-
-        $text = new Text(array('prefix' => 'before', 'postfix' => 'after'));
-        list($sql, $opt) = $text->compare('col', '=', 'val');
-        $this->assertEquals('? || col || ? = ?', $sql);
-        $this->assertEquals(array('before', 'after', 'val'), $opt);
     }
 
-    public function test_compare_like() {
-        $text = new Text(array('prefix' => '', 'postfix' => ''));
-        list($sql, $opt) = $text->compare('col', '~', '%val%');
-        $this->assertEquals('col LIKE ?', $sql);
-        $this->assertEquals(array('%val%'), $opt);
+    /**
+     * @dataProvider data
+     */
+    public function test_filter($prefix, $postfix, $comp, $val, $e_sql, $e_opt) {
+        $QB = new QueryBuilder();
 
-        $text = new Text(array('prefix' => 'before', 'postfix' => ''));
-        list($sql, $opt) = $text->compare('col', '~', '%val%');
-        $this->assertEquals('? || col LIKE ?', $sql);
-        $this->assertEquals(array('before', '%val%'), $opt);
+        $text = new Text(array('prefix' => $prefix, 'postfix' => $postfix));
+        $text->filter($QB, 'T', 'col', $comp, $val, 'AND');
 
-        $text = new Text(array('prefix' => '', 'postfix' => 'after'));
-        list($sql, $opt) = $text->compare('col', '~', '%val%');
-        $this->assertEquals('col || ? LIKE ?', $sql);
-        $this->assertEquals(array('after', '%val%'), $opt);
-
-        $text = new Text(array('prefix' => 'before', 'postfix' => 'after'));
-        list($sql, $opt) = $text->compare('col', '~', '%val%');
-        $this->assertEquals('? || col || ? LIKE ?', $sql);
-        $this->assertEquals(array('before', 'after', '%val%'), $opt);
+        list($sql, $opt) = $QB->getWhereSQL();
+        $this->assertEquals($this->cleanWS($e_sql), $this->cleanWS($sql));
+        $this->assertEquals($e_opt, $opt);
     }
-
-    public function test_compare_notlike() {
-        $text = new Text(array('prefix' => '', 'postfix' => ''));
-        list($sql, $opt) = $text->compare('col', '!~', '%val%');
-        $this->assertEquals('col NOT LIKE ?', $sql);
-        $this->assertEquals(array('%val%'), $opt);
-
-        $text = new Text(array('prefix' => 'before', 'postfix' => ''));
-        list($sql, $opt) = $text->compare('col', '!~', '%val%');
-        $this->assertEquals('? || col NOT LIKE ?', $sql);
-        $this->assertEquals(array('before', '%val%'), $opt);
-
-        $text = new Text(array('prefix' => '', 'postfix' => 'after'));
-        list($sql, $opt) = $text->compare('col', '!~', '%val%');
-        $this->assertEquals('col || ? NOT LIKE ?', $sql);
-        $this->assertEquals(array('after', '%val%'), $opt);
-
-        $text = new Text(array('prefix' => 'before', 'postfix' => 'after'));
-        list($sql, $opt) = $text->compare('col', '!~', '%val%');
-        $this->assertEquals('? || col || ? NOT LIKE ?', $sql);
-        $this->assertEquals(array('before', 'after', '%val%'), $opt);
-    }
-
 }

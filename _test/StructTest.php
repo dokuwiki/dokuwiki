@@ -106,4 +106,16 @@ abstract class StructTest extends \DokuWikiTest {
         }
         return $lang[$key];
     }
+
+    /**
+     * Removes Whitespace
+     *
+     * Makes comparing sql statements a bit simpler as it ignores formatting
+     *
+     * @param $string
+     * @return string
+     */
+    protected function cleanWS($string) {
+        return preg_replace('/\s+/s', '', $string);
+    }
 }
