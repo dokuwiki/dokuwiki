@@ -52,7 +52,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 '', // prefix
                 '', // postfix
-                '~', // comp
+                'LIKE', // comp
                 '%val%', // value
                 '(T.col LIKE ?)', // expect sql
                 array('%val%'), // expect opts
@@ -60,7 +60,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 'before', // prefix
                 '', // postfix
-                '~', // comp
+                'LIKE', // comp
                 '%val%', // value
                 '(? || T.col LIKE ?)', // expect sql
                 array('before','%val%'), // expect opts
@@ -68,7 +68,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 '', // prefix
                 'after', // postfix
-                '~', // comp
+                'LIKE', // comp
                 '%val%', // value
                 '(T.col || ? LIKE ?)', // expect sql
                 array('after','%val%'), // expect opts
@@ -76,7 +76,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 'before', // prefix
                 'after', // postfix
-                '~', // comp
+                'LIKE', // comp
                 '%val%', // value
                 '(? || T.col || ? LIKE ?)', // expect sql
                 array('before','after','%val%'), // expect opts
@@ -85,7 +85,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 '', // prefix
                 '', // postfix
-                '!~', // comp
+                'NOT LIKE', // comp
                 '%val%', // value
                 '(T.col NOT LIKE ?)', // expect sql
                 array('%val%'), // expect opts
@@ -93,7 +93,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 'before', // prefix
                 '', // postfix
-                '!~', // comp
+                'NOT LIKE', // comp
                 '%val%', // value
                 '(? || T.col NOT LIKE ?)', // expect sql
                 array('before','%val%'), // expect opts
@@ -101,7 +101,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 '', // prefix
                 'after', // postfix
-                '!~', // comp
+                'NOT LIKE', // comp
                 '%val%', // value
                 '(T.col || ? NOT LIKE ?)', // expect sql
                 array('after','%val%'), // expect opts
@@ -109,7 +109,7 @@ class Type_Text_struct_test extends StructTest {
             array(
                 'before', // prefix
                 'after', // postfix
-                '!~', // comp
+                'NOT LIKE', // comp
                 '%val%', // value
                 '(? || T.col || ? NOT LIKE ?)', // expect sql
                 array('before','after','%val%'), // expect opts
