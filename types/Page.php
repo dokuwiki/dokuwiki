@@ -44,21 +44,6 @@ class Page extends AbstractMultiBaseType {
     }
 
     /**
-     * Decode JSON before passing to the editor
-     *
-     * @param string $name
-     * @param string $value
-     * @return string
-     */
-    public function valueEditor($name, $value) {
-        if($this->config['usetitles']) {
-            list($value) = json_decode($value);
-        }
-
-        return parent::valueEditor($name, $value);
-    }
-
-    /**
      * Cleans the link
      *
      * @param string $value
@@ -146,6 +131,19 @@ class Page extends AbstractMultiBaseType {
         $rightalias = $QB->generateTableAlias();
         $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
         $QB->addSelectStatement("JSON($tablealias.$colname, $rightalias.title)", $alias);
+    }
+
+    /**
+     * Return the pageid only
+     *
+     * @param string $value
+     * @return string
+     */
+    public function rawValue($value) {
+        if($this->config['usetitles']) {
+            list($value) = json_decode($value);
+        }
+        return $value;
     }
 
     /**

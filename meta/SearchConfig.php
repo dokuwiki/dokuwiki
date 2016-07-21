@@ -143,6 +143,7 @@ class SearchConfig extends Search {
             } else {
                 $value = '';
             }
+            $value = $column->getType()->rawValue($value);
             $key = preg_quote_cb($key);
             $filter = preg_replace('/\$STRUCT\.' . $key . '\$/', $value, $filter, 1);
 
