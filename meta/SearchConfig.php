@@ -140,10 +140,11 @@ class SearchConfig extends Search {
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
                 if(is_array($value)) $value = array_shift($value);
+                $value = $column->getType()->rawValue($value);
             } else {
                 $value = '';
             }
-            $value = $column->getType()->rawValue($value);
+
             $key = preg_quote_cb($key);
             $filter = preg_replace('/\$STRUCT\.' . $key . '\$/', $value, $filter, 1);
 
