@@ -161,6 +161,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $this->tosave = $assignments->getPageAssignments($event->data['id']);
             foreach($this->tosave as $table) {
                 $oldData = new SchemaData($table, $event->data['id'], $REV);
+                $oldData->optionRawValue(true);
                 $structData[$table] = $oldData->getDataArray();
             }
         } else {

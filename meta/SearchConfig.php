@@ -137,10 +137,10 @@ class SearchConfig extends Search {
                 $label = $column->getLabel();
                 $table = $column->getTable();
                 $schemaData = new SchemaData($table, $ID, 0);
+                $schemaData->optionRawValue(true);
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
                 if(is_array($value)) $value = array_shift($value);
-                $value = $column->getType()->rawValue($value);
             } else {
                 $value = '';
             }
