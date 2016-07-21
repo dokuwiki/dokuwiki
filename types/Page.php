@@ -147,7 +147,7 @@ class Page extends AbstractMultiBaseType {
     }
 
     /**
-     * When using titles, we need to compare against the title table
+     * When using titles, we need to compare against the title table, too
      *
      * @param QueryBuilder $QB
      * @param string $tablealias
@@ -165,8 +165,12 @@ class Page extends AbstractMultiBaseType {
         $rightalias = $QB->generateTableAlias();
         $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
 
+        // compare against page and title
+        $sub = $QB->filters()->where($op);
         $pl = $QB->addValue($value);
-        $QB->filters()->where($op, "$rightalias.title $comp $pl");
+        $sub->whereOr("$tablealias.$colname $comp $pl");
+        $pl = $QB->addValue($value);
+        $sub->whereOr("$rightalias.title $comp $pl");
     }
 
 }
