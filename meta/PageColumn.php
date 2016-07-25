@@ -51,7 +51,12 @@ class PageColumn extends Column {
      * @return string always '%pageid%'
      */
     public function getLabel() {
-        return '%pageid%';
+        $conf = $this->getType()->getConfig();
+        if($conf['usetitles']) {
+            return '%title%';
+        } else {
+            return '%pageid%';
+        }
     }
 
     /**
@@ -60,7 +65,7 @@ class PageColumn extends Column {
     public function getFullQualifiedLabel() {
         // There is only one pageid for each row because we JOIN on it
         // so we do not prefix it with the table
-        return '%pageid%';
+        return $this->getLabel();
     }
 
 }
