@@ -30,7 +30,6 @@ class action_plugin_struct_ajax extends DokuWiki_Action_Plugin {
      * @param Doku_Event $event event object by reference
      * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
      *                           handler was registered]
-     * @return bool
      */
     public function handle_ajax(Doku_Event $event, $param) {
         if($event->data != 'plugin_struct') return;
