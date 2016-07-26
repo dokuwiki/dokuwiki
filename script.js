@@ -84,6 +84,23 @@ jQuery(function () {
     });
 
     /**
+     * Attach datepicker to datetype types, keeps time part
+     */
+    jQuery('input.struct_datetime').datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(date, inst){
+            var $input = jQuery(this);
+            var both = inst.lastVal.split(' ', 2);
+            if(both.length == 2) {
+                date += ' ' + both[1];
+            } else{
+                date += ' 00:00:00';
+            }
+            $input.val(date);
+        }
+    });
+
+    /**
      * Attach image dialog to image types
      */
     jQuery('button.struct_media').click(function () {
