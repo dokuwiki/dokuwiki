@@ -17,6 +17,7 @@ $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
 $lang['pagelabel'] = 'Page';
+$lang['revisionlabel'] = 'Last Updated';
 $lang['summary'] = 'Struct data changed';
 $lang['export'] = 'Export Schema as JSON';
 $lang['btn_export'] = 'Export';

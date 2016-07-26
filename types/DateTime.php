@@ -6,7 +6,7 @@ use dokuwiki\plugin\struct\meta\ValidationException;
 class DateTime extends Date {
 
     protected $config = array(
-        'format' => 'Y/m/d H:i:s',
+        'format' => "Y/m/d\xC2\xA0H:i:s", //non-breaking space
         'prefilltoday' => false
     );
 

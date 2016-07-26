@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\struct\meta;
 
+use dokuwiki\plugin\struct\types\Date;
+use dokuwiki\plugin\struct\types\DateTime;
 use dokuwiki\plugin\struct\types\Page;
 
 class Search {
@@ -297,6 +299,13 @@ class Search {
                 $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
                 $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
+
+                // the %lastupdate% column needs datetime mangling
+                if(is_a($col, 'dokuwiki\\plugin\\struct\\meta\\RevisionColumn')) {
+                    $sel = $QB->getSelectStatement($CN);
+                    $QB->addSelectStatement("DATETIME($sel, 'unixepoch')", $CN);
+                }
+
                 $QB->addGroupByStatement($CN);
             }
         }
@@ -365,6 +374,9 @@ class Search {
         }
         if($colname == '%title%') {
             return new PageColumn(0, new Page(array('usetitles' => true)),  $schema_list[0]);
+        }
+        if($colname == '%lastupdate%') {
+            return new RevisionColumn(0, new DateTime(),  $schema_list[0]);
         }
 
         // resolve the alias or table name
