@@ -358,12 +358,14 @@ class Search {
     public function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
 
-        // handling of page column is special
+        // handling of page and title column is special - we add a "fake" column
+        $schema_list = array_keys($this->schemas);
         if($colname == '%pageid%') {
-            $schema_list = array_keys($this->schemas);
-            return new PageColumn(0, new Page(), array_shift($schema_list));
+            return new PageColumn(0, new Page(), $schema_list[0]);
         }
-        // FIXME %title% needs to be handled here, too (later)
+        if($colname == '%title%') {
+            return new PageColumn(0, new Page(array('usetitles' => true)),  $schema_list[0]);
+        }
 
         // resolve the alias or table name
         list($table, $colname) = explode('.', $colname, 2);

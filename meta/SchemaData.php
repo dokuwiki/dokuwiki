@@ -14,6 +14,9 @@ class SchemaData extends Schema {
     protected $page;
     protected $labels = array();
 
+    protected $opt_skipempty = false;
+    protected $opt_rawvalue = false;
+
     /**
      * SchemaData constructor
      *
@@ -120,15 +123,44 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Should empty or invisible (inpage) fields be returned?
+     *
+     * Defaults to false
+     *
+     * @param null|bool $set new value, null to read only
+     * @return bool current value (after set)
+     */
+    public function optionSkipEmpty($set=null) {
+        if(!is_null($set)) {
+            $this->opt_skipempty = $set;
+        }
+        return $this->opt_skipempty;
+    }
+
+    /**
+     * Should the values be returned raw or are complex returns okay?
+     *
+     * Defaults to false = complex values okay
+     *
+     * @param null|bool $set new value, null to read only
+     * @return bool current value (after set)
+     */
+    public function optionRawValue($set=null) {
+        if(!is_null($set)) {
+            $this->opt_rawvalue = $set;
+        }
+        return $this->opt_rawvalue;
+    }
+
+    /**
      * returns the data saved for the page
      *
-     * @param bool $skipempty do not return empty or invisible (inpage) fields
      * @return Value[] a list of values saved for the current page
      */
-    public function getData($skipempty=false) {
+    public function getData() {
         $this->setCorrectTimestamp($this->page, $this->ts);
         $data = $this->getDataFromDB();
-        $data = $this->consolidateData($data, false, $skipempty);
+        $data = $this->consolidateData($data, false);
         return $data;
     }
 
@@ -137,13 +169,12 @@ class SchemaData extends Schema {
      *
      * The array returned is in the same format as used in @see saveData()
      *
-     * @param bool $skipempty do not return empty or invisible (inpage) fields
      * @return array
      */
-    public function getDataArray($skipempty=false) {
+    public function getDataArray() {
         $this->setCorrectTimestamp($this->page, $this->ts);
         $data = $this->getDataFromDB();
-        $data = $this->consolidateData($data, true, $skipempty);
+        $data = $this->consolidateData($data, true);
         return $data;
     }
 
@@ -179,10 +210,9 @@ class SchemaData extends Schema {
      *
      * @param array $DBdata the data as it is retrieved from the database, i.e. by SchemaData::getDataFromDB
      * @param bool $asarray return data as associative array (true) or as array of Values (false)
-     * @param bool $skipemtpy skip empty or invisible (inpage) fields from being returned at all
      * @return array|Value[]
      */
-    protected function consolidateData($DBdata, $asarray = false, $skipemtpy=false) {
+    protected function consolidateData($DBdata, $asarray = false) {
         $data = array();
 
         $sep = Search::CONCAT_SEPARATOR;
@@ -200,11 +230,23 @@ class SchemaData extends Schema {
             // multi val data is concatenated
             if($col->isMulti()) {
                 $val = explode($sep, $val);
+                if($this->opt_rawvalue) {
+                    $val = array_map(
+                        function ($val) use ($col) { // FIXME requires PHP 5.4+
+                            return $col->getType()->rawValue($val);
+                        },
+                        $val
+                    );
+                }
                 $val = array_filter($val);
+            } else {
+                if($this->opt_rawvalue) {
+                    $val = $col->getType()->rawValue($val);
+                }
             }
 
-            if($skipemtpy && ($val === '' || $val == array())) continue;
-            if($skipemtpy && !$col->isVisibleInPage()) continue;
+            if($this->opt_skipempty && ($val === '' || $val == array())) continue;
+            if($this->opt_skipempty && !$col->isVisibleInPage()) continue;
 
             if($asarray) {
                 $data[$col->getLabel()] = $val;

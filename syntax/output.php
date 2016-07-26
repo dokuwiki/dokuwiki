@@ -95,7 +95,8 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
 
         foreach($tables as $table) {
             $schemadata = new SchemaData($table, $ID, $REV);
-            $data = $schemadata->getData(true);
+            $schemadata->optionSkipEmpty(true);
+            $data = $schemadata->getData();
             if(!count($data)) continue;
 
             $R->table_open();

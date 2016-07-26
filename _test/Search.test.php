@@ -20,9 +20,13 @@ class Search_struct_test extends StructTest {
         $this->loadSchemaJSON('schema2');
 
         $as = new mock\Assignments();
-
+        $page = 'page01';
+        $as->assignPageSchema($page, 'schema1');
+        $as->assignPageSchema($page, 'schema2');
+        saveWikiText($page,"===== TestTitle =====\nabc", "Summary");
+        p_get_metadata($page);
         $this->saveData(
-            'page01',
+            $page,
             'schema1',
             array(
                 'first' => 'first data',
@@ -31,10 +35,8 @@ class Search_struct_test extends StructTest {
                 'fourth' => 'fourth data'
             )
         );
-        $as->assignPageSchema('page01', 'schema1');
-
         $this->saveData(
-            'page01',
+            $page,
             'schema2',
             array(
                 'afirst' => 'first data',
@@ -43,7 +45,31 @@ class Search_struct_test extends StructTest {
                 'afourth' => 'fourth data'
             )
         );
-        $as->assignPageSchema('page01', 'schema2');
+
+        $as->assignPageSchema('test:document', 'schema1');
+        $as->assignPageSchema('test:document', 'schema2');
+        $this->saveData(
+            'test:document',
+            'schema1',
+            array(
+                'first' => 'document first data',
+                'second' => array('second', 'more'),
+                'third' => '',
+                'fourth' => 'fourth data'
+            )
+        );
+        $this->saveData(
+            'test:document',
+            'schema2',
+            array(
+                'afirst' => 'first data',
+                'asecond' => array('second data', 'more data', 'even more'),
+                'athird' => 'third data',
+                'afourth' => 'fourth data'
+            )
+        );
+
+
 
         for($i = 10; $i <= 20; $i++) {
             $this->saveData(
@@ -71,9 +97,27 @@ class Search_struct_test extends StructTest {
         /** @var meta\Value[][] $result */
         $result = $search->execute();
 
-        $this->assertEquals(1, count($result), 'result rows');
+        $this->assertEquals(2, count($result), 'result rows');
         $this->assertEquals(3, count($result[0]), 'result columns');
         $this->assertEquals('page01', $result[0][0]->getValue());
+        $this->assertEquals('first data', $result[0][1]->getValue());
+        $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][2]->getValue());
+    }
+
+    public function test_simple_title() {
+        $search = new mock\Search();
+
+        $search->addSchema('schema1');
+        $search->addColumn('%title%');
+        $search->addColumn('first');
+        $search->addColumn('second');
+
+        /** @var meta\Value[][] $result */
+        $result = $search->execute();
+
+        $this->assertEquals(2, count($result), 'result rows');
+        $this->assertEquals(3, count($result[0]), 'result columns');
+        $this->assertEquals('["page01","TestTitle"]', $result[0][0]->getValue());
         $this->assertEquals('first data', $result[0][1]->getValue());
         $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][2]->getValue());
     }
@@ -121,7 +165,7 @@ class Search_struct_test extends StructTest {
         $search->addSort('first', false);
         $this->assertEquals(1, count($search->sortby));
 
-        $search->addFilter('%pageidid%', '%ag%', '~', 'AND');
+        $search->addFilter('%pageid%', '%ag%', '~', 'AND');
         $search->addFilter('second', '%sec%', '~', 'AND');
         $search->addFilter('first', '%rst%', '~', 'AND');
 
@@ -161,6 +205,8 @@ class Search_struct_test extends StructTest {
         $search->addColumn('%pageid%');
         $search->addColumn('afirst');
         $search->addColumn('asecond');
+
+        $search->addFilter('%pageid%', '%ag%', '~', 'AND');
 
         $search->addSort('%pageid%', false);
 

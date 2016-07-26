@@ -262,7 +262,8 @@ class schemaDataDB_struct_test extends StructTest {
         $schemaData->saveData($testdata);
 
         // act
-        $actual_data = $schemaData->getData(true);
+        $schemaData->optionSkipEmpty(true);
+        $actual_data = $schemaData->getData();
 
         $expected_data = array('value2.1_saved', 'value2.2_saved');
 
@@ -284,7 +285,8 @@ class schemaDataDB_struct_test extends StructTest {
         $schemaData->saveData($testdata);
 
         // act
-        $actual_data = $schemaData->getDataArray(true);
+        $schemaData->optionSkipEmpty(true);
+        $actual_data = $schemaData->getDataArray();
 
         $expected_data = array(
             'testMulitColumn' => array('value2.1_saved', 'value2.2_saved')

@@ -75,16 +75,30 @@ class Type_Page_struct_test extends StructTest {
             $result[0][3]->getValue()
         );
 
-        // search single with filter
+        // search single with title
         $single = clone $search;
         $single->addFilter('singletitle', 'Overview', '*~', 'AND');
         $result = $single->execute();
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
 
-        // search multi with filter
+        // search multi with title
         $multi = clone $search;
         $multi->addFilter('multititle', 'Foobar', '*~', 'AND');
+        $result = $multi->execute();
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(1, count($result));
+
+        // search single with page
+        $single = clone $search;
+        $single->addFilter('singletitle', 'wiki:dokuwiki', '*~', 'AND');
+        $result = $single->execute();
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(1, count($result));
+
+        // search multi with page
+        $multi = clone $search;
+        $multi->addFilter('multititle', 'welcome', '*~', 'AND');
         $result = $multi->execute();
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));

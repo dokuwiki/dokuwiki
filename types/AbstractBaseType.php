@@ -310,6 +310,7 @@ abstract class AbstractBaseType {
      * @return string html
      */
     public function valueEditor($name, $value) {
+        $value = $this->rawValue($value);
         $class = 'struct_' . strtolower($this->getClass());
 
         // support the autocomplete configurations out of the box
@@ -332,6 +333,7 @@ abstract class AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
+        $value = $this->rawValue($value);
         $R->cdata($value);
         return true;
     }
@@ -379,7 +381,7 @@ abstract class AbstractBaseType {
      * The default implementation here should be good for nearly all types, it simply
      * passes the given parameters to the query builder. But type may do more fancy
      * stuff here, eg. join more tables or select multiple values and combine them to
-     * JSON.
+     * JSON. If you do, be sure implement a fitting rawValue() method.
      *
      * The passed $tablealias.$columnname might be a data_* table (referencing a single
      * row) or a multi_* table (referencing multiple rows). In the latter case the
@@ -395,6 +397,23 @@ abstract class AbstractBaseType {
      */
     public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
         $QB->addSelectColumn($tablealias, $colname, $alias);
+    }
+
+    /**
+     * This allows types to apply a transformation to the value read by select()
+     *
+     * The returned value should always be a single, non-complex string. In general
+     * it is the identifier a type stores in the database.
+     *
+     * This value will be used wherever the raw saved data is needed for comparisons.
+     * The default implementations of renderValue() and valueEditor() will call this
+     * function as well.
+     *
+     * @param string $value The value as returned by select()
+     * @return string The value as saved in the database
+     */
+    public function rawValue($value) {
+        return $value;
     }
 
     /**

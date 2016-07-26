@@ -50,7 +50,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
         $result = array();
         foreach($schemas as $schema) {
             $schemaData = new SchemaData($schema, $page, $time);
-            $result[$schema] = $schemaData->getDataArray(false);
+            $result[$schema] = $schemaData->getDataArray();
         }
 
         return $result;

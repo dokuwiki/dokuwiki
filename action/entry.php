@@ -121,6 +121,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      */
     public function handle_pagesave_before(Doku_Event $event, $param) {
         if($event->data['contentChanged']) return; // will be saved for page changes
+        global $ACT;
+        global $REV;
 
         if(count($this->tosave) || isset($GLOBALS['struct_plugin_force_page_save'])) {
             if(trim($event->data['newContent']) === '') {
@@ -133,6 +135,13 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
                 if(empty($event->data['summary'])) {
                     $event->data['summary'] = $this->getLang('summary');
                 }
+            }
+        } else if($ACT == 'revert' && $REV) {
+            // revert actions are not validated, so we need to force changes extra
+            $assignments = new Assignments();
+            $tosave = $assignments->getPageAssignments($event->data['id']);
+            if(count($tosave)) {
+                $event->data['contentChanged'] = true; // save for data changes
             }
         }
     }
@@ -161,6 +170,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $this->tosave = $assignments->getPageAssignments($event->data['id']);
             foreach($this->tosave as $table) {
                 $oldData = new SchemaData($table, $event->data['id'], $REV);
+                $oldData->optionRawValue(true);
                 $structData[$table] = $oldData->getDataArray();
             }
         } else {

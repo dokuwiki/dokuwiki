@@ -113,7 +113,6 @@ class SearchConfig extends Search {
                 '$ID$',
                 '$NS$',
                 '$PAGE$',
-                '$TITLE$',
                 '$USER$',
                 '$TODAY$'
             ),
@@ -121,7 +120,6 @@ class SearchConfig extends Search {
                 $ID,
                 getNS($ID),
                 noNS($ID),
-                p_get_first_heading($ID) ? p_get_first_heading($ID) : $ID,
                 isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : '',
                 date('Y-m-d')
             ),
@@ -137,12 +135,14 @@ class SearchConfig extends Search {
                 $label = $column->getLabel();
                 $table = $column->getTable();
                 $schemaData = new SchemaData($table, $ID, 0);
+                $schemaData->optionRawValue(true);
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
                 if(is_array($value)) $value = array_shift($value);
             } else {
                 $value = '';
             }
+
             $key = preg_quote_cb($key);
             $filter = preg_replace('/\$STRUCT\.' . $key . '\$/', $value, $filter, 1);
 

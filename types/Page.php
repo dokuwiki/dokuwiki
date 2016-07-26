@@ -1,5 +1,6 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
+
 use dokuwiki\plugin\struct\meta\QueryBuilder;
 
 /**
@@ -41,21 +42,6 @@ class Page extends AbstractMultiBaseType {
 
         $R->internallink(":$id", $title);
         return true;
-    }
-
-    /**
-     * Decode JSON before passing to the editor
-     *
-     * @param string $name
-     * @param string $value
-     * @return string
-     */
-    public function valueEditor($name, $value) {
-        if($this->config['usetitles']) {
-            list($value) = json_decode($value);
-        }
-
-        return parent::valueEditor($name, $value);
     }
 
     /**
@@ -103,7 +89,7 @@ class Page extends AbstractMultiBaseType {
         $counter = 0;
         foreach($data as $id => $title) {
             if($this->config['usetitles']) {
-                $name = $title;
+                $name = $title . ' (' . $id . ')';
             } else {
                 $ns = getNS($id);
                 if($ns) {
@@ -149,7 +135,20 @@ class Page extends AbstractMultiBaseType {
     }
 
     /**
-     * When using titles, we need to compare against the title table
+     * Return the pageid only
+     *
+     * @param string $value
+     * @return string
+     */
+    public function rawValue($value) {
+        if($this->config['usetitles']) {
+            list($value) = json_decode($value);
+        }
+        return $value;
+    }
+
+    /**
+     * When using titles, we need to compare against the title table, too
      *
      * @param QueryBuilder $QB
      * @param string $tablealias
@@ -167,8 +166,12 @@ class Page extends AbstractMultiBaseType {
         $rightalias = $QB->generateTableAlias();
         $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
 
+        // compare against page and title
+        $sub = $QB->filters()->where($op);
         $pl = $QB->addValue($value);
-        $QB->filters()->where($op, "$rightalias.title $comp $pl");
+        $sub->whereOr("$tablealias.$colname $comp $pl");
+        $pl = $QB->addValue($value);
+        $sub->whereOr("$rightalias.title $comp $pl");
     }
 
 }
