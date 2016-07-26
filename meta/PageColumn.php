@@ -3,6 +3,7 @@
 namespace dokuwiki\plugin\struct\meta;
 
 use dokuwiki\plugin\struct\types\AbstractBaseType;
+use dokuwiki\plugin\struct\types\Page;
 
 /**
  * Class PageColumn
@@ -17,10 +18,10 @@ class PageColumn extends Column {
      * PageColumn constructor.
      *
      * @param int $sort
-     * @param AbstractBaseType $type This should be Page or Title
+     * @param Page $type
      * @param string $table
      */
-    public function __construct($sort, AbstractBaseType $type, $table='') {
+    public function __construct($sort, Page $type, $table='') {
         if($type->isMulti()) throw new StructException('PageColumns can not be multi value types!');
         parent::__construct($sort, $type, 0, true, $table);
     }
