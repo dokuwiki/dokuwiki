@@ -69,4 +69,13 @@ class PageColumn extends Column {
         return $this->getLabel();
     }
 
+    /**
+     * @return string preconfigured label
+     */
+    public function getTranslatedLabel() {
+        /** @var \helper_plugin_struct_config $helper */
+        $helper = plugin_load('helper', 'struct_config');
+        return $helper->getLang('pagelabel');
+    }
+
 }

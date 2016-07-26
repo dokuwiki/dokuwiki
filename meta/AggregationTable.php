@@ -191,9 +191,7 @@ class AggregationTable {
 
             // use field label if no header was set
             if(blank($header)) {
-                if(is_a($column, 'dokuwiki\plugin\struct\meta\PageColumn')) {
-                    $header = $this->helper->getLang('pagelabel'); // @todo this could be part of PageColumn::getTranslatedLabel
-                } else if(is_a($column, 'dokuwiki\plugin\struct\meta\Column')) {
+                if(is_a($column, 'dokuwiki\plugin\struct\meta\Column')) {
                     $header = $column->getTranslatedLabel();
                 } else {
                     $header = 'column ' . $num; // this should never happen
