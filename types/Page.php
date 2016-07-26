@@ -1,5 +1,6 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
+
 use dokuwiki\plugin\struct\meta\QueryBuilder;
 
 /**
@@ -88,7 +89,7 @@ class Page extends AbstractMultiBaseType {
         $counter = 0;
         foreach($data as $id => $title) {
             if($this->config['usetitles']) {
-                $name = $title;
+                $name = $title . ' (' . $id . ')';
             } else {
                 $ns = getNS($id);
                 if($ns) {
