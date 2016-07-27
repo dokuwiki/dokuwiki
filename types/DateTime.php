@@ -35,13 +35,14 @@ class DateTime extends Date {
      * @throws ValidationException
      */
     public function validate($value) {
+        $value = trim($value);
         list($date, $time) = explode(' ', $value, 2);
         $date = trim($date);
         $time = trim($time);
 
         list($year, $month, $day) = explode('-', $date, 3);
-        if(!checkdate($month, $day, $year)) {
-            throw new ValidationException('invalid datetime format' . "$year, $month, $day");
+        if(!checkdate((int) $month, (int) $day, (int) $year)) {
+            throw new ValidationException('invalid datetime format');
         }
 
         list($h, $m, $s) = explode(':', $time, 3);
