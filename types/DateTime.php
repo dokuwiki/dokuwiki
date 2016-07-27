@@ -1,14 +1,30 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
 
+use dokuwiki\plugin\struct\meta\DateFormatConverter;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
 class DateTime extends Date {
 
     protected $config = array(
-        'format' => "Y/m/d\xC2\xA0H:i:s", //non-breaking space
+        'format' => '', // filled by constructor
         'prefilltoday' => false
     );
+
+    /**
+     * DateTime constructor.
+     *
+     * @param array|null $config
+     * @param string $label
+     * @param bool $ismulti
+     * @param int $tid
+     */
+    public function __construct($config, $label, $ismulti, $tid) {
+        global $conf;
+        $this->config['format'] = DateFormatConverter::toDate($conf['dformat']);
+
+        parent::__construct($config, $label, $ismulti, $tid);
+    }
 
     /**
      * Return the editor to edit a single value
