@@ -102,7 +102,7 @@ class SearchConfig extends Search {
      * Replaces placeholders in the given filter value by the proper value
      *
      * @param string $filter
-     * @return string
+     * @return string|string[] Result may be an array when a multi column placeholder is used
      */
     protected function applyFilterVars($filter) {
         global $ID;
@@ -126,9 +126,9 @@ class SearchConfig extends Search {
             $filter
         );
 
-        // apply struct filter
-        while(preg_match('/\$STRUCT\.(.*?)\$/', $filter, $match)) {
-            $key = $match[1];
+        // apply struct column placeholder (we support only one!)
+        if(preg_match('/^(.*?)(?:\$STRUCT\.(.*?)\$)(.*?)$/', $filter, $match)) {
+            $key = $match[2];
             $column = $this->findColumn($key);
 
             if($column) {
@@ -138,14 +138,19 @@ class SearchConfig extends Search {
                 $schemaData->optionRawValue(true);
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
-                if(is_array($value)) $value = array_shift($value);
             } else {
                 $value = '';
             }
 
-            $key = preg_quote_cb($key);
-            $filter = preg_replace('/\$STRUCT\.' . $key . '\$/', $value, $filter, 1);
-
+            // apply any pre and postfixes, even when multi value
+            if(is_array($value)) {
+                $filter = array();
+                foreach($value as $item) {
+                    $filter[] = $match[1].$item.$match[3];
+                }
+            } else {
+                $filter = $match[1].$value.$match[3];
+            }
         }
 
         return $filter;

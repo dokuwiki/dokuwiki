@@ -112,7 +112,7 @@ class Search {
      * Adds a filter
      *
      * @param string $colname may contain an alias
-     * @param string $value
+     * @param string|string[] $value
      * @param string $comp @see self::COMPARATORS
      * @param string $op either 'OR' or 'AND'
      */
@@ -120,7 +120,7 @@ class Search {
         /* Convert certain filters into others
          * this reduces the number of supported filters to implement in types */
         if ($comp == '*~') {
-            $value = '*' . $value . '*';
+            $value = $this->filterWrapAsterisks($value);
             $comp = '~';
         } elseif ($comp == '<>') {
             $comp = '!=';
@@ -147,12 +147,51 @@ class Search {
 
         // we use asterisks, but SQL wants percents
         if($comp == 'LIKE' || $comp == 'NOT LIKE') {
-            $value = str_replace('*','%',$value);
+            $value = $this->filterChangeToLike($value);
         }
 
         // add the filter
         $this->filter[] = array($col, $value, $comp, $op);
     }
+
+    /**
+     * Wrap given value in asterisks
+     *
+     * @param string|string[] $value
+     * @return string|string[]
+     */
+    protected function filterWrapAsterisks($value) {
+        $map = function ($input) {
+            return "*$input*";
+        };
+
+        if(is_array($value)) {
+            $value = array_map($map, $value);
+        } else {
+            $value = $map($value);
+        }
+        return $value;
+    }
+
+    /**
+     * Change given string to use % instead of *
+     *
+     * @param string|string[] $value
+     * @return string|string[]
+     */
+    protected function filterChangeToLike($value) {
+        $map = function ($input) {
+            return str_replace('*','%',$input);
+        };
+
+        if(is_array($value)) {
+            $value = array_map($map, $value);
+        } else {
+            $value = $map($value);
+        }
+        return $value;
+    }
+
 
     /**
      * Set offset for the results
@@ -335,6 +374,7 @@ class Search {
                 $coltbl = $datatable;
                 $colnam = $col->getColName();
             }
+
             $col->getType()->filter($QB, $coltbl, $colnam, $comp, $value, $op); // type based filter
         }
 

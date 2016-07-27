@@ -3,6 +3,7 @@ namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
@@ -363,16 +364,28 @@ abstract class AbstractBaseType {
      * least a filter here but could do additional things like joining more
      * tables needed to handle more complex filters
      *
+     * Important: $value might be an array. If so, the filter should check against
+     * all provided values ORed together
+     *
      * @param QueryBuilder $QB the query so far
      * @param string $tablealias The table the currently saved value(s) are stored in
      * @param string $colname The column name on above table to use in the SQL
      * @param string $comp The SQL comparator (LIKE, NOT LIKE, =, !=, etc)
-     * @param string $value this is the user supplied value to compare against
+     * @param string|string[] $value this is the user supplied value to compare against. might be multiple
      * @param string $op the logical operator this filter should use (AND|OR)
      */
     public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
-        $pl = $QB->addValue($value);
-        $QB->filters()->where($op, "$tablealias.$colname $comp $pl");
+        /** @var QueryBuilderWhere $add Where additionional queries are added to*/
+        if(is_array($value)) {
+            $add = $QB->filters()->where($op); // sub where group
+            $op = 'OR';
+        } else {
+            $add = $QB->filters(); // main where clause
+        }
+        foreach((array) $value as $item) {
+            $pl = $QB->addValue($item);
+            $add->where($op, "$tablealias.$colname $comp $pl");
+        }
     }
 
     /**
