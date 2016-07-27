@@ -63,11 +63,11 @@ class Date extends AbstractBaseType {
         $value = parent::validate($value);
         list($value) = explode(' ', $value, 2); // strip off time if there is any
 
-        list($year, $month, $day) = explode('-',$value, 3);
-        if (!checkdate($month, $day, $year)) {
+        list($year, $month, $day) = explode('-', $value, 3);
+        if(!checkdate($month, $day, $year)) {
             throw new ValidationException('invalid date format');
         }
-        return $value;
+        return sprintf('%d-%02d-%02d', $year, $month, $day);
     }
 
 }
