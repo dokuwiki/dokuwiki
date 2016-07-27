@@ -11,7 +11,6 @@ namespace dokuwiki\plugin\struct\meta;
  */
 class ConfigParser {
 
-
     protected $config = array();
 
     /**
@@ -23,7 +22,7 @@ class ConfigParser {
      */
     public function __construct($lines) {
         /** @var \helper_plugin_struct_config $helper */
-        $helper = plugin_load('helper','struct_config');
+        $helper = plugin_load('helper', 'struct_config');
         $this->config = array(
             'limit' => 0,
             'dynfilters' => false,
@@ -66,8 +65,9 @@ class ConfigParser {
                 case 'align':
                     $this->config['align'] = $this->parseAlignments($val);
                     break;
+                case 'width':
                 case 'widths':
-                    $this->config['width'] = $this->parseValues($val);
+                    $this->config['widths'] = $this->parseWidths($val);
                     break;
                 case 'min':
                     $this->config['min'] = abs((int) $val);
@@ -90,7 +90,7 @@ class ConfigParser {
                 case 'filteror':
                 case 'or':
                     $flt = $helper->parseFilterLine($logic, $val);
-                    if ($flt) {
+                    if($flt) {
                         $this->config['filter'][] = $flt;
                     }
                     break;
@@ -158,7 +158,7 @@ class ConfigParser {
      * @param $val
      * @return array
      */
-    protected function parseSchema($val){
+    protected function parseSchema($val) {
         $schemas = array();
         $parts = explode(',', $val);
         foreach($parts as $part) {
@@ -194,6 +194,33 @@ class ConfigParser {
         }
 
         return $data;
+    }
+
+    /**
+     * Parse width data
+     *
+     * @param $val
+     * @return array
+     */
+    protected function parseWidths($val) {
+        $vals = explode(',', $val);
+        $vals = array_map('trim', $vals);
+        $len = count($vals);
+        for($i = 0; $i < $len; $i++) {
+            $val = trim(strtolower($vals[$i]));
+
+            if(preg_match('/^\d+.?(\d+)?(px|em|ex|ch|rem|%|in|cm|mm|q|pt|pc)$/', $val)) {
+                // proper CSS unit?
+                $vals[$i] = $val;
+            } else if(preg_match('/^\d+$/', $val)) {
+                // decimal only?
+                $vals[$i] = $val . 'px';
+            } else {
+                // invalid
+                $vals[$i] = '';
+            }
+        }
+        return $vals;
     }
 
     /**

@@ -68,4 +68,16 @@ class ConfigParser_struct_test extends StructTest {
         $this->assertEquals($expected_config, $actual_config);
     }
 
+    public function test_width() {
+        $lines = array('width: 5, 15px, 23.4em, meh, 10em');
+
+        $configParser = new meta\ConfigParser($lines);
+
+        $config = $configParser->getConfig();
+
+        $this->assertEquals(
+            array('5px', '15px', '23.4em', '', '10em'),
+            $config['widths']
+        );
+    }
 }
