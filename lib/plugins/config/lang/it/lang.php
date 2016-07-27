@@ -16,6 +16,7 @@
  * @author Matteo Pasotti <matteo@xquiet.eu>
  * @author snarchio@gmail.com
  * @author Torpedo <dgtorpedo@gmail.com>
+ * @author Riccardo <riccardofila@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
 $lang['error']                 = 'Impostazioni non aggiornate a causa di un valore non corretto, controlla le modifiche apportate e salva di nuovo.

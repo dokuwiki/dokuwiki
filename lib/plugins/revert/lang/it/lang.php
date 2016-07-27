@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Pietro Battiston toobaz@email.it
  * @author Diego Pierotto ita.translations@tiscali.it
  * @author ita.translations@tiscali.it
