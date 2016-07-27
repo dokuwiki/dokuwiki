@@ -114,6 +114,16 @@ class Type_Text_struct_test extends StructTest {
                 '(? || T.col || ? NOT LIKE ?)', // expect sql
                 array('before','after','%val%'), // expect opts
             ),
+
+            // complex multi-value
+            array(
+                'before', // prefix
+                'after', // postfix
+                'NOT LIKE', // comp
+                array('%val1%', '%val2%'), // multiple values
+                '((? || T.col || ? NOT LIKE ? OR ? || T.col || ? NOT LIKE ?))', // expect sql
+                array('before','after','%val1%', 'before','after','%val2%',), // expect opts
+            ),
         );
 
     }
