@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Pietro Battiston toobaz@email.it

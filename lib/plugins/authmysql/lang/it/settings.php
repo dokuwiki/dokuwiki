@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Mirko <malisan.mirko@gmail.com>
  * @author Francesco <francesco.cavalli@hotmail.com>
