@@ -19,7 +19,7 @@ class DateTime extends Date {
      * @param bool $ismulti
      * @param int $tid
      */
-    public function __construct($config, $label, $ismulti, $tid) {
+    public function __construct($config = null, $label = '', $ismulti = false, $tid = 0) {
         global $conf;
         $this->config['format'] = DateFormatConverter::toDate($conf['dformat']);
 
