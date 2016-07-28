@@ -37,6 +37,7 @@ class SchemaDataReplacement_struct_test extends StructTest {
 
         $as = new mock\Assignments();
         $as->assignPageSchema('start', 'foo');
+        $as->assignPageSchema('no:data', 'foo');
         $as->assignPageSchema('page1', 'bar');
         $as->assignPageSchema('page2', 'bar');
         $as->assignPageSchema('page2', 'bar');
@@ -86,6 +87,24 @@ class SchemaDataReplacement_struct_test extends StructTest {
         $this->assertEquals(array('page1', 'page2'), $opts, '$STRUCT.table.col$ should not require table to be selected');
         $this->assertEquals('data of page1', $result[0][1]->getValue());
         $this->assertEquals('data of page2', $result[1][1]->getValue());
+    }
+
+    public function test_emptyfield() {
+        global $ID;
+        $ID = 'no:data';
+        $lines = array(
+            "schema    : bar",
+            "cols      : %pageid%, data",
+            "filter    : %pageid% ~ \$STRUCT.foo.pages$"
+        );
+
+        $configParser = new meta\ConfigParser($lines);
+        $actual_config = $configParser->getConfig();
+
+        $search = new meta\SearchConfig($actual_config);
+        $result = $search->execute();
+
+        $this->assertEquals(0, count($result), 'if no pages a given, then none should be shown');
     }
 
 }
