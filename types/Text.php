@@ -2,6 +2,7 @@
 namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 
 class Text extends AbstractMultiBaseType {
 
@@ -30,23 +31,32 @@ class Text extends AbstractMultiBaseType {
      * @param string $tablealias
      * @param string $colname
      * @param string $comp
-     * @param string $value
+     * @param string|string[] $value
      * @param string $op
      */
     public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
-        $column = "$tablealias.$colname";
-
-        if ($this->config['prefix']) {
-            $pl = $QB->addValue($this->config['prefix']);
-            $column = "$pl || $column";
+        /** @var QueryBuilderWhere $add Where additionional queries are added to */
+        if(is_array($value)) {
+            $add = $QB->filters()->where($op); // sub where group
+            $op = 'OR';
+        } else {
+            $add = $QB->filters(); // main where clause
         }
-        if ($this->config['postfix']) {
-            $pl = $QB->addValue($this->config['postfix']);
-            $column = "$column || $pl";
-        }
+        foreach((array) $value as $item) {
+            $column = "$tablealias.$colname";
 
-        $pl = $QB->addValue($value);
-        $QB->filters()->where($op, "$column $comp $pl");
+            if($this->config['prefix']) {
+                $pl = $QB->addValue($this->config['prefix']);
+                $column = "$pl || $column";
+            }
+            if($this->config['postfix']) {
+                $pl = $QB->addValue($this->config['postfix']);
+                $column = "$column || $pl";
+            }
+
+            $pl = $QB->addValue($item);
+            $add->where($op, "$column $comp $pl");
+        }
     }
 
 }

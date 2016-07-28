@@ -50,9 +50,18 @@ class SearchConfig_struct_test extends StructTest {
         $this->assertEquals('test', $searchConfig->applyFilterVars('$STRUCT.first$'));
         $this->assertEquals('test', $searchConfig->applyFilterVars('$STRUCT.alias.first$'));
         $this->assertEquals('test', $searchConfig->applyFilterVars('$STRUCT.schema1.first$'));
-        $this->assertEquals('multi1', $searchConfig->applyFilterVars('$STRUCT.second$'));
-        $this->assertEquals('multi1', $searchConfig->applyFilterVars('$STRUCT.alias.second$'));
-        $this->assertEquals('multi1', $searchConfig->applyFilterVars('$STRUCT.schema1.second$'));
+
+        $this->assertEquals('pretestpost', $searchConfig->applyFilterVars('pre$STRUCT.first$post'));
+        $this->assertEquals('pretestpost', $searchConfig->applyFilterVars('pre$STRUCT.alias.first$post'));
+        $this->assertEquals('pretestpost', $searchConfig->applyFilterVars('pre$STRUCT.schema1.first$post'));
+
+        $this->assertEquals(array('multi1', 'multi2'), $searchConfig->applyFilterVars('$STRUCT.second$'));
+        $this->assertEquals(array('multi1', 'multi2'), $searchConfig->applyFilterVars('$STRUCT.alias.second$'));
+        $this->assertEquals(array('multi1', 'multi2'), $searchConfig->applyFilterVars('$STRUCT.schema1.second$'));
+
+        $this->assertEquals(array('premulti1post', 'premulti2post'), $searchConfig->applyFilterVars('pre$STRUCT.second$post'));
+        $this->assertEquals(array('premulti1post', 'premulti2post'), $searchConfig->applyFilterVars('pre$STRUCT.alias.second$post'));
+        $this->assertEquals(array('premulti1post', 'premulti2post'), $searchConfig->applyFilterVars('pre$STRUCT.schema1.second$post'));
 
         $this->assertEquals('', $searchConfig->applyFilterVars('$STRUCT.notexisting$'));
     }

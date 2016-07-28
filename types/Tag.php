@@ -3,6 +3,7 @@
 namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\SearchConfigParameters;
 
 class Tag extends AbstractMultiBaseType {
@@ -100,12 +101,21 @@ class Tag extends AbstractMultiBaseType {
      * @param string $tablealias
      * @param string $colname
      * @param string $comp
-     * @param string $value
+     * @param string|string[] $value
      * @param string $op
      */
     public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
-        $pl = $QB->addValue($value);
-        $QB->filters()->where($op, "LOWER(REPLACE($tablealias.$colname, ' ', '')) $comp LOWER(REPLACE($pl, ' ', ''))");
+        /** @var QueryBuilderWhere $add Where additionional queries are added to*/
+        if(is_array($value)) {
+            $add = $QB->filters()->where($op); // sub where group
+            $op = 'OR';
+        } else {
+            $add = $QB->filters(); // main where clause
+        }
+        foreach((array) $value as $item) {
+            $pl = $QB->addValue($item);
+            $add->where($op, "LOWER(REPLACE($tablealias.$colname, ' ', '')) $comp LOWER(REPLACE($pl, ' ', ''))");
+        }
     }
 
 }
