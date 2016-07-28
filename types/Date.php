@@ -35,9 +35,10 @@ class Date extends AbstractBaseType {
      *
      * @param string $name the form name where this has to be stored
      * @param string $value the current value
+     * @param bool $isRaw ignored
      * @return string html
      */
-    public function valueEditor($name, $value) {
+    public function valueEditor($name, $value, $isRaw = false) {
         $name = hsc($name);
         $value = hsc($value);
 

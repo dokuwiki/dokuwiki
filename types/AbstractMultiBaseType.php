@@ -19,11 +19,11 @@ abstract class AbstractMultiBaseType extends AbstractBaseType {
      * @return string
      */
     public function multiValueEditor($name, $values) {
-        $value = join(', ', $values);
+        $value = join(', ', array_map(array($this, 'rawValue'), $values));
 
         return
             '<div class="multiwrap">' .
-            $this->valueEditor($name, $value) .
+            $this->valueEditor($name, $value, true) .
             '</div>' .
             '<small>' .
             $this->getLang('multi') .
