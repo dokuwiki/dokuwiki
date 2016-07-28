@@ -120,12 +120,38 @@ class DateFormatConverter {
      * @return string
      */
     static public function toDate($strftime) {
-        // FIXME escape all non %letters
-        $date = str_replace(
-            array_keys(self::$strftime),
-            array_values(self::$strftime),
-            $strftime
-        );
+        $date = $strftime;
+
+        /* All characters that are not strftime placeholders need to be escaped */
+        {
+            $datekeys = array_keys(self::$date);
+            // create negative lookbehind regex to match all known date chars that are not a strtime pattern now
+            $from = array_map(
+                function ($in) {
+                    return '/(?<!%)' . $in . '/';
+                },
+                $datekeys
+            );
+            // those need to be escaped
+            $to = array_map(
+                function ($in) {
+                    return '\\' . $in;
+                },
+                $datekeys
+            );
+            // escape date chars
+            $date = preg_replace($from, $to, $date);
+        }
+
+        /* strftime to date conversion */
+        {
+            $date = str_replace(
+                array_keys(self::$strftime),
+                array_values(self::$strftime),
+                $date
+            );
+        }
+
         return $date;
     }
 
@@ -136,12 +162,38 @@ class DateFormatConverter {
      * @return string
      */
     static public function toStrftime($date) {
-        // FIXME handle escaped letters
-        $strftime = str_replace(
-            array_keys(self::$date),
-            array_values(self::$date),
-            $date
-        );
+        /* date to strftime conversion */
+        {
+            // create negative lookbehind regex to match all unescaped known chars
+            $from = array_keys(self::$date);
+            $from = array_map(
+                function ($in) {
+                    return '/(?<!\\\\)' . $in . '/';
+                },
+                $from
+            );
+            $to = array_values(self::$date);
+
+            // percents need escaping:
+            array_unshift($from, '/%/');
+            array_unshift($to, '%%');
+
+            // replace all the placeholders
+            $strftime = preg_replace($from, $to, $date);
+        }
+
+        /* unescape date escapes */
+        {
+            $datekeys = array_keys(self::$date);
+            $from = array_map(
+                function ($in) {
+                    return '/\\\\' . $in . '/';
+                },
+                $datekeys
+            );
+            $strftime = preg_replace($from, $datekeys, $strftime);
+        }
+
         return $strftime;
     }
 }
