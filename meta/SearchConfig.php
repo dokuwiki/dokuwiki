@@ -145,6 +145,10 @@ class SearchConfig extends Search {
                 $schemaData->optionRawValue(true);
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
+
+                if(is_array($value) && !count($value)) {
+                    $value = '';
+                }
             } else {
                 $value = '';
             }

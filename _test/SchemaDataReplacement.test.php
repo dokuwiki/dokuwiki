@@ -74,7 +74,7 @@ class SchemaDataReplacement_struct_test extends StructTest {
         $lines = array(
             "schema    : bar",
             "cols      : %pageid%, data",
-            "filter    : %pageid% ~ \$STRUCT.foo.pages$"
+            "filter    : %pageid% = \$STRUCT.foo.pages$"
         );
 
         $configParser = new meta\ConfigParser($lines);
@@ -95,7 +95,7 @@ class SchemaDataReplacement_struct_test extends StructTest {
         $lines = array(
             "schema    : bar",
             "cols      : %pageid%, data",
-            "filter    : %pageid% ~ \$STRUCT.foo.pages$"
+            "filter    : %pageid% = \$STRUCT.foo.pages$"
         );
 
         $configParser = new meta\ConfigParser($lines);
