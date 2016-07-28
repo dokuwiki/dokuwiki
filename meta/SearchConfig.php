@@ -129,11 +129,18 @@ class SearchConfig extends Search {
         // apply struct column placeholder (we support only one!)
         if(preg_match('/^(.*?)(?:\$STRUCT\.(.*?)\$)(.*?)$/', $filter, $match)) {
             $key = $match[2];
-            $column = $this->findColumn($key);
 
+            // we try to resolve the key via current schema aliases first, otherwise take it literally
+            $column = $this->findColumn($key);
             if($column) {
                 $label = $column->getLabel();
                 $table = $column->getTable();
+            } else {
+                list($table, $label) = explode('.', $key);
+            }
+
+            // get the data from the current page
+            if($table && $label) {
                 $schemaData = new SchemaData($table, $ID, 0);
                 $schemaData->optionRawValue(true);
                 $data = $schemaData->getDataArray();
@@ -146,10 +153,10 @@ class SearchConfig extends Search {
             if(is_array($value)) {
                 $filter = array();
                 foreach($value as $item) {
-                    $filter[] = $match[1].$item.$match[3];
+                    $filter[] = $match[1] . $item . $match[3];
                 }
             } else {
-                $filter = $match[1].$value.$match[3];
+                $filter = $match[1] . $value . $match[3];
             }
         }
 
