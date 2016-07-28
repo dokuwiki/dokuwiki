@@ -211,7 +211,7 @@ class AggregationTable {
             // width setting
             $width = '';
             if(isset($data['widths'][$num]) && $data['widths'][$num] != '-') {
-                $width = ' style="width: ' . $data['widths'][$num] . ';"';
+                $width = ' style="width: ' . $data['widths'][$num] . ';"'; // widths are prevalidated, no escape needed
             }
 
             // sort indicator and link
