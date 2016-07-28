@@ -32,9 +32,10 @@ class Wiki extends AbstractBaseType {
      *
      * @param string $name
      * @param string $value
+     * @param bool $isRaw ignored
      * @return string
      */
-    public function valueEditor($name, $value) {
+    public function valueEditor($name, $value, $isRaw = false) {
         $class = 'struct_'.strtolower($this->getClass());
         $name = hsc($name);
         $value = formText($value);

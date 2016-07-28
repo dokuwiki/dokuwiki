@@ -305,12 +305,15 @@ abstract class AbstractBaseType {
     /**
      * Return the editor to edit a single value
      *
-     * @param string $name the form name where this has to be stored
+     * @param string $name  the form name where this has to be stored
      * @param string $value the current value
+     * @param bool   $isRaw set to true if the value already contains the correct raw value. e.g. for multi fields
      * @return string html
      */
-    public function valueEditor($name, $value) {
-        $value = $this->rawValue($value);
+    public function valueEditor($name, $value, $isRaw = false) {
+        if (!$isRaw) {
+            $value = $this->rawValue($value);
+        }
         $class = 'struct_' . strtolower($this->getClass());
 
         // support the autocomplete configurations out of the box
