@@ -31,9 +31,10 @@ class DateTime extends Date {
      *
      * @param string $name the form name where this has to be stored
      * @param string $value the current value
+     * @param bool $isRaw ignored
      * @return string html
      */
-    public function valueEditor($name, $value) {
+    public function valueEditor($name, $value, $isRaw = false) {
         if($this->config['prefilltoday'] && !$value) {
             $value = date('Y-m-d H:i:s');
         }
