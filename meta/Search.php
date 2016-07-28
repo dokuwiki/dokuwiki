@@ -46,6 +46,8 @@ class Search {
 
     /** @var int the number of results */
     protected $count = -1;
+    /** @var  string[] the PIDs of the result rows */
+    protected $result_pids = null;
 
     /**
      * Search constructor.
@@ -233,6 +235,11 @@ class Search {
         return $this->count;
     }
 
+    public function getPids() {
+        if($this->result_pids === null) throw new StructException('PIDs are only accessible after executing the search');
+        return $this->result_pids;
+    }
+
     /**
      * Execute this search and return the result
      *
@@ -250,6 +257,7 @@ class Search {
         $res = $this->sqlite->query($sql, $opts);
         if($res === false) throw new StructException("SQL execution failed for\n\n$sql");
 
+        $this->result_pids = array();
         $result = array();
         $cursor = -1;
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
@@ -259,6 +267,8 @@ class Search {
             $cursor++;
             if($cursor < $this->range_begin) continue;
             if($this->range_end && $cursor >= $this->range_end) continue;
+
+            $this->result_pids[] = $row['PID'];
 
             $C = 0;
             $resrow = array();
