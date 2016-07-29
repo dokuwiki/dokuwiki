@@ -338,13 +338,6 @@ class Search {
                 $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
                 $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
-
-                // the %lastupdate% column needs datetime mangling
-                if(is_a($col, 'dokuwiki\\plugin\\struct\\meta\\RevisionColumn')) {
-                    $sel = $QB->getSelectStatement($CN);
-                    $QB->addSelectStatement("DATETIME($sel, 'unixepoch')", $CN);
-                }
-
                 $QB->addGroupByStatement($CN);
             }
         }
