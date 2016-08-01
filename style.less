@@ -241,3 +241,28 @@
     }
 }
 
+.struct_inlineditor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+
+    background-color: @ini_background;
+    color: @ini_text;
+    border: 1px solid @ini_border;
+    padding: 5px;
+
+    box-shadow: 5px 5px 10px 0 rgba(0,0,0,0.5);
+
+    .ctl {
+        margin-top: 5px;
+    }
+
+    .err {
+        font-size: 90%;
+        margin-top: 5px;
+        padding: 5px;
+        background-color: @ini_highlight;
+        color: @ini_text;
+    }
+}

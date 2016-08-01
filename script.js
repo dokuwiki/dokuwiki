@@ -22,7 +22,7 @@ jQuery(function () {
 
         jQuery.post(DOKU_BASE + 'lib/exe/ajax.php', data, fn, 'json')
             .fail(function (result) {
-                if(result.responseJSON) {
+                if (result.responseJSON) {
                     if (result.responseJSON.stacktrace) {
                         console.error(result.responseJSON.error + "\n" + result.responseJSON.stacktrace);
                     }
@@ -62,11 +62,11 @@ jQuery(function () {
      */
     function formatString(format) {
         var args = Array.prototype.slice.call(arguments, 1);
-        return format.replace(/{(\d+)}/g, function(match, number) {
+        return format.replace(/{(\d+)}/g, function (match, number) {
             return typeof args[number] != 'undefined'
                 ? args[number]
                 : match
-            ;
+                ;
         });
     }
 
@@ -88,12 +88,12 @@ jQuery(function () {
      */
     jQuery('input.struct_datetime').datepicker({
         dateFormat: 'yy-mm-dd',
-        onSelect: function(date, inst){
+        onSelect: function (date, inst) {
             var $input = jQuery(this);
             var both = inst.lastVal.split(' ', 2);
-            if(both.length == 2) {
+            if (both.length == 2) {
                 date += ' ' + both[1];
-            } else{
+            } else {
                 date += ' 00:00:00';
             }
             $input.val(date);
@@ -166,7 +166,7 @@ jQuery(function () {
         e.preventDefault();
         e.stopPropagation();
         var $me = jQuery(this);
-        if($me.parent().hasClass('active')) return; // nothing to do
+        if ($me.parent().hasClass('active')) return; // nothing to do
 
         $me.parent().parent().find('li').removeClass('active');
         $me.parent().addClass('active');
@@ -235,10 +235,98 @@ jQuery(function () {
     jQuery('a.deleteSchema').click(function (event) {
         var schema = jQuery(this).closest('tr').find('td:nth-child(2)').text();
         var page = jQuery(this).closest('tr').find('td:nth-child(1)').text();
-        if(!window.confirm(formatString(LANG.plugins.struct['confirmAssignmentsDelete'], schema, page))) {
+        if (!window.confirm(formatString(LANG.plugins.struct['confirmAssignmentsDelete'], schema, page))) {
             event.preventDefault();
             event.stopPropagation();
         }
-    })
+    });
+
+
+    jQuery('div.structaggregation table td').dblclick(function (e) {
+        var $self = jQuery(this);
+        var pid = $self.parent().data('pid');
+        var field = $self.parents('table').find('tr th').eq($self.index()).data('field');
+
+        if (!pid) return;
+        if (!field) return;
+
+        // prepare the edit overlay
+        var $div = jQuery('<div class="struct_inlineditor"><form></form><div class="err"></div></div>');
+        var $form = $div.find('form');
+        var $errors = $div.find('div.err').hide();
+        var $save = jQuery('<button type="submit">Save</button>');
+        var $cancel = jQuery('<button>Cancel</button>');
+        $form.append(jQuery('<input type="hidden" name="pid">').val(pid));
+        $form.append(jQuery('<input type="hidden" name="field">').val(field));
+        $form.append('<input type="hidden" name="call" value="plugin_struct_inline_save">');
+        $form.append(jQuery('<div class="ctl">').append($save).append($cancel));
+
+
+        /**
+         * load the editor
+         */
+        jQuery.post(
+            DOKU_BASE + 'lib/exe/ajax.php',
+            {
+                call: 'plugin_struct_inline_editor',
+                pid: pid,
+                field: field
+            },
+            function (data) {
+                if (!data) return; // we're done
+
+                $form.prepend(data);
+
+                // show
+                jQuery('.dokuwiki').append($div);
+                $div.position({
+                    my: 'left top',
+                    at: 'left top',
+                    of: $self
+                });
+
+                $form.find('input, textarea').first().focus();
+
+                //FIXME apply JS handlers for multi edits?
+            }
+        );
+
+
+        /**
+         * Save the data, then close the form
+         */
+        $form.submit(function (e) {
+            e.preventDefault();
+            jQuery.post(
+                DOKU_BASE + 'lib/exe/ajax.php',
+                $form.serialize()
+            )
+                .done(function (data) {
+                    // save succeeded display new vlaue and close editor
+                    $self.html(data);
+                    $div.remove();
+                })
+                .fail(function (data) {
+                    // something went wrong, display error
+                    $errors.text(data.responseText).show();
+                })
+            ;
+
+
+        });
+
+        /**
+         * Close the editor without saving
+         */
+        $cancel.click(function (e) {
+
+            // FIXME unlock page
+
+            e.preventDefault();
+            $div.remove();
+        });
+
+
+    });
 
 });
