@@ -10,6 +10,7 @@
  * @author Ahmad Abd-Elghany <tolpa1@gmail.com>
  * @author alhajr <alhajr300@gmail.com>
  * @author Mohamed Belhsine <b.mohamed897@gmail.com>
+ * @author Klapin <klapinklapin@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -75,6 +76,7 @@ $lang['regmissing']            = 'عذرا، عليك ملء جميع الحقو
 $lang['reguexists']            = 'عذرا، يوجد مشترك بنفس الاسم.';
 $lang['regsuccess']            = 'أنشئ المستخدم و ارسلت كلمة السر بالبريد.';
 $lang['regsuccess2']           = 'أنشئ المستخدم.';
+$lang['regfail']               = 'TEST test test test';
 $lang['regmailfail']           = 'حدث خطأ فى إرسال رسالة كلمة السر. يرجى مراسلة المدير!';
 $lang['regbadmail']            = 'يبدو البريد الإلكتروني المعطى غيرَ صحيح، إن كنت تظن أن هذا خطأ، راسل المدير';
 $lang['regbadpass']            = 'كلمتا المرور غير متطابقتين، حاول مرة أخرى.';
@@ -345,5 +347,5 @@ $lang['currentns']             = 'مساحة الاسم الحالية';
 $lang['searchresult']          = 'نتيجة البحث';
 $lang['plainhtml']             = 'نص HTML غير منسق';
 $lang['wikimarkup']            = 'علامات الوكي';
-$lang['email_signature_text']       = 'أنشئت هذه الرسالة من دوكو ويكي في
+$lang['email_signature_text']  = 'أنشئت هذه الرسالة من دوكو ويكي في
 @DOKUWIKIURL@';
