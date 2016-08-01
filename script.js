@@ -232,6 +232,9 @@ jQuery(function () {
         });
     });
 
+    /**
+     * Confirm Schema Deletion
+     */
     jQuery('a.deleteSchema').click(function (event) {
         var schema = jQuery(this).closest('tr').find('td:nth-child(2)').text();
         var page = jQuery(this).closest('tr').find('td:nth-child(1)').text();
@@ -241,8 +244,14 @@ jQuery(function () {
         }
     });
 
-
+    /**
+     * Inline Editor
+     *
+     * @todo move to separate file
+     */
     jQuery('div.structaggregation table td').dblclick(function (e) {
+        e.preventDefault();
+
         var $self = jQuery(this);
         var pid = $self.parent().data('pid');
         var field = $self.parents('table').find('tr th').eq($self.index()).data('field');
@@ -260,7 +269,6 @@ jQuery(function () {
         $form.append(jQuery('<input type="hidden" name="field">').val(field));
         $form.append('<input type="hidden" name="call" value="plugin_struct_inline_save">');
         $form.append(jQuery('<div class="ctl">').append($save).append($cancel));
-
 
         /**
          * load the editor
@@ -291,7 +299,6 @@ jQuery(function () {
             }
         );
 
-
         /**
          * Save the data, then close the form
          */
@@ -319,14 +326,18 @@ jQuery(function () {
          * Close the editor without saving
          */
         $cancel.click(function (e) {
-
-            // FIXME unlock page
+            // unlock page
+            jQuery.post(
+                DOKU_BASE + 'lib/exe/ajax.php',
+                {
+                    call: 'plugin_struct_inline_cancel',
+                    pid: pid
+                }
+            );
 
             e.preventDefault();
             $div.remove();
         });
-
-
     });
 
 });

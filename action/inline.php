@@ -64,42 +64,54 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
                 echo $e->getMessage();
             }
         }
+
+        if(substr($event->data,$len) == 'cancel') {
+            $this->inline_cancel();
+        }
     }
 
-
+    /**
+     * Creates the inline editor
+     */
     protected function inline_editor() {
+        // silently fail when editing not possible
         if(!$this->initFromInput()) return;
+        if(auth_quickaclcheck($this->pid) < AUTH_EDIT) return;
+        if(checklock($this->pid)) return;
 
+        // lock page
+        lock($this->pid);
 
-        // FIXME check read permission
-
-        // FIXME lock page
-
+        // output the editor
         $value = $this->schemadata->getDataColumn($this->column);
         echo '<div>';
         echo $value->getValueEditor('entry');
         echo '</div>';
-
         $hint = $this->column->getType()->getTranslatedHint();
         if($hint) {
             echo '<div class="hint">';
             echo hsc($hint);
             echo '</div>';
         }
+
+        // csrf protection
+        formSecurityToken();
     }
 
+    /**
+     * Save the data posted by the inline editor
+     */
     protected function inline_save() {
         global $INPUT;
 
-        if(!$this->initFromInput()) {
+        if (
+            !$this->initFromInput() || // initialize
+            getSecurityToken() != $INPUT->str('sectoc') || // csrf check
+            auth_quickaclcheck($this->pid) < AUTH_EDIT || // edit permissions
+            checklock($this->pid) // page is locked
+        ) {
             throw new StructException('inline save error');
         }
-
-        // FIXME
-
-        // FIXME handle CSRF protection
-        // FIXME check write permission
-        // FIXME make sure page still locked
 
         // validate
         $value = $INPUT->param('entry');
@@ -118,14 +130,24 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         $helper = plugin_load('helper', 'struct');
         $helper->saveData($this->pid, $tosave, 'inline edit');
 
+        // unlock
+        unlock($this->pid);
 
         // reinit then render
         $this->initFromInput();
         $value = $this->schemadata->getDataColumn($this->column);
         $R = new Doku_Renderer_xhtml();
         $value->render($R, 'xhtml'); // FIXME use configured default renderer
-
         echo $R->doc;
+    }
+
+    /**
+     * Unlock a page (on cancel action)
+     */
+    protected function inline_cancel() {
+        global $INPUT;
+        $pid = $INPUT->str('pid');
+        unlock($pid);
     }
 
     /**
