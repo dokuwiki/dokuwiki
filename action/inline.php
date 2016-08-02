@@ -10,7 +10,6 @@
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\SchemaData;
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Title;
 use dokuwiki\plugin\struct\meta\Validator;
 
 if(!defined('DOKU_INC')) die();
@@ -47,15 +46,15 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
      */
     public function handle_ajax(Doku_Event $event, $param) {
         $len = strlen('plugin_struct_inline_');
-        if(substr($event->data, 0,  $len) != 'plugin_struct_inline_') return;
+        if(substr($event->data, 0, $len) != 'plugin_struct_inline_') return;
         $event->preventDefault();
         $event->stopPropagation();
 
-        if(substr($event->data,$len) == 'editor') {
+        if(substr($event->data, $len) == 'editor') {
             $this->inline_editor();
         }
 
-        if(substr($event->data,$len) == 'save') {
+        if(substr($event->data, $len) == 'save') {
             try {
                 $this->inline_save();
             } catch(StructException $e) {
@@ -65,7 +64,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
             }
         }
 
-        if(substr($event->data,$len) == 'cancel') {
+        if(substr($event->data, $len) == 'cancel') {
             $this->inline_cancel();
         }
     }
@@ -104,13 +103,21 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
     protected function inline_save() {
         global $INPUT;
 
-        if (
-            !$this->initFromInput() || // initialize
-            getSecurityToken() != $INPUT->str('sectoc') || // csrf check
-            auth_quickaclcheck($this->pid) < AUTH_EDIT || // edit permissions
-            checklock($this->pid) // page is locked
+        if(!$this->initFromInput()) {
+            throw new StructException('inline save error: init');
+        }
+        // our own implementation of checkSecurityToken because we don't want the msg() call
+        if(
+            $INPUT->server->str('REMOTE_USER') &&
+            getSecurityToken() != $INPUT->str('sectok')
         ) {
-            throw new StructException('inline save error');
+            throw new StructException('inline save error: csrf');
+        }
+        if(auth_quickaclcheck($this->pid) < AUTH_EDIT) {
+            throw new StructException('inline save error: acl');
+        }
+        if(checklock($this->pid)) {
+            throw new StructException('inline save error: lock');
         }
 
         // validate
@@ -174,7 +181,6 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
             $this->schemadata = null;
             return false;
         }
-
 
         $this->column = $this->schemadata->findColumn($field);
         if(!$this->column || !$this->column->isVisibleInEditor()) {
