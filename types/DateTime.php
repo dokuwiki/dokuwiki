@@ -2,6 +2,8 @@
 namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\DateFormatConverter;
+use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
 class DateTime extends Date {
@@ -71,6 +73,50 @@ class DateTime extends Date {
         }
 
         return sprintf("%d-%02d-%02d %02d:%02d:%02d", $year, $month, $day, $h, $m, $s);
+    }
+
+    /**
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $alias
+     */
+    public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
+        // when accessing the revision column we need to convert from Unix timestamp
+        $col = "$tablealias.$colname";
+        if($colname == 'rev') {
+            $col = "DATETIME($col, 'unixepoch')";
+        }
+
+        $QB->addSelectStatement($col, $alias);
+    }
+
+    /**
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $comp
+     * @param string|\string[] $value
+     * @param string $op
+     */
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        // when accessing the revision column we need to convert from Unix timestamp
+        $col = "$tablealias.$colname";
+        if($colname == 'rev') {
+            $col = "DATETIME($col, 'unixepoch')";
+        }
+
+        /** @var QueryBuilderWhere $add Where additionional queries are added to*/
+        if(is_array($value)) {
+            $add = $QB->filters()->where($op); // sub where group
+            $op = 'OR';
+        } else {
+            $add = $QB->filters(); // main where clause
+        }
+        foreach((array) $value as $item) {
+            $pl = $QB->addValue($item);
+            $add->where($op, "$col $comp $pl");
+        }
     }
 
 }

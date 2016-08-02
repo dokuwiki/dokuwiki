@@ -80,6 +80,7 @@ class Search {
      * @param string $colname may contain an alias
      */
     public function addColumn($colname) {
+        if($this->processWildcard($colname)) return; // wildcard?
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
         $this->columns[] = $col;
@@ -348,13 +349,6 @@ class Search {
                 $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
                 $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
-
-                // the %lastupdate% column needs datetime mangling
-                if(is_a($col, 'dokuwiki\\plugin\\struct\\meta\\RevisionColumn')) {
-                    $sel = $QB->getSelectStatement($CN);
-                    $QB->addSelectStatement("DATETIME($sel, 'unixepoch')", $CN);
-                }
-
                 $QB->addGroupByStatement($CN);
             }
         }
@@ -407,6 +401,56 @@ class Search {
         return $this->columns;
     }
 
+    /**
+     * Checks if the given column is a * wildcard
+     *
+     * If it's a wildcard all matching columns are added to the column list, otherwise
+     * nothing happens
+     *
+     * @param string $colname
+     * @return bool was wildcard?
+     */
+    protected function processWildcard($colname) {
+        list($table, $colname) = $this->resolveColumn($colname);
+        if($colname !== '*') return false;
+
+        // no table given? assume the first is meant
+        if($table === null) {
+            $schema_list = array_keys($this->schemas);
+            $table = $schema_list[0];
+        }
+
+        $schema = $this->schemas[$table];
+        if(!$schema) return false;
+        $this->columns = array_merge($this->columns, $schema->getColumns(false));
+        return true;
+    }
+
+    /**
+     * Split a given column name into table and column
+     *
+     * Handles Aliases. Table might be null if none given.
+     *
+     * @param $colname
+     * @return string[] (colname, table)
+     */
+    protected function resolveColumn($colname) {
+        if(!$this->schemas) throw new StructException('noschemas');
+
+        // resolve the alias or table name
+        list($table, $colname) = explode('.', $colname, 2);
+        if(!$colname) {
+            $colname = $table;
+            $table = null;
+        }
+        if($table && isset($this->aliases[$table])) {
+            $table = $this->aliases[$table];
+        }
+
+        if(!$colname) throw new StructException('nocolname');
+
+        return array($colname, $table);
+    }
 
     /**
      * Find a column to be used in the search
@@ -429,21 +473,15 @@ class Search {
             return new RevisionColumn(0, new DateTime(),  $schema_list[0]);
         }
 
-        // resolve the alias or table name
-        list($table, $colname) = explode('.', $colname, 2);
-        if(!$colname) {
-            $colname = $table;
-            $table = '';
-        }
-        if($table && isset($this->aliases[$table])) {
-            $table = $this->aliases[$table];
-        }
-
-        if(!$colname) throw new StructException('nocolname');
+        list($table, $colname) = $this->resolveColumn($colname);
 
         // if table name given search only that, otherwise try all for matching column name
-        if($table) {
-            $schemas = array($table => $this->schemas[$table]);
+        if($table !== null) {
+            if(isset($this->schemas[$table])) {
+                $schemas = array($table => $this->schemas[$table]);
+            } else {
+                return false;
+            }
         } else {
             $schemas = $this->schemas;
         }

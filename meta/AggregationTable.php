@@ -191,9 +191,11 @@ class AggregationTable {
         }
 
         // show all headers
-        foreach($this->data['headers'] as $num => $header) {
-            if(!isset($this->columns[$num])) break; // less columns where available then expected
-            $column = $this->columns[$num];
+        foreach($this->columns as $num => $column) {
+            $header = '';
+            if(isset($this->data['headers'][$num])) {
+                $header = $this->data['headers'][$num];
+            }
 
             // use field label if no header was set
             if(blank($header)) {
