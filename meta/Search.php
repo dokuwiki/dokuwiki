@@ -401,7 +401,7 @@ class Search {
      * @return bool was wildcard?
      */
     protected function processWildcard($colname) {
-        list($table, $colname) = $this->resolveColumn($colname);
+        list($colname, $table) = $this->resolveColumn($colname);
         if($colname !== '*') return false;
 
         // no table given? assume the first is meant
@@ -422,7 +422,7 @@ class Search {
      * Handles Aliases. Table might be null if none given.
      *
      * @param $colname
-     * @return string[] (colname, table)
+     * @return array (colname, table)
      */
     protected function resolveColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
@@ -463,15 +463,11 @@ class Search {
             return new RevisionColumn(0, new DateTime(),  $schema_list[0]);
         }
 
-        list($table, $colname) = $this->resolveColumn($colname);
+        list($colname, $table) = $this->resolveColumn($colname);
 
         // if table name given search only that, otherwise try all for matching column name
         if($table !== null) {
-            if(isset($this->schemas[$table])) {
-                $schemas = array($table => $this->schemas[$table]);
-            } else {
-                return false;
-            }
+            $schemas = array($table => $this->schemas[$table]);
         } else {
             $schemas = $this->schemas;
         }
