@@ -83,9 +83,9 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
         // output the editor
         $value = $this->schemadata->getDataColumn($this->column);
-        echo '<div>';
+        echo '<label data-column="'.hsc($this->column->getFullQualifiedLabel()).'">';
         echo $value->getValueEditor('entry');
-        echo '</div>';
+        echo '</label>';
         $hint = $this->column->getType()->getTranslatedHint();
         if($hint) {
             echo '<div class="hint">';
