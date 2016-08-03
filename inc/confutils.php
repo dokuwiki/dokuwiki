@@ -360,7 +360,7 @@ function conf_decodeString($str) {
     switch (substr($str,0,3)) {
         case '<b>' : return base64_decode(substr($str,3));
         case '<u>' : return convert_uudecode(substr($str,3));
-        default:  // not encode (or unknown)
+        default:  // not encoded (or unknown)
                      return $str;
     }
 }
