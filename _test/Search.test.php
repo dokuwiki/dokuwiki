@@ -23,7 +23,7 @@ class Search_struct_test extends StructTest {
         $page = 'page01';
         $as->assignPageSchema($page, 'schema1');
         $as->assignPageSchema($page, 'schema2');
-        saveWikiText($page,"===== TestTitle =====\nabc", "Summary");
+        saveWikiText($page, "===== TestTitle =====\nabc", "Summary");
         p_get_metadata($page);
         $this->saveData(
             $page,
@@ -68,8 +68,6 @@ class Search_struct_test extends StructTest {
                 'afourth' => 'fourth data'
             )
         );
-
-
 
         for($i = 10; $i <= 20; $i++) {
             $this->saveData(
@@ -285,4 +283,25 @@ class Search_struct_test extends StructTest {
         $this->assertEquals($expected_filter[0][3], $search->filter[0][3], $msg);
     }
 
+    public function test_wildcard() {
+        $search = new mock\Search();
+        $search->addSchema('schema2', 'alias');
+        $search->addColumn('*');
+        $this->assertEquals(4, count($search->getColumns()));
+
+        $search = new mock\Search();
+        $search->addSchema('schema2', 'alias');
+        $search->addColumn('schema2.*');
+        $this->assertEquals(4, count($search->getColumns()));
+
+        $search = new mock\Search();
+        $search->addSchema('schema2', 'alias');
+        $search->addColumn('alias.*');
+        $this->assertEquals(4, count($search->getColumns()));
+
+        $search = new mock\Search();
+        $search->addSchema('schema2', 'alias');
+        $search->addColumn('nope.*');
+        $this->assertEquals(0, count($search->getColumns()));
+    }
 }
