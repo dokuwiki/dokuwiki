@@ -49,6 +49,7 @@ class action_plugin_struct_diff extends DokuWiki_Action_Plugin {
         $event->result .= "\n---- struct data ----\n";
         foreach($tables as $table) {
             $schemadata = new SchemaData($table, $id, $rev);
+            $schemadata->optionRawValue(true);
             $event->result .= $schemadata->getDataPseudoSyntax();
         }
         $event->result .= "----\n";
