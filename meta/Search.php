@@ -2,7 +2,6 @@
 
 namespace dokuwiki\plugin\struct\meta;
 
-use dokuwiki\plugin\struct\types\Date;
 use dokuwiki\plugin\struct\types\DateTime;
 use dokuwiki\plugin\struct\types\Page;
 
@@ -122,10 +121,10 @@ class Search {
     public function addFilter($colname, $value, $comp, $op = 'OR') {
         /* Convert certain filters into others
          * this reduces the number of supported filters to implement in types */
-        if ($comp == '*~') {
+        if($comp == '*~') {
             $value = $this->filterWrapAsterisks($value);
             $comp = '~';
-        } elseif ($comp == '<>') {
+        } elseif($comp == '<>') {
             $comp = '!=';
         }
 
@@ -184,7 +183,7 @@ class Search {
      */
     protected function filterChangeToLike($value) {
         $map = function ($input) {
-            return str_replace('*','%',$input);
+            return str_replace('*', '%', $input);
         };
 
         if(is_array($value)) {
@@ -194,7 +193,6 @@ class Search {
         }
         return $value;
     }
-
 
     /**
      * Set offset for the results
@@ -236,6 +234,13 @@ class Search {
         return $this->count;
     }
 
+    /**
+     * Returns the PID associated with each result row
+     *
+     * Important: this may only be called after running @see execute()
+     *
+     * @return \string[]
+     */
     public function getPids() {
         if($this->result_pids === null) throw new StructException('PIDs are only accessible after executing the search');
         return $this->result_pids;
@@ -262,7 +267,7 @@ class Search {
         $result = array();
         $cursor = -1;
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
-            if ($this->isRowEmpty($row)) {
+            if($this->isRowEmpty($row)) {
                 continue;
             }
             $cursor++;
@@ -302,7 +307,7 @@ class Search {
         // basic tables
         $first_table = '';
         foreach($this->schemas as $schema) {
-            $datatable = 'data_'.$schema->getTable();
+            $datatable = 'data_' . $schema->getTable();
             if($first_table) {
                 // follow up tables
                 $QB->addLeftJoin($first_table, $datatable, $datatable, "$first_table.pid = $datatable.pid");
@@ -344,11 +349,11 @@ class Search {
                      $MN.colref = {$col->getColref()}"
                 );
 
-                $col->getType()->select($QB, $MN, 'value' , $CN);
+                $col->getType()->select($QB, $MN, 'value', $CN);
                 $sel = $QB->getSelectStatement($CN);
                 $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $CN);
             } else {
-                $col->getType()->select($QB, 'data_'.$col->getTable(), $col->getColName() , $CN);
+                $col->getType()->select($QB, 'data_' . $col->getTable(), $col->getColName(), $CN);
                 $QB->addGroupByStatement($CN);
             }
         }
@@ -386,7 +391,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $QB->addOrderBy($col->getFullColName(false) . ' '.(($asc) ? 'ASC' : 'DESC'));
+            $QB->addOrderBy($col->getFullColName(false) . ' ' . (($asc) ? 'ASC' : 'DESC'));
         }
 
         return $QB->getSQL();
@@ -467,10 +472,10 @@ class Search {
             return new PageColumn(0, new Page(), $schema_list[0]);
         }
         if($colname == '%title%') {
-            return new PageColumn(0, new Page(array('usetitles' => true)),  $schema_list[0]);
+            return new PageColumn(0, new Page(array('usetitles' => true)), $schema_list[0]);
         }
         if($colname == '%lastupdate%') {
-            return new RevisionColumn(0, new DateTime(),  $schema_list[0]);
+            return new RevisionColumn(0, new DateTime(), $schema_list[0]);
         }
 
         list($colname, $table) = $this->resolveColumn($colname);
@@ -506,7 +511,7 @@ class Search {
         foreach($this->columns as $col) {
             $val = $rowColumns["C$C"];
             $C += 1;
-            if (blank($val) || is_a($col->getType(),'dokuwiki\plugin\struct\types\Page') && $val == $rowColumns["PID"]) {
+            if(blank($val) || is_a($col->getType(), 'dokuwiki\plugin\struct\types\Page') && $val == $rowColumns["PID"]) {
                 continue;
             }
             return false;
