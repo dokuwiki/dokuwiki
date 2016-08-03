@@ -638,7 +638,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function uninstall() {
         $this->purgeCache();
-        return io_rmdir($this->getInstallDir(), true);
+        if(io_rmdir($this->getInstallDir(), true)) {
+            $this->triggerEvent($this->getID(), 'uninstall');
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -655,6 +659,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         global $plugin_controller;
         if ($plugin_controller->enable($this->base)) {
             $this->purgeCache();
+            $this->triggerEvent($this->getID(), 'enable');
             return true;
         } else {
             return $this->getLang('pluginlistsaveerror');
@@ -675,6 +680,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
         if ($plugin_controller->disable($this->base)) {
             $this->purgeCache();
+            $this->triggerEvent($this->getID(), 'disable');
             return true;
         } else {
             return $this->getLang('pluginlistsaveerror');
@@ -937,6 +943,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         // cleanup
         if($tmp) io_rmdir($tmp, true);
 
+        // trigger for each extension
+        foreach($installed_extensions as $ext => $info) {
+            $this->triggerEvent($ext, $info['action']);
+        }
+
         return $installed_extensions;
     }
 
@@ -1155,6 +1166,19 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 io_rmdir($file, true);
             }
         }
+    }
+
+    /**
+     * Trigger a custom event when an extension has been changed
+     *
+     * @param string $extname
+     * @param string $action (install, update, uninstall, disable, enable)
+     */
+    protected function triggerEvent($extname, $action) {
+        $extension = new helper_plugin_extension_extension();
+        $extension->setExtension($extname);
+        $data = array('extension' => $extension, 'action' => $action);
+        trigger_event('PLUGIN_EXTENSION_CHANGE', $data, null, false);
     }
 }
 
