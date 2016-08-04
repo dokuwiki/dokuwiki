@@ -313,16 +313,19 @@ class Search {
                 $QB->addLeftJoin($first_table, $datatable, $datatable, "$first_table.pid = $datatable.pid");
             } else {
                 // first table
-                $QB->addTable('schema_assignments');
+
+                if(!$schema->isLookup()) {
+                    $QB->addTable('schema_assignments');
+                    $QB->filters()->whereAnd("$datatable.pid = schema_assignments.pid");
+                    $QB->filters()->whereAnd("schema_assignments.tbl = '{$schema->getTable()}'");
+                    $QB->filters()->whereAnd("schema_assignments.assigned = 1");
+                    $QB->filters()->whereAnd("GETACCESSLEVEL($datatable.pid) > 0");
+                    $QB->filters()->whereAnd("PAGEEXISTS($datatable.pid) = 1");
+                }
+
                 $QB->addTable($datatable);
                 $QB->addSelectColumn($datatable, 'pid', 'PID');
                 $QB->addGroupByColumn($datatable, 'pid');
-
-                $QB->filters()->whereAnd("$datatable.pid = schema_assignments.pid");
-                $QB->filters()->whereAnd("schema_assignments.tbl = '{$schema->getTable()}'");
-                $QB->filters()->whereAnd("schema_assignments.assigned = 1");
-                $QB->filters()->whereAnd("GETACCESSLEVEL($datatable.pid) > 0");
-                $QB->filters()->whereAnd("PAGEEXISTS($datatable.pid) = 1");
 
                 $first_table = $datatable;
             }
