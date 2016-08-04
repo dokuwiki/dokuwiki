@@ -52,6 +52,11 @@ class AggregationTable {
     protected $sums;
 
     /**
+     * @var bool skip full table when no results found
+     */
+    protected $simplenone = true;
+
+    /**
      * @todo we might be able to get rid of this helper and move this to SearchConfig
      * @var \helper_plugin_struct_config
      */
@@ -87,7 +92,7 @@ class AggregationTable {
     public function render() {
 
         // abort early if there are no results at all (not filtered)
-        if(!$this->resultCount && !$this->isDynamicallyFiltered()) {
+        if(!$this->resultCount && !$this->isDynamicallyFiltered() && $this->simplenone) {
             $this->startScope();
             $this->renderer->cdata($this->helper->getLang('none'));
             $this->finishScope();

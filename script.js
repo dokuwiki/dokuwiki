@@ -7,6 +7,9 @@ jQuery(function () {
     /* DOKUWIKI:include script/SchemaEditor.js */
     SchemaEditor();
 
+    /* DOKUWIKI:include script/LookupEditor.js */
+    LookupEditor(jQuery('div.structaggregation table'));
+
     /* DOKUWIKI:include script/InlineEditor.js */
     InlineEditor(jQuery('div.structaggregation table'));
 });

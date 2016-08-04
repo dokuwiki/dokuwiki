@@ -73,7 +73,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
 
         /** @var Doku_Form $form */
         $form = $event->data;
-        $html = "<div class=\"struct\">$html</div>";
+        $html = "<div class=\"struct_entry_form\">$html</div>";
         $pos = $form->findElementById('wiki__editbar'); // insert the form before the main buttons
         $form->insertElement($pos, $html);
 
@@ -243,7 +243,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
      * @param String $name field's name
      * @return string
      */
-    protected function makeField(Value $field, $name) {
+    public function makeField(Value $field, $name) {
         $trans = hsc($field->getColumn()->getTranslatedLabel());
         $hint  = hsc($field->getColumn()->getTranslatedHint());
         $class = $hint ? 'hashint' : '';
