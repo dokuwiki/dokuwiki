@@ -364,7 +364,7 @@ class AggregationTable {
      */
     protected function renderEmptyResult() {
         $this->renderer->tablerow_open();
-        $this->renderer->tablecell_open(count($this->data['cols']) + $this->data['rownumbers'], 'center');
+        $this->renderer->tablecell_open(count($this->columns) + $this->data['rownumbers'], 'center');
         $this->renderer->cdata($this->helper->getLang('none'));
         $this->renderer->tablecell_close();
         $this->renderer->tablerow_close();
