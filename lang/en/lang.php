@@ -24,6 +24,8 @@ $lang['btn_export'] = 'Export';
 $lang['import'] = 'Import a Schema from JSON';
 $lang['btn_import'] = 'Import';
 $lang['import_warning'] = 'Warning: this will overwrite already defined fields!';
+$lang['page schema'] = 'Page Schema:';
+$lang['lookup schema'] = 'Lookup Schema:';
 
 $lang['del_confirm'] = 'Enter schema name to confirm deletion';
 $lang['del_fail'] = 'Schema names did not match. Schema not deleted';

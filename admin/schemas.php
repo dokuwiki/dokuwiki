@@ -113,7 +113,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
             echo '</ul>';
             echo '<div class="panelHeader"></div>';
 
-            $editor = new SchemaEditor(new Schema($table));
+            $editor = new SchemaEditor(new Schema($table, 0, $INPUT->bool('lookup')));
             echo $editor->getEditor();
             echo $this->html_json();
             echo $this->html_delete();
@@ -178,10 +178,13 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
      */
     protected function html_newschema() {
         $form = new Form();
+        $form->addClass('struct_newschema');
         $form->addFieldsetOpen($this->getLang('create'));
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'struct_schemas');
         $form->addTextInput('table', $this->getLang('schemaname'));
+        $form->addRadioButton('lookup', $this->getLang('page schema'))->val('0')->attr('checked', 'checked');
+        $form->addRadioButton('lookup', $this->getLang('lookup schema'))->val('1');
         $form->addButton('', $this->getLang('save'));
         $form->addHTML('<p>' . $this->getLang('createhint') . '</p>'); // FIXME is that true? we probably could
         $form->addFieldsetClose();
