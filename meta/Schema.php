@@ -27,6 +27,9 @@ class Schema {
     /** @var string name of the associated table */
     protected $table = '';
 
+    /** @var bool is this a lookup schema? */
+    protected $islookup = false;
+
     /**
      * @var string the current checksum of this schema
      */
@@ -49,8 +52,9 @@ class Schema {
      *
      * @param string $table The table this schema is for
      * @param int $ts The timestamp for when this schema was valid, 0 for current
+     * @param bool $islookup only used when creating a new schema, makes the new schema a lookup
      */
-    public function __construct($table, $ts = 0) {
+    public function __construct($table, $ts = 0, $islookup = false) {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $info = $helper->getInfo();
@@ -85,6 +89,9 @@ class Schema {
             $result = array_shift($schema);
             $this->id = $result['id'];
             $this->chksum = $result['chksum'];
+            $this->islookup = $result['islookup'];
+        } else {
+            $this->islookup = $islookup;
         }
         $this->sqlite->res_close($res);
         if(!$this->id) return;
@@ -221,6 +228,13 @@ class Schema {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @return bool is this a lookup schema?
+     */
+    public function isLookup() {
+        return $this->islookup;
     }
 
     /**
