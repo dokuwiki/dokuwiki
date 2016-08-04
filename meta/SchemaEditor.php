@@ -45,6 +45,7 @@ class SchemaEditor {
         $form->setHiddenField('page', 'struct_schemas');
         $form->setHiddenField('table', $this->schema->getTable());
         $form->setHiddenField('schema[id]', $this->schema->getId());
+        $form->setHiddenField('schema[islookup]', $this->schema->isLookup());
 
         $form->addHTML('<table class="inline">');
         $form->addHTML("<tr>

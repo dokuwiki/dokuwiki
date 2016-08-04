@@ -55,7 +55,7 @@ class SchemaBuilder {
     public function __construct($table, $data) {
         $this->table = $table;
         $this->data = $data;
-        $this->oldschema = new Schema($table);
+        $this->oldschema = new Schema($table, 0, $data['islookup']);
 
         $this->helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $this->helper->getDB();
@@ -75,7 +75,11 @@ class SchemaBuilder {
         $ok = true;
         // create the data table if new schema
         if(!$this->oldschema->getId()) {
-            $ok = $this->newDataTable();
+            if($this->oldschema->isLookup()) {
+                $ok = $this->newLookupTable();
+            } else {
+                $ok = $this->newDataTable();
+            }
         }
 
         // create a new schema
@@ -140,8 +144,8 @@ class SchemaBuilder {
     protected function newSchema() {
         if(!$this->time) $this->time = time();
 
-        $sql = "INSERT INTO schemas (tbl, ts) VALUES (?, ?)";
-        $this->sqlite->query($sql, $this->table, $this->time);
+        $sql = "INSERT INTO schemas (tbl, ts, islookup) VALUES (?, ?, ?)";
+        $this->sqlite->query($sql, $this->table, $this->time, (int) $this->oldschema->isLookup());
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
         $this->newschemaid = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);
@@ -277,6 +281,39 @@ class SchemaBuilder {
                     row INTEGER NOT NULL,
                     value,
                     PRIMARY KEY(colref, pid, rev, row)
+                );";
+        $ok = $ok && (bool) $this->sqlite->query($sql);
+
+        return $ok;
+    }
+
+    /**
+     * Creates a new lookup table with no columns
+     *
+     * This is basically the same as @see newDataTable() but sets
+     * different primary keys and types
+     *
+     * @return bool
+     */
+    protected function newLookupTable() {
+        $ok = true;
+
+        $tbl = 'data_' . $this->table;
+        $sql = "CREATE TABLE $tbl (
+                    pid INTEGER PRIMARY KEY,
+                    rev INTEGER NOT NULL DEFAULT 0,
+                    latest BOOLEAN NOT NULL DEFAULT 1
+                )";
+        $ok = $ok && (bool) $this->sqlite->query($sql);
+
+        $tbl = 'multi_' . $this->table;
+        $sql = "CREATE TABLE $tbl (
+                    colref INTEGER NOT NULL,
+                    pid INTEGER NOT NULL,
+                    rev INTEGER NOT NULL DEFAULT 0,
+                    row INTEGER NOT NULL,
+                    value,
+                    PRIMARY KEY(colref, pid, row)
                 );";
         $ok = $ok && (bool) $this->sqlite->query($sql);
 

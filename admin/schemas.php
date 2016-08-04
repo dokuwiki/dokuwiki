@@ -100,8 +100,15 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
 
         $table = Schema::cleanTableName($INPUT->str('table'));
         if($table) {
+            $schema = new Schema($table, 0, $INPUT->bool('lookup'));
+            if($schema->isLookup()) {
+                $hl = 'edithl lookup';
+            } else {
+                $hl = 'edithl page';
+            }
+
             echo $this->locale_xhtml('editor_edit');
-            echo '<h2>' . sprintf($this->getLang('edithl'), hsc($table)) . '</h2>';
+            echo '<h2>' . sprintf($this->getLang($hl), hsc($table)) . '</h2>';
 
             echo '<ul class="tabs" id="plugin__struct_tabs">';
             /** @noinspection HtmlUnknownAnchorTarget */
@@ -113,7 +120,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
             echo '</ul>';
             echo '<div class="panelHeader"></div>';
 
-            $editor = new SchemaEditor(new Schema($table, 0, $INPUT->bool('lookup')));
+            $editor = new SchemaEditor($schema);
             echo $editor->getEditor();
             echo $this->html_json();
             echo $this->html_delete();
@@ -207,26 +214,46 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                )
         );
         $toc[] = html_mktocitem($link, $this->getLang('menu_assignments'), 0, '');
-        $link = wl(
+        $slink = wl(
             $ID, array(
                    'do' => 'admin',
                    'page' => 'struct_schemas'
                )
         );
-        $toc[] = html_mktocitem($link, $this->getLang('menu'), 0, '');
+        $toc[] = html_mktocitem($slink, $this->getLang('menu'), 0, '');
 
-        $tables = Schema::getAll();
-        foreach($tables as $table) {
-            $link = wl(
-                $ID, array(
-                       'do' => 'admin',
-                       'page' => 'struct_schemas',
-                       'table' => $table
-                   )
-            );
+        $tables = Schema::getAll('page');
+        if($tables) {
+            $toc[] = html_mktocitem($slink, $this->getLang('page schema'), 1, '');
+            foreach($tables as $table) {
+                $link = wl(
+                    $ID, array(
+                           'do' => 'admin',
+                           'page' => 'struct_schemas',
+                           'table' => $table
+                       )
+                );
 
-            $toc[] = html_mktocitem($link, hsc($table), 1, '');
+                $toc[] = html_mktocitem($link, hsc($table), 2, '');
+            }
         }
+
+        $tables = Schema::getAll('lookup');
+        if($tables) {
+            $toc[] = html_mktocitem($slink, $this->getLang('lookup schema'), 1, '');
+            foreach($tables as $table) {
+                $link = wl(
+                    $ID, array(
+                           'do' => 'admin',
+                           'page' => 'struct_schemas',
+                           'table' => $table
+                       )
+                );
+
+                $toc[] = html_mktocitem($link, hsc($table), 2, '');
+            }
+        }
+
         return $toc;
     }
 
