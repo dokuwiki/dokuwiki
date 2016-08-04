@@ -6,9 +6,9 @@ use dokuwiki\plugin\struct\meta\Column;
 
 class SchemaDataNoDB extends \dokuwiki\plugin\struct\meta\SchemaData {
 
-    public function __construct($table, $page, $ts) {
+    public function __construct($table, $pid, $ts) {
         // we do intialization by parent here, because we don't need the whole database behind the class
-        $this->page = $page;
+        $this->pid = $pid;
         $this->table = $table;
         $this->ts = $ts;
     }

@@ -10,8 +10,8 @@
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\SchemaLookupData;
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Validator;
 use dokuwiki\plugin\struct\meta\Value;
 
 if(!defined('DOKU_INC')) die();
@@ -52,43 +52,58 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         $event->preventDefault();
         $event->stopPropagation();
 
-        if(substr($event->data, $len) == 'new') {
-            $this->lookup_new();
-        }
+        try {
 
+            if(substr($event->data, $len) == 'new') {
+                $this->lookup_new();
+            }
+
+            if(substr($event->data, $len) == 'save') {
+                $this->lookup_save();
+            }
+
+        } catch(StructException $e) {
+            http_status(500);
+            header('Content-Type: text/plain');
+            echo $e->getMessage();
+        }
     }
 
+    protected function lookup_save() {
+        global $INPUT;
+        $tablename = $INPUT->str('schema');
+        $data = $INPUT->arr('entry');
+
+        $schemadata = new SchemaLookupData($tablename, 0, 0);
+        $schemadata->saveData($data);
+    }
 
     protected function lookup_new() {
         global $INPUT;
         global $lang;
         $tablename = $INPUT->str('schema');
 
-
         $schema = new Schema($tablename);
-
 
         echo '<div class="struct_entry_form">';
         echo '<fieldset>';
-        echo '<legend>'.$this->getLang('lookup new entry').'</legend>';
+        echo '<legend>' . $this->getLang('lookup new entry') . '</legend>';
         /** @var action_plugin_struct_entry $entry */
         $entry = plugin_load('action', 'struct_entry');
         foreach($schema->getColumns(false) as $column) {
             $label = $column->getLabel();
             $field = new Value($column, '');
-            echo  $entry->makeField($field, "entry[$label]");
+            echo $entry->makeField($field, "entry[$label]");
         }
         formSecurityToken(); // csrf protection
+        echo '<input type="hidden" name="call" value="plugin_struct_lookup_save" />';
+        echo '<input type="hidden" name="schema" value="' . hsc($tablename) . '" />';
 
-        echo '<button type="submit">'.$lang['btn_save'].'</button>';
+        echo '<button type="submit">' . $lang['btn_save'] . '</button>';
 
         echo '</fieldset>';
         echo '</div>';
 
-
-
-
     }
-
 
 }

@@ -11,7 +11,7 @@ namespace dokuwiki\plugin\struct\meta;
  */
 class SchemaData extends Schema {
 
-    protected $page;
+    protected $pid;
     protected $labels = array();
 
     protected $opt_skipempty = false;
@@ -21,12 +21,17 @@ class SchemaData extends Schema {
      * SchemaData constructor
      *
      * @param string $table The table this schema is for
-     * @param string $page The page of which the data is for
+     * @param string $pid The page of which the data is for
      * @param int $ts The timestamp for when this schema was valid, 0 for current
      */
-    public function __construct($table, $page, $ts) {
+    public function __construct($table, $pid, $ts) {
         parent::__construct($table, $ts);
-        $this->page = $page;
+
+        if($this->isLookup() && !is_a($this, 'dokuwiki\plugin\struct\meta\SchemaLookupData')) {
+            throw new StructException('SchemaData should not be used with Lookup Schemas');
+        }
+
+        $this->pid = $pid;
         foreach ($this->columns as $col ){
             $this->labels[$col->getColref()] = $col->getType()->getLabel();
         }
@@ -71,7 +76,7 @@ class SchemaData extends Schema {
 
         $colrefs = array_flip($this->labels);
         $now = $this->ts;
-        $opt = array($this->page, $now, 1);
+        $opt = array($this->pid, $now, 1);
         $multiopts = array();
         $singlecols = 'pid, rev, latest';
         foreach ($data as $colname => $value) {
@@ -102,7 +107,7 @@ class SchemaData extends Schema {
 
         // remove latest status from previous data
         /** @noinspection SqlResolve */
-        $ok = $this->sqlite->query( "UPDATE $stable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->page));
+        $ok = $this->sqlite->query( "UPDATE $stable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
 
         // insert single values
         $ok = $ok && $this->sqlite->query($singlesql, $opt);
@@ -110,7 +115,7 @@ class SchemaData extends Schema {
 
         // insert multi values
         foreach ($multiopts as $multiopt) {
-            $multiopt = array_merge(array($now, $this->page,), $multiopt);
+            $multiopt = array_merge(array($now, $this->pid,), $multiopt);
             $ok = $ok && $this->sqlite->query($multisql, $multiopt);
         }
 
@@ -174,7 +179,7 @@ class SchemaData extends Schema {
      * @return Value[] a list of values saved for the current page
      */
     public function getData() {
-        $this->setCorrectTimestamp($this->page, $this->ts);
+        $this->setCorrectTimestamp($this->pid, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data, false);
         return $data;
@@ -188,7 +193,7 @@ class SchemaData extends Schema {
      * @return array
      */
     public function getDataArray() {
-        $this->setCorrectTimestamp($this->page, $this->ts);
+        $this->setCorrectTimestamp($this->pid, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data, true);
         return $data;
@@ -312,7 +317,7 @@ class SchemaData extends Schema {
             }
         }
 
-        $pl = $QB->addValue($this->page);
+        $pl = $QB->addValue($this->pid);
         $QB->filters()->whereAnd("DATA.pid = $pl");
         $pl = $QB->addValue($this->ts);
         $QB->filters()->whereAnd("DATA.rev = $pl");

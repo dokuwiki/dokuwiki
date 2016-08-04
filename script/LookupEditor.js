@@ -71,10 +71,7 @@ var LookupEditor = function ($table) {
 
             jQuery.post(
                 DOKU_BASE + 'lib/exe/ajax.php',
-                {
-                    call: 'plugin_struct_lookup_save',
-                    schema: schema
-                }
+                $form.serialize()
             )
                 .done(function () {
                     // FIXME
