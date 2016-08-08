@@ -5,7 +5,7 @@ namespace dokuwiki\plugin\struct\test\mock;
 use dokuwiki\plugin\struct\meta\Column;
 
 
-class SchemaDataNoDB extends SchemaData {
+class SchemaDataNoDB extends AccessTableData {
 
 
     /** @noinspection PhpMissingParentConstructorInspection

@@ -3,16 +3,16 @@
 namespace dokuwiki\plugin\struct\meta;
 
 /**
- * Class SchemaLookupData
+ * Class AccessTableLookup
  *
  * Load and (more importantly) save data for Lookup Schemas
  *
  * @package dokuwiki\plugin\struct\meta
  */
-class SchemaLookupData extends AccessTable {
+class AccessTableLookup extends AccessTable {
 
     /**
-     * SchemaLookupData constructor.
+     * AccessTableLookup constructor.
      *
      * @param Schema $schema Which schema to access
      * @param int $pid the row identifier (0 for new row)

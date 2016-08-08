@@ -3,7 +3,7 @@
 namespace dokuwiki\plugin\struct\test;
 
 use dokuwiki\plugin\struct\meta\AccessTable;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\SchemaImporter;
 
 /**

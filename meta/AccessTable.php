@@ -21,13 +21,13 @@ abstract class AccessTable {
      *
      * @param Schema $schema schema to load
      * @param string|int $pid Page or row id to access
-     * @return SchemaData|SchemaLookupData
+     * @return AccessTableData|AccessTableLookup
      */
     public static function bySchema(Schema $schema, $pid) {
         if($schema->isLookup()) {
-            return new SchemaLookupData($schema, $pid);
+            return new AccessTableLookup($schema, $pid);
         } else {
-            return new SchemaData($schema, $pid);
+            return new AccessTableData($schema, $pid);
         }
     }
 
@@ -37,7 +37,7 @@ abstract class AccessTable {
      * @param string $tablename schema to load
      * @param string|int $pid Page or row id to access
      * @param int $ts from when is the schema to access?
-     * @return SchemaData|SchemaLookupData
+     * @return AccessTableData|AccessTableLookup
      */
     public static function byTableName($tablename, $pid, $ts = 0) {
         $schema = new Schema($tablename, $ts);

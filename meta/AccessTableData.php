@@ -3,17 +3,17 @@
 namespace dokuwiki\plugin\struct\meta;
 
 /**
- * Class SchemaData
+ * Class AccessTableData
  * @package dokuwiki\plugin\struct\meta
  *
  * This class is for accessing the data stored for a page in a schema
  *
  */
-class SchemaData extends AccessTable {
+class AccessTableData extends AccessTable {
 
 
     /**
-     * SchemaData constructor
+     * AccessTableData constructor
      *
      * @param Schema $schema Which schema to access
      * @param string $pid The page of which the data is for

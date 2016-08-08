@@ -10,13 +10,13 @@ abstract class AccessTable extends meta\AccessTable {
     /**
      * @param Schema $schema
      * @param int|string $pid
-     * @return meta\SchemaLookupData|SchemaData
+     * @return meta\AccessTableLookup|AccessTableData
      */
     public static function bySchema(Schema $schema, $pid) {
         if($schema->isLookup()) {
-            return new meta\SchemaLookupData($schema, $pid); // FIXME not mocked, yet
+            return new meta\AccessTableLookup($schema, $pid); // FIXME not mocked, yet
         } else {
-            return new SchemaData($schema, $pid);
+            return new AccessTableData($schema, $pid);
         }
     }
 

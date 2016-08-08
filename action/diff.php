@@ -9,7 +9,7 @@
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 
 if(!defined('DOKU_INC')) die();
 

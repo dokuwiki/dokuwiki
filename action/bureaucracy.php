@@ -12,7 +12,7 @@ if(!defined('DOKU_INC')) die();
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\Validator;
 
 /**

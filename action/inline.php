@@ -9,7 +9,7 @@
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Column;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Validator;
 
@@ -22,7 +22,7 @@ if(!defined('DOKU_INC')) die();
  */
 class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
-    /** @var  SchemaData */
+    /** @var  AccessTableData */
     protected $schemadata = null;
 
     /** @var  Column */

@@ -10,7 +10,7 @@
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Value;
 
@@ -23,7 +23,7 @@ if(!defined('DOKU_INC')) die();
  */
 class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
 
-    /** @var  SchemaData */
+    /** @var  AccessTableData */
     protected $schemadata = null;
 
     /** @var  Column */
