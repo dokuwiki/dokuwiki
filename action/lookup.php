@@ -62,6 +62,10 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
                 $this->lookup_save();
             }
 
+            if(substr($event->data, $len) == 'delete') {
+                $this->lookup_delete();
+            }
+
         } catch(StructException $e) {
             http_status(500);
             header('Content-Type: text/plain');
@@ -69,6 +73,27 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         }
     }
 
+    /**
+     * Deletes a lookup row
+     */
+    protected function lookup_delete() {
+        global $INPUT;
+        $tablename = $INPUT->str('schema');
+        $pid = $INPUT->int('pid');
+        if(!$pid) {
+            throw new StructException('No pid given');
+        }
+        if(!$tablename) {
+            throw new StructException('No schema given');
+        }
+
+        $schemadata = new SchemaLookupData($tablename, $pid);
+        $schemadata->clearData();
+    }
+
+    /**
+     * Save one new lookup row
+     */
     protected function lookup_save() {
         global $INPUT;
         $tablename = $INPUT->str('schema');

@@ -83,7 +83,7 @@ $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 $lang['Exception schema missing'] = "Schema %s does not exist!";
 
 
-
 $lang['lookup new entry'] = 'Create new Entry';
+$lang['js']['lookup_delete'] = 'Delete Entry';
 
 //Setup VIM: ex: et ts=4 :

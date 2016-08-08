@@ -30,7 +30,10 @@ class SchemaLookupData extends SchemaData {
     public function clearData() {
         if(!$this->pid) return; // no data
 
-        // FIXME delete data
+        /** @noinspection SqlResolve */
+        $sql = "DELETE FROM ? WHERE pid = ?";
+        $this->sqlite->query($sql, 'data_'.$this->table, $this->pid);
+        $this->sqlite->query($sql, 'multi_'.$this->table, $this->pid);
     }
 
     /**

@@ -6,7 +6,7 @@ var LookupEditor = function ($table) {
     var $form = null;
 
     var schema = $table.parents('.structaggregation').data('schema');
-    if(!schema) return;
+    if (!schema) return;
 
     /**
      * Adds delete row buttons to each row
@@ -24,17 +24,19 @@ var LookupEditor = function ($table) {
             // delete buttons for rows
             var $td = jQuery('<td></td>');
             var pid = $me.data('pid');
-            if (pid !== '') {
-                var $btn = jQuery('<button>DEL</button>');
-                $btn.addClass('delete');
-                $btn.click(function (e) {
+            if (pid === '') return;
+
+            var $btn = jQuery('<button><i class="ui-icon ui-icon-trash"></i></button>')
+                .addClass('delete')
+                .attr('title', LANG.plugins.struct.lookup_delete)
+                .click(function (e) {
                     e.preventDefault();
-                    if (!window.confirm('really delete?')) return;
+                    if (!window.confirm(LANG.del_confirm)) return;
 
                     jQuery.post(
                         DOKU_BASE + 'lib/exe/ajax.php',
                         {
-                            call: 'plugin_struct_lookup_del',
+                            call: 'plugin_struct_lookup_delete',
                             schema: schema,
                             pid: pid
                         }
@@ -47,9 +49,9 @@ var LookupEditor = function ($table) {
                         })
                 });
 
-                $td.append($btn);
-                $me.append($td);
-            }
+            $td.append($btn);
+            $me.append($td);
+
         });
     }
 
@@ -94,7 +96,7 @@ var LookupEditor = function ($table) {
         DOKU_BASE + 'lib/exe/ajax.php',
         {
             call: 'plugin_struct_lookup_new',
-            schema: 'lokkup' //FIXME get from data attribute
+            schema: schema
         },
         function (data) {
             if (!data) return;
