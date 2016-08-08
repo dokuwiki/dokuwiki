@@ -2,61 +2,89 @@
 
 namespace dokuwiki\plugin\struct\meta;
 
-/**
- * Class SchemaData
- * @package dokuwiki\plugin\struct\meta
- *
- * This class is for accessing the data stored for a page in a schema
- *
- */
-class SchemaData extends Schema {
+abstract class AccessTable {
 
+    /** @var  Schema */
+    protected $schema;
     protected $pid;
     protected $labels = array();
+    protected $ts     = 0;
+    /** @var \helper_plugin_sqlite */
+    protected $sqlite;
 
+    // options on how to retieve data
     protected $opt_skipempty = false;
-    protected $opt_rawvalue = false;
+    protected $opt_rawvalue  = false;
 
     /**
-     * SchemaData constructor
+     * Factory Method to access a data or lookup table
      *
-     * @param string $table The table this schema is for
-     * @param string $pid The page of which the data is for
-     * @param int $ts The timestamp for when this schema was valid, 0 for current
+     * @param Schema $schema schema to load
+     * @param string|int $pid Page or row id to access
+     * @return AccessTableData|AccessTableLookup
      */
-    public function __construct($table, $pid, $ts) {
-        parent::__construct($table, $ts);
+    public static function bySchema(Schema $schema, $pid) {
+        if($schema->isLookup()) {
+            return new AccessTableLookup($schema, $pid);
+        } else {
+            return new AccessTableData($schema, $pid);
+        }
+    }
 
-        if($this->isLookup() && !is_a($this, 'dokuwiki\plugin\struct\meta\SchemaLookupData')) {
-            throw new StructException('SchemaData should not be used with Lookup Schemas');
+    /**
+     * Factory Method to access a data or lookup table
+     *
+     * @param string $tablename schema to load
+     * @param string|int $pid Page or row id to access
+     * @param int $ts from when is the schema to access?
+     * @return AccessTableData|AccessTableLookup
+     */
+    public static function byTableName($tablename, $pid, $ts = 0) {
+        $schema = new Schema($tablename, $ts);
+        return self::bySchema($schema, $pid);
+    }
+
+    /**
+     * AccessTable constructor
+     *
+     * @param Schema $schema
+     * @param string $pid
+     */
+    public function __construct(Schema $schema, $pid) {
+        /** @var \helper_plugin_struct_db $helper */
+        $helper = plugin_load('helper', 'struct_db');
+        $this->sqlite = $helper->getDB();
+        if(!$this->sqlite) {
+            throw new StructException('Sqlite plugin required');
         }
 
+        if(!$schema->getId()) {
+            throw new StructException('Schema does not exist. Only data of existing schemas can be accessed');
+        }
+
+        $this->schema = $schema;
         $this->pid = $pid;
-        foreach ($this->columns as $col ){
+        $this->ts = $this->schema->getTimeStamp();
+        foreach($this->schema->getColumns() as $col) {
             $this->labels[$col->getColref()] = $col->getType()->getLabel();
         }
     }
 
     /**
-     * adds an empty data set for this schema and page
+     * gives access to the schema
      *
-     * This is basically a delete for the schema fields of a page
-     *
-     * @return bool
+     * @return Schema
      */
-    public function clearData() {
-        $data = array();
-
-        foreach($this->columns as $col) {
-            if($col->isMulti()) {
-                $data[$col->getLabel()] = array();
-            } else {
-                $data[$col->getLabel()] = null;
-            }
-        }
-
-        return $this->saveData($data);
+    public function getSchema() {
+        return $this->schema;
     }
+
+    /**
+     * Should remove the current data, by either deleting or ovewriting it
+     *
+     * @return bool if the delete succeeded
+     */
+    abstract public function clearData();
 
     /**
      * Save the data to the database.
@@ -65,67 +93,9 @@ class SchemaData extends Schema {
      * i.e. depending on if that is a string or an array, respectively.
      *
      * @param array $data typelabel => value for single fields or typelabel => array(value, value, ...) for multi fields
-     *
      * @return bool success of saving the data to the database
      */
-    public function saveData($data) {
-        $stable = 'data_' . $this->table;
-        $mtable = 'multi_' . $this->table;
-
-        if($this->ts == 0) throw new StructException("Saving with zero timestamp does not work.");
-
-        $colrefs = array_flip($this->labels);
-        $now = $this->ts;
-        $opt = array($this->pid, $now, 1);
-        $multiopts = array();
-        $singlecols = 'pid, rev, latest';
-        foreach ($data as $colname => $value) {
-            if(!isset($colrefs[$colname])) {
-                throw new StructException("Unknown column %s in schema.", hsc($colname));
-            }
-
-            $singlecols .= ",col" . $colrefs[$colname];
-            if (is_array($value)) {
-                foreach ($value as $index => $multivalue) {
-                    $multiopts[] = array($colrefs[$colname], $index+1, $multivalue,);
-                }
-                // copy first value to the single column
-                if(isset($value[0])) {
-                    $opt[] = $value[0];
-                } else {
-                    $opt[] = null;
-                }
-            } else {
-                $opt[] = $value;
-            }
-        }
-        $singlesql = "INSERT INTO $stable ($singlecols) VALUES (" . trim(str_repeat('?,',count($opt)),',') . ")";
-        /** @noinspection SqlResolve */
-        $multisql = "INSERT INTO $mtable (rev, pid, colref, row, value) VALUES (?,?,?,?,?)";
-
-        $this->sqlite->query('BEGIN TRANSACTION');
-
-        // remove latest status from previous data
-        /** @noinspection SqlResolve */
-        $ok = $this->sqlite->query( "UPDATE $stable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
-
-        // insert single values
-        $ok = $ok && $this->sqlite->query($singlesql, $opt);
-
-
-        // insert multi values
-        foreach ($multiopts as $multiopt) {
-            $multiopt = array_merge(array($now, $this->pid,), $multiopt);
-            $ok = $ok && $this->sqlite->query($multisql, $multiopt);
-        }
-
-        if (!$ok) {
-            $this->sqlite->query('ROLLBACK TRANSACTION');
-            return false;
-        }
-        $this->sqlite->query('COMMIT TRANSACTION');
-        return true;
-    }
+    abstract public function saveData($data);
 
     /**
      * Should empty or invisible (inpage) fields be returned?
@@ -135,7 +105,7 @@ class SchemaData extends Schema {
      * @param null|bool $set new value, null to read only
      * @return bool current value (after set)
      */
-    public function optionSkipEmpty($set=null) {
+    public function optionSkipEmpty($set = null) {
         if(!is_null($set)) {
             $this->opt_skipempty = $set;
         }
@@ -150,12 +120,13 @@ class SchemaData extends Schema {
      * @param null|bool $set new value, null to read only
      * @return bool current value (after set)
      */
-    public function optionRawValue($set=null) {
+    public function optionRawValue($set = null) {
         if(!is_null($set)) {
             $this->opt_rawvalue = $set;
         }
         return $this->opt_rawvalue;
     }
+
 
     /**
      * Get the value of a single column
@@ -206,7 +177,7 @@ class SchemaData extends Schema {
         $result = '';
         $data = $this->getDataArray();
         foreach($data as $key => $value) {
-            $key = $this->table . ".$key";
+            $key = $this->schema->getTable() . ".$key";
             if(is_array($value)) $value = join(', ', $value);
             $result .= sprintf("% -20s : %s\n", $key, $value);
         }
@@ -238,8 +209,7 @@ class SchemaData extends Schema {
 
         $sep = Search::CONCAT_SEPARATOR;
 
-        foreach($this->getColumns() as $col) {
-            if(!$col->isEnabled()) continue;
+        foreach($this->schema->getColumns(false) as $col) {
 
             // if no data saved, yet return empty strings
             if($DBdata) {
@@ -286,16 +256,15 @@ class SchemaData extends Schema {
      */
     protected function buildGetDataSQL() {
         $sep = Search::CONCAT_SEPARATOR;
-        $stable = 'data_' . $this->table;
-        $mtable = 'multi_' . $this->table;
+        $stable = 'data_' . $this->schema->getTable();
+        $mtable = 'multi_' . $this->schema->getTable();
 
         $QB = new QueryBuilder();
         $QB->addTable($stable, 'DATA');
         $QB->addSelectColumn('DATA', 'pid', 'PID');
         $QB->addGroupByStatement('DATA.pid');
 
-        foreach($this->columns as $col) {
-            if(!$col->isEnabled()) continue;
+        foreach($this->schema->getColumns(false) as $col) {
 
             $colref = $col->getColref();
             $colname = 'col'.$colref;
@@ -331,17 +300,9 @@ class SchemaData extends Schema {
      *
      * @param          $page
      * @param int|null $ts
+     * @fixme clear up description
      */
-    protected function setCorrectTimestamp($page, $ts = null) {
-        $table = 'data_' . $this->table;
-        $where = "WHERE pid = '$page'";
-        if ($ts) {
-            $where .= " AND rev <= $ts";
-        }
-        /** @noinspection SqlResolve */
-        $sql = "SELECT rev FROM $table $where ORDER BY rev DESC LIMIT 1";
-        $res = $this->sqlite->query($sql);
-        $this->ts = $this->sqlite->res2single($res);
-    }
-
+    abstract protected function setCorrectTimestamp($page, $ts = null);
 }
+
+

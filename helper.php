@@ -7,9 +7,10 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Validator;
 
@@ -49,7 +50,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
 
         $result = array();
         foreach($schemas as $schema) {
-            $schemaData = new SchemaData($schema, $page, $time);
+            $schemaData = AccessTable::byTableName($schema, $page, $time);
             $result[$schema] = $schemaData->getDataArray();
         }
 
@@ -105,7 +106,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
         // save the provided data
         $assignments = new Assignments();
         foreach($tosave as $table) {
-            $schemaData = new SchemaData($table, $page, $newrevision);
+            $schemaData = AccessTable::byTableName($table, $page, $newrevision);
             $schemaData->saveData($data[$table]);
             // make sure this schema is assigned
             $assignments->assignPageSchema($page, $table);

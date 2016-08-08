@@ -7,8 +7,9 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Column;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Validator;
 
@@ -21,7 +22,7 @@ if(!defined('DOKU_INC')) die();
  */
 class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
-    /** @var  SchemaData */
+    /** @var  AccessTableData */
     protected $schemadata = null;
 
     /** @var  Column */
@@ -130,7 +131,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         // current data
         $tosave = $this->schemadata->getDataArray();
         $tosave[$this->column->getLabel()] = $value;
-        $tosave = array($this->schemadata->getTable() => $tosave);
+        $tosave = array($this->schemadata->getSchema()->getTable() => $tosave);
 
         // save
         /** @var helper_plugin_struct $helper */
@@ -175,14 +176,13 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         if(blank($field)) return false;
 
         $this->pid = $pid;
-
-        $this->schemadata = new SchemaData($table, $pid, 0);
-        if(!$this->schemadata->getId()) {
-            $this->schemadata = null;
+        try {
+            $this->schemadata = AccessTable::byTableName($table, $pid);
+        } catch(StructException $ignore) {
             return false;
         }
 
-        $this->column = $this->schemadata->findColumn($field);
+        $this->column = $this->schemadata->getSchema()->findColumn($field);
         if(!$this->column || !$this->column->isVisibleInEditor()) {
             $this->schemadata = null;
             $this->column = null;

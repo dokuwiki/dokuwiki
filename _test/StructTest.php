@@ -2,7 +2,8 @@
 
 namespace dokuwiki\plugin\struct\test;
 
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTable;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\SchemaImporter;
 
 /**
@@ -88,7 +89,7 @@ abstract class StructTest extends \DokuWikiTest {
         if(!$rev) $rev = time();
 
         saveWikiText($page, "test for $page", "saved for testing");
-        $schemaData = new SchemaData($schema, $page, $rev);
+        $schemaData = AccessTable::byTableName($schema, $page, $rev);
         $schemaData->saveData($data);
     }
 

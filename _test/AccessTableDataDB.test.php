@@ -12,7 +12,7 @@ use dokuwiki\plugin\struct\meta\Search;
  * @group plugins
  *
  */
-class schemaDataDB_struct_test extends StructTest {
+class AccessTableDataDB_struct_test extends StructTest {
 
     /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;
@@ -63,7 +63,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
         $actual_data = $schemaData->getDataFromDB();
 
@@ -81,7 +81,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getDataFromDB_oldRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', '');
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', '');
         $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getDataFromDB();
 
@@ -99,7 +99,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getData_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
 
         $actual_data = $schemaData->getData();
@@ -118,7 +118,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getDataArray_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
 
         $actual_data = $schemaData->getDataArray();
@@ -135,7 +135,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getData_currentRev2() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage2', "");
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage2', "");
         $schemaData->setCorrectTimestamp('testpage2');
         $actual_data = $schemaData->getData();
 
@@ -153,7 +153,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getData_oldRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', '');
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', '');
         $schemaData->setCorrectTimestamp('testpage', 200);
         $actual_data = $schemaData->getData();
 
@@ -180,7 +180,7 @@ class schemaDataDB_struct_test extends StructTest {
         );
 
         // act
-        $schemaData = new meta\SchemaData('testtable', 'testpage', time());
+        $schemaData = meta\AccessTable::byTableName('testtable', 'testpage', time());
         $result = $schemaData->saveData($testdata);
 
         // assert
@@ -222,7 +222,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getDataFromDB_clearData() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', time());
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', time());
         $schemaData->clearData();
         $actual_data = $schemaData->getDataFromDB();
 
@@ -240,7 +240,7 @@ class schemaDataDB_struct_test extends StructTest {
     public function test_getData_clearData() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', time());
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', time());
         $schemaData->clearData();
         $actual_data = $schemaData->getData();
 
@@ -258,7 +258,7 @@ class schemaDataDB_struct_test extends StructTest {
                 "value2.2_saved",
             )
         );
-        $schemaData = new meta\SchemaData('testtable', 'testpage', time());
+        $schemaData = meta\AccessTable::byTableName('testtable', 'testpage', time());
         $schemaData->saveData($testdata);
 
         // act
@@ -281,7 +281,7 @@ class schemaDataDB_struct_test extends StructTest {
                 "value2.2_saved",
             )
         );
-        $schemaData = new meta\SchemaData('testtable', 'testpage', time());
+        $schemaData = meta\AccessTable::byTableName('testtable', 'testpage', time());
         $schemaData->saveData($testdata);
 
         // act

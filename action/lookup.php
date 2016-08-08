@@ -7,10 +7,10 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
-use dokuwiki\plugin\struct\meta\SchemaData;
-use dokuwiki\plugin\struct\meta\SchemaLookupData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Value;
 
@@ -23,7 +23,7 @@ if(!defined('DOKU_INC')) die();
  */
 class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
 
-    /** @var  SchemaData */
+    /** @var  AccessTableData */
     protected $schemadata = null;
 
     /** @var  Column */
@@ -87,7 +87,7 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
             throw new StructException('No schema given');
         }
 
-        $schemadata = new SchemaLookupData($tablename, $pid);
+        $schemadata = AccessTable::byTableName($tablename, $pid);
         $schemadata->clearData();
     }
 
@@ -99,10 +99,15 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         $tablename = $INPUT->str('schema');
         $data = $INPUT->arr('entry');
 
-        $schemadata = new SchemaLookupData($tablename, 0, 0);
+        # FIXME validation
+
+        $schemadata = AccessTable::byTableName($tablename, 0, 0);
         $schemadata->saveData($data);
     }
 
+    /**
+     * Create the Editor for a new lookup row
+     */
     protected function lookup_new() {
         global $INPUT;
         global $lang;
