@@ -240,6 +240,14 @@ class Schema {
     }
 
     /**
+     * @todo should this return the time stamp it was created at?
+     * @return int returns the timestamp this Schema was initialized with
+     */
+    public function getTimeStamp() {
+        return $this->ts;
+    }
+
+    /**
      * @return bool is this a lookup schema?
      */
     public function isLookup() {

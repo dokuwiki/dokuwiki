@@ -7,6 +7,7 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\SchemaData;
 
@@ -94,7 +95,7 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         if($mode == 'xhtml') $R->doc .= '<div id="plugin__struct_output">';
 
         foreach($tables as $table) {
-            $schemadata = new SchemaData($table, $ID, $REV);
+            $schemadata = AccessTable::byTableName($table, $ID, $REV);
             $schemadata->optionSkipEmpty(true);
             $data = $schemadata->getData();
             if(!count($data)) continue;

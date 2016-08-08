@@ -51,14 +51,10 @@ class Validator {
         $tables = $assignments->getPageAssignments($id);
 
         foreach($tables as $table) {
-            $schemaData = new SchemaData($table, $id, time());
-            if(!$schemaData->getId()) {
-                // this schema is not available for some reason. skip it
-                continue;
-            }
+            $schemaData = AccessTable::byTableName($table, $id, time());
 
             $newData = $data[$table];
-            foreach($schemaData->getColumns() as $col) {
+            foreach($schemaData->getSchema()->getColumns() as $col) {
                 $label = $col->getType()->getLabel();
                 $result = $result && $this->validateValue($col, $newData[$label]);
             }

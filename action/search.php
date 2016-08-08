@@ -7,6 +7,7 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\SchemaData;
 
@@ -40,7 +41,7 @@ class action_plugin_struct_search extends DokuWiki_Action_Plugin {
         if(!$tables) return;
 
         foreach($tables as $table) {
-            $schemadata = new SchemaData($table, $id, 0);
+            $schemadata = AccessTable::byTableName($table, $id, 0);
             $event->data['body'] .= $schemadata->getDataPseudoSyntax();
         }
     }
@@ -60,7 +61,7 @@ class action_plugin_struct_search extends DokuWiki_Action_Plugin {
         if(!$tables) return;
 
         foreach($tables as $table) {
-            $schemadata = new SchemaData($table, $id, 0);
+            $schemadata = AccessTable::byTableName($table, $id, 0);
             $event->data['text'] .= $schemadata->getDataPseudoSyntax();
         }
     }

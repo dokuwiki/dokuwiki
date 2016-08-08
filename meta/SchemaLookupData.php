@@ -9,18 +9,18 @@ namespace dokuwiki\plugin\struct\meta;
  *
  * @package dokuwiki\plugin\struct\meta
  */
-class SchemaLookupData extends SchemaData {
+class SchemaLookupData extends AccessTable {
 
     /**
      * SchemaLookupData constructor.
      *
-     * @param string $table
+     * @param Schema $schema Which schema to access
      * @param int $pid the row identifier (0 for new row)
      */
-    public function __construct($table, $pid = 0) {
-        parent::__construct($table, $pid, 0);
-        if(!$this->isLookup()) {
-            throw new StructException('SchemaLokupData should not be used with Page Schemas');
+    public function __construct(Schema $schema, $pid=0) {
+        parent::__construct($schema, $pid);
+        if(!$this->schema->isLookup()) {
+            throw new StructException('wrong schema type. use factory methods!');
         }
     }
 
@@ -32,8 +32,8 @@ class SchemaLookupData extends SchemaData {
 
         /** @noinspection SqlResolve */
         $sql = "DELETE FROM ? WHERE pid = ?";
-        $this->sqlite->query($sql, 'data_'.$this->table, $this->pid);
-        $this->sqlite->query($sql, 'multi_'.$this->table, $this->pid);
+        $this->sqlite->query($sql, 'data_'.$this->schema->getTable(), $this->pid);
+        $this->sqlite->query($sql, 'multi_'.$this->schema->getTable(), $this->pid);
     }
 
     /**
@@ -47,8 +47,8 @@ class SchemaLookupData extends SchemaData {
      * @todo this duplicates quite a bit code from SchemaData - could we avoid that?
      */
     public function saveData($data) {
-        $stable = 'data_' . $this->table;
-        $mtable = 'multi_' . $this->table;
+        $stable = 'data_' . $this->schema->getTable();
+        $mtable = 'multi_' . $this->schema->getTable();
 
         $singlecols = array();
         $opt = array();

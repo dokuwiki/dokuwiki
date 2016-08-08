@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\SchemaData;
 use dokuwiki\plugin\struct\meta\Validator;
@@ -169,7 +170,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $structData = array();
             $this->tosave = $assignments->getPageAssignments($event->data['id']);
             foreach($this->tosave as $table) {
-                $oldData = new SchemaData($table, $event->data['id'], $REV);
+                $oldData = AccessTable::byTableName($table, $event->data['id'], $REV);
                 $oldData->optionRawValue(true);
                 $structData[$table] = $oldData->getDataArray();
             }
@@ -182,13 +183,13 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             // clear all data on delete unless it's a move operation
             $tables = $assignments->getPageAssignments($event->data['id']);
             foreach($tables as $table) {
-                $schemaData = new SchemaData($table, $event->data['id'], time());
+                $schemaData = AccessTable::byTableName($table, $event->data['id'], time());
                 $schemaData->clearData();
             }
         } else {
             // save the provided data
             if($this->tosave) foreach($this->tosave as $table) {
-                $schemaData = new SchemaData($table, $event->data['id'], $event->data['newRevision']);
+                $schemaData = AccessTable::byTableName($table, $event->data['id'], $event->data['newRevision']);
                 $schemaData->saveData($structData[$table]);
 
                 // make sure this schema is assigned
@@ -209,7 +210,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $INPUT;
         if (auth_quickaclcheck($ID) == AUTH_READ) return '';
         if (checklock($ID)) return '';
-        $schema = new SchemaData($tablename, $ID, $REV);
+        $schema = AccessTable::byTableName($tablename, $ID, $REV);
         $schemadata = $schema->getData();
 
         $structdata = $INPUT->arr(self::$VAR);
