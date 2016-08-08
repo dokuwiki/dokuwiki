@@ -223,7 +223,7 @@ form.struct_newschema {
 /**
  * Aggregation
  */
-.structaggregation {
+.dokuwiki .structaggregation {
     table th {
         a {
             color: @ini_link;
@@ -256,7 +256,17 @@ form.struct_newschema {
     }
 }
 
-.struct_inlineditor {
+.dokuwiki .structlookup {
+    table.inline {
+        min-width: 100%;
+
+        th.action {
+            width: 30px; //16px icon + margins
+        }
+    }
+}
+
+.dokuwiki .struct_inlineditor {
     position: absolute;
     top: 0;
     left: 0;

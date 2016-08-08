@@ -17,7 +17,7 @@ var LookupEditor = function ($table) {
 
             // empty header cells
             if ($me.parent().is('thead')) {
-                $me.append('<th></th>');
+                $me.append('<th class="action"></th>');
                 return;
             }
 
