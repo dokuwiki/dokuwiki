@@ -65,7 +65,7 @@ class schemaDataDBMulti_struct_test extends StructTest {
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = new mock\SchemaData('testtable', 'testpage', "");
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
         $schemaData->setCorrectTimestamp('testpage');
         $actual_data = $schemaData->getDataFromDB();
 
