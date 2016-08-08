@@ -14,7 +14,7 @@ use dokuwiki\plugin\struct\meta\Search;
  * @group plugins
  *
  */
-class schemaDataDBMulti_struct_test extends StructTest {
+class AccessTableDataDBMulti_struct_test extends StructTest {
 
     /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;

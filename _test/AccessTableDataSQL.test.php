@@ -11,7 +11,7 @@ use dokuwiki\plugin\struct\meta\Search;
  * @group plugins
  *
  */
-class schemaDataSQL_struct_test extends StructTest {
+class AccessTableDataSQL_struct_test extends StructTest {
 
     /**
      * Testdata for @see schemaDataSQL_struct_test::test_buildGetDataSQL
@@ -19,7 +19,7 @@ class schemaDataSQL_struct_test extends StructTest {
      * @return array
      */
     public static function buildGetDataSQL_testdata() {
-        $schemadata = new mock\SchemaDataNoDB('testtable', 'pagename', 27);
+        $schemadata = new mock\AccessTableDataNoDB('testtable', 'pagename', 27);
 
         /** @noinspection SqlResolve */
         return array(
@@ -97,7 +97,7 @@ class schemaDataSQL_struct_test extends StructTest {
      *
      */
     public function test_buildGetDataSQL($testvals, $expected_sql, $expected_opt, $msg) {
-        /** @var mock\SchemaDataNoDB $obj */
+        /** @var mock\AccessTableDataNoDB $obj */
         $obj = $testvals['obj'];
         $obj->setColumns($testvals['singles'], $testvals['multis']);
 

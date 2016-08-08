@@ -12,7 +12,7 @@ use dokuwiki\plugin\struct\meta\Search;
  * @group plugins
  *
  */
-class schemaDataDB_struct_test extends StructTest {
+class AccessTableDataDB_struct_test extends StructTest {
 
     /** @var \helper_plugin_sqlite $sqlite */
     protected $sqlite;
