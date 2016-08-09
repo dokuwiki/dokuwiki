@@ -92,9 +92,10 @@ class AccessTableDataSQL_struct_test extends StructTest {
      *
      * @covers       dokuwiki\plugin\struct\meta\SchemaData::buildGetDataSQL
      *
+     * @param $testvals
      * @param string $expected_sql
+     * @param array $expected_opt
      * @param string $msg
-     *
      */
     public function test_buildGetDataSQL($testvals, $expected_sql, $expected_opt, $msg) {
         /** @var mock\AccessTableDataNoDB $obj */

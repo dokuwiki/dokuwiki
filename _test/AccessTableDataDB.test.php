@@ -63,8 +63,7 @@ class AccessTableDataDB_struct_test extends StructTest {
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
-        $schemaData->setCorrectTimestamp('testpage');
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage');
         $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
@@ -75,14 +74,13 @@ class AccessTableDataDB_struct_test extends StructTest {
             ),
         );
 
-        $this->assertEquals($expected_data, $actual_data, '');
+        $this->assertEquals($expected_data, $actual_data);
     }
 
     public function test_getDataFromDB_oldRev() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', '');
-        $schemaData->setCorrectTimestamp('testpage', 200);
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', 200);
         $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
@@ -99,9 +97,7 @@ class AccessTableDataDB_struct_test extends StructTest {
     public function test_getData_currentRev() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
-        $schemaData->setCorrectTimestamp('testpage');
-
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage');
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
@@ -118,9 +114,7 @@ class AccessTableDataDB_struct_test extends StructTest {
     public function test_getDataArray_currentRev() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
-        $schemaData->setCorrectTimestamp('testpage');
-
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage');
         $actual_data = $schemaData->getDataArray();
 
         $expected_data = array(
@@ -135,8 +129,7 @@ class AccessTableDataDB_struct_test extends StructTest {
     public function test_getData_currentRev2() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage2', "");
-        $schemaData->setCorrectTimestamp('testpage2');
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage2');
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
@@ -153,8 +146,7 @@ class AccessTableDataDB_struct_test extends StructTest {
     public function test_getData_oldRev() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', '');
-        $schemaData->setCorrectTimestamp('testpage', 200);
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', 200);
         $actual_data = $schemaData->getData();
 
         $expected_data = array(

@@ -130,7 +130,9 @@ class AccessTableData extends AccessTable {
         /** @noinspection SqlResolve */
         $sql = "SELECT rev FROM $table $where ORDER BY rev DESC LIMIT 1";
         $res = $this->sqlite->query($sql, $opts);
-        return (int) $this->sqlite->res2single($res);
+        $ret = (int) $this->sqlite->res2single($res);
+        $this->sqlite->res_close($res);
+        return $ret;
     }
 
 }
