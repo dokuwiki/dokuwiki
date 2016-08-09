@@ -16,9 +16,10 @@ class AccessTableLookup extends AccessTable {
      *
      * @param Schema $schema Which schema to access
      * @param int $pid the row identifier (0 for new row)
+     * @param int $ts Time at which the data should be read or written, 0 for now
      */
-    public function __construct(Schema $schema, $pid=0) {
-        parent::__construct($schema, $pid);
+    public function __construct(Schema $schema, $pid = 0, $ts = 0) {
+        parent::__construct($schema, $pid, $ts);
         if(!$this->schema->isLookup()) {
             throw new StructException('wrong schema type. use factory methods!');
         }
@@ -112,14 +113,8 @@ class AccessTableLookup extends AccessTable {
         return true;
     }
 
-    /**
-     * Always sets $ts to 0
-     *
-     * @param string $page unused
-     * @param null $ts unused
-     */
-    protected function setCorrectTimestamp($page, $ts = null) {
-        $this->ts = 0;
+    protected function getLastRevisionTimestamp() {
+        $return = 0;
     }
 
 }
