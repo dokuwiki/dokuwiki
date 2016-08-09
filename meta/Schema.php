@@ -90,6 +90,7 @@ class Schema {
             $this->id = $result['id'];
             $this->chksum = $result['chksum'];
             $this->islookup = $result['islookup'];
+            $this->ts = $result['ts'];
         } else {
             $this->islookup = $islookup;
         }
@@ -240,8 +241,7 @@ class Schema {
     }
 
     /**
-     * @todo should this return the time stamp it was created at?
-     * @return int returns the timestamp this Schema was initialized with
+     * @return int returns the timestamp this Schema was created at
      */
     public function getTimeStamp() {
         return $this->ts;
