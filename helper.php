@@ -95,13 +95,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
         $tosave = $validator->getChangedSchemas();
         if(!$tosave) return;
 
-        // force a new page revision @see action_plugin_struct_entry::handle_pagesave_before()
-        $GLOBALS['struct_plugin_force_page_save'] = true;
-        saveWikiText($page, rawWiki($page), $summary);
-        unset($GLOBALS['struct_plugin_force_page_save']);
-        $file = wikiFN($page);
-        clearstatcache(false, $file);
-        $newrevision = filemtime($file);
+        $newrevision = self::createPageRevision($page, $summary);
 
         // save the provided data
         $assignments = new Assignments();
@@ -111,6 +105,25 @@ class helper_plugin_struct extends DokuWiki_Plugin {
             // make sure this schema is assigned
             $assignments->assignPageSchema($page, $table);
         }
+    }
+
+    /**
+     * Creates a new page revision with the same page content as before
+     *
+     * @param string $page
+     * @param string $summary
+     * @param bool $minor
+     * @return int the new revision
+     */
+    static public function createPageRevision($page, $summary='', $minor=false) {
+        $summary = trim($summary);
+        // force a new page revision @see action_plugin_struct_entry::handle_pagesave_before()
+        $GLOBALS['struct_plugin_force_page_save'] = true;
+        saveWikiText($page, rawWiki($page), $summary, $minor);
+        unset($GLOBALS['struct_plugin_force_page_save']);
+        $file = wikiFN($page);
+        clearstatcache(false, $file);
+        return filemtime($file);
     }
 
     /**

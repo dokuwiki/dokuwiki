@@ -104,21 +104,13 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
     protected function inline_save() {
         global $INPUT;
 
+        // check preconditions
         if(!$this->initFromInput()) {
             throw new StructException('inline save error: init');
         }
-        // our own implementation of checkSecurityToken because we don't want the msg() call
-        if(
-            $INPUT->server->str('REMOTE_USER') &&
-            getSecurityToken() != $INPUT->str('sectok')
-        ) {
-            throw new StructException('inline save error: csrf');
-        }
-        if(auth_quickaclcheck($this->pid) < AUTH_EDIT) {
-            throw new StructException('inline save error: acl');
-        }
-        if(checklock($this->pid)) {
-            throw new StructException('inline save error: lock');
+        self::checkCSRF();
+        if(!$this->schemadata->getSchema()->isLookup()) {
+            $this->checkPage();
         }
 
         // validate
@@ -131,15 +123,23 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         // current data
         $tosave = $this->schemadata->getDataArray();
         $tosave[$this->column->getLabel()] = $value;
-        $tosave = array($this->schemadata->getSchema()->getTable() => $tosave);
 
         // save
-        /** @var helper_plugin_struct $helper */
-        $helper = plugin_load('helper', 'struct');
-        $helper->saveData($this->pid, $tosave, 'inline edit');
-
-        // unlock
-        unlock($this->pid);
+        if($this->schemadata->getSchema()->isLookup()) {
+            $revision = 0;
+        } else {
+            $revision = helper_plugin_struct::createPageRevision($this->pid, 'inline edit');
+        }
+        $this->schemadata->setTimestamp($revision);
+        try {
+            if(!$this->schemadata->saveData($tosave)) {
+                throw new StructException('saving failed');
+            }
+        } finally {
+            // unlock (unlocking a non-existing file is okay,
+            // so we don't check if it's a lookup here
+            unlock($this->pid);
+        }
 
         // reinit then render
         $this->initFromInput();
@@ -148,6 +148,8 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         $value->render($R, 'xhtml'); // FIXME use configured default renderer
         echo $R->doc;
     }
+
+
 
     /**
      * Unlock a page (on cancel action)
@@ -190,6 +192,38 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         }
 
         return true;
+    }
+
+    /**
+     * Checks if a page can be edited
+     *
+     * @throws StructException when check fails
+     */
+    protected function checkPage() {
+        if(!page_exists($this->pid)) {
+            throw new StructException('inline save error: no such page');
+        }
+        if(auth_quickaclcheck($this->pid) < AUTH_EDIT) {
+            throw new StructException('inline save error: acl');
+        }
+        if(checklock($this->pid)) {
+            throw new StructException('inline save error: lock');
+        }
+    }
+
+    /**
+     * Our own implementation of checkSecurityToken because we don't want the msg() call
+     *
+     * @throws StructException when check fails
+     */
+    protected static function checkCSRF() {
+        global $INPUT;
+        if(
+            $INPUT->server->str('REMOTE_USER') &&
+            getSecurityToken() != $INPUT->str('sectok')
+        ) {
+            throw new StructException('CSRF check failed');
+        }
     }
 
 }

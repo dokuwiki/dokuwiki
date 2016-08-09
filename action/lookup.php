@@ -87,6 +87,8 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
             throw new StructException('No schema given');
         }
 
+        #FIXME check security token
+
         $schemadata = AccessTable::byTableName($tablename, $pid);
         $schemadata->clearData();
     }

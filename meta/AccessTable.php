@@ -295,6 +295,14 @@ abstract class AccessTable {
     }
 
     /**
+     * @param int $ts
+     */
+    public function setTimestamp($ts) {
+        $this->ts = $ts;
+    }
+
+
+    /**
      * Set $this->ts to an existing timestamp, which is either current timestamp if it exists
      * or the next oldest timestamp that exists. If not timestamp is provided it is the newest timestamp that exists.
      *
