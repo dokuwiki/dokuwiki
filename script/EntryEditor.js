@@ -91,7 +91,7 @@ var EntryEditor = function($form) {
     /**
      * Duplicate the elements in .newtemplate whenever any input in it changes
      */
-    $form.find('.struct .newtemplate').each(function () {
+    $form.find('.newtemplate').each(function () {
         var $tplwrapper = jQuery(this);
         var $tpl = $tplwrapper.children().clone(true, true);
 
