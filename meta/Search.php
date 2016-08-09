@@ -376,7 +376,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $col->getType()->sort($QB, 'data_'.$col->getTable(), $col->getColName(), $asc ? 'ASC' : 'DESC');
+            $col->getType()->sort($QB, 'data_'.$col->getTable(), $col->getColName(false), $asc ? 'ASC' : 'DESC');
         }
 
         return $QB->getSQL();

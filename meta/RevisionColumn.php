@@ -32,19 +32,19 @@ class RevisionColumn extends Column {
     }
 
     /**
-     * @param bool $forceSingleColumn ignored
+     * @param bool $enforceSingleColumn ignored
      * @return string
      */
-    public function getColName($forceSingleColumn = true) {
+    public function getColName($enforceSingleColumn = true) {
         return 'rev';
     }
 
     /**
-     * @param bool $forceSingleColumn ignored
+     * @param bool $enforceSingleColumn ignored
      * @return string
      */
-    public function getFullColName($forceSingleColumn = true) {
-        $col = $this->getColName($forceSingleColumn);
+    public function getFullColName($enforceSingleColumn = true) {
+        $col = $this->getColName($enforceSingleColumn);
         if($this->table) $col = 'data_'.$this->table.'.'.$col;
         return $col;
     }
