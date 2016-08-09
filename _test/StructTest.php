@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
+use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\SchemaData;
 use dokuwiki\plugin\struct\meta\SchemaImporter;
 
@@ -90,6 +91,8 @@ abstract class StructTest extends \DokuWikiTest {
         saveWikiText($page, "test for $page", "saved for testing");
         $schemaData = new SchemaData($schema, $page, $rev);
         $schemaData->saveData($data);
+        $assignments = new Assignments();
+        $assignments->assignPageSchema($page, $schema);
     }
 
     /**
