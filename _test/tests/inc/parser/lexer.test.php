@@ -158,20 +158,20 @@ class TestParser {
 
 class TestOfLexer extends DokuWikiTest {
     function testNoPatterns() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->never())->method('accept');
         $lexer = new Doku_Lexer($handler);
         $this->assertFalse($lexer->parse("abcdef"));
     }
     function testEmptyPage() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->never())->method('accept');
         $lexer = new Doku_Lexer($handler);
         $lexer->addPattern("a+");
         $this->assertTrue($lexer->parse(""));
     }
     function testSinglePattern() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('accept')
             ->with("aaa", DOKU_LEXER_MATCHED, 0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('accept')
@@ -194,7 +194,7 @@ class TestOfLexer extends DokuWikiTest {
         $this->assertTrue($lexer->parse("aaaxayyyaxaaaz"));
     }
     function testMultiplePattern() {
-        $handler = $this->getMock('TestParser', array('accept'));
+        $handler = $this->createPartialMock('TestParser', array('accept'));
         $target = array("a", "b", "a", "bb", "x", "b", "a", "xxxxxx", "a", "x");
         $positions = array(0, 1, 2, 3, 5, 6, 7, 8, 14, 15);
         for ($i = 0; $i < count($target); $i++) {
@@ -210,7 +210,7 @@ class TestOfLexer extends DokuWikiTest {
 
 class TestOfLexerModes extends DokuWikiTest {
     function testIsolatedPattern() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('a')
             ->with("a", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('a')
@@ -233,7 +233,7 @@ class TestOfLexerModes extends DokuWikiTest {
         $this->assertTrue($lexer->parse("abaabxbaaaxaaaax"));
     }
     function testModeChange() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('a')
             ->with("a", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('a')
@@ -268,7 +268,7 @@ class TestOfLexerModes extends DokuWikiTest {
         $this->assertTrue($lexer->parse("abaabaaa:ababbabbba"));
     }
     function testNesting() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('a')
             ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('a')
@@ -301,7 +301,7 @@ class TestOfLexerModes extends DokuWikiTest {
         $this->assertTrue($lexer->parse("aabaab(bbabb)aab"));
     }
     function testSingular() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('a')
             ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('b')
@@ -320,7 +320,7 @@ class TestOfLexerModes extends DokuWikiTest {
         $this->assertTrue($lexer->parse("aabaaxxbbbxx"));
     }
     function testUnwindTooFar() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('a')
             ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('a')
@@ -335,7 +335,7 @@ class TestOfLexerModes extends DokuWikiTest {
 
 class TestOfLexerHandlers extends DokuWikiTest {
     function testModeMapping() {
-        $handler = $this->getMock('TestParser');
+        $handler = $this->createMock('TestParser');
         $handler->expects($this->at(0))->method('a')
             ->with("aa", DOKU_LEXER_MATCHED,0)->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('a')
@@ -376,7 +376,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
     function testIndex() {
         $doc = "aaa<file>bcd</file>eee";
 
-        $handler = $this->getMock('TestParserByteIndex');
+        $handler = $this->createMock('TestParserByteIndex');
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('caught')
             ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
@@ -402,7 +402,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
     function testIndexLookaheadEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-        $handler = $this->getMock('TestParserByteIndex');
+        $handler = $this->createMock('TestParserByteIndex');
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('caught')
             ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
@@ -428,7 +428,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
     function testIndexLookaheadNotEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-        $handler = $this->getMock('TestParserByteIndex');
+        $handler = $this->createMock('TestParserByteIndex');
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('caught')
             ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
@@ -454,7 +454,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
     function testIndexLookbehindEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-        $handler = $this->getMock('TestParserByteIndex');
+        $handler = $this->createMock('TestParserByteIndex');
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('caught')
             ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
@@ -480,7 +480,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
     function testIndexLookbehindNotEqual() {
         $doc = "aaa<file>bcd</file>eee";
 
-        $handler = $this->getMock('TestParserByteIndex');
+        $handler = $this->createMock('TestParserByteIndex');
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler->expects($this->at(1))->method('caught')
             ->with("<file>", DOKU_LEXER_ENTER, strpos($doc,'<file>'))->will($this->returnValue(true));
@@ -511,7 +511,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $doc = "ALL FOOLS ARE FOO";
         $pattern = '\bFOO\b';
 
-        $handler = $this->getMock('TestParserByteIndex');
+        $handler = $this->createMock('TestParserByteIndex');
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
 
         $matches = array();
@@ -527,5 +527,3 @@ class TestOfLexerByteIndices extends DokuWikiTest {
     }
 
 }
-
-?>
