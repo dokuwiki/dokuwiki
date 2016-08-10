@@ -54,9 +54,8 @@ $lang['emptypage'] = 'Les données du plugin Struct ne sont pas sauvegardées si
 
 $lang['validation_prefix'] = "Champ [%s] : ";
 
-$lang['Validation Exception Integer needed'] = 'seuls les nombres entiers sont autorisés';
-$lang['Validation Exception Integer min'] = 'doit être supérieur ou égal à %d';
-$lang['Validation Exception Integer max'] = 'doit être inférieur ou égal à %d';
+$lang['Validation Exception Decimal min'] = 'doit être supérieur ou égal à %d';
+$lang['Validation Exception Decimal max'] = 'doit être inférieur ou égal à %d';
 $lang['Validation Exception User not found'] = 'doit être un utilisateur existant. L\'utilisateur \'%s\' n\'a pas été trouvé.';
 $lang['Validation Exception Media mime type'] = 'Les fichiers de type %s ne sont pas autorisés. Fichiers autorisés : %s';
 $lang['Validation Exception Url invalid'] = '%s n\'est pas une URL valide';

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\struct\test;
 
+use dokuwiki\plugin\struct\meta\Value;
+use dokuwiki\plugin\struct\test\mock\Search;
 use dokuwiki\plugin\struct\types\Decimal;
 
 /**
@@ -119,4 +121,51 @@ class Type_Decimal_struct_test extends StructTest {
         $decimal->renderValue($value, $R, 'xhtml');
         $this->assertEquals($expect, $R->doc);
     }
+
+    public function test_sort() {
+        $this->loadSchemaJSON('decimal');
+        $this->waitForTick();
+        $this->saveData('page1', 'decimal', array('field' => '5000'));
+        $this->saveData('page2', 'decimal', array('field' => '5000.001'));
+        $this->saveData('page3', 'decimal', array('field' => '900.5'));
+        $this->saveData('page4', 'decimal', array('field' => '1.5'));
+
+        $search = new Search();
+        $search->addSchema('decimal');
+        $search->addColumn('%pageid%');
+        $search->addColumn('field');
+        $search->addSort('field', true);
+        /** @var Value[][] $result */
+        $result = $search->execute();
+
+        $this->assertEquals(4, count($result));
+        $this->assertEquals('page4', $result[0][0]->getValue());
+        $this->assertEquals('page3', $result[1][0]->getValue());
+        $this->assertEquals('page1', $result[2][0]->getValue());
+        $this->assertEquals('page2', $result[3][0]->getValue());
+    }
+
+    public function test_filter() {
+        $this->loadSchemaJSON('decimal');
+        $this->waitForTick();
+        $this->saveData('page1', 'decimal', array('field' => '5000'));
+        $this->saveData('page2', 'decimal', array('field' => '5000.001'));
+        $this->saveData('page3', 'decimal', array('field' => '900.5'));
+        $this->saveData('page4', 'decimal', array('field' => '1.5'));
+
+        $search = new Search();
+        $search->addSchema('decimal');
+        $search->addColumn('%pageid%');
+        $search->addColumn('field');
+        $search->addFilter('field', '800', '>', 'AND');
+        $search->addSort('field', true);
+        /** @var Value[][] $result */
+        $result = $search->execute();
+
+        $this->assertEquals(3, count($result));
+        $this->assertEquals('page3', $result[0][0]->getValue());
+        $this->assertEquals('page1', $result[1][0]->getValue());
+        $this->assertEquals('page2', $result[2][0]->getValue());
+    }
+
 }

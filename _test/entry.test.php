@@ -136,7 +136,7 @@ class entry_struct_test extends StructTest {
         );
         $request->setPost('struct_schema_data', $structData);
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
-        $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Integer needed'), 'afourth');
+        $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), 'afourth');
         $actual_errormsg = $response->queryHTML('.error')->html();
         $test_html = trim($response->queryHTML('.struct')->html());
 
@@ -231,7 +231,7 @@ class entry_struct_test extends StructTest {
         $expected_wikitext = $wikitext;
 
         $actual_errormsg = $response->queryHTML('.error')->html();
-        $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Integer needed'), 'afourth');
+        $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), 'afourth');
 
         $test_html = trim($response->queryHTML('.struct')->html());
 

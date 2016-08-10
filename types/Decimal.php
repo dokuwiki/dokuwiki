@@ -1,6 +1,8 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
 
+use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
 /**
@@ -101,5 +103,43 @@ class Decimal extends AbstractMultiBaseType {
 
         return $out;
     }
+
+    /**
+     * Decimals need to be casted to the proper type for sorting
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $order
+     */
+    public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
+        $QB->addOrderBy("CAST($tablealias.$colname AS DECIMAL) $order");
+    }
+
+    /**
+     * Decimals need to be casted to proper type for comparison
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $comp
+     * @param string|\string[] $value
+     * @param string $op
+     */
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        /** @var QueryBuilderWhere $add Where additionional queries are added to*/
+        if(is_array($value)) {
+            $add = $QB->filters()->where($op); // sub where group
+            $op = 'OR';
+        } else {
+            $add = $QB->filters(); // main where clause
+        }
+        foreach((array) $value as $item) {
+            $pl = $QB->addValue($item);
+            $add->where($op, "CAST($tablealias.$colname AS DECIMAL) $comp CAST($pl AS DECIMAL)");
+        }
+    }
+
+
 
 }
