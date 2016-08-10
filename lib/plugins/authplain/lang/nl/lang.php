@@ -9,4 +9,4 @@
 $lang['userexists']            = 'Er bestaat al een gebruiker met deze loginnaam.';
 $lang['usernotexists']         = 'Sorry, deze gebruiker bestaat niet.';
 $lang['writefail']             = 'Onmogelijk om de gebruikers data te wijzigen. Gelieve de Wiki-Admin te informeren.';
-$lang['protected']             = 'Gegevens van gebruiker %s is beschermd en kan niet worden veranderd of verwijderd';
+$lang['protected']             = 'Gegevens van gebruiker %s zijn beschermd en kunnen niet worden veranderd of verwijderd';
