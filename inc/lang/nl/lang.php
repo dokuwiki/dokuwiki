@@ -28,8 +28,8 @@
  * @author Johan Wijnker <johan@wijnker.eu>
  * @author Hugo Smet <hugo.smet@scarlet.be>
  * @author Mark C. Prins <mprins@users.sf.net>
- * @author hugo smet <hugo.smet@scarlet.be>
  * @author Wesley de Weerd <wesleytiel@gmail.com>
+ * @author Sjoerd <sjoerd@sjomar.eu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -361,7 +361,7 @@ $lang['currentns']             = 'Huidige namespace';
 $lang['searchresult']          = 'Zoekresultaat';
 $lang['plainhtml']             = 'Alleen HTML';
 $lang['wikimarkup']            = 'Wiki Opmaak';
-$lang['email_signature_text']       = 'Deze mail werd gegenereerd door DokuWiki op
-@DOKUWIKIURL@';
 $lang['page_nonexist_rev']     = 'Pagina bestaat niet bij %s. Het is vervolgens aangemaakt bij <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Begrijp het niet bij parameter "%s".';
+$lang['email_signature_text']  = 'Deze mail werd gegenereerd door DokuWiki op
+@DOKUWIKIURL@';
