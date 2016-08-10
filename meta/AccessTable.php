@@ -152,7 +152,6 @@ abstract class AccessTable {
      * @return Value[] a list of values saved for the current page
      */
     public function getData() {
-        $this->getLastRevisionTimestamp($this->pid, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data, false);
         return $data;
@@ -166,7 +165,6 @@ abstract class AccessTable {
      * @return array
      */
     public function getDataArray() {
-        $this->getLastRevisionTimestamp($this->pid, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data, true);
         return $data;
