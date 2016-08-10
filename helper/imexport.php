@@ -45,6 +45,8 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
         var_dump($sql);
         var_dump($this->sqlite->getAdapter()->getDbFile());
         $this->sqlite->doTransaction($sql);
+        $assignments = new \dokuwiki\plugin\struct\meta\Assignments();
+        $assignments->propagatePageAssignments($schema);
     }
 
     public function getSchemaAssignmentPatterns($schema) {

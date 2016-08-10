@@ -52,20 +52,8 @@ class Assignments {
 
         // reload patterns
         $this->loadPatterns();
+        $this->propagatePageAssignments($table);
 
-        // fetch all pages where the schema isn't assigned, yet
-        $sql = 'SELECT pid FROM schema_assignments WHERE tbl != ? OR assigned != 1';
-        $res = $this->sqlite->query($sql, $table);
-        $pagerows = $this->sqlite->res2arr($res);
-        $this->sqlite->res_close($res);
-
-        // reevalute the pages and assign when needed
-        foreach($pagerows as $row) {
-            $tables = $this->getPageAssignments($row['pid'], true);
-            if(in_array($table, $tables)) {
-                $this->assignPageSchema($row['pid'], $table);
-            }
-        }
 
         return $ok;
     }
@@ -324,5 +312,24 @@ class Assignments {
         }
 
         return $assigned;
+    }
+
+    /**
+     * fetch all pages where the schema isn't assigned, yet and reevaluate the page assignments for those pages and assign when needed
+     *
+     * @param $table
+     */
+    public function propagatePageAssignments($table) {
+        $sql = 'SELECT pid FROM schema_assignments WHERE tbl != ? OR assigned != 1';
+        $res = $this->sqlite->query($sql, $table);
+        $pagerows = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+
+        foreach ($pagerows as $row) {
+            $tables = $this->getPageAssignments($row['pid'], true);
+            if (in_array($table, $tables)) {
+                $this->assignPageSchema($row['pid'], $table);
+            }
+        }
     }
 }
