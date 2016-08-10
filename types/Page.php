@@ -135,6 +135,26 @@ class Page extends AbstractMultiBaseType {
     }
 
     /**
+     * When using titles, sort by them first
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $order
+     */
+    public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
+        if(!$this->config['usetitles']) {
+            parent::sort($QB, $tablealias, $colname, $order);
+            return;
+        }
+
+        $rightalias = $QB->generateTableAlias();
+        $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
+        $QB->addOrderBy("$rightalias.title $order");
+        $QB->addOrderBy("$tablealias.$colname $order");
+    }
+
+    /**
      * Return the pageid only
      *
      * @param string $value

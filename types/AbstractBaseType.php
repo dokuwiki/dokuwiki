@@ -416,6 +416,24 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * Sort results by this type
+     *
+     * The default implementation should be good for nearly all types. However some
+     * types may need to do proper SQLite type casting to have the right order.
+     *
+     * Generally if you implemented @see select() you probably want to implement this,
+     * too.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias The table the currently saved value is stored in
+     * @param string $colname The column name on above table (always single column!)
+     * @param string $order either ASC or DESC
+     */
+    public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
+        $QB->addOrderBy("$tablealias.$colname $order");
+    }
+
+    /**
      * This allows types to apply a transformation to the value read by select()
      *
      * The returned value should always be a single, non-complex string. In general
