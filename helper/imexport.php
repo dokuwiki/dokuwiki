@@ -35,9 +35,11 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
         $this->sqlite = $helper->getDB();
         $schema = $this->sqlite->escape_string($schema);
         $sql = array();
-        $sql[] = 'DELETE FROM schema_assignments_patterns WHERE tbl = \'' . $schema . '\'';
+        $sql[] = "DELETE FROM schema_assignments_patterns WHERE tbl = '$schema'";
+        $sql[] = "DELETE FROM schema_assignments WHERE tbl = '$schema'";
         foreach ($patterns as $pattern) {
-            $sql[] = 'INSERT INTO schema_assignments_patterns (pattern, tbl) VALUES (\''.$this->sqlite->escape_string($pattern) .'\',\''.$schema.'\')';
+            $pattern = $this->sqlite->escape_string($pattern);
+            $sql[] = "INSERT INTO schema_assignments_patterns (pattern, tbl) VALUES ('$pattern','$schema')";
         }
 
         var_dump($sql);
