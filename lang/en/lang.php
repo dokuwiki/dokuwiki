@@ -55,9 +55,9 @@ $lang['emptypage'] = 'Struct data has not been saved for an empty page';
 
 $lang['validation_prefix'] = "Field [%s]: ";
 
-$lang['Validation Exception Integer needed'] = 'only integers are allowed';
-$lang['Validation Exception Integer min'] = 'has to be equal or greater than %d';
-$lang['Validation Exception Integer max'] = 'has to be equal or less than %d';
+$lang['Validation Exception Decimal needed'] = 'only decimals are allowed';
+$lang['Validation Exception Decimal min'] = 'has to be equal or greater than %d';
+$lang['Validation Exception Decimal max'] = 'has to be equal or less than %d';
 $lang['Validation Exception User not found'] = 'has to be an existing user. User \'%s\' was not found.';
 $lang['Validation Exception Media mime type'] = 'MIME type %s has to match the allowed set of %s';
 $lang['Validation Exception Url invalid'] = '%s is not a valid URL';
