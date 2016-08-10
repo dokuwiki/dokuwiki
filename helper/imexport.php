@@ -13,6 +13,10 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
 
     private $sqlite;
 
+
+    /**
+     * this possibly duplicates @see helper_plugin_struct::getSchema()
+     */
     public function getAllSchemasList() {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
@@ -42,8 +46,6 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
             $sql[] = "INSERT INTO schema_assignments_patterns (pattern, tbl) VALUES ('$pattern','$schema')";
         }
 
-        var_dump($sql);
-        var_dump($this->sqlite->getAdapter()->getDbFile());
         $this->sqlite->doTransaction($sql);
         $assignments = new \dokuwiki\plugin\struct\meta\Assignments();
         $assignments->propagatePageAssignments($schema);
@@ -59,6 +61,17 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
         $patterns = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
         return array_map(function($elem){return $elem['pattern'];},$patterns);
+    }
+
+    public function getCurrentSchemaJSON($schema) {
+        $schema = new \dokuwiki\plugin\struct\meta\Schema($schema);
+        return $schema->toJSON();
+    }
+
+    public function importSchema($schemaName, $json) {
+        $importer = new \dokuwiki\plugin\struct\meta\SchemaImporter($schemaName, $json); // todo could throw a struct exception?!
+        $ok = $importer->build(); // ToDo: Ensure that user = FARMSYNC is set
+        return $ok;
     }
 
 }

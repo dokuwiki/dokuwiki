@@ -23,6 +23,8 @@ class SchemaBuilder {
      */
     protected $data = array();
 
+    protected $user;
+
     /**
      * @var string The table name associated with the schema
      */
@@ -57,7 +59,7 @@ class SchemaBuilder {
         $this->data = $data;
         $this->oldschema = new Schema($table);
 
-        $this->helper = plugin_load('helper', 'struct_db');
+        $this->helper = plugin_load('helper', 'struct_db', true);
         $this->sqlite = $this->helper->getDB();
     }
 
@@ -140,8 +142,8 @@ class SchemaBuilder {
     protected function newSchema() {
         if(!$this->time) $this->time = time();
 
-        $sql = "INSERT INTO schemas (tbl, ts) VALUES (?, ?)";
-        $this->sqlite->query($sql, $this->table, $this->time);
+        $sql = "INSERT INTO schemas (tbl, ts, user) VALUES (?, ?, ?)";
+        $this->sqlite->query($sql, $this->table, $this->time, blank($this->user) ? $_SERVER['REMOTE_USER'] : $this->user);
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
         $this->newschemaid = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);
