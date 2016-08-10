@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Hugo Smet <hugo.smet@scarlet.be>
  */
 $lang['connectfail']           = 'LDAP kan niet connecteren: %s';
