@@ -11,15 +11,15 @@ namespace dokuwiki\plugin\struct\meta;
  */
 class AccessTableData extends AccessTable {
 
-
     /**
      * AccessTableData constructor
      *
      * @param Schema $schema Which schema to access
      * @param string $pid The page of which the data is for
+     * @param int $ts Time at which the data should be read or written, 0 for now
      */
-    public function __construct(Schema $schema, $pid) {
-        parent::__construct($schema, $pid);
+    public function __construct(Schema $schema, $pid, $ts = 0) {
+        parent::__construct($schema, $pid, $ts);
         if($this->schema->isLookup()) {
             throw new StructException('wrong schema type. use factory methods!');
         }
@@ -115,25 +115,24 @@ class AccessTableData extends AccessTable {
         return true;
     }
 
-
-
     /**
-     * Set $this->ts to an existing timestamp, which is either current timestamp if it exists
-     * or the next oldest timestamp that exists. If not timestamp is provided it is the newest timestamp that exists.
-     *
-     * @param          $page
-     * @param int|null $ts
+     * @return int
      */
-    protected function setCorrectTimestamp($page, $ts = null) {
+    protected function getLastRevisionTimestamp() {
         $table = 'data_' . $this->schema->getTable();
-        $where = "WHERE pid = '$page'";
-        if ($ts) {
-            $where .= " AND rev <= $ts";
+        $where = "WHERE pid = ?";
+        $opts = array($this->pid);
+        if($this->ts) {
+            $where .= " AND rev <= ?";
+            $opts[] = $this->ts;
         }
+
         /** @noinspection SqlResolve */
         $sql = "SELECT rev FROM $table $where ORDER BY rev DESC LIMIT 1";
-        $res = $this->sqlite->query($sql);
-        $this->ts = $this->sqlite->res2single($res);
+        $res = $this->sqlite->query($sql, $opts);
+        $ret = (int) $this->sqlite->res2single($res);
+        $this->sqlite->res_close($res);
+        return $ret;
     }
 
 }

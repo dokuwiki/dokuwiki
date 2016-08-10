@@ -37,4 +37,9 @@ class AccessTableDataNoDB extends AccessTableData {
             $this->schema->columns[] = new Column($sort, new $multi(null, null, true), $sort);
         }
     }
+
+    protected function getLastRevisionTimestamp() {
+        return $this->ts;
+    }
+
 }

@@ -21,13 +21,14 @@ abstract class AccessTable {
      *
      * @param Schema $schema schema to load
      * @param string|int $pid Page or row id to access
+     * @param int $ts Time at which the data should be read or written, 0 for now
      * @return AccessTableData|AccessTableLookup
      */
-    public static function bySchema(Schema $schema, $pid) {
+    public static function bySchema(Schema $schema, $pid, $ts = 0) {
         if($schema->isLookup()) {
-            return new AccessTableLookup($schema, $pid);
+            return new AccessTableLookup($schema, $pid, $ts);
         } else {
-            return new AccessTableData($schema, $pid);
+            return new AccessTableData($schema, $pid, $ts);
         }
     }
 
@@ -36,21 +37,22 @@ abstract class AccessTable {
      *
      * @param string $tablename schema to load
      * @param string|int $pid Page or row id to access
-     * @param int $ts from when is the schema to access?
+     * @param int $ts Time at which the data should be read or written, 0 for now
      * @return AccessTableData|AccessTableLookup
      */
     public static function byTableName($tablename, $pid, $ts = 0) {
         $schema = new Schema($tablename, $ts);
-        return self::bySchema($schema, $pid);
+        return self::bySchema($schema, $pid, $ts);
     }
 
     /**
      * AccessTable constructor
      *
-     * @param Schema $schema
-     * @param string $pid
+     * @param Schema $schema The schema valid at $ts
+     * @param string|int $pid
+     * @param int $ts Time at which the data should be read or written, 0 for now
      */
-    public function __construct(Schema $schema, $pid) {
+    public function __construct(Schema $schema, $pid, $ts = 0) {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
@@ -64,7 +66,7 @@ abstract class AccessTable {
 
         $this->schema = $schema;
         $this->pid = $pid;
-        $this->ts = $this->schema->getTimeStamp();
+        $this->setTimestamp($ts);
         foreach($this->schema->getColumns() as $col) {
             $this->labels[$col->getColref()] = $col->getType()->getLabel();
         }
@@ -150,7 +152,6 @@ abstract class AccessTable {
      * @return Value[] a list of values saved for the current page
      */
     public function getData() {
-        $this->setCorrectTimestamp($this->pid, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data, false);
         return $data;
@@ -164,7 +165,6 @@ abstract class AccessTable {
      * @return array
      */
     public function getDataArray() {
-        $this->setCorrectTimestamp($this->pid, $this->ts);
         $data = $this->getDataFromDB();
         $data = $this->consolidateData($data, true);
         return $data;
@@ -288,7 +288,7 @@ abstract class AccessTable {
 
         $pl = $QB->addValue($this->pid);
         $QB->filters()->whereAnd("DATA.pid = $pl");
-        $pl = $QB->addValue($this->ts);
+        $pl = $QB->addValue($this->getLastRevisionTimestamp());
         $QB->filters()->whereAnd("DATA.rev = $pl");
 
         return $QB->getSQL();
@@ -298,19 +298,22 @@ abstract class AccessTable {
      * @param int $ts
      */
     public function setTimestamp($ts) {
+        if($ts && $ts < $this->schema->getTimeStamp()) {
+            throw new StructException('Given timestamp is not valid for current Schema');
+        }
+
         $this->ts = $ts;
     }
 
 
     /**
-     * Set $this->ts to an existing timestamp, which is either current timestamp if it exists
-     * or the next oldest timestamp that exists. If not timestamp is provided it is the newest timestamp that exists.
+     * Return the last time an edit happened for this table for the currently set
+     * time and pid. When the current timestamp is 0, the newest revision is
+     * returned. Used in @see buildGetDataSQL()
      *
-     * @param          $page
-     * @param int|null $ts
-     * @fixme clear up description
+     * @return int
      */
-    abstract protected function setCorrectTimestamp($page, $ts = null);
+    abstract protected function getLastRevisionTimestamp();
 }
 
 

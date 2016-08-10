@@ -65,8 +65,7 @@ class AccessTableDataDBMulti_struct_test extends StructTest {
     public function test_getDataFromDB_currentRev() {
 
         // act
-        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage', "");
-        $schemaData->setCorrectTimestamp('testpage');
+        $schemaData = mock\AccessTable::byTableName('testtable', 'testpage');
         $actual_data = $schemaData->getDataFromDB();
 
         $expected_data = array(
