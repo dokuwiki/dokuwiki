@@ -138,6 +138,13 @@ class Schema {
     }
 
     /**
+     * @return string identifer for debugging purposes
+     */
+    function __toString() {
+        return __CLASS__.' '.$this->table.' ('.$this->id.') '.($this->islookup ? 'LOOKUP' : 'DATA');
+    }
+
+    /**
      * Cleans any unwanted stuff from table names
      *
      * @param string $table
