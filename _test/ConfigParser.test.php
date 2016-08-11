@@ -15,7 +15,7 @@ class ConfigParser_struct_test extends StructTest {
 
     public function test_simple() {
         $lines = array(
-            "schema    : testtable",
+            "schema    : testtable, another, foo bar",
             "cols      : %pageid%, count",
             "sort      : ^count",
             "sort      : %pageid%"
@@ -45,6 +45,16 @@ class ConfigParser_struct_test extends StructTest {
                         array(
                             0 => 'testtable',
                             1 => '',
+                        ),
+                    1 =>
+                        array(
+                            0 => 'another',
+                            1 => '',
+                        ),
+                    2 =>
+                        array(
+                            0 => 'foo',
+                            1 => 'bar',
                         ),
                 ),
             'cols' =>
