@@ -42,6 +42,11 @@ class AggregationTable {
     protected $resultCount;
 
     /**
+     * @var string[] the result PIDs for each row
+     */
+    protected $resultPIDs;
+
+    /**
      * @var array for summing up columns
      */
     protected $sums;
@@ -72,6 +77,7 @@ class AggregationTable {
 
         $this->result = $this->searchConfig->execute();
         $this->resultCount = $this->searchConfig->getCount();
+        $this->resultPIDs = $this->searchConfig->getPids();
         $this->helper = plugin_load('helper', 'struct_config');
     }
 
@@ -216,6 +222,15 @@ class AggregationTable {
                 $width = ' style="width: ' . $data['widths'][$num] . ';"'; // widths are prevalidated, no escape needed
             }
 
+            // prepare data attribute for inline edits
+            if(!is_a($column, '\dokuwiki\plugin\struct\meta\PageColumn') &&
+                !is_a($column, '\dokuwiki\plugin\struct\meta\RevisionColumn')
+            ) {
+                $data = 'data-field="' . hsc($column->getFullQualifiedLabel()) . '"';
+            } else {
+                $data = '';
+            }
+
             // sort indicator and link
             $sortclass = '';
             $sorts = $this->searchConfig->getSorts();
@@ -233,7 +248,7 @@ class AggregationTable {
             $link = wl($this->id, $dynamic->getURLParameters());
 
             // output XHTML header
-            $this->renderer->doc .= "<th $width >";
+            $this->renderer->doc .= "<th $width $data>";
             $this->renderer->doc .= '<a href="' . $link . '" class="' . $sortclass . '" title="' . $this->helper->getLang('sort') . '">' . hsc($header) . '</a>';
             $this->renderer->doc .= '</th>';
         }
@@ -310,6 +325,13 @@ class AggregationTable {
         $this->renderer->tabletbody_open();
         foreach($this->result as $rownum => $row) {
             $this->renderer->tablerow_open();
+
+            // add data attribute for inline edit
+            if($this->mode == 'xhtml') {
+                $pid = $this->resultPIDs[$rownum];
+                $this->renderer->doc = substr(rtrim($this->renderer->doc), 0, -1); // remove closing '>'
+                $this->renderer->doc .= ' data-pid="' . hsc($pid) . '">';
+            }
 
             // row number column
             if($this->data['rownumbers']) {

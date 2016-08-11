@@ -153,6 +153,22 @@ class SchemaData extends Schema {
     }
 
     /**
+     * Get the value of a single column
+     *
+     * @param Column $column
+     * @return Value|null
+     */
+    public function getDataColumn($column) {
+        $data = $this->getData();
+        foreach($data as $value) {
+            if($value->getColumn() == $column) {
+                return $value;
+            }
+        }
+        return null;
+    }
+
+    /**
      * returns the data saved for the page
      *
      * @return Value[] a list of values saved for the current page
