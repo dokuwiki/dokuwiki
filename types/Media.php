@@ -101,8 +101,10 @@ class Media extends AbstractBaseType {
     public function valueEditor($name, $value, $isRaw = false) {
         $name = hsc($name);
         $value = hsc($value);
+        static $count = 0;
+        $count++;
 
-        $id = 'struct__' . md5($name);
+        $id = 'struct__' . md5($name.$count);
 
         $html = "<input id=\"$id\" class=\"struct_media\"  name=\"$name\" value=\"$value\" />";
         $html .= "<button type=\"button\" class=\"struct_media\">";

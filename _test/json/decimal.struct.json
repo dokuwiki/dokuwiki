@@ -1,0 +1,43 @@
+{
+    "structversion": "2016-08-03",
+    "schema": "decimal",
+    "id": "163",
+    "columns": [
+        {
+            "colref": 1,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 10,
+            "label": "field",
+            "class": "Decimal",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "min": "",
+                "max": "",
+                "roundto": "-1",
+                "decpoint": ".",
+                "thousands": "\u202f",
+                "trimzeros": true,
+                "prefix": "",
+                "postfix": "",
+                "label": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                },
+                "hint": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                }
+            }
+        }
+    ]
+}

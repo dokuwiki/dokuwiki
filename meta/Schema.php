@@ -109,6 +109,10 @@ class Schema {
         $this->sqlite->res_close($res);
 
         foreach($rows as $row) {
+            if($row['class'] == 'Integer') {
+                $row['class'] = 'Decimal';
+            }
+
             $class = 'dokuwiki\\plugin\\struct\\types\\' . $row['class'];
             if(!class_exists($class)) {
                 // This usually never happens, except during development

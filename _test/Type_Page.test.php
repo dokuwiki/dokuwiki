@@ -28,6 +28,41 @@ class Type_Page_struct_test extends StructTest {
 
     }
 
+    public function test_sort() {
+
+        saveWikiText('title1', 'test', 'test');
+        $title = new Title('title1');
+        $title->setTitle('This is a title');
+
+        saveWikiText('title2', 'test', 'test');
+        $title = new Title('title2');
+        $title->setTitle('This is a title');
+
+        saveWikiText('title3', 'test', 'test');
+        $title = new Title('title3');
+        $title->setTitle('Another Title');
+
+
+        $this->loadSchemaJSON('pageschema');
+        $this->saveData('test1', 'pageschema', array('singletitle' => 'title1'));
+        $this->saveData('test2', 'pageschema', array('singletitle' => 'title2'));
+        $this->saveData('test3', 'pageschema', array('singletitle' => 'title3'));
+
+        $search = new Search();
+        $search->addSchema('pageschema');
+        $search->addColumn('%pageid%');
+        $search->addColumn('singletitle');
+        $search->addSort('singletitle', true);
+        /** @var Value[][] $result */
+        $result = $search->execute();
+
+        $this->assertEquals(3, count($result));
+        $this->assertEquals('test3', $result[0][0]->getValue());
+        $this->assertEquals('test1', $result[1][0]->getValue());
+        $this->assertEquals('test2', $result[2][0]->getValue());
+    }
+
+
     public function test_search() {
         // prepare some data
         $this->loadSchemaJSON('pageschema');
@@ -41,8 +76,6 @@ class Type_Page_struct_test extends StructTest {
                 'multititle' => array('wiki:dokuwiki', 'wiki:syntax', 'wiki:welcome'),
             )
         );
-        $as = new mock\Assignments();
-        $as->assignPageSchema('syntax', 'pageschema');
 
         // make sure titles for some pages are known (not for wiki:welcome)
         $title = new Title('wiki:dokuwiki');

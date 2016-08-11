@@ -2,8 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
-use dokuwiki\plugin\struct\meta;
-use dokuwiki\plugin\struct\types\Integer;
+use dokuwiki\plugin\struct\types\Decimal;
 use dokuwiki\plugin\struct\types\Text;
 
 /**
@@ -43,8 +42,8 @@ class Validator_struct_test extends StructTest {
 
     public function test_validate_nonArray() {
         $label = 'label';
-        $errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Integer needed'), $label);
-        $integer = new Integer();
+        $errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), $label);
+        $integer = new Decimal();
 
         $validator = new mock\Validator();
         $value = 'NaN';
@@ -54,8 +53,8 @@ class Validator_struct_test extends StructTest {
 
     public function test_validate_array() {
         $label = 'label';
-        $errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Integer needed'), $label);
-        $integer = new Integer();
+        $errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), $label);
+        $integer = new Decimal();
 
         $validator = new mock\Validator();
         $value = array('NaN', 'NaN');
@@ -64,7 +63,7 @@ class Validator_struct_test extends StructTest {
     }
 
     public function test_validate_blank() {
-        $integer = new Integer();
+        $integer = new Decimal();
 
         $validator = new mock\Validator();
         $value = null;

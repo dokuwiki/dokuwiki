@@ -75,7 +75,7 @@
             "isenabled": true,
             "sort": 40,
             "label": "afourth",
-            "class": "Integer",
+            "class": "Decimal",
             "config": {
                 "visibility": {
                     "inpage": true,
