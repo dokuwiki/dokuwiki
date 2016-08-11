@@ -54,9 +54,6 @@ class ConfigParser {
                 case 'col':
                     $this->config['cols'] = $this->parseValues($val);
                     break;
-                case 'title':
-                    $this->config['title'] = $val;
-                    break;
                 case 'head':
                 case 'header':
                 case 'headers':
@@ -94,10 +91,6 @@ class ConfigParser {
                         $this->config['filter'][] = $flt;
                     }
                     break;
-                case 'page':
-                case 'target':
-                    $this->config['page'] = cleanID($val);
-                    break;
                 case 'dynfilters':
                     $this->config['dynfilters'] = (bool) $val;
                     break;
@@ -106,9 +99,6 @@ class ConfigParser {
                     break;
                 case 'summarize':
                     $this->config['summarize'] = (bool) $val;
-                    break;
-                case 'sepbyheaders':
-                    $this->config['sepbyheaders'] = (bool) $val;
                     break;
                 default:
                     throw new StructException("unknown option '%s'", hsc($key));
