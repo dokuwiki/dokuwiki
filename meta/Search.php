@@ -510,6 +510,7 @@ class Search {
         $C = 0;
         foreach($this->columns as $col) {
             $val = $rowColumns["C$C"];
+            $val = $col->getType()->rawValue($val);
             $C += 1;
             if(blank($val) || is_a($col->getType(), 'dokuwiki\plugin\struct\types\Page') && $val == $rowColumns["PID"]) {
                 continue;
