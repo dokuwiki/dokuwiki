@@ -111,7 +111,7 @@ class ConfigParser {
                     $this->config['sepbyheaders'] = (bool) $val;
                     break;
                 default:
-                    throw new StructException("unknown option '%s'", hsc($val));
+                    throw new StructException("unknown option '%s'", hsc($key));
             }
         }
 
