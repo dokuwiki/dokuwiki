@@ -7,6 +7,8 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\Schema;
+
 if(!defined('DOKU_INC')) die();
 
 class helper_plugin_struct_imexport extends DokuWiki_Plugin {
@@ -18,24 +20,16 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
      * this possibly duplicates @see helper_plugin_struct::getSchema()
      */
     public function getAllSchemasList() {
-        /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
-
-        $sql = 'SELECT DISTINCT(tbl) FROM schemas';
-        $res = $this->sqlite->query($sql);
-        $schemas = $this->sqlite->res2arr($res);
-        $this->sqlite->res_close($res);
-        return $schemas;
+        return Schema::getAll();
     }
 
     /**
      * @param string   $schema
-     * @param string[] $assignments
+     * @param string[] $patterns
      */
     public function replaceSchemaAssignmentPatterns($schema, $patterns) {
         /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db', true);
+        $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
         $schema = $this->sqlite->escape_string($schema);
         $sql = array();
@@ -53,7 +47,7 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
 
     public function getSchemaAssignmentPatterns($schema) {
         /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db', true);
+        $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
 
         $sql = 'SELECT pattern FROM schema_assignments_patterns WHERE tbl = ?';
@@ -64,7 +58,7 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
     }
 
     public function getCurrentSchemaJSON($schema) {
-        $schema = new \dokuwiki\plugin\struct\meta\Schema($schema);
+        $schema = new Schema($schema);
         return $schema->toJSON();
     }
 

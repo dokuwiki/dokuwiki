@@ -55,7 +55,7 @@ class Schema {
      */
     public function __construct($table, $ts = 0) {
         /** @var \helper_plugin_struct_db $helper */
-        $helper = plugin_load('helper', 'struct_db', true);
+        $helper = plugin_load('helper', 'struct_db');
         $info = $helper->getInfo();
         $this->structversion = $info['date'];
         $this->sqlite = $helper->getDB();

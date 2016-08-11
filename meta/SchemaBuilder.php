@@ -59,7 +59,7 @@ class SchemaBuilder {
         $this->data = $data;
         $this->oldschema = new Schema($table);
 
-        $this->helper = plugin_load('helper', 'struct_db', true);
+        $this->helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $this->helper->getDB();
     }
 

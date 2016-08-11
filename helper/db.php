@@ -59,6 +59,11 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
      * @return helper_plugin_sqlite|null
      */
     public function getDB() {
+        global $conf;
+        $len = strlen($conf['metadir']);
+        if ($conf['metadir'] != substr($this->sqlite->getAdapter()->getDbFile(),0,$len)) {
+            $this->init();
+        }
         return $this->sqlite;
     }
 
