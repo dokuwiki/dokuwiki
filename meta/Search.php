@@ -67,13 +67,13 @@ class Search {
      */
     public function addSchema($table, $alias = '') {
         $schema = new Schema($table);
-        if(!$schema->getId()){
+        if(!$schema->getId()) {
             throw new StructException('schema missing', $table);
         }
 
         if($this->schemas &&
             (
-                $schema->isLookup()  ||
+                $schema->isLookup() ||
                 reset($this->schemas)->isLookup()
             )
         ) {
@@ -408,7 +408,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $col->getType()->sort($QB, 'data_'.$col->getTable(), $col->getColName(false), $asc ? 'ASC' : 'DESC');
+            $col->getType()->sort($QB, 'data_' . $col->getTable(), $col->getColName(false), $asc ? 'ASC' : 'DESC');
         }
 
         return $QB->getSQL();
@@ -483,16 +483,18 @@ class Search {
     public function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
 
-        // handling of page and title column is special - we add a "fake" column
-        $schema_list = array_keys($this->schemas);
-        if($colname == '%pageid%') {
-            return new PageColumn(0, new Page(), $schema_list[0]);
-        }
-        if($colname == '%title%') {
-            return new PageColumn(0, new Page(array('usetitles' => true)), $schema_list[0]);
-        }
-        if($colname == '%lastupdate%') {
-            return new RevisionColumn(0, new DateTime(), $schema_list[0]);
+        // add "fake" column for special col (unless it's a lookup)
+        if(!(reset($this->schemas)->isLookup())) {
+            $schema_list = array_keys($this->schemas);
+            if($colname == '%pageid%') {
+                return new PageColumn(0, new Page(), $schema_list[0]);
+            }
+            if($colname == '%title%') {
+                return new PageColumn(0, new Page(array('usetitles' => true)), $schema_list[0]);
+            }
+            if($colname == '%lastupdate%') {
+                return new RevisionColumn(0, new DateTime(), $schema_list[0]);
+            }
         }
 
         list($colname, $table) = $this->resolveColumn($colname);
