@@ -70,6 +70,7 @@ $lang['Validation Exception invalid datetime format'] = 'must be of format YYYY-
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
+$lang['Exception nolookupmix'] = 'You can not aggregate more than one Lookup or mix it with Page data';
 
 $lang['sort']      = 'Sort by this column';
 $lang['next']      = 'Next page';

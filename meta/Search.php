@@ -66,7 +66,21 @@ class Search {
      * @param string $alias
      */
     public function addSchema($table, $alias = '') {
-        $this->schemas[$table] = new Schema($table);
+        $schema = new Schema($table);
+        if(!$schema->getId()){
+            throw new StructException('schema missing', $table);
+        }
+
+        if($this->schemas &&
+            (
+                $schema->isLookup()  ||
+                reset($this->schemas)->isLookup()
+            )
+        ) {
+            throw new StructException('nolookupmix');
+        }
+
+        $this->schemas[$table] = $schema;
         if($alias) $this->aliases[$alias] = $table;
     }
 
