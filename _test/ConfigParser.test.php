@@ -18,7 +18,7 @@ class ConfigParser_struct_test extends StructTest {
             "schema    : testtable, another, foo bar",
             "cols      : %pageid%, count",
             "sort      : ^count",
-            "sort      : %pageid%"
+            "sort      : %pageid%, ^bam"
         );
 
         $configParser = new meta\ConfigParser($lines);
@@ -71,6 +71,10 @@ class ConfigParser_struct_test extends StructTest {
                     array(
                         0 => '%pageid%',
                         1 => true,
+                    ),
+                    array(
+                        0 => 'bam',
+                        1 => false,
                     )
                 ),
         );

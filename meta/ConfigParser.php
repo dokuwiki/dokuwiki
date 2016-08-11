@@ -75,8 +75,9 @@ class ConfigParser {
                     break;
                 case 'order':
                 case 'sort':
-                    // FIXME multiple values!?
-                    $this->config['sort'][] = $helper->parseSort($val);
+                    $sorts = $this->parseValues($val);
+                    $sorts = array_map(array($helper, 'parseSort'), $sorts);
+                    $this->config['sort'] = array_merge($this->config['sort'], $sorts);
                     break;
                 case 'where':
                 case 'filter':
