@@ -181,6 +181,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
             $this->schemadata = null;
             return false;
         }
+        $this->schemadata->optionRawValue(true);
 
         $this->column = $this->schemadata->findColumn($field);
         if(!$this->column || !$this->column->isVisibleInEditor()) {
