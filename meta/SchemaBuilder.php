@@ -300,4 +300,14 @@ class SchemaBuilder {
         return true;
     }
 
+    /**
+     * @param string $user
+     * @return SchemaBuilder
+     */
+    public function setUser($user) {
+        $this->user = $user;
+        return $this;
+    }
+
+
 }

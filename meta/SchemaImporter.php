@@ -72,7 +72,7 @@ class SchemaImporter extends SchemaBuilder {
                 $data['new'][] = $column;
             }
         }
-        $this->user = $input['user'];
+
         $this->data = $data;
     }
 

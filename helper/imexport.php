@@ -62,9 +62,12 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
         return $schema->toJSON();
     }
 
-    public function importSchema($schemaName, $json) {
+    public function importSchema($schemaName, $json, $user = null) {
         $importer = new \dokuwiki\plugin\struct\meta\SchemaImporter($schemaName, $json); // todo could throw a struct exception?!
-        $ok = $importer->build(); // ToDo: Ensure that user = FARMSYNC is set
+        if (!blank($user)) {
+            $importer->setUser($user);
+        }
+        $ok = $importer->build();
         return $ok;
     }
 
