@@ -24,6 +24,9 @@ class Schema {
     /** @var int The ID of this schema */
     protected $id = 0;
 
+    /** @var string the user who last edited this schema */
+    protected $user = '';
+
     /** @var string name of the associated table */
     protected $table = '';
 
@@ -84,6 +87,7 @@ class Schema {
             $schema = $this->sqlite->res2arr($res);
             $result = array_shift($schema);
             $this->id = $result['id'];
+            $this->user = $result['user'];
             $this->chksum = $result['chksum'];
         }
         $this->sqlite->res_close($res);
@@ -228,6 +232,13 @@ class Schema {
     }
 
     /**
+     * @return string
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    /**
      * Returns a list of columns in this schema
      *
      * @param bool $withDisabled if false, disabled columns will not be returned
@@ -285,6 +296,7 @@ class Schema {
             'structversion' => $this->structversion,
             'schema' => $this->getTable(),
             'id' => $this->getId(),
+            'user' => $this->getUser(),
             'columns' => array()
         );
 
