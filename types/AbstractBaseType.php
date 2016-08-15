@@ -451,6 +451,17 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * This is called when a single string is needed to represent this Type's current
+     * value as a single (non-HTML) string. Eg. in a dropdown or in autocompletion.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function displayValue($value) {
+        return $this->rawValue($value);
+    }
+
+    /**
      * Validate and optionally clean a single value
      *
      * This function needs to throw a validation exception when validation fails.
