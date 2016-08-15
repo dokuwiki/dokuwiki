@@ -2,7 +2,6 @@
     "structversion": "2016-03-21",
     "schema": "schema1",
     "id": "1",
-    "user": "",
     "columns": [
         {
             "colref": 1,

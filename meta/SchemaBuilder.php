@@ -61,6 +61,7 @@ class SchemaBuilder {
 
         $this->helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $this->helper->getDB();
+        $this->user = $_SERVER['REMOTE_USER'];
     }
 
     /**
@@ -143,7 +144,7 @@ class SchemaBuilder {
         if(!$this->time) $this->time = time();
 
         $sql = "INSERT INTO schemas (tbl, ts, user) VALUES (?, ?, ?)";
-        $this->sqlite->query($sql, $this->table, $this->time, blank($this->user) ? $_SERVER['REMOTE_USER'] : $this->user);
+        $this->sqlite->query($sql, $this->table, $this->time, $this->user);
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
         $this->newschemaid = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);
