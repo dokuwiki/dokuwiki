@@ -120,6 +120,45 @@ class Dropdown extends AbstractBaseType {
     }
 
     /**
+     * Render using linked field
+     *
+     * @param int|string $value
+     * @param \Doku_Renderer $R
+     * @param string $mode
+     * @return bool
+     */
+    public function renderValue($value, \Doku_Renderer $R, $mode) {
+        if(!$this->usesLookup()) {
+            return parent::renderValue($value, $R, $mode);
+        } else {
+            list(, $value) = json_decode($value);
+            return $this->column->getType()->renderValue($value, $R, $mode);
+        }
+    }
+
+    /**
+     * Render using linked field
+     *
+     * @param \int[]|\string[] $values
+     * @param \Doku_Renderer $R
+     * @param string $mode
+     * @return bool
+     */
+    public function renderMultiValue($values, \Doku_Renderer $R, $mode) {
+        if(!$this->usesLookup()) {
+            return parent::renderMultiValue($values, $R, $mode);
+        } else {
+            $values = array_map(
+                function ($val) {
+                    list(, $val) = json_decode($val);
+                    return $val;
+                }, $values
+            );
+            return $this->column->getType()->renderMultiValue($values, $R, $mode);
+        }
+    }
+
+    /**
      * A Dropdown with a single value to pick
      *
      * @param string $name
@@ -214,7 +253,7 @@ class Dropdown extends AbstractBaseType {
             return;
         }
 
-        $schema = 'data_'.$this->schema->getTable();
+        $schema = 'data_' . $this->schema->getTable();
         $field = $this->column->getColName();
 
         $rightalias = $QB->generateTableAlias();
@@ -240,7 +279,7 @@ class Dropdown extends AbstractBaseType {
             return;
         }
 
-        $schema = 'data_'.$this->schema->getTable();
+        $schema = 'data_' . $this->schema->getTable();
         $field = $this->column->getColName();
 
         // compare against lookup field
@@ -263,7 +302,7 @@ class Dropdown extends AbstractBaseType {
             return;
         }
 
-        $schema = 'data_'.$this->schema->getTable();
+        $schema = 'data_' . $this->schema->getTable();
         $field = $this->column->getColName();
 
         $rightalias = $QB->generateTableAlias();

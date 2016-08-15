@@ -84,6 +84,22 @@ class Type_Dropdown_struct_test extends StructTest {
         $this->assertEquals('This is a title', $data[0]->getDisplayValue());
         $this->assertEquals('title1', $data[1]->getDisplayValue());
         $this->assertEquals('John', $data[2]->getDisplayValue());
+
+        $R = new \Doku_Renderer_xhtml();
+        $data[0]->render($R, 'xhtml');
+        $pq = \phpQuery::newDocument($R->doc);
+        $this->assertEquals('This is a title', $pq->find('a')->text());
+        $this->assertContains('title1', $pq->find('a')->attr('href'));
+
+        $R = new \Doku_Renderer_xhtml();
+        $data[1]->render($R, 'xhtml');
+        $pq = \phpQuery::newDocument($R->doc);
+        $this->assertEquals('title1', $pq->find('a')->text());
+        $this->assertContains('title1', $pq->find('a')->attr('href'));
+
+        $R = new \Doku_Renderer_xhtml();
+        $data[2]->render($R, 'xhtml');
+        $this->assertEquals('John', $R->doc);
     }
 
     public function test_getOptions() {
