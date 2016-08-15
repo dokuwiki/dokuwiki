@@ -337,7 +337,7 @@ abstract class AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $value = $this->rawValue($value);
+        $value = $this->displayValue($value);
         $R->cdata($value);
         return true;
     }
