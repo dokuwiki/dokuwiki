@@ -1,0 +1,100 @@
+{
+    "structversion": "2016-08-09",
+    "schema": "dropdowns",
+    "id": "171",
+    "columns": [
+        {
+            "colref": 1,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 10,
+            "label": "drop1",
+            "class": "Dropdown",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "values": "",
+                "schema": "pageschema",
+                "field": "singletitle",
+                "label": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                },
+                "hint": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                }
+            }
+        },
+        {
+            "colref": 2,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 20,
+            "label": "drop2",
+            "class": "Dropdown",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "values": "",
+                "schema": "pageschema",
+                "field": "singlepage",
+                "label": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                },
+                "hint": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                }
+            }
+        },
+        {
+            "colref": 3,
+            "ismulti": false,
+            "isenabled": true,
+            "sort": 30,
+            "label": "drop3",
+            "class": "Dropdown",
+            "config": {
+                "visibility": {
+                    "inpage": true,
+                    "ineditor": true
+                },
+                "values": "John, Jane, Tarzan",
+                "schema": "",
+                "field": "",
+                "label": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                },
+                "hint": {
+                    "en": "",
+                    "fr": "",
+                    "zh": "",
+                    "it": "",
+                    "de": ""
+                }
+            }
+        }
+    ]
+}

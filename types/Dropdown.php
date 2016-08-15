@@ -195,6 +195,7 @@ class Dropdown extends AbstractBaseType {
     public function displayValue($value) {
         if($this->usesLookup()) {
             list(, $value) = json_decode($value);
+            $value = $this->column->getType()->displayValue($value);
         }
         return $value;
     }
