@@ -58,6 +58,36 @@ class Type_Dropdown_struct_test extends StructTest {
         );
     }
 
+    protected function prepareTranslation() {
+        $this->loadSchemaJSON('translation', '', 0, true);
+        $access = AccessTable::byTableName('translation', 0);
+        $access->saveData(
+            array(
+                'en' => 'shoe',
+                'de' => 'Schuh',
+                'fr' => 'chaussure'
+            )
+        );
+
+        $access = AccessTable::byTableName('translation', 0);
+        $access->saveData(
+            array(
+                'en' => 'dog',
+                'de' => 'Hund',
+                'fr' => 'chien'
+            )
+        );
+
+        $access = AccessTable::byTableName('translation', 0);
+        $access->saveData(
+            array(
+                'en' => 'cat',
+                'de' => 'Katze',
+                'fr' => 'chat'
+            )
+        );
+    }
+
     protected function preparePages() {
         $this->loadSchemaJSON('dropdowns');
         $this->saveData('test1', 'dropdowns', array('drop1' => '1', 'drop2' => '1', 'drop3' => 'John'));
@@ -100,6 +130,80 @@ class Type_Dropdown_struct_test extends StructTest {
         $R = new \Doku_Renderer_xhtml();
         $data[2]->render($R, 'xhtml');
         $this->assertEquals('John', $R->doc);
+    }
+
+    public function test_translation() {
+        global $conf;
+        $this->prepareTranslation();
+
+        // lookup in english
+        $dropdown = new Dropdown(
+            array(
+                'schema' => 'translation',
+                'field' => '$LANG'
+            ),
+            'test',
+            false,
+            0
+        );
+        $expect = array(
+            '' => '',
+            3 => 'cat',
+            2 => 'dog',
+            1 => 'shoe',
+        );
+        $this->assertEquals($expect, $dropdown->getOptions());
+
+        // fallback to english
+        $conf['lang'] = 'zh';
+        $dropdown = new Dropdown(
+            array(
+                'schema' => 'translation',
+                'field' => '$LANG'
+            ),
+            'test',
+            false,
+            0
+        );
+        $this->assertEquals($expect, $dropdown->getOptions());
+
+        // german
+        $conf['lang'] = 'de';
+        $dropdown = new Dropdown(
+            array(
+                'schema' => 'translation',
+                'field' => '$LANG'
+            ),
+            'test',
+            false,
+            0
+        );
+        $expect = array(
+            '' => '',
+            2 => 'Hund',
+            3 => 'Katze',
+            1 => 'Schuh',
+        );
+        $this->assertEquals($expect, $dropdown->getOptions());
+
+        // french
+        $conf['lang'] = 'fr';
+        $dropdown = new Dropdown(
+            array(
+                'schema' => 'translation',
+                'field' => '$LANG'
+            ),
+            'test',
+            false,
+            0
+        );
+        $expect = array(
+            '' => '',
+            2 => 'chien',
+            3 => 'chat',
+            1 => 'chaussure',
+        );
+        $this->assertEquals($expect, $dropdown->getOptions());
     }
 
     public function test_getOptions() {
