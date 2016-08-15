@@ -66,15 +66,17 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
     }
 
     /**
-     * Get the json of the current version of the given schema.
-     * If the schema doesn't exist, then the returned JSON will have id 0.
+     * Get the json of the current version of the given schema or false if the schema doesn't exist.
      *
      * @param string $schemaName
-     * @return string The json string
+     * @return string|bool The json string or false if the schema doesn't exist
      */
     public function getCurrentSchemaJSON($schemaName) {
-        $schemaName = new Schema($schemaName);
-        return $schemaName->toJSON();
+        $schema = new Schema($schemaName);
+        if ($schema->getId() == 0) {
+            return false;
+        }
+        return $schema->toJSON();
     }
 
     /**
