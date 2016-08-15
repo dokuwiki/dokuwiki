@@ -183,6 +183,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         } catch(StructException $ignore) {
             return false;
         }
+        $this->schemadata->optionRawValue(true);
 
         $this->column = $this->schemadata->getSchema()->findColumn($field);
         if(!$this->column || !$this->column->isVisibleInEditor()) {

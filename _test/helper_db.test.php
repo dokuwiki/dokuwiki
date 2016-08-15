@@ -4,6 +4,10 @@ namespace dokuwiki\plugin\struct\test;
 
 use dokuwiki\plugin\struct\meta;
 
+/**
+ * @group plugin_struct
+ * @group plugins
+ */
 class helper_db_struct_test extends StructTest {
 
     public function setUp() {
