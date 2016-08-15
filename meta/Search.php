@@ -281,25 +281,31 @@ class Search {
         $result = array();
         $cursor = -1;
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
-            if($this->isRowEmpty($row)) {
-                continue;
-            }
             $cursor++;
             if($cursor < $this->range_begin) continue;
             if($this->range_end && $cursor >= $this->range_end) continue;
 
-            $this->result_pids[] = $row['PID'];
-
             $C = 0;
             $resrow = array();
+            $isempty = true;
             foreach($this->columns as $col) {
                 $val = $row["C$C"];
                 if($col->isMulti()) {
                     $val = explode(self::CONCAT_SEPARATOR, $val);
                 }
-                $resrow[] = new Value($col, $val);
+                $value = new Value($col, $val);
+                $isempty &= $this->isEmptyValue($value, $row['PID']);
+                $resrow[] = $value;
                 $C++;
             }
+
+            // skip empty rows
+            if($isempty) {
+                $cursor--;
+                continue;
+            }
+
+            $this->result_pids[] = $row['PID'];
             $result[] = $resrow;
         }
 
@@ -520,24 +526,17 @@ class Search {
     }
 
     /**
-     * Check if a row is empty / only contains a reference to itself
+     * Check if the given row is empty or references our own row
      *
-     * @param array $rowColumns an array as returned from the database
+     * @param Value $value
+     * @param string $pid
      * @return bool
      */
-    private function isRowEmpty($rowColumns) {
-        $C = 0;
-        foreach($this->columns as $col) {
-            $val = $rowColumns["C$C"];
-            $C += 1;
-            if(blank($val) || is_a($col->getType(), 'dokuwiki\plugin\struct\types\Page') && $val == $rowColumns["PID"]) {
-                continue;
-            }
-            return false;
-        }
-        return true;
+    protected function isEmptyValue(Value $value, $pid) {
+        if($value->isEmpty()) return true;
+        if(is_a($value->getColumn()->getType(), Page::class) && $value->getRawValue() == $pid) return true;
+        return false;
     }
-
 }
 
 

@@ -12,9 +12,8 @@ abstract class AccessTable {
     /** @var \helper_plugin_sqlite */
     protected $sqlite;
 
-    // options on how to retieve data
+    // options on how to retrieve data
     protected $opt_skipempty = false;
-    protected $opt_rawvalue  = false;
 
     /**
      * Factory Method to access a data or lookup table
@@ -115,22 +114,6 @@ abstract class AccessTable {
     }
 
     /**
-     * Should the values be returned raw or are complex returns okay?
-     *
-     * Defaults to false = complex values okay
-     *
-     * @param null|bool $set new value, null to read only
-     * @return bool current value (after set)
-     */
-    public function optionRawValue($set = null) {
-        if(!is_null($set)) {
-            $this->opt_rawvalue = $set;
-        }
-        return $this->opt_rawvalue;
-    }
-
-
-    /**
      * Get the value of a single column
      *
      * @param Column $column
@@ -161,6 +144,8 @@ abstract class AccessTable {
      * returns the data saved for the page as associative array
      *
      * The array returned is in the same format as used in @see saveData()
+     *
+     * It always returns raw Values!
      *
      * @return array
      */
@@ -211,7 +196,7 @@ abstract class AccessTable {
 
         foreach($this->schema->getColumns(false) as $col) {
 
-            // if no data saved, yet return empty strings
+            // if no data saved yet, return empty strings
             if($DBdata) {
                 $val = $DBdata[0]['col'.$col->getColref()];
             } else {
@@ -221,28 +206,19 @@ abstract class AccessTable {
             // multi val data is concatenated
             if($col->isMulti()) {
                 $val = explode($sep, $val);
-                if($this->opt_rawvalue) {
-                    $val = array_map(
-                        function ($val) use ($col) { // FIXME requires PHP 5.4+
-                            return $col->getType()->rawValue($val);
-                        },
-                        $val
-                    );
-                }
                 $val = array_filter($val);
-            } else {
-                if($this->opt_rawvalue) {
-                    $val = $col->getType()->rawValue($val);
-                }
             }
 
-            if($this->opt_skipempty && ($val === '' || $val == array())) continue;
-            if($this->opt_skipempty && !$col->isVisibleInPage()) continue;
+            $value = new Value($col, $val);
 
+            if($this->opt_skipempty && $value->isEmpty()) continue;
+            if($this->opt_skipempty && !$col->isVisibleInPage()) continue; //FIXME is this a correct assumption?
+
+            // for arrays, we return the raw value only
             if($asarray) {
-                $data[$col->getLabel()] = $val;
+                $data[$col->getLabel()] = $value->getRawValue();
             } else {
-                $data[] = new Value($col, $val);
+                $data[] = $value;
             }
         }
 

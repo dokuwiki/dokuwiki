@@ -17,6 +17,9 @@ class Value {
     /** @var  array|int|string */
     protected $value;
 
+    /** @var  array|int|string */
+    protected $rawvalue = null;
+
     /**
      * Value constructor.
      *
@@ -43,6 +46,15 @@ class Value {
     }
 
     /**
+     * Access the raw value
+     *
+     * @return array|string (array on multi)
+     */
+    public function getRawValue() {
+        return $this->rawvalue;
+    }
+
+    /**
      * Allows overwriting the current value
      *
      * Cleans the value(s) of empties
@@ -50,24 +62,38 @@ class Value {
      * @param array|int|string $value
      */
     public function setValue($value) {
-        if($this->column->isMulti() && !is_array($value)) {
-                $value = array($value);
+        // treat all givens the same
+        if(!is_array($value)) {
+            $value = array($value);
         }
 
-        if(is_array($value)) {
-            // remove all blanks
-            $value = array_map('trim', $value);
-            $value = array_filter($value, array($this, 'filter'));
-            $value = array_values($value); // reset keys
+        // reset/init
+        $this->value = array();
+        $this->rawvalue = array();
 
-            if(!$this->column->isMulti()) {
-                $value = (string) array_shift($value);
-            }
-        } else {
-            $value = trim($value);
+        // remove all blanks
+        foreach($value as $val) {
+            $val = trim($val);
+            $raw = $this->column->getType()->rawValue($val);
+            if('' === (string) $raw) continue;
+            $this->value[] = $val;
+            $this->rawvalue[] = $raw;
         }
 
-        $this->value = $value;
+        // make single value again
+        if(!$this->column->isMulti()) {
+            $this->value = (string) array_shift($this->value);
+            $this->rawvalue = (string) array_shift($this->rawvalue);
+        }
+    }
+
+    /**
+     * Is this empty?
+     *
+     * @return bool
+     */
+    public function isEmpty() {
+        return ($this->rawvalue === '' || $this->rawvalue === array());
     }
 
     /**
@@ -115,6 +141,6 @@ class Value {
      * @return bool
      */
     public function filter($input) {
-        return  '' !== ((string) $input);
+        return '' !== ((string) $input);
     }
 }
