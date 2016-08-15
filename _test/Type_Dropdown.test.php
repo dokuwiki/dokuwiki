@@ -15,7 +15,7 @@ use dokuwiki\plugin\struct\test\mock\Dropdown;
 class Type_Dropdown_struct_test extends StructTest {
 
 
-    public function prepareLookup() {
+    protected function prepareLookup() {
         saveWikiText('title1', 'test', 'test');
         $title = new Title('title1');
         $title->setTitle('This is a title');
@@ -56,6 +56,12 @@ class Type_Dropdown_struct_test extends StructTest {
                 'multititle' => array('title3'),
             )
         );
+    }
+
+    protected function preparePage() {
+
+
+
     }
 
 
