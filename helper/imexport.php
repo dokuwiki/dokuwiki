@@ -85,18 +85,15 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
      * @param string $schemaJSON The structure of the schema as exportet by structs export functionality
      * @param string $user optional, the user that should be set in the schemas history. If blank, the current user is used.
      * @return bool|int the id of the new schema version or false on error.
+     *
+     * @throws dokuwiki\plugin\struct\meta\StructException
      */
     public function importSchema($schemaName, $schemaJSON, $user = null) {
-        try {
-            $importer = new \dokuwiki\plugin\struct\meta\SchemaImporter($schemaName, $schemaJSON);
-            if (!blank($user)) {
-                $importer->setUser($user);
-            }
-            $ok = $importer->build();
-        } catch(dokuwiki\plugin\struct\meta\StructException $e) {
-            msg(hsc($e->getMessage()), -1);
-            return false;
+        $importer = new \dokuwiki\plugin\struct\meta\SchemaImporter($schemaName, $schemaJSON);
+        if (!blank($user)) {
+            $importer->setUser($user);
         }
+        $ok = $importer->build();
         return $ok;
     }
 
