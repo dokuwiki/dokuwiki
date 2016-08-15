@@ -2,7 +2,6 @@
 
 namespace dokuwiki\plugin\struct\test;
 
-
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\SchemaImporter;
@@ -37,15 +36,16 @@ abstract class StructTest extends \DokuWikiTest {
      * @param string $schema
      * @param string $json base name of the JSON file optional, defaults to $schema
      * @param int $rev allows to create schemas back in time
+     * @param bool $lookup create as a lookup schema
      */
-    protected function loadSchemaJSON($schema, $json = '', $rev = 0) {
+    protected function loadSchemaJSON($schema, $json = '', $rev = 0, $lookup = false) {
         if(!$json) $json = $schema;
         $file = __DIR__ . "/json/$json.struct.json";
         if(!file_exists($file)) {
             throw new \RuntimeException("$file does not exist");
         }
 
-        $importer = new SchemaImporter($schema, file_get_contents($file));
+        $importer = new SchemaImporter($schema, file_get_contents($file), $lookup);
 
         if(!$importer->build($rev)) {
             throw new \RuntimeException("build of $schema from $file failed");
