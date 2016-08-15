@@ -22,7 +22,7 @@ class SchemaImporter extends SchemaBuilder {
      * @param string $json
      * @param bool $islookup
      */
-    public function __construct($table, $json, $islookup) {
+    public function __construct($table, $json, $islookup=false) {
         parent::__construct($table, array('islookup' => $islookup));
 
         // number of existing columns
