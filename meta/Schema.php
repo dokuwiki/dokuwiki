@@ -292,6 +292,7 @@ class Schema {
             'structversion' => $this->structversion,
             'schema' => $this->getTable(),
             'id' => $this->getId(),
+            'user' => $this->getUser(),
             'columns' => array()
         );
 
