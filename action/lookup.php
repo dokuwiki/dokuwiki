@@ -86,8 +86,7 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         if(!$tablename) {
             throw new StructException('No schema given');
         }
-
-        #FIXME check security token
+        action_plugin_struct_inline::checkCSRF();
 
         $schemadata = AccessTable::byTableName($tablename, $pid);
         $schemadata->clearData();
@@ -100,6 +99,7 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         global $INPUT;
         $tablename = $INPUT->str('schema');
         $data = $INPUT->arr('entry');
+        action_plugin_struct_inline::checkCSRF();
 
         # FIXME validation
 

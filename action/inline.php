@@ -216,7 +216,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
      *
      * @throws StructException when check fails
      */
-    protected static function checkCSRF() {
+    public static function checkCSRF() {
         global $INPUT;
         if(
             $INPUT->server->str('REMOTE_USER') &&

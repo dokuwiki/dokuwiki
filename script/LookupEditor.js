@@ -38,7 +38,8 @@ var LookupEditor = function ($table) {
                         {
                             call: 'plugin_struct_lookup_delete',
                             schema: schema,
-                            pid: pid
+                            pid: pid,
+                            sectok: $me.parents('.structlookup').find('.struct_entry_form input[name=sectok]').val()
                         }
                     )
                         .done(function () {
