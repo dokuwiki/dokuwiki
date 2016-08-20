@@ -160,16 +160,26 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      */
     public function checkPass($user, $pass) {
 
-        $data = $this->_selectUser($user);
-        if($data == false) return false;
+        $userdata = $this->_selectUser($user);
+        if($userdata == false) return false;
 
-        if(isset($data['hash'])) {
+        // password checking done in SQL?
+        if($this->_chkcnf(array('check-pass'))) {
+            $userdata['clear'] = $pass;
+            $userdata['hash'] = auth_cryptPassword($pass);
+            $result = $this->_query($this->getConf('check-pass'), $userdata);
+            if($result === false) return false;
+            return (count($result) == 1);
+        }
+
+        // we do password checking on our own
+        if(isset($userdata['hash'])) {
             // hashed password
             $passhash = new PassHash();
-            return $passhash->verify_hash($pass, $data['hash']);
+            return $passhash->verify_hash($pass, $userdata['hash']);
         } else {
             // clear text password in the database O_o
-            return ($pass == $data['clear']);
+            return ($pass == $userdata['clear']);
         }
     }
 
@@ -498,7 +508,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             $this->_debug("Statement did not return 'user' attribute", -1, __LINE__);
             $dataok = false;
         }
-        if(!isset($data['hash']) && !isset($data['clear'])) {
+        if(!isset($data['hash']) && !isset($data['clear']) && !$this->_chkcnf(array('check-pass'))) {
             $this->_debug("Statement did not return 'clear' or 'hash' attribute", -1, __LINE__);
             $dataok = false;
         }
