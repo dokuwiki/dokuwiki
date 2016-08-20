@@ -97,12 +97,21 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             )
         );
 
-        // can real names and emails be changed?
-        $this->cando['modName'] = $this->cando['modMail'] = $this->_chkcnf(
+        // can real names be changed?
+        $this->cando['modName'] = $this->_chkcnf(
             array(
                 'select-user',
                 'select-user-groups',
-                'update-user-info'
+                'update-user-info:name'
+            )
+        );
+
+        // can real email be changed?
+        $this->cando['modMail'] = $this->_chkcnf(
+            array(
+                'select-user',
+                'select-user-groups',
+                'update-user-info:mail'
             )
         );
 
@@ -716,7 +725,16 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
      */
     protected function _chkcnf($keys) {
         foreach($keys as $key) {
-            if(!trim($this->getConf($key))) return false;
+            $params = explode(':', $key);
+            $key = array_shift($params);
+            $sql = trim($this->getConf($key));
+
+            // check if sql is set
+            if(!$sql) return false;
+            // check if needed params are there
+            foreach($params as $param) {
+                if(strpos($sql, ":$param") === false) return false;
+            }
         }
 
         return true;
