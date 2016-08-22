@@ -12,6 +12,7 @@
  * @author AmirH Hassaneini <mytechmix@gmail.com>
  * @author Mohmmad Razavi <sepent@gmail.com>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ * @author sam01 <m.sajad079@gmail.com>
  */
 $lang['menu']                  = 'تنظیمات پیکر‌بندی';
 $lang['error']                 = 'به دلیل ایراد در مقادیر وارد شده، تنظیمات اعمال نشد، خواهشمندیم تغییرات را مجددن کنترل نمایید و دوباره ارسال کنید.<br/> مقادیر مشکل‌دار با کادر قرمز مشخص شده‌اند.';
