@@ -168,6 +168,19 @@ class Page extends AbstractMultiBaseType {
     }
 
     /**
+     * Return the title only
+     *
+     * @param string $value
+     * @return string
+     */
+    public function displayValue($value) {
+        if($this->config['usetitles']) {
+            list(, $value) = json_decode($value);
+        }
+        return $value;
+    }
+
+    /**
      * When using titles, we need to compare against the title table, too
      *
      * @param QueryBuilder $QB
