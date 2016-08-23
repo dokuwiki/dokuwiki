@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  */
 $lang['menu']                  = 'تنظیمات ظاهری تمپلیت';
