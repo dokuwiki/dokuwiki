@@ -11,7 +11,7 @@ if(!defined('DOKU_INC')) die();
 
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
-use dokuwiki\plugin\struct\meta\ValidationResult;
+use dokuwiki\plugin\struct\meta\AccessDataValidator;
 use dokuwiki\plugin\struct\meta\Value;
 
 /**
@@ -32,7 +32,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     /** @var  bool has the data been validated correctly? */
     protected $validated;
 
-    /** @var  ValidationResult[] these schemas are validated and have changed data and need to be saved */
+    /** @var  AccessDataValidator[] these schemas are validated and have changed data and need to be saved */
     protected $tosave;
 
     /**
@@ -65,23 +65,15 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $this->tosave = array();
 
         // run the validation for each assignded schema
-        $input = $INPUT->arr(self::$VAR);
-        $this->validated = true;
-        $assignments = new Assignments();
-        $tables = $assignments->getPageAssignments($ID);
-        foreach($tables as $table) {
-            $access = AccessTable::byTableName($table, $ID);
-            $validation = $access->getValidator($input[$table]);
-            if(!$validation->validate()) {
-                $this->validated = false;
-                foreach($validation->getErrors() as $error) {
-                    msg(hsc($error), -1);
-                }
-            } else {
-                if($validation->hasChanges()) {
-                    $this->tosave[] = $validation;
-                }
+        $valid = AccessDataValidator::validateDataForPage($INPUT->arr(self::$VAR), $ID, $errors);
+        if($valid === false) {
+            $this->validated = false;
+            foreach($errors as $error) {
+                msg(hsc($error), -1);
             }
+        } else {
+            $this->validated = true;
+            $this->tosave = $valid;
         }
 
         // FIXME we used to set the cleaned data as new input data. this caused #140

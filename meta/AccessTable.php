@@ -294,10 +294,10 @@ abstract class AccessTable {
      * Check if the given data validates against the current types.
      *
      * @param array $data
-     * @return ValidationResult
+     * @return AccessDataValidator
      */
     public function getValidator($data) {
-        return new ValidationResult($this, $data);
+        return new AccessDataValidator($this, $data);
     }
 }
 

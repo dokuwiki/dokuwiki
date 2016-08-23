@@ -11,9 +11,6 @@ if(!defined('DOKU_INC')) die();
 
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
-use dokuwiki\plugin\struct\meta\AccessTableData;
-use dokuwiki\plugin\struct\meta\ValidationResult;
-use dokuwiki\plugin\struct\meta\Validator;
 use dokuwiki\plugin\struct\meta\Value;
 
 /**
@@ -77,8 +74,8 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
         global $ID;
         global $REV;
         global $INPUT;
-        if (auth_quickaclcheck($ID) == AUTH_READ) return '';
-        if (checklock($ID)) return '';
+        if(auth_quickaclcheck($ID) == AUTH_READ) return '';
+        if(checklock($ID)) return '';
         $schema = AccessTable::byTableName($tablename, $ID, $REV);
         $schemadata = $schema->getData();
 
@@ -90,7 +87,7 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
         }
 
         // we need a short, unique identifier to use in the cookie. this should be good enough
-        $schemaid = 'SRCT'.substr(str_replace(array('+', '/'), '', base64_encode(sha1($tablename, true))), 0, 5);
+        $schemaid = 'SRCT' . substr(str_replace(array('+', '/'), '', base64_encode(sha1($tablename, true))), 0, 5);
         $html = '<fieldset data-schema="' . $schemaid . '">';
         $html .= '<legend>' . hsc($tablename) . '</legend>';
         foreach($schemadata as $field) {
@@ -99,7 +96,7 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
                 // posted data trumps stored data
                 $field->setValue($postdata[$label]);
             }
-            $html .=  $this->makeField($field, self::$VAR . "[$tablename][$label]");
+            $html .= $this->makeField($field, self::$VAR . "[$tablename][$label]");
         }
         $html .= '</fieldset>';
 
@@ -115,7 +112,7 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
      */
     public function makeField(Value $field, $name) {
         $trans = hsc($field->getColumn()->getTranslatedLabel());
-        $hint  = hsc($field->getColumn()->getTranslatedHint());
+        $hint = hsc($field->getColumn()->getTranslatedHint());
         $class = $hint ? 'hashint' : '';
         $colname = $field->getColumn()->getFullQualifiedLabel();
 

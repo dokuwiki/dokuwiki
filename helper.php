@@ -7,12 +7,11 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessDataValidator;
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
-use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Validator;
 
 if(!defined('DOKU_INC')) die();
 
@@ -38,7 +37,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @return array ('schema' => ( 'fieldlabel' => 'value', ...))
      * @throws StructException
      */
-    public function getData($page, $schema=null, $time=0) {
+    public function getData($page, $schema = null, $time = 0) {
         $page = cleanID($page);
 
         if(is_null($schema)) {
@@ -79,7 +78,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @param string $summary
      * @throws StructException
      */
-    public function saveData($page, $data, $summary='') {
+    public function saveData($page, $data, $summary = '') {
         $page = cleanID($page);
         $summary = trim($summary);
         if(!$summary) $summary = $this->getLang('summary');
@@ -87,23 +86,20 @@ class helper_plugin_struct extends DokuWiki_Plugin {
         if(!page_exists($page)) throw new StructException("Page does not exist. You can not attach struct data");
 
         // validate and see if anything changes
-        $validator = new Validator();
-        if(!$validator->validate($data, $page)) {
-            throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
+        $valid = AccessDataValidator::validateDataForPage($data, $page, $errors);
+        if($valid === false) {
+            throw new StructException("Validation failed:\n%s", join("\n", $errors));
         }
-        $data = $validator->getCleanedData();
-        $tosave = $validator->getChangedSchemas();
-        if(!$tosave) return;
+        if(!$valid) return; // empty array when no changes were detected
 
         $newrevision = self::createPageRevision($page, $summary);
 
         // save the provided data
         $assignments = new Assignments();
-        foreach($tosave as $table) {
-            $schemaData = AccessTable::byTableName($table, $page, $newrevision);
-            $schemaData->saveData($data[$table]);
+        foreach($valid as $v) {
+            $v->saveData($newrevision);
             // make sure this schema is assigned
-            $assignments->assignPageSchema($page, $table);
+            $assignments->assignPageSchema($page, $v->getAccessTable()->getSchema()->getTable());
         }
     }
 
@@ -115,7 +111,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @param bool $minor
      * @return int the new revision
      */
-    static public function createPageRevision($page, $summary='', $minor=false) {
+    static public function createPageRevision($page, $summary = '', $minor = false) {
         $summary = trim($summary);
         // force a new page revision @see action_plugin_struct_entry::handle_pagesave_before()
         $GLOBALS['struct_plugin_force_page_save'] = true;
@@ -133,7 +129,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @return Schema[]
      * @throws StructException
      */
-    public function getSchema($schema=null) {
+    public function getSchema($schema = null) {
         if(is_null($schema)) {
             $schemas = Schema::getAll();
         } else {
@@ -156,7 +152,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @return array (page => (schema => true), ...)
      * @throws StructException
      */
-    public function getPages($schema=null) {
+    public function getPages($schema = null) {
         $assignments = new Assignments();
         return $assignments->getPages($schema);
     }
