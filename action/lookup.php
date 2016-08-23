@@ -12,6 +12,7 @@ use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\Validator;
 use dokuwiki\plugin\struct\meta\Value;
 
 if(!defined('DOKU_INC')) die();
@@ -102,6 +103,15 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         action_plugin_struct_inline::checkCSRF();
 
         # FIXME validation
+
+        $validator = new Validator();
+        if(!$validator->validate($data, $page)) {
+            throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
+        }
+        $data = $validator->getCleanedData();
+        $tosave = $validator->getChangedSchemas();
+        if(!$tosave) return;
+
 
         $schemadata = AccessTable::byTableName($tablename, 0, 0);
         $schemadata->saveData($data);

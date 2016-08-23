@@ -114,7 +114,7 @@ class AccessTableLookup extends AccessTable {
     }
 
     protected function getLastRevisionTimestamp() {
-        $return = 0;
+        return 0;
     }
 
 }

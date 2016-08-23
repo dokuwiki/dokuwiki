@@ -198,7 +198,7 @@ abstract class AccessTable {
 
             // if no data saved yet, return empty strings
             if($DBdata) {
-                $val = $DBdata[0]['col'.$col->getColref()];
+                $val = $DBdata[0]['col' . $col->getColref()];
             } else {
                 $val = '';
             }
@@ -243,7 +243,7 @@ abstract class AccessTable {
         foreach($this->schema->getColumns(false) as $col) {
 
             $colref = $col->getColref();
-            $colname = 'col'.$colref;
+            $colname = 'col' . $colref;
 
             if($col->getType()->isMulti()) {
                 $tn = 'M' . $colref;
@@ -281,7 +281,6 @@ abstract class AccessTable {
         $this->ts = $ts;
     }
 
-
     /**
      * Return the last time an edit happened for this table for the currently set
      * time and pid. When the current timestamp is 0, the newest revision is
@@ -290,6 +289,16 @@ abstract class AccessTable {
      * @return int
      */
     abstract protected function getLastRevisionTimestamp();
+
+    /**
+     * Check if the given data validates against the current types.
+     *
+     * @param array $data
+     * @return ValidationResult
+     */
+    public function getValidator($data) {
+        return new ValidationResult($this, $data);
+    }
 }
 
 

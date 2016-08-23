@@ -4,74 +4,93 @@ namespace dokuwiki\plugin\struct\meta;
 
 use dokuwiki\plugin\struct\types\AbstractBaseType;
 
-/**
- * Validate input data against schemas and their field validators
- *
- * @package dokuwiki\plugin\struct\meta
- */
-class Validator {
-
-    /** @var array */
-    protected $data = array();
-
-    /** @var array of the given data only these schemas need to be saved */
-    protected $tosave = array();
-
-    /** @var array a list of validation errors */
-    protected $errors = array();
+// FIXME rename
+class ValidationResult {
 
     /** @var  \helper_plugin_struct_db */
     protected $hlp;
 
-    /**
-     * Validator constructor.
-     */
-    public function __construct() {
-        $this->hlp = plugin_load('helper', 'struct_db');
+    /** @var AccessTable */
+    protected $access;
 
-        throw new \RuntimeException('we should no longer use this class - refactor!');
+    /** @var array */
+    protected $data;
+
+    /** @var  array list of validation errors */
+    protected $errors;
+
+    /**
+     * ValidationResult constructor.
+     * @param AccessTable $access
+     * @param array $data the data to validate (and save)
+     */
+    public function __construct(AccessTable $access, $data) {
+        $this->hlp = plugin_load('helper', 'struct_db');
+        $this->access = $access;
+        $this->data = $data;
+        $this->errors = array();
     }
 
     /**
-     * Does the actual validation
+     * Validate the data. This will clean the data according to type!
      *
-     * the given data is cleaned up and returned (ommiting unavailable schemas and
-     * making sure multi value fields are arrays)
-     *
-     * internal result vars are set here as well.
-     *
-     * @param array $data [schema=>[data], ...]
-     * @param string $pageid
-     * @return bool did the data validate without errors?
+     * @return bool
      */
-    public function validate($data, $pageid) {
-        $this->data = array();
-        $this->errors = array();
+    public function validate() {
         $result = true;
-
-        $assignments = new Assignments();
-        $tables = $assignments->getPageAssignments($pageid);
-
-        foreach($tables as $table) {
-            $schemaData = AccessTable::byTableName($table, $pageid, time());
-
-            $newData = $data[$table];
-            foreach($schemaData->getSchema()->getColumns() as $col) {
-                $label = $col->getType()->getLabel();
-                $result = $result && $this->validateValue($col, $newData[$label]);
-            }
-
-            // has the data changed? mark it for saving.
-            $olddata = $schemaData->getDataArray();
-            if($olddata != $newData) {
-                $this->tosave[] = $table;
-            }
-
-            // write back cleaned up data
-            $this->data[$table] = $newData;
+        foreach($this->access->getSchema()->getColumns() as $col) {
+            $label = $col->getType()->getLabel();
+            $result = $result && $this->validateValue($col, $this->data[$label]);
         }
-
         return $result;
+    }
+
+    /**
+     * Check if the data changed (selects current data)
+     *
+     * @return bool
+     */
+    public function hasChanges() {
+        $olddata = $this->access->getDataArray();
+        return ($olddata != $this->data);
+    }
+
+    /**
+     * The errors that occured during validation
+     *
+     * @return string[] already translated error messages
+     */
+    public function getErrors() {
+        return $this->errors;
+    }
+
+    /**
+     * @return AccessTable
+     */
+    public function getAccessTable() {
+        return $this->access;
+    }
+
+    /**
+     * Access the data after it has been cleand in the validation process
+     *
+     * @return array
+     */
+    public function getCleanData() {
+        return $this->data;
+    }
+
+    /**
+     * Saves the data
+     *
+     * This saves no matter what. You have to chcek validation results and changes on your own!
+     *
+     * @param int $ts the timestamp to use when saving the data
+     * @return bool
+     */
+    public function saveData($ts = 0) {
+        $this->access->setTimestamp($ts);
+        return $this->access->saveData($this->data);
     }
 
     /**
@@ -81,7 +100,7 @@ class Validator {
      * @param mixed &$value the value, will be fixed according to the type
      * @return bool
      */
-    public function validateValue(Column $col, &$value) {
+    protected function validateValue(Column $col, &$value) {
         // fix multi value types
         $type = $col->getType();
         $trans = $type->getTranslatedLabel();
@@ -96,27 +115,6 @@ class Validator {
 
         // validate data
         return $this->validateField($type, $trans, $value);
-    }
-
-    /**
-     * @return array the input data cleaned uo
-     */
-    public function getCleanedData() {
-        return $this->data;
-    }
-
-    /**
-     * @return array a list of error messages if validation failed
-     */
-    public function getErrors() {
-        return $this->errors;
-    }
-
-    /**
-     * @return array the list of schemas that changed and actually have to be saved
-     */
-    public function getChangedSchemas() {
-        return $this->tosave;
     }
 
     /**
@@ -169,5 +167,4 @@ class Validator {
     public function filter($val) {
         return !blank($val);
     }
-
 }
