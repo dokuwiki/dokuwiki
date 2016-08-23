@@ -47,11 +47,11 @@ class Page extends AbstractMultiBaseType {
     /**
      * Cleans the link
      *
-     * @param string $value
+     * @param string $rawvalue
      * @return string
      */
-    public function validate($value) {
-        return cleanID($value);
+    public function validate($rawvalue) {
+        return cleanID($rawvalue);
     }
 
     /**
