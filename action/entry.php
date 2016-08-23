@@ -62,6 +62,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $ID, $INPUT;
         $act = act_clean($event->data);
         if(!in_array($act, array('save', 'preview'))) return false;
+        $this->tosave = array();
 
         // run the validation for each assignded schema
         $input = $INPUT->arr(self::$VAR);
