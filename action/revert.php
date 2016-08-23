@@ -9,7 +9,7 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-use dokuwiki\plugin\struct\meta\AccessTableData;
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 
 /**
@@ -74,8 +74,8 @@ class action_plugin_struct_revert extends DokuWiki_Action_Plugin {
         //  we load the data to restore from DB:
         $tosave = $assignments->getPageAssignments($event->data['id']);
         foreach($tosave as $table) {
-            $accessOld = new AccessTableData($table, $event->data['id'], $REV);
-            $accessNew = new AccessTableData($table, $event->data['id'], $event->data['newRevision']);
+            $accessOld = AccessTable::byTableName($table, $event->data['id'], $REV);
+            $accessNew = AccessTable::byTableName($table, $event->data['id'], $event->data['newRevision']);
             $accessNew->saveData($accessOld->getDataArray());
 
             // make sure this schema is assigned

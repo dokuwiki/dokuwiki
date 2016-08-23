@@ -10,7 +10,6 @@
 if(!defined('DOKU_INC')) die();
 
 use dokuwiki\plugin\struct\meta\AccessTable;
-use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\ValidationResult;
 use dokuwiki\plugin\struct\meta\Value;
@@ -33,7 +32,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
     /** @var  bool has the data been validated correctly? */
     protected $validated;
 
-    /** @var  ValidationResult[]|string[] these schemas are validated and have changed data and need to be saved */
+    /** @var  ValidationResult[] these schemas are validated and have changed data and need to be saved */
     protected $tosave;
 
     /**
@@ -70,7 +69,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         $assignments = new Assignments();
         $tables = $assignments->getPageAssignments($ID);
         foreach($tables as $table) {
-            $access = new AccessTableData($table, $ID);
+            $access = AccessTable::byTableName($table, $ID);
             $validation = $access->getValidator($input[$table]);
             if(!$validation->validate()) {
                 $this->validated = false;
@@ -144,7 +143,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             // clear all data on delete unless it's a move operation
             $tables = $assignments->getPageAssignments($event->data['id']);
             foreach($tables as $table) {
-                $schemaData = new AccessTableData($table, $event->data['id'], time());
+                $schemaData = AccessTable::byTableName($table, $event->data['id'], time());
                 $schemaData->clearData();
             }
         } else {
