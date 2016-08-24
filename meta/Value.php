@@ -20,6 +20,9 @@ class Value {
     /** @var  array|int|string */
     protected $rawvalue = null;
 
+    /** @var array|int|string */
+    protected $display = null;
+
     /**
      * Value constructor.
      *
@@ -55,6 +58,15 @@ class Value {
     }
 
     /**
+     * Access the display value
+     *
+     * @return array|string (array on multi)
+     */
+    public function getDisplayValue() {
+        return $this->display;
+    }
+
+    /**
      * Allows overwriting the current value
      *
      * Cleans the value(s) of empties
@@ -70,6 +82,7 @@ class Value {
         // reset/init
         $this->value = array();
         $this->rawvalue = array();
+        $this->display = array();
 
         // remove all blanks
         foreach($value as $val) {
@@ -78,12 +91,14 @@ class Value {
             if('' === (string) $raw) continue;
             $this->value[] = $val;
             $this->rawvalue[] = $raw;
+            $this->display[] = $this->column->getType()->displayValue($val);
         }
 
         // make single value again
         if(!$this->column->isMulti()) {
             $this->value = (string) array_shift($this->value);
             $this->rawvalue = (string) array_shift($this->rawvalue);
+            $this->display = (string) array_shift($this->display);
         }
     }
 

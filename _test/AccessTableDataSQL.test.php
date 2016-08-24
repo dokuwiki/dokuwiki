@@ -30,12 +30,12 @@ class AccessTableDataSQL_struct_test extends StructTest {
                     'multis' => array(),
                 ),
                 "SELECT DATA.pid AS PID,
-                        DATA.col1 AS col1,
-                        DATA.col2 AS col2
+                        DATA.col1 AS out1,
+                        DATA.col2 AS out2
                    FROM data_testtable AS DATA
                   WHERE (DATA.pid = ?
                     AND DATA.rev = ?)
-               GROUP BY DATA.pid,col1,col2",
+               GROUP BY DATA.pid,out1,out2",
                 array('pagename', 27),
                 'no multis, with ts',
             ),
@@ -46,9 +46,9 @@ class AccessTableDataSQL_struct_test extends StructTest {
                     'multis' => array('dokuwiki\\plugin\\struct\\types\\Text'),
                 ),
                 "SELECT DATA.pid AS PID,
-                        DATA.col1 AS col1,
-                        DATA.col2 AS col2,
-                        GROUP_CONCAT(M3.value,'".Search::CONCAT_SEPARATOR."') AS col3
+                        DATA.col1 AS out1,
+                        DATA.col2 AS out2,
+                        GROUP_CONCAT(M3.value,'".Search::CONCAT_SEPARATOR."') AS out3
                    FROM data_testtable AS DATA
                    LEFT OUTER JOIN multi_testtable AS M3
                      ON DATA.pid = M3.pid
@@ -56,7 +56,7 @@ class AccessTableDataSQL_struct_test extends StructTest {
                     AND M3.colref = 3
                   WHERE (DATA.pid = ?
                     AND DATA.rev = ?)
-               GROUP BY DATA.pid,col1,col2",
+               GROUP BY DATA.pid,out1,out2",
                 array('pagename', 27,),
                 'one multi, with ts',
             ),
@@ -67,8 +67,8 @@ class AccessTableDataSQL_struct_test extends StructTest {
                     'multis' => array('dokuwiki\\plugin\\struct\\types\\Text','dokuwiki\\plugin\\struct\\types\\Text')
                 ),
                 "SELECT DATA.pid AS PID,
-                        GROUP_CONCAT(M1.value,'".Search::CONCAT_SEPARATOR."') AS col1,
-                        GROUP_CONCAT(M2.value,'".Search::CONCAT_SEPARATOR."') AS col2
+                        GROUP_CONCAT(M1.value,'".Search::CONCAT_SEPARATOR."') AS out1,
+                        GROUP_CONCAT(M2.value,'".Search::CONCAT_SEPARATOR."') AS out2
                    FROM data_testtable AS DATA
                    LEFT OUTER JOIN multi_testtable AS M2
                      ON DATA.pid = M2.pid

@@ -70,8 +70,8 @@ class AccessTableDataDBMulti_struct_test extends StructTest {
 
         $expected_data = array(
             array(
-                'col1' => 'value1.1a' . Search::CONCAT_SEPARATOR . 'value1.2a',
-                'col2' => 'value2.1a' . Search::CONCAT_SEPARATOR . 'value2.2a',
+                'out1' => 'value1.1a' . Search::CONCAT_SEPARATOR . 'value1.2a',
+                'out2' => 'value2.1a' . Search::CONCAT_SEPARATOR . 'value2.2a',
                 'PID' => 'testpage',
             ),
         );

@@ -198,7 +198,7 @@ abstract class AccessTable {
 
             // if no data saved yet, return empty strings
             if($DBdata) {
-                $val = $DBdata[0]['col' . $col->getColref()];
+                $val = $DBdata[0]['out' . $col->getColref()];
             } else {
                 $val = '';
             }
@@ -244,6 +244,7 @@ abstract class AccessTable {
 
             $colref = $col->getColref();
             $colname = 'col' . $colref;
+            $outname = 'out' . $colref;
 
             if($col->getType()->isMulti()) {
                 $tn = 'M' . $colref;
@@ -253,12 +254,12 @@ abstract class AccessTable {
                     $tn,
                     "DATA.pid = $tn.pid AND DATA.rev = $tn.rev AND $tn.colref = $colref"
                 );
-                $col->getType()->select($QB, $tn, 'value', $colname);
-                $sel = $QB->getSelectStatement($colname);
-                $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $colname);
+                $col->getType()->select($QB, $tn, 'value', $outname);
+                $sel = $QB->getSelectStatement($outname);
+                $QB->addSelectStatement("GROUP_CONCAT($sel, '$sep')", $outname);
             } else {
-                $col->getType()->select($QB, 'DATA', $colname, $colname);
-                $QB->addGroupByStatement($colname);
+                $col->getType()->select($QB, 'DATA', $colname, $outname);
+                $QB->addGroupByStatement($outname);
             }
         }
 

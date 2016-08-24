@@ -337,7 +337,7 @@ abstract class AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $value = $this->rawValue($value);
+        $value = $this->displayValue($value);
         $R->cdata($value);
         return true;
     }
@@ -448,6 +448,17 @@ abstract class AbstractBaseType {
      */
     public function rawValue($value) {
         return $value;
+    }
+
+    /**
+     * This is called when a single string is needed to represent this Type's current
+     * value as a single (non-HTML) string. Eg. in a dropdown or in autocompletion.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function displayValue($value) {
+        return $this->rawValue($value);
     }
 
     /**
