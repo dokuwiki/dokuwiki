@@ -183,8 +183,8 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
             if(isset($postdata[$label])) {
-                // posted data trumps stored data
-                $field->setValue($postdata[$label]);
+                // posted data trumps stored data -> set as raw value
+                $field->setValue($postdata[$label], true);
             }
             $html .= $this->makeField($field, self::$VAR . "[$tablename][$label]");
         }
