@@ -280,8 +280,9 @@ class Search {
         $this->result_pids = array();
         $result = array();
         $cursor = -1;
-        $pageidAndRevOnly = !(count($this->columns) > 2 || $this->columns[0]->getTid() ||
-            !empty($this->columns[1]) && $this->columns[1]->getTid());
+        $pageidAndRevOnly = array_reduce($this->columns, function ($pageidAndRevOnly, Column $col) {
+            return $pageidAndRevOnly && ($col->getTid() == 0);
+        }, true);
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
             $cursor++;
             if($cursor < $this->range_begin) continue;
