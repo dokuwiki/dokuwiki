@@ -180,6 +180,9 @@ class SchemaBuilder {
                     if(!$res) return false;
                     $newTid = $this->sqlite->res2single($res);
                     $this->sqlite->res_close($res);
+                    if ($oldEntry['ismulti'] == false && $newEntry['ismulti'] == '1') {
+                        $this->migrateSingleToMulti($this->oldschema->getTable(), $column->getColref());
+                    }
                 }
             } else {
                 $enabled = false; // no longer there for some reason
@@ -197,6 +200,34 @@ class SchemaBuilder {
             if(!$ok) return false;
         }
         return true;
+    }
+
+    /**
+     * Write the latest value from an entry in a data_ table to the corresponding multi_table
+     *
+     * @param string $table
+     * @param int    $colref
+     */
+    protected function migrateSingleToMulti($table, $colref) {
+        $sqlSelect = "SELECT pid, rev, col$colref AS value FROM data_$table WHERE latest = 1";
+        $res = $this->sqlite->query($sqlSelect);
+        $valueSet = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+        $valueString = array();
+        $arguments = array();
+        foreach ($valueSet as $values) {
+            if (blank($values['value']) || trim($values['value']) == '') {
+                continue;
+            }
+            $valueString[] = "(?, ?, ?, ?, ?)";
+            $arguments = array_merge($arguments, array($colref, $values['pid'], $values['rev'], 1, $values['value']));
+        }
+        if (empty($valueString)) {
+            return;
+        }
+        $valueString = join(',', $valueString);
+        $sqlInsert = "INSERT OR REPLACE INTO multi_$table (colref, pid, rev, row, value) VALUES $valueString";
+        $this->sqlite->query($sqlInsert, $arguments);
     }
 
     /**
