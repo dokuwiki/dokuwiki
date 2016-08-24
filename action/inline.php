@@ -8,10 +8,10 @@
 
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\AccessTable;
-use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\AccessTableData;
+use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Validator;
+use dokuwiki\plugin\struct\meta\ValueValidator;
 
 if(!defined('DOKU_INC')) die();
 
@@ -84,7 +84,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
         // output the editor
         $value = $this->schemadata->getDataColumn($this->column);
-        echo '<label data-column="'.hsc($this->column->getFullQualifiedLabel()).'">';
+        echo '<label data-column="' . hsc($this->column->getFullQualifiedLabel()) . '">';
         echo $value->getValueEditor('entry');
         echo '</label>';
         $hint = $this->column->getType()->getTranslatedHint();
@@ -115,7 +115,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
         // validate
         $value = $INPUT->param('entry');
-        $validator = new Validator();
+        $validator = new ValueValidator();
         if(!$validator->validateValue($this->column, $value)) {
             throw new StructException(join("\n", $validator->getErrors()));
         }
@@ -148,8 +148,6 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         $value->render($R, 'xhtml'); // FIXME use configured default renderer
         echo $R->doc;
     }
-
-
 
     /**
      * Unlock a page (on cancel action)

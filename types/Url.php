@@ -15,13 +15,13 @@ class Url extends Text {
     /**
      * The final string should be an URL
      *
-     * @param string $value
+     * @param string $rawvalue
      * @return int|string|void
      */
-    public function validate($value) {
-        $value = parent::validate($value);
+    public function validate($rawvalue) {
+        $rawvalue = parent::validate($rawvalue);
 
-        $url = $this->buildURL($value);
+        $url = $this->buildURL($rawvalue);
 
         $schemes = getSchemes();
         $regex = '^(' . join('|', $schemes) . '):\/\/.+';
@@ -29,7 +29,7 @@ class Url extends Text {
             throw new ValidationException('Url invalid', $url);
         }
 
-        return $value;
+        return $rawvalue;
     }
 
     /**

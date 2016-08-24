@@ -2,8 +2,8 @@
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Validator;
 use dokuwiki\plugin\struct\meta\Value;
+use dokuwiki\plugin\struct\meta\ValueValidator;
 
 /**
  * Allows adding a single struct field as a bureaucracy field
@@ -42,14 +42,13 @@ class helper_plugin_struct_field extends helper_plugin_bureaucracy_field {
         if(!$this->column) {
             $value = '';
         } else {
-            $validator = new Validator();
+            $validator = new ValueValidator();
             $this->error = !$validator->validateValue($this->column, $value);
             if($this->error) {
                 foreach($validator->getErrors() as $error) {
                     msg(hsc($error), -1);
                 }
             }
-
         }
 
         if($value === array() || $value === '') {

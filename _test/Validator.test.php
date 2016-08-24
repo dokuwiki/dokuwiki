@@ -45,7 +45,7 @@ class Validator_struct_test extends StructTest {
         $errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), $label);
         $integer = new Decimal();
 
-        $validator = new mock\Validator();
+        $validator = new mock\ValueValidator();
         $value = 'NaN';
         $this->assertFalse($validator->validateField($integer, $label, $value));
         $this->assertEquals(array($errormsg), $validator->getErrors());
@@ -56,7 +56,7 @@ class Validator_struct_test extends StructTest {
         $errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), $label);
         $integer = new Decimal();
 
-        $validator = new mock\Validator();
+        $validator = new mock\ValueValidator();
         $value = array('NaN', 'NaN');
         $this->assertFalse($validator->validateField($integer, $label, $value));
         $this->assertEquals(array($errormsg, $errormsg), $validator->getErrors());
@@ -65,7 +65,7 @@ class Validator_struct_test extends StructTest {
     public function test_validate_blank() {
         $integer = new Decimal();
 
-        $validator = new mock\Validator();
+        $validator = new mock\ValueValidator();
         $value = null;
         $this->assertTrue($validator->validateField($integer, 'label', $value));
         $this->assertEquals(array(), $validator->getErrors());
@@ -74,7 +74,7 @@ class Validator_struct_test extends StructTest {
     public function test_validate_clean() {
         $text = new Text();
 
-        $validator = new mock\Validator();
+        $validator = new mock\ValueValidator();
         $value = '  foo  ';
         $this->assertTrue($validator->validateField($text, 'label', $value));
         $this->assertEquals('foo', $value);

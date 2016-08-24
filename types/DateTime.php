@@ -49,13 +49,13 @@ class DateTime extends Date {
      * This function needs to throw a validation exception when validation fails.
      * The exception message will be prefixed by the appropriate field on output
      *
-     * @param string|array $value
+     * @param string|array $rawvalue
      * @return string
      * @throws ValidationException
      */
-    public function validate($value) {
-        $value = trim($value);
-        list($date, $time) = explode(' ', $value, 2);
+    public function validate($rawvalue) {
+        $rawvalue = trim($rawvalue);
+        list($date, $time) = explode(' ', $rawvalue, 2);
         $date = trim($date);
         $time = trim($time);
 

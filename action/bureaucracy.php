@@ -12,8 +12,6 @@ if(!defined('DOKU_INC')) die();
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
-use dokuwiki\plugin\struct\meta\AccessTableData;
-use dokuwiki\plugin\struct\meta\Validator;
 
 /**
  * Handles bureaucracy additions
@@ -48,7 +46,7 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
      */
     public function handle_schema(Doku_Event $event, $param) {
         $args = $event->data['args'];
-        if($args[0] != 'struct_schema') return;
+        if($args[0] != 'struct_schema') return false;
         $event->preventDefault();
         $event->stopPropagation();
 
@@ -59,7 +57,7 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
         $schema = new Schema($helper->opt['label']);
         if(!$schema->getId()) {
             msg('This schema does not exist', -1);
-            return;
+            return false;
         }
 
         foreach($schema->getColumns(false) as $column) {
@@ -71,6 +69,7 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             $field->column = $column;
             $event->data['fields'][] = $field;
         }
+        return true;
     }
 
     /**
@@ -95,17 +94,17 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
 
         // save all the struct data of assigned schemas
         $id = $event->data['id'];
+        $time = filemtime(wikiFN($id));
 
-        $validator = new Validator();
-        if(!$validator->validate($tosave, $id)) return false;
-        $tosave = $validator->getCleanedData();
+        $assignments = new Assignments();
+        $assigned = $assignments->getPageAssignments($id);
         foreach($tosave as $table => $data) {
-            $time = filemtime(wikiFN($id));
-            $schemaData = AccessTable::byTableName($table, $id, $time);
-            $schemaData->saveData($data);
-
-            $assignments = new Assignments();
-            $assignments->assignPageSchema($id, $table);
+            if(!in_array($table, $assigned)) continue;
+            $access = AccessTable::byTableName($table, $id, $time);
+            $validator = $access->getValidator($data);
+            if($validator->validate()) {
+                $validator->saveData($time);
+            }
         }
 
         return true;

@@ -5,14 +5,12 @@ namespace dokuwiki\plugin\struct\test;
 use dokuwiki\plugin\struct\meta;
 
 /**
- * Tests for the building of SQL-Queries for the struct plugin
- *
  * @group plugin_struct
  * @group plugins
  *
  * @covers action_plugin_struct_entry
- *
- *
+ * @covers action_plugin_struct_revert
+ * @covers action_plugin_struct_edit
  */
 class entry_struct_test extends StructTest {
 

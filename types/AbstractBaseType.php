@@ -469,12 +469,12 @@ abstract class AbstractBaseType {
      *
      * The function should return the value as it should be saved later on.
      *
-     * @param string|int $value
+     * @param string|int $rawvalue
      * @return int|string the cleaned value
      * @throws ValidationException
      */
-    public function validate($value) {
-        return trim($value);
+    public function validate($rawvalue) {
+        return trim($rawvalue);
     }
 
     /**
