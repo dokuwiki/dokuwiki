@@ -23,6 +23,9 @@ class Value {
     /** @var array|int|string */
     protected $display = null;
 
+    /** @var bool is this a raw value only? */
+    protected $rawonly = false;
+
     /**
      * Value constructor.
      *
@@ -45,6 +48,9 @@ class Value {
      * @return array|int|string
      */
     public function getValue() {
+        if($this->rawonly) {
+            throw new StructException('Accessing value of rawonly value forbidden');
+        }
         return $this->value;
     }
 
@@ -63,6 +69,9 @@ class Value {
      * @return array|string (array on multi)
      */
     public function getDisplayValue() {
+        if($this->rawonly) {
+            throw new StructException('Accessing displayvalue of rawonly value forbidden');
+        }
         return $this->display;
     }
 
@@ -72,8 +81,11 @@ class Value {
      * Cleans the value(s) of empties
      *
      * @param array|int|string $value
+     * @param bool $israw is the passed value a raw value? turns Value into rawonly
      */
-    public function setValue($value) {
+    public function setValue($value, $israw=false) {
+        $this->rawonly = $israw;
+
         // treat all givens the same
         if(!is_array($value)) {
             $value = array($value);
@@ -87,11 +99,19 @@ class Value {
         // remove all blanks
         foreach($value as $val) {
             $val = trim($val);
-            $raw = $this->column->getType()->rawValue($val);
+            if($israw) {
+                $raw = $val;
+            } else {
+                $raw = $this->column->getType()->rawValue($val);
+            }
             if('' === (string) $raw) continue;
             $this->value[] = $val;
             $this->rawvalue[] = $raw;
-            $this->display[] = $this->column->getType()->displayValue($val);
+            if($israw) {
+                $this->display[] = $val;
+            } else {
+                $this->display[] = $this->column->getType()->displayValue($val);
+            }
         }
 
         // make single value again
@@ -143,9 +163,9 @@ class Value {
      */
     public function getValueEditor($name) {
         if($this->column->isMulti()) {
-            return $this->column->getType()->multiValueEditor($name, $this->value);
+            return $this->column->getType()->multiValueEditor($name, $this->rawvalue);
         } else {
-            return $this->column->getType()->valueEditor($name, $this->value);
+            return $this->column->getType()->valueEditor($name, $this->rawvalue);
         }
     }
 

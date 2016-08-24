@@ -93,20 +93,19 @@ class Media extends AbstractBaseType {
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
-     * @param string $value the current value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue the current value
      *
      * @return string html
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $name = hsc($name);
-        $value = hsc($value);
+        $rawvalue = hsc($rawvalue);
         static $count = 0;
         $count++;
 
         $id = 'struct__' . md5($name.$count);
 
-        $html = "<input id=\"$id\" class=\"struct_media\"  name=\"$name\" value=\"$value\" />";
+        $html = "<input id=\"$id\" class=\"struct_media\"  name=\"$name\" value=\"$rawvalue\" />";
         $html .= "<button type=\"button\" class=\"struct_media\">";
         $html .= "<img src=\"" . DOKU_BASE . "lib/images/toolbar/image.png\" height=\"16\" width=\"16\">";
         $html .= "</button>";

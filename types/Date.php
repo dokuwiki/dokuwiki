@@ -34,19 +34,18 @@ class Date extends AbstractBaseType {
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
-     * @param string $value the current value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue the current value
      * @return string html
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $name = hsc($name);
-        $value = hsc($value);
+        $rawvalue = hsc($rawvalue);
 
-        if($this->config['prefilltoday'] && !$value) {
-            $value = date('Y-m-d');
+        if($this->config['prefilltoday'] && !$rawvalue) {
+            $rawvalue = date('Y-m-d');
         }
 
-        $html = "<input class=\"struct_date\" name=\"$name\" value=\"$value\" />";
+        $html = "<input class=\"struct_date\" name=\"$name\" value=\"$rawvalue\" />";
         return "$html";
     }
 

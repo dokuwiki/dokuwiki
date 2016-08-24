@@ -31,16 +31,15 @@ class Wiki extends AbstractBaseType {
      * Use a text area for input
      *
      * @param string $name
-     * @param string $value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue
      * @return string
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $class = 'struct_'.strtolower($this->getClass());
         $name = hsc($name);
-        $value = formText($value);
+        $rawvalue = formText($rawvalue);
 
-        $html = "<textarea name=\"$name\" class=\"$class\">$value</textarea>";
+        $html = "<textarea name=\"$name\" class=\"$class\">$rawvalue</textarea>";
         return "$html";
     }
 

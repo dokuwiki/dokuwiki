@@ -15,11 +15,11 @@ abstract class AbstractMultiBaseType extends AbstractBaseType {
 
     /**
      * @param string $name
-     * @param \string[] $values
+     * @param \string[] $rawvalues
      * @return string
      */
-    public function multiValueEditor($name, $values) {
-        $value = join(', ', array_map(array($this, 'rawValue'), $values));
+    public function multiValueEditor($name, $rawvalues) {
+        $value = join(', ', array_map(array($this, 'rawValue'), $rawvalues));
 
         return
             '<div class="multiwrap">' .

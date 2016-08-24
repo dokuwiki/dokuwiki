@@ -162,19 +162,16 @@ class Dropdown extends AbstractBaseType {
      * A Dropdown with a single value to pick
      *
      * @param string $name
-     * @param string $value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue
      * @return string
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $class = 'struct_' . strtolower($this->getClass());
-
-        if(!$isRaw) $value = $this->rawValue($value);
 
         $name = hsc($name);
         $html = "<select name=\"$name\" class=\"$class\">";
         foreach($this->getOptions() as $opt => $val) {
-            if($opt == $value) {
+            if($opt == $rawvalue) {
                 $selected = 'selected="selected"';
             } else {
                 $selected = '';
@@ -191,18 +188,16 @@ class Dropdown extends AbstractBaseType {
      * A dropdown that allows to pick multiple values
      *
      * @param string $name
-     * @param \string[] $values
+     * @param \string[] $rawvalues
      * @return string
      */
-    public function multiValueEditor($name, $values) {
+    public function multiValueEditor($name, $rawvalues) {
         $class = 'struct_' . strtolower($this->getClass());
-
-        $values = array_map(array($this, 'rawValue'), $values);
 
         $name = hsc($name);
         $html = "<select name=\"{$name}[]\" class=\"$class\" multiple=\"multiple\" size=\"5\">";
         foreach($this->getOptions() as $opt) {
-            if(in_array($opt, $values)) {
+            if(in_array($opt, $rawvalues)) {
                 $selected = 'selected="selected"';
             } else {
                 $selected = '';
