@@ -150,6 +150,7 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
 
         echo '<button type="submit">' . $lang['btn_save'] . '</button>';
 
+        echo '<div class="err"></div>';
         echo '</fieldset>';
         echo '</div>';
 

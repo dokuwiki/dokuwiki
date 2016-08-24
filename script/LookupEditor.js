@@ -4,6 +4,7 @@
 var LookupEditor = function ($table) {
 
     var $form = null;
+    var formdata;
 
     var schema = $table.parents('.structaggregation').data('schema');
     if (!schema) return;
@@ -80,8 +81,11 @@ var LookupEditor = function ($table) {
         $agg.append($form);
         EntryEditor($form);
 
+        var $errors = $form.find('div.err').hide();
+
         $form.submit(function (e) {
             e.preventDefault();
+            $errors.hide();
 
             jQuery.post(
                 DOKU_BASE + 'lib/exe/ajax.php',
@@ -90,10 +94,10 @@ var LookupEditor = function ($table) {
                 .done(function (data) {
                     $table.find('tbody').append(data);
                     addDeleteRowButtons(); // add the delete button to the new row
+                    addForm(formdata); // reset the whole form
                 })
                 .fail(function (xhr) {
-                    // FIXME
-                    alert(xhr.responseText)
+                    $errors.text(xhr.responseText).show();
                 })
         });
     }
@@ -113,6 +117,7 @@ var LookupEditor = function ($table) {
         },
         function (data) {
             if (!data) return;
+            formdata = data;
             addDeleteRowButtons();
             addForm(data);
         }
