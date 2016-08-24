@@ -15,6 +15,11 @@ var LookupEditor = function ($table) {
         $table.find('tr').each(function () {
             var $me = jQuery(this);
 
+            // already added here?
+            if ($me.find('th.action, td.action').length) {
+                return;
+            }
+
             // empty header cells
             if ($me.parent().is('thead')) {
                 $me.append('<th class="action"></th>');
@@ -22,7 +27,7 @@ var LookupEditor = function ($table) {
             }
 
             // delete buttons for rows
-            var $td = jQuery('<td></td>');
+            var $td = jQuery('<td class="action"></td>');
             var pid = $me.data('pid');
             if (pid === '') return;
 
@@ -63,10 +68,16 @@ var LookupEditor = function ($table) {
      */
     function addForm(data) {
         if ($form) $form.remove();
+        var $agg = $table.parents('.structaggregation');
+
         $form = jQuery('<form></form>');
         $form.html(data);
-        $table.parents('.structaggregation').append($form);
-
+        jQuery('<input>').attr({
+            type: 'hidden',
+            name: 'searchconf',
+            value: $agg.attr('data-searchconf')
+        }).appendTo($form); // add the search config to the form
+        $agg.append($form);
         EntryEditor($form);
 
         $form.submit(function (e) {
@@ -76,8 +87,9 @@ var LookupEditor = function ($table) {
                 DOKU_BASE + 'lib/exe/ajax.php',
                 $form.serialize()
             )
-                .done(function () {
-                    // FIXME
+                .done(function (data) {
+                    $table.find('tbody').append(data);
+                    addDeleteRowButtons(); // add the delete button to the new row
                 })
                 .fail(function (xhr) {
                     // FIXME

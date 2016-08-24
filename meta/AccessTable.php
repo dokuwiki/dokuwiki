@@ -81,6 +81,15 @@ abstract class AccessTable {
     }
 
     /**
+     * The current pid
+     *
+     * @return int|string
+     */
+    public function getPid() {
+        return $this->pid;
+    }
+
+    /**
      * Should remove the current data, by either deleting or ovewriting it
      *
      * @return bool if the delete succeeded

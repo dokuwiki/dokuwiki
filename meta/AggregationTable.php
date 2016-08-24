@@ -329,39 +329,49 @@ class AggregationTable {
     protected function renderResult() {
         $this->renderer->tabletbody_open();
         foreach($this->result as $rownum => $row) {
-            $this->renderer->tablerow_open();
-
-            // add data attribute for inline edit
-            if($this->mode == 'xhtml') {
-                $pid = $this->resultPIDs[$rownum];
-                $this->renderer->doc = substr(rtrim($this->renderer->doc), 0, -1); // remove closing '>'
-                $this->renderer->doc .= ' data-pid="' . hsc($pid) . '">';
-            }
-
-            // row number column
-            if($this->data['rownumbers']) {
-                $this->renderer->tablecell_open();
-                $this->renderer->doc .= $rownum + 1;
-                $this->renderer->tablecell_close();
-            }
-
-            /** @var Value $value */
-            foreach($row as $colnum => $value) {
-                $this->renderer->tablecell_open();
-                $value->render($this->renderer, $this->mode);
-                $this->renderer->tablecell_close();
-
-                // summarize
-                if($this->data['summarize'] && is_numeric($value->getValue())) {
-                    if(!isset($this->sums[$colnum])) {
-                        $this->sums[$colnum] = 0;
-                    }
-                    $this->sums[$colnum] += $value->getValue();
-                }
-            }
-            $this->renderer->tablerow_close();
+            $this->renderResultRow($rownum, $row);
         }
         $this->renderer->tabletbody_close();
+    }
+
+    /**
+     * Render a single result row
+     *
+     * @param int $rownum
+     * @param array $row
+     */
+    protected function renderResultRow($rownum, $row) {
+        $this->renderer->tablerow_open();
+
+        // add data attribute for inline edit
+        if($this->mode == 'xhtml') {
+            $pid = $this->resultPIDs[$rownum];
+            $this->renderer->doc = substr(rtrim($this->renderer->doc), 0, -1); // remove closing '>'
+            $this->renderer->doc .= ' data-pid="' . hsc($pid) . '">';
+        }
+
+        // row number column
+        if($this->data['rownumbers']) {
+            $this->renderer->tablecell_open();
+            $this->renderer->doc .= $rownum + 1;
+            $this->renderer->tablecell_close();
+        }
+
+        /** @var Value $value */
+        foreach($row as $colnum => $value) {
+            $this->renderer->tablecell_open();
+            $value->render($this->renderer, $this->mode);
+            $this->renderer->tablecell_close();
+
+            // summarize
+            if($this->data['summarize'] && is_numeric($value->getValue())) {
+                if(!isset($this->sums[$colnum])) {
+                    $this->sums[$colnum] = 0;
+                }
+                $this->sums[$colnum] += $value->getValue();
+            }
+        }
+        $this->renderer->tablerow_close();
     }
 
     /**

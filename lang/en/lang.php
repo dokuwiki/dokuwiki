@@ -20,6 +20,7 @@ $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
 $lang['pagelabel'] = 'Page';
+$lang['rowlabel'] = 'Row #';
 $lang['revisionlabel'] = 'Last Updated';
 $lang['summary'] = 'Struct data changed';
 $lang['export'] = 'Export Schema as JSON';

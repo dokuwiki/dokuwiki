@@ -41,6 +41,8 @@ class syntax_plugin_struct_lookup extends syntax_plugin_struct_table {
 
         // adjust some things for the lookup editor
         $config['cols'] = array('*'); // always select all columns
+        if(isset($config['summarize'])) unset($config['summarize']); // this is hard to update dynamically
+        if(isset($config['rownumbers'])) unset($config['rownumbers']); // this annoying to update dynamically
 
         return $config;
     }
