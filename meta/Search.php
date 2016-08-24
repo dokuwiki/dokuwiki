@@ -280,6 +280,9 @@ class Search {
         $this->result_pids = array();
         $result = array();
         $cursor = -1;
+        $pageidAndRevOnly = array_reduce($this->columns, function ($pageidAndRevOnly, Column $col) {
+            return $pageidAndRevOnly && ($col->getTid() == 0);
+        }, true);
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
             $cursor++;
             if($cursor < $this->range_begin) continue;
@@ -294,13 +297,13 @@ class Search {
                     $val = explode(self::CONCAT_SEPARATOR, $val);
                 }
                 $value = new Value($col, $val);
-                $isempty &= $this->isEmptyValue($value, $row['PID']);
+                $isempty &= $this->isEmptyValue($value);
                 $resrow[] = $value;
                 $C++;
             }
 
             // skip empty rows
-            if($isempty) {
+            if($isempty && !$pageidAndRevOnly) {
                 $cursor--;
                 continue;
             }
@@ -529,12 +532,11 @@ class Search {
      * Check if the given row is empty or references our own row
      *
      * @param Value $value
-     * @param string $pid
      * @return bool
      */
-    protected function isEmptyValue(Value $value, $pid) {
-        if($value->isEmpty()) return true;
-        if(is_a($value->getColumn()->getType(), Page::class) && $value->getRawValue() == $pid) return true;
+    protected function isEmptyValue(Value $value) {
+        if ($value->isEmpty()) return true;
+        if ($value->getColumn()->getTid() == 0) return true;
         return false;
     }
 }
