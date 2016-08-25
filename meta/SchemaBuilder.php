@@ -141,12 +141,11 @@ class SchemaBuilder {
 
     /**
      * Creates a new schema
-     *
-     * @todo use checksum or other heuristic to see if we really need a new schema OTOH we probably need one nearly always!?
      */
     protected function newSchema() {
         if(!$this->time) $this->time = time();
 
+        /** @noinspection SqlResolve */
         $sql = "INSERT INTO schemas (tbl, ts, islookup, user) VALUES (?, ?, ?, ?)";
         $this->sqlite->query($sql, $this->table, $this->time, (int) $this->oldschema->isLookup(), $this->user);
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
@@ -212,6 +211,7 @@ class SchemaBuilder {
      * @param int    $colref
      */
     protected function migrateSingleToMulti($table, $colref) {
+        /** @noinspection SqlResolve */
         $sqlSelect = "SELECT pid, rev, col$colref AS value FROM data_$table WHERE latest = 1";
         $res = $this->sqlite->query($sqlSelect);
         $valueSet = $this->sqlite->res2arr($res);
@@ -229,6 +229,7 @@ class SchemaBuilder {
             return;
         }
         $valueString = join(',', $valueString);
+        /** @noinspection SqlResolve */
         $sqlInsert = "INSERT OR REPLACE INTO multi_$table (colref, pid, rev, row, value) VALUES $valueString";
         $this->sqlite->query($sqlInsert, $arguments);
     }
