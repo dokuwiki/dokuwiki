@@ -20,6 +20,7 @@
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
+ * @author Daniel Slováček <danslo@danslo.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -42,7 +43,7 @@ $lang['btn_revs']              = 'Starší verze';
 $lang['btn_recent']            = 'Poslední úpravy';
 $lang['btn_upload']            = 'Načíst';
 $lang['btn_cancel']            = 'Storno';
-$lang['btn_index']             = 'Index';
+$lang['btn_index']             = 'Mapa stránek';
 $lang['btn_secedit']           = 'Upravit';
 $lang['btn_login']             = 'Přihlásit se';
 $lang['btn_logout']            = 'Odhlásit se';
@@ -71,7 +72,7 @@ $lang['pass']                  = 'Heslo';
 $lang['newpass']               = 'Nové heslo';
 $lang['oldpass']               = 'Současné heslo';
 $lang['passchk']               = 'Zopakovat';
-$lang['remember']              = 'Přihlásit se nastálo';
+$lang['remember']              = 'Zapamatovat';
 $lang['fullname']              = 'Celé jméno';
 $lang['email']                 = 'E-mail';
 $lang['profile']               = 'Uživatelský profil';
@@ -106,7 +107,7 @@ $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hes
 $lang['resendpwd']             = 'Nastavit nové heslo pro';
 $lang['resendpwdmissing']      = 'Musíte vyplnit všechny položky.';
 $lang['resendpwdnouser']       = 'Bohužel takový uživatel v systému není.';
-$lang['resendpwdbadauth']      = 'Autorizační kód není platný. Zadali jste opravdu celý odkaz na potvrzovací stránku?';
+$lang['resendpwdbadauth']      = 'Tento autorizační kód není platný. Zadali jste opravdu celý odkaz na potvrzovací stránku?';
 $lang['resendpwdconfirm']      = 'Odkaz na potvrzovací stránku byl odeslán e-mailem.';
 $lang['resendpwdsuccess']      = 'Vaše nové heslo bylo odesláno e-mailem.';
 $lang['license']               = 'Kromě míst, kde je explicitně uvedeno jinak, je obsah této wiki licencován pod následující licencí:';
@@ -353,5 +354,6 @@ $lang['plainhtml']             = 'Čisté HTML';
 $lang['wikimarkup']            = 'Wiki jazyk';
 $lang['page_nonexist_rev']     = 'Stránka neexistovala na %s. Byla vytvořena dodatečne na <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Nelze rozebrat parametr "%s".';
-$lang['email_signature_text'] = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki
+$lang['email_signature_text']  = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@';
+$lang['email_signature_html']  = ' ';
