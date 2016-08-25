@@ -84,7 +84,7 @@ class DateTime extends Date {
         // when accessing the revision column we need to convert from Unix timestamp
         $col = "$tablealias.$colname";
         if($colname == 'rev') {
-            $col = "DATETIME($col, 'unixepoch')";
+            $col = "DATETIME($col, 'unixepoch', 'localtime')";
         }
 
         $QB->addSelectStatement($col, $alias);
@@ -102,7 +102,7 @@ class DateTime extends Date {
         // when accessing the revision column we need to convert from Unix timestamp
         $col = "$tablealias.$colname";
         if($colname == 'rev') {
-            $col = "DATETIME($col, 'unixepoch')";
+            $col = "DATETIME($col, 'unixepoch', 'localtime')";
         }
 
         /** @var QueryBuilderWhere $add Where additionional queries are added to*/
