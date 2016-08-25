@@ -28,8 +28,12 @@ class LookupTable extends AggregationTable {
 
         $table = $this->columns[0]->getTable();
 
+        $config = $this->searchConfig->getConf();
+        if(isset($config['filter'])) unset($config['filter']);
+        $config = hsc(json_encode($config));
+
         // wrapping div
-        $this->renderer->doc .= "<div class=\"structaggregation structlookup\" data-schema=\"$table\">";
+        $this->renderer->doc .= "<div class=\"structaggregation structlookup\" data-schema=\"$table\" data-searchconf=\"$config\">";
 
         // unique identifier for this aggregation
         $this->renderer->info['struct_table_hash'] = md5(var_export($this->data, true));
@@ -41,4 +45,15 @@ class LookupTable extends AggregationTable {
     protected function renderEmptyResult() {
     }
 
+    /**
+     * Renders the first result row and returns it
+     *
+     * Only used for rendering new rows via JS (where the first row is the only one)
+     *
+     * @return string
+     */
+    public function getFirstRow() {
+        $this->renderResultRow(0, $this->result[0]);
+        return $this->renderer->doc;
+    }
 }

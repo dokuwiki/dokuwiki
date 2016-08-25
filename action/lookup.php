@@ -10,7 +10,9 @@
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\Column;
+use dokuwiki\plugin\struct\meta\LookupTable;
 use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\SearchConfig;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Value;
 
@@ -107,6 +109,19 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
             throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
         }
         $validator->saveData();
+
+        // create a new row based on the original aggregation config for the new pid
+        $pid = $access->getPid();
+        $config = json_decode($INPUT->str('searchconf'), true);
+        $config['filter'] = array(array('%rowid%', '=', $pid, 'AND'));
+        $lookup = new LookupTable(
+            '', // current page doesn't matter
+            'xhtml',
+            new Doku_Renderer_xhtml(),
+            new SearchConfig($config)
+        );
+
+        echo $lookup->getFirstRow();
     }
 
     /**
@@ -135,6 +150,7 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
 
         echo '<button type="submit">' . $lang['btn_save'] . '</button>';
 
+        echo '<div class="err"></div>';
         echo '</fieldset>';
         echo '</div>';
 

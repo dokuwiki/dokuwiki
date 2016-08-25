@@ -3,6 +3,7 @@
 namespace dokuwiki\plugin\struct\meta;
 
 use dokuwiki\plugin\struct\types\DateTime;
+use dokuwiki\plugin\struct\types\Decimal;
 use dokuwiki\plugin\struct\types\Page;
 
 class Search {
@@ -491,10 +492,10 @@ class Search {
      */
     public function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
+        $schema_list = array_keys($this->schemas);
 
-        // add "fake" column for special col (unless it's a lookup)
+        // add "fake" column for special col
         if(!(reset($this->schemas)->isLookup())) {
-            $schema_list = array_keys($this->schemas);
             if($colname == '%pageid%') {
                 return new PageColumn(0, new Page(), $schema_list[0]);
             }
@@ -503,6 +504,10 @@ class Search {
             }
             if($colname == '%lastupdate%') {
                 return new RevisionColumn(0, new DateTime(), $schema_list[0]);
+            }
+        } else {
+            if($colname == '%rowid%') {
+                return new RowColumn(0, new Decimal(), $schema_list[0]);
             }
         }
 

@@ -4,7 +4,7 @@
 var InlineEditor = function ($table) {
 
 
-    $table.find('td').dblclick(function (e) {
+    $table.on('dblclick', 'td', function (e) {
         e.preventDefault();
 
         var $self = jQuery(this);

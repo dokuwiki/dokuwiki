@@ -260,7 +260,9 @@ form.struct_newschema {
     }
 
 }
-
+/**
+ * Lookup Aggregation Editor
+ */
 .dokuwiki .structlookup {
     table.inline {
         min-width: 100%;
@@ -271,6 +273,9 @@ form.struct_newschema {
     }
 }
 
+/**
+ * Inline Editor Overlay
+ */
 .dokuwiki .struct_inlineditor {
     position: absolute;
     top: 0;
@@ -288,11 +293,19 @@ form.struct_newschema {
         margin-top: 5px;
     }
 
+}
+
+/**
+ * Errors on AJAX
+ */
+.dokuwiki .structlookup form,
+.dokuwiki .struct_inlineditor {
     .err {
         font-size: 90%;
         margin-top: 5px;
         padding: 5px;
         background-color: @ini_highlight;
         color: @ini_text;
+        text-align: left;
     }
 }
