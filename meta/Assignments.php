@@ -17,6 +17,9 @@ class Assignments {
     /** @var  array All the assignments patterns */
     protected $patterns;
 
+    /** @var  string[] All lookup schemas for error checking */
+    protected $lookups;
+
     /**
      * Assignments constructor.
      */
@@ -24,8 +27,10 @@ class Assignments {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
+        if(!$this->sqlite) return;
 
-        if($this->sqlite) $this->loadPatterns();
+        $this->loadPatterns();
+        $this->lookups = Schema::getAll('lookup');
     }
 
     /**
@@ -46,6 +51,10 @@ class Assignments {
      * @return bool
      */
     public function addPattern($pattern, $table) {
+        if(in_array($table, $this->lookups)) {
+            throw new StructException('nolookupassign');
+        }
+
         // add the pattern
         $sql = 'REPLACE INTO schema_assignments_patterns (pattern, tbl) VALUES (?,?)';
         $ok = (bool) $this->sqlite->query($sql, array($pattern, $table));
@@ -190,6 +199,7 @@ class Assignments {
             $pns = ':' . getNS($page) . ':';
             foreach($this->patterns as $row) {
                 if($this->matchPagePattern($row['pattern'], $page, $pns)) {
+                    if(in_array($row['tbl'], $this->lookups)) continue; // wrong assignment
                     $tables[] = $row['tbl'];
                 }
             }
@@ -200,6 +210,7 @@ class Assignments {
             $list = $this->sqlite->res2arr($res);
             $this->sqlite->res_close($res);
             foreach($list as $row) {
+                if(in_array($row['tbl'], $this->lookups)) continue; // wrong assignment
                 $tables[] = $row['tbl'];
             }
         }

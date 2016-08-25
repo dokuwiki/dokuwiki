@@ -7,10 +7,11 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 use dokuwiki\plugin\struct\meta\Column;
-use dokuwiki\plugin\struct\meta\SchemaData;
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Validator;
+use dokuwiki\plugin\struct\meta\ValueValidator;
 
 if(!defined('DOKU_INC')) die();
 
@@ -21,7 +22,7 @@ if(!defined('DOKU_INC')) die();
  */
 class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
-    /** @var  SchemaData */
+    /** @var  AccessTableData */
     protected $schemadata = null;
 
     /** @var  Column */
@@ -83,7 +84,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
 
         // output the editor
         $value = $this->schemadata->getDataColumn($this->column);
-        echo '<label data-column="'.hsc($this->column->getFullQualifiedLabel()).'">';
+        echo '<label data-column="' . hsc($this->column->getFullQualifiedLabel()) . '">';
         echo $value->getValueEditor('entry');
         echo '</label>';
         $hint = $this->column->getType()->getTranslatedHint();
@@ -103,26 +104,18 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
     protected function inline_save() {
         global $INPUT;
 
+        // check preconditions
         if(!$this->initFromInput()) {
             throw new StructException('inline save error: init');
         }
-        // our own implementation of checkSecurityToken because we don't want the msg() call
-        if(
-            $INPUT->server->str('REMOTE_USER') &&
-            getSecurityToken() != $INPUT->str('sectok')
-        ) {
-            throw new StructException('inline save error: csrf');
-        }
-        if(auth_quickaclcheck($this->pid) < AUTH_EDIT) {
-            throw new StructException('inline save error: acl');
-        }
-        if(checklock($this->pid)) {
-            throw new StructException('inline save error: lock');
+        self::checkCSRF();
+        if(!$this->schemadata->getSchema()->isLookup()) {
+            $this->checkPage();
         }
 
         // validate
         $value = $INPUT->param('entry');
-        $validator = new Validator();
+        $validator = new ValueValidator();
         if(!$validator->validateValue($this->column, $value)) {
             throw new StructException(join("\n", $validator->getErrors()));
         }
@@ -130,15 +123,23 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         // current data
         $tosave = $this->schemadata->getDataArray();
         $tosave[$this->column->getLabel()] = $value;
-        $tosave = array($this->schemadata->getTable() => $tosave);
 
         // save
-        /** @var helper_plugin_struct $helper */
-        $helper = plugin_load('helper', 'struct');
-        $helper->saveData($this->pid, $tosave, 'inline edit');
-
-        // unlock
-        unlock($this->pid);
+        if($this->schemadata->getSchema()->isLookup()) {
+            $revision = 0;
+        } else {
+            $revision = helper_plugin_struct::createPageRevision($this->pid, 'inline edit');
+        }
+        $this->schemadata->setTimestamp($revision);
+        try {
+            if(!$this->schemadata->saveData($tosave)) {
+                throw new StructException('saving failed');
+            }
+        } finally {
+            // unlock (unlocking a non-existing file is okay,
+            // so we don't check if it's a lookup here
+            unlock($this->pid);
+        }
 
         // reinit then render
         $this->initFromInput();
@@ -175,15 +176,13 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         if(blank($field)) return false;
 
         $this->pid = $pid;
-
-        $this->schemadata = new SchemaData($table, $pid, 0);
-        if(!$this->schemadata->getId()) {
-            $this->schemadata = null;
+        try {
+            $this->schemadata = AccessTable::byTableName($table, $pid);
+        } catch(StructException $ignore) {
             return false;
         }
-        $this->schemadata->optionRawValue(true);
 
-        $this->column = $this->schemadata->findColumn($field);
+        $this->column = $this->schemadata->getSchema()->findColumn($field);
         if(!$this->column || !$this->column->isVisibleInEditor()) {
             $this->schemadata = null;
             $this->column = null;
@@ -191,6 +190,38 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         }
 
         return true;
+    }
+
+    /**
+     * Checks if a page can be edited
+     *
+     * @throws StructException when check fails
+     */
+    protected function checkPage() {
+        if(!page_exists($this->pid)) {
+            throw new StructException('inline save error: no such page');
+        }
+        if(auth_quickaclcheck($this->pid) < AUTH_EDIT) {
+            throw new StructException('inline save error: acl');
+        }
+        if(checklock($this->pid)) {
+            throw new StructException('inline save error: lock');
+        }
+    }
+
+    /**
+     * Our own implementation of checkSecurityToken because we don't want the msg() call
+     *
+     * @throws StructException when check fails
+     */
+    public static function checkCSRF() {
+        global $INPUT;
+        if(
+            $INPUT->server->str('REMOTE_USER') &&
+            getSecurityToken() != $INPUT->str('sectok')
+        ) {
+            throw new StructException('CSRF check failed');
+        }
     }
 
 }

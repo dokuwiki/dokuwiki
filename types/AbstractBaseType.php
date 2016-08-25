@@ -283,12 +283,12 @@ abstract class AbstractBaseType {
      * Types can override this to provide a better alternative than multiple entry fields
      *
      * @param string $name the form base name where this has to be stored
-     * @param string[] $values the current values
+     * @param string[] $rawvalues the current values
      * @return string html
      */
-    public function multiValueEditor($name, $values) {
+    public function multiValueEditor($name, $rawvalues) {
         $html = '';
-        foreach($values as $value) {
+        foreach($rawvalues as $value) {
             $html .= '<div class="multiwrap">';
             $html .= $this->valueEditor($name . '[]', $value);
             $html .= '</div>';
@@ -307,14 +307,10 @@ abstract class AbstractBaseType {
      * Return the editor to edit a single value
      *
      * @param string $name  the form name where this has to be stored
-     * @param string $value the current value
-     * @param bool   $isRaw set to true if the value already contains the correct raw value. e.g. for multi fields
+     * @param string $rawvalue the current value
      * @return string html
      */
-    public function valueEditor($name, $value, $isRaw = false) {
-        if (!$isRaw) {
-            $value = $this->rawValue($value);
-        }
+    public function valueEditor($name, $rawvalue) {
         $class = 'struct_' . strtolower($this->getClass());
 
         // support the autocomplete configurations out of the box
@@ -323,8 +319,8 @@ abstract class AbstractBaseType {
         }
 
         $name = hsc($name);
-        $value = hsc($value);
-        $html = "<input name=\"$name\" value=\"$value\" class=\"$class\" />";
+        $rawvalue = hsc($rawvalue);
+        $html = "<input name=\"$name\" value=\"$rawvalue\" class=\"$class\" />";
         return "$html";
     }
 
@@ -337,7 +333,7 @@ abstract class AbstractBaseType {
      * @return bool true if $mode could be satisfied
      */
     public function renderValue($value, \Doku_Renderer $R, $mode) {
-        $value = $this->rawValue($value);
+        $value = $this->displayValue($value);
         $R->cdata($value);
         return true;
     }
@@ -451,6 +447,17 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * This is called when a single string is needed to represent this Type's current
+     * value as a single (non-HTML) string. Eg. in a dropdown or in autocompletion.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function displayValue($value) {
+        return $this->rawValue($value);
+    }
+
+    /**
      * Validate and optionally clean a single value
      *
      * This function needs to throw a validation exception when validation fails.
@@ -458,12 +465,12 @@ abstract class AbstractBaseType {
      *
      * The function should return the value as it should be saved later on.
      *
-     * @param string|int $value
+     * @param string|int $rawvalue
      * @return int|string the cleaned value
      * @throws ValidationException
      */
-    public function validate($value) {
-        return trim($value);
+    public function validate($rawvalue) {
+        return trim($rawvalue);
     }
 
     /**

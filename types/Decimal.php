@@ -59,27 +59,27 @@ class Decimal extends AbstractMultiBaseType {
     }
 
     /**
-     * @param int|string $value
+     * @param int|string $rawvalue
      * @return int|string
      * @throws ValidationException
      */
-    public function validate($value) {
-        $value = parent::validate($value);
-        $value = str_replace(',', '.', $value); // we accept both
+    public function validate($rawvalue) {
+        $rawvalue = parent::validate($rawvalue);
+        $rawvalue = str_replace(',', '.', $rawvalue); // we accept both
 
-        if((string) $value != (string) floatval($value)) {
+        if((string) $rawvalue != (string) floatval($rawvalue)) {
             throw new ValidationException('Decimal needed');
         }
 
-        if($this->config['min'] !== '' && floatval($value) <= floatval($this->config['min'])) {
+        if($this->config['min'] !== '' && floatval($rawvalue) <= floatval($this->config['min'])) {
             throw new ValidationException('Decimal min', floatval($this->config['min']));
         }
 
-        if($this->config['max'] !== '' && floatval($value) >= floatval($this->config['max'])) {
+        if($this->config['max'] !== '' && floatval($rawvalue) >= floatval($this->config['max'])) {
             throw new ValidationException('Decimal max', floatval($this->config['max']));
         }
 
-        return $value;
+        return $rawvalue;
     }
 
     /**

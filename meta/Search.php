@@ -3,6 +3,7 @@
 namespace dokuwiki\plugin\struct\meta;
 
 use dokuwiki\plugin\struct\types\DateTime;
+use dokuwiki\plugin\struct\types\Decimal;
 use dokuwiki\plugin\struct\types\Page;
 
 class Search {
@@ -66,7 +67,21 @@ class Search {
      * @param string $alias
      */
     public function addSchema($table, $alias = '') {
-        $this->schemas[$table] = new Schema($table);
+        $schema = new Schema($table);
+        if(!$schema->getId()) {
+            throw new StructException('schema missing', $table);
+        }
+
+        if($this->schemas &&
+            (
+                $schema->isLookup() ||
+                reset($this->schemas)->isLookup()
+            )
+        ) {
+            throw new StructException('nolookupmix');
+        }
+
+        $this->schemas[$table] = $schema;
         if($alias) $this->aliases[$alias] = $table;
     }
 
@@ -266,26 +281,35 @@ class Search {
         $this->result_pids = array();
         $result = array();
         $cursor = -1;
+        $pageidAndRevOnly = array_reduce($this->columns, function ($pageidAndRevOnly, Column $col) {
+            return $pageidAndRevOnly && ($col->getTid() == 0);
+        }, true);
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
-            if($this->isRowEmpty($row)) {
-                continue;
-            }
             $cursor++;
             if($cursor < $this->range_begin) continue;
             if($this->range_end && $cursor >= $this->range_end) continue;
 
-            $this->result_pids[] = $row['PID'];
-
             $C = 0;
             $resrow = array();
+            $isempty = true;
             foreach($this->columns as $col) {
                 $val = $row["C$C"];
                 if($col->isMulti()) {
                     $val = explode(self::CONCAT_SEPARATOR, $val);
                 }
-                $resrow[] = new Value($col, $val);
+                $value = new Value($col, $val);
+                $isempty &= $this->isEmptyValue($value);
+                $resrow[] = $value;
                 $C++;
             }
+
+            // skip empty rows
+            if($isempty && !$pageidAndRevOnly) {
+                $cursor--;
+                continue;
+            }
+
+            $this->result_pids[] = $row['PID'];
             $result[] = $resrow;
         }
 
@@ -313,16 +337,19 @@ class Search {
                 $QB->addLeftJoin($first_table, $datatable, $datatable, "$first_table.pid = $datatable.pid");
             } else {
                 // first table
-                $QB->addTable('schema_assignments');
+
+                if(!$schema->isLookup()) {
+                    $QB->addTable('schema_assignments');
+                    $QB->filters()->whereAnd("$datatable.pid = schema_assignments.pid");
+                    $QB->filters()->whereAnd("schema_assignments.tbl = '{$schema->getTable()}'");
+                    $QB->filters()->whereAnd("schema_assignments.assigned = 1");
+                    $QB->filters()->whereAnd("GETACCESSLEVEL($datatable.pid) > 0");
+                    $QB->filters()->whereAnd("PAGEEXISTS($datatable.pid) = 1");
+                }
+
                 $QB->addTable($datatable);
                 $QB->addSelectColumn($datatable, 'pid', 'PID');
                 $QB->addGroupByColumn($datatable, 'pid');
-
-                $QB->filters()->whereAnd("$datatable.pid = schema_assignments.pid");
-                $QB->filters()->whereAnd("schema_assignments.tbl = '{$schema->getTable()}'");
-                $QB->filters()->whereAnd("schema_assignments.assigned = 1");
-                $QB->filters()->whereAnd("GETACCESSLEVEL($datatable.pid) > 0");
-                $QB->filters()->whereAnd("PAGEEXISTS($datatable.pid) = 1");
 
                 $first_table = $datatable;
             }
@@ -391,7 +418,7 @@ class Search {
         foreach($this->sortby as $sort) {
             list($col, $asc) = $sort;
             /** @var $col Column */
-            $col->getType()->sort($QB, 'data_'.$col->getTable(), $col->getColName(false), $asc ? 'ASC' : 'DESC');
+            $col->getType()->sort($QB, 'data_' . $col->getTable(), $col->getColName(false), $asc ? 'ASC' : 'DESC');
         }
 
         return $QB->getSQL();
@@ -465,17 +492,23 @@ class Search {
      */
     public function findColumn($colname) {
         if(!$this->schemas) throw new StructException('noschemas');
-
-        // handling of page and title column is special - we add a "fake" column
         $schema_list = array_keys($this->schemas);
-        if($colname == '%pageid%') {
-            return new PageColumn(0, new Page(), $schema_list[0]);
-        }
-        if($colname == '%title%') {
-            return new PageColumn(0, new Page(array('usetitles' => true)), $schema_list[0]);
-        }
-        if($colname == '%lastupdate%') {
-            return new RevisionColumn(0, new DateTime(), $schema_list[0]);
+
+        // add "fake" column for special col
+        if(!(reset($this->schemas)->isLookup())) {
+            if($colname == '%pageid%') {
+                return new PageColumn(0, new Page(), $schema_list[0]);
+            }
+            if($colname == '%title%') {
+                return new PageColumn(0, new Page(array('usetitles' => true)), $schema_list[0]);
+            }
+            if($colname == '%lastupdate%') {
+                return new RevisionColumn(0, new DateTime(), $schema_list[0]);
+            }
+        } else {
+            if($colname == '%rowid%') {
+                return new RowColumn(0, new Decimal(), $schema_list[0]);
+            }
         }
 
         list($colname, $table) = $this->resolveColumn($colname);
@@ -501,24 +534,16 @@ class Search {
     }
 
     /**
-     * Check if a row is empty / only contains a reference to itself
+     * Check if the given row is empty or references our own row
      *
-     * @param array $rowColumns an array as returned from the database
+     * @param Value $value
      * @return bool
      */
-    private function isRowEmpty($rowColumns) {
-        $C = 0;
-        foreach($this->columns as $col) {
-            $val = $rowColumns["C$C"];
-            $C += 1;
-            if(blank($val) || is_a($col->getType(), 'dokuwiki\plugin\struct\types\Page') && $val == $rowColumns["PID"]) {
-                continue;
-            }
-            return false;
-        }
-        return true;
+    protected function isEmptyValue(Value $value) {
+        if ($value->isEmpty()) return true;
+        if ($value->getColumn()->getTid() == 0) return true;
+        return false;
     }
-
 }
 
 

@@ -11,7 +11,7 @@ use dokuwiki\plugin\struct\meta;
  * @group plugins
  *
  */
-class SchemaDataReplacement_struct_test extends StructTest {
+class AccessTableDataReplacement_struct_test extends StructTest {
 
     /** @var array alway enable the needed plugins */
     protected $pluginsEnabled = array('struct', 'sqlite');

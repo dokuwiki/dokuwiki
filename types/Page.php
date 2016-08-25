@@ -47,11 +47,11 @@ class Page extends AbstractMultiBaseType {
     /**
      * Cleans the link
      *
-     * @param string $value
+     * @param string $rawvalue
      * @return string
      */
-    public function validate($value) {
-        return cleanID($value);
+    public function validate($rawvalue) {
+        return cleanID($rawvalue);
     }
 
     /**
@@ -163,6 +163,19 @@ class Page extends AbstractMultiBaseType {
     public function rawValue($value) {
         if($this->config['usetitles']) {
             list($value) = json_decode($value);
+        }
+        return $value;
+    }
+
+    /**
+     * Return the title only
+     *
+     * @param string $value
+     * @return string
+     */
+    public function displayValue($value) {
+        if($this->config['usetitles']) {
+            list(, $value) = json_decode($value);
         }
         return $value;
     }

@@ -16,20 +16,20 @@ class Media extends AbstractBaseType {
     /**
      * Checks against the allowed mime types
      *
-     * @param string $value
+     * @param string $rawvalue
      * @return int|string
      */
-    public function validate($value) {
-        $value = parent::validate($value);
+    public function validate($rawvalue) {
+        $rawvalue = parent::validate($rawvalue);
 
-        if(!trim($this->config['mime'])) return $value;
+        if(!trim($this->config['mime'])) return $rawvalue;
         $allows = explode(',', $this->config['mime']);
         $allows = array_map('trim', $allows);
         $allows = array_filter($allows);
 
-        list(, $mime,) = mimetype($value, false);
+        list(, $mime,) = mimetype($rawvalue, false);
         foreach($allows as $allow) {
-            if(strpos($mime, $allow) === 0) return $value;
+            if(strpos($mime, $allow) === 0) return $rawvalue;
         }
 
         throw new ValidationException('Media mime type', $mime, $this->config['mime']);
@@ -93,20 +93,19 @@ class Media extends AbstractBaseType {
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
-     * @param string $value the current value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue the current value
      *
      * @return string html
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $name = hsc($name);
-        $value = hsc($value);
+        $rawvalue = hsc($rawvalue);
         static $count = 0;
         $count++;
 
         $id = 'struct__' . md5($name.$count);
 
-        $html = "<input id=\"$id\" class=\"struct_media\"  name=\"$name\" value=\"$value\" />";
+        $html = "<input id=\"$id\" class=\"struct_media\"  name=\"$name\" value=\"$rawvalue\" />";
         $html .= "<button type=\"button\" class=\"struct_media\">";
         $html .= "<img src=\"" . DOKU_BASE . "lib/images/toolbar/image.png\" height=\"16\" width=\"16\">";
         $html .= "</button>";

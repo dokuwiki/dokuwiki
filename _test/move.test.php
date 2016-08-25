@@ -37,7 +37,7 @@ class move_struct_test extends StructTest {
         );
 
         // add initial data
-        $schemaData = new meta\SchemaData('schema1', 'somepage', time());
+        $schemaData = meta\AccessTable::byTableName('schema1', 'somepage', time());
         $schemaData->saveData($data);
         $this->assertEquals($data, $schemaData->getDataArray());
 
@@ -48,11 +48,11 @@ class move_struct_test extends StructTest {
         $this->assertTrue($evhandler->handle_move($event, null));
 
         // old page should be gone
-        $schemaData = new meta\SchemaData('schema1', 'somepage', 0);
+        $schemaData = meta\AccessTable::byTableName('schema1', 'somepage', 0);
         $this->assertEquals($empty, $schemaData->getDataArray());
 
         // new page should have data
-        $schemaData = new meta\SchemaData('schema1', 'newpage', 0);
+        $schemaData = meta\AccessTable::byTableName('schema1', 'newpage', 0);
         $this->assertEquals($data, $schemaData->getDataArray());
     }
 }

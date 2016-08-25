@@ -16,20 +16,20 @@ class User extends AbstractMultiBaseType {
     );
 
     /**
-     * @param string $value the user to validate
+     * @param string $rawvalue the user to validate
      * @return int|string|void
      */
-    public function validate($value) {
-        $value = parent::validate($value);
+    public function validate($rawvalue) {
+        $rawvalue = parent::validate($rawvalue);
 
         if($this->config['existingonly']) {
             /** @var \DokuWiki_Auth_Plugin $auth */
             global $auth;
-            $info = $auth->getUserData($value, false);
-            if($info === false) throw new ValidationException('User not found', $value);
+            $info = $auth->getUserData($rawvalue, false);
+            if($info === false) throw new ValidationException('User not found', $rawvalue);
         }
 
-        return $value;
+        return $rawvalue;
     }
 
     /**

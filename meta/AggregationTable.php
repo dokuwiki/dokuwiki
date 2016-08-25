@@ -52,6 +52,11 @@ class AggregationTable {
     protected $sums;
 
     /**
+     * @var bool skip full table when no results found
+     */
+    protected $simplenone = true;
+
+    /**
      * @todo we might be able to get rid of this helper and move this to SearchConfig
      * @var \helper_plugin_struct_config
      */
@@ -87,7 +92,7 @@ class AggregationTable {
     public function render() {
 
         // abort early if there are no results at all (not filtered)
-        if(!$this->resultCount && !$this->isDynamicallyFiltered()) {
+        if(!$this->resultCount && !$this->isDynamicallyFiltered() && $this->simplenone) {
             $this->startScope();
             $this->renderer->cdata($this->helper->getLang('none'));
             $this->finishScope();
@@ -324,39 +329,49 @@ class AggregationTable {
     protected function renderResult() {
         $this->renderer->tabletbody_open();
         foreach($this->result as $rownum => $row) {
-            $this->renderer->tablerow_open();
-
-            // add data attribute for inline edit
-            if($this->mode == 'xhtml') {
-                $pid = $this->resultPIDs[$rownum];
-                $this->renderer->doc = substr(rtrim($this->renderer->doc), 0, -1); // remove closing '>'
-                $this->renderer->doc .= ' data-pid="' . hsc($pid) . '">';
-            }
-
-            // row number column
-            if($this->data['rownumbers']) {
-                $this->renderer->tablecell_open();
-                $this->renderer->doc .= $rownum + 1;
-                $this->renderer->tablecell_close();
-            }
-
-            /** @var Value $value */
-            foreach($row as $colnum => $value) {
-                $this->renderer->tablecell_open();
-                $value->render($this->renderer, $this->mode);
-                $this->renderer->tablecell_close();
-
-                // summarize
-                if($this->data['summarize'] && is_numeric($value->getValue())) {
-                    if(!isset($this->sums[$colnum])) {
-                        $this->sums[$colnum] = 0;
-                    }
-                    $this->sums[$colnum] += $value->getValue();
-                }
-            }
-            $this->renderer->tablerow_close();
+            $this->renderResultRow($rownum, $row);
         }
         $this->renderer->tabletbody_close();
+    }
+
+    /**
+     * Render a single result row
+     *
+     * @param int $rownum
+     * @param array $row
+     */
+    protected function renderResultRow($rownum, $row) {
+        $this->renderer->tablerow_open();
+
+        // add data attribute for inline edit
+        if($this->mode == 'xhtml') {
+            $pid = $this->resultPIDs[$rownum];
+            $this->renderer->doc = substr(rtrim($this->renderer->doc), 0, -1); // remove closing '>'
+            $this->renderer->doc .= ' data-pid="' . hsc($pid) . '">';
+        }
+
+        // row number column
+        if($this->data['rownumbers']) {
+            $this->renderer->tablecell_open();
+            $this->renderer->doc .= $rownum + 1;
+            $this->renderer->tablecell_close();
+        }
+
+        /** @var Value $value */
+        foreach($row as $colnum => $value) {
+            $this->renderer->tablecell_open();
+            $value->render($this->renderer, $this->mode);
+            $this->renderer->tablecell_close();
+
+            // summarize
+            if($this->data['summarize'] && is_numeric($value->getValue())) {
+                if(!isset($this->sums[$colnum])) {
+                    $this->sums[$colnum] = 0;
+                }
+                $this->sums[$colnum] += $value->getValue();
+            }
+        }
+        $this->renderer->tablerow_close();
     }
 
     /**
@@ -364,7 +379,7 @@ class AggregationTable {
      */
     protected function renderEmptyResult() {
         $this->renderer->tablerow_open();
-        $this->renderer->tablecell_open(count($this->data['cols']) + $this->data['rownumbers'], 'center');
+        $this->renderer->tablecell_open(count($this->columns) + $this->data['rownumbers'], 'center');
         $this->renderer->cdata($this->helper->getLang('none'));
         $this->renderer->tablecell_close();
         $this->renderer->tablerow_close();

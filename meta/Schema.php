@@ -30,6 +30,9 @@ class Schema {
     /** @var string name of the associated table */
     protected $table = '';
 
+    /** @var bool is this a lookup schema? */
+    protected $islookup = false;
+
     /**
      * @var string the current checksum of this schema
      */
@@ -52,8 +55,9 @@ class Schema {
      *
      * @param string $table The table this schema is for
      * @param int $ts The timestamp for when this schema was valid, 0 for current
+     * @param bool $islookup only used when creating a new schema, makes the new schema a lookup
      */
-    public function __construct($table, $ts = 0) {
+    public function __construct($table, $ts = 0, $islookup = false) {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $info = $helper->getInfo();
@@ -89,6 +93,10 @@ class Schema {
             $this->id = $result['id'];
             $this->user = $result['user'];
             $this->chksum = $result['chksum'];
+            $this->islookup = $result['islookup'];
+            $this->ts = $result['ts'];
+        } else {
+            $this->islookup = $islookup;
         }
         $this->sqlite->res_close($res);
         if(!$this->id) return;
@@ -134,6 +142,13 @@ class Schema {
     }
 
     /**
+     * @return string identifer for debugging purposes
+     */
+    function __toString() {
+        return __CLASS__.' '.$this->table.' ('.$this->id.') '.($this->islookup ? 'LOOKUP' : 'DATA');
+    }
+
+    /**
      * Cleans any unwanted stuff from table names
      *
      * @param string $table
@@ -150,15 +165,24 @@ class Schema {
     /**
      * Gets a list of all available schemas
      *
-     * @return string[]
+     * @param string $filter either 'page' or 'lookup'
+     * @return \string[]
      */
-    static public function getAll() {
+    static public function getAll($filter = '') {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $db = $helper->getDB();
         if(!$db) return array();
 
-        $res = $db->query("SELECT DISTINCT tbl FROM schemas ORDER BY tbl");
+        if($filter == 'page') {
+            $where = 'islookup = 0';
+        } elseif($filter == 'lookup') {
+            $where = 'islookup = 1';
+        } else {
+            $where = '1 = 1';
+        }
+
+        $res = $db->query("SELECT DISTINCT tbl FROM schemas WHERE $where ORDER BY tbl");
         $tables = $db->res2arr($res);
         $db->res_close($res);
 
@@ -180,8 +204,8 @@ class Schema {
         $this->sqlite->query('BEGIN TRANSACTION');
 
         $sql = "DROP TABLE ?";
-        $this->sqlite->query($sql, 'data_'.$this->table);
-        $this->sqlite->query($sql, 'multi_'.$this->table);
+        $this->sqlite->query($sql, 'data_' . $this->table);
+        $this->sqlite->query($sql, 'multi_' . $this->table);
 
         $sql = "DELETE FROM schema_assignments WHERE tbl = ?";
         $this->sqlite->query($sql, $this->table);
@@ -229,6 +253,20 @@ class Schema {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @return int returns the timestamp this Schema was created at
+     */
+    public function getTimeStamp() {
+        return $this->ts;
+    }
+
+    /**
+     * @return bool is this a lookup schema?
+     */
+    public function isLookup() {
+        return $this->islookup;
     }
 
     /**

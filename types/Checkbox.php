@@ -23,18 +23,17 @@ class Checkbox extends AbstractBaseType {
      * A single checkbox, additional values are ignored
      *
      * @param string $name
-     * @param string $value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue
      * @return string
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $class = 'struct_' . strtolower($this->getClass());
 
         $name = hsc($name);
         $options = $this->getOptions();
         $opt = array_shift($options);
 
-        if($value == $opt) {
+        if($rawvalue == $opt) {
             $checked = 'checked="checked"';
         } else {
             $checked = '';
@@ -48,16 +47,16 @@ class Checkbox extends AbstractBaseType {
      * Multiple checkboxes
      *
      * @param string $name
-     * @param \string[] $values
+     * @param \string[] $rawvalues
      * @return string
      */
-    public function multiValueEditor($name, $values) {
+    public function multiValueEditor($name, $rawvalues) {
         $class = 'struct_' . strtolower($this->getClass());
 
         $name = hsc($name);
         $html = '';
         foreach($this->getOptions() as $opt) {
-            if(in_array($opt, $values)) {
+            if(in_array($opt, $rawvalues)) {
                 $checked = 'checked="checked"';
             } else {
                 $checked = '';

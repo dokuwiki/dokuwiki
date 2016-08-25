@@ -57,7 +57,7 @@ class SchemaBuilder {
     public function __construct($table, $data) {
         $this->table = $table;
         $this->data = $data;
-        $this->oldschema = new Schema($table);
+        $this->oldschema = new Schema($table, 0, $data['islookup']);
 
         $this->helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $this->helper->getDB();
@@ -78,7 +78,11 @@ class SchemaBuilder {
         $ok = true;
         // create the data table if new schema
         if(!$this->oldschema->getId()) {
-            $ok = $this->newDataTable();
+            if($this->oldschema->isLookup()) {
+                $ok = $this->newLookupTable();
+            } else {
+                $ok = $this->newDataTable();
+            }
         }
 
         // create a new schema
@@ -137,14 +141,13 @@ class SchemaBuilder {
 
     /**
      * Creates a new schema
-     *
-     * @todo use checksum or other heuristic to see if we really need a new schema OTOH we probably need one nearly always!?
      */
     protected function newSchema() {
         if(!$this->time) $this->time = time();
 
-        $sql = "INSERT INTO schemas (tbl, ts, user) VALUES (?, ?, ?)";
-        $this->sqlite->query($sql, $this->table, $this->time, $this->user);
+        /** @noinspection SqlResolve */
+        $sql = "INSERT INTO schemas (tbl, ts, islookup, user) VALUES (?, ?, ?, ?)";
+        $this->sqlite->query($sql, $this->table, $this->time, (int) $this->oldschema->isLookup(), $this->user);
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
         $this->newschemaid = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);
@@ -179,6 +182,9 @@ class SchemaBuilder {
                     if(!$res) return false;
                     $newTid = $this->sqlite->res2single($res);
                     $this->sqlite->res_close($res);
+                    if ($oldEntry['ismulti'] == false && $newEntry['ismulti'] == '1') {
+                        $this->migrateSingleToMulti($this->oldschema->getTable(), $column->getColref());
+                    }
                 }
             } else {
                 $enabled = false; // no longer there for some reason
@@ -196,6 +202,36 @@ class SchemaBuilder {
             if(!$ok) return false;
         }
         return true;
+    }
+
+    /**
+     * Write the latest value from an entry in a data_ table to the corresponding multi_table
+     *
+     * @param string $table
+     * @param int    $colref
+     */
+    protected function migrateSingleToMulti($table, $colref) {
+        /** @noinspection SqlResolve */
+        $sqlSelect = "SELECT pid, rev, col$colref AS value FROM data_$table WHERE latest = 1";
+        $res = $this->sqlite->query($sqlSelect);
+        $valueSet = $this->sqlite->res2arr($res);
+        $this->sqlite->res_close($res);
+        $valueString = array();
+        $arguments = array();
+        foreach ($valueSet as $values) {
+            if (blank($values['value']) || trim($values['value']) == '') {
+                continue;
+            }
+            $valueString[] = "(?, ?, ?, ?, ?)";
+            $arguments = array_merge($arguments, array($colref, $values['pid'], $values['rev'], 1, $values['value']));
+        }
+        if (empty($valueString)) {
+            return;
+        }
+        $valueString = join(',', $valueString);
+        /** @noinspection SqlResolve */
+        $sqlInsert = "INSERT OR REPLACE INTO multi_$table (colref, pid, rev, row, value) VALUES $valueString";
+        $this->sqlite->query($sqlInsert, $arguments);
     }
 
     /**
@@ -280,6 +316,39 @@ class SchemaBuilder {
                     row INTEGER NOT NULL,
                     value,
                     PRIMARY KEY(colref, pid, rev, row)
+                );";
+        $ok = $ok && (bool) $this->sqlite->query($sql);
+
+        return $ok;
+    }
+
+    /**
+     * Creates a new lookup table with no columns
+     *
+     * This is basically the same as @see newDataTable() but sets
+     * different primary keys and types
+     *
+     * @return bool
+     */
+    protected function newLookupTable() {
+        $ok = true;
+
+        $tbl = 'data_' . $this->table;
+        $sql = "CREATE TABLE $tbl (
+                    pid INTEGER PRIMARY KEY,
+                    rev INTEGER NOT NULL DEFAULT 0,
+                    latest BOOLEAN NOT NULL DEFAULT 1
+                )";
+        $ok = $ok && (bool) $this->sqlite->query($sql);
+
+        $tbl = 'multi_' . $this->table;
+        $sql = "CREATE TABLE $tbl (
+                    colref INTEGER NOT NULL,
+                    pid INTEGER NOT NULL,
+                    rev INTEGER NOT NULL DEFAULT 0,
+                    row INTEGER NOT NULL,
+                    value,
+                    PRIMARY KEY(colref, pid, row)
                 );";
         $ok = $ok && (bool) $this->sqlite->query($sql);
 

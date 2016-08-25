@@ -34,19 +34,18 @@ class Date extends AbstractBaseType {
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
-     * @param string $value the current value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue the current value
      * @return string html
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $name = hsc($name);
-        $value = hsc($value);
+        $rawvalue = hsc($rawvalue);
 
-        if($this->config['prefilltoday'] && !$value) {
-            $value = date('Y-m-d');
+        if($this->config['prefilltoday'] && !$rawvalue) {
+            $rawvalue = date('Y-m-d');
         }
 
-        $html = "<input class=\"struct_date\" name=\"$name\" value=\"$value\" />";
+        $html = "<input class=\"struct_date\" name=\"$name\" value=\"$rawvalue\" />";
         return "$html";
     }
 
@@ -56,15 +55,15 @@ class Date extends AbstractBaseType {
      * This function needs to throw a validation exception when validation fails.
      * The exception message will be prefixed by the appropriate field on output
      *
-     * @param string|int $value
+     * @param string|int $rawvalue
      * @return int|string
      * @throws ValidationException
      */
-    public function validate($value) {
-        $value = parent::validate($value);
-        list($value) = explode(' ', $value, 2); // strip off time if there is any
+    public function validate($rawvalue) {
+        $rawvalue = parent::validate($rawvalue);
+        list($rawvalue) = explode(' ', $rawvalue, 2); // strip off time if there is any
 
-        list($year, $month, $day) = explode('-', $value, 3);
+        list($year, $month, $day) = explode('-', $rawvalue, 3);
         if(!checkdate((int) $month, (int) $day, (int) $year)) {
             throw new ValidationException('invalid date format');
         }

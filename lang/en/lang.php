@@ -11,12 +11,16 @@ $lang['menu_assignments'] = 'Struct Schema Assignments';
 
 $lang['headline'] = 'Structured Data';
 
-$lang['edithl'] = 'Editing Schema <i>%s</i>';
+$lang['page schema'] = 'Page Schema:';
+$lang['lookup schema'] = 'Lookup Schema:';
+$lang['edithl page'] = 'Editing Page Schema <i>%s</i>';
+$lang['edithl lookup'] = 'Editing Lookup Schema <i>%s</i>';
 $lang['create'] = 'Create new Schema';
 $lang['schemaname'] = 'Schema Name:';
 $lang['save'] = 'Save';
 $lang['createhint'] = 'Please note: schemas can not be renamed later';
 $lang['pagelabel'] = 'Page';
+$lang['rowlabel'] = 'Row #';
 $lang['revisionlabel'] = 'Last Updated';
 $lang['summary'] = 'Struct data changed';
 $lang['export'] = 'Export Schema as JSON';
@@ -67,6 +71,9 @@ $lang['Validation Exception invalid datetime format'] = 'must be of format YYYY-
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
+$lang['Exception nolookupmix'] = 'You can not aggregate more than one Lookup or mix it with Page data';
+$lang['Exception nolookupassign'] = 'You can not assign Lookup schemas to pages';
+$lang['Exception No data saved'] = 'No data saved';
 
 $lang['sort']      = 'Sort by this column';
 $lang['next']      = 'Next page';
@@ -78,5 +85,9 @@ $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 
 $lang['Exception schema missing'] = "Schema %s does not exist!";
+
+
+$lang['lookup new entry'] = 'Create new Entry';
+$lang['js']['lookup_delete'] = 'Delete Entry';
 
 //Setup VIM: ex: et ts=4 :

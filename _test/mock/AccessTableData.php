@@ -2,11 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test\mock;
 
-class SchemaData extends \dokuwiki\plugin\struct\meta\SchemaData {
-
-    public function setCorrectTimestamp($page, $ts = null) {
-        parent::setCorrectTimestamp($page, $ts);
-    }
+class AccessTableData extends \dokuwiki\plugin\struct\meta\AccessTableData {
 
     public function getDataFromDB() {
         return parent::getDataFromDB();

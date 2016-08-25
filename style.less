@@ -1,7 +1,7 @@
 /**
  * The input entry form
  */
-#dw__editform .struct {
+.dokuwiki .struct_entry_form {
     margin-bottom: 1em;
 
     fieldset {
@@ -125,6 +125,21 @@
     }
 }
 
+
+form.struct_newschema {
+    label {
+        display: block;
+        text-align: left;
+
+        span {
+            display: inline-block;
+            width: 45%;
+            text-align: right;
+            padding-right: 1em;
+        }
+    }
+}
+
 /**
  * The Schema Editor
  */
@@ -208,7 +223,7 @@
 /**
  * Aggregation
  */
-.structaggregation {
+.dokuwiki .structaggregation {
     table th {
         a {
             color: @ini_link;
@@ -245,8 +260,23 @@
     }
 
 }
+/**
+ * Lookup Aggregation Editor
+ */
+.dokuwiki .structlookup {
+    table.inline {
+        min-width: 100%;
 
-.struct_inlineditor {
+        th.action {
+            width: 30px; //16px icon + margins
+        }
+    }
+}
+
+/**
+ * Inline Editor Overlay
+ */
+.dokuwiki .struct_inlineditor {
     position: absolute;
     top: 0;
     left: 0;
@@ -263,11 +293,19 @@
         margin-top: 5px;
     }
 
+}
+
+/**
+ * Errors on AJAX
+ */
+.dokuwiki .structlookup form,
+.dokuwiki .struct_inlineditor {
     .err {
         font-size: 90%;
         margin-top: 5px;
         padding: 5px;
         background-color: @ini_highlight;
         color: @ini_text;
+        text-align: left;
     }
 }

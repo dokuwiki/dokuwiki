@@ -32,15 +32,14 @@ class DateTime extends Date {
      * Return the editor to edit a single value
      *
      * @param string $name the form name where this has to be stored
-     * @param string $value the current value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue the current value
      * @return string html
      */
-    public function valueEditor($name, $value, $isRaw = false) {
-        if($this->config['prefilltoday'] && !$value) {
-            $value = date('Y-m-d H:i:s');
+    public function valueEditor($name, $rawvalue) {
+        if($this->config['prefilltoday'] && !$rawvalue) {
+            $rawvalue = date('Y-m-d H:i:s');
         }
-        return parent::valueEditor($name, $value);
+        return parent::valueEditor($name, $rawvalue);
     }
 
     /**
@@ -49,13 +48,13 @@ class DateTime extends Date {
      * This function needs to throw a validation exception when validation fails.
      * The exception message will be prefixed by the appropriate field on output
      *
-     * @param string|array $value
+     * @param string|array $rawvalue
      * @return string
      * @throws ValidationException
      */
-    public function validate($value) {
-        $value = trim($value);
-        list($date, $time) = explode(' ', $value, 2);
+    public function validate($rawvalue) {
+        $rawvalue = trim($rawvalue);
+        list($date, $time) = explode(' ', $rawvalue, 2);
         $date = trim($date);
         $time = trim($time);
 
@@ -85,7 +84,7 @@ class DateTime extends Date {
         // when accessing the revision column we need to convert from Unix timestamp
         $col = "$tablealias.$colname";
         if($colname == 'rev') {
-            $col = "DATETIME($col, 'unixepoch')";
+            $col = "DATETIME($col, 'unixepoch', 'localtime')";
         }
 
         $QB->addSelectStatement($col, $alias);
@@ -103,7 +102,7 @@ class DateTime extends Date {
         // when accessing the revision column we need to convert from Unix timestamp
         $col = "$tablealias.$colname";
         if($colname == 'rev') {
-            $col = "DATETIME($col, 'unixepoch')";
+            $col = "DATETIME($col, 'unixepoch', 'localtime')";
         }
 
         /** @var QueryBuilderWhere $add Where additionional queries are added to*/

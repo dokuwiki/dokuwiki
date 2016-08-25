@@ -18,29 +18,28 @@ class Wiki extends AbstractBaseType {
     /**
      * Clean line endings
      *
-     * @param int|string $value
+     * @param int|string $rawvalue
      * @return int|string
      */
-    public function validate($value) {
-        $value = parent::validate($value);
-        $value = cleanText($value);
-        return $value;
+    public function validate($rawvalue) {
+        $rawvalue = parent::validate($rawvalue);
+        $rawvalue = cleanText($rawvalue);
+        return $rawvalue;
     }
 
     /**
      * Use a text area for input
      *
      * @param string $name
-     * @param string $value
-     * @param bool $isRaw ignored
+     * @param string $rawvalue
      * @return string
      */
-    public function valueEditor($name, $value, $isRaw = false) {
+    public function valueEditor($name, $rawvalue) {
         $class = 'struct_'.strtolower($this->getClass());
         $name = hsc($name);
-        $value = formText($value);
+        $rawvalue = formText($rawvalue);
 
-        $html = "<textarea name=\"$name\" class=\"$class\">$value</textarea>";
+        $html = "<textarea name=\"$name\" class=\"$class\">$rawvalue</textarea>";
         return "$html";
     }
 

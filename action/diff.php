@@ -7,8 +7,9 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
-use dokuwiki\plugin\struct\meta\SchemaData;
+use dokuwiki\plugin\struct\meta\AccessTableData;
 
 if(!defined('DOKU_INC')) die();
 
@@ -48,8 +49,7 @@ class action_plugin_struct_diff extends DokuWiki_Action_Plugin {
 
         $event->result .= "\n---- struct data ----\n";
         foreach($tables as $table) {
-            $schemadata = new SchemaData($table, $id, $rev);
-            $schemadata->optionRawValue(true);
+            $schemadata = AccessTable::byTableName($table, $id, $rev);
             $event->result .= $schemadata->getDataPseudoSyntax();
         }
         $event->result .= "----\n";

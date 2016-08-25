@@ -5,14 +5,12 @@ namespace dokuwiki\plugin\struct\test;
 use dokuwiki\plugin\struct\meta;
 
 /**
- * Tests for the building of SQL-Queries for the struct plugin
- *
  * @group plugin_struct
  * @group plugins
  *
  * @covers action_plugin_struct_entry
- *
- *
+ * @covers action_plugin_struct_revert
+ * @covers action_plugin_struct_edit
  */
 class entry_struct_test extends StructTest {
 
@@ -95,7 +93,7 @@ class entry_struct_test extends StructTest {
 
         $request = new \TestRequest();
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
-        $structElement = $response->queryHTML('.struct');
+        $structElement = $response->queryHTML('.struct_entry_form');
 
         $this->assertEquals(1, count($structElement));
         $this->assertEquals($structElement->html(), '');
@@ -109,7 +107,7 @@ class entry_struct_test extends StructTest {
 
         $request = new \TestRequest();
         $response = $request->get(array('id' => $page, 'do' => 'edit'), '/doku.php');
-        $test_html = trim($response->queryHTML('.struct')->html());
+        $test_html = trim($response->queryHTML('.struct_entry_form')->html());
 
         $pq = \phpQuery::newDocument($test_html);
         $this->assertEquals('Schema2', $pq->find('legend')->text());
@@ -138,7 +136,7 @@ class entry_struct_test extends StructTest {
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
         $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), 'afourth');
         $actual_errormsg = $response->queryHTML('.error')->html();
-        $test_html = trim($response->queryHTML('.struct')->html());
+        $test_html = trim($response->queryHTML('.struct_entry_form')->html());
 
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
 
@@ -168,7 +166,7 @@ class entry_struct_test extends StructTest {
         $request->setPost('struct_schema_data', $structData);
         $response = $request->post(array('id' => $page, 'do' => 'preview'), '/doku.php');
         $actual_errormsg = $response->queryHTML('.error')->get();
-        $test_html = trim($response->queryHTML('.struct')->html());
+        $test_html = trim($response->queryHTML('.struct_entry_form')->html());
 
         $this->assertEquals($actual_errormsg, array(), "If all data is valid, then there should be no error message.");
 
@@ -233,7 +231,7 @@ class entry_struct_test extends StructTest {
         $actual_errormsg = $response->queryHTML('.error')->html();
         $expected_errormsg = sprintf($this->getLang('validation_prefix') . $this->getLang('Validation Exception Decimal needed'), 'afourth');
 
-        $test_html = trim($response->queryHTML('.struct')->html());
+        $test_html = trim($response->queryHTML('.struct_entry_form')->html());
 
         $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
@@ -276,7 +274,7 @@ class entry_struct_test extends StructTest {
         $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
-        $schemaData = new meta\SchemaData($schema, $page, 0);
+        $schemaData = meta\AccessTable::byTableName($schema, $page, 0);
         $actual_struct_data = $schemaData->getDataArray();
         $expected_struct_data = array(
             'afirst' => 'foo',
@@ -338,7 +336,7 @@ class entry_struct_test extends StructTest {
         $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
-        $schemaData = new meta\SchemaData($schema, $page, 0);
+        $schemaData = meta\AccessTable::byTableName($schema, $page, 0);
         $actual_struct_data = $schemaData->getDataArray();
         $expected_struct_data = array(
             'afirst' => 'foo2',
@@ -400,7 +398,7 @@ class entry_struct_test extends StructTest {
         $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
-        $schemaData = new meta\SchemaData($schema, $page, 0);
+        $schemaData = meta\AccessTable::byTableName($schema, $page, 0);
         $actual_struct_data = $schemaData->getDataArray();
         $expected_struct_data = array(
             'afirst' => '',
@@ -481,7 +479,7 @@ class entry_struct_test extends StructTest {
         $pagelog = new \PageChangelog($page);
         $revisions = $pagelog->getRevisions(-1, 200);
         $revinfo = $pagelog->getRevisionInfo($revisions[0]);
-        $schemaData = new meta\SchemaData($schema, $page, 0);
+        $schemaData = meta\AccessTable::byTableName($schema, $page, 0);
         $actual_struct_data = $schemaData->getDataArray();
         $expected_struct_data = array(
             'afirst' => 'foo',

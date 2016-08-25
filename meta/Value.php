@@ -17,6 +17,15 @@ class Value {
     /** @var  array|int|string */
     protected $value;
 
+    /** @var  array|int|string */
+    protected $rawvalue = null;
+
+    /** @var array|int|string */
+    protected $display = null;
+
+    /** @var bool is this a raw value only? */
+    protected $rawonly = false;
+
     /**
      * Value constructor.
      *
@@ -39,7 +48,31 @@ class Value {
      * @return array|int|string
      */
     public function getValue() {
+        if($this->rawonly) {
+            throw new StructException('Accessing value of rawonly value forbidden');
+        }
         return $this->value;
+    }
+
+    /**
+     * Access the raw value
+     *
+     * @return array|string (array on multi)
+     */
+    public function getRawValue() {
+        return $this->rawvalue;
+    }
+
+    /**
+     * Access the display value
+     *
+     * @return array|string (array on multi)
+     */
+    public function getDisplayValue() {
+        if($this->rawonly) {
+            throw new StructException('Accessing displayvalue of rawonly value forbidden');
+        }
+        return $this->display;
     }
 
     /**
@@ -48,26 +81,54 @@ class Value {
      * Cleans the value(s) of empties
      *
      * @param array|int|string $value
+     * @param bool $israw is the passed value a raw value? turns Value into rawonly
      */
-    public function setValue($value) {
-        if($this->column->isMulti() && !is_array($value)) {
-                $value = array($value);
+    public function setValue($value, $israw=false) {
+        $this->rawonly = $israw;
+
+        // treat all givens the same
+        if(!is_array($value)) {
+            $value = array($value);
         }
 
-        if(is_array($value)) {
-            // remove all blanks
-            $value = array_map('trim', $value);
-            $value = array_filter($value, array($this, 'filter'));
-            $value = array_values($value); // reset keys
+        // reset/init
+        $this->value = array();
+        $this->rawvalue = array();
+        $this->display = array();
 
-            if(!$this->column->isMulti()) {
-                $value = (string) array_shift($value);
+        // remove all blanks
+        foreach($value as $val) {
+            $val = trim($val);
+            if($israw) {
+                $raw = $val;
+            } else {
+                $raw = $this->column->getType()->rawValue($val);
             }
-        } else {
-            $value = trim($value);
+            if('' === (string) $raw) continue;
+            $this->value[] = $val;
+            $this->rawvalue[] = $raw;
+            if($israw) {
+                $this->display[] = $val;
+            } else {
+                $this->display[] = $this->column->getType()->displayValue($val);
+            }
         }
 
-        $this->value = $value;
+        // make single value again
+        if(!$this->column->isMulti()) {
+            $this->value = (string) array_shift($this->value);
+            $this->rawvalue = (string) array_shift($this->rawvalue);
+            $this->display = (string) array_shift($this->display);
+        }
+    }
+
+    /**
+     * Is this empty?
+     *
+     * @return bool
+     */
+    public function isEmpty() {
+        return ($this->rawvalue === '' || $this->rawvalue === array());
     }
 
     /**
@@ -102,9 +163,9 @@ class Value {
      */
     public function getValueEditor($name) {
         if($this->column->isMulti()) {
-            return $this->column->getType()->multiValueEditor($name, $this->value);
+            return $this->column->getType()->multiValueEditor($name, $this->rawvalue);
         } else {
-            return $this->column->getType()->valueEditor($name, $this->value);
+            return $this->column->getType()->valueEditor($name, $this->rawvalue);
         }
     }
 
@@ -115,6 +176,6 @@ class Value {
      * @return bool
      */
     public function filter($input) {
-        return  '' !== ((string) $input);
+        return '' !== ((string) $input);
     }
 }

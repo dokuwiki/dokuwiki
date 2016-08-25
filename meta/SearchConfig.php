@@ -141,8 +141,7 @@ class SearchConfig extends Search {
 
             // get the data from the current page
             if($table && $label) {
-                $schemaData = new SchemaData($table, $ID, 0);
-                $schemaData->optionRawValue(true);
+                $schemaData = AccessTable::byTableName($table, $ID, 0);
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
 
