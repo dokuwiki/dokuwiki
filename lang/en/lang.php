@@ -73,6 +73,7 @@ $lang['Exception noschemas'] = 'There have been no schemas given to load columns
 $lang['Exception nocolname'] = 'No column name given';
 $lang['Exception nolookupmix'] = 'You can not aggregate more than one Lookup or mix it with Page data';
 $lang['Exception nolookupassign'] = 'You can not assign Lookup schemas to pages';
+$lang['Exception No data saved'] = 'No data saved';
 
 $lang['sort']      = 'Sort by this column';
 $lang['next']      = 'Next page';

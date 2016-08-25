@@ -108,7 +108,9 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         if(!$validator->validate()) {
             throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
         }
-        $validator->saveData();
+        if(!$validator->saveData()) {
+            throw new StructException('No data saved');
+        }
 
         // create a new row based on the original aggregation config for the new pid
         $pid = $access->getPid();

@@ -45,11 +45,18 @@ class AccessTableLookup extends AccessTable {
      *
      * @param array $data typelabel => value for single fields or typelabel => array(value, value, ...) for multi fields
      * @return bool success of saving the data to the database
-     * @todo this duplicates quite a bit code from SchemaData - could we avoid that?
+     * @todo this duplicates quite a bit code from AccessTableData - could we avoid that?
      */
     public function saveData($data) {
         $stable = 'data_' . $this->schema->getTable();
         $mtable = 'multi_' . $this->schema->getTable();
+
+        // we do not store completely empty rows
+        $isempty = array_reduce($data, function ($isempty, $cell) {
+            return $isempty && ($cell === '' || $cell === array() || $cell === null);
+        }, true);
+        if($isempty) return false;
+
 
         $singlecols = array();
         $opt = array();
