@@ -129,17 +129,36 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
      * test get correct revision on deleted media
      *
      */
-    function test_deletedmedia() {
-        $image = 'wiki:kind_zu_katze.png';
+    function test_deletedimage() {
+        global $conf;
+        global $AUTH_ACL;
+
+        //we need to have a user with AUTH_DELETE rights
+        //save settings
+        $oldSuperUser = $conf['superuser'];
+        $oldUseacl = $conf['useacl'];
+        $oldRemoteUser = $_SERVER['REMOTE_USER'];
+
+        $conf['superuser'] = 'admin';
+        $conf['useacl']    = 1;
+        $_SERVER['REMOTE_USER'] = 'admin';
+
+        $image = 'wiki:imageat.png';
+
+        $ret = copy(mediaFn('wiki:kind_zu_katze.png'),mediaFn($image));
+
         $revexpected = @filemtime(mediaFn($image));
         $rev = $revexpected + 10;
 
-        media_delete('wiki:kind_zu_katze.png', 0);
+        $ret = media_delete($image, 0);
 
         $medialog = new MediaChangelog($image);
         $current = $medialog->getLastRevisionAt($rev);
         $this->assertEquals($revexpected, $current);
-    	
-        media_restore($image, $revexpected, AUTH_UPLOAD);
+        
+        //restore settings
+        $_SERVER['REMOTE_USER'] = $oldRemoteUser;
+        $conf['superuser'] = $oldSuperUser;
+        $conf['useacl'] = $oldUseacl;
     }
 }
