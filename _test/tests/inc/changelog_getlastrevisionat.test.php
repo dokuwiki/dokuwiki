@@ -124,4 +124,22 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         $current = $pagelog->getLastRevisionAt($rev);
         $this->assertEquals($currentexpected, $current);
     }
+    
+    /**
+     * test get correct revision on deleted media
+     *
+     */
+    function test_deletedmedia() {
+        $image = 'wiki:kind_zu_katze.png';
+        $revexpected = @filemtime(mediaFn($image));
+        $rev = $revexpected + 10;
+
+        media_delete('wiki:kind_zu_katze.png', 0);
+
+        $medialog = new MediaChangelog($image);
+        $current = $medialog->getLastRevisionAt($rev);
+        $this->assertEquals($revexpected, $current);
+    	
+        media_restore($image, $revexpected, AUTH_UPLOAD);
+    }
 }
