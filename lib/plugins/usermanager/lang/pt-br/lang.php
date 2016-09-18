@@ -23,6 +23,7 @@
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  * @author Guilherme Cardoso <guicardoso@gmail.com>
  * @author Viliam Dias <viliamjr@gmail.com>
+ * @author João de Deus Souza <joaon1@hotmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
@@ -57,7 +58,7 @@ $lang['delete_fail']           = 'Erro na exclusão de %d usuários.';
 $lang['update_ok']             = 'Usuário atualizado com sucesso';
 $lang['update_fail']           = 'Não foi possível atualizar o usuário';
 $lang['update_exists']         = 'Não foi possível mudar o nome do usuário. O nome especificado (%s) já existe (as outras mudanças serão aplicadas).';
-$lang['start']                 = 'primeira';
+$lang['start']                 = 'Inicio';
 $lang['prev']                  = 'anterior';
 $lang['next']                  = 'próxima';
 $lang['last']                  = 'última';

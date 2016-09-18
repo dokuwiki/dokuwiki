@@ -6,6 +6,7 @@
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Hudson FAS <hudsonfas@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
+ * @author João de Deus Souza <joaon1@hotmail.com>
  */
 $lang['menu']                  = 'Gerenciador de extensões';
 $lang['tab_plugins']           = 'Extensões instaladas';
@@ -83,8 +84,8 @@ $lang['url_change']            = '<strong>URL mudou:</strong> A URL para baixar 
 $lang['error_badurl']          = 'O URL deve começar com http ou https';
 $lang['error_dircreate']       = 'Impossível criar pasta temporária para receber o download';
 $lang['error_download']        = 'Impossável baixar o arquivo: %s';
-$lang['error_decompress']      = 'Impossável descompimir o arquivo baixado. Isso pode ser resultado de um download ruim que neste caso pode ser tentado novamente; ou o formato da compressão pode ser desconhecido, neste caso baixe e instale manualmente.';
-$lang['error_findfolder']      = 'Impossíl identificar a extensão do diretório, você deve baixar e instalar manualmente.';
+$lang['error_decompress']      = 'Impossível descomprimir o arquivo baixado. Isso pode ser resultado de um download ruim que neste caso pode ser tentado novamente; ou o formato da compressão pode ser desconhecido, neste caso baixe e instale manualmente.';
+$lang['error_findfolder']      = 'Impossível identificar a extensão do diretório, você deve baixar e instalar manualmente.';
 $lang['error_copy']            = 'Houve um erro de cópia de arquivo durante a tentativa de instalar os arquivos para o diretório <em>%s</em> : o disco pode estar cheio ou as permissões de acesso ao arquivo podem estar incorreta. Isso pode ter resultado em um plugin parcialmente instalado e deixar a sua instalação wiki instável';
 $lang['noperms']               = 'Diretório de extensão não é gravável';
 $lang['notplperms']            = 'Diretório de modelo (Template) não é gravável';
