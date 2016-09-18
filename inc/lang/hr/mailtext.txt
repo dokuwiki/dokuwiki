@@ -4,8 +4,8 @@ Datum             : @DATE@
 Preglednik        : @BROWSER@
 IP-Adresa         : @IPADDRESS@
 Host              : @HOSTNAME@
-Prijašnja verzija : @OLDPAGE@
-Nova verzija      : @NEWPAGE@
+Prijašnja izmjena : @OLDPAGE@
+Nova izmjena      : @NEWPAGE@
 Opis izmjene      : @SUMMARY@
 Korisnik          : @USER@
 

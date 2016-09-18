@@ -1,4 +1,4 @@
-====== Niste autorizirani ======
+====== Niste ovlašteni ======
 
-Nemate autorizaciju.
+Nemate potrebne ovlasti za nastavak.
 

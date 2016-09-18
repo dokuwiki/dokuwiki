@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['name']                  = 'Povratna informacija o popularnosti (može proteći neko vrijeme dok se učita)';

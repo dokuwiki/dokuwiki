@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['menu']                  = 'Upravitelj korisnicima';
@@ -21,7 +21,7 @@ $lang['delete']                = 'Obriši';
 $lang['delete_selected']       = 'Obriši odabrano';
 $lang['edit']                  = 'Uredi';
 $lang['edit_prompt']           = 'Uredi ovog korisnika';
-$lang['modify']                = 'Snimi promjene';
+$lang['modify']                = 'Pohrani promjene';
 $lang['search']                = 'Potraži';
 $lang['search_prompt']         = 'Izvedi potragu';
 $lang['clear']                 = 'Obriši filtar potrage';
