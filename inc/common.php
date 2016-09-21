@@ -1325,7 +1325,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         io_sweepNS($id, 'mediadir');
     } else {
         // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($svdta['file'], $text, $id);
+        io_writeWikiPage($svdta['file'], $svdta['newContent'], $id);
         // pre-save the revision, to keep the attic in sync
         $svdta['newRevision'] = saveOldRevision($id);
         $filesize_new = filesize($svdta['file']);
