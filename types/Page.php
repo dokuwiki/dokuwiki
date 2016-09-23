@@ -78,7 +78,7 @@ class Page extends AbstractMultiBaseType {
             resolve_pageid($INPUT->str('ns'), $namespace, $exists);
             $namespace = getNS($namespace);
         }
-        $postfix = $this->config['postfix'];
+        $postfix = $this->config['autocomplete']['postfix'];
         if($namespace) $lookup .= ' @' . $namespace;
 
         $data = ft_pageLookup($lookup, true, $this->config['usetitles']);
@@ -100,7 +100,7 @@ class Page extends AbstractMultiBaseType {
             }
 
             // check suffix
-            if($postfix && !substr($id, -1 * strlen($postfix)) == $postfix) {
+            if($postfix && substr($id, -1 * strlen($postfix)) != $postfix) {
                 continue; // page does not end in postfix, don't suggest it
             }
 
