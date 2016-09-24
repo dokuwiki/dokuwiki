@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Kiril <neohidra@gmail.com>
  * @author Ivan Peltekov <ivan.peltekov@abv.bg>
  */
