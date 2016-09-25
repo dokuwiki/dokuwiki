@@ -6,7 +6,7 @@
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['menu']                  = 'Konfiguracijske postavke';
-$lang['error']                 = 'Postavke nisu ažurirane zbog neispravnih vrijednosti, molim provjerite vaše promjene i ponovo ih snimite.
+$lang['error']                 = 'Postavke nisu ažurirane zbog neispravnih vrijednosti, molim provjerite vaše promjene i ponovo ih pohranite.
                   <br />Neispravne vrijednosti biti će označene crvenim rubom.';
 $lang['updated']               = 'Postavke uspješno izmijenjene.';
 $lang['nochoice']              = '(ne postoje druge mogućnosti odabira)';
@@ -91,7 +91,7 @@ $lang['relnofollow']           = 'Koristi rel="nofollow" na vanjskim poveznicama
 $lang['indexdelay']            = 'Čekanje prije indeksiranja (sek.)';
 $lang['mailguard']             = 'Prikrivanje e-mail adresa';
 $lang['iexssprotect']          = 'Provjeri učitane datoteke za potencijalno maliciozni JavaScript ili HTML kod';
-$lang['usedraft']              = 'Automatski snimi nacrte promjena tijekom uređivanja';
+$lang['usedraft']              = 'Automatski pohrani nacrte promjena tijekom uređivanja';
 $lang['htmlok']                = 'Omogući ugrađeni HTML';
 $lang['phpok']                 = 'Omogući ugrađeni PHP';
 $lang['locktime']              = 'Maksimalna trajanje zaključavanja (sek.)';
