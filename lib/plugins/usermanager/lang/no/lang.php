@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>
@@ -16,6 +16,7 @@
  * @author Rune Rasmussen syntaxerror.no@gmail.com
  * @author Jon Bøe <jonmagneboe@hotmail.com>
  * @author Egil Hansen <egil@rosetta.no>
+ * @author Arne Hanssen <arne.hanssen@getmail.no>
  */
 $lang['menu']                  = 'Behandle brukere';
 $lang['noauth']                = '(autentisering av brukere ikke tilgjengelig)';
@@ -51,10 +52,12 @@ $lang['next']                  = 'neste';
 $lang['last']                  = 'siste';
 $lang['edit_usermissing']      = 'Fant ikke valgte brukere. Det oppgitte brukernavnet kan ha blitt slettet eller endret et annet sted.';
 $lang['user_notify']           = 'Varsle bruker';
-$lang['note_notify']           = 'E-post med varsling blir bare sendt hvis brukeren blir gitt nytt passord.';
+$lang['note_notify']           = 'E-post med varsling blir bare sendt bare dersom brukeren gis et nytt passord.';
 $lang['note_group']            = 'Nye brukere vil bli lagt til standardgruppen (%s) hvis ingen gruppe oppgis.';
 $lang['note_pass']             = 'Passordet vil bli autogenerert dersom feltet er tomt og varsle bruker er valgt.';
 $lang['add_ok']                = 'Brukeren ble lagt til';
 $lang['add_fail']              = 'Brukeren kunne ikke legges til';
 $lang['notify_ok']             = 'Varsling sendt';
 $lang['notify_fail']           = 'Varsling kunne ikke sendes';
+$lang['import_notify_fail']    = 'Varsling ble ikke sendt til importerte bruker, %s med e-postadresse %s.';
+$lang['addUser_error_missing_pass'] = 'Enten skriv inn et passord, eller aktiver brukervarsling for å slå på generering av passord.';

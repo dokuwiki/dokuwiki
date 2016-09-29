@@ -23,6 +23,7 @@
  * @author Christopher Schive <chschive@frisurf.no>
  * @author Patrick <spill.p@hotmail.com>
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
+ * @author Arne Hanssen <arne.hanssen@getmail.no>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -358,6 +359,6 @@ $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
 $lang['wikimarkup']            = 'wiki-format';
 $lang['page_nonexist_rev']     = 'Finnes ingen side på %s. Den er derfor laget på <a href="%s">%s</a>';
-$lang['email_signature_text']       = 'Denne meldingen ble laget av DokuWiki
-@DOKUWIKIURL@';
 $lang['unable_to_parse_date']  = 'Ikke mulig å tolke "%s".';
+$lang['email_signature_text']  = 'Denne meldingen ble laget av DokuWiki
+@DOKUWIKIURL@';
