@@ -70,7 +70,7 @@ class SearchConfig extends Search {
         }
 
         if(!empty($config['offset'])) {
-            $this->setLimit($config['offset']);
+            $this->setOffset($config['offset']);
         }
 
         $this->config = $config;
