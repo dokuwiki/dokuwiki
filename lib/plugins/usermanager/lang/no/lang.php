@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Thomas Nygreen <nygreen@gmail.com>
  * @author Arild Burud <arildb@met.no>
  * @author Torkill Bruland <torkar-b@online.no>

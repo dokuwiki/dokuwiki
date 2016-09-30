@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Patrick <spill.p@hotmail.com>
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
