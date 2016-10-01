@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Rune M. Andersen <rune.andersen@gmail.com>
  * @author Jakob Vad Nielsen (me@jakobnielsen.net)
  * @author Kjell Tore Næsgaard <kjell.t.nasgaard@ntnu.no>
