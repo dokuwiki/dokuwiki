@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ggallon <gwenael.gallon@mac.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
