@@ -38,6 +38,7 @@
  * @author james <j.mccann@celcat.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Floriang <antispam@floriang.eu>
+ * @author Eric <ericstevenart@netc.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -369,5 +370,5 @@ $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
 $lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été créée le <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Ne peut analyser le paramètre date "%s".';
-$lang['email_signature_text'] = 'Ce courriel a été généré par DokuWiki depuis
+$lang['email_signature_text']  = 'Ce courriel a été généré par DokuWiki depuis
 @DOKUWIKIURL@';

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
