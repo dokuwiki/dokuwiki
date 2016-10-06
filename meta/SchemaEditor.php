@@ -66,6 +66,12 @@ class SchemaEditor {
         $form->addHTML($this->adminColumn('new1', new Column($this->schema->getMaxsort()+10, new Text()), 'new'));
 
         $form->addHTML('</table>');
+
+        $form->addFieldsetOpen();
+        $form->addTextInput('schema[editors]', $this->hlp->getLang('editor_editors'))->val($this->schema->getEditors());
+        $form->addFieldsetClose();
+
+
         $form->addButton('save', 'Save')->attr('type','submit');
         return $form->toHTML() . $this->initJSONEditor();
     }

@@ -50,6 +50,9 @@ class Schema {
     /** @var string struct version info */
     protected $structversion = '?';
 
+    /** @var string comma separated list of allowed editors */
+    protected $editors = '';
+
     /**
      * Schema constructor
      *
@@ -95,6 +98,7 @@ class Schema {
             $this->chksum = $result['chksum'];
             $this->islookup = $result['islookup'];
             $this->ts = $result['ts'];
+            $this->editors = $result['editors'];
         } else {
             $this->islookup = $islookup;
         }
@@ -274,6 +278,10 @@ class Schema {
      */
     public function getUser() {
         return $this->user;
+    }
+
+    public function getEditors() {
+        return $this->editors;
     }
 
     /**

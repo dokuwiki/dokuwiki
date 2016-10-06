@@ -146,8 +146,8 @@ class SchemaBuilder {
         if(!$this->time) $this->time = time();
 
         /** @noinspection SqlResolve */
-        $sql = "INSERT INTO schemas (tbl, ts, islookup, user) VALUES (?, ?, ?, ?)";
-        $this->sqlite->query($sql, $this->table, $this->time, (int) $this->oldschema->isLookup(), $this->user);
+        $sql = "INSERT INTO schemas (tbl, ts, islookup, user, editors) VALUES (?, ?, ?, ?, ?)";
+        $this->sqlite->query($sql, $this->table, $this->time, (int) $this->oldschema->isLookup(), $this->user, $this->data['editors']);
         $res = $this->sqlite->query('SELECT last_insert_rowid()');
         $this->newschemaid = $this->sqlite->res2single($res);
         $this->sqlite->res_close($res);

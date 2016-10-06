@@ -45,6 +45,7 @@ $lang['editor_multi'] = 'Multi-Input?';
 $lang['editor_conf'] = 'Configuration';
 $lang['editor_type'] = 'Type';
 $lang['editor_enabled'] = 'Enabled';
+$lang['editor_editors'] = 'Comma separated list of users and @groups who may edit this schema\'s data (empty for all):';
 
 $lang['assign_add'] = 'Add';
 $lang['assign_del'] = 'Delete';
@@ -53,7 +54,7 @@ $lang['assign_tbl'] = 'Schema';
 
 $lang['multi'] = 'Enter multiple values separated by commas.';
 $lang['multidropdown'] = 'Hold CTRL or CMD to select multiple values.';
-$lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed it to <code>%s</code>.";
+$lang['duplicate_label'] = "Label <code>%s</code> already exists in schema, second occurance was renamed to <code>%s</code>.";
 
 $lang['emptypage'] = 'Struct data has not been saved for an empty page';
 
