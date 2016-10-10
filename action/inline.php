@@ -77,6 +77,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         // silently fail when editing not possible
         if(!$this->initFromInput()) return;
         if(auth_quickaclcheck($this->pid) < AUTH_EDIT) return;
+        if(!$this->schemadata->getSchema()->isEditable()) return;
         if(checklock($this->pid)) return;
 
         // lock page
@@ -111,6 +112,9 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         self::checkCSRF();
         if(!$this->schemadata->getSchema()->isLookup()) {
             $this->checkPage();
+        }
+        if(!$this->schemadata->getSchema()->isEditable()) {
+            throw new StructException('inline save error: no permission for schema');
         }
 
         // validate

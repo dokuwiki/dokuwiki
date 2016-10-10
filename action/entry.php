@@ -137,18 +137,22 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
             $tables = $assignments->getPageAssignments($event->data['id']);
             foreach($tables as $table) {
                 $schemaData = AccessTable::byTableName($table, $event->data['id'], time());
-                $schemaData->clearData();
+                if($schemaData->getSchema()->isEditable()){
+                   $schemaData->clearData();
+                }
             }
         } else {
             // save the provided data
             if($this->tosave) foreach($this->tosave as $validation) {
-                $validation->saveData($event->data['newRevision']);
+                if($validation->getAccessTable()->getSchema()->isEditable()) {
+                    $validation->saveData($event->data['newRevision']);
 
-                // make sure this schema is assigned
-                $assignments->assignPageSchema(
-                    $event->data['id'],
-                    $validation->getAccessTable()->getSchema()->getTable()
-                );
+                    // make sure this schema is assigned
+                    $assignments->assignPageSchema(
+                        $event->data['id'],
+                        $validation->getAccessTable()->getSchema()->getTable()
+                    );
+                }
             }
         }
         return true;

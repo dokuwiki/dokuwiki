@@ -91,6 +91,9 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         action_plugin_struct_inline::checkCSRF();
 
         $schemadata = AccessTable::byTableName($tablename, $pid);
+        if(!$schemadata->getSchema()->isEditable()) {
+            throw new StructException('lookup delete error: no permission for schema');
+        }
         $schemadata->clearData();
     }
 
@@ -104,6 +107,9 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         action_plugin_struct_inline::checkCSRF();
 
         $access = AccessTable::byTableName($tablename, 0, 0);
+        if(!$access->getSchema()->isEditable()) {
+            throw new StructException('lookup save error: no permission for schema');
+        }
         $validator = $access->getValidator($data);
         if(!$validator->validate()) {
             throw new StructException("Validation failed:\n%s", join("\n", $validator->getErrors()));
@@ -135,6 +141,7 @@ class action_plugin_struct_lookup extends DokuWiki_Action_Plugin {
         $tablename = $INPUT->str('schema');
 
         $schema = new Schema($tablename);
+        if(!$schema->isEditable()) return; // no permissions, no editor
 
         echo '<div class="struct_entry_form">';
         echo '<fieldset>';

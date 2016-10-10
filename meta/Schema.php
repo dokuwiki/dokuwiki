@@ -149,7 +149,7 @@ class Schema {
      * @return string identifer for debugging purposes
      */
     function __toString() {
-        return __CLASS__.' '.$this->table.' ('.$this->id.') '.($this->islookup ? 'LOOKUP' : 'DATA');
+        return __CLASS__ . ' ' . $this->table . ' (' . $this->id . ') ' . ($this->islookup ? 'LOOKUP' : 'DATA');
     }
 
     /**
@@ -280,8 +280,24 @@ class Schema {
         return $this->user;
     }
 
+    /**
+     * @return string
+     */
     public function getEditors() {
         return $this->editors;
+    }
+
+    /**
+     * Checks if the current user may edit data in this schema
+     *
+     * @return bool
+     */
+    public function isEditable() {
+        global $USERINFO;
+        if($this->editors == '') return true;
+        if(blank($_SERVER['REMOTE_USER'])) return false;
+        if(auth_isadmin()) return true;
+        return auth_isMember($this->editors, $_SERVER['REMOTE_USER'], $USERINFO['grps']);
     }
 
     /**
