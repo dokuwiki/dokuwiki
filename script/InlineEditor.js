@@ -6,6 +6,7 @@ var InlineEditor = function ($table) {
 
     $table.on('dblclick', 'td', function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         var $self = jQuery(this);
         var pid = $self.parent().data('pid');
@@ -41,7 +42,7 @@ var InlineEditor = function ($table) {
                 $form.prepend(data);
 
                 // show
-                jQuery('.dokuwiki').append($div);
+                $self.closest('.dokuwiki').append($div);
                 $div.position({
                     my: 'left top',
                     at: 'left top',
