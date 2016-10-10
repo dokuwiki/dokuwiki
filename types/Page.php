@@ -131,7 +131,7 @@ class Page extends AbstractMultiBaseType {
         }
         $rightalias = $QB->generateTableAlias();
         $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
-        $QB->addSelectStatement("JSON($tablealias.$colname, $rightalias.title)", $alias);
+        $QB->addSelectStatement("STRUCT_JSON($tablealias.$colname, $rightalias.title)", $alias);
     }
 
     /**

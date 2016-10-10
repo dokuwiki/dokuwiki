@@ -22,13 +22,13 @@ class helper_db_struct_test extends StructTest {
         $helper = plugin_load('helper', 'struct_db');
         $sqlite = $helper->getDB();
 
-        $res = $sqlite->query("SELECT JSON('foo', 'bar') ");
+        $res = $sqlite->query("SELECT STRUCT_JSON('foo', 'bar') ");
         $result = $sqlite->res2single($res);
         $sqlite->res_close($res);
         $expect = '["foo","bar"]';
         $this->assertEquals($expect, $result);
 
-        $res = $sqlite->query("SELECT JSON(id, tbl) AS col FROM schemas");
+        $res = $sqlite->query("SELECT STRUCT_JSON(id, tbl) AS col FROM schemas");
         $result = $sqlite->res2arr($res);
         $sqlite->res_close($res);
 

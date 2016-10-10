@@ -255,7 +255,7 @@ class Dropdown extends AbstractBaseType {
         $QB->addLeftJoin($tablealias, $schema, $rightalias, "$tablealias.$colname = $rightalias.pid");
         $this->column->getType()->select($QB, $rightalias, $field, $alias);
         $sql = $QB->getSelectStatement($alias);
-        $QB->addSelectStatement("JSON($tablealias.$colname, $sql)", $alias);
+        $QB->addSelectStatement("STRUCT_JSON($tablealias.$colname, $sql)", $alias);
     }
 
     /**

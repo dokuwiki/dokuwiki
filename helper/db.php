@@ -52,7 +52,7 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
 
         // register our JSON function with variable parameters
         // todo this might be useful to be moved into the sqlite plugin
-        $this->sqlite->create_function('JSON', array($this, 'SQL_JSON'), -1);
+        $this->sqlite->create_function('STRUCT_JSON', array($this, 'STRUCT_JSON'), -1);
     }
 
     /**
@@ -87,7 +87,7 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
      * @param string ...
      * @return string
      */
-    public function SQL_JSON() {
+    public function STRUCT_JSON() {
         $args = func_get_args();
         return json_encode($args);
     }
