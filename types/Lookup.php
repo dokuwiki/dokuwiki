@@ -15,6 +15,9 @@ class Lookup extends Dropdown {
         'field' => ''
     );
 
+    /** @var  Column caches the referenced column */
+    protected $column = null;
+
     /**
      * Dropdown constructor.
      *
@@ -34,9 +37,7 @@ class Lookup extends Dropdown {
      */
     protected function getLookupColumn() {
         global $conf;
-
-        static $column = null;
-        if($column !== null) return $column;
+        if($this->column !== null) return $this->column;
 
         $schema = new Schema($this->config['schema']);
         if(!$schema->getId()) {
@@ -64,6 +65,7 @@ class Lookup extends Dropdown {
             return false;
         }
 
+        $this->column = $column;
         return $column;
     }
 
