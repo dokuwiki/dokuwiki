@@ -22,6 +22,7 @@
  * @author Patrick <spill.p@hotmail.com>
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
+ * @author Arne Hanssen <arnehans@getmail.no>
  */
 $lang['menu']                  = 'Tilbakestillingsbehandler';
 $lang['filter']                = 'Søk etter søppelmeldinger';
