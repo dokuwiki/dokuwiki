@@ -9,13 +9,12 @@
             "isenabled": true,
             "sort": 10,
             "label": "drop1",
-            "class": "Dropdown",
+            "class": "Lookup",
             "config": {
                 "visibility": {
                     "inpage": true,
                     "ineditor": true
                 },
-                "values": "",
                 "schema": "pageschema",
                 "field": "singletitle",
                 "label": {
@@ -40,13 +39,12 @@
             "isenabled": true,
             "sort": 20,
             "label": "drop2",
-            "class": "Dropdown",
+            "class": "Lookup",
             "config": {
                 "visibility": {
                     "inpage": true,
                     "ineditor": true
                 },
-                "values": "",
                 "schema": "pageschema",
                 "field": "singlepage",
                 "label": {
@@ -78,8 +76,6 @@
                     "ineditor": true
                 },
                 "values": "John, Jane, Tarzan",
-                "schema": "",
-                "field": "",
                 "label": {
                     "en": "",
                     "fr": "",
