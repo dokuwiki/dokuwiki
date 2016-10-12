@@ -18,6 +18,7 @@
  * @author Egil Hansen <egil@rosetta.no>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
  * @author Arne Hanssen <arnehans@getmail.no>
+ * @author Patrick Sletvold <patricksletvold@hotmail.com>
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.

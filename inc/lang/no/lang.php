@@ -25,6 +25,7 @@
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
  * @author Arne Hanssen <arnehans@getmail.no>
+ * @author Patrick Sletvold <patricksletvold@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
