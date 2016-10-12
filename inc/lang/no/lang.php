@@ -355,6 +355,7 @@ $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese file
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';
 $lang['media_update']          = 'Last opp ny versjon';
 $lang['media_restore']         = 'Gjenopprett denne versjonen';
+$lang['media_acl_warning']     = 'Kanskje er denne listen ikke komplett, pga. restrisjoner satt i ACL eller skjulte sider.';
 $lang['currentns']             = 'gjeldende navnemellomrom';
 $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
