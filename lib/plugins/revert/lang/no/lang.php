@@ -35,4 +35,4 @@ tidsavbrudd før prosessen er ferdig, må du tilbakestille
 færre sider om gangen.';
 $lang['revstop']               = 'Tilbakestillingen er fullført.';
 $lang['note1']                 = 'Merk: søket skiller mellom store og små bokstaver';
-$lang['note2']                 = 'Merk: siden vil bli tilbakestilt til den siste versjonen som ikke inneholder det oppgitte søppel-ordet <i>%s</i>.';
+$lang['note2']                 = 'Merk: sidene vil bli tilbakestilt til den siste versjonen som ikke inneholder søppelteksten: <i>%s</i>.';

@@ -28,7 +28,7 @@ $lang['nochoice']              = '(ingen andre mulige valg)';
 $lang['locked']                = 'Innstillingene kan ikke oppdateres. Hvis dette ikke er meningen,<br />
 forsikre deg om at fila med de lokale innstillingene har korrekt filnavn<br/>
 og tillatelser.';
-$lang['danger']                = 'Advarsel: Endrig av dette valget kan føre til at wiki og konfigurasjon menyen ikke blir tilgjengelig.';
+$lang['danger']                = 'Advarsel: Endring av dette valget kan føre til at wiki og konfigurasjonsmenyen ikke blir tilgjengelig.';
 $lang['warning']               = 'Advarsel: Endring av dette valget kan føre til utilsiktet atferd.
 
 ';
