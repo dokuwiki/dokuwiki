@@ -7,6 +7,7 @@
  * @author Thomas Juberg <Thomas.Juberg@Gmail.com>
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
  * @author Patrick Sletvold <patricksletvold@hotmail.com>
+ * @author Arne Hanssen <arnehans@getmail.no>
  */
 $lang['domain']                = 'Loggpå-domene';
 $lang['authpwdexpire']         = 'Ditt passord går ut om %d dager, du bør endre det snarest.';

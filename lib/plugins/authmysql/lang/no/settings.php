@@ -5,13 +5,14 @@
  *
  * @author Patrick <spill.p@hotmail.com>
  * @author Arne Hanssen <arne.hanssen@getmail.no>
+ * @author Arne Hanssen <arnehans@getmail.no>
  */
 $lang['server']                = 'Din MySQL-server';
 $lang['user']                  = 'Ditt MySQL-brukernavn';
 $lang['password']              = 'Passord til brukeren';
 $lang['database']              = 'Database som skal brukes';
 $lang['charset']               = 'Tegnsettet som datasen bruker';
-$lang['debug']                 = 'Vis utvidet feilinformasjon';
+$lang['debug']                 = 'Vis tilleggsinformasjon for feilsøking';
 $lang['forwardClearPass']      = 'Videresendt passord i klartekst til SQL-uttrykket under, i stedet for å bruke det krypterte passordet';
 $lang['TablesToLock']          = 'Kommaseparert liste over tabeller som må låses ved skriveopperasjoner';
 $lang['checkPass']             = 'SQL-uttrykk for å sjekke passord';
@@ -40,4 +41,4 @@ $lang['delUserGroup']          = 'SQL-uttrykk for å fjerne en bruker fra en git
 $lang['getGroupID']            = 'SQL-uttrykk for å hente primærnøkkel for en gitt gruppe ';
 $lang['debug_o_0']             = 'ingen';
 $lang['debug_o_1']             = 'bare ved feil';
-$lang['debug_o_2']             = 'alle SQL-forespørsler';
+$lang['debug_o_2']             = 'alle SQL-spørringer';
