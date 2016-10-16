@@ -22,4 +22,4 @@ $lang['autosubmit']            = 'Send data automatisk en gang i måneden';
 $lang['submissionFailed']      = 'Kunne ikke sende dataene på grunn av følgende feil:';
 $lang['submitDirectly']        = 'Du kan sende dataene manuelt ved å sende inn dette skjemaet.';
 $lang['autosubmitError']       = 'Den siste automatiske innsendingen feilet på grunn av følgende feil:';
-$lang['lastSent']              = 'Dataene er sendt.';
+$lang['lastSent']              = 'Dataene er sendt for ';
