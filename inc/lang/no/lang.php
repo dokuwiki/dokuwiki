@@ -324,7 +324,7 @@ $lang['i_license']             = 'Velg lisens som du vil legge ut innholdet unde
 $lang['i_license_none']        = 'Ikke vis noen lisensinformasjon';
 $lang['i_pop_field']           = 'Venligst hejlp oss å forbedre Dokuwiki-opplevelsen:';
 $lang['i_pop_label']           = 'Sand annonyme bruksdata til Dokuwiki-utviklerene, en gang i måneden';
-$lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';
+$lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også <a href="%s">se på nylig foretatte endringer for hele wikien</a>. ';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måneder siden';
 $lang['weeks']                 = '%d uker siden';
