@@ -22,7 +22,7 @@
  */
 $lang['menu']                  = 'Konfigurasjonsinnstillinger';
 $lang['error']                 = 'Innstillingene ble ikke oppdatert på grunn av en eller flere ugyldig verdier. Vennligst se gjennom endringene og prøv på nytt.
-<br />Ugyldige verdier er omgitt av en rød ramme.';
+<br />Ugyldige verdi(er) vil vises i rød ramme.';
 $lang['updated']               = 'Innstillingene ble oppdatert.';
 $lang['nochoice']              = '(ingen andre mulige valg)';
 $lang['locked']                = 'Innstillingene kan ikke oppdateres. Hvis dette ikke er meningen,<br />
@@ -60,9 +60,9 @@ $lang['tagline']               = 'Slagord (dersom malen støtter dette)';
 $lang['sidebar']               = 'Sidestolpens navn (dersom malen støtter dette), la stå tomt for å slå av sidestolpen';
 $lang['license']               = 'Under hvilken lisens skal ditt innhold utgis?';
 $lang['savedir']               = 'Mappe for lagring av data';
-$lang['basedir']               = 'Grunnkatalog';
-$lang['baseurl']               = 'Grunn-nettadresse';
-$lang['cookiedir']             = 'Sti for informasjonskapsler. La stå blankt for å bruke rot-adresse.';
+$lang['basedir']               = 'Sti til hovekatalog (eks. <code>/dokuwiki/</code>). La stå blank for automatisk deteksjon.';
+$lang['baseurl']               = 'Nettadresse til server (eks. <code>http://www.yourserver.com</code>).  La stå blank for automatisk deteksjon.';
+$lang['cookiedir']             = 'Sti for informasjonskapsler. La stå blankt for å bruke nettadresse til server.';
 $lang['dmode']                 = 'Rettigheter for nye mapper';
 $lang['fmode']                 = 'Rettigheter for nye filer';
 $lang['allowdebug']            = 'Tillat feilsøking <b>skru av om det ikke behøves!</b>';
