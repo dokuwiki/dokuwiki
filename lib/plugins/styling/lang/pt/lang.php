@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Alfredo Silva <alfredo.silva@sky.com>
  */
 $lang['js']['popup']           = 'Abrir como uma janela extra';

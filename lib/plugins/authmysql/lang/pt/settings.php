@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author André Neves <drakferion@gmail.com>
  * @author Guido Salatino <guidorafael23@gmail.com>
  */
