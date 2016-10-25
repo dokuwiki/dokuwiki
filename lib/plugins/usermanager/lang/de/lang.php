@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
@@ -24,6 +24,7 @@
  * @author Jonas Gröger <jonas.groeger@gmail.com>
  * @author Uwe Benzelrath <uwebenzelrath@gmail.com>
  * @author ms <msocial@posteo.de>
+ * @author Carsten Perthel <carsten@cpesoft.com>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';
@@ -84,6 +85,7 @@ $lang['import_error_readfail'] = 'Import fehlgeschlagen. Die hochgeladene Datei 
 $lang['import_error_create']   = 'User konnte nicht angelegt werden';
 $lang['import_notify_fail']    = 'Notifikation konnte nicht an den importierten Benutzer %s (E-Mail: %s) gesendet werden.';
 $lang['import_downloadfailures'] = 'Fehler als CSV-Datei zur Korrektur herunterladen';
+$lang['addUser_error_missing_pass'] = 'Bitte vergeben Sie entweder ein Passwort oder Sie aktivieren die Benutzerbenachrichtigung, um die Passwortgenerierung zu ermöglichen.';
 $lang['addUser_error_pass_not_identical'] = 'Die eingegebenen Passwörter stimmen nicht überein.';
 $lang['addUser_error_modPass_disabled'] = 'Das bearbeiten von Passwörtern ist momentan deaktiviert';
 $lang['addUser_error_name_missing'] = 'Bitte geben sie den Namen des neuen Benutzer ein.';
