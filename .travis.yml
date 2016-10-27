@@ -13,7 +13,9 @@ env:
   - DISABLE_FUNCTIONS="gzopen"
 matrix:
   allow_failures:
-    - php: "hhvm"
+    - php:
+        - "hhvm"
+        - "7.1"
 notifications:
   irc:
     channels:
