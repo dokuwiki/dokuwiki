@@ -124,6 +124,9 @@ class AggregationTable {
 
         // table close
         $this->renderer->table_close();
+
+        // export handle
+        $this->renderExportControls();
         $this->finishScope();
     }
 
@@ -133,13 +136,12 @@ class AggregationTable {
      * @see finishScope()
      */
     protected function startScope() {
-        if($this->mode != 'xhtml') return;
-
-        // wrapping div
-        $this->renderer->doc .= "<div class=\"structaggregation\">";
-
         // unique identifier for this aggregation
         $this->renderer->info['struct_table_hash'] = md5(var_export($this->data, true));
+
+        // wrapping div
+        if($this->mode != 'xhtml') return;
+        $this->renderer->doc .= "<div class=\"structaggregation\">";
     }
 
     /**
@@ -148,15 +150,14 @@ class AggregationTable {
      * @see startScope()
      */
     protected function finishScope() {
-        if($this->mode != 'xhtml') return;
-
-        // wrapping div
-        $this->renderer->doc .= '</div>';
-
         // remove identifier from renderer again
         if(isset($this->renderer->info['struct_table_hash'])) {
             unset($this->renderer->info['struct_table_hash']);
         }
+
+        // wrapping div
+        if($this->mode != 'xhtml') return;
+        $this->renderer->doc .= '</div>';
     }
 
     /**
@@ -353,7 +354,7 @@ class AggregationTable {
         // row number column
         if($this->data['rownumbers']) {
             $this->renderer->tablecell_open();
-            $this->renderer->doc .= $rownum + 1;
+            $this->renderer->cdata($rownum + 1);
             $this->renderer->tablecell_close();
         }
 
@@ -449,5 +450,18 @@ class AggregationTable {
 
         $this->renderer->tableheader_close();
         $this->renderer->tablerow_close();
+    }
+
+    /**
+     * Adds CSV export controls
+     */
+    protected function renderExportControls() {
+        if($this->mode != 'xhtml') return;
+        if(!$this->resultCount) return;
+
+        // FIXME apply dynamic filters
+        $link = exportlink($this->id, 'struct', array('hash' => $this->renderer->info['struct_table_hash']));
+
+        $this->renderer->doc .= '<a href="' . $link . '" class="export mediafile mf_csv">'.$this->helper->getLang('csvexport').'</a>';
     }
 }
