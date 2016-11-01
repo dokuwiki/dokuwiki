@@ -113,7 +113,7 @@ var EntryEditor = function($form) {
     /**
      * Toggle fieldsets in edit form and remeber in cookie
      */
-    $form.find('.struct fieldset legend').each(function () {
+    $form.find('.struct_entry_form fieldset legend').each(function () {
         var $legend = jQuery(this);
         var $fset = $legend.parent();
 
