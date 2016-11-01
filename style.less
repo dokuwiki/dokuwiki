@@ -13,7 +13,6 @@
             text-align: left;
             padding-left: 17px;
             cursor: pointer;
-            margin-left: 1em;
             background: transparent url(../../images/open.png) 5px center no-repeat;
             font-weight: bold;
         }
@@ -35,6 +34,7 @@
     label {
         display: table-row;
         text-align: left;
+        font-weight: normal;
 
         &:hover {
             background-color: @ini_background_alt;
@@ -46,6 +46,11 @@
             padding-left: 0.5em;
             padding-top: 0.25em;
             padding-bottom: 0.25em;
+
+            // fixes for bootstrap3 template
+            color: @ini_text;
+            font-size: 100%;
+            text-align: left;
         }
 
         span.label.hashint {
