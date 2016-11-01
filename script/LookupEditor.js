@@ -100,6 +100,9 @@ var LookupEditor = function ($table) {
                     $errors.text(xhr.responseText).show();
                 })
         });
+
+        // focus first input
+        $form.find('input, textarea').first().focus();
     }
 
     /**
