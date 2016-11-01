@@ -42,7 +42,7 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         $new = $event->data['dst_id'];
 
         // ALL data tables (we don't trust the assigments are still there)
-        foreach(Schema::getAll() as $tbl) {
+        foreach(Schema::getAll('page') as $tbl) {
             $sql = "UPDATE data_$tbl SET pid = ? WHERE pid = ?";
             $db->query($sql, array($new, $old));
             $sql = "UPDATE multi_$tbl SET pid = ? WHERE pid = ?";
