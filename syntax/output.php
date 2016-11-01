@@ -9,13 +9,15 @@
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
-use dokuwiki\plugin\struct\meta\AccessTableData;
 
 if(!defined('DOKU_INC')) die();
 
 class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
 
     protected $hasBeenRendered = false;
+
+    const XHTML_OPEN = '<div id="plugin__struct_output">';
+    const XHTML_CLOSE = '</div>';
 
     /**
      * @return string Syntax mode type
@@ -70,8 +72,6 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
      *
      * Currently completely renderer agnostic
      *
-     * @todo we currently have no schema headlines
-     *
      * @param string $mode Renderer mode
      * @param Doku_Renderer $R The renderer
      * @param array $data The data from the handler() function
@@ -92,13 +92,15 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         $tables = $assignments->getPageAssignments($ID);
         if(!$tables) return true;
 
-        if($mode == 'xhtml') $R->doc .= '<div id="plugin__struct_output">';
+        if($mode == 'xhtml') $R->doc .= self::XHTML_OPEN;
 
+        $hasdata = false;
         foreach($tables as $table) {
             $schemadata = AccessTable::byTableName($table, $ID, $REV);
             $schemadata->optionSkipEmpty(true);
             $data = $schemadata->getData();
             if(!count($data)) continue;
+            $hasdata = true;
 
             $R->table_open();
 
@@ -125,7 +127,12 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
             $R->table_close();
         }
 
-        if($mode == 'xhtml') $R->doc .= '</div>';
+        if($mode == 'xhtml') $R->doc .= self::XHTML_CLOSE;
+
+        // if no data has been output, remove empty wrapper again
+        if($mode == 'xhtml' && !$hasdata) {
+            $R->doc = substr($R->doc, 0, -1 * strlen(self::XHTML_OPEN . self::XHTML_CLOSE));
+        }
 
         return true;
     }
