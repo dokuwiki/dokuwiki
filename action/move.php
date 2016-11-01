@@ -55,6 +55,10 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         $assignments = new Assignments();
         $assignments->reevaluatePageAssignments($new);
 
+        // titles
+        $sql = "UPDATE titles SET pid = ? WHERE pid = ?";
+        $db->query($sql, array($new, $old));
+
         return true;
     }
 }
