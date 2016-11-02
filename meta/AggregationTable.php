@@ -392,6 +392,7 @@ class AggregationTable {
     protected function renderSums() {
         if(empty($this->data['summarize'])) return;
 
+        $this->renderer->info['struct_table_meta'] = true;
         $this->renderer->tablerow_open();
 
         if($this->data['rownumbers']) {
@@ -413,6 +414,7 @@ class AggregationTable {
             $this->renderer->tablecell_close();
         }
         $this->renderer->tablerow_close();
+        $this->renderer->info['struct_table_meta'] = false;
     }
 
     /**
@@ -420,8 +422,9 @@ class AggregationTable {
      */
     protected function renderPagingControls() {
         if(empty($this->data['limit'])) return;
-        if($this->mode != 'xhtml') ;
+        if($this->mode != 'xhtml') return;
 
+        $this->renderer->info['struct_table_meta'] = true;
         $this->renderer->tablerow_open();
         $this->renderer->tableheader_open((count($this->data['cols']) + ($this->data['rownumbers'] ? 1 : 0)));
         $offset = $this->data['offset'];
@@ -450,6 +453,7 @@ class AggregationTable {
 
         $this->renderer->tableheader_close();
         $this->renderer->tablerow_close();
+        $this->renderer->info['struct_table_meta'] = true;
     }
 
     /**
@@ -458,8 +462,6 @@ class AggregationTable {
     protected function renderExportControls() {
         if($this->mode != 'xhtml') return;
         if(!$this->resultCount) return;
-
-
 
         $dynamic = $this->searchConfig->getDynamicParameters();
         $params = $dynamic->getURLParameters();

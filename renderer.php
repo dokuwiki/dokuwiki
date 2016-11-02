@@ -7,8 +7,29 @@
  */
 class renderer_plugin_struct extends Doku_Renderer {
 
-    protected $first  = false;
-    protected $output = false;
+    protected $first = false;
+
+    /**
+     * Determine if out put is wanted right now
+     *
+     * @return bool
+     */
+    function _doOutput() {
+        global $INPUT;
+
+        if(
+            !isset($this->info['struct_table_hash']) or
+            $this->info['struct_table_hash'] != $INPUT->str('hash')
+        ) {
+            return false;
+        }
+
+        if(!empty($this->info['struct_table_meta'])) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Our own format
@@ -34,41 +55,12 @@ class renderer_plugin_struct extends Doku_Renderer {
         $this->nocache();
     }
 
-    /**
-     * Decide if this is the table we want to export
-     *
-     * @param null $maxcols ignored
-     * @param null $numrows ignored
-     * @param null $pos ignored
-     */
-    function table_open($maxcols = null, $numrows = null, $pos = null) {
-
-        global $INPUT;
-
-        if(
-            isset($this->info['struct_table_hash']) and
-            $this->info['struct_table_hash'] == $INPUT->str('hash')
-        ) {
-            $this->output = true;
-        } else {
-            $this->output = false;
-        }
-    }
-
-    /**
-     * Stop output after table for sure
-     *
-     * @param null $pos ignored
-     */
-    function table_close($pos = null) {
-        $this->output = false;
-    }
 
     /**
      * Opening a table row prevents the separator for the first following cell
      */
     function tablerow_open() {
-        if(!$this->output) return;
+        if(!$this->_doOutput()) return;
         $this->first = true;
     }
 
@@ -80,7 +72,7 @@ class renderer_plugin_struct extends Doku_Renderer {
      * @param int $rowspan ignored
      */
     function tablecell_open($colspan = 1, $align = null, $rowspan = 1) {
-        if(!$this->output) return;
+        if(!$this->_doOutput()) return;
         if(!$this->first) {
             $this->doc .= "\t";
         }
@@ -95,7 +87,7 @@ class renderer_plugin_struct extends Doku_Renderer {
      * @param int $rowspan ignored
      */
     function tableheader_open($colspan = 1, $align = null, $rowspan = 1) {
-        if(!$this->output) return;
+        if(!$this->_doOutput()) return;
         $this->tablecell_open($colspan, $align, $rowspan);
     }
 
@@ -103,7 +95,7 @@ class renderer_plugin_struct extends Doku_Renderer {
      * Add newline at the end of one line
      */
     function tablerow_close() {
-        if(!$this->output) return;
+        if(!$this->_doOutput()) return;
         $this->doc .= "\n";
     }
 
@@ -113,7 +105,7 @@ class renderer_plugin_struct extends Doku_Renderer {
      * @param string $text
      */
     function cdata($text) {
-        if(!$this->output) return;
+        if(!$this->_doOutput()) return;
         // FIXME how to handle newlines in TSV??
         $this->doc .= str_replace("\t", '    ', $text); // TSV does not allow tabs in fields
     }
