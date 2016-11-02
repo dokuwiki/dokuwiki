@@ -127,23 +127,134 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
         $this->doc .= str_replace('"', '""', $text);
     }
 
-    /**
-     * Uses cdata to output the title
-     *
-     * @param string $link
-     * @param null $title
-     */
+
+    #region overrides using cdata for output
+
     function internallink($link, $title = null) {
+        if(is_null($title) or is_array($title) or $title == '') {
+            $title = $this->_simpleTitle($link);
+        }
         $this->cdata($title);
     }
 
-    /**
-     * Uses cdata to output the email address
-     *
-     * @param string $address
-     * @param null $name
-     */
+    function externallink($link, $title = null) {
+        if(is_null($title) or is_array($title) or $title == '') {
+            $title = $link;
+        }
+        $this->cdata($title);
+    }
+
     function emaillink($address, $name = null) {
         $this->cdata($address);
     }
+
+    function plugin($name, $args, $state = '', $match = '') {
+        $this->cdata($match);
+    }
+
+    function acronym($acronym) {
+        $this->cdata($acronym);
+    }
+
+    function code($text, $lang = null, $file = null) {
+        $this->cdata($text);
+    }
+
+    function header($text, $level, $pos) {
+        $this->cdata($text);
+    }
+
+    function linebreak() {
+        $this->cdata("\r\n");
+    }
+
+    function unformatted($text) {
+        $this->cdata($text);
+    }
+
+    function php($text) {
+        $this->cdata($text);
+    }
+
+    function phpblock($text) {
+        $this->cdata($text);
+    }
+
+    function html($text) {
+        $this->cdata($text);
+    }
+
+    function htmlblock($text) {
+        $this->cdata($text);
+    }
+
+    function preformatted($text) {
+        $this->cdata($text);
+    }
+
+    function file($text, $lang = null, $file = null) {
+        $this->cdata($text);
+    }
+
+    function smiley($smiley) {
+        $this->cdata($smiley);
+    }
+
+    function entity($entity) {
+        $this->cdata($entity);
+    }
+
+    function multiplyentity($x, $y) {
+        $this->cdata($x . 'x' . $y);
+    }
+
+    function locallink($hash, $name = null) {
+        if(is_null($name) or is_array($name) or $name == '') {
+            $name = $hash;
+        }
+        $this->cdata($name);
+    }
+
+    function interwikilink($link, $title = null, $wikiName, $wikiUri) {
+        if(is_null($title) or is_array($title) or $title == '') {
+            $title = $wikiName . '>' . $link;
+        }
+        $this->cdata($title);
+    }
+
+    function filelink($link, $title = null) {
+        if(is_null($title) or is_array($title) or $title == '') {
+            $title = $link;
+        }
+        $this->cdata($title);
+    }
+
+    function windowssharelink($link, $title = null) {
+        if(is_null($title) or is_array($title) or $title == '') {
+            $title = $link;
+        }
+        $this->cdata($title);
+    }
+
+    function internalmedia($src, $title = null, $align = null, $width = null,
+                           $height = null, $cache = null, $linking = null) {
+        $this->cdata($src);
+    }
+
+    function externalmedia($src, $title = null, $align = null, $width = null,
+                           $height = null, $cache = null, $linking = null) {
+        $this->cdata($src);
+    }
+
+    function internalmedialink($src, $title = null, $align = null,
+                               $width = null, $height = null, $cache = null) {
+        $this->cdata($src);
+    }
+
+    function externalmedialink($src, $title = null, $align = null,
+                               $width = null, $height = null, $cache = null) {
+        $this->cdata($src);
+    }
+
+    #endregion
 }
