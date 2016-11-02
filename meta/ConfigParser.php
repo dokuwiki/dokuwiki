@@ -33,7 +33,8 @@ class ConfigParser {
             'widths' => array(),
             'filter' => array(),
             'schemas' => array(),
-            'sort' => array()
+            'sort' => array(),
+            'csv' => true,
         );
         // parse info
         foreach($lines as $line) {
@@ -100,6 +101,9 @@ class ConfigParser {
                     break;
                 case 'summarize':
                     $this->config['summarize'] = (bool) $val;
+                    break;
+                case 'csv':
+                    $this->config['csv'] = (bool) $val;
                     break;
                 default:
                     throw new StructException("unknown option '%s'", hsc($key));

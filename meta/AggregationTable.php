@@ -461,6 +461,7 @@ class AggregationTable {
      */
     protected function renderExportControls() {
         if($this->mode != 'xhtml') return;
+        if(empty($this->data['csv'])) return;
         if(!$this->resultCount) return;
 
         $dynamic = $this->searchConfig->getDynamicParameters();
