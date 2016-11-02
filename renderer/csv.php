@@ -5,7 +5,7 @@
  *
  * @link http://www.iana.org/assignments/media-types/text/tab-separated-values
  */
-class renderer_plugin_struct extends Doku_Renderer {
+class renderer_plugin_struct_csv extends Doku_Renderer {
 
     protected $first = false;
 
@@ -37,7 +37,7 @@ class renderer_plugin_struct extends Doku_Renderer {
      * @return string
      */
     function getFormat() {
-        return 'struct';
+        return 'struct_csv';
     }
 
     /**
