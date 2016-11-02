@@ -459,8 +459,14 @@ class AggregationTable {
         if($this->mode != 'xhtml') return;
         if(!$this->resultCount) return;
 
+
+
+        $dynamic = $this->searchConfig->getDynamicParameters();
+        $params = $dynamic->getURLParameters();
+        $params['hash'] = $this->renderer->info['struct_table_hash'];
+
         // FIXME apply dynamic filters
-        $link = exportlink($this->id, 'struct', array('hash' => $this->renderer->info['struct_table_hash']));
+        $link = exportlink($this->id, 'struct', $params);
 
         $this->renderer->doc .= '<a href="' . $link . '" class="export mediafile mf_csv">'.$this->helper->getLang('csvexport').'</a>';
     }

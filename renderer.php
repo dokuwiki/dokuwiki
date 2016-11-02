@@ -56,6 +56,15 @@ class renderer_plugin_struct extends Doku_Renderer {
     }
 
     /**
+     * Stop output after table for sure
+     *
+     * @param null $pos ignored
+     */
+    function table_close($pos = null) {
+        $this->output = false;
+    }
+
+    /**
      * Opening a table row prevents the separator for the first following cell
      */
     function tablerow_open() {
