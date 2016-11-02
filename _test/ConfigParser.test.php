@@ -77,6 +77,7 @@ class ConfigParser_struct_test extends StructTest {
                         1 => false,
                     )
                 ),
+            'csv' => true,
         );
 
         $this->assertEquals($expected_config, $actual_config);
