@@ -85,6 +85,7 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
      * Close the text wrapper
      */
     function tablecell_close() {
+        if(!$this->_doOutput()) return;
         $this->doc .= '"';
     }
 
