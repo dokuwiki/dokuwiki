@@ -51,7 +51,7 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="' . $filename . '";'
         );
-        p_set_metadata($ID, array('format' => array('struct' => $headers)));
+        p_set_metadata($ID, array('format' => array('struct_csv' => $headers)));
         // don't cache
         $this->nocache();
     }
