@@ -1,9 +1,10 @@
 <?php
 
 /**
- * TSV export of tabular data
+ * CSV export of tabular data
  *
- * @link http://www.iana.org/assignments/media-types/text/tab-separated-values
+ * @link https://tools.ietf.org/html/rfc4180
+ * @link http://csvlint.io/
  */
 class renderer_plugin_struct_csv extends Doku_Renderer {
 
@@ -45,16 +46,15 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
      */
     function document_start() {
         global $ID;
-        $filename = noNS($ID) . '.tsv';
+        $filename = noNS($ID) . '.csv';
         $headers = array(
-            'Content-Type' => 'text/tab-separated-values',
+            'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="' . $filename . '";'
         );
         p_set_metadata($ID, array('format' => array('struct' => $headers)));
         // don't cache
         $this->nocache();
     }
-
 
     /**
      * Opening a table row prevents the separator for the first following cell
@@ -65,7 +65,7 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
     }
 
     /**
-     * Output the delimiter (unless it's the first cell of this row
+     * Output the delimiter (unless it's the first cell of this row) and the text wrapper
      *
      * @param int $colspan ignored
      * @param null $align ignored
@@ -74,9 +74,18 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
     function tablecell_open($colspan = 1, $align = null, $rowspan = 1) {
         if(!$this->_doOutput()) return;
         if(!$this->first) {
-            $this->doc .= "\t";
+            $this->doc .= ",";
         }
         $this->first = false;
+
+        $this->doc .= '"';
+    }
+
+    /**
+     * Close the text wrapper
+     */
+    function tablecell_close() {
+        $this->doc .= '"';
     }
 
     /**
@@ -87,16 +96,22 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
      * @param int $rowspan ignored
      */
     function tableheader_open($colspan = 1, $align = null, $rowspan = 1) {
-        if(!$this->_doOutput()) return;
         $this->tablecell_open($colspan, $align, $rowspan);
     }
 
     /**
-     * Add newline at the end of one line
+     * Alias for tablecell_close
+     */
+    function tableheader_close() {
+        $this->tablecell_close();
+    }
+
+    /**
+     * Add CRLF newline at the end of one line
      */
     function tablerow_close() {
         if(!$this->_doOutput()) return;
-        $this->doc .= "\n";
+        $this->doc .= "\r\n";
     }
 
     /**
@@ -106,10 +121,17 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
      */
     function cdata($text) {
         if(!$this->_doOutput()) return;
-        // FIXME how to handle newlines in TSV??
-        $this->doc .= str_replace("\t", '    ', $text); // TSV does not allow tabs in fields
+        if($text === '') return;
+
+        $this->doc .= str_replace('"', '""', $text);
     }
 
+    /**
+     * Uses cdata to output the title
+     *
+     * @param string $link
+     * @param null $title
+     */
     function internallink($link, $title = null) {
         $this->cdata($title);
     }
