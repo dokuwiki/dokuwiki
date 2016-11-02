@@ -96,7 +96,7 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
         $id = $event->data['id'];
         $time = filemtime(wikiFN($id));
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $assigned = $assignments->getPageAssignments($id);
         foreach($tosave as $table => $data) {
             if(!in_array($table, $assigned)) continue;

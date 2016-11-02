@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
+use dokuwiki\plugin\struct\test\mock\Assignments;
 use dokuwiki\plugin\struct\types\Decimal;
 use dokuwiki\plugin\struct\types\Text;
 
@@ -38,6 +39,7 @@ class Validator_struct_test extends StructTest {
         /** @var \helper_plugin_struct_db $sqlite */
         $sqlite = plugin_load('helper', 'struct_db');
         $sqlite->resetDB();
+        Assignments::reset();
     }
 
     public function test_validate_nonArray() {

@@ -52,7 +52,7 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         $sql = "UPDATE schema_assignments SET pid = ? WHERE pid = ?";
         $db->query($sql, array($new, $old));
         // make sure assignments still match patterns;
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $assignments->reevaluatePageAssignments($new);
 
         // titles

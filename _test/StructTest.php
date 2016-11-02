@@ -3,7 +3,7 @@
 namespace dokuwiki\plugin\struct\test;
 
 use dokuwiki\plugin\struct\meta\AccessTable;
-use dokuwiki\plugin\struct\meta\Assignments;
+use dokuwiki\plugin\struct\test\mock\Assignments;
 use dokuwiki\plugin\struct\meta\SchemaImporter;
 
 /**
@@ -28,6 +28,7 @@ abstract class StructTest extends \DokuWikiTest {
         /** @var \helper_plugin_struct_db $db */
         $db = plugin_load('helper', 'struct_db');
         $db->resetDB();
+        Assignments::reset();
     }
 
     /**
@@ -92,7 +93,7 @@ abstract class StructTest extends \DokuWikiTest {
         saveWikiText($page, "test for $page", "saved for testing");
         $schemaData = AccessTable::byTableName($schema, $page, $rev);
         $schemaData->saveData($data);
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $assignments->assignPageSchema($page, $schema);
     }
 

@@ -36,7 +36,7 @@ class action_plugin_struct_search extends DokuWiki_Action_Plugin {
      */
     public function handle_indexing(Doku_Event $event, $param) {
         $id = $event->data['page'];
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tables = $assignments->getPageAssignments($id);
         if(!$tables) return;
 
@@ -56,7 +56,7 @@ class action_plugin_struct_search extends DokuWiki_Action_Plugin {
      */
     public function handle_snippets(Doku_Event $event, $param) {
         $id = $event->data['id'];
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tables = $assignments->getPageAssignments($id);
         if(!$tables) return;
 

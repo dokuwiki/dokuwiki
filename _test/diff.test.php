@@ -24,7 +24,7 @@ class diff_struct_test extends StructTest {
 
     public function test_diff() {
         $page = 'test_save_page_without_new_text';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'schema1';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';

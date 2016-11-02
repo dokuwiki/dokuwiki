@@ -88,7 +88,7 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
         // do not render the output twice on the same page, e.g. when another page has been included
         $this->hasBeenRendered = true;
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tables = $assignments->getPageAssignments($ID);
         if(!$tables) return true;
 

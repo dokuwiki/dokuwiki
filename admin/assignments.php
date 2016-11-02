@@ -45,7 +45,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         global $INPUT;
         global $ID;
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         if($INPUT->str('action') && $INPUT->arr('assignment') && checkSecurityToken()) {
             $assignment = $INPUT->arr('assignment');
             if(!blank($assignment['assign']) && !blank($assignment['tbl'])) {
@@ -81,7 +81,7 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
 
         echo $this->locale_xhtml('assignments_intro');
 
-        $ass = new Assignments();
+        $ass = Assignments::getInstance();
         $assignments = $ass->getAllPatterns();
 
         echo '<form action="' . wl($ID) . '" action="post">';
