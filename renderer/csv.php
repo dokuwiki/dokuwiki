@@ -136,4 +136,13 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
         $this->cdata($title);
     }
 
+    /**
+     * Uses cdata to output the email address
+     *
+     * @param string $address
+     * @param null $name
+     */
+    function emaillink($address, $name = null) {
+        $this->cdata($address);
+    }
 }
