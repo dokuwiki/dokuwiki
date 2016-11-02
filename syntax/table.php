@@ -91,6 +91,12 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
 
         try {
             $search = new SearchConfig($data);
+            if($mode == 'struct_csv') {
+                // no pagination in export
+                $search->setLimit(0);
+                $search->setOffset(0);
+            }
+
             /** @var AggregationTable $table */
             $table = new $this->tableclass($ID, $mode, $renderer, $search);
             $table->render();
