@@ -149,7 +149,11 @@ class renderer_plugin_struct_csv extends Doku_Renderer {
     }
 
     function plugin($name, $args, $state = '', $match = '') {
-        $this->cdata($match);
+        if(substr($name,0, 7) == 'struct_') {
+            parent::plugin($name, $args, $state, $match);
+        } else {
+            $this->cdata($match);
+        }
     }
 
     function acronym($acronym) {
