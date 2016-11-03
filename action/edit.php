@@ -47,7 +47,7 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
     public function handle_editform(Doku_Event $event, $param) {
         global $ID;
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tables = $assignments->getPageAssignments($ID);
 
         $html = '';

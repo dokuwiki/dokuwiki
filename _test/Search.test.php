@@ -19,7 +19,7 @@ class Search_struct_test extends StructTest {
         $this->loadSchemaJSON('schema1');
         $this->loadSchemaJSON('schema2');
 
-        $as = new mock\Assignments();
+        $as = mock\Assignments::getInstance();
         $page = 'page01';
         $as->assignPageSchema($page, 'schema1');
         $as->assignPageSchema($page, 'schema2');

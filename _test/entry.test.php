@@ -101,7 +101,7 @@ class entry_struct_test extends StructTest {
 
     public function test_edit_page_with_schema() {
         $page = 'test_edit_page_with_schema';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
 
@@ -119,7 +119,7 @@ class entry_struct_test extends StructTest {
 
     public function test_preview_page_invaliddata() {
         $page = 'test_preview_page_invaliddata';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
 
@@ -150,7 +150,7 @@ class entry_struct_test extends StructTest {
 
     public function test_preview_page_validdata() {
         $page = 'test_preview_page_validdata';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
 
@@ -180,7 +180,7 @@ class entry_struct_test extends StructTest {
 
     public function test_fail_saving_empty_page() {
         $page = 'test_fail_saving_empty_page';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
 
@@ -207,7 +207,7 @@ class entry_struct_test extends StructTest {
 
     public function test_fail_saveing_page_with_invaliddata() {
         $page = 'test_fail_saveing_page_with_invaliddata';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
 
@@ -253,7 +253,7 @@ class entry_struct_test extends StructTest {
 
     public function test_save_page() {
         $page = 'test_save_page';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
 
@@ -295,7 +295,7 @@ class entry_struct_test extends StructTest {
      */
     public function test_save_page_without_new_text() {
         $page = 'test_save_page_without_new_text';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
@@ -357,7 +357,7 @@ class entry_struct_test extends StructTest {
      */
     public function test_delete_page() {
         $page = 'test_delete_page';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
@@ -419,7 +419,7 @@ class entry_struct_test extends StructTest {
      */
     public function test_revert_page() {
         $page = 'test_revert_page';
-        $assignment = new meta\Assignments();
+        $assignment = mock\Assignments::getInstance();
         $schema = 'Schema2';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';

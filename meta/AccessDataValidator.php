@@ -43,7 +43,7 @@ class AccessDataValidator extends ValueValidator {
         $valid = true;
         $errors = array();
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tables = $assignments->getPageAssignments($pageid);
         foreach($tables as $table) {
             $access = AccessTable::byTableName($table, $pageid);

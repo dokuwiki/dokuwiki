@@ -47,7 +47,7 @@ class action_plugin_struct_revert extends DokuWiki_Action_Plugin {
         if($ACT != 'revert' || !$REV) return false;
 
         // force changes for revert if there are assignments
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tosave = $assignments->getPageAssignments($event->data['id']);
         if(count($tosave)) {
             $event->data['contentChanged'] = true; // save for data changes
@@ -69,7 +69,7 @@ class action_plugin_struct_revert extends DokuWiki_Action_Plugin {
         global $REV;
         if($ACT != 'revert' || !$REV) return false;
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
 
         //  we load the data to restore from DB:
         $tosave = $assignments->getPageAssignments($event->data['id']);

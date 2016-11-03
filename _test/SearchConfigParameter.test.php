@@ -19,7 +19,7 @@ class SearchConfigParameter_struct_test extends StructTest {
         $this->loadSchemaJSON('schema1');
         $this->loadSchemaJSON('schema2');
 
-        $as = new mock\Assignments();
+        $as = mock\Assignments::getInstance();
 
         $as->assignPageSchema('page01', 'schema1');
         $this->saveData(

@@ -131,7 +131,7 @@ class action_plugin_struct_entry extends DokuWiki_Action_Plugin {
         global $ACT;
         if($ACT == 'revert') return false; // handled in revert
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         if($event->data['changeType'] == DOKU_CHANGE_TYPE_DELETE && empty($GLOBALS['PLUGIN_MOVE_WORKING'])) {
             // clear all data on delete unless it's a move operation
             $tables = $assignments->getPageAssignments($event->data['id']);

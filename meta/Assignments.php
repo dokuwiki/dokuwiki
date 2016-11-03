@@ -7,6 +7,8 @@ namespace dokuwiki\plugin\struct\meta;
  *
  * Manages the assignment of schemas (table names) to pages and namespaces
  *
+ * This is a singleton. Assignment data is only loaded once per request.
+ *
  * @package dokuwiki\plugin\struct\meta
  */
 class Assignments {
@@ -20,10 +22,29 @@ class Assignments {
     /** @var  string[] All lookup schemas for error checking */
     protected $lookups;
 
+    /** @var Assignments */
+    protected static $instance = null;
+
+    /**
+     * Get the singleton instance of the Assignments
+     *
+     * @param bool $forcereload create a new instace to reload the assignment data
+     * @return Assignments
+     */
+    public static function getInstance($forcereload = false) {
+        if(is_null(self::$instance) or $forcereload) {
+            $class = get_called_class();
+            self::$instance = new $class();
+        }
+        return self::$instance;
+    }
+
     /**
      * Assignments constructor.
+     *
+     * Not public. Use Assignments::getInstance() instead
      */
-    public function __construct() {
+    protected function __construct() {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
@@ -32,6 +53,8 @@ class Assignments {
         $this->loadPatterns();
         $this->lookups = Schema::getAll('lookup');
     }
+
+
 
     /**
      * Load existing assignment patterns

@@ -35,7 +35,7 @@ class AccessTableDataReplacement_struct_test extends StructTest {
         $builder_bar = new meta\SchemaBuilder('bar', $schemabar);
         $builder_bar->build();
 
-        $as = new mock\Assignments();
+        $as = mock\Assignments::getInstance();
         $as->assignPageSchema('start', 'foo');
         $as->assignPageSchema('no:data', 'foo');
         $as->assignPageSchema('page1', 'bar');

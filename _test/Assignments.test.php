@@ -10,7 +10,7 @@ namespace dokuwiki\plugin\struct\test;
 class Assignments_struct_test extends StructTest {
 
     public function test_patternmatching() {
-        $ass = new mock\Assignments();
+        $ass = mock\Assignments::getInstance();
 
         $this->assertTrue($ass->matchPagePattern('some:ns:page', 'some:ns:page'));
         $this->assertTrue($ass->matchPagePattern('some:ns:*', 'some:ns:page'));
@@ -31,7 +31,7 @@ class Assignments_struct_test extends StructTest {
      * check clearing works
      */
     public function test_clear() {
-        $ass = new mock\Assignments();
+        $ass = mock\Assignments::getInstance();
         $this->assertTrue($ass->clear());
         $ass->addPattern('foo', 'foo');
         $ass->assignPageSchema('foo', 'foo');
@@ -53,7 +53,7 @@ class Assignments_struct_test extends StructTest {
      * basic usage
      */
     public function test_patternassigns() {
-        $ass = new mock\Assignments();
+        $ass = mock\Assignments::getInstance();
         $ass->clear(true);
 
         $ass->addPattern('a:single:page', 'singlepage');
@@ -102,7 +102,7 @@ class Assignments_struct_test extends StructTest {
      * Check reevaluation of patterns for a specific page works
      */
     public function test_pagereassign() {
-        $ass = new mock\Assignments();
+        $ass = mock\Assignments::getInstance();
         $ass->clear(true);
 
         // no assignment
@@ -130,7 +130,7 @@ class Assignments_struct_test extends StructTest {
      * Check the direct page assignments
      */
     public function test_pageassign() {
-        $ass = new mock\Assignments();
+        $ass = mock\Assignments::getInstance();
         $ass->clear(true);
 
         // no assignment

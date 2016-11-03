@@ -41,7 +41,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
         $page = cleanID($page);
 
         if(is_null($schema)) {
-            $assignments = new Assignments();
+            $assignments = Assignments::getInstance();
             $schemas = $assignments->getPageAssignments($page, false);
         } else {
             $schemas = array($schema);
@@ -95,7 +95,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
         $newrevision = self::createPageRevision($page, $summary);
 
         // save the provided data
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         foreach($valid as $v) {
             $v->saveData($newrevision);
             // make sure this schema is assigned
@@ -153,7 +153,7 @@ class helper_plugin_struct extends DokuWiki_Plugin {
      * @throws StructException
      */
     public function getPages($schema = null) {
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         return $assignments->getPages($schema);
     }
 

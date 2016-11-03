@@ -43,7 +43,7 @@ class action_plugin_struct_diff extends DokuWiki_Action_Plugin {
         $rev = $event->data[3];
         if($INFO['id'] != $id) return;
 
-        $assignments = new Assignments();
+        $assignments = Assignments::getInstance();
         $tables = $assignments->getPageAssignments($id);
         if(!$tables) return;
 
