@@ -1,8 +1,8 @@
 /**
  * Lookup Editor
  */
-var LookupEditor = function ($table) {
-
+var LookupEditor = function (idx, table) {
+    var $table = jQuery(table);
     var $form = null;
     var formdata;
 

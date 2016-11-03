@@ -8,7 +8,7 @@ jQuery(function () {
     SchemaEditor();
 
     /* DOKUWIKI:include script/LookupEditor.js */
-    LookupEditor(jQuery('div.structaggregation table'));
+    jQuery('div.structlookup table').each(LookupEditor);
 
     /* DOKUWIKI:include script/InlineEditor.js */
     InlineEditor(jQuery('div.structaggregation table'));
