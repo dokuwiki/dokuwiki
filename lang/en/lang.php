@@ -81,6 +81,7 @@ $lang['next']      = 'Next page';
 $lang['prev']      = 'Previous page';
 
 $lang['none']      = 'Nothing found';
+$lang['csvexport'] = 'CSV Export';
 
 $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';

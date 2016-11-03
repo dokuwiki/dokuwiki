@@ -24,6 +24,9 @@ class LookupTable extends AggregationTable {
      * @see finishScope()
      */
     protected function startScope() {
+        // unique identifier for this aggregation
+        $this->renderer->info['struct_table_hash'] = md5(var_export($this->data, true));
+
         if($this->mode != 'xhtml') return;
 
         $table = $this->columns[0]->getTable();

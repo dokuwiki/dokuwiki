@@ -124,6 +124,9 @@ class AggregationTable {
 
         // table close
         $this->renderer->table_close();
+
+        // export handle
+        $this->renderExportControls();
         $this->finishScope();
     }
 
@@ -133,13 +136,12 @@ class AggregationTable {
      * @see finishScope()
      */
     protected function startScope() {
-        if($this->mode != 'xhtml') return;
-
-        // wrapping div
-        $this->renderer->doc .= "<div class=\"structaggregation\">";
-
         // unique identifier for this aggregation
         $this->renderer->info['struct_table_hash'] = md5(var_export($this->data, true));
+
+        // wrapping div
+        if($this->mode != 'xhtml') return;
+        $this->renderer->doc .= "<div class=\"structaggregation\">";
     }
 
     /**
@@ -148,15 +150,14 @@ class AggregationTable {
      * @see startScope()
      */
     protected function finishScope() {
-        if($this->mode != 'xhtml') return;
-
-        // wrapping div
-        $this->renderer->doc .= '</div>';
-
         // remove identifier from renderer again
         if(isset($this->renderer->info['struct_table_hash'])) {
             unset($this->renderer->info['struct_table_hash']);
         }
+
+        // wrapping div
+        if($this->mode != 'xhtml') return;
+        $this->renderer->doc .= '</div>';
     }
 
     /**
@@ -353,7 +354,7 @@ class AggregationTable {
         // row number column
         if($this->data['rownumbers']) {
             $this->renderer->tablecell_open();
-            $this->renderer->doc .= $rownum + 1;
+            $this->renderer->cdata($rownum + 1);
             $this->renderer->tablecell_close();
         }
 
@@ -391,6 +392,7 @@ class AggregationTable {
     protected function renderSums() {
         if(empty($this->data['summarize'])) return;
 
+        $this->renderer->info['struct_table_meta'] = true;
         $this->renderer->tablerow_open();
 
         if($this->data['rownumbers']) {
@@ -412,6 +414,7 @@ class AggregationTable {
             $this->renderer->tablecell_close();
         }
         $this->renderer->tablerow_close();
+        $this->renderer->info['struct_table_meta'] = false;
     }
 
     /**
@@ -419,8 +422,9 @@ class AggregationTable {
      */
     protected function renderPagingControls() {
         if(empty($this->data['limit'])) return;
-        if($this->mode != 'xhtml') ;
+        if($this->mode != 'xhtml') return;
 
+        $this->renderer->info['struct_table_meta'] = true;
         $this->renderer->tablerow_open();
         $this->renderer->tableheader_open((count($this->data['cols']) + ($this->data['rownumbers'] ? 1 : 0)));
         $offset = $this->data['offset'];
@@ -449,5 +453,24 @@ class AggregationTable {
 
         $this->renderer->tableheader_close();
         $this->renderer->tablerow_close();
+        $this->renderer->info['struct_table_meta'] = true;
+    }
+
+    /**
+     * Adds CSV export controls
+     */
+    protected function renderExportControls() {
+        if($this->mode != 'xhtml') return;
+        if(empty($this->data['csv'])) return;
+        if(!$this->resultCount) return;
+
+        $dynamic = $this->searchConfig->getDynamicParameters();
+        $params = $dynamic->getURLParameters();
+        $params['hash'] = $this->renderer->info['struct_table_hash'];
+
+        // FIXME apply dynamic filters
+        $link = exportlink($this->id, 'struct_csv', $params);
+
+        $this->renderer->doc .= '<a href="' . $link . '" class="export mediafile mf_csv">'.$this->helper->getLang('csvexport').'</a>';
     }
 }
