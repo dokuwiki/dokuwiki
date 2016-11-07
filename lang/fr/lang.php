@@ -6,16 +6,21 @@
  * @author Andreas Gohr, Michael Große <dokuwiki@cosmocode.de>
  * @author Laynee <seedfloyd@gmail.com>
  * @author lerdt <pro@nicolas-hemard.eu>
+ * @author Digitalin <digikatya@yahoo.fr>
  */
 $lang['menu']                  = 'Struct - Éditeur de schémas';
 $lang['menu_assignments']      = 'Struct - Assignement de schémas';
 $lang['headline']              = 'Données structurées';
-$lang['edithl']                = 'Édition du schéma <i>%s</i>';
+$lang['page schema']           = 'Schéma de page';
+$lang['lookup schema']         = 'Schéma de consultation';
+$lang['edithl page']           = 'Éditez le schéma de page <i>%s</i>';
+$lang['edithl lookup']         = 'Éditez le schéma de consultation <i>%s</i>';
 $lang['create']                = 'Créer un nouveau schéma';
 $lang['schemaname']            = 'Nom du schéma :';
 $lang['save']                  = 'Sauvegarder';
 $lang['createhint']            = 'Remarque : les schémas ne peuvent être renommés ultérieurement.';
 $lang['pagelabel']             = 'Page';
+$lang['rowlabel']              = 'Lignes';
 $lang['revisionlabel']         = 'Dernière mise à jour';
 $lang['summary']               = 'Struct : données mises à jour';
 $lang['export']                = 'Exporter le schéma dans un fichier JSON';
@@ -27,6 +32,8 @@ $lang['del_confirm']           = 'Entrez le nom du schéma pour confirmer sa sup
 $lang['del_fail']              = 'Le nom que vous avez entré ne correspond pas à celui du schéma actuel. Il n\'a pas été supprimé.';
 $lang['del_ok']                = 'Le schéma a été supprimé.';
 $lang['btn_delete']            = 'Supprimer';
+$lang['js']['confirmAssignmentsDelete'] = 'Voulez-vous réellement supprimer l\'assignement du schéma "{0}" à la page/catégorie de page "{1}"?';
+$lang['js']['lookup_delete']   = 'Supprimer l\'entrée';
 $lang['tab_edit']              = 'Édition';
 $lang['tab_export']            = 'Import/Export';
 $lang['tab_delete']            = 'Suppression';
@@ -36,6 +43,7 @@ $lang['editor_multi']          = 'Valeurs multiples';
 $lang['editor_conf']           = 'Configuration';
 $lang['editor_type']           = 'Type';
 $lang['editor_enabled']        = 'Activer';
+$lang['editor_editors']        = 'Liste séparée par une virgule d\'utilisateurs et de @groupes qui peuvent modifier les données du schéma (vide pour tous)';
 $lang['assign_add']            = 'Ajouter';
 $lang['assign_del']            = 'Supprimer';
 $lang['assign_assign']         = 'Page / Namespace';
@@ -56,10 +64,15 @@ $lang['Validation Exception invalid date format'] = 'doit être au format AAAA-M
 $lang['Validation Exception invalid datetime format'] = 'doit être au format AAAA-MM-JJ HH:MM:SS';
 $lang['Exception noschemas']   = 'Schéma non spécifié, impossible de charger des colonnes';
 $lang['Exception nocolname']   = 'Nom de colonne non spécifié';
+$lang['Exception nolookupmix'] = 'Vous ne pouvez pas agréger plus d\'un schéma de consultation ou le mélanger avec des données de page.';
+$lang['Exception nolookupassign'] = 'Vous ne pouvez assigner un schéma de consultation à des pages';
+$lang['Exception No data saved'] = 'Aucune donnée sauvegardée';
 $lang['sort']                  = 'Trier selon cette colonne';
 $lang['next']                  = 'Page suivante';
 $lang['prev']                  = 'Page précédente';
 $lang['none']                  = 'Rien n\'a été trouvé.';
+$lang['csvexport']             = 'Export CSV';
 $lang['tablefilteredby']       = 'Filtre : %s';
 $lang['tableresetfilter']      = 'Supprimer les filtres';
 $lang['Exception schema missing'] = 'Le schéma %s n\'existe pas !';
+$lang['lookup new entry']      = 'Créer une nouvelle entrée';
