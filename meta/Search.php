@@ -81,8 +81,8 @@ class Search {
             throw new StructException('nolookupmix');
         }
 
-        $this->schemas[$table] = $schema;
-        if($alias) $this->aliases[$alias] = $table;
+        $this->schemas[$schema->getTable()] = $schema;
+        if($alias) $this->aliases[$alias] = $schema->getTable();
     }
 
     /**
