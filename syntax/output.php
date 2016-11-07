@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
+use dokuwiki\plugin\struct\meta\StructException;
 
 if(!defined('DOKU_INC')) die();
 
@@ -87,8 +88,11 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
 
         // do not render the output twice on the same page, e.g. when another page has been included
         $this->hasBeenRendered = true;
-
-        $assignments = Assignments::getInstance();
+        try {
+            $assignments = Assignments::getInstance();
+        } catch (StructException $e) {
+            return false;
+        }
         $tables = $assignments->getPageAssignments($ID);
         if(!$tables) return true;
 

@@ -66,8 +66,6 @@ class Schema {
         $info = $helper->getInfo();
         $this->structversion = $info['date'];
         $this->sqlite = $helper->getDB();
-        if(!$this->sqlite) return;
-
         $table = self::cleanTableName($table);
         $this->table = $table;
         $this->ts = $ts;
@@ -175,7 +173,7 @@ class Schema {
     static public function getAll($filter = '') {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
-        $db = $helper->getDB();
+        $db = $helper->getDB(false);
         if(!$db) return array();
 
         if($filter == 'page') {

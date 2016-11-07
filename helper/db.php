@@ -7,6 +7,8 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\StructException;
+
 if(!defined('DOKU_INC')) die();
 
 class helper_plugin_struct_db extends DokuWiki_Plugin {
@@ -30,15 +32,11 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         $this->sqlite = plugin_load('helper', 'sqlite');
         if(!$this->sqlite) {
             if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t load sqlite.');
-
-            msg('The struct plugin requires the sqlite plugin. Please install it', -1);
             return;
         }
 
         if($this->sqlite->getAdapter()->getName() != DOKU_EXT_PDO) {
             if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t load PDO sqlite.');
-
-            msg('The struct plugin requires sqlite3 you\'re still using sqlite2', -1);
             $this->sqlite = null;
             return;
         }
@@ -47,6 +45,7 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
         // initialize the database connection
         if(!$this->sqlite->init('struct', DOKU_PLUGIN . 'struct/db/')) {
             if(defined('DOKU_UNITTEST')) throw new \Exception('Couldn\'t init sqlite.');
+            $this->sqlite = null;
             return;
         }
 
@@ -56,13 +55,17 @@ class helper_plugin_struct_db extends DokuWiki_Plugin {
     }
 
     /**
+     * @param bool $throw throw an Exception when sqlite not available?
      * @return helper_plugin_sqlite|null
      */
-    public function getDB() {
+    public function getDB($throw=true) {
         global $conf;
         $len = strlen($conf['metadir']);
-        if ($conf['metadir'] != substr($this->sqlite->getAdapter()->getDbFile(),0,$len)) {
+        if ($this->sqlite && $conf['metadir'] != substr($this->sqlite->getAdapter()->getDbFile(),0,$len)) {
             $this->init();
+        }
+        if(!$this->sqlite && $throw) {
+            throw new StructException('no sqlite');
         }
         return $this->sqlite;
     }

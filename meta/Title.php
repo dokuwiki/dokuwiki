@@ -14,8 +14,6 @@ class Title {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
-        if(!$this->sqlite) return;
-
         $this->pid = $pid;
     }
 

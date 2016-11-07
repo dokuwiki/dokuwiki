@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\meta\StructException;
 
 if(!defined('DOKU_INC')) die();
 
@@ -45,7 +46,13 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
         global $INPUT;
         global $ID;
 
-        $assignments = Assignments::getInstance();
+        try {
+            $assignments = Assignments::getInstance();
+        } catch(StructException $e) {
+            msg($e->getMessage(), -1);
+            return false;
+        }
+
         if($INPUT->str('action') && $INPUT->arr('assignment') && checkSecurityToken()) {
             $assignment = $INPUT->arr('assignment');
             if(!blank($assignment['assign']) && !blank($assignment['tbl'])) {
@@ -81,7 +88,12 @@ class admin_plugin_struct_assignments extends DokuWiki_Admin_Plugin {
 
         echo $this->locale_xhtml('assignments_intro');
 
-        $ass = Assignments::getInstance();
+        try {
+            $ass = Assignments::getInstance();
+        } catch(StructException $e) {
+            msg($e->getMessage(), -1);
+            return false;
+        }
         $assignments = $ass->getAllPatterns();
 
         echo '<form action="' . wl($ID) . '" action="post">';

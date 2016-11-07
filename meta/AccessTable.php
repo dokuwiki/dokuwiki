@@ -55,9 +55,6 @@ abstract class AccessTable {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $this->sqlite = $helper->getDB();
-        if(!$this->sqlite) {
-            throw new StructException('Sqlite plugin required');
-        }
 
         if(!$schema->getId()) {
             throw new StructException('Schema does not exist. Only data of existing schemas can be accessed');

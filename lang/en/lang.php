@@ -75,6 +75,7 @@ $lang['Exception nocolname'] = 'No column name given';
 $lang['Exception nolookupmix'] = 'You can not aggregate more than one Lookup or mix it with Page data';
 $lang['Exception nolookupassign'] = 'You can not assign Lookup schemas to pages';
 $lang['Exception No data saved'] = 'No data saved';
+$lang['Exception no sqlite'] = 'The struct plugin requires the sqlite plugin. Please install and enable it.';
 
 $lang['sort']      = 'Sort by this column';
 $lang['next']      = 'Next page';

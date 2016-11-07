@@ -5,6 +5,7 @@ namespace dokuwiki\plugin\struct\types;
 use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\SearchConfigParameters;
+use dokuwiki\plugin\struct\meta\StructException;
 
 class Tag extends AbstractMultiBaseType {
 

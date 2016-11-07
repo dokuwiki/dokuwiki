@@ -7,6 +7,7 @@
  */
 
 // must be run within Dokuwiki
+use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Schema;
 
 if(!defined('DOKU_INC')) die();
@@ -26,13 +27,15 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
     /**
      * Delete all existing assignment patterns of a schema and replace them with the provided ones.
      *
-     * @param string   $schemaName
+     * @param string $schemaName
      * @param string[] $patterns
      */
     public function replaceSchemaAssignmentPatterns($schemaName, $patterns) {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
+        $this->sqlite = $helper->getDB(false);
+        if(!$this->sqlite) return;
+
         $schemaName = $this->sqlite->escape_string($schemaName);
         $sql = array();
         $sql[] = "DELETE FROM schema_assignments_patterns WHERE tbl = '$schemaName'";
@@ -43,7 +46,7 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
         }
 
         $this->sqlite->doTransaction($sql);
-        $assignments = new \dokuwiki\plugin\struct\meta\Assignments();
+        $assignments = Assignments::getInstance();
         $assignments->propagatePageAssignments($schemaName);
     }
 
@@ -56,7 +59,8 @@ class helper_plugin_struct_imexport extends DokuWiki_Plugin {
     public function getSchemaAssignmentPatterns($schemaName) {
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
-        $this->sqlite = $helper->getDB();
+        $this->sqlite = $helper->getDB(false);
+        if(!$this->sqlite) return array();
 
         $sql = 'SELECT pattern FROM schema_assignments_patterns WHERE tbl = ?';
         $res = $this->sqlite->query($sql, $schemaName);

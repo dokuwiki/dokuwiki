@@ -40,7 +40,10 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
             /** @var helper_plugin_struct_db $db */
             $db = plugin_load('helper', 'struct_db');
             // cache depends on last database save
-            $cache->depends['files'][] = $db->getDB()->getAdapter()->getDbFile();
+            $sqlite = $db->getDB(false);
+            if($sqlite) {
+                $cache->depends['files'][] = $sqlite->getAdapter()->getDbFile();
+            }
 
             // dynamic renders should never overwrite the default page cache
             // we need this in additon to handle_cache_dynamic() below because we can only

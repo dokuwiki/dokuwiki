@@ -35,9 +35,8 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
     public function handle_move(Doku_Event $event, $param) {
         /** @var helper_plugin_struct_db $hlp */
         $hlp = plugin_load('helper', 'struct_db');
-        $db = $hlp->getDB();
+        $db = $hlp->getDB(false);
         if(!$db) return false;
-
         $old = $event->data['src_id'];
         $new = $event->data['dst_id'];
 
