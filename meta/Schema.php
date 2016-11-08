@@ -114,12 +114,13 @@ class Schema {
         $rows = $this->sqlite->res2arr($res);
         $this->sqlite->res_close($res);
 
+        $typeclasses = Column::allTypes();
         foreach($rows as $row) {
             if($row['class'] == 'Integer') {
                 $row['class'] = 'Decimal';
             }
 
-            $class = 'dokuwiki\\plugin\\struct\\types\\' . $row['class'];
+            $class = $typeclasses[$row['class']];
             if(!class_exists($class)) {
                 // This usually never happens, except during development
                 msg('Unknown type "' . hsc($row['class']) . '" falling back to Text', -1);

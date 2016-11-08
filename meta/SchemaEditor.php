@@ -125,7 +125,7 @@ class SchemaEditor {
         $html .= '<textarea name="' . $base . '[config]" cols="45" rows="10" class="config">' . hsc($config) . '</textarea>';
         $html .= '</td>';
 
-        $types = Column::allTypes();
+        $types = array_keys(Column::allTypes());
         $html .= '<td class="class">';
         $html .= '<select name="' . $base . '[class]">';
         foreach($types as $type) {

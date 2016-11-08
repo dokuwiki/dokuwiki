@@ -160,21 +160,29 @@ class Column {
     }
 
     /**
-     * Returns a list of all available types
+     * Returns a list of all available types and their class names
      *
+     * @param bool $reload forces reloading the types
      * @return array
      */
-    static public function allTypes() {
-        $types = array();
+    static public function allTypes($reload=false) {
+        static $map = null;
+        if(!is_null($map) && !$reload) return $map;
+
+        // get our own types
+        $map = array();
         $files = glob(DOKU_PLUGIN . 'struct/types/*.php');
         foreach($files as $file) {
             $file = basename($file, '.php');
             if(substr($file, 0, 8) == 'Abstract') continue;
-            $types[] = $file;
+            $map[$file] = 'dokuwiki\\plugin\\struct\\types\\' .$file;
         }
-        sort($types);
 
-        return $types;
+        // let plugins add their own
+        trigger_event('PLUGIN_STRUCT_TYPECLASS_INIT', $map);
+
+        ksort($map);
+        return $map;
     }
 
 }
