@@ -137,6 +137,47 @@ class Type_Page_struct_test extends StructTest {
         $this->assertEquals(1, count($result));
     }
 
+
+    /**
+     * This provides the testdata for @see Type_Page_struct_test::test_validate
+     */
+    public static function validate_testdata() {
+        return array(
+            array(
+                'namespace:page',
+                'namespace:page',
+                'do not change clean valid page'
+            ),
+            array(
+                'namespace:page#headline',
+                'namespace:page#headline',
+                'keep fragments'
+            ),
+            array(
+                'namespace:page#headline#second',
+                'namespace:page#headline_second',
+                'keep fragments, but only the first one'
+            ),
+            array(
+                'namespace:page?do=something',
+                'namespace:page_do_something',
+                'clean query strings'
+            )
+        );
+    }
+
+    /**
+     * @param string $rawvalue
+     * @param string $validatedValue
+     * @param string $msg
+     *
+     * @dataProvider validate_testdata
+     */
+    public function test_validate($rawvalue, $validatedValue, $msg) {
+        $page = new Page();
+        $this->assertEquals($validatedValue, $page->validate($rawvalue), $msg);
+    }
+
     public function test_ajax_default() {
         global $INPUT;
 
