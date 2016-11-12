@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Serbian language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Иван Петровић petrovicivan@ubuntusrbija.org
  * @author Ivan Petrovic <petrovicivan@ubuntusrbija.org>
