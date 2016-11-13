@@ -1186,6 +1186,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      */
     function externalmedia($src, $title = null, $align = null, $width = null,
                            $height = null, $cache = null, $linking = null, $return = false) {
+        if(link_isinterwiki($src)){
+            list($shortcut, $reference) = explode('>', $src, 2);
+            $exists = null;
+            $src = $this->_resolveInterWiki($shortcut, $reference, $exists);
+        }
         list($src, $hash) = explode('#', $src, 2);
         $noLink = false;
         $render = ($linking == 'linkonly') ? false : true;
