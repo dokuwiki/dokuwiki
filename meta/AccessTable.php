@@ -184,7 +184,7 @@ abstract class AccessTable {
 
         $res = $this->sqlite->query($sql, $opt);
         $data = $this->sqlite->res2arr($res);
-
+        $this->sqlite->res_close($res);
         return $data;
     }
 
