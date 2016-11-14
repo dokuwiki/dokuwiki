@@ -108,12 +108,13 @@ class Search {
      *
      * @param string $colname may contain an alias
      * @param bool $asc sort direction (ASC = true, DESC = false)
+     * @param bool $nc set true for caseinsensitivity
      */
-    public function addSort($colname, $asc = true) {
+    public function addSort($colname, $asc = true, $nc = true) {
         $col = $this->findColumn($colname);
         if(!$col) return; //FIXME do we really want to ignore missing columns?
 
-        $this->sortby[$col->getFullQualifiedLabel()] = array($col, $asc);
+        $this->sortby[$col->getFullQualifiedLabel()] = array($col, $asc, $nc);
     }
 
     /**
@@ -416,9 +417,11 @@ class Search {
 
         // sorting - we always sort by the single val column
         foreach($this->sortby as $sort) {
-            list($col, $asc) = $sort;
+            list($col, $asc, $nc) = $sort;
             /** @var $col Column */
-            $col->getType()->sort($QB, 'data_' . $col->getTable(), $col->getColName(false), $asc ? 'ASC' : 'DESC');
+            $colname = $col->getColName(false);
+            if($nc) $colname .= ' COLLATE NOCASE';
+            $col->getType()->sort($QB, 'data_' . $col->getTable(), $colname, $asc ? 'ASC' : 'DESC');
         }
 
         return $QB->getSQL();

@@ -82,7 +82,7 @@ class Type_Lookup_struct_test extends StructTest {
             array(
                 'en' => 'cat',
                 'de' => 'Katze',
-                'fr' => 'chat'
+                'fr' => 'Chat'
             )
         );
     }
@@ -191,7 +191,7 @@ class Type_Lookup_struct_test extends StructTest {
         $expect = array(
             '' => '',
             2 => 'chien',
-            3 => 'chat',
+            3 => 'Chat',
             1 => 'chaussure',
         );
         $this->assertEquals($expect, $dropdown->getOptions());
