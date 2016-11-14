@@ -92,7 +92,8 @@ var LookupEditor = function (idx, table) {
                 $form.serialize()
             )
                 .done(function (data) {
-                    $table.find('tbody').append(data);
+                    const $tbody = $table.find('tbody').length ? $table.find('tbody') : jQuery('<tbody>').appendTo($table);
+                    $tbody.append(data);
                     addDeleteRowButtons(); // add the delete button to the new row
                     addForm(formdata); // reset the whole form
                 })
