@@ -59,14 +59,14 @@ class Dropdown extends AbstractBaseType {
 
         $name = hsc($name);
         $html = "<select name=\"{$name}[]\" class=\"$class\" multiple=\"multiple\" size=\"5\">";
-        foreach($this->getOptions() as $opt) {
+        foreach($this->getOptions() as $raw => $opt) {
             if(in_array($opt, $rawvalues)) {
                 $selected = 'selected="selected"';
             } else {
                 $selected = '';
             }
 
-            $html .= "<option $selected value=\"" . hsc($opt) . "\">" . hsc($opt) . '</option>';
+            $html .= "<option $selected value=\"" . hsc($raw) . "\">" . hsc($opt) . '</option>';
 
         }
         $html .= '</select> ';
