@@ -110,6 +110,9 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
                     $id,
                     $validator->getAccessTable()->getSchema()->getTable()
                 );
+
+                // trigger meta data rendering to set page title
+                p_get_metadata($id);
             }
         }
 
