@@ -104,6 +104,15 @@ class action_plugin_struct_bureaucracy extends DokuWiki_Action_Plugin {
             $validator = $access->getValidator($data);
             if($validator->validate()) {
                 $validator->saveData($time);
+
+                // make sure this schema is assigned
+                $assignments->assignPageSchema(
+                    $id,
+                    $validator->getAccessTable()->getSchema()->getTable()
+                );
+
+                // trigger meta data rendering to set page title
+                p_get_metadata($id);
             }
         }
 
