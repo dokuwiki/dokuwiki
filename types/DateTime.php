@@ -36,10 +36,15 @@ class DateTime extends Date {
      * @return string html
      */
     public function valueEditor($name, $rawvalue) {
+        $name = hsc($name);
+        $rawvalue = hsc($rawvalue);
+
         if($this->config['prefilltoday'] && !$rawvalue) {
             $rawvalue = date('Y-m-d H:i:s');
         }
-        return parent::valueEditor($name, $rawvalue);
+
+        $html = "<input class=\"struct_datetime\" name=\"$name\" value=\"$rawvalue\" />";
+        return "$html";
     }
 
     /**
