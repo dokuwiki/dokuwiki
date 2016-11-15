@@ -11,6 +11,7 @@ use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\types\Lookup;
+use dokuwiki\plugin\struct\types\Media;
 use dokuwiki\plugin\struct\types\Page;
 
 if(!defined('DOKU_INC')) die();
@@ -27,18 +28,18 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-        $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'AFTER', $this, 'handle_move');
+        $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'AFTER', $this, 'handle_move', true);
+        $controller->register_hook('PLUGIN_MOVE_MEDIA_RENAME', 'AFTER', $this, 'handle_move', false);
     }
 
     /**
      * Renames all occurances of a page ID in the database
      *
      * @param Doku_Event $event event object by reference
-     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
+     * @param bool $ispage is this a page move operation?
      * @return bool
      */
-    public function handle_move(Doku_Event $event, $param) {
+    public function handle_move(Doku_Event $event, $ispage) {
         /** @var helper_plugin_struct_db $hlp */
         $hlp = plugin_load('helper', 'struct_db');
         $this->db = $hlp->getDB(false);
@@ -50,27 +51,35 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         $this->db->query('BEGIN TRANSACTION');
 
         // general update of our meta tables
-        $this->updateDataTablePIDs($old, $new);
-        $this->updateAssignments($old, $new);
-        $this->updateTitles($old, $new);
+        if($ispage) {
+            $this->updateDataTablePIDs($old, $new);
+            $this->updateAssignments($old, $new);
+            $this->updateTitles($old, $new);
+        }
 
         // apply updates to all columns in all schemas depending on type
         $schemas = Schema::getAll();
         foreach($schemas as $table) {
             $schema = new Schema($table);
             foreach($schema->getColumns() as $col) {
-                switch(get_class($col->getType())) {
-                    case Page::class:
-                        $this->updateColumnPage($schema, $col, $old, $new);
-                        break;
-                    case Lookup::class:
-                        $this->updateColumnLookup($schema, $col, $old, $new);
-                        break;
+                if($ispage) {
+                    switch(get_class($col->getType())) {
+                        case Page::class:
+                            $this->updateColumnID($schema, $col, $old, $new, true);
+                            break;
+                        case Lookup::class:
+                            $this->updateColumnLookup($schema, $col, $old, $new);
+                            break;
+                    }
+                } else {
+                    switch(get_class($col->getType())) {
+                        case Media::class:
+                            $this->updateColumnID($schema, $col, $old, $new);
+                            break;
+                    }
                 }
             }
         }
-
-        // FIXME we need to update Media Type fields on media move
 
         // execute everything
         $ok = $this->db->query('COMMIT TRANSACTION');
@@ -129,14 +138,15 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * Update a Page type column
+     * Update the ID in a given column
      *
      * @param Schema $schema
      * @param Column $col
      * @param string $old old page id
      * @param string $new new page id
+     * @param bool $hashes could the ID have a hash part? (for Page type)
      */
-    protected function updateColumnPage(Schema $schema, Column $col, $old, $new) {
+    protected function updateColumnID(Schema $schema, Column $col, $old, $new, $hashes = false) {
         $colref = $col->getColref();
         $table = $schema->getTable();
 
@@ -156,7 +166,9 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
                                AND latest = 1";
         }
         $this->db->query($sql, $old, $new, $old); // exact match
-        $this->db->query($sql, $old, $new, "$old#%"); // match with hashes
+        if($hashes) {
+            $this->db->query($sql, $old, $new, "$old#%"); // match with hashes
+        }
     }
 
     /**
@@ -175,7 +187,7 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         if(!$ref->getId()) return; // this schema does not exist
         if($ref->isLookup()) return; // a lookup is referenced, nothing to do
 
-        // after the checks it's basically the same as a Page type column
-        $this->updateColumnPage($schema, $col, $old, $new);
+        $this->updateColumnID($schema, $col, $old, $new);
     }
+
 }

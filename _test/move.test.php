@@ -64,8 +64,7 @@ class move_struct_test extends StructTest {
         // fake move event
         $evdata = array('src_id' => 'page1', 'dst_id' => 'page3');
         $event = new \Doku_Event('PLUGIN_MOVE_PAGE_RENAME', $evdata);
-        $evhandler = new \action_plugin_struct_move();
-        $this->assertTrue($evhandler->handle_move($event, null));
+        $event->trigger();
 
         // old page should be gone
         $schemaData = meta\AccessTable::byTableName('moves', 'page1', 0);
@@ -90,8 +89,7 @@ class move_struct_test extends StructTest {
         // fake move event
         $evdata = array('src_id' => 'wiki:syntax', 'dst_id' => 'foobar');
         $event = new \Doku_Event('PLUGIN_MOVE_PAGE_RENAME', $evdata);
-        $evhandler = new \action_plugin_struct_move();
-        $this->assertTrue($evhandler->handle_move($event, null));
+        $event->trigger();
 
         $data = $this->data1;
         $data['page'] = 'foobar';
@@ -106,6 +104,25 @@ class move_struct_test extends StructTest {
         $data['pages'] = array('foobar#something', 'wiki:welcome#something');
         $data['title'] = 'foobar#something';
         $data['titles'] = array('foobar#something', 'wiki:welcome#something');
+        $schemaData = meta\AccessTable::byTableName('moves', 'page2', 0);
+        $this->assertEquals($data, $schemaData->getDataArray());
+    }
+
+    public function test_mediamove() {
+        // fake move event
+        $evdata = array('src_id' => 'wiki:logo.png', 'dst_id' => 'foobar.png');
+        $event = new \Doku_Event('PLUGIN_MOVE_MEDIA_RENAME', $evdata);
+        $event->trigger();
+
+        $data = $this->data1;
+        $data['media'] = 'foobar.png';
+        $data['medias'] = array('foobar.png');
+        $schemaData = meta\AccessTable::byTableName('moves', 'page1', 0);
+        $this->assertEquals($data, $schemaData->getDataArray());
+
+        $data = $this->data2;
+        $data['media'] = 'foobar.png';
+        $data['medias'] = array('foobar.png');
         $schemaData = meta\AccessTable::byTableName('moves', 'page2', 0);
         $this->assertEquals($data, $schemaData->getDataArray());
     }
