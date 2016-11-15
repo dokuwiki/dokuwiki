@@ -36,7 +36,8 @@ class action_plugin_struct_title extends DokuWiki_Action_Plugin {
      * @param $param
      */
     public function handle_meta(Doku_Event $event, $param) {
-        $id = $event->data['current']['last_change']['id'];
+        $id = $event->data['page'];
+
         try {
             $title = new Title($id);
 
