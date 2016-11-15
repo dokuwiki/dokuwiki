@@ -8,11 +8,17 @@
 
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\Assignments;
+use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\Schema;
+use dokuwiki\plugin\struct\types\Lookup;
+use dokuwiki\plugin\struct\types\Page;
 
 if(!defined('DOKU_INC')) die();
 
 class action_plugin_struct_move extends DokuWiki_Action_Plugin {
+
+    /** @var helper_plugin_sqlite */
+    protected $db = null;
 
     /**
      * Registers a callback function for a given event
@@ -35,72 +41,132 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
     public function handle_move(Doku_Event $event, $param) {
         /** @var helper_plugin_struct_db $hlp */
         $hlp = plugin_load('helper', 'struct_db');
-        $db = $hlp->getDB(false);
-        if(!$db) return false;
+        $this->db = $hlp->getDB(false);
+        if(!$this->db) return false;
         $old = $event->data['src_id'];
         $new = $event->data['dst_id'];
 
-        // ALL data tables (we don't trust the assigments are still there)
-        foreach(Schema::getAll('page') as $tbl) {
-            /** @noinspection SqlResolve */
-            $sql = "UPDATE data_$tbl SET pid = ? WHERE pid = ?";
-            $db->query($sql, array($new, $old));
+        // general update of our meta tables
+        $this->updateDataTablePIDs($old, $new);
+        $this->updateAssignments($old, $new);
+        $this->updateTitles($old, $new);
 
-            /** @noinspection SqlResolve */
-            $sql = "UPDATE multi_$tbl SET pid = ? WHERE pid = ?";
-            $db->query($sql, array($new, $old));
+        // apply updates to all columns in all schemas depending on type
+        $schemas = Schema::getAll();
+        foreach($schemas as $table) {
+            $schema = new Schema($table);
+            foreach($schema->getColumns() as $col) {
+                switch(get_class($col->getType())) {
+                    case Page::class:
+                        $this->updateColumnPage($schema, $col, $old, $new);
+                        break;
+                    case Lookup::class:
+                        $this->updateColumnLookup($schema, $col, $old, $new);
+                        break;
+                }
+            }
         }
-        // assignments
-        $sql = "UPDATE schema_assignments SET pid = ? WHERE pid = ?";
-        $db->query($sql, array($new, $old));
-        // make sure assignments still match patterns;
-        $assignments = Assignments::getInstance();
-        $assignments->reevaluatePageAssignments($new);
 
-        // titles
-        $sql = "UPDATE titles SET pid = ? WHERE pid = ?";
-        $db->query($sql, array($new, $old));
-
-        // Page Type references
-        $this->movePageLinks($db, $old, $new);
+        // FIXME we need to update Media Type fields on media move
+        // FIXME we should wrap all this in a transaction
 
         return true;
     }
 
     /**
-     * Handles current values for all Page type columns
+     * Update the pid column of ALL data tables
      *
-     * @param helper_plugin_sqlite $db
-     * @param string $old
-     * @param string $new
+     * (we don't trust the assigments are still there)
+     *
+     * @param string $old old page id
+     * @param string $new new page id
      */
-    protected function movePageLinks(helper_plugin_sqlite $db, $old, $new) {
-        $schemas = Schema::getAll();
+    protected function updateDataTablePIDs($old, $new) {
+        foreach(Schema::getAll('page') as $tbl) {
+            /** @noinspection SqlResolve */
+            $sql = "UPDATE data_$tbl SET pid = ? WHERE pid = ?";
+            $this->db->query($sql, array($new, $old));
 
-        foreach($schemas as $table) {
-            $schema = new Schema($table);
-            foreach($schema->getColumns() as $col) {
-                if(!is_a($col->getType(), dokuwiki\plugin\struct\types\Page::class)) continue;
+            /** @noinspection SqlResolve */
+            $sql = "UPDATE multi_$tbl SET pid = ? WHERE pid = ?";
+            $this->db->query($sql, array($new, $old));
+        }
+    }
 
-                $colref = $col->getColref();
-                if($col->isMulti()) {
-                    /** @noinspection SqlResolve */
-                    $sql = "UPDATE multi_$table
+    /**
+     * Update the page-schema assignments
+     *
+     * @param string $old old page id
+     * @param string $new new page id
+     */
+    protected function updateAssignments($old, $new) {
+        // assignments
+        $sql = "UPDATE schema_assignments SET pid = ? WHERE pid = ?";
+        $this->db->query($sql, array($new, $old));
+        // make sure assignments still match patterns;
+        $assignments = Assignments::getInstance();
+        $assignments->reevaluatePageAssignments($new);
+    }
+
+    /**
+     * Update the Title information for the moved page
+     *
+     * @param string $old old page id
+     * @param string $new new page id
+     */
+    protected function updateTitles($old, $new) {
+        $sql = "UPDATE titles SET pid = ? WHERE pid = ?";
+        $this->db->query($sql, array($new, $old));
+    }
+
+    /**
+     * Update a Page type column
+     *
+     * @param Schema $schema
+     * @param Column $col
+     * @param string $old old page id
+     * @param string $new new page id
+     */
+    protected function updateColumnPage(Schema $schema, Column $col, $old, $new) {
+        $colref = $col->getColref();
+        $table = $schema->getTable();
+
+        if($col->isMulti()) {
+            /** @noinspection SqlResolve */
+            $sql = "UPDATE multi_$table
                                SET value = REPLACE(value, ?, ?)
                              WHERE value LIKE ?
                                AND colref = $colref
                                AND latest = 1";
 
-                } else {
-                    /** @noinspection SqlResolve */
-                    $sql = "UPDATE data_$table
+        } else {
+            /** @noinspection SqlResolve */
+            $sql = "UPDATE data_$table
                                SET col$colref = REPLACE(col$colref, ?, ?)
                              WHERE col$colref LIKE ?
                                AND latest = 1";
-                }
-                $db->query($sql, $old, $new, $old); // exact match
-                $db->query($sql, $old, $new, "$old#%"); // match with hashes
-            }
         }
+        $this->db->query($sql, $old, $new, $old); // exact match
+        $this->db->query($sql, $old, $new, "$old#%"); // match with hashes
+    }
+
+    /**
+     * Update a Lookup type column
+     *
+     * Lookups contain a page id when the referenced schema is a data schema
+     *
+     * @param Schema $schema
+     * @param Column $col
+     * @param string $old old page id
+     * @param string $new new page id
+     */
+    protected function updateColumnLookup(Schema $schema, Column $col, $old, $new) {
+        $tconf = $col->getType()->getConfig();
+        $ref = new Schema($tconf['schema']);
+        if(!$ref->getId()) return; // this schema does not exist
+        if($ref->isLookup()) return; // a lookup is referenced, nothing to do
+
+        // after the checks it's basically the same as a Page type column
+        $this->updateColumnPage($schema, $col, $old, $new);
     }
 }
