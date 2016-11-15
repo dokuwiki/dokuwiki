@@ -42,8 +42,11 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
 
         // ALL data tables (we don't trust the assigments are still there)
         foreach(Schema::getAll('page') as $tbl) {
+            /** @noinspection SqlResolve */
             $sql = "UPDATE data_$tbl SET pid = ? WHERE pid = ?";
             $db->query($sql, array($new, $old));
+
+            /** @noinspection SqlResolve */
             $sql = "UPDATE multi_$tbl SET pid = ? WHERE pid = ?";
             $db->query($sql, array($new, $old));
         }
@@ -58,6 +61,46 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         $sql = "UPDATE titles SET pid = ? WHERE pid = ?";
         $db->query($sql, array($new, $old));
 
+        // Page Type references
+        $this->movePageLinks($db, $old, $new);
+
         return true;
+    }
+
+    /**
+     * Handles current values for all Page type columns
+     *
+     * @param helper_plugin_sqlite $db
+     * @param string $old
+     * @param string $new
+     */
+    protected function movePageLinks(helper_plugin_sqlite $db, $old, $new) {
+        $schemas = Schema::getAll();
+
+        foreach($schemas as $table) {
+            $schema = new Schema($table);
+            foreach($schema->getColumns() as $col) {
+                if(!is_a($col->getType(), dokuwiki\plugin\struct\types\Page::class)) continue;
+
+                $colref = $col->getColref();
+                if($col->isMulti()) {
+                    /** @noinspection SqlResolve */
+                    $sql = "UPDATE multi_$table
+                               SET value = REPLACE(value, ?, ?)
+                             WHERE value LIKE ?
+                               AND colref = $colref
+                               AND latest = 1";
+
+                } else {
+                    /** @noinspection SqlResolve */
+                    $sql = "UPDATE data_$table
+                               SET col$colref = REPLACE(col$colref, ?, ?)
+                             WHERE col$colref LIKE ?
+                               AND latest = 1";
+                }
+                $db->query($sql, $old, $new, $old); // exact match
+                $db->query($sql, $old, $new, "$old#%"); // match with hashes
+            }
+        }
     }
 }
