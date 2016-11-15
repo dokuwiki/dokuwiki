@@ -89,13 +89,15 @@ class AccessTableData extends AccessTable {
         }
         $singlesql = "INSERT INTO $stable ($singlecols) VALUES (" . trim(str_repeat('?,',count($opt)),',') . ")";
         /** @noinspection SqlResolve */
-        $multisql = "INSERT INTO $mtable (rev, pid, colref, row, value) VALUES (?,?,?,?,?)";
+        $multisql = "INSERT INTO $mtable (latest, rev, pid, colref, row, value) VALUES (?, ?,?,?,?,?)";
 
         $this->sqlite->query('BEGIN TRANSACTION');
 
         // remove latest status from previous data
         /** @noinspection SqlResolve */
         $ok = $this->sqlite->query( "UPDATE $stable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
+        /** @noinspection SqlResolve */
+        $ok = $this->sqlite->query( "UPDATE $mtable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
 
         // insert single values
         $ok = $ok && $this->sqlite->query($singlesql, $opt);
@@ -103,7 +105,7 @@ class AccessTableData extends AccessTable {
 
         // insert multi values
         foreach ($multiopts as $multiopt) {
-            $multiopt = array_merge(array($now, $this->pid,), $multiopt);
+            $multiopt = array_merge(array(1, $now, $this->pid,), $multiopt);
             $ok = $ok && $this->sqlite->query($multisql, $multiopt);
         }
 
