@@ -46,6 +46,9 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         $old = $event->data['src_id'];
         $new = $event->data['dst_id'];
 
+        // prepare work
+        $this->db->query('BEGIN TRANSACTION');
+
         // general update of our meta tables
         $this->updateDataTablePIDs($old, $new);
         $this->updateAssignments($old, $new);
@@ -68,7 +71,13 @@ class action_plugin_struct_move extends DokuWiki_Action_Plugin {
         }
 
         // FIXME we need to update Media Type fields on media move
-        // FIXME we should wrap all this in a transaction
+
+        // execute everything
+        $ok = $this->db->query('COMMIT TRANSACTION');
+        if(!$ok) {
+            $this->db->query('ROLLBACK TRANSACTION');
+            return false;
+        }
 
         return true;
     }
