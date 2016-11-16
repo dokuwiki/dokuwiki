@@ -16,6 +16,7 @@ class column_struct_test extends StructTest {
 
         $expect = array(
             'Checkbox' => 'dokuwiki\\plugin\\struct\\types\\Checkbox',
+            'Color' => 'dokuwiki\\plugin\\struct\\types\\Color',
             'Date' => 'dokuwiki\\plugin\\struct\\types\\Date',
             'DateTime' => 'dokuwiki\\plugin\\struct\\types\\DateTime',
             'Decimal' => 'dokuwiki\\plugin\\struct\\types\\Decimal',
@@ -38,6 +39,7 @@ class column_struct_test extends StructTest {
 
         $expect = array(
             'Checkbox' => 'dokuwiki\\plugin\\struct\\types\\Checkbox',
+            'Color' => 'dokuwiki\\plugin\\struct\\types\\Color',
             'Date' => 'dokuwiki\\plugin\\struct\\types\\Date',
             'DateTime' => 'dokuwiki\\plugin\\struct\\types\\DateTime',
             'Decimal' => 'dokuwiki\\plugin\\struct\\types\\Decimal',
