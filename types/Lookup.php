@@ -5,7 +5,6 @@ use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\Search;
-use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\Value;
 
 class Lookup extends Dropdown {
@@ -32,40 +31,52 @@ class Lookup extends Dropdown {
     }
 
     /**
-     * @throws StructException
+     * Get the configured loojup column
+     *
      * @return Column|false
      */
     protected function getLookupColumn() {
-        global $conf;
         if($this->column !== null) return $this->column;
+        $this->column = $this->getColumn($this->config['schema'], $this->config['field']);
+        return $this->column;
+    }
 
-        $schema = new Schema($this->config['schema']);
-        if(!$schema->getId()) {
+    /**
+     * Gets the given column, applies language place holder
+     *
+     * @param string $table
+     * @param string $xxx
+     * @return Column|false
+     */
+    protected function getColumn($table, $infield) {
+        global $conf;
+
+        $table = new Schema($table);
+        if(!$table->getId()) {
             // schema does not exist
-            msg(sprintf('Schema %s does not exist', $this->config['schema']), -1);
+            msg(sprintf('Schema %s does not exist', $table), -1);
             return false;
         }
 
         // apply language replacement
-        $field = str_replace('$LANG', $conf['lang'], $this->config['field']);
-        $column = $schema->findColumn($field);
+        $field = str_replace('$LANG', $conf['lang'], $infield);
+        $column = $table->findColumn($field);
         if(!$column) {
-            $field = str_replace('$LANG', 'en', $this->config['field']); // fallback to en
-            $column = $schema->findColumn($field);
+            $field = str_replace('$LANG', 'en', $infield); // fallback to en
+            $column = $table->findColumn($field);
         }
         if(!$column) {
             // field does not exist
-            msg(sprintf('Field %s.%s does not exist', $this->config['schema'], $this->config['field']), -1);
+            msg(sprintf('Field %s.%s does not exist', $table, $infield), -1);
             return false;
         }
 
         if($column->isMulti()) {
             // field is multi
-            msg(sprintf('Field %s.%s is a multi field - not allowed for lookup', $this->config['schema'], $this->config['field']), -1);
+            msg(sprintf('Field %s.%s is a multi field - not allowed for lookup', $table, $field), -1);
             return false;
         }
 
-        $this->column = $column;
         return $column;
     }
 
