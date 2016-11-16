@@ -313,6 +313,7 @@ class SchemaBuilder {
                     colref INTEGER NOT NULL,
                     pid NOT NULL,
                     rev INTEGER NOT NULL,
+                    latest INTEGER NOT NULL DEFAULT 0,
                     row INTEGER NOT NULL,
                     value,
                     PRIMARY KEY(colref, pid, rev, row)
@@ -346,6 +347,7 @@ class SchemaBuilder {
                     colref INTEGER NOT NULL,
                     pid INTEGER NOT NULL,
                     rev INTEGER NOT NULL DEFAULT 0,
+                    latest INTEGER NOT NULL DEFAULT 0,
                     row INTEGER NOT NULL,
                     value,
                     PRIMARY KEY(colref, pid, row)
