@@ -8,7 +8,7 @@
 
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Title;
+use dokuwiki\plugin\struct\meta\Page;
 
 if(!defined('DOKU_INC')) die();
 
@@ -39,12 +39,26 @@ class action_plugin_struct_title extends DokuWiki_Action_Plugin {
         $id = $event->data['page'];
 
         try {
-            $title = new Title($id);
+            $page = new Page($id);
 
             if(!blank($event->data['current']['title'])) {
-                $title->setTitle($event->data['current']['title']);
+                $page->setTitle($event->data['current']['title']);
             } else {
-                $title->setTitle(null);
+                $page->setTitle(null);
+            }
+
+            if(!blank($event->data['current']['last_change']['date'])) {
+                $page->setLastRevision($event->data['current']['last_change']['date']);
+            } else {
+                $page->setLastRevision(null);
+            }
+
+            if(!blank($event->data['current']['last_change']['user'])) {
+                $page->setLastEditor($event->data['current']['last_change']['user']);
+            } elseif (!blank($event->data['current']['last_change']['ip'])) {
+                $page->setLastEditor($event->data['current']['last_change']['user']);
+            } else {
+                $page->setLastEditor(null);
             }
         } catch(StructException $e) {
             msg($e->getMessage(), -1);

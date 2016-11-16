@@ -1,0 +1,159 @@
+<?php
+
+namespace dokuwiki\plugin\struct\meta;
+
+class Page {
+
+    /** @var \helper_plugin_sqlite */
+    protected $sqlite;
+
+    protected $pid;
+    protected $title = null;
+    protected $lasteditor = null;
+
+    public function __construct($pid) {
+        /** @var \helper_plugin_struct_db $helper */
+        $helper = plugin_load('helper', 'struct_db');
+        $this->sqlite = $helper->getDB();
+        $this->pid = $pid;
+    }
+
+    /**
+     * Load the title from the database
+     *
+     * @return null|string the current title, null if not exists
+     */
+    protected function loadTitle() {
+        $sql = "SELECT title FROM titles WHERE pid = ?";
+        $res = $this->sqlite->query($sql, $this->pid);
+        $title = $this->sqlite->res2single($res);
+        $this->sqlite->res_close($res);
+
+        if($title === false) return null;
+        return $title;
+    }
+
+    protected function loadLastEditor() {
+        $sql = "SELECT lasteditor FROM titles WHERE pid = ?";
+        $res = $this->sqlite->query($sql, $this->pid);
+        $lasteditor = $this->sqlite->res2single($res);
+        $this->sqlite->res_close($res);
+
+        if($lasteditor === false) return null;
+        return $lasteditor;
+    }
+
+    protected function loadLastRevision() {
+        $sql = "SELECT lastrev FROM titles WHERE pid = ?";
+        $res = $this->sqlite->query($sql, $this->pid);
+        $lastrev = $this->sqlite->res2single($res);
+        $this->sqlite->res_close($res);
+
+        if($lastrev === false) return null;
+        return $lastrev;
+    }
+
+    /**
+     * Sets a new title in the database;
+     *
+     * @param string|null $title set null to derive from PID
+     */
+    public function setTitle($title) {
+        if($title === null) {
+            $title = noNS($this->pid);
+        }
+
+        $this->updateEntry('title', $title);
+
+        $this->title = $title;
+    }
+
+    /**
+     * Sets a new title in the database;
+     *
+     * @param string|null $title set null to derive from PID
+     */
+    public function setLastEditor($lastEditor) {
+        if($lastEditor === null) {
+            $lastEditor = '';
+        }
+
+        $this->updateEntry('lasteditor', $lastEditor);
+
+        $this->lasteditor = $lastEditor;
+    }
+
+    /**
+     * Sets a new title in the database;
+     *
+     * @param string|null $title set null to derive from PID
+     */
+    public function setLastRevision($lastrev) {
+        if($lastrev === null) {
+            $lastrev = 0;
+        }
+
+        $this->updateEntry('lastrev', $lastrev);
+
+        $this->title = $lastrev;
+    }
+
+    protected function updateEntry($column, $entry) {
+        if ( !is_string($column) || !in_array($column, ['title', 'lasteditor', 'lastrev'])) {
+            throw new \Exception('invalid column given! ' . $column);
+        }
+        // only one of these will succeed
+        $sql = "UPDATE OR IGNORE titles SET $column = ? WHERE pid = ?";
+        $this->sqlite->query($sql, array($entry, $this->pid));
+
+        $sql = "INSERT OR IGNORE INTO titles ($column, pid) VALUES (?,?)";
+        $this->sqlite->query($sql, array($entry, $this->pid));
+    }
+
+    /**
+     * @return string the page's title
+     */
+    public function getTitle() {
+        // try to load from database
+        if($this->title === null) {
+            $this->title = $this->loadTitle();
+        }
+        // still none? set to pid
+        if($this->title === null) {
+            $this->setTitle(null);
+        }
+
+        return $this->title;
+    }
+
+    public function getLastEditor() {
+        if ($this->lasteditor === null) {
+            $this->lasteditor = $this->loadLastEditor();
+        }
+
+        if ($this->lasteditor === null) {
+            $this->setLastEditor(null);
+        }
+
+        return $this->lasteditor;
+    }
+
+    public function getLastRevision() {
+        if ($this->lastrev === null) {
+            $this->lastrev = $this->loadLastRevision();
+        }
+
+        if ($this->lastrev === null) {
+            $this->setLastRevision(null);
+        }
+
+        return $this->lastrev;
+    }
+
+    /**
+     * @return string the page's ID
+     */
+    public function getPid() {
+        return $this->pid;
+    }
+}
