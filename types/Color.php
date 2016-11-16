@@ -58,7 +58,10 @@ class Color extends AbstractBaseType {
      */
     public function valueEditor($name, $rawvalue) {
         $class = 'struct_color';
-        if($rawvalue == '') $rawvalue = $this->config['default'];
+        if(!preg_match('/^#[a-f0-9]{6}$/', $rawvalue)) {
+            // any non-color (eg. from a previous type) should default to the default
+            $rawvalue = $this->config['default'];
+        }
         $name = hsc($name);
         $rawvalue = hsc($rawvalue);
         $html = "<input name=\"$name\" value=\"$rawvalue\" class=\"$class\" type=\"color\" />";
