@@ -69,6 +69,7 @@ $lang['Validation Exception Url invalid'] = '%s is not a valid URL';
 $lang['Validation Exception Mail invalid'] = '%s is not a valid email address';
 $lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-DD';
 $lang['Validation Exception invalid datetime format'] = 'must be of format YYYY-MM-DD HH:MM:SS';
+$lang['Validation Exception bad color specification'] = 'must be of format #RRGGBB';
 
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
