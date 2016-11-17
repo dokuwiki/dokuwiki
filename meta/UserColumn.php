@@ -17,7 +17,7 @@ class UserColumn extends Column {
      * PageColumn constructor.
      *
      * @param int $sort
-     * @param Date $type
+     * @param User $type
      * @param string $table
      */
     public function __construct($sort, User $type, $table='') {
@@ -48,14 +48,14 @@ class UserColumn extends Column {
     }
 
     /**
-     * @return string always '%lastupdate%'
+     * @return string always '%lasteditor%'
      */
     public function getLabel() {
         return '%lasteditor%';
     }
 
     /**
-     * @return string always '%lastupdate%'
+     * @return string always '%lasteditor%'
      */
     public function getFullQualifiedLabel() {
         // There is only one pageid for each row because we JOIN on it

@@ -21,7 +21,7 @@ class Page {
 
 
     /**
-     * Sets a new title in the database;
+     * Sets a new title
      *
      * @param string|null $title set null to derive from PID
      */
@@ -36,9 +36,9 @@ class Page {
     }
 
     /**
-     * Sets a new title in the database;
+     * Sets the last editor
      *
-     * @param string|null $title set null to derive from PID
+     * @param string|null $lastEditor
      */
     public function setLastEditor($lastEditor) {
         if($lastEditor === null) {
@@ -51,9 +51,9 @@ class Page {
     }
 
     /**
-     * Sets a new title in the database;
+     * Sets the revision timestamp
      *
-     * @param string|null $title set null to derive from PID
+     * @param int|null $lastrev
      */
     public function setLastRevision($lastrev) {
         if($lastrev === null) {
