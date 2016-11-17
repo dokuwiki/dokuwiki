@@ -56,7 +56,7 @@ class action_plugin_struct_title extends DokuWiki_Action_Plugin {
             if(!blank($event->data['current']['last_change']['user'])) {
                 $page->setLastEditor($event->data['current']['last_change']['user']);
             } elseif (!blank($event->data['current']['last_change']['ip'])) {
-                $page->setLastEditor($event->data['current']['last_change']['user']);
+                $page->setLastEditor($event->data['current']['last_change']['ip']);
             } else {
                 $page->setLastEditor(null);
             }
