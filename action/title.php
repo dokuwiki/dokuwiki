@@ -60,6 +60,7 @@ class action_plugin_struct_title extends DokuWiki_Action_Plugin {
             } else {
                 $page->setLastEditor(null);
             }
+            $page->savePageData();
         } catch(StructException $e) {
             msg($e->getMessage(), -1);
         }

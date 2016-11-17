@@ -10,6 +10,9 @@ class Page {
     protected $pid;
     protected $title = null;
     protected $lasteditor = null;
+    protected $lastrev = null;
+
+    protected $saveNeeded = false;
 
     public function __construct($pid) {
         /** @var \helper_plugin_struct_db $helper */
@@ -18,7 +21,23 @@ class Page {
         $this->pid = $pid;
     }
 
+    /**
+     * If data was explicitly set, then save it to the database if that hasn't happened yet.
+     */
+    public function __destruct() {
+        if ($this->saveNeeded) {
+            $this->savePageData();
+        }
+    }
 
+    /**
+     * Save title, last editor and revision timestamp to database
+     */
+    public function savePageData() {
+        $sql = "REPLACE INTO titles (pid, title, lasteditor, lastrev) VALUES (?,?,?,?)";
+        $this->sqlite->query($sql, array($this->pid, $this->title, $this->lasteditor, $this->lastrev));
+        $this->saveNeeded = false;
+    }
 
     /**
      * Sets a new title
@@ -30,9 +49,8 @@ class Page {
             $title = noNS($this->pid);
         }
 
-        $this->updateEntry('title', $title);
-
         $this->title = $title;
+        $this->saveNeeded = true;
     }
 
     /**
@@ -45,9 +63,8 @@ class Page {
             $lastEditor = '';
         }
 
-        $this->updateEntry('lasteditor', $lastEditor);
-
         $this->lasteditor = $lastEditor;
+        $this->saveNeeded = true;
     }
 
     /**
@@ -60,21 +77,8 @@ class Page {
             $lastrev = 0;
         }
 
-        $this->updateEntry('lastrev', $lastrev);
-
-        $this->title = $lastrev;
-    }
-
-    protected function updateEntry($column, $entry) {
-        if ( !is_string($column) || !in_array($column, ['title', 'lasteditor', 'lastrev'])) {
-            throw new \Exception('invalid column given! ' . $column);
-        }
-        // only one of these will succeed
-        $sql = "UPDATE OR IGNORE titles SET $column = ? WHERE pid = ?";
-        $this->sqlite->query($sql, array($entry, $this->pid));
-
-        $sql = "INSERT OR IGNORE INTO titles ($column, pid) VALUES (?,?)";
-        $this->sqlite->query($sql, array($entry, $this->pid));
+        $this->lastrev = $lastrev;
+        $this->saveNeeded = true;
     }
 
     /**

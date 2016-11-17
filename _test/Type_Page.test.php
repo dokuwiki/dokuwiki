@@ -81,6 +81,7 @@ class Type_Page_struct_test extends StructTest {
         $title->setTitle('DokuWiki Overview');
         $title = new \dokuwiki\plugin\struct\meta\Page('wiki:syntax');
         $title->setTitle('DokuWiki Foobar Syntax');
+        $title->savePageData();
 
         // search
         $search = new Search();
