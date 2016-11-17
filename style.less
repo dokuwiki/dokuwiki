@@ -63,7 +63,7 @@
             padding-top: 0.25em;
             padding-bottom: 0.25em;
 
-            input:not([type='checkbox']), textarea, select {
+            input:not([type='checkbox']:not[type='color']), textarea, select {
                 width: 380px;
             }
         }
@@ -297,6 +297,16 @@ form.struct_newschema {
             width: 30px; //16px icon + margins
         }
     }
+}
+
+/**
+ * General Output styles
+ */
+.dokuwiki div.struct_color {
+    width: 1.2em;
+    height: 1.2em;
+    display: inline-block;
+    margin-right: 0.5em;
 }
 
 /**
