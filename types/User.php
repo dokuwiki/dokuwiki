@@ -1,6 +1,7 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
 
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
@@ -88,6 +89,69 @@ class User extends AbstractMultiBaseType {
         }
 
         return $users;
+    }
+
+    /**
+     * When handling `%lasteditor%` get the data from the `titles` table instead the `data_` table.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $alias
+     */
+    public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
+        if(is_a($this->context,'dokuwiki\plugin\struct\meta\UserColumn')) {
+            $rightalias = $QB->generateTableAlias();
+            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
+            $QB->addSelectStatement("$rightalias.lasteditor", $alias);
+            return;
+        }
+
+        parent::select($QB, $tablealias, $colname, $alias);
+    }
+
+    /**
+     * When sorting `%lasteditor%`, then sort the data from the `titles` table instead the `data_` table.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $order
+     */
+    public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
+        if(is_a($this->context,'dokuwiki\plugin\struct\meta\UserColumn')) {
+            $rightalias = $QB->generateTableAlias();
+            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
+            $QB->addOrderBy("$rightalias.lasteditor $order");
+            return;
+        }
+
+        $QB->addOrderBy("$tablealias.$colname $order");
+    }
+
+    /**
+     * When using `%lasteditor%`, we need to compare against the `title` table.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $comp
+     * @param string|\string[] $value
+     * @param string $op
+     */
+    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+        if(is_a($this->context,'dokuwiki\plugin\struct\meta\UserColumn')) {
+            $rightalias = $QB->generateTableAlias();
+            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
+
+            // compare against page and title
+            $sub = $QB->filters()->where($op);
+            $pl = $QB->addValue($value);
+            $sub->whereOr("$rightalias.lasteditor $comp $pl");
+            return;
+        }
+
+        parent::filter($QB, $tablealias, $colname, $comp, $value, $op);
     }
 
 }
