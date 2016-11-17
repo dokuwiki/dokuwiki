@@ -280,10 +280,10 @@ class AggregationTable {
     protected function renderDynamicFilters() {
         if($this->mode != 'xhtml') return;
         if(!$this->data['dynfilters']) return;
-        global $conf, $ACT;
-        if ($ACT == 'export_pdf') {
+        if (is_a($this->renderer, 'renderer_plugin_dw2pdf')) {
             return;
         }
+        global $conf;
 
         $this->renderer->doc .= '<tr class="dataflt">';
 
