@@ -45,7 +45,7 @@ class Lookup extends Dropdown {
      * Gets the given column, applies language place holder
      *
      * @param string $table
-     * @param string $xxx
+     * @param string $infield
      * @return Column|false
      */
     protected function getColumn($table, $infield) {
