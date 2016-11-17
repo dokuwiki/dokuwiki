@@ -133,6 +133,7 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
             $revision = 0;
         } else {
             $revision = helper_plugin_struct::createPageRevision($this->pid, 'inline edit');
+            p_get_metadata($this->pid); // reparse the metadata of the page top update the titles/rev/lasteditor table
         }
         $this->schemadata->setTimestamp($revision);
         try {
