@@ -25,6 +25,7 @@ class RevisionColumn extends Column {
     public function __construct($sort, Date $type, $table='') {
         if($type->isMulti()) throw new StructException('RevisionColumns can not be multi value types!');
         parent::__construct($sort, $type, 0, true, $table);
+        $this->getType()->setContext($this);
     }
 
     public function getColref() {
