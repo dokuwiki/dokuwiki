@@ -18,6 +18,7 @@ class Search_struct_test extends StructTest {
 
         $this->loadSchemaJSON('schema1');
         $this->loadSchemaJSON('schema2');
+        $_SERVER['REMOTE_USER'] = 'testuser';
 
         $as = mock\Assignments::getInstance();
         $page = 'page01';
@@ -118,6 +119,24 @@ class Search_struct_test extends StructTest {
         $this->assertEquals('["page01","TestTitle"]', $result[0][0]->getValue());
         $this->assertEquals('first data', $result[0][1]->getValue());
         $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][2]->getValue());
+    }
+
+    public function test_search_lasteditor() {
+        $search = new mock\Search();
+
+        $search->addSchema('schema1');
+        $search->addColumn('%title%');
+        $search->addColumn('%lasteditor%');
+        $search->addColumn('first');
+        $search->addColumn('second');
+
+        /** @var meta\Value[][] $result */
+        $result = $search->execute();
+
+        $this->assertEquals(2, count($result), 'result rows');
+        $this->assertEquals(4, count($result[0]), 'result columns');
+        $this->assertEquals('testuser', $result[0][1]->getValue());
+        $this->assertEquals(array('second data', 'more data', 'even more'), $result[0][3]->getValue());
     }
 
     public function test_search() {
