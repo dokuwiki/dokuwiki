@@ -2,9 +2,7 @@
 
 namespace dokuwiki\plugin\struct\meta;
 
-use dokuwiki\plugin\struct\types\AbstractBaseType;
-use dokuwiki\plugin\struct\types\Date;
-use dokuwiki\plugin\struct\types\Page;
+use dokuwiki\plugin\struct\types\DateTime;
 
 /**
  * Class RevisionColumn
@@ -19,10 +17,10 @@ class RevisionColumn extends Column {
      * PageColumn constructor.
      *
      * @param int $sort
-     * @param Date $type
+     * @param DateTime $type
      * @param string $table
      */
-    public function __construct($sort, Date $type, $table='') {
+    public function __construct($sort, DateTime $type, $table='') {
         if($type->isMulti()) throw new StructException('RevisionColumns can not be multi value types!');
         parent::__construct($sort, $type, 0, true, $table);
         $this->getType()->setContext($this);
