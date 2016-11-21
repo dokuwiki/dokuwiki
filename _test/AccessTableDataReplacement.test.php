@@ -69,8 +69,8 @@ class AccessTableDataReplacement_struct_test extends StructTest {
     }
 
     public function test_simple() {
-        global $ID;
-        $ID = 'start';
+        global $INFO;
+        $INFO['id'] = 'start';
         $lines = array(
             "schema    : bar",
             "cols      : %pageid%, data",

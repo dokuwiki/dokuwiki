@@ -105,7 +105,7 @@ class SearchConfig extends Search {
      * @return string|string[] Result may be an array when a multi column placeholder is used
      */
     protected function applyFilterVars($filter) {
-        global $ID;
+        global $INFO;
 
         // apply inexpensive filters first
         $filter = str_replace(
@@ -117,9 +117,9 @@ class SearchConfig extends Search {
                 '$TODAY$'
             ),
             array(
-                $ID,
-                getNS($ID),
-                noNS($ID),
+                $INFO['id'],
+                getNS($INFO['id']),
+                noNS($INFO['id']),
                 isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : '',
                 date('Y-m-d')
             ),
@@ -141,7 +141,7 @@ class SearchConfig extends Search {
 
             // get the data from the current page
             if($table && $label) {
-                $schemaData = AccessTable::byTableName($table, $ID, 0);
+                $schemaData = AccessTable::byTableName($table, $INFO['id'], 0);
                 $data = $schemaData->getDataArray();
                 $value = $data[$label];
 
