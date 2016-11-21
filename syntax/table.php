@@ -86,7 +86,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if(!$data) return false;
-        global $ID;
+        global $INFO;
         global $conf;
 
         try {
@@ -98,7 +98,7 @@ class syntax_plugin_struct_table extends DokuWiki_Syntax_Plugin {
             }
 
             /** @var AggregationTable $table */
-            $table = new $this->tableclass($ID, $mode, $renderer, $search);
+            $table = new $this->tableclass($INFO['id'], $mode, $renderer, $search);
             $table->render();
 
             if($mode == 'metadata') {
