@@ -123,6 +123,9 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
                 $R->cdata($field->getColumn()->getTranslatedLabel());
                 $R->tableheader_close();
                 $R->tablecell_open();
+                if($mode == 'xhtml') {
+                    $R->doc = substr($R->doc, 0, -1) . ' data-struct="'.hsc($field->getColumn()->getFullQualifiedLabel()).'">';
+                }
                 $field->render($R, $mode);
                 $R->tablecell_close();
                 $R->tablerow_close();
