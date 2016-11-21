@@ -122,7 +122,7 @@ function css_out(){
             case 'all':
             case 'feed':
             default:
-                print NL.'/* START rest styles */ '.NL.$css_content.NL.'/* END rest styles */'.NL;
+                #print NL.'/* START rest styles */ '.NL.$css_content.NL.'/* END rest styles */'.NL;
                 break;
         }
     }
@@ -163,42 +163,45 @@ function css_out(){
  * @return string
  */
 function css_parseless($css) {
-    global $conf;
 
-    $less = new lessc();
-    $less->importDir[] = DOKU_INC;
-    $less->setPreserveComments(!$conf['compress']);
-
-    if (defined('DOKU_UNITTEST')){
-        $less->importDir[] = TMP_DIR;
+    $directories = array(DOKU_INC => DOKU_BASE);
+    if(defined('DOKU_UNITTEST')) {
+        $directories[TMP_DIR] = DOKU_BASE;
     }
 
     try {
-        return $less->compile($css);
-    } catch(Exception $e) {
-        // get exception message
-        $msg = str_replace(array("\n", "\r", "'"), array(), $e->getMessage());
+        $parser = new Less_Parser();
+        $parser->SetImportDirs($directories);
+        // error supression until https://github.com/oyejorge/less.php/issues/219 is fixed
+        @$parser->parse($css);
+        return @$parser->getCss();
+    } catch(Less_Exception_Parser $e) {
+        $msg = $e->getMessage();
+        $msg = preg_replace('/ in file.*$/', '', $msg); // remove file info
 
-        // try to use line number to find affected file
-        if(preg_match('/line: (\d+)$/', $msg, $m)){
-            $msg = substr($msg, 0, -1* strlen($m[0])); //remove useless linenumber
-            $lno = $m[1];
-
-            // walk upwards to last include
+        $code = '';
+        if($e->index) {
+            $code  = substr($css, $e->index, 50);
+            $css   = substr($css, 0, $e->index);
             $lines = explode("\n", $css);
-            for($i=$lno-1; $i>=0; $i--){
-                if(preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)){
+            $count = count($lines);
+
+            for($i = $count; $i >= 0; $i--) {
+                if(preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)) {
                     // we found it, add info to message
-                    $msg .= ' in '.$m[2].' at line '.($lno-$i);
+                    $msg .= ' in '.$m[2].' at line '.($count - ($i + 1));
                     break;
                 }
             }
+
         }
 
         // something went wrong
         $error = 'A fatal error occured during compilation of the CSS files. '.
             'If you recently installed a new plugin or template it '.
             'might be broken and you should try disabling it again. ['.$msg.']';
+
+        if(defined('DOKU_UNITTEST')) return '[ERROR] '.$error;
 
         echo ".dokuwiki:before {
             content: '$error';
@@ -209,7 +212,6 @@ function css_parseless($css) {
             color: #000;
             padding: 0.5em;
         }";
-
         exit;
     }
 }

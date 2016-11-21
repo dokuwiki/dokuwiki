@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'GeSHi' => $vendorDir . '/easybook/geshi/geshi.php',
+    'lessc' => $vendorDir . '/oyejorge/less.php/lessc.inc.php',
 );
