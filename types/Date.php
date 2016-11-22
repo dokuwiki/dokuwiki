@@ -1,7 +1,6 @@
 <?php
 namespace dokuwiki\plugin\struct\types;
 
-use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\ValidationException;
 
 class Date extends AbstractBaseType {
@@ -69,69 +68,6 @@ class Date extends AbstractBaseType {
             throw new ValidationException('invalid date format');
         }
         return sprintf('%d-%02d-%02d', $year, $month, $day);
-    }
-
-    /**
-     * When handling `%lastupdated%` get the data from the `titles` table instead the `data_` table.
-     *
-     * @param QueryBuilder $QB
-     * @param string $tablealias
-     * @param string $colname
-     * @param string $alias
-     */
-    public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
-        if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
-            $rightalias = $QB->generateTableAlias();
-            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
-            $QB->addSelectStatement("$rightalias.lastrev", $alias);
-            return;
-        }
-
-        parent::select($QB, $tablealias, $colname, $alias);
-    }
-
-    /**
-     * When sorting `%lastupdated%`, then sort the data from the `titles` table instead the `data_` table.
-     *
-     * @param QueryBuilder $QB
-     * @param string $tablealias
-     * @param string $colname
-     * @param string $order
-     */
-    public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
-        if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
-            $rightalias = $QB->generateTableAlias();
-            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
-            $QB->addOrderBy("$rightalias.lastrev $order");
-            return;
-        }
-
-        $QB->addOrderBy("$tablealias.$colname $order");
-    }
-
-    /**
-     * When using `%lastupdated%`, we need to compare against the `title` table.
-     *
-     * @param QueryBuilder $QB
-     * @param string $tablealias
-     * @param string $colname
-     * @param string $comp
-     * @param string|\string[] $value
-     * @param string $op
-     */
-    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
-        if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
-            $rightalias = $QB->generateTableAlias();
-            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
-
-            // compare against page and title
-            $sub = $QB->filters()->where($op);
-            $pl = $QB->addValue($value);
-            $sub->whereOr("$rightalias.lastrev $comp $pl");
-            return;
-        }
-
-        parent::filter($QB, $tablealias, $colname, $comp, $value, $op);
     }
 
 }
