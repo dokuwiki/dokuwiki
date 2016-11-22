@@ -429,7 +429,7 @@ class AggregationTable {
 
         $this->renderer->info['struct_table_meta'] = true;
         $this->renderer->tablerow_open();
-        $this->renderer->tableheader_open((count($this->data['cols']) + ($this->data['rownumbers'] ? 1 : 0)));
+        $this->renderer->tableheader_open((count($this->columns) + ($this->data['rownumbers'] ? 1 : 0)));
         $offset = $this->data['offset'];
 
         // prev link
