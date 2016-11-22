@@ -86,10 +86,13 @@ class DateTime extends Date {
      * @param string $alias
      */
     public function select(QueryBuilder $QB, $tablealias, $colname, $alias) {
-        // when accessing the revision column we need to convert from Unix timestamp
         $col = "$tablealias.$colname";
-        if($colname == 'rev') {
-            $col = "DATETIME($col, 'unixepoch', 'localtime')";
+
+        // when accessing the revision column we need to convert from Unix timestamp
+        if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
+            $rightalias = $QB->generateTableAlias();
+            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
+            $col = "DATETIME($rightalias.lastrev, 'unixepoch', 'localtime')";
         }
 
         $QB->addSelectStatement($col, $alias);
@@ -104,10 +107,13 @@ class DateTime extends Date {
      * @param string $op
      */
     public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
-        // when accessing the revision column we need to convert from Unix timestamp
         $col = "$tablealias.$colname";
-        if($colname == 'rev') {
-            $col = "DATETIME($col, 'unixepoch', 'localtime')";
+
+        // when accessing the revision column we need to convert from Unix timestamp
+        if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
+            $rightalias = $QB->generateTableAlias();
+            $col = "DATETIME($rightalias.lastrev, 'unixepoch', 'localtime')";
+            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
         }
 
         /** @var QueryBuilderWhere $add Where additionional queries are added to*/
@@ -121,6 +127,26 @@ class DateTime extends Date {
             $pl = $QB->addValue($item);
             $add->where($op, "$col $comp $pl");
         }
+    }
+
+    /**
+     * When sorting `%lastupdated%`, then sort the data from the `titles` table instead the `data_` table.
+     *
+     * @param QueryBuilder $QB
+     * @param string $tablealias
+     * @param string $colname
+     * @param string $order
+     */
+    public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
+        $col = "$tablealias.$colname";
+
+        if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
+            $rightalias = $QB->generateTableAlias();
+            $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
+            $col = "$rightalias.lastrev";
+        }
+
+        $QB->addOrderBy("$col $order");
     }
 
 }
