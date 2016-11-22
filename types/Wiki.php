@@ -22,7 +22,7 @@ class Wiki extends AbstractBaseType {
      * @return int|string
      */
     public function validate($rawvalue) {
-        $rawvalue = parent::validate($rawvalue);
+        $rawvalue = rtrim($rawvalue);
         $rawvalue = cleanText($rawvalue);
         return $rawvalue;
     }

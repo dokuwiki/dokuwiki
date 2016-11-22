@@ -98,13 +98,12 @@ class Value {
 
         // remove all blanks
         foreach($value as $val) {
-            $val = trim($val);
             if($israw) {
                 $raw = $val;
             } else {
                 $raw = $this->column->getType()->rawValue($val);
             }
-            if('' === (string) $raw) continue;
+            if('' === (string) trim($raw)) continue;
             $this->value[] = $val;
             $this->rawvalue[] = $raw;
             if($israw) {
