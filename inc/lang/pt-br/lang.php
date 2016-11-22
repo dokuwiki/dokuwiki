@@ -27,6 +27,7 @@
  * @author Hudson FAS <hudsonfas@gmail.com>
  * @author Guilherme Cardoso <guicardoso@gmail.com>
  * @author Viliam Dias <viliamjr@gmail.com>
+ * @author Edney Rossi <edneyrossi@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -363,3 +364,4 @@ $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada post
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
 $lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@';
+$lang['email_signature_html']  = ' ';

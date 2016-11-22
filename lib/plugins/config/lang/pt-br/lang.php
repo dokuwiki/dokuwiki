@@ -20,6 +20,7 @@
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Guilherme Cardoso <guicardoso@gmail.com>
  * @author Viliam Dias <viliamjr@gmail.com>
+ * @author Edney Rossi <edneyrossi@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
