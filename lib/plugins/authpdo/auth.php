@@ -179,7 +179,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
             return $passhash->verify_hash($pass, $userdata['hash']);
         } else {
             // clear text password in the database O_o
-            return ($pass == $userdata['clear']);
+            return ($pass === $userdata['clear']);
         }
     }
 
