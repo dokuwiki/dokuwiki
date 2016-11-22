@@ -55,6 +55,9 @@ class ConfigParser {
                 case 'col':
                     $this->config['cols'] = $this->parseValues($val);
                     break;
+                case 'sepbyheaders':
+                    $this->config['sepbyheaders'] = (bool) $val;
+                    break;
                 case 'head':
                 case 'header':
                 case 'headers':

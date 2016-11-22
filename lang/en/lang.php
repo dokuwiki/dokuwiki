@@ -71,6 +71,7 @@ $lang['Validation Exception invalid date format'] = 'must be of format YYYY-MM-D
 $lang['Validation Exception invalid datetime format'] = 'must be of format YYYY-MM-DD HH:MM:SS';
 $lang['Validation Exception bad color specification'] = 'must be of format #RRGGBB';
 
+$lang['Exception illegal option'] = 'The option \'<code>%s</code>\' is invalid for this aggregation type.';
 $lang['Exception noschemas'] = 'There have been no schemas given to load columns from';
 $lang['Exception nocolname'] = 'No column name given';
 $lang['Exception nolookupmix'] = 'You can not aggregate more than one Lookup or mix it with Page data';
