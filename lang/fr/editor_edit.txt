@@ -6,4 +6,4 @@ Chaque champ doit avoir un nom unique. Il est recommandé d'utiliser des noms co
 
 Le type de champ détermine quelles données peuvent y être stockées (texte, image, URL...) et influence également la façon dont elles seront affichées plus tard. Chaque type de champ a des options de configuration spécifiques.
 
-Consultez la [[doku>plugin:struct:type|documentation]] pour en savoir plus.
+Consultez la [[doku>fr:plugin:struct:type|documentation]] pour en savoir plus.
