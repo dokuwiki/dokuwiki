@@ -2174,7 +2174,12 @@ function html_admin(){
         ptln('<ul>');
         foreach ($menu as $item) {
             if (!$item['prompt']) continue;
-            ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
+            //add icon to the item, in case of being specified
+            if(strlen($item['icon']) > 0){
+                ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.'<img src="'.$item['icon'].'" alt="admin-icon-'.hsc($item['prompt']).'" class="admin-menu-item"></img>'.'&nbsp;'.$item['prompt'].'</a></div></li>');
+            } else {
+                ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
+            }
         }
         ptln('</ul>');
     }
