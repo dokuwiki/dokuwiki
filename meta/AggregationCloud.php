@@ -161,7 +161,7 @@ class AggregationCloud {
         $this->renderer->doc .= '<li><div class="li">';
         $this->renderer->doc .= '<div data-count="'. $count.'" class="' . $value->getColumn()->getLabel() . '">';
         //$value->render($this->renderer, $this->mode);
-        $this->renderer->internallink("?flt[$schema.$col*~]=$raw",$raw);
+        $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($raw),$raw);
         if ($column < $this->resultCount) {
             $this->renderer->doc .= ' ';
         }
