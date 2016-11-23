@@ -5,6 +5,7 @@ namespace dokuwiki\plugin\struct\meta;
 use dokuwiki\plugin\struct\types\DateTime;
 use dokuwiki\plugin\struct\types\Decimal;
 use dokuwiki\plugin\struct\types\Page;
+use dokuwiki\plugin\struct\types\User;
 
 class Search {
     /**
@@ -507,6 +508,9 @@ class Search {
             }
             if($colname == '%lastupdate%') {
                 return new RevisionColumn(0, new DateTime(), $schema_list[0]);
+            }
+            if ($colname == '%lasteditor%') {
+                return new UserColumn(0, new User(), $schema_list[0]);
             }
         } else {
             if($colname == '%rowid%') {

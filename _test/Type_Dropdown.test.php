@@ -2,7 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
-use dokuwiki\plugin\struct\meta\Title;
+use dokuwiki\plugin\struct\meta\Page;
 use dokuwiki\plugin\struct\test\mock\AccessTable;
 use dokuwiki\plugin\struct\test\mock\Dropdown;
 

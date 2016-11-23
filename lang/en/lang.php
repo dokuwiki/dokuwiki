@@ -22,6 +22,7 @@ $lang['createhint'] = 'Please note: schemas can not be renamed later';
 $lang['pagelabel'] = 'Page';
 $lang['rowlabel'] = 'Row #';
 $lang['revisionlabel'] = 'Last Updated';
+$lang['userlabel'] = 'Last Editor';
 $lang['summary'] = 'Struct data changed';
 $lang['export'] = 'Export Schema as JSON';
 $lang['btn_export'] = 'Export';

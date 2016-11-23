@@ -2,7 +2,6 @@
 
 namespace dokuwiki\plugin\struct\test;
 
-use dokuwiki\plugin\struct\meta\Title;
 use dokuwiki\plugin\struct\meta\Value;
 use dokuwiki\plugin\struct\test\mock\Search;
 use dokuwiki\plugin\struct\types\Page;
@@ -31,15 +30,15 @@ class Type_Page_struct_test extends StructTest {
     public function test_sort() {
 
         saveWikiText('title1', 'test', 'test');
-        $title = new Title('title1');
+        $title = new \dokuwiki\plugin\struct\meta\Page('title1');
         $title->setTitle('This is a title');
 
         saveWikiText('title2', 'test', 'test');
-        $title = new Title('title2');
+        $title = new \dokuwiki\plugin\struct\meta\Page('title2');
         $title->setTitle('This is a title');
 
         saveWikiText('title3', 'test', 'test');
-        $title = new Title('title3');
+        $title = new \dokuwiki\plugin\struct\meta\Page('title3');
         $title->setTitle('Another Title');
 
 
@@ -78,10 +77,11 @@ class Type_Page_struct_test extends StructTest {
         );
 
         // make sure titles for some pages are known (not for wiki:welcome)
-        $title = new Title('wiki:dokuwiki');
+        $title = new \dokuwiki\plugin\struct\meta\Page('wiki:dokuwiki');
         $title->setTitle('DokuWiki Overview');
-        $title = new Title('wiki:syntax');
+        $title = new \dokuwiki\plugin\struct\meta\Page('wiki:syntax');
         $title->setTitle('DokuWiki Foobar Syntax');
+        $title->savePageData();
 
         // search
         $search = new Search();
