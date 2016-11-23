@@ -2073,7 +2073,8 @@ function html_admin(){
 
         $menu[$p] = array('plugin' => $p,
                 'prompt' => $obj->getMenuText($conf['lang']),
-                'sort' => $obj->getMenuSort()
+                'icon' => $obj->getMenuIcon(),
+                'sort' => $obj->getMenuSort(),
                 );
     }
 
