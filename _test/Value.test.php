@@ -80,6 +80,9 @@ class Value_struct_test extends StructTest {
 
         $val->setValue(array());
         $this->assertEquals('', $val->getValue());
+
+        $val->setValue("  * hi\n  * ho");
+        $this->assertEquals("  * hi\n  * ho", $val->getValue());
     }
 
     /**
