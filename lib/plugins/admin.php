@@ -31,6 +31,15 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
     }
 
     /**
+     * Return the path to the icon being displayed in the main admin menu.
+     * Default means, there won't be any icon.
+     * (Override this function for setting another image)
+     */
+    public function getMenuIcon(){
+        return '';
+    }
+    
+    /**
      * Determine position in list in admin window
      * Lower values are sorted up
      *
