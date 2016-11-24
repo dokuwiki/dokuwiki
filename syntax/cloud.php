@@ -10,7 +10,7 @@
 if (!defined('DOKU_INC')) die();
 
 use dokuwiki\plugin\struct\meta\ConfigParser;
-use dokuwiki\plugin\struct\meta\SearchConfig;
+use dokuwiki\plugin\struct\meta\SearchCloud;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\AggregationCloud;
 
@@ -85,7 +85,7 @@ class syntax_plugin_struct_cloud extends DokuWiki_Syntax_Plugin {
         if(!$data) return false;
         global $INFO, $conf;
         try {
-            $search = new SearchConfig($data);
+            $search = new SearchCloud($data);
             /** @var AggregationList $list */
             $list = new $this->tableclass($INFO['id'], $mode, $renderer, $search);
             $list->render();

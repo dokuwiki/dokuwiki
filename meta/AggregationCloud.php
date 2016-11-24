@@ -56,51 +56,16 @@ class AggregationCloud {
      * @param \Doku_Renderer $renderer
      * @param SearchConfig $searchConfig
      */
-    public function __construct($id, $mode, \Doku_Renderer $renderer, SearchConfig $searchConfig) {
+    public function __construct($id, $mode, \Doku_Renderer $renderer, SearchCloud $searchConfig) {
         $this->id = $id;
         $this->mode = $mode;
         $this->renderer = $renderer;
         $this->searchConfig = $searchConfig;
         $this->data = $searchConfig->getConf();
         $this->columns = $searchConfig->getColumns();
-        $this->result = $this->search(); //$this->searchConfig->execute();
-        //$this->resultCount = $this->searchConfig->getCount();
-        //$this->resultPIDs = $this->searchConfig->getPids();
+        $this->result = $this->searchConfig->execute();
+        $this->resultCount = $this->searchConfig->getCount();
         $this->helper = plugin_load('helper', 'struct_config');
-    }
-
-    public function search() {
-        $QB = new QueryBuilder;
-        $schema = $this->data['schemas'][0][0];
-        $colref = $this->columns[0]->getColref();
-        if ($this->columns[0]->getType()->isMulti()) {
-            $table = 'multi_' . $schema;
-            $col = 'value';
-            $QB->filters()->whereAnd('T1.colref='.$colref);
-        } else {
-            $table = 'data_' . $schema;
-            $col = 'col' . $colref;
-        }
-        $QB->addTable($table, 'T1');
-        $QB->addSelectColumn('T1', $col, 'tag');
-        $QB->addSelectStatement("COUNT(T1.$col)", 'count');
-        $QB->filters()->whereAnd('T1.latest=1');
-        $QB->addGroupByStatement('tag');
-        $QB->addOrderBy('tag');
-        /*
-          if ($min=$this->data['min']) {
-          $QB->filters()->whereAnd("count > $min");
-          }
-        */
-        $sql = $QB->getSQL();
-        $db = plugin_load('helper', 'struct_db')->getDB();
-        $res=$db->query($sql[0], $sql[1]);
-        $results = $db->res2arr($res);
-        $db->res_close($res);
-        foreach ($results as &$result) {
-            $result['tag'] = new Value($this->columns[0], $result['tag']);
-        }
-        return $results;
     }
 
     /**
