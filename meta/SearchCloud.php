@@ -58,7 +58,7 @@ class SearchCloud extends SearchConfig {
         }
         $QB->addSelectStatement("COUNT($colname)", 'count');
         $QB->addGroupByStatement('tag');
-        $QB->addOrderBy('tag');
+        $QB->addOrderBy('count DESC');
 
         return $QB->getSQL();
     }

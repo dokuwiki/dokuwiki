@@ -66,6 +66,9 @@ class AggregationCloud {
         $this->result = $this->searchConfig->execute();
         $this->resultCount = $this->searchConfig->getCount();
         $this->helper = plugin_load('helper', 'struct_config');
+
+        $this->max = $this->result[0]['count'];
+        $this->min = end($this->result)['count'];
     }
 
     /**
@@ -107,12 +110,15 @@ class AggregationCloud {
         if($this->mode != 'xhtml') return;
         $this->renderer->doc .= '</div>';
     }
+
     protected function renderResult($result) {
         /**
          * @var Value $value
          */
         $value = $result['tag'];
         $count = $result['count'];
+        $weight = $this->getWeight($count, $this->min, $this->max);
+        $type = strtolower($value->getColumn()->getType()->getClass());
         if ($value->isEmpty()) {
             return;
         }
@@ -124,7 +130,7 @@ class AggregationCloud {
         $schema = $this->data['schemas'][0][0];
         $col = $value->getColumn()->getLabel();
         $this->renderer->doc .= '<li><div class="li">';
-        $this->renderer->doc .= '<div data-count="'. $count.'" class="' . $value->getColumn()->getLabel() . '">';
+        $this->renderer->doc .= "<div data-weight='$weight' data-count='$count' class='cloudtag $type'>";
         //$value->render($this->renderer, $this->mode);
         $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($raw),$raw);
         if ($column < $this->resultCount) {
@@ -132,5 +138,20 @@ class AggregationCloud {
         }
         $this->renderer->doc .= '</div>';
         $this->renderer->doc .= '</div></li>';
+    }
+
+    /**
+     * This interpolates the weight between 70 and 150 based on $min, $max and $current
+     *
+     * @param int $current
+     * @param int $min
+     * @param int $max
+     * @return float|int
+     */
+    protected function getWeight($current, $min, $max) {
+        if ($min == $max) {
+            return 100;
+        }
+        return ($current - $min)/($max - $min) * 80 + 70;
     }
 }
