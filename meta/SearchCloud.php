@@ -83,12 +83,14 @@ class SearchCloud extends SearchConfig {
         $this->result_pids = array();
         $result = array();
         $cursor = -1;
+
         while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
+            if (!empty($this->config['min']) && $this->config['min'] > $row['count']) {
+                break;
+            }
             $cursor++;
             if($cursor < $this->range_begin) continue;
             if($this->range_end && $cursor >= $this->range_end) continue;
-
-            // todo: check for min
 
             $row['tag'] = new Value($this->columns[0], $row['tag']);
             $result[] = $row;
