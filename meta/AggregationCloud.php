@@ -78,7 +78,7 @@ class AggregationCloud {
         $this->startScope();
         $this->renderer->doc .= '<ul>';
         foreach ($this->result as $result) {
-            $this->renderResult($result);
+            $this->renderTag($result);
         }
         $this->renderer->doc .= '</ul>';
         $this->finishScope();
@@ -111,7 +111,12 @@ class AggregationCloud {
         $this->renderer->doc .= '</div>';
     }
 
-    protected function renderResult($result) {
+    /**
+     * Render a tag of the cloud
+     *
+     * @param ['tag' => Value, 'count' => int] $result
+     */
+    protected function renderTag($result) {
         /**
          * @var Value $value
          */
