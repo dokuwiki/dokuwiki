@@ -15,8 +15,7 @@ use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\AggregationCloud;
 
 class syntax_plugin_struct_cloud extends DokuWiki_Syntax_Plugin {
-    /** @var string which class to use for output */
-    protected $tableclass = AggregationCloud::class;
+
     /**
      * @return string Syntax mode type
      */
@@ -86,9 +85,8 @@ class syntax_plugin_struct_cloud extends DokuWiki_Syntax_Plugin {
         global $INFO, $conf;
         try {
             $search = new SearchCloud($data);
-            /** @var AggregationList $list */
-            $list = new $this->tableclass($INFO['id'], $mode, $renderer, $search);
-            $list->render();
+            $cloud = new AggregationCloud($INFO['id'], $mode, $renderer, $search);
+            $cloud->render();
             if($mode == 'metadata') {
                 /** @var Doku_Renderer_metadata $renderer */
                 $renderer->meta['plugin']['struct']['hasaggregation'] = $search->getCacheFlag();
