@@ -94,7 +94,7 @@ class AggregationCloud {
         $this->renderer->info['struct_cloud_hash'] = md5(var_export($this->data, true));
         // wrapping div
         if($this->mode != 'xhtml') return;
-        $this->renderer->doc .= "<div class=\"structaggregation cloudaggregation\">";
+        $this->renderer->doc .= "<div class=\"structcloud\">";
     }
     /**
      * Closes the table and anything opened in startScope()

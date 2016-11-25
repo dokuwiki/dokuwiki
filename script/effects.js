@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    const $taglist = jQuery('.cloudaggregation ul');
+    const $taglist = jQuery('.structcloud ul');
     const $taglis = $taglist.children('li');
     $taglis.sort(function (a, b) {
         const at = jQuery(a).text().toLowerCase();
