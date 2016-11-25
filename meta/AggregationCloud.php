@@ -123,16 +123,18 @@ class AggregationCloud {
             return;
         }
 
-        $raw = $value->getRawValue();
-        if (is_array($raw)) {
-            $raw = $raw[0];
+        $tagValue = $value->getDisplayValue();
+        if (empty($tagValue)) {
+            $tagValue = $value->getRawValue();
+        }
+        if (is_array($tagValue)) {
+            $tagValue = $tagValue[0];
         }
         $schema = $this->data['schemas'][0][0];
         $col = $value->getColumn()->getLabel();
         $this->renderer->doc .= '<li><div class="li">';
         $this->renderer->doc .= "<div data-weight='$weight' data-count='$count' class='cloudtag $type'>";
-        //$value->render($this->renderer, $this->mode);
-        $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($raw),$raw);
+        $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($tagValue),$tagValue);
         if ($column < $this->resultCount) {
             $this->renderer->doc .= ' ';
         }
