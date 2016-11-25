@@ -1,51 +1,44 @@
 <?php
+
 namespace dokuwiki\plugin\struct\meta;
+
 class AggregationCloud {
+
     /**
      * @var string the page id of the page this is rendered to
      */
     protected $id;
+
     /**
      * @var string the Type of renderer used
      */
     protected $mode;
+
     /**
      * @var \Doku_Renderer the DokuWiki renderer used to create the output
      */
     protected $renderer;
+
     /**
      * @var SearchConfig the configured search - gives access to columns etc.
      */
     protected $searchConfig;
+
     /**
      * @var Column[] the list of columns to be displayed
      */
     protected $columns;
+
     /**
      * @var  Value[][] the search result
      */
     protected $result;
+
     /**
      * @var int number of all results
      */
     protected $resultCount;
-    /**
-     * @var string[] the result PIDs for each row
-     */
-    protected $resultPIDs;
-    /**
-     * @var array for summing up columns
-     */
-    protected $sums;
-    /**
-     * @var bool skip full table when no results found
-     */
-    protected $simplenone = true;
-    /**
-     * @todo we might be able to get rid of this helper and move this to SearchConfig
-     * @var \helper_plugin_struct_config
-     */
-    protected $helper;
+
     /**
      * Initialize the Aggregation renderer and executes the search
      *
@@ -65,7 +58,6 @@ class AggregationCloud {
         $this->columns = $searchConfig->getColumns();
         $this->result = $this->searchConfig->execute();
         $this->resultCount = $this->searchConfig->getCount();
-        $this->helper = plugin_load('helper', 'struct_config');
 
         $this->max = $this->result[0]['count'];
         $this->min = end($this->result)['count'];
@@ -84,28 +76,24 @@ class AggregationCloud {
         $this->finishScope();
         return;
     }
+
     /**
      * Adds additional info to document and renderer in XHTML mode
      *
      * @see finishScope()
      */
     protected function startScope() {
-        // unique identifier for this aggregation
-        $this->renderer->info['struct_cloud_hash'] = md5(var_export($this->data, true));
         // wrapping div
         if($this->mode != 'xhtml') return;
         $this->renderer->doc .= "<div class=\"structcloud\">";
     }
+
     /**
      * Closes the table and anything opened in startScope()
      *
      * @see startScope()
      */
     protected function finishScope() {
-        // remove identifier from renderer again
-        if(isset($this->renderer->info['struct_cloud_hash'])) {
-            unset($this->renderer->info['struct_cloud_hash']);
-        }
         // wrapping div
         if($this->mode != 'xhtml') return;
         $this->renderer->doc .= '</div>';
@@ -123,7 +111,7 @@ class AggregationCloud {
         $value = $result['tag'];
         $count = $result['count'];
         $weight = $this->getWeight($count, $this->min, $this->max);
-        $type = strtolower($value->getColumn()->getType()->getClass());
+        $type = 'struct_' . strtolower($value->getColumn()->getType()->getClass());
         if ($value->isEmpty()) {
             return;
         }
@@ -141,9 +129,6 @@ class AggregationCloud {
         $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag $type'>";
 
         $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($tagValue),$tagValue);
-        if ($column < $this->resultCount) {
-            $this->renderer->doc .= ' ';
-        }
         $this->renderer->doc .= '</div>';
         $this->renderer->doc .= '</div></li>';
     }
