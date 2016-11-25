@@ -67,6 +67,9 @@ class AggregationCloud {
      * Create the table on the renderer
      */
     public function render() {
+
+        $this->sortResults();
+
         $this->startScope();
         $this->renderer->doc .= '<ul>';
         foreach ($this->result as $result) {
@@ -146,5 +149,61 @@ class AggregationCloud {
             return 100;
         }
         return ($current - $min)/($max - $min) * 80 + 70;
+    }
+
+    /**
+     * Sort the list of results
+     */
+    protected function sortResults() {
+        foreach ($this->result as &$result) {
+            if ($result['tag']->getColumn()->getType()->getClass() == 'Color') {
+                $result['sort'] = $this->getHue($result['tag']->getRawValue());
+            } else {
+                $result['sort'] = $result['tag']->getDisplayValue();
+            }
+        }
+        usort($this->result, function ($a, $b) {
+            if ($a['sort'] < $b['sort']) {
+                return -1;
+            }
+            if ($a['sort'] > $b['sort']) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+    /**
+     * Calculate the hue of a color to use it for sorting so we can sort similar colors together.
+     *
+     * @param string $color the color as #RRGGBB
+     * @return float|int
+     */
+    protected function getHue($color) {
+        if (!preg_match('/^#[0-9A-F]{6}$/i', $color)) {
+            return 0;
+        }
+
+        $red   = hexdec(substr($color, 1, 2));
+        $green = hexdec(substr($color, 3, 2));
+        $blue  = hexdec(substr($color, 5, 2));
+
+        $min = min([$red, $green, $blue]);
+        $max = max([$red, $green, $blue]);
+
+        if ($max == $red) {
+            $hue = ($green-$blue)/($max-$min);
+        }
+        if ($max == $green) {
+            $hue = 2 + ($blue-$red)/($max-$min);
+        }
+        if ($max == $blue) {
+            $hue = 4 + ($red-$green)/($max-$min);
+        }
+        $hue = $hue * 60;
+        if ($hue < 0) {
+            $hue += 360;
+        }
+        return $hue;
     }
 }
