@@ -119,6 +119,27 @@ class AggregationCloud {
             return;
         }
 
+        $this->renderer->doc .= '<li><div class="li">';
+        $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag $type'>";
+
+        $this->renderer->doc .= $this->getTagLink($value, $weight);
+        $this->renderer->doc .= '</div>';
+        $this->renderer->doc .= '</div></li>';
+    }
+
+    /**
+     * @param Value $value
+     * @param int $weight
+     * @return string
+     */
+    protected function getTagLink(Value $value, $weight) {
+        $type = $value->getColumn()->getType()->getClass();
+        $schema = $this->data['schemas'][0][0];
+        $col = $value->getColumn()->getLabel();
+
+        global $ID; // todo replace with target
+
+
         $tagValue = $value->getDisplayValue();
         if (empty($tagValue)) {
             $tagValue = $value->getRawValue();
@@ -126,14 +147,19 @@ class AggregationCloud {
         if (is_array($tagValue)) {
             $tagValue = $tagValue[0];
         }
-        $schema = $this->data['schemas'][0][0];
-        $col = $value->getColumn()->getLabel();
-        $this->renderer->doc .= '<li><div class="li">';
-        $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag $type'>";
+        $filter = "flt[$schema.$col*~]=" . urlencode($tagValue);
+        $linktext = $tagValue;
 
-        $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($tagValue),$tagValue);
-        $this->renderer->doc .= '</div>';
-        $this->renderer->doc .= '</div></li>';
+        if ($type == 'Color') {
+            $url = wl($ID, $filter);
+            $style = "background-color:$tagValue;display:block;height:100%";
+            return "<a href='$url' style='$style'></a>";
+        }
+        if ($type == 'Media' && $value->getColumn()->getType()->getConfig()['mime'] == 'image/') {
+            $linktext = p_get_instructions("[[|{{{$tagValue}?$weight}}]]")[2][1][1];
+        }
+
+        return $this->renderer->internallink("?$filter",$linktext, null, true);
     }
 
     /**
@@ -142,13 +168,13 @@ class AggregationCloud {
      * @param int $current
      * @param int $min
      * @param int $max
-     * @return float|int
+     * @return int
      */
     protected function getWeight($current, $min, $max) {
         if ($min == $max) {
             return 100;
         }
-        return ($current - $min)/($max - $min) * 80 + 70;
+        return round(($current - $min)/($max - $min) * 80 + 70);
     }
 
     /**
