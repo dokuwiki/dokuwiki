@@ -137,7 +137,12 @@ class AggregationCloud {
         $schema = $this->data['schemas'][0][0];
         $col = $value->getColumn()->getLabel();
 
-        global $ID; // todo replace with target
+        if (!empty($this->data['target'])) {
+            $target = $this->data['target'];
+        } else {
+            global $INFO;
+            $target = $INFO['id'];
+        }
 
 
         $tagValue = $value->getDisplayValue();
@@ -151,7 +156,7 @@ class AggregationCloud {
         $linktext = $tagValue;
 
         if ($type == 'Color') {
-            $url = wl($ID, $filter);
+            $url = wl($target, $filter);
             $style = "background-color:$tagValue;display:block;height:100%";
             return "<a href='$url' style='$style'></a>";
         }
@@ -159,7 +164,7 @@ class AggregationCloud {
             $linktext = p_get_instructions("[[|{{{$tagValue}?$weight}}]]")[2][1][1];
         }
 
-        return $this->renderer->internallink("?$filter",$linktext, null, true);
+        return $this->renderer->internallink("$target?$filter",$linktext, null, true);
     }
 
     /**
