@@ -133,7 +133,8 @@ class AggregationCloud {
         $schema = $this->data['schemas'][0][0];
         $col = $value->getColumn()->getLabel();
         $this->renderer->doc .= '<li><div class="li">';
-        $this->renderer->doc .= "<div data-weight='$weight' data-count='$count' class='cloudtag $type'>";
+        $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag $type'>";
+
         $this->renderer->internallink("?flt[$schema.$col*~]=" . urlencode($tagValue),$tagValue);
         if ($column < $this->resultCount) {
             $this->renderer->doc .= ' ';
