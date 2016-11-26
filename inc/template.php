@@ -414,11 +414,11 @@ function tpl_metaheaders($alt = true) {
     if($conf['jquerycdn']) {
         $head['script'][] = array(
             'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
-            'src' => sprintf('http://code.jquery.com/jquery-%s.min.js', $jqver['JQ_VERSION'])
+            'src' => sprintf('https://code.jquery.com/jquery-%s.min.js', $jqver['JQ_VERSION'])
         );
         $head['script'][] = array(
             'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
-            'src' => sprintf('http://code.jquery.com/jquery-migrate-%s.min.js', $jqver['JQM_VERSION'])
+            'src' => sprintf('https://code.jquery.com/jquery-migrate-%s.min.js', $jqver['JQM_VERSION'])
         );
         $head['script'][] = array(
             'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
