@@ -409,7 +409,30 @@ function tpl_metaheaders($alt = true) {
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
-    // load external javascript
+    // load jquery
+    $jqver = getJqueryVersions();
+    if($conf['jquerycdn']) {
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
+            'src' => sprintf('http://code.jquery.com/jquery-%s.min.js', $jqver['JQ_VERSION'])
+        );
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
+            'src' => sprintf('http://code.jquery.com/jquery-migrate-%s.min.js', $jqver['JQM_VERSION'])
+        );
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
+            'src' => sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $jqver['JQUI_VERSION'])
+        );
+    } else {
+        $jqmod = md5(join('-', $jqver));
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
+            'src' => DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod
+        );
+    }
+
+    // load our javascript dispatcher
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed

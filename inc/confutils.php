@@ -120,6 +120,24 @@ function getInterwiki() {
 }
 
 /**
+ * Returns the jquery script versions defined in lib/scripts/jquery/versions
+ *
+ * @return array
+ */
+function getJqueryVersions() {
+    $versions = array();
+    $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
+    foreach($lines as $line ) {
+        $line = preg_replace('/#.*$/', '', $line);
+        list($key, $val) = explode('=', $line, 2);
+        $key = trim($key);
+        $val = trim($val);
+        $versions[$key] = $val;
+    }
+    return $versions;
+}
+
+/**
  * returns array of wordblock patterns
  *
  */
