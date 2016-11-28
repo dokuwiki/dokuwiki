@@ -8,7 +8,7 @@
 
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\StructException;
-use dokuwiki\plugin\struct\meta\Page;
+use dokuwiki\plugin\struct\meta\PageMeta;
 
 if(!defined('DOKU_INC')) die();
 
@@ -39,7 +39,7 @@ class action_plugin_struct_title extends DokuWiki_Action_Plugin {
         $id = $event->data['page'];
 
         try {
-            $page = new Page($id);
+            $page = new PageMeta($id);
 
             if(!blank($event->data['current']['title'])) {
                 $page->setTitle($event->data['current']['title']);

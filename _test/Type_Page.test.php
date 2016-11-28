@@ -30,16 +30,16 @@ class Type_Page_struct_test extends StructTest {
     public function test_sort() {
 
         saveWikiText('title1', 'test', 'test');
-        $title = new \dokuwiki\plugin\struct\meta\Page('title1');
-        $title->setTitle('This is a title');
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('title1');
+        $pageMeta->setTitle('This is a title');
 
         saveWikiText('title2', 'test', 'test');
-        $title = new \dokuwiki\plugin\struct\meta\Page('title2');
-        $title->setTitle('This is a title');
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('title2');
+        $pageMeta->setTitle('This is a title');
 
         saveWikiText('title3', 'test', 'test');
-        $title = new \dokuwiki\plugin\struct\meta\Page('title3');
-        $title->setTitle('Another Title');
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('title3');
+        $pageMeta->setTitle('Another Title');
 
 
         $this->loadSchemaJSON('pageschema');
@@ -77,11 +77,11 @@ class Type_Page_struct_test extends StructTest {
         );
 
         // make sure titles for some pages are known (not for wiki:welcome)
-        $title = new \dokuwiki\plugin\struct\meta\Page('wiki:dokuwiki');
-        $title->setTitle('DokuWiki Overview');
-        $title = new \dokuwiki\plugin\struct\meta\Page('wiki:syntax');
-        $title->setTitle('DokuWiki Foobar Syntax');
-        $title->savePageData();
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('wiki:dokuwiki');
+        $pageMeta->setTitle('DokuWiki Overview');
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('wiki:syntax');
+        $pageMeta->setTitle('DokuWiki Foobar Syntax');
+        $pageMeta->savePageData();
 
         // search
         $search = new Search();
