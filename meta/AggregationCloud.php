@@ -71,11 +71,11 @@ class AggregationCloud {
         $this->sortResults();
 
         $this->startScope();
-        $this->renderer->doc .= '<ul>';
+        $this->startList();
         foreach ($this->result as $result) {
             $this->renderTag($result);
         }
-        $this->renderer->doc .= '</ul>';
+        $this->finishList();
         $this->finishScope();
         return;
     }
@@ -113,27 +113,25 @@ class AggregationCloud {
          */
         $value = $result['tag'];
         $count = $result['count'];
-        $weight = $this->getWeight($count, $this->min, $this->max);
-        $type = 'struct_' . strtolower($value->getColumn()->getType()->getClass());
         if ($value->isEmpty()) {
             return;
         }
 
-        $this->renderer->doc .= '<li><div class="li">';
-        $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag $type'>";
+        $this->renderer->listitem_open(1);
+        $this->renderer->listcontent_open();
 
-        $this->renderer->doc .= $this->getTagLink($value, $weight);
-        $this->renderer->doc .= '</div>';
-        $this->renderer->doc .= '</div></li>';
+        $this->renderTagLink($value, $count);
+        $this->renderer->listcontent_close();
+        $this->renderer->listitem_close();
     }
 
     /**
      * @param Value $value
-     * @param int $weight
-     * @return string
+     * @param int $count
      */
-    protected function getTagLink(Value $value, $weight) {
-        $type = $value->getColumn()->getType()->getClass();
+    protected function renderTagLink(Value $value, $count) {
+        $type = strtolower($value->getColumn()->getType()->getClass());
+        $weight = $this->getWeight($count, $this->min, $this->max);
         $schema = $this->data['schemas'][0][0];
         $col = $value->getColumn()->getLabel();
 
@@ -143,7 +141,6 @@ class AggregationCloud {
             global $INFO;
             $target = $INFO['id'];
         }
-
 
         $tagValue = $value->getDisplayValue();
         if (empty($tagValue)) {
@@ -155,16 +152,26 @@ class AggregationCloud {
         $filter = "flt[$schema.$col*~]=" . urlencode($tagValue);
         $linktext = $tagValue;
 
-        if ($type == 'Color') {
-            $url = wl($target, $filter);
-            $style = "background-color:$tagValue;display:block;height:100%";
-            return "<a href='$url' style='$style'></a>";
-        }
-        if ($type == 'Media' && $value->getColumn()->getType()->getConfig()['mime'] == 'image/') {
-            $linktext = p_get_instructions("[[|{{{$tagValue}?$weight}}]]")[2][1][1];
+
+        if($this->mode != 'xhtml') {
+            $this->renderer->internallink("$target?$filter",$linktext);
+            return;
         }
 
-        return $this->renderer->internallink("$target?$filter",$linktext, null, true);
+        $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag struct_$type'>";
+
+        if ($type == 'color') {
+            $url = wl($target, $filter);
+            $style = "background-color:$tagValue;display:block;height:100%";
+            $this->renderer->doc .=  "<a href='$url' style='$style'></a>";
+        } else {
+            if ($type == 'media' && $value->getColumn()->getType()->getConfig()['mime'] == 'image/') {
+                $linktext = p_get_instructions("[[|{{{$tagValue}?$weight}}]]")[2][1][1];
+            }
+
+            $this->renderer->internallink("$target?$filter", $linktext);
+        }
+        $this->renderer->doc .= '</div>';
     }
 
     /**
@@ -236,5 +243,13 @@ class AggregationCloud {
             $hue += 360;
         }
         return $hue;
+    }
+
+    protected function startList() {
+        $this->renderer->listu_open();
+    }
+
+    protected function finishList() {
+        $this->renderer->listu_close();
     }
 }
