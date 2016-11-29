@@ -40,6 +40,9 @@ class action_plugin_struct_diff extends DokuWiki_Action_Plugin {
         global $INFO;
         if($ACT != 'diff') return;
         $id = $event->data[2];
+        if (!blank($event->data[1])) {
+            $id = $event->data[1] . ':' . $id;
+        }
         $rev = $event->data[3];
         if($INFO['id'] != $id) return;
 
