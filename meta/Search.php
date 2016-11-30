@@ -438,6 +438,15 @@ class Search {
     }
 
     /**
+     * All the schemas currently added
+     *
+     * @return Schema[]
+     */
+    public function getSchemas() {
+        return array_values($this->schemas);
+    }
+
+    /**
      * Checks if the given column is a * wildcard
      *
      * If it's a wildcard all matching columns are added to the column list, otherwise

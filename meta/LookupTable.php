@@ -59,4 +59,16 @@ class LookupTable extends AggregationTable {
         $this->renderResultRow(0, $this->result[0]);
         return $this->renderer->doc;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function render() {
+        if(!$this->searchConfig->getSchemas()[0]->isLookup()) {
+            msg($this->helper->getLang('no_lookup_for_page'), -1);
+            return;
+        }
+        parent::render();
+    }
+
 }
