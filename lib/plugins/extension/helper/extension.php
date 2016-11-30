@@ -638,11 +638,22 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function uninstall() {
         $this->purgeCache();
-        if(io_rmdir($this->getInstallDir(), true)) {
-            $this->triggerEvent($this->getID(), 'uninstall');
-            return true;
+
+        $data = array(
+            'extension' => $this,
+            'action' => 'uninstall'
+        );
+        $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+
+        if($trigger->advise_before()) {
+            if(io_rmdir($this->getInstallDir(), true)) {
+                $trigger->advise_after();
+                return true;
+            } else {
+                return false;
+            }
         }
-        return false;
+        return (bool) $trigger->result;
     }
 
     /**
@@ -654,16 +665,26 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         if ($this->isTemplate()) return $this->getLang('notimplemented');
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if ($this->isEnabled()) return $this->getLang('alreadyenabled');
-
         /* @var Doku_Plugin_Controller $plugin_controller */
         global $plugin_controller;
-        if ($plugin_controller->enable($this->base)) {
-            $this->purgeCache();
-            $this->triggerEvent($this->getID(), 'enable');
-            return true;
-        } else {
-            return $this->getLang('pluginlistsaveerror');
+
+        $data = array(
+            'extension' => $this,
+            'action' => 'enable'
+        );
+        $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+
+        if($trigger->advise_before()) {
+            if($plugin_controller->enable($this->base)) {
+                $this->purgeCache();
+                $trigger->advise_after();
+                return true;
+            } else {
+                return $this->getLang('pluginlistsaveerror');
+            }
         }
+        if($trigger->result === true) return true;
+        return (string) $trigger->result;
     }
 
     /**
@@ -673,18 +694,28 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
      */
     public function disable() {
         if ($this->isTemplate()) return $this->getLang('notimplemented');
-
-        /* @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
         if (!$this->isInstalled()) return $this->getLang('notinstalled');
         if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
-        if ($plugin_controller->disable($this->base)) {
-            $this->purgeCache();
-            $this->triggerEvent($this->getID(), 'disable');
-            return true;
-        } else {
-            return $this->getLang('pluginlistsaveerror');
+        /* @var Doku_Plugin_Controller $plugin_controller */
+        global $plugin_controller;
+
+        $data = array(
+            'extension' => $this,
+            'action' => 'disable'
+        );
+        $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+
+        if($trigger->advise_before()) {
+            if($plugin_controller->disable($this->base)) {
+                $this->purgeCache();
+                $trigger->advise_after();
+                return true;
+            } else {
+                return $this->getLang('pluginlistsaveerror');
+            }
         }
+        if($trigger->result === true) return true;
+        return (string) $trigger->result;
     }
 
     /**
@@ -921,32 +952,42 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
                 continue;
             }
 
+            // gather info
             $action = file_exists($target) ? 'update' : 'install';
-
-            // copy action
-            if($this->dircopy($item['tmp'], $target)) {
-                // return info
-                $id = $item['base'];
-                if($item['type'] == 'template') {
-                    $id = 'template:'.$id;
-                }
-                $installed_extensions[$id] = array(
-                    'base' => $item['base'],
-                    'type' => $item['type'],
-                    'action' => $action
-                );
-            } else {
-                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF, '<bdi>'.$item['base'].'</bdi>'));
+            $extname = $item['base'];
+            if($item['type'] == 'template') {
+                $extname = 'template:'.$extname;
             }
+
+            // prepare plugin hook
+            $extension = new helper_plugin_extension_extension();
+            $extension->setExtension($extname);
+            $data = array(
+                'extension' => $extension,
+                'action' => $action,
+                'src' => $item['tmp'],
+                'dst' => $target
+            );
+
+            // execute the copy
+            $trigger = new Doku_Event('PLUGIN_EXTENSION_CHANGE', $data);
+            if($trigger->advise_before()) {
+                // copy action
+                if($this->dircopy($item['tmp'], $target)) {
+                    $installed_extensions[$extname] = array(
+                        'base' => $item['base'],
+                        'type' => $item['type'],
+                        'action' => $action
+                    );
+                } else {
+                    throw new Exception(sprintf($this->getLang('error_copy') . DOKU_LF, '<bdi>' . $item['base'] . '</bdi>'));
+                }
+            }
+            $trigger->advise_after();
         }
 
         // cleanup
         if($tmp) io_rmdir($tmp, true);
-
-        // trigger for each extension
-        foreach($installed_extensions as $ext => $info) {
-            $this->triggerEvent($ext, $info['action']);
-        }
 
         return $installed_extensions;
     }
@@ -1168,18 +1209,6 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin {
         }
     }
 
-    /**
-     * Trigger a custom event when an extension has been changed
-     *
-     * @param string $extname
-     * @param string $action (install, update, uninstall, disable, enable)
-     */
-    protected function triggerEvent($extname, $action) {
-        $extension = new helper_plugin_extension_extension();
-        $extension->setExtension($extname);
-        $data = array('extension' => $extension, 'action' => $action);
-        trigger_event('PLUGIN_EXTENSION_CHANGE', $data, null, false);
-    }
 }
 
 // vim:ts=4:sw=4:et:
