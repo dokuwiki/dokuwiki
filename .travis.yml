@@ -14,7 +14,6 @@ env:
 matrix:
   allow_failures:
     - php: "hhvm"
-    - php: "7.1"
   exclude:
     - php: "hhvm"
       env: DISABLE_FUNCTIONS="gzopen"
