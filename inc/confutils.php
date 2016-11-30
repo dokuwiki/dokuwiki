@@ -309,6 +309,7 @@ function actionOK($action){
  */
 function useHeading($linktype) {
     static $useHeading = null;
+    if(defined('DOKU_UNITTEST')) $useHeading = null; // don't cache during unit tests
 
     if (is_null($useHeading)) {
         global $conf;

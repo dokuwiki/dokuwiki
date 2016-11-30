@@ -257,11 +257,17 @@ class renderer_xhtml_test extends DokuWikiTest {
 
     public function test_blankTitleLink() {
         global $conf;
-        $conf['useheading'] = 1;
-        saveWikiText('test','====== 0 ======', 'test');
-        $this->R->internallink('test');
+        $id = 'blanktest';
 
-        $expected = '<a href="/./doku.php?id=test" class="wikilink1" title="test">0</a>';
+        $conf['useheading'] = 1;
+        saveWikiText($id,'====== 0 ======', 'test');
+        $this->assertTrue(page_exists($id));
+
+        $header = p_get_first_heading($id, METADATA_RENDER_UNLIMITED);
+        $this->assertSame('0', $header);
+
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'">0</a>';
         $this->assertEquals($expected, trim($this->R->doc));
     }
 }
