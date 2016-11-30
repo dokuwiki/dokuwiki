@@ -15,6 +15,9 @@ matrix:
   allow_failures:
     - php: "hhvm"
     - php: "7.1"
+  exclude:
+    - php: "hhvm"
+      env: DISABLE_FUNCTIONS="gzopen"
 notifications:
   irc:
     channels:
@@ -25,7 +28,7 @@ services:
   - "mysql"
   - "postgresql"
 before_script:
-  - echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - [ -z "$DISABLE_FUNCTIONS" ] || echo "disable_functions=$DISABLE_FUNCTIONS" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - cp _test/mysql.conf.php.dist _test/mysql.conf.php
   - cp _test/pgsql.conf.php.dist _test/pgsql.conf.php
 script: cd _test && phpunit --verbose --stderr
