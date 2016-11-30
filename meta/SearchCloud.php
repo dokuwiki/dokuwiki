@@ -51,7 +51,7 @@ class SearchCloud extends SearchConfig {
             );
 
             $col->getType()->select($QB, $MN, 'value', 'tag');
-            $colname = $MN . 'value';
+            $colname = $MN . '.value';
         } else {
             $col->getType()->select($QB, $datatable, $col->getColName(), 'tag');
             $colname = $datatable . '.' . $col->getColName();
