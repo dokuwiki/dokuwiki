@@ -358,7 +358,7 @@ function auth_random($min, $max) {
  */
 function auth_encrypt($data, $secret) {
     $iv     = auth_randombytes(16);
-    $cipher = new Crypt_AES();
+    $cipher = new \phpseclib\Crypt\AES();
     $cipher->setPassword($secret);
 
     /*
@@ -381,7 +381,7 @@ function auth_encrypt($data, $secret) {
  */
 function auth_decrypt($ciphertext, $secret) {
     $iv     = substr($ciphertext, 0, 16);
-    $cipher = new Crypt_AES();
+    $cipher = new \phpseclib\Crypt\AES();
     $cipher->setPassword($secret);
     $cipher->setIV($iv);
 

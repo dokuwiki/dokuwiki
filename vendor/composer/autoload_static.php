@@ -8,6 +8,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
 {
     public static $files = array (
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -15,12 +16,20 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         array (
             'splitbrain\\PHPArchive\\' => 22,
         ),
+        'p' => 
+        array (
+            'phpseclib\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'splitbrain\\PHPArchive\\' => 
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-archive/src',
+        ),
+        'phpseclib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
     );
 
