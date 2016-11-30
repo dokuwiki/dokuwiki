@@ -1,7 +1,7 @@
 Datoteka je učitana na Vaš DokuWiki. Ovdje su detalji:
 
 Datoteka     : @MEDIA@
-Stara verzija: @OLD@
+Stara izmjena: @OLD@
 Datum        : @DATE@
 Preglednik   : @BROWSER@
 IP-Adresa    : @IPADDRESS@

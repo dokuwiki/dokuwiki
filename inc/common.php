@@ -835,6 +835,17 @@ function clientismobile() {
 }
 
 /**
+ * check if a given link is interwiki link
+ *
+ * @param string $link the link, e.g. "wiki>page"
+ * @return bool
+ */
+function link_isinterwiki($link){
+    if (preg_match('/^[a-zA-Z0-9\.]+>/u',$link)) return true;
+    return false;
+}
+
+/**
  * Convert one or more comma separated IPs to hostnames
  *
  * If $conf['dnslookups'] is disabled it simply returns the input string
@@ -1325,7 +1336,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         io_sweepNS($id, 'mediadir');
     } else {
         // save file (namespace dir is created in io_writeWikiPage)
-        io_writeWikiPage($svdta['file'], $text, $id);
+        io_writeWikiPage($svdta['file'], $svdta['newContent'], $id);
         // pre-save the revision, to keep the attic in sync
         $svdta['newRevision'] = saveOldRevision($id);
         $filesize_new = filesize($svdta['file']);
