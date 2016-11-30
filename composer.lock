@@ -4,20 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "762e5a22135332cb4b2e6e74eaed4f84",
     "content-hash": "203c74fd2582945e08dcab4324b70d55",
     "packages": [
         {
             "name": "easybook/geshi",
-            "version": "v1.0.8.17",
+            "version": "v1.0.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easybook/geshi.git",
-                "reference": "0fced4f530c0a1726588651f04c2bf2a3073c9c0"
+                "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easybook/geshi/zipball/0fced4f530c0a1726588651f04c2bf2a3073c9c0",
-                "reference": "0fced4f530c0a1726588651f04c2bf2a3073c9c0",
+                "url": "https://api.github.com/repos/easybook/geshi/zipball/4b06bfe8c6fbedd6aad0a0700d650f591386e287",
+                "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +51,7 @@
                 "highlighter",
                 "syntax"
             ],
-            "time": "2016-03-29T13:15:17+00:00"
+            "time": "2016-10-05 07:15:42"
         },
         {
             "name": "paragonie/random_compat",
@@ -98,7 +99,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07T23:38:38+00:00"
+            "time": "2016-11-07 23:38:38"
         },
         {
             "name": "splitbrain/php-archive",
@@ -145,7 +146,7 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2015-08-12T13:24:34+00:00"
+            "time": "2015-08-12 13:24:34"
         }
     ],
     "packages-dev": [],
