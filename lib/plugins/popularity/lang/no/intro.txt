@@ -1,9 +1,9 @@
-====== Popularitetsfeedback ======
+======  Tilbakemelding om popularitet ======
 
-Dette verktøyet samler anonyme data om din wiki og lar deg sende det tilbake til DokuWikis utviklere. Dette hjelper utviklerne å forstå hvordan DokuWiki blir brukt av brukerne, og gjør at fremtidig beslutninger om videre utvikling kan baseres på statistikk fra virkelig bruk.
+Dette verktøyet samler anonyme data om din wiki og sender disse tilbake til DokuWikis utviklere. Dette hjelper utviklerne til å forstå hvordan DokuWiki blir brukt, og gjør at fremtidig beslutninger om videre utvikling kan baseres på statistikk fra virkelig bruk.
 
-Du oppfordres herved til å gjenta dette skrittet fra tid til annen for å holde utviklerne informert når din wiki vokser. Ditt gjentatte datasett blir identifisert vha en anonym ID.
+Du oppfordres herved til å gjenta innsendingen fra tid til annen for å holde utviklerne informert når din wiki vokser. Dine datasett vil bli  identifisert ved hjelp av en anonym identifikator.
 
-De data som samles inn inneholder informasjon som din DokuWiki-versjon, antallet og størrelsen på sider og filer, installerte plugins og informasjon om din installerte PHP.
+De data som samles inn inneholder informasjon om din DokuWiki-versjon, antallet og størrelsen på sider og filer, installerte utvidelser og informasjon om hvilken versjon av PHP som er installert.
 
-Rådata som blir sendt vises nedenfor. Bruk knappen "Send data" for å overføre informasjonen.
+Rådata som blir sendt vises nedenfor. Bruk knappen "Send data" for å overføre denne informasjonen.

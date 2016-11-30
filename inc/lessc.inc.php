@@ -51,7 +51,8 @@ class lessc {
 	public $parentSelector = '&';
 
 	public $importDisabled = false;
-	public $importDir = '';
+    /** @var  string|string[] */
+	public $importDir;
 
 	protected $numberPrecision = null;
 

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
 $lang['__background_site__']   = 'Barva hlavního pozadí (pod kontextovým boxem)';

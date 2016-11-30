@@ -1,8 +1,8 @@
 <?php
+
 /**
- * serbian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Filip Brcic <brcha@users.sourceforge.net>
  * @author Иван Петровић petrovicivan@ubuntusrbija.org
  * @author Ivan Petrovic <petrovicivan@ubuntusrbija.org>

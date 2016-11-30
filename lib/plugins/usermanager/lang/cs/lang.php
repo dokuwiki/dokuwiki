@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
@@ -16,6 +16,7 @@
  * @author mkucera66@seznam.cz
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Daniel Slováček <danslo@danslo.cz>
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';
@@ -80,7 +81,7 @@ $lang['addUser_error_missing_pass'] = 'Buď prosím nastavte heslo nebo aktivujt
 $lang['addUser_error_pass_not_identical'] = 'Zadaná hesla nebyla shodná.';
 $lang['addUser_error_modPass_disabled'] = 'Změna hesel je momentálně zákázána.';
 $lang['addUser_error_name_missing'] = 'Zadejte prosím jméno nového uživatele.';
-$lang['addUser_error_modName_disabled'] = 'Změna jmen je momentálně zákázána.';
+$lang['addUser_error_modName_disabled'] = 'Změna jmen je momentálně zakázána.';
 $lang['addUser_error_mail_missing'] = 'Zadejte prosím emailovou adresu nového uživatele.';
 $lang['addUser_error_modMail_disabled'] = 'Změna emailové adresy je momentálně zákázána.';
 $lang['addUser_error_create_event_failed'] = 'Zásuvný modul zabránil přidání nového uživatele. Pro více informací si prohlédněte další možné zprávy.';

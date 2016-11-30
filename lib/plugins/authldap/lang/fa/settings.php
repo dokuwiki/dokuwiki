@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Mohammad Sadegh <msdn2013@gmail.com>
  * @author Omid Hezaveh <hezpublic@gmail.com>
  * @author Mohmmad Razavi <sepent@gmail.com>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ * @author sam01 <m.sajad079@gmail.com>
  */
 $lang['server']                = 'سرور LDAP شما. چه به صورت ';
 $lang['port']                  = 'درگاه سرور LDAP اگر که URL کامل در بالا نوشته نشده';

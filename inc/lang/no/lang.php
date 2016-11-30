@@ -23,6 +23,9 @@
  * @author Christopher Schive <chschive@frisurf.no>
  * @author Patrick <spill.p@hotmail.com>
  * @author Danny Buckhof <daniel.raknes@hotmail.no>
+ * @author Arne Hanssen <arne.hanssen@getmail.no>
+ * @author Arne Hanssen <arnehans@getmail.no>
+ * @author Patrick Sletvold <patricksletvold@hotmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -101,7 +104,7 @@ $lang['profchanged']           = 'Brukerprofilen ble vellykket oppdatert.';
 $lang['profnodelete']          = 'Denne wikien støtter ikke sletting av brukere';
 $lang['profdeleteuser']        = 'Slett konto';
 $lang['profdeleted']           = 'Din brukerkonto har blitt slettet fra denne wikien';
-$lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke omgjøres.';
+$lang['profconfdelete']        = 'Jeg ønsker å fjerne min konto fra denne wikien. <br/> Denne handlingen kan ikke gjøres om.';
 $lang['profconfdeletemissing'] = 'Boks for bekreftelse ikke avkrysset';
 $lang['proffail']              = 'Brukerprofilen ble ikke oppdatert';
 $lang['pwdforget']             = 'Glemt passordet ditt? Få deg et nytt';
@@ -229,7 +232,7 @@ $lang['mail_changed']          = 'side endret:';
 $lang['mail_subscribe_list']   = 'side endret i \'namespace\':';
 $lang['mail_new_user']         = 'ny bruker:';
 $lang['mail_upload']           = 'fil opplastet:';
-$lang['changes_type']          = 'Vis endringer av';
+$lang['changes_type']          = 'Vis endringer for';
 $lang['pages_changes']         = 'Sider';
 $lang['media_changes']         = 'Mediefiler';
 $lang['both_changes']          = 'Både sider og mediefiler';
@@ -299,7 +302,7 @@ $lang['i_problems']            = 'Installasjonen oppdaget noen problemer, disse 
 $lang['i_modified']            = 'For sikkerhets skyld vil dette skriptet bare virke med en ny og uendret Dokuwiki-installsjon.
                          Du bør enten pakke ut filene på nytt fra den nedlastede pakken, eller konsultere den komplette
                          <a href="http://dokuwiki.org/install">Dokuwiki-installasjonsinstruksen</a>';
-$lang['i_funcna']              = 'PHP-funksjonen <code>%s</code> er ikke tilgjengelig. Kanskje din leverandør har deaktivert den av noen grunn?';
+$lang['i_funcna']              = 'PHP-funksjonen <code>%s</code> er ikke tilgjengelig. Kanskje din nettleverandør har deaktivert denne?';
 $lang['i_phpver']              = 'Din PHP versjon <code>%s</code> er lavere enn kravet <code>%s</code>. Du må oppgradere PHP installasjonen. ';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload må deaktiveres i php.ini for å kjøre DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> er ikke skrivbar for DokuWiki. Du må fikse rettighetene for denne mappen!';
@@ -321,7 +324,7 @@ $lang['i_license']             = 'Velg lisens som du vil legge ut innholdet unde
 $lang['i_license_none']        = 'Ikke vis noen lisensinformasjon';
 $lang['i_pop_field']           = 'Venligst hejlp oss å forbedre Dokuwiki-opplevelsen:';
 $lang['i_pop_label']           = 'Sand annonyme bruksdata til Dokuwiki-utviklerene, en gang i måneden';
-$lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også<a href="%s">se på nylig foretatte endringer for hele wikien</a>.';
+$lang['recent_global']         = 'Du ser nå på endringene i navnerommet <b>%s</b>. Du kan også <a href="%s">se på nylig foretatte endringer for hele wikien</a>. ';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måneder siden';
 $lang['weeks']                 = '%d uker siden';
@@ -353,11 +356,12 @@ $lang['media_perm_read']       = 'Beklager, du har ikke tilgang til å lese file
 $lang['media_perm_upload']     = 'Beklager, du har ikke tilgang til å laste opp filer.';
 $lang['media_update']          = 'Last opp ny versjon';
 $lang['media_restore']         = 'Gjenopprett denne versjonen';
+$lang['media_acl_warning']     = 'Kanskje er denne listen ikke komplett, pga. restrisjoner satt i ACL eller skjulte sider.';
 $lang['currentns']             = 'gjeldende navnemellomrom';
 $lang['searchresult']          = 'Søk i resultat';
 $lang['plainhtml']             = 'Enkel HTML';
 $lang['wikimarkup']            = 'wiki-format';
 $lang['page_nonexist_rev']     = 'Finnes ingen side på %s. Den er derfor laget på <a href="%s">%s</a>';
-$lang['email_signature_text']       = 'Denne meldingen ble laget av DokuWiki
-@DOKUWIKIURL@';
 $lang['unable_to_parse_date']  = 'Ikke mulig å tolke "%s".';
+$lang['email_signature_text']  = 'Denne meldingen ble laget av DokuWiki
+@DOKUWIKIURL@';

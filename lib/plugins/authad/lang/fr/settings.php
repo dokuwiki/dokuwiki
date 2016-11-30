@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Momo50 <c.brothelande@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>

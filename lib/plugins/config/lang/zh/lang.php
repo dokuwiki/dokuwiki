@@ -17,6 +17,7 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Garfield <garfield_550@outlook.com>
  * @author JellyChen <451453325@qq.com>
+ * @author tai <tai_tang@126.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。

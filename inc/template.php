@@ -1224,8 +1224,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     /** @var Input $INPUT */
     global $INPUT;
     global $REV;
-    $w = tpl_img_getTag('File.Width');
-    $h = tpl_img_getTag('File.Height');
+    $w = (int) tpl_img_getTag('File.Width');
+    $h = (int) tpl_img_getTag('File.Height');
 
     //resize to given max values
     $ratio = 1;
