@@ -28,6 +28,7 @@
  * @author Garfield <garfield_550@outlook.com>
  * @author JellyChen <451453325@qq.com>
  * @author tai <tai_tang@126.com>
+ * @author 高博 <bobnemo1983@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
