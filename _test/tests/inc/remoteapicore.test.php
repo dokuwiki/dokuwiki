@@ -525,7 +525,7 @@ You can use up to five different levels of',
         );
         $this->assertEquals($expected, $this->remote->call('wiki.getRecentMediaChanges', $params));
 
-        sleep(1);
+        $this->waitForTick(true);
         $conf['useacl'] = 1;
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['grps'] = array('user');
