@@ -7,6 +7,7 @@
  * @author Laynee <seedfloyd@gmail.com>
  * @author lerdt <pro@nicolas-hemard.eu>
  * @author Digitalin <digikatya@yahoo.fr>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  */
 $lang['menu']                  = 'Struct - Éditeur de schémas';
 $lang['menu_assignments']      = 'Struct - Assignement de schémas';
@@ -22,6 +23,7 @@ $lang['createhint']            = 'Remarque : les schémas ne peuvent être renom
 $lang['pagelabel']             = 'Page';
 $lang['rowlabel']              = 'Lignes';
 $lang['revisionlabel']         = 'Dernière mise à jour';
+$lang['userlabel']             = 'Dernier éditeur';
 $lang['summary']               = 'Struct : données mises à jour';
 $lang['export']                = 'Exporter le schéma dans un fichier JSON';
 $lang['btn_export']            = 'Exporter';
@@ -62,11 +64,13 @@ $lang['Validation Exception Url invalid'] = '%s n\'est pas une URL valide';
 $lang['Validation Exception Mail invalid'] = '%s n\'est pas une adresse email valide';
 $lang['Validation Exception invalid date format'] = 'doit être au format AAAA-MM-JJ';
 $lang['Validation Exception invalid datetime format'] = 'doit être au format AAAA-MM-JJ HH:MM:SS';
+$lang['Validation Exception bad color specification'] = 'doit être au format #RRVVBB';
 $lang['Exception noschemas']   = 'Schéma non spécifié, impossible de charger des colonnes';
 $lang['Exception nocolname']   = 'Nom de colonne non spécifié';
 $lang['Exception nolookupmix'] = 'Vous ne pouvez pas agréger plus d\'un schéma de consultation ou le mélanger avec des données de page.';
 $lang['Exception nolookupassign'] = 'Vous ne pouvez assigner un schéma de consultation à des pages';
 $lang['Exception No data saved'] = 'Aucune donnée sauvegardée';
+$lang['Exception no sqlite']   = 'Le plugin struct requiert le plugin sqlite. Merci de l\'installer et l\'activer.';
 $lang['sort']                  = 'Trier selon cette colonne';
 $lang['next']                  = 'Page suivante';
 $lang['prev']                  = 'Page précédente';
@@ -75,4 +79,5 @@ $lang['csvexport']             = 'Export CSV';
 $lang['tablefilteredby']       = 'Filtre : %s';
 $lang['tableresetfilter']      = 'Supprimer les filtres';
 $lang['Exception schema missing'] = 'Le schéma %s n\'existe pas !';
+$lang['no_lookup_for_page']    = 'Vous ne pouvez pas utiliser l\'éditeur de consultation sur une page de schéma!';
 $lang['lookup new entry']      = 'Créer une nouvelle entrée';
