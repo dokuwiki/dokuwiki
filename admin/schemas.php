@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Form\Form;
+use dokuwiki\plugin\struct\meta\CSVImporter;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\SchemaBuilder;
 use dokuwiki\plugin\struct\meta\SchemaEditor;
@@ -39,7 +40,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         global $INPUT;
         global $ID;
         global $config_cascade;
-        $config_file_path =  end($config_cascade['main']['local']);
+        $config_file_path = end($config_cascade['main']['local']);
 
         // form submit
         $table = Schema::cleanTableName($INPUT->str('table'));
@@ -73,6 +74,19 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                 }
             }
         }
+
+        // import CSV
+        if($table && $INPUT->bool('importcsv')) {
+            if(isset($_FILES['csvfile']['tmp_name'])) {
+                try {
+                    new CSVImporter($table, $_FILES['csvfile']['tmp_name']);
+                    msg('CSV imported', 1);
+                } catch(StructException $e) {
+                    msg(hsc($e->getMessage()), -1);
+                }
+            }
+        }
+
         // delete
         if($table && $INPUT->bool('delete')) {
             if($table != $INPUT->str('confirm')) {
@@ -153,6 +167,15 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $form->addButton('import', $this->getLang('btn_import'));
         $form->addHTML('<p>' . $this->getLang('import_warning') . '</p>');
         $form->addFieldsetClose();
+
+        if($schema->isLookup()) {
+            $form->addFieldsetOpen($this->getLang('csvimport'));
+            $form->addElement(new \dokuwiki\Form\InputElement('file', 'csvfile'));
+            $form->addButton('importcsv', $this->getLang('btn_import'));
+            $form->addHTML('<p><a href="https://www.dokuwiki.org/plugin:struct:csvimport">' . $this->getLang('csv_help_link') . '</a></p>');
+            $form->addFieldsetClose();
+        }
+
         return $form->toHTML();
     }
 
@@ -255,6 +278,8 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
 
         return $toc;
     }
+
+
 
 }
 

@@ -86,6 +86,9 @@ $lang['prev']      = 'Previous page';
 $lang['none']      = 'Nothing found';
 $lang['csvexport'] = 'CSV Export';
 
+$lang['csvimport'] = 'Import data from a CSV file';
+$lang['csv_help_link'] = 'Please refer to the manual on CSV Import for format details.';
+
 $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 
