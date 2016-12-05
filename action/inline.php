@@ -9,6 +9,7 @@
 // must be run within Dokuwiki
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\AccessTableData;
+use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValueValidator;
@@ -112,6 +113,11 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         self::checkCSRF();
         if(!$this->schemadata->getSchema()->isLookup()) {
             $this->checkPage();
+            $assignments = Assignments::getInstance();
+            $tables = $assignments->getPageAssignments($this->pid, true);
+            if (!in_array($this->schemadata->getSchema()->getTable(), $tables)) {
+                throw new StructException('inline save error: schema not assigned to page');
+            }
         }
         if(!$this->schemadata->getSchema()->isEditable()) {
             throw new StructException('inline save error: no permission for schema');
@@ -139,6 +145,13 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         try {
             if(!$this->schemadata->saveData($tosave)) {
                 throw new StructException('saving failed');
+            }
+            if(!$this->schemadata->getSchema()->isLookup()) {
+                // make sure this schema is assigned
+                $assignments->assignPageSchema(
+                    $this->pid,
+                    $this->schemadata->getSchema()->getTable()
+                );
             }
         } finally {
             // unlock (unlocking a non-existing file is okay,
