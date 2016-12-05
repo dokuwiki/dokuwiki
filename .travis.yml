@@ -7,11 +7,27 @@ php:
   - "5.5"
   - "5.4"
   - "5.3"
-  - "hhvm"
+
 env:
   - DISABLE_FUNCTIONS=
   - DISABLE_FUNCTIONS="gzopen"
 matrix:
+  fast_finish: true
+  include:
+    - php: hhvm
+      sudo: true
+      dist: trusty
+      group: edge # until the next update
+      addons:
+        apt:
+          packages:
+            - mysql-server-5.6
+            - mysql-client-core-5.6
+            - mysql-client-5.6
+      services:
+        - mysql
+        - postgresql
+      env: DISABLE_FUNCTIONS=
   allow_failures:
     - php: "hhvm"
   exclude:
@@ -23,9 +39,6 @@ notifications:
         - "chat.freenode.net#dokuwiki"
     on_success: change
     on_failure: change
-services:
-  - "mysql"
-  - "postgresql"
 install:
   - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit.phar
   - chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit
