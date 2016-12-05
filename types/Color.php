@@ -69,6 +69,17 @@ class Color extends AbstractBaseType {
     }
 
     /**
+     * @inheritDoc
+     */
+    public function renderTagCloudLink($value, \Doku_Renderer $R, $mode, $page, $filter, $weight) {
+        $url = wl($page, $filter);
+        $color = $this->displayValue($value);
+        $style = "background-color:$color;";
+        $R->doc .=  "<a class='struct_color_tagcloud' href='$url' style='$style'><span class='hide_text'>$color</span></a>";
+    }
+
+
+    /**
      * Sort by the hue of a color, not by its hex-representation
      */
     public function getSortString($value) {

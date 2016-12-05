@@ -154,6 +154,10 @@ class Value {
         return true;
     }
 
+    public function renderAsTagCloudLink(\Doku_Renderer $R, $mode, $page, $filter, $weight) {
+        $this->column->getType()->renderTagCloudLink($this->value, $R, $mode, $page, $filter, $weight);
+    }
+
     /**
      * Return the value editor for this value field
      *

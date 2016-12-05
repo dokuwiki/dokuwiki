@@ -153,25 +153,15 @@ class AggregationCloud {
         $linktext = $tagValue;
 
 
-        if($this->mode != 'xhtml') {
-            $this->renderer->internallink("$target?$filter",$linktext);
-            return;
+        if($this->mode == 'xhtml') {
+            $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag struct_$type'>";
         }
 
-        $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag struct_$type'>";
+        $value->renderAsTagCloudLink($this->renderer, $this->mode, $target, $filter, $weight);
 
-        if ($type == 'color') {
-            $url = wl($target, $filter);
-            $style = "background-color:$tagValue;display:block;height:100%";
-            $this->renderer->doc .=  "<a href='$url' style='$style'></a>";
-        } else {
-            if ($type == 'media' && $value->getColumn()->getType()->getConfig()['mime'] == 'image/') {
-                $linktext = p_get_instructions("[[|{{{$tagValue}?$weight}}]]")[2][1][1];
-            }
-
-            $this->renderer->internallink("$target?$filter", $linktext);
+        if($this->mode == 'xhtml') {
+            $this->renderer->doc .= '</div>';
         }
-        $this->renderer->doc .= '</div>';
     }
 
     /**

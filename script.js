@@ -1,6 +1,5 @@
 jQuery(function () {
     /* DOKUWIKI:include script/functions.js */
-    /* DOKUWIKI:include script/cloud.js */
 
     /* DOKUWIKI:include script/EntryEditor.js */
     EntryEditor(jQuery('#dw__editform, form.bureaucracy__plugin'));
