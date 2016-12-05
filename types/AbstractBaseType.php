@@ -6,6 +6,7 @@ use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValidationException;
+use dokuwiki\plugin\struct\meta\Value;
 
 /**
  * Class AbstractBaseType
@@ -427,6 +428,25 @@ abstract class AbstractBaseType {
      */
     public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
         $QB->addOrderBy("$tablealias.$colname $order");
+    }
+
+    /**
+     * Get the string by which to sort values of this type
+     *
+     * This implementation is designed to work both as registered function in sqlite
+     * and to provide a string to be used in sorting values of this type in PHP.
+     *
+     * @param string|Value $string The string by which the types would usually be sorted
+     */
+    public function getSortString($value) {
+        if (is_string($value)) {
+            return $value;
+        }
+        $display = $value->getDisplayValue();
+        if (is_array($display)) {
+            return blank($display[0]) ? "" : $display[0];
+        }
+        return $display;
     }
 
     /**
