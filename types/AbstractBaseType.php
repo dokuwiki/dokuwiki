@@ -451,6 +451,8 @@ abstract class AbstractBaseType {
      * and to provide a string to be used in sorting values of this type in PHP.
      *
      * @param string|Value $string The string by which the types would usually be sorted
+     *
+     * @return string
      */
     public function getSortString($value) {
         if (is_string($value)) {

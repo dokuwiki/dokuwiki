@@ -64,7 +64,7 @@ class AggregationCloud {
     }
 
     /**
-     * Create the table on the renderer
+     * Create the cloud on the renderer
      */
     public function render() {
 
