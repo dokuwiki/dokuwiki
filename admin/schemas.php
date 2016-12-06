@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Form\Form;
+use dokuwiki\plugin\struct\meta\CSVExporter;
 use dokuwiki\plugin\struct\meta\CSVImporter;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\SchemaBuilder;
@@ -85,6 +86,14 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                     msg(hsc($e->getMessage()), -1);
                 }
             }
+        }
+
+        // export CSV
+        if($table && $INPUT->bool('exportcsv')) {
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="' . $table . '.csv";');
+            new CSVExporter($table);
+            exit();
         }
 
         // delete
@@ -166,6 +175,10 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $form->addElement(new \dokuwiki\Form\InputElement('file', 'schemafile'));
         $form->addButton('import', $this->getLang('btn_import'));
         $form->addHTML('<p>' . $this->getLang('import_warning') . '</p>');
+        $form->addFieldsetClose();
+
+        $form->addFieldsetOpen($this->getLang('csvexport'));
+        $form->addButton('exportcsv', $this->getLang('btn_export'));
         $form->addFieldsetClose();
 
         if($schema->isLookup()) {

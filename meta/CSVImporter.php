@@ -3,9 +3,9 @@
 namespace dokuwiki\plugin\struct\meta;
 
 /**
- * Class ConfigParser
+ * Class CSVImporter
  *
- * Utilities to parse the configuration syntax into an array
+ * Imports CSV data into a lookup schema
  *
  * @package dokuwiki\plugin\struct\meta
  */
