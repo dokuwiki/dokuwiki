@@ -86,8 +86,10 @@ $lang['prev']      = 'Previous page';
 $lang['none']      = 'Nothing found';
 $lang['csvexport'] = 'CSV Export';
 
-$lang['csvimport'] = 'Import data from a CSV file';
-$lang['csv_help_link'] = 'Please refer to the manual on CSV Import for format details.';
+$lang['admin_csvexport'] = 'Export raw data to a CSV file';
+$lang['admin_csvimport'] = 'Import raw data from a CSV file';
+$lang['admin_csvdone'] = 'CSV file imported';
+$lang['admin_csvhelp'] = 'Please refer to the manual on CSV Import for format details.';
 
 $lang['tablefilteredby'] = 'Filtered by %s';
 $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
