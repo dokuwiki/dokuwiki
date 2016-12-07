@@ -117,19 +117,6 @@ class AggregationCloud {
             return;
         }
 
-        $this->renderer->listitem_open(1);
-        $this->renderer->listcontent_open();
-
-        $this->renderTagLink($value, $count);
-        $this->renderer->listcontent_close();
-        $this->renderer->listitem_close();
-    }
-
-    /**
-     * @param Value $value
-     * @param int $count
-     */
-    protected function renderTagLink(Value $value, $count) {
         $type = strtolower($value->getColumn()->getType()->getClass());
         $weight = $this->getWeight($count, $this->min, $this->max);
 
@@ -150,6 +137,9 @@ class AggregationCloud {
         $key = $value->getColumn()->getFullQualifiedLabel() . '*~';
         $filter = SearchConfigParameters::$PARAM_FILTER . "[$key]=" . urlencode($tagValue);
 
+        $this->renderer->listitem_open(1);
+        $this->renderer->listcontent_open();
+
         if($this->mode == 'xhtml') {
             $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag struct_$type'>";
         }
@@ -159,6 +149,9 @@ class AggregationCloud {
         if($this->mode == 'xhtml') {
             $this->renderer->doc .= '</div>';
         }
+
+        $this->renderer->listcontent_close();
+        $this->renderer->listitem_close();
     }
 
     /**
