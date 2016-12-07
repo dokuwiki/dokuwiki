@@ -132,8 +132,6 @@ class AggregationCloud {
     protected function renderTagLink(Value $value, $count) {
         $type = strtolower($value->getColumn()->getType()->getClass());
         $weight = $this->getWeight($count, $this->min, $this->max);
-        $schema = $this->data['schemas'][0][0];
-        $col = $value->getColumn()->getLabel();
 
         if (!empty($this->data['target'])) {
             $target = $this->data['target'];
@@ -149,9 +147,8 @@ class AggregationCloud {
         if (is_array($tagValue)) {
             $tagValue = $tagValue[0];
         }
-        $filter = "flt[$schema.$col*~]=" . urlencode($tagValue);
-        $linktext = $tagValue;
-
+        $key = $value->getColumn()->getFullQualifiedLabel() . '*~';
+        $filter = SearchConfigParameters::$PARAM_FILTER . "[$key]=" . urlencode($tagValue);
 
         if($this->mode == 'xhtml') {
             $this->renderer->doc .= "<div style='font-size:$weight%' data-count='$count' class='cloudtag struct_$type'>";
