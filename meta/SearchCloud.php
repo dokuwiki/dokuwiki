@@ -12,6 +12,8 @@ namespace dokuwiki\plugin\struct\meta;
  */
 class SearchCloud extends SearchConfig {
 
+    protected $limit = '';
+
 
     /**
      * Transform the set search parameters into a statement
@@ -60,8 +62,19 @@ class SearchCloud extends SearchConfig {
         $QB->addGroupByStatement('tag');
         $QB->addOrderBy('count DESC');
 
-        return $QB->getSQL();
+        list($sql, $opts) = $QB->getSQL();
+        return [$sql . $this->limit, $opts];
     }
+
+    /**
+     * We do not have pagination in clouds, so we can work with a limit within SQL
+     *
+     * @param int $limit
+     */
+    public function setLimit($limit) {
+        $this->limit = " LIMIT $limit";
+    }
+
 
     /**
      * Execute this search and return the result
@@ -80,24 +93,20 @@ class SearchCloud extends SearchConfig {
         $res = $this->sqlite->query($sql, $opts);
         if($res === false) throw new StructException("SQL execution failed for\n\n$sql");
 
-        $this->result_pids = array();
-        $result = array();
-        $cursor = -1;
+        $result = [];
+        $rows = $this->sqlite->res2arr($res);
 
-        while($row = $res->fetch(\PDO::FETCH_ASSOC)) {
+        foreach ($rows as $row) {
             if (!empty($this->config['min']) && $this->config['min'] > $row['count']) {
                 break;
             }
-            $cursor++;
-            if($cursor < $this->range_begin) continue;
-            if($this->range_end && $cursor >= $this->range_end) continue;
 
             $row['tag'] = new Value($this->columns[0], $row['tag']);
             $result[] = $row;
         }
 
         $this->sqlite->res_close($res);
-        $this->count = $cursor + 1;
+        $this->count = count($result);
         return $result;
     }
 }
