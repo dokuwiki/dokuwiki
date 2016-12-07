@@ -1,4 +1,5 @@
 <?php
+use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\SearchConfig;
 use dokuwiki\plugin\struct\meta\SearchConfigParameters;
 
@@ -14,8 +15,39 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
+        $controller->register_hook('PARSER_CACHE_USE', 'BEFORE', $this, 'handle_cache_schemachange');
         $controller->register_hook('PARSER_CACHE_USE', 'BEFORE', $this, 'handle_cache_aggregation');
         $controller->register_hook('PARSER_CACHE_USE', 'AFTER', $this, 'handle_cache_dynamic');
+    }
+
+    /**
+     * @return string the refresh file
+     */
+    public static function getSchemaRefreshFile() {
+        global $conf;
+        return $conf['cachedir'] . '/struct.schemarefresh';
+    }
+
+    /**
+     * For pages potentially containing schema data, refresh the cache when schema data has been
+     * updated
+     *
+     * @param Doku_Event $event event object by reference
+     * @param mixed $param [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     * @return bool
+     */
+    public function handle_cache_schemachange(Doku_Event $event, $param) {
+        /** @var \cache_parser $cache */
+        $cache = $event->data;
+        if($cache->mode != 'xhtml') return true;
+        if(!$cache->page) return true; // not a page cache
+
+        $assignments = Assignments::getInstance();
+        if(!$assignments->getPageAssignments($cache->page)) return true; // no struct here
+
+        $cache->depends['files'][] = self::getSchemaRefreshFile();
+        return true;
     }
 
     /**
@@ -65,7 +97,7 @@ class action_plugin_struct_cache extends DokuWiki_Action_Plugin {
 
             // cache depends on current user
             if($meta['hasaggregation'] & SearchConfig::$CACHE_USER) {
-                $cache->key .= ';'.$INPUT->server->str('REMOTE_USER');
+                $cache->key .= ';' . $INPUT->server->str('REMOTE_USER');
 
             }
 

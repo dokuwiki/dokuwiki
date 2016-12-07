@@ -180,12 +180,13 @@ class QueryBuilder {
     /**
      * Creates a new table alias that has not been used before
      *
+     * @param string $prefix the prefix for the alias, helps with readability of the SQL
      * @return string
      */
-    public function generateTableAlias() {
+    public function generateTableAlias($prefix = 'T') {
         static $count = 0;
         $count++;
-        return "T$count";
+        return $prefix . $count;
     }
 
     /**

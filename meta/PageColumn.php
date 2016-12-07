@@ -18,7 +18,7 @@ class PageColumn extends Column {
      * PageColumn constructor.
      *
      * @param int $sort
-     * @param Page $type
+     * @param PageMeta $type
      * @param string $table
      */
     public function __construct($sort, Page $type, $table='') {

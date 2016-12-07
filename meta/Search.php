@@ -367,7 +367,7 @@ class Search {
             if($col->isMulti()) {
                 $datatable = "data_{$col->getTable()}";
                 $multitable = "multi_{$col->getTable()}";
-                $MN = 'M' . $col->getColref();
+                $MN = $QB->generateTableAlias('M');
 
                 $QB->addLeftJoin(
                     $datatable,
@@ -396,7 +396,7 @@ class Search {
 
             /** @var $col Column */
             if($col->isMulti()) {
-                $MN = 'MN' . $col->getColref(); // FIXME this joins a second time if the column was selected before
+                $MN = $QB->generateTableAlias('MN');
 
                 $QB->addLeftJoin(
                     $datatable,
@@ -435,6 +435,15 @@ class Search {
      */
     public function getColumns() {
         return $this->columns;
+    }
+
+    /**
+     * All the schemas currently added
+     *
+     * @return Schema[]
+     */
+    public function getSchemas() {
+        return array_values($this->schemas);
     }
 
     /**

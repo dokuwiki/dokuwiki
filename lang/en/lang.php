@@ -93,7 +93,7 @@ $lang['tableresetfilter'] = 'Show all (remove filter/sort)';
 
 $lang['Exception schema missing'] = "Schema %s does not exist!";
 
-
+$lang['no_lookup_for_page'] = 'You can\'t use the Lookup Editor on a page schema!';
 $lang['lookup new entry'] = 'Create new Entry';
 $lang['js']['lookup_delete'] = 'Delete Entry';
 

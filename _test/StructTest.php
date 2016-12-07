@@ -66,6 +66,11 @@ abstract class StructTest extends \DokuWikiTest {
      * @return int new timestamp
      */
     protected function waitForTick($init = false) {
+        // this will be in DokuWiki soon
+        if (is_callable('parent::waitForTick')) {
+            return parent::waitForTick($init);
+        }
+
         static $last = 0;
         if($init) $last = time();
 

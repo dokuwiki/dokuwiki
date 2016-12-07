@@ -97,7 +97,7 @@ class AccessTableData extends AccessTable {
         /** @noinspection SqlResolve */
         $ok = $this->sqlite->query( "UPDATE $stable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
         /** @noinspection SqlResolve */
-        $ok = $this->sqlite->query( "UPDATE $mtable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
+        $ok = $ok && $this->sqlite->query( "UPDATE $mtable SET latest = 0 WHERE latest = 1 AND pid = ?",array($this->pid));
 
         // insert single values
         $ok = $ok && $this->sqlite->query($singlesql, $opt);

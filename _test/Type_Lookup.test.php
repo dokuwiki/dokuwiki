@@ -2,7 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
-use dokuwiki\plugin\struct\meta\Page;
+use dokuwiki\plugin\struct\meta\PageMeta;
 use dokuwiki\plugin\struct\test\mock\AccessTable;
 use dokuwiki\plugin\struct\test\mock\Lookup;
 
@@ -16,16 +16,16 @@ class Type_Lookup_struct_test extends StructTest {
 
     protected function prepareLookup() {
         saveWikiText('title1', 'test', 'test');
-        $title = new Page('title1');
-        $title->setTitle('This is a title');
+        $pageMeta = new PageMeta('title1');
+        $pageMeta->setTitle('This is a title');
 
         saveWikiText('title2', 'test', 'test');
-        $title = new Page('title2');
-        $title->setTitle('This is a 2nd title');
+        $pageMeta = new PageMeta('title2');
+        $pageMeta->setTitle('This is a 2nd title');
 
         saveWikiText('title3', 'test', 'test');
-        $title = new Page('title3');
-        $title->setTitle('Another Title');
+        $pageMeta = new PageMeta('title3');
+        $pageMeta->setTitle('Another Title');
 
         $this->loadSchemaJSON('pageschema', '', 0, true);
         $access = AccessTable::byTableName('pageschema', 0);
