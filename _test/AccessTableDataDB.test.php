@@ -288,4 +288,34 @@ class AccessTableDataDB_struct_test extends StructTest {
         $this->assertEquals(1, count($actual_data), 'There should be only one value returned and the empty value skipped');
         $this->assertEquals($expected_data, $actual_data);
     }
+
+    public function test_pseudodiff() {
+        $this->loadSchemaJSON('pageschema');
+        $this->saveData(
+            'syntax',
+            'pageschema',
+            array(
+                'singlepage' => 'wiki:dokuwiki',
+                'multipage' => array('wiki:dokuwiki', 'wiki:syntax', 'wiki:welcome'),
+                'singletitle' => 'wiki:dokuwiki',
+                'multititle' => array('wiki:dokuwiki', 'wiki:syntax', 'wiki:welcome'),
+            )
+        );
+
+        // make sure titles for some pages are known (not for wiki:welcome)
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('wiki:dokuwiki');
+        $pageMeta->setTitle('DokuWiki Overview');
+        $pageMeta = new \dokuwiki\plugin\struct\meta\PageMeta('wiki:syntax');
+        $pageMeta->setTitle('DokuWiki Foobar Syntax');
+        $pageMeta->savePageData();
+
+        $schemaData = meta\AccessTable::byTableName('pageschema', 'syntax', time());
+        $actual_pseudodiff = $schemaData->getDataPseudoSyntax();
+        $expected_pseudodiff = "pageschema.singlepage : wiki:dokuwiki
+pageschema.multipage : wiki:dokuwiki, wiki:syntax, wiki:welcome
+pageschema.singletitle : DokuWiki Overview
+pageschema.multititle : DokuWiki Overview, DokuWiki Foobar Syntax, \n";
+
+        $this->assertEquals($expected_pseudodiff, $actual_pseudodiff);
+    }
 }
