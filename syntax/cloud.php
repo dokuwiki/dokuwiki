@@ -58,7 +58,7 @@ class syntax_plugin_struct_cloud extends DokuWiki_Syntax_Plugin {
         $lines = explode("\n", $match);
         array_shift($lines);
         array_pop($lines);
-        // todo: disallow dynfilters, rownumbers, limit, offset, ...
+
         try {
             $parser = new ConfigParser($lines);
             $config = $parser->getConfig();
@@ -82,6 +82,9 @@ class syntax_plugin_struct_cloud extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
         if(!$data) return false;
+        if (!empty($data['filter'])) {
+            msg($this->getLang('Warning: no filters for cloud'), -1);
+        }
         global $INFO, $conf;
         try {
             $search = new SearchCloud($data);

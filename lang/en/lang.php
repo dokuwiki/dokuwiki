@@ -79,6 +79,8 @@ $lang['Exception nolookupassign'] = 'You can not assign Lookup schemas to pages'
 $lang['Exception No data saved'] = 'No data saved';
 $lang['Exception no sqlite'] = 'The struct plugin requires the sqlite plugin. Please install and enable it.';
 
+$lang['Warning: no filters for cloud'] = 'Filters are not support for struct clouds.';
+
 $lang['sort']      = 'Sort by this column';
 $lang['next']      = 'Next page';
 $lang['prev']      = 'Previous page';
