@@ -39,7 +39,7 @@ class SearchCloud extends SearchConfig {
         $col = $this->columns[0];
         if($col->isMulti()) {
             $multitable = "multi_{$col->getTable()}";
-            $MN = 'M' . $col->getColref();
+            $MN = $QB->generateTableAlias('M');
 
             $QB->addLeftJoin(
                 $datatable,
