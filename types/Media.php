@@ -122,7 +122,7 @@ class Media extends AbstractBaseType {
             $image = ml($media, ['h' => $weight, 'w' => $weight]);
             $R->doc .= "<div style=\"height:{$weight}px; width:{$weight}px\">";
             $R->doc .= "<a href='$url' class='struct_image' style='background-image:url(\"$image\")' title='$media'>";
-            $R->doc .= "<span class='hide_text'>$media</span>";
+            $R->doc .= "<span class='a11y'>$media</span>";
             $R->doc .= "</a>";
             $R->doc .= "</div>";
             return;

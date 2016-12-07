@@ -75,7 +75,7 @@ class Color extends AbstractBaseType {
         $url = wl($page, $filter);
         $color = $this->displayValue($value);
         $style = "background-color:$color;";
-        $R->doc .=  "<a class='struct_color_tagcloud' href='$url' style='$style'><span class='hide_text'>$color</span></a>";
+        $R->doc .=  "<a class='struct_color_tagcloud' href='$url' style='$style'><span class='a11y'>$color</span></a>";
     }
 
 
