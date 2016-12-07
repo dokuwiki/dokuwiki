@@ -72,13 +72,17 @@ class AggregationList {
 
         $this->startScope();
 
-        $this->renderer->doc .= '<ul>';
+        $this->renderer->listu_open();
 
         foreach ($this->result as $result) {
+            $this->renderer->listitem_open(1);
+            $this->renderer->listcontent_open();
             $this->renderListItem($result);
+            $this->renderer->listcontent_close();
+            $this->renderer->listitem_close();
         }
 
-        $this->renderer->doc .= '</ul>';
+        $this->renderer->listu_close();
 
         $this->finishScope();
 
@@ -111,7 +115,6 @@ class AggregationList {
      * @param $resultrow
      */
     protected function renderListItem($resultrow) {
-        $this->renderer->doc .= '<li><div class="li">';
         $sepbyheaders = $this->searchConfig->getConf()['sepbyheaders'];
         $headers = $this->searchConfig->getConf()['headers'];
 
@@ -123,17 +126,24 @@ class AggregationList {
                 continue;
             }
             if ($sepbyheaders && !empty($headers[$column])) {
-                $this->renderer->doc .= '<span class="struct_header">' . hsc($headers[$column]) . '</span>';
+                if ($this->mode == 'xhtml') {
+                    $this->renderer->doc .= '<span class="struct_header">' . hsc($headers[$column]) . '</span>';
+                } else {
+                    $this->renderer->cdata($headers[$column]);
+                }
             }
-            $type = 'struct_' . strtolower($value->getColumn()->getType()->getClass());
-            $this->renderer->doc .= '<div class="' . $type . '">';
+            if ($this->mode == 'xhtml') {
+                $type = 'struct_' . strtolower($value->getColumn()->getType()->getClass());
+                $this->renderer->doc .= '<div class="' . $type . '">';
+            }
             $value->render($this->renderer, $this->mode);
             if ($column < $this->resultColumnCount) {
                 $this->renderer->doc .= ' ';
             }
-            $this->renderer->doc .= '</div>';
+            if ($this->mode == 'xhtml') {
+                $this->renderer->doc .= '</div>';
+            }
         }
 
-        $this->renderer->doc .= '</div></li>';
     }
 }
