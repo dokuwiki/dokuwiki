@@ -72,10 +72,14 @@ class Color extends AbstractBaseType {
      * @inheritDoc
      */
     public function renderTagCloudLink($value, \Doku_Renderer $R, $mode, $page, $filter, $weight) {
-        $url = wl($page, $filter);
         $color = $this->displayValue($value);
-        $style = "background-color:$color;";
-        $R->doc .=  "<a class='struct_color_tagcloud' href='$url' style='$style'><span class='a11y'>$color</span></a>";
+        if ($mode == 'xhtml') {
+            $url = wl($page, $filter);
+            $style = "background-color:$color;";
+            $R->doc .= "<a class='struct_color_tagcloud' href='$url' style='$style'><span class='a11y'>$color</span></a>";
+            return;
+        }
+        $R->internallink("$page?$filter", $color);
     }
 
 
