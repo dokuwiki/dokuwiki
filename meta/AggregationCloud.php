@@ -128,9 +128,6 @@ class AggregationCloud {
         }
 
         $tagValue = $value->getDisplayValue();
-        if (empty($tagValue)) {
-            $tagValue = $value->getRawValue();
-        }
         if (is_array($tagValue)) {
             $tagValue = $tagValue[0];
         }
