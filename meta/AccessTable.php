@@ -166,9 +166,11 @@ abstract class AccessTable {
      */
     public function getDataPseudoSyntax() {
         $result = '';
-        $data = $this->getDataArray();
-        foreach($data as $key => $value) {
-            $key = $this->schema->getTable() . ".$key";
+        $data = $this->getData();
+
+        foreach($data as $value) {
+            $key = $value->getColumn()->getFullQualifiedLabel();
+            $value = $value->getDisplayValue();
             if(is_array($value)) $value = join(', ', $value);
             $result .= sprintf("% -20s : %s\n", $key, $value);
         }
