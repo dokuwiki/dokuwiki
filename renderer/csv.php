@@ -1,7 +1,9 @@
 <?php
 
 /**
- * CSV export of tabular data
+ * CSV export of tabular data generated in Aggregations
+ *
+ * Note: this is different from meta\CSVExporter
  *
  * @link https://tools.ietf.org/html/rfc4180
  * @link http://csvlint.io/

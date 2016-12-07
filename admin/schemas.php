@@ -7,6 +7,8 @@
  */
 
 use dokuwiki\Form\Form;
+use dokuwiki\plugin\struct\meta\CSVExporter;
+use dokuwiki\plugin\struct\meta\CSVImporter;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\SchemaBuilder;
 use dokuwiki\plugin\struct\meta\SchemaEditor;
@@ -39,7 +41,7 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         global $INPUT;
         global $ID;
         global $config_cascade;
-        $config_file_path =  end($config_cascade['main']['local']);
+        $config_file_path = end($config_cascade['main']['local']);
 
         // form submit
         $table = Schema::cleanTableName($INPUT->str('table'));
@@ -73,6 +75,27 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
                 }
             }
         }
+
+        // import CSV
+        if($table && $INPUT->bool('importcsv')) {
+            if(isset($_FILES['csvfile']['tmp_name'])) {
+                try {
+                    new CSVImporter($table, $_FILES['csvfile']['tmp_name']);
+                    msg($this->getLang('admin_csvdone'), 1);
+                } catch(StructException $e) {
+                    msg(hsc($e->getMessage()), -1);
+                }
+            }
+        }
+
+        // export CSV
+        if($table && $INPUT->bool('exportcsv')) {
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="' . $table . '.csv";');
+            new CSVExporter($table);
+            exit();
+        }
+
         // delete
         if($table && $INPUT->bool('delete')) {
             if($table != $INPUT->str('confirm')) {
@@ -153,6 +176,19 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
         $form->addButton('import', $this->getLang('btn_import'));
         $form->addHTML('<p>' . $this->getLang('import_warning') . '</p>');
         $form->addFieldsetClose();
+
+        $form->addFieldsetOpen($this->getLang('admin_csvexport'));
+        $form->addButton('exportcsv', $this->getLang('btn_export'));
+        $form->addFieldsetClose();
+
+        if($schema->isLookup()) {
+            $form->addFieldsetOpen($this->getLang('admin_csvimport'));
+            $form->addElement(new \dokuwiki\Form\InputElement('file', 'csvfile'));
+            $form->addButton('importcsv', $this->getLang('btn_import'));
+            $form->addHTML('<p><a href="https://www.dokuwiki.org/plugin:struct:csvimport">' . $this->getLang('admin_csvhelp') . '</a></p>');
+            $form->addFieldsetClose();
+        }
+
         return $form->toHTML();
     }
 
@@ -255,6 +291,8 @@ class admin_plugin_struct_schemas extends DokuWiki_Admin_Plugin {
 
         return $toc;
     }
+
+
 
 }
 
