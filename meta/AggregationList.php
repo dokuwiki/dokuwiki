@@ -138,7 +138,7 @@ class AggregationList {
             }
             $value->render($this->renderer, $this->mode);
             if ($column < $this->resultColumnCount) {
-                $this->renderer->doc .= ' ';
+                $this->renderer->cdata(' ');
             }
             if ($this->mode == 'xhtml') {
                 $this->renderer->doc .= '</div>';
