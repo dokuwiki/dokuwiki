@@ -120,9 +120,10 @@ class Media extends AbstractBaseType {
         if ($mode == 'xhtml' && $this->getConfig()['mime'] == 'image/') {
             $url = wl($page, $filter);
             $image = ml($media, ['h' => $weight, 'w' => $weight]);
+            $media_escaped = hsc($media);
             $R->doc .= "<div style=\"height:{$weight}px; width:{$weight}px\">";
-            $R->doc .= "<a href='$url' class='struct_image' style='background-image:url(\"$image\")' title='$media'>";
-            $R->doc .= "<span class='a11y'>$media</span>";
+            $R->doc .= "<a href='$url' class='struct_image' style='background-image:url(\"$image\")' title='$media_escaped'>";
+            $R->doc .= "<span class='a11y'>$media_escaped</span>";
             $R->doc .= "</a>";
             $R->doc .= "</div>";
             return;
