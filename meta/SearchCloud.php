@@ -75,14 +75,10 @@ class SearchCloud extends SearchConfig {
         $this->limit = " LIMIT $limit";
     }
 
-
     /**
      * Execute this search and return the result
      *
      * The result is a two dimensional array of Value()s.
-     *
-     * This will always query for the full result (not using offset and limit) and then
-     * return the wanted range, setting the count (@see getCount) to the whole result number
      *
      * @return Value[][]
      */
