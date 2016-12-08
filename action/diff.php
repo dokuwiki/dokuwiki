@@ -10,6 +10,7 @@
 use dokuwiki\plugin\struct\meta\AccessTable;
 use dokuwiki\plugin\struct\meta\Assignments;
 use dokuwiki\plugin\struct\meta\AccessTableData;
+use dokuwiki\plugin\struct\meta\StructException;
 
 if(!defined('DOKU_INC')) die();
 
@@ -52,7 +53,11 @@ class action_plugin_struct_diff extends DokuWiki_Action_Plugin {
 
         $event->result .= "\n---- struct data ----\n";
         foreach($tables as $table) {
-            $schemadata = AccessTable::byTableName($table, $id, $rev);
+            try {
+                $schemadata = AccessTable::byTableName($table, $id, $rev);
+            } catch(StructException $ignored) {
+                continue; // no such schema at this revision
+            }
             $event->result .= $schemadata->getDataPseudoSyntax();
         }
         $event->result .= "----\n";

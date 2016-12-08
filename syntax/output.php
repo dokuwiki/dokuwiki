@@ -100,7 +100,11 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
 
         $hasdata = false;
         foreach($tables as $table) {
-            $schemadata = AccessTable::byTableName($table, $ID, $REV);
+            try {
+                $schemadata = AccessTable::byTableName($table, $ID, $REV);
+            } catch(StructException $ignored) {
+                continue; // no such schema at this revision
+            }
             $schemadata->optionSkipEmpty(true);
             $data = $schemadata->getData();
             if(!count($data)) continue;
