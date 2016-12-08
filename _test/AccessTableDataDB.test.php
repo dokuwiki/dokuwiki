@@ -314,7 +314,7 @@ class AccessTableDataDB_struct_test extends StructTest {
         $expected_pseudodiff = "pageschema.singlepage : wiki:dokuwiki
 pageschema.multipage : wiki:dokuwiki, wiki:syntax, wiki:welcome
 pageschema.singletitle : DokuWiki Overview
-pageschema.multititle : DokuWiki Overview, DokuWiki Foobar Syntax, \n";
+pageschema.multititle : DokuWiki Overview, DokuWiki Foobar Syntax, wiki:welcome\n";
 
         $this->assertEquals($expected_pseudodiff, $actual_pseudodiff);
     }
