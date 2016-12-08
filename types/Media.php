@@ -111,4 +111,25 @@ class Media extends AbstractBaseType {
         $html .= "</button>";
         return $html;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function renderTagCloudLink($value, \Doku_Renderer $R, $mode, $page, $filter, $weight) {
+        $media = $this->displayValue($value);
+        if ($mode == 'xhtml' && $this->getConfig()['mime'] == 'image/') {
+            $url = wl($page, $filter);
+            $image = ml($media, ['h' => $weight, 'w' => $weight]);
+            $media_escaped = hsc($media);
+            $R->doc .= "<div style=\"height:{$weight}px; width:{$weight}px\">";
+            $R->doc .= "<a href='$url' class='struct_image' style='background-image:url(\"$image\")' title='$media_escaped'>";
+            $R->doc .= "<span class='a11y'>$media_escaped</span>";
+            $R->doc .= "</a>";
+            $R->doc .= "</div>";
+            return;
+        }
+        $R->internallink("$page?$filter", $media);
+    }
+
+
 }

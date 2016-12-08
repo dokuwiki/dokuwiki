@@ -29,6 +29,7 @@ class ConfigParser {
             'summarize' => false,
             'rownumbers' => false,
             'sepbyheaders' => false,
+            'target' => '',
             'headers' => array(),
             'widths' => array(),
             'filter' => array(),
@@ -107,6 +108,10 @@ class ConfigParser {
                     break;
                 case 'csv':
                     $this->config['csv'] = (bool) $val;
+                    break;
+                case 'target':
+                case 'page':
+                    $this->config['target'] = cleanID($val);
                     break;
                 default:
                     throw new StructException("unknown option '%s'", hsc($key));

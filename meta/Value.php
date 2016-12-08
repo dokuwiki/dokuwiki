@@ -155,6 +155,19 @@ class Value {
     }
 
     /**
+     * Render this value as a tag-link in a struct cloud
+     *
+     * @param \Doku_Renderer $R
+     * @param string $mode
+     * @param string $page
+     * @param string $filterQuery
+     * @param int $weight
+     */
+    public function renderAsTagCloudLink(\Doku_Renderer $R, $mode, $page, $filterQuery, $weight) {
+        $this->column->getType()->renderTagCloudLink($this->value, $R, $mode, $page, $filterQuery, $weight);
+    }
+
+    /**
      * Return the value editor for this value field
      *
      * @param string $name The field name to use in the editor

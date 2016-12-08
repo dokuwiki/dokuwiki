@@ -108,6 +108,16 @@ class Type_Page_struct_test extends StructTest {
             $result[0][3]->getValue()
         );
 
+        // if there is no title in the database display the pageid
+        $this->assertEquals(
+            array(
+                'DokuWiki Overview',
+                'DokuWiki Foobar Syntax',
+                'wiki:welcome'
+            ),
+            $result[0][3]->getDisplayValue()
+        );
+
         // search single with title
         $single = clone $search;
         $single->addFilter('singletitle', 'Overview', '*~', 'AND');

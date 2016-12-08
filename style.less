@@ -305,6 +305,29 @@ form.struct_newschema {
         background-position-x: 2px;
     }
 }
+
+.dokuwiki .structcloud {
+    li {
+        float: left;
+        list-style: none;
+        margin: 0 1em 0 0;
+        padding: 0;
+
+        .struct_color, .struct_media {
+            a {
+                display: block;
+                height: 100%;
+            }
+        }
+
+        .struct_media a {
+            background-size: cover;
+            background-position: center;
+            box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.5)
+        }
+    }
+}
+
 /**
  * Lookup Aggregation Editor
  */

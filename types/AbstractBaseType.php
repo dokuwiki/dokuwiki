@@ -6,6 +6,7 @@ use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\StructException;
 use dokuwiki\plugin\struct\meta\ValidationException;
+use dokuwiki\plugin\struct\meta\Value;
 
 /**
  * Class AbstractBaseType
@@ -358,6 +359,20 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * Render a link in a struct cloud. This should be good for most types, but can be overwritten if necessary.
+     *
+     * @param string|int $value the value stored in the database
+     * @param \Doku_Renderer $R the renderer currently used to render the data
+     * @param string $mode The mode the output is rendered in (eg. XHTML)
+     * @param string $page the target to which should be linked
+     * @param string $filter the filter to apply to the aggregations on $page
+     * @param int $weight the scaled weight of the item. Will already be implemented as css font-size on the outside container
+     */
+    public function renderTagCloudLink($value, \Doku_Renderer $R, $mode, $page, $filter, $weight) {
+        $R->internallink("$page?$filter", $this->displayValue($value));
+    }
+
+    /**
      * This function is used to modify an aggregation query to add a filter
      * for the given column matching the given value. A type should add at
      * least a filter here but could do additional things like joining more
@@ -427,6 +442,27 @@ abstract class AbstractBaseType {
      */
     public function sort(QueryBuilder $QB, $tablealias, $colname, $order) {
         $QB->addOrderBy("$tablealias.$colname $order");
+    }
+
+    /**
+     * Get the string by which to sort values of this type
+     *
+     * This implementation is designed to work both as registered function in sqlite
+     * and to provide a string to be used in sorting values of this type in PHP.
+     *
+     * @param string|Value $string The string by which the types would usually be sorted
+     *
+     * @return string
+     */
+    public function getSortString($value) {
+        if (is_string($value)) {
+            return $value;
+        }
+        $display = $value->getDisplayValue();
+        if (is_array($display)) {
+            return blank($display[0]) ? "" : $display[0];
+        }
+        return $display;
     }
 
     /**
