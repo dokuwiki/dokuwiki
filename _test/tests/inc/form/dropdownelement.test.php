@@ -81,6 +81,51 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertTrue($option->hasClass('classes'));
     }
 
+    public function test_optgroups() {
+        $form = new Form\Form();
+
+        $options1 = array(
+            'first' => 'the label',
+            'second'
+        );
+
+        $options2 = array(
+            'third' => array (
+                'label' => 'label of third option',
+                'attribute' => 'attribute-value'
+            ),
+            'fourth'
+        );
+
+        $dropdown = $form->addDropdown('foo', null, 'label text');
+        $dropdown->addOptGroup('opt1', $options1);
+        $dropdown->addOptGroup('opt2', $options2);
+
+        $dropdown->val('third');
+        $this->assertEquals('third', $dropdown->val());
+
+        $optGroups = $dropdown->optGroups();
+        $this->assertEquals(array(
+            'first' => array('label' => 'the label'),
+            'second' => array('label' => 'second')
+        ), $optGroups[0]->options());
+
+        // HTML
+        $html = $form->toHTML();
+        $pq = phpQuery::newDocumentXHTML($html);
+
+        $optGroups = $pq->find('optgroup');
+        $this->assertEquals(2, $optGroups->length);
+
+        $options = $pq->find('option');
+        $this->assertEquals(4, $options->length);
+
+        $selected = $pq->find('option[selected=selected]');
+        $this->assertEquals('third', $selected->val());
+        $this->assertEquals('label of third option', $selected->text());
+
+    }
+
     /**
      * check that posted values overwrite preset default
      */
