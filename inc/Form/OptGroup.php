@@ -1,0 +1,99 @@
+<?php
+
+namespace dokuwiki\Form;
+
+
+class OptGroup extends Element {
+    protected $options = array();
+    protected $value;
+
+    /**
+     * @param string $name The name of this form element
+     * @param string $options The available options
+     * @param string $label The label text for this element (will be autoescaped)
+     */
+    public function __construct($name, $options) {
+        parent::__construct('optGroup', array('label' => $name));
+        $this->options($options);
+    }
+
+    /**
+     * Set the element's value
+     *
+     * This is intended to be only called from within @see DropdownElement::val()
+     *
+     * @param string $value
+     * @return bool
+     */
+    public function setValue($value) {
+        $this->value = $value;
+        return isset($this->options[$value]);
+    }
+
+    /**
+     * Get or set the options of the optgroup
+     *
+     * Options can be given as associative array (value => label) or as an
+     * indexd array (label = value) or as an array of arrays. In the latter
+     * case an element has to look as follows:
+     * option-value => array (
+     *                 'label' => option-label,
+     *                 'attrs' => array (
+     *                                    attr-key => attr-value, ...
+     *                                  )
+     *                 )
+     *
+     * @param null|array $options
+     * @return $this|array
+     */
+    public function options($options = null) {
+        if($options === null) return $this->options;
+        if(!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
+        $this->options = array();
+        foreach($options as $key => $val) {
+            if(is_int($key)) {
+                $this->options[$val] = array('label' => (string) $val);
+            } elseif (!is_array($val)) {
+                $this->options[$key] = array('label' => (string) $val);
+            } else {
+                if (!key_exists('label', $val)) throw new \InvalidArgumentException('If option is given as array, it has to have a "label"-key!');
+                $this->options[$key] = $val;
+            }
+        }
+        return $this;
+    }
+
+
+    /**
+     * The HTML representation of this element
+     *
+     * @return string
+     */
+    public function toHTML() {
+        if ($this->attributes['label'] === null) {
+            return $this->renderOptions();
+        }
+        $html = '<optgroup '. buildAttributes($this->attrs()) . '>';
+        $html .= $this->renderOptions();
+        $html .= '</optgroup>';
+        return $html;
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function renderOptions() {
+        $html = '';
+        foreach($this->options as $key => $val) {
+            $selected = ($key == $this->value) ? ' selected="selected"' : '';
+            $attrs = '';
+            if (is_array($val['attrs'])) {
+                array_walk($val['attrs'],function (&$aval, $akey){$aval = hsc($akey).'="'.hsc($aval).'"';});
+                $attrs = join(' ', $val['attrs']);
+            }
+            $html .= '<option' . $selected . ' value="' . hsc($key) . '" '.$attrs.'>' . hsc($val['label']) . '</option>';
+        }
+        return $html;
+    }
+}
