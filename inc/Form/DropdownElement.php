@@ -21,6 +21,7 @@ class DropdownElement extends InputElement {
      */
     public function __construct($name, $options, $label = '') {
         parent::__construct('dropdown', $name, $label);
+        $this->rmattr('type');
         $this->options($options);
     }
 
