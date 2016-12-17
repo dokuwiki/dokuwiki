@@ -4,6 +4,8 @@
  * @author     bouchon
  * @link       http://dev.maxg.info
  * @link       http://forum.maxg.info
+ * 
+ * @see        Official ZIP file format: http://www.pkware.com/support/zip-app-note
  *
  * Modified for Dokuwiki
  * @deprecated 2015-05-15 - use splitbrain\PHPArchive\Zip instead
@@ -130,7 +132,7 @@ class ZipLib {
         $cdrec = "\x50\x4b\x01\x02\x00\x00\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00";
         $cdrec .= pack("V",0).pack("V",0).pack("V",0).pack("v", strlen($name) );
         $cdrec .= pack("v", 0 ).pack("v", 0 ).pack("v", 0 ).pack("v", 0 );
-        $ext = "\xff\xff\xff\xff";
+        //$ext = "\xff\xff\xff\xff";  //FIXME never used?
         $cdrec .= pack("V", 16 ).pack("V", $this -> old_offset ).$name;
 
         $this -> ctrl_dir[] = $cdrec;
@@ -155,11 +157,6 @@ class ZipLib {
                               $dtime[2].$dtime[3].
                               $dtime[0].$dtime[1]);
 
-        if($compact){
-            $fr = "\x50\x4b\x03\x04\x14\x00\x00\x00\x08\x00".$hexdtime;
-        }else{
-            $fr = "\x50\x4b\x03\x04\x0a\x00\x00\x00\x00\x00".$hexdtime;
-        }
         $unc_len = strlen($data);
         $crc = crc32($data);
 
@@ -171,10 +168,14 @@ class ZipLib {
             $zdata = $data;
         }
         $c_len=strlen($zdata);
+
+        if($compact){
+            $fr = "\x50\x4b\x03\x04\x14\x00\x00\x00\x08\x00".$hexdtime;
+        }else{
+            $fr = "\x50\x4b\x03\x04\x0a\x00\x00\x00\x00\x00".$hexdtime;
+        }
         $fr .= pack('V', $crc).pack('V', $c_len).pack('V', $unc_len);
         $fr .= pack('v', strlen($name)).pack('v', 0).$name.$zdata;
-
-        $fr .= pack('V', $crc).pack('V', $c_len).pack('V', $unc_len);
 
         $this -> datasec[] = $fr;
         $new_offset        = strlen(implode('', $this->datasec));
@@ -281,7 +282,7 @@ class ZipLib {
         if ($header['mdate'] && $header['mtime']){
             $hour    = ($header['mtime']&0xF800)>>11;
             $minute  = ($header['mtime']&0x07E0)>>5;
-            $seconde = ($header['mtime']&0x001F)*2;
+            $seconde = ($header['mtime']&0x001F)<<1;
             $year    = (($header['mdate']&0xFE00)>>9)+1980;
             $month   = ($header['mdate']&0x01E0)>>5;
             $day     = $header['mdate']&0x001F;
@@ -324,7 +325,7 @@ class ZipLib {
         if ($header['mdate'] && $header['mtime']) {
             $hour    = ($header['mtime'] & 0xF800) >> 11;
             $minute  = ($header['mtime'] & 0x07E0) >> 5;
-            $seconde = ($header['mtime'] & 0x001F)*2;
+            $seconde = ($header['mtime'] & 0x001F) << 1;
             $year    = (($header['mdate'] & 0xFE00) >> 9) + 1980;
             $month   = ($header['mdate'] & 0x01E0) >> 5;
             $day     = $header['mdate'] & 0x001F;
