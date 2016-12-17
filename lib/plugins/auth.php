@@ -378,13 +378,15 @@ class DokuWiki_Auth_Plugin extends DokuWiki_Plugin {
      * the backend before returning it somewhere.
      *
      * This should be used to enforce username restrictions.
+     * It applies default the pagename convention of DokuWiki
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @param string $user username
      * @return string the cleaned username
      */
     public function cleanUser($user) {
-        return $user;
+        global $conf;
+        return cleanID(str_replace(':', $conf['sepchar'], $user));
     }
 
     /**

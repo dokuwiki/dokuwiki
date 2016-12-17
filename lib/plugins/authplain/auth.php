@@ -305,17 +305,6 @@ class auth_plugin_authplain extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * Only valid pageid's (no namespaces) for usernames
-     *
-     * @param string $user
-     * @return string
-     */
-    public function cleanUser($user) {
-        global $conf;
-        return cleanID(str_replace(':', $conf['sepchar'], $user));
-    }
-
-    /**
      * Only valid pageid's (no namespaces) for groupnames
      *
      * @param string $group
