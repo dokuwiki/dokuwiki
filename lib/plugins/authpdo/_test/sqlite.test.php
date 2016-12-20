@@ -195,12 +195,12 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
 
         $users = $auth->retrieveUsers(0, -1, array('group' => 'admin')); // full group
         $this->assertEquals(array($expect['admin'], $expect['tester']), $users);
-        $count = $auth->getUserCount(array('group' => 'admin'));
+        $count = $auth->getUserCount(array('grps' => 'admin'));
         $this->assertSame(2, $count);
 
         $users = $auth->retrieveUsers(0, -1, array('group' => 'dmi')); // substring
         $this->assertEquals(array($expect['admin'], $expect['tester']), $users);
-        $count = $auth->getUserCount(array('group' => 'dmi'));
+        $count = $auth->getUserCount(array('grps' => 'dmi'));
         $this->assertSame(2, $count);
 
         $users = $auth->retrieveUsers(0, -1, array('user' => 'dmi')); // substring
