@@ -446,7 +446,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if(!$result || !isset($result[0]['count'])) {
             $this->_debug("Statement did not return 'count' attribute", -1, __LINE__);
         }
-        return isset($result[0]['count']);
+        return (int) $result[0]['count'];
     }
 
     /**

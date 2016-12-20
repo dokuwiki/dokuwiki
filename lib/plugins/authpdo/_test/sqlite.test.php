@@ -171,21 +171,21 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $users = $auth->retrieveUsers(0, -1, array('group' => 'admin')); // full group
         $this->assertEquals(array('admin', 'tester'), $users);
         $count = $auth->getUserCount(array('group' => 'admin'));
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
 
         $users = $auth->retrieveUsers(0, -1, array('group' => 'dmi')); // substring
         $this->assertEquals(array('admin', 'tester'), $users);
         $count = $auth->getUserCount(array('group' => 'dmi'));
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
 
         $users = $auth->retrieveUsers(0, -1, array('user' => 'dmi')); // substring
         $this->assertEquals(array('admin'), $users);
         $count = $auth->getUserCount(array('user' => 'dmi'));
-        $this->assertEquals(1, $count);
+        $this->assertSame(1, $count);
 
         // delete user
         $num = $auth->deleteUsers(array('tester', 'foobar'));
-        $this->assertEquals(1, $num);
+        $this->assertSame(1, $num);
 
     }
 
