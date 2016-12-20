@@ -420,7 +420,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 $this->_debug("Statement did not return 'user' attribute", -1, __LINE__);
                 return array();
             }
-            $users[] = $row['user'];
+            $users[] = $this->getUserData($row['user']);
         }
         return $users;
     }
