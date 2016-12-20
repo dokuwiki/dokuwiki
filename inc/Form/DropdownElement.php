@@ -33,7 +33,7 @@ class DropdownElement extends InputElement {
     /**
      * @param $label
      * @param $options
-     * @return mixed
+     * @return OptGroup
      * @throws \Exception
      */
     public function addOptGroup($label, $options) {
@@ -161,9 +161,14 @@ class DropdownElement extends InputElement {
      * @return bool
      */
     protected function setValueInOptGroups($value) {
-        $value_exists = $this->options->setValue($value);
-        foreach ($this->optGroups as $optGroup) {
+        $value_exists = false;
+        $isMultiSelect = $this->attributes['multiple'];
+        /** @var OptGroup $optGroup */
+        foreach (array_merge(array($this->options), $this->optGroups) as $optGroup) {
             $value_exists = $optGroup->setValue($value) || $value_exists;
+            if ($value_exists && !$isMultiSelect) {
+                $value = null;
+            }
         }
         return $value_exists;
     }

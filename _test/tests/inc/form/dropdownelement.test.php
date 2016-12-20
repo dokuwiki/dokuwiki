@@ -104,6 +104,7 @@ class form_dropdownelement_test extends DokuWikiTest {
         $dropdown->val('third');
         $this->assertEquals('third', $dropdown->val());
 
+        /** @var Form\OptGroup[] $optGroups */
         $optGroups = $dropdown->optGroups();
         $this->assertEquals(array(
             'first' => array('label' => 'the label'),
@@ -114,8 +115,8 @@ class form_dropdownelement_test extends DokuWikiTest {
         $html = $form->toHTML();
         $pq = phpQuery::newDocumentXHTML($html);
 
-        $optGroups = $pq->find('optgroup');
-        $this->assertEquals(2, $optGroups->length);
+        $optGroupsHTML = $pq->find('optgroup');
+        $this->assertEquals(2, $optGroupsHTML->length);
 
         $options = $pq->find('option');
         $this->assertEquals(4, $options->length);
@@ -123,8 +124,37 @@ class form_dropdownelement_test extends DokuWikiTest {
         $selected = $pq->find('option[selected=selected]');
         $this->assertEquals('third', $selected->val());
         $this->assertEquals('label of third option', $selected->text());
-
     }
+
+    /**
+     * Ensure that there is always only a single one selected option
+     */
+    public function test_optgroups_doubleselect() {
+        $form = new Form\Form();
+        $options1 = array(
+            'double' => 'the label'
+        );
+
+        $options2 = array(
+            'double' => array (
+                'label' => 'label of third option',
+                'attribute' => 'attribute-value'
+            )
+        );
+
+        $dropdown = $form->addDropdown('foo', null, 'label text');
+        $dropdown->addOptGroup('opt1', $options1);
+        $dropdown->addOptGroup('opt2', $options2);
+        $dropdown->val('double');
+
+        // HTML
+        $html = $form->toHTML();
+        $pq = phpQuery::newDocumentXHTML($html);
+        $selected = $pq->find('option[selected=selected]');
+        $this->assertEquals(1, $selected->length);
+        $this->assertEquals('the label', $selected->text());
+    }
+
 
     /**
      * check that posted values overwrite preset default
