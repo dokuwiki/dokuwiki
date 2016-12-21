@@ -410,25 +410,10 @@ function tpl_metaheaders($alt = true) {
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
     // load jquery
-    $jqver = getJqueryVersions();
-    if($conf['jquerycdn']) {
+    $jquery = getCdnUrls();
+    foreach($jquery as $src) {
         $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
-            'src' => sprintf('https://code.jquery.com/jquery-%s.min.js', $jqver['JQ_VERSION'])
-        );
-        $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
-            'src' => sprintf('https://code.jquery.com/jquery-migrate-%s.min.js', $jqver['JQM_VERSION'])
-        );
-        $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
-            'src' => sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $jqver['JQUI_VERSION'])
-        );
-    } else {
-        $jqmod = md5(join('-', $jqver));
-        $head['script'][] = array(
-            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '',
-            'src' => DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
         );
     }
 

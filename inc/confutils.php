@@ -120,21 +120,48 @@ function getInterwiki() {
 }
 
 /**
- * Returns the jquery script versions defined in lib/scripts/jquery/versions
+ * Returns the jquery script URLs for the versions defined in lib/scripts/jquery/versions
  *
+ * @trigger CONFUTIL_CDN_SELECT
  * @return array
  */
-function getJqueryVersions() {
+function getCdnUrls() {
+    global $conf;
+
+    // load version info
     $versions = array();
     $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
-    foreach($lines as $line ) {
+    foreach($lines as $line) {
         $line = preg_replace('/#.*$/', '', $line);
         list($key, $val) = explode('=', $line, 2);
         $key = trim($key);
         $val = trim($val);
         $versions[$key] = $val;
     }
-    return $versions;
+
+    $src = array();
+    $data = array(
+        'versions' => $versions,
+        'src' => &$src
+    );
+    $event = new Doku_Event('CONFUTIL_CDN_SELECT', $data);
+    if($event->advise_before()) {
+        if(!$conf['jquerycdn']) {
+            $jqmod = md5(join('-', $versions));
+            $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
+        } elseif($conf['jquerycdn'] == 'jquery') {
+            $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
+            $src[] = sprintf('https://code.jquery.com/jquery-migrate-%s.min.js', $versions['JQM_VERSION']);
+            $src[] = sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
+        } elseif($conf['jquerycdn'] == 'cdnjs') {
+            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jquery/%s/jquery.min.js', $versions['JQ_VERSION']);
+            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/%s/jquery-migrate.min.js', $versions['JQM_VERSION']);
+            $src[] = sprintf('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
+        }
+    }
+    $event->advise_after();
+
+    return $src;
 }
 
 /**
