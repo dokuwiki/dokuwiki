@@ -163,11 +163,10 @@ class DropdownElement extends InputElement {
      */
     protected function setValueInOptGroups($value) {
         $value_exists = false;
-        $isMultiSelect = $this->attributes['multiple'];
         /** @var OptGroup $optGroup */
         foreach (array_merge(array($this->options), $this->optGroups) as $optGroup) {
             $value_exists = $optGroup->setValue($value) || $value_exists;
-            if ($value_exists && !$isMultiSelect) {
+            if ($value_exists) {
                 $value = null;
             }
         }
