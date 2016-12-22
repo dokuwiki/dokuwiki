@@ -109,7 +109,7 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertEquals(array(
             'first' => array('label' => 'the label'),
             'second' => array('label' => 'second')
-        ), $optGroups[0]->options());
+        ), $optGroups['opt1']->options());
 
         // HTML
         $html = $form->toHTML();

@@ -10,37 +10,34 @@ namespace dokuwiki\Form;
  */
 class DropdownElement extends InputElement {
 
-    /** @var OptGroup */
-    protected $options = null;
-
     /** @var array OptGroup[] */
     protected $optGroups = array();
 
-    protected $value = '';
-
     /**
      * @param string $name The name of this form element
-     * @param string $options The available options
+     * @param array  $options The available options
      * @param string $label The label text for this element (will be autoescaped)
      */
     public function __construct($name, $options, $label = '') {
         parent::__construct('dropdown', $name, $label);
         $this->rmattr('type');
-        $this->options = new OptGroup(null, $options);
+        $this->optGroups[''] = new OptGroup(null, $options);
         $this->val('');
     }
 
     /**
-     * @param $label
-     * @param $options
-     * @return OptGroup
+     * Add an `<optgroup>` and respective options
+     *
+     * @param string $label
+     * @param array  $options
+     * @return OptGroup a reference to the added optgroup
      * @throws \Exception
      */
     public function addOptGroup($label, $options) {
         if (empty($label)) {
             throw new \InvalidArgumentException(hsc('<optgroup> must have a label!'));
         }
-        $this->optGroups[] = new OptGroup($label, $options);
+        $this->optGroups[$label] = new OptGroup($label, $options);
         return end($this->optGroups);
     }
 
@@ -86,9 +83,9 @@ class DropdownElement extends InputElement {
      */
     public function options($options = null) {
         if ($options === null) {
-            return $this->options->options();
+            return $this->optGroups['']->options();
         }
-        $this->options = new OptGroup(null, $options);
+        $this->optGroups[''] = new OptGroup(null, $options);
         return $this;
     }
 
@@ -164,7 +161,7 @@ class DropdownElement extends InputElement {
     protected function setValueInOptGroups($value) {
         $value_exists = false;
         /** @var OptGroup $optGroup */
-        foreach (array_merge(array($this->options), $this->optGroups) as $optGroup) {
+        foreach ($this->optGroups as $optGroup) {
             $value_exists = $optGroup->storeValue($value) || $value_exists;
             if ($value_exists) {
                 $value = null;
@@ -182,7 +179,6 @@ class DropdownElement extends InputElement {
         if($this->useInput) $this->prefillInput();
 
         $html = '<select ' . buildAttributes($this->attrs()) . '>';
-        $html .= $this->options->toHTML();
         $html = array_reduce($this->optGroups, function($html, OptGroup $optGroup) {return $html . $optGroup->toHTML();}, $html);
         $html .= '</select>';
 
