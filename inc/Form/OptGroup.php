@@ -8,12 +8,11 @@ class OptGroup extends Element {
     protected $value;
 
     /**
-     * @param string $name The name of this form element
-     * @param string $options The available options
      * @param string $label The label text for this element (will be autoescaped)
+     * @param array  $options The available options
      */
-    public function __construct($name, $options) {
-        parent::__construct('optGroup', array('label' => $name));
+    public function __construct($label, $options) {
+        parent::__construct('optGroup', array('label' => $label));
         $this->options($options);
     }
 
