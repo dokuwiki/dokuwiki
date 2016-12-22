@@ -18,14 +18,14 @@ class OptGroup extends Element {
     }
 
     /**
-     * Set the element's value
+     * Store the given value so it can be used during rendering
      *
      * This is intended to be only called from within @see DropdownElement::val()
      *
      * @param string $value
-     * @return bool
+     * @return bool true if an option with the given value exists, false otherwise
      */
-    public function setValue($value) {
+    public function storeValue($value) {
         $this->value = $value;
         return isset($this->options[$value]);
     }

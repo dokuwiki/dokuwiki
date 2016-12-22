@@ -165,7 +165,7 @@ class DropdownElement extends InputElement {
         $value_exists = false;
         /** @var OptGroup $optGroup */
         foreach (array_merge(array($this->options), $this->optGroups) as $optGroup) {
-            $value_exists = $optGroup->setValue($value) || $value_exists;
+            $value_exists = $optGroup->storeValue($value) || $value_exists;
             if ($value_exists) {
                 $value = null;
             }
