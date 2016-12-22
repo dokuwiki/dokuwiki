@@ -52,7 +52,7 @@ class DropdownElement extends InputElement {
      *   * the value being an array of options as defined in @see OptGroup::options()
      *
      * @param null|array $optGroups
-     * @return array
+     * @return OptGroup[]|DropdownElement
      */
     public function optGroups($optGroups = null) {
         if($optGroups === null) {
@@ -65,6 +65,7 @@ class DropdownElement extends InputElement {
         foreach ($optGroups as $label => $options) {
             $this->addOptGroup($label, $options);
         }
+        return $this;
     }
 
     /**
