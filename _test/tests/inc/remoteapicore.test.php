@@ -40,6 +40,13 @@ class remoteapicore_test extends DokuWikiTest {
         $AUTH_ACL = $this->oldAuthAcl;
     }
 
+    /** Delay writes of old revisions by a second. */
+    public function handle_write(Doku_Event $event, $param) {
+        if ($event->data[3] !== false) {
+            $this->waitForTick();
+        }
+    }
+
     public function test_getVersion() {
         $this->assertEquals(getVersion(), $this->remote->call('dokuwiki.getVersion'));
     }
@@ -382,6 +389,9 @@ You can use up to five different levels of',
     }
 
     public function test_getPageVersions() {
+        /** @var $EVENT_HANDLER Doku_Event_Handler */
+        global $EVENT_HANDLER;
+        $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
         global $conf;
 
         $id = 'revpage';
