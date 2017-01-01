@@ -175,6 +175,12 @@ $lang['renderer__plugin'] = '%s (plugin)';
 
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
+$lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
+
+/* jQuery CDN options */
+$lang['jquerycdn_o_0'] = 'No CDN, local delivery only';
+$lang['jquerycdn_o_jquery'] = 'CDN at code.jquery.com';
+$lang['jquerycdn_o_cdnjs'] = 'CDN at cdnjs.com';
 
 /* Proxy Options */
 $lang['proxy____host']    = 'Proxy servername';
