@@ -449,14 +449,20 @@ class RemoteAPICore {
             throw new RemoteException('The requested page does not exist', 121);
         }
 
+        // set revision to current version if empty, use revision otherwise
+        // as the timestamps of old files are not necessarily correct
+        if($rev === '') {
+            $rev = $time;
+        }
+
         $pagelog = new PageChangeLog($id, 1024);
-        $info = $pagelog->getRevisionInfo($time);
+        $info = $pagelog->getRevisionInfo($rev);
 
         $data = array(
             'name'         => $id,
-            'lastModified' => $this->api->toDate($time),
+            'lastModified' => $this->api->toDate($rev),
             'author'       => (($info['user']) ? $info['user'] : $info['ip']),
-            'version'      => $time
+            'version'      => $rev
         );
 
         return ($data);
@@ -806,7 +812,7 @@ class RemoteAPICore {
                 // specified via $conf['recent']
                 if($time){
                     $pagelog->setChunkSize(1024);
-                    $info = $pagelog->getRevisionInfo($time);
+                    $info = $pagelog->getRevisionInfo($rev ? $rev : $time);
                     if(!empty($info)) {
                         $data = array();
                         $data['user'] = $info['user'];
