@@ -1324,7 +1324,7 @@ function saveWikiText($id, $text, $summary, $minor = false) {
         // pre-save deleted revision
         @touch($svdta['file']);
         clearstatcache();
-        $data['newRevision'] = saveOldRevision($id);
+        $svdta['newRevision'] = saveOldRevision($id);
         // remove empty file
         @unlink($svdta['file']);
         $filesize_new = 0;
