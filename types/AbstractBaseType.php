@@ -381,23 +381,21 @@ abstract class AbstractBaseType {
      * Important: $value might be an array. If so, the filter should check against
      * all provided values ORed together
      *
-     * @param QueryBuilder $QB the query so far
+     * @param QueryBuilderWhere $add The where clause where statements can be added
      * @param string $tablealias The table the currently saved value(s) are stored in
      * @param string $colname The column name on above table to use in the SQL
      * @param string $comp The SQL comparator (LIKE, NOT LIKE, =, !=, etc)
      * @param string|string[] $value this is the user supplied value to compare against. might be multiple
      * @param string $op the logical operator this filter should use (AND|OR)
      */
-    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+    public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op) {
         /** @var QueryBuilderWhere $add Where additionional queries are added to*/
         if(is_array($value)) {
-            $add = $QB->filters()->where($op); // sub where group
+            $add = $add->where($op); // sub where group
             $op = 'OR';
-        } else {
-            $add = $QB->filters(); // main where clause
         }
         foreach((array) $value as $item) {
-            $pl = $QB->addValue($item);
+            $pl = $add->getQB()->addValue($item);
             $add->where($op, "$tablealias.$colname $comp $pl");
         }
     }

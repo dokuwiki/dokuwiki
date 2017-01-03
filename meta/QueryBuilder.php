@@ -27,7 +27,7 @@ class QueryBuilder {
      * QueryBuilder constructor.
      */
     public function __construct() {
-        $this->where = new QueryBuilderWhere();
+        $this->where = new QueryBuilderWhere($this);
     }
 
     /**

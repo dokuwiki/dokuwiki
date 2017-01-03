@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\struct\test;
 
+use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 
 /**
@@ -11,7 +12,8 @@ use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 class QueryBuilderWhere_struct_test extends StructTest {
 
     public function test_sql() {
-        $where = new QueryBuilderWhere();
+        $QB = new QueryBuilder();
+        $where = new QueryBuilderWhere($QB);
 
         $where->whereAnd('foo = foo');
         $this->assertEquals(

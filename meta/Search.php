@@ -388,6 +388,9 @@ class Search {
         }
 
         // where clauses
+        if (!empty($this->filter)) {
+            $userWHERE = $QB->filters()->where('AND');
+        }
         foreach($this->filter as $filter) {
             list($col, $value, $comp, $op) = $filter;
 
@@ -413,7 +416,7 @@ class Search {
                 $colnam = $col->getColName();
             }
 
-            $col->getType()->filter($QB, $coltbl, $colnam, $comp, $value, $op); // type based filter
+            $col->getType()->filter($userWHERE, $coltbl, $colnam, $comp, $value, $op); // type based filter
         }
 
         // sorting - we always sort by the single val column

@@ -3,6 +3,7 @@ namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\Schema;
 use dokuwiki\plugin\struct\meta\Search;
 use dokuwiki\plugin\struct\meta\Value;
@@ -195,29 +196,30 @@ class Lookup extends Dropdown {
     /**
      * Compare against lookup table
      *
-     * @param QueryBuilder $QB
+     * @param QueryBuilderWhere $add
      * @param string $tablealias
      * @param string $colname
      * @param string $comp
      * @param string|\string[] $value
      * @param string $op
      */
-    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+    public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op) {
         $schema = 'data_' . $this->config['schema'];
         $column = $this->getLookupColumn();
         if(!$column) {
-            parent::filter($QB, $tablealias, $colname, $comp, $value, $op);
+            parent::filter($add, $tablealias, $colname, $comp, $value, $op);
             return;
         }
         $field = $column->getColName();
 
         // compare against lookup field
+        $QB = $add->getQB();
         $rightalias = $QB->generateTableAlias();
         $QB->addLeftJoin(
             $tablealias, $schema, $rightalias,
             "$tablealias.$colname = $rightalias.pid AND $rightalias.latest = 1"
         );
-        $column->getType()->filter($QB, $rightalias, $field, $comp, $value, $op);
+        $column->getType()->filter($add, $rightalias, $field, $comp, $value, $op);
     }
 
     /**

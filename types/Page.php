@@ -2,6 +2,7 @@
 namespace dokuwiki\plugin\struct\types;
 
 use dokuwiki\plugin\struct\meta\QueryBuilder;
+use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 
 /**
  * Class Page
@@ -187,24 +188,25 @@ class Page extends AbstractMultiBaseType {
     /**
      * When using titles, we need to compare against the title table, too
      *
-     * @param QueryBuilder $QB
+     * @param QueryBuilderWhere $add
      * @param string $tablealias
      * @param string $colname
      * @param string $comp
      * @param string $value
      * @param string $op
      */
-    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+    public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op) {
         if(!$this->config['usetitles']) {
-            parent::filter($QB, $tablealias, $colname, $comp, $value, $op);
+            parent::filter($add, $tablealias, $colname, $comp, $value, $op);
             return;
         }
 
+        $QB = $add->getQB();
         $rightalias = $QB->generateTableAlias();
         $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.$colname = $rightalias.pid");
 
         // compare against page and title
-        $sub = $QB->filters()->where($op);
+        $sub = $add->where($op);
         $pl = $QB->addValue($value);
         $sub->whereOr("$tablealias.$colname $comp $pl");
         $pl = $QB->addValue($value);

@@ -99,18 +99,19 @@ class DateTime extends Date {
     }
 
     /**
-     * @param QueryBuilder $QB
+     * @param QueryBuilderWhere $add
      * @param string $tablealias
      * @param string $colname
      * @param string $comp
      * @param string|\string[] $value
      * @param string $op
      */
-    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+    public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op) {
         $col = "$tablealias.$colname";
 
         // when accessing the revision column we need to convert from Unix timestamp
         if(is_a($this->context,'dokuwiki\plugin\struct\meta\RevisionColumn')) {
+            $QB = $add->getQB();
             $rightalias = $QB->generateTableAlias();
             $col = "DATETIME($rightalias.lastrev, 'unixepoch', 'localtime')";
             $QB->addLeftJoin($tablealias, 'titles', $rightalias, "$tablealias.pid = $rightalias.pid");
@@ -118,10 +119,8 @@ class DateTime extends Date {
 
         /** @var QueryBuilderWhere $add Where additionional queries are added to*/
         if(is_array($value)) {
-            $add = $QB->filters()->where($op); // sub where group
+            $add = $add->where($op); // sub where group
             $op = 'OR';
-        } else {
-            $add = $QB->filters(); // main where clause
         }
         foreach((array) $value as $item) {
             $pl = $QB->addValue($item);
