@@ -27,21 +27,20 @@ class Text extends AbstractMultiBaseType {
     /**
      * Comparisons are done against the full string (including prefix/postfix)
      *
-     * @param QueryBuilder $QB
+     * @param QueryBuilderWhere $add
      * @param string $tablealias
      * @param string $colname
      * @param string $comp
      * @param string|string[] $value
      * @param string $op
      */
-    public function filter(QueryBuilder $QB, $tablealias, $colname, $comp, $value, $op) {
+    public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op) {
         /** @var QueryBuilderWhere $add Where additionional queries are added to */
         if(is_array($value)) {
-            $add = $QB->filters()->where($op); // sub where group
+            $add = $add->where($op); // sub where group
             $op = 'OR';
-        } else {
-            $add = $QB->filters(); // main where clause
         }
+        $QB = $add->getQB();
         foreach((array) $value as $item) {
             $column = "$tablealias.$colname";
 

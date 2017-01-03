@@ -12,14 +12,18 @@ class QueryBuilderWhere {
     protected $statement;
     /** @var string */
     protected $type = 'AND';
+    /** @var QueryBuilder */
+    protected $QB;
 
     /**
      * Create a new WHERE clause
      *
+     * @param QueryBuilder $QB The QueryBuilder to which this where-clause belongs
      * @param string $type The type of the statement, either 'AND' or 'OR'
      * @param null|string $statement The statement or null if this should hold sub statments
      */
-    public function __construct($type = 'AND', $statement = null) {
+    public function __construct(QueryBuilder $QB, $type = 'AND', $statement = null) {
+        $this->QB = $QB;
         $this->type = $type;
         if($statement === null) {
             $this->statement = array();
@@ -81,7 +85,7 @@ class QueryBuilderWhere {
         if($op != 'AND' && $op != 'OR') {
             throw new StructException('Bad logical operator');
         }
-        $where = new QueryBuilderWhere($op, $statement);
+        $where = new QueryBuilderWhere($this->QB, $op, $statement);
         $this->statement[] = $where;
 
         if($statement) {
@@ -89,6 +93,13 @@ class QueryBuilderWhere {
         } else {
             return $where;
         }
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getQB() {
+        return $this->QB;
     }
 
     /**

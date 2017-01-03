@@ -135,7 +135,7 @@ class Type_Text_struct_test extends StructTest {
         $QB = new QueryBuilder();
 
         $text = new Text(array('prefix' => $prefix, 'postfix' => $postfix));
-        $text->filter($QB, 'T', 'col', $comp, $val, 'AND');
+        $text->filter($QB->filters(), 'T', 'col', $comp, $val, 'AND');
 
         list($sql, $opt) = $QB->getWhereSQL();
         $this->assertEquals($this->cleanWS($e_sql), $this->cleanWS($sql));
