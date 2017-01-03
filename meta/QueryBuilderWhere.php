@@ -18,6 +18,7 @@ class QueryBuilderWhere {
     /**
      * Create a new WHERE clause
      *
+     * @param QueryBuilder $QB The QueryBuilder to which this where-clause belongs
      * @param string $type The type of the statement, either 'AND' or 'OR'
      * @param null|string $statement The statement or null if this should hold sub statments
      */
