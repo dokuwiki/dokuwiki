@@ -50,13 +50,13 @@ class OptGroup extends Element {
         if(!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
         $this->options = array();
         foreach($options as $key => $val) {
-            if(is_int($key)) {
-                $this->options[$val] = array('label' => (string) $val);
-            } elseif (!is_array($val)) {
-                $this->options[$key] = array('label' => (string) $val);
-            } else {
+            if (is_array($val)) {
                 if (!key_exists('label', $val)) throw new \InvalidArgumentException('If option is given as array, it has to have a "label"-key!');
                 $this->options[$key] = $val;
+            } elseif(is_int($key)) {
+                $this->options[$val] = array('label' => (string) $val);
+            } else {
+                $this->options[$key] = array('label' => (string) $val);
             }
         }
         return $this;
