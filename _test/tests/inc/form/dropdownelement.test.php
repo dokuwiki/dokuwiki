@@ -58,7 +58,10 @@ class form_dropdownelement_test extends DokuWikiTest {
                     'data-foo' => 'bar'
                 )
             ),
-            'second'
+            'second',
+            '3' => array(
+                'label' => 'the label of the complex third option',
+            )
         );
 
         $form->addDropdown('foo', $options, 'label text');
@@ -70,7 +73,7 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertTrue($select->length == 1);
 
         $options = $pq->find('option');
-        $this->assertTrue($options->length == 2);
+        $this->assertEquals(3, $options->length);
 
         $option = $pq->find('option#theID');
         $this->assertEquals(1, $option->length);
