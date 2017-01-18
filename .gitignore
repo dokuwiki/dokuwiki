@@ -80,4 +80,4 @@ vendor/splitbrain/php-archive/generate-api.sh
 vendor/paragonie/random_compat/build-phar.sh
 vendor/paragonie/random_compat/dist/*
 vendor/paragonie/random_compat/other/*
-
+vendor/simplepie/simplepie/db.sql

@@ -33,6 +33,16 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'SimplePie' => 
+            array (
+                0 => __DIR__ . '/..' . '/simplepie/simplepie/library',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'GeSHi' => __DIR__ . '/..' . '/easybook/geshi/geshi.php',
     );
@@ -42,6 +52,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita19a915ee98347a0c787119619d2ff9b::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita19a915ee98347a0c787119619d2ff9b::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita19a915ee98347a0c787119619d2ff9b::$prefixesPsr0;
             $loader->classMap = ComposerStaticInita19a915ee98347a0c787119619d2ff9b::$classMap;
 
         }, null, ClassLoader::class);
