@@ -401,6 +401,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if($limit < 0) $limit = 10000; // we don't support no limit
         if(is_null($filter)) $filter = array();
 
+        if(isset($filter['grps'])) $filter['group'] = $filter['grps'];
         foreach(array('user', 'name', 'mail', 'group') as $key) {
             if(!isset($filter[$key])) {
                 $filter[$key] = '%';
@@ -420,7 +421,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
                 $this->_debug("Statement did not return 'user' attribute", -1, __LINE__);
                 return array();
             }
-            $users[] = $row['user'];
+            $users[] = $this->getUserData($row['user']);
         }
         return $users;
     }
@@ -434,6 +435,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
     public function getUserCount($filter = array()) {
         if(is_null($filter)) $filter = array();
 
+        if(isset($filter['grps'])) $filter['group'] = $filter['grps'];
         foreach(array('user', 'name', 'mail', 'group') as $key) {
             if(!isset($filter[$key])) {
                 $filter[$key] = '%';
@@ -446,7 +448,7 @@ class auth_plugin_authpdo extends DokuWiki_Auth_Plugin {
         if(!$result || !isset($result[0]['count'])) {
             $this->_debug("Statement did not return 'count' attribute", -1, __LINE__);
         }
-        return isset($result[0]['count']);
+        return (int) $result[0]['count'];
     }
 
     /**
