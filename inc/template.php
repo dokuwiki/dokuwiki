@@ -675,7 +675,7 @@ function tpl_get_action($type) {
                     $accesskey     = 'v';
                 }
             } else {
-                $params    = array('do' => '');
+                $params    = '';
                 $type      = 'show';
                 $accesskey = 'v';
             }
