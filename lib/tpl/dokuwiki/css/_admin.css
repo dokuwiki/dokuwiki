@@ -73,13 +73,15 @@
 
 .dokuwiki ul.admin_plugins li .admin_plugin_container {
 	display: block;
-	height; 20px;
+	height: 20px;
+	vertical-align: middle;
 }
 
 .dokuwiki ul.admin_plugins li .admin_plugin_container div.admin_plugin_icon {
 	width: 20px;
 	height: 20px;
 	display: inline-block;
+	vertical-align: middle;
 }
 
 .dokuwiki ul.admin_plugins li .admin_plugin_container div.admin_plugin_icon img {
@@ -88,9 +90,11 @@
 }
 
 .dokuwiki ul.admin_plugins li .admin_plugin_container div.admin_plugin_name {
-	margin-left: 0.5em;
+	padding-left: 0.5em;
+	vertical-align: middle;
 	display: inline-block;
 	text-align: center;
+	margin: 0 auto;
 }
 
 
