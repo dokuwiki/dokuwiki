@@ -52,7 +52,7 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
         $returnValue = '';        
         
         if(strlen($this->getMenuIcon()) != '' && is_file(DOKU_INC.substr($this->getMenuIcon(), strlen(DOKU_BASE)))){
-           if(array_values(mimetype(DOKU_INC.substr($this->getMenuIcon(), strlen(DOKU_BASE)), false)) == array('svg','application/octet-stream', true)) {
+           if(mimetype(DOKU_INC.substr($this->getMenuIcon(), strlen(DOKU_BASE)), false)[0] == 'svg') {
                $returnValue = $this->getMenuIcon();
            }
         }
