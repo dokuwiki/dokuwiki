@@ -2073,7 +2073,8 @@ function html_admin(){
 
         $menu[$p] = array('plugin' => $p,
                 'prompt' => $obj->getMenuText($conf['lang']),
-                'sort' => $obj->getMenuSort()
+                'icon' => $obj->getMenuIconSvgOnly(),
+                'sort' => $obj->getMenuSort(),
                 );
     }
 
@@ -2171,10 +2172,20 @@ function html_admin(){
         // output the menu
         ptln('<div class="clearer"></div>');
         print p_locale_xhtml('adminplugins');
-        ptln('<ul>');
+        ptln('<ul class="admin_plugins icon">');       
         foreach ($menu as $item) {
             if (!$item['prompt']) continue;
-            ptln('  <li><div class="li"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">'.$item['prompt'].'</a></div></li>');
+            ptln('<li><div class="li admin_plugin_container">');
+            ptln('<div class="admin_plugin_icon">');
+            //add icon to the item, in case of being specified
+            if(strlen($item['icon']) > 0){
+                 ptln('<img src="'.$item['icon'].'" alt="admin_icon_'.hsc($item['prompt']).'"></img>');
+            }
+            ptln('</div>');
+            ptln('<div class="admin_plugin_name"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">');
+            ptln($item['prompt']);
+            ptln('</a></div>');
+            ptln('</div></li>');
         }
         ptln('</ul>');
     }
