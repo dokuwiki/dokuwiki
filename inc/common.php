@@ -2024,7 +2024,7 @@ function stripsourcemaps(&$text){
  * @param int $maxsize maximum allowed size for the SVG to be embedded
  * @return bool true if the file was embedded, false otherwise
  */
-function embedSVG($file, $maxsize = 1024) {
+function embedSVG($file, $maxsize = 1024*2) {
     $file = trim($file);
     if($file === '') return false;
     if(!file_exists($file)) return false;
