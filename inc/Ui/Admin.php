@@ -43,7 +43,7 @@ class Admin extends Ui {
 
         // user manager only if the auth backend supports it
         if(!$auth || !$auth->canDo('getUsers') ) {
-            if(isset($menu['usermanager'])) unset($menu['usermanager']);
+            if(isset($this->menu['usermanager'])) unset($this->menu['usermanager']);
         }
 
         echo '<ul class="admin_tasks">';
