@@ -1,0 +1,59 @@
+.dokuwiki div.UI-admin {
+
+    /* main task grouped in two columns */
+    ul.admin_tasks {
+        float: left;
+        width: 40%;
+        list-style-type: none;
+        font-size: 1.125em;
+    }
+    [dir=rtl] ul.admin_tasks {
+        float: right;
+    }
+
+    /* general menu item styling */
+    ul li {
+        margin: 0 0 1em 0;
+        font-weight: bold;
+        list-style-type: none;
+
+        div {
+            // flexbox takes care of RTL alignment
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-content: flex-start;
+            align-items: flex-start;
+
+            span {
+                width: 1.5em;
+                align-self: center;
+
+                svg {
+                    width: 1.5em;
+                    height: 1.5em;
+                    fill: @ini_link;
+                }
+            }
+
+            a {
+                flex-grow: 1;
+                align-self: center;
+                margin: 0 0.5em;
+            }
+        }
+    }
+
+    /* DokuWiki version */
+    #admin__version {
+        clear: left;
+        float: right;
+        color: @ini_text_neu;
+        background-color: inherit;
+    }
+    [dir=rtl] #admin__version {
+        clear: right;
+        float: left;
+    }
+}

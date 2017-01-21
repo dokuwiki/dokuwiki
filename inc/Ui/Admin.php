@@ -21,14 +21,14 @@ class Admin extends Ui {
      */
     public function show() {
         $this->menu = $this->getPluginList();
-        dbg($this->menu);
-
+        echo '<div class="UI-admin">';
         echo p_locale_xhtml('admin');
         $this->showSecurityCheck();
         $this->showAdminMenu();
         $this->showManagerMenu();
         $this->showVersion();
         $this->showPluginMenu();
+        echo '</div>';
     }
 
     /**
