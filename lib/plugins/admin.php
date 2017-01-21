@@ -36,7 +36,7 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
      * (Override this function for setting another image)
      *
      * Important: you have to return a single path, monochrome SVG icon! It has to be
-     * under 1024 bytes!
+     * under 2 Kilobytes!
      *
      * We recommend icons from https://materialdesignicons.com/ or to use a matching
      * style.
