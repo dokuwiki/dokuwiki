@@ -2073,7 +2073,7 @@ function html_admin(){
 
         $menu[$p] = array('plugin' => $p,
                 'prompt' => $obj->getMenuText($conf['lang']),
-                'icon' => $obj->getMenuIconSvgOnly(),
+                'icon' => $obj->getMenuIcon(),
                 'sort' => $obj->getMenuSort(),
                 );
     }
@@ -2172,15 +2172,12 @@ function html_admin(){
         // output the menu
         ptln('<div class="clearer"></div>');
         print p_locale_xhtml('adminplugins');
-        ptln('<ul class="admin_plugins icon">');       
+        ptln('<ul class="admin_plugins">');
         foreach ($menu as $item) {
             if (!$item['prompt']) continue;
-            ptln('<li><div class="li admin_plugin_container">');
+            ptln('<li><div class="li">');
             ptln('<div class="admin_plugin_icon">');
-            //add icon to the item, in case of being specified
-            if(strlen($item['icon']) > 0){
-                 ptln('<img src="'.$item['icon'].'" alt="admin_icon_'.hsc($item['prompt']).'"></img>');
-            }
+            embedSVG($item['icon']);
             ptln('</div>');
             ptln('<div class="admin_plugin_name"><a href="'.wl($ID, 'do=admin&amp;page='.$item['plugin']).'">');
             ptln($item['prompt']);

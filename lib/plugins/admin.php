@@ -32,34 +32,22 @@ class DokuWiki_Admin_Plugin extends DokuWiki_Plugin {
 
     /**
      * Return the path to the icon being displayed in the main admin menu.
-     * Default means, there won't be any icon.
+     * By default it tries to find an 'admin.svg' file in the plugin directory.
      * (Override this function for setting another image)
-     * 
-     * CAUTION:
-     * Only svg-files are allowed
-     * 
+     *
+     * Important: you have to return a single path, monochrome SVG icon! It has to be
+     * under 1024 bytes!
+     *
+     * We recommend icons from https://materialdesignicons.com/ or to use a matching
+     * style.
+     *
+     * @return string full path to the icon file
      */
-    public function getMenuIcon(){
-        return '';
+    public function getMenuIcon() {
+        $plugin = $this->getPluginName();
+        return DOKU_PLUGIN . $plugin . '/admin.svg';
     }
-    
-    /**
-     * Return the path to the icon being displayed in the main admin menu.
-     * In case of file mime-type not being SVG, an empty string will be returned.
-     * @return string menu icon url or empty
-     */
-    public function getMenuIconSvgOnly(){
-        $returnValue = '';        
-        
-        if(strlen($this->getMenuIcon()) != '' && is_file(DOKU_INC.substr($this->getMenuIcon(), strlen(DOKU_BASE)))){
-           $calculated = mimetype(DOKU_INC.substr($this->getMenuIcon(), strlen(DOKU_BASE)), false);
-           if(is_array($calculated) && $calculated[0] == 'svg') {
-               $returnValue = $this->getMenuIcon();
-           }
-        }
-        return $returnValue;
-    }
-    
+
     /**
      * Determine position in list in admin window
      * Lower values are sorted up
