@@ -8,7 +8,3 @@ Date                : @DATE@
 Navigateur internet         : @BROWSER@
 Adresse IP          : @IPADDRESS@
 Nom d'hôte          : @HOSTNAME@
-
--- 
-Ce courriel a été généré par DokuWiki depuis
-@DOKUWIKIURL@

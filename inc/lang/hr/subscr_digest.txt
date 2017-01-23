@@ -7,13 +7,9 @@ Ovdje su promjene:
 @DIFF@
 --------------------------------------------------------
 
-Stara verzija: @OLDPAGE@
-Nova verzija: @NEWPAGE@
+Stara izmjena: @OLDPAGE@
+Nova izmjena: @NEWPAGE@
 
 Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite
 @SUBSCRIBE@
 i odjavite se s promjena na stranici i/ili imeničkom prostoru.
-
--- 
-Ova poruka je generirana od strane DokuWiki dostupnog na
-@DOKUWIKIURL@

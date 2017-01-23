@@ -2,10 +2,11 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Michalek <michalek.dev@gmail.com>
  */
 $lang['menu']                  = 'Nastavenia konfigurácie';
 $lang['error']                 = 'Nastavenia neboli aktualizované kvôli neplatnej hodnote, prosím skontrolujte vaše zmeny a znovu ich pošlite. <br />Nesprávna hodnota(y) bude ohraničená červeným okrajom.';
@@ -55,7 +56,7 @@ $lang['breadcrumbs']           = 'Počet záznamov histórie';
 $lang['youarehere']            = 'Nachádzate sa';
 $lang['fullpath']              = 'Zobrazovať plnú cestu k stránkam v pätičke';
 $lang['typography']            = 'Vykonať typografické zmeny';
-$lang['dformat']               = 'Formát dátumu (pozri funkciu PHP <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formát dátumu (pozri funkciu PHP <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['showuseras']            = 'Čo použiť pri zobrazení používateľa, ktorý posledný upravoval stránku';
 $lang['toptoclevel']           = 'Najvyššia úroveň pre generovanie obsahu.';
@@ -130,7 +131,7 @@ $lang['autoplural']            = 'Kontrolovať množné číslo v odkazoch';
 $lang['compression']           = 'Metóda kompresie pre staré verzie stránok';
 $lang['gzip_output']           = 'Používať gzip Content-Encoding pre xhtml';
 $lang['compress']              = 'Komprimovať CSS a javascript výstup';
-$lang['cssdatauri']            = 'Veľkosť v bytoch, do ktorej by mali byť obrázky s odkazom v CSS vložené priamo do štýlu z dôvodu obmedzenia HTTP požiadaviek. Tento postup nefunguje v IE verzie 7 a nižšie! Vhodná hodnota je od <code>400</code> do <code>600</code> bytov. Hodnota <code>0</code> deaktivuje túto metódu.';
+$lang['cssdatauri']            = 'Veľkosť v bytoch, do ktorej by mali byť obrázky s odkazom v CSS vložené priamo do štýlu z dôvodu obmedzenia HTTP požiadaviek. Vhodná hodnota je od <code>400</code> do <code>600</code> bytov. Hodnota <code>0</code> deaktivuje túto metódu.';
 $lang['send404']               = 'Poslať "HTTP 404/Page Not Found" pre neexistujúce stránky';
 $lang['broken_iua']            = 'Je vo Vašom systéme funkcia ignore_user_abort poškodená? Môže to mať za následok nefunkčnosť vyhľadávania v indexe. IIS+PHP/CGI je známy tým, že nefunguje správne. Pozrite <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> pre dalšie informácie.';
 $lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručenie statických súborov webserverom? Webserver musí túto funkcionalitu podporovať.';

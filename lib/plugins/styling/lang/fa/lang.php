@@ -2,12 +2,13 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ * @author Sam01 <m.sajad079@gmail.com>
  */
 $lang['menu']                  = 'تنظیمات ظاهری تمپلیت';
 $lang['js']['loader']          = 'پیش‌نمایش در حال باز شدن است... <br />اگر این پیش نرفت یعنی مقادیرتان اشکال دارد';
-$lang['js']['popup']           = 'باز کردن به صورت popup';
+$lang['js']['popup']           = 'باز کردن به صورت پاپ‌آپ';
 $lang['error']                 = 'ببخشید، این قالب از این قابلیت پشتیبانی نمی‌کند';
 $lang['btn_preview']           = 'نمایش تغییرات';
 $lang['btn_save']              = 'ذخیره تغییرات';

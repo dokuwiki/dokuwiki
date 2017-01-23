@@ -93,7 +93,7 @@ def');
 abc
 |
 def');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -111,14 +111,14 @@ def');
 
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testTableHeaders() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->parse('
 abc
 ^ X | Y ^ Z |
 def');
-    
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -291,14 +291,14 @@ def');
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
 
     }
-    
+
     function testCellAlignment() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->parse('
 abc
 |  X | Y  ^  Z  |
 def');
-    
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -325,7 +325,7 @@ def');
 
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testCellSpan() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->parse('
@@ -334,7 +334,7 @@ abc
 | f ^ ^|
 ||||
 def');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -367,7 +367,7 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testCellRowSpan() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->parse('
@@ -376,7 +376,7 @@ abc
 |:::^ d  | e|
 |b  ^  ::: |:::f|
 def');
-        
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -473,7 +473,7 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testRowSpanTableHead() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->parse('
@@ -606,7 +606,7 @@ def');
 abc
 |  **X** | Y  ^  Z  |
 def');
-    
+
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
@@ -634,11 +634,11 @@ def');
             array('p_close',array()),
             array('document_end',array()),
         );
- 
+
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
-        
+
     }
-    
+
     function testTableEol() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
@@ -683,7 +683,7 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     // This is really a failing test - formatting able to spread across cols
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableStrong() {
@@ -738,7 +738,7 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     // This is really a failing test - unformatted able to spread across cols
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableUnformatted() {
@@ -789,7 +789,7 @@ def');
         );
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     function testTableLinebreak() {
         $this->P->addMode('table',new Doku_Parser_Mode_Table());
         $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
@@ -837,7 +837,7 @@ def');
 
         $this->assertEquals($calls,array_map('stripbyteindex',$this->H->calls));
     }
-    
+
     // This is really a failing test - footnote able to spread across cols
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableFootnote() {
@@ -915,4 +915,85 @@ def');
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
+    /**
+     * missing cells in one row get filled up...
+     */
+    function testTable_CellFix() {
+        $syntax = "\n| r1c1 | r1c2 | r1c3 |\n| r2c1 |\n";
+        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->parse($syntax);
+        $calls = array (
+            array('document_start',array()),
+            array('table_open',array(3, 2, 2)),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c2 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c3 ')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('table_close',array(strlen($syntax))),
+            array('document_end',array()),
+        );
+        $this->assertEquals($calls, array_map('stripbyteindex',$this->H->calls));
+    }
+
+    /**
+     * ... even if the longer row comes later
+     */
+    function testTable_CellFix2() {
+        $syntax = "\n| r1c1 |\n| r2c1 | r2c2 | r2c3 |\n";
+        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->parse($syntax);
+        $calls = array (
+            array('document_start',array()),
+            array('table_open',array(3, 2, 2)),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r1c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array('')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('tablerow_open',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c1 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c2 ')),
+            array('tablecell_close',array()),
+            array('tablecell_open',array(1,null,1)),
+            array('cdata',array(' r2c3 ')),
+            array('tablecell_close',array()),
+            array('tablerow_close',array()),
+
+            array('table_close',array(strlen($syntax))),
+            array('document_end',array()),
+        );
+        $this->assertEquals($calls, array_map('stripbyteindex',$this->H->calls));
+    }
 }

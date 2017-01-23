@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Remon <no@email.local>
  */
 $lang['server']                = 'Je PostgreSQL server';

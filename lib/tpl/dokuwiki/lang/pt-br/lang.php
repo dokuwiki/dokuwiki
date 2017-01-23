@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  */
 $lang['__background_site__']   = 'Cor para o fundo da tela (atrás da caixa de conteúdo)';

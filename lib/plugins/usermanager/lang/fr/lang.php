@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -24,6 +24,7 @@
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Eric <ericstevenart@netc.fr>
  */
 $lang['menu']                  = 'Gestion des utilisateurs';
 $lang['noauth']                = '(authentification de l\'utilisateur non disponible)';
@@ -89,6 +90,6 @@ $lang['addUser_error_pass_not_identical'] = 'Les mots de passe saisis diffèrent
 $lang['addUser_error_modPass_disabled'] = 'La modification des mots de passe est actuellement désactivée.';
 $lang['addUser_error_name_missing'] = 'Veuillez saisir un nom pour le nouvel utilisateur.';
 $lang['addUser_error_modName_disabled'] = 'La modification des noms est actuellement désactivée.';
-$lang['addUser_error_mail_missing'] = 'Veuillez saisir une adressse de courriel pour le nouvel utilisateur.';
+$lang['addUser_error_mail_missing'] = 'Veuillez saisir une adresse de courriel pour le nouvel utilisateur.';
 $lang['addUser_error_modMail_disabled'] = 'La modification des adresses de courriel est actuellement désactivée.';
 $lang['addUser_error_create_event_failed'] = 'Un greffon a empêché l\'ajout du nouvel utilisateur. Examinez les autres messages potentiels pour obtenir de plus amples informations.';

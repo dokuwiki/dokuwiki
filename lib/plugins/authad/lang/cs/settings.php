@@ -2,9 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author mkucera66@seznam.cz
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Daniel Slováček <danslo@danslo.cz>
  */
 $lang['account_suffix']        = 'Přípona vašeho účtu, tj. <code>@moje.domena.org</code>';
 $lang['base_dn']               = 'Vaše doménové jméno DN. tj. <code>DC=moje,DC=domena,DC=org</code>';
@@ -19,3 +20,5 @@ $lang['use_tls']               = 'Použít spojení TLS? Pokud ano, nevyužívej
 $lang['debug']                 = 'Zobrazit dodatečné debugovací výstupy při chybách?';
 $lang['expirywarn']            = 'Dny mezi varováním o vyprčšení hesla uživatele a jeho vypršením. 0 znaší vypnuto.';
 $lang['additional']            = 'Čárkou oddělený seznam dodatečných atributů získávaných z uživatelských dat. Využito některými pluginy.';
+$lang['update_name']           = 'Povolit uživatelům upravit jejich AD zobrazované jméno?';
+$lang['update_mail']           = 'Povolit uživatelům upravit svou emailovou adresu?';

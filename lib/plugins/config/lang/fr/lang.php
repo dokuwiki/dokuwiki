@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -25,6 +25,7 @@
  * @author Floriang <antispam@floriang.eu>
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
+ * @author Eric <ericstevenart@netc.fr>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -73,7 +74,7 @@ $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cet
 $lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Données à insérer lors de l\'utilisation du bouton « signature » dans l\'éditeur';
 $lang['showuseras']            = 'Données à afficher concernant le dernier utilisateur ayant modifié une page';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';

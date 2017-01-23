@@ -388,7 +388,7 @@ class DOMDocumentWrapper {
                 phpQuery::debug("Full markup load (XML), appending charset '$charset'");
                 $markup = $this->charsetAppendToXML($markup, $charset);
             }
-            // see http://pl2.php.net/manual/en/book.dom.php#78929
+            // see http://php.net/manual/en/book.dom.php#78929
             // LIBXML_DTDLOAD (>= PHP 5.1)
             // does XML ctalogues works with LIBXML_NONET
     //      $this->document->resolveExternals = true;
@@ -401,7 +401,7 @@ class DOMDocumentWrapper {
                     ? $this->document->loadXML($markup)
                     : @$this->document->loadXML($markup);
             } else {
-                /** @link http://pl2.php.net/manual/en/libxml.constants.php */
+                /** @link http://php.net/manual/en/libxml.constants.php */
                 $libxmlStatic = phpQuery::$debug === 2
                     ? LIBXML_DTDLOAD|LIBXML_DTDATTR|LIBXML_NONET
                     : LIBXML_DTDLOAD|LIBXML_DTDATTR|LIBXML_NONET|LIBXML_NOWARNING|LIBXML_NOERROR;

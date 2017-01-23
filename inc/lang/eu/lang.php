@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Xabi Ezpeleta <xezpeleta@mendikute.com>
  * @author Inko Illarramendi <inko.i.a@gmail.com>
  * @author Zigor Astarbe <astarbe@gmail.com>
@@ -306,3 +306,5 @@ $lang['media_viewold']         = '%s -n %s';
 $lang['media_edit']            = '%s editatu';
 $lang['media_update']          = 'Bertsio berria igo';
 $lang['media_restore']         = 'Bertsio hau berrezarri';
+$lang['email_signature_text'] = 'Email hau DokuWiki erabiliz sortu da
+@DOKUWIKIURL@';

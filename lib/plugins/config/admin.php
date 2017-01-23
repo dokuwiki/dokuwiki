@@ -354,7 +354,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         // build toc
         $t = array();
 
-        $t[] = html_mktocitem('configuration_manager', $this->getLang('_configuration_manager'), 1);
+        $check = false;
+        $title = $this->getLang('_configuration_manager');
+        $t[] = html_mktocitem(sectionID($title, $check), $title, 1);
         $t[] = html_mktocitem('dokuwiki_settings', $this->getLang('_header_dokuwiki'), 1);
         /** @var setting $setting */
         foreach($toc['conf'] as $setting) {

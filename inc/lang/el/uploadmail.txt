@@ -9,7 +9,3 @@ IP-Διεύθυνση    : @IPADDRESS@
 Μέγεθος         : @SIZE@
 MIME Type       : @MIME@
 Χρήστης         : @USER@
-
--- 
-Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
-@DOKUWIKIURL@

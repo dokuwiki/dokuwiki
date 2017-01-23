@@ -1,0 +1,7 @@
+base   authpdo
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2016-08-20
+name   authpdo plugin
+desc   Authenticate against a database via PDO
+url    https://www.dokuwiki.org/plugin:authpdo

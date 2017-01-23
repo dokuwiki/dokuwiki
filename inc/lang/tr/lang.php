@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
@@ -339,3 +339,5 @@ $lang['currentns']             = 'Geçerli isimalanı';
 $lang['searchresult']          = 'Arama Sonucu';
 $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
+$lang['email_signature_text'] = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
+@DOKUWIKIURL@';

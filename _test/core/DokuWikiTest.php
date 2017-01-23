@@ -73,7 +73,15 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
                 }
             }
         }
+        // reload some settings
+        $conf['gzip_output'] &= (strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') !== false);
 
+        if($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
+            $conf['compression'] = 'gz';
+        }
+        if($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
+            $conf['compression'] = 0;
+        }
         // make real paths and check them
         init_paths();
         init_files();
@@ -118,5 +126,56 @@ abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
 
         global $INPUT;
         $INPUT = new Input();
+    }
+
+    /**
+     * Compatibility for older PHPUnit versions
+     *
+     * @param string $originalClassName
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createMock($originalClassName) {
+        if(is_callable(array('parent', 'createMock'))) {
+            return parent::createMock($originalClassName);
+        } else {
+            return $this->getMock($originalClassName);
+        }
+    }
+
+    /**
+     * Compatibility for older PHPUnit versions
+     *
+     * @param string $originalClassName
+     * @param array $methods
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createPartialMock($originalClassName, array $methods) {
+        if(is_callable(array('parent', 'createPartialMock'))) {
+            return parent::createPartialMock($originalClassName, $methods);
+        } else {
+            return $this->getMock($originalClassName, $methods);
+        }
+    }
+
+    /**
+     * Waits until a new second has passed
+     *
+     * The very first call will return immeadiately, proceeding calls will return
+     * only after at least 1 second after the last call has passed.
+     *
+     * When passing $init=true it will not return immeadiately but use the current
+     * second as initialization. It might still return faster than a second.
+     *
+     * @param bool $init wait from now on, not from last time
+     * @return int new timestamp
+     */
+    protected function waitForTick($init = false) {
+        static $last = 0;
+        if($init) $last = time();
+        while($last === $now = time()) {
+            usleep(100000); //recheck in a 10th of a second
+        }
+        $last = $now;
+        return $now;
     }
 }

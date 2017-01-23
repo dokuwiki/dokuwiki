@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
  * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
@@ -242,3 +242,5 @@ $lang['days']                  = '%d วันก่อน';
 $lang['hours']                 = '%d ชั่วโมงก่อน';
 $lang['minutes']               = '%d นาทีก่อน';
 $lang['seconds']               = '%d วินาทีก่อน';
+$lang['email_signature_text'] = 'จดหมายนี้ถูกสร้างขึ้นโดยโดกุวิกิที่
+@DOKUWIKIURL@';

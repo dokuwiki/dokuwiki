@@ -8,7 +8,3 @@ Datum         : @DATE@
 Browser       : @BROWSER@
 IP-adres      : @IPADDRESS@
 Hostname      : @HOSTNAME@
-
--- 
-Dit bericht is gegenereerd door DokuWiki op
-@DOKUWIKIURL@

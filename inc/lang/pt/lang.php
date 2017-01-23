@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author José Carlos Monteiro <jose.c.monteiro@netcabo.pt>
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
@@ -346,3 +346,5 @@ $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Markup de Wiki';
 $lang['page_nonexist_rev']     = 'Página não existia no %s. Posteriormente, foi criado em <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Não é possível analisar o parâmetro "%s".';
+$lang['email_signature_text'] = 'Este email foi gerado por DokuWiki em
+@DOKUWIKIURL@';

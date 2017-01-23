@@ -68,6 +68,7 @@ function load_autoload($name){
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
         'IXR_Server'            => DOKU_INC.'inc/IXR_Library.php',
         'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
+        'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
         'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
@@ -82,10 +83,6 @@ function load_autoload($name){
         'RemoteAPI'             => DOKU_INC.'inc/remote.php',
         'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
         'Subscription'          => DOKU_INC.'inc/subscription.php',
-        'Crypt_Base'            => DOKU_INC.'inc/phpseclib/Crypt_Base.php',
-        'Crypt_Rijndael'        => DOKU_INC.'inc/phpseclib/Crypt_Rijndael.php',
-        'Crypt_AES'             => DOKU_INC.'inc/phpseclib/Crypt_AES.php',
-        'Crypt_Hash'            => DOKU_INC.'inc/phpseclib/Crypt_Hash.php',
         'lessc'                 => DOKU_INC.'inc/lessc.inc.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
@@ -111,8 +108,20 @@ function load_autoload($name){
         return true;
     }
 
-    // our own namespace
+    // namespace to directory conversion
     $name = str_replace('\\', '/', $name);
+
+    // plugin namespace
+    if(substr($name, 0, 16) == 'dokuwiki/plugin/') {
+        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
+        $file = DOKU_PLUGIN . substr($name, 16) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
+    // our own namespace
     if(substr($name, 0, 9) == 'dokuwiki/') {
         require substr($name, 9) . '.php';
         return true;

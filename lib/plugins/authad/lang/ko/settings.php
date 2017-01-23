@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Myeongjin <aranet100@gmail.com>
  * @author Garam <rowain8@gmail.com>
  */
@@ -19,3 +19,5 @@ $lang['use_tls']               = 'TLS 연결을 사용합니까? 사용한다면
 $lang['debug']                 = '오류에 대한 추가적인 디버그 정보를 보이겠습니까?';
 $lang['expirywarn']            = '미리 비밀번호 만료를 사용자에게 경고할 날짜. 0일 경우 비활성화합니다.';
 $lang['additional']            = '사용자 데이터에서 가져올 추가적인 AD 속성의 쉼표로 구분한 목록. 일부 플러그인이 사용합니다.';
+$lang['update_name']           = '사용자가 자신의 AD 표시 이름을 업데이트할 수 있도록 하겠습니까?';
+$lang['update_mail']           = '사용자가 자신의 이메일 주소를 업데이트할 수 있도록 하겠습니까?';

@@ -9,7 +9,3 @@ Per confirmar que realment heu sol·licitat una nova contrasenya, utilitzeu
 l'enllaç següent:
 
 @CONFIRM@
-
--- 
-Missatge generat per DokuWiki en
-@DOKUWIKIURL@

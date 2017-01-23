@@ -2,9 +2,11 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author lainme <lainme993@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
+ * @author JellyChen <451453325@qq.com>
+ * @author 高博 <bobnemo1983@gmail.com>
  */
 $lang['account_suffix']        = '您的账户后缀。例如 <code>@my.domain.org</code>';
 $lang['base_dn']               = '您的基本分辨名。例如 <code>DC=my,DC=domain,DC=org</code>';
@@ -19,3 +21,5 @@ $lang['use_tls']               = '使用 TLS 连接？如果是 ，不要激活�
 $lang['debug']                 = '有错误时显示额外的调试信息？';
 $lang['expirywarn']            = '提前多少天警告用户密码即将到期。0 则禁用。';
 $lang['additional']            = '需要从用户数据中获取的额外 AD 属性的列表，以逗号分隔。用于某些插件。';
+$lang['update_name']           = '允许用户更新其AD显示名称？';
+$lang['update_mail']           = '是否允许用户更新他们的电子邮件地址？';

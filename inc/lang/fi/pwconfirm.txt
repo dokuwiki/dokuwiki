@@ -7,7 +7,3 @@ Jos sinä ei pyytänyt uutta salasanaa, niin voit unohtaa tämän postin.
 Käytä alla olevaa linkkiä vahvistaaksesi, että pyynnön lähettäjä todella olet sinä.
 
 @CONFIRM@
-
--- 
-Tämän postin loi DokuWiki
-@DOKUWIKIURL@

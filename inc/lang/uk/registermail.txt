@@ -8,6 +8,3 @@ E-Mail      : @NEWEMAIL@
 Браузер     : @BROWSER@
 Адреса IP   : @IPADDRESS@
 Назва хосту : @HOSTNAME@
-
---
-Цей лист було надіслано за допомогою служби повідомлень DokuWiki, сайту @DOKUWIKIURL@

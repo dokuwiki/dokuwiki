@@ -189,4 +189,3 @@ $language_data = array (
     )
 );
 
-?>

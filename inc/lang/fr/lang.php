@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Sébastien Bauer <sebastien.bauer@advalvas.be>
  * @author Antoine Fixary <antoine.fixary@freesbee.fr>
  * @author cumulus <pta-n56@myamail.com>
@@ -38,6 +38,7 @@
  * @author james <j.mccann@celcat.com>
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Floriang <antispam@floriang.eu>
+ * @author Eric <ericstevenart@netc.fr>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -98,7 +99,7 @@ $lang['badpassconfirm']        = 'Désolé, le mot de passe est erroné';
 $lang['minoredit']             = 'Modification mineure';
 $lang['draftdate']             = 'Brouillon enregistré automatiquement le';
 $lang['nosecedit']             = 'La page a changé entre temps, les informations de la section sont obsolètes ; la page complète a été chargée à la place.';
-$lang['searchcreatepage']      = 'Si vous n\'avez pas trouvé ce que vous cherchiez, vous pouvez créer ou modifier la page correspondante à votre requête en cliquant sur le bouton approprié.';
+$lang['searchcreatepage']      = 'Si vous n\'avez pas trouvé ce que vous cherchiez, vous pouvez créer ou modifier la page correspondant à votre requête en cliquant sur le bouton approprié.';
 $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.';
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
@@ -369,3 +370,5 @@ $lang['plainhtml']             = 'HTML brut';
 $lang['wikimarkup']            = 'Wiki balise';
 $lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été créée le <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Ne peut analyser le paramètre date "%s".';
+$lang['email_signature_text']  = 'Ce courriel a été généré par DokuWiki depuis
+@DOKUWIKIURL@';

@@ -9,6 +9,7 @@
 
     global $INPUT;
     global $lang;
+    global $conf;
     // handle passed message
     if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
     if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);
@@ -32,7 +33,8 @@
 
     global $INFO, $JSINFO;
     $INFO = !empty($INFO) ? array_merge($INFO, mediainfo()) : mediainfo();
-    $JSINFO = array('id' => '', 'namespace' => '');
+    $JSINFO['id']        = '';
+    $JSINFO['namespace'] = '';
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
     $tmp = array();

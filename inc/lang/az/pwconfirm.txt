@@ -7,8 +7,3 @@ Kimsə @DOKUWIKIURL@ adresində yerləşən @TITLE@ adlı wiki-yə giriş üçü
 Tələbi təsdiq etmək üçün, aşağıdakı link-ə keçin.
 
 @CONFIRM@
-
--- 
-Bu məktub DokuWiki tərəfindən yaradıldı.
-DokuWiki aşağıdakı adresdə yerləşir:
-@DOKUWIKIURL@

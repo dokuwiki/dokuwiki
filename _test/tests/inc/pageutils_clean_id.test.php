@@ -158,5 +158,15 @@ class init_clean_id_test extends DokuWikiTest {
         }
     }
 
+    function test_caching_ascii() {
+        global $conf;
+        $conf['deaccent'] = 0;
+        $this->assertEquals('pàge', cleanID('pàge',false));
+        $this->assertEquals('page', cleanID('pàge',true));
+
+        $this->assertEquals('page', cleanID('pagĖ',true));
+        $this->assertEquals('pagė', cleanID('pagĖ',false));
+    }
+
 }
 //Setup VIM: ex: et ts=4 :

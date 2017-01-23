@@ -446,7 +446,7 @@ class Doku_Handler {
 
         //decide which kind of link it is
 
-        if ( preg_match('/^[a-zA-Z0-9\.]+>{1}.*$/u',$link[0]) ) {
+        if ( link_isinterwiki($link[0]) ) {
             // Interwiki
             $interwiki = explode('>',$link[0],2);
             $this->_addCall(
@@ -693,8 +693,8 @@ function Doku_Handler_Parse_Media($match) {
         $cache = 'cache';
     }
 
-    // Check whether this is a local or remote image
-    if ( media_isexternal($src) ) {
+    // Check whether this is a local or remote image or interwiki
+    if (media_isexternal($src) || link_isinterwiki($src)){
         $call = 'externalmedia';
     } else {
         $call = 'internalmedia';
@@ -1470,12 +1470,16 @@ class Doku_Handler_Table implements Doku_Handler_CallWriter_Interface {
                 case 'tablerow_close':
 
                     // Fix broken tables by adding missing cells
+                    $moreCalls = array();
                     while (++$lastCell < $this->maxCols) {
-                        array_splice($this->tableCalls, $key, 0, array(
-                               array('tablecell_open', array(1, null, 1), $call[2]),
-                               array('cdata', array(''), $call[2]),
-                               array('tablecell_close', array(), $call[2])));
-                        $key += 3;
+                        $moreCalls[] = array('tablecell_open', array(1, null, 1), $call[2]);
+                        $moreCalls[] = array('cdata', array(''), $call[2]);
+                        $moreCalls[] = array('tablecell_close', array(), $call[2]);
+                    }
+                    $moreCallsLength = count($moreCalls);
+                    if($moreCallsLength) {
+                        array_splice($this->tableCalls, $key, 0, $moreCalls);
+                        $key += $moreCallsLength;
                     }
 
                     if($this->countTableHeadRows == $lastRow) {

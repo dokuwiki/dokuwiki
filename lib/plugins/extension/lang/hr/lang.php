@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Davor Turkalj <turki.bsc@gmail.com>
  */
 $lang['menu']                  = 'Upravitelj proširenja';
@@ -25,6 +25,10 @@ $lang['btn_disable']           = 'Onemogući';
 $lang['btn_install']           = 'Ugradi';
 $lang['btn_reinstall']         = 'Ponovno ugradi';
 $lang['js']['reallydel']       = 'Zaista ukloniti ovo proširenje?';
+$lang['js']['display_viewoptions'] = 'Opcije pregleda:';
+$lang['js']['display_enabled'] = 'omogućen';
+$lang['js']['display_disabled'] = 'onemogućen';
+$lang['js']['display_updatable'] = 'izmjenjiv';
 $lang['search_for']            = 'Pretraži proširenja';
 $lang['search']                = 'Pretraži';
 $lang['extensionby']           = '<strong>%s</strong> po %s';

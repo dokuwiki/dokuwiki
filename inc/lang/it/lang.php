@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Giorgio Vecchiocattivi <giorgio@vecchio.it>
  * @author Roberto Bolli [http://www.rbnet.it/]
  * @author Silvia Sargentoni <polinnia@tin.it>
@@ -22,6 +22,7 @@
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Torpedo <dgtorpedo@gmail.com>
  * @author Maurizio <mcannavo@katamail.com>
+ * @author Riccardo <riccardofila@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -356,3 +357,5 @@ $lang['plainhtml']             = 'HTML';
 $lang['wikimarkup']            = 'Marcatura wiki';
 $lang['page_nonexist_rev']     = 'Pagina non esistente a %s. E\' stata creata successivamente a <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Impossibile eseguire l\'analisi al parametro "%s".';
+$lang['email_signature_text']  = 'Questa email è stata generata dal DokuWiki all\'indirizzo
+@DOKUWIKIURL@';

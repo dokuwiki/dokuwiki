@@ -15,7 +15,3 @@ Aby zrezygnować z powiadomień o zmianach zaloguj się do wiki na
 @SUBSCRIBE@
 i anuluj otrzymywanie powiadomień o zmianach na stronach i/lub
 katalogach.
-
---
-Ta wiadomość została wygenerowana przez DokuWiki na
-@DOKUWIKIURL@

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author José Monteiro <Jose.Monteiro@DoWeDo-IT.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
@@ -56,7 +56,7 @@ $lang['breadcrumbs']           = 'Número máximo de breadcrumbs';
 $lang['youarehere']            = 'Breadcrumbs hierárquicas';
 $lang['fullpath']              = 'Revelar caminho completo no rodapé';
 $lang['typography']            = 'Executar substituições tipográficas';
-$lang['dformat']               = 'Formato de Data (ver função PHP\'s <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formato de Data (ver função PHP\'s <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Assinatura';
 $lang['showuseras']            = 'O que exibir quando mostrar o utilizador que editou a página pela última vez';
 $lang['toptoclevel']           = 'Nível de topo para a tabela de conteúdo';
@@ -129,7 +129,7 @@ $lang['autoplural']            = 'Verificar formas plurais nos links';
 $lang['compression']           = 'Método de compressão para histórico';
 $lang['gzip_output']           = 'Usar "Content-Encoding" do gzip para o código xhtml';
 $lang['compress']              = 'Compactar as saídas de CSS e JavaScript';
-$lang['cssdatauri']            = 'Tamanho em bytes até ao qual as imagens referenciadas em ficheiros CSS devem ser embutidas diretamente no CSS para reduzir a carga de pedidos HTTP extra. Esta técnica não funciona em IE 7 e abaixo! <code>400</code> a <code>600</code> bytes é um bom valor. Escolher <code>0</code> para desativar.';
+$lang['cssdatauri']            = 'Tamanho em bytes até ao qual as imagens referenciadas em ficheiros CSS devem ser embutidas diretamente no CSS para reduzir a carga de pedidos HTTP extra. <code>400</code> a <code>600</code> bytes é um bom valor. Escolher <code>0</code> para desativar.';
 $lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para páginas não existentes';
 $lang['broken_iua']            = 'A função "ignore_user_abort" não está a funcionar no seu sistema? Isso pode causar um índice de busca defeituoso. Sistemas com IIS+PHP/CGI são conhecidos por possuírem este problema. Veja o <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> para mais informações.';
 $lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir o servidor de internet encaminhar ficheiros estáticos? O seu servidor de internet precisa ter suporte a isso.';

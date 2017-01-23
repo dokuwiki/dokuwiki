@@ -9,7 +9,3 @@ passe, ignorez simplement ce message.
 Pour confirmer que cette requête émane bien de vous, merci de cliquer sur le lien ci-dessous.
 
 @CONFIRM@
-
--- 
-Ce courriel a été généré par DokuWiki depuis
-@DOKUWIKIURL@

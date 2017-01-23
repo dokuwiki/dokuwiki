@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Finnish language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Wiki Doku <SugarKidder@mailinator.com>
  */
 $lang['menu']                  = 'Asetukset';
 $lang['error']                 = 'Asetuksia ei päivitetty väärän arvon vuoksi. Tarkista muutokset ja lähetä sivu uudestaan.
@@ -56,7 +58,7 @@ $lang['breadcrumbs']           = 'Leivänmurujen määrä';
 $lang['youarehere']            = 'Hierarkkiset leivänmurut';
 $lang['fullpath']              = 'Näytä sivun koko polku sivun alareunassa';
 $lang['typography']            = 'Tee typografiset korvaukset';
-$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://www.php.net/strftime">strftime</a> funktiota)';
+$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://php.net/strftime">strftime</a> funktiota)';
 $lang['signature']             = 'Allekirjoitus';
 $lang['showuseras']            = 'Mitä näytetään, kun kerrotaan viimeisen editoijan tiedot';
 $lang['toptoclevel']           = 'Ylätason sisällysluettelo';

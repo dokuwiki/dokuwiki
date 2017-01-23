@@ -11,7 +11,3 @@ Pro cancellar le notificationes de paginas, aperi un session al wiki a
 @DOKUWIKIURL@ postea visita
 @SUBSCRIBE@
 e cancella tu subscription al modificationes in paginas e/o spatios de nomines.
-
---
-Iste message ha essite generate per DokuWiki a
-@DOKUWIKIURL@

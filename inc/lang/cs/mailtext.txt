@@ -10,8 +10,3 @@ Komentář    : @SUMMARY@
 Uživatel    : @USER@
 
 @DIFF@
-
-
--- 
-Tento e-mail byl automaticky vygenerován systémem DokuWiki
-@DOKUWIKIURL@

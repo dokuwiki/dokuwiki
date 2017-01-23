@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Marina Vladi <deldadam@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -25,3 +25,5 @@ $lang['btn_older']             = 'régebbi >>';
 $lang['btn_revs']              = 'Korábbi változatok';
 $lang['btn_recent']            = 'Legújabb változások';
 $lang['btn_upload']            = 'Feltöltés';
+$lang['email_signature_text'] = 'Ezt a levelet a DokuWiki generálta
+@DOKUWIKIURL@';

@@ -2,12 +2,13 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Carles Bellver <carles.bellver@cent.uji.es>
  * @author Carles Bellver <carles.bellver@gmail.com>
  * @author daniel@6temes.cat
  * @author Eduard Díaz <edudiaz@scopia.es>
  * @author controlonline.net <controlonline.net@gmail.com>
+ * @author Pauet <pauet@gmx.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -334,3 +335,5 @@ $lang['media_restore']         = 'Restaura aquesta versió';
 $lang['currentns']             = 'Espai de noms actual';
 $lang['searchresult']          = 'Resultats cerca';
 $lang['plainhtml']             = 'HTML pla';
+$lang['email_signature_text']  = 'Aquest mail ha estat generat per DokuWiki a
+@DOKUWIKIURL@';

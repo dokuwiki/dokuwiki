@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Oleksiy Voronin <ovoronin@gmail.com>
  * @author serg_stetsuk@ukr.net
  * @author Oleksandr Kunytsia <okunia@gmail.com>
@@ -305,6 +305,8 @@ $lang['hours']                 = '%d годин тому';
 $lang['minutes']               = '%d хвилин тому';
 $lang['seconds']               = '%d секунд тому';
 $lang['wordblock']             = 'Ваші зміни не збережено, тому що вони розпізнані як такі, що містять заблокований текст(спам).';
+$lang['email_signature_text']       = 'Це повідомлення було створене ДокуВікі з
+@DOKUWIKIURL@';
 $lang['media_searchtab']       = 'Пошук';
 $lang['media_file']            = 'Файл';
 $lang['media_viewtab']         = 'Огляд';

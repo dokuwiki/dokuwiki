@@ -68,8 +68,14 @@
  *   '_max'        - maximum numeric value, optional for 'numeric' and 'numericopt', ignored by others
  *   '_delimiter'  - string, default '/', a single character used as a delimiter for testing regex input values
  *   '_pregflags'  - string, default 'ui', valid preg pattern modifiers used when testing regex input values, for more
- *                   information see http://uk1.php.net/manual/en/reference.pcre.pattern.modifiers.php
+ *                   information see http://php.net/manual/en/reference.pcre.pattern.modifiers.php
  *   '_multiple'   - bool, allow multiple comma separated email values; optional for 'email', ignored by others
+ *   '_other'      - how to handle other values (not listed in _choices). accepted values: 'always','exists','never'
+ *                   default value 'always'. 'exists' only shows 'other' input field when the setting contains value(s)
+ *                   not listed in choices (e.g. due to manual editing or update changing _choices).  This is safer than
+ *                   'never' as it will not discard unknown/other values.
+ *                   optional for 'multicheckbox', ignored by others
+ *
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
  */
@@ -131,7 +137,10 @@ $meta['_authentication'] = array('fieldset');
 $meta['useacl']      = array('onoff','_caution' => 'danger');
 $meta['autopasswd']  = array('onoff');
 $meta['authtype']    = array('authtype','_caution' => 'danger');
-$meta['passcrypt']   = array('multichoice','_choices' => array('smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5','mediawiki','bcrypt','djangomd5','djangosha1','sha512'));
+$meta['passcrypt']   = array('multichoice','_choices' => array(
+    'smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5',
+    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256','sha512'
+));
 $meta['defaultgroup']= array('string');
 $meta['superuser']   = array('string','_caution' => 'danger');
 $meta['manager']     = array('string');

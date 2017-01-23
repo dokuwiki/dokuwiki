@@ -2,8 +2,8 @@
 /*************************************************************************************
  * xbasic.php
  * ----------
- * Author: José Gabriel Moya Yangüela (josemoya@gmail.com)
- * Copyright: (c) 2005 José Gabriel Moya Yangüela (http://aprenderadesaprender.6te.net)
+ * Author: JosÃ© Gabriel Moya YangÃ¼ela (josemoya@gmail.com)
+ * Copyright: (c) 2005 JosÃ© Gabriel Moya YangÃ¼ela (http://aprenderadesaprender.6te.net)
  * Release Version: 1.0.8.11
  * Date Started: 2005/11/23
  *
@@ -140,4 +140,3 @@ $language_data = array (
         )
 );
 
-?>

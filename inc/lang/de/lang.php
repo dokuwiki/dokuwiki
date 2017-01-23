@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -217,7 +217,7 @@ $lang['lastmod']               = 'Zuletzt geändert:';
 $lang['by']                    = 'von';
 $lang['deleted']               = 'gelöscht';
 $lang['created']               = 'angelegt';
-$lang['restored']              = 'alte Version wieder hergestellt (%s)';
+$lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
 $lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
@@ -360,3 +360,5 @@ $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde aber unter <a href="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
+$lang['email_signature_text'] = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
+@DOKUWIKIURL@';

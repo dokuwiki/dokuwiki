@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Miguel Pagano <miguel.pagano>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Gabriel Castillo <gch@pumas.ii.unam.mx>
@@ -29,6 +29,8 @@
  * @author Jonathan Hernández <me@jhalicea.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author solohazlo <solohhazlo@gmail.com>
+ * @author David Roy <davidroyapp@gmail.com>
+ * @author Enny Rodriguez <aquilez.4@gmail.com>
  */
 $lang['menu']                  = 'Administración de usuarios';
 $lang['noauth']                = '(la autenticación de usuarios no está disponible)';
@@ -89,6 +91,11 @@ $lang['import_error_readfail'] = 'Error al importar. No se puede leer el archivo
 $lang['import_error_create']   = 'No se puede crear el usuario';
 $lang['import_notify_fail']    = 'Mensaje de notificación no se ha podido enviar por el usuario importado,%s con el email %s.';
 $lang['import_downloadfailures'] = 'Descarga errores en archivo CSV para la corrección';
+$lang['addUser_error_missing_pass'] = 'Por favor, establezca una contraseña o active las notificaciónes de usuario para permitir la generación de contraseñas.';
 $lang['addUser_error_pass_not_identical'] = 'Las contraseñas no coinciden';
 $lang['addUser_error_modPass_disabled'] = 'Está desactivado por ahora modificar contraseñas.';
 $lang['addUser_error_name_missing'] = 'Por favor teclea el nombre del nuevo usuario.';
+$lang['addUser_error_modName_disabled'] = 'La modificación de nombres está desactivada.';
+$lang['addUser_error_mail_missing'] = 'Por favor indica el email del nuevo usuario.';
+$lang['addUser_error_modMail_disabled'] = 'La modificación de email está desactivada.';
+$lang['addUser_error_create_event_failed'] = 'Un plugin impidió que se añadiera el nuevo usuario. Revisa los otros mensajes para obtener más detalles.';
