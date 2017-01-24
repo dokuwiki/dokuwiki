@@ -364,13 +364,7 @@ class AggregationTable {
         /** @var Value $value */
         $col = -1;
         foreach($row as $colnum => $value) {
-            if(isset($this->data['align'][$col++])) {
-                $align = $this->data['align'][$col++];
-            } else {
-                $align = null;
-            }
-
-            $this->renderer->tablecell_open(1, $align);
+            $this->renderer->tablecell_open(1, $this->data['align'][$colnum]);
             $value->render($this->renderer, $this->mode);
             $this->renderer->tablecell_close();
 

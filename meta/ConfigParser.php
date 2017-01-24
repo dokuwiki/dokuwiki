@@ -126,6 +126,11 @@ class ConfigParser {
         for($i = $cnth; $i < $cntf; $i++) {
             $this->config['headers'][] = null;
         }
+        // fill up alignments
+        $cnta = count($this->config['align']);
+        for($i = $cnta; $i < $cntf; $i++) {
+            $this->config['align'][] = null;
+        }
     }
 
     /**
