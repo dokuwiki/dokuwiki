@@ -148,11 +148,15 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
             }
             if(!$this->schemadata->getSchema()->isLookup()) {
                 // make sure this schema is assigned
+                /** @noinspection PhpUndefinedVariableInspection */
                 $assignments->assignPageSchema(
                     $this->pid,
                     $this->schemadata->getSchema()->getTable()
                 );
             }
+        } catch (\Exception $e) {
+            // PHP <7 needs a catch block
+            throw $e;
         } finally {
             // unlock (unlocking a non-existing file is okay,
             // so we don't check if it's a lookup here
