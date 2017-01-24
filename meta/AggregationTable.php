@@ -322,7 +322,7 @@ class AggregationTable {
                 }
 
                 // add input field
-                $key = $column->getFullQualifiedLabel() . '*~';
+                $key = $column->getFullQualifiedLabel() . $column->getType()->getDefaultComparator();
                 $form->addElement(form_makeField('text', SearchConfigParameters::$PARAM_FILTER . '[' . $key . ']', $current, ''));
                 $this->renderer->doc .= $form->getForm();
             }

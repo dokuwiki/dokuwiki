@@ -135,7 +135,17 @@ class Decimal extends AbstractMultiBaseType {
         foreach((array) $value as $item) {
             $pl = $add->getQB()->addValue($item);
             $add->where($op, "($tablealias.$colname != '' AND CAST($tablealias.$colname AS DECIMAL) $comp CAST($pl AS DECIMAL))");
+
         }
+    }
+
+    /**
+     * Only exact matches for numbers
+     *
+     * @return string
+     */
+    public function getDefaultComparator() {
+        return '=';
     }
 
 }

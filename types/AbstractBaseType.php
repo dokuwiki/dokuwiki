@@ -448,7 +448,7 @@ abstract class AbstractBaseType {
      * This implementation is designed to work both as registered function in sqlite
      * and to provide a string to be used in sorting values of this type in PHP.
      *
-     * @param string|Value $string The string by which the types would usually be sorted
+     * @param string|Value $value The string by which the types would usually be sorted
      *
      * @return string
      */
@@ -531,5 +531,17 @@ abstract class AbstractBaseType {
     public function getLang($string) {
         if(is_null($this->hlp)) $this->hlp = plugin_load('helper', 'struct');
         return $this->hlp->getLang($string);
+    }
+
+    /**
+     * With what comparator should dynamic filters filter this type?
+     *
+     * This default does a LIKE operation
+     *
+     * @see Search::$COMPARATORS
+     * @return string
+     */
+    public function getDefaultComparator() {
+        return '*~';
     }
 }
