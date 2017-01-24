@@ -226,10 +226,11 @@ class AggregationTable {
 
             // still here? create custom header for more flexibility
 
-            // width setting
+            // width setting, widths are prevalidated, no escape needed
             $width = '';
-            if(isset($data['widths'][$num]) && $data['widths'][$num] != '-') {
-                $width = ' style="width: ' . $data['widths'][$num] . ';"'; // widths are prevalidated, no escape needed
+            if(isset($this->data['widths'][$num]) && $this->data['widths'][$num] != '-') {
+                $width = ' style="min-width: ' . $this->data['widths'][$num] . ';'.
+                         'max-width: ' . $this->data['widths'][$num] . ';"';
             }
 
             // prepare data attribute for inline edits
@@ -364,7 +365,6 @@ class AggregationTable {
         }
 
         /** @var Value $value */
-        $col = -1;
         foreach($row as $colnum => $value) {
             $this->renderer->tablecell_open(1, $this->data['align'][$colnum]);
             $value->render($this->renderer, $this->mode);
