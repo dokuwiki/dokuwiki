@@ -18,7 +18,8 @@ class ConfigParser_struct_test extends StructTest {
             "schema    : testtable, another, foo bar",
             "cols      : %pageid%, count",
             "sort      : ^count",
-            "sort      : %pageid%, ^bam"
+            "sort      : %pageid%, ^bam",
+            "align     : r,l,center,foo"
         );
 
         $configParser = new meta\ConfigParser($lines);
@@ -78,7 +79,8 @@ class ConfigParser_struct_test extends StructTest {
                     )
                 ),
             'csv' => true,
-            'target' => ''
+            'target' => '',
+            'align' => array('right', 'left', 'center', null)
         );
 
         $this->assertEquals($expected_config, $actual_config);

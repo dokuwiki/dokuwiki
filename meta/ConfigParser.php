@@ -30,6 +30,7 @@ class ConfigParser {
             'rownumbers' => false,
             'sepbyheaders' => false,
             'target' => '',
+            'align' => array(),
             'headers' => array(),
             'widths' => array(),
             'filter' => array(),
@@ -190,8 +191,10 @@ class ConfigParser {
                 $align = 'center';
             } elseif($col[0] == 'r') {
                 $align = 'right';
-            } else {
+            } elseif($col[0] == 'l') {
                 $align = 'left';
+            } else {
+                $align = null;
             }
             $data[] = $align;
         }
