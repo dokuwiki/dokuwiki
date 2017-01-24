@@ -397,16 +397,21 @@ class AggregationTable {
         if(empty($this->data['summarize'])) return;
 
         $this->renderer->info['struct_table_meta'] = true;
-        $this->renderer->tablerow_open();
+        if($this->mode == 'xhtml') {
+            /** @noinspection PhpMethodParametersCountMismatchInspection */
+            $this->renderer->tablerow_open('summarize');
+        } else {
+            $this->renderer->tablerow_open();
+        }
 
         if($this->data['rownumbers']) {
-            $this->renderer->tablecell_open();
-            $this->renderer->tablecell_close();
+            $this->renderer->tableheader_open();
+            $this->renderer->tableheader_close();
         }
 
         $len = count($this->columns);
         for($i = 0; $i < $len; $i++) {
-            $this->renderer->tablecell_open(1, $this->data['align'][$i]);
+            $this->renderer->tableheader_open(1, $this->data['align'][$i]);
             if(!empty($this->sums[$i])) {
                 $this->renderer->cdata('∑ ');
                 $this->columns[$i]->getType()->renderValue($this->sums[$i], $this->renderer, $this->mode);
@@ -415,7 +420,7 @@ class AggregationTable {
                     $this->renderer->doc .= '&nbsp;';
                 }
             }
-            $this->renderer->tablecell_close();
+            $this->renderer->tableheader_close();
         }
         $this->renderer->tablerow_close();
         $this->renderer->info['struct_table_meta'] = false;

@@ -67,9 +67,11 @@ var InlineEditor = function ($table) {
                 $form.serialize()
             )
                 .done(function (data) {
-                    // save succeeded display new vlaue and close editor
+                    // save succeeded display new value and close editor
                     $self.html(data);
                     $div.remove();
+                    // sums are now out of date - remove them til page is reloaded
+                    $self.parents('table').find('tr.summarize').remove();
                 })
                 .fail(function (data) {
                     // something went wrong, display error

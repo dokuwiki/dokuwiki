@@ -21,15 +21,16 @@ var LookupEditor = function (idx, table) {
                 return;
             }
 
+            var pid = $me.data('pid');
+
             // empty header cells
-            if ($me.parent().is('thead')) {
+            if (!pid) {
                 $me.append('<th class="action"></th>');
                 return;
             }
 
             // delete buttons for rows
             var $td = jQuery('<td class="action"></td>');
-            var pid = $me.data('pid');
             if (pid === '') return;
 
             var $btn = jQuery('<button><i class="ui-icon ui-icon-trash"></i></button>')
