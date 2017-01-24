@@ -392,6 +392,7 @@ class Search {
             $userWHERE = $QB->filters()->where('AND');
         }
         foreach($this->filter as $filter) {
+            /** @var Column $col */
             list($col, $value, $comp, $op) = $filter;
 
             $datatable = "data_{$col->getTable()}";

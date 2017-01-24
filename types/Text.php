@@ -5,6 +5,7 @@ use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 
 class Text extends AbstractMultiBaseType {
+    use TraitFilterPrefix;
 
     protected $config = array(
         'prefix' => '',
@@ -22,44 +23,6 @@ class Text extends AbstractMultiBaseType {
     public function renderValue($value, \Doku_Renderer $R, $mode) {
         $R->cdata($this->config['prefix'] . $value . $this->config['postfix']);
         return true;
-    }
-
-    /**
-     * Comparisons are done against the full string (including prefix/postfix)
-     *
-     * @param QueryBuilderWhere $add
-     * @param string $tablealias
-     * @param string $colname
-     * @param string $comp
-     * @param string|string[] $value
-     * @param string $op
-     */
-    public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op) {
-        $add = $add->where($op); // open a subgroup
-        $add->where('AND', "$tablealias.$colname != ''"); // make sure the field isn't empty
-        $op = 'AND';
-
-        /** @var QueryBuilderWhere $add Where additionional queries are added to */
-        if(is_array($value)) {
-            $add = $add->where($op); // sub where group
-            $op = 'OR';
-        }
-        $QB = $add->getQB();
-        foreach((array) $value as $item) {
-            $column = "$tablealias.$colname";
-
-            if($this->config['prefix']) {
-                $pl = $QB->addValue($this->config['prefix']);
-                $column = "$pl || $column";
-            }
-            if($this->config['postfix']) {
-                $pl = $QB->addValue($this->config['postfix']);
-                $column = "$column || $pl";
-            }
-
-            $pl = $QB->addValue($item);
-            $add->where($op, "$column $comp $pl");
-        }
     }
 
 }

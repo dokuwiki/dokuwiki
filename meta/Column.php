@@ -175,6 +175,7 @@ class Column {
         foreach($files as $file) {
             $file = basename($file, '.php');
             if(substr($file, 0, 8) == 'Abstract') continue;
+            if(substr($file, 0, 5) == 'Trait') continue;
             $map[$file] = 'dokuwiki\\plugin\\struct\\types\\' .$file;
         }
 
