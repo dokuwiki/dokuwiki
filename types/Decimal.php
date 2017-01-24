@@ -71,11 +71,11 @@ class Decimal extends AbstractMultiBaseType {
             throw new ValidationException('Decimal needed');
         }
 
-        if($this->config['min'] !== '' && floatval($rawvalue) <= floatval($this->config['min'])) {
+        if($this->config['min'] !== '' && floatval($rawvalue) < floatval($this->config['min'])) {
             throw new ValidationException('Decimal min', floatval($this->config['min']));
         }
 
-        if($this->config['max'] !== '' && floatval($rawvalue) >= floatval($this->config['max'])) {
+        if($this->config['max'] !== '' && floatval($rawvalue) > floatval($this->config['max'])) {
             throw new ValidationException('Decimal max', floatval($this->config['max']));
         }
 

@@ -60,6 +60,15 @@ class Type_Decimal_struct_test extends StructTest {
             array('-5.5', '', '4.5'),
             array('-5,5', '', '4.5'),
             array('5.5645000', '', ''),
+            // boundaries
+            array('0', '0', ''),
+            array('0', '', '0'),
+            array('5', '5', ''),
+            array('5', '', '5'),
+            array('0', '0.0', ''),
+            array('0', '', '0.0'),
+            array('5.0', '5.0', ''),
+            array('5.0', '', '5.0'),
         );
     }
 
