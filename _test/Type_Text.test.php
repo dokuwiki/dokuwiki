@@ -21,7 +21,7 @@ class Type_Text_struct_test extends StructTest {
                 '', // postfix
                 '=', // comp
                 'val', // value
-                '(T.col = ?)', // expect sql
+                '((T.col != \'\' AND T.col = ?))', // expect sql
                 array('val'), // expect opts
             ),
             array(
@@ -29,7 +29,7 @@ class Type_Text_struct_test extends StructTest {
                 '', // postfix
                 '=', // comp
                 'val', // value
-                '(? || T.col = ?)', // expect sql
+                '((T.col != \'\' AND ? || T.col = ?))', // expect sql
                 array('before', 'val'), // expect opts
             ),
             array(
@@ -37,7 +37,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 '=', // comp
                 'val', // value
-                '(T.col || ? = ?)', // expect sql
+                '((T.col != \'\' AND T.col || ? = ?))', // expect sql
                 array('after', 'val'), // expect opts
             ),
             array(
@@ -45,7 +45,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 '=', // comp
                 'val', // value
-                '(? || T.col || ? = ?)', // expect sql
+                '((T.col != \'\' AND ? || T.col || ? = ?))', // expect sql
                 array('before', 'after', 'val'), // expect opts
             ),
             // LIKE
@@ -54,7 +54,7 @@ class Type_Text_struct_test extends StructTest {
                 '', // postfix
                 'LIKE', // comp
                 '%val%', // value
-                '(T.col LIKE ?)', // expect sql
+                '((T.col != \'\' AND T.col LIKE ?))', // expect sql
                 array('%val%'), // expect opts
             ),
             array(
@@ -62,7 +62,7 @@ class Type_Text_struct_test extends StructTest {
                 '', // postfix
                 'LIKE', // comp
                 '%val%', // value
-                '(? || T.col LIKE ?)', // expect sql
+                '((T.col != \'\' AND ? || T.col LIKE ?))', // expect sql
                 array('before','%val%'), // expect opts
             ),
             array(
@@ -70,7 +70,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 'LIKE', // comp
                 '%val%', // value
-                '(T.col || ? LIKE ?)', // expect sql
+                '((T.col != \'\' AND T.col || ? LIKE ?))', // expect sql
                 array('after','%val%'), // expect opts
             ),
             array(
@@ -78,7 +78,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 'LIKE', // comp
                 '%val%', // value
-                '(? || T.col || ? LIKE ?)', // expect sql
+                '((T.col != \'\' AND ? || T.col || ? LIKE ?))', // expect sql
                 array('before','after','%val%'), // expect opts
             ),
             // NOT LIKE
@@ -87,7 +87,7 @@ class Type_Text_struct_test extends StructTest {
                 '', // postfix
                 'NOT LIKE', // comp
                 '%val%', // value
-                '(T.col NOT LIKE ?)', // expect sql
+                '((T.col != \'\' AND T.col NOT LIKE ?))', // expect sql
                 array('%val%'), // expect opts
             ),
             array(
@@ -95,7 +95,7 @@ class Type_Text_struct_test extends StructTest {
                 '', // postfix
                 'NOT LIKE', // comp
                 '%val%', // value
-                '(? || T.col NOT LIKE ?)', // expect sql
+                '((T.col != \'\' AND ? || T.col NOT LIKE ?))', // expect sql
                 array('before','%val%'), // expect opts
             ),
             array(
@@ -103,7 +103,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 'NOT LIKE', // comp
                 '%val%', // value
-                '(T.col || ? NOT LIKE ?)', // expect sql
+                '((T.col != \'\' AND T.col || ? NOT LIKE ?))', // expect sql
                 array('after','%val%'), // expect opts
             ),
             array(
@@ -111,7 +111,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 'NOT LIKE', // comp
                 '%val%', // value
-                '(? || T.col || ? NOT LIKE ?)', // expect sql
+                '((T.col != \'\' AND ? || T.col || ? NOT LIKE ?))', // expect sql
                 array('before','after','%val%'), // expect opts
             ),
 
@@ -121,7 +121,7 @@ class Type_Text_struct_test extends StructTest {
                 'after', // postfix
                 'NOT LIKE', // comp
                 array('%val1%', '%val2%'), // multiple values
-                '((? || T.col || ? NOT LIKE ? OR ? || T.col || ? NOT LIKE ?))', // expect sql
+                '((T.col != \'\' AND (? || T.col || ? NOT LIKE ? OR ? || T.col || ? NOT LIKE ?)))', // expect sql
                 array('before','after','%val1%', 'before','after','%val2%',), // expect opts
             ),
         );
