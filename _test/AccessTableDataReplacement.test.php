@@ -113,14 +113,14 @@ class AccessTableDataReplacement_struct_test extends StructTest {
                 array(
                     "filter    : data = foo"
                 ),
-                "AND (data_bar.col1 = ?)",
+                "AND ((data_bar.col1 != '' AND data_bar.col1 = ?))",
                 "The WHERE-clauses from page-syntax should be wrapped in parentheses"
             ),
             array(
                 array(
                     "OR    : data = foo"
                 ),
-                "AND (data_bar.col1 = ?)",
+                "AND ((data_bar.col1 != '' AND data_bar.col1 = ?))",
                 "A single OR clause should be treated as AND clauses"
             ),
             array(
@@ -128,7 +128,7 @@ class AccessTableDataReplacement_struct_test extends StructTest {
                     "filter    : data = foo",
                     "OR        : data = bar"
                 ),
-                "AND (data_bar.col1 = ? OR data_bar.col1 = ?)",
+                "AND ((data_bar.col1 != '' AND data_bar.col1 = ?) OR (data_bar.col1 != '' AND data_bar.col1 = ?))",
                 "The WHERE-clauses from page-syntax should be wrapped in parentheses"
             ),
             array(
@@ -136,7 +136,7 @@ class AccessTableDataReplacement_struct_test extends StructTest {
                     "OR        : data = bar",
                     "filter    : data = foo"
                 ),
-                "AND (data_bar.col1 = ? AND data_bar.col1 = ?)",
+                "AND ((data_bar.col1 != '' AND data_bar.col1 = ?) AND (data_bar.col1 != '' AND data_bar.col1 = ?))",
                 "A single OR clause should be treated as AND clauses"
             )
         );
@@ -161,7 +161,13 @@ class AccessTableDataReplacement_struct_test extends StructTest {
         $where = array_filter(explode("\n", $sql), function ($elem) {return strpos($elem,'WHERE') !== false;});
         $where = trim(reset($where));
 
-        $baseWhere = "WHERE  ( data_bar.pid = schema_assignments.pid AND schema_assignments.tbl = 'bar' AND schema_assignments.assigned = 1 AND GETACCESSLEVEL(data_bar.pid) > 0 AND PAGEEXISTS(data_bar.pid) = 1 AND data_bar.latest = 1 ";
+        $baseWhere = "WHERE  ( 
+                                  data_bar.pid = schema_assignments.pid
+                              AND schema_assignments.tbl = 'bar'
+                              AND schema_assignments.assigned = 1
+                              AND GETACCESSLEVEL(data_bar.pid) > 0
+                              AND PAGEEXISTS(data_bar.pid) = 1
+                              AND data_bar.latest = 1 ";
 
         $expected_where = $baseWhere . $expectedFilterWhere ." )";
         $this->assertEquals($this->cleanWS($expected_where), $this->cleanWS($where), $msg);
