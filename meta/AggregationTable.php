@@ -112,11 +112,15 @@ class AggregationTable {
 
         if($this->resultCount) {
             // actual data
+            $this->renderer->tabletbody_open();
             $this->renderResult();
+            $this->renderer->tabletbody_close();
 
-            // footer
+            // footer (tfoot is develonly currently)
+            if(method_exists($this->renderer, 'tabletfoot_open')) $this->renderer->tabletfoot_open();
             $this->renderSums();
             $this->renderPagingControls();
+            if(method_exists($this->renderer, 'tabletfoot_close')) $this->renderer->tabletfoot_close();
         } else {
             // nothing found
             $this->renderEmptyResult();
@@ -331,11 +335,9 @@ class AggregationTable {
      * Display the actual table data
      */
     protected function renderResult() {
-        $this->renderer->tabletbody_open();
         foreach($this->result as $rownum => $row) {
             $this->renderResultRow($rownum, $row);
         }
-        $this->renderer->tabletbody_close();
     }
 
     /**
