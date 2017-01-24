@@ -1382,14 +1382,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      * Open a table footer
      */
     function tabletfoot_open() {
-        $this->doc .= DOKU_TAB.'<tfood>'.DOKU_LF;
+        $this->doc .= DOKU_TAB.'<tfoot>'.DOKU_LF;
     }
 
     /**
      * Close a table footer
      */
     function tabletfoot_close() {
-        $this->doc .= DOKU_TAB.'</tfood>'.DOKU_LF;
+        $this->doc .= DOKU_TAB.'</tfoot>'.DOKU_LF;
     }
 
     /**
