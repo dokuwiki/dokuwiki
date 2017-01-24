@@ -1379,6 +1379,20 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
+     * Open a table footer
+     */
+    function tabletfoot_open() {
+        $this->doc .= DOKU_TAB.'<tfood>'.DOKU_LF;
+    }
+
+    /**
+     * Close a table footer
+     */
+    function tabletfoot_close() {
+        $this->doc .= DOKU_TAB.'</tfood>'.DOKU_LF;
+    }
+
+    /**
      * Open a table row
      *
      * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
