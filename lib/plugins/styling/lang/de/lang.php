@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Anika Henke <anika@selfthinker.org>
  */
 $lang['menu']                  = 'Einstellungen fürs Template-Design';
