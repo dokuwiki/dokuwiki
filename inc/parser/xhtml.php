@@ -147,7 +147,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
                     }
 
                     // add footnote markup and close this footnote
-                    $this->doc .= $footnote;
+                    $this->doc .= '<div class="content">'.$footnote.'</div>';
                     $this->doc .= '</div>'.DOKU_LF;
                 }
             }
