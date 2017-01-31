@@ -4,7 +4,7 @@ namespace dokuwiki\Ui;
 /**
  * Class Ui
  *
- * Abstrract base class for all DokuWiki screens
+ * Abstract base class for all DokuWiki screens
  *
  * @package dokuwiki\Ui
  */
