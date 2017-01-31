@@ -7,40 +7,39 @@
         list-style-type: none;
         font-size: 1.125em;
     }
-    [dir=rtl] ul.admin_tasks {
+    [dir=rtl] & ul.admin_tasks {
         float: right;
     }
 
     /* general menu item styling */
-    ul li {
-        margin: 0 0 1em 0;
-        font-weight: bold;
-        list-style-type: none;
+    ul {
+        padding: 0;
+        li {
+            margin: 0 0 1em 0;
+            font-weight: bold;
+            list-style-type: none;
+            white-space: nowrap;
 
-        div {
-            // flexbox takes care of RTL alignment
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            align-content: flex-start;
-            align-items: flex-start;
+            a span {
+                display: inline-block;
 
-            span {
-                width: 1.5em;
-                align-self: center;
-
-                svg {
+                &.icon {
                     width: 1.5em;
-                    height: 1.5em;
-                    fill: @ini_link;
-                }
-            }
+                    min-height: 1.5em;
+                    margin: 0 0.5em;
+                    vertical-align: top;
 
-            a {
-                flex-grow: 1;
-                align-self: center;
-                margin: 0 0.5em;
+                    svg {
+                        width: 1.5em;
+                        height: 1.5em;
+                        fill: @ini_link;
+                        display: inline-block;
+                    }
+                }
+
+                &.prompt {
+                    white-space: normal;
+                }
             }
         }
     }
@@ -52,7 +51,7 @@
         color: @ini_text_neu;
         background-color: inherit;
     }
-    [dir=rtl] #admin__version {
+    [dir=rtl] & #admin__version {
         clear: right;
         float: left;
     }

@@ -118,11 +118,13 @@ class Admin extends Ui {
         global $ID;
         if(blank($item['prompt'])) return;
         echo '<li><div class="li">';
-        echo '<span>';
+        echo '<a href="' . wl($ID, 'do=admin&amp;page=' . $item['plugin']) . '">';
+        echo '<span class="icon">';
         embedSVG($item['icon']);
         echo '</span>';
-        echo '<a href="' . wl($ID, 'do=admin&amp;page=' . $item['plugin']) . '">';
+        echo '<span class="prompt">';
         echo $item['prompt'];
+        echo '</span>';
         echo '</a>';
         echo '</div></li>';
     }
