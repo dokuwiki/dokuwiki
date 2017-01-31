@@ -21,7 +21,7 @@ class Admin extends Ui {
      */
     public function show() {
         $this->menu = $this->getPluginList();
-        echo '<div class="UI-admin">';
+        echo '<div class="ui-admin">';
         echo p_locale_xhtml('admin');
         $this->showSecurityCheck();
         $this->showAdminMenu();
