@@ -73,7 +73,6 @@ class Admin extends Ui {
      */
     protected function showPluginMenu() {
         if(!count($this->menu)) return;
-        echo '<div class="clearer"></div>';
         echo p_locale_xhtml('adminplugins');
         echo '<ul class="admin_plugins">';
         foreach ($this->menu as $item) {
