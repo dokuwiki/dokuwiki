@@ -248,4 +248,26 @@ class renderer_xhtml_test extends DokuWikiTest {
 ';
         $this->assertEquals($expected, $this->R->doc);
     }
+
+    public function test_blankHeader() {
+        $this->R->header('0', 1, 1);
+        $expected = '<h1 class="sectionedit1" id="section0">0</h1>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
+
+    public function test_blankTitleLink() {
+        global $conf;
+        $id = 'blanktest';
+
+        $conf['useheading'] = 1;
+        saveWikiText($id,'====== 0 ======', 'test');
+        $this->assertTrue(page_exists($id));
+
+        $header = p_get_first_heading($id, METADATA_RENDER_UNLIMITED);
+        $this->assertSame('0', $header);
+
+        $this->R->internallink($id);
+        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'">0</a>';
+        $this->assertEquals($expected, trim($this->R->doc));
+    }
 }
