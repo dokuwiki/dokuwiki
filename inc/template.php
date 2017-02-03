@@ -445,6 +445,9 @@ function tpl_metaheaders($alt = true) {
  */
 function _tpl_metaheaders_action($data) {
     foreach($data as $tag => $inst) {
+        if($tag == 'script') {
+            echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
+        }
         foreach($inst as $attr) {
             echo '<', $tag, ' ', buildAttributes($attr);
             if(isset($attr['_data']) || $tag == 'script') {
@@ -458,6 +461,9 @@ function _tpl_metaheaders_action($data) {
                 echo '/>';
             }
             echo "\n";
+        }
+        if($tag == 'script') {
+            echo "<!--<![endif]-->\n";
         }
     }
 }
