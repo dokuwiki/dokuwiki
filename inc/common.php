@@ -213,7 +213,7 @@ function pageinfo() {
     }
 
     $info['locked']     = checklock($ID);
-    $info['filepath']   = fullpath(wikiFN($ID));
+    $info['filepath']   = wikiFN($ID);
     $info['exists']     = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
     if($REV) {
@@ -227,7 +227,7 @@ function pageinfo() {
             msg($lang['nosecedit'], 0);
         } else {
             //really use old revision
-            $info['filepath'] = fullpath(wikiFN($ID, $REV));
+            $info['filepath'] = wikiFN($ID, $REV);
             $info['exists']   = file_exists($info['filepath']);
         }
     }

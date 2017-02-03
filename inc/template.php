@@ -1010,9 +1010,9 @@ function tpl_pageinfo($ret = false) {
     $fn = $INFO['filepath'];
     if(!$conf['fullpath']) {
         if($INFO['rev']) {
-            $fn = str_replace(fullpath($conf['olddir']).'/', '', $fn);
+            $fn = str_replace($conf['olddir'].'/', '', $fn);
         } else {
-            $fn = str_replace(fullpath($conf['datadir']).'/', '', $fn);
+            $fn = str_replace($conf['datadir'].'/', '', $fn);
         }
     }
     $fn   = utf8_decodeFN($fn);
