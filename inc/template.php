@@ -262,7 +262,8 @@ function tpl_admin() {
         if($INFO['prependTOC']) tpl_toc();
         $plugin->html();
     } else {
-        html_admin();
+        $admin = new dokuwiki\Ui\Admin();
+        $admin->show();
     }
     return true;
 }
