@@ -158,6 +158,7 @@ $conf['readdircache'] = 0;               //time cache in second for the readdir 
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups
+$conf['jquerycdn']  = 0;                 //use a CDN for delivering jQuery?
 // Proxy setup - if your Server needs a proxy to access the web set these
 $conf['proxy']['host']    = '';
 $conf['proxy']['port']    = '';

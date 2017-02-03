@@ -410,7 +410,15 @@ function tpl_metaheaders($alt = true) {
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
-    // load external javascript
+    // load jquery
+    $jquery = getCdnUrls();
+    foreach($jquery as $src) {
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
+        );
+    }
+
+    // load our javascript dispatcher
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed

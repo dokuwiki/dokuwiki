@@ -221,6 +221,7 @@ $meta['readdircache'] = array('numeric');
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
+$meta['jquerycdn']   = array('multichoice', '_choices' => array(0,'jquery', 'cdnjs'));
 $meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');

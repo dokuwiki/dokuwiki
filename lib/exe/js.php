@@ -45,10 +45,7 @@ function js_out(){
 
     // array of core files
     $files = array(
-                DOKU_INC."lib/scripts/jquery/jquery$min.js",
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
-                DOKU_INC."lib/scripts/jquery/jquery-ui$min.js",
-                DOKU_INC."lib/scripts/jquery/jquery-migrate$min.js",
                 DOKU_INC.'inc/lang/'.$conf['lang'].'/jquery.ui.datepicker.js',
                 DOKU_INC."lib/scripts/fileuploader.js",
                 DOKU_INC."lib/scripts/fileuploaderextended.js",

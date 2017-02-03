@@ -203,7 +203,7 @@
     float: right;
 }
 
-#mediamanager__page .panelHeader ul li.ui-buttonset {
+#mediamanager__page .panelHeader ul li.ui-controlgroup-horizontal {
     padding-left: 30px;
     margin: 0 0 0 5px;
 }
@@ -213,18 +213,16 @@
 #mediamanager__page .panelHeader ul li.sortBy {
     background: url('../../images/icon-sort.png') 3px 1px no-repeat;
 }
-[dir=rtl] #mediamanager__page .panelHeader ul li.ui-buttonset {
+[dir=rtl] #mediamanager__page .panelHeader ul li.ui-controlgroup-horizontal {
     padding-left: 0;
     padding-right: 30px;
     margin: 0 5px 0 0;
     background-position: right 1px;
 }
 
-#mediamanager__page .panelHeader form.options .ui-buttonset label{
+#mediamanager__page .panelHeader form.options .ui-controlgroup-horizontal label{
     font-size: 90%;
     margin-right: -0.4em;
-}
-#mediamanager__page .panelHeader form.options .ui-buttonset .ui-button-text {
     padding: .3em .5em;
     line-height: 1;
 }
