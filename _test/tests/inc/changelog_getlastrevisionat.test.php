@@ -150,11 +150,16 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         $revexpected = @filemtime(mediaFn($image));
         $rev = $revexpected + 10;
 
+        $this->waitForTick(true);
+
         $ret = media_delete($image, 0);
 
         $medialog = new MediaChangelog($image);
         $current = $medialog->getLastRevisionAt($rev);
-        $this->assertEquals($revexpected, $current);
+        // as we wait for a tick, we should get something greater than the timestamp
+        $this->assertGreaterThan($revexpected, $current);
+        // however, it should be less than the current time or equal to it
+        $this->assertLessThanOrEqual(time(), $current);
         
         //restore settings
         $_SERVER['REMOTE_USER'] = $oldRemoteUser;
