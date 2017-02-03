@@ -992,12 +992,12 @@ function tpl_userinfo() {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
+ * @triggers TPL_PAGEINFO_RENDER
  * @param bool $ret return content instead of printing it
  * @return bool|string
  */
 function tpl_pageinfo($ret = false) {
     global $conf;
-    global $lang;
     global $INFO;
     global $ID;
 
@@ -1007,45 +1007,58 @@ function tpl_pageinfo($ret = false) {
     }
 
     // prepare date and path
-    $fn = $INFO['filepath'];
+    $context = Array();
+    $context['fn'] = $INFO['filepath'];
     if(!$conf['fullpath']) {
         if($INFO['rev']) {
-            $fn = str_replace(fullpath($conf['olddir']).'/', '', $fn);
+            $context['fn'] = str_replace(fullpath($conf['olddir']).'/', '', $context['fn']);
         } else {
-            $fn = str_replace(fullpath($conf['datadir']).'/', '', $fn);
+            $context['fn'] = str_replace(fullpath($conf['datadir']).'/', '', $context['fn']);
         }
     }
-    $fn   = utf8_decodeFN($fn);
-    $date = dformat($INFO['lastmod']);
+    $context['fn']   = utf8_decodeFN($context['fn']);
+    $context['date'] = dformat($INFO['lastmod']);
+    $context['editor'] = $INFO['editor'];
+    $context['locked'] = $INFO['locked'];
+    $context['exists'] = $INFO['exists'];
+
+    ob_start();
+    trigger_event('TPL_PAGEINFO_RENDER', $context, 'tpl_pageinfo_core');
+    $html_output = ob_get_clean();
+    if($ret) {
+      return $html_output;
+    } else {
+      echo $html_output;
+      return !empty($html_output);
+    }
+}
+
+function tpl_pageinfo_core(&$data) {
+    global $lang;
 
     // print it
-    if($INFO['exists']) {
-        $out = '';
-        $out .= '<bdi>'.$fn.'</bdi>';
-        $out .= ' · ';
-        $out .= $lang['lastmod'];
-        $out .= ' ';
-        $out .= $date;
-        if($INFO['editor']) {
-            $out .= ' '.$lang['by'].' ';
-            $out .= '<bdi>'.editorinfo($INFO['editor']).'</bdi>';
+    if($data['exists']) {
+        echo ($data['pre']?:"");
+        echo '<bdi>'.$data['fn'].'</bdi>';
+        echo ' · ';
+        echo $lang['lastmod'];
+        echo ' ';
+        echo $data['date'];
+        if($data['editor']) {
+            echo ' '.$lang['by'].' ';
+            echo '<bdi>'.editorinfo($data['editor']).'</bdi>';
         } else {
-            $out .= ' ('.$lang['external_edit'].')';
+            echo ' ('.$lang['external_edit'].')';
         }
-        if($INFO['locked']) {
-            $out .= ' · ';
-            $out .= $lang['lockedby'];
-            $out .= ' ';
-            $out .= '<bdi>'.editorinfo($INFO['locked']).'</bdi>';
+        if($data['locked']) {
+            echo ' · ';
+            echo $lang['lockedby'];
+            echo ' ';
+            echo '<bdi>'.editorinfo($data['locked']).'</bdi>';
         }
-        if($ret) {
-            return $out;
-        } else {
-            echo $out;
-            return true;
-        }
+        echo ($data['post']?:"");
     }
-    return false;
+    return true;
 }
 
 /**
