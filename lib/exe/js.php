@@ -40,9 +40,6 @@ function js_out(){
     $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl,'.js');
     $cache->_event = 'JS_CACHE_USE';
 
-    // load minified version for some files
-    $min = $conf['compress'] ? '.min' : '';
-
     // array of core files
     $files = array(
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
