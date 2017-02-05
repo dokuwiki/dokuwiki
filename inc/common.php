@@ -2026,7 +2026,7 @@ function stripsourcemaps(&$text){
  * @param int $maxsize maximum allowed size for the SVG to be embedded
  * @return string|false the SVG content, false if the file couldn't be loaded
  */
-function inlinSVG($file, $maxsize = 2048) {
+function inlineSVG($file, $maxsize = 2048) {
     $file = trim($file);
     if($file === '') return false;
     if(!file_exists($file)) return false;

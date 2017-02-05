@@ -119,7 +119,7 @@ class Admin extends Ui {
         echo '<li><div class="li">';
         echo '<a href="' . wl($ID, 'do=admin&amp;page=' . $item['plugin']) . '">';
         echo '<span class="icon">';
-        echo inlinSVG($item['icon']);
+        echo inlineSVG($item['icon']);
         echo '</span>';
         echo '<span class="prompt">';
         echo $item['prompt'];
