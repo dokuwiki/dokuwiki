@@ -96,8 +96,8 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                                 $data = array(
                                     'view' => 'detail',
                                     'items' => array(
-                                        'mediaManager' => tpl_action('mediaManager', true, 'li', true, '<span>', '</span>'),
-                                        'img_backto' =>   tpl_action('img_backto',   true, 'li', true, '<span>', '</span>'),
+                                        'mediaManager' => dokuwiki\template\dokuwiki\tpl::pageToolAction('mediaManager'),
+                                        'img_backto' =>   dokuwiki\template\dokuwiki\tpl::pageToolAction('img_backto'),
                                     )
                                 );
 
