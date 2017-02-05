@@ -14,10 +14,7 @@ class common_embedSVG_test extends DokuWikiTest {
             '6.41-3.205 25.59 12.795zM57.59 40.795l6.41 3.205-32 16-32-16 6.41-3.205 25.59 12.795z" '.
             'fill="#000000"></path></svg>';
 
-        ob_start();
-        $this->assertTrue(embedSVG($file));
-        $svg = ob_get_clean();
-        $this->assertEquals($clean, $svg);
+        $this->assertEquals($clean, inlinSVG($file));
     }
 
     /**
@@ -25,10 +22,7 @@ class common_embedSVG_test extends DokuWikiTest {
      */
     function test_fail() {
         $file = mediaFN('wiki:test.svg');
-        ob_start();
-        $this->assertFalse(embedSVG($file, 100));
-        $svg = ob_get_clean();
-        $this->assertEquals('', $svg);
+        $this->assertFalse(inlinSVG($file, 100));
     }
 
 }

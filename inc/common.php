@@ -2014,17 +2014,19 @@ function stripsourcemaps(&$text){
 }
 
 /**
- * Embeds the contents of a given SVG file in the current context
+ * Returns the contents of a given SVG file for embedding
  *
  * Inlining SVGs saves on HTTP requests and more importantly allows for styling them through
  * CSS. However it should used with small SVGs only. The $maxsize setting ensures only small
  * files are embedded.
  *
+ * This strips unneeded headers, comments and newline. The result is not a vaild standalone SVG!
+ *
  * @param string $file full path to the SVG file
  * @param int $maxsize maximum allowed size for the SVG to be embedded
- * @return bool true if the file was embedded, false otherwise
+ * @return string|false the SVG content, false if the file couldn't be loaded
  */
-function embedSVG($file, $maxsize = 2048) {
+function inlinSVG($file, $maxsize = 2048) {
     $file = trim($file);
     if($file === '') return false;
     if(!file_exists($file)) return false;
@@ -2037,8 +2039,7 @@ function embedSVG($file, $maxsize = 2048) {
     $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags
     $content = trim($content);
     if(substr($content, 0, 5) !== '<svg ') return false;
-    echo $content;
-    return true;
+    return $content;
 }
 
 //Setup VIM: ex: et ts=2 :
