@@ -17,6 +17,8 @@ $lang['userkey']     = 'Attribute denoting the username; must be consistent to u
 $lang['groupkey']    = 'Group membership from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
 $lang['modPass']     = 'Can the LDAP password be changed via dokuwiki?';
 $lang['debug']       = 'Display additional debug information on errors';
+$lang['enableWhitelist'] = 'Limit acces to below specified users only!';
+$lang['whitelist']  = 'Comma separated list of user names. This option is useful if you´re not admin of the LDAP directory.';
 
 
 $lang['deref_o_0']   = 'LDAP_DEREF_NEVER';
