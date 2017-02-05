@@ -57,6 +57,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         if(empty($pass)) return false;
         if(!$this->_openLDAP()) return false;
 
+        // reject if whitelist enabled and user not listed
+        if(!$this->_isWhitelisted($user)) { return false; }
+        
         // indirect user bind
         if($this->getConf('binddn') && $this->getConf('bindpw')) {
             // use superuser credentials
@@ -642,6 +645,20 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
     protected function _debug($message, $err, $line, $file) {
         if(!$this->getConf('debug')) return;
         msg($message, $err, $line, $file);
+    }
+    
+    /**
+    * Check if user is whitelisted if option enabled
+    *
+    * @param string $user
+    * @return bool
+    */
+    protected function _isWhitelisted($user) { 
+		if($this->getConf('enableWhitelist')==0) { return true; }
+		$names = explode(',', str_replace(' ', '', $this->getConf('whitelist')));
+		$dbg=in_array($user, $names);
+		$this->_debug('LDAP whitelist match for '.$user.': '.(($dbg)?'success':'failed'), 0, __LINE__, __FILE__ );
+		return $dbg;
     }
 
 }
