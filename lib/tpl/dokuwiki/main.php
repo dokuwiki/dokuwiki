@@ -77,12 +77,12 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                             $data = array(
                                 'view'  => 'main',
                                 'items' => array(
-                                    'edit'      => tpl_action('edit',      true, 'li', true, '<span>', '</span>'),
-                                    'revert'    => tpl_action('revert',    true, 'li', true, '<span>', '</span>'),
-                                    'revisions' => tpl_action('revisions', true, 'li', true, '<span>', '</span>'),
-                                    'backlink'  => tpl_action('backlink',  true, 'li', true, '<span>', '</span>'),
-                                    'subscribe' => tpl_action('subscribe', true, 'li', true, '<span>', '</span>'),
-                                    'top'       => tpl_action('top',       true, 'li', true, '<span>', '</span>')
+                                    'edit'      => tpl_action('edit',      true, 'li', true, '<span>', '</span>'.inlinSVG(__DIR__ . '/images/tools/01-edit_pencil.svg')),
+                                    'revert'    => tpl_action('revert',    true, 'li', true, '<span>', '</span>'.inlinSVG(__DIR__ . '/images/tools/06-revert_replay.svg')),
+                                    'revisions' => tpl_action('revisions', true, 'li', true, '<span>', '</span>'.inlinSVG(__DIR__ . '/images/tools/07-revisions_history.svg')),
+                                    'backlink'  => tpl_action('backlink',  true, 'li', true, '<span>', '</span>'.inlinSVG(__DIR__ . '/images/tools/08-backlink_link-variant.svg')),
+                                    'subscribe' => tpl_action('subscribe', true, 'li', true, '<span>', '</span>'.inlinSVG(__DIR__ . '/images/tools/09-subscribe_email-outline.svg')),
+                                    'top'       => tpl_action('top',       true, 'li', true, '<span>', '</span>'.inlinSVG(__DIR__ . '/images/tools/10-top_arrow-up.svg'))
                                 )
                             );
 
