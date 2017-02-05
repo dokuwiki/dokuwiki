@@ -121,6 +121,16 @@ function load_autoload($name){
         }
     }
 
+    // template namespace
+    if(substr($name, 0, 18) == 'dokuwiki/template/') {
+        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
+        $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
+        if(file_exists($file)) {
+            require $file;
+            return true;
+        }
+    }
+
     // our own namespace
     if(substr($name, 0, 9) == 'dokuwiki/') {
         require substr($name, 9) . '.php';
