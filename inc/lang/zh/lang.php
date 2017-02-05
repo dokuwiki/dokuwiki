@@ -29,6 +29,7 @@
  * @author JellyChen <451453325@qq.com>
  * @author tai <tai_tang@126.com>
  * @author 高博 <bobnemo1983@gmail.com>
+ * @author hznupeter <qiujiongtao@163.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
