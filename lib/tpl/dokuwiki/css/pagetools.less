@@ -31,19 +31,20 @@
 }
 
 #dokuwiki__pagetools {
-    @ico-width: 30px;
+    @ico-width: 25px;
     @ico-margin: 5px;
-    @size: (@ico-width + @ico-margin + @ico-margin);
+    @item-width: (@ico-width + @ico-margin + @ico-margin);
+    @item-height: (@ico-width + @ico-margin);
 
     position: absolute;
-    right: (-1 * @size);
+    right: (-1 * @item-width);
     /* on same vertical level as first headline, because .page has 2em padding */
     top: 2em;
-    width: @size;
+    width: @item-width;
 
     div.tools {
         position: fixed;
-        width: @size;
+        width: @item-width;
 
         ul {
             position: absolute;
@@ -67,9 +68,9 @@
                     /* add transparent border to prevent jumping when proper border is added on focus */
                     border: 1px solid transparent;
                     white-space: nowrap;
-                    line-height: @size;
+                    line-height: @item-height;
                     vertical-align: middle;
-                    height: @size;
+                    height: @item-height;
 
                     span {
                         display: none; // hide label until hover
