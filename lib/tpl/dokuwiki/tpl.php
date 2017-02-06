@@ -81,11 +81,11 @@ class tpl {
         $svg = inlineSVG($svg);
         if(!$svg) $svg = inlineSVG(__DIR__ . '/images/tools/' . self::$icons['default']);
 
-        $out = '<li>';
-        $out .= '<a href="' . $link . '" title="' . hsc($title) . '" rel="nofollow" ' . $key . '>';
+        $out  = '<a href="' . $link . '" title="' . hsc($title) . '" rel="nofollow" ' . $key . '>';
         $out .= '<span>' . hsc($caption) . '</span>';
         $out .= $svg;
-        $out .= '</li>';
+        $out .= '</a>';
+
         return $out;
     }
 }

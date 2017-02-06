@@ -75,7 +75,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                     <ul>
                         <?php
                             $data = array(
-                                'view'  => 'main',
+                                'view'  => 'main-svg',
                                 'items' => array(
                                     'edit'      => dokuwiki\template\dokuwiki\tpl::pageToolAction('edit'),
                                     'revert'    => dokuwiki\template\dokuwiki\tpl::pageToolAction('revert'),
@@ -89,7 +89,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                             // the page tools can be amended through a custom plugin hook
                             $evt = new Doku_Event('TEMPLATE_PAGETOOLS_DISPLAY', $data);
                             if($evt->advise_before()){
-                                foreach($evt->data['items'] as $k => $html) echo $html;
+                                foreach($evt->data['items'] as $k => $html) echo "<li>$html</li>";
                             }
                             $evt->advise_after();
                             unset($data);
