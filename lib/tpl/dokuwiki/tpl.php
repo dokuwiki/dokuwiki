@@ -78,8 +78,8 @@ class tpl {
             $key = 'accesskey="' . $key . '"';
         }
 
-        $svg = inlinSVG($svg);
-        if(!$svg) $svg = inlinSVG(__DIR__ . '/images/tools/' . self::$icons['default']);
+        $svg = inlineSVG($svg);
+        if(!$svg) $svg = inlineSVG(__DIR__ . '/images/tools/' . self::$icons['default']);
 
         $out = '<li>';
         $out .= '<a href="' . $link . '" title="' . hsc($title) . '" rel="nofollow" ' . $key . '>';
