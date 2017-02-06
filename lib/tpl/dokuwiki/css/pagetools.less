@@ -86,8 +86,16 @@
                         fill: @ini_border;
                     }
                 }
+
+                // on interaction show the full item
+                a:active,
+                a:focus,
                 a:hover {
                     background-color: @ini_background_alt;
+
+                    span {
+                        display: inline-block;
+                    }
 
                     svg {
                         fill: @ini_link;
@@ -96,8 +104,22 @@
             }
         }
     }
+
+    [dir=rtl] & {
+        right: auto;
+        left: (-1 * @item-width);
+
+        div.tools {
+            ul {
+                right: auto;
+                left: 0;
+                text-align: left;
+            }
+        }
+    }
 }
 
+// on hover show all items
 #dokuwiki__pagetools:hover {
     div.tools ul {
         background-color: @ini_background;
