@@ -56,32 +56,42 @@ class tpl {
             $linktarget,
             $caption,
             $svg,
-            $data['accesskey']
+            array('accesskey' => $data['accesskey'])
         );
     }
 
     /**
      * Return the HTML for a page action
      *
-     * Plugins could use this
+     * Plugins may use this in TEMPLATE_PAGETOOLS_DISPLAY
      *
      * @param string $link The link
      * @param string $caption The label of the action
      * @param string $svg The icon to show
-     * @param string $key Accesskey
+     * @param string[] $args HTML attributes for the item
      * @return string
      */
-    static public function pageToolItem($link, $caption, $svg, $key = '') {
-        $title = $caption;
-        if($key) {
-            $title .= ' [' . strtoupper($key) . ']';
-            $key = 'accesskey="' . $key . '"';
+    static public function pageToolItem($link, $caption, $svg, $args = array()) {
+        if(blank($args['title'])) {
+            $args['title'] = $caption;
         }
+
+        if(!blank($args['accesskey'])) {
+            $args['title'] .= ' [' . strtoupper($args['accesskey']) . ']';
+        }
+
+        if(blank($args['rel'])) {
+            $args['rel'] = 'nofollow';
+        }
+
+        $args['href'] = $link;
 
         $svg = inlineSVG($svg);
         if(!$svg) $svg = inlineSVG(__DIR__ . '/images/tools/' . self::$icons['default']);
 
-        $out  = '<a href="' . $link . '" title="' . hsc($title) . '" rel="nofollow" ' . $key . '>';
+        $attributes = buildAttributes($args, true);
+
+        $out = "<a $attributes>";
         $out .= '<span>' . hsc($caption) . '</span>';
         $out .= $svg;
         $out .= '</a>';
