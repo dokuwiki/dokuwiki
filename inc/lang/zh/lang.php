@@ -30,6 +30,7 @@
  * @author tai <tai_tang@126.com>
  * @author 高博 <bobnemo1983@gmail.com>
  * @author hznupeter <qiujiongtao@163.com>
+ * @author daihy <dai875939260@163.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
