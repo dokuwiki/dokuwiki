@@ -36,10 +36,6 @@ function js_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // The generated script depends on some dynamic options
-    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl,'.js');
-    $cache->_event = 'JS_CACHE_USE';
-
     // array of core files
     $files = array(
                 DOKU_INC.'lib/scripts/jquery/jquery.cookie.js',
@@ -74,6 +70,13 @@ function js_out(){
             $files[] = $userscript;
         }
     }
+
+    // Let plugins decide to either put more scripts here or to remove some
+	trigger_event('JS_SCRIPT_LIST', $files);
+
+    // The generated script depends on some dynamic options
+    $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
+    $cache->_event = 'JS_CACHE_USE';
 
     $cache_files = array_merge($files, getConfigFiles('main'));
     $cache_files[] = __FILE__;
