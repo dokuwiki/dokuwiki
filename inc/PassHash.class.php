@@ -313,7 +313,7 @@ class PassHash {
      * @return string Hashed password
      */
     public function hash_my411($clear) {
-        return '*'.sha1(pack("H*", sha1($clear)));
+        return '*'.strtoupper(sha1(pack("H*", sha1($clear))));
     }
 
     /**

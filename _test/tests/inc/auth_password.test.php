@@ -12,7 +12,7 @@ class auth_password_test extends DokuWikiTest {
         'lsmd5' => '{SMD5}HGbkPrkWgy9KgcRGWlrsUWFiY2RlZmdo',
         'crypt' => 'ablvoGr1hvZ5k',
         'mysql' => '4a1fa3780bd6fd55',
-        'my411' => '*e5929347e25f82e19e4ebe92f1dc6b6e7c2dbd29',
+        'my411' => '*E5929347E25F82E19E4EBE92F1DC6B6E7C2DBD29',
         'kmd5'  => 'a579299436d7969791189acadd86fcb716',
         'djangomd5'  => 'md5$abcde$d0fdddeda8cd92725d2b54148ac09158',
         'djangosha1' => 'sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678',
