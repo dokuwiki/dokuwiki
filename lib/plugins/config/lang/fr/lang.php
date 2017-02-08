@@ -58,6 +58,7 @@ $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
 $lang['lang']                  = 'Langue de l\'interface';
 $lang['template']              = 'Modèle (rendu visuel du wiki)';
+$lang['frontEndTemplate']      = 'Modèle des pages publiques (rendu visuel public du wiki), les pages admin seront sur modèle global';
 $lang['tagline']               = 'Descriptif du site (si le modèle supporte cette fonctionnalité)';
 $lang['sidebar']               = 'Nom du panneau latéral (si le modèle supporte cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
