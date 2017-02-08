@@ -9,6 +9,8 @@
  *
  * For help with the configuration and a more detailed explanation of the various options
  * see http://www.dokuwiki.org/config
+ * 
+ * backend frontend setup: @author Olivier Brizard <contact@beemoon.fr>
  */
 
 

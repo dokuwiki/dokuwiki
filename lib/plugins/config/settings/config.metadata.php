@@ -78,6 +78,9 @@
  *
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
+ * 
+ * add setup backend and frontend template: @author Olivier Brizard <contact@beemoon.fr>
+ * 
  */
 // ---------------[ settings for settings ]------------------------------
 $config['format']  = 'php';      // format of setting files, supported formats: php

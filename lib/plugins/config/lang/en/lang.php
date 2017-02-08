@@ -5,6 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Matthias Schulte <dokuwiki@lupo49.de>
+ * @author     Olivier Brizard <contact@beemoon.fr>
+ * 
  */
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
