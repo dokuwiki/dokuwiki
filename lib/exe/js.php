@@ -72,7 +72,7 @@ function js_out(){
     }
 
     // Let plugins decide to either put more scripts here or to remove some
-	trigger_event('JS_SCRIPT_LIST', $files);
+    trigger_event('JS_SCRIPT_LIST', $files);
 
     // The generated script depends on some dynamic options
     $cache = new cache('scripts'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].md5(serialize($files)),'.js');
