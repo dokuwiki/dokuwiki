@@ -34,18 +34,14 @@ function css_out(){
 
     if ($INPUT->str('s') == 'feed') {
         $mediatypes = array('feed');
-        $type = 'feed';
     } else {
-        $mediatypes = array('screen', 'all', 'print');
-        $type = '';
+        $mediatypes = array('screen', 'all', 'print', 'handheld');
     }
 
     // decide from where to get the template
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].$INPUT->int('preview').DOKU_BASE.$tpl.$type,'.css');
 
     // load styl.ini
     $styleini = css_styleini($tpl, $INPUT->bool('preview'));
