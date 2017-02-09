@@ -396,10 +396,15 @@ function tpl_metaheaders($alt = true) {
     }
 
     // load stylesheets
-    $head['link'][] = array(
-        'rel' => 'stylesheet', 'type'=> 'text/css',
-        'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
-    );
+    foreach( scandir( template('') ) as $ini_file ) {
+        // allow all .ini files in a templates 'ini' dir to be a flavour for stylesheet creation
+        list( $flavour, $ext ) = explode( '.', $ini_file, 2 );
+        if ( $ext != 'ini' ) continue;
+        $head['link'][] = array(
+            'rel' => 'stylesheet', 'type'=> 'text/css',
+            'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&f='.rawurlencode($flavour).'&tseed='.$tseed
+        );
+    }
 
     // make $INFO and other vars available to JavaScripts
     $json   = new JSON();

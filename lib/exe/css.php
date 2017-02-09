@@ -10,6 +10,7 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 if(!defined('NL')) define('NL',"\n");
+if(!defined('DEFAULT_FLAVOUR')) define('DEFAULT_FLAVOUR',"style");
 require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -42,15 +43,19 @@ function css_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
+    // decide from where to get the template
+    $flavour = trim(preg_replace('/[^\w-]+/','',$INPUT->str('f')));
+    if(!$flavour) $flavour = DEFAULT_FLAVOUR;
 
     // load styl.ini
-    $styleini = css_styleini($tpl, $INPUT->bool('preview'));
+    $styleini = css_styleini($tpl, $flavour, $INPUT->bool('preview'));
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
     $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
+    $cache_files[] = DOKU_CONF."tpl/$tpl/ini/".$flavour.".ini";
     $cache_files[] = __FILE__;
     if($INPUT->bool('preview')) $cache_files[] = $conf['cachedir'].'/preview.ini';
 
@@ -255,16 +260,27 @@ function css_applystyle($css, $replacements) {
  * @param bool   $preview load preview replacements
  * @return array with keys 'stylesheets' and 'replacements'
  */
-function css_styleini($tpl, $preview=false) {
+function css_styleini($tpl, $flavour=DEFAULT_FLAVOUR, $preview=false) {
     global $conf;
 
     $stylesheets = array(); // mode, file => base
     $replacements = array(); // placeholder => value
 
-    // load template's style.ini
+    // load template style.ini replacements first
+    // they should be the base for the colors - if not the default flavour
     $incbase = tpl_incdir($tpl);
     $webbase = tpl_basedir($tpl);
-    $ini = $incbase.'style.ini';
+    $ini = $incbase.DEFAULT_FLAVOUR.'.ini';
+    if($flavour != DEFAULT_FLAVOUR && file_exists($ini)) {
+        $data = parse_ini_file($ini, true);
+        // replacements
+        if(is_array($data['replacements'])) {
+            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'], $webbase));
+        }
+    }
+
+    // load template's style.ini
+    $ini = $incbase.$flavour.'.ini';
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
@@ -272,9 +288,8 @@ function css_styleini($tpl, $preview=false) {
         if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
             $stylesheets[$mode][$incbase.$file] = $webbase;
         }
-
         // replacements
-        if(is_array($data['replacements'])){
+        if(isset($data['replacements']) && is_array($data['replacements'])){
             $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
@@ -286,11 +301,10 @@ function css_styleini($tpl, $preview=false) {
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
-        // stylesheets
-        if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+        // stylesheets - but only if we are on the default flavour
+        if($flavour === DEFAULT_FLAVOUR && isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
             $stylesheets[$mode][$incbase.$file] = $webbase;
         }
-
         // replacements
         if(isset($data['replacements']) && is_array($data['replacements'])){
             $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
