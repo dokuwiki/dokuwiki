@@ -94,18 +94,18 @@ function css_out(){
     
         // Let plugins decide to either put more styles here or to remove some
         $media_files[$mediatype] = css_filewrapper($mediatype, $flavour, $files);
-    	$CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
+        $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
     
         // Make it preventable.
-    	if ( $CSSEvt->advise_before() ) {
+        if ( $CSSEvt->advise_before() ) {
             $cache_files = array_merge($cache_files, array_keys($media_files[$mediatype]['files']));
-    	} else {
-        	// unset if prevented. Nothing will be printed for this mediatype.
-        	unset($media_files[$mediatype]);
-    	}
-    	
-    	// finish event.
-    	$CSSEvt->advise_after();
+        } else {
+            // unset if prevented. Nothing will be printed for this mediatype.
+            unset($media_files[$mediatype]);
+        }
+        
+        // finish event.
+        $CSSEvt->advise_after();
     }
 
     // The generated script depends on some dynamic options
@@ -139,9 +139,9 @@ function css_out(){
         $cssData = $media_files[$mediatype];
         
         // Print the styles.
-    	print NL;
-    	if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
-    	print '/* START '.$cssData['mediatype'].' styles */'.NL;
+        print NL;
+        if ( $cssData['encapsulate'] === true ) print $cssData['encapsulationPrefix'] . ' {';
+        print '/* START '.$cssData['mediatype'].' styles */'.NL;
     
         // load files
         foreach($cssData['files'] as $file => $location){
@@ -150,10 +150,10 @@ function css_out(){
             print css_loadfile($file, $location);
         }
         
-    	print NL;
-    	if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
-    	else print '/*';
-    	print ' END '.$cssData['mediatype'].' styles */'.NL;
+        print NL;
+        if ( $cssData['encapsulate'] === true ) print '} /* /@media ';
+        else print '/*';
+        print ' END '.$cssData['mediatype'].' styles */'.NL;
     }
 
     // end output buffering and get contents
@@ -387,10 +387,10 @@ function css_fixreplacementurls($replacements, $location) {
 function css_filewrapper($mediatype, $flavour=DEFAULT_FLAVOUR, $files=array()){
     return array(
             'files'                 => $files,
-	        'mediatype'             => $mediatype,
-	        'flavour'               => $flavour,
-	        'encapsulate'           => in_array($mediatype, array('screen', 'print', 'handheld')),
-	        'encapsulationPrefix'   => '@media '.$mediatype
+            'mediatype'             => $mediatype,
+            'flavour'               => $flavour,
+            'encapsulate'           => in_array($mediatype, array('screen', 'print', 'handheld')),
+            'encapsulationPrefix'   => '@media '.$mediatype
         );
 }
 
@@ -404,7 +404,7 @@ function css_filewrapper($mediatype, $flavour=DEFAULT_FLAVOUR, $files=array()){
  *   DW_DEFAULT
  */
 function css_defaultstyles(){
-	// print the default classes for interwiki links and file downloads
+    // print the default classes for interwiki links and file downloads
     print '@media screen {';
     css_interwiki();
     css_filetypes();
