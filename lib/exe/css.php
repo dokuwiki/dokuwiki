@@ -35,8 +35,10 @@ function css_out(){
 
     if ($INPUT->str('s') == 'feed') {
         $mediatypes = array('feed');
+        $type = 'feed';
     } else {
         $mediatypes = array('screen', 'all', 'print', 'handheld');
+        $type = '';
     }
 
     // decide from where to get the template
@@ -107,7 +109,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.md5(serialize($cache_files)),'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$flavour.$type,'.css');
     $cache->_event = 'CSS_CACHE_USE';
 
     // check cache age & handle conditional request
