@@ -45,7 +45,7 @@ function css_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // decide from where to get the template
+    // decide from where to get the flavour
     $flavour = trim(preg_replace('/[^\w-]+/','',$INPUT->str('f')));
     if(!$flavour) $flavour = DEFAULT_FLAVOUR;
 
