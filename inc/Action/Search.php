@@ -4,6 +4,13 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Search
+ *
+ * Search for pages and content
+ *
+ * @package dokuwiki\Action
+ */
 class Search extends AbstractAction {
 
     /** @inheritdoc */

@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:33 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionException;
 
+/**
+ * Class Admin
+ *
+ * Action to show the admin interface or admin plugins
+ *
+ * @package dokuwiki\Action
+ */
 class Admin extends AbstractUserAction {
 
     /** @inheritdoc */
@@ -37,10 +38,10 @@ class Admin extends AbstractUserAction {
         global $INFO;
 
         // retrieve admin plugin name from $_REQUEST['page']
-        if (($page = $INPUT->str('page', '', true)) != '') {
+        if(($page = $INPUT->str('page', '', true)) != '') {
             /** @var $plugin \DokuWiki_Admin_Plugin */
-            if ($plugin = plugin_getRequestAdminPlugin()){ // FIXME this method does also permission checking
-                if($plugin->forAdminOnly() && !$INFO['isadmin'] ) {
+            if($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
+                if($plugin->forAdminOnly() && !$INFO['isadmin']) {
                     throw new ActionException('denied');
                 }
                 $plugin->handle();

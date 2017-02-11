@@ -1,17 +1,19 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 10:26 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Recover
+ *
+ * Recover a draft
+ *
+ * @package dokuwiki\Action
+ */
 class Recover extends AbstractAliasAction {
 
+    /** @inheritdoc */
     public function preProcess() {
         throw new ActionAbort('edit');
     }

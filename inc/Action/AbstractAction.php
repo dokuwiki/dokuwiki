@@ -6,6 +6,13 @@ use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Action\Exception\FatalException;
 
+/**
+ * Class AbstractAction
+ *
+ * Base class for all actions
+ *
+ * @package dokuwiki\Action
+ */
 abstract class AbstractAction {
 
     /** @var string holds the name of the action (lowercase class name, no namespace) */

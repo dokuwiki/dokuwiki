@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:10 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Export
+ *
+ * Handle exporting by calling the appropriate renderer
+ *
+ * @package dokuwiki\Action
+ */
 class Export extends AbstractAction {
 
     /** @inheritdoc */
@@ -32,6 +33,7 @@ class Export extends AbstractAction {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Michael Klier <chi@chimeric.de>
+     * @inheritdoc
      */
     public function preProcess() {
         global $ID;

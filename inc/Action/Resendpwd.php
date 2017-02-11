@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 9:33 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Resendpwd
+ *
+ * Handle password recovery
+ *
+ * @package dokuwiki\Action
+ */
 class Resendpwd extends AbstractAclAction {
 
     /** @inheritdoc */

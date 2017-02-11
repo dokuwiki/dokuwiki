@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 9:47 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Profile
+ *
+ * Handle the profile form
+ *
+ * @package dokuwiki\Action
+ */
 class Profile extends AbstractUserAction {
 
     /** @inheritdoc */
@@ -17,6 +18,7 @@ class Profile extends AbstractUserAction {
         return AUTH_NONE;
     }
 
+    /** @inheritdoc */
     public function preProcess() {
         global $lang;
         if(updateprofile()) {
@@ -25,6 +27,7 @@ class Profile extends AbstractUserAction {
         }
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_updateprofile();
     }

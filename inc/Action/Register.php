@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 9:18 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Register
+ *
+ * Self registering a new user
+ *
+ * @package dokuwiki\Action
+ */
 class Register extends AbstractAction {
 
     /** @inheritdoc */
@@ -17,12 +18,14 @@ class Register extends AbstractAction {
         return AUTH_NONE;
     }
 
+    /** @inheritdoc */
     public function preProcess() {
         if(register()) { // FIXME could be moved from auth to here
             throw new ActionAbort('login');
         }
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_register();
     }

@@ -2,10 +2,15 @@
 
 namespace dokuwiki\Action;
 
-use dokuwiki\Action\Exception\ActionAclRequiredException;
-use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Action\Exception\ActionUserRequiredException;
 
+/**
+ * Class AbstractUserAction
+ *
+ * An action that requires a logged in user
+ *
+ * @package dokuwiki\Action
+ */
 abstract class AbstractUserAction extends AbstractAclAction {
 
     /** @inheritdoc */

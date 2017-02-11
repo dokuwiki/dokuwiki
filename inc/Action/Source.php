@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:44 AM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Source
+ *
+ * Show the source of a page
+ *
+ * @package dokuwiki\Action
+ */
 class Source extends AbstractAction {
 
     /** @inheritdoc */
@@ -15,6 +16,7 @@ class Source extends AbstractAction {
         return AUTH_READ;
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_edit(); // FIXME is this correct? Should we split it off completely?
     }

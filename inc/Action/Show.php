@@ -8,6 +8,13 @@
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Show
+ *
+ * The default action of showing a page
+ *
+ * @package dokuwiki\Action
+ */
 class Show extends AbstractAction {
 
     /** @inheritdoc */
@@ -15,6 +22,7 @@ class Show extends AbstractAction {
         return AUTH_READ;
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_show();
     }

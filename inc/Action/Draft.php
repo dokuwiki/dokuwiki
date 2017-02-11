@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:55 AM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Draft
+ *
+ * Screen to see and recover a draft
+ *
+ * @package dokuwiki\Action
+ * @fixme combine with Recover?
+ */
 class Draft extends AbstractAction {
 
     /** @inheritdoc */

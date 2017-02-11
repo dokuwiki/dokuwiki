@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 4:51 PM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Denied
+ *
+ * Show the access denied screen
+ *
+ * @package dokuwiki\Action
+ */
 class Denied extends AbstractAclAction {
 
     /** @inheritdoc */

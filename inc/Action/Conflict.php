@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:52 AM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Conflict
+ *
+ * Show the conflict resolution screen
+ *
+ * @package dokuwiki\Action
+ */
 class Conflict extends AbstractAction {
 
     /** @inheritdoc */

@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:49 AM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Media
+ *
+ * The full screen media manager
+ *
+ * @package dokuwiki\Action
+ */
 class Media extends AbstractAction {
 
     /** @inheritdoc */
@@ -15,6 +16,7 @@ class Media extends AbstractAction {
         return AUTH_READ;
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         tpl_media();
     }

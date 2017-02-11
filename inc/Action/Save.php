@@ -1,16 +1,17 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 10:06 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionException;
 
+/**
+ * Class Save
+ *
+ * Save at the end of an edit session
+ *
+ * @package dokuwiki\Action
+ */
 class Save extends AbstractAction {
 
     /** @inheritdoc */
@@ -23,6 +24,7 @@ class Save extends AbstractAction {
         }
     }
 
+    /** @inheritdoc */
     public function preProcess() {
         if(!checkSecurityToken()) throw new ActionException('preview');
 

@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 3:18 PM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\FatalException;
 
+/**
+ * Class Sitemap
+ *
+ * Generate an XML sitemap for search engines. Do not confuse with Index
+ *
+ * @package dokuwiki\Action
+ */
 class Sitemap extends AbstractAction {
 
     /** @inheritdoc */
@@ -27,26 +28,26 @@ class Sitemap extends AbstractAction {
     public function preProcess() {
         global $conf;
 
-        if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
+        if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
             throw new FatalException(404, 'Sitemap generation is disabled');
         }
 
         $sitemap = \Sitemapper::getFilePath();
-        if (\Sitemapper::sitemapIsCompressed()) {
+        if(\Sitemapper::sitemapIsCompressed()) {
             $mime = 'application/x-gzip';
-        }else{
+        } else {
             $mime = 'application/xml; charset=utf-8';
         }
 
         // Check if sitemap file exists, otherwise create it
-        if (!is_readable($sitemap)) {
+        if(!is_readable($sitemap)) {
             \Sitemapper::generate();
         }
 
-        if (is_readable($sitemap)) {
+        if(is_readable($sitemap)) {
             // Send headers
-            header('Content-Type: '.$mime);
-            header('Content-Disposition: attachment; filename='.utf8_basename($sitemap));
+            header('Content-Type: ' . $mime);
+            header('Content-Disposition: attachment; filename=' . utf8_basename($sitemap));
 
             http_conditionalRequest(filemtime($sitemap));
 

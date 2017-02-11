@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 12:31 PM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Subscribe
+ *
+ * E-Mail subscription handling
+ *
+ * @package dokuwiki\Action
+ */
 class Subscribe extends AbstractUserAction {
 
     /** @inheritdoc */

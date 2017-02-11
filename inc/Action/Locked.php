@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:43 AM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Locked
+ *
+ * Show a locked screen when a page is locked
+ *
+ * @package dokuwiki\Action
+ */
 class Locked extends AbstractAction {
 
     /** @inheritdoc */
@@ -15,6 +16,7 @@ class Locked extends AbstractAction {
         return AUTH_READ;
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_locked();
     }

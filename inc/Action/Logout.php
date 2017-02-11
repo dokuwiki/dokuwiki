@@ -1,30 +1,21 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 12:08 PM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Action\Exception\ActionUserRequiredException;
 
-class Logout extends AbstractAclAction {
+/**
+ * Class Logout
+ *
+ * Log out a user
+ *
+ * @package dokuwiki\Action
+ */
+class Logout extends AbstractUserAction {
 
     /** @inheritdoc */
     function minimumPermission() {
         return AUTH_NONE;
-    }
-
-    /** @inheritdoc */
-    public function checkPermissions() {
-        global $INPUT;
-        parent::checkPermissions();
-        if(!$INPUT->server->has('REMOTE_USER')) {
-            throw new ActionUserRequiredException('login');
-        }
     }
 
     /** @inheritdoc */

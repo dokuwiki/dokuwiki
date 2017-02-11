@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 3:21 PM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Recent
+ *
+ * The recent changes view
+ *
+ * @package dokuwiki\Action
+ */
 class Recent extends AbstractAction {
 
     /** @inheritdoc */
@@ -19,11 +20,12 @@ class Recent extends AbstractAction {
     public function preProcess() {
         global $INPUT;
         $show_changes = $INPUT->str('show_changes');
-        if (!empty($show_changes)) {
+        if(!empty($show_changes)) {
             set_doku_pref('show_changes', $show_changes);
         }
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         global $INPUT;
         html_recent($INPUT->int('first'));

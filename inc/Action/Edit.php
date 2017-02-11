@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 10:42 AM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Edit
+ *
+ * Handle editing
+ *
+ * @package dokuwiki\Action
+ */
 class Edit extends AbstractAction {
 
     /** @inheritdoc */
@@ -22,6 +23,9 @@ class Edit extends AbstractAction {
         }
     }
 
+    /**
+     * @inheritdoc falls back to 'source' if page not writable
+     */
     public function checkPermissions() {
         parent::checkPermissions();
         global $INFO;
@@ -45,12 +49,12 @@ class Edit extends AbstractAction {
         global $lang;
         global $DATE;
 
-        if (!isset($TEXT)) {
-            if ($INFO['exists']) {
-                if ($RANGE) {
-                    list($PRE,$TEXT,$SUF) = rawWikiSlices($RANGE,$ID,$REV);
+        if(!isset($TEXT)) {
+            if($INFO['exists']) {
+                if($RANGE) {
+                    list($PRE, $TEXT, $SUF) = rawWikiSlices($RANGE, $ID, $REV);
                 } else {
-                    $TEXT = rawWiki($ID,$REV);
+                    $TEXT = rawWiki($ID, $REV);
                 }
             } else {
                 $TEXT = pageTemplate($ID);
@@ -58,10 +62,10 @@ class Edit extends AbstractAction {
         }
 
         //set summary default
-        if(!$SUM){
-            if($REV){
+        if(!$SUM) {
+            if($REV) {
                 $SUM = sprintf($lang['restored'], dformat($REV));
-            }elseif(!$INFO['exists']){
+            } elseif(!$INFO['exists']) {
                 $SUM = $lang['created'];
             }
         }

@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/11/17
- * Time: 11:31 AM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Index
+ *
+ * Show the human readable sitemap. Do not confuse with Sitemap
+ *
+ * @package dokuwiki\Action
+ */
 class Index extends AbstractAction {
 
     /** @inheritdoc */

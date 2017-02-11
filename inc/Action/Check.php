@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 3:16 PM
- */
 
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
 
+/**
+ * Class Check
+ *
+ * Adds some debugging info before aborting to show
+ *
+ * @package dokuwiki\Action
+ */
 class Check extends AbstractAction {
 
     /** @inheritdoc */

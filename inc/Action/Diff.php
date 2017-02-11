@@ -1,13 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 3:30 PM
- */
 
 namespace dokuwiki\Action;
 
+/**
+ * Class Diff
+ *
+ * Show the differences between two revisions
+ *
+ * @package dokuwiki\Action
+ */
 class Diff extends AbstractAction {
 
     /** @inheritdoc */
@@ -20,7 +21,7 @@ class Diff extends AbstractAction {
 
         // store the selected diff type in cookie
         $difftype = $INPUT->str('difftype');
-        if (!empty($difftype)) {
+        if(!empty($difftype)) {
             set_doku_pref('difftype', $difftype);
         }
     }
