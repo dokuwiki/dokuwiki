@@ -7,7 +7,8 @@ namespace dokuwiki\Action\Exception;
  *
  * A fatal exception during handling the action
  *
- * Will abort all handling displaying some info to the user
+ * Will abort all handling and display some info to the user. The HTTP status code
+ * can be defined.
  *
  * @package dokuwiki\Action\Exception
  */
