@@ -49,6 +49,8 @@ class ActionRouter {
      *
      * @param string $actionname
      * @fixme implement redirect on action change with post
+     * @fixme add event handling
+     * @fixme add the action name back to $ACT for plugins relying on it
      */
     protected function setupAction($actionname) {
         try {

@@ -9,7 +9,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Action\Exception\ActionNoUserException;
+use dokuwiki\Action\Exception\ActionUserRequiredException;
 
 class Logout extends AbstractAclAction {
 
@@ -23,7 +23,7 @@ class Logout extends AbstractAclAction {
         global $INPUT;
         parent::checkPermissions();
         if(!$INPUT->server->has('REMOTE_USER')) {
-            throw new ActionNoUserException('login');
+            throw new ActionUserRequiredException('login');
         }
     }
 

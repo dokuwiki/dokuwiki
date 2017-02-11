@@ -4,7 +4,7 @@ namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAclRequiredException;
 use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Action\Exception\ActionNoUserException;
+use dokuwiki\Action\Exception\ActionUserRequiredException;
 
 abstract class AbstractUserAction extends AbstractAclAction {
 
@@ -13,7 +13,7 @@ abstract class AbstractUserAction extends AbstractAclAction {
         parent::checkPermissions();
         global $INPUT;
         if(!$INPUT->server->str('REMOTE_USER')) {
-            throw new ActionNoUserException();
+            throw new ActionUserRequiredException();
         }
     }
 
