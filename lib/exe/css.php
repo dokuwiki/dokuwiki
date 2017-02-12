@@ -37,7 +37,7 @@ function css_out(){
         $mediatypes = array('feed');
         $type = 'feed';
     } else {
-        $mediatypes = array('screen', 'all', 'print', 'handheld');
+        $mediatypes = array('screen', 'all', 'print', 'speech');
         $type = '';
     }
 
