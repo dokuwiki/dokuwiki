@@ -97,11 +97,17 @@ class io_replaceinfile_test extends DokuWikiTest {
 
     /**
      * Test passing an invalid parameter.
-     *
-     * @expectedException PHPUnit\Framework\Error\Warning
      */
     function test_badparam()
     {
+        if (class_exists('PHPUnit\Framework\Error\Warning')) {
+            // PHPUnit 6
+            $this->expectException(PHPUnit\Framework\Error\Warning::class);
+        } else {
+            // PHPUnit 5
+            $this->expectException(PHPUnit_Framework_Error_Warning::class);
+        }
+
         /* The empty $oldline parameter should be caught before the file doesn't exist test. */
         $this->assertFalse(io_replaceInFile(TMP_DIR.'/not_existing_file.txt', '', '', false, 0));
     }
