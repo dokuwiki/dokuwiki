@@ -39,6 +39,7 @@
  * @author Pietroni <pietroni@informatique.univ-paris-diderot.fr>
  * @author Floriang <antispam@floriang.eu>
  * @author Eric <ericstevenart@netc.fr>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
