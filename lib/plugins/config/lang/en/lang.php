@@ -155,6 +155,7 @@ $lang['rss_show_summary'] = 'XML feed show summary in title';
 $lang['rss_media']   = 'What kind of changes should be listed in the XML feed?';
 
 /* Advanced Options */
+$lang['paytribute']  = 'Send in each response an HTTP header in tribute to Terry Pratchett.';
 $lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
