@@ -26,6 +26,7 @@
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -161,9 +162,9 @@ $lang['renderer__core']        = '%s (cœur de DokuWiki)';
 $lang['renderer__plugin']      = '%s (extension)';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
-$lang['jquerycdn_o_0']         = 'Non: utilisation de votre serveur.';
-$lang['jquerycdn_o_jquery']    = 'Oui: CDN code.jquery.com.';
-$lang['jquerycdn_o_cdnjs']     = 'Oui: CDN cdnjs.com.';
+$lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
+$lang['jquerycdn_o_jquery']    = 'Oui : CDN code.jquery.com.';
+$lang['jquerycdn_o_cdnjs']     = 'Oui : CDN cdnjs.com.';
 $lang['proxy____host']         = 'Mandataire (proxy) - Hôte';
 $lang['proxy____port']         = 'Mandataire - Port';
 $lang['proxy____user']         = 'Mandataire - Identifiant';
