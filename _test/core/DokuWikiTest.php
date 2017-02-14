@@ -2,7 +2,7 @@
 /**
  * Helper class to provide basic functionality for tests
  */
-abstract class DokuWikiTest extends PHPUnit_Framework_TestCase {
+abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
 
     /**
      * tests can override this

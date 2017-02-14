@@ -98,7 +98,7 @@ class io_replaceinfile_test extends DokuWikiTest {
     /**
      * Test passing an invalid parameter.
      *
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedException PHPUnit\Framework\Error\Warning
      */
     function test_badparam()
     {
