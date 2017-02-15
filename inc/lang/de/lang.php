@@ -29,6 +29,7 @@
  * @author Marcel Eickhoff <eickhoff.marcel@gmail.com>
  * @author Pascal Schröder <Pascal1802@gmail.com>
  * @author Hendrik Diel <diel.hendrik@gmail.com>
+ * @author test <test@test.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -360,5 +361,5 @@ $lang['plainhtml']             = 'HTML Klartext';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde aber unter <a href="%s">%s</a>';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
-$lang['email_signature_text'] = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
+$lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';
