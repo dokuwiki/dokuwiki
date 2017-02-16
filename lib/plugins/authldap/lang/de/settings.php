@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author christian studer <cstuder@existenz.ch>
  * @author Philip Knack <p.knack@stollfuss.de>

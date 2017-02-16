@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Ben Fey <benedikt.fey@beck-heun.de>

@@ -19,6 +19,7 @@
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Anika Henke <anika@selfthinker.org>
+ * @author Marco Hofmann <xenadmin@meinekleinefarm.net>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.<br /> Bitte überprüfen sie die rot umrandeten Eingaben und speichern Sie erneut.';
@@ -152,6 +153,9 @@ $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wik
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Plugin)';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktiviert sein.';
+$lang['jquerycdn_o_0']         = 'Kein CDN, nur lokale Übermittlung';
+$lang['jquerycdn_o_jquery']    = 'CDN über code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN über cdnjs.com';
 $lang['proxy____host']         = 'Proxy-Server';
 $lang['proxy____port']         = 'Proxy-Port';
 $lang['proxy____user']         = 'Proxy Benutzername';
