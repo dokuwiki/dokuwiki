@@ -153,6 +153,7 @@ $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wik
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Plugin)';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktiviert sein.';
+$lang['jquerycdn']             = 'Sollten die jQuery und jQuery UI Skript Dateien von einem CDN geladen werden? Das erzeugt zusätzliche HTTP Anfragen, aber Dateien könnten dadurch schneller laden und Benutzer haben sie eventuell bereits zwischengespeichert. ';
 $lang['jquerycdn_o_0']         = 'Kein CDN, nur lokale Übermittlung';
 $lang['jquerycdn_o_jquery']    = 'CDN über code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN über cdnjs.com';
