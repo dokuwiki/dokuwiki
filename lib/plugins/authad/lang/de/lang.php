@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @author Philip Knack <p.knack@stollfuss.de>
  * @author Uwe Benzelrath <uwebenzelrath@gmail.com>
