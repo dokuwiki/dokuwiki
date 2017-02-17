@@ -35,6 +35,7 @@
  * @author RainbowSpike <1@2.ru>
  * @author dimsharav <dimsharav@gmail.com>
  * @author Radimir <radimir.shevchenko@gmail.com>
+ * @author ice <icerook@yandex.ru>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
