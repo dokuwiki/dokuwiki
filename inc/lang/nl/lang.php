@@ -31,6 +31,7 @@
  * @author Wesley de Weerd <wesleytiel@gmail.com>
  * @author Sjoerd <sjoerd@sjomar.eu>
  * @author Joachim David <joa_david@hotmail.com>
+ * @author mark prins <mprins@users.sf.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
