@@ -26,6 +26,8 @@
  * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
+ * @author Olivier Brizard <contact@beemoon.fr>
+ * 
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -58,6 +60,7 @@ $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
 $lang['lang']                  = 'Langue de l\'interface';
 $lang['template']              = 'Modèle (rendu visuel du wiki)';
+$lang['frontEndTemplate']      = 'Modèle des pages publiques (rendu visuel public du wiki), les pages admin seront sur modèle global';
 $lang['tagline']               = 'Descriptif du site (si le modèle supporte cette fonctionnalité)';
 $lang['sidebar']               = 'Nom du panneau latéral (si le modèle supporte cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';

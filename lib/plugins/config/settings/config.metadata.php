@@ -78,6 +78,9 @@
  *
  *
  * @author    Chris Smith <chris@jalakai.co.uk>
+ * 
+ * add setup backend and frontend template: @author Olivier Brizard <contact@beemoon.fr>
+ * 
  */
 // ---------------[ settings for settings ]------------------------------
 $config['format']  = 'php';      // format of setting files, supported formats: php
@@ -102,6 +105,7 @@ $meta['title']    = array('string');
 $meta['start']    = array('string','_caution' => 'warning','_pattern' => '!^[^:;/]+$!'); // don't accept namespaces
 $meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
 $meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
+$meta['frontEndTemplate'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
 $meta['tagline']  = array('string');
 $meta['sidebar']  = array('string');
 $meta['license']  = array('license');

@@ -5,6 +5,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  * @author     Matthias Schulte <dokuwiki@lupo49.de>
+ * @author     Olivier Brizard <contact@beemoon.fr>
+ * 
  */
 
 // for admin plugins, the menu prompt to be displayed in the admin menu
@@ -54,6 +56,7 @@ $lang['title']       = 'Wiki title aka. your wiki\'s name';
 $lang['start']       = 'Page name to use as the starting point for each namespace';
 $lang['lang']        = 'Interface language';
 $lang['template']    = 'Template aka. the design of the wiki.';
+$lang['frontEndTemplate']    = 'Frontend Template for public pages';
 $lang['tagline']     = 'Tagline (if template supports it)';
 $lang['sidebar']     = 'Sidebar page name (if template supports it), empty field disables the sidebar';
 $lang['license']     = 'Under which license should your content be released?';

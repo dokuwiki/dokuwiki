@@ -8,3 +8,9 @@ DokuWiki - 2004-2016 (c) Andreas Gohr <andi@splitbrain.org>
                          and the DokuWiki Community
 See COPYING and file headers for license info
 
+****************
+
+Fork to test/add new features for my own use
+
+new:
+- add setup backend and frontend template

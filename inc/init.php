@@ -71,6 +71,11 @@ foreach (array('default','local','protected') as $config_group) {
     }
 }
 
+// enable frontend template : @author Olivier Brizard <contact@beemoon.fr>
+if ($_GET['do'] != 'admin') {
+    $conf['template']=$conf['frontEndTemplate'];
+}
+
 //prepare license array()
 global $license;
 $license = array();
