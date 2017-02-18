@@ -38,7 +38,7 @@
  * @author alexey <xeenych@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
-$lang['direction']             = 'слева направо';
+$lang['direction']             = 'ltr';
 $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
 $lang['singlequoteopening']    = '„';
