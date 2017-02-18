@@ -35,9 +35,10 @@
  * @author RainbowSpike <1@2.ru>
  * @author dimsharav <dimsharav@gmail.com>
  * @author Radimir <radimir.shevchenko@gmail.com>
+ * @author alexey <xeenych@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
-$lang['direction']             = 'ltr';
+$lang['direction']             = 'слева направо';
 $lang['doublequoteopening']    = '«';
 $lang['doublequoteclosing']    = '»';
 $lang['singlequoteopening']    = '„';
