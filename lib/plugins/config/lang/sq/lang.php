@@ -47,7 +47,7 @@ $lang['youarehere']            = 'Gjurmë hierarkike';
 $lang['typography']            = 'Bëj zëvendësime tipografike';
 $lang['htmlok']                = 'Lejo HTML të ngulitura';
 $lang['phpok']                 = 'Lejo PHP të ngulitura';
-$lang['dformat']               = 'Formati i Datës (shiko funksionin <a href="http://www.php.net/strftime">strftime</a> e PHP-së)';
+$lang['dformat']               = 'Formati i Datës (shiko funksionin <a href="http://php.net/strftime">strftime</a> e PHP-së)';
 $lang['signature']             = 'Firma';
 $lang['toptoclevel']           = 'Niveli i Kreut për tabelën e përmbajtjes';
 $lang['tocminheads']           = 'Sasia minimum e titrave që përcaktojnë nëse TOC ndërtohet ose jo';

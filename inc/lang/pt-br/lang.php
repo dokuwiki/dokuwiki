@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Luis Fernando Enciso <lfenciso@certto.com.br>
  * @author Alauton/Loug
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
@@ -25,6 +25,8 @@
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
  * @author Ednei <leuloch@gmail.com>
  * @author Hudson FAS <hudsonfas@gmail.com>
+ * @author Guilherme Cardoso <guicardoso@gmail.com>
+ * @author Viliam Dias <viliamjr@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -359,3 +361,5 @@ $lang['plainhtml']             = 'HTML simples';
 $lang['wikimarkup']            = 'Marcação wiki';
 $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada posteriormente em <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
+$lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
+@DOKUWIKIURL@';

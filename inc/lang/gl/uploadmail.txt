@@ -8,7 +8,3 @@ Nome do Host : @HOSTNAME@
 Tamaño : @SIZE@
 Tipo MIME : @MIME@
 Usuario : @USER@
-
---
-Este correo foi xerado polo DokuWiki en
-@DOKUWIKIURL@

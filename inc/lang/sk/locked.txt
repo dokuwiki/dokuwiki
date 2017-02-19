@@ -1,3 +1,3 @@
 ====== Stránka je uzamknutá ======
 
-Tato stránka je práve uzamknutá pre úpravy iným užívateľom. Musíte počkať dovtedy, pokiaľ daný užívateľ dokončí svoje úpravy alebo pokiaľ tento zámok stratí platnosť.
+Tato stránka je práve uzamknutá pre úpravy iným používateľom. Musíte počkať dovtedy, pokiaľ daný používateľ dokončí svoje úpravy alebo pokiaľ tento zámok stratí platnosť.

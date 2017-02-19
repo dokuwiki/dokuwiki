@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Tomo Krajina <aaa@puzz.info>
  * @author Branko Rihtman <theney@gmail.com>
  * @author Dražen Odobašić <dodobasic@gmail.com>
@@ -341,3 +341,5 @@ $lang['plainhtml']             = 'Čisti HTML';
 $lang['wikimarkup']            = 'Wiki kod';
 $lang['page_nonexist_rev']     = 'Stranica ne postoji na %s. Ona je naknadno napravljena na <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Ne mogu analizirati parametar "%s".';
+$lang['email_signature_text'] = 'Ovaj email je poslan na
+@DOKUWIKIURL@';

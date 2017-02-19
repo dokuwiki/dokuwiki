@@ -1,0 +1,2 @@
+Ovaj alat omogućava izmjenu nekih postavki stila vašeg tekućeg wiki predloška.
+Sve postavke su snimljene u lokalnu konfiguracijsku datoteku i neće biti prebrisane kod nadogradnje.

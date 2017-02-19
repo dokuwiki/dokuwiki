@@ -272,13 +272,15 @@ class HTTPClient {
             $server      = $this->proxy_host;
             $port        = $this->proxy_port;
             if (empty($port)) $port = 8080;
+            $use_tls     = $this->proxy_ssl;
         }else{
             $request_url = $path;
             if (!isset($port)) $port = ($uri['scheme'] == 'https') ? 443 : 80;
+            $use_tls     = ($uri['scheme'] == 'https');
         }
 
         // add SSL stream prefix if needed - needs SSL support in PHP
-        if($port == 443 || $this->proxy_ssl) {
+        if($use_tls) {
             if(!in_array('ssl', stream_get_transports())) {
                 $this->status = -200;
                 $this->error = 'This PHP version does not support SSL - cannot connect to server';
@@ -597,13 +599,15 @@ class HTTPClient {
             // setups with this solution before, but we have no usable test for that and TLS should be the more
             // common crypto by now
             if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-                $requesturl = $requestinfo['path'];
+                $requesturl = $requestinfo['path'].
+                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }
 
             // if the above failed, this will most probably not work either, but we can try
             if (@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_SSLv3_CLIENT)) {
-                $requesturl = $requestinfo['path'];
+                $requesturl = $requestinfo['path'].
+                  (!empty($requestinfo['query'])?'?'.$requestinfo['query']:'');
                 return true;
             }
 

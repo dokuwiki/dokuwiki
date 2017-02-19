@@ -60,7 +60,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         // indirect user bind
         if($this->getConf('binddn') && $this->getConf('bindpw')) {
             // use superuser credentials
-            if(!@ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'))) {
+            if(!@ldap_bind($this->con, $this->getConf('binddn'), conf_decodeString($this->getConf('bindpw')))) {
                 $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
@@ -165,7 +165,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         // force superuser bind if wanted and not bound as superuser yet
         if($this->getConf('binddn') && $this->getConf('bindpw') && $this->bound < 2) {
             // use superuser credentials
-            if(!@ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'))) {
+            if(!@ldap_bind($this->con, $this->getConf('binddn'), conf_decodeString($this->getConf('bindpw')))) {
                 $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
@@ -275,6 +275,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
     /**
      * Definition of the function modifyUser in order to modify the password
+     *
+     * @param   string $user    nick of the user to be changed
+     * @param   array  $changes array of field/value pairs to be changed (password will be clear text)
+     * @return  bool   true on success, false on error
      */
 
     function modifyUser($user,$changes){
@@ -307,7 +311,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         } elseif ($this->getConf('binddn') && $this->getConf('bindpw')) {
             // we are changing the password on behalf of the user (eg: forgotten password)
             // bind with the superuser ldap
-            if (!@ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'))){
+            if (!@ldap_bind($this->con, $this->getConf('binddn'), conf_decodeString($this->getConf('bindpw')))){
                 $this->_debug('LDAP bind as superuser: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
@@ -463,9 +467,12 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return string
      */
     protected function _filterEscape($string) {
-        return preg_replace(
-            '/([\x00-\x1F\*\(\)\\\\])/e',
-            '"\\\\\".join("",unpack("H2","$1"))',
+        // see https://github.com/adldap/adLDAP/issues/22
+        return preg_replace_callback(
+            '/([\x00-\x1F\*\(\)\\\\])/',
+            function ($matches) {
+                return "\\".join("", unpack("H2", $matches[1]));
+            },
             $string
         );
     }
@@ -478,6 +485,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      */
     protected function _openLDAP() {
         if($this->con) return true; // connection already established
+
+        if($this->getConf('debug')) {
+            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+        }
 
         $this->bound = 0;
 
@@ -543,7 +554,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             }
 
             if($this->getConf('binddn') && $this->getConf('bindpw')) {
-                $bound = @ldap_bind($this->con, $this->getConf('binddn'), $this->getConf('bindpw'));
+                $bound = @ldap_bind($this->con, $this->getConf('binddn'), conf_decodeString($this->getConf('bindpw')));
                 $this->bound = 2;
             } else {
                 $bound = @ldap_bind($this->con);
@@ -555,6 +566,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
 
         if(!$bound) {
             msg("LDAP: couldn't connect to LDAP server", -1);
+            $this->_debug(ldap_error($this->con), 0, __LINE__, __FILE__);
             return false;
         }
 

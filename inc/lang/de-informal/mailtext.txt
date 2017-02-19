@@ -10,9 +10,3 @@ Zusammenfassung: @SUMMARY@
 Benutzer       : @USER@
 
 @DIFF@
-
-
--- 
-Diese Mail wurde vom DokuWiki auf
-@DOKUWIKIURL@
-erzeugt.

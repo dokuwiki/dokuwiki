@@ -10,8 +10,3 @@ Aldatu laburpena    : @SUMMARY@
 Erabiltzailea       : @USER@
 
 @DIFF@
-
-
--- 
-Email hau DokuWiki erabiliz sortu da;
-@DOKUWIKIURL@

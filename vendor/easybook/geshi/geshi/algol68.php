@@ -326,4 +326,3 @@ $language_data = array(
 );
 
 unset($a68);
-?>

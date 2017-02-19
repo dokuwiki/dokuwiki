@@ -6,6 +6,3 @@ S podatki vašega imena je bila poslana zahteva za pridobitev novega gesla za up
  - Za potrditev zahteve za pridobitev novega gesla, kliknite spodnjo povezavo.
 
 @CONFIRM@
-
---
-Sporočilo je samodejno ustvarjeno na spletišču @DOKUWIKIURL@

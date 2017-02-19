@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Tomas Valenta <t.valenta@sh.cvut.cz>
  * @author Tomas Valenta <tomas@valenta.cz>
@@ -353,3 +353,5 @@ $lang['plainhtml']             = 'Čisté HTML';
 $lang['wikimarkup']            = 'Wiki jazyk';
 $lang['page_nonexist_rev']     = 'Stránka neexistovala na %s. Byla vytvořena dodatečne na <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Nelze rozebrat parametr "%s".';
+$lang['email_signature_text'] = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki
+@DOKUWIKIURL@';

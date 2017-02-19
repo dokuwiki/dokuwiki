@@ -10,8 +10,3 @@ Edit Summary: @SUMMARY@
 User        : @USER@
 
 @DIFF@
-
-
--- 
-Email ini digenerate oleh DokuWiki di
-@DOKUWIKIURL@

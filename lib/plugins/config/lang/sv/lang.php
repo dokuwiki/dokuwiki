@@ -65,7 +65,7 @@ $lang['breadcrumbs']           = 'Antal spår';
 $lang['youarehere']            = 'Hierarkiska spår';
 $lang['fullpath']              = 'Visa fullständig sökväg i sidfoten';
 $lang['typography']            = 'Aktivera typografiska ersättningar';
-$lang['dformat']               = 'Datumformat (se PHP:s <a href="http://www.php.net/strftime">strftime</a>-funktion)';
+$lang['dformat']               = 'Datumformat (se PHP:s <a href="http://php.net/strftime">strftime</a>-funktion)';
 $lang['signature']             = 'Signatur';
 $lang['showuseras']            = 'Vad som skall visas när man visar den användare som senast redigerade en sida';
 $lang['toptoclevel']           = 'Toppnivå för innehållsförteckning';

@@ -22,7 +22,7 @@ class TagCloseElement extends ValueElement {
     /**
      * do not call this
      *
-     * @param $class
+     * @param string $class
      * @return void
      * @throws \BadMethodCallException
      */
@@ -33,35 +33,47 @@ class TagCloseElement extends ValueElement {
     /**
      * do not call this
      *
-     * @param $id
-     * @return void
+     * @param null|string $id
+     * @return string
      * @throws \BadMethodCallException
      */
     public function id($id = null) {
-        throw new \BadMethodCallException('You can\t add ID to closing tag');
+        if ($id === null) {
+            return '';
+        } else {
+            throw new \BadMethodCallException('You can\t add ID to closing tag');
+        }
     }
 
     /**
      * do not call this
      *
-     * @param $name
-     * @param $value
-     * @return void
+     * @param string $name
+     * @param null|string $value
+     * @return string
      * @throws \BadMethodCallException
      */
     public function attr($name, $value = null) {
-        throw new \BadMethodCallException('You can\t add attributes to closing tag');
+        if ($value === null) {
+            return '';
+        } else {
+            throw new \BadMethodCallException('You can\t add attributes to closing tag');
+        }
     }
 
     /**
      * do not call this
      *
-     * @param $attributes
-     * @return void
+     * @param array|null $attributes
+     * @return array
      * @throws \BadMethodCallException
      */
     public function attrs($attributes = null) {
-        throw new \BadMethodCallException('You can\t add attributes to closing tag');
+        if ($attributes === null) {
+            return array();
+        } else {
+            throw new \BadMethodCallException('You can\t add attributes to closing tag');
+        }
     }
 
     /**

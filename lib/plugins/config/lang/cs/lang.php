@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
  * @author Zbynek Krivka <zbynek.krivka@seznam.cz>
  * @author tomas@valenta.cz
@@ -67,7 +67,7 @@ $lang['breadcrumbs']           = 'Počet odkazů na navštívené stránky';
 $lang['youarehere']            = 'Hierarchická "drobečková" navigace';
 $lang['fullpath']              = 'Ukazovat plnou cestu ke stránkám v patičce';
 $lang['typography']            = 'Provádět typografické nahrazování';
-$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Formát data (viz PHP funkci <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Podpis';
 $lang['showuseras']            = 'Co se má přesně zobrazit, když se ukazuje uživatel, který naposledy editoval stránku';
 $lang['toptoclevel']           = 'Nejvyšší úroveň, kterou začít automaticky generovaný obsah';
@@ -149,7 +149,7 @@ $lang['autoplural']            = 'Kontrolovat plurálové tvary v odkazech';
 $lang['compression']           = 'Metoda komprese pro staré verze';
 $lang['gzip_output']           = 'Používat pro xhtml Content-Encoding gzip';
 $lang['compress']              = 'Zahustit CSS a JavaScript výstup';
-$lang['cssdatauri']            = 'Velikost [v bajtech] obrázků odkazovaných v CSS souborech, které budou pro ušetření HTTP požadavku vestavěny do stylu. Tato technika nefunguje v IE 7 a starším. Doporučená hodnota je mezi <code>400</code> a <code>600</code> bajty. Pro vypnutí nastavte na <code>0</code>.';
+$lang['cssdatauri']            = 'Velikost [v bajtech] obrázků odkazovaných v CSS souborech, které budou pro ušetření HTTP požadavku vestavěny do stylu. Doporučená hodnota je mezi <code>400</code> a <code>600</code> bajty. Pro vypnutí nastavte na <code>0</code>.';
 $lang['send404']               = 'Posílat "HTTP 404/Page Not Found" pro neexistují stránky';
 $lang['broken_iua']            = 'Je na vašem systému funkce ignore_user_abort porouchaná? To může způsobovat nefunkčnost vyhledávacího indexu. O kombinaci IIS+PHP/CGI je známo, že nefunguje správně. Viz <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> pro více informací.';
 $lang['xsendfile']             = 'Používat X-Sendfile hlavničky pro download statických souborů z webserveru? Je však požadována podpora této funkce na straně Vašeho webserveru.';
@@ -204,6 +204,7 @@ $lang['xsendfile_o_2']         = 'Standardní hlavička X-Sendfile';
 $lang['xsendfile_o_3']         = 'Proprietární hlavička Nginx X-Accel-Redirect';
 $lang['showuseras_o_loginname'] = 'Přihlašovací jméno';
 $lang['showuseras_o_username'] = 'Celé jméno uživatele';
+$lang['showuseras_o_username_link'] = 'Celé uživatelské jméno jako odkaz mezi wiki';
 $lang['showuseras_o_email']    = 'E-mailová adresa uživatele ("zamaskována" aktuálně nastavenou metodou)';
 $lang['showuseras_o_email_link'] = 'E-mailová adresa uživatele jako mailto: odkaz';
 $lang['useheading_o_0']        = 'Nikdy';

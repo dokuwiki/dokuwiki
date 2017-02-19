@@ -6,17 +6,16 @@
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
- * @author stephane.gully@gmail.com
+ * @author <stephane.gully@gmail.com>
  * @author Guillaume Turri <guillaume.turri@gmail.com>
  * @author Erik Pedersen <erik.pedersen@shaw.ca>
  * @author olivier duperray <duperray.olivier@laposte.net>
  * @author Vincent Feltz <psycho@feltzv.fr>
  * @author Philippe Bajoit <philippe.bajoit@gmail.com>
  * @author Florian Gaub <floriang@floriang.net>
- * @author Samuel Dorsaz samuel.dorsaz@novelion.net
+ * @author Samuel Dorsaz <samuel.dorsaz@novelion.net>
  * @author Johan Guilbaud <guilbaud.johan@gmail.com>
- * @author schplurtz@laposte.net
- * @author skimpax@gmail.com
+ * @author <skimpax@gmail.com>
  * @author Yannick Aure <yannick.aure@gmail.com>
  * @author Olivier DUVAL <zorky00@gmail.com>
  * @author Anael Mobilia <contrib@anael.eu>
@@ -24,6 +23,8 @@
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Floriang <antispam@floriang.eu>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Simon DELAGE <simon.geekitude@gmail.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
@@ -36,7 +37,7 @@ $lang['security']              = 'Avertissement de sécurité : modifier cette o
 $lang['_configuration_manager'] = 'Gestionnaire de configuration';
 $lang['_header_dokuwiki']      = 'Paramètres de DokuWiki';
 $lang['_header_plugin']        = 'Paramètres des extensions';
-$lang['_header_template']      = 'Paramètres des modèles';
+$lang['_header_template']      = 'Paramètres du modèle';
 $lang['_header_undefined']     = 'Paramètres indéfinis';
 $lang['_basic']                = 'Paramètres de base';
 $lang['_display']              = 'Paramètres d\'affichage';
@@ -72,7 +73,7 @@ $lang['breadcrumbs']           = 'Nombre de traces à afficher. 0 désactive cet
 $lang['youarehere']            = 'Utiliser des traces hiérarchiques (vous voulez probablement désactiver l\'option ci-dessus)';
 $lang['fullpath']              = 'Afficher le chemin complet des pages dans le pied de page';
 $lang['typography']            = 'Effectuer des améliorations typographiques';
-$lang['dformat']               = 'Format de date (cf. fonction <a href="http://fr.php.net/strftime">strftime</a> de PHP)';
+$lang['dformat']               = 'Format de date (cf. fonction <a href="http://php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Données à insérer lors de l\'utilisation du bouton « signature » dans l\'éditeur';
 $lang['showuseras']            = 'Données à afficher concernant le dernier utilisateur ayant modifié une page';
 $lang['toptoclevel']           = 'Niveau le plus haut à afficher dans la table des matières';

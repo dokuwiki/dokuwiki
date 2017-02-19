@@ -13,11 +13,7 @@ Summering: @SUMMARY@
 Gammel Revision: @OLDPAGE@
 Ny Revision: @NEWPAGE@
 
-For at slå side notifikationer fra, skal du logge ind på 
+For at slå side notifikationer fra, skal du logge ind på
 @DOKUWIKIURL@ og besøge
 @SUBSCRIBE@
 og slå abonnoment for side / navnerum ændringer fra.
-
---
-Denne email blev generet af DokuWiki på
-@DOKUWIKIURL@

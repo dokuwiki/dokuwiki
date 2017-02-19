@@ -248,7 +248,7 @@ class PageCLI extends DokuCLI {
 
         lock($wiki_id);
 
-        if(checklock($wiki_id) != $this->username) {
+        if(checklock($wiki_id)) {
             $this->error("Unable to obtain lock for $wiki_id ");
             var_dump(checklock($wiki_id));
             exit(1);

@@ -10,8 +10,3 @@ IPアドレス  : @IPADDRESS@
 ユーザー名  : @USER@
 
 @DIFF@
-
-
--- 
-このメールは次のDokuWikiより自動的に送信されています。
-@DOKUWIKIURL@

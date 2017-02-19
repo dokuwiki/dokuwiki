@@ -15,6 +15,7 @@
  * @author tomer <tomercarolldergicz@gmail.com>
  * @author itsho <itsho.itsho@gmail.com>
  * @author Menashe Tomer <menashesite@gmail.com>
+ * @author sagi <sagiyosef@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'rtl';
@@ -95,6 +96,7 @@ $lang['profdeleteuser']        = 'הסר חשבון';
 $lang['profdeleted']           = 'חשבון המשתמש שלך נמחק מויקי זה';
 $lang['profconfdelete']        = 'ברצוני להסיר את החשבון שלי מוויקי זה. <br/> לא ניתן לבטל פעולה זו.';
 $lang['profconfdeletemissing'] = 'תיבת אישור אינו מסומן';
+$lang['proffail']              = 'פרופיל המשתמש לא עודכן';
 $lang['pwdforget']             = 'שכחת את הססמה שלך? ניתן לקבל חדשה';
 $lang['resendna']              = 'הוויקי הזה אינו תומך בחידוש ססמה';
 $lang['resendpwd']             = 'הגדר סיסמא חדשה בעבור';
@@ -341,8 +343,11 @@ $lang['media_perm_read']       = 'מצטערים, אין לך הרשאות לק�
 $lang['media_perm_upload']     = 'מצטערים, אין לך הרשאות להעלות קבצים.';
 $lang['media_update']          = 'העלה גירסה חדשה';
 $lang['media_restore']         = 'שחזר גירסה זו';
+$lang['media_acl_warning']     = 'רשימה זו עלולה להיות חסרה עכב חוסר בהרשאות או דפים מוסתרים';
 $lang['currentns']             = 'שם מרחב נוכחי';
 $lang['searchresult']          = 'תוצאות חיפוש';
 $lang['plainhtml']             = 'HTML פשוט';
 $lang['page_nonexist_rev']     = 'העמוד לא קיים ב%s. העמוד נוצר במקום זאת ב<a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'לא ניתן לפענח פרמטר "%s".';
+$lang['email_signature_text'] = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
+@DOKUWIKIURL@';

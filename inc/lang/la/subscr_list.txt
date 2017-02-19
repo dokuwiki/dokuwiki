@@ -11,7 +11,3 @@ Ut adnotationes deleas, preme hic
 @DOKUWIKIURL@ then visit
 @SUBSCRIBE@
 et paginarum et\aut generum mutationes tollis.
-
---
-Hic cursus generatus a(b)
-@DOKUWIKIURL@

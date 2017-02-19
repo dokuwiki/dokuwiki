@@ -277,7 +277,7 @@ function mail_isvalid($email){
  * Quoted printable encoding
  *
  * @author umu <umuAThrz.tu-chemnitz.de>
- * @link   http://www.php.net/manual/en/function.imap-8bit.php#61216
+ * @link   http://php.net/manual/en/function.imap-8bit.php#61216
  */
 function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
     // split text into lines

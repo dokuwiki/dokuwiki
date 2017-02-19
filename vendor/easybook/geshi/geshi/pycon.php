@@ -61,4 +61,3 @@ if(!isset($language_data['COMMENT_REGEXP'])) {
 $language_data['COMMENT_REGEXP'][-1] = '/(?:^|\A\s)(?:>>>|\.\.\.)/m';
 $language_data['STYLES']['COMMENTS'][-1] = 'color: #444444;';
 
-?>

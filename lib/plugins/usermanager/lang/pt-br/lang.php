@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
@@ -21,6 +21,8 @@
  * @author Leone Lisboa Magevski <leone1983@gmail.com>
  * @author Dário Estevão <darioems@gmail.com>
  * @author Juliano Marconi Lanigra <juliano.marconi@gmail.com>
+ * @author Guilherme Cardoso <guicardoso@gmail.com>
+ * @author Viliam Dias <viliamjr@gmail.com>
  */
 $lang['menu']                  = 'Gerenciamento de Usuários';
 $lang['noauth']                = '(o gerenciamento de usuários não está disponível)';
@@ -81,3 +83,11 @@ $lang['import_error_readfail'] = 'Falha na Importação: Habilitar para ler o ar
 $lang['import_error_create']   = 'Habilitar para criar o usuário.';
 $lang['import_notify_fail']    = 'Mensagem de notificação não pode ser enviada para o usuário importado, %s com email %s.';
 $lang['import_downloadfailures'] = 'Falhas no Download como CSV para correção';
+$lang['addUser_error_missing_pass'] = 'Por favor coloque uma senha ou ative as notificações do usuário para habilitar a geração de senhas.';
+$lang['addUser_error_pass_not_identical'] = 'As senhas fornecidas não são idênticas.';
+$lang['addUser_error_modPass_disabled'] = 'A alteração de senhas está atualmente desabilitada.';
+$lang['addUser_error_name_missing'] = 'Por favor entre com um nome para o novo usuário.';
+$lang['addUser_error_modName_disabled'] = 'Alteração de nomes está desabilitada no momento.';
+$lang['addUser_error_mail_missing'] = 'Por favor entre com um endereço de e-mail para o novo usuário.';
+$lang['addUser_error_modMail_disabled'] = 'Alteração de endereço de e-mail está desabilitada no momento.';
+$lang['addUser_error_create_event_failed'] = 'Uma extensão impediu que um novo usuário seja adicionado. Reveja outras mensagens para mais informações.';

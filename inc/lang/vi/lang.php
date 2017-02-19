@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author James Do <jdo@myrealbox.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -239,3 +239,5 @@ $lang['media_perm_read']       = 'Sorry, bạn không đủ quyền truy cập.'
 $lang['media_perm_upload']     = 'Xin lỗi, bạn không đủ quyền để upload file lên.';
 $lang['media_update']          = 'Tải lên phiên bản mới';
 $lang['media_restore']         = 'Phục hồi phiên bản này';
+$lang['email_signature_text'] = 'Điện thư này tạo bởi DokuWiki ở
+@DOKUWIKIURL@';

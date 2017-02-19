@@ -31,7 +31,7 @@ class TextareaElement extends InputElement {
      */
     public function val($value = null) {
         if($value !== null) {
-            $this->text = $value;
+            $this->text = cleanText($value);
             return $this;
         }
         return $this->text;

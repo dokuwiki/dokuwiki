@@ -18,6 +18,7 @@
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
+ * @author Torpedo <dgtorpedo@gmail.com>
  */
 $lang['menu']                  = 'Gestione Utenti';
 $lang['noauth']                = '(autenticazione non disponibile)';
@@ -65,6 +66,8 @@ $lang['add_ok']                = 'Utente aggiunto correttamente';
 $lang['add_fail']              = 'Aggiunta utente fallita';
 $lang['notify_ok']             = 'Email di notifica inviata';
 $lang['notify_fail']           = 'L\'email di notifica non può essere inviata';
+$lang['import_userlistcsv']    = 'File lista utente (CSV):';
+$lang['import_header']         = 'Importazioni più recenti - Non riuscite';
 $lang['import_success_count']  = 'Importazione utenti: %d utenti trovati, %d utenti importati con successo.';
 $lang['import_failure_count']  = 'Importazione utenti: %d falliti. Errori riportati qui sotto.';
 $lang['import_error_fields']   = 'Campi insufficienti, trovati %d, richiesti 4.';
@@ -74,3 +77,13 @@ $lang['import_error_badmail']  = 'Indirizzo email errato';
 $lang['import_error_upload']   = 'Importazione fallita. Il file CSV non può essere caricato, o è vuoto.';
 $lang['import_error_readfail'] = 'Importazione in errore. Impossibile leggere i file caricati.';
 $lang['import_error_create']   = 'Impossibile creare l\'utente';
+$lang['import_notify_fail']    = 'Non è stato possibile inviare un messaggio di notifica per l\'utente importato %s con e-mail %s.';
+$lang['import_downloadfailures'] = 'Scarica operazioni non riuscite come CSV per correzione';
+$lang['addUser_error_missing_pass'] = 'Imposta una password oppure attiva la notifica utente per abilitare la generazione password.';
+$lang['addUser_error_pass_not_identical'] = 'Le password inserite non sono identiche.';
+$lang['addUser_error_modPass_disabled'] = 'La modifica delle password è al momento disabilitata.';
+$lang['addUser_error_name_missing'] = 'Inserire un nome per il nuovo utente.';
+$lang['addUser_error_modName_disabled'] = 'La modifica dei nomi è al momento disabilitata.';
+$lang['addUser_error_mail_missing'] = 'Inserire un indirizzo e-mail per il nuovo utente.';
+$lang['addUser_error_modMail_disabled'] = 'La modifica degli indirizzi e-mail è al momento disabilitata.';
+$lang['addUser_error_create_event_failed'] = 'Un plugin ha impedito che il nuovo utente venisse aggiunto. Rivedere gli altri messaggi per maggiori informazioni.';

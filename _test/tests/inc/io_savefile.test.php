@@ -6,7 +6,7 @@ class io_savefile_test extends DokuWikiTest {
      * dependency for tests needing zlib extension to pass
      */
     public function test_ext_zlib() {
-        if (!extension_loaded('zlib')) {
+        if (!DOKU_HAS_GZIP) {
             $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
         }
     }
@@ -15,7 +15,7 @@ class io_savefile_test extends DokuWikiTest {
      * dependency for tests needing zlib extension to pass
      */
     public function test_ext_bz2() {
-        if (!extension_loaded('bz2')) {
+        if (!DOKU_HAS_BZIP) {
             $this->markTestSkipped('skipping all bzip2 tests.  Need bz2 extension');
         }
     }

@@ -22,7 +22,7 @@ $lang['youarehere']            = 'Stigveldisá brauðmolar';
 $lang['typography']            = 'Gera stað fyrir leturgerðir';
 $lang['htmlok']                = 'Fella HTML inn';
 $lang['phpok']                 = 'Fella PHP inn';
-$lang['dformat']               = 'Dagsetningarsnið (sjá PHP-aðgerð <a href="http://www.php.net/strftime">strftime</a>)';
+$lang['dformat']               = 'Dagsetningarsnið (sjá PHP-aðgerð <a href="http://php.net/strftime">strftime</a>)';
 $lang['signature']             = 'Undirskrift';
 $lang['passcrypt']             = 'Dulritunaraðferð aðgangsorðs';
 $lang['defaultgroup']          = 'Sjálfgefinn hópur';

@@ -119,8 +119,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         }
 
         // other can do's are changed in $this->_loadServerConfig() base on domain setup
-        $this->cando['modName'] = true;
-        $this->cando['modMail'] = true;
+        $this->cando['modName'] = (bool)$this->conf['update_name'];
+        $this->cando['modMail'] = (bool)$this->conf['update_mail'];
         $this->cando['getUserCount'] = true;
     }
 
@@ -642,6 +642,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin {
         // compatibility with old option name
         if(empty($opts['admin_username']) && !empty($opts['ad_username'])) $opts['admin_username'] = $opts['ad_username'];
         if(empty($opts['admin_password']) && !empty($opts['ad_password'])) $opts['admin_password'] = $opts['ad_password'];
+        $opts['admin_password'] = conf_decodeString($opts['admin_password']); // deobfuscate
 
         // we can change the password if SSL is set
         if($opts['use_ssl'] || $opts['use_tls']) {

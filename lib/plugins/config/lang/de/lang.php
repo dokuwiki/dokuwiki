@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  * @author Leo Moll <leo@yeasoft.com>
@@ -67,7 +67,7 @@ $lang['breadcrumbs']           = 'Anzahl der Einträge im "Krümelpfad"';
 $lang['youarehere']            = 'Hierarchische Pfadnavigation verwenden';
 $lang['fullpath']              = 'Den kompletten Dateipfad im Footer anzeigen';
 $lang['typography']            = 'Typographische Ersetzungen';
-$lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://www.php.net/strftime">strftime</a> Funktion)';
+$lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
 $lang['showuseras']            = 'Was angezeigt werden soll, wenn der Benutzer, der zuletzt eine Seite bearbeitet hat, angezeigt wird';
 $lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
@@ -144,7 +144,7 @@ $lang['autoplural']            = 'Bei Links automatisch nach vorhandenen Pluralf
 $lang['compression']           = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
-$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in CSS-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter!  Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes. Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in CSS-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes. Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';
 $lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Ihr Webserver muss dies unterstützen!';

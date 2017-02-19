@@ -10,7 +10,3 @@ IP адрес : @IPADDRESS@
 Потребител : @USER@
 
 @DIFF@
-
-
--- 
-Писмото е генерирано от DokuWiki на адрес @DOKUWIKIURL@

@@ -2,13 +2,14 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author jk Lee
  * @author dongnak@gmail.com
  * @author Song Younghwan <purluno@gmail.com>
  * @author Seung-Chul Yoo <dryoo@live.com>
  * @author erial2@gmail.com
  * @author Myeongjin <aranet100@gmail.com>
+ * @author Erial <erial2@gmail.com>
  */
 $lang['menu']                  = '환경 설정';
 $lang['error']                 = '잘못된 값 때문에 설정을 바꿀 수 없습니다, 바뀜을 검토하고 다시 제출하세요.
@@ -59,7 +60,7 @@ $lang['breadcrumbs']           = '이동 경로 "추적" 수. 비활성화하려
 $lang['youarehere']            = '계층적 이동 경로 사용 (다음에 위 옵션을 비활성화하기를 원할 겁니다)';
 $lang['fullpath']              = '바닥글에 문서의 전체 경로 밝히기';
 $lang['typography']            = '타이포그래피 대체';
-$lang['dformat']               = '날짜 형식 (PHP의 <a href="http://www.php.net/strftime">strftime</a> 함수 참고)';
+$lang['dformat']               = '날짜 형식 (PHP의 <a href="http://php.net/strftime">strftime</a> 함수 참고)';
 $lang['signature']             = '편집기에서 서명 버튼을 누를 때 넣을 내용';
 $lang['showuseras']            = '문서를 마지막으로 편집한 사용자를 보여줄지 여부';
 $lang['toptoclevel']           = '목차의 최상위 단계';
@@ -112,7 +113,7 @@ $lang['gdlib']                 = 'GD 라이브러리 버전';
 $lang['im_convert']            = 'ImageMagick의 변환 도구의 경로';
 $lang['jpg_quality']           = 'JPG 압축 품질 (0-100)';
 $lang['fetchsize']             = 'fetch.php가 바깥 URL에서 다운로드할 수 있는 최대 크기 (바이트), 예를 들어 바깥 그림을 캐시하고 크기 조절할 때.';
-$lang['subscribers']           = '사용자가 이메일로 문서 바뀜을 구독하는 것을 허용';
+$lang['subscribers']           = '사용자가 이메일로 문서 바뀜을 구독할 수 있도록 하기';
 $lang['subscribe_time']        = '구독 목록과 요약이 보내질 경과 시간 (초); recent_days에 지정된 시간보다 작아야 합니다.';
 $lang['notify']                = '항상 이 이메일 주소로 바뀜 알림을 보냄';
 $lang['registernotify']        = '항상 이 이메일 주소로 새로 등록한 사용자의 정보를 보냄';
@@ -126,7 +127,7 @@ $lang['rss_content']           = 'XML 피드 항목에 보여주는 내용은 �
 $lang['rss_update']            = 'XML 피드 업데이트 간격 (초)';
 $lang['rss_show_summary']      = 'XML 피드의 제목에서 요악 보여주기';
 $lang['rss_media']             = '어떤 규격으로 XML 피드에 바뀜을 나열해야 합니까?';
-$lang['updatecheck']           = '데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
+$lang['updatecheck']           = '업데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
 $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름공간 구분자로 슬래시 사용';
 $lang['sepchar']               = '문서 이름 낱말 구분자';
@@ -136,7 +137,7 @@ $lang['autoplural']            = '링크에서 복수형 검사';
 $lang['compression']           = '첨부 파일의 압축 방법';
 $lang['gzip_output']           = 'xhtml에 대해 gzip 내용 인코딩 사용';
 $lang['compress']              = 'CSS 및 자바스크립트를 압축하여 출력';
-$lang['cssdatauri']            = 'CSS 파일에서 그림이 참조되는 최대 바이트 크기를 스타일시트에 규정해야 HTTP 요청 헤더 오버헤드 크기를 줄일 수 있습니다. 이 기술은 IE 7 이하에서는 작동하지 않습니다! <code>400</code>에서 <code>600</code> 바이트 정도면 좋은 효율을 가져옵니다. 비활성화하려면 <code>0</code>으로 설정하세요.';
+$lang['cssdatauri']            = 'CSS 파일에서 그림이 참조되는 최대 바이트 크기를 스타일시트에 규정해야 HTTP 요청 헤더 오버헤드 크기를 줄일 수 있습니다. <code>400</code>에서 <code>600</code> 바이트 정도면 좋은 효율을 가져옵니다. 비활성화하려면 <code>0</code>으로 설정하세요.';
 $lang['send404']               = '존재하지 않는 문서에 "HTTP 404/페이지를 찾을 수 없습니다" 보내기';
 $lang['broken_iua']            = '시스템에서 ignore_user_abort 함수에 문제가 있습니까? 문제가 있다면 검색 색인이 동작하지 않는 원인이 됩니다. 이 함수가 IIS+PHP/CGI에서 문제가 있는 것으로 알려져 있습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참조하시기 바랍니다.';
 $lang['xsendfile']             = '웹 서버가 정적 파일을 제공할 수 있도록 X-Sendfile 헤더를 사용하겠습니까? 웹 서버가 이 기능을 지원해야 합니다.';

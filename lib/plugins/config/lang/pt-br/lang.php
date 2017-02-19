@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
@@ -18,6 +18,8 @@
  * @author Isaias Masiero Filho <masiero@masiero.org>
  * @author Balaco Baco <balacobaco@imap.cc>
  * @author Victor Westmann <victor.westmann@gmail.com>
+ * @author Guilherme Cardoso <guicardoso@gmail.com>
+ * @author Viliam Dias <viliamjr@gmail.com>
  */
 $lang['menu']                  = 'Configurações do DokuWiki';
 $lang['error']                 = 'As configurações não foram atualizadas devido a um valor inválido. Por favor, reveja suas alterações e reenvie-as.<br />O(s) valor(es) incorreto(s) serão exibidos contornados por uma borda vermelha.';
@@ -68,7 +70,7 @@ $lang['breadcrumbs']           = 'Número de elementos na trilha de páginas vis
 $lang['youarehere']            = 'Trilha hierárquica';
 $lang['fullpath']              = 'Indica o caminho completo das páginas no rodapé';
 $lang['typography']            = 'Efetuar modificações tipográficas';
-$lang['dformat']               = 'Formato da data (veja a função <a href="http://www.php.net/strftime">strftime</a> do PHP)';
+$lang['dformat']               = 'Formato da data (veja a função <a href="http://php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Assinatura';
 $lang['showuseras']            = 'O que exibir quando mostrar o usuário que editou a página pela última vez';
 $lang['toptoclevel']           = 'Nível mais alto para a tabela de conteúdos';

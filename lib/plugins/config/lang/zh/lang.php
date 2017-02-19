@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton guxd@163.com
@@ -15,6 +15,8 @@
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
+ * @author Garfield <garfield_550@outlook.com>
+ * @author JellyChen <451453325@qq.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -65,7 +67,7 @@ $lang['breadcrumbs']           = '显示“足迹”的数量';
 $lang['youarehere']            = '显示“您在这里”';
 $lang['fullpath']              = '在页面底部显示完整路径';
 $lang['typography']            = '进行字符替换';
-$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://www.php.net/strftime">strftime</a> 功能）';
+$lang['dformat']               = '日期格式（参见 PHP 的 <a href="http://php.net/strftime">strftime</a> 功能）';
 $lang['signature']             = '签名样式';
 $lang['showuseras']            = '显示用户为';
 $lang['toptoclevel']           = '目录的最顶层';

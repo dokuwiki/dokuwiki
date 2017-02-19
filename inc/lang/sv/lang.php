@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
@@ -341,3 +341,5 @@ $lang['media_update']          = 'Ladda upp ny version';
 $lang['media_restore']         = 'Återställ denna version';
 $lang['searchresult']          = 'Sökresultat';
 $lang['plainhtml']             = 'Ren HTML';
+$lang['email_signature_text'] = 'Detta meddelande har skapats av DokuWiki på
+@DOKUWIKIURL@';

@@ -55,7 +55,7 @@ $lang['breadcrumbs']           = 'Número de niveis da estrutura de navegación'
 $lang['youarehere']            = 'Niveis xerárquicos da estrutura de navegación';
 $lang['fullpath']              = 'Amosar a ruta completa das páxinas no pé das mesmas';
 $lang['typography']            = 'Facer substitucións tipográficas';
-$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://www.php.net/strftime">strftime</a> do PHP)';
+$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://php.net/strftime">strftime</a> do PHP)';
 $lang['signature']             = 'Sinatura';
 $lang['showuseras']            = 'Que amosar cando se informe do usuario que fixo a última modificación dunha páxina';
 $lang['toptoclevel']           = 'Nivel superior para a táboa de contidos';
@@ -130,7 +130,7 @@ $lang['autoplural']            = 'Comprobar formas plurais nas ligazóns';
 $lang['compression']           = 'Método de compresión para arquivos attic';
 $lang['gzip_output']           = 'Utilizar Contido-Codificación gzip para o xhtml';
 $lang['compress']              = 'Saída compacta de CSS e Javascript';
-$lang['cssdatauri']            = 'Tamaño en bytes ata o cal as imaxes referenciadas nos CSS serán incrustadas na folla de estilos para disminuir o tamaño das cabeceiras das solicitudes HTTP. Esta técnica non funcionará en IE 7 ou anteriores! entre <code>400</code> e <code>600</code> bytes é un valor axeitado. Establecer a <code>0</code> para deshabilitar.';
+$lang['cssdatauri']            = 'Tamaño en bytes ata o cal as imaxes referenciadas nos CSS serán incrustadas na folla de estilos para disminuir o tamaño das cabeceiras das solicitudes HTTP. Entre <code>400</code> e <code>600</code> bytes é un valor axeitado. Establecer a <code>0</code> para deshabilitar.';
 $lang['send404']               = 'Enviar "HTTP 404/Páxina non atopada" para as páxinas inexistentes';
 $lang['broken_iua']            = 'Rachou a función ignore_user_abort no teu sistema? Isto podería causar que o índice de procura non funcione. Coñécese que o IIS+PHP/CGI ráchaa. Bótalle un ollo ao <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> para obter máis información.';
 $lang['xsendfile']             = 'Empregar a cabeceira X-Sendfile para que o servidor web envie arquivos estáticos? O teu servidor web precisa soportar isto.';

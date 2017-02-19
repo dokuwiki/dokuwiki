@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author George Sheraton <guxd@163.com>
@@ -25,6 +25,8 @@
  * @author qinghao <qingxianhao@gmail.com>
  * @author Yuwei Sun <yuwei@hrz.tu-chemnitz.de>
  * @author Errol <errol@hotmail.com>
+ * @author Garfield <garfield_550@outlook.com>
+ * @author JellyChen <451453325@qq.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -362,3 +364,5 @@ $lang['plainhtml']             = '纯HTML';
 $lang['wikimarkup']            = 'Wiki Markup 语言';
 $lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a href="%s">%s</a>。';
 $lang['unable_to_parse_date']  = '无法解析参数 "%s"。';
+$lang['email_signature_text']  = '本邮件由 DokuWiki 自动创建
+@DOKUWIKIURL@';

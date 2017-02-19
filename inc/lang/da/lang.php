@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author koeppe <koeppe@kazur.dk>
  * @author Jon Bendtsen <bendtsen@diku.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
@@ -85,6 +85,7 @@ $lang['regmissing']            = 'Du skal udfylde alle felter.';
 $lang['reguexists']            = 'Dette brugernavn er allerede i brug.';
 $lang['regsuccess']            = 'Du er nu oprettet som bruger. Dit adgangskode bliver sendt til dig i en e-mail.';
 $lang['regsuccess2']           = 'Du er nu oprettet som bruger.';
+$lang['regfail']               = 'Brugeren kunne ikke oprettes.';
 $lang['regmailfail']           = 'Dit adgangskode blev ikke sendt. Kontakt venligst administratoren.';
 $lang['regbadmail']            = 'E-mail-adressen er ugyldig. Kontakt venligst administratoren, hvis du mener dette er en fejl.';
 $lang['regbadpass']            = 'De to adgangskoder er ikke ens, vær venlig at prøve igen.';
@@ -98,6 +99,7 @@ $lang['profnodelete']          = 'Denne wiki understøtter ikke sletning af brug
 $lang['profdeleteuser']        = 'Slet konto';
 $lang['profdeleted']           = 'Din brugerkonto er blevet slettet fra denne wiki';
 $lang['profconfdelete']        = 'Jeg ønsker at slette min konto fra denne wiki. <br/> Denne handling kan ikke fortrydes.';
+$lang['proffail']              = 'Brugerprofilen blev ikke opdateret.';
 $lang['pwdforget']             = 'Har du glemt dit adgangskode? Få en ny';
 $lang['resendna']              = 'Denne wiki understøtter ikke udsendelse af ny adgangskode.';
 $lang['resendpwd']             = 'Vælg en ny adgangskode for';
@@ -345,8 +347,11 @@ $lang['media_perm_read']       = 'Du har ikke nok rettigheder til at læse filer
 $lang['media_perm_upload']     = 'Du har ikke nok rettigheder til at uploade filer.';
 $lang['media_update']          = 'Upload ny version';
 $lang['media_restore']         = 'Genskab denne version';
+$lang['media_acl_warning']     = 'Listen er måske ikke komplet pga. ACL restriktioner og skjulte sider.';
 $lang['currentns']             = 'Nuværende navnerum';
 $lang['searchresult']          = 'Søgsresultat';
 $lang['plainhtml']             = 'Ren HTML';
 $lang['wikimarkup']            = 'Wiki Opmærkning';
 $lang['page_nonexist_rev']     = 'Siden blev ikke fundet ved %s. Den blev efterfølgende oprettet ved <a href="%s">%s</a>.';
+$lang['email_signature_text']  = 'Denne e-mail blev genereret af DokuWiki på
+@DOKUWIKIURL@';

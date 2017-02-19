@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['account_suffix']        = 'Prípona používateľského účtu. Napr. <code>@my.domain.org</code>';

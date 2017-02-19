@@ -11,10 +11,6 @@ Gammel versjon : @OLDPAGE@
 Ny versjon: @NEWPAGE@
 
 For å avslutte varslingen, logg inn på
-@DOKUWIKIURL@ og gå til 
+@DOKUWIKIURL@ og gå til
 @SUBSCRIBE@
 og avslutt abonnementet på endringer av siden eller i navnerommet.
-
---
-Denne e-posten ble generert av DokuWiki på
-@DOKUWIKIURL@

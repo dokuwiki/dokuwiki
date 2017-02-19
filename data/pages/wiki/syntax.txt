@@ -96,9 +96,9 @@ $lang['js']['nosmblinks'] = '';
 
 You can also use an image to link to another internal or external page by combining the syntax for links and [[#images_and_other_files|images]] (see below) like this:
 
-  [[http://www.php.net|{{wiki:dokuwiki-128.png}}]]
+  [[http://php.net|{{wiki:dokuwiki-128.png}}]]
 
-[[http://www.php.net|{{wiki:dokuwiki-128.png}}]]
+[[http://php.net|{{wiki:dokuwiki-128.png}}]]
 
 Please note: The image formatting is the only formatting syntax accepted in link names.
 
@@ -136,12 +136,12 @@ Resize to given width:            {{wiki:dokuwiki-128.png?50}}
 
 Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): {{wiki:dokuwiki-128.png?200x50}}
 
-Resized external image:           {{http://de3.php.net/images/php.gif?200x50}}
+Resized external image:           {{http://php.net/images/php.gif?200x50}}
 
   Real size:                        {{wiki:dokuwiki-128.png}}
   Resize to given width:            {{wiki:dokuwiki-128.png?50}}
   Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
-  Resized external image:           {{http://de3.php.net/images/php.gif?200x50}}
+  Resized external image:           {{http://php.net/images/php.gif?200x50}}
 
 
 By using left or right whitespaces you can choose the alignment.

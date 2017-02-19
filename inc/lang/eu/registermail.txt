@@ -8,6 +8,3 @@ Data : @DATE@
 Nabigatzailea : @BROWSER@
 IP-Helbidea : @IPADDRESS@
 Hostalari izena : @HOSTNAME@
-
--- 
-Posta hau @DOKUWIKIURL@ gunean DokuWikik sortua izan da.

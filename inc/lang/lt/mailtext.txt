@@ -12,7 +12,3 @@ Vartotojas        : @USER@
 Pakeitimo diff'as:
 
 @DIFF@
-
-
--- 
-Šis laiškas buvo sugeneruotas DokuWiki (@DOKUWIKIURL@).

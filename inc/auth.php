@@ -51,11 +51,6 @@ function auth_setup() {
         if ($conf['authtype'] === $plugin) {
             $auth = $plugin_controller->load('auth', $plugin);
             break;
-        } elseif ('auth' . $conf['authtype'] === $plugin) {
-            // matches old auth backends (pre-Weatherwax)
-            $auth = $plugin_controller->load('auth', $plugin);
-            msg('Your authtype setting is deprecated. You must set $conf[\'authtype\'] = "auth' . $conf['authtype'] . '"'
-                 . ' in your configuration (see <a href="https://www.dokuwiki.org/auth">Authentication Backends</a>)',-1,'','',MSG_ADMINS_ONLY);
         }
     }
 
@@ -101,10 +96,7 @@ function auth_setup() {
         $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
-    if($INPUT->str('authtok')) {
-        // when an authentication token is given, trust the session
-        auth_validateToken($INPUT->str('authtok'));
-    } elseif(!is_null($auth) && $auth->canDo('external')) {
+    if(!is_null($auth) && $auth->canDo('external')) {
         // external trust mechanism in place
         $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
     } else {
@@ -275,52 +267,6 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
 }
 
 /**
- * Checks if a given authentication token was stored in the session
- *
- * Will setup authentication data using data from the session if the
- * token is correct. Will exit with a 401 Status if not.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param  string $token The authentication token
- * @return boolean|null true (or will exit on failure)
- */
-function auth_validateToken($token) {
-    if(!$token || $token != $_SESSION[DOKU_COOKIE]['auth']['token']) {
-        // bad token
-        http_status(401);
-        print 'Invalid auth token - maybe the session timed out';
-        unset($_SESSION[DOKU_COOKIE]['auth']['token']); // no second chance
-        exit;
-    }
-    // still here? trust the session data
-    global $USERINFO;
-    /* @var Input $INPUT */
-    global $INPUT;
-
-    $INPUT->server->set('REMOTE_USER',$_SESSION[DOKU_COOKIE]['auth']['user']);
-    $USERINFO               = $_SESSION[DOKU_COOKIE]['auth']['info'];
-    return true;
-}
-
-/**
- * Create an auth token and store it in the session
- *
- * NOTE: this is completely unrelated to the getSecurityToken() function
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @return string The auth token
- */
-function auth_createToken() {
-    $token = md5(auth_randombytes(16));
-    @session_start(); // reopen the session if needed
-    $_SESSION[DOKU_COOKIE]['auth']['token'] = $token;
-    session_write_close();
-    return $token;
-}
-
-/**
  * Builds a pseudo UID from browser and IP data
  *
  * This is neither unique nor unfakable - still it adds some
@@ -380,7 +326,7 @@ function auth_cookiesalt($addsession = false, $secure = false) {
  *
  * @author Mark Seecof
  * @author Michael Hamann <michael@content-space.de>
- * @link   http://www.php.net/manual/de/function.mt-rand.php#83655
+ * @link   http://php.net/manual/de/function.mt-rand.php#83655
  *
  * @param int $length number of bytes to get
  * @return string binary random strings
@@ -752,10 +698,10 @@ function auth_aclcheck_cb($data) {
 
     //add ALL group
     $groups[] = '@ALL';
-    
+
     //add User
     if($user) $groups[] = $user;
-    
+
     //check exact match first
     $matches = preg_grep('/^'.preg_quote($id, '/').'[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
     if(count($matches)) {
@@ -1098,12 +1044,19 @@ function updateprofile() {
         return false;
     }
 
-    // update cookie and session with the changed data
     if($changes['pass']) {
+        // update cookie and session with the changed data
         list( /*user*/, $sticky, /*pass*/) = auth_getCookie();
         $pass = auth_encrypt($changes['pass'], auth_cookiesalt(!$sticky, true));
         auth_setCookie($INPUT->server->str('REMOTE_USER'), $pass, (bool) $sticky);
+    } else {
+        // make sure the session is writable
+        @session_start();
+        // invalidate session cache
+        $_SESSION[DOKU_COOKIE]['auth']['time'] = 0;
+        session_write_close();
     }
+
     return true;
 }
 

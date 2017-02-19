@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Yuji Takenaka <webmaster@davilin.com>
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Ikuo Obataya <i.obataya@gmail.com>
@@ -72,3 +72,11 @@ $lang['import_error_readfail'] = 'インポートが失敗しました。アッ�
 $lang['import_error_create']   = 'ユーザーが作成できません。';
 $lang['import_notify_fail']    = '通知メッセージがインポートされたユーザー（%s）・電子メールアドレス（%s）に送信できませんでした。';
 $lang['import_downloadfailures'] = '修正用に失敗を CSVファイルとしてダウンロードする。';
+$lang['addUser_error_missing_pass'] = 'パスワードを設定するかパスワードの自動生成できるようにユーザーへの通知を有効にして下さい。';
+$lang['addUser_error_pass_not_identical'] = '入力されたパスワードは同一ではありません。';
+$lang['addUser_error_modPass_disabled'] = 'パスワードの変更は現在無効になっています。';
+$lang['addUser_error_name_missing'] = '新規ユーザーのフルネームを入力してください。';
+$lang['addUser_error_modName_disabled'] = 'フルネームの変更は現在無効になっています。';
+$lang['addUser_error_mail_missing'] = '新規ユーザーのメールアドレスを入力してください。';
+$lang['addUser_error_modMail_disabled'] = 'メールアドレスの変更は現在無効になっています。';
+$lang['addUser_error_create_event_failed'] = 'プラグインが新規ユーザーの追加を抑止しました。詳細については、他のメッセージで確認できます。';

@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
  * @author schilling.janos@gmail.com
@@ -60,7 +60,7 @@ $lang['breadcrumbs']           = 'Nyomvonal elemszám';
 $lang['youarehere']            = 'Hierarchikus nyomvonal';
 $lang['fullpath']              = 'Az oldalak teljes útvonalának mutatása a láblécben';
 $lang['typography']            = 'Legyen-e tipográfiai csere';
-$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://www.php.net/strftime">strftime</a> függvényt)';
+$lang['dformat']               = 'Dátum formázás (lásd a PHP <a href="http://php.net/strftime">strftime</a> függvényt)';
 $lang['signature']             = 'Aláírás';
 $lang['showuseras']            = 'A felhasználó melyik adatát mutassunk az utolsó változtatás adatainál?';
 $lang['toptoclevel']           = 'A tartalomjegyzék felső szintje';
@@ -137,7 +137,7 @@ $lang['autoplural']            = 'Többes szám ellenőrzés a hivatkozásokban 
 $lang['compression']           = 'Tömörítés használata a törölt lapokhoz';
 $lang['gzip_output']           = 'gzip tömörítés használata xhtml-hez (Content-Encoding)';
 $lang['compress']              = 'CSS és JavaScript fájlok tömörítése';
-$lang['cssdatauri']            = 'Mérethatár bájtokban, ami alatti CSS-ben hivatkozott fájlok közvetlenül beágyazódjanak a stíluslapba. Ez IE 7-ben és alatta nem fog működni! <code>400</code>-<code>600</code> bájt ideális érték. Állítsd <code>0</code>-ra a beágyazás kikapcsolásához!';
+$lang['cssdatauri']            = 'Mérethatár bájtokban, ami alatti CSS-ben hivatkozott fájlok közvetlenül beágyazódjanak a stíluslapba. <code>400</code>-<code>600</code> bájt ideális érték. Állítsd <code>0</code>-ra a beágyazás kikapcsolásához!';
 $lang['send404']               = '"HTTP 404/Page Not Found" küldése nemlétező oldalak esetén';
 $lang['broken_iua']            = 'Az ignore_user_abort függvény hibát dob a rendszereden? Ez nem működő keresési indexet eredményezhet. Az IIS+PHP/CGI összeállításról tudjuk, hogy hibát dob. Lásd a <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> oldalt a további infóért.';
 $lang['xsendfile']             = 'Használjuk az X-Sendfile fejlécet, hogy a webszerver statikus állományokat tudjon küldeni? A webszervernek is támogatnia kell ezt a funkciót.';

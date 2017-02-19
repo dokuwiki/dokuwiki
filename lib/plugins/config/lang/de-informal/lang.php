@@ -60,7 +60,7 @@ $lang['breadcrumbs']           = 'Anzahl der Einträge im "Krümelpfad"';
 $lang['youarehere']            = 'Hierarchische Pfadnavigation verwenden';
 $lang['fullpath']              = 'Zeige vollen Pfad der Datei in Fußzeile an';
 $lang['typography']            = 'Mach drucktechnische Ersetzungen';
-$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://www.php.net/strftime">strftime</a> Funktion)';
+$lang['dformat']               = 'Datumsformat (siehe PHPs <a href="http://php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
 $lang['showuseras']            = 'Was angezeigt werden soll, wenn der Benutzer, der zuletzt eine Seite bearbeitet hat, angezeigt wird';
 $lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
@@ -136,7 +136,7 @@ $lang['autoplural']            = 'Bei Links automatisch nach vorhandenen Pluralf
 $lang['compression']           = 'Komprimierungsmethode für alte Seitenrevisionen';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
-$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter! <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. <code>400</code> bis <code>600</code> Bytes sind gute Werte. Setze <code>0</code> für inaktive Funktion.';
 $lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nicht existierende Seiten';
 $lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';

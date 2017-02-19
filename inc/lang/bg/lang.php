@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Viktor Usunov <usun0v@mail.bg>
  * @author Kiril <neohidra@gmail.com>
@@ -331,5 +331,8 @@ $lang['media_perm_read']       = 'За съжаление нямате дост�
 $lang['media_perm_upload']     = 'За съжаление нямате достатъчно права, за да можете да качите файла.';
 $lang['media_update']          = 'Качване на нова версия';
 $lang['media_restore']         = 'Възстановяване на тази версия';
+$lang['currentns']             = 'Текущо именно пространство';
 $lang['searchresult']          = 'Резултати от търсенето';
 $lang['plainhtml']             = 'Обикновен HTML';
+$lang['email_signature_text'] = 'Писмото е генерирано от DokuWiki на адрес
+@DOKUWIKIURL@';

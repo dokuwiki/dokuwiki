@@ -62,6 +62,7 @@ $config_cascade = array_merge(
         ),
         'plainauth.users' => array(
             'default'   => DOKU_CONF . 'users.auth.php',
+            'protected' => '' // not used by default
         ),
         'plugins' => array(
             'default'   => array(DOKU_CONF . 'plugins.php'),

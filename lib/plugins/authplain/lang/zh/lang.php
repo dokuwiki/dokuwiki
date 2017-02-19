@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author lainme <lainme993@gmail.com>
  */
 $lang['userexists']            = '对不起，该用户名已经存在。';

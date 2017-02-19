@@ -8,7 +8,3 @@ Date : @DATE@
 Browser : @BROWSER@
 IP-Address : @IPADDRESS@
 Hostname : @HOSTNAME@
-
--- 
-Email ini dibuat otomatis oleh DokuWIki
-@DOKUWIKIURL@

@@ -346,8 +346,8 @@ class Crypt_Base {
      *
      * Only used if $engine == CRYPT_MODE_MCRYPT
      *
-     * @link http://www.php.net/mcrypt_module_open
-     * @link http://www.php.net/mcrypt_list_algorithms
+     * @link http://php.net/mcrypt_module_open
+     * @link http://php.net/mcrypt_list_algorithms
      * @see Crypt_Base::_setupMcrypt()
      * @var String
      * @access private
@@ -907,7 +907,7 @@ class Crypt_Base {
             }
 
             if ($this->paddable) {
-                // we pad with chr(0) since that's what mcrypt_generic does.  to quote from {@link http://www.php.net/function.mcrypt-generic}:
+                // we pad with chr(0) since that's what mcrypt_generic does.  to quote from {@link http://php.net/function.mcrypt-generic}:
                 // "The data is padded with "\0" to make sure the length of the data is n * blocksize."
                 $ciphertext = str_pad($ciphertext, strlen($ciphertext) + ($block_size - strlen($ciphertext) % $block_size) % $block_size, chr(0));
             }
