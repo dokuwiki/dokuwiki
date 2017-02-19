@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
@@ -23,6 +23,7 @@
  * @author Igor Degraf <igordegraf@gmail.com>
  * @author Vitaly Filatenko <kot@hacktest.net>
  * @author dimsharav <dimsharav@gmail.com>
+ * @author Radimir <radimir.shevchenko@gmail.com>
  */
 $lang['menu']                  = 'Управление пользователями';
 $lang['noauth']                = '(авторизация пользователей недоступна)';
@@ -90,3 +91,4 @@ $lang['addUser_error_name_missing'] = 'Укажите имя нового пол
 $lang['addUser_error_modName_disabled'] = 'Изменение имени в настоящее время невозможно.';
 $lang['addUser_error_mail_missing'] = 'Укажите адрес эл. почты нового пользователя.';
 $lang['addUser_error_modMail_disabled'] = 'Изменение e-mail в настоящее время невозможно.';
+$lang['addUser_error_create_event_failed'] = 'Плагин заблокировал добавление нового пользователя. Смотрите также другие сообщения.';

@@ -202,7 +202,12 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
  */
 function _io_writeWikiPage_action($data) {
     if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
-        return call_user_func_array('io_saveFile', $data[0]);
+        $ok = call_user_func_array('io_saveFile', $data[0]);
+        // for attic files make sure the file has the mtime of the revision
+        if($ok && is_int($data[3]) && $data[3] > 0) {
+            @touch($data[0][0], $data[3]);
+        }
+        return $ok;
     } else {
         return false; //callback error
     }

@@ -166,7 +166,7 @@ function css_parseless($css) {
     global $conf;
 
     $less = new lessc();
-    $less->importDir[] = DOKU_INC;
+    $less->importDir = array(DOKU_INC);
     $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')){

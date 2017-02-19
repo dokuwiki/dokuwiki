@@ -11,6 +11,9 @@ class remoteapicore_test extends DokuWikiTest {
     protected $remote;
 
     public function setUp() {
+        // we need a clean setup before each single test:
+        DokuWikiTest::setUpBeforeClass();
+
         parent::setUp();
         global $conf;
         global $USERINFO;
@@ -28,21 +31,27 @@ class remoteapicore_test extends DokuWikiTest {
     }
 
     public function tearDown() {
+        parent::tearDown();
+
         global $USERINFO;
         global $AUTH_ACL;
 
         $USERINFO = $this->userinfo;
         $AUTH_ACL = $this->oldAuthAcl;
-
     }
 
-    public function test_core() {
+    /** Delay writes of old revisions by a second. */
+    public function handle_write(Doku_Event $event, $param) {
+        if ($event->data[3] !== false) {
+            $this->waitForTick();
+        }
+    }
+
+    public function test_getVersion() {
         $this->assertEquals(getVersion(), $this->remote->call('dokuwiki.getVersion'));
-//        $params = array('user', 'passwrd');
-//        $this->assertEquals(, $remoteApi->call('dokuwiki.login'));                   //TODO
+    }
 
-//        $this->assertEquals(, $remoteApi->call('dokuwiki.logoff'));                  //TODO
-
+    public function test_getPageList() {
         $file1 = wikiFN('wiki:dokuwiki');
         $file2 = wikiFN('wiki:syntax');
         $expected = array(
@@ -70,15 +79,20 @@ class remoteapicore_test extends DokuWikiTest {
             )
         );
         $this->assertEquals($expected, $this->remote->call('dokuwiki.getPagelist', $params));
+    }
 
-        idx_addPage('wiki:syntax'); //full text search depends on index
+    public function test_search() {
+        $id = 'wiki:syntax';
+        $file = wikiFN($id);
+
+        idx_addPage($id); //full text search depends on index
         $expected = array(
             array(
-                'id' => 'wiki:syntax',
+                'id' => $id,
                 'score' => 1,
-                'rev' => filemtime($file2),
-                'mtime' => filemtime($file2),
-                'size' => filesize($file2),
+                'rev' => filemtime($file),
+                'mtime' => filemtime($file),
+                'size' => filesize($file),
                 'snippet' => ' a footnote)) by using double parentheses.
 
 ===== <strong class="search_hit">Sectioning</strong> =====
@@ -89,11 +103,15 @@ You can use up to five different levels of',
         );
         $params = array('Sectioning');
         $this->assertEquals($expected, $this->remote->call('dokuwiki.search', $params));
+    }
 
+    public function test_getTime() {
         $timeexpect = time();
         $timeactual = $this->remote->call('dokuwiki.getTime');
         $this->assertTrue(($timeexpect <= $timeactual) && ($timeactual <= $timeexpect + 1));
+    }
 
+    public function test_setLocks() {
         $expected = array(
             'locked' => array('wiki:dokuwiki', 'wiki:syntax', 'nonexisting'),
             'lockfail' => array(),
@@ -121,176 +139,316 @@ You can use up to five different levels of',
             )
         );
         $this->assertEquals($expected, $this->remote->call('dokuwiki.setLocks', $params));
+    }
 
+    public function test_getTitle() {
         global $conf;
         $this->assertEquals($conf['title'], $this->remote->call('dokuwiki.getTitle'));
+    }
 
-        $file3 = wikiFN('nice_page');
+    public function test_putPage() {
+        $id = 'putpage';
+
         $content = "====Title====\nText";
         $params = array(
-            'nice_page',
+            $id,
             $content,
             array(
                 'minor' => false,
                 'sum' => 'Summary of nice text'
             )
         );
-        $this->assertEquals(true, $this->remote->call('wiki.putPage', $params));  //TODO check exceptions
-        $this->assertEquals($content, rawWiki('nice_page'));
+        $this->assertTrue($this->remote->call('wiki.putPage', $params));
+        $this->assertEquals($content, rawWiki($id));
 
-        $rev[1] = filemtime(wikiFN('nice_page')); //stored for later
-        sleep(1); // wait for new revision ID
+        //remove page
+        $params = array(
+            $id,
+            '',
+            array(
+                'minor' => false,
+            )
+        );
+        $this->assertTrue($this->remote->call('wiki.putPage', $params));
+        $this->assertFileNotExists(wikiFN($id));
+    }
 
-        $params = array('nice_page');
+    public function test_getPage() {
+        $id = 'getpage';
+        $content = 'a test';
+        saveWikiText($id, $content, 'test for getpage');
+
+        $params = array($id);
         $this->assertEquals($content, $this->remote->call('wiki.getPage', $params));
+    }
 
-        $morecontent = "\nOther text.";
-        $secondcontent = $content . $morecontent;
-        $params_append = array(
-            'nice_page',
+    public function test_appendPage() {
+        $id = 'appendpage';
+        $content = 'a test';
+        $morecontent = "\nOther text";
+        saveWikiText($id, $content, 'local');
+
+        $params = array(
+            $id,
             $morecontent,
             array()
         );
-        $this->assertEquals(true, $this->remote->call('dokuwiki.appendPage', $params_append));
-        $this->assertEquals($secondcontent, rawWiki('nice_page'));
+        $this->assertEquals(true, $this->remote->call('dokuwiki.appendPage', $params));
+        $this->assertEquals($content . $morecontent, rawWiki($id));
+    }
 
-        $params = array('nice_page', '');
-        $this->assertEquals($secondcontent, $this->remote->call('wiki.getPageVersion', $params));
-        $params = array('nice_page', $rev[1]);
-        $this->assertEquals($content, $this->remote->call('wiki.getPageVersion', $params));
-        $params = array('nice_page', 1234);
-        $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Not existing revision');
-        $params = array('notexisting', 1234);
-        $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Not existing page');
+    public function test_getPageVersion() {
+        $id = 'pageversion';
+        $file = wikiFN($id);
 
-        $html1 = "\n<h3 class=\"sectionedit1\" id=\"title\">Title</h3>\n<div class=\"level3\">\n\n<p>\nText\n";
-        $html2 = "Other text.\n";
-        $html3 = "</p>\n\n</div>\n";
-        $params = array('nice_page');
-        $this->assertEquals($html1 . $html2 . $html3, $this->remote->call('wiki.getPageHTML', $params));
+        saveWikiText($id, 'first version', 'first');
+        $rev1 = filemtime($file);
+        clearstatcache(false, $file);
+        $this->waitForTick(true);
+        saveWikiText($id, 'second version', 'second');
+        $rev2 = filemtime($file);
 
-        $params = array('nice_page', '');
-        $this->assertEquals($html1 . $html2 . $html3, $this->remote->call('wiki.getPageHTMLVersion', $params));
-        $params = array('nice_page', $rev[1]);
-        $this->assertEquals($html1 . $html3, $this->remote->call('wiki.getPageHTMLVersion', $params));
-        $params = array('nice_page', 1234);
-        $this->assertEquals('', $this->remote->call('wiki.getPageHTMLVersion', $params));
+        $params = array($id, '');
+        $this->assertEquals('second version', $this->remote->call('wiki.getPageVersion', $params), 'no revision given');
+
+        $params = array($id, $rev1);
+        $this->assertEquals('first version', $this->remote->call('wiki.getPageVersion', $params), '1st revision given');
+
+        $params = array($id, $rev2);
+        $this->assertEquals('second version', $this->remote->call('wiki.getPageVersion', $params), '2nd revision given');
+
+        $params = array($id, 1234);
+        $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Non existing revision given');
+
+        $params = array('foobar', 1234);
+        $this->assertEquals('', $this->remote->call('wiki.getPageVersion', $params), 'Non existing page given');
+    }
+
+    public function test_getPageHTML() {
+        $id = 'htmltest';
+        $content = "====Title====\nText";
+        $html = "\n<h3 class=\"sectionedit1\" id=\"title\">Title</h3>\n<div class=\"level3\">\n\n<p>\nText\n</p>\n\n</div>\n";
+
+        saveWikiText($id, $content, 'htmltest');
+
+        $params = array($id);
+        $this->assertEquals($html, $this->remote->call('wiki.getPageHTML', $params));
+    }
+
+    public function test_getPageHTMLVersion() {
+        $id = 'htmltest';
+        $file = wikiFN($id);
+
+        $content1 = "====Title====\nText";
+        $html1 = "\n<h3 class=\"sectionedit1\" id=\"title\">Title</h3>\n<div class=\"level3\">\n\n<p>\nText\n</p>\n\n</div>\n";
+        $content2 = "====Foobar====\nText Bamm";
+        $html2 = "\n<h3 class=\"sectionedit1\" id=\"foobar\">Foobar</h3>\n<div class=\"level3\">\n\n<p>\nText Bamm\n</p>\n\n</div>\n";
+
+        saveWikiText($id, $content1, 'first');
+        $rev1 = filemtime($file);
+        clearstatcache(false, $file);
+        $this->waitForTick(true);
+        saveWikiText($id, $content2, 'second');
+        $rev2 = filemtime($file);
+
+        $params = array($id, '');
+        $this->assertEquals($html2, $this->remote->call('wiki.getPageHTMLVersion', $params), 'no revision given');
+
+        $params = array($id, $rev1);
+        $this->assertEquals($html1, $this->remote->call('wiki.getPageHTMLVersion', $params), '1st revision given');
+
+        $params = array($id, $rev2);
+        $this->assertEquals($html2, $this->remote->call('wiki.getPageHTMLVersion', $params), '2nd revision given');
+
+        $params = array($id, 1234);
+        $this->assertEquals('', $this->remote->call('wiki.getPageHTMLVersion', $params), 'Non existing revision given');
+
+        $params = array('foobar', 1234);
+        $this->assertEquals('', $this->remote->call('wiki.getPageHTMLVersion', $params), 'Non existing page given');
+    }
+
+    public function test_getAllPages() {
+        // all pages depends on index
+        idx_addPage('wiki:syntax');
+        idx_addPage('wiki:dokuwiki');
+
+        $file1 = wikiFN('wiki:syntax');
+        $file2 = wikiFN('wiki:dokuwiki');
 
         $expected = array(
             array(
                 'id' => 'wiki:syntax',
                 'perms' => 8,
-                'size' => filesize($file2),
-                'lastModified' => filemtime($file2)
+                'size' => filesize($file1),
+                'lastModified' => filemtime($file1)
             ),
             array(
-                'id' => 'nice_page',
+                'id' => 'wiki:dokuwiki',
                 'perms' => 8,
-                'size' => filesize($file3),
-                'lastModified' => filemtime($file3)
+                'size' => filesize($file2),
+                'lastModified' => filemtime($file2)
             )
         );
-        $this->assertEquals($expected, $this->remote->call('wiki.getAllPages')); //only indexed pages
+        $this->assertEquals($expected, $this->remote->call('wiki.getAllPages'));
+    }
+
+    public function test_getBacklinks() {
+        saveWikiText('linky', '[[wiki:syntax]]', 'test');
+        // backlinks need index
+        idx_addPage('wiki:syntax');
+        idx_addPage('linky');
 
         $params = array('wiki:syntax');
-        $this->assertEquals(ft_backlinks('wiki:syntax'), $this->remote->call('wiki.getBackLinks', $params));
+        $result = $this->remote->call('wiki.getBackLinks', $params);
+        $this->assertTrue(count($result) > 0);
+        $this->assertEquals(ft_backlinks('wiki:syntax'), $result);
+    }
+
+    public function test_getPageInfo() {
+        $id = 'pageinfo';
+        $file = wikiFN($id);
+
+        saveWikiText($id, 'test', 'test');
 
         $expected = array(
-            'name' => 'nice_page',
-            'lastModified' => filemtime($file3),
+            'name' => $id,
+            'lastModified' => filemtime($file),
             'author' => clientIP(),
-            'version' => filemtime($file3)
+            'version' => filemtime($file)
         );
-        $params = array('nice_page');
+        $params = array($id);
         $this->assertEquals($expected, $this->remote->call('wiki.getPageInfo', $params));
+    }
+
+    public function test_getPageInfoVersion() {
+        $id = 'pageinfo';
+        $file = wikiFN($id);
+
+        saveWikiText($id, 'first version', 'first');
+        $rev1 = filemtime($file);
+        clearstatcache(false, $file);
+        $this->waitForTick(true);
+        saveWikiText($id, 'second version', 'second');
+        $rev2 = filemtime($file);
 
         $expected = array(
-            'name' => 'nice_page',
-            'lastModified' => $rev[1],
+            'name' => $id,
+            'lastModified' => $rev2,
             'author' => clientIP(),
-            'version' => $rev[1]
+            'version' => $rev2
         );
-        $params = array('nice_page', $rev[1]);
-        $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params));
+        $params = array($id, '');
+        $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params), 'no revision given');
 
-        clearstatcache(wikiFN('nice_page'));
-        $rev[2] = filemtime(wikiFN('nice_page'));
-        sleep(1); // wait for new revision ID
-        clearstatcache(wikiFN('nice_page'));
-        $this->remote->call('dokuwiki.appendPage', $params_append);
-        $rev[3] = filemtime(wikiFN('nice_page'));
-        sleep(1);
-        clearstatcache(wikiFN('nice_page'));
-        $this->remote->call('dokuwiki.appendPage', $params_append);
-        $rev[4] = filemtime(wikiFN('nice_page'));
-        sleep(1);
-        clearstatcache(wikiFN('nice_page'));
-        $this->remote->call('dokuwiki.appendPage', $params_append);
-        $rev[5] = filemtime(wikiFN('nice_page'));
-        sleep(1);
-        clearstatcache(wikiFN('nice_page'));
-        $this->remote->call('dokuwiki.appendPage', $params_append);
-        $rev[6] = filemtime(wikiFN('nice_page'));
-        sleep(1);
+        $expected = array(
+            'name' => $id,
+            'lastModified' => $rev1,
+            'author' => clientIP(),
+            'version' => $rev1
+        );
+        $params = array($id, $rev1);
+        $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params), '1st revision given');
+
+        $expected = array(
+            'name' => $id,
+            'lastModified' => $rev2,
+            'author' => clientIP(),
+            'version' => $rev2
+        );
+        $params = array($id, $rev2);
+        $this->assertEquals($expected, $this->remote->call('wiki.getPageInfoVersion', $params), '2nd revision given');
+    }
+
+    public function test_getRecentChanges() {
+
+        saveWikiText('pageone', 'test', 'test');
+        $rev1 = filemtime(wikiFN('pageone'));
+        saveWikiText('pagetwo', 'test', 'test');
+        $rev2 = filemtime(wikiFN('pagetwo'));
 
         $expected = array(
             array(
-                'name' => 'nice_page',
-                'lastModified' => $rev[6],
+                'name' => 'pageone',
+                'lastModified' => $rev1,
                 'author' => '',
-                'version' => $rev[6],
+                'version' => $rev1,
                 'perms' => 8,
-                'size' => 78
+                'size' => 4
+            ),
+            array(
+                'name' => 'pagetwo',
+                'lastModified' => $rev2,
+                'author' => '',
+                'version' => $rev2,
+                'perms' => 8,
+                'size' => 4
             )
         );
         $params = array(strtotime("-1 year"));
         $this->assertEquals($expected, $this->remote->call('wiki.getRecentChanges', $params));
+    }
 
-        $params = array('nice_page', 0);
-        $versions = $this->remote->call('wiki.getPageVersions', $params);
-        $this->assertEquals($rev[6], $versions[0]['version']);
-        $this->assertEquals($rev[5], $versions[1]['version']);
-        $this->assertEquals($rev[1], $versions[5]['version']);
-        $this->assertEquals(6, count($this->remote->call('wiki.getPageVersions', $params)));
+    public function test_getPageVersions() {
+        /** @var $EVENT_HANDLER Doku_Event_Handler */
+        global $EVENT_HANDLER;
+        $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
+        global $conf;
 
-        $params = array('nice_page', 1);
+        $id = 'revpage';
+        $file = wikiFN($id);
+
+        $rev = array();
+        for($i = 0; $i < 6; $i++) {
+            $this->waitForTick();
+            saveWikiText($id, "rev$i", "rev$i");
+            clearstatcache(false, $file);
+            $rev[$i] = filemtime($file);
+        }
+
+        $params = array($id, 0);
         $versions = $this->remote->call('wiki.getPageVersions', $params);
+        $this->assertEquals(6, count($versions));
         $this->assertEquals($rev[5], $versions[0]['version']);
         $this->assertEquals($rev[4], $versions[1]['version']);
-        $this->assertEquals(5, count($this->remote->call('wiki.getPageVersions', $params)));
+        $this->assertEquals($rev[3], $versions[2]['version']);
+        $this->assertEquals($rev[2], $versions[3]['version']);
+        $this->assertEquals($rev[1], $versions[4]['version']);
+        $this->assertEquals($rev[0], $versions[5]['version']);
 
-        $conf['recent'] = 3; //set number of page returned
-        $params = array('nice_page', 1);
-        $this->assertEquals(3, count($this->remote->call('wiki.getPageVersions', $params)));
-
-        $params = array('nice_page', $conf['recent']);
+        $params = array($id, 1); // offset 1
         $versions = $this->remote->call('wiki.getPageVersions', $params);
-        $this->assertEquals($rev[3], $versions[0]['version']); //skips current,1st old,2nd old
-        $this->assertEquals(3, count($this->remote->call('wiki.getPageVersions', $params)));
+        $this->assertEquals(5, count($versions));
+        $this->assertEquals($rev[4], $versions[0]['version']);
+        $this->assertEquals($rev[3], $versions[1]['version']);
+        $this->assertEquals($rev[2], $versions[2]['version']);
+        $this->assertEquals($rev[1], $versions[3]['version']);
+        $this->assertEquals($rev[0], $versions[4]['version']);
 
-        $params = array('nice_page', 2 * $conf['recent']);
-        $this->assertEquals(0, count($this->remote->call('wiki.getPageVersions', $params)));
+        $conf['recent'] = 3; //set number of results per page
 
-        //remove page
-        $file3 = wikiFN('nice_page');
-        $content = "";
-        $params = array(
-            'nice_page',
-            $content,
-            array(
-                'minor' => false,
-            )
-        );
-        $this->assertEquals(true, $this->remote->call('wiki.putPage', $params));
-        $this->assertFalse(file_exists($file3));
+        $params = array($id, 0); // first page
+        $versions = $this->remote->call('wiki.getPageVersions', $params);
+        $this->assertEquals(3, count($versions));
+        $this->assertEquals($rev[5], $versions[0]['version']);
+        $this->assertEquals($rev[4], $versions[1]['version']);
+        $this->assertEquals($rev[3], $versions[2]['version']);
 
-        $params = array('nice_page', 0);
-        $this->assertEquals(2, count($this->remote->call('wiki.getPageVersions', $params)));
+        $params = array($id, $conf['recent']); // second page
+        $versions = $this->remote->call('wiki.getPageVersions', $params);
+        $this->assertEquals(3, count($versions));
+        $this->assertEquals($rev[2], $versions[0]['version']);
+        $this->assertEquals($rev[1], $versions[1]['version']);
+        $this->assertEquals($rev[0], $versions[2]['version']);
 
-        $params = array('nice_page', 1);
-        $this->assertEquals(3, count($this->remote->call('wiki.getPageVersions', $params)));
+        $params = array($id, $conf['recent'] * 2); // third page
+        $versions = $this->remote->call('wiki.getPageVersions', $params);
+        $this->assertEquals(0, count($versions));
+    }
 
-        $params = array('nice_page');
+    public function test_aclCheck() {
+        $id = 'aclpage';
+
+        $params = array($id);
         $this->assertEquals(AUTH_UPLOAD, $this->remote->call('wiki.aclCheck', $params));
 
         global $conf;
@@ -303,39 +461,43 @@ You can use up to five different levels of',
             '*                  @user          2', //edit
         );
 
-        $params = array('nice_page');
+        $params = array($id);
         $this->assertEquals(AUTH_EDIT, $this->remote->call('wiki.aclCheck', $params));
+    }
 
+    public function test_getXMLRPCAPIVersion() {
         $this->assertEquals(DOKU_API_VERSION, $this->remote->call('dokuwiki.getXMLRPCAPIVersion'));
+    }
 
+    public function test_getRPCVersionSupported() {
         $this->assertEquals(2, $this->remote->call('wiki.getRPCVersionSupported'));
     }
 
-    public function test_core2() {
+    public function test_listLinks() {
         $localdoku = array(
             'type' => 'local',
             'page' => 'DokuWiki',
             'href' => DOKU_BASE . DOKU_SCRIPT . '?id=DokuWiki'
         );
         $expected = array(  //no local links
-            $localdoku,
-            array(
-                'type' => 'extern',
-                'page' => 'http://www.freelists.org',
-                'href' => 'http://www.freelists.org'
-            ),
-            array(
-                'type' => 'extern',
-                'page' => 'https://tools.ietf.org/html/rfc1855',
-                'href' => 'https://tools.ietf.org/html/rfc1855'
-            ),
-            array(
-                'type' => 'extern',
-                'page' => 'http://www.catb.org/~esr/faqs/smart-questions.html',
-                'href' => 'http://www.catb.org/~esr/faqs/smart-questions.html'
-            ),
-            $localdoku,
-            $localdoku
+                            $localdoku,
+                            array(
+                                'type' => 'extern',
+                                'page' => 'http://www.freelists.org',
+                                'href' => 'http://www.freelists.org'
+                            ),
+                            array(
+                                'type' => 'extern',
+                                'page' => 'https://tools.ietf.org/html/rfc1855',
+                                'href' => 'https://tools.ietf.org/html/rfc1855'
+                            ),
+                            array(
+                                'type' => 'extern',
+                                'page' => 'http://www.catb.org/~esr/faqs/smart-questions.html',
+                                'href' => 'http://www.catb.org/~esr/faqs/smart-questions.html'
+                            ),
+                            $localdoku,
+                            $localdoku
         );
         $params = array('mailinglist');
         $this->assertEquals($expected, $this->remote->call('wiki.listLinks', $params));
@@ -373,7 +535,7 @@ You can use up to five different levels of',
         );
         $this->assertEquals($expected, $this->remote->call('wiki.getRecentMediaChanges', $params));
 
-        sleep(1);
+        $this->waitForTick(true);
         $conf['useacl'] = 1;
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['grps'] = array('user');

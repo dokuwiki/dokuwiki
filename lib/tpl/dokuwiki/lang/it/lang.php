@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Torpedo <dgtorpedo@gmail.com>
  */
 $lang['__background_site__']   = 'Colore per lo sfondo di livello più basso (dietro il riquadro del contenuto)';

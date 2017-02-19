@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Anika Henke <anika@selfthinker.org>
  */
 $lang['__background_site__']   = 'Farbe für den Seitenhintergrund (hinter dem Inhaltsbereich)';

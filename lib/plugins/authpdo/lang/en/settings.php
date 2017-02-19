@@ -20,5 +20,6 @@ $lang['update-user-info']   = 'SQL Statement to update the full name and email a
 $lang['update-user-login']  = 'SQL Statement to update the login name of a single user';
 $lang['update-user-pass']   = 'SQL Statement to update the password of a single user';
 $lang['insert-group']       = 'SQL Statement to insert a new group into the database';
-$lang['join-group']         = 'SQL Statement to add a user to an exisitng group';
+$lang['join-group']         = 'SQL Statement to add a user to an existing group';
 $lang['leave-group']        = 'SQL Statement to remove a user from a group';
+$lang['check-pass']         = 'SQL Statement to check the password for a user. Can be left empty if password info is fetched in select-user.';

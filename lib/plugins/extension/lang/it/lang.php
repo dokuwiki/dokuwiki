@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Francesco <francesco.cavalli@hotmail.com>
  * @author Fabio <fabioslurp@yahoo.it>
  * @author Torpedo <dgtorpedo@gmail.com>

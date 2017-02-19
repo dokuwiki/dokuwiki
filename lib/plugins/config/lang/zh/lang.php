@@ -17,6 +17,9 @@
  * @author Shuo-Ting Jian <shoting@gmail.com>
  * @author Garfield <garfield_550@outlook.com>
  * @author JellyChen <451453325@qq.com>
+ * @author tai <tai_tang@126.com>
+ * @author 高博 <bobnemo1983@gmail.com>
+ * @author hznupeter <qiujiongtao@163.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
@@ -153,6 +156,9 @@ $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染'
 $lang['renderer__core']        = '%s（DokuWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';
 $lang['dnslookups']            = 'Dokuwiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
+$lang['jquerycdn_o_0']         = '没有CDN，只有本地库。';
+$lang['jquerycdn_o_jquery']    = '在code.jquery.com上的CDN';
+$lang['jquerycdn_o_cdnjs']     = '在cdnjs.com上的CDN';
 $lang['proxy____host']         = '代理服务器的名称';
 $lang['proxy____port']         = '代理服务器的端口';
 $lang['proxy____user']         = '代理服务器的用户名';

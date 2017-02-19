@@ -1,11 +1,12 @@
 <?php
+
 /**
- * serbian language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Filip Brcic <brcha@users.sourceforge.net>
  * @author Иван Петровић (Ivan Petrovic) <petrovicivan@ubuntusrbija.org>
  * @author Miroslav Šolti <solti.miroslav@gmail.com>
+ * @author Жељко Тодоровић <zeljko_todorovic@mail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -45,11 +46,13 @@ $lang['btn_recover']           = 'Опорави нацрт';
 $lang['btn_draftdel']          = 'Обриши нацрт';
 $lang['btn_revert']            = 'Врати на пређашњу верзију';
 $lang['btn_register']          = 'Региструј се';
+$lang['btn_deleteuser']        = 'Уклони мој налог';
+$lang['btn_img_backto']        = 'Натраг на %s';
 $lang['loggedinas']            = 'Пријављен као:';
 $lang['user']                  = 'Корисничко име';
 $lang['pass']                  = 'Лозинка';
 $lang['newpass']               = 'Нова лозинка';
-$lang['oldpass']               = 'Потврди нову лозинку';
+$lang['oldpass']               = 'Унеси садашњу лозинку';
 $lang['passchk']               = 'поново';
 $lang['remember']              = 'Запамти ме';
 $lang['fullname']              = 'Име и презиме';
@@ -59,7 +62,7 @@ $lang['badlogin']              = 'Извините, није добро кори
 $lang['minoredit']             = 'Мала измена';
 $lang['draftdate']             = 'Нацрт је аутоматски сачуван';
 $lang['nosecedit']             = 'Страна је у међувремену промењена, поглавље је застарело и поново се учитава цела страна.';
-$lang['searchcreatepage']      = "Ако нисте нашли то што сте тражили, можете да направите нову страницу названу по Вашем упиту користећи дугме ''Измени ову страницу''.";
+$lang['searchcreatepage']      = 'Ако нисте нашли то што сте тражили, можете да направите нову страницу названу по Вашем упиту користећи дугме \'\'Измени ову страницу\'\'.';
 $lang['regmissing']            = 'Извините, морате да попуните сва поља.';
 $lang['reguexists']            = 'Извините, корисник са истим именом већ постоји.';
 $lang['regsuccess']            = 'Корисник је направљен и лозинка је послата путем е-поште.';
@@ -73,6 +76,8 @@ $lang['profna']                = 'Овај вики не дозвољава из
 $lang['profnochange']          = 'Нема промена.';
 $lang['profnoempty']           = 'Није дозвољено оставити празно поље имена или е-адресе.';
 $lang['profchanged']           = 'Кориснички профил је ажуриран.';
+$lang['profdeleteuser']        = 'Избриши налог';
+$lang['profdeleted']           = 'Ваш кориснички налог је избрисан са овог викија';
 $lang['pwdforget']             = 'Заборавили сте лозинку? Направите нову';
 $lang['resendna']              = 'Овај вики не дозвољава слање лозинки.';
 $lang['resendpwdmissing']      = 'Жао ми је, сва поља морају бити попуњена.';
@@ -89,7 +94,7 @@ $lang['txt_filename']          = 'Унесите вики-име (опционо
 $lang['txt_overwrt']           = 'Препишите тренутни фајл';
 $lang['lockedby']              = 'Тренутно закључано од стране:';
 $lang['lockexpire']            = 'Закључавање истиче:';
-$lang['js']['willexpire']            = 'Ваше закључавање за измену ове странице ће да истекне за један минут.\nДа би сте избегли конфликте, искористите дугме за преглед како би сте ресетовали тајмер закључавања.';
+$lang['js']['willexpire']      = 'Ваше закључавање за измену ове странице ће да истекне за један минут.\nДа би сте избегли конфликте, искористите дугме за преглед како би сте ресетовали тајмер закључавања.';
 $lang['js']['notsavedyet']     = 'Несачуване измене ће бити изгубљене.
 Да ли стварно желите да наставите?';
 $lang['js']['searchmedia']     = 'Потражи фајлове';
@@ -171,6 +176,8 @@ $lang['mail_changed']          = 'страница измењена:';
 $lang['mail_subscribe_list']   = 'Странице промењене у именском простору:';
 $lang['mail_new_user']         = 'нови корисник:';
 $lang['mail_upload']           = 'послата датотека:';
+$lang['pages_changes']         = 'Странице';
+$lang['both_changes']          = 'И странице и датотеке';
 $lang['qb_bold']               = 'Мастан текст';
 $lang['qb_italic']             = 'Курзивни текст';
 $lang['qb_underl']             = 'Подвучени текст';
@@ -199,7 +206,6 @@ $lang['upperns']               = 'Скочи на виши именски про
 $lang['metaedit']              = 'Измени мета-податке';
 $lang['metasaveerr']           = 'Записивање мета-података није било успешно';
 $lang['metasaveok']            = 'Мета-подаци су сачувани';
-$lang['btn_img_backto']            = 'Натраг на %s';
 $lang['img_title']             = 'Наслов:';
 $lang['img_caption']           = 'Назив:';
 $lang['img_date']              = 'Датум:';
@@ -258,5 +264,5 @@ $lang['hours']                 = 'Пре %d сати';
 $lang['minutes']               = 'Пре %d минута';
 $lang['seconds']               = 'Пре %d секунди';
 $lang['wordblock']             = 'Ваше измене нису сачуване јер садрже забрањен текст (спам)';
-$lang['email_signature_text'] = 'Ову поруку је генерисао DokuWiki sa
+$lang['email_signature_text']  = 'Ову поруку је генерисао DokuWiki sa
 @DOKUWIKIURL@';

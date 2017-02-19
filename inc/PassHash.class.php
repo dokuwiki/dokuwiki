@@ -313,7 +313,7 @@ class PassHash {
      * @return string Hashed password
      */
     public function hash_my411($clear) {
-        return '*'.sha1(pack("H*", sha1($clear)));
+        return '*'.strtoupper(sha1(pack("H*", sha1($clear))));
     }
 
     /**
@@ -627,10 +627,6 @@ class PassHash {
      * @return int
      */
     protected function random($min, $max){
-        if(function_exists('auth_random')){
-            return auth_random($min, $max);
-        }else{
-            return mt_rand($min, $max);
-        }
+        return random_int($min, $max);
     }
 }
