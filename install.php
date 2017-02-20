@@ -9,7 +9,8 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
-require_once(DOKU_INC.'inc/PassHash.class.php');
+// load and initialize the core system
+require_once(DOKU_INC.'inc/init.php');
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
@@ -641,21 +642,3 @@ function print_errors(){
         echo '</ul>';
     }
 }
-
-/**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param array $array
- */
-function remove_magic_quotes(&$array) {
-    foreach (array_keys($array) as $key) {
-        if (is_array($array[$key])) {
-            remove_magic_quotes($array[$key]);
-        }else {
-            $array[$key] = stripslashes($array[$key]);
-        }
-    }
-}
-
