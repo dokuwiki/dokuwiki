@@ -146,6 +146,7 @@ $meta['superuser']   = array('string','_caution' => 'danger');
 $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
+$meta['disablerelogin'] = array('onoff');
 $meta['disableactions'] = array('disableactions',
                                 '_choices' => array('backlink','index','recent','revisions','search','subscription','register','resendpwd','profile','profile_delete','edit','wikicode','check', 'rss'),
                                 '_combine' => array('subscription' => array('subscribe','unsubscribe'), 'wikicode' => array('source','export_raw')));

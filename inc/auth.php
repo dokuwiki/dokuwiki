@@ -237,11 +237,19 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
     } else {
         // read cookie information
         list($user, $sticky, $pass) = auth_getCookie();
+
         if($user && $pass) {
             // we got a cookie - see if we can trust it
 
             // get session info
             $session = $_SESSION[DOKU_COOKIE]['auth'];
+
+            // if relogin is disabled, grab the user name from session.
+            // still secure since the random session password must match.
+            if ($conf['disablerelogin']) {
+                $user = $session['user'];
+            }
+
             if(isset($session) &&
                 $auth->useSessionCache($user) &&
                 ($session['time'] >= time() - $conf['auth_security_timeout']) &&
@@ -1226,8 +1234,16 @@ function auth_setCookie($user, $pass, $sticky) {
     if(!$auth) return false;
     $USERINFO = $auth->getUserData($user);
 
+    $cookie_user = $user;
+
+    // if relogin is disabled, use a random password instead of encrypted password
+    if ($conf['disablerelogin']) {
+        $pass = bin2hex(auth_randombytes(32));
+        $cookie_user = '!';
+    }
+
     // set cookie
-    $cookie    = base64_encode($user).'|'.((int) $sticky).'|'.base64_encode($pass);
+    $cookie    = base64_encode($cookie_user).'|'.((int) $sticky).'|'.base64_encode($pass);
     $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     $time      = $sticky ? (time() + 60 * 60 * 24 * 365) : 0; //one year
     setcookie(DOKU_COOKIE, $cookie, $time, $cookieDir, '', ($conf['securecookie'] && is_ssl()), true);

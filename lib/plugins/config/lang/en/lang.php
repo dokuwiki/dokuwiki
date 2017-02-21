@@ -95,6 +95,7 @@ $lang['superuser']   = 'Superuser - group, user or comma separated list user1,@g
 $lang['manager']     = 'Manager - group, user or comma separated list user1,@group1,user2 with access to certain management functions';
 $lang['profileconfirm'] = 'Confirm profile changes with password';
 $lang['rememberme'] = 'Allow permanent login cookies (remember me)';
+$lang['disablerelogin'] = 'Disable relogin (remember me will not work)';
 $lang['disableactions'] = 'Disable DokuWiki actions';
 $lang['disableactions_check'] = 'Check';
 $lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
