@@ -395,6 +395,7 @@ function tpl_metaheaders($alt = true) {
         }
     }
 
+    // load stylesheets
     $head['link'][] = array(
         'rel' => 'stylesheet', 'type'=> 'text/css',
         'href'=> DOKU_BASE.'lib/exe/css.php?t='.rawurlencode($conf['template']).'&tseed='.$tseed
