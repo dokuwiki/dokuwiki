@@ -5,7 +5,7 @@
  *
  * @author rnck <dokuwiki@rnck.de>
  */
-$lang['userexists']            = 'Der Benutzername existiert leider schon.';
+$lang['connectfail']           = 'Konnte nicht zur Datenbank verbinden.';
+$lang['userexists']            = 'Entschuldigung, es existiert bereits ein Nutzer mit diesem Login.';
 $lang['usernotexists']         = 'Entschuldigung, dieser Nutzer existiert nicht.';
 $lang['writefail']             = 'Konnte Nutzer-Daten nicht modifizieren. Bitte informiere einen Admin.';
-$lang['protected']             = 'Die Daten für den Nutzer %s sind geschützt und können nicht verändert oder gelöscht werden.';
