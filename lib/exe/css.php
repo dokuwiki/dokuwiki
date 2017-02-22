@@ -10,7 +10,6 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 if(!defined('NOSESSION')) define('NOSESSION',true); // we do not use a session or authentication here (better caching)
 if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT',1); // we gzip ourself here
 if(!defined('NL')) define('NL',"\n");
-if(!defined('DEFAULT_FLAVOUR')) define('DEFAULT_FLAVOUR',"style");
 require_once(DOKU_INC.'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -45,12 +44,8 @@ function css_out(){
     $tpl = trim(preg_replace('/[^\w-]+/','',$INPUT->str('t')));
     if(!$tpl) $tpl = $conf['template'];
 
-    // decide from where to get the flavour
-    $flavour = trim(preg_replace('/[^\w-]+/','',$INPUT->str('f')));
-    if(!$flavour) $flavour = DEFAULT_FLAVOUR;
-
     // load styl.ini
-    $styleini = css_styleini($tpl, $flavour, $INPUT->bool('preview'));
+    $styleini = css_styleini($tpl $INPUT->bool('preview'));
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
@@ -63,37 +58,32 @@ function css_out(){
 
     // Array of needed files and their web locations, the latter ones
     // are needed to fix relative paths in the stylesheets
-    // We only need to build the list for the requested flavour.
     $media_files = array();
     foreach($mediatypes as $mediatype) {
         $files = array();
-        if ( $flavour === DEFAULT_FLAVOUR ) {
-            // load core styles
-            $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
-    
-            // load jQuery-UI theme
-            if ($mediatype == 'screen') {
-                $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
-            }
-            // load plugin styles
-            $files = array_merge($files, css_pluginstyles($mediatype));
-            // load template styles
-            if (isset($styleini['stylesheets'][$mediatype])) {
-                $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
-            }
-            // load user styles
-            if(!empty($config_cascade['userstyle'][$mediatype])) {
-                foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
-                    $files[$userstyle] = DOKU_BASE;
-                }
-            }
-        } else if (isset($styleini['stylesheets'][$mediatype])) {
-            // only allow the predefined media types
-            $files = $styleini['stylesheets'][$mediatype];
+
+        // load core styles
+        $files[DOKU_INC.'lib/styles/'.$mediatype.'.css'] = DOKU_BASE.'lib/styles/';
+
+        // load jQuery-UI theme
+        if ($mediatype == 'screen') {
+            $files[DOKU_INC.'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] = DOKU_BASE.'lib/scripts/jquery/jquery-ui-theme/';
         }
-    
+        // load plugin styles
+        $files = array_merge($files, css_pluginstyles($mediatype));
+        // load template styles
+        if (isset($styleini['stylesheets'][$mediatype])) {
+            $files = array_merge($files, $styleini['stylesheets'][$mediatype]);
+        }
+        // load user styles
+        if(!empty($config_cascade['userstyle'][$mediatype])) {
+            foreach($config_cascade['userstyle'][$mediatype] as $userstyle) {
+                $files[$userstyle] = DOKU_BASE;
+            }
+        }
+
         // Let plugins decide to either put more styles here or to remove some
-        $media_files[$mediatype] = css_filewrapper($mediatype, $flavour, $files);
+        $media_files[$mediatype] = css_filewrapper($mediatype, $files);
         $CSSEvt = new Doku_Event('CSS_STYLES_INCLUDED', $media_files[$mediatype]);
     
         // Make it preventable.
@@ -109,7 +99,7 @@ function css_out(){
     }
 
     // The generated script depends on some dynamic options
-    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$flavour.$type,'.css');
+    $cache = new cache('styles'.$_SERVER['HTTP_HOST'].$_SERVER['SERVER_PORT'].DOKU_BASE.$tpl.$type,'.css');
     $cache->_event = 'CSS_CACHE_USE';
 
     // check cache age & handle conditional request
@@ -120,13 +110,11 @@ function css_out(){
     // start output buffering
     ob_start();
     
-    if ( $flavour === DEFAULT_FLAVOUR ) {
-        // Fire CSS_STYLES_INCLUDED for one last time to let the
-        // plugins decide whether to include the DW default styles.
-        // This can be done by preventing the Default.
-        $media_files['DW_DEFAULT'] = css_filewrapper('DW_DEFAULT');
-        trigger_event('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
-    }
+    // Fire CSS_STYLES_INCLUDED for one last time to let the
+    // plugins decide whether to include the DW default styles.
+    // This can be done by preventing the Default.
+    $media_files['DW_DEFAULT'] = css_filewrapper('DW_DEFAULT');
+    trigger_event('CSS_STYLES_INCLUDED', $media_files['DW_DEFAULT'], 'css_defaultstyles');
 
     // build the stylesheet
     foreach ($mediatypes as $mediatype) {
@@ -289,27 +277,16 @@ function css_applystyle($css, $replacements) {
  * @param bool   $preview load preview replacements
  * @return array with keys 'stylesheets' and 'replacements'
  */
-function css_styleini($tpl, $flavour=DEFAULT_FLAVOUR, $preview=false) {
+function css_styleini($tpl, $preview=false) {
     global $conf;
 
     $stylesheets = array(); // mode, file => base
     $replacements = array(); // placeholder => value
 
-    // load template style.ini replacements first
-    // they should be the base for the colors - if not the default flavour
+    // load template's style.ini
     $incbase = tpl_incdir($tpl);
     $webbase = tpl_basedir($tpl);
-    $ini = $incbase.DEFAULT_FLAVOUR.'.ini';
-    if($flavour != DEFAULT_FLAVOUR && file_exists($ini)) {
-        $data = parse_ini_file($ini, true);
-        // replacements
-        if(is_array($data['replacements'])) {
-            $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'], $webbase));
-        }
-    }
-
-    // load template's style.ini
-    $ini = $incbase.$flavour.'.ini';
+    $ini = $incbase.'style.ini';
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
@@ -317,8 +294,9 @@ function css_styleini($tpl, $flavour=DEFAULT_FLAVOUR, $preview=false) {
         if(is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
             $stylesheets[$mode][$incbase.$file] = $webbase;
         }
+
         // replacements
-        if(isset($data['replacements']) && is_array($data['replacements'])){
+        if(is_array($data['replacements'])){
             $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
         }
     }
@@ -330,10 +308,11 @@ function css_styleini($tpl, $flavour=DEFAULT_FLAVOUR, $preview=false) {
     if(file_exists($ini)){
         $data = parse_ini_file($ini, true);
 
-        // stylesheets - but only if we are on the default flavour
-        if($flavour === DEFAULT_FLAVOUR && isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
+        // stylesheets
+        if(isset($data['stylesheets']) && is_array($data['stylesheets'])) foreach($data['stylesheets'] as $file => $mode){
             $stylesheets[$mode][$incbase.$file] = $webbase;
         }
+
         // replacements
         if(isset($data['replacements']) && is_array($data['replacements'])){
             $replacements = array_merge($replacements, css_fixreplacementurls($data['replacements'],$webbase));
@@ -384,12 +363,11 @@ function css_fixreplacementurls($replacements, $location) {
  * @param array $files set of files that define the current mediatype
  * @return array
  */
-function css_filewrapper($mediatype, $flavour=DEFAULT_FLAVOUR, $files=array()){
+function css_filewrapper($mediatype, $files=array()){
     return array(
             'files'                 => $files,
             'mediatype'             => $mediatype,
-            'flavour'               => $flavour,
-            'encapsulate'           => in_array($mediatype, array('screen', 'print', 'handheld')),
+            'encapsulate'           => in_array($mediatype, array('screen', 'print', 'speech')),
             'encapsulationPrefix'   => '@media '.$mediatype
         );
 }
