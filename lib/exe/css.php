@@ -45,14 +45,13 @@ function css_out(){
     if(!$tpl) $tpl = $conf['template'];
 
     // load styl.ini
-    $styleini = css_styleini($tpl $INPUT->bool('preview'));
+    $styleini = css_styleini($tpl, $INPUT->bool('preview'));
 
     // cache influencers
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc.'style.ini';
     $cache_files[] = DOKU_CONF."tpl/$tpl/style.ini";
-    $cache_files[] = DOKU_CONF."tpl/$tpl/ini/".$flavour.".ini";
     $cache_files[] = __FILE__;
     if($INPUT->bool('preview')) $cache_files[] = $conf['cachedir'].'/preview.ini';
 
