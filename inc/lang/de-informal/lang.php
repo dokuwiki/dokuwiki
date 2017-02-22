@@ -350,8 +350,8 @@ $lang['media_restore']         = 'Diese Version wiederherstellen';
 $lang['media_acl_warning']     = 'Diese Liste ist möglicherweise nicht vollständig. Versteckte und durch ACL gesperrte Seiten werden nicht angezeigt.';
 $lang['currentns']             = 'Aktueller Namensraum';
 $lang['searchresult']          = 'Suchergebnis';
-$lang['email_signature_text']       = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
-@DOKUWIKIURL@';
 $lang['plainhtml']             = 'Reines HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Seite existierte nicht an der Stelle %s. Sie wurde an folgende Stelle erstellt: <a href="%s">%s</a>.';
+$lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
+@DOKUWIKIURL@';
