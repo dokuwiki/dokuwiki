@@ -8,7 +8,7 @@ use dokuwiki\plugin\struct\meta;
  * @group plugin_struct
  * @group plugins
  *
- * @ covers \action_plugin_struct_output
+ * @covers \action_plugin_struct_output
  */
 class output_struct_test extends StructTest {
 
@@ -78,7 +78,7 @@ class output_struct_test extends StructTest {
         $insIncludedPage = p_cached_instructions(wikiFN($includedPage), false, $includedPage);
         $this->assertEquals('document_start', $insIncludedPage[0][0]);
         $this->assertEquals('header', $insIncludedPage[1][0]);
-        $this->assertEquals('plugin', $insIncludedPage[2][0]);
+        $this->assertEquals('plugin', $insIncludedPage[2][0], 'The struct data of a page that has been included should still be displayed when viewed on its own.');
         $this->assertEquals('struct_output', $insIncludedPage[2][1][0]);
 
     }
@@ -96,7 +96,7 @@ Log for [[page01]]:
         $instructions = p_cached_instructions(wikiFN($page), false, $page);
         $this->assertEquals('document_start', $instructions[0][0]);
         $this->assertEquals('header', $instructions[1][0]);
-        $this->assertEquals('plugin', $instructions[2][0]);
+        $this->assertEquals('plugin', $instructions[2][0], 'The struct data should be rendererd after the first headline');
         $this->assertEquals('struct_output', $instructions[2][1][0]);
     }
 }
