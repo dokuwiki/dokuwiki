@@ -242,20 +242,38 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
 
             // get session info
             $session = $_SESSION[DOKU_COOKIE]['auth'];
+
             if(isset($session) &&
                 $auth->useSessionCache($user) &&
                 ($session['time'] >= time() - $conf['auth_security_timeout']) &&
-                ($session['user'] == $user) &&
-                ($session['pass'] == sha1($pass)) && //still crypted
-                ($session['buid'] == auth_browseruid())
+                ($session['buid'] == auth_browseruid()) &&
+                (($sticky && //for sticky session, compare user and pass are same
+                    ($session['user'] == $user) &&
+                    ($session['pass'] == sha1($pass)) //still crypted
+                 ) ||
+                 ((!$sticky && //for non-sticky session, compare otp is same
+                    ($user == '!') &&
+                    ($session['sotp'] == sha1($pass))
+                  )
+                 )
+                )
             ) {
-
                 // he has session, cookie and browser right - let him in
-                $INPUT->server->set('REMOTE_USER', $user);
+                $INPUT->server->set('REMOTE_USER', $session['user']);
                 $USERINFO               = $session['info']; //FIXME move all references to session
                 return true;
             }
             // no we don't trust it yet - recheck pass but silent
+
+            // if not sticky, get back the crypted password
+            if(!$sticky) {
+                if (!isset($session)) {
+                    auth_logoff(true);
+                    return false;
+                }
+                $pass = $pass ^ $session['pass'];
+                $user = $session['user'];
+            }
             $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
             $pass   = auth_decrypt($pass, $secret);
             return auth_login($user, $pass, $sticky, true);
@@ -1226,15 +1244,26 @@ function auth_setCookie($user, $pass, $sticky) {
     if(!$auth) return false;
     $USERINFO = $auth->getUserData($user);
 
+    $cookie_user = $user;
+    $cookie_pass = $pass;
+
+    // if not sticky, we'll store an OTP in lieu of credentials in cookie
+    if (!$sticky) {
+        $cookie_pass = auth_randombytes(strlen($pass)); //this is the otp
+        $pass = $cookie_pass ^ $pass; //crypted pass is now XORed with OTP
+        $cookie_user = '!';
+        $_SESSION[DOKU_COOKIE]['auth']['sotp'] = sha1($cookie_pass); //store the SHA1-OTP for later
+    }
+
     // set cookie
-    $cookie    = base64_encode($user).'|'.((int) $sticky).'|'.base64_encode($pass);
+    $cookie    = base64_encode($cookie_user).'|'.((int) $sticky).'|'.base64_encode($cookie_pass);
     $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     $time      = $sticky ? (time() + 60 * 60 * 24 * 365) : 0; //one year
     setcookie(DOKU_COOKIE, $cookie, $time, $cookieDir, '', ($conf['securecookie'] && is_ssl()), true);
 
     // set session
     $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-    $_SESSION[DOKU_COOKIE]['auth']['pass'] = sha1($pass);
+    $_SESSION[DOKU_COOKIE]['auth']['pass'] = $sticky ? sha1($pass) : $pass;
     $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
     $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
     $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
