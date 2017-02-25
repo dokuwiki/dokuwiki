@@ -20,6 +20,7 @@
  * @author tai <tai_tang@126.com>
  * @author 高博 <bobnemo1983@gmail.com>
  * @author hznupeter <qiujiongtao@163.com>
+ * @author daihy <dai875939260@163.com>
  */
 $lang['menu']                  = '配置设置';
 $lang['error']                 = '由于非法参数，设置没有更新。请检查您做的改动并重新提交。
