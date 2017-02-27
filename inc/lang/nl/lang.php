@@ -32,6 +32,7 @@
  * @author Sjoerd <sjoerd@sjomar.eu>
  * @author Joachim David <joa_david@hotmail.com>
  * @author mark prins <mprins@users.sf.net>
+ * @author stafmans <dokuwiki@stafmans.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -367,3 +368,4 @@ $lang['page_nonexist_rev']     = 'Pagina bestaat niet bij %s. Het is vervolgens 
 $lang['unable_to_parse_date']  = 'Begrijp het niet bij parameter "%s".';
 $lang['email_signature_text']  = 'Deze mail werd gegenereerd door DokuWiki op
 @DOKUWIKIURL@';
+$lang['email_signature_html']  = ' ';
