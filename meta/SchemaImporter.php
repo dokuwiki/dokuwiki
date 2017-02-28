@@ -56,7 +56,9 @@ class SchemaImporter extends SchemaBuilder {
 
             throw new StructException('JSON couldn\'t be decoded: ' . $error);
         }
+        $config = isset($input['config']) ? $input['config'] : array();
         $data = array(
+            'config' => json_encode($config),
             'cols' => array(),
             'new' => array(),
         );

@@ -115,7 +115,7 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
             $R->tablethead_open();
             $R->tablerow_open();
             $R->tableheader_open(2);
-            $R->cdata($table);
+            $R->cdata($schemadata->getSchema()->getTranslatedLabel());
             $R->tableheader_close();
             $R->tablerow_close();
             $R->tablethead_open();

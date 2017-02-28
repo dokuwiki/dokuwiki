@@ -3,6 +3,12 @@
     "schema": "schema1",
     "id": "1",
     "user": "",
+    "config": {
+        "allowed editors": "",
+        "label": {
+            "en": ""
+        }
+    },
     "columns": [
         {
             "colref": 1,

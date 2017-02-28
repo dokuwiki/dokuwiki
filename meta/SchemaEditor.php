@@ -68,7 +68,8 @@ class SchemaEditor {
         $form->addHTML('</table>');
 
         $form->addFieldsetOpen();
-        $form->addTextInput('schema[editors]', $this->hlp->getLang('editor_editors'))->val($this->schema->getEditors());
+        $config = json_encode($this->schema->getConfig(), JSON_PRETTY_PRINT);
+        $form->addHTML('<textarea name="schema[config]" id="schemaConfig" cols="45" rows="10" class="config">' . hsc($config) . '</textarea>');
         $form->addFieldsetClose();
 
 

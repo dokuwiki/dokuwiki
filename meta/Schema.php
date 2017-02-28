@@ -50,8 +50,8 @@ class Schema {
     /** @var string struct version info */
     protected $structversion = '?';
 
-    /** @var string comma separated list of allowed editors */
-    protected $editors = '';
+    /** @var array config array with label translations */
+    protected $config = array();
 
     /**
      * Schema constructor
@@ -61,6 +61,8 @@ class Schema {
      * @param bool $islookup only used when creating a new schema, makes the new schema a lookup
      */
     public function __construct($table, $ts = 0, $islookup = false) {
+        $baseconfig = array('allowed editors' => '');
+
         /** @var \helper_plugin_struct_db $helper */
         $helper = plugin_load('helper', 'struct_db');
         $info = $helper->getInfo();
@@ -88,6 +90,7 @@ class Schema {
             $opt = array($table);
         }
         $res = $this->sqlite->query($sql, $opt);
+        $config = array();
         if($this->sqlite->res2count($res)) {
             $schema = $this->sqlite->res2arr($res);
             $result = array_shift($schema);
@@ -96,11 +99,13 @@ class Schema {
             $this->chksum = $result['chksum'];
             $this->islookup = $result['islookup'];
             $this->ts = $result['ts'];
-            $this->editors = $result['editors'];
+            $config = json_decode($result['config'], true);
         } else {
             $this->islookup = $islookup;
         }
         $this->sqlite->res_close($res);
+        $this->config = array_merge($baseconfig, $config);
+        $this->initTransConfig();
         if(!$this->id) return;
 
         // load existing columns
@@ -145,6 +150,36 @@ class Schema {
     }
 
     /**
+     * Add the translatable keys to the configuration
+     *
+     * This checks if a configuration for the translation plugin exists and if so
+     * adds all configured languages to the config array.
+     *
+     * Adapted from @see \dokuwiki\plugin\struct\types\AbstractBaseType::initTransConfig
+     */
+    protected function initTransConfig() {
+        global $conf;
+        $lang = $conf['lang'];
+        if(isset($conf['plugin']['translation']['translations'])) {
+            $lang .= ' ' . $conf['plugin']['translation']['translations'];
+        }
+        $langs = explode(' ', $lang);
+        $langs = array_map('trim', $langs);
+        $langs = array_filter($langs);
+        $langs = array_unique($langs);
+
+        if(!isset($this->config['label'])) $this->config['label'] = array();
+        // initialize missing keys
+        foreach($langs as $lang) {
+            if(!isset($this->config['label'][$lang])) $this->config['label'][$lang] = '';
+        }
+        // strip unknown languages
+        foreach(array_keys($this->config['label']) as $key) {
+            if(!in_array($key, $langs)) unset($this->config['label'][$key]);
+        }
+    }
+
+    /**
      * @return string identifer for debugging purposes
      */
     function __toString() {
@@ -163,6 +198,28 @@ class Schema {
         $table = preg_replace('/^[0-9_]+/', '', $table);
         $table = trim($table);
         return $table;
+    }
+
+    /**
+     * Returns the translated label for this schema
+     *
+     * Uses the current language as determined by $conf['lang']. Falls back to english
+     * and then to the table name
+     *
+     * @see \dokuwiki\plugin\struct\types\AbstractBaseType::getTranslatedLabel
+     *
+     * @return string
+     */
+    public function getTranslatedLabel() {
+        global $conf;
+        $lang = $conf['lang'];
+        if(!blank($this->config['label'][$lang])) {
+            return $this->config['label'][$lang];
+        }
+        if(!blank($this->config['label']['en'])) {
+            return $this->config['label']['en'];
+        }
+        return $this->table;
     }
 
     /**
@@ -279,11 +336,8 @@ class Schema {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
-    public function getEditors() {
-        return $this->editors;
+    public function getConfig() {
+        return $this->config;
     }
 
     /**
@@ -293,10 +347,10 @@ class Schema {
      */
     public function isEditable() {
         global $USERINFO;
-        if($this->editors == '') return true;
+        if($this->config['allowed editors'] === '') return true;
         if(blank($_SERVER['REMOTE_USER'])) return false;
         if(auth_isadmin()) return true;
-        return auth_isMember($this->editors, $_SERVER['REMOTE_USER'], $USERINFO['grps']);
+        return auth_isMember($this->config['allowed editors'], $_SERVER['REMOTE_USER'], $USERINFO['grps']);
     }
 
     /**
@@ -358,6 +412,7 @@ class Schema {
             'schema' => $this->getTable(),
             'id' => $this->getId(),
             'user' => $this->getUser(),
+            'config' => $this->getConfig(),
             'columns' => array()
         );
 
