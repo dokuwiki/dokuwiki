@@ -139,24 +139,29 @@ if ($conf['gzip_output'] &&
     ob_start('ob_gzhandler');
 }
 
-// init session
-if(!headers_sent() && !defined('NOSESSION')) {
-    if(!defined('DOKU_SESSION_NAME'))     define ('DOKU_SESSION_NAME', "DokuWiki");
-    if(!defined('DOKU_SESSION_LIFETIME')) define ('DOKU_SESSION_LIFETIME', 0);
-    if(!defined('DOKU_SESSION_PATH')) {
-        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-        define ('DOKU_SESSION_PATH', $cookieDir);
+if(!headers_sent()) {
+    if($conf['paytribute']) {
+        header('X-Clacks-overhead: GNU Terry Pratchett');
     }
-    if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
+    // init session
+    if(!defined('NOSESSION')) {
+        if(!defined('DOKU_SESSION_NAME'))     define ('DOKU_SESSION_NAME', "DokuWiki");
+        if(!defined('DOKU_SESSION_LIFETIME')) define ('DOKU_SESSION_LIFETIME', 0);
+        if(!defined('DOKU_SESSION_PATH')) {
+            $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+            define ('DOKU_SESSION_PATH', $cookieDir);
+        }
+        if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
 
-    session_name(DOKU_SESSION_NAME);
-    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
-    session_start();
+        session_name(DOKU_SESSION_NAME);
+        session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
+        session_start();
 
-    // load left over messages
-    if(isset($_SESSION[DOKU_COOKIE]['msg'])) {
-        $MSG = $_SESSION[DOKU_COOKIE]['msg'];
-        unset($_SESSION[DOKU_COOKIE]['msg']);
+        // load left over messages
+        if(isset($_SESSION[DOKU_COOKIE]['msg'])) {
+            $MSG = $_SESSION[DOKU_COOKIE]['msg'];
+            unset($_SESSION[DOKU_COOKIE]['msg']);
+        }
     }
 }
 

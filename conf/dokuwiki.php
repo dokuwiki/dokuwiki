@@ -137,6 +137,7 @@ $conf['rss_update'] = 5*60;              //Update the RSS feed every n seconds (
 $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
 
 /* Advanced Settings */
+$conf['paytribute']  = 0;                //Send X-Clacks-overhead HTTP header in tribute to Terry Pratchett
 $conf['updatecheck'] = 1;                //automatically check for new releases?
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on

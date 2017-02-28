@@ -202,6 +202,7 @@ $meta['rss_update']  = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
 
 $meta['_advanced']   = array('fieldset');
+$meta['paytribute']  = array('onoff');
 $meta['updatecheck'] = array('onoff');
 $meta['userewrite']  = array('multichoice','_choices' => array(0,1,2),'_caution' => 'danger');
 $meta['useslash']    = array('onoff');

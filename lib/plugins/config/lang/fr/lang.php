@@ -142,6 +142,7 @@ $lang['rss_content']           = 'Quel contenu afficher dans le flux XML?';
 $lang['rss_update']            = 'Fréquence de mise à jour du flux XML (secondes)';
 $lang['rss_show_summary']      = 'Le flux XML affiche le résumé dans le titre';
 $lang['rss_media']             = 'Quels types de changements doivent être listés dans le flux XML?';
+$lang['paytribute']            = 'Envoyer avec chaque réponse un entête HTTP d\'hommage à Terry Pratchett.';
 $lang['updatecheck']           = 'Vérifier les mises à jour et alertes de sécurité? DokuWiki doit pouvoir contacter update.dokuwiki.org';
 $lang['userewrite']            = 'Utiliser des URL esthétiques';
 $lang['useslash']              = 'Utiliser « / » comme séparateur de catégories dans les URL';
