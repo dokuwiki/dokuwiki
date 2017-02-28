@@ -8,6 +8,7 @@
  * @author qinghao <qingxianhao@gmail.com>
  * @author lainme <lainme993@gmail.com>
  * @author Errol <errol@hotmail.com>
+ * @author phy25 <git@phy25.com>
  */
 $lang['menu']                  = '扩展管理器';
 $lang['tab_plugins']           = '安装插件';
@@ -91,9 +92,9 @@ $lang['error_copy']            = '在尝试安装文件到目录 <em>%s</em> 时
 $lang['noperms']               = '扩展目录不可写';
 $lang['notplperms']            = '模板目录不可写';
 $lang['nopluginperms']         = '插件目录不可写';
-$lang['git']                   = '这个扩展是通过 git 安装的，您可能不想在这里升级它';
+$lang['git']                   = '这个扩展是通过 Git 安装的，您可能不想在这里升级它';
 $lang['auth']                  = '这个认证插件没有在配置中启用，请考虑禁用它。';
 $lang['install_url']           = '从 URL 安装：';
 $lang['install_upload']        = '上传扩展：';
 $lang['repo_error']            = '无法连接到插件仓库。请确定您的服务器可以连接 www.dokuwiki.org 并检查您的代理设置。';
-$lang['nossl']                 = '您的 PHP 似乎没有 SSL 支持。很多 Dokuwiki 扩展将无法下载。';
+$lang['nossl']                 = '您的 PHP 似乎不支持 SSL。很多 DokuWiki 扩展将无法下载。';
