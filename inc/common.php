@@ -94,7 +94,13 @@ function stripctl($string) {
 function getSecurityToken() {
     /** @var Input $INPUT */
     global $INPUT;
-    return PassHash::hmac('md5', session_id().$INPUT->server->str('REMOTE_USER'), auth_cookiesalt());
+
+    $user = $INPUT->server->str('REMOTE_USER');
+    $session = session_id();
+
+    // CSRF checks are only for logged in users - do not generate for anonymous
+    if(trim($user) == '' || trim($session) == '') return '';
+    return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
 }
 
 /**
