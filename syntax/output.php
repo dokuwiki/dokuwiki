@@ -79,9 +79,13 @@ class syntax_plugin_struct_output extends DokuWiki_Syntax_Plugin {
      * @return bool If rendering was successful.
      */
     public function render($mode, Doku_Renderer $R, $data) {
+        global $ACT;
         global $ID;
         global $INFO;
         global $REV;
+        if (act_clean($ACT) !== 'show') {
+            return true;
+        }
         if($ID != $INFO['id']) return true;
         if(!$INFO['exists']) return true;
         if($this->hasBeenRendered) return true;

@@ -38,10 +38,7 @@ class action_plugin_struct_output extends DokuWiki_Action_Plugin {
      * @param $param
      */
     public function handle_output(Doku_Event $event, $param) {
-        global $ID, $ACT;
-        if (act_clean($ACT) !== 'show') {
-            return;
-        }
+        global $ID;
         if(!page_exists($ID)) return;
         $ins = -1;
         $pos = 0;
