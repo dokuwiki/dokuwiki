@@ -102,7 +102,7 @@ class entry_struct_test extends StructTest {
     public function test_edit_page_with_schema() {
         $page = 'test_edit_page_with_schema';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
@@ -110,17 +110,17 @@ class entry_struct_test extends StructTest {
         $test_html = trim($response->queryHTML('.struct_entry_form')->html());
 
         $pq = \phpQuery::newDocument($test_html);
-        $this->assertEquals('Schema2', $pq->find('legend')->text());
-        $this->checkField($pq, 'Schema2', 'afirst', '');
-        $this->checkField($pq, 'Schema2', 'asecond', '');
-        $this->checkField($pq, 'Schema2', 'athird', '');
-        $this->checkField($pq, 'Schema2', 'afourth', '');
+        $this->assertEquals('schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema2', 'afirst', '');
+        $this->checkField($pq, 'schema2', 'asecond', '');
+        $this->checkField($pq, 'schema2', 'athird', '');
+        $this->checkField($pq, 'schema2', 'afourth', '');
     }
 
     public function test_preview_page_invaliddata() {
         $page = 'test_preview_page_invaliddata';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
@@ -141,17 +141,17 @@ class entry_struct_test extends StructTest {
         $this->assertEquals($expected_errormsg, $actual_errormsg, 'If there is invalid data, then there should be an error message.');
 
         $pq = \phpQuery::newDocument($test_html);
-        $this->assertEquals('Schema2', $pq->find('legend')->text());
-        $this->checkField($pq, 'Schema2', 'afirst', 'foo');
-        $this->checkField($pq, 'Schema2', 'asecond', 'bar, baz');
-        $this->checkField($pq, 'Schema2', 'athird', 'foobar');
-        $this->checkField($pq, 'Schema2', 'afourth', 'Eve');
+        $this->assertEquals('schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema2', 'afirst', 'foo');
+        $this->checkField($pq, 'schema2', 'asecond', 'bar, baz');
+        $this->checkField($pq, 'schema2', 'athird', 'foobar');
+        $this->checkField($pq, 'schema2', 'afourth', 'Eve');
     }
 
     public function test_preview_page_validdata() {
         $page = 'test_preview_page_validdata';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
@@ -171,17 +171,17 @@ class entry_struct_test extends StructTest {
         $this->assertEquals($actual_errormsg, array(), "If all data is valid, then there should be no error message.");
 
         $pq = \phpQuery::newDocument($test_html);
-        $this->assertEquals('Schema2', $pq->find('legend')->text());
-        $this->checkField($pq, 'Schema2', 'afirst', 'foo');
-        $this->checkField($pq, 'Schema2', 'asecond', 'bar, baz');
-        $this->checkField($pq, 'Schema2', 'athird', 'foobar');
-        $this->checkField($pq, 'Schema2', 'afourth', '42');
+        $this->assertEquals('schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema2', 'afirst', 'foo');
+        $this->checkField($pq, 'schema2', 'asecond', 'bar, baz');
+        $this->checkField($pq, 'schema2', 'athird', 'foobar');
+        $this->checkField($pq, 'schema2', 'afourth', '42');
     }
 
     public function test_fail_saving_empty_page() {
         $page = 'test_fail_saving_empty_page';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
@@ -208,7 +208,7 @@ class entry_struct_test extends StructTest {
     public function test_fail_saveing_page_with_invaliddata() {
         $page = 'test_fail_saveing_page_with_invaliddata';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
 
         $wikitext = 'teststring';
@@ -242,11 +242,11 @@ class entry_struct_test extends StructTest {
         $this->assertEquals($expected_wikitext, $actual_wikitext);
 
         $pq = \phpQuery::newDocument($test_html);
-        $this->assertEquals('Schema2', $pq->find('legend')->text());
-        $this->checkField($pq, 'Schema2', 'afirst', 'foo');
-        $this->checkField($pq, 'Schema2', 'asecond', 'bar, baz');
-        $this->checkField($pq, 'Schema2', 'athird', 'foobar');
-        $this->checkField($pq, 'Schema2', 'afourth', 'Eve');
+        $this->assertEquals('schema2', $pq->find('legend')->text());
+        $this->checkField($pq, 'schema2', 'afirst', 'foo');
+        $this->checkField($pq, 'schema2', 'asecond', 'bar, baz');
+        $this->checkField($pq, 'schema2', 'athird', 'foobar');
+        $this->checkField($pq, 'schema2', 'afourth', 'Eve');
 
         // todo: assert that no struct data has been saved
     }
@@ -254,7 +254,7 @@ class entry_struct_test extends StructTest {
     public function test_save_page() {
         $page = 'test_save_page';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
 
         $request = new \TestRequest();
@@ -296,7 +296,7 @@ class entry_struct_test extends StructTest {
     public function test_save_page_without_new_text() {
         $page = 'test_save_page_without_new_text';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
@@ -358,7 +358,7 @@ class entry_struct_test extends StructTest {
     public function test_delete_page() {
         $page = 'test_delete_page';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
@@ -420,7 +420,7 @@ class entry_struct_test extends StructTest {
     public function test_revert_page() {
         $page = 'test_revert_page';
         $assignment = mock\Assignments::getInstance();
-        $schema = 'Schema2';
+        $schema = 'schema2';
         $assignment->addPattern($page, $schema);
         $wikitext = 'teststring';
 
