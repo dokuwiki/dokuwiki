@@ -232,6 +232,7 @@ mail_setup();
  * Makes sure the passed session cookie is valid, invalid ones are ignored an a new session ID is issued
  *
  * @link http://stackoverflow.com/a/33024310/172068
+ * @link http://php.net/manual/en/session.configuration.php#ini.session.sid-length
  */
 function init_session() {
     global $conf;
@@ -239,7 +240,7 @@ function init_session() {
     session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
 
     // make sure the session cookie contains a valid session ID
-    if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{1,128}$/', $_COOKIE[DOKU_SESSION_NAME])) {
+    if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
         unset($_COOKIE[DOKU_SESSION_NAME]);
     }
 
