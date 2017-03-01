@@ -92,7 +92,7 @@ class action_plugin_struct_edit extends DokuWiki_Action_Plugin {
         // we need a short, unique identifier to use in the cookie. this should be good enough
         $schemaid = 'SRCT' . substr(str_replace(array('+', '/'), '', base64_encode(sha1($tablename, true))), 0, 5);
         $html = '<fieldset data-schema="' . $schemaid . '">';
-        $html .= '<legend>' . hsc($tablename) . '</legend>';
+        $html .= '<legend>' . hsc($schema->getSchema()->getTranslatedLabel()) . '</legend>';
         foreach($schemadata as $field) {
             $label = $field->getColumn()->getLabel();
             if(isset($postdata[$label])) {
