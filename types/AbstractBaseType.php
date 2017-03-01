@@ -5,6 +5,7 @@ use dokuwiki\plugin\struct\meta\Column;
 use dokuwiki\plugin\struct\meta\QueryBuilder;
 use dokuwiki\plugin\struct\meta\QueryBuilderWhere;
 use dokuwiki\plugin\struct\meta\StructException;
+use dokuwiki\plugin\struct\meta\TranslationUtilities;
 use dokuwiki\plugin\struct\meta\ValidationException;
 use dokuwiki\plugin\struct\meta\Value;
 
@@ -20,6 +21,8 @@ use dokuwiki\plugin\struct\meta\Value;
  * @see Column
  */
 abstract class AbstractBaseType {
+
+    use TranslationUtilities;
 
     /**
      * @var array current config
@@ -105,41 +108,6 @@ abstract class AbstractBaseType {
     }
 
     /**
-     * Add the translatable keys to the configuration
-     *
-     * This checks if a configuration for the translation plugin exists and if so
-     * adds all configured languages to the config array. This ensures all types
-     * can have translatable labels.
-     */
-    protected function initTransConfig() {
-        global $conf;
-        $lang = $conf['lang'];
-        if(isset($conf['plugin']['translation']['translations'])) {
-            $lang .= ' ' . $conf['plugin']['translation']['translations'];
-        }
-        $langs = explode(' ', $lang);
-        $langs = array_map('trim', $langs);
-        $langs = array_filter($langs);
-        $langs = array_unique($langs);
-
-        if(!isset($this->config['label'])) $this->config['label'] = array();
-        if(!isset($this->config['hint'])) $this->config['hint'] = array();
-        // initialize missing keys
-        foreach($langs as $lang) {
-            if(!isset($this->config['label'][$lang])) $this->config['label'][$lang] = '';
-            if(!isset($this->config['hint'][$lang])) $this->config['hint'][$lang] = '';
-        }
-        // strip unknown languages
-        foreach(array_keys($this->config['label']) as $key) {
-            if(!in_array($key, $langs)) unset($this->config['label'][$key]);
-        }
-        foreach(array_keys($this->config['hint']) as $key) {
-            if(!in_array($key, $langs)) unset($this->config['hint'][$key]);
-        }
-
-    }
-
-    /**
      * Returns data as associative array
      *
      * @return array
@@ -189,20 +157,12 @@ abstract class AbstractBaseType {
      * Returns the translated label for this type
      *
      * Uses the current language as determined by $conf['lang']. Falls back to english
-     * and then to the Schema label
+     * and then to the type label
      *
      * @return string
      */
     public function getTranslatedLabel() {
-        global $conf;
-        $lang = $conf['lang'];
-        if(!blank($this->config['label'][$lang])) {
-            return $this->config['label'][$lang];
-        }
-        if(!blank($this->config['label']['en'])) {
-            return $this->config['label']['en'];
-        }
-        return $this->label;
+        return $this->getTranslatedKey('label', $this->label);
     }
 
     /**
@@ -214,15 +174,7 @@ abstract class AbstractBaseType {
      * @return string
      */
     public function getTranslatedHint() {
-        global $conf;
-        $lang = $conf['lang'];
-        if(!blank($this->config['hint'][$lang])) {
-            return $this->config['hint'][$lang];
-        }
-        if(!blank($this->config['hint']['en'])) {
-            return $this->config['hint']['en'];
-        }
-        return '';
+        return $this->getTranslatedKey('hint', '');
     }
 
     /**

@@ -18,6 +18,8 @@ if(!defined('JSON_PRETTY_PRINT')) define('JSON_PRETTY_PRINT', 0); // PHP 5.3 com
  */
 class Schema {
 
+    use TranslationUtilities;
+
     /** @var \helper_plugin_sqlite|null */
     protected $sqlite;
 
@@ -105,7 +107,7 @@ class Schema {
         }
         $this->sqlite->res_close($res);
         $this->config = array_merge($baseconfig, $config);
-        $this->initTransConfig();
+        $this->initTransConfig(array('label'));
         if(!$this->id) return;
 
         // load existing columns
@@ -150,36 +152,6 @@ class Schema {
     }
 
     /**
-     * Add the translatable keys to the configuration
-     *
-     * This checks if a configuration for the translation plugin exists and if so
-     * adds all configured languages to the config array.
-     *
-     * Adapted from @see \dokuwiki\plugin\struct\types\AbstractBaseType::initTransConfig
-     */
-    protected function initTransConfig() {
-        global $conf;
-        $lang = $conf['lang'];
-        if(isset($conf['plugin']['translation']['translations'])) {
-            $lang .= ' ' . $conf['plugin']['translation']['translations'];
-        }
-        $langs = explode(' ', $lang);
-        $langs = array_map('trim', $langs);
-        $langs = array_filter($langs);
-        $langs = array_unique($langs);
-
-        if(!isset($this->config['label'])) $this->config['label'] = array();
-        // initialize missing keys
-        foreach($langs as $lang) {
-            if(!isset($this->config['label'][$lang])) $this->config['label'][$lang] = '';
-        }
-        // strip unknown languages
-        foreach(array_keys($this->config['label']) as $key) {
-            if(!in_array($key, $langs)) unset($this->config['label'][$key]);
-        }
-    }
-
-    /**
      * @return string identifer for debugging purposes
      */
     function __toString() {
@@ -200,27 +172,6 @@ class Schema {
         return $table;
     }
 
-    /**
-     * Returns the translated label for this schema
-     *
-     * Uses the current language as determined by $conf['lang']. Falls back to english
-     * and then to the table name
-     *
-     * @see \dokuwiki\plugin\struct\types\AbstractBaseType::getTranslatedLabel
-     *
-     * @return string
-     */
-    public function getTranslatedLabel() {
-        global $conf;
-        $lang = $conf['lang'];
-        if(!blank($this->config['label'][$lang])) {
-            return $this->config['label'][$lang];
-        }
-        if(!blank($this->config['label']['en'])) {
-            return $this->config['label']['en'];
-        }
-        return $this->table;
-    }
 
     /**
      * Gets a list of all available schemas
@@ -338,6 +289,18 @@ class Schema {
 
     public function getConfig() {
         return $this->config;
+    }
+
+    /**
+     * Returns the translated label for this schema
+     *
+     * Uses the current language as determined by $conf['lang']. Falls back to english
+     * and then to the Schema label
+     *
+     * @return string
+     */
+    public function getTranslatedLabel() {
+        return $this->getTranslatedKey('label', $this->table);
     }
 
     /**
