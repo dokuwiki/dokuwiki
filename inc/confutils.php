@@ -132,7 +132,8 @@ function getCdnUrls() {
     $versions = array();
     $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
     foreach($lines as $line) {
-        $line = preg_replace('/#.*$/', '', $line);
+        $line = trim(preg_replace('/#.*$/', '', $line));
+        if($line === '') continue;
         list($key, $val) = explode('=', $line, 2);
         $key = trim($key);
         $val = trim($val);
