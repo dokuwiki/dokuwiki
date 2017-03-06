@@ -68,6 +68,45 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1,$sort='natural'){
 }
 
 /**
+ * Check for readable directory
+ *
+ * This function recurses into a given base directory
+ * and calls the supplied function for each directory until one returns true
+ *
+ * @param   array    &$data The results of the search are stored here
+ * @param   string    $base Where to start the search
+ * @param   callback  $func Callback (function name or array with object,method)
+ * @param   array     $opts option array will be given to the Callback
+ * @param   string    $dir  Current directory beyond $base
+ * @param   int       $lvl  Recursion Level
+ */
+function search_sneaky(&$data,$base,$func,$opts,$dir='',$lvl=1){
+    $dirs   = array();
+    $files  = array();
+    $filepaths = array();
+
+    //read in directories and files
+    $dh = @opendir($base.'/'.$dir);
+    if(!$dh) return;
+    while(($file = readdir($dh)) !== false){
+        if(preg_match('/^[\._]/',$file)) continue; //skip hidden files and upper dirs
+        if(is_dir($base.'/'.$dir.'/'.$file)){
+            $dirs[] = $dir.'/'.$file;
+            continue;
+        }
+    }
+
+    closedir($dh);
+    //give directories to userfunction then recurse
+    foreach($dirs as $dir){
+        if (call_user_func_array($func, array(&$data,$base,$dir,'d',$lvl,$opts))){
+           return true;
+        }
+    }
+    return false;
+}
+
+/**
  * The following functions are userfunctions to use with the search
  * function above. This function is called for every found file or
  * directory. When a directory is given to the function it has to
@@ -125,6 +164,14 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
     return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
 
+function search_index_sneaky(&$data,$base,$file,$type,$lvl,$opts){
+    global $conf;
+    $opts = array(
+        'listdirs'  => false,
+        'listfiles' => false,
+    );
+    return search_universal($data, $base, $file, $type, $lvl, $opts);
+}
 /**
  * List all namespaces
  *
@@ -358,6 +405,8 @@ function pathID($path,$keeptxt=false){
  * @author Andreas Gohr <gohr@cosmocode.de>
  */
 function search_universal(&$data,$base,$file,$type,$lvl,$opts){
+    global $conf;
+    
     $item   = array();
     $return = true;
 
@@ -403,6 +452,11 @@ function search_universal(&$data,$base,$file,$type,$lvl,$opts){
         $item['perm'] = AUTH_DELETE;
     }
 
+    if(!$item['perm'] && $type =='d' && $conf['sneaky_index']){
+        $ret = search_sneaky($data1,$base,'search_index_sneaky',array(),utf8_encodeFN(str_replace(':','/',$item['id'])));
+        if($ret) $item['perm'] = AUTH_READ;
+    }
+   
     // are we done here maybe?
     if($type == 'd'){
         if(empty($opts['listdirs'])) return $return;
