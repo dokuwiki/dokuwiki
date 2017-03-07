@@ -9,7 +9,7 @@
  */
 
 // update message version - always use a string to avoid localized floats!
-$updateVersion = "48.1";
+$updateVersion = "48.2";
 
 //  xdebug_start_profiling();
 
