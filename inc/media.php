@@ -304,7 +304,7 @@ function media_upload_xhr($ns,$auth){
             'mime' => $mime,
             'ext'  => $ext),
         $ns.':'.$id,
-        (($INPUT->get->str('ow') == 'checked') ? true : false),
+        (($INPUT->get->str('ow') == 'true') ? true : false),
         $auth,
         'copy'
     );

@@ -9,6 +9,10 @@ inc/ZipLib.class.php
 inc/phpseclib/Crypt_AES.php
 inc/phpseclib/Crypt_Rijndael.php
 inc/phpseclib/update.sh
+inc/phpseclib/LICENSE
+inc/phpseclib/Crypt_Base.php
+inc/phpseclib/Crypt_Hash.php
+inc/phpseclib/Math_BigInteger.php
 lib/scripts/jquery/jquery-migrate.js
 lib/scripts/jquery/jquery-ui-theme/images/ui-bg_flat_0_aaaaaa_40x100.png
 lib/scripts/jquery/jquery-ui-theme/images/ui-bg_flat_75_ffffff_40x100.png
