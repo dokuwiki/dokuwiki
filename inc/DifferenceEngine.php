@@ -864,7 +864,7 @@ class DiffFormatter {
      * @return string The escaped string.
      */
     function _escape($str){
-        return $str;
+        return hsc($str);
     }
 }
 
