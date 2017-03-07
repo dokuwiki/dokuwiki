@@ -160,6 +160,7 @@ function _mail_send_action($data) {
     $header .= 'MIME-Version: 1.0'.MAILHEADER_EOL;
     $header .= 'Content-Type: text/plain; charset=UTF-8'.MAILHEADER_EOL;
     $header .= 'Content-Transfer-Encoding: quoted-printable'.MAILHEADER_EOL;
+    $header .= 'X-WikiUser: '.$_SERVER['REMOTE_USER'].MAILHEADER_EOL;
     $header .= $headers;
     $header  = trim($header);
 
