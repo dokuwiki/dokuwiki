@@ -3,11 +3,8 @@
 # No need to include words shorter than 3 chars - these are ignored anyway
 ell
 ella
-nosatres
-nosatros
-mosatros
-vosatres
-vosatros
+nosaltres
+vosaltres
 ells
 els
 los
@@ -51,7 +48,7 @@ això
 açò
 allò
 des
-soc
+sóc
 eres
 som
 sou
@@ -62,14 +59,14 @@ com
 cóm
 qui
 que
-qué
+què
 quan
 quant
 quants
 quanta
 quantes
 mentres
-pero
+però
 atre
 atra
 atres
