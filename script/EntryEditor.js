@@ -105,6 +105,9 @@ var EntryEditor = function($form) {
                 this.id = this.id + '_' + copycount;
             });
 
+            // move edited .multiwrap out of .newtemplate container
+            $tplwrapper.before(jQuery(this).closest('.multiwrap').detach());
+
             // append the template
             $tplwrapper.append($copy);
         });
