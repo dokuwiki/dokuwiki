@@ -62,7 +62,7 @@ abstract class DokuCLI {
         );
         $this->options->registerOption(
             'help',
-            'Display this help screen and exit immeadiately.',
+            'Display this help screen and exit immediately.',
             'h'
         );
 
