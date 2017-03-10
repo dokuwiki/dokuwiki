@@ -15,11 +15,7 @@ matrix:
     - php: "7.0"
     - php: "hhvm"
 notifications:
-  irc:
-    channels:
-        - "chat.freenode.net#dokuwiki"
-    on_success: change
-    on_failure: change
+  slack: hozong:haBs33ICo44odrx7iM01nBvg
 services:
   - "mysql"
   - "postgresql"
