@@ -29,17 +29,4 @@ class Plugin extends AbstractAction {
         }
         $evt->advise_after();
     }
-
-    /**
-     * Set the action name
-     *
-     * This class handles arbitrary names by passing them to action plugins
-     * later in tplContent(). The actual name (=$ACT) is via this function
-     * in ActionRouter::setupAction()
-     *
-     * @param string $actionname
-     */
-    public function setActionName($actionname) {
-        $this->actionname = $actionname;
-    }
 }

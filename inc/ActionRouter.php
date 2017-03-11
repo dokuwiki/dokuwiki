@@ -95,8 +95,7 @@ class ActionRouter {
                 $this->transitionAction($presetup, $actionname);
             } else {
                 // event said the action should be kept, assume action plugin will handle it later
-                $this->action = new Plugin();
-                $this->action->setActionName($actionname);
+                $this->action = new Plugin($actionname);
             }
             $evt->advise_after();
 
@@ -173,15 +172,29 @@ class ActionRouter {
     /**
      * Load the given action
      *
+     * This translates the given name to a class name by uppercasing the first letter.
+     * Underscores translate to camelcase names. For actions with underscores, the different
+     * parts are removed beginning from the end until a matching class is found. The instatiated
+     * Action will always have the full original action set as Name
+     *
+     * Example: 'export_raw' -> ExportRaw then 'export' -> 'Export'
+     *
      * @param $actionname
      * @return AbstractAction
      * @throws NoActionException
      */
     protected function loadAction($actionname) {
-        $class = 'dokuwiki\\Action\\' . ucfirst(strtolower($actionname));
-        if(class_exists($class)) {
-            return new $class;
+        $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
+        $parts = explode('_', $actionname);
+        while($parts) {
+            $load = join('_', $parts);
+            $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
+            if(class_exists($class)) {
+                return new $class($actionname);
+            }
+            array_pop($parts);
         }
+
         throw new NoActionException();
     }
 

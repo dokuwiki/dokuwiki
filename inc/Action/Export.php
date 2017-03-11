@@ -18,8 +18,6 @@ class Export extends AbstractAction {
         return AUTH_READ;
     }
 
-    // FIXME proper mode should be checked
-
     /**
      * Export a wiki page for various formats
      *
@@ -48,7 +46,7 @@ class Export extends AbstractAction {
         // search engines: never cache exported docs! (Google only currently)
         $headers['X-Robots-Tag'] = 'noindex';
 
-        $mode = substr('FIXME', 7); // FIXME how to pass the proper mode?
+        $mode = substr($this->actionname, 7);
         switch($mode) {
             case 'raw':
                 $headers['Content-Type'] = 'text/plain; charset=utf-8';

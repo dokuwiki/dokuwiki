@@ -20,10 +20,11 @@ abstract class AbstractAction {
 
     /**
      * AbstractAction constructor.
+     *
+     * @param string $actionname the name of this action (see getActioName() for caveats)
      */
-    public function __construct() {
-        // http://stackoverflow.com/a/27457689/172068
-        $this->actionname = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+    public function __construct($actionname) {
+        $this->actionname = $actionname;
     }
 
     /**
@@ -70,6 +71,11 @@ abstract class AbstractAction {
     }
 
     /**
+     * Returns the name of this action
+     *
+     * This is usually the lowercased class name, but may differ for some actions.
+     * eg. the export_ modes or for the Plugin action.
+     *
      * @return string
      */
     public function getActionName() {
