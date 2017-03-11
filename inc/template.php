@@ -87,12 +87,18 @@ function tpl_content($prependTOC = true) {
     return !empty($html_output);
 }
 
+function tpl_content_core() {
+    $router = \dokuwiki\ActionRouter::getInstance();
+    $router->getAction()->tplContent();
+    return true; // FIXME when is this false? do we need to catch an exception?
+}
+
 /**
  * Default Action of TPL_ACT_RENDER
  *
  * @return bool
  */
-function tpl_content_core() {
+function XXX_tpl_content_core() {
     global $ACT;
     global $TEXT;
     global $PRE;

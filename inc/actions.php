@@ -8,6 +8,27 @@
 
 if(!defined('DOKU_INC')) die('meh.');
 
+
+function act_dispatch(){
+    $router = \dokuwiki\ActionRouter::getInstance(); // is this needed here or could we delegate it to tpl_content() later?
+
+
+
+    //call template FIXME: all needed vars available?
+    $headers[] = 'Content-Type: text/html; charset=utf-8';
+    trigger_event('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
+
+    // clear internal variables
+    unset($router);
+    unset($headers);
+    // make all globals available to the template
+    extract($GLOBALS);
+
+    include(template('main.php'));
+    // output for the commands is now handled in inc/templates.php
+    // in function tpl_content()
+}
+
 /**
  * Call the needed action handlers
  *
@@ -15,7 +36,7 @@ if(!defined('DOKU_INC')) die('meh.');
  * @triggers ACTION_ACT_PREPROCESS
  * @triggers ACTION_HEADERS_SEND
  */
-function act_dispatch(){
+function XXX_act_dispatch(){
     global $ACT;
     global $ID;
     global $INFO;
