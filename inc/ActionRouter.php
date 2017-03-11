@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: andi
- * Date: 2/10/17
- * Time: 3:18 PM
- */
 
 namespace dokuwiki;
 
@@ -13,7 +7,12 @@ use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Action\Exception\FatalException;
 use dokuwiki\Action\Exception\NoActionException;
+use dokuwiki\Action\Plugin;
 
+/**
+ * Class ActionRouter
+ * @package dokuwiki
+ */
 class ActionRouter {
 
     /** @var  AbstractAction */
@@ -24,8 +23,15 @@ class ActionRouter {
 
     /**
      * ActionRouter constructor. Singleton, thus protected!
+     *
+     * Sets up the correct action based on the $ACT global. Writes back
+     * the selected action to $ACT
      */
     protected function __construct() {
+        global $ACT;
+        $ACT = act_clean($ACT);
+        $this->setupAction($ACT);
+        $ACT = $this->action->getActionName();
     }
 
     /**
@@ -45,14 +51,15 @@ class ActionRouter {
      * Setup the given action
      *
      * Instantiates the right class, runs permission checks and pre-processing and
-     * seta $action
+     * sets $action
      *
      * @param string $actionname
+     * @triggers ACTION_ACT_PREPROCESS
      * @fixme implement redirect on action change with post
-     * @fixme add event handling
-     * @fixme add the action name back to $ACT for plugins relying on it
      */
     protected function setupAction($actionname) {
+        $presetup = $actionname;
+
         try {
             $this->action = $this->loadAction($actionname);
             $this->action->checkPermissions();
@@ -61,25 +68,38 @@ class ActionRouter {
 
         } catch(ActionException $e) {
             // we should have gotten a new action
-            $newaction = $e->getNewAction();
+            $actionname = $e->getNewAction();
 
             // no infinite recursion
-            if($newaction === $actionname) {
+            if($actionname == $presetup) {
                 // FIXME this doesn't catch larger circles
                 $this->handleFatalException(new FatalException('Infinite loop in actions', 500, $e));
             }
 
             // this one should trigger a user message
             if(is_a($e, ActionDisabledException::class)) {
-                msg('Action disabled: ' . hsc($actionname), -1);
+                msg('Action disabled: ' . hsc($presetup), -1);
             }
 
             // do setup for new action
-            $this->setupAction($newaction);
+            $this->setupAction($actionname);
 
         } catch(NoActionException $e) {
-            // FIXME here the unknown event needs to be run
-            $this->action = $this->loadAction('show');
+            // give plugins an opportunity to process the actionname
+            $evt = new \Doku_Event('ACTION_ACT_PREPROCESS', $actionname);
+            if($evt->advise_before()) {
+                if($actionname == $presetup) {
+                    // no plugin changed the action, complain and switch to show
+                    msg('Action unknown: ' . hsc($actionname), -1);
+                    $actionname = 'show';
+                }
+                $this->setupAction($actionname);
+            } else {
+                // event said the action should be kept, assume action plugin will handle it later
+                $this->action = new Plugin();
+                $this->action->setActionName($actionname);
+            }
+            $evt->advise_after();
 
         } catch(\Exception $e) {
             $this->handleFatalException($e);
