@@ -9,6 +9,7 @@
  * @author Eduard Díaz <edudiaz@scopia.es>
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
+ * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
