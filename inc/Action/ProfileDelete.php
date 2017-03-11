@@ -5,14 +5,13 @@ namespace dokuwiki\Action;
 use dokuwiki\Action\Exception\ActionAbort;
 
 /**
- * Class Profiledel
+ * Class ProfileDelete
  *
  * Delete a user account
  *
  * @package dokuwiki\Action
- * @fixme rename profile_delete action to profiledel
  */
-class Profiledel extends AbstractUserAction {
+class ProfileDelete extends AbstractUserAction {
 
     /** @inheritdoc */
     function minimumPermission() {
