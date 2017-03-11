@@ -21,6 +21,12 @@ class ActionRouter {
     /** @var  ActionRouter */
     protected $instance;
 
+    /** @var int transition counter */
+    protected $transitions = 0;
+
+    /** maximum loop */
+    const MAX_TRANSITIONS = 5;
+
     /**
      * ActionRouter constructor. Singleton, thus protected!
      *
@@ -55,7 +61,6 @@ class ActionRouter {
      *
      * @param string $actionname
      * @triggers ACTION_ACT_PREPROCESS
-     * @fixme implement redirect on action change with post
      */
     protected function setupAction($actionname) {
         $presetup = $actionname;
@@ -70,19 +75,13 @@ class ActionRouter {
             // we should have gotten a new action
             $actionname = $e->getNewAction();
 
-            // no infinite recursion
-            if($actionname == $presetup) {
-                // FIXME this doesn't catch larger circles
-                $this->handleFatalException(new FatalException('Infinite loop in actions', 500, $e));
-            }
-
             // this one should trigger a user message
             if(is_a($e, ActionDisabledException::class)) {
                 msg('Action disabled: ' . hsc($presetup), -1);
             }
 
             // do setup for new action
-            $this->setupAction($actionname);
+            $this->transitionAction($presetup, $actionname);
 
         } catch(NoActionException $e) {
             // give plugins an opportunity to process the actionname
@@ -93,7 +92,7 @@ class ActionRouter {
                     msg('Action unknown: ' . hsc($actionname), -1);
                     $actionname = 'show';
                 }
-                $this->setupAction($actionname);
+                $this->transitionAction($presetup, $actionname);
             } else {
                 // event said the action should be kept, assume action plugin will handle it later
                 $this->action = new Plugin();
@@ -104,6 +103,41 @@ class ActionRouter {
         } catch(\Exception $e) {
             $this->handleFatalException($e);
         }
+    }
+
+    /**
+     * Transitions from one action to another
+     *
+     * Basically just calls setupAction() again but does some checks before. Also triggers
+     * redirects for POST to show transitions
+     *
+     * @param string $from current action name
+     * @param string $to new action name
+     * @param null|ActionException $e any previous exception that caused the transition
+     */
+    protected function transitionAction($from, $to, $e = null) {
+        global $INPUT;
+        global $ID;
+
+        $this->transitions++;
+
+        // no infinite recursion
+        if($from == $to) {
+            $this->handleFatalException(new FatalException('Infinite loop in actions', 500, $e));
+        }
+
+        // larger loops will be caught here
+        if($this->transitions >= self::MAX_TRANSITIONS) {
+            $this->handleFatalException(new FatalException('Maximum action transitions reached', 500, $e));
+        }
+
+        // POST transitions to show should be a redirect
+        if($to == 'show' && $from != $to && strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
+            act_redirect($ID, $from); // FIXME we may want to move this function to the class
+        }
+
+        // do the recursion
+        $this->setupAction($to);
     }
 
     /**
