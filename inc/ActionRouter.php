@@ -19,7 +19,7 @@ class ActionRouter {
     protected $action;
 
     /** @var  ActionRouter */
-    protected $instance;
+    protected static $instance;
 
     /** @var int transition counter */
     protected $transitions = 0;
@@ -46,11 +46,11 @@ class ActionRouter {
      * @param bool $reinit
      * @return ActionRouter
      */
-    public function getInstance($reinit = false) {
-        if(($this->instance === null) || $reinit) {
-            $this->instance = new ActionRouter();
+    public static function getInstance($reinit = false) {
+        if((self::$instance === null) || $reinit) {
+            self::$instance = new ActionRouter();
         }
-        return $this->instance;
+        return self::$instance;
     }
 
     /**
