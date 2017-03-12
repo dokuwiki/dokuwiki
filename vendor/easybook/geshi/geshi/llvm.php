@@ -70,11 +70,11 @@ $language_data = array(
             ),
         //Terminator Instructions
         1 => array(
-            'ret', 'br', 'switch', 'indirectbr', 'invoke', 'unwind', 'unreachable'
+            'ret', 'br', 'switch', 'indirectbr', 'invoke', 'resume', 'catchswitch', 'catchret', 'cleanupret', 'unreachable'
             ),
         //Binary Operations
         2 => array(
-            'add', 'fadd', 'sub', 'fsub', 'mul', 'fmul', 'udiv', 'sdiv', 'fdiv', 'urem', 'frem', 'srem'
+            'add', 'fadd', 'sub', 'fsub', 'mul', 'fmul', 'udiv', 'sdiv', 'fdiv', 'urem', 'srem', 'frem'
             ),
         //Bitwise Binary Operations
         3 => array(
@@ -90,39 +90,44 @@ $language_data = array(
             ),
         //Memory Access and Addressing Operations
         6 => array(
-            'alloca', 'load', 'store', 'getelementptr'
+            'alloca', 'load', 'store', 'fence', 'cmpxchg', 'atomicrmw', 'getelementptr'
             ),
         //Conversion Operations
         7 => array(
-            'trunc', 'zext', 'sext', 'fptrunc', 'fpext', 'fptoui', 'fptosi',
-            'uitofp', 'sitofp', 'ptrtoint', 'inttoptr', 'bitcast'
+            'trunc', 'zext', 'sext', 'fptrunc', 'fpext', 'fptoui', 'fptosi', 'uitofp', 'sitofp',
+            'ptrtoint', 'inttoptr', 'bitcast', 'addrspacecast'
             ),
         //Other Operations
         8 => array(
-            'icmp', 'fcmp', 'phi', 'select', 'call', 'va_arg'
+            'icmp', 'fcmp', 'phi', 'select', 'call', 'va_arg', 'landingpad', 'catchpad', 'cleanuppad'
             ),
         //Linkage Types
         9 => array(
-            'private', 'linker_private', 'linker_private_weak', 'linker_private_weak_def_auto',
-            'internal', 'available_externally', 'linkonce', 'common', 'weak', 'appending',
-            'extern_weak', 'linkonce_odr', 'weak_odr', 'externally visible', 'dllimport', 'dllexport',
+            'private', 'internal', 'available_externally', 'linkonce', 'weak', 'common', 'appending',
+            'extern_weak', 'linkonce_odr', 'weak_odr', 'external'
             ),
         //Calling Conventions
         10 => array(
-            'ccc', 'fastcc', 'coldcc', 'cc 10'
+            'ccc', 'fastcc', 'coldcc', 'cc 10', 'cc 11', 'webkit_jscc', 'anyregcc', 'preserve_mostcc',
+            'preserve_allcc', 'cxx_fast_tlscc', 'swiftcc', 'cc'
             ),
-        //Named Types
+        //Structure Types
         11 => array(
             'type'
             ),
         //Parameter Attributes
         12 => array(
-            'zeroext', 'signext', 'inreg', 'byval', 'sret', 'noalias', 'nocapture', 'nest'
+            'zeroext', 'signext', 'inreg', 'byval', 'inalloca', 'sret', 'align', 'noalias', 'nocapture', 'nest',
+            'returned', 'nonnull', 'dereferenceable', 'dereferenceable_or_null', 'swiftself', 'swifterror'
             ),
         //Function Attributes
         13 => array(
-            'alignstack', 'alwaysinline', 'inlinehint', 'naked', 'noimplicitfloat', 'noinline', 'noredzone', 'noreturn',
-            'nounwind', 'optsize', 'readnone', 'readonly', 'ssp', 'sspreq',
+            'alignstack', 'allocsize', 'alwaysinline', 'builtin', 'cold', 'convergent', 'inaccessiblememonly',
+            'inaccessiblemem_or_argmemonly', 'inlinehint', 'jumptable', 'minsize', 'naked', 'nobuiltin', 'noduplicate',
+            'noimplicitfloat', 'noinline', 'nonlazybind', 'noredzone', 'noreturn', 'norecurse', 'nounwind',
+            'optnone', 'optsize', 'patchable-function', 'readnone', 'readonly', 'writeonly', 'argmemonly',
+            'returns_twice', 'safestack', 'sanitize_address', 'sanitize_memory', 'sanitize_thread', 'ssp',
+            'sspreq', 'sspstrong', 'thunk', 'uwtable'
             ),
         //Module-Level Inline Assembly
         14 => array(
@@ -132,9 +137,9 @@ $language_data = array(
         15 => array(
             'target datalayout'
             ),
-        //Primitive Types
+        //Type System
         16 => array(
-            'x86mmx',
+            'x86_mmx',
             'void',
             'label',
             'metadata',
@@ -142,13 +147,13 @@ $language_data = array(
             ),
         //Floating Point Types
         17 => array(
-            'float', 'double', 'fp128', 'x86_fp80', 'ppc_fp128',
+            'half', 'float', 'double', 'fp128', 'x86_fp80', 'ppc_fp128',
             ),
         //Simple Constants
         18 => array(
             'false', 'true', 'null'
             ),
-        //Global Variable and Function Addresses
+        //Global Variable
         19 => array(
             'global', 'addrspace', 'constant', 'section'
             ),
@@ -172,6 +177,7 @@ $language_data = array(
         24 => array(
             'default', 'hidden', 'protected'
             ),
+        //Volatile Memory Accesses
         25 => array(
             'volatile'
             ),
@@ -304,32 +310,32 @@ $language_data = array(
         ),
     'URLS' => array(
         0 => '',
-        1 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        2 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        3 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        4 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        5 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        6 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        7 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        8 => 'http://llvm.org/docs/LangRef.html#i_{FNAME}',
-        9 => 'http://llvm.org/docs/LangRef.html#linkage_{FNAME}',
-        10 => 'http://llvm.org/docs/LangRef.html#callingconv',
-        11 => 'http://llvm.org/docs/LangRef.html#namedtypes',
-        12 => 'http://llvm.org/docs/LangRef.html#paramattrs',
-        13 => 'http://llvm.org/docs/LangRef.html#fnattrs',
-        14 => 'http://llvm.org/docs/LangRef.html#moduleasm',
-        15 => 'http://llvm.org/docs/LangRef.html#datalayout',
-        16 => 'http://llvm.org/docs/LangRef.html#t_{FNAME}',
-        17 => 'http://llvm.org/docs/LangRef.html#t_floating',
-        18 => 'http://llvm.org/docs/LangRef.html#simpleconstants',
-        19 => 'http://llvm.org/docs/LangRef.html#globalvars',
-        20 => 'http://llvm.org/docs/LangRef.html#functionstructure',
-        21 => 'http://llvm.org/docs/LangRef.html#complexconstants',
-        22 => 'http://llvm.org/docs/LangRef.html#undefvalues',
-        23 => 'http://llvm.org/docs/LangRef.html#blockaddress',
-        24 => 'http://llvm.org/docs/LangRef.html#visibility',
-        25 => 'http://llvm.org/docs/LangRef.html#volatile',
-        26 => 'http://llvm.org/docs/LangRef.html#i_call',
+        1 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        2 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        3 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        4 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        5 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        6 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        7 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        8 => 'http://llvm.org/docs/LangRef.html#{FNAME}-instruction',
+        9 => 'http://llvm.org/docs/LangRef.html#linkage-types',
+        10 => 'http://llvm.org/docs/LangRef.html#calling-conventions',
+        11 => 'http://llvm.org/docs/LangRef.html#opaque-structure-types',
+        12 => 'http://llvm.org/docs/LangRef.html#parameter-attributes',
+        13 => 'http://llvm.org/docs/LangRef.html#function-attributes',
+        14 => 'http://llvm.org/docs/LangRef.html#module-level-inline-assembly',
+        15 => 'http://llvm.org/docs/LangRef.html#data-layout',
+        16 => 'http://llvm.org/docs/LangRef.html#type-system',
+        17 => 'http://llvm.org/docs/LangRef.html#floating-point-types',
+        18 => 'http://llvm.org/docs/LangRef.html#simple-constants',
+        19 => 'http://llvm.org/docs/LangRef.html#global-variables',
+        20 => 'http://llvm.org/docs/LangRef.html#functions',
+        21 => 'http://llvm.org/docs/LangRef.html#complex-constants',
+        22 => 'http://llvm.org/docs/LangRef.html#undefined-values',
+        23 => 'http://llvm.org/docs/LangRef.html#addresses-of-basic-blocks',
+        24 => 'http://llvm.org/docs/LangRef.html#visibility-styles',
+        25 => 'http://llvm.org/docs/LangRef.html#volatile-memory-accesses',
+        26 => 'http://llvm.org/docs/LangRef.html#call-instruction',
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
