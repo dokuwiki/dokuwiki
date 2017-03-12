@@ -101,9 +101,9 @@ class io_replaceinfile_test extends DokuWikiTest {
     function test_badparam()
     {
         if (class_exists('PHPUnit\Framework\Error\Warning')) {
-            $expect = PHPUnit\Framework\Error\Warning::class; // PHPUnit 6
+            $expect = 'PHPUnit\Framework\Error\Warning'; // PHPUnit 6
         } else {
-            $expect = PHPUnit_Framework_Error_Warning::class; // PHPUnit 5
+            $expect = 'PHPUnit_Framework_Error_Warning'; // PHPUnit 5
         }
         $this->setExpectedException($expect);
 
