@@ -101,13 +101,13 @@ class AccessTableDataDB_struct_test extends StructTest {
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
-            array('value2.1a', 'value2.2a'),
-            'value1a',
+            'testMulitColumn' => array('value2.1a', 'value2.2a'),
+            'testcolumn' => 'value1a',
         );
 
         // assert
-        foreach($expected_data as $index => $value) {
-            $this->assertEquals($value, $actual_data[$index]->getValue());
+        foreach($expected_data as $key => $value) {
+            $this->assertEquals($value, $actual_data[$key]->getValue());
         }
     }
 
@@ -133,8 +133,8 @@ class AccessTableDataDB_struct_test extends StructTest {
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
-            array('value2.1a'),
-            'value1a',
+            'testMulitColumn' => array('value2.1a'),
+            'testcolumn' => 'value1a',
         );
 
         // assert
@@ -150,8 +150,8 @@ class AccessTableDataDB_struct_test extends StructTest {
         $actual_data = $schemaData->getData();
 
         $expected_data = array(
-            array('value2.1', 'value2.2'),
-            'value1',
+            'testMulitColumn' => array('value2.1', 'value2.2'),
+            'testcolumn' => 'value1',
         );
 
         // assert
@@ -237,8 +237,8 @@ class AccessTableDataDB_struct_test extends StructTest {
         $actual_data = $schemaData->getData();
 
         // assert
-        $this->assertEquals(array(), $actual_data[0]->getValue());
-        $this->assertEquals(null, $actual_data[1]->getValue());
+        $this->assertEquals(array(), $actual_data['testMulitColumn']->getValue());
+        $this->assertEquals(null, $actual_data['testcolumn']->getValue());
     }
 
     public function test_getData_skipEmpty() {
@@ -261,7 +261,7 @@ class AccessTableDataDB_struct_test extends StructTest {
 
         // assert
         $this->assertEquals(1, count($actual_data), 'There should be only one value returned and the empty value skipped');
-        $this->assertEquals($expected_data, $actual_data[0]->getValue());
+        $this->assertEquals($expected_data, $actual_data['testMulitColumn']->getValue());
     }
 
     public function test_getDataArray_skipEmpty() {

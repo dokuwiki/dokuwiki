@@ -27,12 +27,12 @@ class Type_Dropdown_struct_test extends StructTest {
         $access = AccessTable::byTableName('dropdowns', 'test1');
         $data = $access->getData();
 
-        $this->assertEquals('John', $data[2]->getValue());
-        $this->assertEquals('John', $data[2]->getRawValue());
-        $this->assertEquals('John', $data[2]->getDisplayValue());
+        $this->assertEquals('John', $data['drop3']->getValue());
+        $this->assertEquals('John', $data['drop3']->getRawValue());
+        $this->assertEquals('John', $data['drop3']->getDisplayValue());
 
         $R = new \Doku_Renderer_xhtml();
-        $data[2]->render($R, 'xhtml');
+        $data['drop3']->render($R, 'xhtml');
         $this->assertEquals('John', $R->doc);
     }
 
