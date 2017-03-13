@@ -103,8 +103,8 @@ function css_out(){
 
     // check cache age & handle conditional request
     // This may exit if a cache can be used
-    http_cached($cache->cache,
-                $cache->useCache(array('files' => $cache_files)));
+    $cache_ok = $cache->useCache(array('files' => $cache_files));
+    http_cached($cache->cache, $cache_ok);
 
     // start output buffering
     ob_start();
