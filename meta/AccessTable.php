@@ -226,7 +226,7 @@ abstract class AccessTable {
             if($asarray) {
                 $data[$col->getLabel()] = $value->getRawValue();
             } else {
-                $data[] = $value;
+                $data[$col->getLabel()] = $value;
             }
         }
 

@@ -101,23 +101,23 @@ class Type_Lookup_struct_test extends StructTest {
         $access = AccessTable::byTableName('dropdowns', 'test1');
         $data = $access->getData();
 
-        $this->assertEquals('["1","[\\"title1\\",\\"This is a title\\"]"]', $data[0]->getValue());
-        $this->assertEquals('["1","title1"]', $data[1]->getValue());
+        $this->assertEquals('["1","[\\"title1\\",\\"This is a title\\"]"]', $data['drop1']->getValue());
+        $this->assertEquals('["1","title1"]', $data['drop2']->getValue());
 
-        $this->assertEquals('1', $data[0]->getRawValue());
-        $this->assertEquals('1', $data[1]->getRawValue());
+        $this->assertEquals('1', $data['drop1']->getRawValue());
+        $this->assertEquals('1', $data['drop2']->getRawValue());
 
-        $this->assertEquals('This is a title', $data[0]->getDisplayValue());
-        $this->assertEquals('title1', $data[1]->getDisplayValue());
+        $this->assertEquals('This is a title', $data['drop1']->getDisplayValue());
+        $this->assertEquals('title1', $data['drop2']->getDisplayValue());
 
         $R = new \Doku_Renderer_xhtml();
-        $data[0]->render($R, 'xhtml');
+        $data['drop1']->render($R, 'xhtml');
         $pq = \phpQuery::newDocument($R->doc);
         $this->assertEquals('This is a title', $pq->find('a')->text());
         $this->assertContains('title1', $pq->find('a')->attr('href'));
 
         $R = new \Doku_Renderer_xhtml();
-        $data[1]->render($R, 'xhtml');
+        $data['drop2']->render($R, 'xhtml');
         $pq = \phpQuery::newDocument($R->doc);
         $this->assertEquals('title1', $pq->find('a')->text());
         $this->assertContains('title1', $pq->find('a')->attr('href'));
