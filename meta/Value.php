@@ -23,6 +23,9 @@ class Value {
     /** @var array|int|string */
     protected $display = null;
 
+    /** @var array|int|string */
+    protected $compare = null;
+
     /** @var bool is this a raw value only? */
     protected $rawonly = false;
 
@@ -76,6 +79,18 @@ class Value {
     }
 
     /**
+     * Access the compare value
+     *
+     * @return array|string (array on multi)
+     */
+    public function getCompareValue() {
+        if($this->rawonly) {
+            throw new StructException('Accessing comparevalue of rawonly value forbidden');
+        }
+        return $this->compare;
+    }
+
+    /**
      * Allows overwriting the current value
      *
      * Cleans the value(s) of empties
@@ -95,6 +110,7 @@ class Value {
         $this->value = array();
         $this->rawvalue = array();
         $this->display = array();
+        $this->compare = array();
 
         // remove all blanks
         foreach($value as $val) {
@@ -108,8 +124,10 @@ class Value {
             $this->rawvalue[] = $raw;
             if($israw) {
                 $this->display[] = $val;
+                $this->compare[] = $val;
             } else {
                 $this->display[] = $this->column->getType()->displayValue($val);
+                $this->compare[] = $this->column->getType()->compareValue($val);
             }
         }
 
@@ -118,6 +136,7 @@ class Value {
             $this->value = (string) array_shift($this->value);
             $this->rawvalue = (string) array_shift($this->rawvalue);
             $this->display = (string) array_shift($this->display);
+            $this->compare = (string) array_shift($this->compare);
         }
     }
 

@@ -444,6 +444,19 @@ abstract class AbstractBaseType {
     }
 
     /**
+     * This is the value to be used as argument to a filter for another column.
+     *
+     * In a sense this is the counterpart to the @see filter() function
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function compareValue($value) {
+        return $this->rawValue($value);
+    }
+
+    /**
      * Validate and optionally clean a single value
      *
      * This function needs to throw a validation exception when validation fails.

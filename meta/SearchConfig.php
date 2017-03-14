@@ -142,8 +142,8 @@ class SearchConfig extends Search {
             // get the data from the current page
             if($table && $label) {
                 $schemaData = AccessTable::byTableName($table, $INFO['id'], 0);
-                $data = $schemaData->getDataArray();
-                $value = $data[$label];
+                $data = $schemaData->getData();
+                $value = $data[$label]->getCompareValue();
 
                 if(is_array($value) && !count($value)) {
                     $value = '';

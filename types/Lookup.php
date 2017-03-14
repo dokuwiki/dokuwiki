@@ -167,6 +167,26 @@ class Lookup extends Dropdown {
     }
 
     /**
+     * This is the value to be used as argument to a filter for another column.
+     *
+     * In a sense this is the counterpart to the @see filter() function
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function compareValue($value) {
+        list(, $value) = json_decode($value);
+        $column = $this->getLookupColumn();
+        if($column) {
+            return $column->getType()->rawValue($value);
+        } else {
+            return '';
+        }
+    }
+
+
+    /**
      * Merge with lookup table
      *
      * @param QueryBuilder $QB
