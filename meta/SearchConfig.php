@@ -143,6 +143,9 @@ class SearchConfig extends Search {
             if($table && $label) {
                 $schemaData = AccessTable::byTableName($table, $INFO['id'], 0);
                 $data = $schemaData->getData();
+                if (!isset($data[$label])) {
+                    throw new StructException("comlumn not in table", $label, $table);
+                }
                 $value = $data[$label]->getCompareValue();
 
                 if(is_array($value) && !count($value)) {
