@@ -240,7 +240,12 @@ function init_session() {
     session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
 
     // make sure the session cookie contains a valid session ID
-    if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
+    // Originally, the session ID was required to have at least 22 characters
+    // (see commit 924e477e), but this broke the
+    // [authplaincas](https://www.dokuwiki.org/plugin:authplaincas) plugin,
+    // because it replaces the session ID by a string of 13 characters.
+    // So I lowered the lower bound in the regex.
+    if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{13,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
         unset($_COOKIE[DOKU_SESSION_NAME]);
     }
 
