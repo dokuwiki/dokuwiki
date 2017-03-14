@@ -106,17 +106,18 @@ class DokuWiki_Plugin {
      * plugin equivalent of localFN()
      *
      * @param string $id id of localization file
+     * @param  string $ext The file extension (usually txt)
      * @return string wiki text
      */
-    public function localFN($id) {
+    public function localFN($id,$ext='txt') {
         global $conf;
         $plugin = $this->getPluginName();
-        $file = DOKU_CONF.'plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.txt';
+        $file = DOKU_CONF.'plugin_lang/'.$plugin.'/'.$conf['lang'].'/'.$id.'.'.$ext;
         if (!file_exists($file)){
-            $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.txt';
+            $file = DOKU_PLUGIN.$plugin.'/lang/'.$conf['lang'].'/'.$id.'.'.$ext;
             if(!file_exists($file)){
                 //fall back to english
-                $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.txt';
+                $file = DOKU_PLUGIN.$plugin.'/lang/en/'.$id.'.'.$ext;
             }
         }
         return $file;
