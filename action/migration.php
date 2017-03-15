@@ -30,6 +30,9 @@ class action_plugin_struct_migration extends DokuWiki_Action_Plugin {
      * @param $param
      */
     public function handle_migrations(Doku_Event $event, $param) {
+        if ($event->data['sqlite']->getAdapter()->getDbname() !== 'struct') {
+            return;
+        }
         $to = $event->data['to'];
 
         if(is_callable(array($this, "migration$to"))) {
