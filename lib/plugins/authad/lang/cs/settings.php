@@ -6,6 +6,7 @@
  * @author mkucera66@seznam.cz
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['account_suffix']        = 'Přípona vašeho účtu, tj. <code>@moje.domena.org</code>';
 $lang['base_dn']               = 'Vaše doménové jméno DN. tj. <code>DC=moje,DC=domena,DC=org</code>';
@@ -18,7 +19,7 @@ $lang['real_primarygroup']     = 'Má být zjištěna primární skupina namíst
 $lang['use_ssl']               = 'Použít spojení SSL? Pokud ano, nevyužívejte TLS níže.';
 $lang['use_tls']               = 'Použít spojení TLS? Pokud ano, nevyužívejte SSL výše.';
 $lang['debug']                 = 'Zobrazit dodatečné debugovací výstupy při chybách?';
-$lang['expirywarn']            = 'Dny mezi varováním o vyprčšení hesla uživatele a jeho vypršením. 0 znaší vypnuto.';
+$lang['expirywarn']            = 'Dny mezi varováním o vypršení hesla uživatele a jeho vypršením. 0 značí vypnuto.';
 $lang['additional']            = 'Čárkou oddělený seznam dodatečných atributů získávaných z uživatelských dat. Využito některými pluginy.';
 $lang['update_name']           = 'Povolit uživatelům upravit jejich AD zobrazované jméno?';
 $lang['update_mail']           = 'Povolit uživatelům upravit svou emailovou adresu?';
