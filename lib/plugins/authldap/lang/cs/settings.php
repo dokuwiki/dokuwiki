@@ -5,6 +5,7 @@
  *
  * @author mkucera66@seznam.cz
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['server']                = 'Váš server LDAP. Buď jméno hosta (<code>localhost</code>) nebo plně kvalifikovaný popis URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Port serveru LDAP. Pokud není, bude využito URL výše';
@@ -21,7 +22,7 @@ $lang['bindpw']                = 'Heslo uživatele výše';
 $lang['userscope']             = 'Omezení rozsahu vyhledávání uživatele';
 $lang['groupscope']            = 'Omezení rozsahu vyhledávání skupiny';
 $lang['userkey']               = 'Atribut označující uživatelské jméno; musí být konzistetní s uživatelským filtrem.';
-$lang['groupkey']              = 'Atribut šlenství uživatele ve skupinách (namísto standardních AD skupin), tj. skupina z oddělení nebo telefonní číslo';
+$lang['groupkey']              = 'Atribut členství uživatele ve skupinách (namísto standardních AD skupin), tj. skupina z oddělení nebo telefonní číslo';
 $lang['modPass']               = 'Může být LDAP heslo změněno přes dokuwiki?';
 $lang['debug']                 = 'Zobrazit dodatečné debugovací informace';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
