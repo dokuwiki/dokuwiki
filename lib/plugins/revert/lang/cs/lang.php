@@ -21,6 +21,7 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['menu']                  = 'Obnova zaspamovaných stránek';
 $lang['filter']                = 'Hledat zaspamované stránky';
