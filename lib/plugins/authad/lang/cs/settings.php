@@ -6,10 +6,11 @@
  * @author mkucera66@seznam.cz
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['account_suffix']        = 'Přípona vašeho účtu, tj. <code>@moje.domena.org</code>';
 $lang['base_dn']               = 'Vaše doménové jméno DN. tj. <code>DC=moje,DC=domena,DC=org</code>';
-$lang['domain_controllers']    = 'Čárkou oddělenových kontrol=rů, tj. <code>srv1.domena.org,srv2.domena.org</code>';
+$lang['domain_controllers']    = 'Seznam čárkou oddělených kontrolérů, tj. <code>srv1.domena.org,srv2.domena.org</code>';
 $lang['admin_username']        = 'Privilegovaný uživatel Active Directory s přístupem ke všem datům. Volitelně, ale nutné pro určité akce typu zasílání mailů.';
 $lang['admin_password']        = 'Heslo uživatele výše';
 $lang['sso']                   = 'Chcete přihlašování Single-Sign-On pomocí jádra Kerberos nebo NTLM ( autentizační protokol obvyklý ve Windows)?';
