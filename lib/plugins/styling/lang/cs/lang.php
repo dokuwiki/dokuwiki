@@ -4,10 +4,11 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['menu']                  = 'Nastavení stylů vzhledu';
 $lang['js']['loader']          = 'Náhled se načítá...<br />pokud tento text nezmizí, pravděpodobně jsou nastaveny nesprávné hodnoty';
-$lang['js']['popup']           = 'Otevřit ve vlastním okně';
+$lang['js']['popup']           = 'Otevřít ve vlastním okně';
 $lang['error']                 = 'Omlouváme se, tento ';
 $lang['btn_preview']           = 'Náhled změn';
 $lang['btn_save']              = 'Uložit změny';

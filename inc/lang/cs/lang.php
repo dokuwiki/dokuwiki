@@ -21,6 +21,7 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -42,7 +43,7 @@ $lang['btn_older']             = 'starší >>';
 $lang['btn_revs']              = 'Starší verze';
 $lang['btn_recent']            = 'Poslední úpravy';
 $lang['btn_upload']            = 'Načíst';
-$lang['btn_cancel']            = 'Storno';
+$lang['btn_cancel']            = 'Zrušit';
 $lang['btn_index']             = 'Mapa stránek';
 $lang['btn_secedit']           = 'Upravit';
 $lang['btn_login']             = 'Přihlásit se';
@@ -133,8 +134,8 @@ $lang['js']['mediasize']       = 'Velikost obrázku';
 $lang['js']['mediatarget']     = 'Cíl odkazu';
 $lang['js']['mediaclose']      = 'Zavřít';
 $lang['js']['mediainsert']     = 'Vložit';
-$lang['js']['mediadisplayimg'] = 'Ukázat obrázek';
-$lang['js']['mediadisplaylnk'] = 'Ukázat pouze odkaz';
+$lang['js']['mediadisplayimg'] = 'Zobrazit obrázek';
+$lang['js']['mediadisplaylnk'] = 'Zobrazit pouze odkaz';
 $lang['js']['mediasmall']      = 'Malá verze';
 $lang['js']['mediamedium']     = 'Střední verze';
 $lang['js']['medialarge']      = 'Velká verze';
