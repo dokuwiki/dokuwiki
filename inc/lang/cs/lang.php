@@ -21,6 +21,7 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -42,7 +43,7 @@ $lang['btn_older']             = 'starší >>';
 $lang['btn_revs']              = 'Starší verze';
 $lang['btn_recent']            = 'Poslední úpravy';
 $lang['btn_upload']            = 'Načíst';
-$lang['btn_cancel']            = 'Storno';
+$lang['btn_cancel']            = 'Zrušit';
 $lang['btn_index']             = 'Mapa stránek';
 $lang['btn_secedit']           = 'Upravit';
 $lang['btn_login']             = 'Přihlásit se';
