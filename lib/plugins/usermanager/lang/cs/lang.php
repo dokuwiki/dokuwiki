@@ -17,6 +17,7 @@
  * @author Zbyněk Křivka <krivka@fit.vutbr.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['menu']                  = 'Správa uživatelů';
 $lang['noauth']                = '(autentizace uživatelů není k dispozici)';
@@ -45,7 +46,7 @@ $lang['import']                = 'Importovat nové uživatele';
 $lang['line']                  = 'Řádek č.';
 $lang['error']                 = 'Chybová zpráva';
 $lang['summary']               = 'Zobrazuji uživatele %1$d-%2$d z %3$d nalezených. Celkem %4$d uživatelů.';
-$lang['nonefound']             = 'Žadný uživatel nenalezen. Celkem %d uživatelů.';
+$lang['nonefound']             = 'Žádný uživatel nebyl nalezen. Celkem %d uživatelů.';
 $lang['delete_ok']             = '%d uživatelů smazáno';
 $lang['delete_fail']           = '%d uživatelů nelze smazat.';
 $lang['update_ok']             = 'Uživatel upraven';
