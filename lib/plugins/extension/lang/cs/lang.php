@@ -6,11 +6,12 @@
  * @author Viktor Zavadil <vzavadil@newps.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['menu']                  = 'Správce rozšíření';
 $lang['tab_plugins']           = 'Instalované moduly';
 $lang['tab_templates']         = 'Instalované šablony';
-$lang['tab_search']            = 'Vyhledej a instaluj';
+$lang['tab_search']            = 'Vyhledat a instalovat';
 $lang['tab_install']           = 'Ruční instalování';
 $lang['notimplemented']        = 'Tato vychytávka není dosud implementována';
 $lang['notinstalled']          = 'Toto rozšíření není instalováno';
