@@ -21,6 +21,7 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -133,8 +134,8 @@ $lang['js']['mediasize']       = 'Velikost obrázku';
 $lang['js']['mediatarget']     = 'Cíl odkazu';
 $lang['js']['mediaclose']      = 'Zavřít';
 $lang['js']['mediainsert']     = 'Vložit';
-$lang['js']['mediadisplayimg'] = 'Ukázat obrázek';
-$lang['js']['mediadisplaylnk'] = 'Ukázat pouze odkaz';
+$lang['js']['mediadisplayimg'] = 'Zobrazit obrázek';
+$lang['js']['mediadisplaylnk'] = 'Zobrazit pouze odkaz';
 $lang['js']['mediasmall']      = 'Malá verze';
 $lang['js']['mediamedium']     = 'Střední verze';
 $lang['js']['medialarge']      = 'Velká verze';
