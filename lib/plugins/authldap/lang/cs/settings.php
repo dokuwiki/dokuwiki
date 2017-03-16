@@ -5,13 +5,14 @@
  *
  * @author mkucera66@seznam.cz
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
+ * @author Martin Růžička <martinr@post.cz>
  */
 $lang['server']                = 'Váš server LDAP. Buď jméno hosta (<code>localhost</code>) nebo plně kvalifikovaný popis URL (<code>ldap://server.tld:389</code>)';
 $lang['port']                  = 'Port serveru LDAP. Pokud není, bude využito URL výše';
 $lang['usertree']              = 'Kde najít uživatelské účty, tj. <code>ou=Lide, dc=server, dc=tld</code>';
 $lang['grouptree']             = 'Kde najít uživatelské skupiny, tj. <code>ou=Skupina, dc=server, dc=tld</code>';
-$lang['userfilter']            = 'Filter LDAPu pro vyhledávání uživatelských účtů, tj. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
-$lang['groupfilter']           = 'Filter LDAPu pro vyhledávání uživatelských skupin, tj. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
+$lang['userfilter']            = 'Filtr LDAPu pro vyhledávání uživatelských účtů, tj. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
+$lang['groupfilter']           = 'Filtr LDAPu pro vyhledávání uživatelských skupin, tj. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
 $lang['version']               = 'Verze použitého protokolu. Můžete potřebovat jej nastavit na <code>3</code>';
 $lang['starttls']              = 'Využít spojení TLS?';
 $lang['referrals']             = 'Přeposílat odkazy?';
