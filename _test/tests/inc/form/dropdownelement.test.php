@@ -58,7 +58,10 @@ class form_dropdownelement_test extends DokuWikiTest {
                     'data-foo' => 'bar'
                 )
             ),
-            'second'
+            'second',
+            '3' => array(
+                'label' => 'the label of the complex third option',
+            )
         );
 
         $form->addDropdown('foo', $options, 'label text');
@@ -70,7 +73,7 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertTrue($select->length == 1);
 
         $options = $pq->find('option');
-        $this->assertTrue($options->length == 2);
+        $this->assertEquals(3, $options->length);
 
         $option = $pq->find('option#theID');
         $this->assertEquals(1, $option->length);
@@ -80,6 +83,81 @@ class form_dropdownelement_test extends DokuWikiTest {
         $this->assertTrue($option->hasClass('two'));
         $this->assertTrue($option->hasClass('classes'));
     }
+
+    public function test_optgroups() {
+        $form = new Form\Form();
+
+        $options1 = array(
+            'first' => 'the label',
+            'second'
+        );
+
+        $options2 = array(
+            'third' => array (
+                'label' => 'label of third option',
+                'attribute' => 'attribute-value'
+            ),
+            'fourth'
+        );
+
+        $dropdown = $form->addDropdown('foo', null, 'label text');
+        $dropdown->addOptGroup('opt1', $options1);
+        $dropdown->addOptGroup('opt2', $options2);
+
+        $dropdown->val('third');
+        $this->assertEquals('third', $dropdown->val());
+
+        /** @var Form\OptGroup[] $optGroups */
+        $optGroups = $dropdown->optGroups();
+        $this->assertEquals(array(
+            'first' => array('label' => 'the label'),
+            'second' => array('label' => 'second')
+        ), $optGroups['opt1']->options());
+
+        // HTML
+        $html = $form->toHTML();
+        $pq = phpQuery::newDocumentXHTML($html);
+
+        $optGroupsHTML = $pq->find('optgroup');
+        $this->assertEquals(2, $optGroupsHTML->length);
+
+        $options = $pq->find('option');
+        $this->assertEquals(4, $options->length);
+
+        $selected = $pq->find('option[selected=selected]');
+        $this->assertEquals('third', $selected->val());
+        $this->assertEquals('label of third option', $selected->text());
+    }
+
+    /**
+     * Ensure that there is always only a single one selected option
+     */
+    public function test_optgroups_doubleselect() {
+        $form = new Form\Form();
+        $options1 = array(
+            'double' => 'the label'
+        );
+
+        $options2 = array(
+            'double' => array (
+                'label' => 'label of third option',
+                'attribute' => 'attribute-value'
+            )
+        );
+
+        $dropdown = $form->addDropdown('foo', null, 'label text');
+        $dropdown->addOptGroup('opt1', $options1);
+        $dropdown->addOptGroup('opt2', $options2);
+        $dropdown->val('double');
+
+        // HTML
+        $html = $form->toHTML();
+        $pq = phpQuery::newDocumentXHTML($html);
+        $selected = $pq->find('option[selected=selected]');
+        $this->assertEquals(1, $selected->length);
+        $this->assertEquals('the label', $selected->text());
+    }
+
 
     /**
      * check that posted values overwrite preset default

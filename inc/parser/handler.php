@@ -446,7 +446,7 @@ class Doku_Handler {
 
         //decide which kind of link it is
 
-        if ( preg_match('/^[a-zA-Z0-9\.]+>{1}.*$/u',$link[0]) ) {
+        if ( link_isinterwiki($link[0]) ) {
             // Interwiki
             $interwiki = explode('>',$link[0],2);
             $this->_addCall(
@@ -693,8 +693,8 @@ function Doku_Handler_Parse_Media($match) {
         $cache = 'cache';
     }
 
-    // Check whether this is a local or remote image
-    if ( media_isexternal($src) ) {
+    // Check whether this is a local or remote image or interwiki
+    if (media_isexternal($src) || link_isinterwiki($src)){
         $call = 'externalmedia';
     } else {
         $call = 'internalmedia';

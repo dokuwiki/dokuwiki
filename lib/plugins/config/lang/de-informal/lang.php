@@ -1,6 +1,7 @@
 <?php
+
 /**
- * German (informal) language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
@@ -11,7 +12,7 @@
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author rnck <dokuwiki@rnck.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -87,6 +88,7 @@ $lang['disableactions_subscription'] = 'Bestellen/Abbestellen';
 $lang['disableactions_wikicode'] = 'Zeige Quelle/Exportiere Rohdaten';
 $lang['disableactions_profile_delete'] = 'Eigenes Benutzerprofil löschen';
 $lang['disableactions_other']  = 'Weitere Aktionen (durch Komma getrennt)';
+$lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Zeitüberschreitung bei der Authentifizierung (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktiviere diese Option, wenn nur der Login deines Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
 $lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
@@ -144,6 +146,10 @@ $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wik
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
 $lang['renderer__plugin']      = '%s (Erweiterung)';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
+$lang['jquerycdn']             = 'Sollen die jQuery und jQuery UI Skriptdateien von einem CDN geladen werden? Das verursacht zusätzliche HTTP Anfragen, aber die Dateien werden möglicherweise schneller geladen und Nutzer haben sie vielleicht bereits im Cache.';
+$lang['jquerycdn_o_0']         = 'Kein CDN, nur lokale Auslieferung';
+$lang['jquerycdn_o_jquery']    = 'CDN bei code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN bei cdnjs.com';
 $lang['proxy____host']         = 'Proxyadresse';
 $lang['proxy____port']         = 'Proxyport';
 $lang['proxy____user']         = 'Benutzername für den Proxy';
@@ -191,6 +197,7 @@ $lang['xsendfile_o_2']         = 'Standard X-Sendfile-Header';
 $lang['xsendfile_o_3']         = 'Proprietärer Nginx X-Accel-Redirect-Header';
 $lang['showuseras_o_loginname'] = 'Login-Name';
 $lang['showuseras_o_username'] = 'Voller Name des Benutzers';
+$lang['showuseras_o_username_link'] = 'Kompletter Name des Benutzers als Interwiki-Link';
 $lang['showuseras_o_email']    = 'E-Mail-Adresse des Benutzers (je nach Mailguard-Einstellung verschleiert)';
 $lang['showuseras_o_email_link'] = 'E-Mail-Adresse des Benutzers als mailto:-Link';
 $lang['useheading_o_0']        = 'Niemals';

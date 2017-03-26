@@ -4,4 +4,4 @@ Koristite ovu stranicu za upravljanje postavkama Vaše DokuWiki instalacije. Za 
 
 Postavke prikazane u svjetlo crvenoj pozadini su zaštićene i ne mogu biti mijenjane pomoću ovog dodatka. Postavke s plavom pozadinom sadrže inicijalno podrazumijevane vrijednosti, dok postavke s bijelom pozadinom sadrže korisnički postavljene vrijednosti. I plave i bijele postavke se mogu mijenjati.
 
-Zapamtite da pritisnete **Snimi** gumb prije nego napustite ovu stranicu ili će izmjene biti izgubljene.
+Zapamtite da pritisnete **Pohrani** gumb prije nego napustite ovu stranicu ili će izmjene biti izgubljene.

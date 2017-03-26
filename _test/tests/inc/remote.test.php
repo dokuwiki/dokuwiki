@@ -144,7 +144,7 @@ class remote_test extends DokuWikiTest {
         parent::setUp();
 
         // mock plugin controller to return our test plugins
-        $pluginManager = $this->getMock('Doku_Plugin_Controller');
+        $pluginManager = $this->createMock('Doku_Plugin_Controller');
         $pluginManager->method('getList')->willReturn(array('testplugin', 'testplugin2'));
         $pluginManager->method('load')->willReturnCallback(
             function($type, $plugin) {

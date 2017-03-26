@@ -10,18 +10,59 @@ namespace dokuwiki\Form;
  */
 class DropdownElement extends InputElement {
 
-    protected $options = array();
-
-    protected $value = '';
+    /** @var array OptGroup[] */
+    protected $optGroups = array();
 
     /**
      * @param string $name The name of this form element
-     * @param string $options The available options
+     * @param array  $options The available options
      * @param string $label The label text for this element (will be autoescaped)
      */
     public function __construct($name, $options, $label = '') {
         parent::__construct('dropdown', $name, $label);
-        $this->options($options);
+        $this->rmattr('type');
+        $this->optGroups[''] = new OptGroup(null, $options);
+        $this->val('');
+    }
+
+    /**
+     * Add an `<optgroup>` and respective options
+     *
+     * @param string $label
+     * @param array  $options
+     * @return OptGroup a reference to the added optgroup
+     * @throws \Exception
+     */
+    public function addOptGroup($label, $options) {
+        if (empty($label)) {
+            throw new \InvalidArgumentException(hsc('<optgroup> must have a label!'));
+        }
+        $this->optGroups[$label] = new OptGroup($label, $options);
+        return end($this->optGroups);
+    }
+
+    /**
+     * Set or get the optgroups of an Dropdown-Element.
+     *
+     * optgroups have to be given as associative array
+     *   * the key being the label of the group
+     *   * the value being an array of options as defined in @see OptGroup::options()
+     *
+     * @param null|array $optGroups
+     * @return OptGroup[]|DropdownElement
+     */
+    public function optGroups($optGroups = null) {
+        if($optGroups === null) {
+            return $this->optGroups;
+        }
+        if (!is_array($optGroups)) {
+            throw new \InvalidArgumentException(hsc('Argument must be an associative array of label => [options]!'));
+        }
+        $this->optGroups = array();
+        foreach ($optGroups as $label => $options) {
+            $this->addOptGroup($label, $options);
+        }
+        return $this;
     }
 
     /**
@@ -41,21 +82,10 @@ class DropdownElement extends InputElement {
      * @return $this|array
      */
     public function options($options = null) {
-        if($options === null) return $this->options;
-        if(!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
-        $this->options = array();
-
-        foreach($options as $key => $val) {
-            if(is_int($key)) {
-                $this->options[$val] = array('label' => (string) $val);
-            } elseif (!is_array($val)) {
-                $this->options[$key] = array('label' => (string) $val);
-            } else {
-                if (!key_exists('label', $val)) throw new \InvalidArgumentException('If option is given as array, it has to have a "label"-key!');
-                $this->options[$key] = $val;
-            }
+        if ($options === null) {
+            return $this->optGroups['']->options();
         }
-        $this->val(''); // set default value (empty or first)
+        $this->optGroups[''] = new OptGroup(null, $options);
         return $this;
     }
 
@@ -91,15 +121,55 @@ class DropdownElement extends InputElement {
     public function val($value = null) {
         if($value === null) return $this->value;
 
-        if(isset($this->options[$value])) {
+        $value_exists = $this->setValueInOptGroups($value);
+
+        if($value_exists) {
             $this->value = $value;
         } else {
             // unknown value set, select first option instead
-            $keys = array_keys($this->options);
-            $this->value = (string) array_shift($keys);
+            $this->value = $this->getFirstOption();
+            $this->setValueInOptGroups($this->value);
         }
 
         return $this;
+    }
+
+    /**
+     * Returns the first options as it will be rendered in HTML
+     *
+     * @return string
+     */
+    protected function getFirstOption() {
+        $options = $this->options();
+        if (!empty($options)) {
+            $keys = array_keys($options);
+            return (string) array_shift($keys);
+        }
+        foreach ($this->optGroups as $optGroup) {
+            $options = $optGroup->options();
+            if (!empty($options)) {
+                $keys = array_keys($options);
+                return (string) array_shift($keys);
+            }
+        }
+    }
+
+    /**
+     * Set the value in the OptGroups, including the optgroup for the options without optgroup.
+     *
+     * @param string $value
+     * @return bool
+     */
+    protected function setValueInOptGroups($value) {
+        $value_exists = false;
+        /** @var OptGroup $optGroup */
+        foreach ($this->optGroups as $optGroup) {
+            $value_exists = $optGroup->storeValue($value) || $value_exists;
+            if ($value_exists) {
+                $value = null;
+            }
+        }
+        return $value_exists;
     }
 
     /**
@@ -111,15 +181,7 @@ class DropdownElement extends InputElement {
         if($this->useInput) $this->prefillInput();
 
         $html = '<select ' . buildAttributes($this->attrs()) . '>';
-        foreach($this->options as $key => $val) {
-            $selected = ($key == $this->value) ? ' selected="selected"' : '';
-            $attrs = '';
-            if (is_array($val['attrs'])) {
-                array_walk($val['attrs'],function (&$aval, $akey){$aval = hsc($akey).'="'.hsc($aval).'"';});
-                $attrs = join(' ', $val['attrs']);
-            }
-            $html .= '<option' . $selected . ' value="' . hsc($key) . '" '.$attrs.'>' . hsc($val['label']) . '</option>';
-        }
+        $html = array_reduce($this->optGroups, function($html, OptGroup $optGroup) {return $html . $optGroup->toHTML();}, $html);
         $html .= '</select>';
 
         return $html;

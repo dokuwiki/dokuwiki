@@ -41,14 +41,17 @@ class FeedParser_File extends SimplePie_File {
     var $headers = array();
     var $body;
     var $error;
+    /** @noinspection PhpMissingParentConstructorInspection */
 
     /**
      * Inititializes the HTTPClient
      *
      * We ignore all given parameters - they are set in DokuHTTPClient
+     *
+     * @inheritdoc
      */
     function __construct($url, $timeout=10, $redirects=5,
-                         $headers=null, $useragent=null, $force_fsockopen=false) {
+                         $headers=null, $useragent=null, $force_fsockopen=false, $curl_options = array()) {
         $this->http    = new DokuHTTPClient();
         $this->success = $this->http->sendRequest($url);
 
@@ -61,14 +64,17 @@ class FeedParser_File extends SimplePie_File {
         return $this->success;
     }
 
+    /** @inheritdoc */
     function headers(){
         return $this->headers;
     }
 
+    /** @inheritdoc */
     function body(){
         return $this->body;
     }
 
+    /** @inheritdoc */
     function close(){
         return true;
     }

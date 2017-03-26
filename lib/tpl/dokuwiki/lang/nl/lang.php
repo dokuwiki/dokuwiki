@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author hugo smet <hugo.smet@scarlet.be>
  */
 $lang['__background_site__']   = 'Kleur voor de onderste ondergrond (achter de inhoud kader)';

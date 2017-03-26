@@ -1,8 +1,8 @@
-Do DokuWiki byl nahrán nový dokument. Tady jsou detaily:
+Do DokuWiki byl nahrán nový dokument. Zde jsou podrobnosti:
 
 Soubor : @MEDIA@
 Datum : @DATE@
-Prohlážeč : @BROWSER@
+Prohlížeč : @BROWSER@
 IP adresa : @IPADDRESS@
 Hostitel : @HOSTNAME@
 Velikost : @SIZE@

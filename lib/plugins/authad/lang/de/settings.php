@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author Ben Fey <benedikt.fey@beck-heun.de>
  * @author Jonas Gröger <jonas.groeger@gmail.com>
+ * @author Carsten Perthel <carsten@cpesoft.com>
  */
 $lang['account_suffix']        = 'Ihr Account-Suffix. Z. B. <code>@my.domain.org</code>';
 $lang['base_dn']               = 'Ihr Base-DN. Z. B. <code>DC=my,DC=domain,DC=org</code>';
@@ -21,3 +22,5 @@ $lang['use_tls']               = 'TLS-Verbindung benutzen? Falls ja, SSL oberhal
 $lang['debug']                 = 'Zusätzliche Debug-Informationen bei Fehlern anzeigen?';
 $lang['expirywarn']            = 'Tage im Voraus um Benutzer über ablaufende Passwörter zu informieren. 0 zum Ausschalten.';
 $lang['additional']            = 'Eine Komma-separierte Liste von zusätzlichen AD-Attributen, die von den Benutzerobjekten abgefragt werden. Wird von einigen Plugins benutzt.';
+$lang['update_name']           = 'Benutzern erlauben, ihren AD Anzeige-Namen zu ändern?';
+$lang['update_mail']           = 'Benutzern erlauben, ihre E-Mail-Adresse zu ändern?';

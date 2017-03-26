@@ -3,7 +3,7 @@
  * Author Markus Baker: http://www.lastcraft.com
  * Version adapted from Simple Test: http://sourceforge.net/projects/simpletest/
  * For an intro to the Lexer see:
- * http://www.phppatterns.com/index.php/article/articleview/106/1/2/
+ * https://web.archive.org/web/20120125041816/http://www.phppatterns.com/docs/develop/simple_test_lexer_notes
  * @author Marcus Baker
  * @package Doku
  * @subpackage Lexer

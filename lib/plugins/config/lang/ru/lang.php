@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Denis Simakov <akinoame1@gmail.com>
  * @author Andrew Pleshakov <beotiger@mail.ru>
  * @author Змей Этерийский evil_snake@eternion.ru
@@ -20,6 +20,7 @@
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author RainbowSpike <1@2.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author alexey <xeenych@gmail.com>
  */
 $lang['menu']                  = 'Настройки вики';
 $lang['error']                 = 'Настройки не были сохранены из-за ошибки в одном из значений. Пожалуйста, проверьте свои изменения и попробуйте ещё раз.<br />Неправильные значения будут обведены красной рамкой.';
@@ -153,6 +154,9 @@ $lang['renderer_xhtml']        = 'Обработчик основного (xhtml
 $lang['renderer__core']        = '%s (ядро «Докувики»)';
 $lang['renderer__plugin']      = '%s (плагин)';
 $lang['dnslookups']            = '«Докувики» ищет DNS-имена пользователей, редактирующих страницы. Если у вас нет DNS-сервера или он работает медленно, рекомендуем отключить эту опцию.';
+$lang['jquerycdn_o_0']         = 'Не использовать CDN. Использовать только локальную доставку';
+$lang['jquerycdn_o_jquery']    = 'Использовать CDN с code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'Использовать CDN с cdnjs.com';
 $lang['proxy____host']         = 'proxy-адрес';
 $lang['proxy____port']         = 'proxy-порт';
 $lang['proxy____user']         = 'proxy-имя пользователя';

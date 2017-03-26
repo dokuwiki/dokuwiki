@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author H. Richard <wanderer379@t-online.de>
  * @author Joerg <scooter22@gmx.de>
  * @author Simon <st103267@stud.uni-stuttgart.de>
@@ -10,12 +10,13 @@
  * @author Dominik Mahr <drache.mahr@gmx.de>
  * @author Noel Tilliot <noeltilliot@byom.de>
  * @author Philip Knack <p.knack@stollfuss.de>
+ * @author Hella Breitkopf <hella.breitkopf@gmail.com>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
 $lang['tab_templates']         = 'Installierte Templates';
 $lang['tab_search']            = 'Suchen und Installieren';
-$lang['tab_install']           = 'Händisch installieren';
+$lang['tab_install']           = 'Manuell installieren';
 $lang['notimplemented']        = 'Dieses Fähigkeit/Eigenschaft wurde noch nicht implementiert';
 $lang['notinstalled']          = 'Diese Erweiterung ist nicht installiert';
 $lang['alreadyenabled']        = 'Diese Erweiterung ist bereits aktiviert';
@@ -45,10 +46,10 @@ $lang['bugs_features']         = 'Bugs';
 $lang['tags']                  = 'Schlagworte';
 $lang['author_hint']           = 'Suche weitere Erweiterungen dieses Autors';
 $lang['installed']             = 'Installiert:';
-$lang['downloadurl']           = 'URL zum Herunterladen';
+$lang['downloadurl']           = 'URL zum Herunterladen:';
 $lang['repository']            = 'Quelle:';
 $lang['unknown']               = '<em>unbekannt</em>';
-$lang['installed_version']     = 'Installierte Version';
+$lang['installed_version']     = 'Installierte Version:';
 $lang['install_date']          = 'Ihr letztes Update:';
 $lang['available_version']     = 'Verfügbare Version: ';
 $lang['compatible']            = 'Kompatibel mit:';
@@ -85,10 +86,10 @@ $lang['update_available']      = '<strong>Update:</strong> Version %s steht zum 
 $lang['wrong_folder']          = '<strong>Plugin wurde nicht korrekt installiert:</strong> Benennen Sie das Plugin-Verzeichnis "%s" in "%s" um.';
 $lang['url_change']            = '<strong>URL geändert:</strong> Die Download URL wurde seit dem letzten Download geändert. Internetadresse vor Aktualisierung der Erweiterung auf Gültigkeit prüfen.<br />Neu: %s<br />Alt: %s';
 $lang['error_badurl']          = 'URLs sollten mit http oder https beginnen';
-$lang['error_dircreate']       = 'Temporären Ordner konnte nicht erstellt werden, um Download zu empfangen';
+$lang['error_dircreate']       = 'Temporärer Ordner konnte nicht erstellt werden, um Download zu abzuspeichern';
 $lang['error_download']        = 'Download der Datei: %s nicht möglich.';
 $lang['error_decompress']      = 'Die heruntergeladene Datei konnte nicht entpackt werden. Dies kann die Folge eines fehlerhaften Downloads sein. In diesem Fall sollten Sie versuchen den Vorgang zu wiederholen. Es kann auch die Folge eines unbekannten Kompressionsformates sein, in diesem ​​Fall müssen Sie die Datei selber herunterladen und manuell installieren.';
-$lang['error_findfolder']      = 'Das Erweiterungs-Verzeichnis konnte nicht identifiziert werden, laden und installieren sie die Datei manuell.';
+$lang['error_findfolder']      = 'Das Erweiterungs-Verzeichnis konnte nicht identifiziert werden, laden und installieren Sie die Datei manuell.';
 $lang['error_copy']            = 'Beim Versuch Dateien in den Ordner <em>%s</em>: zu installieren trat ein Kopierfehler auf. Die Dateizugriffsberechtigungen könnten falsch sein. Dies kann an einem unvollständig installierten Plugin liegen und beeinträchtigt somit die Stabilität Ihre Wiki-Installation.';
 $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgeschützt';
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';

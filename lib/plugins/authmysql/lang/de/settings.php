@@ -2,14 +2,15 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Hella Breitkopf <hella.breitkopf@gmail.com>
  */
 $lang['server']                = 'MySQL-Server';
 $lang['user']                  = 'Benutzername für den Zugriff auf den MySQL-Server.';
 $lang['password']              = 'Passwort des angegebenen Benutzers.';
-$lang['database']              = 'Zu verwendende Datenbank.';
-$lang['charset']               = 'Verwendetes Character-Set in der Datenbank.';
+$lang['database']              = 'Zu verwendende Datenbank';
+$lang['charset']               = 'Zeichensatz der Datenbank';
 $lang['debug']                 = 'Debug-Informationen anzeigen?';
 $lang['forwardClearPass']      = 'Passwort der DokuWiki-Benutzer im Klartext an die Datenbank übergeben? (Im Normalfall wird die passcrypt-Option angewendet.)';
 $lang['TablesToLock']          = 'Eine Komma-separierte Liste von Tabellen, die vor Schreiboperationen gesperrt werden müssen.';

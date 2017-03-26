@@ -158,34 +158,59 @@ class sqlite_plugin_authpdo_test extends DokuWikiTest {
         $info = $auth->getUserData('tester');
         $this->assertEquals(array('admin', 'another', 'user'), $info['grps']);
 
+
+        $expect = array(
+            'admin' => array(
+                'user' => 'admin',
+                'name' => 'The Admin',
+                'mail' => 'admin@example.com',
+                'uid' => '1',
+                'grps' => array('admin', 'user')
+            ),
+            'user' => array(
+                'user' => 'user',
+                'name' => 'A normal user',
+                'mail' => 'user@example.com',
+                'uid' => '2',
+                'grps' => array('user')
+            ),
+            'tester' => array(
+                'user' => 'tester',
+                'name' => 'The Test User',
+                'mail' => 'test@example.com',
+                'uid' => '3',
+                'grps' => array('admin', 'another', 'user')
+            )
+        );
+
         // list users
         $users = $auth->retrieveUsers();
-        $this->assertEquals(array('admin', 'tester', 'user'), $users);
+        $this->assertEquals(array($expect['admin'], $expect['tester'], $expect['user']), $users);
 
         $users = $auth->retrieveUsers(1); // offset
-        $this->assertEquals(array('tester', 'user'), $users);
+        $this->assertEquals(array($expect['tester'], $expect['user']), $users);
 
         $users = $auth->retrieveUsers(1, 1); // offset + limit
-        $this->assertEquals(array('tester'), $users);
+        $this->assertEquals(array($expect['tester']), $users);
 
         $users = $auth->retrieveUsers(0, -1, array('group' => 'admin')); // full group
-        $this->assertEquals(array('admin', 'tester'), $users);
-        $count = $auth->getUserCount(array('group' => 'admin'));
-        $this->assertEquals(2, $count);
+        $this->assertEquals(array($expect['admin'], $expect['tester']), $users);
+        $count = $auth->getUserCount(array('grps' => 'admin'));
+        $this->assertSame(2, $count);
 
         $users = $auth->retrieveUsers(0, -1, array('group' => 'dmi')); // substring
-        $this->assertEquals(array('admin', 'tester'), $users);
-        $count = $auth->getUserCount(array('group' => 'dmi'));
-        $this->assertEquals(2, $count);
+        $this->assertEquals(array($expect['admin'], $expect['tester']), $users);
+        $count = $auth->getUserCount(array('grps' => 'dmi'));
+        $this->assertSame(2, $count);
 
         $users = $auth->retrieveUsers(0, -1, array('user' => 'dmi')); // substring
-        $this->assertEquals(array('admin'), $users);
+        $this->assertEquals(array($expect['admin']), $users);
         $count = $auth->getUserCount(array('user' => 'dmi'));
-        $this->assertEquals(1, $count);
+        $this->assertSame(1, $count);
 
         // delete user
         $num = $auth->deleteUsers(array('tester', 'foobar'));
-        $this->assertEquals(1, $num);
+        $this->assertSame(1, $num);
 
     }
 

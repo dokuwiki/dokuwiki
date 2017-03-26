@@ -2,8 +2,9 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Hella Breitkopf <hella.breitkopf@gmail.com>
  */
 $lang['server']                = 'PostgreSQL-Server';
 $lang['port']                  = 'Port des PostgreSQL-Servers.';
@@ -30,9 +31,9 @@ $lang['delUser']               = 'SQL-Kommando um einen Benutzer zu löschen.';
 $lang['delUserRefs']           = 'SQL-Kommando um einen Benutzer aus allen Gruppen zu entfernen.';
 $lang['updateUser']            = 'SQL-Kommando um das Profil eines Benutzers zu aktualisieren.';
 $lang['UpdateLogin']           = 'SQL-Bedingung um den Anmeldenamen eines Benutzers zu ändern.';
-$lang['UpdatePass']            = 'SQL-Bedingung um das Passwort eines Benutzers zu ändern.';
-$lang['UpdateEmail']           = 'SQL-Bedingung um die E-Mail-Adresse eines Benutzers zu ändern.';
-$lang['UpdateName']            = 'SQL-Bedingung um den Namen eines Benutzers zu ändern.';
-$lang['UpdateTarget']          = 'SQL-Bedingung zur eindeutigen Identifikation des Benutzers.';
+$lang['UpdatePass']            = 'SQL-Befehl um das Passwort eines Benutzers zu ändern.';
+$lang['UpdateEmail']           = 'SQL-Befehl um die E-Mail-Adresse eines Benutzers zu ändern.';
+$lang['UpdateName']            = 'SQL-Befehl um den Namen eines Benutzers zu ändern.';
+$lang['UpdateTarget']          = 'SQL-Filter zur eindeutigen Identifikation des Benutzers.';
 $lang['delUserGroup']          = 'SQL-Kommando um einen Benutzer aus einer angegeben Gruppe zu entfernen.';
 $lang['getGroupID']            = 'SQL-Kommando um den Primärschlüssel einer Gruppe auszulesen.';

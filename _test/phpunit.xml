@@ -4,6 +4,7 @@
     convertNoticesToExceptions="false"
     colors="true"
     stderr="true"
+    backupGlobals="true"
     >
 
     <testsuites>

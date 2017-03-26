@@ -262,7 +262,8 @@ function tpl_admin() {
         if($INFO['prependTOC']) tpl_toc();
         $plugin->html();
     } else {
-        html_admin();
+        $admin = new dokuwiki\Ui\Admin();
+        $admin->show();
     }
     return true;
 }
@@ -409,7 +410,15 @@ function tpl_metaheaders($alt = true) {
     $script .= 'var JSINFO = '.$json->encode($JSINFO).';';
     $head['script'][] = array('type'=> 'text/javascript', '_data'=> $script);
 
-    // load external javascript
+    // load jquery
+    $jquery = getCdnUrls();
+    foreach($jquery as $src) {
+        $head['script'][] = array(
+            'type' => 'text/javascript', 'charset' => 'utf-8', '_data' => '', 'src' => $src
+        );
+    }
+
+    // load our javascript dispatcher
     $head['script'][] = array(
         'type'=> 'text/javascript', 'charset'=> 'utf-8', '_data'=> '',
         'src' => DOKU_BASE.'lib/exe/js.php'.'?t='.rawurlencode($conf['template']).'&tseed='.$tseed
@@ -436,6 +445,9 @@ function tpl_metaheaders($alt = true) {
  */
 function _tpl_metaheaders_action($data) {
     foreach($data as $tag => $inst) {
+        if($tag == 'script') {
+            echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
+        }
         foreach($inst as $attr) {
             echo '<', $tag, ' ', buildAttributes($attr);
             if(isset($attr['_data']) || $tag == 'script') {
@@ -449,6 +461,9 @@ function _tpl_metaheaders_action($data) {
                 echo '/>';
             }
             echo "\n";
+        }
+        if($tag == 'script') {
+            echo "<!--<![endif]-->\n";
         }
     }
 }
@@ -995,9 +1010,9 @@ function tpl_pageinfo($ret = false) {
     $fn = $INFO['filepath'];
     if(!$conf['fullpath']) {
         if($INFO['rev']) {
-            $fn = str_replace(fullpath($conf['olddir']).'/', '', $fn);
+            $fn = str_replace($conf['olddir'].'/', '', $fn);
         } else {
-            $fn = str_replace(fullpath($conf['datadir']).'/', '', $fn);
+            $fn = str_replace($conf['datadir'].'/', '', $fn);
         }
     }
     $fn   = utf8_decodeFN($fn);
@@ -1224,8 +1239,8 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null) {
     /** @var Input $INPUT */
     global $INPUT;
     global $REV;
-    $w = tpl_img_getTag('File.Width');
-    $h = tpl_img_getTag('File.Height');
+    $w = (int) tpl_img_getTag('File.Width');
+    $h = (int) tpl_img_getTag('File.Height');
 
     //resize to given max values
     $ratio = 1;

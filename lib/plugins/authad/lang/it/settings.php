@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Torpedo <dgtorpedo@gmail.com>
  */
@@ -19,3 +19,5 @@ $lang['use_tls']               = 'Usare la connessione TSL? Se usata, non abilit
 $lang['debug']                 = 'Visualizzare output addizionale di debug per gli errori?';
 $lang['expirywarn']            = 'Giorni di preavviso per la scadenza della password dell\'utente. 0 per disabilitare.';
 $lang['additional']            = 'Valori separati da virgola di attributi AD addizionali da caricare dai dati utente. Usato da alcuni plugin.';
+$lang['update_name']           = 'Permettere agli utenti di aggiornare il loro nome AD visualizzato? ';
+$lang['update_mail']           = 'Permettere agli utenti di aggiornare il loro indirizzo e-mail?';

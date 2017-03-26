@@ -9,7 +9,8 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
-require_once(DOKU_INC.'inc/PassHash.class.php');
+// load and initialize the core system
+require_once(DOKU_INC.'inc/init.php');
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
@@ -59,7 +60,8 @@ $dokuwiki_hash = array(
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
     '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
-    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73'
+    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73',
+    '2017-02-19'   => 'e4f2f5a34c9dbcd96a5ecc8f2df25bd9'
 );
 
 
@@ -640,21 +642,3 @@ function print_errors(){
         echo '</ul>';
     }
 }
-
-/**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param array $array
- */
-function remove_magic_quotes(&$array) {
-    foreach (array_keys($array) as $key) {
-        if (is_array($array[$key])) {
-            remove_magic_quotes($array[$key]);
-        }else {
-            $array[$key] = stripslashes($array[$key]);
-        }
-    }
-}
-
