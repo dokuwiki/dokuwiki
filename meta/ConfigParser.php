@@ -115,7 +115,12 @@ class ConfigParser {
                     $this->config['target'] = cleanID($val);
                     break;
                 default:
-                    throw new StructException("unknown option '%s'", hsc($key));
+                    $data = array('config' => &$this->config, 'key' => $key, 'val' => $val);
+                    $ev = new \Doku_Event('PLUGIN_STRUCT_CONFIGPARSER_UNKNOWNKEY', $data);
+                    if($ev->advise_before()) {
+                        throw new StructException("unknown option '%s'", hsc($key));
+                    }
+                    $ev->advise_after();
             }
         }
 
