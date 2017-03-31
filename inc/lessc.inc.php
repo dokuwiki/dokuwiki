@@ -3280,7 +3280,7 @@ class lessc_parser {
      * Consume an assignment operator
      * Can optionally take a name that will be set to the current property name
      *
-     * @param null $name
+     * @param null|string $name
      *
      * @return bool
      */
