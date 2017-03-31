@@ -777,8 +777,8 @@ class Doku_Handler_Nest implements Doku_Handler_CallWriter_Interface {
      * constructor
      *
      * @param Doku_Handler_CallWriter|Doku_Handler_CallWriter_Interface $CallWriter the renderers current call writer
-     * @param  string $close closing instruction name, this is required to properly terminate the
-     *                                    syntax mode if the document ends without a closing pattern
+     * @param string                                                    $close      closing instruction name, this is required to properly terminate the
+     *                                                                              syntax mode if the document ends without a closing pattern
      */
     function __construct(Doku_Handler_CallWriter_Interface $CallWriter, $close="nest_close") {
         $this->CallWriter = $CallWriter;
