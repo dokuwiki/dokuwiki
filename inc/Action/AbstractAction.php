@@ -23,8 +23,13 @@ abstract class AbstractAction {
      *
      * @param string $actionname the name of this action (see getActioName() for caveats)
      */
-    public function __construct($actionname) {
-        $this->actionname = $actionname;
+    public function __construct($actionname='') {
+        if($actionname !== '') {
+            $this->actionname = $actionname;
+        } else {
+            // http://stackoverflow.com/a/27457689/172068
+            $this->actionname = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+        }
     }
 
     /**

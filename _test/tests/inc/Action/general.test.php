@@ -15,12 +15,13 @@ class action_general extends DokuWikiTest {
             array('Search', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Recent', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Profile', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
-            array('Profiledel', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
+            array('ProfileDelete', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Index', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Sitemap', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Denied', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Register', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Resendpwd', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
+            array('Backlink', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
 
             array('Revert', AUTH_ADMIN, array('exists' => true, 'ismanager' => false)),
             array('Revert', AUTH_EDIT, array('exists' => true, 'ismanager' => true)),
@@ -36,6 +37,7 @@ class action_general extends DokuWikiTest {
             array('Source', AUTH_READ, array('exists' => true, 'ismanager' => false)),
             array('Export', AUTH_READ, array('exists' => true, 'ismanager' => false)),
             array('Media', AUTH_READ, array('exists' => true, 'ismanager' => false)),
+            array('Revisions', AUTH_READ, array('exists' => true, 'ismanager' => false)),
 
             array('Draftdel', AUTH_EDIT, array('exists' => true, 'ismanager' => false)),
 
@@ -58,8 +60,6 @@ class action_general extends DokuWikiTest {
             array('Draft', AUTH_CREATE, array('exists' => false, 'ismanager' => false)),
             array('Edit', AUTH_CREATE, array('exists' => false, 'ismanager' => false)),
             array('Preview', AUTH_CREATE, array('exists' => false, 'ismanager' => false)),
-
-
         );
     }
 
@@ -109,6 +109,8 @@ class action_general extends DokuWikiTest {
         } catch(\Exception $e) {
             $this->assertSame(ActionDisabledException::class, get_class($e));
         }
+
+        $this->assertTrue(true); // mark as not risky
     }
 
     /**
@@ -121,6 +123,7 @@ class action_general extends DokuWikiTest {
         $classname = 'dokuwiki\\Action\\' . $name;
         /** @var \dokuwiki\Action\AbstractAction $class */
         $class = new $classname();
+        $this->assertTrue(true); // mark as not risky
         if(!is_a($class, AbstractAclAction::class)) return;
 
         global $conf;
@@ -152,6 +155,7 @@ class action_general extends DokuWikiTest {
         $classname = 'dokuwiki\\Action\\' . $name;
         /** @var \dokuwiki\Action\AbstractAction $class */
         $class = new $classname();
+        $this->assertTrue(true); // mark as not risky
         if(!is_a($class, AbstractUserAction::class)) return;
 
         global $conf;
