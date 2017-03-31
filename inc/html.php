@@ -1049,9 +1049,9 @@ function html_li_default($item){
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param array    $data array with item arrays
+ * @param array    $data  array with item arrays
  * @param string   $class class of ul wrapper
- * @param callable $func callback to print an list item
+ * @param callable $func  callback to print an list item
  * @param callable $lifunc callback to the opening li tag
  * @param bool     $forcewrapper Trigger building a wrapper ul if the first level is
  *                               0 (we have a root object) or 1 (just the root content)

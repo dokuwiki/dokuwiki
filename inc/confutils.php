@@ -263,7 +263,10 @@ function confToHash($file,$lower=false) {
  * @param  callback $fn       the function used to process the configuration file into an array
  * @param  array    $params   optional additional params to pass to the callback
  * @param  callback $combine  the function used to combine arrays of values read from different configuration files;
- * 
+ *                            the function takes two parameters,
+ *                               $combined - the already read & merged configuration values
+ *                               $new - array of config values from the config cascade file being currently processed
+ *                            and returns an array of the merged configuration values.
  * @return array    configuration values
  */
 function retrieveConfig($type,$fn,$params=null,$combine='array_merge') {

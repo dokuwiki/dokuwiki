@@ -1798,7 +1798,7 @@ class lessc {
      * Initialize any static state, can initialize parser for a file
      * $opts isn't used yet
      *
-     * @param null $fname
+     * @param null|string $fname
      */
 	public function __construct($fname = null) {
 		if ($fname !== null) {
