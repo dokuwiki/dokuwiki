@@ -427,7 +427,12 @@ function media_save($file, $id, $ow, $auth, $move) {
 
     // get filetype regexp
     $types = array_keys(getMimeTypes());
-    $types = array_map(create_function('$q','return preg_quote($q,"/");'),$types);
+    $types = array_map(
+        function ($q) {
+            return preg_quote($q, "/");
+        },
+        $types
+    );
     $regex = join('|',$types);
 
     // because a temp file was created already
