@@ -16,6 +16,7 @@ class Diff extends AbstractAction {
         return AUTH_READ;
     }
 
+    /** @inheritdoc */
     public function preProcess() {
         global $INPUT;
 
@@ -24,6 +25,11 @@ class Diff extends AbstractAction {
         if(!empty($difftype)) {
             set_doku_pref('difftype', $difftype);
         }
+    }
+
+    /** @inheritdoc */
+    public function tplContent() {
+        html_diff();
     }
 
 }
