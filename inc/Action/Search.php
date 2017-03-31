@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionAbort;
 class Search extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_NONE;
     }
 

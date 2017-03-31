@@ -15,7 +15,7 @@ use dokuwiki\Action\Exception\ActionException;
 class Save extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         global $INFO;
         if($INFO['exists']) {
             return AUTH_EDIT;

@@ -12,7 +12,7 @@ namespace dokuwiki\Action;
 class Diff extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_READ;
     }
 

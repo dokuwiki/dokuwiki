@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionException;
 class Login extends AbstractAclAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_NONE;
     }
 

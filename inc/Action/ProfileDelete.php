@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionAbort;
 class ProfileDelete extends AbstractUserAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_NONE;
     }
 

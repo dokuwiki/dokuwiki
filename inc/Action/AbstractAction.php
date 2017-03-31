@@ -41,7 +41,7 @@ abstract class AbstractAction {
      *
      * @return int
      */
-    abstract function minimumPermission();
+    abstract public function minimumPermission();
 
     /**
      * Check permissions are correct to run this action

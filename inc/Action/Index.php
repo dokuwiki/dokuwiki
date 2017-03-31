@@ -12,10 +12,11 @@ namespace dokuwiki\Action;
 class Index extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_NONE;
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         global $IDX;
         html_index($IDX);

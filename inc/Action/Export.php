@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionAbort;
 class Export extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_READ;
     }
 

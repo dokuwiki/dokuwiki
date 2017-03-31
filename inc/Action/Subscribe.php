@@ -12,7 +12,7 @@ namespace dokuwiki\Action;
 class Subscribe extends AbstractUserAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_READ;
     }
 

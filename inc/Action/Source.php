@@ -12,7 +12,7 @@ namespace dokuwiki\Action;
 class Source extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_READ;
     }
 

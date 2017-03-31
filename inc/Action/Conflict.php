@@ -12,7 +12,7 @@ namespace dokuwiki\Action;
 class Conflict extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         global $INFO;
         if($INFO['exists']) {
             return AUTH_EDIT;

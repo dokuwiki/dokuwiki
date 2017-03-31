@@ -18,7 +18,7 @@ namespace dokuwiki\Action;
 class Show extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_READ;
     }
 

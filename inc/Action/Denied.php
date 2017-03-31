@@ -12,7 +12,7 @@ namespace dokuwiki\Action;
 class Denied extends AbstractAclAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         return AUTH_NONE;
     }
 

@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionAbort;
 class Edit extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         global $INFO;
         if($INFO['exists']) {
             return AUTH_READ; // we check again below
@@ -36,6 +36,7 @@ class Edit extends AbstractAction {
         }
     }
 
+    /** @inheritdoc */
     public function preProcess() {
         global $ID;
         global $INFO;
@@ -82,6 +83,7 @@ class Edit extends AbstractAction {
         lock($ID);
     }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_edit();
     }

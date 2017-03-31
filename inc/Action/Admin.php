@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionException;
 class Admin extends AbstractUserAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         global $INFO;
 
         if($INFO['ismanager']) {

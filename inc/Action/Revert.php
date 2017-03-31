@@ -15,7 +15,7 @@ use dokuwiki\Action\Exception\ActionException;
 class Revert extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         global $INFO;
         if($INFO['ismanager']) {
             return AUTH_EDIT;
@@ -24,8 +24,13 @@ class Revert extends AbstractAction {
         }
     }
 
-    // fixme check for writability of the current page ($INFO might do it wrong and check the attic version)
-
+    /**
+     *
+     * @inheritdoc
+     * @throws ActionAbort
+     * @throws ActionException
+     * @todo check for writability of the current page ($INFO might do it wrong and check the attic version)
+     */
     public function preProcess() {
         if(!checkSecurityToken()) throw new ActionException();
 

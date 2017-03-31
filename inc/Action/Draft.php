@@ -13,7 +13,7 @@ namespace dokuwiki\Action;
 class Draft extends AbstractAction {
 
     /** @inheritdoc */
-    function minimumPermission() {
+    public function minimumPermission() {
         global $INFO;
         if($INFO['exists']) {
             return AUTH_EDIT;
