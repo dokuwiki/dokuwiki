@@ -256,6 +256,7 @@ class remote_test extends DokuWikiTest {
         $conf['remote'] = 1;
         $conf['remoteuser'] = '';
         $this->remote->forceAccess(); // no exception should occur
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
     /**
