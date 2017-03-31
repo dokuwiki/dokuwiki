@@ -789,7 +789,7 @@ class lessc {
      * The input is expected to be reduced. This function will not work on
      * things like expressions and variables.
      *
-     * @param $value
+     * @param array $value
      *
      * @return string
      */
@@ -1033,7 +1033,7 @@ class lessc {
      * Helper function to get arguments for color manipulation functions.
      * takes a list that contains a color like thing and a percentage
      *
-     * @param $args
+     * @param array $args
      *
      * @return array
      */
@@ -1276,7 +1276,7 @@ class lessc {
      * Converts a hsl array into a color value in rgb.
      * Expects H to be in range of 0 to 360, S and L in 0 to 100
      *
-     * @param $color
+     * @param array $color
      *
      * @return array
      */
@@ -1315,7 +1315,7 @@ class lessc {
      * Convert the rgb, rgba, hsl color literals of function type
      * as returned by the parser into values of color type.
      *
-     * @param $func
+     * @param array $func
      *
      * @return bool|mixed
      */
@@ -2020,7 +2020,7 @@ class lessc {
     /**
      * Uses the current value of $this->count to show line and line number
      *
-     * @param null $msg
+     * @param null|string $msg
      *
      * @throws exception
      */
@@ -2524,7 +2524,7 @@ class lessc_parser {
      *
      * @link http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
      *
-     * @param $out
+     * @param array $out
      *
      * @return bool
      */
@@ -2552,8 +2552,8 @@ class lessc_parser {
     /**
      * recursively parse infix equation with $lhs at precedence $minP
      *
-     * @param $lhs
-     * @param $minP
+     * @param array $lhs
+     * @param mixed $minP
      *
      * @return array
      */
