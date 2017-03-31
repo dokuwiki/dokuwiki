@@ -560,7 +560,12 @@ class Doku_Lexer {
 
 /**
  * Escapes regex characters other than (, ) and /
+ *
  * @TODO
+ *
+ * @param string $str
+ *
+ * @return mixed
  */
 function Doku_Lexer_Escape($str) {
     //$str = addslashes($str);

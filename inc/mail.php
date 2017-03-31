@@ -278,6 +278,12 @@ function mail_isvalid($email){
  *
  * @author umu <umuAThrz.tu-chemnitz.de>
  * @link   http://php.net/manual/en/function.imap-8bit.php#61216
+ *
+ * @param string $sText
+ * @param int $maxlen
+ * @param bool $bEmulate_imap_8bit
+ *
+ * @return string
  */
 function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
     // split text into lines

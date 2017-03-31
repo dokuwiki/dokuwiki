@@ -404,6 +404,13 @@ class PassHash {
 
     /**
      * Alias for hash_pmd5
+     *
+     * @param string $clear
+     * @param null|string $salt
+     * @param string $magic
+     * @param int $compute
+     *
+     * @return string
      */
     public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);

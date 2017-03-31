@@ -23,6 +23,8 @@ class Doku_Handler {
 
     /**
      * @param string $handler
+     * @param mixed $args
+     * @param integer|string $pos
      */
     function _addCall($handler, $args, $pos) {
         $call = array($handler,$args, $pos);
@@ -71,6 +73,13 @@ class Doku_Handler {
      * An additional parameter with the plugin name is passed
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string|integer $match
+     * @param string|integer $state
+     * @param integer $pos
+     * @param $pluginname
+     *
+     * @return bool
      */
     function plugin($match, $state, $pos, $pluginname){
         $data = array($match);
@@ -137,6 +146,9 @@ class Doku_Handler {
     }
 
     /**
+     * @param string|integer $match
+     * @param string|integer $state
+     * @param integer $pos
      * @param string $name
      */
     function _nestingTag($match, $state, $pos, $name) {
@@ -764,8 +776,8 @@ class Doku_Handler_Nest implements Doku_Handler_CallWriter_Interface {
     /**
      * constructor
      *
-     * @param  Doku_Handler_CallWriter $CallWriter     the renderers current call writer
-     * @param  string     $close          closing instruction name, this is required to properly terminate the
+     * @param Doku_Handler_CallWriter|Doku_Handler_CallWriter_Interface $CallWriter the renderers current call writer
+     * @param  string $close closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
     function __construct(Doku_Handler_CallWriter_Interface $CallWriter, $close="nest_close") {
@@ -1590,6 +1602,8 @@ class Doku_Handler_Block {
      * This function makes sure there are no empty paragraphs on the stack
      *
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param string|integer $pos
      */
     function closeParagraph($pos){
         if (!$this->inParagraph) return;
@@ -1641,6 +1655,10 @@ class Doku_Handler_Block {
      *
      * @author Harry Fuecks <hfuecks@gmail.com>
      * @author Andreas Gohr <andi@splitbrain.org>
+     *
+     * @param array $calls
+     *
+     * @return array
      */
     function process($calls) {
         // open first paragraph

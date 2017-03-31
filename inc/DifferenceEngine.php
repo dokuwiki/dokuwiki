@@ -226,6 +226,14 @@ class _DiffEngine {
      * of the two files do not match, and likewise that the last lines do not
      * match.  The caller must trim matching lines from the beginning and end
      * of the portions it is going to specify.
+     *
+     * @param integer $xoff
+     * @param integer $xlim
+     * @param integer $yoff
+     * @param integer $ylim
+     * @param integer $nchunks
+     *
+     * @return array
      */
     function _diag($xoff, $xlim, $yoff, $ylim, $nchunks) {
         $flip = false;
@@ -336,6 +344,11 @@ class _DiffEngine {
      *
      * Note that XLIM, YLIM are exclusive bounds.
      * All line numbers are origin-0 and discarded lines are not counted.
+     *
+     * @param integer $xoff
+     * @param integer $xlim
+     * @param integer $yoff
+     * @param integer $ylim
      */
     function _compareseq($xoff, $xlim, $yoff, $ylim) {
         // Slide down the bottom initial diagonal.
@@ -392,6 +405,10 @@ class _DiffEngine {
      * to be the "change".
      *
      * This is extracted verbatim from analyze.c (GNU diffutils-2.7).
+     *
+     * @param array $lines
+     * @param array $changed
+     * @param array $other_changed
      */
     function _shift_boundaries($lines, &$changed, $other_changed) {
         $i = 0;
@@ -612,6 +629,9 @@ class Diff {
      * Check a Diff for validity.
      *
      * This is here only for debugging purposes.
+     *
+     * @param mixed $from_lines
+     * @param mixed $to_lines
      */
     function _check($from_lines, $to_lines) {
         if (serialize($from_lines) != serialize($this->orig()))
@@ -889,6 +909,10 @@ class HTMLDiff {
 
     /**
      * Return a class or style parameter
+     *
+     * @param string $classname
+     *
+     * @return string
      */
     static function css($classname){
         global $DIFF_INLINESTYLES;
@@ -1339,6 +1363,11 @@ class Diff3 extends Diff {
 
     /**
      * @access private
+     *
+     * @param array $edits1
+     * @param array $edits2
+     *
+     * @return array
      */
     function _diff3($edits1, $edits2) {
         $edits = array();

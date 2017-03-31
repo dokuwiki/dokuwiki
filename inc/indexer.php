@@ -1474,6 +1474,10 @@ function idx_lookup(&$words) {
 /**
  * Split a string into tokens
  *
+ * @param string $string
+ * @param bool $wc
+ *
+ * @return array
  */
 function idx_tokenizer($string, $wc=false) {
     $Indexer = idx_get_indexer();
