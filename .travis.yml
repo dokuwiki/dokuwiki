@@ -38,7 +38,7 @@ notifications:
     on_success: change
     on_failure: change
 install:
-  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit.phar
+  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
   - chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit
 before_script:
   # Disable the HHVM JIT for faster Unit Testing
