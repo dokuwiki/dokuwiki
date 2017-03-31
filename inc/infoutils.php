@@ -114,13 +114,13 @@ function check(){
     if ($INFO['isadmin'] || $INFO['ismanager']){
         msg('DokuWiki version: '.getVersion(),1);
 
-        if(version_compare(phpversion(),'5.3.3','<')){
-            msg('Your PHP version is too old ('.phpversion().' vs. 5.3.3+ needed)',-1);
+        if(version_compare(phpversion(),'5.6.0','<')){
+            msg('Your PHP version is too old ('.phpversion().' vs. 5.6.0+ needed)',-1);
         }else{
             msg('PHP version '.phpversion(),1);
         }
     } else {
-        if(version_compare(phpversion(),'5.3.3','<')){
+        if(version_compare(phpversion(),'5.6.0','<')){
             msg('Your PHP version is too old',-1);
         }
     }

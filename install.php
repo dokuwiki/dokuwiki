@@ -560,8 +560,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.3.3','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
+    if(version_compare(phpversion(),'5.6.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.6.0');
         $ok = false;
     }
 
