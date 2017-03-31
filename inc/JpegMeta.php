@@ -53,6 +53,8 @@ class JpegMeta {
      * Constructor
      *
      * @author Sebastian Delmont <sdelmont@zonageek.com>
+     *
+     * @param $fileName
      */
     function __construct($fileName) {
 
@@ -1109,6 +1111,8 @@ class JpegMeta {
 
     /**
      * @param string $outputName
+     *
+     * @return bool
      */
     function _writeJPEG($outputName) {
         $this->_parseAll();
@@ -1246,7 +1250,10 @@ class JpegMeta {
     /**
      * @param integer $marker
      * @param integer $length
+     * @param string $data
      * @param integer $origLength
+     *
+     * @return bool
      */
     function _writeJPEGMarker($marker, $length, &$data, $origLength) {
         if ($length <= 0) {
@@ -1575,6 +1582,10 @@ class JpegMeta {
      * Parses XMP nodes by recursion
      *
      * @author  Hakan Sandell <hakan.sandell@mydata.se>
+     *
+     * @param array $values
+     * @param int $i
+     * @param mixed $meta
      * @param integer $count
      */
     function _parseXmpNode($values, &$i, &$meta, $count) {
@@ -1681,9 +1692,13 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
      * @param integer $base
+     * @param integer $offset
      * @param boolean $isBigEndian
      * @param string $mode
+     *
+     * @return int
      */
     function _readIFD($data, $base, $offset, $isBigEndian, $mode) {
         $EXIFTags = $this->_exifTagNames($mode);
@@ -1942,9 +1957,14 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
+     * @param integer $pos
      * @param integer $offsetBase
+     * @param array $entries
      * @param boolean $isBigEndian
      * @param boolean $hasNext
+     *
+     * @return mixed
      */
     function _writeIFD(&$data, $pos, $offsetBase, &$entries, $isBigEndian, $hasNext) {
         $tiffData = null;
@@ -2006,6 +2026,8 @@ class JpegMeta {
     /**
      * @param boolean $isBigEndian
      * @param string $mode
+     *
+     * @return array
      */
     function & _getIFDEntries($isBigEndian, $mode) {
         $EXIFNames = $this->_exifTagNames($mode);
@@ -2517,7 +2539,14 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
      * @param integer $pos
+     *
+     * @param string $type
+     * @param string $header
+     * @param mixed $value
+     *
+     * @return int|mixed
      */
     function _write8BIM(&$data, $pos, $type, $header, &$value) {
         $signature = "8BIM";
@@ -2581,7 +2610,13 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
      * @param integer $pos
+     *
+     * @param string $type
+     * @param mixed $value
+     *
+     * @return int|mixed
      */
     function _writeIPTCEntry(&$data, $pos, $type, &$value) {
         $pos = $this->_putShort($data, $pos, 0x1C02);
@@ -2945,7 +2980,10 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param $data
      * @param integer $pos
+     *
+     * @return int
      */
     function _getByte(&$data, $pos) {
         return ord($data{$pos});
@@ -2954,7 +2992,12 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
      * @param integer $pos
+     *
+     * @param mixed $val
+     *
+     * @return int
      */
     function _putByte(&$data, $pos, $val) {
         $val = intval($val);
@@ -2993,7 +3036,12 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
      * @param integer $pos
+     *
+     * @param bool $bigEndian
+     *
+     * @return int
      */
     function _getLong(&$data, $pos, $bigEndian = true) {
         if ($bigEndian) {
@@ -3012,7 +3060,13 @@ class JpegMeta {
     /*************************************************************/
 
     /**
+     * @param mixed $data
      * @param integer $pos
+     *
+     * @param mixed $val
+     * @param bool $bigEndian
+     *
+     * @return int
      */
     function _putLong(&$data, $pos, $val, $bigEndian = true) {
         $val = intval($val);

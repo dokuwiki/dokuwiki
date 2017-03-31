@@ -383,6 +383,9 @@ function info_msg_allowed($msg){
  * little function to print the content of a var
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param bool $hidden
  */
 function dbg($msg,$hidden=false){
     if($hidden){
@@ -400,6 +403,9 @@ function dbg($msg,$hidden=false){
  * Print info to a log file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $msg
+ * @param string $header
  */
 function dbglog($msg,$header=''){
     global $conf;
@@ -502,6 +508,8 @@ function dbg_backtrace(){
  * debug output
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param array $data
  */
 function debug_guard(&$data){
     foreach($data as $key => $value){

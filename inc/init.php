@@ -5,6 +5,10 @@
 
 /**
  * timing Dokuwiki execution
+ *
+ * @param integer $start
+ *
+ * @return mixed
  */
 function delta_time($start=0) {
     return microtime(true)-((float)$start);
@@ -341,6 +345,10 @@ function init_files(){
  * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $path
+ *
+ * @return bool|string
  */
 function init_path($path){
     // check existence
@@ -400,6 +408,8 @@ function init_creationmodes(){
  * remove magic quotes recursivly
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param $array
  */
 function remove_magic_quotes(&$array) {
     foreach (array_keys($array) as $key) {
@@ -429,6 +439,10 @@ function remove_magic_quotes(&$array) {
  * !! initialized.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param null|string $abs
+ *
+ * @return string
  */
 function getBaseURL($abs=null){
     global $conf;
@@ -526,6 +540,8 @@ function is_ssl(){
 
 /**
  * print a nice message even if no styles are loaded yet.
+ *
+ * @param integer|string $msg
  */
 function nice_die($msg){
     echo<<<EOT
@@ -553,6 +569,11 @@ EOT;
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author <richpageau at yahoo dot co dot uk>
  * @link   http://php.net/manual/en/function.realpath.php#75992
+ *
+ * @param string $path
+ * @param bool $exists
+ *
+ * @return bool|string
  */
 function fullpath($path,$exists=false){
     static $run = 0;

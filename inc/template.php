@@ -1560,6 +1560,9 @@ function tpl_mediaFileList() {
  * list of file revisions
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
+ *
+ * @param string $image
+ * @param boolean $rev
  */
 function tpl_mediaFileDetails($image, $rev) {
     global $conf, $DEL, $lang;

@@ -38,6 +38,10 @@ if(!defined('DOKU_FARM')) define('DOKU_FARM', false);
  * website's hostname from left to right and pathname from right to left. The
  * first configuration file found will be used; the remaining will ignored.
  * If no configuration file is found, return the default confdir './conf'.
+ *
+ * @param string $farm
+ *
+ * @return string
  */
 function farm_confpath($farm) {
 

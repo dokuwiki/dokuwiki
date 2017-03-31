@@ -45,6 +45,10 @@ require_once(DOKU_INC.'inc/compatibility.php');
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @todo   add generic loading of renderers and auth backends
+ *
+ * @param string $name
+ *
+ * @return bool
  */
 function load_autoload($name){
     static $classes = null;
