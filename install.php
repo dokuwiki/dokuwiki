@@ -16,18 +16,6 @@ require_once(DOKU_INC.'inc/init.php');
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
 
-// kill magic quotes
-if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    @ini_set('magic_quotes_gpc', 0);
-    define('MAGIC_QUOTES_STRIPPED',1);
-}
-if (function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-@ini_set('magic_quotes_sybase',0);
-
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
 if(isset($_REQUEST['l']) && !is_array($_REQUEST['l'])) {
