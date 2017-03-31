@@ -88,8 +88,8 @@ class SafeFN {
     /**
      * convert an array of unicode codepoints into 'safe_filename' format
      *
-     * @param array $unicode    an array of unicode codepoints
-     * @return string the unicode represented in 'safe_filename' format
+     * @param    array  int    $unicode    an array of unicode codepoints
+     * @return   string        the unicode represented in 'safe_filename' format
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
