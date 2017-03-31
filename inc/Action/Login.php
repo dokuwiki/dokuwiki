@@ -26,7 +26,6 @@ class Login extends AbstractAclAction {
             // nothing to do
             throw new ActionException();
         }
-        // FIXME auth login capabilities
     }
 
     /** @inheritdoc */

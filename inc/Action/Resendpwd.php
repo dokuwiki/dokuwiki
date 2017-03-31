@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Action\Exception\ActionDisabledException;
 
 /**
  * Class Resendpwd
@@ -16,6 +17,17 @@ class Resendpwd extends AbstractAclAction {
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_NONE;
+    }
+
+    /** @inheritdoc */
+    public function checkPermissions() {
+        parent::checkPermissions();
+
+        /** @var \DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        global $conf;
+        if(isset($conf['resendpasswd']) && !$conf['resendpasswd']) throw new ActionDisabledException(); //legacy option
+        if(!$auth->canDo('modPass')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */

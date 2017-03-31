@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Action\Exception\ActionDisabledException;
 
 /**
  * Class ProfileDelete
@@ -16,6 +17,15 @@ class ProfileDelete extends AbstractUserAction {
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_NONE;
+    }
+
+    /** @inheritdoc */
+    public function checkPermissions() {
+        parent::checkPermissions();
+
+        /** @var \DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        if(!$auth->canDo('delUser')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */

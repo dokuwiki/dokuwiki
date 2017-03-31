@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Action\Exception\ActionDisabledException;
 
 /**
  * Class Register
@@ -11,11 +12,22 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Register extends AbstractAction {
+class Register extends AbstractAclAction {
 
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_NONE;
+    }
+
+    /** @inheritdoc */
+    public function checkPermissions() {
+        parent::checkPermissions();
+
+        /** @var \DokuWiki_Auth_Plugin $auth */
+        global $auth;
+        global $conf;
+        if(isset($conf['openregister']) && !$conf['openregister']) throw new ActionDisabledException();
+        if(!$auth->canDo('addUser')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */

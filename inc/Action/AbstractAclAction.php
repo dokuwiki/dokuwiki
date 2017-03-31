@@ -17,7 +17,9 @@ abstract class AbstractAclAction extends AbstractAction {
     public function checkPermissions() {
         parent::checkPermissions();
         global $conf;
+        global $auth;
         if(!$conf['useacl']) throw new ActionAclRequiredException();
+        if(!$auth) throw new ActionAclRequiredException();
     }
 
 }

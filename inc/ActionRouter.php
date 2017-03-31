@@ -27,6 +27,9 @@ class ActionRouter {
     /** maximum loop */
     const MAX_TRANSITIONS = 5;
 
+    /** @var string[] the actions disabled in the configuration */
+    protected $disabled;
+
     /**
      * ActionRouter constructor. Singleton, thus protected!
      *
@@ -35,6 +38,12 @@ class ActionRouter {
      */
     protected function __construct() {
         global $ACT;
+        global $conf;
+
+        $this->disabled = explode(',', $conf['disableactions']);
+        $this->disabled = array_map('trim', $this->disabled);
+        $this->transitions = 0;
+
         $ACT = act_clean($ACT);
         $this->setupAction($ACT);
         $ACT = $this->action->getActionName();
@@ -67,8 +76,7 @@ class ActionRouter {
 
         try {
             $this->action = $this->loadAction($actionname);
-            $this->action->checkPermissions();
-            $this->ensureMinimumPermission($this->action->minimumPermission());
+            $this->checkAction($this->action);
             $this->action->preProcess();
 
         } catch(ActionException $e) {
@@ -140,19 +148,6 @@ class ActionRouter {
     }
 
     /**
-     * Check that the given minimum permissions are reached
-     *
-     * @param int $permneed
-     * @throws ActionException
-     */
-    protected function ensureMinimumPermission($permneed) {
-        global $INFO;
-        if($INFO['perm'] < $permneed) {
-            throw new ActionException('denied');
-        }
-    }
-
-    /**
      * Aborts all processing with a message
      *
      * When a FataException instanc is passed, the code is treated as Status code
@@ -183,7 +178,7 @@ class ActionRouter {
      * @return AbstractAction
      * @throws NoActionException
      */
-    protected function loadAction($actionname) {
+    public function loadAction($actionname) {
         $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
         $parts = explode('_', $actionname);
         while($parts) {
@@ -196,6 +191,34 @@ class ActionRouter {
         }
 
         throw new NoActionException();
+    }
+
+    /**
+     * Execute all the checks to see if this action can be executed
+     *
+     * @param AbstractAction $action
+     * @throws ActionDisabledException
+     * @throws ActionException
+     */
+    public function checkAction(AbstractAction $action) {
+        global $INFO;
+        global $ID;
+
+        if(in_array($action->getActionName(), $this->disabled)) {
+            throw new ActionDisabledException();
+        }
+
+        $action->checkPermissions();
+
+        if(isset($INFO)) {
+            $perm = $INFO['perm'];
+        } else {
+            $perm = auth_quickaclcheck($ID);
+        }
+
+        if($perm < $action->minimumPermission()) {
+            throw new ActionException('denied');
+        }
     }
 
     /**

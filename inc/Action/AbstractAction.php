@@ -23,7 +23,7 @@ abstract class AbstractAction {
      *
      * @param string $actionname the name of this action (see getActioName() for caveats)
      */
-    public function __construct($actionname='') {
+    public function __construct($actionname = '') {
         if($actionname !== '') {
             $this->actionname = $actionname;
         } else {
@@ -50,7 +50,6 @@ abstract class AbstractAction {
      * @return void
      */
     public function checkPermissions() {
-        if(!actionOK($this->actionname)) throw new ActionDisabledException();
     }
 
     /**

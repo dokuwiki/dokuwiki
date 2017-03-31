@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Action\Exception\ActionDisabledException;
+
 /**
  * Class Subscribe
  *
@@ -14,6 +16,14 @@ class Subscribe extends AbstractUserAction {
     /** @inheritdoc */
     public function minimumPermission() {
         return AUTH_READ;
+    }
+
+    /** @inheritdoc */
+    public function checkPermissions() {
+        parent::checkPermissions();
+
+        global $conf;
+        if(isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
