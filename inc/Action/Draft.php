@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Action\Exception\ActionException;
+
 /**
  * Class Draft
  *
@@ -22,8 +24,14 @@ class Draft extends AbstractAction {
         }
     }
 
-    // FIXME any permission checks needed?
+    /** @inheritdoc */
+    public function checkPermissions() {
+        parent::checkPermissions();
+        global $INFO;
+        if(!file_exists($INFO['draft'])) throw new ActionException('edit');
+    }
 
+    /** @inheritdoc */
     public function tplContent() {
         html_draft();
     }
