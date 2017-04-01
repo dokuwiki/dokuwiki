@@ -139,7 +139,7 @@ class ActionRouter {
         }
 
         // POST transitions to show should be a redirect
-        if($to == 'show' && $from != $to && strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
+        if($to == 'show' && strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
             act_redirect($ID, $from); // FIXME we may want to move this function to the class
         }
 
