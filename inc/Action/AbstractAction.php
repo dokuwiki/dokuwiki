@@ -21,7 +21,7 @@ abstract class AbstractAction {
     /**
      * AbstractAction constructor.
      *
-     * @param string $actionname the name of this action (see getActioName() for caveats)
+     * @param string $actionname the name of this action (see getActionName() for caveats)
      */
     public function __construct($actionname = '') {
         if($actionname !== '') {
