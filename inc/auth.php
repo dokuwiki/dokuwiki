@@ -230,7 +230,10 @@ function auth_login($user, $pass, $sticky = false, $silent = false) {
             return true;
         } else {
             //invalid credentials - log off
-            if(!$silent) msg($lang['badlogin'], -1);
+            if(!$silent) {
+                http_status(403, 'Login failed');
+                msg($lang['badlogin'], -1);
+            }
             auth_logoff();
             return false;
         }
