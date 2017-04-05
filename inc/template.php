@@ -449,6 +449,7 @@ function _tpl_metaheaders_action($data) {
             echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
         }
         foreach($inst as $attr) {
+            if ( empty($attr) ) { continue; }
             echo '<', $tag, ' ', buildAttributes($attr);
             if(isset($attr['_data']) || $tag == 'script') {
                 if($tag == 'script' && $attr['_data'])
