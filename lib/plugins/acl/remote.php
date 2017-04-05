@@ -20,7 +20,7 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin {
             ),'addAcl' => array(
                 'args' => array('string','string','int'),
                 'return' => 'int',
-                'name' => 'addAcl',
+                'name' => 'addAcls',
                 'doc' => 'Adds a new ACL rule.'
             ), 'delAcl' => array(
                 'args' => array('string','string'),
