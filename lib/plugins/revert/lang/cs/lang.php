@@ -22,6 +22,7 @@
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
  * @author Martin Růžička <martinr@post.cz>
+ * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['menu']                  = 'Obnova zaspamovaných stránek';
 $lang['filter']                = 'Hledat zaspamované stránky';
