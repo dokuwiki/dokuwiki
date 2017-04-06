@@ -32,6 +32,7 @@
  * @author hznupeter <qiujiongtao@163.com>
  * @author kuma <kuma000@qq.com>
  * @author phy25 <git@phy25.com>
+ * @author 王庚辉 <wghmycl1985@163.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
