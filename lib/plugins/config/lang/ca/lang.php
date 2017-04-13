@@ -11,6 +11,7 @@
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
+ * @author David Surroca <david.tb303@gmail.com>
  */
 $lang['menu']                  = 'Paràmetres de configuració';
 $lang['error']                 = 'Els paràmetres no s\'han pogut actualitzar per causa d\'un valor incorrecte Reviseu els canvis i torneu a enviar-los.<br />Els valors incorrectes es ressaltaran amb un marc vermell.';
