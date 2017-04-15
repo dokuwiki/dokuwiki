@@ -134,6 +134,9 @@ class HTTPClient {
     var $proxy_ssl; //boolean set to true if your proxy needs SSL
     var $proxy_except; // regexp of URLs to exclude from proxy
 
+    // allows you to set SSL stream options http://www.php.net/manual/en/context.ssl.php
+    var $stream_options = array();
+
     // list of kept alive connections
     static $connections = array();
 
@@ -162,6 +165,13 @@ class HTTPClient {
         $this->headers['Accept'] = 'text/xml,application/xml,application/xhtml+xml,'.
                                    'text/html,text/plain,image/png,image/jpeg,image/gif,*/*';
         $this->headers['Accept-Language'] = 'en-us';
+
+        // this is PHP default anyway, but PHP might be configured weird
+        $this->stream_options = array(
+            'ssl' => array(
+                'verify_peer' => false,
+            )
+        );
     }
 
 
@@ -331,8 +341,10 @@ class HTTPClient {
         }
         if (is_null($socket) || feof($socket)) {
             $this->_debug('opening connection', $connectionId);
+            $context = stream_context_create( $this->stream_options );
             // open socket
-            $socket = @fsockopen($server,$port,$errno, $errstr, $this->timeout);
+            $socket = @stream_socket_client("$server:$port", $errno, $errstr, $this->timeout, STREAM_CLIENT_CONNECT, $context);
+
             if (!$socket){
                 $this->status = -100;
                 $this->error = "Could not connect to $server:$port\n$errstr ($errno)";
