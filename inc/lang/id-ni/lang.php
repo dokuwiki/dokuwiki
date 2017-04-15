@@ -1,7 +1,8 @@
 <?php
+
 /**
- * idni language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Harefa <fidelis@harefa.com>
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
  */
