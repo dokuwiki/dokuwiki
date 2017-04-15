@@ -240,7 +240,7 @@ function css_applystyle($css, $replacements) {
     }
 
     // we now replace all old ini replacements with LESS variables
-    $css = strtr($css, $replacements);
+    $css = strtr($css, (array)$replacements);
 
     // now prepend the list of LESS variables as the very first thing
     $css = $less.$css;
