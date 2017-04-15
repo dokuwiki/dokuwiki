@@ -303,7 +303,7 @@ class Doku_Parser_Mode_header extends Doku_Parser_Mode {
 class Doku_Parser_Mode_notoc extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('~~NOTOC~~',$mode,'notoc');
+        $this->Lexer->addSpecialPattern('~~NOTOC~~\s?',$mode,'notoc');
     }
 
     function getSort() {
@@ -315,7 +315,7 @@ class Doku_Parser_Mode_notoc extends Doku_Parser_Mode {
 class Doku_Parser_Mode_nocache extends Doku_Parser_Mode {
 
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('~~NOCACHE~~',$mode,'nocache');
+        $this->Lexer->addSpecialPattern('~~NOCACHE~~\s?',$mode,'nocache');
     }
 
     function getSort() {
