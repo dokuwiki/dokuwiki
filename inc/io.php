@@ -726,6 +726,9 @@ function io_rename($from,$to){
  * @return int exit code from process
  */
 function io_exec($cmd, $input, &$output){
+    if( PHP_OS=='WINNT' && version_compare(PHP_VERSION, '5.3.0', '<') ) { //FS#2338
+        $cmd = '"'.$cmd.'"';
+    }
     $descspec = array(
             0=>array("pipe","r"),
             1=>array("pipe","w"),
