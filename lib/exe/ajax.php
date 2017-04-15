@@ -413,8 +413,16 @@ function ajax_linkwiz(){
 
     // output the found data
     $even = 1;
+    $count = 0;
     foreach($data as $item){
         $even *= -1; //zebra
+
+        //truncated output
+        if($count > 50) {
+            echo '<div class="'.(($even > 0)?'even':'odd').' type_'.$item['type'].'">...</div>';
+            break;
+        }
+        $count ++;
 
         if(($item['type'] == 'd' || $item['type'] == 'u') && $item['id']) $item['id'] .= ':';
         $link = wl($item['id']);
