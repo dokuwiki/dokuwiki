@@ -120,6 +120,7 @@ $lang['htmlok']      = 'Allow embedded HTML';
 $lang['phpok']       = 'Allow embedded PHP';
 $lang['locktime']    = 'Maximum age for lock files (sec)';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
+$lang['geshi_cache_expiry'] = 'Minimum age of cached GeSHi files before purging (sec)';
 
 /* Link settings */
 $lang['target____wiki']      = 'Target window for internal links';

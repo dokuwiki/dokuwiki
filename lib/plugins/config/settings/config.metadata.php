@@ -167,6 +167,7 @@ $meta['htmlok']      = array('onoff','_caution' => 'security');
 $meta['phpok']       = array('onoff','_caution' => 'security');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
+$meta['geshi_cache_expiry'] = array('numeric');
 
 $meta['_links']    = array('fieldset');
 $meta['target____wiki']      = array('string');

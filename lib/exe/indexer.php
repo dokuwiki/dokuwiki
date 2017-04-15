@@ -36,6 +36,8 @@ if ($evt->advise_before()) {
     sendDigest() or
     runTrimRecentChanges() or
     runTrimRecentChanges(true) or
+    runGeshiCleanUp() or
+
     $evt->advise_after();
 }
 
@@ -185,6 +187,40 @@ function sendDigest() {
     echo "sendDigest(): sent $sent mails".NL;
     echo 'sendDigest(): finished'.NL;
     return (bool) $sent;
+}
+
+/**
+ * Clean out old cached geshi files
+ *
+ * @author Christopher Smith
+ */
+function runGeshiCleanUp() {
+    global $conf;
+
+    print "runGeshiCleanUp(): started".NL;
+
+    $purgeFile = $conf['cachedir'].'/lastgeshipurge';
+    $now = time();
+
+    // to prevent reading through all the cache directories too frequently
+    // only carry out clean up checks at an interval 1/4 * cache expiry
+    if ($now - @filemtime($purgeFile) > ($conf['geshi_cache_expiry']/4)) {
+        // minimize possibility of two cleanUps proceeding simultaneously
+        io_saveFile($purgeFile, $now);
+
+        $geshi_files = glob($conf['cachedir'].'/*/*.code');
+
+        foreach($geshi_files as $file) {
+            if ($now - filemtime($file) > $conf['geshi_cache_expiry']) {
+                @unlink($file);
+            }
+        }
+        print "runGeshiCleanUp(): cleaned / finished".NL;
+        return true;
+    }
+
+    print "runGeshiCleanUp(): not required / finished".NL;
+    return false;
 }
 
 /**
