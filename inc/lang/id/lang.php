@@ -9,6 +9,7 @@
  * @author zamroni <therons@ymail.com>
  * @author umriya afini <bigdream.power@gmail.com>
  * @author Arif Budiman <me@kangarif.com>
+ * @author alfabalon <gudang.balon@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
