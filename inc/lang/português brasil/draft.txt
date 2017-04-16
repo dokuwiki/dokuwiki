@@ -1,0 +1,5 @@
+====== Projeto de arquivo encontrado ======
+
+Sua última sessão de edição desta página não foi salvada  corretamente. DokuWiki salvou um rascunho durante o seu trabalho, que agora você pode continuar a edição. Abaixo você pode ver os dados que foram salvos na última sessão.
+
+Por favor decida se você quer recuperar //recover// e prosseguir a edição do rascunho, apagar //delete// o rascunho ou cancelar //cancel// o processo de edição.
