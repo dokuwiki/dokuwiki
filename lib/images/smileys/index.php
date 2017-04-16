@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <title>smileys</title>
+    <title>Smileys</title>
 
     <style type="text/css">
         body {
@@ -28,21 +28,23 @@
 </head>
 <body>
 
-<div class="white box">
 <?php
 foreach (glob('*.gif') as $img) {
-    echo '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
+    $list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
 }
-?>
+if(is_dir('local')) {
+    $list .= '<hr />';
+    foreach (glob('local/*.gif') as $img) {
+        $list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
+    }
+}
+echo '<div class="white box">
+'.$list.'
 </div>
 
 <div class="black box">
-<?php
-foreach (glob('*.gif') as $img) {
-    echo '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
-}
-?>
-</div>
+'.$list.'
+</div>';?>
 
 </body>
 </html>
