@@ -493,6 +493,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
     }
 
     /**
+    * Add node class to list item
+    */
+    function list_node() {
+        $our_doc = & $this->doc;
+        $class_pos = strrpos($our_doc,'<li class="level');
+        $class_pos = strpos($our_doc, '"', $class_pos + 11);
+        $class_end = substr($our_doc,$class_pos);
+        $our_doc = substr($our_doc,0,$class_pos);
+        $this->doc .= ' node';
+        $this->doc .= $class_end;
+    }
+
+    /**
      * Stop the content of a list item
      */
     function listcontent_close() {

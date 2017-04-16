@@ -361,6 +361,12 @@ class Doku_Renderer extends DokuWiki_Plugin {
     }
 
     /**
+    * Add node class to list item
+    */
+    function list_node() {
+    }
+
+    /**
      * Stop the content of a list item
      */
     function listcontent_close() {

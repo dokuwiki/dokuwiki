@@ -951,6 +951,7 @@ class Doku_Handler_List implements Doku_Handler_CallWriter_Interface {
         // Getting deeper...
         } else if ( $depth > $end[1] ) {
 
+            $this->listCalls[] = array('list_node',array(),$call[2]);
             $this->listCalls[] = array('listcontent_close',array(),$call[2]);
             $this->listCalls[] = array('list'.$listType.'_open', array(), $call[2]);
             $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
