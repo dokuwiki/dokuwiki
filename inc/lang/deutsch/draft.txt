@@ -1,0 +1,3 @@
+====== Entwurf gefunden ======
+Das zuletzt bearbeitete Dokument wurde nicht ordnungsgemäß beendigt. DokuWiki hat einen Entwurf der Datei gespeichert, mit welcher sie jetzt weiterarbeiten können. Unten können sie den gespeicherten Entwurf einsehen. 
+Entscheiden sie sich ob das Dokument //gerettet// werden soll, oder ob es //gelöscht// werden soll. Wählen sie //abbrechen// um es zu beenden. 
