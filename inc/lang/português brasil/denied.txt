@@ -1,0 +1,3 @@
+====== Permissão negada ======
+
+Desculpe mas você não tem permissões suficientes para continuar.
