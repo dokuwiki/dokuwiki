@@ -181,7 +181,7 @@ $lang['mediaupload']           = 'Upload a file to the current namespace here. T
 $lang['mediaextchange']        = 'Filextension changed from .%s to .%s!';
 $lang['reference']             = 'References for';
 $lang['ref_inuse']             = 'The file can\'t be deleted, because it\'s still used by the following pages:';
-$lang['ref_hidden']            = 'Some references  are on pages you don\'t have permission to read';
+$lang['ref_hidden']            = 'Some references are on pages you don\'t have permission to read';
 
 $lang['hits']                  = 'Hits';
 $lang['quickhits']             = 'Matching pagenames';
@@ -352,7 +352,7 @@ $lang['media_files']           = 'Files in %s';
 $lang['media_upload']          = 'Upload to %s';
 $lang['media_search']          = 'Search in %s';
 $lang['media_view']            = '%s';
-$lang['media_viewold']         = '%s at %s';
+$lang['media_viewold']         = '%1$s at %2$s';
 $lang['media_edit']            = 'Edit %s';
 $lang['media_history']         = 'History of %s';
 $lang['media_meta_edited']     = 'metadata edited';
