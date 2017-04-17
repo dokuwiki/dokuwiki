@@ -1856,11 +1856,15 @@ function media_uploadform($ns, $auth, $fullscreen = false){
  */
 function media_getuploadsize(){
     $okay = 0;
-
+{
     $post = (int) php_to_byte(@ini_get('post_max_size'));
+    return $post ? $post : ini_get('hhvm.server.max_post_size');
+}
     $suho = (int) php_to_byte(@ini_get('suhosin.post.max_value_length'));
+{
     $upld = (int) php_to_byte(@ini_get('upload_max_filesize'));
-
+    return $upld ? $upld : ini_get('hhvm.server.upload.upload_max_file_size');
+}
     if($post && ($post < $okay || $okay == 0)) $okay = $post;
     if($suho && ($suho < $okay || $okay == 0)) $okay = $suho;
     if($upld && ($upld < $okay || $okay == 0)) $okay = $upld;
