@@ -66,6 +66,7 @@ $lang['savedir']               = 'Répertoire d\'enregistrement des données';
 $lang['basedir']               = 'Répertoire de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base du site (par exemple <code>http://www.example.com</code>). Laisser vide pour une détection automatique.';
 $lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
+$lang['cdnurl']                = 'Si non vide, le préfixe du CDN CloufFront.';
 $lang['dmode']                 = 'Mode de création des répertoires';
 $lang['fmode']                 = 'Mode de création des fichiers';
 $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en avez besoin !</strong>)';

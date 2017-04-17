@@ -109,6 +109,7 @@ $meta['savedir']  = array('savedir','_caution' => 'danger');
 $meta['basedir']  = array('string','_caution' => 'danger');
 $meta['baseurl']  = array('string','_caution' => 'danger');
 $meta['cookiedir'] = array('string','_caution' => 'danger');
+$meta['cdnurl'] = array('string','_caution' => 'danger');
 $meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
 $meta['allowdebug']  = array('onoff','_caution' => 'security');

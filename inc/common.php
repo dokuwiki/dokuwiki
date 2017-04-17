@@ -597,10 +597,15 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false) 
         $more = str_replace(',', $sep, $more);
     }
 
-    if($abs) {
-        $xlink = DOKU_URL;
-    } else {
-        $xlink = DOKU_BASE;
+    if ($conf[cdn] && $direct) {
+        $xlink = $conf[cdn];
+    }
+    else {
+        if($abs) {
+            $xlink = DOKU_URL;
+        } else {
+            $xlink = DOKU_BASE;
+        }
     }
 
     // external URLs are always direct without rewriting
