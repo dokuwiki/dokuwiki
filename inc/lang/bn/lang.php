@@ -2,11 +2,12 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- *
+ * 
  * @author Foysol <ragebot1125@gmail.com>
  * @author ninetailz <ninetailz1125@gmail.com>
  * @author Khan M. B. Asad <muhammad2017@gmail.com>
  * @author Ninetailz <ninetailz1125@gmail.com>
+ * @author sabbirsumon <sabbirsumon3337@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
