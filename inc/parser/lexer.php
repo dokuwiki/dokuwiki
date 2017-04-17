@@ -225,15 +225,21 @@ class Doku_LexerParallelRegex {
  * @subpackage Lexer
  */
 class Doku_LexerStateStack {
-    var $_stack;
+    /**
+     * Lexer state stack
+     *
+     * @var \SplStack
+     */
+    protected $_stack;
 
     /**
      * Constructor. Starts in named state.
      * @param string $start        Starting state name.
      * @access public
      */
-    function __construct($start) {
-        $this->_stack = array($start);
+    public function __construct($start) {
+        $this->_stack = new \SplStack();
+        $this->_stack->push($start);
     }
 
     /**
@@ -241,8 +247,8 @@ class Doku_LexerStateStack {
      * @return string       State.
      * @access public
      */
-    function getCurrent() {
-        return $this->_stack[count($this->_stack) - 1];
+    public function getCurrent() {
+        return $this->_stack->top();
     }
 
     /**
@@ -251,8 +257,8 @@ class Doku_LexerStateStack {
      * @param string $state        New state.
      * @access public
      */
-    function enter($state) {
-        array_push($this->_stack, $state);
+    public function enter($state) {
+        $this->_stack->push($state);
     }
 
     /**
@@ -262,11 +268,11 @@ class Doku_LexerStateStack {
      *                    the bottom of the list.
      * @access public
      */
-    function leave() {
-        if (count($this->_stack) == 1) {
+    public function leave() {
+        if ($this->_stack->count() == 1) {
             return false;
         }
-        array_pop($this->_stack);
+        $this->_stack->pop();
         return true;
     }
 }
