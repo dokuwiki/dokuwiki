@@ -32,6 +32,7 @@ $conf['allowdebug']  = 0;                 //allow debug output, enable if needed
 $conf['recent']      = 20;                //how many entries to show in recent
 $conf['recent_days'] = 7;                 //How many days of recent changes to keep. (days)
 $conf['breadcrumbs'] = 10;                //how many recent visited pages to show
+$conf['showtitle']   = 1;                 //show the wiki title beside the logo 0|1
 $conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
 $conf['fullpath']    = 0;                 //show full path of the document or relative to datadir only? 0|1
 $conf['typography']  = 1;                 //smartquote conversion 0=off, 1=doublequotes, 2=all quotes

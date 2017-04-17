@@ -117,6 +117,7 @@ $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
 $meta['recent_days'] = array('numeric');
 $meta['breadcrumbs'] = array('numeric','_min' => 0);
+$meta['showtitle']   = array('onoff');
 $meta['youarehere']  = array('onoff');
 $meta['fullpath']    = array('onoff','_caution' => 'security');
 $meta['typography']  = array('multichoice','_choices' => array(0,1,2));

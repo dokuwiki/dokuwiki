@@ -69,6 +69,7 @@ $lang['allowdebug']  = 'Allow debug. <b>Disable if not needed!</b>';
 $lang['recent']      = 'Number of entries per page in the recent changes';
 $lang['recent_days'] = 'How many recent changes to keep (days)';
 $lang['breadcrumbs'] = 'Number of "trace" breadcrumbs. Set to 0 to disable.';
+$lang['showtitle']   = 'Show wiki title in the header beside the logo';
 $lang['youarehere']  = 'Use hierarchical breadcrumbs (you probably want to disable the above option then)';
 $lang['fullpath']    = 'Reveal full path of pages in the footer';
 $lang['typography']  = 'Do typographical replacements';
