@@ -176,6 +176,16 @@ class mailer_test extends DokuWikiTest {
         $this->assertEquals(0, preg_match('/(^|\n)To: (\n|$)/', $header), 'To found in headers.');
     }
 
+    function test_BBConly() {
+        $mail = new TestMailer();
+        $mail->bcc('some one <mail@example.com>');
+        $mail->cleanHeaders();
+        $headers = $mail->prop('headers');
+
+        $this->assertEquals('some one <mail@example.com>', $headers['Bcc']);
+        $this->assertEquals('undisclosed-recipients:;', $headers['To']);
+    }
+
     /**
      * @group internet
      */

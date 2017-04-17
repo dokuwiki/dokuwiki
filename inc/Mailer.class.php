@@ -524,6 +524,10 @@ class Mailer {
                 $this->headers[$addr] = $this->cleanAddress($this->headers[$addr]);
             }
         }
+        // make sure there's a To header when sending to BCC only #1422
+        if(isset($this->headers['Bcc']) && !isset($this->headers['To'])) {
+            $this->headers['To'] = 'undisclosed-recipients:;';
+        }
 
         if(isset($this->headers['Subject'])) {
             // add prefix to subject
