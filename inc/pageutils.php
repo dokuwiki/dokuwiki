@@ -651,8 +651,12 @@ function _isHiddenPage(&$data) {
     if(empty($conf['hidepages'])) return;
     if($ACT == 'admin') return;
 
-    if(preg_match('/'.$conf['hidepages'].'/ui',':'.$data['id'])){
-        $data['hidden'] = true;
+    $hidepages = explode('|', $conf['hidepages']);
+    foreach($hidepages as $hidepage) {
+        if(preg_match('/' . $hidepage . ':/ui', ':' . $data['id'])) {
+            $data['hidden'] = true;
+            return;
+        }
     }
 }
 
