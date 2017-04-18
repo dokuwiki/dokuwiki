@@ -35,6 +35,12 @@ class common_blank_test extends DokuWikiTest {
         }
     }
 
+    function test_array() {
+        $foo = array();
+        blank($foo['bar']['baz']);
+        $this->assertFalse(isset($foo['bar']));
+    }
+
     function test_trim() {
         $whitespace = " \t\r\n";
         $this->assertFalse(blank($whitespace), "using default \$trim value");
