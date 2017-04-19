@@ -1,10 +1,12 @@
 <?php
+
 /**
- * Arabic language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
  * @author Usama Akkad <uahello@gmail.com>
  * @author uahello@gmail.com
+ * @author Klapin <klapinklapin@gmail.com>
  */
 $lang['menu']                  = 'الإعدادات';
 $lang['error']                 = 'لم تحدث الاعدادات بسبب قيمة غير صالحة، رجاء راجع تغييراتك ثم ارسلها.

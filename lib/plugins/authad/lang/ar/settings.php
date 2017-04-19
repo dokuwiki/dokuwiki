@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author alhajr <alhajr300@gmail.com>
  */
 $lang['account_suffix']        = 'لاحقة الحساب الخاص بك. على سبيل المثال. <code>@my.domain.org</code>';
