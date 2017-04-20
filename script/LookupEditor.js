@@ -93,7 +93,7 @@ var LookupEditor = function (idx, table) {
                 $form.serialize()
             )
                 .done(function (data) {
-                    let $tbody = $table.find('tbody');
+                    var $tbody = $table.find('tbody');
                     if (!$tbody.length) {
                         $tbody = jQuery('<tbody>').appendTo($table);
                     }
