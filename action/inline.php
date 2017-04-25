@@ -91,9 +91,9 @@ class action_plugin_struct_inline extends DokuWiki_Action_Plugin {
         echo '</label>';
         $hint = $this->column->getType()->getTranslatedHint();
         if($hint) {
-            echo '<div class="hint"><p>';
+            echo '<p class="hint">';
             echo hsc($hint);
-            echo '</p></div>';
+            echo '</p>';
         }
 
         // csrf protection
