@@ -4,7 +4,11 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
 require_once(DOKU_INC.'inc/init.php');
 session_write_close();  //close session
 
-if(!$conf['remote']) die((new IXR_Error(-32605, "XML-RPC server not enabled."))->getXml());
+if(!$conf['remote']){
+    $IXRErr =  new IXR_Error(-32605, "XML-RPC server not enabled.");
+    die($IXRErr->getXml());
+}
+
 
 /**
  * Contains needed wrapper functions and registers all available
