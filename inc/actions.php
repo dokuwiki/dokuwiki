@@ -302,8 +302,10 @@ function act_permcheck($act){
         }else{
             $permneed = AUTH_CREATE;
         }
-    }elseif(in_array($act,array('login','search','recent','profile','profile_delete','index', 'sitemap'))){
+    }elseif(in_array($act,array('login','search','recent','profile','profile_delete', 'sitemap'))){
         $permneed = AUTH_NONE;
+    }elseif($act == 'index'){
+        $permneed = AUTH_READ;
     }elseif($act == 'revert'){
         $permneed = AUTH_ADMIN;
         if($INFO['ismanager']) $permneed = AUTH_EDIT;
