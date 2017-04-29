@@ -27,6 +27,7 @@
  * @author Simon DELAGE <simon.geekitude@gmail.com>
  * @author Eric <ericstevenart@netc.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author insomniaqc <stefb965@yahoo.com>
  */
 $lang['menu']                  = 'Paramètres de configuration';
 $lang['error']                 = 'Paramètres non modifiés en raison d\'une valeur invalide, vérifiez vos réglages puis réessayez. <br />Les valeurs erronées sont entourées d\'une bordure rouge.';
