@@ -357,6 +357,94 @@ class Doku_Handler {
         return true;
     }
 
+    /**
+     * Internal function for parsing highlight options.
+     * $options is parsed for key value pairs separated by commas.
+     * A value might also be missing in which case the value will simple
+     * be set to true. Commas in strings are ignored, e.g. option="4,56"
+     * will work as expected and will only create one entry.
+     *
+     * @param string $options Comma separated list of key-value pairs,
+     *                        e.g. option1=123, option2="456"
+     * @return array|null     Array of key-value pairs $array['key'] = 'value';
+     *                        or null if no entries found
+     */
+    protected function parse_highlight_options ($options) {
+        $max = strlen($options);
+        $pos = 0;
+        $result = array();
+        $collected = '';
+        $in_string = false;
+        $open_char = '';
+        while ($pos < $max) {
+            $sign = $options[$pos];
+            if ($pos < $max-1 && ($sign != ',' || $in_string)) {
+                if (!$in_string && ($sign == "'" || $sign == '"')) {
+                    $in_string = true;
+                    $open_char = $sign;
+                } else if ($in_string && $sign == $open_char) {
+                    $in_string = false;
+                } else {
+                    $collected .= $sign;
+                }
+            } else {
+                if ($sign != ',') {
+                    // Collect the last sign ($pos == $max-1)
+                    if (!$in_string && ($sign == "'" || $sign == '"')) {
+                        $in_string = true;
+                        $open_char = $sign;
+                    } else if ($in_string && $sign == $open_char) {
+                        $in_string = false;
+                    } else {
+                        $collected .= $sign;
+                    }
+                }
+                $equal_sign = strpos($collected, '=');
+                if ($equal_sign === false) {
+                    // Just a flag, no value given, assign true.
+                    $collected = trim($collected);
+                    $result[$collected] = true;
+                } else {
+                    // We need to check if thee qual sign is inside the string
+                    $quote_sign = strpos($collected, "'");
+                    $double_quote_sign = strpos($collected, '"');
+                    $quote_pos = false;
+                    if ($quote_sign !== false) {
+                        $quote_pos = $quote_sign;
+                    }
+                    if ($double_quote_sign !== false &&
+                        ($quote_pos === false || $double_quote_sign < $quote_pos)) {
+                        $quote_pos = $double_quote_sign;
+                    }
+                    if ($quote_pos && $equal_sign > $quote_pos) {
+                        // Just a flag, no value given, assign true.
+                        $collected = trim($collected);
+                        $result[$collected] = true;
+                    } else {
+                        // key-value-pair
+                        $key = substr($collected, 0, $equal_sign);
+                        $key = trim($key);
+                        $value = substr($collected, $equal_sign+1);
+                        $value = trim($value);
+                        if ($value[0] == '"') {
+                            $value = trim($value, '"');
+                        } else if ($value[0] == "'") {
+                            $value = trim($value, "'");
+                        }
+                        $result[$key] = $value;
+                    }
+                }
+                $collected = '';
+            }
+            $pos++;
+        }
+        
+        if (count($result) == 0) {
+            return null;
+        }
+        return $result;
+    }
+
     function file($match, $state, $pos) {
         return $this->code($match, $state, $pos, 'file');
     }
@@ -365,6 +453,10 @@ class Doku_Handler {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
             $matches = explode('>',$match,2);
 
+            preg_match('/\[.*\]/', $matches[0], $options);
+            if (!empty($options[0])) {
+                $matches[0] = str_replace($options[0], '', $matches[0]);
+            }
             $param = preg_split('/\s+/', $matches[0], 2, PREG_SPLIT_NO_EMPTY);
             while(count($param) < 2) array_push($param, null);
 
@@ -372,6 +464,9 @@ class Doku_Handler {
             if ($param[0] == 'html') $param[0] = 'html4strict';
             if ($param[0] == '-') $param[0] = null;
             array_unshift($param, $matches[1]);
+            if (!empty($options[0])) {
+                $param [] = $this->parse_highlight_options (trim($options[0], '[]'));
+            }
 
             $this->_addCall($type, $param, $pos);
         }
