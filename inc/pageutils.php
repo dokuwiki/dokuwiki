@@ -533,73 +533,85 @@ function resolve_pageid($ns,&$page,&$exists,$rev='',$date_at=false ){
     global $conf;
     global $ID;
     $exists = false;
-
-    //empty address should point to current page
-    if ($page === "") {
-        $page = $ID;
-    }
-
-    //keep hashlink if exists then clean both parts
-    if (strpos($page,'#')) {
-        list($page,$hash) = explode('#',$page,2);
-    } else {
-        $hash = '';
-    }
-    $hash = cleanID($hash);
-    $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
-
-    // get filename (calls clean itself)
-    if($rev !== '' && $date_at) {
-        $pagelog = new PageChangeLog($page);
-        $pagelog_rev = $pagelog->getLastRevisionAt($rev);
-        if($pagelog_rev !== false)//something found
-           $rev  = $pagelog_rev;
-    }
-    $file = wikiFN($page,$rev);
-
-    // if ends with colon or slash we have a namespace link
-    if(in_array(substr($page,-1), array(':', ';')) ||
-       ($conf['useslash'] && substr($page,-1) == '/')){
-        if(page_exists($page.$conf['start'],$rev,true,$date_at)){
-            // start page inside namespace
-            $page = $page.$conf['start'];
-            $exists = true;
-        }elseif(page_exists($page.noNS(cleanID($page)),$rev,true,$date_at)){
-            // page named like the NS inside the NS
-            $page = $page.noNS(cleanID($page));
-            $exists = true;
-        }elseif(page_exists($page,$rev,true,$date_at)){
-            // page like namespace exists
-            $page = $page;
-            $exists = true;
-        }else{
-            // fall back to default
-            $page = $page.$conf['start'];
+    
+    $data = array();
+    $data['ns'] = $ns;
+    $data['page'] = &$page;
+    $data['exists'] = &$exists;
+    $data['rev'] = $rev;
+    $data['date_at'] = $date_at;
+    
+    $evt = new Doku_Event('WIKI_RESOLVE_PAGEID',$data);
+    if ($evt->advise_before()) {
+        //empty address should point to current page
+        if ($page === "") {
+            $page = $ID;
         }
-    }else{
-        //check alternative plural/nonplural form
-        if(!file_exists($file)){
-            if( $conf['autoplural'] ){
-                if(substr($page,-1) == 's'){
-                    $try = substr($page,0,-1);
-                }else{
-                    $try = $page.'s';
-                }
-                if(page_exists($try,$rev,true,$date_at)){
-                    $page   = $try;
-                    $exists = true;
-                }
+
+        //keep hashlink if exists then clean both parts
+        if (strpos($page,'#')) {
+            list($page,$hash) = explode('#',$page,2);
+        } else {
+            $hash = '';
+        }
+        $hash = cleanID($hash);
+        $page = resolve_id($ns,$page,false); // resolve but don't clean, yet
+
+        // get filename (calls clean itself)
+        if($rev !== '' && $date_at) {
+            $pagelog = new PageChangeLog($page);
+            $pagelog_rev = $pagelog->getLastRevisionAt($rev);
+            if($pagelog_rev !== false)//something found
+               $rev  = $pagelog_rev;
+        }
+        $file = wikiFN($page,$rev);
+    
+
+        // if ends with colon or slash we have a namespace link
+        if(in_array(substr($page,-1), array(':', ';')) ||
+           ($conf['useslash'] && substr($page,-1) == '/')){
+            if(page_exists($page.$conf['start'],$rev,true,$date_at)){
+                // start page inside namespace
+                $page = $page.$conf['start'];
+                $exists = true;
+            }elseif(page_exists($page.noNS(cleanID($page)),$rev,true,$date_at)){
+                // page named like the NS inside the NS
+                $page = $page.noNS(cleanID($page));
+                $exists = true;
+            }elseif(page_exists($page,$rev,true,$date_at)){
+                // page like namespace exists
+                $page = $page;
+                $exists = true;
+            }else{
+                // fall back to default
+                $page = $page.$conf['start'];
             }
         }else{
-            $exists = true;
+            //check alternative plural/nonplural form
+            if(!file_exists($file)){
+                if( $conf['autoplural'] ){
+                    if(substr($page,-1) == 's'){
+                        $try = substr($page,0,-1);
+                    }else{
+                        $try = $page.'s';
+                    }
+                    if(page_exists($try,$rev,true,$date_at)){
+                        $page   = $try;
+                        $exists = true;
+                    }
+                }
+            }else{
+                $exists = true;
+            }
         }
+        // now make sure we have a clean page
+        $page = cleanID($page);
+
+        //add hash if any
+        if(!empty($hash)) $page .= '#'.$hash;
     }
-
-    // now make sure we have a clean page
-    $page = cleanID($page);
-
-    //add hash if any
-    if(!empty($hash)) $page .= '#'.$hash;
+    $evt->advise_after();
+    unset($evt);
 }
 
 /**
