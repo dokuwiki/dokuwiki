@@ -477,13 +477,18 @@ function act_revert($act){
 function act_redirect($id,$preact){
     global $PRE;
     global $TEXT;
+    global $INPUT;
 
     $opts = array(
             'id'       => $id,
             'preact'   => $preact
             );
     //get section name when coming from section edit
-    if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+    if ($INPUT->has('hid')) {
+        // Use explicitly transmitted header id
+        $opts['fragment'] = $INPUT->str('hid');
+    } else if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+        // Fallback to old mechanism
         $check = false; //Byref
         $opts['fragment'] = sectionID($match[0], $check);
     }
