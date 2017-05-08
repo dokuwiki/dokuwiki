@@ -67,6 +67,14 @@ if (defined('SIMPLE_TEST')) {
         if($data['status'] != 200) {
             http_status($data['status'], $data['statusmessage']);
         }
+        // redirect to login-form if forbidden
+        // workaround for ACLs broken on non-logged-in users
+        if ($data['status'] == 403) {
+            global $ACT;
+            $ACT = "show";
+            act_dispatch();
+            exit;
+        }
         // die on errors
         if($data['status'] > 203) {
             print $data['statusmessage'];
