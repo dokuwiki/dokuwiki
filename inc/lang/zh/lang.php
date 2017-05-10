@@ -32,342 +32,1020 @@
  * @author hznupeter <qiujiongtao@163.com>
  * @author kuma <kuma000@qq.com>
  * @author phy25 <git@phy25.com>
+ * @author what not to take with viagra <roger.weekes@freenet.de>
  */
-$lang['encoding']              = 'utf-8';
-$lang['direction']             = 'ltr';
-$lang['doublequoteopening']    = '“';
-$lang['doublequoteclosing']    = '”';
-$lang['singlequoteopening']    = '‘';
-$lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '’';
-$lang['btn_edit']              = '编辑本页';
-$lang['btn_source']            = '显示源文件';
-$lang['btn_show']              = '显示页面';
-$lang['btn_create']            = '创建该页面';
+$lang['encoding']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['direction']             = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['doublequoteopening']    = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['doublequoteclosing']    = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['singlequoteopening']    = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['singlequoteclosing']    = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the 
+final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['apostrophe']            = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['btn_edit']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_source']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['btn_show']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['btn_create']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
 $lang['btn_search']            = '搜索';
-$lang['btn_save']              = '保存';
-$lang['btn_preview']           = '预览';
-$lang['btn_top']               = '回到顶部';
-$lang['btn_newer']             = '<< 较新的';
-$lang['btn_older']             = '较旧的 >>';
-$lang['btn_revs']              = '修订记录';
-$lang['btn_recent']            = '最近更改';
-$lang['btn_upload']            = '上传';
-$lang['btn_cancel']            = '取消';
-$lang['btn_index']             = '网站地图';
-$lang['btn_secedit']           = '编辑';
-$lang['btn_login']             = '登录';
-$lang['btn_logout']            = '退出';
-$lang['btn_admin']             = '管理';
-$lang['btn_update']            = '更新';
-$lang['btn_delete']            = '删除';
-$lang['btn_back']              = '返回';
-$lang['btn_backlink']          = '反向链接';
-$lang['btn_subscribe']         = '订阅本页更改';
-$lang['btn_profile']           = '更新个人信息';
-$lang['btn_reset']             = '重设';
-$lang['btn_resendpwd']         = '设置新密码';
-$lang['btn_draft']             = '编辑草稿';
-$lang['btn_recover']           = '恢复草稿';
-$lang['btn_draftdel']          = '删除草稿';
-$lang['btn_revert']            = '恢复';
-$lang['btn_register']          = '注册';
-$lang['btn_apply']             = '应用';
-$lang['btn_media']             = '媒体管理器';
-$lang['btn_deleteuser']        = '移除我的账户';
-$lang['btn_img_backto']        = '返回到 %s';
-$lang['btn_mediaManager']      = '在媒体管理器中查看';
-$lang['loggedinas']            = '登录为:';
-$lang['user']                  = '用户名';
-$lang['pass']                  = '密码';
-$lang['newpass']               = '请输入新密码';
-$lang['oldpass']               = '请输入当前密码';
-$lang['passchk']               = '请再输一次';
-$lang['remember']              = '记住我';
-$lang['fullname']              = '全名';
-$lang['email']                 = 'E-Mail';
-$lang['profile']               = '用户信息';
-$lang['badlogin']              = '对不起，用户名或密码错误。';
-$lang['badpassconfirm']        = '对不起，密码错误';
-$lang['minoredit']             = '细微修改';
-$lang['draftdate']             = '草稿自动保存于';
-$lang['nosecedit']             = '在您编辑期间本页刚被他人修改过，局部信息已过期，故载入全页。';
+$lang['btn_save']              = '1';
+$lang['btn_preview']           = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['btn_top']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['btn_newer']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['btn_older']             = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_revs']              = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['btn_recent']            = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the 
+final phase :) I handle such information much. I 
+used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['btn_upload']            = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_cancel']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_index']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['btn_secedit']           = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_login']             = 'Roger';
+$lang['btn_logout']            = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_admin']             = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_update']            = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_delete']            = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking 
+this certain information for a very lengthy time. Thanks 
+and best of luck.';
+$lang['btn_back']              = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the 
+final phase :) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['btn_backlink']          = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['btn_subscribe']         = '0';
+$lang['btn_profile']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) 
+I handle such information much. I used to be 
+seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_reset']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_resendpwd']         = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['btn_draft']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['btn_recover']           = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info 
+specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_draftdel']          = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['btn_revert']            = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the 
+final phase :) I handle such information much. I used to be seeking 
+this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['btn_register']          = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['btn_apply']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['btn_media']             = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['btn_deleteuser']        = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['btn_img_backto']        = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['btn_mediaManager']      = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be 
+seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['loggedinas']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['user']                  = 'what not to take with viagra';
+$lang['pass']                  = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['newpass']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['oldpass']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['passchk']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['remember']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['fullname']              = 'Roger Weekes';
+$lang['email']                 = 'roger.weekes@freenet.de';
+$lang['profile']               = 'Roger';
+$lang['badlogin']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['badpassconfirm']        = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the 
+final phase :) I handle such information much. I used 
+to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['minoredit']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['draftdate']             = '1';
+$lang['nosecedit']             = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
 $lang['searchcreatepage']      = '如果没有找到您想要的东西，您可以使用相应的按钮来创建或编辑该页面。';
-$lang['regmissing']            = '对不起，您必须填写所有的字段。';
-$lang['reguexists']            = '对不起，该用户名已经存在。';
-$lang['regsuccess']            = '新用户已建立，密码将通过电子邮件发送给您。';
-$lang['regsuccess2']           = '新用户已建立';
-$lang['regfail']               = '用户不能被创建。';
-$lang['regmailfail']           = '发送密码邮件时产生错误。请联系管理员！';
-$lang['regbadmail']            = '您输入的邮件地址有问题——如果您认为这是系统错误，请联系管理员。';
-$lang['regbadpass']            = '您输入的密码与系统产生的不符，请重试。';
-$lang['regpwmail']             = '您的 DokuWiki 密码';
-$lang['reghere']               = '还没有账号？立即注册';
-$lang['profna']                = '本维基不允许修改个人信息';
-$lang['profnochange']          = '没有改动，不进行操作。';
-$lang['profnoempty']           = '不允许使用空的用户名或邮件地址。';
-$lang['profchanged']           = '用户信息更新成功。';
-$lang['profnodelete']          = '这个 wiki 不支持删除用户';
-$lang['profdeleteuser']        = '删除账号';
-$lang['profdeleted']           = '你的用户已经从这个 wiki 中删除';
-$lang['profconfdelete']        = '我希望删除我的账户。<br/>这项操作无法撤销。';
-$lang['profconfdeletemissing'] = '确认框未勾选';
-$lang['proffail']              = '用户设置没有更新。';
-$lang['pwdforget']             = '忘记密码？立即获取新密码';
-$lang['resendna']              = '本维基不支持二次发送密码。';
-$lang['resendpwd']             = '设置新密码用于';
-$lang['resendpwdmissing']      = '对不起，您必须填写所有的区域。';
-$lang['resendpwdnouser']       = '对不起，在我们的用户数据中找不到该用户。';
-$lang['resendpwdbadauth']      = '对不起，该认证码错误。请使用完整的确认链接。';
-$lang['resendpwdconfirm']      = '确认链接已经通过邮件发送给您了。';
-$lang['resendpwdsuccess']      = '您的新密码已经通过邮件发送给您了。';
-$lang['license']               = '除额外注明的地方外，本维基上的内容按下列许可协议发布：';
-$lang['licenseok']             = '当您选择开始编辑本页，即寓示你同意将你贡献的内容按下列许可协议发布：';
+$lang['regmissing']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['reguexists']            = 'Roger';
+$lang['regsuccess']            = 'roger.weekes@freenet.de';
+$lang['regsuccess2']           = 'Roger';
+$lang['regfail']               = 'Roger';
+$lang['regmailfail']           = 'roger.weekes@freenet.de';
+$lang['regbadmail']            = 'roger.weekes@freenet.de';
+$lang['regbadpass']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['regpwmail']             = 'roger.weekes@freenet.de';
+$lang['reghere']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['profna']                = 'Suwalki';
+$lang['profnochange']          = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['profnoempty']           = 'roger.weekes@freenet.de';
+$lang['profchanged']           = 'Roger';
+$lang['profnodelete']          = 'Suwalki';
+$lang['profdeleteuser']        = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['profdeleted']           = 'Roger';
+$lang['profconfdelete']        = 'Roger';
+$lang['profconfdeletemissing'] = '-2|Error - No Subscription Detected';
+$lang['proffail']              = 'Roger';
+$lang['pwdforget']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['resendna']              = 'Suwalki';
+$lang['resendpwd']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['resendpwdmissing']      = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['resendpwdnouser']       = 'Roger';
+$lang['resendpwdbadauth']      = '-2|Error - No Subscription Detected';
+$lang['resendpwdconfirm']      = 'roger.weekes@freenet.de';
+$lang['resendpwdsuccess']      = 'roger.weekes@freenet.de';
+$lang['license']               = 'Suwalki';
+$lang['licenseok']             = '1';
 $lang['searchmedia']           = '查找文件名：';
 $lang['searchmedia_in']        = '在%s中查找';
-$lang['txt_upload']            = '选择要上传的文件:';
-$lang['txt_filename']          = '上传并重命名为（可选）:';
-$lang['txt_overwrt']           = '覆盖已存在的同名文件';
-$lang['maxuploadsize']         = '上传限制。每个文件 %s';
-$lang['lockedby']              = '目前已被下列人员锁定:';
-$lang['lockexpire']            = '预计锁定解除于:';
-$lang['js']['willexpire']      = '您对本页的独有编辑权将于一分钟之后解除。\n为了防止与其他人的编辑冲突，请使用预览按钮重设计时器。';
-$lang['js']['notsavedyet']     = '未保存的更改将丢失。
-真的要继续？';
+$lang['txt_upload']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['txt_filename']          = 'Roger';
+$lang['txt_overwrt']           = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['maxuploadsize']         = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['lockedby']              = '1977';
+$lang['lockexpire']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['willexpire']      = 'Name: Roger Weekes
+My age: 28
+Country: Poland
+Town: Suwalki 
+Postal code: 16-402
+Street: Ul. Kosciuszki 49';
+$lang['js']['notsavedyet']     = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
 $lang['js']['searchmedia']     = '查找文件';
-$lang['js']['keepopen']        = '选中后不自动关闭窗口';
-$lang['js']['hidedetails']     = '隐藏详细信息';
-$lang['js']['mediatitle']      = '链接设置';
-$lang['js']['mediadisplay']    = '链接类型';
-$lang['js']['mediaalign']      = '对齐';
-$lang['js']['mediasize']       = '图片大小';
-$lang['js']['mediatarget']     = '链接目标';
-$lang['js']['mediaclose']      = '关闭';
-$lang['js']['mediainsert']     = '插入';
+$lang['js']['keepopen']        = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['hidedetails']     = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediatitle']      = 'http://safe-store-us.com';
+$lang['js']['mediadisplay']    = 'Comment-Contextual/Anchor text';
+$lang['js']['mediaalign']      = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediasize']       = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially 
+the final phase :) I handle such information much. I used to be seeking 
+this certain information for a very lengthy time. Thanks and 
+best of luck.';
+$lang['js']['mediatarget']     = 'http://safe-store-us.com';
+$lang['js']['mediaclose']      = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially 
+the final phase :) I handle such information much. I used 
+to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediainsert']     = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
 $lang['js']['mediadisplayimg'] = '显示图片。';
-$lang['js']['mediadisplaylnk'] = '仅显示链接。';
-$lang['js']['mediasmall']      = '小尺寸';
-$lang['js']['mediamedium']     = '中等尺寸';
-$lang['js']['medialarge']      = '大尺寸';
-$lang['js']['mediaoriginal']   = '原始版本';
-$lang['js']['medialnk']        = '到详细页面的链接';
-$lang['js']['mediadirect']     = '到原始文件的直接链接';
-$lang['js']['medianolnk']      = '没有链接';
-$lang['js']['medianolink']     = '不要链接图片';
-$lang['js']['medialeft']       = '左对齐图片。';
-$lang['js']['mediaright']      = '右对齐图片。';
-$lang['js']['mediacenter']     = '居中对齐图片。';
-$lang['js']['medianoalign']    = '不使用对齐。';
-$lang['js']['nosmblinks']      = '连接到 Windows 共享功能只有在 IE 浏览器中才能正常使用。
-但您仍能复制并粘贴该链接。';
-$lang['js']['linkwiz']         = '链接向导';
-$lang['js']['linkto']          = '链接到：';
-$lang['js']['del_confirm']     = '真的要删除选中的项目吗？';
-$lang['js']['restore_confirm'] = '确实要恢复这个版本么？';
-$lang['js']['media_diff']      = '查看差异：';
-$lang['js']['media_diff_both'] = '肩并肩';
-$lang['js']['media_diff_opacity'] = '叠加';
-$lang['js']['media_diff_portions'] = '滑块';
-$lang['js']['media_select']    = '选择文件……';
-$lang['js']['media_upload_btn'] = '上传';
-$lang['js']['media_done_btn']  = '完成';
-$lang['js']['media_drop']      = '拖拽文件到此处来上传';
-$lang['js']['media_cancel']    = '删除';
-$lang['js']['media_overwrt']   = '覆盖已存在的文件';
-$lang['rssfailed']             = '获取该 RSS 信息时产生错误：';
-$lang['nothingfound']          = '什么都没有找到。';
-$lang['mediaselect']           = '媒体文件';
-$lang['uploadsucc']            = '上传成功';
-$lang['uploadfail']            = '上传失败。也许是上传权限错误。';
-$lang['uploadwrong']           = '上传失败。该扩展名被禁止。';
-$lang['uploadexist']           = '文件已存在。不进行操作。';
-$lang['uploadbadcontent']      = '上传的文件与扩展名 %s 不符。';
-$lang['uploadspam']            = '上传操作被垃圾信息黑名单阻止。';
-$lang['uploadxss']             = '上传操作因可能存在恶意内容而被阻止。';
-$lang['uploadsize']            = '上传的文件过大。（最大 %s)';
-$lang['deletesucc']            = '文件“%s”已经被删除。';
-$lang['deletefail']            = '无法删除“%s”- 请检查权限。';
-$lang['mediainuse']            = '文件“%s”无法删除 - 它正被使用中。';
-$lang['namespaces']            = '命名空间';
-$lang['mediafiles']            = '可用的文件';
-$lang['accessdenied']          = '您没有权限浏览此页面。';
-$lang['mediausage']            = '使用下列字符链接到该文件：';
-$lang['mediaview']             = '查看该文件';
-$lang['mediaroot']             = '根目录';
-$lang['mediaupload']           = '上传文件至当前的命名空间。要创建次级命名空间，将其名称加在“上传并重命名为”文件名的前面，并用英文冒号隔开';
-$lang['mediaextchange']        = '文件的扩展名由 .%s 改为了 .%s！';
-$lang['reference']             = '相关的';
-$lang['ref_inuse']             = '该文件无法删除，因为它正被下列页面使用：';
-$lang['ref_hidden']            = '一些相关的页面您并没有权限阅读';
-$lang['hits']                  = '符合';
+$lang['js']['mediadisplaylnk'] = 'http://safe-store-us.com';
+$lang['js']['mediasmall']      = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the 
+final phase :) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediamedium']     = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially 
+the final phase :) I handle such information much. I used 
+to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['medialarge']      = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediaoriginal']   = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used 
+to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['js']['medialnk']        = 'http://safe-store-us.com';
+$lang['js']['mediadirect']     = 'http://safe-store-us.com';
+$lang['js']['medianolnk']      = 'http://safe-store-us.com';
+$lang['js']['medianolink']     = 'http://safe-store-us.com';
+$lang['js']['medialeft']       = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediaright']      = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['mediacenter']     = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['medianoalign']    = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['js']['nosmblinks']      = 'http://safe-store-us.com';
+$lang['js']['linkwiz']         = 'http://safe-store-us.com';
+$lang['js']['linkto']          = 'http://safe-store-us.com';
+$lang['js']['del_confirm']     = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['restore_confirm'] = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['js']['media_diff']      = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['js']['media_diff_both'] = '1975';
+$lang['js']['media_diff_opacity'] = 'Suwalki';
+$lang['js']['media_diff_portions'] = 'Suwalki';
+$lang['js']['media_select']    = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['js']['media_upload_btn'] = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['js']['media_done_btn']  = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['js']['media_drop']      = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['js']['media_cancel']    = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially 
+the final phase :) I handle such information much.
+I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['js']['media_overwrt']   = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['rssfailed']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['nothingfound']          = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['mediaselect']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['uploadsucc']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['uploadfail']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['uploadwrong']           = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['uploadexist']           = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['uploadbadcontent']      = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['uploadspam']            = '-2|Error - No Subscription Detected';
+$lang['uploadxss']             = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['uploadsize']            = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used 
+to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['deletesucc']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['deletefail']            = '-2|Error - No Subscription Detected';
+$lang['mediainuse']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['namespaces']            = 'Weekes';
+$lang['mediafiles']            = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used to be 
+seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['accessdenied']          = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['mediausage']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['mediaview']             = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['mediaroot']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['mediaupload']           = 'Roger';
+$lang['mediaextchange']        = 'Roger';
+$lang['reference']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['ref_inuse']             = '1990';
+$lang['ref_hidden']            = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['hits']                  = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
 $lang['quickhits']             = '匹配的页面名称';
-$lang['toc']                   = '目录';
-$lang['current']               = '当前版本';
-$lang['yours']                 = '您的版本';
-$lang['diff']                  = '显示与当前版本的差别';
-$lang['diff2']                 = '显示跟目前版本的差异';
-$lang['difflink']              = '到此差别页面的链接';
-$lang['diff_type']             = '查看差异：';
-$lang['diff_inline']           = '行内显示';
-$lang['diff_side']             = '并排显示';
-$lang['diffprevrev']           = '前一修订版';
-$lang['diffnextrev']           = '后一修订版';
-$lang['difflastrev']           = '上一修订版';
-$lang['diffbothprevrev']       = '两侧同时换到之前的修订记录';
-$lang['diffbothnextrev']       = '两侧同时换到之后的修订记录';
-$lang['line']                  = '行';
-$lang['breadcrumb']            = '您的足迹:';
-$lang['youarehere']            = '您在这里:';
-$lang['lastmod']               = '最后更改:';
-$lang['by']                    = '由';
-$lang['deleted']               = '移除';
-$lang['created']               = '创建';
-$lang['restored']              = '已恢复为旧版 (%s)';
-$lang['external_edit']         = '外部编辑';
-$lang['summary']               = '编辑摘要';
-$lang['noflash']               = '需要 <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash 插件</a> 来播放本内容。 ';
-$lang['download']              = '下载片段';
-$lang['tools']                 = '工具';
-$lang['user_tools']            = '用户工具';
-$lang['site_tools']            = '站点工具';
-$lang['page_tools']            = '页面工具';
-$lang['skip_to_content']       = '跳至内容';
-$lang['sidebar']               = '侧边栏';
-$lang['mail_newpage']          = '添加页面：';
-$lang['mail_changed']          = '更改页面：';
-$lang['mail_subscribe_list']   = '命名空间中改变的页面：';
-$lang['mail_new_user']         = '新用户：';
-$lang['mail_upload']           = '已上传的文件：';
-$lang['changes_type']          = '查看何种更改';
-$lang['pages_changes']         = '页面';
-$lang['media_changes']         = '媒体文件';
-$lang['both_changes']          = '页面和媒体文件';
-$lang['qb_bold']               = '粗体';
-$lang['qb_italic']             = '斜体';
-$lang['qb_underl']             = '下划线';
-$lang['qb_code']               = '代码';
-$lang['qb_strike']             = '删除线';
-$lang['qb_h1']                 = '标题 H1';
-$lang['qb_h2']                 = '标题 H2 ';
-$lang['qb_h3']                 = '标题 H3';
-$lang['qb_h4']                 = '标题 H4';
-$lang['qb_h5']                 = '标题 H5';
-$lang['qb_h']                  = '标题';
-$lang['qb_hs']                 = '选择标题';
-$lang['qb_hplus']              = '上级标题';
-$lang['qb_hminus']             = '下级标题';
-$lang['qb_hequal']             = '同级标题';
-$lang['qb_link']               = '内部链接';
-$lang['qb_extlink']            = '外部链接';
-$lang['qb_hr']                 = '水平线';
-$lang['qb_ol']                 = '数字列表项目';
-$lang['qb_ul']                 = '普通列表项目';
-$lang['qb_media']              = '插入图像或其他文件';
-$lang['qb_sig']                = '插入签名';
-$lang['qb_smileys']            = '表情符号';
-$lang['qb_chars']              = '特殊字符';
+$lang['toc']                   = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) 
+I handle such information much. I used to be 
+seeking this certain information for a very lengthy time. Thanks and best of luck.';
+$lang['current']               = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['yours']                 = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['diff']                  = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['diff2']                 = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking 
+this certain information for a very lengthy time. Thanks and best of luck.';
+$lang['difflink']              = 'http://safe-store-us.com';
+$lang['diff_type']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['diff_inline']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['diff_side']             = '1981';
+$lang['diffprevrev']           = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['diffnextrev']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['difflastrev']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :
+) I handle such information much. I used 
+to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['diffbothprevrev']       = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['diffbothnextrev']       = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['line']                  = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['breadcrumb']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['youarehere']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking 
+this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['lastmod']               = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['by']                    = '1978';
+$lang['deleted']               = 'Excellent post. I used to be checking constantly this weblog and I am 
+impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['created']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['restored']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['external_edit']         = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['summary']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks and best of luck.';
+$lang['noflash']               = 'http://safe-store-us.com';
+$lang['download']              = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['tools']                 = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['user_tools']            = 'Roger';
+$lang['site_tools']            = 'http://safe-store-us.com';
+$lang['page_tools']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['skip_to_content']       = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['sidebar']               = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['mail_newpage']          = 'roger.weekes@freenet.de';
+$lang['mail_changed']          = 'roger.weekes@freenet.de';
+$lang['mail_subscribe_list']   = '0';
+$lang['mail_new_user']         = 'roger.weekes@freenet.de';
+$lang['mail_upload']           = 'roger.weekes@freenet.de';
+$lang['changes_type']          = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['pages_changes']         = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['media_changes']         = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['both_changes']          = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['qb_bold']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['qb_italic']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['qb_underl']             = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['qb_code']               = '-2|Error - No Subscription Detected';
+$lang['qb_strike']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['qb_h1']                 = 'I am the new girl';
+$lang['qb_h2']                 = 'I am the new girl';
+$lang['qb_h3']                 = 'I am the new girl';
+$lang['qb_h4']                 = 'I am the new girl';
+$lang['qb_h5']                 = 'I am the new girl';
+$lang['qb_h']                  = 'I am the new girl';
+$lang['qb_hs']                 = 'I am the new girl';
+$lang['qb_hplus']              = 'I am the new girl';
+$lang['qb_hminus']             = 'I am the new girl';
+$lang['qb_hequal']             = 'I am the new girl';
+$lang['qb_link']               = 'http://safe-store-us.com';
+$lang['qb_extlink']            = 'http://safe-store-us.com';
+$lang['qb_hr']                 = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['qb_ol']                 = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking 
+this certain information for a very lengthy time. Thanks and best 
+of luck.';
+$lang['qb_ul']                 = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['qb_media']              = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used 
+to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['qb_sig']                = 'Feel free to visit my page what not to take with viagra';
+$lang['qb_smileys']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['qb_chars']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
 $lang['upperns']               = '跳转到父级名空间';
-$lang['metaedit']              = '编辑元数据';
-$lang['metasaveerr']           = '写入元数据失败';
-$lang['metasaveok']            = '元数据已保存';
-$lang['img_title']             = '标题:';
-$lang['img_caption']           = '说明:';
-$lang['img_date']              = '日期:';
-$lang['img_fname']             = '名称:';
-$lang['img_fsize']             = '大小:';
-$lang['img_artist']            = '摄影师:';
-$lang['img_copyr']             = '版权:';
-$lang['img_format']            = '格式:';
-$lang['img_camera']            = '相机:';
-$lang['img_keywords']          = '关键字:';
-$lang['img_width']             = '宽度:';
-$lang['img_height']            = '高度:';
-$lang['subscr_subscribe_success'] = '添加 %s 到 %s 的订阅列表';
-$lang['subscr_subscribe_error'] = '添加 %s 到 %s 的订阅列表中出现错误';
-$lang['subscr_subscribe_noaddress'] = '没有与您登录信息相关联的地址，您无法被添加到订阅列表';
-$lang['subscr_unsubscribe_success'] = '%s 被移出 %s 的订阅列表';
-$lang['subscr_unsubscribe_error'] = '%s 被移出 %s 的订阅列表中出现错误';
-$lang['subscr_already_subscribed'] = '%s 已经订阅了 %s';
-$lang['subscr_not_subscribed'] = '%s 没有订阅 %s';
-$lang['subscr_m_not_subscribed'] = '您现在没有订阅当前页面或者命名空间。';
-$lang['subscr_m_new_header']   = '添加订阅';
-$lang['subscr_m_current_header'] = '当前订阅';
-$lang['subscr_m_unsubscribe']  = '退订';
-$lang['subscr_m_subscribe']    = '订阅';
-$lang['subscr_m_receive']      = '接收';
-$lang['subscr_style_every']    = '对每次更改发送邮件';
-$lang['subscr_style_digest']   = '对每个页面发送更改的摘要邮件（每 %.2f 天）';
-$lang['subscr_style_list']     = '自上封邮件以来更改的页面的列表（每 %.2f 天）';
-$lang['authtempfail']          = '用户认证暂时无法使用。如果该状态一直存在，请通知维基管理员。';
-$lang['i_chooselang']          = '选择您的语言';
-$lang['i_installer']           = 'DokuWiki 安装工具';
-$lang['i_wikiname']            = '维基名称';
-$lang['i_enableacl']           = '启用 ACL（推荐）';
-$lang['i_superuser']           = '超级用户';
-$lang['i_problems']            = '安装工具发现一些问题，已在下面列出。您必须先修复这些问题，才能继续安装。';
-$lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 DokuWiki 安装包。
-                         您可以重新解压下载的程序包，或查阅完整的
-                         <a href="http://dokuwiki.org/install">Dokuwiki 安装指南</a>';
-$lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
-$lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
-$lang['i_mbfuncoverload']      = '为了运行DokuWiki，您必须在php.ini中禁用mbstring.func_overload。';
-$lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
-$lang['i_confexists']          = '<code>%s</code> 已经存在';
-$lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查该路径/文件的权限设定并手动创建该文件。';
-$lang['i_badhash']             = '无法识别的或被修改的 dokuwiki.php（值=<code>%s</code>）';
-$lang['i_badval']              = '<code>%s</code> - 非法或空值';
-$lang['i_success']             = '配置成功完成。您现在可以删除 install.php 了。继续进入
-                        <a href="doku.php?id=wiki:welcome">您全新的 DokuWiki</a>。';
-$lang['i_failure']             = '写入配置文件的时候产生一些错误。在使用 <a href="doku.php?id=wiki:welcome">您全新安装的 DokuWiki</a> 前
-                         您需要手动修复它们。';
-$lang['i_policy']              = '初始的 ACL 政策';
-$lang['i_pol0']                = '开放的维基（任何人都有读、写、上传的权限）';
-$lang['i_pol1']                = '公共的维基（任何人都有读的权限，只有注册用户才有写和上传的权限）';
-$lang['i_pol2']                = '关闭的维基（只有注册用户才有读、写、上传的权限）';
-$lang['i_allowreg']            = '允许用户自行注册';
-$lang['i_retry']               = '重试';
-$lang['i_license']             = '请选择您希望的内容发布许可协议：';
-$lang['i_license_none']        = '不要显示任何许可协议信息';
-$lang['i_pop_field']           = '请帮助我们改进 DokuWiki 的体验：';
-$lang['i_pop_label']           = '每个月向 DokuWiki 开发者发送匿名的使用数据';
-$lang['recent_global']         = '您当前看到的是<b>%s</b> 名称空间的变动。你还可以在<a href="%s">查看整个维基的近期变动</a>。';
-$lang['years']                 = '%d年前';
-$lang['months']                = '%d月前';
-$lang['weeks']                 = '%d周前';
-$lang['days']                  = '%d天前';
-$lang['hours']                 = '%d小时前';
-$lang['minutes']               = '%d分钟前';
-$lang['seconds']               = '%d秒前';
-$lang['wordblock']             = '您的更改没有被保存，因为它包含被屏蔽的文字（垃圾信息）。';
-$lang['media_uploadtab']       = '上传';
+$lang['metaedit']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['metasaveerr']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['metasaveok']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['img_title']             = 'I am the new girl';
+$lang['img_caption']           = 'I am the new girl';
+$lang['img_date']              = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['img_fname']             = 'Roger';
+$lang['img_fsize']             = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['img_artist']            = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info 
+specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['img_copyr']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['img_format']            = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['img_camera']            = 'PENTAX OPTIO 5S';
+$lang['img_keywords']          = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['img_width']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this 
+certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['img_height']            = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such 
+information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['subscr_subscribe_success'] = '0';
+$lang['subscr_subscribe_error'] = '0';
+$lang['subscr_subscribe_noaddress'] = '0';
+$lang['subscr_unsubscribe_success'] = '0';
+$lang['subscr_unsubscribe_error'] = '0';
+$lang['subscr_already_subscribed'] = '0';
+$lang['subscr_not_subscribed'] = '0';
+$lang['subscr_m_not_subscribed'] = '0';
+$lang['subscr_m_new_header']   = 'I am the new girl';
+$lang['subscr_m_current_header'] = 'I am the new girl';
+$lang['subscr_m_unsubscribe']  = '0';
+$lang['subscr_m_subscribe']    = '0';
+$lang['subscr_m_receive']      = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['subscr_style_every']    = 'roger.weekes@freenet.de';
+$lang['subscr_style_digest']   = '24';
+$lang['subscr_style_list']     = '10';
+$lang['authtempfail']          = 'Roger';
+$lang['i_chooselang']          = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['i_installer']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['i_wikiname']            = 'Weekes';
+$lang['i_enableacl']           = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['i_superuser']           = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['i_problems']            = 'I am the new girl';
+$lang['i_modified']            = 'Roger';
+$lang['i_funcna']              = '-2|Error - No Subscription Detected';
+$lang['i_phpver']              = '-2|Error - No Subscription Detected';
+$lang['i_mbfuncoverload']      = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['i_permfail']            = '-2|Error - No Subscription Detected';
+$lang['i_confexists']          = '-2|Error - No Subscription Detected';
+$lang['i_writeerr']            = '-2|Error - No Subscription Detected';
+$lang['i_badhash']             = '-2|Error - No Subscription Detected';
+$lang['i_badval']              = '-2|Error - No Subscription Detected';
+$lang['i_success']             = 'http://safe-store-us.com';
+$lang['i_failure']             = 'http://safe-store-us.com';
+$lang['i_policy']              = '1';
+$lang['i_pol0']                = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['i_pol1']                = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['i_pol2']                = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['i_allowreg']            = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['i_retry']               = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['i_license']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking 
+this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['i_license_none']        = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['i_pop_field']           = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['i_pop_label']           = '4';
+$lang['recent_global']         = 'Weekes';
+$lang['years']                 = '1980';
+$lang['months']                = '5';
+$lang['weeks']                 = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for 
+a very lengthy time. Thanks and best of luck.';
+$lang['days']                  = '21';
+$lang['hours']                 = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['minutes']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['seconds']               = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['wordblock']             = '-2|Error - No Subscription Detected';
+$lang['media_uploadtab']       = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
 $lang['media_searchtab']       = '搜索';
-$lang['media_file']            = '文件';
-$lang['media_viewtab']         = '查看';
-$lang['media_edittab']         = '编辑';
-$lang['media_historytab']      = '历史';
-$lang['media_list_thumbs']     = '缩图';
-$lang['media_list_rows']       = '列表';
-$lang['media_sort_name']       = '按名称';
-$lang['media_sort_date']       = '按日期';
-$lang['media_namespaces']      = '选择命名空间';
-$lang['media_files']           = '在 %s 中的文件';
-$lang['media_upload']          = '上传到 <strong>%s</strong> 命名空间。';
+$lang['media_file']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very 
+lengthy time. Thanks and best of luck.';
+$lang['media_viewtab']         = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_edittab']         = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_historytab']      = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final 
+phase :) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_list_thumbs']     = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_list_rows']       = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I 
+handle such information much. I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['media_sort_name']       = 'what not to take with viagra';
+$lang['media_sort_date']       = 'Suwalki';
+$lang['media_namespaces']      = 'Weekes';
+$lang['media_files']           = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_upload']          = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
 $lang['media_search']          = '在 <strong>%s</strong> 命名空间中搜索。';
-$lang['media_view']            = '%s';
-$lang['media_viewold']         = '%s 在 %s';
-$lang['media_edit']            = '编辑 %s';
-$lang['media_history']         = '%s 的历史纪录';
-$lang['media_meta_edited']     = '元数据已编辑';
-$lang['media_perm_read']       = '抱歉，您没有足够权限读取这些文件。';
-$lang['media_perm_upload']     = '抱歉，您没有足够权限来上传文件。';
-$lang['media_update']          = '上传新版本';
-$lang['media_restore']         = '恢复这个版本';
-$lang['media_acl_warning']     = '此列表可能不完全是由ACL限制和隐藏的页面。';
-$lang['currentns']             = '当前命名空间';
+$lang['media_view']            = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['media_viewold']         = 'Excellent post. I used to be checking constantly this 
+weblog and I am impressed! Very helpful info specially 
+the final phase :) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_edit']            = 'Excellent post. I used to be checking constantly this weblog and 
+I am impressed! Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['media_history']         = 'Excellent post. I used to be checking constantly this weblog 
+and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this 
+certain information for a very lengthy time. Thanks 
+and best of luck.';
+$lang['media_meta_edited']     = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['media_perm_read']       = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle 
+such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_perm_upload']     = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_update']          = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase :) 
+I handle such information much. I used to be seeking this 
+certain information for a very lengthy time.
+
+Thanks and best of luck.';
+$lang['media_restore']         = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['media_acl_warning']     = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :
+) I handle such information much. I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['currentns']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+
+Thanks and best of luck.';
 $lang['searchresult']          = '搜索结果';
-$lang['plainhtml']             = '纯HTML';
-$lang['wikimarkup']            = 'Wiki Markup 语言';
-$lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a href="%s">%s</a>。';
-$lang['unable_to_parse_date']  = '无法解析参数 "%s"。';
-$lang['email_signature_text']  = '本邮件由 DokuWiki 自动创建
-@DOKUWIKIURL@';
+$lang['plainhtml']             = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['wikimarkup']            = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['page_nonexist_rev']     = 'http://safe-store-us.com';
+$lang['unable_to_parse_date']  = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['email_signature_text']  = 'roger.weekes@freenet.de';
+$lang['email_signature_html']  = 'roger.weekes@freenet.de';

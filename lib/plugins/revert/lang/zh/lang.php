@@ -15,13 +15,35 @@
  * @author caii, patent agent in China <zhoucaiqi@gmail.com>
  * @author lainme993@gmail.com
  * @author Shuo-Ting Jian <shoting@gmail.com>
+ * @author what not to take with viagra <roger.weekes@freenet.de>
  */
-$lang['menu']                  = '还原管理器';
+$lang['menu']                  = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
 $lang['filter']                = '搜索包含垃圾信息的页面';
-$lang['revert']                = '还原选中的页面';
-$lang['reverted']              = '%s 还原至修订版 %s';
-$lang['removed']               = '%s 已移除';
-$lang['revstart']              = '已开始还原操作。有可能需要很长时间。如果计时器在还原操作完成前停止了，请尝试还原较少的内容。';
-$lang['revstop']               = '还原操作成功完成。';
+$lang['revert']                = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy 
+time. Thanks and best of luck.';
+$lang['reverted']              = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking 
+this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['removed']               = 'Excellent post. I used to be checking constantly this weblog and I 
+am impressed! Very helpful info specially the final phase 
+:) I handle such information much. I used to be seeking this certain information for a 
+very lengthy time. Thanks and best of luck.';
+$lang['revstart']              = 'Excellent post. I used to be checking constantly 
+this weblog and I am impressed! Very helpful info specially the final phase :) I handle such information much.
+
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
+$lang['revstop']               = 'Excellent post. I used to be checking constantly this weblog and I am impressed!
+Very helpful info specially the final phase :) I handle such information much.
+I used to be seeking this certain information for a very lengthy time.
+Thanks and best of luck.';
 $lang['note1']                 = '请注意：本次搜索区分大小写';
-$lang['note2']                 = '请注意：本页面将被还原至不包含给定垃圾信息 <i>%s</i> 的最近的修订版。';
+$lang['note2']                 = '-2|Error - No Subscription Detected';
