@@ -785,6 +785,9 @@ function p_parse_geshi_options(&$geshi, array $options) {
         }
         $geshi->highlight_lines_extra($numbers);
     }
+    if (array_key_exists('enable_keyword_links', $options)) {
+        $geshi->enable_keyword_links($options['enable_keyword_links'] != 'false');
+    }
 }
 
 /**
