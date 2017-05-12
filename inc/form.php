@@ -28,17 +28,17 @@ if(!defined('DOKU_INC')) die('meh.');
 class Doku_Form {
 
     // Form id attribute
-    var $params = array();
+    protected $params = array();
 
     // Draw a border around form fields.
     // Adds <fieldset></fieldset> around the elements
-    var $_infieldset = false;
+    protected $_infieldset = false;
 
     // Hidden form fields.
-    var $_hidden = array();
+    protected $_hidden = array();
 
     // Array of pseudo-tags
-    var $_content = array();
+    protected $_content = array();
 
     /**
      * Constructor

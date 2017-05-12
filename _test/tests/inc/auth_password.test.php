@@ -3,7 +3,7 @@
 class auth_password_test extends DokuWikiTest {
 
     // hashes for the password foo$method, using abcdefgh12345678912345678912345678 as salt
-    var $passes = array(
+    protected $passes = array(
         'smd5'  => '$1$abcdefgh$SYbjm2AEvSoHG7Xapi8so.',
         'apr1'  => '$apr1$abcdefgh$C/GzYTF4kOVByYLEoD5X4.',
         'md5'   => '8fa22d62408e5351553acdd91c6b7003',

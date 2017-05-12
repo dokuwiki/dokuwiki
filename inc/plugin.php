@@ -12,10 +12,10 @@
  */
 class DokuWiki_Plugin {
 
-    var $localised = false;        // set to true by setupLocale() after loading language dependent strings
-    var $lang = array();           // array to hold language dependent strings, best accessed via ->getLang()
-    var $configloaded = false;     // set to true by loadConfig() after loading plugin configuration variables
-    var $conf = array();           // array to hold plugin settings, best accessed via ->getConf()
+    protected $localised = false;        // set to true by setupLocale() after loading language dependent strings
+    protected $lang = array();           // array to hold language dependent strings, best accessed via ->getLang()
+    protected $configloaded = false;     // set to true by loadConfig() after loading plugin configuration variables
+    protected $conf = array();           // array to hold plugin settings, best accessed via ->getConf()
 
     /**
      * General Info

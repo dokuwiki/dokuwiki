@@ -129,10 +129,10 @@ class remote_plugin_testplugin2 extends DokuWiki_Remote_Plugin {
 
 class remote_test extends DokuWikiTest {
 
-    var $userinfo;
+    protected $userinfo;
 
     /** @var  RemoteAPI */
-    var $remote;
+    protected $remote;
 
     function setUp() {
         parent::setUp();

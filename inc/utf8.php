@@ -357,7 +357,7 @@ if(!function_exists('utf8_strtolower')){
      */
     function utf8_strtolower($string){
         if(UTF8_MBSTRING) {
-            if (class_exists("Normalizer", $autoload = false)) 
+            if (class_exists("Normalizer", $autoload = false))
                 return normalizer::normalize(mb_strtolower($string,'utf-8'));
             else
                 return (mb_strtolower($string,'utf-8'));
@@ -636,7 +636,7 @@ if(!class_exists('utf8_entity_decoder')){
      * Encapsulate HTML entity decoding tables
      */
     class utf8_entity_decoder {
-        var $table;
+        protected $table;
 
         /**
          * Initializes the decoding tables
