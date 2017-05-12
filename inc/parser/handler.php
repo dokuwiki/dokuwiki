@@ -370,77 +370,19 @@ class Doku_Handler {
      *                        or null if no entries found
      */
     protected function parse_highlight_options ($options) {
-        $max = strlen($options);
-        $pos = 0;
         $result = array();
-        $collected = '';
-        $in_string = false;
-        $open_char = '';
-        while ($pos < $max) {
-            $sign = $options[$pos];
-            if ($pos < $max-1 && ($sign != ',' || $in_string)) {
-                if (!$in_string && ($sign == "'" || $sign == '"')) {
-                    $in_string = true;
-                    $open_char = $sign;
-                } else if ($in_string && $sign == $open_char) {
-                    $in_string = false;
-                } else {
-                    $collected .= $sign;
-                }
+        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,])(?:,*)/', $options, $matches, PREG_SET_ORDER);
+        foreach ($matches as $match) {
+            $equal_sign = strpos($match [0], '=');
+            if ($equal_sign === false) {
+                $key = trim($match[0],',');
+                $result [$key] = true;
             } else {
-                if ($sign != ',') {
-                    // Collect the last sign ($pos == $max-1)
-                    if (!$in_string && ($sign == "'" || $sign == '"')) {
-                        $in_string = true;
-                        $open_char = $sign;
-                    } else if ($in_string && $sign == $open_char) {
-                        $in_string = false;
-                    } else {
-                        $collected .= $sign;
-                    }
-                }
-                $equal_sign = strpos($collected, '=');
-                if ($equal_sign === false) {
-                    // Just a flag, no value given, assign true.
-                    $collected = trim($collected);
-                    $result[$collected] = true;
-                } else {
-                    // We need to check if thee qual sign is inside the string
-                    $quote_sign = strpos($collected, "'");
-                    $double_quote_sign = strpos($collected, '"');
-                    $quote_pos = false;
-                    if ($quote_sign !== false) {
-                        $quote_pos = $quote_sign;
-                    }
-                    if ($double_quote_sign !== false &&
-                        ($quote_pos === false || $double_quote_sign < $quote_pos)) {
-                        $quote_pos = $double_quote_sign;
-                    }
-                    if ($quote_pos && $equal_sign > $quote_pos) {
-                        // Just a flag, no value given, assign true.
-                        $collected = trim($collected);
-                        $result[$collected] = true;
-                    } else {
-                        // key-value-pair
-                        $key = substr($collected, 0, $equal_sign);
-                        $key = trim($key);
-                        $value = substr($collected, $equal_sign+1);
-                        $value = trim($value);
-                        if ($value[0] == '"') {
-                            $value = trim($value, '"');
-                        } else if ($value[0] == "'") {
-                            $value = trim($value, "'");
-                        }
-                        $result[$key] = $value;
-                    }
-                }
-                $collected = '';
+                $key = substr($match[0], 0, $equal_sign);
+                $value = substr($match[0], $equal_sign+1);
+                $value = trim($value, '"');
+                $result [$key] = $value;
             }
-            $pos++;
-        }
-        
-        if (count($result) == 0) {
-            return null;
         }
         return $result;
     }
@@ -465,7 +407,7 @@ class Doku_Handler {
             if ($param[0] == '-') $param[0] = null;
             array_unshift($param, $matches[1]);
             if (!empty($options[0])) {
-                $param [] = $this->parse_highlight_options (trim($options[0], '[]'));
+                $param [] = $this->parse_highlight_options ($options[0]);
             }
 
             $this->_addCall($type, $param, $pos);
