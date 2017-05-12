@@ -7,4 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'GeSHi' => $vendorDir . '/easybook/geshi/geshi.php',
+    'lessc' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
+    'lessc_formatter_classic' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
+    'lessc_formatter_compressed' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
+    'lessc_formatter_lessjs' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
+    'lessc_parser' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
 );

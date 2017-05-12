@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae068822c3d6326d4aee89a1f6061d22",
+    "hash": "8436e5bf38d0f0b964f9a68d6bdd2575",
     "packages": [
         {
             "name": "easybook/geshi",
@@ -50,7 +50,59 @@
                 "highlighter",
                 "syntax"
             ],
-            "time": "2016-10-05T07:15:42+00:00"
+            "time": "2016-10-05 07:15:42"
+        },
+        {
+            "name": "marcusschwarz/lesserphp",
+            "version": "v0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MarcusSchwarz/lesserphp.git",
+                "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+                "reference": "e9e3d53980c0e486b07c75e12f2bae5e10bdee44",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.3"
+            },
+            "bin": [
+                "plessc"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "lessc.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                },
+                {
+                    "name": "Marcus Schwarz",
+                    "email": "github@maswaba.de",
+                    "homepage": "https://www.maswaba.de"
+                }
+            ],
+            "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
+            "homepage": "http://leafo.net/lessphp/",
+            "time": "2016-09-30 11:13:18"
         },
         {
             "name": "paragonie/random_compat",
@@ -98,7 +150,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-03-13 16:27:32"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -190,7 +242,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2016-10-04T00:57:04+00:00"
+            "time": "2016-10-04 00:57:04"
         },
         {
             "name": "simplepie/simplepie",
@@ -250,7 +302,7 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2016-11-27T01:39:18+00:00"
+            "time": "2016-11-27 01:39:18"
         },
         {
             "name": "splitbrain/php-archive",
@@ -301,7 +353,7 @@
                 "unzip",
                 "zip"
             ],
-            "time": "2017-03-19T09:10:53+00:00"
+            "time": "2017-03-19 09:10:53"
         }
     ],
     "packages-dev": [],
