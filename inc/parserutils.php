@@ -735,62 +735,6 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
 }
 
 /**
- * Helper function for p_xhtml_cached_geshi:
- * Parses additional options from options array and applies them to the
- * given geshi instance.
- * 
- * The actually supported options are:
- * - enable_line_numbers or enable_line_numbers=[GESHI_NORMAL_LINE_NUMBERS|GESHI_NO_LINE_NUMBERS]
- * - start_line_numbers_at=integer
- * - highlight_lines_extra="integer1,integer2..."
- *
- * @param  GeSHi    $geshi      Geshi instance/object
- * @param  Array    $options    Options array
- *
- * @author LarsDW223
- */
-function p_parse_geshi_options(&$geshi, array $options) {
-    // Check for supported options
-    if (array_key_exists('enable_line_numbers', $options)) {
-        $numbering_params = $options ['enable_line_numbers'];
-        if ($numbering_params === true) {
-            $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-        } else {
-            // Split params by comma
-            $numbering_params = explode (',', $numbering_params);
-            switch ($numbering_params [0]) {
-                case 'GESHI_NORMAL_LINE_NUMBERS':
-                    $flag = GESHI_NORMAL_LINE_NUMBERS;
-                break;
-                // Out commented/not supported for now:
-                // Setting fancy line numbering and styles did not show any effect on Geshi's output
-                //case 'GESHI_FANCY_LINE_NUMBERS':
-                //    $flag = GESHI_FANCY_LINE_NUMBERS;
-                //break;
-                default:
-                    $flag = GESHI_NO_LINE_NUMBERS;
-                break;
-            }
-            $geshi->enable_line_numbers($flag, intval($numbering_params [1]));
-        }
-    }
-    if (array_key_exists('start_line_numbers_at', $options)) {
-        $geshi->start_line_numbers_at(intval($options['start_line_numbers_at']));
-    }
-    if (array_key_exists('highlight_lines_extra', $options)) {
-        $numbers = array();
-        $number_strings = explode (',', $options['highlight_lines_extra']);
-        foreach ($number_strings as $number) {
-            $numbers [] = intval($number);
-        }
-        $geshi->highlight_lines_extra($numbers);
-    }
-    if (array_key_exists('enable_keyword_links', $options)) {
-        $geshi->enable_keyword_links($options['enable_keyword_links'] != 'false');
-    }
-}
-
-/**
  * Wrapper for GeSHi Code Highlighter, provides caching of its output
  *
  * @param  string   $code       source code to be highlighted
@@ -823,7 +767,22 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=n
         $geshi->set_header_type(GESHI_HEADER_PRE);
         $geshi->set_link_target($conf['target']['extern']);
         if ($options !== null) {
-            p_parse_geshi_options($geshi, $options);
+            foreach ($options as $function => $params) {
+                switch ($function) {
+                    case 'enable_line_numbers':
+                        $geshi->enable_line_numbers($params);
+                    break;
+                    case 'start_line_numbers_at':
+                        $geshi->start_line_numbers_at($params);
+                    break;
+                    case 'highlight_lines_extra':
+                        $geshi->highlight_lines_extra($params);
+                    break;
+                    case 'enable_keyword_links':
+                        $geshi->enable_keyword_links($params);
+                    break;
+                }
+            }
         }
 
         // remove GeSHi's wrapper element (we'll replace it with our own later)

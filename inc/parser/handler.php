@@ -384,6 +384,53 @@ class Doku_Handler {
                 $result [$key] = $value;
             }
         }
+
+        // Check for supported options
+        foreach ($result as $key => $value) {
+            switch ($key) {
+                case 'enable_line_numbers':
+                    $numbering_params = $value;
+                    if ($numbering_params === true) {
+                        $result['enable_line_numbers'] = 1; // GESHI_NORMAL_LINE_NUMBERS;
+                    } else {
+                        // Split params by comma
+                        $numbering_params = explode (',', $numbering_params);
+                        switch ($numbering_params [0]) {
+                            case 'GESHI_NORMAL_LINE_NUMBERS':
+                                $result['enable_line_numbers'] = 1; // GESHI_NORMAL_LINE_NUMBERS
+                            break;
+                            // Out commented/not supported for now:
+                            // Setting fancy line numbering and styles did not show any effect on Geshi's output
+                            //case 'GESHI_FANCY_LINE_NUMBERS':
+                            //    $result['enable_line_numbers'] = 2; // GESHI_FANCY_LINE_NUMBERS
+                            //break;
+                            default:
+                                $result['enable_line_numbers'] = 0; // GESHI_NO_LINE_NUMBERS
+                            break;
+                        }
+                    }
+                break;
+                case 'start_line_numbers_at':
+                    $result['start_line_numbers_at'] = intval($value);
+                break;
+                case 'highlight_lines_extra':
+                    $numbers = array();
+                    $number_strings = explode (',', $value);
+                    foreach ($number_strings as $number) {
+                        $numbers [] = intval($number);
+                    }
+                    $result['highlight_lines_extra'] = $numbers;
+                break;
+                case 'enable_keyword_links':
+                    $result['enable_keyword_links'] = ($value != 'false');
+                break;
+                default:
+                    // Unknown, erase it
+                    unset($result[$key]);
+                break;
+            }
+        }
+
         return $result;
     }
 
