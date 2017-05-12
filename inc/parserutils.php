@@ -752,13 +752,16 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=n
     // remove any leading or trailing blank lines
     $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
 
-    $cache = getCacheName($language.$code,".code");
+    $optionsmd5 = '';
+    if ($options != null) {
+        $optionsmd5 = $options['md5'];
+    }
+    $cache = getCacheName($language.$code.$optionsmd5,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
             $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
-
     } else {
 
         $geshi = new GeSHi($code, $language);

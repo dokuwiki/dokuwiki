@@ -371,6 +371,7 @@ class Doku_Handler {
      */
     protected function parse_highlight_options ($options) {
         $result = array();
+        $concatenated = '';
         preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,])(?:,*)/', $options, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
             $equal_sign = strpos($match [0], '=');
@@ -387,6 +388,7 @@ class Doku_Handler {
 
         // Check for supported options
         foreach ($result as $key => $value) {
+            $concatenated .= $key.$value;
             switch ($key) {
                 case 'enable_line_numbers':
                     $numbering_params = $value;
@@ -430,6 +432,7 @@ class Doku_Handler {
                 break;
             }
         }
+        $result['md5'] = md5($concatenated);
 
         return $result;
     }
