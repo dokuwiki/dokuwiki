@@ -1315,7 +1315,7 @@ class MBOXCreator extends FeedCreator {
         $eol = "\r\n";
         $escape = "=";
         $output = "";
-        while( list(, $line) = each($lines) ) {
+        foreach($lines as $line) {
             //$line = rtrim($line); // remove trailing white space -> no =20\r\n necessary
             $linlen = strlen($line);
             $newline = "";

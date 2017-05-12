@@ -208,8 +208,7 @@ function html_btn($name, $id, $akey, $params, $method='get', $tooltip='', $label
     $ret .= '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
 
     if(is_array($params)){
-        reset($params);
-        while (list($key, $val) = each($params)) {
+        foreach($params as $key => $val) {
             $ret .= '<input type="hidden" name="'.$key.'" ';
             $ret .= 'value="'.htmlspecialchars($val).'" />';
         }
