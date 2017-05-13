@@ -2037,8 +2037,7 @@ class JpegMeta {
         $ifdEntries = array();
         $entryCount = 0;
 
-        reset($EXIFNames);
-        while (list($tag, $name) = each($EXIFNames)) {
+        foreach($EXIFNames as $tag => $name) {
             $type = $EXIFTypeInfo[$tag][0];
             $count = $EXIFTypeInfo[$tag][1];
             $value = null;
@@ -2578,9 +2577,7 @@ class JpegMeta {
 
         $IPTCNames =& $this->_iptcNameTags();
 
-        reset($this->_info['iptc']);
-
-        while (list($label) = each($this->_info['iptc'])) {
+        foreach($this->_info['iptc'] as $label => $value) {
             $value =& $this->_info['iptc'][$label];
             $type = -1;
 
@@ -2969,8 +2966,8 @@ class JpegMeta {
     /*************************************************************/
     function _names2Tags($tags2Names) {
         $names2Tags = array();
-        reset($tags2Names);
-        while (list($tag, $name) = each($tags2Names)) {
+
+        foreach($tags2Names as $tag => $name) {
             $names2Tags[$name] = $tag;
         }
 

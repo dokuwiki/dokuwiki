@@ -537,7 +537,7 @@ class PassHash {
 
         if(is_null($salt)) {
             if($compute < 4 || $compute > 31) $compute = 8;
-            $salt = '$2a$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
+            $salt = '$2y$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
                 $this->gen_salt(22);
         }
 

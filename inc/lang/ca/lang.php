@@ -10,6 +10,7 @@
  * @author controlonline.net <controlonline.net@gmail.com>
  * @author Pauet <pauet@gmx.com>
  * @author Àngel Pérez Beroy <aperezberoy@gmail.com>
+ * @author David Surroca <david.tb303@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

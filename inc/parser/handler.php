@@ -57,10 +57,16 @@ class Doku_Handler {
         array_push($this->calls,array('document_end',array(),$last_call[2]));
     }
 
+    /**
+     * fetch the current call and advance the pointer to the next one
+     *
+     * @return bool|mixed
+     */
     function fetch() {
-        $call = each($this->calls);
-        if ( $call ) {
-            return $call['value'];
+        $call = current($this->calls);
+        if($call !== false) {
+            next($this->calls); //advance the pointer
+            return $call;
         }
         return false;
     }

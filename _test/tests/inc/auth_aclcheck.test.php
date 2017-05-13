@@ -2,7 +2,7 @@
 
 class auth_acl_test extends DokuWikiTest {
 
-    var $oldAuthAcl;
+    protected $oldAuthAcl;
 
     function setUp() {
         parent::setUp();

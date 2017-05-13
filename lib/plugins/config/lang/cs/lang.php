@@ -17,6 +17,7 @@
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
  * @author Martin Růžička <martinr@post.cz>
+ * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['menu']                  = 'Správa nastavení';
 $lang['error']                 = 'Nastavení nebyla změněna kvůli alespoň jedné neplatné položce,
@@ -159,6 +160,11 @@ $lang['renderer_xhtml']        = 'Vykreslovací jádro pro hlavní (xhtml) výst
 $lang['renderer__core']        = '%s (jádro DokuWiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
+$lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
+Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
+$lang['jquerycdn_o_0']         = 'Bez CDN, pouze lokální doručení';
+$lang['jquerycdn_o_jquery']    = 'CDN na code.jquery.com';
+$lang['jquerycdn_o_cdnjs']     = 'CDN na cdnjs.com';
 $lang['proxy____host']         = 'Název proxy serveru';
 $lang['proxy____port']         = 'Proxy port';
 $lang['proxy____user']         = 'Proxy uživatelské jméno';
