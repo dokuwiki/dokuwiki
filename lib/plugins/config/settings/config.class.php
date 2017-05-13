@@ -513,11 +513,11 @@ if (!class_exists('setting')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
-         * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
+         * @param admin_plugin_config $plugin object of config plugin
+         * @param bool $echo true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        public function html(&$plugin, $echo=false) {
+        public function html(admin_plugin_config $plugin, $echo=false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -565,10 +565,10 @@ if (!class_exists('setting')) {
         /**
          * Returns the localized prompt
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @return string text
          */
-        public function prompt(&$plugin) {
+        public function prompt(admin_plugin_config $plugin) {
             $prompt = $plugin->getLang($this->_key);
             if (!$prompt) $prompt = htmlspecialchars(str_replace(array('____','_'),' ',$this->_key));
             return $prompt;
@@ -738,11 +738,11 @@ if (!class_exists('setting_array')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        function html(admin_plugin_config $plugin, $echo=false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -774,11 +774,11 @@ if (!class_exists('setting_string')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        function html(admin_plugin_config $plugin, $echo=false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -835,11 +835,11 @@ if (!class_exists('setting_password')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        function html(admin_plugin_config $plugin, $echo=false) {
 
             $disable = $this->is_protected() ? 'disabled="disabled"' : '';
 
@@ -993,11 +993,11 @@ if (!class_exists('setting_onoff')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo = false) {
+        function html(admin_plugin_config $plugin, $echo = false) {
             $disable = '';
 
             if ($this->is_protected()) {
@@ -1047,11 +1047,11 @@ if (!class_exists('setting_multichoice')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show inputted value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo = false) {
+        function html(admin_plugin_config $plugin, $echo = false) {
             $disable = '';
             $nochoice = '';
 
@@ -1247,11 +1247,11 @@ if (!class_exists('setting_multicheckbox')) {
         /**
          * Build html for label and input of setting
          *
-         * @param DokuWiki_Plugin $plugin object of config plugin
+         * @param admin_plugin_config $plugin object of config plugin
          * @param bool            $echo   true: show input value, when error occurred, otherwise the stored setting
          * @return string[] with content array(string $label_html, string $input_html)
          */
-        function html(&$plugin, $echo=false) {
+        function html(admin_plugin_config $plugin, $echo=false) {
 
             $disable = '';
 
