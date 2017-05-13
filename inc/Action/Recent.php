@@ -28,7 +28,7 @@ class Recent extends AbstractAction {
     /** @inheritdoc */
     public function tplContent() {
         global $INPUT;
-        html_recent($INPUT->int('first'));
+        html_recent((int) $INPUT->extract('first')->int('first'));
     }
 
 }
