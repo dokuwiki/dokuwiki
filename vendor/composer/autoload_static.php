@@ -44,7 +44,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     );
 
     public static $classMap = array (
-        'GeSHi' => __DIR__ . '/..' . '/easybook/geshi/geshi.php',
+        'GeSHi' => __DIR__ . '/..' . '/geshi/geshi/src/geshi.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
