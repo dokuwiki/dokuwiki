@@ -132,7 +132,7 @@ class Doku_Event {
      *
      * @return bool
      */
-    public function mayPropgate() {
+    public function mayPropagate() {
         return $this->_continue;
     }
 
@@ -229,7 +229,7 @@ class Doku_Event_Handler {
                         $obj->$method($event, $param);
                     }
 
-                    if (!$event->mayPropgate()) return;
+                    if (!$event->mayPropagate()) return;
                 }
             }
         }
