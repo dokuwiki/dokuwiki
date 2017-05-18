@@ -420,10 +420,14 @@ class Doku_Handler {
                     $concatenated .= $key.$value;
                     $numbers = array();
                     $number_strings = explode (',', $value);
-                    foreach ($number_strings as $number) {
-                        $numbers [] = intval($number);
+                    if (count($number_strings) > 0 && $value !== true && !empty($value)) {
+                        foreach ($number_strings as $number) {
+                            $numbers [] = intval($number);
+                        }
+                        $result['highlight_lines_extra'] = $numbers;
+                    } else {
+                        unset($result[$key]);
                     }
-                    $result['highlight_lines_extra'] = $numbers;
                 break;
                 case 'enable_keyword_links':
                     $concatenated .= $key.$value;
