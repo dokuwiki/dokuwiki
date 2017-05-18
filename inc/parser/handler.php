@@ -372,7 +372,7 @@ class Doku_Handler {
     protected function parse_highlight_options ($options) {
         $result = array();
         $concatenated = '';
-        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,])(?:,*)/', $options, $matches, PREG_SET_ORDER);
+        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,\]])(?:,*)/', $options, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
             $equal_sign = strpos($match [0], '=');
             if ($equal_sign === false) {
