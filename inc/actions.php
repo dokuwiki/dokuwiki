@@ -87,13 +87,18 @@ function act_draftdel($act){
 function act_redirect($id,$preact){
     global $PRE;
     global $TEXT;
+    global $INPUT;
 
     $opts = array(
             'id'       => $id,
             'preact'   => $preact
             );
     //get section name when coming from section edit
-    if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+    if ($INPUT->has('hid')) {
+        // Use explicitly transmitted header id
+        $opts['fragment'] = $INPUT->str('hid');
+    } else if($PRE && preg_match('/^\s*==+([^=\n]+)/',$TEXT,$match)){
+        // Fallback to old mechanism
         $check = false; //Byref
         $opts['fragment'] = sectionID($match[0], $check);
     }
@@ -114,60 +119,5 @@ function act_redirect_execute($opts){
     send_redirect($go);
 }
 
-/**
- * Validate POST data
- *
- * Validates POST data for a subscribe or unsubscribe request. This is the
- * default action for the event ACTION_HANDLE_SUBSCRIBE.
- *
- * @author Adrian Lang <lang@cosmocode.de>
- *
- * @param array &$params the parameters: target, style and action
- * @throws Exception
- */
-function subscription_handle_post(&$params) {
-    global $INFO;
-    global $lang;
-    /* @var Input $INPUT */
-    global $INPUT;
-
-    // Get and validate parameters.
-    if (!isset($params['target'])) {
-        throw new Exception('no subscription target given');
-    }
-    $target = $params['target'];
-    $valid_styles = array('every', 'digest');
-    if (substr($target, -1, 1) === ':') {
-        // Allow “list” subscribe style since the target is a namespace.
-        $valid_styles[] = 'list';
-    }
-    $style  = valid_input_set('style', $valid_styles, $params,
-                              'invalid subscription style given');
-    $action = valid_input_set('action', array('subscribe', 'unsubscribe'),
-                              $params, 'invalid subscription action given');
-
-    // Check other conditions.
-    if ($action === 'subscribe') {
-        if ($INFO['userinfo']['mail'] === '') {
-            throw new Exception($lang['subscr_subscribe_noaddress']);
-        }
-    } elseif ($action === 'unsubscribe') {
-        $is = false;
-        foreach($INFO['subscribed'] as $subscr) {
-            if ($subscr['target'] === $target) {
-                $is = true;
-            }
-        }
-        if ($is === false) {
-            throw new Exception(sprintf($lang['subscr_not_subscribed'],
-                                        $INPUT->server->str('REMOTE_USER'),
-                                        prettyprint_id($target)));
-        }
-        // subscription_set deletes a subscription if style = null.
-        $style = null;
-    }
-
-    $params = compact('target', 'style', 'action');
-}
 
 //Setup VIM: ex: et ts=2 :

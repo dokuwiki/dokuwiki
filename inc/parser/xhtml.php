@@ -66,8 +66,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    public function startSectionEdit($start, $type, $title = null) {
-        $this->sectionedits[] = array(++$this->lastsecid, $start, $type, $title);
+    public function startSectionEdit($start, $type, $title = null, $hid = null) {
+        $this->sectionedits[] = array(++$this->lastsecid, $start, $type, $title, $hid);
         return 'sectionedit'.$this->lastsecid;
     }
 
@@ -78,14 +78,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
      *
      * @author Adrian Lang <lang@cosmocode.de>
      */
-    public function finishSectionEdit($end = null) {
-        list($id, $start, $type, $title) = array_pop($this->sectionedits);
+    public function finishSectionEdit($end = null, $hid = null) {
+        list($id, $start, $type, $title, $hid) = array_pop($this->sectionedits);
         if(!is_null($end) && $end <= $start) {
             return;
         }
         $this->doc .= "<!-- EDIT$id ".strtoupper($type).' ';
         if(!is_null($title)) {
             $this->doc .= '"'.str_replace('"', '', $title).'" ';
+        }
+        if(!is_null($hid)) {
+            $this->doc .= '"'.$hid.'" ';
         }
         $this->doc .= "[$start-".(is_null($end) ? '' : $end).'] -->';
     }
@@ -217,7 +220,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         // write the header
         $this->doc .= DOKU_LF.'<h'.$level;
         if($level <= $conf['maxseclevel']) {
-            $this->doc .= ' class="'.$this->startSectionEdit($pos, 'section', $text).'"';
+            $this->doc .= ' class="'.$this->startSectionEdit($pos, 'section', $text, $hid).'"';
         }
         $this->doc .= ' id="'.$hid.'">';
         $this->doc .= $this->_xmlEntities($text);
