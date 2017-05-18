@@ -414,7 +414,11 @@ class Doku_Handler {
                 break;
                 case 'start_line_numbers_at':
                     $concatenated .= $key.$value;
-                    $result['start_line_numbers_at'] = intval($value);
+                    if ($value !== true && !empty($value)) {
+                        $result['start_line_numbers_at'] = intval($value);
+                    } else {
+                        unset($result[$key]);
+                    }
                 break;
                 case 'highlight_lines_extra':
                     $concatenated .= $key.$value;
