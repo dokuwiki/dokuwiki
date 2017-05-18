@@ -53,12 +53,8 @@ class Save extends AbstractAction {
         //unlock it
         unlock($ID);
 
-        //delete draft
-        act_draftdel('fixme'); // FIXME replace this utility function
-        //session_write_close(); // FIXME close session higher up
-
-        // when done, show page
-        throw new ActionAbort('redirect');
+        // continue with draftdel -> redirect -> show
+        throw new ActionAbort('draftdel');
     }
 
 }

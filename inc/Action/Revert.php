@@ -56,14 +56,10 @@ class Revert extends AbstractAction {
 
         saveWikiText($ID, $text, $sum, false);
         msg($sum, 1);
-
-        //delete any draft
-        act_draftdel('fixme'); // FIXME replace this utility function
-        //session_write_close(); // FIXME sessions should be close somewhere higher up, maybe ActionRouter
-
-        // when done, show current page
         $REV = '';
-        throw new ActionAbort('redirect');
+
+        // continue with draftdel -> redirect -> show
+        throw new ActionAbort('draftdel');
     }
 
 }

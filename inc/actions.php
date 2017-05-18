@@ -59,18 +59,3 @@ function act_clean($act){
     if($act === '') $act = 'show';
     return $act;
 }
-
-/**
- * Handle 'draftdel'
- *
- * Deletes the draft for the current page and user
- *
- * @param string $act action command
- * @return string action command
- */
-function act_draftdel($act){
-    global $INFO;
-    @unlink($INFO['draft']);
-    $INFO['draft'] = null;
-    return 'show';
-}

@@ -18,8 +18,18 @@ class Draftdel extends AbstractAction {
         return AUTH_EDIT;
     }
 
+    /**
+     * Delete an existing draft if any
+     *
+     * Reads draft information from $INFO. Redirects to show, afterwards.
+     *
+     * @throws ActionAbort
+     */
     public function preProcess() {
-        act_draftdel('fixme'); // FIXME replace this utility function
+        global $INFO;
+        @unlink($INFO['draft']);
+        $INFO['draft'] = null;
+
         throw new ActionAbort('redirect');
     }
 
