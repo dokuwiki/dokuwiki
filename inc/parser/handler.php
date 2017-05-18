@@ -388,9 +388,9 @@ class Doku_Handler {
 
         // Check for supported options
         foreach ($result as $key => $value) {
-            $concatenated .= $key.$value;
             switch ($key) {
                 case 'enable_line_numbers':
+                    $concatenated .= $key.$value;
                     $numbering_params = $value;
                     if ($numbering_params === true) {
                         $result['enable_line_numbers'] = 1; // GESHI_NORMAL_LINE_NUMBERS;
@@ -413,9 +413,11 @@ class Doku_Handler {
                     }
                 break;
                 case 'start_line_numbers_at':
+                    $concatenated .= $key.$value;
                     $result['start_line_numbers_at'] = intval($value);
                 break;
                 case 'highlight_lines_extra':
+                    $concatenated .= $key.$value;
                     $numbers = array();
                     $number_strings = explode (',', $value);
                     foreach ($number_strings as $number) {
@@ -424,6 +426,7 @@ class Doku_Handler {
                     $result['highlight_lines_extra'] = $numbers;
                 break;
                 case 'enable_keyword_links':
+                    $concatenated .= $key.$value;
                     $result['enable_keyword_links'] = ($value != 'false');
                 break;
                 default:
@@ -432,8 +435,11 @@ class Doku_Handler {
                 break;
             }
         }
-        $result['md5'] = md5($concatenated);
+        if (empty($concatenated)) {
+            return null;
+        }
 
+        $result['md5'] = md5($concatenated);
         return $result;
     }
 
