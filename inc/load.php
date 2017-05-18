@@ -76,7 +76,6 @@ function load_autoload($name){
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
-        'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
         'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',

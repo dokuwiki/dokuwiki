@@ -67,7 +67,7 @@ lib/images/*/local/*
 # composer default ignores
 composer.phar
 vendor/bin/*
-vendor/*/*/phpunit.xml
+vendor/*/*/phpunit.xml*
 vendor/*/*/.travis.yml
 vendor/*/*/bin/*
 vendor/*/*/tests/*

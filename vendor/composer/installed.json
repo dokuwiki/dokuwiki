@@ -299,5 +299,55 @@
         ],
         "description": "Generic Syntax Highlighter",
         "homepage": "http://qbnz.com/highlighter/"
+    },
+    {
+        "name": "openpsa/universalfeedcreator",
+        "version": "v1.8.3",
+        "version_normalized": "1.8.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/flack/UniversalFeedCreator.git",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2017-05-18T08:28:48+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Flack",
+                "email": "flack@contentcontrol-berlin.de",
+                "homepage": "http://www.contentcontrol-berlin.de/"
+            }
+        ],
+        "description": "RSS and Atom feed generator by Kai Blankenhorn",
+        "keywords": [
+            "atom",
+            "georss",
+            "gpx",
+            "opml",
+            "pie",
+            "rss"
+        ]
     }
 ]
