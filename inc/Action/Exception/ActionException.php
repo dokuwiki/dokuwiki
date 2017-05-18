@@ -24,11 +24,23 @@ class ActionException extends \Exception {
     /**
      * ActionException constructor.
      *
-     * @param string $newaction the action that should be used next
+     * When no new action is given 'show' is assumed. For requests that originated in a POST,
+     * a 'redirect' is used which will cause a redirect to the 'show' action.
+     *
+     * @param string|null $newaction the action that should be used next
      * @param string $message optional message, will not be shown except for some dub classes
      */
-    public function __construct($newaction = 'show', $message = '') {
+    public function __construct($newaction = null, $message = '') {
+        global $INPUT;
         parent::__construct($message);
+        if(is_null($newaction)) {
+            if(strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
+                $newaction = 'redirect';
+            } else {
+                $newaction = 'show';
+            }
+        }
+
         $this->newaction = $newaction;
     }
 

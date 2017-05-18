@@ -37,7 +37,6 @@ class Revert extends AbstractAction {
         global $ID;
         global $REV;
         global $lang;
-        global $INPUT;
 
         // when no revision is given, delete current one
         // FIXME this feature is not exposed in the GUI currently
@@ -63,10 +62,8 @@ class Revert extends AbstractAction {
         //session_write_close(); // FIXME sessions should be close somewhere higher up, maybe ActionRouter
 
         // when done, show current page
-        $INPUT->server->set('REQUEST_METHOD', 'post'); //should force a redirect // FIXME should we have a RedirectException?
         $REV = '';
-
-        throw new ActionAbort();
+        throw new ActionAbort('redirect');
     }
 
 }

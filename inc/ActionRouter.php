@@ -120,17 +120,13 @@ class ActionRouter {
     /**
      * Transitions from one action to another
      *
-     * Basically just calls setupAction() again but does some checks before. Also triggers
-     * redirects for POST to show transitions
+     * Basically just calls setupAction() again but does some checks before.
      *
      * @param string $from current action name
      * @param string $to new action name
      * @param null|ActionException $e any previous exception that caused the transition
      */
     protected function transitionAction($from, $to, $e = null) {
-        global $INPUT;
-        global $ID;
-
         $this->transitions++;
 
         // no infinite recursion
@@ -141,11 +137,6 @@ class ActionRouter {
         // larger loops will be caught here
         if($this->transitions >= self::MAX_TRANSITIONS) {
             $this->handleFatalException(new FatalException('Maximum action transitions reached', 500, $e));
-        }
-
-        // POST transitions to show should be a redirect
-        if($to == 'show' && strtolower($INPUT->server->str('REQUEST_METHOD')) == 'post') {
-            act_redirect($ID, $from); // FIXME we may want to move this function to the class
         }
 
         // do the recursion

@@ -58,7 +58,7 @@ class Save extends AbstractAction {
         //session_write_close(); // FIXME close session higher up
 
         // when done, show page
-        throw new ActionAbort();
+        throw new ActionAbort('redirect');
     }
 
 }

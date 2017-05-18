@@ -20,7 +20,7 @@ class Draftdel extends AbstractAction {
 
     public function preProcess() {
         act_draftdel('fixme'); // FIXME replace this utility function
-        throw new ActionAbort();
+        throw new ActionAbort('redirect');
     }
 
 }

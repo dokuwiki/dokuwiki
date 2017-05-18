@@ -14,7 +14,7 @@ use dokuwiki\Action\Exception\ActionAbort;
 class Cancel extends AbstractAliasAction {
 
     public function preProcess() {
-        throw new ActionAbort();
+        throw new ActionAbort('draftdel');
     }
 
 }
