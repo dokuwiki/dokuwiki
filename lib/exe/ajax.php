@@ -124,19 +124,23 @@ function ajax_suggestions() {
  * Andreas Gohr <andi@splitbrain.org>
  */
 function ajax_lock(){
-    global $conf;
     global $lang;
     global $ID;
     global $INFO;
     global $INPUT;
 
     $ID = cleanID($INPUT->post->str('id'));
-    if(empty($ID)) return;
-
+    if($ID === '') return;
     $INFO = pageinfo();
+    if(isset($INFO['draft'])) unset($INFO['draft']);
 
-    if (!$INFO['writable']) {
-        echo 'Permission denied';
+    // the preview action does locking and draft saving for us
+    try {
+        $preview = new \dokuwiki\Action\Preview();
+        $preview->checkPermissions();
+        $preview->preProcess();
+    } catch(\dokuwiki\Action\Exception\ActionException $e) {
+        echo $e->getMessage();
         return;
     }
 
@@ -145,23 +149,9 @@ function ajax_lock(){
         echo 1;
     }
 
-    if($conf['usedraft'] && $INPUT->post->str('wikitext')){
-        $client = $_SERVER['REMOTE_USER'];
-        if(!$client) $client = clientIP(true);
-
-        $draft = array('id'     => $ID,
-                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-                'text'   => $INPUT->post->str('wikitext'),
-                'suffix' => $INPUT->post->str('suffix'),
-                'date'   => $INPUT->post->int('date'),
-                'client' => $client,
-                );
-        $cname = getCacheName($draft['client'].$ID,'.draft');
-        if(io_saveFile($cname,serialize($draft))){
-            echo $lang['draftdate'].' '.dformat();
-        }
+    if(isset($INFO['draft'])) {
+        echo $lang['draftdate'].' '.dformat();
     }
-
 }
 
 /**

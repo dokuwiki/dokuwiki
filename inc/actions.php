@@ -77,37 +77,6 @@ function act_draftdel($act){
 }
 
 /**
- * Saves a draft on preview
- *
- * @todo this currently duplicates code from ajax.php :-/
- *
- * @param string $act action command
- * @return string action command
- */
-function act_draftsave($act){
-    global $INFO;
-    global $ID;
-    global $INPUT;
-    global $conf;
-    if($conf['usedraft'] && $INPUT->post->has('wikitext')) {
-        $draft = array('id'     => $ID,
-                'prefix' => substr($INPUT->post->str('prefix'), 0, -1),
-                'text'   => $INPUT->post->str('wikitext'),
-                'suffix' => $INPUT->post->str('suffix'),
-                'date'   => $INPUT->post->int('date'),
-                'client' => $INFO['client'],
-                );
-        $cname = getCacheName($draft['client'].$ID,'.draft');
-        if(io_saveFile($cname,serialize($draft))){
-            $INFO['draft'] = $cname;
-        }
-    }
-    return $act;
-}
-
-
-
-/**
  * Do a redirect after receiving post data
  *
  * Tries to add the section id as hash mark after section editing
