@@ -15,7 +15,11 @@ namespace dokuwiki\Action\Exception;
  */
 class ActionException extends \Exception {
 
+    /** @var string the new action */
     protected $newaction;
+
+    /** @var bool should the exception's message be shown to the user? */
+    protected $displayToUser = false;
 
     /**
      * ActionException constructor.
@@ -35,5 +39,16 @@ class ActionException extends \Exception {
      */
     public function getNewAction() {
         return $this->newaction;
+    }
+
+    /**
+     * Should this Exception's message be shown to the user?
+     *
+     * @param null|bool $set when null is given, the current setting is not changed
+     * @return bool
+     */
+    public function displayToUser($set = null) {
+        if(!is_null($set)) $this->displayToUser = $set;
+        return $set;
     }
 }

@@ -88,6 +88,11 @@ class ActionRouter {
                 msg('Action disabled: ' . hsc($presetup), -1);
             }
 
+            // some actions may request the display of a message
+            if($e->displayToUser()) {
+                msg(hsc($e->getMessage()), -1);
+            }
+
             // do setup for new action
             $this->transitionAction($presetup, $actionname);
 
