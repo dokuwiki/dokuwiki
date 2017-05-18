@@ -363,6 +363,100 @@ class Doku_Handler {
         return true;
     }
 
+    /**
+     * Internal function for parsing highlight options.
+     * $options is parsed for key value pairs separated by commas.
+     * A value might also be missing in which case the value will simple
+     * be set to true. Commas in strings are ignored, e.g. option="4,56"
+     * will work as expected and will only create one entry.
+     *
+     * @param string $options Comma separated list of key-value pairs,
+     *                        e.g. option1=123, option2="456"
+     * @return array|null     Array of key-value pairs $array['key'] = 'value';
+     *                        or null if no entries found
+     */
+    protected function parse_highlight_options ($options) {
+        $result = array();
+        $concatenated = '';
+        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,\]])(?:,*)/', $options, $matches, PREG_SET_ORDER);
+        foreach ($matches as $match) {
+            $equal_sign = strpos($match [0], '=');
+            if ($equal_sign === false) {
+                $key = trim($match[0],',');
+                $result [$key] = true;
+            } else {
+                $key = substr($match[0], 0, $equal_sign);
+                $value = substr($match[0], $equal_sign+1);
+                $value = trim($value, '"');
+                $result [$key] = $value;
+            }
+        }
+
+        // Check for supported options
+        foreach ($result as $key => $value) {
+            switch ($key) {
+                case 'enable_line_numbers':
+                    $concatenated .= $key.$value;
+                    $numbering_params = $value;
+                    if ($numbering_params === true) {
+                        $result['enable_line_numbers'] = 1; // GESHI_NORMAL_LINE_NUMBERS;
+                    } else {
+                        // Split params by comma
+                        $numbering_params = explode (',', $numbering_params);
+                        switch ($numbering_params [0]) {
+                            case 'GESHI_NORMAL_LINE_NUMBERS':
+                                $result['enable_line_numbers'] = 1; // GESHI_NORMAL_LINE_NUMBERS
+                            break;
+                            // Out commented/not supported for now:
+                            // Setting fancy line numbering and styles did not show any effect on Geshi's output
+                            //case 'GESHI_FANCY_LINE_NUMBERS':
+                            //    $result['enable_line_numbers'] = 2; // GESHI_FANCY_LINE_NUMBERS
+                            //break;
+                            default:
+                                $result['enable_line_numbers'] = 0; // GESHI_NO_LINE_NUMBERS
+                            break;
+                        }
+                    }
+                break;
+                case 'start_line_numbers_at':
+                    $concatenated .= $key.$value;
+                    if ($value !== true && !empty($value)) {
+                        $result['start_line_numbers_at'] = intval($value);
+                    } else {
+                        unset($result[$key]);
+                    }
+                break;
+                case 'highlight_lines_extra':
+                    $concatenated .= $key.$value;
+                    $numbers = array();
+                    $number_strings = explode (',', $value);
+                    if (count($number_strings) > 0 && $value !== true && !empty($value)) {
+                        foreach ($number_strings as $number) {
+                            $numbers [] = intval($number);
+                        }
+                        $result['highlight_lines_extra'] = $numbers;
+                    } else {
+                        unset($result[$key]);
+                    }
+                break;
+                case 'enable_keyword_links':
+                    $concatenated .= $key.$value;
+                    $result['enable_keyword_links'] = ($value != 'false');
+                break;
+                default:
+                    // Unknown, erase it
+                    unset($result[$key]);
+                break;
+            }
+        }
+        if (empty($concatenated)) {
+            return null;
+        }
+
+        $result['md5'] = md5($concatenated);
+        return $result;
+    }
+
     function file($match, $state, $pos) {
         return $this->code($match, $state, $pos, 'file');
     }
@@ -371,6 +465,10 @@ class Doku_Handler {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
             $matches = explode('>',$match,2);
 
+            preg_match('/\[.*\]/', $matches[0], $options);
+            if (!empty($options[0])) {
+                $matches[0] = str_replace($options[0], '', $matches[0]);
+            }
             $param = preg_split('/\s+/', $matches[0], 2, PREG_SPLIT_NO_EMPTY);
             while(count($param) < 2) array_push($param, null);
 
@@ -378,6 +476,9 @@ class Doku_Handler {
             if ($param[0] == 'html') $param[0] = 'html4strict';
             if ($param[0] == '-') $param[0] = null;
             array_unshift($param, $matches[1]);
+            if (!empty($options[0])) {
+                $param [] = $this->parse_highlight_options ($options[0]);
+            }
 
             $this->_addCall($type, $param, $pos);
         }

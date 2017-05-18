@@ -745,20 +745,23 @@ function p_get_first_heading($id, $render=METADATA_RENDER_USING_SIMPLE_CACHE){
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
+function p_xhtml_cached_geshi($code, $language, $wrapper='pre', array $options=null) {
     global $conf, $config_cascade, $INPUT;
     $language = strtolower($language);
 
     // remove any leading or trailing blank lines
     $code = preg_replace('/^\s*?\n|\s*?\n$/','',$code);
 
-    $cache = getCacheName($language.$code,".code");
+    $optionsmd5 = '';
+    if ($options != null) {
+        $optionsmd5 = $options['md5'];
+    }
+    $cache = getCacheName($language.$code.$optionsmd5,".code");
     $ctime = @filemtime($cache);
     if($ctime && !$INPUT->bool('purge') &&
             $ctime > filemtime(DOKU_INC.'vendor/composer/installed.json') &&  // libraries changed
             $ctime > filemtime(reset($config_cascade['main']['default']))){ // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
-
     } else {
 
         $geshi = new GeSHi($code, $language);
@@ -766,6 +769,24 @@ function p_xhtml_cached_geshi($code, $language, $wrapper='pre') {
         $geshi->enable_classes();
         $geshi->set_header_type(GESHI_HEADER_PRE);
         $geshi->set_link_target($conf['target']['extern']);
+        if ($options !== null) {
+            foreach ($options as $function => $params) {
+                switch ($function) {
+                    case 'enable_line_numbers':
+                        $geshi->enable_line_numbers($params);
+                    break;
+                    case 'start_line_numbers_at':
+                        $geshi->start_line_numbers_at($params);
+                    break;
+                    case 'highlight_lines_extra':
+                        $geshi->highlight_lines_extra($params);
+                    break;
+                    case 'enable_keyword_links':
+                        $geshi->enable_keyword_links($params);
+                    break;
+                }
+            }
+        }
 
         // remove GeSHi's wrapper element (we'll replace it with our own later)
         // we need to use a GeSHi wrapper to avoid <BR> throughout the highlighted text
