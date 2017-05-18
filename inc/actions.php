@@ -60,7 +60,6 @@ function act_clean($act){
     return $act;
 }
 
-
 /**
  * Handle 'draftdel'
  *
