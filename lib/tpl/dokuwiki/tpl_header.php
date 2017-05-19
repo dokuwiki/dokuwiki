@@ -59,7 +59,11 @@ if (!defined('DOKU_INC')) die();
             <h3 class="a11y"><?php echo $lang['site_tools']; ?></h3>
             <?php tpl_searchform(); ?>
             <div class="mobileTools">
-                <?php tpl_actiondropdown($lang['tools']); ?>
+                <?php
+                    $menu = new \dokuwiki\Menu\MobileMenu();
+                    echo $menu->getDropdown($lang['tools']);
+                    unset($menu);
+                ?>
             </div>
             <ul>
                 <?php

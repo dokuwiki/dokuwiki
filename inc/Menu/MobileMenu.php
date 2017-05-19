@@ -1,0 +1,72 @@
+<?php
+
+namespace dokuwiki\Menu;
+
+use dokuwiki\Menu\Item\AbstractItem;
+
+class MobileMenu {
+
+    /**
+     * Returns all items grouped
+     *
+     * @return AbstractItem[][]
+     */
+    public function getItems() {
+        $pagemenu = new PageMenu(AbstractItem::CTX_MOBILE);
+        $sitemenu = new SiteMenu(AbstractItem::CTX_MOBILE);
+        $usermenu = new UserMenu(AbstractItem::CTX_MOBILE);
+
+        return array(
+            'page' => $pagemenu->getItems(),
+            'site' => $sitemenu->getItems(),
+            'user' => $usermenu->getItems()
+        );
+    }
+
+    /**
+     * Print a dropdown menu with all DokuWiki actions
+     *
+     * Note: this will not use any pretty URLs
+     *
+     * @param string $empty empty option label
+     * @param string $button submit button label
+     * @return string
+     */
+    public function getDropdown($empty = '', $button = '&gt;') {
+        global $ID;
+        global $REV;
+        /** @var string[] $lang */
+        global $lang;
+        global $INPUT;
+
+        $html = '<form action="' . script() . '" method="get" accept-charset="utf-8">';
+        $html .= '<div class="no">';
+        $html .= '<input type="hidden" name="id" value="' . $ID . '" />';
+        if($REV) $html .= '<input type="hidden" name="rev" value="' . $REV . '" />';
+        if($INPUT->server->str('REMOTE_USER')) {
+            $html .= '<input type="hidden" name="sectok" value="' . getSecurityToken() . '" />';
+        }
+
+        $html .= '<select name="do" class="edit quickselect" title="' . $lang['tools'] . '">';
+        $html .= '<option value="">' . $empty . '</option>';
+
+        foreach($this->getItems() as $tools => $items) {
+            $html .= '<optgroup label="' . $lang[$tools . '_tools'] . '">';
+            foreach($items as $item) {
+                $params = $item->getParams();
+                $html .= '<option value="' . $params['do'] . '">';
+                $html .= hsc($item->getLabel());
+                $html .= '</option>';
+            }
+            $html .= '</optgroup>';
+        }
+
+        $html .= '</select>';
+        $html .= '<button type="submit">' . $button . '</button>';
+        $html .= '</div>';
+        $html .= '</form>';
+
+        return $html;
+    }
+
+}
