@@ -18,6 +18,7 @@
  * @author Paweł Jan Czochański <czochanski@gmail.com>
  * @author Mati <mackosa@wp.pl>
  * @author Maciej Helt <geraldziu@gmail.com>
+ * @author Kris Charatonik <krishary@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -83,6 +84,7 @@ $lang['regmissing']            = 'Wypełnij wszystkie pola.';
 $lang['reguexists']            = 'Użytkownik o tej nazwie już istnieje.';
 $lang['regsuccess']            = 'Utworzono użytkownika. Hasło zostało przesłane pocztą.';
 $lang['regsuccess2']           = 'Utworzono użytkownika.';
+$lang['regfail']               = 'Użytkownik nie mógł zostać utworzony.';
 $lang['regmailfail']           = 'Wystąpił błąd przy wysyłaniu hasła pocztą!';
 $lang['regbadmail']            = 'Adres e-mail jest nieprawidłowy!';
 $lang['regbadpass']            = 'Hasła nie są identyczne, spróbuj ponownie.';
@@ -97,6 +99,7 @@ $lang['profdeleteuser']        = 'Usuń konto';
 $lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
 $lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
 $lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
+$lang['proffail']              = 'Profil użytkownika nie został uaktualniony.';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
 $lang['resendpwd']             = 'Podaj nowe hasło dla';
@@ -341,9 +344,10 @@ $lang['media_perm_read']       = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawnień do przesyłania plików.';
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
+$lang['media_acl_warning']     = 'Ta lista może nie być kompletna ze względu na ograniczenia ACL oraz ukryte strony.';
 $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
 $lang['wikimarkup']            = 'Znaczniki';
-$lang['email_signature_text'] = 'List został wygenerowany przez DokuWiki pod adresem
+$lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';

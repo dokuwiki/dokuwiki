@@ -75,6 +75,9 @@ class Doku_Parser {
     /**
      * PHP preserves order of associative elements
      * Mode sequence is important
+     *
+     * @param string $name
+     * @param Doku_Parser_Mode_Interface $Mode
      */
     function addMode($name, Doku_Parser_Mode_Interface $Mode) {
         if ( !isset($this->modes['base']) ) {
@@ -709,6 +712,11 @@ class Doku_Parser_Mode_acronym extends Doku_Parser_Mode {
 
     /**
      * sort callback to order by string length descending
+     *
+     * @param string $a
+     * @param string $b
+     *
+     * @return int
      */
     function _compare($a,$b) {
         $a_len = strlen($a);

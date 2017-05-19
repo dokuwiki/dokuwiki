@@ -5,6 +5,10 @@
 
 /**
  * timing Dokuwiki execution
+ *
+ * @param integer $start
+ *
+ * @return mixed
  */
 function delta_time($start=0) {
     return microtime(true)-((float)$start);
@@ -32,11 +36,7 @@ if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF.'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
-    if(defined('E_DEPRECATED')){ // since php 5.3, since php 5.4 E_STRICT is part of E_ALL
-        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
-    }else{
-        error_reporting(E_ALL ^ E_NOTICE);
-    }
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
 } else {
     error_reporting(DOKU_E_LEVEL);
 }
@@ -149,9 +149,8 @@ if(!headers_sent() && !defined('NOSESSION')) {
     }
     if(!defined('DOKU_SESSION_DOMAIN'))   define ('DOKU_SESSION_DOMAIN', '');
 
-    session_name(DOKU_SESSION_NAME);
-    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
-    session_start();
+    // start the session
+    init_session();
 
     // load left over messages
     if(isset($_SESSION[DOKU_COOKIE]['msg'])) {
@@ -159,18 +158,6 @@ if(!headers_sent() && !defined('NOSESSION')) {
         unset($_SESSION[DOKU_COOKIE]['msg']);
     }
 }
-
-// kill magic quotes
-if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    @ini_set('magic_quotes_gpc', 0);
-    define('MAGIC_QUOTES_STRIPPED',1);
-}
-if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-@ini_set('magic_quotes_sybase',0);
 
 // don't let cookies ever interfere with request vars
 $_REQUEST = array_merge($_GET,$_POST);
@@ -226,6 +213,28 @@ if (!defined('NOSESSION')) {
 
 // setup mail system
 mail_setup();
+
+/**
+ * Initializes the session
+ *
+ * Makes sure the passed session cookie is valid, invalid ones are ignored an a new session ID is issued
+ *
+ * @link http://stackoverflow.com/a/33024310/172068
+ * @link http://php.net/manual/en/session.configuration.php#ini.session.sid-length
+ */
+function init_session() {
+    global $conf;
+    session_name(DOKU_SESSION_NAME);
+    session_set_cookie_params(DOKU_SESSION_LIFETIME, DOKU_SESSION_PATH, DOKU_SESSION_DOMAIN, ($conf['securecookie'] && is_ssl()), true);
+
+    // make sure the session cookie contains a valid session ID
+    if(isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
+        unset($_COOKIE[DOKU_SESSION_NAME]);
+    }
+
+    session_start();
+}
+
 
 /**
  * Checks paths from config file
@@ -320,6 +329,10 @@ function init_files(){
  * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $path
+ *
+ * @return bool|string
  */
 function init_path($path){
     // check existence
@@ -376,30 +389,6 @@ function init_creationmodes(){
 }
 
 /**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- */
-function remove_magic_quotes(&$array) {
-    foreach (array_keys($array) as $key) {
-        // handle magic quotes in keynames (breaks order)
-        $sk = stripslashes($key);
-        if($sk != $key){
-            $array[$sk] = $array[$key];
-            unset($array[$key]);
-            $key = $sk;
-        }
-
-        // do recursion if needed
-        if (is_array($array[$key])) {
-            remove_magic_quotes($array[$key]);
-        }else {
-            $array[$key] = stripslashes($array[$key]);
-        }
-    }
-}
-
-/**
  * Returns the full absolute URL to the directory where
  * DokuWiki is installed in (includes a trailing slash)
  *
@@ -408,6 +397,10 @@ function remove_magic_quotes(&$array) {
  * !! initialized.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param null|string $abs
+ *
+ * @return string
  */
 function getBaseURL($abs=null){
     global $conf;
@@ -505,6 +498,8 @@ function is_ssl(){
 
 /**
  * print a nice message even if no styles are loaded yet.
+ *
+ * @param integer|string $msg
  */
 function nice_die($msg){
     echo<<<EOT
@@ -532,6 +527,11 @@ EOT;
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author <richpageau at yahoo dot co dot uk>
  * @link   http://php.net/manual/en/function.realpath.php#75992
+ *
+ * @param string $path
+ * @param bool $exists
+ *
+ * @return bool|string
  */
 function fullpath($path,$exists=false){
     static $run = 0;

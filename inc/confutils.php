@@ -132,7 +132,8 @@ function getCdnUrls() {
     $versions = array();
     $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
     foreach($lines as $line) {
-        $line = preg_replace('/#.*$/', '', $line);
+        $line = trim(preg_replace('/#.*$/', '', $line));
+        if($line === '') continue;
         list($key, $val) = explode('=', $line, 2);
         $key = trim($key);
         $val = trim($val);
@@ -201,6 +202,11 @@ function getSchemes() {
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Gina Haeussge <gina@foosel.net>
+ *
+ * @param array $lines
+ * @param bool $lower
+ *
+ * @return array
  */
 function linesToHash($lines, $lower=false) {
     $conf = array();
@@ -234,6 +240,11 @@ function linesToHash($lines, $lower=false) {
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Gina Haeussge <gina@foosel.net>
+ *
+ * @param string $file
+ * @param bool $lower
+ *
+ * @return array
  */
 function confToHash($file,$lower=false) {
     $conf = array();

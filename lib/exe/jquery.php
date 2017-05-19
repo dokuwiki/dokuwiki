@@ -7,6 +7,7 @@ if(!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); 
 require_once(DOKU_INC . 'inc/init.php');
 
 // MAIN
+header('Content-Type: application/javascript; charset=utf-8');
 jquery_out();
 
 /**

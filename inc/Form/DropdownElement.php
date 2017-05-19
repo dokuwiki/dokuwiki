@@ -142,12 +142,14 @@ class DropdownElement extends InputElement {
     protected function getFirstOption() {
         $options = $this->options();
         if (!empty($options)) {
-            return (string) array_shift(array_keys($options));
+            $keys = array_keys($options);
+            return (string) array_shift($keys);
         }
         foreach ($this->optGroups as $optGroup) {
             $options = $optGroup->options();
             if (!empty($options)) {
-                return (string) array_shift(array_keys($options));
+                $keys = array_keys($options);
+                return (string) array_shift($keys);
             }
         }
     }

@@ -52,6 +52,7 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
         if(!in_array($this->driver, pdo_drivers())) {
             $this->markTestSkipped("Skipped {$this->driver} tests. Missing pdo_{$this->driver} extension");
         }
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
     /**

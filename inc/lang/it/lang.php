@@ -23,6 +23,7 @@
  * @author Torpedo <dgtorpedo@gmail.com>
  * @author Maurizio <mcannavo@katamail.com>
  * @author Riccardo <riccardofila@gmail.com>
+ * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';

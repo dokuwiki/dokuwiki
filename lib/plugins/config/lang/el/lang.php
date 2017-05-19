@@ -1,11 +1,8 @@
 <?php
+
 /**
- * Greek language file
- *
- * Based on DokuWiki Version rc2007-05-24 english language file
- * Original english language file contents included for reference
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
@@ -13,6 +10,7 @@
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
  * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Zacharias Sdregas <zsdregas@sch.gr>
  */
 $lang['menu']                  = 'Ρυθμίσεις';
 $lang['error']                 = 'Οι ρυθμίσεις σας δεν έγιναν δεκτές λόγω λανθασμένης τιμής κάποιας ρύθμισης. Διορθώστε την λάθος τιμή και προσπαθήστε ξανά.

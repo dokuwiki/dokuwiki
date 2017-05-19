@@ -10,7 +10,6 @@ spl_autoload_register('load_autoload');
 
 // require all the common libraries
 // for a few of these order does matter
-require_once(DOKU_INC.'inc/blowfish.php');
 require_once(DOKU_INC.'inc/actions.php');
 require_once(DOKU_INC.'inc/changelog.php');
 require_once(DOKU_INC.'inc/common.php');
@@ -45,6 +44,10 @@ require_once(DOKU_INC.'inc/compatibility.php');
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @todo   add generic loading of renderers and auth backends
+ *
+ * @param string $name
+ *
+ * @return bool
  */
 function load_autoload($name){
     static $classes = null;
@@ -73,7 +76,6 @@ function load_autoload($name){
         'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
         'Tar'                   => DOKU_INC.'inc/Tar.class.php',
         'ZipLib'                => DOKU_INC.'inc/ZipLib.class.php',
-        'DokuWikiFeedCreator'   => DOKU_INC.'inc/feedcreator.class.php',
         'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
         'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',

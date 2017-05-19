@@ -1,13 +1,10 @@
 language: php
 sudo: false
 php:
+  - "nightly"
   - "7.1"
   - "7.0"
   - "5.6"
-  - "5.5"
-  - "5.4"
-  - "5.3"
-
 env:
   - DISABLE_FUNCTIONS=
   - DISABLE_FUNCTIONS="gzopen"
@@ -30,6 +27,7 @@ matrix:
       env: DISABLE_FUNCTIONS=
   allow_failures:
     - php: "hhvm"
+    - php: "nightly"
   exclude:
     - php: "hhvm"
       env: DISABLE_FUNCTIONS="gzopen"
@@ -40,7 +38,7 @@ notifications:
     on_success: change
     on_failure: change
 install:
-  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit.phar
+  - wget -O ~/.phpenv/versions/hhvm/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
   - chmod 755 ~/.phpenv/versions/hhvm/bin/phpunit
 before_script:
   # Disable the HHVM JIT for faster Unit Testing

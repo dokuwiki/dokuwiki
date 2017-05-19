@@ -1,0 +1,1 @@
+Dies sind die Plugins, die bereits installiert sind. Du kannst sie hier an- oder abschalten oder sie komplett deinstallieren. Außerdem werden hier Updates zu den installiereten Plugins angezeigt. Bitte lies vor einem Update die zugehörige Dokumentation.

@@ -167,27 +167,28 @@ class lessc {
 		$this->sourceParser = $oldSourceParser;
 	}
 
-	/**
-	 * Recursively compiles a block.
-	 *
-	 * A block is analogous to a CSS block in most cases. A single LESS document
-	 * is encapsulated in a block when parsed, but it does not have parent tags
-	 * so all of it's children appear on the root level when compiled.
-	 *
-	 * Blocks are made up of props and children.
-	 *
-	 * Props are property instructions, array tuples which describe an action
-	 * to be taken, eg. write a property, set a variable, mixin a block.
-	 *
-	 * The children of a block are just all the blocks that are defined within.
-	 * This is used to look up mixins when performing a mixin.
-	 *
-	 * Compiling the block involves pushing a fresh environment on the stack,
-	 * and iterating through the props, compiling each one.
-	 *
-	 * See lessc::compileProp()
-	 *
-	 */
+    /**
+     * Recursively compiles a block.
+     *
+     * A block is analogous to a CSS block in most cases. A single LESS document
+     * is encapsulated in a block when parsed, but it does not have parent tags
+     * so all of it's children appear on the root level when compiled.
+     *
+     * Blocks are made up of props and children.
+     *
+     * Props are property instructions, array tuples which describe an action
+     * to be taken, eg. write a property, set a variable, mixin a block.
+     *
+     * The children of a block are just all the blocks that are defined within.
+     * This is used to look up mixins when performing a mixin.
+     *
+     * Compiling the block involves pushing a fresh environment on the stack,
+     * and iterating through the props, compiling each one.
+     *
+     * See lessc::compileProp()
+     *
+     * @param stdClass $block
+     */
 	protected function compileBlock($block) {
 		switch ($block->type) {
 		case "root":
@@ -777,17 +778,21 @@ class lessc {
 	}
 
 
-	/**
-	 * Compiles a primitive value into a CSS property value.
-	 *
-	 * Values in lessphp are typed by being wrapped in arrays, their format is
-	 * typically:
-	 *
-	 *     array(type, contents [, additional_contents]*)
-	 *
-	 * The input is expected to be reduced. This function will not work on
-	 * things like expressions and variables.
-	 */
+    /**
+     * Compiles a primitive value into a CSS property value.
+     *
+     * Values in lessphp are typed by being wrapped in arrays, their format is
+     * typically:
+     *
+     *     array(type, contents [, additional_contents]*)
+     *
+     * The input is expected to be reduced. This function will not work on
+     * things like expressions and variables.
+     *
+     * @param array $value
+     *
+     * @return string
+     */
 	protected function compileValue($value) {
 		switch ($value[0]) {
 		case 'list':
@@ -1024,10 +1029,14 @@ class lessc {
 		}
 	}
 
-	/**
-	 * Helper function to get arguments for color manipulation functions.
-	 * takes a list that contains a color like thing and a percentage
-	 */
+    /**
+     * Helper function to get arguments for color manipulation functions.
+     * takes a list that contains a color like thing and a percentage
+     *
+     * @param array $args
+     *
+     * @return array
+     */
 	protected function colorArgs($args) {
 		if ($args[0] != 'list' || count($args[2]) < 2) {
 			return array(array('color', 0, 0, 0), 0);
@@ -1263,10 +1272,14 @@ class lessc {
 		return $temp1;
 	}
 
-	/**
-	 * Converts a hsl array into a color value in rgb.
-	 * Expects H to be in range of 0 to 360, S and L in 0 to 100
-	 */
+    /**
+     * Converts a hsl array into a color value in rgb.
+     * Expects H to be in range of 0 to 360, S and L in 0 to 100
+     *
+     * @param array $color
+     *
+     * @return array
+     */
 	protected function toRGB($color) {
 		if ($color[0] == 'color') return $color;
 
@@ -1298,10 +1311,14 @@ class lessc {
 		return min($max, max($min, $v));
 	}
 
-	/**
-	 * Convert the rgb, rgba, hsl color literals of function type
-	 * as returned by the parser into values of color type.
-	 */
+    /**
+     * Convert the rgb, rgba, hsl color literals of function type
+     * as returned by the parser into values of color type.
+     *
+     * @param array $func
+     *
+     * @return bool|mixed
+     */
 	protected function funcToColor($func) {
 		$fname = $func[1];
 		if ($func[2][0] != 'list') return false; // need a list of arguments
@@ -1777,10 +1794,12 @@ class lessc {
 		}
 	}
 
-	/**
-	 * Initialize any static state, can initialize parser for a file
-	 * $opts isn't used yet
-	 */
+    /**
+     * Initialize any static state, can initialize parser for a file
+     * $opts isn't used yet
+     *
+     * @param null|string $fname
+     */
 	public function __construct($fname = null) {
 		if ($fname !== null) {
 			// used for deprecated parse method
@@ -1998,9 +2017,13 @@ class lessc {
 		$this->allParsedFiles[realpath($file)] = filemtime($file);
 	}
 
-	/**
-	 * Uses the current value of $this->count to show line and line number
-	 */
+    /**
+     * Uses the current value of $this->count to show line and line number
+     *
+     * @param null|string $msg
+     *
+     * @throws exception
+     */
 	protected function throwError($msg = null) {
 		if ($this->sourceLoc >= 0) {
 			$this->sourceParser->throwError($msg, $this->sourceLoc);
@@ -2496,10 +2519,15 @@ class lessc_parser {
 		return true;
 	}
 
-	/**
-	 * Attempt to consume an expression.
-	 * @link http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
-	 */
+    /**
+     * Attempt to consume an expression.
+     *
+     * @link http://en.wikipedia.org/wiki/Operator-precedence_parser#Pseudo-code
+     *
+     * @param array $out
+     *
+     * @return bool
+     */
 	protected function expression(&$out) {
 		if ($this->value($lhs)) {
 			$out = $this->expHelper($lhs, 0);
@@ -2521,9 +2549,14 @@ class lessc_parser {
 		return false;
 	}
 
-	/**
-	 * recursively parse infix equation with $lhs at precedence $minP
-	 */
+    /**
+     * recursively parse infix equation with $lhs at precedence $minP
+     *
+     * @param array $lhs
+     * @param mixed $minP
+     *
+     * @return array
+     */
 	protected function expHelper($lhs, $minP) {
 		$this->inExp = true;
 		$ss = $this->seek();
@@ -3243,10 +3276,14 @@ class lessc_parser {
 		return false;
 	}
 
-	/**
-	 * Consume an assignment operator
-	 * Can optionally take a name that will be set to the current property name
-	 */
+    /**
+     * Consume an assignment operator
+     * Can optionally take a name that will be set to the current property name
+     *
+     * @param null|string $name
+     *
+     * @return bool
+     */
 	protected function assign($name = null) {
 		if ($name) $this->currentProperty = $name;
 		return $this->literal(':') || $this->literal('=');

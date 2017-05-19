@@ -1,4 +1,26 @@
 <?php
+
+
+if(!class_exists('PHPUnit_Framework_TestCase')) {
+    /**
+     * phpunit 5/6 compatibility
+     */
+    class PHPUnit_Framework_TestCase extends PHPUnit\Framework\TestCase {
+        /**
+         * @param string $class
+         * @param null|string $message
+         */
+        public function setExpectedException($class, $message=null) {
+            $this->expectException($class);
+            if(!is_null($message)) {
+                $this->expectExceptionMessage($message);
+            }
+        }
+    }
+}
+
+
+
 /**
  * Helper class to provide basic functionality for tests
  */

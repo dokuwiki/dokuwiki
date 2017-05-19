@@ -313,7 +313,7 @@ class PassHash {
      * @return string Hashed password
      */
     public function hash_my411($clear) {
-        return '*'.sha1(pack("H*", sha1($clear)));
+        return '*'.strtoupper(sha1(pack("H*", sha1($clear))));
     }
 
     /**
@@ -404,6 +404,13 @@ class PassHash {
 
     /**
      * Alias for hash_pmd5
+     *
+     * @param string $clear
+     * @param null|string $salt
+     * @param string $magic
+     * @param int $compute
+     *
+     * @return string
      */
     public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);
@@ -530,7 +537,7 @@ class PassHash {
 
         if(is_null($salt)) {
             if($compute < 4 || $compute > 31) $compute = 8;
-            $salt = '$2a$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
+            $salt = '$2y$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
                 $this->gen_salt(22);
         }
 

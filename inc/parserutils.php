@@ -59,6 +59,8 @@ define('METADATA_RENDER_UNLIMITED', 4);
  * @param string $id page id
  * @param string|int $rev revision timestamp or empty string
  * @param bool $excuse
+ * @param string $date_at
+ *
  * @return null|string
  */
 function p_wiki_xhtml($id, $rev='', $excuse=true,$date_at=''){

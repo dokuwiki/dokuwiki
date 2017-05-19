@@ -94,7 +94,13 @@ function stripctl($string) {
 function getSecurityToken() {
     /** @var Input $INPUT */
     global $INPUT;
-    return PassHash::hmac('md5', session_id().$INPUT->server->str('REMOTE_USER'), auth_cookiesalt());
+
+    $user = $INPUT->server->str('REMOTE_USER');
+    $session = session_id();
+
+    // CSRF checks are only for logged in users - do not generate for anonymous
+    if(trim($user) == '' || trim($session) == '') return '';
+    return PassHash::hmac('md5', $session.$user, auth_cookiesalt());
 }
 
 /**
@@ -724,7 +730,9 @@ function checkwordblock($text = '') {
                 $data['userinfo']['name'] = $INFO['userinfo']['name'];
                 $data['userinfo']['mail'] = $INFO['userinfo']['mail'];
             }
-            $callback = create_function('', 'return true;');
+            $callback = function () {
+                return true;
+            };
             return trigger_event('COMMON_WORDBLOCK_BLOCKED', $data, $callback, true);
         }
     }
@@ -1133,7 +1141,13 @@ function parsePageTemplate(&$data) {
     );
 
     // we need the callback to work around strftime's char limit
-    $tpl         = preg_replace_callback('/%./', create_function('$m', 'return strftime($m[0]);'), $tpl);
+    $tpl = preg_replace_callback(
+        '/%./',
+        function ($m) {
+            return strftime($m[0]);
+        },
+        $tpl
+    );
     $data['tpl'] = $tpl;
     return $tpl;
 }

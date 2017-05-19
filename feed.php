@@ -51,7 +51,7 @@ if($cache->useCache($depends)) {
 }
 
 // create new feed
-$rss                 = new DokuWikiFeedCreator();
+$rss                 = new UniversalFeedCreator();
 $rss->title          = $conf['title'].(($opt['namespace']) ? ' '.$opt['namespace'] : '');
 $rss->link           = DOKU_URL;
 $rss->syndicationURL = DOKU_URL.'feed.php';
@@ -85,7 +85,7 @@ if(isset($modes[$opt['feed_mode']])) {
 }
 
 rss_buildItems($rss, $data, $opt);
-$feed = $rss->createFeed($opt['feed_type'], 'utf-8');
+$feed = $rss->createFeed($opt['feed_type']);
 
 // save cachefile
 $cache->storeCache($feed);

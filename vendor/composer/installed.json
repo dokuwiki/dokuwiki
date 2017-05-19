@@ -1,152 +1,5 @@
 [
     {
-        "name": "splitbrain/php-archive",
-        "version": "1.0.7",
-        "version_normalized": "1.0.7.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/splitbrain/php-archive.git",
-            "reference": "c075304b44c4aadff0718af445e86bf730f331ff"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/c075304b44c4aadff0718af445e86bf730f331ff",
-            "reference": "c075304b44c4aadff0718af445e86bf730f331ff",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.5.*"
-        },
-        "time": "2015-08-12T13:24:34+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "splitbrain\\PHPArchive\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Andreas Gohr",
-                "email": "andi@splitbrain.org"
-            }
-        ],
-        "description": "Pure-PHP implementation to read and write TAR and ZIP archives",
-        "keywords": [
-            "archive",
-            "extract",
-            "tar",
-            "unpack",
-            "unzip",
-            "zip"
-        ]
-    },
-    {
-        "name": "paragonie/random_compat",
-        "version": "v2.0.4",
-        "version_normalized": "2.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
-            "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*|5.*"
-        },
-        "suggest": {
-            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-        },
-        "time": "2016-11-07T23:38:38+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/random.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Paragon Initiative Enterprises",
-                "email": "security@paragonie.com",
-                "homepage": "https://paragonie.com"
-            }
-        ],
-        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-        "keywords": [
-            "csprng",
-            "pseudorandom",
-            "random"
-        ]
-    },
-    {
-        "name": "easybook/geshi",
-        "version": "v1.0.8.18",
-        "version_normalized": "1.0.8.18",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/easybook/geshi.git",
-            "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/easybook/geshi/zipball/4b06bfe8c6fbedd6aad0a0700d650f591386e287",
-            "reference": "4b06bfe8c6fbedd6aad0a0700d650f591386e287",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">4.3.0"
-        },
-        "time": "2016-10-05T07:15:42+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "./"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Nigel McNie",
-                "email": "nigel@geshi.org"
-            },
-            {
-                "name": "Benny Baumann",
-                "email": "BenBE@geshi.org"
-            }
-        ],
-        "description": "GeSHi - Generic Syntax Highlighter. This is an unmodified port of GeSHi project code found on SourceForge.",
-        "homepage": "http://qbnz.com/highlighter",
-        "keywords": [
-            "highlight",
-            "highlighter",
-            "syntax"
-        ]
-    },
-    {
         "name": "phpseclib/phpseclib",
         "version": "2.0.4",
         "version_normalized": "2.0.4.0",
@@ -299,6 +152,201 @@
         "keywords": [
             "atom",
             "feeds",
+            "rss"
+        ]
+    },
+    {
+        "name": "paragonie/random_compat",
+        "version": "v2.0.10",
+        "version_normalized": "2.0.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paragonie/random_compat.git",
+            "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+            "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.*|5.*"
+        },
+        "suggest": {
+            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+        },
+        "time": "2017-03-13T16:27:32+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/random.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Paragon Initiative Enterprises",
+                "email": "security@paragonie.com",
+                "homepage": "https://paragonie.com"
+            }
+        ],
+        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+        "keywords": [
+            "csprng",
+            "pseudorandom",
+            "random"
+        ]
+    },
+    {
+        "name": "splitbrain/php-archive",
+        "version": "1.0.8",
+        "version_normalized": "1.0.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/splitbrain/php-archive.git",
+            "reference": "6b1c1746fa0a6f9f68f0bc832892ddeda8db905c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/6b1c1746fa0a6f9f68f0bc832892ddeda8db905c",
+            "reference": "6b1c1746fa0a6f9f68f0bc832892ddeda8db905c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.5.*"
+        },
+        "suggest": {
+            "ext-iconv": "Used for proper filename encode handling",
+            "ext-mbstring": "Can be used alternatively for handling filename encoding"
+        },
+        "time": "2017-03-19T09:10:53+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "splitbrain\\PHPArchive\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Gohr",
+                "email": "andi@splitbrain.org"
+            }
+        ],
+        "description": "Pure-PHP implementation to read and write TAR and ZIP archives",
+        "keywords": [
+            "archive",
+            "extract",
+            "tar",
+            "unpack",
+            "unzip",
+            "zip"
+        ]
+    },
+    {
+        "name": "geshi/geshi",
+        "version": "v1.0.9.0",
+        "version_normalized": "1.0.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/GeSHi/geshi-1.0.git",
+            "reference": "5a7b461338d322d941986a656d4d1651452e73dd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/5a7b461338d322d941986a656d4d1651452e73dd",
+            "reference": "5a7b461338d322d941986a656d4d1651452e73dd",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7"
+        },
+        "time": "2017-05-05T05:51:25+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/geshi/",
+                "src/geshi.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Benny Baumann",
+                "email": "BenBE@geshi.org",
+                "homepage": "http://blog.benny-baumann.de/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Generic Syntax Highlighter",
+        "homepage": "http://qbnz.com/highlighter/"
+    },
+    {
+        "name": "openpsa/universalfeedcreator",
+        "version": "v1.8.3",
+        "version_normalized": "1.8.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/flack/UniversalFeedCreator.git",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "reference": "6261e130446d8f787bbfd229a602fb11e6816a4e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2017-05-18T08:28:48+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Andreas Flack",
+                "email": "flack@contentcontrol-berlin.de",
+                "homepage": "http://www.contentcontrol-berlin.de/"
+            }
+        ],
+        "description": "RSS and Atom feed generator by Kai Blankenhorn",
+        "keywords": [
+            "atom",
+            "georss",
+            "gpx",
+            "opml",
+            "pie",
             "rss"
         ]
     }

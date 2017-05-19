@@ -31,6 +31,8 @@
  * @author Wesley de Weerd <wesleytiel@gmail.com>
  * @author Sjoerd <sjoerd@sjomar.eu>
  * @author Joachim David <joa_david@hotmail.com>
+ * @author mark prins <mprins@users.sf.net>
+ * @author stafmans <dokuwiki@stafmans.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -47,7 +49,7 @@ $lang['btn_search']            = 'Zoeken';
 $lang['btn_save']              = 'Opslaan';
 $lang['btn_preview']           = 'Voorbeeld';
 $lang['btn_top']               = 'Terug naar boven';
-$lang['btn_newer']             = '<< recenter';
+$lang['btn_newer']             = '<< nieuwer';
 $lang['btn_older']             = 'ouder >>';
 $lang['btn_revs']              = 'Oude revisies';
 $lang['btn_recent']            = 'Recente aanpassingen';

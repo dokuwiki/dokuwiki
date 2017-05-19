@@ -2,6 +2,24 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# remove in 2017-02-19
+inc/SimplePie.php
+inc/Tar.class.php
+inc/ZipLib.class.php
+inc/phpseclib/Crypt_AES.php
+inc/phpseclib/Crypt_Rijndael.php
+inc/phpseclib/update.sh
+inc/phpseclib/LICENSE
+inc/phpseclib/Crypt_Base.php
+inc/phpseclib/Crypt_Hash.php
+inc/phpseclib/Math_BigInteger.php
+lib/scripts/jquery/jquery-migrate.js
+lib/scripts/jquery/jquery-ui-theme/images/ui-bg_flat_0_aaaaaa_40x100.png
+lib/scripts/jquery/jquery-ui-theme/images/ui-bg_flat_75_ffffff_40x100.png
+lib/scripts/jquery/jquery-ui.js
+lib/scripts/jquery/jquery.js
+lib/tpl/dokuwiki/css/_admin.css
+
 # removed in 2016-06-26
 inc/cliopts.php
 lib/tpl/dokuwiki/css/mixins.less

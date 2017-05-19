@@ -9,23 +9,12 @@ if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/');
 if(!defined('DOKU_CONF')) define('DOKU_CONF',DOKU_INC.'conf/');
 if(!defined('DOKU_LOCAL')) define('DOKU_LOCAL',DOKU_INC.'conf/');
 
-require_once(DOKU_INC.'inc/PassHash.class.php');
+// load and initialize the core system
+require_once(DOKU_INC.'inc/init.php');
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL')) { error_reporting(E_ALL ^ E_NOTICE); }
 else { error_reporting(DOKU_E_LEVEL); }
-
-// kill magic quotes
-if (get_magic_quotes_gpc() && !defined('MAGIC_QUOTES_STRIPPED')) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    @ini_set('magic_quotes_gpc', 0);
-    define('MAGIC_QUOTES_STRIPPED',1);
-}
-if (function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-@ini_set('magic_quotes_sybase',0);
 
 // language strings
 require_once(DOKU_INC.'inc/lang/en/lang.php');
@@ -59,7 +48,8 @@ $dokuwiki_hash = array(
     '2013-12-08'   => '263c76af309fbf083867c18a34ff5214',
     '2014-05-05'   => '263c76af309fbf083867c18a34ff5214',
     '2015-08-10'   => '263c76af309fbf083867c18a34ff5214',
-    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73'
+    '2016-06-26'   => 'fd3abb6d89853dacb032907e619fbd73',
+    '2017-02-19'   => 'e4f2f5a34c9dbcd96a5ecc8f2df25bd9'
 );
 
 
@@ -558,8 +548,8 @@ function check_functions(){
     global $lang;
     $ok = true;
 
-    if(version_compare(phpversion(),'5.3.3','<')){
-        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.3.3');
+    if(version_compare(phpversion(),'5.6.0','<')){
+        $error[] = sprintf($lang['i_phpver'],phpversion(),'5.6.0');
         $ok = false;
     }
 
@@ -640,21 +630,3 @@ function print_errors(){
         echo '</ul>';
     }
 }
-
-/**
- * remove magic quotes recursivly
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param array $array
- */
-function remove_magic_quotes(&$array) {
-    foreach (array_keys($array) as $key) {
-        if (is_array($array[$key])) {
-            remove_magic_quotes($array[$key]);
-        }else {
-            $array[$key] = stripslashes($array[$key]);
-        }
-    }
-}
-

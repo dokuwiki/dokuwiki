@@ -129,10 +129,10 @@ class remote_plugin_testplugin2 extends DokuWiki_Remote_Plugin {
 
 class remote_test extends DokuWikiTest {
 
-    var $userinfo;
+    protected $userinfo;
 
     /** @var  RemoteAPI */
-    var $remote;
+    protected $remote;
 
     function setUp() {
         parent::setUp();
@@ -256,6 +256,7 @@ class remote_test extends DokuWikiTest {
         $conf['remote'] = 1;
         $conf['remoteuser'] = '';
         $this->remote->forceAccess(); // no exception should occur
+        $this->assertTrue(true); // avoid being marked as risky for having no assertion
     }
 
     /**
