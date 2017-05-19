@@ -93,22 +93,9 @@ header('X-UA-Compatible: IE=edge,chrome=1');
                     <div class="tools">
                         <ul>
                             <?php
-                                $data = array(
-                                    'view' => 'detail-svg',
-                                    'items' => array(
-                                        'mediaManager' => dokuwiki\template\dokuwiki\tpl::pageToolAction('mediaManager'),
-                                        'img_backto' =>   dokuwiki\template\dokuwiki\tpl::pageToolAction('img_backto'),
-                                    )
-                                );
-
-                                // the page tools can be amended through a custom plugin hook
-                                $evt = new Doku_Event('TEMPLATE_PAGETOOLS_DISPLAY', $data);
-                                if($evt->advise_before()) {
-                                    foreach($evt->data['items'] as $k => $html) echo "<li>$html</li>";
-                                }
-                                $evt->advise_after();
-                                unset($data);
-                                unset($evt);
+                                $menu = new \dokuwiki\Menu\DetailMenu();
+                                echo $menu->getListItems();
+                                unset($menu);
                             ?>
                         </ul>
                     </div>

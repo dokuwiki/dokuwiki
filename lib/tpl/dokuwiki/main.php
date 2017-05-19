@@ -74,26 +74,9 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <div class="tools">
                     <ul>
                         <?php
-                            $data = array(
-                                'view'  => 'main-svg',
-                                'items' => array(
-                                    'edit'      => dokuwiki\template\dokuwiki\tpl::pageToolAction('edit'),
-                                    'revert'    => dokuwiki\template\dokuwiki\tpl::pageToolAction('revert'),
-                                    'revisions' => dokuwiki\template\dokuwiki\tpl::pageToolAction('revisions'),
-                                    'backlink'  => dokuwiki\template\dokuwiki\tpl::pageToolAction('backlink'),
-                                    'subscribe' => dokuwiki\template\dokuwiki\tpl::pageToolAction('subscribe'),
-                                    'top'       => dokuwiki\template\dokuwiki\tpl::pageToolAction('top'),
-                                )
-                            );
-
-                            // the page tools can be amended through a custom plugin hook
-                            $evt = new Doku_Event('TEMPLATE_PAGETOOLS_DISPLAY', $data);
-                            if($evt->advise_before()){
-                                foreach($evt->data['items'] as $k => $html) echo "<li>$html</li>";
-                            }
-                            $evt->advise_after();
-                            unset($data);
-                            unset($evt);
+                            $menu = new \dokuwiki\Menu\PageMenu();
+                            echo $menu->getListItems();
+                            unset($menu);
                         ?>
                     </ul>
                 </div>
