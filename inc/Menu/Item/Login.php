@@ -4,6 +4,8 @@ namespace dokuwiki\Menu\Item;
 
 class Login extends AbstractItem {
 
+    protected $svg = DOKU_INC . 'lib/images/menu/login.svg';
+
     /** @inheritdoc */
     public function __construct() {
         global $INPUT;
@@ -17,6 +19,7 @@ class Login extends AbstractItem {
             }
             $this->params['do'] = 'logout';
             $this->type = 'logout';
+            $this->svg = DOKU_INC . 'lib/images/menu/logout.svg';
         }
     }
 

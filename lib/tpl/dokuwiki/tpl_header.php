@@ -46,12 +46,9 @@ if (!defined('DOKU_INC')) die();
                             tpl_userinfo(); /* 'Logged in as ...' */
                             echo '</li>';
                         }
-                        tpl_toolsevent('usertools', array(
-                            tpl_action('admin', true, 'li', true),
-                            tpl_action('profile', true, 'li', true),
-                            tpl_action('register', true, 'li', true),
-                            tpl_action('login', true, 'li', true)
-                        ));
+                        $menu = new \dokuwiki\Menu\UserMenu();
+                        echo $menu->getListItems('action ');
+                        unset($menu);
                     ?>
                 </ul>
             </div>
