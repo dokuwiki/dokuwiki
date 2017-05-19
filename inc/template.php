@@ -1646,42 +1646,8 @@ function tpl_mediaTree() {
  * @param string $button submit button label
  */
 function tpl_actiondropdown($empty = '', $button = '&gt;') {
-    global $ID;
-    global $REV;
-    global $lang;
-    /** @var Input $INPUT */
-    global $INPUT;
-
-    $action_structure = array(
-        'page_tools' => array('edit', 'revert', 'revisions', 'backlink', 'subscribe'),
-        'site_tools' => array('recent', 'media', 'index'),
-        'user_tools' => array('login', 'register', 'profile', 'admin'),
-    );
-
-    echo '<form action="'.script().'" method="get" accept-charset="utf-8">';
-    echo '<div class="no">';
-    echo '<input type="hidden" name="id" value="'.$ID.'" />';
-    if($REV) echo '<input type="hidden" name="rev" value="'.$REV.'" />';
-    if ($INPUT->server->str('REMOTE_USER')) {
-        echo '<input type="hidden" name="sectok" value="'.getSecurityToken().'" />';
-    }
-
-    echo '<select name="do" class="edit quickselect" title="'.$lang['tools'].'">';
-    echo '<option value="">'.$empty.'</option>';
-
-    foreach($action_structure as $tools => $actions) {
-        echo '<optgroup label="'.$lang[$tools].'">';
-        foreach($actions as $action) {
-            $act = tpl_get_action($action);
-            if($act) echo '<option value="'.$act['params']['do'].'">'.$lang['btn_'.$act['type']].'</option>';
-        }
-        echo '</optgroup>';
-    }
-
-    echo '</select>';
-    echo '<button type="submit">'.$button.'</button>';
-    echo '</div>';
-    echo '</form>';
+    $menu = new \dokuwiki\Menu\MobileMenu();
+    echo $menu->getDropdown($empty, $button);
 }
 
 /**
