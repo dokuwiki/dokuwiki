@@ -66,9 +66,10 @@ abstract class AbstractMenu {
      * output, use getItems() and build the HTML yourself
      *
      * @param string|false $classprefix create a class from type with this prefix, false for no class
+     * @param bool $svg add the SVG link
      * @return string
      */
-    public function getListItems($classprefix = '') {
+    public function getListItems($classprefix = '', $svg = true) {
         $html = '';
         foreach($this->getItems() as $item) {
             if($classprefix !== false) {
@@ -78,7 +79,7 @@ abstract class AbstractMenu {
             }
 
             $html .= "<li$class>";
-            $html .= $item->asHtmlLink(false);
+            $html .= $item->asHtmlLink(false, $svg);
             $html .= '</li>';
         }
         return $html;

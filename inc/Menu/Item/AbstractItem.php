@@ -114,13 +114,18 @@ abstract class AbstractItem {
      * Wraps around the label and SVG image
      *
      * @param string|false $classprefix create a class from type with this prefix, false for no class
+     * @param bool $svg add SVG icon to the link
      * @return string
      */
-    public function asHtmlLink($classprefix = 'menuitem ') {
+    public function asHtmlLink($classprefix = 'menuitem ', $svg = true) {
         $attr = buildAttributes($this->getLinkAttributes($classprefix));
         $html = "<a $attr>";
-        $html .= '<span>' . hsc($this->getLabel()) . '</span>';
-        $html .= inlineSVG($this->getSvg());
+        if($svg) {
+            $html .= '<span>' . hsc($this->getLabel()) . '</span>';
+            $html .= inlineSVG($this->getSvg());
+        } else {
+            $html .= hsc($this->getLabel());
+        }
         $html .= "</a>";
 
         return $html;

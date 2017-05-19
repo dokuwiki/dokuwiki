@@ -4,6 +4,8 @@ namespace dokuwiki\Menu\Item;
 
 class Index extends AbstractItem {
 
+    protected $svg = DOKU_INC . 'lib/images/menu/file-tree.svg';
+
     /** @inheritdoc */
     public function __construct() {
         parent::__construct();

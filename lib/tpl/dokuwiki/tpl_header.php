@@ -63,11 +63,9 @@ if (!defined('DOKU_INC')) die();
             </div>
             <ul>
                 <?php
-                    tpl_toolsevent('sitetools', array(
-                        tpl_action('recent', true, 'li', true),
-                        tpl_action('media', true, 'li', true),
-                        tpl_action('index', true, 'li', true)
-                    ));
+                    $menu = new \dokuwiki\Menu\SiteMenu();
+                    echo $menu->getListItems('action ', false);
+                    unset($menu);
                 ?>
             </ul>
         </div>
