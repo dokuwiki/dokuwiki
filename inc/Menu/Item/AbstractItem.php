@@ -33,7 +33,6 @@ abstract class AbstractItem {
     protected $params      = array();
     protected $nofollow    = true;
     protected $replacement = '';
-    protected $category    = 'page';
     protected $svg         = DOKU_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
     protected $label       = '';
     protected $context     = self::CTX_ALL;

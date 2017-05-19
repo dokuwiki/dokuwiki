@@ -11,8 +11,6 @@ class Admin extends AbstractItem {
         global $INFO;
         parent::__construct();
 
-        $this->category = 'user';
-
         if(!$INFO['ismanager']) {
             throw new \RuntimeException("admin is for managers only");
         }

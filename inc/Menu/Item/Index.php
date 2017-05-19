@@ -10,7 +10,6 @@ class Index extends AbstractItem {
     public function __construct() {
         parent::__construct();
 
-        $this->category = 'site';
         $this->accesskey = 'x';
 
         // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)

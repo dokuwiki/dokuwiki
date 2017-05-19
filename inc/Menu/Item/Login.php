@@ -11,7 +11,6 @@ class Login extends AbstractItem {
         global $INPUT;
         parent::__construct();
 
-        $this->category = 'user';
         $this->params['sectok'] = getSecurityToken();
         if($INPUT->server->has('REMOTE_USER')) {
             if(!actionOK('logout')) {

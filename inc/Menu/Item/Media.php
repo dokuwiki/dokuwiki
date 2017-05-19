@@ -11,7 +11,6 @@ class Media extends AbstractItem {
         global $ID;
         parent::__construct();
 
-        $this->category = 'site';
         $params['ns'] = getNS($ID);
     }
 

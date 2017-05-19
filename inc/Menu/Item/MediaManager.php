@@ -8,10 +8,10 @@ class MediaManager extends AbstractItem {
 
     /** @inheritdoc */
     public function __construct() {
+        global $IMG;
         parent::__construct();
 
         // View image in media manager
-        global $IMG;
         $imgNS = getNS($IMG);
         $authNS = auth_quickaclcheck("$imgNS:*");
         if($authNS < AUTH_UPLOAD) {

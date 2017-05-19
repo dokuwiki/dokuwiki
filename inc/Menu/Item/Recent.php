@@ -8,7 +8,6 @@ class Recent extends AbstractItem {
     public function __construct() {
         parent::__construct();
 
-        $this->category = 'site';
         $this->accesskey = 'r';
         $this->svg = DOKU_INC . 'lib/images/menu/calendar-clock.svg';
     }
