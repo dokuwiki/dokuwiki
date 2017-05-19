@@ -37,7 +37,7 @@ class Edit extends AbstractItem {
             $this->accesskey = 'v';
         }
 
-        $this->svg = $this->setIcon();
+        $this->setIcon();
     }
 
     /**
