@@ -120,7 +120,7 @@ abstract class AbstractItem {
         $attr = buildAttributes($this->getLinkAttributes($classprefix));
         $html = "<a $attr>";
         $html .= '<span>' . hsc($this->getLabel()) . '</span>';
-        $html .= inlinSVG($this->getSvg());
+        $html .= inlineSVG($this->getSvg());
         $html .= "</a>";
 
         return $html;
