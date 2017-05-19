@@ -66,6 +66,7 @@ abstract class AbstractMenu {
      * output, use getItems() and build the HTML yourself
      *
      * @param string|false $classprefix create a class from type with this prefix, false for no class
+     * @return string
      */
     public function getListItems($classprefix = '') {
         $html = '';
@@ -80,6 +81,7 @@ abstract class AbstractMenu {
             $html .= $item->asHtmlLink(false);
             $html .= '</li>';
         }
+        return $html;
     }
 
 }

@@ -4,7 +4,7 @@ namespace dokuwiki\Menu\Item;
 
 class Subscribe extends AbstractItem {
 
-    protected $svg = DOKU_BASE . 'lib/images/menu/09-subscribe_email-outline.svg';
+    protected $svg = DOKU_INC . 'lib/images/menu/09-subscribe_email-outline.svg';
 
     /** @inheritdoc */
     public function __construct() {

@@ -52,7 +52,7 @@ class Edit extends AbstractItem {
             'source' => '05-source_file-xml.svg',
         );
         if(isset($icons[$this->type])) {
-            $this->svg = DOKU_BASE . 'lib/images/menu/' . $icons[$this->type];
+            $this->svg = DOKU_INC . 'lib/images/menu/' . $icons[$this->type];
         }
     }
 

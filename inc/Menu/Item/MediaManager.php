@@ -4,7 +4,7 @@ namespace dokuwiki\Menu\Item;
 
 class MediaManager extends AbstractItem {
 
-    protected $svg = DOKU_BASE . 'lib/images/menu/11-mediamanager_folder-image.svg';
+    protected $svg = DOKU_INC . 'lib/images/menu/11-mediamanager_folder-image.svg';
 
     /** @inheritdoc */
     public function __construct() {
