@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Admin
+ *
+ * Opens the Admin screen. Only shown to managers or above
+ */
 class Admin extends AbstractItem {
 
     protected $svg = DOKU_INC . 'lib/images/menu/settings.svg';

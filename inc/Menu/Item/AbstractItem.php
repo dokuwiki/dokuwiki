@@ -26,17 +26,36 @@ abstract class AbstractItem {
     /** menu item is to be shown in all contexts */
     const CTX_ALL = 3;
 
-    protected $type        = '';
-    protected $accesskey   = '';
-    protected $id          = '';
-    protected $method      = 'get';
-    protected $params      = array();
-    protected $nofollow    = true;
+    /** @var string name of the action, usually the lowercase class name */
+    protected $type = '';
+    /** @var string optional keyboard shortcut */
+    protected $accesskey = '';
+    /** @var string the page id this action links to */
+    protected $id = '';
+    /** @var string the method to be used when this action is used in a form */
+    protected $method = 'get';
+    /** @var array parameters for the action (should contain the do parameter) */
+    protected $params = array();
+    /** @var bool when true, a rel=nofollow should be used */
+    protected $nofollow = true;
+    /** @var string this item's label may contain a placeholder, which is replaced with this */
     protected $replacement = '';
-    protected $svg         = DOKU_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
-    protected $label       = '';
-    protected $context     = self::CTX_ALL;
+    /** @var string the full path to the SVG icon of this menu item */
+    protected $svg = DOKU_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
+    /** @var string can be set to overwrite the default lookup in $lang.btn_* */
+    protected $label = '';
+    /** @var int the context this titme is shown in */
+    protected $context = self::CTX_ALL;
 
+    /**
+     * AbstractItem constructor.
+     *
+     * Sets the dynamic properties
+     *
+     * Children should always call the parent constructor!
+     *
+     * @throws \RuntimeException when the action is disabled
+     */
     public function __construct() {
         global $ID;
         $this->id = $ID;

@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Resendpwd
+ *
+ * Access the "forgot password" dialog
+ */
 class Resendpwd extends AbstractItem {
 
     /** @inheritdoc */

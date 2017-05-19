@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Register
+ *
+ * Open the view to register a new account
+ */
 class Register extends AbstractItem {
 
     /** @inheritdoc */

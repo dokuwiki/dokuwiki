@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class MediaManager
+ *
+ * Opens the current image in the media manager. Used on image detail view.
+ */
 class MediaManager extends AbstractItem {
 
     protected $svg = DOKU_INC . 'lib/images/menu/11-mediamanager_folder-image.svg';
@@ -11,7 +16,6 @@ class MediaManager extends AbstractItem {
         global $IMG;
         parent::__construct();
 
-        // View image in media manager
         $imgNS = getNS($IMG);
         $authNS = auth_quickaclcheck("$imgNS:*");
         if($authNS < AUTH_UPLOAD) {

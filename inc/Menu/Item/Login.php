@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Login
+ *
+ * Show a login or logout item, based on the current state
+ */
 class Login extends AbstractItem {
 
     protected $svg = DOKU_INC . 'lib/images/menu/login.svg';

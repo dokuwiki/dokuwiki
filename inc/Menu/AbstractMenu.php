@@ -4,6 +4,13 @@ namespace dokuwiki\Menu;
 
 use dokuwiki\Menu\Item\AbstractItem;
 
+/**
+ * Class AbstractMenu
+ *
+ * Basic menu functionality. A menu defines a list of AbstractItem that shall be shown.
+ * It contains convenience functions to display the menu in HTML, but template authors can also
+ * just accesst the items via getItems() and create the HTML as however they see fit.
+ */
 abstract class AbstractMenu {
 
     /** @var string[] list of Item classes to load */

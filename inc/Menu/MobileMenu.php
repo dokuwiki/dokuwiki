@@ -4,6 +4,13 @@ namespace dokuwiki\Menu;
 
 use dokuwiki\Menu\Item\AbstractItem;
 
+/**
+ * Class MobileMenu
+ *
+ * Note: this does not inherit from AbstractMenu because it is not working like the other
+ * menus. This is a meta menu, aggregating the items from the other menus and offering a combined
+ * view. The idea is to use this on mobile devices, thus the context is fixed to CTX_MOBILE
+ */
 class MobileMenu {
 
     /**

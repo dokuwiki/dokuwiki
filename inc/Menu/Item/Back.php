@@ -2,6 +2,12 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Back
+ *
+ * @fixme where is this used?
+ * @fixme missing SVG
+ */
 class Back extends AbstractItem {
 
     /** @inheritdoc */

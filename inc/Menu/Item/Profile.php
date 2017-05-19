@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Profile
+ *
+ * Open the user's profile
+ */
 class Profile extends AbstractItem {
 
     protected $svg = DOKU_INC . 'lib/images/menu/account-card-details.svg';

@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Revert
+ *
+ * Quick revert to the currently shown page revision
+ */
 class Revert extends AbstractItem {
 
     /** @inheritdoc */

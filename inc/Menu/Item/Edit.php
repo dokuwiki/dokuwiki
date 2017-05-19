@@ -2,6 +2,12 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Edit
+ *
+ * Most complex item. Shows the edit button but mutates to show, draft and create based on
+ * current state.
+ */
 class Edit extends AbstractItem {
 
     /** @inheritdoc */

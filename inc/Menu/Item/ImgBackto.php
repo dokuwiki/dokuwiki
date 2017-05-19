@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class ImgBackto
+ *
+ * Links back to the originating page from a detail image view
+ */
 class ImgBackto extends AbstractItem {
 
     /** @inheritdoc */

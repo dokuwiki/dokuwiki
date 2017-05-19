@@ -2,6 +2,11 @@
 
 namespace dokuwiki\Menu\Item;
 
+/**
+ * Class Subscribe
+ *
+ * Access the subscription management view
+ */
 class Subscribe extends AbstractItem {
 
     protected $svg = DOKU_INC . 'lib/images/menu/09-subscribe_email-outline.svg';
