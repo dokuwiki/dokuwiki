@@ -312,6 +312,8 @@ define('MSG_ADMINS_ONLY',4);
 /**
  * Display a message to the user
  *
+ * Triggers INFOUTIL_MSG_SHOW
+ *
  * @param string $message
  * @param int    $lvl   -1 = error, 0 = info, 1 = success, 2 = notify
  * @param string $line  line number
@@ -320,25 +322,33 @@ define('MSG_ADMINS_ONLY',4);
  */
 function msg($message,$lvl=0,$line='',$file='',$allow=MSG_PUBLIC){
     global $MSG, $MSG_shown;
-    $errors = array();
-    $errors[-1] = 'error';
-    $errors[0]  = 'info';
-    $errors[1]  = 'success';
-    $errors[2]  = 'notify';
+    static $errors = array(-1=>'error', 0=>'info', 1=>'success', 2=>'notify');
+    $msgdata = array();
+    $msgdata['message'] = $message;
+    $msgdata['lvl'] = $lvl;
+    $msgdata['line'] = $line;
+    $msgdata['file'] = $file;
+    $msgdata['allow'] = $allow;
+    $evt = new Doku_Event('INFOUTIL_MSG_SHOW', $msgdata);  
+    if ($evt->advise_before()) { 
+        /* Show msg normally */
+        if($msgdata['line'] || $msgdata['file']) $msgdata['message'].=' ['.utf8_basename($msgdata['file']).':'.$msgdata['line'].']';
 
-    if($line || $file) $message.=' ['.utf8_basename($file).':'.$line.']';
-
-    if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message, 'allow' => $allow);
-    if(isset($MSG_shown) || headers_sent()){
-        if(function_exists('html_msgarea')){
-            html_msgarea();
-        }else{
-            print "ERROR($lvl) $message";
+        if(!isset($MSG)) $MSG = array();
+        $MSG[]=array('lvl' => $errors[$msgdata['lvl']], 'msg' => $msgdata['message'], 'allow' => $msgdata['allow']);
+        if(isset($MSG_shown) || headers_sent()){
+            if(function_exists('html_msgarea')){
+                html_msgarea();
+            }else{
+                print "ERROR(".$msgdata['lvl'].") ".$msgdata['message'];
+            }
+            unset($GLOBALS['MSG']);
         }
-        unset($GLOBALS['MSG']);
     }
+    $evt->advise_after();
+    unset($evt);
 }
+
 /**
  * Determine whether the current user is allowed to view the message
  * in the $msg data structure
