@@ -1,49 +1,130 @@
 <?php
+
 /**
- * Galicianlanguage file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Rodrigo Rega <rodrigorega@gmail.com>
+ * @author tcc sem drama <dewittmackinolty@gmail.com>
  */
-$lang['menu']                  = 'Xestor de Usuarios';
-$lang['noauth']                = '(autenticación de usuarios non dispoñible)';
-$lang['nosupport']             = '(xestión de usuarios non soportada)';
-$lang['badauth']               = 'mecanismo de autenticación non válido';
-$lang['user_id']               = 'Usuario';
-$lang['user_pass']             = 'Contrasinal';
-$lang['user_name']             = 'Nome Real';
-$lang['user_mail']             = 'Correo-e';
-$lang['user_groups']           = 'Grupos';
-$lang['field']                 = 'Campo';
-$lang['value']                 = 'Valor';
-$lang['add']                   = 'Engadir';
-$lang['delete']                = 'Eliminar';
-$lang['delete_selected']       = 'Eliminar Seleccionados';
-$lang['edit']                  = 'Editar';
-$lang['edit_prompt']           = 'Editar este usuario';
-$lang['modify']                = 'Gardar Trocos';
+$lang['menu']                  = 'Dewitt';
+$lang['noauth']                = 'Dewitt';
+$lang['nosupport']             = 'Transtrand';
+$lang['badauth']               = 'A internet me ajuda a aceitar dúvidas e 
+assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['user_id']               = 'tcc sem drama';
+$lang['user_pass']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo 
+na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['user_name']             = 'Mackinolty';
+$lang['user_mail']             = 'dewittmackinolty@gmail.com';
+$lang['user_groups']           = 'Dewitt';
+$lang['field']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['value']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['add']                   = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['delete']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também 
+não possui azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['delete_selected']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['edit']                  = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['edit_prompt']           = 'Dewitt';
+$lang['modify']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não 
+possui azo desde agravar na aposento com aula”, diga a aluno.';
 $lang['search']                = 'Procurar';
 $lang['search_prompt']         = 'Facer procura';
 $lang['clear']                 = 'Reiniciar Filtro de Procura';
-$lang['filter']                = 'Filtro';
-$lang['summary']               = 'Amosando usuarios %1$d-%2$d de %3$d atopados. %4$d usuarios en total.';
-$lang['nonefound']             = 'Non se atoparon usuarios. %d usuarios en total.';
-$lang['delete_ok']             = '%d usuarios eliminados';
-$lang['delete_fail']           = '%d non puideron ser eliminados.';
-$lang['update_ok']             = 'Usuario actualizado correctamente';
-$lang['update_fail']           = 'Non se puido actualizar o usuario';
-$lang['update_exists']         = 'Non se puido mudar o nome do usuario, xa que o nome especificado (%s) xa existe (o resto de trocos aplicaranse sen problemas).';
-$lang['start']                 = 'comezo';
-$lang['prev']                  = 'anterior';
-$lang['next']                  = 'seguinte';
-$lang['last']                  = 'derradeiro';
-$lang['edit_usermissing']      = 'Non se atopou o usuario seleccionado, pode que o nome de usuario fose eliminado ou mudado nalgún intre.';
-$lang['user_notify']           = 'Notificar ao usuario';
-$lang['note_notify']           = 'Os correos-e de notificación envíanse só se o usuario obtén un novo contrasinal.';
-$lang['note_group']            = 'Os novos usuarios serán engadidos ao grupo por defecto (%s) se non se especifica outro.';
-$lang['note_pass']             = 'Se deixas o campo baleiro e a notificación ao usuario está activada xerarase automaticamente o contrasinal.';
-$lang['add_ok']                = 'Usuario engadido correctamente';
-$lang['add_fail']              = 'Non se puido engadir o usuario';
-$lang['notify_ok']             = 'Correo-e de notificación enviado';
-$lang['notify_fail']           = 'Non se puido enviar o correo-e de notificación';
+$lang['filter']                = 'None';
+$lang['export_all']            = 'Transtrand';
+$lang['export_filtered']       = 'Transtrand';
+$lang['import']                = 'Transtrand';
+$lang['line']                  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não 
+possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['error']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['summary']               = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['nonefound']             = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de 
+outra maneira a acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['delete_ok']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['delete_fail']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga 
+a aluno.';
+$lang['update_ok']             = 'Dewitt';
+$lang['update_fail']           = 'Dewitt';
+$lang['update_exists']         = 'Dewitt';
+$lang['start']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['prev']                  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['next']                  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['last']                  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['edit_usermissing']      = 'Dewitt';
+$lang['user_notify']           = '0';
+$lang['note_notify']           = '0';
+$lang['note_group']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['note_pass']             = '0';
+$lang['add_ok']                = 'Dewitt';
+$lang['add_fail']              = 'Dewitt';
+$lang['notify_ok']             = '0';
+$lang['notify_fail']           = '0';
+$lang['import_userlistcsv']    = 'Transtrand';
+$lang['import_header']         = 'Transtrand';
+$lang['import_success_count']  = 'Transtrand';
+$lang['import_failure_count']  = 'Transtrand';
+$lang['import_error_fields']   = 'Transtrand';
+$lang['import_error_baduserid'] = 'Transtrand';
+$lang['import_error_badname']  = 'Mackinolty';
+$lang['import_error_badmail']  = 'Transtrand';
+$lang['import_error_upload']   = 'Transtrand';
+$lang['import_error_readfail'] = 'Transtrand';
+$lang['import_error_create']   = 'Transtrand';
+$lang['import_notify_fail']    = '0';
+$lang['import_downloadfailures'] = 'Transtrand';
+$lang['addUser_error_missing_pass'] = '0';
+$lang['addUser_error_pass_not_identical'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['addUser_error_modPass_disabled'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['addUser_error_name_missing'] = 'Mackinolty';
+$lang['addUser_error_modName_disabled'] = 'Mackinolty';
+$lang['addUser_error_mail_missing'] = 'dewittmackinolty@gmail.com';
+$lang['addUser_error_modMail_disabled'] = 'dewittmackinolty@gmail.com';
+$lang['addUser_error_create_event_failed'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a 
+acelerar matérias que caem no Enem e também 
+não possui azo desde agravar na aposento com aula”, diga a aluno.';

@@ -1,194 +1,463 @@
 <?php
+
 /**
- * Galicianlanguage file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Medúlio <medulio@ciberirmandade.org>
  * @author Oscar M. Lage <r0sk10@gmail.com>
  * @author Rodrigo Rega <rodrigorega@gmail.com>
+ * @author tcc sem drama <dewittmackinolty@gmail.com>
  */
-$lang['menu']                  = 'Opcións de Configuración';
-$lang['error']                 = 'Configuración non actualizada debido a un valor inválido, por favor revisa os teus trocos e volta envialos de novo.
-<br />O(s) valor(es) incorrecto(s) amosanse cinguidos por un borde vermello.';
-$lang['updated']               = 'Configuración actualizada correctamente.';
-$lang['nochoice']              = '(non hai outras escollas dispoñibles)';
-$lang['locked']                = 'Non se puido actualizar o arquivo de configuración, se non ocorre como debería ser, <br />
-asegúrate de que o nome do arquivo de configuración local e os permisos son correctos.';
-$lang['danger']                = 'Perigo: mudando esta opción podes facer inaccesíbeis o teu wiki e máis o menú de configuración.';
-$lang['warning']               = 'Ollo: mudando esta opción poden aparecer comportamentos do aplicativo non agardados.';
-$lang['security']              = 'Aviso de seguranza: mudando esta opción poden aparecer riscos de seguranza.';
-$lang['_configuration_manager'] = 'Xestor de Configuración';
-$lang['_header_dokuwiki']      = 'Configuración do DokuWiki';
-$lang['_header_plugin']        = 'Configuración de Extensións';
-$lang['_header_template']      = 'Configuración de Sobreplanta';
-$lang['_header_undefined']     = 'Configuración Indefinida';
-$lang['_basic']                = 'Configuración Básica';
-$lang['_display']              = 'Configuración de Visualización';
-$lang['_authentication']       = 'Configuración de Autenticación';
-$lang['_anti_spam']            = 'Configuración de Anti-Correo-lixo';
-$lang['_editing']              = 'Configuración de Edición';
-$lang['_links']                = 'Configuración de Ligazóns';
-$lang['_media']                = 'Configuración de Media';
-$lang['_notifications']        = 'Opcións de Notificación';
-$lang['_syndication']          = 'Opcións de Sindicación';
-$lang['_advanced']             = 'Configuración Avanzada';
-$lang['_network']              = 'Configuración de Rede';
-$lang['_msg_setting_undefined'] = 'Non hai configuración de metadatos.';
-$lang['_msg_setting_no_class'] = 'Non hai configuración de clase.';
-$lang['_msg_setting_no_default'] = 'Non hai valor predeterminado.';
-$lang['title']                 = 'Título do Wiki';
-$lang['start']                 = 'Nome da páxina inicial';
-$lang['lang']                  = 'Idioma';
-$lang['template']              = 'Sobreplanta';
-$lang['tagline']               = 'Tagline (si a plantilla o soporta)';
-$lang['sidebar']               = 'Nome de páxina da barra lateral (si a platilla o soporta), o campo en baleiro deshabilita a barra lateral';
-$lang['license']               = 'Baixo de que licenza será ceibado o teu contido?';
-$lang['savedir']               = 'Directorio no que se gardarán os datos';
-$lang['basedir']               = 'Directorio base';
-$lang['baseurl']               = 'URL base';
-$lang['cookiedir']             = 'Ruta das cookies. Deixar en blanco para usar a url de base.';
-$lang['dmode']                 = 'Modo de creación de directorios';
-$lang['fmode']                 = 'Modo de creación de arquivos';
-$lang['allowdebug']            = 'Permitir o depurado <b>desactívao se non o precisas!</b>';
-$lang['recent']                = 'Trocos recentes';
-$lang['recent_days']           = 'Número de trocos recentes a manter (días)';
-$lang['breadcrumbs']           = 'Número de niveis da estrutura de navegación';
-$lang['youarehere']            = 'Niveis xerárquicos da estrutura de navegación';
-$lang['fullpath']              = 'Amosar a ruta completa das páxinas no pé das mesmas';
-$lang['typography']            = 'Facer substitucións tipográficas';
-$lang['dformat']               = 'Formato de Data (bótalle un ollo á función <a href="http://php.net/strftime">strftime</a> do PHP)';
-$lang['signature']             = 'Sinatura';
-$lang['showuseras']            = 'Que amosar cando se informe do usuario que fixo a última modificación dunha páxina';
-$lang['toptoclevel']           = 'Nivel superior para a táboa de contidos';
-$lang['tocminheads']           = 'Cantidade mínima de liñas de cabeceira que determinará se a TDC vai ser xerada';
-$lang['maxtoclevel']           = 'Nivel máximo para a táboa de contidos';
-$lang['maxseclevel']           = 'Nivel máximo de edición da sección';
-$lang['camelcase']             = 'Utilizar CamelCase para as ligazóns';
-$lang['deaccent']              = 'Limpar nomes de páxina';
-$lang['useheading']            = 'Utilizar a primeira cabeceira para os nomes de páxina';
-$lang['sneaky_index']          = 'O DokuWiki amosará por defecto todos os nomes de espazo na vista de índice. Se activas isto agocharanse aqueles onde o usuario non teña permisos de lectura.';
+$lang['menu']                  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['error']                 = '1989';
+$lang['updated']               = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['nochoice']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['locked']                = 'Dewitt';
+$lang['danger']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de 
+outra maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['warning']               = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['security']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar 
+na aposento com aula”, diga a aluno.';
+$lang['_configuration_manager'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['_header_dokuwiki']      = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['_header_plugin']        = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['_header_template']      = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['_header_undefined']     = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['_basic']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também 
+não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['_display']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['_authentication']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['_anti_spam']            = 'None';
+$lang['_editing']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira 
+a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['_links']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['_media']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['_notifications']        = '0';
+$lang['_syndication']          = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também 
+não possui azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['_advanced']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['_network']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['_msg_setting_undefined'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['_msg_setting_no_class'] = 'Magician';
+$lang['_msg_setting_no_default'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira 
+a acelerar matérias que caem no Enem e também não possui azo desde agravar 
+na aposento com aula”, diga a aluno.';
+$lang['title']                 = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['start']                 = 'Dewitt';
+$lang['lang']                  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['template']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['tagline']               = '26';
+$lang['sidebar']               = 'Transtrand';
+$lang['license']               = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['savedir']               = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['basedir']               = 'None';
+$lang['baseurl']               = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['cookiedir']             = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['dmode']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['fmode']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['allowdebug']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga 
+a aluno.';
+$lang['recent']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem e também não 
+possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['recent_days']           = '15';
+$lang['breadcrumbs']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['youarehere']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não 
+é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['fullpath']              = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['typography']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['dformat']               = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['signature']             = 'my web site - tcc sem drama';
+$lang['showuseras']            = 'Dewitt';
+$lang['toptoclevel']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['tocminheads']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['maxtoclevel']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['maxseclevel']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['camelcase']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de 
+outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['deaccent']              = 'Mackinolty';
+$lang['useheading']            = 'Dewitt';
+$lang['sneaky_index']          = 'Dewitt';
 $lang['hidepages']             = 'Agochar páxinas que coincidan (expresións regulares)';
-$lang['useacl']                = 'Utilizar lista de control de acceso';
-$lang['autopasswd']            = 'Xerar contrasinais automaticamente';
-$lang['authtype']              = 'Backend de autenticación';
-$lang['passcrypt']             = 'Método de encriptado do contrasinal';
-$lang['defaultgroup']          = 'Grupo por defecto';
-$lang['superuser']             = 'Super-usuario - un grupo ou usuario con acceso completo a todas as páxinas e funcións independentemente da configuración da ACL';
-$lang['manager']               = 'Xestor - un grupo ou usuario con acceso a certas funcións de xestión';
-$lang['profileconfirm']        = 'Confirmar trocos de perfil mediante contrasinal';
-$lang['rememberme']            = 'Permitir cookies permanentes de inicio de sesión (lembrarme)';
-$lang['disableactions']        = 'Desactivar accións do DokuWiki';
-$lang['disableactions_check']  = 'Comprobar';
-$lang['disableactions_subscription'] = 'Subscribir/Desubscribir';
-$lang['disableactions_wikicode'] = 'Ver fonte/Exportar Datos Raw';
-$lang['disableactions_other']  = 'Outras accións (separadas por comas)';
-$lang['auth_security_timeout'] = 'Tempo Límite de Seguridade de Autenticación (segundos)';
-$lang['securecookie']          = 'Deben enviarse só vía HTTPS polo navegador as cookies configuradas vía HTTPS? Desactiva esta opción cando só o inicio de sesión do teu wiki estea asegurado con SSL pero a navegación do mesmo se faga de xeito inseguro.';
-$lang['remote']                = 'Permite o uso do sistema API remoto. Isto permite a outras aplicacións acceder ao wiki mediante XML-RPC ou outros mecanismos.';
-$lang['remoteuser']            = 'Restrinxe o uso remoto da API aos grupos ou usuarios indicados, separados por comas. Deixar baleiro para dar acceso a todo o mundo.';
-$lang['usewordblock']          = 'Bloquear correo-lixo segundo unha lista de verbas';
-$lang['relnofollow']           = 'Utilizar rel="nofollow" nas ligazóns externas';
-$lang['indexdelay']            = 'Retardo denantes de indexar (seg)';
-$lang['mailguard']             = 'Ofuscar enderezos de correo-e';
-$lang['iexssprotect']          = 'Comprobar arquivos subidos na procura de posíbel código JavaScript ou HTML malicioso';
-$lang['usedraft']              = 'Gardar un borrador automaticamente no tempo da edición';
-$lang['htmlok']                = 'Permitir a inserción de HTML';
-$lang['phpok']                 = 'Permitir a inserción de PHP';
-$lang['locktime']              = 'Tempo máximo para o bloqueo de arquivos (seg.)';
-$lang['cachetime']             = 'Tempo máximo para a caché (seg.)';
-$lang['target____wiki']        = 'Fiestra de destino para as ligazóns internas';
-$lang['target____interwiki']   = 'Fiestra de destino para as ligazóns interwiki';
-$lang['target____extern']      = 'Fiestra de destino para as ligazóns externas';
-$lang['target____media']       = 'Fiestra de destino para as ligazóns de media';
-$lang['target____windows']     = 'Fiestra de destino para as ligazóns de fiestras';
-$lang['mediarevisions']        = 'Habilitar revisións dos arquivos-media?';
-$lang['refcheck']              = 'Comprobar a referencia media';
-$lang['gdlib']                 = 'Versión da Libraría GD';
-$lang['im_convert']            = 'Ruta deica a ferramenta de conversión ImageMagick';
-$lang['jpg_quality']           = 'Calidade de compresión dos JPG (0-100)';
-$lang['fetchsize']             = 'Tamaño máximo (en bytes) que pode descargar fetch.php dende fontes externas';
-$lang['subscribers']           = 'Activar posibilidade de subscrición á páxina';
-$lang['subscribe_time']        = 'Tempo despois do cal se enviarán os resumos e listas de subscrición (seg.): isto debe ser inferior ao tempo especificado en recent_days.';
-$lang['notify']                = 'Enviar notificacións de trocos a este enderezo de correo-e';
-$lang['registernotify']        = 'Enviar información de novos usuarios rexistrados a este enderezo de correo-e';
-$lang['mailfrom']              = 'Enderezo de correo-e a usar para as mensaxes automáticas';
+$lang['useacl']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de 
+outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['autopasswd']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['authtype']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não 
+é sempre que aprendo na aprendizado de outra maneira a 
+acelerar matérias que caem no Enem e também não 
+possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['passcrypt']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['defaultgroup']          = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['superuser']             = 'Dewitt';
+$lang['manager']               = 'Dewitt';
+$lang['profileconfirm']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['rememberme']            = 'Dewitt';
+$lang['disableactions']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo 
+na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['disableactions_check']  = 'None';
+$lang['disableactions_subscription'] = '0';
+$lang['disableactions_wikicode'] = 'Transtrand';
+$lang['disableactions_profile_delete'] = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga 
+a aluno.';
+$lang['disableactions_other']  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['disableactions_rss']    = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['auth_security_timeout'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a 
+acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['securecookie']          = 'Dewitt';
+$lang['remote']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não 
+possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['remoteuser']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['usewordblock']          = 'None';
+$lang['relnofollow']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['indexdelay']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['mailguard']             = 'dewittmackinolty@gmail.com';
+$lang['iexssprotect']          = 'None';
+$lang['usedraft']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['htmlok']                = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['phpok']                 = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['locktime']              = '36';
+$lang['cachetime']             = '39';
+$lang['target____wiki']        = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['target____interwiki']   = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de 
+outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['target____extern']      = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira 
+a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['target____media']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['target____windows']     = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de 
+outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['mediarevisions']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['refcheck']              = 'None';
+$lang['gdlib']                 = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['im_convert']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['jpg_quality']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['fetchsize']             = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['subscribers']           = '0';
+$lang['subscribe_time']        = '0';
+$lang['notify']                = '0';
+$lang['registernotify']        = '0';
+$lang['mailfrom']              = 'dewittmackinolty@gmail.com';
 $lang['mailprefix']            = 'Prefixo de asunto de correo-e para as mensaxes automáticas';
-$lang['htmlmail']              = 'Enviar correos electrónicos HTML multiparte máis estéticos, pero máis grande en tamaño. Deshabilitar para mandar correos electrónicos en texto claro.';
-$lang['sitemap']               = 'Xerar mapa do sitio co Google (días)';
-$lang['rss_type']              = 'Tipo de corrente RSS XML';
-$lang['rss_linkto']            = 'A corrente XML liga para';
-$lang['rss_content']           = 'Que queres amosar nos elementos da corrente XML?';
-$lang['rss_update']            = 'Intervalo de actualización da corrente XML (seg.)';
-$lang['rss_show_summary']      = 'Amosar sumario no título da corrente XML';
-$lang['rss_media']             = 'Qué tipo de cambios deben ser listados no feed XML?';
-$lang['updatecheck']           = 'Comprobar se hai actualizacións e avisos de seguridade? O DokuWiki precisa contactar con update.dokuwiki.org para executar esta característica.';
-$lang['userewrite']            = 'Utilizar URLs amigábeis';
-$lang['useslash']              = 'Utilizar a barra inclinada (/) como separador de nome de espazo nos URLs';
-$lang['sepchar']               = 'Verba separadora do nome de páxina';
-$lang['canonical']             = 'Utilizar URLs completamente canónicos';
-$lang['fnencode']              = 'Método para codificar os nomes de arquivo non-ASCII.';
-$lang['autoplural']            = 'Comprobar formas plurais nas ligazóns';
-$lang['compression']           = 'Método de compresión para arquivos attic';
-$lang['gzip_output']           = 'Utilizar Contido-Codificación gzip para o xhtml';
-$lang['compress']              = 'Saída compacta de CSS e Javascript';
-$lang['cssdatauri']            = 'Tamaño en bytes ata o cal as imaxes referenciadas nos CSS serán incrustadas na folla de estilos para disminuir o tamaño das cabeceiras das solicitudes HTTP. Entre <code>400</code> e <code>600</code> bytes é un valor axeitado. Establecer a <code>0</code> para deshabilitar.';
-$lang['send404']               = 'Enviar "HTTP 404/Páxina non atopada" para as páxinas inexistentes';
+$lang['htmlmail']              = 'dewittmackinolty@gmail.com';
+$lang['sitemap']               = '26';
+$lang['rss_type']              = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_linkto']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar 
+na aposento com aula”, diga a aluno.';
+$lang['rss_content']           = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['rss_update']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_show_summary']      = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['rss_media']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['updatecheck']           = 'None';
+$lang['userewrite']            = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['useslash']              = 'Mackinolty';
+$lang['sepchar']               = 'Dewitt';
+$lang['canonical']             = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['fnencode']              = 'Dewitt';
+$lang['autoplural']            = 'None';
+$lang['compression']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não 
+é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['gzip_output']           = '780 68';
+$lang['compress']              = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['cssdatauri']            = 'None';
+$lang['send404']               = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
 $lang['broken_iua']            = 'Rachou a función ignore_user_abort no teu sistema? Isto podería causar que o índice de procura non funcione. Coñécese que o IIS+PHP/CGI ráchaa. Bótalle un ollo ao <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> para obter máis información.';
-$lang['xsendfile']             = 'Empregar a cabeceira X-Sendfile para que o servidor web envie arquivos estáticos? O teu servidor web precisa soportar isto.';
-$lang['renderer_xhtml']        = 'Intérprete a empregar para a saída principal (XHTML) do Wiki';
-$lang['renderer__core']        = '%s (núcleo do Dokuwiki)';
-$lang['renderer__plugin']      = '%s (extensión)';
-$lang['dnslookups']            = 'DokuWiki resolverá os nomes de host das direccións IP dos usuarios que editan as páxinas. Si contas un servidor DNS lento, que non funciona ou non che interesa esta característica, deshabilita esta opción';
-$lang['proxy____host']         = 'Nome do servidor Proxy';
-$lang['proxy____port']         = 'Porto do Proxy';
-$lang['proxy____user']         = 'Nome de usuario do Proxy';
-$lang['proxy____pass']         = 'Contrasinal do Proxy';
-$lang['proxy____ssl']          = 'Utilizar ssl para conectar ao Proxy';
-$lang['proxy____except']       = 'Expresión regular para atopar URLs que deban ser omitidas polo Proxy.';
-$lang['safemodehack']          = 'Activar hack de modo seguro (safemode)';
-$lang['ftp____host']           = 'Servidor FTP para o hack de modo seguro (safemode)';
-$lang['ftp____port']           = 'Porto FTP para o hack de modo seguro(safemode)';
-$lang['ftp____user']           = 'Nome de usuario FTP para o hack de modo seguro(safemode)';
-$lang['ftp____pass']           = 'Contrasinal FTP para o hack de modo seguro(safemode)';
-$lang['ftp____root']           = 'Directorio raigaña do FTP para o hack de modo seguro(safemode)';
-$lang['license_o_']            = 'Non se escolleu nada';
-$lang['typography_o_0']        = 'ningunha';
-$lang['typography_o_1']        = 'Só dobres aspas';
-$lang['typography_o_2']        = 'Todas as aspas (pode que non funcione sempre)';
-$lang['userewrite_o_0']        = 'ningún';
-$lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'Interno do DokuWiki';
-$lang['deaccent_o_0']          = 'desconectado';
-$lang['deaccent_o_1']          = 'Eliminar acentos';
-$lang['deaccent_o_2']          = 'romanizar';
-$lang['gdlib_o_0']             = 'Libraría GD non dispoñíbel';
-$lang['gdlib_o_1']             = 'Versión 1.x';
-$lang['gdlib_o_2']             = 'Detección automática';
-$lang['rss_type_o_rss']        = 'RSS 0.91';
-$lang['rss_type_o_rss1']       = 'RSS 1.0';
-$lang['rss_type_o_rss2']       = 'RSS 2.0';
-$lang['rss_type_o_atom']       = 'Atom 0.3';
-$lang['rss_type_o_atom1']      = 'Atom 1.0';
-$lang['rss_content_o_abstract'] = 'Sumario';
-$lang['rss_content_o_diff']    = 'Formato Unified Diff';
-$lang['rss_content_o_htmldiff'] = 'Táboa diff formatada en HTML';
-$lang['rss_content_o_html']    = 'Contido HTML completo da páxina';
-$lang['rss_linkto_o_diff']     = 'vista de diferenzas';
-$lang['rss_linkto_o_page']     = 'a páxina revisada';
-$lang['rss_linkto_o_rev']      = 'listaxe de revisións';
-$lang['rss_linkto_o_current']  = 'a páxina actual';
-$lang['compression_o_0']       = 'ningunha';
-$lang['compression_o_gz']      = 'gzip';
-$lang['compression_o_bz2']     = 'bz2';
-$lang['xsendfile_o_0']         = 'non o empregues';
-$lang['xsendfile_o_1']         = 'Cabeceira lighttpd propietaria (denantes da versión 1.5)';
-$lang['xsendfile_o_2']         = 'Cabeceira X-Sendfile estándar';
-$lang['xsendfile_o_3']         = 'Cabeceira X-Accel-Redirect propia de Nginx';
-$lang['showuseras_o_loginname'] = 'Nome de inicio de sesión';
-$lang['showuseras_o_username'] = 'Nome completo do usuario';
-$lang['showuseras_o_email']    = 'Enderezo de correo-e do usuario (ofuscado segundo a configuración mailguard)';
-$lang['showuseras_o_email_link'] = 'Enderezo de correo-e do usuario como ligazón mailto:';
-$lang['useheading_o_0']        = 'Endexamais';
-$lang['useheading_o_navigation'] = 'Só Navegación';
-$lang['useheading_o_content']  = 'Só Contido do Wiki';
-$lang['useheading_o_1']        = 'Sempre';
-$lang['readdircache']          = 'Edad máxima para o directorio de caché (seg)';
+$lang['xsendfile']             = 'Transtrand';
+$lang['renderer_xhtml']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['renderer__core']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['renderer__plugin']      = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a 
+acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['dnslookups']            = 'Mackinolty';
+$lang['jquerycdn']             = 'Dewitt';
+$lang['jquerycdn_o_0']         = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também 
+não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['jquerycdn_o_jquery']    = 'None';
+$lang['jquerycdn_o_cdnjs']     = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não 
+é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['proxy____host']         = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['proxy____port']         = 'Transtrand';
+$lang['proxy____user']         = 'Dewitt';
+$lang['proxy____pass']         = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a 
+acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['proxy____ssl']          = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['proxy____except']       = 'http://la.fnst.org/?option=com_k2&view=itemlist&task=user&id=3510669';
+$lang['safemodehack']          = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['ftp____host']           = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento com aula”, 
+diga a aluno.';
+$lang['ftp____port']           = 'Transtrand';
+$lang['ftp____user']           = 'Dewitt';
+$lang['ftp____pass']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre 
+que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['ftp____root']           = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem e 
+também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['license_o_']            = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['typography_o_0']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['typography_o_1']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado 
+de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['typography_o_2']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['userewrite_o_0']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que 
+não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar 
+na aposento com aula”, diga a aluno.';
+$lang['userewrite_o_1']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo 
+na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['userewrite_o_2']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira 
+a acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['deaccent_o_0']          = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['deaccent_o_1']          = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na 
+aposento com aula”, diga a aluno.';
+$lang['deaccent_o_2']          = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['gdlib_o_0']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira 
+a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['gdlib_o_1']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar 
+na aposento com aula”, diga a aluno.';
+$lang['gdlib_o_2']             = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo 
+na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_type_o_rss']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar 
+na aposento com aula”, diga a aluno.';
+$lang['rss_type_o_rss1']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_type_o_rss2']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento 
+com aula”, diga a aluno.';
+$lang['rss_type_o_atom']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não 
+é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a 
+aluno.';
+$lang['rss_type_o_atom1']      = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é 
+sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['rss_content_o_abstract'] = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['rss_content_o_diff']    = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias 
+que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_content_o_htmldiff'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['rss_content_o_html']    = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_linkto_o_diff']     = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_linkto_o_page']     = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['rss_linkto_o_rev']      = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no 
+Enem e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['rss_linkto_o_current']  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo 
+na aprendizado de outra maneira a acelerar matérias que 
+caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['compression_o_0']       = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira 
+a acelerar matérias que caem no Enem e também não possui 
+azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['compression_o_gz']      = '780 68';
+$lang['compression_o_bz2']     = 'A internet me ajuda a aceitar dúvidas e assimilar 
+matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem e também não possui azo desde 
+agravar na aposento com aula”, diga a aluno.';
+$lang['xsendfile_o_0']         = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que 
+aprendo na aprendizado de outra maneira a acelerar matérias que caem 
+no Enem e também não possui azo desde agravar na aposento com 
+aula”, diga a aluno.';
+$lang['xsendfile_o_1']         = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['xsendfile_o_2']         = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['xsendfile_o_3']         = 'De que jeito Pesquisar Desacompanhado Com finalidade de O ENEM 2016';
+$lang['showuseras_o_loginname'] = 'Dewitt';
+$lang['showuseras_o_username'] = 'Dewitt';
+$lang['showuseras_o_username_link'] = 'Dewitt';
+$lang['showuseras_o_email']    = 'dewittmackinolty@gmail.com';
+$lang['showuseras_o_email_link'] = 'dewittmackinolty@gmail.com';
+$lang['useheading_o_0']        = 'A internet me ajuda a aceitar dúvidas e 
+assimilar matérias que não é sempre que aprendo na 
+aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo desde agravar na aposento com aula”, diga a aluno.';
+$lang['useheading_o_navigation'] = 'A internet me ajuda a aceitar dúvidas e assimilar matérias 
+que não é sempre que aprendo na aprendizado de outra maneira a acelerar matérias que caem no Enem 
+e também não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['useheading_o_content']  = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra 
+maneira a acelerar matérias que caem no Enem e também 
+não possui azo desde agravar na aposento com aula”,
+diga a aluno.';
+$lang['useheading_o_1']        = 'A internet me ajuda a aceitar dúvidas e assimilar matérias que não é sempre que aprendo na aprendizado de outra maneira a acelerar 
+matérias que caem no Enem e também não possui azo 
+desde agravar na aposento com aula”, diga a aluno.';
+$lang['readdircache']          = '26';
