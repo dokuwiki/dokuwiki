@@ -363,6 +363,71 @@ class Doku_Handler {
         return true;
     }
 
+    /**
+     * Internal function for parsing highlight options.
+     * $options is parsed for key value pairs separated by commas.
+     * A value might also be missing in which case the value will simple
+     * be set to true. Commas in strings are ignored, e.g. option="4,56"
+     * will work as expected and will only create one entry.
+     *
+     * @param string $options Comma separated list of key-value pairs,
+     *                        e.g. option1=123, option2="456"
+     * @return array|null     Array of key-value pairs $array['key'] = 'value';
+     *                        or null if no entries found
+     */
+    protected function parse_highlight_options ($options) {
+        $result = array();
+        preg_match_all('/(\w+(?:="[^"]*"))|(\w+[^=,\]])(?:,*)/', $options, $matches, PREG_SET_ORDER);
+        foreach ($matches as $match) {
+            $equal_sign = strpos($match [0], '=');
+            if ($equal_sign === false) {
+                $key = trim($match[0],',');
+                $result [$key] = 1;
+            } else {
+                $key = substr($match[0], 0, $equal_sign);
+                $value = substr($match[0], $equal_sign+1);
+                $value = trim($value, '"');
+                if (strlen($value) > 0) {
+                    $result [$key] = $value;
+                } else {
+                    $result [$key] = 1;
+                }
+            }
+        }
+
+        // Check for supported options
+        $result = array_intersect_key(
+            $result,
+            array_flip(array(
+                'enable_line_numbers',
+                'start_line_numbers_at',
+                'highlight_lines_extra',
+                'enable_keyword_links')
+            )
+        );
+
+        // Sanitize values
+        if(isset($result['enable_line_numbers'])) {
+            $result['enable_line_numbers'] = (bool) $result['enable_line_numbers'];
+        }
+        if(isset($result['highlight_lines_extra'])) {
+            $result['highlight_lines_extra'] = array_map('intval', explode(',', $result['highlight_lines_extra']));
+            $result['highlight_lines_extra'] = array_filter($result['highlight_lines_extra']);
+            $result['highlight_lines_extra'] = array_unique($result['highlight_lines_extra']);
+        }        
+        if(isset($result['start_line_numbers_at'])) {
+            $result['start_line_numbers_at'] = (int) $result['start_line_numbers_at'];
+        }
+        if(isset($result['enable_keyword_links'])) {
+            $result['enable_keyword_links'] = ($result['enable_keyword_links'] !== 'false');
+        }
+        if (count($result) == 0) {
+            return null;
+        }
+
+        return $result;
+    }
+
     function file($match, $state, $pos) {
         return $this->code($match, $state, $pos, 'file');
     }
@@ -370,15 +435,20 @@ class Doku_Handler {
     function code($match, $state, $pos, $type='code') {
         if ( $state == DOKU_LEXER_UNMATCHED ) {
             $matches = explode('>',$match,2);
-
+            // Cut out variable options enclosed in []
+            preg_match('/\[.*\]/', $matches[0], $options);
+            if (!empty($options[0])) {
+                $matches[0] = str_replace($options[0], '', $matches[0]);
+            }
             $param = preg_split('/\s+/', $matches[0], 2, PREG_SPLIT_NO_EMPTY);
             while(count($param) < 2) array_push($param, null);
-
             // We shortcut html here.
             if ($param[0] == 'html') $param[0] = 'html4strict';
             if ($param[0] == '-') $param[0] = null;
             array_unshift($param, $matches[1]);
-
+            if (!empty($options[0])) {
+                $param [] = $this->parse_highlight_options ($options[0]);
+            }
             $this->_addCall($type, $param, $pos);
         }
         return true;
