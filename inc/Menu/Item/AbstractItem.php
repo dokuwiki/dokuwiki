@@ -93,6 +93,8 @@ abstract class AbstractItem {
      * Basically runs wl() on $id and $params. However if the ID is a hash it is used directly
      * as the link
      *
+     * Please note that the generated URL is *not* XML escaped.
+     *
      * @see wl()
      * @return string
      */
@@ -100,7 +102,7 @@ abstract class AbstractItem {
         if($this->id[0] == '#') {
             return $this->id;
         } else {
-            return wl($this->id, $this->params);
+            return wl($this->id, $this->params, false, '&');
         }
     }
 
