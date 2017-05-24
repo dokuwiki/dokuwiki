@@ -1,6 +1,11 @@
 <?php
 require_once 'parser.inc.php';
 
+/**
+ * Tests for the implementation of link syntax
+ *
+ * @group parser_links
+*/
 class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
 
     function testExternalLinkSimple() {
@@ -274,6 +279,36 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testInternalLinkCodeFollows() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[wiki:internal:link|Test]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('wiki:internal:link','Test')),
+            array('cdata',array(' Bar <code>command [arg1 [arg2 [arg3]]]</code>')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testInternalLinkCodeFollows2() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[wiki:internal:link|[Square brackets in title] Test]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('internallink',array('wiki:internal:link','[Square brackets in title] Test')),
+            array('cdata',array(' Bar <code>command [arg1 [arg2 [arg3]]]</code>')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testExternalInInternalLink() {
         $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
         $this->P->parse("Foo [[http://www.google.com|Google]] Bar");
@@ -283,6 +318,36 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
             array('cdata',array("\n".'Foo ')),
             array('externallink',array('http://www.google.com','Google')),
             array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalInInternalLink2() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[http://www.google.com?test[]=squarebracketsinurl|Google]] Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('http://www.google.com?test[]=squarebracketsinurl','Google')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalInInternalLink2CodeFollows() {
+        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->parse("Foo [[http://www.google.com?test[]=squarebracketsinurl|Google]] Bar <code>command [arg1 [arg2 [arg3]]]</code>");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo ')),
+            array('externallink',array('http://www.google.com?test[]=squarebracketsinurl','Google')),
+            array('cdata',array(' Bar <code>command [arg1 [arg2 [arg3]]]</code>')),
             array('p_close',array()),
             array('document_end',array()),
         );
