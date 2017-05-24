@@ -8,6 +8,7 @@
  * @author Mohmmad Razavi <sepent@gmail.com>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author sam01 <m.sajad079@gmail.com>
+ * @author Sajjad <sajjad8t@gmail.com>
  */
 $lang['server']                = 'سرور LDAP شما. چه به صورت ';
 $lang['port']                  = 'درگاه سرور LDAP اگر که URL کامل در بالا نوشته نشده';
