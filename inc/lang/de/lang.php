@@ -31,6 +31,7 @@
  * @author Hendrik Diel <diel.hendrik@gmail.com>
  * @author Marco Hofmann <xenadmin@meinekleinefarm.net>
  * @author Hella Breitkopf <hella.breitkopf@gmail.com>
+ * @author Oliver <gericom@berge-net.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
