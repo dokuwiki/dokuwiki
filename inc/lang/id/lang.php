@@ -9,6 +9,7 @@
  * @author zamroni <therons@ymail.com>
  * @author umriya afini <bigdream.power@gmail.com>
  * @author Arif Budiman <me@kangarif.com>
+ * @author robby <robby_tapem@yahoo.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -309,5 +310,5 @@ $lang['media_restore']         = 'Kembalikan versi ini';
 $lang['currentns']             = 'Namespace saat ini';
 $lang['searchresult']          = 'Hasil Pencarian';
 $lang['wikimarkup']            = 'Markah Wiki';
-$lang['email_signature_text'] = 'Email ini dibuat otomatis oleh DokuWiki
+$lang['email_signature_text']  = 'Email ini dibuat otomatis oleh DokuWiki
 @DOKUWIKIURL@';
