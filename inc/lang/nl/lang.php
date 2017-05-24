@@ -368,3 +368,4 @@ $lang['page_nonexist_rev']     = 'Pagina bestaat niet bij %s. Het is vervolgens 
 $lang['unable_to_parse_date']  = 'Begrijp het niet bij parameter "%s".';
 $lang['email_signature_text']  = 'Deze mail werd gegenereerd door DokuWiki op
 @DOKUWIKIURL@';
+$lang['email_signature_html']  = ' ';
