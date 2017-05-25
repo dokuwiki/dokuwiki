@@ -625,19 +625,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
 /**
  * Check the actions and get data for buttons and links
  *
- * Available actions are
- *
- *  edit        - edit/create/show/draft
- *  history     - old revisions
- *  recent      - recent changes
- *  login       - login/logout - if ACL enabled
- *  profile     - user profile (if logged in)
- *  index       - The index
- *  admin       - admin page - if enough rights
- *  top         - back to top
- *  back        - back to parent - if available
- *  backlink    - links to the list of backlinks
- *  subscribe/subscription- subscribe/unsubscribe
+ * @deprecated use \dokuwiki\Menu\Item\AbstractItem descendants instead
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
@@ -647,156 +635,33 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
  * @return array|bool|string
  */
 function tpl_get_action($type) {
-    global $ID;
-    global $INFO;
-    global $REV;
-    global $ACT;
-    global $conf;
-    /** @var Input $INPUT */
-    global $INPUT;
-
-    // check disabled actions and fix the badly named ones
     if($type == 'history') $type = 'revisions';
-    if ($type == 'subscription') $type = 'subscribe';
-    if(!actionOK($type)) return false;
+    if($type == 'subscription') $type = 'subscribe';
+    if($type == 'img_backto') $type = 'imgBackto';
 
-    $accesskey   = null;
-    $id          = $ID;
-    $method      = 'get';
-    $params      = array('do' => $type);
-    $nofollow    = true;
-    $replacement = '';
-
-    $unknown = false;
-    switch($type) {
-        case 'edit':
-            // most complicated type - we need to decide on current action
-            if($ACT == 'show' || $ACT == 'search') {
-                $method = 'post';
-                if($INFO['writable']) {
-                    $accesskey = 'e';
-                    if(!empty($INFO['draft'])) {
-                        $type         = 'draft';
-                        $params['do'] = 'draft';
-                    } else {
-                        $params['rev'] = $REV;
-                        if(!$INFO['exists']) {
-                            $type = 'create';
-                        }
-                    }
-                } else {
-                    if(!actionOK('source')) return false; //pseudo action
-                    $params['rev'] = $REV;
-                    $type          = 'source';
-                    $accesskey     = 'v';
-                }
-            } else {
-                $params    = array('do' => '');
-                $type      = 'show';
-                $accesskey = 'v';
-            }
-            break;
-        case 'revisions':
-            $type      = 'revs';
-            $accesskey = 'o';
-            break;
-        case 'recent':
-            $accesskey = 'r';
-            break;
-        case 'index':
-            $accesskey = 'x';
-            // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
-            if ($conf['start'] == $ID && !$conf['sitemap']) {
-                $nofollow = false;
-            }
-            break;
-        case 'top':
-            $accesskey = 't';
-            $params    = array('do' => '');
-            $id        = '#dokuwiki__top';
-            break;
-        case 'back':
-            $parent = tpl_getparent($ID);
-            if(!$parent) {
-                return false;
-            }
-            $id        = $parent;
-            $params    = array('do' => '');
-            $accesskey = 'b';
-            break;
-        case 'img_backto':
-            $params = array();
-            $accesskey = 'b';
-            $replacement = $ID;
-            break;
-        case 'login':
-            $params['sectok'] = getSecurityToken();
-            if($INPUT->server->has('REMOTE_USER')) {
-                if(!actionOK('logout')) {
-                    return false;
-                }
-                $params['do'] = 'logout';
-                $type         = 'logout';
-            }
-            break;
-        case 'register':
-            if($INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'resendpwd':
-            if($INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'admin':
-            if(!$INFO['ismanager']) {
-                return false;
-            }
-            break;
-        case 'revert':
-            if(!$INFO['ismanager'] || !$REV || !$INFO['writable']) {
-                return false;
-            }
-            $params['rev']    = $REV;
-            $params['sectok'] = getSecurityToken();
-            break;
-        case 'subscribe':
-            if(!$INPUT->server->str('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'backlink':
-            break;
-        case 'profile':
-            if(!$INPUT->server->has('REMOTE_USER')) {
-                return false;
-            }
-            break;
-        case 'media':
-            $params['ns'] = getNS($ID);
-            break;
-        case 'mediaManager':
-            // View image in media manager
-            global $IMG;
-            $imgNS = getNS($IMG);
-            $authNS = auth_quickaclcheck("$imgNS:*");
-            if ($authNS < AUTH_UPLOAD) {
-                return false;
-            }
-            $params = array(
-                'ns' => $imgNS,
-                'image' => $IMG,
-                'do' => 'media'
-            );
-            //$type = 'media';
-            break;
-        default:
-            //unknown type
-            $unknown = true;
+    $class = '\\dokuwiki\\Menu\\Item\\' . ucfirst($type);
+    if(class_exists($class)) {
+        try {
+            /** @var \dokuwiki\Menu\Item\AbstractItem $item */
+            $item = new $class;
+            $data = $item->getLegacyData();
+            $unknown = false;
+        } catch(\RuntimeException $ignored) {
+            return false;
+        }
+    } else {
+        global $ID;
+        $data = array(
+            'accesskey' => null,
+            'type' => $type,
+            'id' => $ID,
+            'method' => 'get',
+            'params' => array('do' => $type),
+            'nofollow' => true,
+            'replacement' => '',
+        );
+        $unknown = true;
     }
-
-    $data = compact('accesskey', 'type', 'id', 'method', 'params', 'nofollow', 'replacement');
 
     $evt = new Doku_Event('TPL_ACTION_GET', $data);
     if($evt->advise_before()) {

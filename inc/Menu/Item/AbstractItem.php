@@ -196,4 +196,20 @@ abstract class AbstractItem {
         return $this->svg;
     }
 
+    /**
+     * Return this Item's settings as an array as used in tpl_get_action()
+     *
+     * @return array
+     */
+    public function getLegacyData() {
+        return array(
+            'accesskey' => $this->accesskey ? $this->accesskey : null,
+            'type' => $this->type,
+            'id' => $this->id,
+            'method' => $this->method,
+            'params' => $this->params,
+            'nofollow' => $this->nofollow,
+            'replacement' => $this->replacement
+        );
+    }
 }
