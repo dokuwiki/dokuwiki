@@ -9,14 +9,13 @@ namespace dokuwiki\Menu\Item;
  */
 class Media extends AbstractItem {
 
-    protected $svg = DOKU_INC . 'lib/images/menu/folder-multiple-image.svg';
-
     /** @inheritdoc */
     public function __construct() {
         global $ID;
         parent::__construct();
 
-        $params['ns'] = getNS($ID);
+        $this->svg = DOKU_INC . 'lib/images/menu/folder-multiple-image.svg';
+        $this->params['ns'] = getNS($ID);
     }
 
 }

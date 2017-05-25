@@ -10,10 +10,15 @@ namespace dokuwiki\Menu\Item;
  */
 class Top extends AbstractItem {
 
-    protected $svg       = DOKU_INC . 'lib/images/menu/10-top_arrow-up.svg';
-    protected $accesskey = 't';
-    protected $params    = array('do' => '');
-    protected $id        = '#dokuwiki__top';
-    protected $context   = self::CTX_DESKTOP;
+    /** @inheritdoc */
+    public function __construct() {
+        parent::__construct();
+
+        $this->svg = DOKU_INC . 'lib/images/menu/10-top_arrow-up.svg';
+        $this->accesskey = 't';
+        $this->params = array('do' => '');
+        $this->id = '#dokuwiki__top';
+        $this->context = self::CTX_DESKTOP;
+    }
 
 }

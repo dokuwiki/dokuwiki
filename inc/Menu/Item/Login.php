@@ -9,13 +9,12 @@ namespace dokuwiki\Menu\Item;
  */
 class Login extends AbstractItem {
 
-    protected $svg = DOKU_INC . 'lib/images/menu/login.svg';
-
     /** @inheritdoc */
     public function __construct() {
         global $INPUT;
         parent::__construct();
 
+        $this->svg = DOKU_INC . 'lib/images/menu/login.svg';
         $this->params['sectok'] = getSecurityToken();
         if($INPUT->server->has('REMOTE_USER')) {
             if(!actionOK('logout')) {
