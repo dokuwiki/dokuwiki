@@ -139,6 +139,35 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
 
+    function testExternalWWWLinkInPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        // See issue #936. Should NOT generate a link!
+        $this->P->parse("Foo /home/subdir/www/www.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/www.something.de/somedir/ Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalWWWLinkFollowingPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo /home/subdir/www/ www.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/ ')),
+            array('externallink',array('http://www.something.de/somedir/', 'www.something.de/somedir/')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testExternalFTPLink() {
         $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
         $this->P->parse("Foo ftp.sunsite.com Bar");
@@ -153,6 +182,36 @@ class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
     }
+
+    function testExternalFTPLinkInPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        // See issue #936. Should NOT generate a link!
+        $this->P->parse("Foo /home/subdir/www/ftp.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/ftp.something.de/somedir/ Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
+    function testExternalFTPLinkFollowingPath() {
+        $this->P->addMode('externallink',new Doku_Parser_Mode_ExternalLink());
+        $this->P->parse("Foo /home/subdir/www/ ftp.something.de/somedir/ Bar");
+        $calls = array (
+            array('document_start',array()),
+            array('p_open',array()),
+            array('cdata',array("\n".'Foo /home/subdir/www/ ')),
+            array('externallink',array('ftp://ftp.something.de/somedir/', 'ftp.something.de/somedir/')),
+            array('cdata',array(' Bar')),
+            array('p_close',array()),
+            array('document_end',array()),
+        );
+        $this->assertEquals(array_map('stripByteIndex',$this->H->calls),$calls);
+    }
+
     function testEmail() {
         $this->P->addMode('emaillink',new Doku_Parser_Mode_Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
