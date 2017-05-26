@@ -28,8 +28,6 @@ class Mailer {
     protected $partid    = '';
     protected $sendparam = null;
 
-    /** @var EmailAddressValidator */
-    protected $validator = null;
     protected $allowhtml = true;
 
     protected $replacements = array('text'=> array(), 'html' => array());
@@ -363,11 +361,7 @@ class Mailer {
                 continue;
             }
 
-            if(is_null($this->validator)) {
-                $this->validator                      = new EmailAddressValidator();
-                $this->validator->allowLocalAddresses = true;
-            }
-            if(!$this->validator->check_email_address($addr)) {
+            if(!mail_isvalid($addr)) {
                 msg(htmlspecialchars("E-Mail address <$addr> is not valid"), -1);
                 continue;
             }
